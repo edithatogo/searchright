@@ -1,0 +1,30 @@
+[package]
+name = "searchright-mcp"
+description = "Model Context Protocol server for Searchright."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "searchright-mcp"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+evidence-search-core = { path = "../evidence-search-core" }
+rmcp.workspace = true
+searchright-agent = { path = "../searchright-agent" }
+searchright-contracts = { path = "../searchright-contracts" }
+searchright-dedup = { path = "../searchright-dedup" }
+searchright-prisma = { path = "../searchright-prisma" }
+serde.workspace = true
+serde_json.workspace = true
+serde_yaml.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true

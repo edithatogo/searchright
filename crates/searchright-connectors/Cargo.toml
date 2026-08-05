@@ -1,0 +1,24 @@
+[package]
+name = "searchright-connectors"
+description = "Fixture-backed and opt-in live literature-search provider adapters."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[features]
+default = []
+live = ["dep:reqwest"]
+
+[dependencies]
+async-trait.workspace = true
+evidence-search-core = { path = "../evidence-search-core" }
+reqwest = { workspace = true, optional = true }
+searchright-contracts = { path = "../searchright-contracts" }
+serde.workspace = true
+serde_json.workspace = true
+url.workspace = true
+
+[lints]
+workspace = true

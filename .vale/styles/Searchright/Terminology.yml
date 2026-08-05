@@ -1,0 +1,10 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+level: error
+ignorecase: false
+swap:
+  Prisma-S: PRISMA-S
+  Prisma: PRISMA
+  Pubmed: PubMed
+  Openalex: OpenAlex
+  Sourceright Library: Sourceright

@@ -1,0 +1,23 @@
+{
+  "schema_version": "searchright.conductor-upstream-lock.v1",
+  "repository": "https://github.com/gemini-cli-extensions/conductor",
+  "observed_version": "0.3.0",
+  "observed_date": "2026-08-05",
+  "installation": {
+    "gemini_cli": "gemini extensions install https://github.com/gemini-cli-extensions/conductor --auto-update",
+    "antigravity": "agy plugins install https://github.com/gemini-cli-extensions/conductor",
+    "claude_code": [
+      "/plugin marketplace add gemini-cli-extensions/conductor",
+      "/plugin install conductor"
+    ]
+  },
+  "enabled_repository_capabilities": [
+    "context artefacts",
+    "spec and plan tracks",
+    "adaptive UX where host-supported",
+    "smart logical revert",
+    "review-fixes flow"
+  ],
+  "undocumented_experimental_flags_enabled": false,
+  "note": "The generation runtime had no compatible agent host or networked git, so the repository contains an idempotent installer and full Conductor artefacts but does not claim a successful runtime installation."
+}

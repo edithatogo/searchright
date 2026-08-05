@@ -1,0 +1,14 @@
+[alias]
+xtask = "run --package searchright-cli --"
+ci = "test --workspace --all-features --locked"
+
+[build]
+incremental = false
+
+[env]
+CARGO_TERM_COLOR = "always"
+RUST_BACKTRACE = "1"
+
+[net]
+git-fetch-with-cli = true
+retry = 3

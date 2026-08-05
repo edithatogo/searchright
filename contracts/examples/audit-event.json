@@ -1,0 +1,18 @@
+{
+  "schema_version": "org.searchright.audit-event.v1",
+  "event_id": "event-001",
+  "review_id": "demo-paediatric-metabolic-search",
+  "event_type": "review_plan_validated",
+  "occurred_at": "2026-08-05T00:00:00Z",
+  "actor": {
+    "actor_id": "searchright-cli",
+    "actor_type": "cli",
+    "provenance": "searchright-cli/0.1.0-alpha.1"
+  },
+  "payload": {
+    "plan_id": "demo-paediatric-metabolic-search",
+    "contract_version": "org.searchright.review-plan.v1"
+  },
+  "previous_hash": "GENESIS",
+  "event_hash": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+}

@@ -1,0 +1,17 @@
+decision_id: decision-reviewer-a-record-001
+review_id: demo-paediatric-metabolic-search
+subject_id: record-001
+round: full_text
+reviewer_id: reviewer-a
+reviewer_kind: human
+decision: exclude
+exclusion_reason:
+  reason_id: wrong-population
+  criterion_id: population-child
+  label: Population is entirely adult
+  evidence: null
+confidence: null
+decided_at: '2026-08-05T00:00:00Z'
+rationale: Full text reports an adult-only cohort and no separable paediatric data.
+eligibility_version: '1.0'
+agent_provenance: null

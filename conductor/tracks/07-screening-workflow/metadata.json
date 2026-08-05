@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "07",
+  "slug": "screening-workflow",
+  "title": "Governed screening workflow",
+  "status": "scaffolded",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "06"
+  ],
+  "evidence_level": "scaffolded",
+  "external_approval_required": false
+}

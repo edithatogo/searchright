@@ -1,0 +1,16 @@
+[package]
+name = "searchright-agent"
+description = "Agent workflow, authority and methodological gate contracts for Searchright."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+schemars.workspace = true
+searchright-contracts = { path = "../searchright-contracts" }
+serde.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "13",
+  "slug": "estate-migration",
+  "title": "GitHub estate audit and custom-code replacement",
+  "status": "planned",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "12"
+  ],
+  "evidence_level": "contracted",
+  "external_approval_required": true
+}

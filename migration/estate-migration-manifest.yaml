@@ -1,0 +1,35 @@
+schema_version: searchright.estate-migration.v1
+generated_at: 2026-08-05T00:00:00Z
+canonical_new_repository: edithatogo/searchright
+shared_core: evidence-search-core
+entries:
+  - repository: edithatogo/sourceright
+    path: src/live_providers.rs
+    observed_blob_sha: 57bc071c6afc7d5a4cb8ead12112919a446ebd24
+    responsibility: provider runtime, retries, caching, endpoints and receipts
+    replacement: evidence-search-core plus searchright-connectors
+    detailed_packet: migration/sourceright/replacement-map.yaml
+    status: planned
+    evidence_required:
+      - fixture parity
+      - API compatibility review
+      - rollback feature flag
+      - Sourceright full gate pass
+  - repository: edithatogo/academic-research-skills
+    path: systematic-review workflow
+    responsibility: planning and search execution prompts
+    replacement: Searchright MCP and skill
+    status: planned
+  - repository: edithatogo/PRISMA.jl
+    path: flow/checklist generation
+    responsibility: PRISMA outputs
+    replacement: searchright-prisma after parity
+    status: compatibility_first
+  - repository: edithatogo/standards_check
+    responsibility: checklist source/provenance
+    replacement: none
+    status: reuse
+  - repository: edithatogo/synergy-dataset
+    responsibility: screening benchmark corpus
+    replacement: none
+    status: reuse

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.edithatogo/searchright",
+  "title": "Searchright",
+  "description": "Contract-first planning, execution, screening and reporting infrastructure for systematic and scoping literature searches.",
+  "repository": {
+    "url": "https://github.com/edithatogo/searchright",
+    "source": "github"
+  },
+  "version": "0.1.0-alpha.1",
+  "packages": [
+    {
+      "registryType": "oci",
+      "identifier": "ghcr.io/edithatogo/searchright:0.1.0-alpha.1",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

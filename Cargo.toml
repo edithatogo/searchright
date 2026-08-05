@@ -1,0 +1,82 @@
+[workspace]
+members = [
+  "crates/evidence-search-core",
+  "crates/searchright",
+  "crates/searchright-agent",
+  "crates/searchright-cli",
+  "crates/searchright-connectors",
+  "crates/searchright-contracts",
+  "crates/searchright-dedup",
+  "crates/searchright-mcp",
+  "crates/searchright-prisma",
+  "crates/searchright-screening",
+  "crates/searchright-store",
+]
+default-members = [
+  "crates/searchright",
+  "crates/searchright-cli",
+  "crates/searchright-mcp",
+]
+resolver = "3"
+
+[workspace.package]
+version = "0.1.0-alpha.1"
+edition = "2024"
+rust-version = "1.97.1"
+authors = ["Dylan Mordaunt"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/edithatogo/searchright"
+homepage = "https://edithatogo.github.io/searchright/"
+documentation = "https://edithatogo.github.io/searchright/"
+readme = "README.md"
+keywords = ["systematic-review", "literature-search", "prisma", "mcp", "evidence-synthesis"]
+categories = ["command-line-utilities", "science", "text-processing"]
+
+[workspace.dependencies]
+anyhow = "1.0"
+async-trait = "0.1.89"
+blake3 = "1.8"
+clap = { version = "4.5", features = ["derive", "env", "unicode", "wrap_help"] }
+futures = "0.3"
+indexmap = { version = "2.12", features = ["serde"] }
+proptest = "1.8"
+reqwest = { version = "0.13.2", default-features = false, features = ["json", "rustls-tls", "http2", "charset"] }
+rmcp = { version = "3.1.0", features = ["server", "macros", "transport-io", "schemars"] }
+schemars = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+serde_yaml = "0.9"
+sha2 = "0.11"
+thiserror = "2.0"
+time = { version = "0.3", features = ["formatting", "parsing", "serde", "macros"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "sync", "time", "io-std", "fs"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
+url = { version = "2.5", features = ["serde"] }
+uuid = { version = "1.18", features = ["serde", "v7"] }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+unreachable_pub = "warn"
+unused_lifetimes = "deny"
+unused_qualifications = "warn"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+cargo = { level = "warn", priority = -1 }
+allow_attributes_without_reason = "deny"
+dbg_macro = "deny"
+expect_used = "deny"
+indexing_slicing = "warn"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+module_name_repetitions = "allow"
+multiple_crate_versions = "allow"
+print_stderr = "deny"
+print_stdout = "deny"
+todo = "deny"
+unimplemented = "deny"
+unwrap_used = "deny"

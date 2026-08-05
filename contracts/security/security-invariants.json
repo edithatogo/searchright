@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "searchright.security-invariants.v1",
+  "invariants": [
+    {
+      "id": "SEC-001",
+      "statement": "Secrets are never persisted in audit events, receipts, logs or fixtures.",
+      "level": "must"
+    },
+    {
+      "id": "SEC-002",
+      "statement": "Network egress requires a named source and enabled provider policy.",
+      "level": "must"
+    },
+    {
+      "id": "SEC-003",
+      "statement": "External writes and protocol amendments are dry-run or approval gated.",
+      "level": "must"
+    },
+    {
+      "id": "SEC-004",
+      "statement": "Agent content is untrusted and cannot alter its own authority policy.",
+      "level": "must"
+    },
+    {
+      "id": "SEC-005",
+      "statement": "Licensed providers use BYO access and terms-aware adapters.",
+      "level": "must"
+    },
+    {
+      "id": "SEC-006",
+      "statement": "Experimental plugins are signed or pinned and capability scoped.",
+      "level": "should"
+    }
+  ]
+}

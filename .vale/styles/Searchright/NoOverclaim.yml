@@ -1,0 +1,10 @@
+extends: existence
+message: "Avoid unsupported product-readiness claim: '%s'."
+level: error
+ignorecase: true
+tokens:
+  - fully autonomous systematic review
+  - guarantees comprehensive
+  - guarantees compliance
+  - production ready
+  - registry accepted

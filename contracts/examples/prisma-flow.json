@@ -1,0 +1,34 @@
+{
+  "schema_version": "org.searchright.prisma-flow.v1",
+  "review_id": "demo-paediatric-metabolic-search",
+  "records_databases": 1200,
+  "records_registers": 80,
+  "records_other": 20,
+  "duplicates_removed": 250,
+  "automation_removed": 0,
+  "other_removed": 0,
+  "records_screened": 1050,
+  "records_excluded": 850,
+  "reports_sought": 200,
+  "reports_not_retrieved": 5,
+  "reports_assessed": 195,
+  "full_text_exclusions": [
+    {
+      "reason_id": "wrong-population",
+      "label": "Wrong population",
+      "count": 45
+    },
+    {
+      "reason_id": "wrong-intervention",
+      "label": "Wrong intervention",
+      "count": 50
+    },
+    {
+      "reason_id": "no-primary-data",
+      "label": "No primary data",
+      "count": 30
+    }
+  ],
+  "studies_included": 55,
+  "reports_included": 70
+}

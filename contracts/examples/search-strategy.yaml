@@ -1,0 +1,53 @@
+schema_version: org.searchright.search-strategy.v1
+strategy_id: strategy-medline-v1
+review_id: demo-paediatric-metabolic-search
+source_id: medline-pubmed
+dialect: pub_med
+query:
+  op: and
+  children:
+    - op: or
+      children:
+        - op: term
+          term:
+            text: child
+            fields: [title_abstract]
+            vocabulary: null
+            explode: false
+            phrase: false
+            truncation: true
+        - op: term
+          term:
+            text: Pediatrics
+            fields: [subject_heading]
+            vocabulary: MeSH
+            explode: true
+            phrase: true
+            truncation: false
+    - op: or
+      children:
+        - op: term
+          term:
+            text: exome sequencing
+            fields: [title_abstract]
+            vocabulary: null
+            explode: false
+            phrase: true
+            truncation: false
+        - op: term
+          term:
+            text: whole genome sequencing
+            fields: [title_abstract]
+            vocabulary: null
+            explode: false
+            phrase: true
+            truncation: false
+limits:
+  publication_date: null
+  languages: []
+  publication_types: []
+  filters: []
+  rationale: []
+translated_from: null
+notes:
+  - Outcome terms intentionally omitted pending gold-set testing.

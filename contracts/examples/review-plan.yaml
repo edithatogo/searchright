@@ -1,0 +1,77 @@
+schema_version: org.searchright.review-plan.v1
+review_id: demo-paediatric-metabolic-search
+title: Genomic testing in children with suspected inherited metabolic disease
+review_kind: systematic
+question:
+  text: In children with suspected inherited metabolic disease, what is the diagnostic yield and clinical utility of genomic sequencing compared with conventional testing?
+  framework:
+    kind: pico
+    elements:
+      population: Children with suspected inherited metabolic disease
+      intervention: Exome or genome sequencing
+      comparison: Conventional biochemical and sequential genetic testing
+      outcome: Diagnostic yield, time to diagnosis, management change and family outcomes
+  notes:
+    - Search concepts should not require the outcome domain unless validated against a gold set.
+objectives:
+  - Identify studies reporting diagnostic yield or clinical utility.
+eligibility:
+  version: "1.0"
+  include:
+    - id: population-child
+      domain: population
+      rule: Participants are predominantly younger than 18 years or paediatric results are separable.
+      rationale: Review concerns paediatric diagnostic pathways.
+      stage: any
+      priority: 10
+    - id: intervention-sequencing
+      domain: intervention
+      rule: Study evaluates exome sequencing or genome sequencing.
+      rationale: Defines the index technology.
+      stage: title_abstract
+      priority: 20
+  exclude:
+    - id: no-original-cohort
+      domain: study_design
+      rule: Publication contains no original patient cohort or primary diagnostic-yield data.
+      rationale: Narrative reviews do not estimate diagnostic yield.
+      stage: full_text
+      priority: 30
+information_sources:
+  - id: medline-pubmed
+    name: MEDLINE
+    platform: PubMed
+    kind: database
+    provider: pubmed
+    required: true
+    access_notes: []
+  - id: europe-pmc
+    name: Europe PMC
+    platform: Europe PMC
+    kind: database
+    provider: europe_pmc
+    required: false
+    access_notes: []
+  - id: clinicaltrials-gov
+    name: ClinicalTrials.gov
+    platform: ClinicalTrials.gov
+    kind: register
+    provider: clinical_trials_gov
+    required: true
+    access_notes: []
+strategy_ids:
+  - strategy-medline-v1
+  - strategy-europe-pmc-v1
+protocol:
+  registry: null
+  identifier: null
+  version: "1.0"
+  amendments: []
+governance:
+  title_abstract_reviewers: 2
+  full_text_reviewers: 2
+  press_review_required: true
+  protocol_amendment_roles:
+    - review_lead
+    - information_specialist
+  conflict_resolution: Resolve disagreement by discussion, then independent adjudication.

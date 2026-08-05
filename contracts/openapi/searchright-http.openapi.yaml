@@ -1,0 +1,39 @@
+openapi: 3.1.0
+info:
+  title: Searchright HTTP API
+  version: 0.1.0-alpha.1
+  description: Future approval-gated HTTP surface over the same contracts as CLI and MCP.
+servers:
+  - url: https://example.invalid/searchright
+paths:
+  /v1/reviews/{review_id}/compile:
+    post:
+      operationId: compileStrategy
+      parameters:
+        - in: path
+          name: review_id
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../json-schema/search-strategy.v1.schema.json
+      responses:
+        "200":
+          description: Compiled query and warnings.
+          content:
+            application/json:
+              schema: { type: object }
+        "422": { description: Contract or translation error. }
+  /v1/reviews/{review_id}/audit/verify:
+    post:
+      operationId: verifyAudit
+      parameters:
+        - in: path
+          name: review_id
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Audit verification result. }

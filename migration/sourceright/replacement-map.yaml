@@ -1,0 +1,106 @@
+schema_version: searchright.sourceright-replacement-map.v1
+observed_at: '2026-08-05'
+source:
+  requested_repository: edithatogo/sourcerightlibrary
+  resolved_repository: edithatogo/sourceright
+  branch: main
+  path: src/live_providers.rs
+  blob_sha: 57bc071c6afc7d5a4cb8ead12112919a446ebd24
+target:
+  workspace: edithatogo/searchright
+  shared_crate: evidence-search-core
+  connector_crate: searchright-connectors
+rules:
+  deletion_requires:
+    - fixture parity receipt
+    - semantic and security difference review
+    - full Sourceright quality gate pass
+    - semver decision
+    - tested rollback feature
+  minimum_deprecation_releases: 1
+  remote_change_status: not_performed
+mappings:
+  - existing_symbols:
+      - LiveProviderConfig
+      - LiveProviderRuntimeControls
+      - live_provider_config_from_env
+    existing_responsibility: environment configuration and runtime controls
+    target_symbols:
+      - searchright_contracts::ExecutionPolicy
+      - searchright_contracts::ProviderManifest
+    retained_in_sourceright: environment-to-contract compatibility adapter
+    implementation_status: planned
+  - existing_symbols:
+      - LiveProviderExecution
+    existing_responsibility: fixture, live or skipped execution classification
+    target_symbols:
+      - evidence_search_core::ProviderMode
+    retained_in_sourceright: compatibility serialization where public output requires it
+    implementation_status: source_scaffolded_uncompiled
+  - existing_symbols:
+      - fetch_json
+      - fetch_text
+      - apply_provider_interval
+    existing_responsibility: HTTP, timeout, rate interval and bounded retries
+    target_symbols:
+      - evidence_search_core::ProviderRegistry
+      - evidence_search_core::SearchProvider
+    retained_in_sourceright: none after parity
+    implementation_status: source_scaffolded_uncompiled
+  - existing_symbols:
+      - read_cached
+      - write_cached
+      - cache_path
+    existing_responsibility: local response cache
+    target_symbols:
+      - shared content-addressed replay/cache service
+    retained_in_sourceright: existing implementation until safe parity exists
+    implementation_status: gap_not_implemented
+  - existing_symbols:
+      - europe_pmc_endpoint
+      - ncbi_esummary_endpoint
+      - unpaywall_endpoint
+      - open_citations_endpoint
+      - arxiv_endpoint
+    existing_responsibility: source endpoint construction
+    target_symbols:
+      - searchright_connectors::EuropePmcRequest
+      - searchright_connectors::PubMedSearchRequest
+      - future source-specific adapters
+    retained_in_sourceright: none after each adapter reaches parity
+    implementation_status: partial
+  - existing_symbols:
+      - europe_pmc_fixture_result
+      - repository_records_fixture_result
+      - unpaywall_fixture_result
+      - open_citations_fixture_result
+      - arxiv_fixture_result
+      - licensed_byo_key_fixture_result
+    existing_responsibility: payload parsing and Sourceright candidate construction
+    target_symbols:
+      - provider-specific parser returning BibliographicRecord
+      - Sourceright compatibility translator returning AcademicProviderResult
+    retained_in_sourceright: citation/CSL comparison and candidate construction
+    implementation_status: partial
+  - existing_symbols:
+      - live_provider_smoke_report
+      - LiveProviderSmokeState
+      - LiveProviderOutcome
+    existing_responsibility: Sourceright live-provider smoke orchestration and report
+    target_symbols:
+      - evidence_search_core::ExecutionResult
+      - searchright_contracts::SourceReceipt
+      - Sourceright compatibility report facade
+    retained_in_sourceright: public verification-oriented report semantics
+    implementation_status: planned
+parity_dimensions:
+  - provider identity
+  - execution mode
+  - identifiers and normalised candidate fields
+  - error classification
+  - timeout, retry and rate behaviour
+  - fixture determinism
+  - replay and cache behaviour
+  - endpoint and secret redaction
+  - disabled-live negative behaviour
+  - malformed and adversarial response handling

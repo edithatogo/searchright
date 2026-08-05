@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "02",
+  "slug": "query-ast-dialects",
+  "title": "Portable query AST and dialect compilers",
+  "status": "scaffolded",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "01"
+  ],
+  "evidence_level": "scaffolded",
+  "external_approval_required": false
+}

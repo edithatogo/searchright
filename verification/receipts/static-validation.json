@@ -1,0 +1,32 @@
+{
+  "checks": {
+    "audit_event_semantic_invariants": 1,
+    "conductor_tracks_checked": 24,
+    "draft_2020_12_schemas_checked": 7,
+    "github_action_commit_pins_checked": 18,
+    "json_documents_parsed": 79,
+    "mermaid_design_blocks_checked": 5,
+    "prisma_arithmetic_invariants": 1,
+    "provider_manifest_semantic_invariants": 1,
+    "publication_packets_checked": 7,
+    "python_validation_dependency_pins_checked": 6,
+    "registry_targets_truthfulness_checked": 9,
+    "review_plan_semantic_invariants": 1,
+    "rust_sources_lexically_checked": 21,
+    "schema_examples_validated": 7,
+    "screening_semantic_invariants": 1,
+    "search_strategy_semantic_invariants": 1,
+    "status_and_receipt_truthfulness_checked": 1,
+    "text_files_hygiene_checked": 234,
+    "toml_documents_parsed": 33,
+    "workspace_crates_checked": 11,
+    "yaml_documents_parsed": 25
+  },
+  "error_count": 0,
+  "limitations": [
+    "No Rust parsing, compilation, tests, coverage, mutation or fuzzing were executed.",
+    "No live provider, remote GitHub, Conductor host or registry operation was executed."
+  ],
+  "repository": "/mnt/data/searchright",
+  "status": "passed"
+}

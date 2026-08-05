@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "03",
+  "slug": "shared-provider-runtime",
+  "title": "Shared provider runtime and Sourceright extraction",
+  "status": "planned",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "02"
+  ],
+  "evidence_level": "contracted",
+  "external_approval_required": false
+}

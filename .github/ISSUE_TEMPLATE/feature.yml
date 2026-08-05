@@ -1,0 +1,23 @@
+name: Feature track
+about: Propose a contract-first feature or adapter
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and user
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Contract surface
+      description: Identify schema, Rust API, CLI, MCP or provider contracts.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Completion evidence
+      description: Fixtures, tests, docs, security and public claim boundary.
+    validations:
+      required: true

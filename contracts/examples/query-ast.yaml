@@ -1,0 +1,34 @@
+op: and
+children:
+  - op: term
+    term:
+      text: child
+      fields:
+        - title_abstract
+      vocabulary: null
+      explode: false
+      phrase: false
+      truncation: true
+  - op: proximity
+    left:
+      op: term
+      term:
+        text: genome
+        fields:
+          - title_abstract
+        vocabulary: null
+        explode: false
+        phrase: false
+        truncation: true
+    right:
+      op: term
+      term:
+        text: sequencing
+        fields:
+          - title_abstract
+        vocabulary: null
+        explode: false
+        phrase: false
+        truncation: true
+    distance: 3
+    ordered: false

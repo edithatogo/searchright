@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/query-ast.v1.schema.json",
+  "title": "Searchright Query AST v1",
+  "$ref": "#/$defs/query",
+  "$defs": {
+    "field": {
+      "oneOf": [
+        {
+          "enum": [
+            "all",
+            "title",
+            "abstract",
+            "title_abstract",
+            "author",
+            "journal",
+            "identifier",
+            "subject_heading",
+            "keyword"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9_.\\-/]+$"
+            }
+          }
+        }
+      ]
+    },
+    "term": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "fields",
+        "vocabulary",
+        "explode",
+        "phrase",
+        "truncation"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^\\u0000-\\u001F\\u007F]+$"
+        },
+        "fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/field"
+          },
+          "default": []
+        },
+        "vocabulary": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "explode": {
+          "type": "boolean",
+          "default": false
+        },
+        "phrase": {
+          "type": "boolean",
+          "default": false
+        },
+        "truncation": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "query": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "term"
+          ],
+          "properties": {
+            "op": {
+              "const": "term"
+            },
+            "term": {
+              "$ref": "#/$defs/term"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "children"
+          ],
+          "properties": {
+            "op": {
+              "enum": [
+                "and",
+                "or"
+              ]
+            },
+            "children": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "$ref": "#/$defs/query"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "include",
+            "exclude"
+          ],
+          "properties": {
+            "op": {
+              "const": "not"
+            },
+            "include": {
+              "$ref": "#/$defs/query"
+            },
+            "exclude": {
+              "$ref": "#/$defs/query"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "op",
+            "left",
+            "right",
+            "distance",
+            "ordered"
+          ],
+          "properties": {
+            "op": {
+              "const": "proximity"
+            },
+            "left": {
+              "$ref": "#/$defs/query"
+            },
+            "right": {
+              "$ref": "#/$defs/query"
+            },
+            "distance": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 65535
+            },
+            "ordered": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

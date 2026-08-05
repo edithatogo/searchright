@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/search-strategy.v1.schema.json",
+  "title": "Searchright Search Strategy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "strategy_id",
+    "review_id",
+    "source_id",
+    "dialect",
+    "query",
+    "limits",
+    "translated_from",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.search-strategy.v1"
+    },
+    "strategy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dialect": {
+      "oneOf": [
+        {
+          "enum": [
+            "pub_med",
+            "ovid_medline",
+            "embase",
+            "europe_pmc",
+            "cinahl_ebsco",
+            "psyc_info_ovid",
+            "scopus",
+            "web_of_science",
+            "crossref",
+            "open_alex",
+            "clinical_trials_gov",
+            "generic_boolean"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "query": {
+      "$ref": "query-ast.v1.schema.json"
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publication_date",
+        "languages",
+        "publication_types",
+        "filters",
+        "rationale"
+      ],
+      "properties": {
+        "publication_date": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "from_year",
+                "to_year"
+              ],
+              "properties": {
+                "from_year": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -10000,
+                      "maximum": 30000
+                    }
+                  ]
+                },
+                "to_year": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -10000,
+                      "maximum": 30000
+                    }
+                  ]
+                }
+              },
+              "not": {
+                "properties": {
+                  "from_year": {
+                    "type": "null"
+                  },
+                  "to_year": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "from_year",
+                  "to_year"
+                ]
+              }
+            }
+          ]
+        },
+        "languages": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "publication_types": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "filters": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "rationale": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "publication_date": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "publication_date"
+                ]
+              },
+              {
+                "properties": {
+                  "languages": {
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "languages"
+                ]
+              },
+              {
+                "properties": {
+                  "publication_types": {
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "publication_types"
+                ]
+              },
+              {
+                "properties": {
+                  "filters": {
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "filters"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "rationale": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "translated_from": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "minLength": 1
+        }
+      ]
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "default": []
+    }
+  }
+}

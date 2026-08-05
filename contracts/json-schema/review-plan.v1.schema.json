@@ -1,0 +1,438 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/review-plan.v1.schema.json",
+  "title": "Searchright Review Plan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "title",
+    "review_kind",
+    "question",
+    "objectives",
+    "eligibility",
+    "information_sources",
+    "strategy_ids",
+    "protocol",
+    "governance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.review-plan.v1"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_kind": {
+      "$ref": "#/$defs/review_kind"
+    },
+    "question": {
+      "$ref": "#/$defs/question"
+    },
+    "objectives": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "eligibility": {
+      "$ref": "#/$defs/eligibility"
+    },
+    "information_sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "strategy_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "protocol": {
+      "$ref": "#/$defs/protocol"
+    },
+    "governance": {
+      "$ref": "#/$defs/governance"
+    }
+  },
+  "$defs": {
+    "review_kind": {
+      "oneOf": [
+        {
+          "enum": [
+            "systematic",
+            "scoping",
+            "rapid",
+            "living",
+            "evidence_map",
+            "umbrella"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "other"
+          ],
+          "properties": {
+            "other": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "framework_kind": {
+      "oneOf": [
+        {
+          "enum": [
+            "pico",
+            "pecos",
+            "pcc",
+            "spider",
+            "peo"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "question": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "text",
+        "framework"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "framework": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "elements"
+          ],
+          "properties": {
+            "kind": {
+              "$ref": "#/$defs/framework_kind"
+            },
+            "elements": {
+              "type": "object",
+              "minProperties": 1,
+              "propertyNames": {
+                "type": "string",
+                "minLength": 1
+              },
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "domain",
+        "rule",
+        "rationale",
+        "stage",
+        "priority"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "enum": [
+            "title_abstract",
+            "full_text",
+            "any"
+          ]
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        }
+      }
+    },
+    "eligibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "include",
+        "exclude",
+        "version"
+      ],
+      "properties": {
+        "include": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/criterion"
+          }
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/criterion"
+          }
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "source_kind": {
+      "oneOf": [
+        {
+          "enum": [
+            "database",
+            "register",
+            "repository",
+            "website",
+            "citation_search",
+            "contact",
+            "handsearch",
+            "grey_literature",
+            "import"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "other"
+          ],
+          "properties": {
+            "other": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "platform",
+        "kind",
+        "provider",
+        "required",
+        "access_notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "platform": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "kind": {
+          "$ref": "#/$defs/source_kind"
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "access_notes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "registry",
+        "identifier",
+        "version",
+        "amendments"
+      ],
+      "properties": {
+        "registry": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "identifier": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string",
+              "minLength": 1
+            }
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "amendments": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "registry": {
+              "type": "null"
+            },
+            "identifier": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "registry": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identifier": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title_abstract_reviewers",
+        "full_text_reviewers",
+        "press_review_required",
+        "protocol_amendment_roles",
+        "conflict_resolution"
+      ],
+      "properties": {
+        "title_abstract_reviewers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 255
+        },
+        "full_text_reviewers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 255
+        },
+        "press_review_required": {
+          "type": "boolean"
+        },
+        "protocol_amendment_roles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "conflict_resolution": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+services:
+  searchright-mcp:
+    build: .
+    image: ghcr.io/edithatogo/searchright:local
+    read_only: true
+    network_mode: none
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    stdin_open: true

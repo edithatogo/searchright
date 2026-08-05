@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use Searchright, cite the software release and the methodological standards relevant to your review."
+title: "Searchright: contract-first systematic-search infrastructure"
+type: software
+authors:
+  - family-names: Mordaunt
+    given-names: Dylan
+version: 0.1.0-alpha.1
+date-released: 2026-08-05
+license: Apache-2.0 OR MIT
+repository-code: "https://github.com/edithatogo/searchright"
+url: "https://edithatogo.github.io/searchright/"
+keywords:
+  - systematic review
+  - scoping review
+  - literature search
+  - PRISMA-S
+  - Model Context Protocol

@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "18",
+  "slug": "broader-discovery",
+  "title": "Grey literature, registers and citation discovery",
+  "status": "planned",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "17"
+  ],
+  "evidence_level": "contracted",
+  "external_approval_required": false
+}

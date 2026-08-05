@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "04",
+  "slug": "open-connectors-mvp",
+  "title": "Open provider connectors MVP",
+  "status": "scaffolded",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "03"
+  ],
+  "evidence_level": "scaffolded",
+  "external_approval_required": false
+}

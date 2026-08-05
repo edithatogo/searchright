@@ -1,0 +1,15 @@
+[package]
+name = "searchright-screening"
+description = "Human-governed screening decisions, conflicts and agent authority for Searchright."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+searchright-contracts = { path = "../searchright-contracts" }
+thiserror.workspace = true
+
+[lints]
+workspace = true

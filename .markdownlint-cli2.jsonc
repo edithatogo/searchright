@@ -1,0 +1,10 @@
+{
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD024": { "siblings_only": true },
+    "MD033": { "allowed_elements": ["details", "summary", "br"] },
+    "MD041": false
+  },
+  "globs": ["**/*.md", "!target/**", "!vendor/**"]
+}

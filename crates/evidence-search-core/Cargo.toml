@@ -1,0 +1,23 @@
+[package]
+name = "evidence-search-core"
+description = "Product-neutral query, provider, evidence-receipt and audit kernel for Searchright and Sourceright."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+async-trait.workspace = true
+blake3.workspace = true
+searchright-contracts = { path = "../searchright-contracts" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+time.workspace = true
+tokio.workspace = true
+uuid.workspace = true
+url.workspace = true
+
+[lints]
+workspace = true

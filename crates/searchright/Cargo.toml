@@ -1,0 +1,29 @@
+[package]
+name = "searchright"
+description = "Contract-first infrastructure for systematic, scoping and living literature searches."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+documentation.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+default = []
+live = ["searchright-connectors/live"]
+
+[dependencies]
+evidence-search-core = { path = "../evidence-search-core" }
+searchright-agent = { path = "../searchright-agent" }
+searchright-connectors = { path = "../searchright-connectors" }
+searchright-contracts = { path = "../searchright-contracts" }
+searchright-dedup = { path = "../searchright-dedup" }
+searchright-prisma = { path = "../searchright-prisma" }
+searchright-screening = { path = "../searchright-screening" }
+searchright-store = { path = "../searchright-store" }
+
+[lints]
+workspace = true

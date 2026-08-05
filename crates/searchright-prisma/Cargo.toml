@@ -1,0 +1,15 @@
+[package]
+name = "searchright-prisma"
+description = "Executable PRISMA-S reporting ledger and PRISMA flow generation."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+searchright-contracts = { path = "../searchright-contracts" }
+thiserror.workspace = true
+
+[lints]
+workspace = true

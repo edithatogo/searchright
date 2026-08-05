@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "16",
+  "slug": "alpha-release",
+  "title": "Alpha release and distribution",
+  "status": "planned",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "15"
+  ],
+  "evidence_level": "contracted",
+  "external_approval_required": true
+}

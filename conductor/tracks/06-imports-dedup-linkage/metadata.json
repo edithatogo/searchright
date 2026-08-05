@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "06",
+  "slug": "imports-dedup-linkage",
+  "title": "Imports, deduplication and study linkage",
+  "status": "partial",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "05"
+  ],
+  "evidence_level": "scaffolded",
+  "external_approval_required": false
+}

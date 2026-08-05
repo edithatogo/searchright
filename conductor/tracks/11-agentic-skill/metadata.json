@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "11",
+  "slug": "agentic-skill",
+  "title": "Systematic-search agent skill and workflows",
+  "status": "scaffolded",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "10"
+  ],
+  "evidence_level": "scaffolded",
+  "external_approval_required": false
+}

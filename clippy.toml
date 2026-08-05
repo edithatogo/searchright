@@ -1,0 +1,6 @@
+avoid-breaking-exported-api = false
+cognitive-complexity-threshold = 20
+doc-valid-idents = ["PRISMA", "PRISMA-S", "PRESS", "PubMed", "OpenAlex", "Crossref", "MCP", "JSON"]
+msrv = "1.97.1"
+too-many-arguments-threshold = 7
+type-complexity-threshold = 250

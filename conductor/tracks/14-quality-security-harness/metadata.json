@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "14",
+  "slug": "quality-security-harness",
+  "title": "Maximal quality, context and security harness",
+  "status": "planned",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "13"
+  ],
+  "evidence_level": "contracted",
+  "external_approval_required": false
+}

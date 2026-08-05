@@ -1,0 +1,16 @@
+provider_id: europe_pmc
+display_name: Europe PMC
+version: 0.1.0-alpha.1
+support_level: fixture_backed
+capabilities:
+  - search
+  - pagination
+  - lookup
+allowed_hosts:
+  - www.ebi.ac.uk
+authentication_required: false
+licensed: false
+default_min_interval_ms: 1000
+policy_notes:
+  - Live execution is opt-in and HTTPS-only.
+  - Redirects are disabled and response payloads are bounded.

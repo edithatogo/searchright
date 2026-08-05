@@ -1,0 +1,21 @@
+name: Bug report
+about: Report a deterministic defect without sensitive review data
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Contractually expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: fixture
+    attributes:
+      label: Minimal redacted fixture or reproduction
+    validations:
+      required: true

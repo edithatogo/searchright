@@ -1,0 +1,76 @@
+{
+  "schema_version": "searchright.mcp-tool-catalog.v1",
+  "protocol_version": "2026-07-28",
+  "tools": [
+    {
+      "name": "plan_review",
+      "effect": "write_local_draft",
+      "authority": "human_confirmation",
+      "output": "review-plan.v1",
+      "implementation_status": "contracted"
+    },
+    {
+      "name": "validate_plan",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "compile_strategy",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "compiled-strategy.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "press_review_strategy",
+      "effect": "write_local_review",
+      "authority": "human_confirmation",
+      "output": "press-review.v1",
+      "implementation_status": "contracted"
+    },
+    {
+      "name": "execute_search",
+      "effect": "network_and_local_write",
+      "authority": "explicit_approval",
+      "output": "search-run.v1",
+      "implementation_status": "contracted"
+    },
+    {
+      "name": "deduplicate_records",
+      "effect": "local_write_preview",
+      "authority": "explicit_apply",
+      "output": "duplicate-clusters.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "record_screening_decision",
+      "effect": "local_write",
+      "authority": "role_policy",
+      "output": "screening-decision.v1",
+      "implementation_status": "contracted"
+    },
+    {
+      "name": "generate_prisma",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "prisma-report.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "verify_audit",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "audit-verification.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "workflow",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "agent-workflow.v1",
+      "implementation_status": "implemented"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": "searchright.registry-status.v1",
+  "updated": "2026-08-05",
+  "overall_status": "prepared_not_submitted",
+  "targets": [
+    {
+      "target": "github",
+      "status": "not_started",
+      "evidence_url": null,
+      "blockers": [
+        "remote repository not created or pushed"
+      ]
+    },
+    {
+      "target": "crates.io",
+      "status": "prepared",
+      "evidence_url": null,
+      "blockers": [
+        "Cargo.lock and compile/package dry-run absent",
+        "crate names not reserved"
+      ]
+    },
+    {
+      "target": "github-container-registry",
+      "status": "prepared",
+      "evidence_url": null,
+      "blockers": [
+        "OCI image not built or published"
+      ]
+    },
+    {
+      "target": "official-mcp-registry",
+      "status": "prepared",
+      "evidence_url": null,
+      "blockers": [
+        "OCI package unavailable",
+        "mcp-publisher validation not run",
+        "maintainer approval required"
+      ]
+    },
+    {
+      "target": "glama",
+      "status": "prepared",
+      "evidence_url": null,
+      "blockers": [
+        "public GitHub repository and runnable server required",
+        "GitHub maintainer authentication required"
+      ]
+    },
+    {
+      "target": "smithery",
+      "status": "prepared",
+      "evidence_url": null,
+      "blockers": [
+        "signed MCPB or Streamable HTTP endpoint required",
+        "Smithery submission not performed"
+      ]
+    },
+    {
+      "target": "github-releases",
+      "status": "prepared",
+      "evidence_url": null,
+      "blockers": [
+        "signed binaries and release tag absent"
+      ]
+    },
+    {
+      "target": "zenodo-osf",
+      "status": "not_started",
+      "evidence_url": null,
+      "blockers": [
+        "first release and archive decision absent"
+      ]
+    },
+    {
+      "target": "joss",
+      "status": "not_started",
+      "evidence_url": null,
+      "blockers": [
+        "mature tested software, archived release, external use and paper absent"
+      ]
+    }
+  ]
+}

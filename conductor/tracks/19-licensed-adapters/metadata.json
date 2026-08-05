@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "19",
+  "slug": "licensed-adapters",
+  "title": "Licensed BYO-access adapters",
+  "status": "planned",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "18"
+  ],
+  "evidence_level": "contracted",
+  "external_approval_required": true
+}

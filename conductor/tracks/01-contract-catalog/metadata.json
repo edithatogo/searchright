@@ -1,0 +1,14 @@
+{
+  "schema_version": "conductor.track-metadata.v1",
+  "track_id": "01",
+  "slug": "contract-catalog",
+  "title": "Contract catalogue and code generation",
+  "status": "scaffolded",
+  "created": "2026-08-05",
+  "updated": "2026-08-05",
+  "dependencies": [
+    "00"
+  ],
+  "evidence_level": "scaffolded",
+  "external_approval_required": false
+}

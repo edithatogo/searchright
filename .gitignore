@@ -1,0 +1,13 @@
+/target/
+/.cache/
+/.coverage/
+/.searchright/
+*.profraw
+*.profdata
+*.sarif
+*.tmp
+.DS_Store
+.env
+.env.*
+!.env.example
+!fixtures/**/Cargo.lock

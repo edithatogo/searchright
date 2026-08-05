@@ -1,0 +1,19 @@
+{
+  "manifest_version": "0.3",
+  "name": "searchright",
+  "display_name": "Searchright",
+  "version": "0.1.0-alpha.1",
+  "description": "Contract-first systematic-search MCP server",
+  "author": {
+    "name": "Dylan Mordaunt"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "${platform}/searchright-mcp",
+    "mcp_config": {
+      "command": "${__dirname}/${platform}/searchright-mcp",
+      "args": []
+    }
+  },
+  "tools_generated_from": "contracts/mcp/tool-catalog.json"
+}

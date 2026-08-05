@@ -1,0 +1,19 @@
+[package]
+name = "searchright-store"
+description = "Append-only local review storage and replace-style snapshots for Searchright."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+evidence-search-core = { path = "../evidence-search-core" }
+searchright-contracts = { path = "../searchright-contracts" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+
+[lints]
+workspace = true

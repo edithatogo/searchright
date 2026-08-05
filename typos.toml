@@ -1,0 +1,11 @@
+[default.extend-words]
+Deduplicator = "Deduplicator"
+Deduplication = "Deduplication"
+Deduplicate = "Deduplicate"
+MeSH = "MeSH"
+Mordaunt = "Mordaunt"
+Sourceright = "Sourceright"
+Searchright = "Searchright"
+
+[files]
+extend-exclude = ["fixtures/**", "contracts/examples/**", "target/**"]

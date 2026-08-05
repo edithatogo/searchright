@@ -1,0 +1,35 @@
+schema_version: org.searchright.skill-workflow.v1
+name: systematic-review
+human_checkpoints:
+  - review_plan_approval
+  - strategy_and_press_approval
+  - live_execution_approval
+  - deduplication_apply
+  - screening_conflict_resolution
+  - final_reporting_review
+stages:
+  - id: scope
+    agent: question-framer
+    output: review-plan-draft.yaml
+  - id: strategy
+    agent: information-specialist
+    requires: [review_plan_approval]
+    output: search-strategies/
+  - id: press
+    agent: press-reviewer
+    isolation: independent_context
+    output: press-review.yaml
+  - id: execute
+    agent: execution-operator
+    requires: [strategy_and_press_approval, live_execution_approval]
+    output: source-receipts.json
+  - id: deduplicate
+    agent: dedup-adjudicator
+    output: dedup-decisions.jsonl
+  - id: screen
+    agent: screening-assistant
+    authority: advisory_only
+    output: screening-recommendations.jsonl
+  - id: report
+    agent: reporting-auditor
+    output: reporting-audit.json

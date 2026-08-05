@@ -1,0 +1,57 @@
+package searchright:provider@0.1.0;
+
+interface types {
+  record compiled-strategy {
+    strategy-id: string,
+    dialect: string,
+    query: string,
+    compilation-hash: string,
+  }
+
+  record execution-policy {
+    max-records: u64,
+    max-pages: u32,
+    timeout-seconds: u64,
+    min-interval-ms: u64,
+  }
+
+  record search-request {
+    review-id: string,
+    run-id: string,
+    strategy: compiled-strategy,
+    cursor: option<string>,
+    page-size: u32,
+    policy: execution-policy,
+  }
+
+  record record-envelope {
+    native-id: string,
+    media-type: string,
+    payload: list<u8>,
+  }
+
+  record provider-page {
+    records: list<record-envelope>,
+    next-cursor: option<string>,
+    total-available: option<u64>,
+  }
+
+  variant provider-error {
+    invalid-request(string),
+    access-denied(string),
+    rate-limited(option<u64>),
+    upstream(string),
+    malformed-response(string),
+    policy-denied(string),
+  }
+}
+
+interface search-provider {
+  use types.{search-request, provider-page, provider-error};
+  manifest: func() -> string;
+  execute: func(request: search-request) -> result<provider-page, provider-error>;
+}
+
+world provider-component {
+  export search-provider;
+}
