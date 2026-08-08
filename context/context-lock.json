@@ -3,58 +3,78 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "sha256": "50da5a08551d102f5e4cc50366acf421d86faba53bf0468b4244bdf70cea2d5d",
-      "size": 1251
+      "sha256": "fb45f9d7890ee7344ef967d0fc31336d0f107d848c10a21008bb10f3ae035ed8",
+      "size": 2499
+    },
+    {
+      "path": "CODEX_HANDOFF.md",
+      "sha256": "b2fe8d2106b6360a956930f48d3d2176d3e076edf29b10ce4af9ef9491dfe7c1",
+      "size": 6494
     },
     {
       "path": "CONTEXT.md",
-      "sha256": "91564b600f4361f4fcd0dc9064dab53320e7d10bd2c485b5a4410ede743343b6",
-      "size": 1704
+      "sha256": "76b85c1e15c82474101b9f35aef615f7f1523b185dc56ae9035e3211b3a92ae2",
+      "size": 2970
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "2c43e421df246d17925099db267f854e6023c5e2af102471e27d1b265d9ebf75",
-      "size": 56671
+      "sha256": "5f5f86adbe54c12f6ca727a486385135ce5a31e903ec09dcfd6cd92fae7ffaa0",
+      "size": 552739
+    },
+    {
+      "path": "conductor/github/project.json",
+      "sha256": "bd7887d6e9288cf7265328f18f194c11348aab0f378b0d15bf075c9ec921decd",
+      "size": 3327
+    },
+    {
+      "path": "conductor/github/repository-settings.json",
+      "sha256": "c280c2a4d1f22061636b698ef39f3e6c84f970fd1ce77c44c8535cc355daf209",
+      "size": 1715
+    },
+    {
+      "path": "conductor/maturity-dossier.json",
+      "sha256": "7310c3c9cbd8375d61d6c033d9d089db279cf54315f83070aca372f0aff6959b",
+      "size": 2237
     },
     {
       "path": "conductor/requirements.md",
-      "sha256": "d79004b80935ebd7d7563d9b30ef703b176b252d3b22d7475428087888fac0b1",
-      "size": 19381
+      "sha256": "a40a44139fe01330cce446bf7357906bc7c2cb1b96869016a9683c3de58de885",
+      "size": 26284
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "ce0e69ada20b79321f7646e53ee856354761f668f75c337aabbd13300085fa5a",
-      "size": 46111
+      "sha256": "b4a588743d5c6d1a7260f89b3dc46c1ee133502904b3024fd3dc236218f5a022",
+      "size": 58949
     },
     {
       "path": "context/capability-matrix.json",
-      "sha256": "237e0669ccb6f1f86dfe7c760afd81c6b76ac706ccffca213932f74a3e4868ec",
-      "size": 1771
+      "sha256": "8a0a92f7c7d393bdf6a0d9f7c7a5bfb5f95c40275ceb4538fa1fb9ccd3820f10",
+      "size": 3832
     },
     {
       "path": "context/claim-boundaries.json",
-      "sha256": "3251a01f8c708071d9e34219d85842c9e210b08419c720c5fda169966f8f7d07",
-      "size": 2511
+      "sha256": "6879bc1ef36d9e05c81321743a099baf7bd11439d81198229cb991cbf4f91641",
+      "size": 5050
     },
     {
       "path": "context/decision-ledger.json",
-      "sha256": "b4d48fe406227759846180303a4127dd6f5d5e6241e0e2171663ad26af45bb8d",
-      "size": 3521
+      "sha256": "bf8c7690d8561a2d5d77b3a0b4474ed39e4f11829d28725ab5552860582010c8",
+      "size": 6454
     },
     {
       "path": "context/evidence-ledger.json",
-      "sha256": "aee62d426dae980543ca8bf9e88a759bd531059fc8ad4b5c8bed0ac9710f7997",
-      "size": 1907
+      "sha256": "84cb8713e2672d3c9a8dd60ab476dd8967a989c395e674595aa2270197e0eb63",
+      "size": 3564
     },
     {
       "path": "context/hazard-log.json",
-      "sha256": "9360715a2953975066961062a2a9cdc2d82f7642fe8a8d1ac4d7ab258a852e42",
-      "size": 5942
+      "sha256": "8f17b9f9a1f8bbe047fa14f5cb736c9345c694f0a17c570390acda3b04db1438",
+      "size": 10458
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "035d7c76e15d80ac7aee5726ec1f59dbd74b4c245c724c615c899cee7e1fd262",
-      "size": 14940
+      "sha256": "6a82cd80d2f55956cba4449b2057fa0ef8aedf9776ba594f2fd53b27219f975f",
+      "size": 19831
     },
     {
       "path": "docs/safety/safety-case.md",
@@ -63,8 +83,8 @@
     },
     {
       "path": "docs/security/threat-model.md",
-      "sha256": "a13fa0bc33a1ae7840e50ca503a5c9938f4959ab53c3b914be440705d5e1a5df",
-      "size": 1986
+      "sha256": "1a8f005e0daf109fd208071c38880dc02613aaf5e59a9ac1c7565e11d86db0c9",
+      "size": 1982
     },
     {
       "path": "integration/consumer-contract-suite.json",
@@ -75,8 +95,23 @@
       "path": "integration/passports/index.json",
       "sha256": "3b6c3416f44bc987f7797ac84a4758acedf16e486ab3b70f4a6f40d1d6446008",
       "size": 4049
+    },
+    {
+      "path": "integration/release-train.json",
+      "sha256": "85675deae56d2c061a00e08701cb6a708120cc76a6af7b74ddc69e08103e5824",
+      "size": 2077
+    },
+    {
+      "path": "release/rehearsal.json",
+      "sha256": "197eb2b8f2db0b830d27fe9a42110a2c37fb9a02d2d3787aaec62afbe3b97c82",
+      "size": 962
+    },
+    {
+      "path": "requirements/rust-tools.json",
+      "sha256": "fb3e546f1251ce7dde96cf3ba056178e0fddc1da167100e8a657f40bdec95cb1",
+      "size": 1557
     }
   ],
-  "generated_at": "2026-08-06",
+  "generated_at": "source-epoch:2026-08-08",
   "schema_version": "org.searchright.context-lock.v1"
 }

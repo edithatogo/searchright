@@ -362,6 +362,30 @@
       "version": "0.1.0-alpha.1"
     },
     {
+      "bom-ref": "cargo:searchright-access@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-access",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-access"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-access@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
       "bom-ref": "cargo:searchright-agent@0.1.0-alpha.1",
       "licenses": [
         {
@@ -722,6 +746,30 @@
       "version": "0.1.0-alpha.1"
     },
     {
+      "bom-ref": "cargo:searchright-ops@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-ops",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-ops"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-ops@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
       "bom-ref": "cargo:searchright-plugin-sdk@0.1.0-alpha.1",
       "licenses": [
         {
@@ -1070,6 +1118,18 @@
       "version": "fb8b3582c8e4def4969c97caa2f19720cb33a72f"
     },
     {
+      "bom-ref": "github-action:dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8",
+      "name": "dtolnay/rust-toolchain",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "29eef336d9b2848a0b548edc03f92a220660cdb8"
+    },
+    {
       "bom-ref": "github-action:github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3",
       "name": "github/codeql-action/analyze",
       "properties": [
@@ -1169,6 +1229,13 @@
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
       "ref": "cargo:evidence-search-core@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-access@0.1.0-alpha.1"
     },
     {
       "dependsOn": [
@@ -1318,6 +1385,13 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-ops@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
         "cargo-requirement:blake3@1.8",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
@@ -1453,7 +1527,7 @@
       },
       {
         "name": "searchright:schema-count",
-        "value": "37"
+        "value": "49"
       },
       {
         "name": "searchright:standard-pack-count",
@@ -1465,7 +1539,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:f2790207-05ed-5bc2-8eb6-61c37de3c098",
+  "serialNumber": "urn:uuid:47d798ce-ecc9-5253-b677-b142bdbd07a3",
   "specVersion": "1.6",
   "version": 1
 }
