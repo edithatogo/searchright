@@ -11,3 +11,5 @@
 .env.*
 !.env.example
 !fixtures/**/Cargo.lock
+__pycache__/
+*.py[cod]
