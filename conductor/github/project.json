@@ -1,0 +1,147 @@
+{
+  "schema_version": "org.searchright.github-project.v1",
+  "owner": "edithatogo",
+  "owner_type": "user",
+  "repository": "edithatogo/searchright",
+  "title": "Searchright delivery roadmap",
+  "short_description": "Contract-first delivery, evidence and maturity roadmap for Searchright.",
+  "readme_path": "conductor/github/project-readme.md",
+  "visibility": "public",
+  "project_number": null,
+  "link_repository": true,
+  "apply_permitted": false,
+  "fields": [
+    {
+      "name": "Delivery status",
+      "data_type": "SINGLE_SELECT",
+      "options": [
+        "Backlog",
+        "Ready",
+        "In progress",
+        "Source complete",
+        "Evidence blocked",
+        "Review",
+        "Done"
+      ]
+    },
+    {
+      "name": "Work kind",
+      "data_type": "SINGLE_SELECT",
+      "options": [
+        "Epic",
+        "Track",
+        "Phase",
+        "Task"
+      ]
+    },
+    {
+      "name": "Horizon",
+      "data_type": "SINGLE_SELECT",
+      "options": [
+        "Foundation",
+        "Mvp",
+        "Alpha",
+        "Beta",
+        "Mature"
+      ]
+    },
+    {
+      "name": "Evidence level",
+      "data_type": "SINGLE_SELECT",
+      "options": [
+        "Contracted",
+        "Source Verified",
+        "Compiler Verified",
+        "Fixture Proven",
+        "Live Proven",
+        "Externally Validated",
+        "Published"
+      ]
+    },
+    {
+      "name": "MoSCoW",
+      "data_type": "SINGLE_SELECT",
+      "options": [
+        "Must",
+        "Should",
+        "Could",
+        "Won't"
+      ]
+    },
+    {
+      "name": "External gate",
+      "data_type": "SINGLE_SELECT",
+      "options": [
+        "No",
+        "Yes",
+        "Multiple"
+      ]
+    },
+    {
+      "name": "Track ID",
+      "data_type": "TEXT"
+    },
+    {
+      "name": "Phase",
+      "data_type": "NUMBER"
+    },
+    {
+      "name": "Task",
+      "data_type": "NUMBER"
+    },
+    {
+      "name": "Conductor key",
+      "data_type": "TEXT"
+    },
+    {
+      "name": "Conductor path",
+      "data_type": "TEXT"
+    },
+    {
+      "name": "Last sync",
+      "data_type": "DATE"
+    }
+  ],
+  "views": [
+    {
+      "name": "Delivery board",
+      "layout": "BOARD_LAYOUT",
+      "filter": ""
+    },
+    {
+      "name": "Roadmap",
+      "layout": "ROADMAP_LAYOUT",
+      "filter": "\"Work kind\":Track"
+    },
+    {
+      "name": "Evidence blockers",
+      "layout": "TABLE_LAYOUT",
+      "filter": "\"Delivery status\":\"Evidence blocked\""
+    },
+    {
+      "name": "MVP",
+      "layout": "TABLE_LAYOUT",
+      "filter": "Horizon:Mvp"
+    },
+    {
+      "name": "Open tasks",
+      "layout": "TABLE_LAYOUT",
+      "filter": "is:open \"Work kind\":Task"
+    }
+  ],
+  "sync": {
+    "hierarchy_path": "conductor/github/issue-hierarchy.json",
+    "labels_path": "conductor/github/labels.json",
+    "identity_field": "Conductor key",
+    "state_policy": "task_issues_only",
+    "delete_policy": "never",
+    "archive_policy": "never_automatic",
+    "field_policy": "manifest_owned_custom_fields_only",
+    "promotion_policy": "remote_state_cannot_promote_evidence",
+    "checkpoint_policy": "ignored_atomic_resumable",
+    "partial_run_policy": "canonical_order_resume_after",
+    "receipt_directory": ".searchright/receipts",
+    "remote_audit_path": "scripts/audit_github_control_plane.py",
+    "minimum_interval_ms": 75
+  }
+}

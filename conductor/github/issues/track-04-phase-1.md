@@ -4,15 +4,9 @@
 Parent track key: `track-04`
 Conductor plan: `conductor/tracks/04-open-connectors-mvp/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-04-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-connectors/src/lib.rs`
-  - [x] `contracts/examples/provider-manifest.yaml`
-  - [x] `contracts/examples/provider-page.yaml`
-  - [x] `contracts/examples/source-receipt.yaml`
+- [x] T01: Implement and document the track's source deliverables. (`track-04-phase-1-task-01`)
 
 ## Evidence rule
 

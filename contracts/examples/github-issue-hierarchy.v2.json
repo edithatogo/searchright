@@ -1,0 +1,67 @@
+{
+  "schema_version": "org.searchright.github-issue-hierarchy.v2",
+  "repository": "edithatogo/searchright",
+  "epic_key": "roadmap-epic",
+  "nodes": [
+    {
+      "key": "roadmap-epic",
+      "title": "Searchright roadmap",
+      "kind": "epic",
+      "parent_key": null,
+      "body_path": "conductor/github/issues/roadmap-epic.md",
+      "labels": ["kind:epic", "conductor"],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": null,
+      "phase_number": null,
+      "task_number": null,
+      "project_fields": {"Conductor key": "roadmap-epic", "Work kind": "Epic"}
+    },
+    {
+      "key": "track-00",
+      "title": "Track 00: Foundation",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-00.md",
+      "labels": ["kind:track", "conductor", "track:00"],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "00",
+      "phase_number": null,
+      "task_number": null,
+      "project_fields": {"Conductor key": "track-00", "Track ID": "00", "Work kind": "Track"}
+    },
+    {
+      "key": "track-00-phase-1",
+      "title": "Track 00 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-00",
+      "body_path": "conductor/github/issues/track-00-phase-1.md",
+      "labels": ["kind:phase", "conductor", "track:00", "phase:1"],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "00",
+      "phase_number": 1,
+      "task_number": null,
+      "project_fields": {"Conductor key": "track-00-phase-1", "Track ID": "00", "Phase": 1, "Work kind": "Phase"}
+    },
+    {
+      "key": "track-00-phase-1-task-01",
+      "title": "Track 00 / P1 / T01: Implement foundation",
+      "kind": "task",
+      "parent_key": "track-00-phase-1",
+      "body_path": "conductor/github/issues/track-00-phase-1-task-01.md",
+      "labels": ["kind:task", "conductor", "track:00", "phase:1", "state:source-complete"],
+      "status": "prepared_not_synced",
+      "desired_state": "closed",
+      "track_id": "00",
+      "phase_number": 1,
+      "task_number": 1,
+      "project_fields": {"Conductor key": "track-00-phase-1-task-01", "Track ID": "00", "Phase": 1, "Task": 1, "Work kind": "Task"}
+    }
+  ],
+  "generated_at": "source-epoch:2026-08-08",
+  "apply_permitted": false,
+  "state_sync_policy": "task_issues_only",
+  "project_manifest": "conductor/github/project.json"
+}

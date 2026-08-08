@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/tenant-policy.v1.schema.json",
+  "title": "Tenant policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "tenant_id",
+    "allowed_regions",
+    "allowed_scopes",
+    "maximum_concurrent_tasks",
+    "external_model_processing_allowed",
+    "restricted_full_text_persistence_allowed",
+    "cross_tenant_aggregation_allowed",
+    "approved_by",
+    "policy_version"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.tenant-policy.v1"
+    },
+    "tenant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "allowed_regions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      }
+    },
+    "allowed_scopes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "review_read",
+          "review_write",
+          "search_execute",
+          "screening_recommend",
+          "screening_decide",
+          "tenant_admin",
+          "external_write"
+        ]
+      }
+    },
+    "maximum_concurrent_tasks": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "external_model_processing_allowed": {
+      "type": "boolean"
+    },
+    "restricted_full_text_persistence_allowed": {
+      "type": "boolean"
+    },
+    "cross_tenant_aggregation_allowed": {
+      "const": false
+    },
+    "approved_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

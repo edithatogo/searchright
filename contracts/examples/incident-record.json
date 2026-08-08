@@ -1,0 +1,17 @@
+{
+  "schema_version": "org.searchright.incident-record.v1",
+  "incident_id": "incident-demo-1",
+  "severity": "medium",
+  "detected_at": "2026-08-08T00:00:00Z",
+  "components": [
+    "provider-runtime"
+  ],
+  "impact": "Fixture provider exceeded its bounded execution envelope.",
+  "containment": [
+    "cancelled task",
+    "disabled provider capability"
+  ],
+  "data_exposure_suspected": false,
+  "status": "contained",
+  "postmortem_required": true
+}

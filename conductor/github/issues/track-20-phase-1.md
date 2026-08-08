@@ -4,15 +4,9 @@
 Parent track key: `track-20`
 Conductor plan: `conductor/tracks/20-broader-discovery/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-20-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-discovery/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/discovery.rs`
-  - [x] `contracts/examples/discovery-run.yaml`
-  - [x] `docs/provider-model.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-20-phase-1-task-01`)
 
 ## Evidence rule
 

@@ -1,0 +1,54 @@
+name: Integration release train
+
+on:
+  pull_request:
+    paths:
+      - 'integration/**'
+      - 'migration/**'
+      - 'contracts/**'
+      - 'scripts/check_release_train.py'
+      - '.github/workflows/integration-release-train.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'integration/**'
+      - 'migration/**'
+      - 'contracts/**'
+      - 'scripts/check_release_train.py'
+      - '.github/workflows/integration-release-train.yml'
+  schedule:
+    - cron: '41 4 * * 4'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: integration-release-train-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contract-train:
+    name: Cross-repository contract train
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate release train and consumer contracts
+        run: |
+          python scripts/check_release_train.py
+          python scripts/check_integration_passports.py
+          python scripts/check_consumer_contracts.py
+          python scripts/check_integration_drift.py
+      - name: Preserve read-only receipt
+        run: python scripts/check_release_train.py > verification/receipts/integration-release-train.json
+      - name: Upload receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: integration-release-train-receipt
+          path: verification/receipts/integration-release-train.json
+          if-no-files-found: error
+          retention-days: 30

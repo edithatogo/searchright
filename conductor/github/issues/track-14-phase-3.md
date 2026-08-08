@@ -4,13 +4,11 @@
 Parent track key: `track-14`
 Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-14-phase-3 -->
-
-- [ ] Open and merge the downstream Sourceright integration after dual-run parity.
-- [ ] Generate compiled parity receipts and exercise rollback.
-- [ ] Remove superseded downstream code only after the deletion gate passes.
+- [ ] T01: Open and merge the downstream Sourceright integration after dual-run parity. (`track-14-phase-3-task-01`)
+- [ ] T02: Generate compiled parity receipts and exercise rollback. (`track-14-phase-3-task-02`)
+- [ ] T03: Remove superseded downstream code only after the deletion gate passes. (`track-14-phase-3-task-03`)
 
 ## Evidence rule
 

@@ -1,0 +1,19 @@
+{
+  "schema_version": "org.searchright.backup-manifest.v1",
+  "backup_id": "backup-20260808-01",
+  "scope_id": "review-demo",
+  "kind": "full",
+  "parent_backup_id": null,
+  "digest_algorithm": "sha256",
+  "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "encrypted": true,
+  "key_reference": "kms://searchright/demo",
+  "content_classes": [
+    "contracts",
+    "audit_events",
+    "screening_decisions"
+  ],
+  "created_at": "2026-08-08T00:00:00Z",
+  "retention_days": 90,
+  "restore_test_required": true
+}

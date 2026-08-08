@@ -1,18 +1,61 @@
 {
-  "schema_version": "org.searchright.context-manifest.v1",
-  "updated_at": "2026-08-06",
+  "claim_boundary": "Context artefacts constrain work and claims but cannot promote their own evidence level.",
+  "context_tiers": {
+    "architecture": [
+      "conductor/design.md",
+      "docs/architecture.md",
+      "docs/adrs/"
+    ],
+    "integration": [
+      "integration/passports/",
+      "migration/",
+      "conductor/github/",
+      "integration/consumer-contract-suite.json",
+      "integration/release-train.json"
+    ],
+    "planning": [
+      "conductor/requirements.md",
+      "conductor/roadmap-coverage.json",
+      "conductor/tracks.md",
+      "conductor/maturity-dossier.json",
+      "CODEX_HANDOFF.md"
+    ],
+    "policy": [
+      "AGENTS.md",
+      "CONTEXT.md",
+      "context/claim-boundaries.json",
+      "context/capability-matrix.json"
+    ],
+    "verification": [
+      "scripts/",
+      "verification/receipts/",
+      ".github/workflows/",
+      "verification/harness-matrix.json",
+      "release/rehearsal.json",
+      "requirements/rust-tools.json"
+    ]
+  },
   "evidence_ceiling": "source_verified",
   "load_order": [
     "AGENTS.md",
     "CONTEXT.md",
+    "CODEX_HANDOFF.md",
     "context/claim-boundaries.json",
     "context/decision-ledger.json",
     "context/capability-matrix.json",
     "context/hazard-log.json",
+    "context/evidence-ledger.json",
     "conductor/requirements.md",
     "conductor/roadmap-coverage.json",
+    "conductor/github/issue-hierarchy.json",
+    "conductor/github/project.json",
+    "conductor/github/repository-settings.json",
     "integration/consumer-contract-suite.json",
-    "verification/harness-matrix.json"
+    "integration/release-train.json",
+    "release/rehearsal.json",
+    "conductor/maturity-dossier.json",
+    "verification/harness-matrix.json",
+    "requirements/rust-tools.json"
   ],
   "required_context": [
     {
@@ -24,24 +67,20 @@
       "role": "context entry point and evidence ceiling"
     },
     {
-      "path": "context/claim-boundaries.json",
-      "role": "allowed and forbidden public claims"
+      "path": "conductor/github/issue-hierarchy.json",
+      "role": "prepared GitHub issue/subissue projection"
     },
     {
-      "path": "context/decision-ledger.json",
-      "role": "architectural decisions and supersession"
+      "path": "conductor/github/project.json",
+      "role": "declarative GitHub Project v2 fields, views and sync policy"
     },
     {
-      "path": "context/capability-matrix.json",
-      "role": "default-deny component authority"
+      "path": "conductor/github/repository-settings.json",
+      "role": "dry-run-first repository settings and ruleset contract"
     },
     {
-      "path": "context/hazard-log.json",
-      "role": "safety hazards, controls and evidence"
-    },
-    {
-      "path": "context/evidence-ledger.json",
-      "role": "repository-wide evidence status"
+      "path": "conductor/maturity-dossier.json",
+      "role": "version 1.0 evidence domains and decision ceiling"
     },
     {
       "path": "conductor/requirements.md",
@@ -52,59 +91,62 @@
       "role": "track ownership and evidence blockers"
     },
     {
+      "path": "context/capability-matrix.json",
+      "role": "default-deny component authority"
+    },
+    {
+      "path": "context/claim-boundaries.json",
+      "role": "allowed and forbidden public claims"
+    },
+    {
+      "path": "context/decision-ledger.json",
+      "role": "architectural decisions and supersession"
+    },
+    {
+      "path": "context/evidence-ledger.json",
+      "role": "repository-wide evidence status"
+    },
+    {
+      "path": "context/hazard-log.json",
+      "role": "safety hazards, controls and evidence"
+    },
+    {
       "path": "contracts/schema-catalog.json",
       "role": "public persisted contract catalogue"
     },
     {
-      "path": "integration/passports/index.json",
-      "role": "active and candidate repository integrations"
-    },
-    {
-      "path": "integration/consumer-contract-suite.json",
-      "role": "consumer-driven cross-repository interaction catalogue"
-    },
-    {
-      "path": "conductor/github/issue-hierarchy.json",
-      "role": "prepared GitHub issue/subissue projection"
+      "path": "docs/safety/safety-case.md",
+      "role": "structured safety argument and evidence gaps"
     },
     {
       "path": "docs/security/threat-model.md",
       "role": "security trust boundaries and mitigations"
     },
     {
-      "path": "docs/safety/safety-case.md",
-      "role": "structured safety argument and evidence gaps"
+      "path": "integration/consumer-contract-suite.json",
+      "role": "consumer-driven cross-repository interaction catalogue"
+    },
+    {
+      "path": "integration/passports/index.json",
+      "role": "active and candidate repository integrations"
+    },
+    {
+      "path": "integration/release-train.json",
+      "role": "cross-repository promotion and rollback order"
+    },
+    {
+      "path": "release/rehearsal.json",
+      "role": "release-candidate and pilot gate contract"
+    },
+    {
+      "path": "CODEX_HANDOFF.md",
+      "role": "turnkey Codex compiler, remote bootstrap and GitHub Project execution contract"
+    },
+    {
+      "path": "requirements/rust-tools.json",
+      "role": "exact Rust developer-tool pins shared with CI"
     }
   ],
-  "context_tiers": {
-    "policy": [
-      "AGENTS.md",
-      "CONTEXT.md",
-      "context/claim-boundaries.json",
-      "context/capability-matrix.json"
-    ],
-    "planning": [
-      "conductor/requirements.md",
-      "conductor/roadmap-coverage.json",
-      "conductor/tracks.md"
-    ],
-    "architecture": [
-      "conductor/design.md",
-      "docs/architecture.md",
-      "docs/adrs/"
-    ],
-    "integration": [
-      "integration/passports/",
-      "migration/",
-      "conductor/github/",
-      "integration/consumer-contract-suite.json"
-    ],
-    "verification": [
-      "scripts/",
-      "verification/receipts/",
-      ".github/workflows/",
-      "verification/harness-matrix.json"
-    ]
-  },
-  "claim_boundary": "Context artefacts constrain work and claims but cannot promote their own evidence level."
+  "schema_version": "org.searchright.context-manifest.v1",
+  "updated_at": "2026-08-08"
 }

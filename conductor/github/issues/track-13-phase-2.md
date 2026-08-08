@@ -4,20 +4,10 @@
 Parent track key: `track-13`
 Conductor plan: `conductor/tracks/13-integration-passports-github-context/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-13-phase-2 -->
-
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_integration_passports.py`
-  - [x] `python scripts/check_consumer_contracts.py`
-  - [x] `python scripts/check_github_issue_hierarchy.py`
-  - [x] `python scripts/check_context_integrity.py`
-  - [x] `python scripts/check_integration_drift.py`
-  - [x] `python scripts/render_github_issues.py --check`
-  - [x] `python scripts/sync_context_lock.py --check`
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [x] T01: Run deterministic, network-free contract and policy checks. (`track-13-phase-2-task-01`)
+- [x] T02: Record machine-readable evidence without promoting compiler, live or external claims. (`track-13-phase-2-task-02`)
 
 ## Evidence rule
 

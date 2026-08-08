@@ -4,12 +4,10 @@
 Parent track key: `track-22`
 Conductor plan: `conductor/tracks/22-living-updates/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-22-phase-3 -->
-
-- [ ] Compile and run multi-cycle living-review and amendment scenarios.
-- [ ] Pilot a real update and independently reproduce change attribution.
+- [ ] T01: Compile and run multi-cycle living-review and amendment scenarios. (`track-22-phase-3-task-01`)
+- [ ] T02: Pilot a real update and independently reproduce change attribution. (`track-22-phase-3-task-02`)
 
 ## Evidence rule
 

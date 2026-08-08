@@ -4,12 +4,10 @@
 Parent track key: `track-02`
 Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-02-phase-3 -->
-
-- [ ] Compile and execute dialect snapshot/property tests.
-- [ ] Expand the conformance corpus with independently reviewed source strategies.
+- [ ] T01: Compile and execute dialect snapshot/property tests. (`track-02-phase-3-task-01`)
+- [ ] T02: Expand the conformance corpus with independently reviewed source strategies. (`track-02-phase-3-task-02`)
 
 ## Evidence rule
 

@@ -1,171 +1,235 @@
 {
-  "schema_version": "org.searchright.harness-matrix.v1",
-  "updated_at": "2026-08-06",
-  "evidence_ceiling": "source_verified",
+  "claim_boundary": "Configured gates are not passing evidence until their receipts are observed.",
   "dimensions": [
     {
-      "dimension": "contract_schema",
-      "gate": "scripts/validate_repository.py",
-      "frequency": "every_change",
       "blocking": true,
-      "evidence": "static receipt",
-      "status": "configured"
+      "dimension": "authenticated_remote_mcp",
+      "evidence": "deployed authenticated MCP and isolation receipts",
+      "frequency": "remote_transport_change_and_release",
+      "gate": "tenant/scope/replay/rate/egress adversarial suite",
+      "status": "source_contracts_not_deployed"
     },
     {
-      "dimension": "semantic_invariants",
-      "gate": "Rust Validate implementations and canonical examples",
-      "frequency": "every_change",
       "blocking": true,
-      "evidence": "unit/property receipts",
-      "status": "source_implemented_not_run"
+      "dimension": "binary_reproducibility_and_attestation",
+      "evidence": "binary comparison and attestations",
+      "frequency": "clean_room_and_release",
+      "gate": "clean-room double build and actions/attest",
+      "status": "configured_not_run"
     },
     {
+      "blocking": true,
+      "dimension": "clean_room_offline",
+      "evidence": "vendored offline build/install/MCP receipts",
+      "frequency": "every_change_and_weekly",
+      "gate": ".github/workflows/clean-room.yml",
+      "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
       "dimension": "cli_mcp_facade_parity",
-      "gate": "scripts/check_cli_mcp_parity.py and scripts/mcp_smoke.py",
-      "frequency": "every_change_and_clean_room",
-      "blocking": true,
       "evidence": "static parity plus MCP transcript",
+      "frequency": "every_change_and_clean_room",
+      "gate": "scripts/check_cli_mcp_parity.py and scripts/mcp_smoke.py",
       "status": "static_configured_runtime_not_run"
     },
     {
-      "dimension": "consumer_driven_integration_contracts",
-      "gate": "scripts/check_integration_passports.py and scripts/check_consumer_contracts.py",
-      "frequency": "every_change",
       "blocking": true,
+      "dimension": "concurrency_permutations",
+      "evidence": "Loom test report",
+      "frequency": "changed_assurance_and_weekly",
+      "gate": "Loom 0.7.2",
+      "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "consumer_driven_integration_contracts",
       "evidence": "passport plus producer-consumer interaction receipts",
+      "frequency": "every_change",
+      "gate": "scripts/check_integration_passports.py and scripts/check_consumer_contracts.py",
       "status": "configured"
     },
     {
-      "dimension": "integration_drift",
-      "gate": "scripts/check_integration_drift.py",
-      "frequency": "weekly",
       "blocking": true,
+      "dimension": "contract_schema",
+      "evidence": "static receipt",
+      "frequency": "every_change",
+      "gate": "scripts/validate_repository.py",
+      "status": "configured"
+    },
+    {
+      "blocking": true,
+      "dimension": "coverage",
+      "evidence": "LCOV plus Codecov",
+      "frequency": "every_change",
+      "gate": "cargo llvm-cov",
+      "status": "configured_not_run",
+      "threshold": {
+        "lines": 91
+      }
+    },
+    {
+      "blocking": true,
+      "dimension": "cross_repository_release_train",
+      "evidence": "exact-revision producer/consumer/canary receipts",
+      "frequency": "integration_change_and_release",
+      "gate": "scripts/check_release_train.py and downstream canary workflow",
+      "status": "source_configured_downstream_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "default_deny_safety",
+      "evidence": "static default-deny receipt",
+      "frequency": "every_change",
+      "gate": "scripts/check_default_deny.py",
+      "status": "configured"
+    },
+    {
+      "blocking": true,
+      "dimension": "formal_authority",
+      "evidence": "proof report",
+      "frequency": "changed_assurance_and_weekly",
+      "gate": "Kani 0.67.0",
+      "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "fuzz",
+      "evidence": "corpus and crash artifacts",
+      "frequency": "weekly_and_changed_contracts",
+      "gate": "cargo-fuzz 0.13.2",
+      "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "github_control_plane",
+      "evidence": "static hierarchy/Project plans plus observed remote bootstrap receipt",
+      "frequency": "every_change",
+      "gate": "scripts/check_github_issue_hierarchy.py, scripts/check_github_project.py and all three dry-run synchronisers",
+      "status": "static_configured_remote_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "human_methodological_validation",
+      "evidence": "external evaluation report",
+      "frequency": "release_milestones",
+      "gate": "preregistered expert and usability evaluation",
+      "status": "external_evidence_required"
+    },
+    {
+      "blocking": true,
+      "dimension": "integration_drift",
       "evidence": "read-only drift receipt",
+      "frequency": "weekly",
+      "gate": "scripts/check_integration_drift.py",
       "status": "configured_not_live_run"
     },
     {
-      "dimension": "unit_integration_doctest",
-      "gate": "cargo test or cargo nextest",
-      "frequency": "every_change",
       "blocking": true,
-      "evidence": "CI test report",
-      "status": "configured_not_run"
+      "dimension": "maturity_decision",
+      "evidence": "version 1.0 decision receipt with no critical blocker",
+      "frequency": "release_milestone",
+      "gate": "scripts/check_maturity_dossier.py and accountable final review",
+      "status": "not_ready"
     },
     {
-      "dimension": "property_metamorphic",
-      "gate": "proptest and transformation invariants",
-      "frequency": "every_change",
-      "blocking": true,
-      "evidence": "test report",
-      "status": "configured_not_run"
-    },
-    {
-      "dimension": "coverage",
-      "gate": "cargo llvm-cov",
-      "frequency": "every_change",
-      "blocking": true,
-      "threshold": {
-        "lines": 91
-      },
-      "evidence": "LCOV plus Codecov",
-      "status": "configured_not_run"
-    },
-    {
-      "dimension": "mutation",
-      "gate": "cargo-mutants 27.1.0",
-      "frequency": "weekly",
       "blocking": false,
+      "dimension": "mutation",
       "evidence": "mutation report",
-      "status": "configured_not_run"
-    },
-    {
-      "dimension": "fuzz",
-      "gate": "cargo-fuzz 0.13.2",
-      "frequency": "weekly_and_changed_contracts",
-      "blocking": true,
-      "evidence": "corpus and crash artifacts",
-      "status": "configured_not_run"
-    },
-    {
-      "dimension": "formal_authority",
-      "gate": "Kani 0.67.0",
-      "frequency": "changed_assurance_and_weekly",
-      "blocking": true,
-      "evidence": "proof report",
-      "status": "configured_not_run"
-    },
-    {
-      "dimension": "concurrency_permutations",
-      "gate": "Loom 0.7.2",
-      "frequency": "changed_assurance_and_weekly",
-      "blocking": true,
-      "evidence": "Loom test report",
-      "status": "configured_not_run"
-    },
-    {
-      "dimension": "undefined_behavior",
-      "gate": "Miri and cargo-careful 0.4.10",
       "frequency": "weekly",
-      "blocking": true,
-      "evidence": "Miri/careful report",
+      "gate": "cargo-mutants 27.1.0",
       "status": "configured_not_run"
     },
     {
-      "dimension": "supply_chain",
-      "gate": "cargo-deny, cargo-audit, dependency review, CodeQL, Scorecard, Gitleaks, zizmor",
-      "frequency": "every_change_and_weekly",
       "blocking": true,
-      "evidence": "security workflow receipts",
-      "status": "configured_not_run"
+      "dimension": "operational_reliability",
+      "evidence": "health, backup restore and incident receipts",
+      "frequency": "release_candidate_and_quarterly",
+      "gate": "health/SLO checks, restore drill and incident exercise",
+      "status": "source_contracts_not_exercised"
     },
     {
-      "dimension": "default_deny_safety",
-      "gate": "scripts/check_default_deny.py",
+      "blocking": true,
+      "dimension": "property_metamorphic",
+      "evidence": "test report",
       "frequency": "every_change",
-      "blocking": true,
-      "evidence": "static default-deny receipt",
-      "status": "configured"
-    },
-    {
-      "dimension": "workflow_hardening",
-      "gate": "scripts/check_workflow_hardening.py",
-      "frequency": "every_change",
-      "blocking": true,
-      "evidence": "workflow policy receipt",
-      "status": "configured"
-    },
-    {
-      "dimension": "clean_room_offline",
-      "gate": ".github/workflows/clean-room.yml",
-      "frequency": "every_change_and_weekly",
-      "blocking": true,
-      "evidence": "vendored offline build/install/MCP receipts",
+      "gate": "proptest and transformation invariants",
       "status": "configured_not_run"
     },
     {
+      "blocking": true,
+      "dimension": "release_candidate_and_pilots",
+      "evidence": "RC, pilot exit and rollback receipts",
+      "frequency": "release_candidate",
+      "gate": "scripts/check_release_rehearsal.py and release-candidate workflow",
+      "status": "prepared_not_executed"
+    },
+    {
+      "blocking": true,
+      "dimension": "sdk_examples_and_adoption",
+      "evidence": "source manifest plus published package/example receipts",
+      "frequency": "every_change_and_release",
+      "gate": "scripts/check_sdk_examples.py and clean-environment quickstarts",
+      "status": "static_configured_publication_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "semantic_invariants",
+      "evidence": "unit/property receipts",
+      "frequency": "every_change",
+      "gate": "Rust Validate implementations and canonical examples",
+      "status": "source_implemented_not_run"
+    },
+    {
+      "blocking": true,
       "dimension": "source_reproducibility",
-      "gate": "scripts/check_packaging_reproducibility.py",
-      "frequency": "every_change",
-      "blocking": true,
       "evidence": "source archive comparison receipt",
+      "frequency": "every_change",
+      "gate": "scripts/check_packaging_reproducibility.py",
       "status": "configured"
     },
     {
-      "dimension": "binary_reproducibility_and_attestation",
-      "gate": "clean-room double build and actions/attest",
-      "frequency": "clean_room_and_release",
       "blocking": true,
-      "evidence": "binary comparison and attestations",
+      "dimension": "supply_chain",
+      "evidence": "security workflow receipts",
+      "frequency": "every_change_and_weekly",
+      "gate": "cargo-deny, cargo-audit, dependency review, CodeQL, Scorecard, Gitleaks, zizmor",
       "status": "configured_not_run"
     },
     {
-      "dimension": "human_methodological_validation",
-      "gate": "preregistered expert and usability evaluation",
-      "frequency": "release_milestones",
       "blocking": true,
-      "evidence": "external evaluation report",
-      "status": "external_evidence_required"
+      "dimension": "toolchain_and_dev_tool_pins",
+      "evidence": "exact Rust toolchain and CI developer-tool pin parity receipt",
+      "frequency": "every_change",
+      "gate": "requirements/rust-tools.json and scripts/check_toolchain_manifest.py",
+      "status": "configured"
+    },
+    {
+      "blocking": true,
+      "dimension": "undefined_behavior",
+      "evidence": "Miri/careful report",
+      "frequency": "weekly",
+      "gate": "Miri and cargo-careful 0.4.10",
+      "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "unit_integration_doctest",
+      "evidence": "CI test report",
+      "frequency": "every_change",
+      "gate": "cargo test or cargo nextest",
+      "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "workflow_hardening",
+      "evidence": "workflow policy receipt",
+      "frequency": "every_change",
+      "gate": "scripts/check_workflow_hardening.py",
+      "status": "configured"
     }
   ],
-  "claim_boundary": "Configured gates are not passing evidence until their receipts are observed."
+  "evidence_ceiling": "source_verified",
+  "schema_version": "org.searchright.harness-matrix.v1",
+  "updated_at": "2026-08-08"
 }

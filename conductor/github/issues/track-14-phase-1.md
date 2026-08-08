@@ -4,16 +4,9 @@
 Parent track key: `track-14`
 Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-14-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `migration/sourceright/README.md`
-  - [x] `migration/sourceright/replacement-map.yaml`
-  - [x] `migration/sourceright/parity-cases.json`
-  - [x] `crates/searchright-sourceright-compat/src/lib.rs`
-  - [x] `scripts/check_sourceright_migration.py`
+- [x] T01: Implement and document the track's source deliverables. (`track-14-phase-1-task-01`)
 
 ## Evidence rule
 

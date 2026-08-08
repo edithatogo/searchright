@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/incident-record.v1.schema.json",
+  "title": "Incident record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "incident_id",
+    "severity",
+    "detected_at",
+    "components",
+    "impact",
+    "containment",
+    "data_exposure_suspected",
+    "status",
+    "postmortem_required"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.incident-record.v1"
+    },
+    "incident_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "severity": {
+      "enum": [
+        "informational",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "detected_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "impact": {
+      "type": "string",
+      "minLength": 1
+    },
+    "containment": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "data_exposure_suspected": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "postmortem_required": {
+      "type": "boolean"
+    }
+  }
+}

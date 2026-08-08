@@ -1,16 +1,285 @@
 {
-  "schema_version": "org.searchright.github-labels.v1",
+  "schema_version": "org.searchright.github-labels.v2",
   "labels": [
-    {"name": "conductor", "color": "1d76db", "description": "Generated from Conductor source-of-truth artefacts"},
-    {"name": "kind:epic", "color": "5319e7", "description": "Roadmap epic"},
-    {"name": "kind:track", "color": "0052cc", "description": "Conductor track"},
-    {"name": "kind:phase", "color": "bfd4f2", "description": "Numbered Conductor plan phase"},
-    {"name": "evidence:source-verified", "color": "0e8a16", "description": "Source-level evidence only"},
-    {"name": "evidence:external-required", "color": "d93f0b", "description": "Needs live, downstream, human or external evidence"},
-    {"name": "horizon:foundation", "color": "c5def5", "description": "Foundation horizon"},
-    {"name": "horizon:mvp", "color": "bfe5bf", "description": "MVP horizon"},
-    {"name": "horizon:alpha", "color": "fbca04", "description": "Alpha horizon"},
-    {"name": "horizon:beta", "color": "f9d0c4", "description": "Beta horizon"},
-    {"name": "horizon:mature", "color": "d4c5f9", "description": "Mature horizon"}
+    {
+      "name": "conductor",
+      "color": "1d76db",
+      "description": "Generated from Conductor source-of-truth artefacts"
+    },
+    {
+      "name": "kind:epic",
+      "color": "5319e7",
+      "description": "Roadmap epic"
+    },
+    {
+      "name": "kind:track",
+      "color": "0052cc",
+      "description": "Conductor track"
+    },
+    {
+      "name": "kind:phase",
+      "color": "bfd4f2",
+      "description": "Numbered Conductor plan phase"
+    },
+    {
+      "name": "kind:task",
+      "color": "d4e5ff",
+      "description": "Top-level Conductor plan task"
+    },
+    {
+      "name": "state:source-complete",
+      "color": "0e8a16",
+      "description": "Canonical source task is complete; higher evidence may remain open"
+    },
+    {
+      "name": "state:evidence-open",
+      "color": "d93f0b",
+      "description": "Canonical task remains open or requires higher evidence"
+    },
+    {
+      "name": "evidence:source-verified",
+      "color": "0e8a16",
+      "description": "Source-level evidence only"
+    },
+    {
+      "name": "evidence:external-required",
+      "color": "d93f0b",
+      "description": "Needs live, downstream, human or external evidence"
+    },
+    {
+      "name": "horizon:alpha",
+      "color": "fbca04",
+      "description": "Alpha horizon"
+    },
+    {
+      "name": "horizon:beta",
+      "color": "f9d0c4",
+      "description": "Beta horizon"
+    },
+    {
+      "name": "horizon:foundation",
+      "color": "c5def5",
+      "description": "Foundation horizon"
+    },
+    {
+      "name": "horizon:mature",
+      "color": "d4c5f9",
+      "description": "Mature horizon"
+    },
+    {
+      "name": "horizon:mvp",
+      "color": "bfe5bf",
+      "description": "Mvp horizon"
+    },
+    {
+      "name": "phase:1",
+      "color": "bfdadc",
+      "description": "Conductor phase 1"
+    },
+    {
+      "name": "phase:2",
+      "color": "bfdadc",
+      "description": "Conductor phase 2"
+    },
+    {
+      "name": "phase:3",
+      "color": "bfdadc",
+      "description": "Conductor phase 3"
+    },
+    {
+      "name": "phase:4",
+      "color": "bfdadc",
+      "description": "Conductor phase 4"
+    },
+    {
+      "name": "track:00",
+      "color": "dbeafe",
+      "description": "Conductor track 00"
+    },
+    {
+      "name": "track:01",
+      "color": "dbeafe",
+      "description": "Conductor track 01"
+    },
+    {
+      "name": "track:02",
+      "color": "dbeafe",
+      "description": "Conductor track 02"
+    },
+    {
+      "name": "track:03",
+      "color": "dbeafe",
+      "description": "Conductor track 03"
+    },
+    {
+      "name": "track:04",
+      "color": "dbeafe",
+      "description": "Conductor track 04"
+    },
+    {
+      "name": "track:05",
+      "color": "dbeafe",
+      "description": "Conductor track 05"
+    },
+    {
+      "name": "track:06",
+      "color": "dbeafe",
+      "description": "Conductor track 06"
+    },
+    {
+      "name": "track:07",
+      "color": "dbeafe",
+      "description": "Conductor track 07"
+    },
+    {
+      "name": "track:08",
+      "color": "dbeafe",
+      "description": "Conductor track 08"
+    },
+    {
+      "name": "track:09",
+      "color": "dbeafe",
+      "description": "Conductor track 09"
+    },
+    {
+      "name": "track:10",
+      "color": "dbeafe",
+      "description": "Conductor track 10"
+    },
+    {
+      "name": "track:11",
+      "color": "dbeafe",
+      "description": "Conductor track 11"
+    },
+    {
+      "name": "track:12",
+      "color": "dbeafe",
+      "description": "Conductor track 12"
+    },
+    {
+      "name": "track:13",
+      "color": "dbeafe",
+      "description": "Conductor track 13"
+    },
+    {
+      "name": "track:14",
+      "color": "dbeafe",
+      "description": "Conductor track 14"
+    },
+    {
+      "name": "track:15",
+      "color": "dbeafe",
+      "description": "Conductor track 15"
+    },
+    {
+      "name": "track:16",
+      "color": "dbeafe",
+      "description": "Conductor track 16"
+    },
+    {
+      "name": "track:17",
+      "color": "dbeafe",
+      "description": "Conductor track 17"
+    },
+    {
+      "name": "track:18",
+      "color": "dbeafe",
+      "description": "Conductor track 18"
+    },
+    {
+      "name": "track:19",
+      "color": "dbeafe",
+      "description": "Conductor track 19"
+    },
+    {
+      "name": "track:20",
+      "color": "dbeafe",
+      "description": "Conductor track 20"
+    },
+    {
+      "name": "track:21",
+      "color": "dbeafe",
+      "description": "Conductor track 21"
+    },
+    {
+      "name": "track:22",
+      "color": "dbeafe",
+      "description": "Conductor track 22"
+    },
+    {
+      "name": "track:23",
+      "color": "dbeafe",
+      "description": "Conductor track 23"
+    },
+    {
+      "name": "track:24",
+      "color": "dbeafe",
+      "description": "Conductor track 24"
+    },
+    {
+      "name": "track:25",
+      "color": "dbeafe",
+      "description": "Conductor track 25"
+    },
+    {
+      "name": "track:26",
+      "color": "dbeafe",
+      "description": "Conductor track 26"
+    },
+    {
+      "name": "track:27",
+      "color": "dbeafe",
+      "description": "Conductor track 27"
+    },
+    {
+      "name": "track:28",
+      "color": "dbeafe",
+      "description": "Conductor track 28"
+    },
+    {
+      "name": "track:29",
+      "color": "dbeafe",
+      "description": "Conductor track 29"
+    },
+    {
+      "name": "track:30",
+      "color": "dbeafe",
+      "description": "Conductor track 30"
+    },
+    {
+      "name": "track:31",
+      "color": "dbeafe",
+      "description": "Conductor track 31"
+    },
+    {
+      "name": "track:32",
+      "color": "dbeafe",
+      "description": "Conductor track 32"
+    },
+    {
+      "name": "track:33",
+      "color": "dbeafe",
+      "description": "Conductor track 33"
+    },
+    {
+      "name": "track:34",
+      "color": "dbeafe",
+      "description": "Conductor track 34"
+    },
+    {
+      "name": "track:35",
+      "color": "dbeafe",
+      "description": "Conductor track 35"
+    },
+    {
+      "name": "track:36",
+      "color": "dbeafe",
+      "description": "Conductor track 36"
+    },
+    {
+      "name": "track:37",
+      "color": "dbeafe",
+      "description": "Conductor track 37"
+    }
   ]
 }

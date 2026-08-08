@@ -31,7 +31,7 @@ flowchart LR
 | Malicious plugin | Signed/pinned components, deny-by-default WASI capabilities, memory/time/output limits. |
 | Audit tampering | Canonical JSON and BLAKE3 hash chain; optional external transparency receipt. |
 | Agent overreach | Authority policy, dry-run, protocol amendment gate and human final-exclusion default. |
-| Supply-chain compromise | Locked dependencies, cargo-vet/deny/audit, action SHA pinning, SBOM, provenance and signatures. |
+| Supply-chain compromise | Locked dependencies, cargo-deny/audit, action SHA pinning, SBOM, provenance and signatures. |
 | Data exfiltration through telemetry | Telemetry off by default; local structured logs; explicit opt-in export. |
 | Denial of service | Input size limits, bounded concurrency, cancellation, quotas and backpressure. |
 

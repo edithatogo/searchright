@@ -4,15 +4,9 @@
 Parent track key: `track-10`
 Conductor plan: `conductor/tracks/10-mcp-mvp/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-10-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-mcp/src/main.rs`
-  - [x] `contracts/mcp/tool-catalog.json`
-  - [x] `contracts/interface-catalog.json`
-  - [x] `server.json`
+- [x] T01: Implement and document the track's source deliverables. (`track-10-phase-1-task-01`)
 
 ## Evidence rule
 

@@ -29,4 +29,4 @@ Integrate CiteWeft through a pinned optional adapter while preserving spans, unc
 
 CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made.
 
-> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime/external receipts remain authoritative.
+> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

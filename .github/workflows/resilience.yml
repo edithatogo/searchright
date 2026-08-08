@@ -1,0 +1,66 @@
+name: Reliability and access controls
+
+on:
+  pull_request:
+    paths:
+      - 'crates/searchright-ops/**'
+      - 'crates/searchright-access/**'
+      - 'crates/searchright-contracts/**'
+      - 'contracts/**'
+      - 'docs/operations/**'
+      - 'docs/security/authenticated-remote-mcp.md'
+      - '.github/workflows/resilience.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'crates/searchright-ops/**'
+      - 'crates/searchright-access/**'
+      - 'crates/searchright-contracts/**'
+      - 'contracts/**'
+      - 'docs/operations/**'
+      - 'docs/security/authenticated-remote-mcp.md'
+      - '.github/workflows/resilience.yml'
+  schedule:
+    - cron: '23 5 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: resilience-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  resilience:
+    name: Reliability, tenancy and restore policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Require committed dependency lock
+        run: test -f Cargo.lock
+      - name: Install pinned Rust toolchain
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8 # stable
+        with:
+          toolchain: 1.97.1
+      - name: Test operations and access policy
+        run: |
+          cargo test --locked -p searchright-ops -p searchright-access -p searchright-contracts
+          python scripts/validate_repository.py
+      - name: Verify backup and access examples remain valid
+        run: |
+          python - <<'PY'
+          import json
+          for path in [
+              'contracts/examples/backup-manifest.json',
+              'contracts/examples/incident-record.json',
+              'contracts/examples/tenant-policy.json',
+              'contracts/examples/access-request.json',
+              'contracts/examples/access-decision.json',
+          ]:
+              json.load(open(path, encoding='utf-8'))
+          PY

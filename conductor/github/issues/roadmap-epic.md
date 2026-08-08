@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: roadmap-epic -->
 # Searchright roadmap epic
 
-This issue is generated from `conductor/roadmap-coverage.json`. Conductor remains canonical; remote status cannot promote repository evidence.
+This issue is generated from `conductor/roadmap-coverage.json`. Conductor remains canonical; remote state cannot promote repository evidence.
 
 ## Tracks
 
@@ -35,11 +35,21 @@ This issue is generated from `conductor/roadmap-coverage.json`. Conductor remain
 - [ ] `27` — Accessibility, internationalisation and usability (`track-27`)
 - [ ] `28` — Institutional governance, privacy and collaboration (`track-28`)
 - [ ] `29` — External methodological evaluation and sustainability (`track-29`)
-- [ ] `30` — Mature 1.0 product, community and evaluation (`track-30`)
+- [ ] `30` — Maturity gate and gap closure (`track-30`)
+- [ ] `31` — GitHub remote, nested issues and Project v2 control plane (`track-31`)
+- [ ] `32` — Cross-repository contract release train and downstream canaries (`track-32`)
+- [ ] `33` — Operational observability, backup, restore and incident response (`track-33`)
+- [ ] `34` — Authenticated remote MCP, tenancy and data residency (`track-34`)
+- [ ] `35` — Generated SDKs, fixture-backed documentation and adoption operations (`track-35`)
+- [ ] `36` — Release-candidate rehearsal, staged pilots and ecosystem rehearsal (`track-36`)
+- [ ] `37` — Final mature 1.0 release and long-term operations (`track-37`)
 
 ## Synchronisation contract
 
 - Dry-run is the default.
-- Apply requires an explicit CLI flag, environment opt-in and GitHub write permission.
-- Track issues are native subissues of this epic; phase issues are native subissues of their track.
+- Apply requires explicit CLI and environment opt-ins plus GitHub write permission.
+- Track issues are native subissues of this epic.
+- Phase issues are native subissues of their track.
+- Individual top-level Conductor tasks are native subissues of their phase.
 - Stable markers preserve idempotency and a portable hierarchy fallback.
+- GitHub Project fields are a projection; they never replace Conductor evidence.

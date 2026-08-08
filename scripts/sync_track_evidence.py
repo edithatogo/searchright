@@ -2,8 +2,9 @@
 """Synchronise Conductor metadata, evidence and plans from roadmap coverage.
 
 The machine-readable roadmap is the only dependency/status source. Every track
-maps to one GitHub issue key and every four-phase plan maps to four deterministic
-subissue keys; remote issue numbers remain external evidence.
+maps to one GitHub issue key, every plan phase maps to a deterministic subissue,
+and every top-level phase task maps to a nested task subissue; remote identities
+remain external evidence.
 """
 
 from __future__ import annotations
@@ -23,13 +24,24 @@ PHASES = (
 )
 
 
-def issue_keys(track_id: str) -> dict[str, object]:
+def task_counts(entry: dict) -> dict[int, int]:
+    return {1: 1, 2: 2, 3: max(1, len(entry.get("blockers", []))), 4: 4}
+
+
+def issue_keys(track_id: str, entry: dict) -> dict[str, object]:
+    tasks = [
+        f"track-{track_id}-phase-{phase}-task-{number:02d}"
+        for phase, count in task_counts(entry).items()
+        for number in range(1, count + 1)
+    ]
     return {
         "epic_issue_key": "roadmap-epic",
         "track_issue_key": f"track-{track_id}",
         "phase_issue_keys": [f"track-{track_id}-phase-{number}" for number, _ in PHASES],
+        "task_issue_keys": tasks,
         "remote_issue_number": None,
         "remote_phase_issue_numbers": [],
+        "remote_task_issue_numbers": [],
     }
 
 
@@ -41,21 +53,21 @@ def render_metadata(entry: dict) -> str:
         "slug": entry["slug"],
         "title": entry["title"],
         "status": entry["status"],
-        "created": "2026-08-05" if int(track_id) <= 11 else "2026-08-06",
-        "updated": "2026-08-06",
+        "created": "2026-08-05" if int(track_id) <= 11 else ("2026-08-06" if int(track_id) <= 30 else "2026-08-08"),
+        "updated": "2026-08-08",
         "dependencies": entry.get("dependencies", []),
         "horizon": entry["horizon"],
         "evidence_level": entry["evidence_level"],
         "external_approval_required": bool(entry.get("external_approval_required", False)),
         "evidence_path": f"conductor/tracks/{track_id}-{entry['slug']}/evidence.json",
-        "github": issue_keys(track_id),
+        "github": issue_keys(track_id, entry),
     }
     return json.dumps(value, indent=2) + "\n"
 
 
 def render_evidence(entry: dict) -> str:
     track_id = entry["track_id"]
-    keys = issue_keys(track_id)
+    keys = issue_keys(track_id, entry)
     value = {
         "schema_version": "org.searchright.track-evidence.v2",
         "track_id": track_id,
@@ -72,6 +84,7 @@ def render_evidence(entry: dict) -> str:
             "epic": keys["epic_issue_key"],
             "track": keys["track_issue_key"],
             "phases": keys["phase_issue_keys"],
+            "tasks": keys["task_issue_keys"],
         },
         "remote_github_evidence": [],
         "runtime_evidence": [],
@@ -148,10 +161,10 @@ def render_tracks(entries: list[dict]) -> str:
         "contracts and source exist and pass the static harness; it does not mean Rust",
         "compiled, providers ran, users evaluated the workflow or a registry accepted it.",
         "",
-        "Each track maps to a GitHub issue key `track-NN`; each numbered plan phase maps",
-        "to a native GitHub subissue key `track-NN-phase-M`. The generated hierarchy is",
-        "stored under `conductor/github/` and remains prepared-not-synced until an",
-        "explicit, approval-gated apply run succeeds.",
+        "Each track maps to `track-NN`; each phase maps to `track-NN-phase-M`; and",
+        "each top-level plan task maps to `track-NN-phase-M-task-TT`. The generated",
+        "native issue hierarchy and Project projection remain prepared-not-synced until",
+        "an explicit, approval-gated apply receipt exists.",
         "",
         "| ID | Track | Horizon | Status | Evidence | Outcome |",
         "| --- | --- | --- | --- | --- | --- |",

@@ -79,6 +79,75 @@
         "scripts/check_rust_dependency_graph.py"
       ],
       "supersedes": []
+    },
+    {
+      "id": "D-008",
+      "status": "accepted",
+      "decision": "Project every Conductor track, phase and top-level task into native GitHub issue/subissue relationships and a manifest-owned Project v2.",
+      "rationale": "A four-level work graph preserves executable task granularity while keeping Conductor as source of truth.",
+      "evidence": [
+        "docs/github-operating-system.md",
+        "conductor/github/issue-hierarchy.json",
+        "conductor/github/project.json"
+      ],
+      "supersedes": [
+        "D-003"
+      ]
+    },
+    {
+      "id": "D-009",
+      "status": "accepted",
+      "decision": "Create and wire the remote repository only through a dry-run-first, additive GitHub bootstrap controller.",
+      "rationale": "Repository settings, issue writes and Project mutations require explicit authority, clean state and observed receipts.",
+      "evidence": [
+        "scripts/bootstrap_github.py",
+        "conductor/github/repository-settings.json"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-010",
+      "status": "accepted",
+      "decision": "Keep authenticated remote MCP and tenant authorisation separate from the local stdio MCP default.",
+      "rationale": "Remote identity, tenancy, data residency and abuse budgets introduce distinct trust boundaries that must not weaken local defaults.",
+      "evidence": [
+        "docs/security/authenticated-remote-mcp.md",
+        "crates/searchright-access/src/lib.rs"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-011",
+      "status": "accepted",
+      "decision": "Represent health, telemetry, backup and incidents as versioned operational contracts with telemetry disabled by default.",
+      "rationale": "Operational maturity requires observable and testable reliability without silently exporting sensitive review content.",
+      "evidence": [
+        "docs/operations/reliability.md",
+        "crates/searchright-ops/src/lib.rs"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-012",
+      "status": "accepted",
+      "decision": "Promote CiteWeft, Searchright and Sourceright changes through an explicit cross-repository release train with downstream canaries and rollback.",
+      "rationale": "Exact pins and consumer fixtures still require coordinated compatibility evidence before ecosystem promotion.",
+      "evidence": [
+        "integration/release-train.json",
+        "docs/release-train.md"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-013",
+      "status": "accepted",
+      "decision": "Make version 1.0 a recorded evidence decision, not a date or source-completeness milestone.",
+      "rationale": "Maturity depends on compiler, runtime, integration, security, usability, methodological and operational evidence.",
+      "evidence": [
+        "conductor/maturity-dossier.json",
+        "docs/maturity/release-decision.md"
+      ],
+      "supersedes": []
     }
   ]
 }

@@ -1,45 +1,15 @@
 {
   "schema_version": "org.searchright.evidence-ledger.v1",
-  "updated_at": "2026-08-06",
+  "updated_at": "2026-08-08",
   "repository_level": "source_verified",
   "domains": [
     {
-      "domain": "contracts_and_static_source",
+      "domain": "authenticated_remote_mcp",
       "level": "source_verified",
-      "receipt": "verification/receipts/static-harness.json",
-      "blockers": []
-    },
-    {
-      "domain": "rust_compilation",
-      "level": "contracted",
-      "receipt": null,
+      "receipt": "contracts/examples/tenant-policy.json",
       "blockers": [
-        "Rust toolchain unavailable",
-        "Cargo.lock not generated"
-      ]
-    },
-    {
-      "domain": "fixture_behavior",
-      "level": "contracted",
-      "receipt": null,
-      "blockers": [
-        "Cargo tests not executed"
-      ]
-    },
-    {
-      "domain": "live_providers",
-      "level": "contracted",
-      "receipt": null,
-      "blockers": [
-        "No authorised live run"
-      ]
-    },
-    {
-      "domain": "github_issue_hierarchy",
-      "level": "source_verified",
-      "receipt": "conductor/github/issue-hierarchy.json",
-      "blockers": [
-        "No remote Searchright repository or apply receipt"
+        "No deployed authenticated endpoint",
+        "No adversarial tenancy/replay/abuse receipt"
       ]
     },
     {
@@ -51,11 +21,78 @@
       ]
     },
     {
+      "domain": "contracts_and_static_source",
+      "level": "source_verified",
+      "receipt": "verification/receipts/static-harness.json",
+      "blockers": []
+    },
+    {
+      "domain": "cross_repository_release_train",
+      "level": "source_verified",
+      "receipt": "integration/release-train.json",
+      "blockers": [
+        "No producer/consumer run across exact revisions",
+        "No downstream canary"
+      ]
+    },
+    {
       "domain": "downstream_migration",
       "level": "contracted",
       "receipt": null,
       "blockers": [
         "No downstream dual-run or merged cutover"
+      ]
+    },
+    {
+      "domain": "external_methodological_evaluation",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "Preregistered external evaluation not executed"
+      ]
+    },
+    {
+      "domain": "fixture_behavior",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "Cargo tests not executed"
+      ]
+    },
+    {
+      "domain": "github_control_plane",
+      "level": "source_verified",
+      "receipt": "conductor/github/project.json",
+      "blockers": [
+        "No remote repository/bootstrap apply receipt",
+        "No observed Project ID, fields, views or 564-item sync receipt"
+      ]
+    },
+    {
+      "domain": "github_issue_hierarchy",
+      "level": "source_verified",
+      "receipt": "conductor/github/issue-hierarchy.json",
+      "blockers": [
+        "No remote Searchright repository or apply receipt"
+      ]
+    },
+    {
+      "domain": "live_providers",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "No authorised live run"
+      ]
+    },
+    {
+      "domain": "operational_reliability",
+      "level": "source_verified",
+      "receipt": "release/rehearsal.json",
+      "blockers": [
+        "No health SLO run",
+        "No backup restore drill",
+        "No incident exercise",
+        "Telemetry not runtime-tested"
       ]
     },
     {
@@ -67,11 +104,30 @@
       ]
     },
     {
-      "domain": "external_methodological_evaluation",
+      "domain": "release_candidate_and_pilots",
+      "level": "contracted",
+      "receipt": "release/rehearsal.json",
+      "blockers": [
+        "Rehearsal prepared_not_executed",
+        "No pilot exit or rollback receipt"
+      ]
+    },
+    {
+      "domain": "rust_compilation",
       "level": "contracted",
       "receipt": null,
       "blockers": [
-        "Preregistered external evaluation not executed"
+        "Rust toolchain unavailable",
+        "Cargo.lock not generated"
+      ]
+    },
+    {
+      "domain": "version_1_maturity",
+      "level": "contracted",
+      "receipt": "conductor/maturity-dossier.json",
+      "blockers": [
+        "Decision remains not_ready",
+        "Compiler, runtime, downstream, human and external gates remain open"
       ]
     }
   ]

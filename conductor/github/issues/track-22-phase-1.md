@@ -4,17 +4,9 @@
 Parent track key: `track-22`
 Conductor plan: `conductor/tracks/22-living-updates/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-22-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-living/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/living.rs`
-  - [x] `crates/searchright-contracts/src/amendment.rs`
-  - [x] `contracts/examples/living-update.yaml`
-  - [x] `contracts/examples/protocol-amendment.yaml`
-  - [x] `docs/adrs/0009-immutable-lineage-and-research-objects.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-22-phase-1-task-01`)
 
 ## Evidence rule
 

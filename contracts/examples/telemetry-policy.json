@@ -1,0 +1,16 @@
+{
+  "schema_version": "org.searchright.telemetry-policy.v1",
+  "policy_id": "telemetry-disabled-default",
+  "enabled": false,
+  "endpoint": null,
+  "attribute_allowlist": [],
+  "prohibited_attributes": [
+    "query_text",
+    "full_text",
+    "api_key",
+    "personal_identifier"
+  ],
+  "sampling_per_million": 0,
+  "retention_days": 0,
+  "approved_by": null
+}

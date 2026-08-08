@@ -4,13 +4,11 @@
 Parent track key: `track-28`
 Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaboration/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-28-phase-3 -->
-
-- [ ] Compile and run governance/authority negative scenarios.
-- [ ] Obtain institutional privacy, records and security review for a deployment profile.
-- [ ] Pilot multi-reviewer and cross-institution artefact exchange with minimised data.
+- [ ] T01: Compile and run governance/authority negative scenarios. (`track-28-phase-3-task-01`)
+- [ ] T02: Obtain institutional privacy, records and security review for a deployment profile. (`track-28-phase-3-task-02`)
+- [ ] T03: Pilot multi-reviewer and cross-institution artefact exchange with minimised data. (`track-28-phase-3-task-03`)
 
 ## Evidence rule
 

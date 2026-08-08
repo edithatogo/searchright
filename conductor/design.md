@@ -142,18 +142,53 @@ flowchart LR
   CW -. extraction evidence only .-> DE
 ```
 
-## Conductor and GitHub hierarchy
+## Conductor and GitHub control plane
 
 ```mermaid
 flowchart TB
-  COV[roadmap-coverage.json] --> TRACKS[31 Conductor tracks]
+  COV[roadmap-coverage.json] --> TRACKS[38 Conductor tracks]
   TRACKS --> PLANS[Four phases per track]
+  PLANS --> TASKS[373 top-level tasks]
   COV --> RENDER[Deterministic issue renderer]
   RENDER --> EPIC[One roadmap epic]
-  EPIC --> ISSUES[31 track issues]
-  ISSUES --> SUB[124 phase subissues]
-  SUB --> APPLY[Approval-gated idempotent apply]
-  APPLY --> RECEIPT[Observed remote receipt]
+  EPIC --> ISSUES[38 track issues]
+  ISSUES --> PHASES[152 phase subissues]
+  PHASES --> TSUB[373 task subissues]
+  TSUB --> PROJECT[Project v2: 12 custom fields / 5 views]
+  SETTINGS[Repository settings + main ruleset] --> BOOT[Dry-run-first bootstrap]
+  PROJECT --> BOOT
+  TSUB --> BOOT
+  BOOT --> RECEIPT[Observed remote receipt]
+  RECEIPT -. cannot promote .-> COV
+```
+
+## Operational deployment boundary
+
+```mermaid
+flowchart LR
+  LOCAL[Local stdio MCP] --> ENGINE[SearchrightEngine]
+  REMOTE[Authenticated streamable HTTP MCP] --> AUTH[Identity + tenant + scope decision]
+  AUTH --> BUDGET[Region, concurrency, rate and egress budgets]
+  BUDGET --> ENGINE
+  ENGINE --> HEALTH[Health/readiness]
+  ENGINE --> AUDIT[Audit and incident evidence]
+  ENGINE --> BACKUP[Backup manifest / restore drill]
+  ENGINE -. explicit opt-in only .-> TELEMETRY[Allowlisted telemetry]
+```
+
+## Release and maturity promotion
+
+```mermaid
+flowchart LR
+  CW[CiteWeft exact revision] --> CONTRACT[Contract gate]
+  CONTRACT --> FIXTURE[Consumer fixture]
+  FIXTURE --> BUILD[Compiler gate]
+  BUILD --> CANARY[Downstream canary]
+  CANARY --> RC[Release candidate rehearsal]
+  RC --> PILOT[Bounded pilots + rollback]
+  PILOT --> DOSSIER[Maturity dossier]
+  DOSSIER -->|all thresholds met| READY[Version 1.0 ready decision]
+  DOSSIER -->|blocker remains| NOTREADY[Not ready + gap track]
 ```
 
 ## Key decisions
@@ -166,3 +201,6 @@ flowchart TB
 - Ranking is advisory and requires calibration; no automatic final exclusion.
 - Downstream migration is dual-run and reversible.
 - Contract evolution and public claims are evidence-gated.
+- GitHub state is a generated coordination projection, not evidence authority.
+- Remote MCP authentication/tenancy and operational recovery are distinct maturity domains.
+- Cross-repository promotion requires downstream canaries, RC rehearsal and rollback.

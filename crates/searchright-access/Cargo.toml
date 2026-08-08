@@ -1,0 +1,15 @@
+[package]
+name = "searchright-access"
+description = "Default-deny authentication, authorisation, tenancy and data-residency policy for Searchright."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+thiserror.workspace = true
+
+[lints]
+workspace = true

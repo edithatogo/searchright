@@ -1,0 +1,30 @@
+{
+  "schema_version": "org.searchright.sdk-manifest.v1",
+  "source_contracts": [
+    "contracts/openapi/searchright-http.openapi.yaml",
+    "contracts/schema-catalog.json",
+    "contracts/wit/search-provider.wit",
+    "contracts/interface-catalog.json"
+  ],
+  "targets": [
+    {
+      "language": "rust",
+      "status": "native_facade",
+      "package": "searchright"
+    },
+    {
+      "language": "python",
+      "status": "generated_client_planned",
+      "package": "searchright-client"
+    },
+    {
+      "language": "typescript",
+      "status": "generated_client_planned",
+      "package": "@searchright/client"
+    }
+  ],
+  "generation_policy": "generated_clients_must_not_reimplement_domain_logic",
+  "compatibility_policy": "consumer_contract_and_semver_gate",
+  "automatic_publication": false,
+  "claim_boundary": "Planned generated clients are not published SDKs."
+}

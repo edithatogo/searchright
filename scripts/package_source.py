@@ -31,15 +31,20 @@ def epoch() -> int:
 
 
 def files() -> list[Path]:
+    """Return the exact tracked source set, never incidental working files."""
+    payload = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT)
     result: list[Path] = []
-    for path in sorted(ROOT.rglob("*")):
-        relative = path.relative_to(ROOT)
+    for raw in payload.split(b"\0"):
+        if not raw:
+            continue
+        relative = Path(raw.decode("utf-8"))
+        path = ROOT / relative
         if not path.is_file() or any(part in EXCLUDED_PARTS for part in relative.parts):
             continue
         if relative.parts and relative.parts[0] in EXCLUDED_PREFIXES:
             continue
         result.append(path)
-    return result
+    return sorted(result)
 
 
 def sha256(path: Path) -> str:
@@ -56,6 +61,9 @@ def main() -> int:
     parser.add_argument("--prefix", default="searchright")
     args = parser.parse_args()
     output_dir = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
+    status = subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True)
+    if status.strip():
+        raise SystemExit("source packaging requires a clean Git working tree")
     output_dir.mkdir(parents=True, exist_ok=True)
     source_epoch = epoch()
     members = files()

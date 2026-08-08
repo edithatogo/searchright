@@ -4,17 +4,9 @@
 Parent track key: `track-08`
 Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-08-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-prisma/src/lib.rs`
-  - [x] `crates/searchright-validation/src/lib.rs`
-  - [x] `contracts/examples/prisma-flow.json`
-  - [x] `contracts/examples/search-validation.yaml`
-  - [x] `contracts/examples/standard-assessment.yaml`
-  - [x] `docs/standards-and-provenance.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-08-phase-1-task-01`)
 
 ## Evidence rule
 

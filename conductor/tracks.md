@@ -4,10 +4,10 @@ Track status is evidence-scaled. `source_implemented_unverified` means the
 contracts and source exist and pass the static harness; it does not mean Rust
 compiled, providers ran, users evaluated the workflow or a registry accepted it.
 
-Each track maps to a GitHub issue key `track-NN`; each numbered plan phase maps
-to a native GitHub subissue key `track-NN-phase-M`. The generated hierarchy is
-stored under `conductor/github/` and remains prepared-not-synced until an
-explicit, approval-gated apply run succeeds.
+Each track maps to `track-NN`; each phase maps to `track-NN-phase-M`; and
+each top-level plan task maps to `track-NN-phase-M-task-TT`. The generated
+native issue hierarchy and Project projection remain prepared-not-synced until
+an explicit, approval-gated apply receipt exists.
 
 | ID | Track | Horizon | Status | Evidence | Outcome |
 | --- | --- | --- | --- | --- | --- |
@@ -41,7 +41,14 @@ explicit, approval-gated apply run succeeds.
 | 27 | [Accessibility, internationalisation and usability](tracks/27-accessibility-internationalisation-usability/spec.md) | mature | source_implemented_unverified | source_verified | Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology. |
 | 28 | [Institutional governance, privacy and collaboration](tracks/28-institutional-governance-privacy-collaboration/spec.md) | mature | source_implemented_unverified | source_verified | Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations. |
 | 29 | [External methodological evaluation and sustainability](tracks/29-external-evaluation-sustainability/spec.md) | mature | external_evidence_required | source_verified | Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence. |
-| 30 | [Mature 1.0 product, community and evaluation](tracks/30-maturity-1-0/spec.md) | mature | external_evidence_required | source_verified | Reach a stable externally evaluated 1.0 infrastructure product only after every evidence domain passes. |
+| 30 | [Maturity gate and gap closure](tracks/30-maturity-gap-closure/spec.md) | mature | source_implemented_unverified | source_verified | Maintain one evidence-scaled gap register and block premature release claims while remaining domains are implemented. |
+| 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | mature | integration_prepared | source_verified | Create and synchronise the remote repository, epic, tracks, phases, tasks, Project fields/views and repository protections from declarative source. |
+| 32 | [Cross-repository contract release train and downstream canaries](tracks/32-cross-repository-release-train/spec.md) | mature | integration_prepared | source_verified | Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions. |
+| 33 | [Operational observability, backup, restore and incident response](tracks/33-operational-reliability/spec.md) | mature | source_implemented_unverified | source_verified | Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments. |
+| 34 | [Authenticated remote MCP, tenancy and data residency](tracks/34-authenticated-remote-mcp/spec.md) | mature | source_implemented_unverified | source_verified | Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment. |
+| 35 | [Generated SDKs, fixture-backed documentation and adoption operations](tracks/35-sdk-docs-adoption/spec.md) | mature | source_implemented_unverified | source_verified | Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core. |
+| 36 | [Release-candidate rehearsal, staged pilots and ecosystem rehearsal](tracks/36-release-candidate-pilots/spec.md) | mature | release_prepared | source_verified | Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals. |
+| 37 | [Final mature 1.0 release and long-term operations](tracks/37-maturity-1-0/spec.md) | mature | external_evidence_required | source_verified | Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness. |
 
 ## Evidence ladder
 

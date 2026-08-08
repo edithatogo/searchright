@@ -74,7 +74,7 @@ maintain separate methodological logic.
 
 ### Executable Rust components
 
-The workspace currently contains **27 crates**:
+The workspace currently contains **29 crates**:
 
 ```text
 crates/evidence-search-core/           Shared query/provider/audit kernel
@@ -104,11 +104,13 @@ crates/searchright/                    Shared application facade
 crates/searchright-cli/                `searchright` CLI
 crates/searchright-mcp/                `searchright-mcp` stdio server
 crates/searchright-agent/              Governed agent workflow
+crates/searchright-access/             Authentication, tenancy and authority policy
+crates/searchright-ops/                Health, telemetry, backup and incident contracts
 ```
 
 ### Contracts, integration and standards
 
-- **37** Draft 2020-12 JSON Schemas with 37 conforming examples.
+- **49** Draft 2020-12 JSON Schemas with 49 conforming examples.
 - A machine-readable schema catalogue and a **31-operation**
   CLI–MCP–facade interface catalogue.
 - OpenAPI and WIT boundary contracts.
@@ -135,35 +137,52 @@ or promote a public readiness claim.
 ## Conductor and GitHub hierarchy
 
 Conductor context is fully scaffolded with vision, strategy, architecture,
-MoSCoW requirements and **31 ordered tracks** spanning foundation through a
+MoSCoW requirements and **38 ordered tracks** spanning foundation through a
 version 1.0 maturity dossier. Every track has `spec.md`, a four-phase `plan.md`,
 `metadata.json`, `evidence.json`, source work and higher-evidence blockers.
 
-The canonical roadmap deterministically renders **156 GitHub work items**:
+The canonical roadmap deterministically renders **564 GitHub work items** in a four-level hierarchy:
 
 - one roadmap epic;
-- 31 track issues;
-- 124 phase subissues, four under each track.
+- 38 track issues;
+- 152 phase subissues, four under each track;
+- 373 task subissues corresponding to every top-level Conductor task.
 
 Remote mutation is dry-run first and requires an explicit workflow input, a
-protected write environment, issue-write permission, a clean Git tree and a
-second environment opt-in. No remote Searchright repository or issues are
-claimed by the local source artefacts.
+protected write environment, issue/project scopes, a clean Git tree and a
+second environment opt-in. A declarative GitHub Project v2 manifest owns 12
+custom fields and five views; an additive synchroniser creates or updates the
+Project and places all 564 issue nodes into it without deleting or archiving
+remote work. A one-command bootstrap controller can create the remote repository,
+apply settings and the main-branch ruleset, synchronise the issue hierarchy, and
+create/populate the Project. No remote Searchright repository, issue or Project
+is claimed by the local source artefacts until an observed apply receipt exists.
 
 The repository prepares host-aware Conductor installation scripts and records the
 observed upstream version. A compatible Gemini, Antigravity or Claude host was
 not present in this runtime, so installation is not falsely claimed.
 
+## Operational and maturity control plane
+
+Searchright now includes source contracts and policy crates for authenticated
+remote MCP, tenant-scoped authorisation, bounded long-running tasks, component
+health, opt-in telemetry, backup manifests, incident records and restore/rollback
+planning. A cross-repository release train orders CiteWeft → Searchright →
+Sourceright promotion through explicit consumer and downstream-canary evidence.
+A release-candidate rehearsal and three pilot profiles are prepared; neither is
+represented as executed. The final maturity track records a version 1.0 decision
+only when every required evidence domain passes.
+
 ## Maximal engineering harness
 
-The source configures a 20-dimension assurance matrix covering schema and
+The source configures a 28-dimension assurance matrix covering schema and
 semantic contracts, unit/integration/doctests, property and metamorphic tests,
 coverage, mutation, fuzzing, Kani proofs, Loom concurrency exploration, Miri,
 `cargo-careful`, SSRF/hostile-content controls, supply-chain review, clean-room
 offline builds, reproducible archives and binaries, attestations, MCP transcripts
 and human methodological evaluation.
 
-The network-free aggregate harness currently runs 22 static gates. Configured
+The network-free aggregate harness currently runs 31 static gates, including exact CI/developer-tool pin parity. Configured
 compiler, runtime, live and external gates do not become passing evidence until
 their receipts are observed.
 

@@ -4,17 +4,9 @@
 Parent track key: `track-06`
 Conductor plan: `conductor/tracks/06-imports-dedup-linkage/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-06-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-dedup/src/lib.rs`
-  - [x] `crates/searchright-interchange/src/lib.rs`
-  - [x] `crates/searchright-study/src/lib.rs`
-  - [x] `contracts/examples/interchange-receipt.yaml`
-  - [x] `contracts/examples/study-graph.yaml`
-  - [x] `docs/adrs/0005-record-report-study-separation.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-06-phase-1-task-01`)
 
 ## Evidence rule
 

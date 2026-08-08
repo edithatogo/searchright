@@ -4,19 +4,10 @@
 Parent track key: `track-16`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-16-phase-2 -->
-
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_rust_dependency_graph.py`
-  - [x] `python scripts/generate_source_sbom.py --check`
-  - [x] `python scripts/run_static_harness.py`
-  - [x] `python scripts/check_default_deny.py`
-  - [x] `python scripts/check_workflow_hardening.py`
-  - [x] `python scripts/generate_source_hash_manifest.py --check`
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [x] T01: Run deterministic, network-free contract and policy checks. (`track-16-phase-2-task-01`)
+- [x] T02: Record machine-readable evidence without promoting compiler, live or external claims. (`track-16-phase-2-task-02`)
 
 ## Evidence rule
 

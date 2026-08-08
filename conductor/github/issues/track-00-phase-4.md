@@ -4,14 +4,12 @@
 Parent track key: `track-00`
 Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-00-phase-4 -->
-
-- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
-- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] T01: Reconcile source paths, requirements, interface effects and claim boundaries. (`track-00-phase-4-task-01`)
+- [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-00-phase-4-task-02`)
+- [ ] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-00-phase-4-task-03`)
+- [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-00-phase-4-task-04`)
 
 ## Evidence rule
 

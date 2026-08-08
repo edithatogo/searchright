@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/github-repository-settings.v1.schema.json",
+  "title": "Searchright GitHub repository settings manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "repository",
+    "visibility",
+    "description",
+    "homepage",
+    "features",
+    "merge_policy",
+    "topics",
+    "environments",
+    "security",
+    "ruleset",
+    "apply_permitted",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.github-repository-settings.v1"
+    },
+    "repository": {
+      "type": "string",
+      "pattern": "^[^/\\s]+/[^/\\s]+$"
+    },
+    "visibility": {
+      "enum": [
+        "public",
+        "private"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri"
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issues",
+        "projects",
+        "discussions",
+        "wiki"
+      ],
+      "properties": {
+        "issues": {
+          "type": "boolean"
+        },
+        "projects": {
+          "type": "boolean"
+        },
+        "discussions": {
+          "type": "boolean"
+        },
+        "wiki": {
+          "type": "boolean"
+        }
+      }
+    },
+    "merge_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "squash",
+        "rebase",
+        "merge_commit",
+        "delete_head_branch",
+        "allow_auto_merge",
+        "allow_update_branch"
+      ],
+      "properties": {
+        "squash": {
+          "type": "boolean"
+        },
+        "rebase": {
+          "type": "boolean"
+        },
+        "merge_commit": {
+          "type": "boolean"
+        },
+        "delete_head_branch": {
+          "type": "boolean"
+        },
+        "allow_auto_merge": {
+          "type": "boolean"
+        },
+        "allow_update_branch": {
+          "type": "boolean"
+        }
+      }
+    },
+    "topics": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "environments": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vulnerability_alerts",
+        "automated_security_fixes",
+        "secret_scanning",
+        "push_protection",
+        "private_vulnerability_reporting"
+      ],
+      "properties": {
+        "vulnerability_alerts": {
+          "type": "boolean"
+        },
+        "automated_security_fixes": {
+          "type": "boolean"
+        },
+        "secret_scanning": {
+          "type": "boolean"
+        },
+        "push_protection": {
+          "type": "boolean"
+        },
+        "private_vulnerability_reporting": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ruleset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "target",
+        "enforcement",
+        "include",
+        "required_status_checks",
+        "required_linear_history",
+        "required_signed_commits",
+        "deletion",
+        "non_fast_forward"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "const": "branch"
+        },
+        "enforcement": {
+          "enum": [
+            "active",
+            "evaluate",
+            "disabled"
+          ]
+        },
+        "include": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required_status_checks": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required_linear_history": {
+          "type": "boolean"
+        },
+        "required_signed_commits": {
+          "type": "boolean"
+        },
+        "deletion": {
+          "const": false
+        },
+        "non_fast_forward": {
+          "const": false
+        }
+      }
+    },
+    "apply_permitted": {
+      "const": false
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

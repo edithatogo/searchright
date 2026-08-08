@@ -1,0 +1,47 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "37",
+  "slug": "maturity-1-0",
+  "title": "Final mature 1.0 release and long-term operations",
+  "status": "external_evidence_required",
+  "created": "2026-08-08",
+  "updated": "2026-08-08",
+  "dependencies": [
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": true,
+  "evidence_path": "conductor/tracks/37-maturity-1-0/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-37",
+    "phase_issue_keys": [
+      "track-37-phase-1",
+      "track-37-phase-2",
+      "track-37-phase-3",
+      "track-37-phase-4"
+    ],
+    "task_issue_keys": [
+      "track-37-phase-1-task-01",
+      "track-37-phase-2-task-01",
+      "track-37-phase-2-task-02",
+      "track-37-phase-3-task-01",
+      "track-37-phase-3-task-02",
+      "track-37-phase-3-task-03",
+      "track-37-phase-4-task-01",
+      "track-37-phase-4-task-02",
+      "track-37-phase-4-task-03",
+      "track-37-phase-4-task-04"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": [],
+    "remote_task_issue_numbers": []
+  }
+}

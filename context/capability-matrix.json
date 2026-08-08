@@ -2,13 +2,117 @@
   "schema_version": "org.searchright.capability-matrix.v1",
   "default_policy": "deny",
   "components": [
-    {"component": "searchright library", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "Pure contracts and local workflow by default."},
-    {"component": "searchright CLI", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "Live and apply modes require explicit flags and policy."},
-    {"component": "searchright MCP", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "Typed tools delegate to the same facade; remote effects remain policy-gated."},
-    {"component": "evidence-search-core", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "Fixture/replay are default; providers need declared hosts and budgets."},
-    {"component": "searchright-citeweft", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "One-way extraction evidence adapter; no canonical writes."},
-    {"component": "WASI provider component", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "Capabilities are per-component and deny-by-default."},
-    {"component": "GitHub issue sync", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "Dry-run default; apply needs flag, environment opt-in, clean tree and issues:write."},
-    {"component": "agent skill", "network": false, "external_writes": false, "telemetry": false, "final_exclusion": false, "notes": "May recommend and prepare; consequential actions require human authority."}
+    {
+      "component": "GitHub Project sync",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Dry-run default; Project create/edit/item writes require project scope, clean tree and dual apply opt-in."
+    },
+    {
+      "component": "GitHub bootstrap control plane",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "May create a remote and settings only after explicit apply; no delete or automatic evidence promotion."
+    },
+    {
+      "component": "GitHub issue sync",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Dry-run default; apply needs flag, environment opt-in, clean tree and issues:write."
+    },
+    {
+      "component": "WASI provider component",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Capabilities are per-component and deny-by-default."
+    },
+    {
+      "component": "agent skill",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "May recommend and prepare; consequential actions require human authority."
+    },
+    {
+      "component": "cross-repository release train",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Read-only plan by default; no automatic revision or release promotion."
+    },
+    {
+      "component": "evidence-search-core",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Fixture/replay are default; providers need declared hosts and budgets."
+    },
+    {
+      "component": "release rehearsal",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Prepares gates and pilots only; cannot publish, submit registries or declare success automatically."
+    },
+    {
+      "component": "searchright CLI",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Live and apply modes require explicit flags and policy."
+    },
+    {
+      "component": "searchright MCP",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Typed tools delegate to the same facade; remote effects remain policy-gated."
+    },
+    {
+      "component": "searchright access policy",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Evaluates authenticated requests locally; cross-tenant aggregation and final agent exclusion remain denied."
+    },
+    {
+      "component": "searchright library",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Pure contracts and local workflow by default."
+    },
+    {
+      "component": "searchright operations",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Health/backup/incident logic is local; telemetry has a separate disabled-by-default policy."
+    },
+    {
+      "component": "searchright-citeweft",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "One-way extraction evidence adapter; no canonical writes."
+    }
   ]
 }

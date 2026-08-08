@@ -1,0 +1,59 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "32",
+  "title": "Cross-repository contract release train and downstream canaries",
+  "status": "integration_prepared",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "integration/release-train.json",
+    "scripts/check_release_train.py",
+    ".github/workflows/integration-release-train.yml",
+    "docs/release-train.md",
+    "integration/consumer-contract-suite.json",
+    "integration/passports/index.json"
+  ],
+  "static_checks": [
+    "python scripts/check_release_train.py",
+    "python scripts/check_integration_passports.py",
+    "python scripts/check_consumer_contracts.py",
+    "python scripts/check_integration_drift.py"
+  ],
+  "requirements": [
+    "SR-065",
+    "SR-070",
+    "SR-076",
+    "SR-077"
+  ],
+  "blockers": [
+    "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+    "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+    "Approve promotion or rollback explicitly and record cross-repository receipts."
+  ],
+  "claim_boundary": "A source-verified release train does not prove producer-consumer compatibility or publish any component.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-32",
+    "phases": [
+      "track-32-phase-1",
+      "track-32-phase-2",
+      "track-32-phase-3",
+      "track-32-phase-4"
+    ],
+    "tasks": [
+      "track-32-phase-1-task-01",
+      "track-32-phase-2-task-01",
+      "track-32-phase-2-task-02",
+      "track-32-phase-3-task-01",
+      "track-32-phase-3-task-02",
+      "track-32-phase-3-task-03",
+      "track-32-phase-4-task-01",
+      "track-32-phase-4-task-02",
+      "track-32-phase-4-task-03",
+      "track-32-phase-4-task-04"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

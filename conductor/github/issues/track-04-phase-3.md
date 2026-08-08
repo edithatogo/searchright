@@ -4,13 +4,11 @@
 Parent track key: `track-04`
 Conductor plan: `conductor/tracks/04-open-connectors-mvp/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-04-phase-3 -->
-
-- [ ] Compile and run connector fixtures.
-- [ ] Run authorised, redacted live smokes for each advertised provider.
-- [ ] Verify upstream terms, rate limits and response changes at release time.
+- [ ] T01: Compile and run connector fixtures. (`track-04-phase-3-task-01`)
+- [ ] T02: Run authorised, redacted live smokes for each advertised provider. (`track-04-phase-3-task-02`)
+- [ ] T03: Verify upstream terms, rate limits and response changes at release time. (`track-04-phase-3-task-03`)
 
 ## Evidence rule
 

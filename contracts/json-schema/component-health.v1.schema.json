@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/component-health.v1.schema.json",
+  "title": "Component health",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "component",
+    "state",
+    "diagnostics",
+    "ready",
+    "observed_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.component-health.v1"
+    },
+    "component": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "healthy",
+        "degraded",
+        "unhealthy",
+        "disabled"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "ready": {
+      "type": "boolean"
+    },
+    "observed_at": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

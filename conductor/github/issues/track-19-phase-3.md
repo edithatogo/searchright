@@ -4,14 +4,12 @@
 Parent track key: `track-19`
 Conductor plan: `conductor/tracks/19-registries-publication/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-19-phase-3 -->
-
-- [ ] Publish a verified release that registry packets can reference.
-- [ ] Submit to each external registry with maintainer approval.
-- [ ] Record public listing, rejection or revision evidence.
-- [ ] Complete JOSS submission requirements and independent review.
+- [ ] T01: Publish a verified release that registry packets can reference. (`track-19-phase-3-task-01`)
+- [ ] T02: Submit to each external registry with maintainer approval. (`track-19-phase-3-task-02`)
+- [ ] T03: Record public listing, rejection or revision evidence. (`track-19-phase-3-task-03`)
+- [ ] T04: Complete JOSS submission requirements and independent review. (`track-19-phase-3-task-04`)
 
 ## Evidence rule
 

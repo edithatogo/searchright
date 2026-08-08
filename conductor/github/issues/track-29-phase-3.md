@@ -4,14 +4,12 @@
 Parent track key: `track-29`
 Conductor plan: `conductor/tracks/29-external-evaluation-sustainability/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-29-phase-3 -->
-
-- [ ] Preregister the independent evaluation protocol.
-- [ ] Recruit external information specialists and execute blinded evaluation.
-- [ ] Publish results, limitations and response-to-findings matrix.
-- [ ] Demonstrate observed maintenance, standards surveillance and succession practice.
+- [ ] T01: Preregister the independent evaluation protocol. (`track-29-phase-3-task-01`)
+- [ ] T02: Recruit external information specialists and execute blinded evaluation. (`track-29-phase-3-task-02`)
+- [ ] T03: Publish results, limitations and response-to-findings matrix. (`track-29-phase-3-task-03`)
+- [ ] T04: Demonstrate observed maintenance, standards surveillance and succession practice. (`track-29-phase-3-task-04`)
 
 ## Evidence rule
 

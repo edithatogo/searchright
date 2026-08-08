@@ -29,4 +29,4 @@ Adopt the shared runtime in Sourceright and coordinate compatible releases witho
 
 Source-verified implementation only; higher evidence levels require the named open gates.
 
-> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime/external receipts remain authoritative.
+> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

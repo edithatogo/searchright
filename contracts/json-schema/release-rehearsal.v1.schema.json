@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/release-rehearsal.v1.schema.json",
+  "title": "Searchright release rehearsal manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "target",
+    "status",
+    "source_epoch",
+    "required_gates",
+    "pilot_profiles",
+    "automatic_release",
+    "automatic_registry_submission",
+    "rollback_required",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.release-rehearsal.v1"
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "prepared_not_executed",
+        "in_progress",
+        "failed",
+        "passed"
+      ]
+    },
+    "source_epoch": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_gates": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "pilot_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "automatic_release": {
+      "const": false
+    },
+    "automatic_registry_submission": {
+      "const": false
+    },
+    "rollback_required": {
+      "const": true
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

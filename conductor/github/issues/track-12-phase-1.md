@@ -4,19 +4,9 @@
 Parent track key: `track-12`
 Conductor plan: `conductor/tracks/12-citeweft-document-evidence/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-12-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-citeweft/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/document.rs`
-  - [x] `contracts/json-schema/document-evidence.v1.schema.json`
-  - [x] `contracts/examples/document-evidence.json`
-  - [x] `integration/citeweft-compatibility.json`
-  - [x] `docs/citeweft-integration.md`
-  - [x] `docs/adrs/0013-citeweft-document-evidence-boundary.md`
-  - [x] `scripts/check_citeweft_integration.py`
+- [x] T01: Implement and document the track's source deliverables. (`track-12-phase-1-task-01`)
 
 ## Evidence rule
 

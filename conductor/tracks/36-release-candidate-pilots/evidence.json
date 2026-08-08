@@ -1,0 +1,61 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "36",
+  "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+  "status": "release_prepared",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "release/rehearsal.json",
+    "scripts/check_release_rehearsal.py",
+    ".github/workflows/release-candidate.yml",
+    "docs/releases/release-candidate.md",
+    "docs/pilots/pilot-protocol.md",
+    "registry/status.json",
+    "scripts/package_source.py"
+  ],
+  "static_checks": [
+    "python scripts/check_release_rehearsal.py",
+    "python scripts/check_packaging_reproducibility.py",
+    "python scripts/check_maturity_dossier.py"
+  ],
+  "requirements": [
+    "SR-039",
+    "SR-040",
+    "SR-068",
+    "SR-089",
+    "SR-090",
+    "SR-091"
+  ],
+  "blockers": [
+    "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+    "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+    "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+  ],
+  "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-36",
+    "phases": [
+      "track-36-phase-1",
+      "track-36-phase-2",
+      "track-36-phase-3",
+      "track-36-phase-4"
+    ],
+    "tasks": [
+      "track-36-phase-1-task-01",
+      "track-36-phase-2-task-01",
+      "track-36-phase-2-task-02",
+      "track-36-phase-3-task-01",
+      "track-36-phase-3-task-02",
+      "track-36-phase-3-task-03",
+      "track-36-phase-4-task-01",
+      "track-36-phase-4-task-02",
+      "track-36-phase-4-task-03",
+      "track-36-phase-4-task-04"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

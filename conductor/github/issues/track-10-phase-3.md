@@ -4,12 +4,10 @@
 Parent track key: `track-10`
 Conductor plan: `conductor/tracks/10-mcp-mvp/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-10-phase-3 -->
-
-- [ ] Compile and run stdio MCP conformance transcripts with current and compatibility clients.
-- [ ] Validate structured output schemas against live client implementations.
+- [ ] T01: Compile and run stdio MCP conformance transcripts with current and compatibility clients. (`track-10-phase-3-task-01`)
+- [ ] T02: Validate structured output schemas against live client implementations. (`track-10-phase-3-task-02`)
 
 ## Evidence rule
 

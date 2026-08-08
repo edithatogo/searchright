@@ -4,19 +4,9 @@
 Parent track key: `track-26`
 Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-26-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-assurance/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/assurance.rs`
-  - [x] `contracts/examples/workflow-trace.yaml`
-  - [x] `docs/adrs/0011-assurance-and-evidence-ladder.md`
-  - [x] `crates/searchright-assurance/tests/loom_authority.rs`
-  - [x] `.github/workflows/formal.yml`
-  - [x] `fuzz/Cargo.toml`
-  - [x] `verification/harness-matrix.json`
+- [x] T01: Implement and document the track's source deliverables. (`track-26-phase-1-task-01`)
 
 ## Evidence rule
 

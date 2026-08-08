@@ -4,13 +4,11 @@
 Parent track key: `track-27`
 Conductor plan: `conductor/tracks/27-accessibility-internationalisation-usability/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-27-phase-3 -->
-
-- [ ] Compile and run plain/JSON/JSONL snapshots and no-colour tests.
-- [ ] Create message catalogues and execute locale-fallback tests.
-- [ ] Complete keyboard, screen-reader and information-specialist usability evaluation.
+- [ ] T01: Compile and run plain/JSON/JSONL snapshots and no-colour tests. (`track-27-phase-3-task-01`)
+- [ ] T02: Create message catalogues and execute locale-fallback tests. (`track-27-phase-3-task-02`)
+- [ ] T03: Complete keyboard, screen-reader and information-specialist usability evaluation. (`track-27-phase-3-task-03`)
 
 ## Evidence rule
 

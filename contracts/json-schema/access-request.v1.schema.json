@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/access-request.v1.schema.json",
+  "title": "Access request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "principal_id",
+    "principal_kind",
+    "tenant_id",
+    "scopes",
+    "region",
+    "authenticated",
+    "external_write",
+    "final_eligibility_decision",
+    "human_approval"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.access-request.v1"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "principal_kind": {
+      "enum": [
+        "human",
+        "service",
+        "agent"
+      ]
+    },
+    "tenant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scopes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "review_read",
+          "review_write",
+          "search_execute",
+          "screening_recommend",
+          "screening_decide",
+          "tenant_admin",
+          "external_write"
+        ]
+      }
+    },
+    "region": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "authenticated": {
+      "type": "boolean"
+    },
+    "external_write": {
+      "type": "boolean"
+    },
+    "final_eligibility_decision": {
+      "type": "boolean"
+    },
+    "human_approval": {
+      "type": "boolean"
+    }
+  }
+}

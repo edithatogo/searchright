@@ -1,0 +1,197 @@
+{
+  "$id": "https://schemas.searchright.dev/github-project.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "apply_permitted": {
+      "const": false
+    },
+    "fields": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "data_type": {
+            "enum": [
+              "SINGLE_SELECT",
+              "TEXT",
+              "NUMBER",
+              "DATE"
+            ]
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "options": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "name",
+          "data_type"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "link_repository": {
+      "type": "boolean"
+    },
+    "owner": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "owner_type": {
+      "enum": [
+        "user",
+        "organization"
+      ]
+    },
+    "project_number": {
+      "type": "null"
+    },
+    "readme_path": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "repository": {
+      "pattern": "^[^/\\s]+/[^/\\s]+$",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "org.searchright.github-project.v1"
+    },
+    "short_description": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sync": {
+      "additionalProperties": false,
+      "properties": {
+        "archive_policy": {
+          "const": "never_automatic"
+        },
+        "checkpoint_policy": {
+          "const": "ignored_atomic_resumable"
+        },
+        "delete_policy": {
+          "const": "never"
+        },
+        "field_policy": {
+          "const": "manifest_owned_custom_fields_only"
+        },
+        "hierarchy_path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "identity_field": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "labels_path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "minimum_interval_ms": {
+          "maximum": 2000,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "partial_run_policy": {
+          "const": "canonical_order_resume_after"
+        },
+        "promotion_policy": {
+          "const": "remote_state_cannot_promote_evidence"
+        },
+        "receipt_directory": {
+          "const": ".searchright/receipts"
+        },
+        "remote_audit_path": {
+          "const": "scripts/audit_github_control_plane.py"
+        },
+        "state_policy": {
+          "const": "task_issues_only"
+        }
+      },
+      "required": [
+        "hierarchy_path",
+        "labels_path",
+        "identity_field",
+        "state_policy",
+        "delete_policy",
+        "archive_policy",
+        "field_policy",
+        "promotion_policy",
+        "checkpoint_policy",
+        "partial_run_policy",
+        "receipt_directory",
+        "remote_audit_path",
+        "minimum_interval_ms"
+      ],
+      "type": "object"
+    },
+    "title": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "views": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "filter": {
+            "type": "string"
+          },
+          "layout": {
+            "enum": [
+              "BOARD_LAYOUT",
+              "ROADMAP_LAYOUT",
+              "TABLE_LAYOUT"
+            ]
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "layout",
+          "filter"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "visibility": {
+      "enum": [
+        "public",
+        "private"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "owner",
+    "owner_type",
+    "repository",
+    "title",
+    "short_description",
+    "readme_path",
+    "visibility",
+    "project_number",
+    "link_repository",
+    "apply_permitted",
+    "fields",
+    "views",
+    "sync"
+  ],
+  "title": "Searchright GitHub Project v2 manifest",
+  "type": "object"
+}

@@ -4,16 +4,9 @@
 Parent track key: `track-29`
 Conductor plan: `conductor/tracks/29-external-evaluation-sustainability/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-29-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `docs/evaluation/external-methodological-evaluation.md`
-  - [x] `docs/evaluation/benchmark-and-calibration-protocol.md`
-  - [x] `docs/governance/sustainability.md`
-  - [x] `registry/joss/paper.md`
-  - [x] `GOVERNANCE.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-29-phase-1-task-01`)
 
 ## Evidence rule
 

@@ -4,12 +4,10 @@
 Parent track key: `track-08`
 Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-08-phase-3 -->
-
-- [ ] Compile and run arithmetic, snapshot and standards-pack tests.
-- [ ] Obtain independent PRESS review of representative generated strategies and appendices.
+- [ ] T01: Compile and run arithmetic, snapshot and standards-pack tests. (`track-08-phase-3-task-01`)
+- [ ] T02: Obtain independent PRESS review of representative generated strategies and appendices. (`track-08-phase-3-task-02`)
 
 ## Evidence rule
 

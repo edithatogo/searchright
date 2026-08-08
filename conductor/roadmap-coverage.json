@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.roadmap-coverage.v1",
-  "updated": "2026-08-06",
+  "updated": "2026-08-08",
   "strategy_improvements": [
     "Stable auditable kernel with an explicitly experimental adapter and agent edge.",
     "One application facade with machine-readable CLI/MCP parity.",
@@ -11,7 +11,11 @@
     "CiteWeft provides optional source-grounded document evidence without contaminating the search kernel or canonical CSL.",
     "Pinned integration passports and consumer-driven contracts replace undocumented cross-repository coupling.",
     "Conductor tracks map deterministically to GitHub issues and each plan phase maps to a native subissue.",
-    "A canonical context spine, claim boundaries and hazard ledger constrain all coding-agent surfaces."
+    "A canonical context spine, claim boundaries and hazard ledger constrain all coding-agent surfaces.",
+    "Every top-level Conductor task maps to a native nested GitHub subissue and every generated issue maps to a declarative Project v2 item.",
+    "Repository settings, protected environments, security controls, branch rules and Project fields are managed by an idempotent dry-run-first control plane.",
+    "Maturity now includes cross-repository release trains, operational reliability, authenticated tenancy, generated SDK boundaries, staged pilots and a final release decision.",
+    "Telemetry is disabled by default; backups, restore, incidents and remote access are explicit versioned contracts rather than deployment assumptions."
   ],
   "tracks": [
     {
@@ -1171,53 +1175,354 @@
     },
     {
       "track_id": "30",
-      "slug": "maturity-1-0",
-      "title": "Mature 1.0 product, community and evaluation",
-      "outcome": "Reach a stable externally evaluated 1.0 infrastructure product only after every evidence domain passes.",
+      "slug": "maturity-gap-closure",
+      "title": "Maturity gate and gap closure",
+      "outcome": "Maintain one evidence-scaled gap register and block premature release claims while remaining domains are implemented.",
       "horizon": "mature",
-      "status": "external_evidence_required",
+      "status": "source_implemented_unverified",
       "evidence_level": "source_verified",
       "requirements": [
-        "SR-050",
-        "SR-061"
+        "SR-050"
       ],
       "deliverables": [
-        "docs/maturity/1.0-gate.md",
+        "docs/maturity/gap-register.md",
         "conductor/maturity-dossier.json",
-        "ROADMAP.md",
-        "PROJECT_STATUS.md",
-        "conductor/requirements.md"
+        "scripts/check_maturity_dossier.py",
+        "PROJECT_STATUS.md"
       ],
       "checks": [
-        "python scripts/validate_repository.py",
+        "python scripts/check_maturity_dossier.py",
         "python scripts/check_roadmap_coverage.py"
       ],
       "blockers": [
-        "Pass compiler, fixture, live-provider, interoperability, security and usability gates.",
-        "Complete Sourceright and estate migrations with rollback evidence.",
-        "Complete independent methodological evaluation.",
-        "Publish signed 1.0 release and record registry/community evidence."
+        "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
+        "Review and approve any explicit release-risk exception without hiding the open gap.",
+        "Keep autonomous end-to-end review and final agent exclusions outside the release claim."
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "claim_boundary": "The gap register is source-verified planning evidence; it cannot close the gaps it records.",
       "dependencies": [
-        "12",
-        "13",
-        "14",
-        "15",
-        "16",
-        "17",
-        "18",
-        "19",
-        "20",
-        "21",
-        "22",
-        "23",
-        "24",
         "25",
         "26",
         "27",
         "28",
         "29"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "31",
+      "slug": "github-control-plane",
+      "title": "GitHub remote, nested issues and Project v2 control plane",
+      "outcome": "Create and synchronise the remote repository, epic, tracks, phases, tasks, Project fields/views and repository protections from declarative source.",
+      "horizon": "mature",
+      "status": "integration_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-066",
+        "SR-071",
+        "SR-072",
+        "SR-073",
+        "SR-074",
+        "SR-075"
+      ],
+      "deliverables": [
+        "conductor/github/project.json",
+        "conductor/github/project-readme.md",
+        "conductor/github/repository-settings.json",
+        "conductor/github/issue-hierarchy.json",
+        "scripts/bootstrap_github.py",
+        "scripts/sync_github_issues.py",
+        "scripts/sync_github_project.py",
+        "scripts/check_github_project.py",
+        ".github/workflows/github-control-plane.yml",
+        "docs/github-operating-system.md",
+        "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+        "contracts/json-schema/github-project.v1.schema.json"
+      ],
+      "checks": [
+        "python scripts/render_github_issues.py --check",
+        "python scripts/check_github_issue_hierarchy.py",
+        "python scripts/check_github_project.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "blockers": [
+        "Create or verify the public remote and push the committed main branch.",
+        "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+        "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
+      ],
+      "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists.",
+      "dependencies": [
+        "00",
+        "13",
+        "16",
+        "30"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "32",
+      "slug": "cross-repository-release-train",
+      "title": "Cross-repository contract release train and downstream canaries",
+      "outcome": "Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions.",
+      "horizon": "mature",
+      "status": "integration_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-065",
+        "SR-070",
+        "SR-076",
+        "SR-077"
+      ],
+      "deliverables": [
+        "integration/release-train.json",
+        "scripts/check_release_train.py",
+        ".github/workflows/integration-release-train.yml",
+        "docs/release-train.md",
+        "integration/consumer-contract-suite.json",
+        "integration/passports/index.json"
+      ],
+      "checks": [
+        "python scripts/check_release_train.py",
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_consumer_contracts.py",
+        "python scripts/check_integration_drift.py"
+      ],
+      "blockers": [
+        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+        "Approve promotion or rollback explicitly and record cross-repository receipts."
+      ],
+      "claim_boundary": "A source-verified release train does not prove producer-consumer compatibility or publish any component.",
+      "dependencies": [
+        "13",
+        "14",
+        "15",
+        "18",
+        "31"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "33",
+      "slug": "operational-reliability",
+      "title": "Operational observability, backup, restore and incident response",
+      "outcome": "Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments.",
+      "horizon": "mature",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-078",
+        "SR-079",
+        "SR-080",
+        "SR-081"
+      ],
+      "deliverables": [
+        "crates/searchright-ops/src/lib.rs",
+        "crates/searchright-contracts/src/ops.rs",
+        "contracts/examples/component-health.json",
+        "contracts/examples/telemetry-policy.json",
+        "contracts/examples/backup-manifest.json",
+        "contracts/examples/incident-record.json",
+        "docs/operations/reliability.md",
+        "docs/operations/backup-restore.md",
+        "docs/operations/incident-response.md",
+        ".github/workflows/resilience.yml"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "blockers": [
+        "Compile and execute operations policy tests and failure-injection scenarios.",
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+      ],
+      "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run.",
+      "dependencies": [
+        "05",
+        "16",
+        "25",
+        "28",
+        "30"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "34",
+      "slug": "authenticated-remote-mcp",
+      "title": "Authenticated remote MCP, tenancy and data residency",
+      "outcome": "Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment.",
+      "horizon": "mature",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-047",
+        "SR-082",
+        "SR-083",
+        "SR-084",
+        "SR-085"
+      ],
+      "deliverables": [
+        "crates/searchright-access/src/lib.rs",
+        "crates/searchright-contracts/src/access.rs",
+        "contracts/examples/tenant-policy.json",
+        "contracts/examples/access-request.json",
+        "contracts/examples/access-decision.json",
+        "docs/security/authenticated-remote-mcp.md",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "docs/security/threat-model.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py"
+      ],
+      "blockers": [
+        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
+        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+      ],
+      "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service.",
+      "dependencies": [
+        "10",
+        "24",
+        "28",
+        "33"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "35",
+      "slug": "sdk-docs-adoption",
+      "title": "Generated SDKs, fixture-backed documentation and adoption operations",
+      "outcome": "Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core.",
+      "horizon": "mature",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-086",
+        "SR-087",
+        "SR-088"
+      ],
+      "deliverables": [
+        "sdk/manifest.json",
+        "scripts/check_sdk_examples.py",
+        "docs/sdk-and-adoption.md",
+        "examples/quickstart/README.md",
+        "contracts/interface-catalog.json",
+        "README.md",
+        "GOVERNANCE.md"
+      ],
+      "checks": [
+        "python scripts/check_sdk_examples.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
+      ],
+      "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published.",
+      "dependencies": [
+        "10",
+        "18",
+        "27",
+        "31",
+        "34"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "36",
+      "slug": "release-candidate-pilots",
+      "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+      "outcome": "Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals.",
+      "horizon": "mature",
+      "status": "release_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-039",
+        "SR-040",
+        "SR-068",
+        "SR-089",
+        "SR-090",
+        "SR-091"
+      ],
+      "deliverables": [
+        "release/rehearsal.json",
+        "scripts/check_release_rehearsal.py",
+        ".github/workflows/release-candidate.yml",
+        "docs/releases/release-candidate.md",
+        "docs/pilots/pilot-protocol.md",
+        "registry/status.json",
+        "scripts/package_source.py"
+      ],
+      "checks": [
+        "python scripts/check_release_rehearsal.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_maturity_dossier.py"
+      ],
+      "blockers": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
+      "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted.",
+      "dependencies": [
+        "18",
+        "19",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "37",
+      "slug": "maturity-1-0",
+      "title": "Final mature 1.0 release and long-term operations",
+      "outcome": "Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness.",
+      "horizon": "mature",
+      "status": "external_evidence_required",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-050",
+        "SR-061",
+        "SR-092"
+      ],
+      "deliverables": [
+        "docs/maturity/1.0-gate.md",
+        "docs/maturity/release-decision.md",
+        "conductor/maturity-dossier.json",
+        "scripts/check_maturity_dossier.py",
+        "ROADMAP.md",
+        "PROJECT_STATUS.md"
+      ],
+      "checks": [
+        "python scripts/check_maturity_dossier.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/run_static_harness.py"
+      ],
+      "blockers": [
+        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
+      ],
+      "claim_boundary": "Searchright remains below 1.0 maturity until all named evidence and external decisions exist.",
+      "dependencies": [
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36"
       ],
       "external_approval_required": true
     }

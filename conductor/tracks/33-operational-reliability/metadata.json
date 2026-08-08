@@ -1,0 +1,45 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "33",
+  "slug": "operational-reliability",
+  "title": "Operational observability, backup, restore and incident response",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-08",
+  "updated": "2026-08-08",
+  "dependencies": [
+    "05",
+    "16",
+    "25",
+    "28",
+    "30"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": true,
+  "evidence_path": "conductor/tracks/33-operational-reliability/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-33",
+    "phase_issue_keys": [
+      "track-33-phase-1",
+      "track-33-phase-2",
+      "track-33-phase-3",
+      "track-33-phase-4"
+    ],
+    "task_issue_keys": [
+      "track-33-phase-1-task-01",
+      "track-33-phase-2-task-01",
+      "track-33-phase-2-task-02",
+      "track-33-phase-3-task-01",
+      "track-33-phase-3-task-02",
+      "track-33-phase-3-task-03",
+      "track-33-phase-4-task-01",
+      "track-33-phase-4-task-02",
+      "track-33-phase-4-task-03",
+      "track-33-phase-4-task-04"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": [],
+    "remote_task_issue_numbers": []
+  }
+}

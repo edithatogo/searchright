@@ -1,0 +1,16 @@
+{
+  "schema_version": "org.searchright.access-request.v1",
+  "request_id": "access-demo-1",
+  "principal_id": "reviewer-1",
+  "principal_kind": "human",
+  "tenant_id": "tenant-demo",
+  "scopes": [
+    "review_read",
+    "screening_decide"
+  ],
+  "region": "AU",
+  "authenticated": true,
+  "external_write": false,
+  "final_eligibility_decision": true,
+  "human_approval": true
+}

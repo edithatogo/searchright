@@ -1,0 +1,24 @@
+{
+  "schema_version": "org.searchright.release-rehearsal.v1",
+  "target": "1.0.0-rc.1",
+  "status": "prepared_not_executed",
+  "source_epoch": "2026-08-08",
+  "required_gates": [
+    "clean_clone",
+    "locked_cross_platform_build",
+    "msrv_and_nightly_forward_compatibility",
+    "unit_integration_property_metamorphic_tests",
+    "coverage_mutation_fuzz_formal_harness",
+    "fixture_and_authorised_live_provider_receipts",
+    "mcp_cli_facade_interoperability",
+    "sourceright_citeweft_downstream_canaries",
+    "sbom_checksums_attestation_reproducibility",
+    "accessibility_usability_security_privacy_review",
+    "pilot_exit_and_rollback_rehearsal"
+  ],
+  "pilot_profiles": ["local_researcher", "institution_self_hosted", "remote_single_tenant"],
+  "automatic_release": false,
+  "automatic_registry_submission": false,
+  "rollback_required": true,
+  "claim_boundary": "A prepared rehearsal is not an executed release candidate or successful pilot."
+}

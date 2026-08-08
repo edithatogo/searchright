@@ -4,18 +4,9 @@
 Parent track key: `track-28`
 Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaboration/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-28-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-governance/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/governance.rs`
-  - [x] `contracts/examples/institutional-policy.yaml`
-  - [x] `contracts/examples/data-handling-request.yaml`
-  - [x] `contracts/examples/data-handling-decision.yaml`
-  - [x] `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
-  - [x] `docs/security/threat-model.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-28-phase-1-task-01`)
 
 ## Evidence rule
 

@@ -4,16 +4,9 @@
 Parent track key: `track-07`
 Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-07-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-screening/src/lib.rs`
-  - [x] `crates/searchright-agent/src/lib.rs`
-  - [x] `contracts/examples/screening-decision.yaml`
-  - [x] `contracts/examples/screening-policy.yaml`
-  - [x] `docs/adrs/0003-agent-authority.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-07-phase-1-task-01`)
 
 ## Evidence rule
 

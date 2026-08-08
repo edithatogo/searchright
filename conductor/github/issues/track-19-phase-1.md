@@ -4,18 +4,9 @@
 Parent track key: `track-19`
 Conductor plan: `conductor/tracks/19-registries-publication/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-19-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `registry/status.json`
-  - [x] `registry/official-mcp/README.md`
-  - [x] `registry/glama/README.md`
-  - [x] `registry/smithery/README.md`
-  - [x] `registry/joss/paper.md`
-  - [x] `server.json`
-  - [x] `glama.json`
+- [x] T01: Implement and document the track's source deliverables. (`track-19-phase-1-task-01`)
 
 ## Evidence rule
 

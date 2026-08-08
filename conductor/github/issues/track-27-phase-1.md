@@ -4,16 +4,9 @@
 Parent track key: `track-27`
 Conductor plan: `conductor/tracks/27-accessibility-internationalisation-usability/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-27-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-diagnostics/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/diagnostic.rs`
-  - [x] `contracts/examples/diagnostic.yaml`
-  - [x] `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
-  - [x] `docs/evaluation/external-methodological-evaluation.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-27-phase-1-task-01`)
 
 ## Evidence rule
 

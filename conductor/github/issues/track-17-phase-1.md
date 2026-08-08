@@ -4,18 +4,9 @@
 Parent track key: `track-17`
 Conductor plan: `conductor/tracks/17-benchmarks-calibration/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-17-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-bench/src/lib.rs`
-  - [x] `crates/searchright-ranking/src/lib.rs`
-  - [x] `crates/searchright-validation/src/lib.rs`
-  - [x] `contracts/examples/benchmark-report.yaml`
-  - [x] `contracts/examples/ranking-calibration.yaml`
-  - [x] `docs/evaluation/benchmark-and-calibration-protocol.md`
-  - [x] `benchmarks/README.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-17-phase-1-task-01`)
 
 ## Evidence rule
 

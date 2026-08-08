@@ -1,24 +1,24 @@
 # Project status
 
-**Status date:** 6 August 2026
+**Status date:** 8 August 2026
 
 **Evidence level:** source-verified alpha
 
 ## Headline status
 
 Searchright has a broad contract-first source implementation covering the entire
-roadmap. It is managed in Git and organised into 31 evidence-aware Conductor
-tracks. The network-free harness passes its individual source gates; compiler,
+roadmap. It is managed in Git and organised into 38 evidence-aware Conductor
+tracks through final version 1.0 decision. The network-free harness passes its individual source gates; compiler,
 live, downstream and external-evaluation gates remain separate and open where
 this environment could not execute them.
 
 ## Source implementation completed
 
-- 27-crate Rust 2024 workspace with a shared application facade, CLI and stdio
+- 29-crate Rust 2024 workspace with a shared application facade, CLI and stdio
   MCP server.
 - CiteWeft isolated behind a one-way, non-publishable leaf adapter and a neutral
   `DocumentEvidence` contract.
-- 37 Draft 2020-12 schemas, 37 canonical examples and a complete schema
+- 49 Draft 2020-12 schemas, 49 canonical examples and a complete schema
   catalogue.
 - 31 mapped operations across Rust facade, CLI and MCP.
 - Review planning, protocol amendments, standards packs and evidence-linked
@@ -45,8 +45,14 @@ this environment could not execute them.
   interactions and read-only drift surveillance.
 - Sourceright symbol/parity/cutover packet and a 15-repository estate migration
   inventory.
-- One roadmap epic, 31 track issue bodies and 124 phase subissue bodies, with
-  dry-run-first idempotent synchronisation.
+- One roadmap epic, 38 track issues, 152 phase subissues and 373 task
+  subissues, with dry-run-first idempotent issue and Project synchronisation.
+- Declarative GitHub repository settings, main ruleset, Project v2 fields/views
+  and one-command remote bootstrap controller.
+- Authenticated remote-MCP, tenancy, component-health, telemetry, backup and
+  incident contracts with default-deny authority.
+- Cross-repository release train, release-candidate rehearsal, pilot protocol
+  and final maturity decision track.
 - CI, CodeQL, dependency review, cargo-deny/audit/machete, Scorecard, Gitleaks,
   Codecov, coverage, mutation, SBOM, clean-room builds, reproducible packaging
   and build attestations.
@@ -56,17 +62,17 @@ this environment could not execute them.
 
 The source tree currently contains and checks:
 
-- 37 schemas and 37 schema examples;
-- 31 Conductor tracks and 70 MoSCoW requirements;
-- 218 declared source deliverables, 56 deterministic source checks and 87
-  explicit higher-evidence blockers;
-- 27 crate manifests and 57 Rust source files;
+- 49 schemas and 49 schema examples;
+- 38 Conductor tracks and 92 MoSCoW requirements;
+- 190 checked plan tasks and 183 explicit open evidence tasks;
+- 29 crate manifests and 62 Rust source files;
 - 31 CLI/MCP/facade operations;
 - 8 integration passports and 8 consumer-contract interactions;
-- 156 prepared GitHub hierarchy nodes;
+- 564 prepared GitHub hierarchy nodes: one epic, 38 tracks, 152 phases and
+  373 tasks;
 - 24 mapped Sourceright symbols, 7 parity cases and 10 parity dimensions;
-- 47 immutable GitHub Action references;
-- a 20-dimension assurance matrix and 22-command aggregate static harness;
+- 58 immutable GitHub Action references;
+- a 28-dimension assurance matrix and 30-command aggregate static harness;
 - source-component SBOM and deterministic source-package consistency.
 
 These checks are lexical, structural and contract-semantic. They are not a Rust
@@ -92,7 +98,11 @@ compiler substitute.
   OpenAlex or ClinicalTrials.gov receipt was produced.
 - Licensed platforms require user-provided access, terms review and redacted live
   evidence.
-- Remote HTTP/OAuth MCP and WASI runtime conformance remain higher-evidence work.
+- Authenticated remote HTTP MCP, tenancy and WASI runtime conformance remain
+  higher-evidence work; only source contracts and policies are present.
+- No operational health/SLO run, backup restore drill, incident exercise,
+  downstream release-train canary, release rehearsal or institutional pilot has
+  been executed.
 - Conductor plugin installation was not performed because no compatible host
   executable was present; host-aware installers and setup artefacts are checked
   in.
@@ -102,7 +112,7 @@ compiler substitute.
 - PRESS review and usability testing by information specialists.
 - Human calibration of advisory ranking and agent recommendations.
 - Independent methodological, security and privacy evaluation.
-- Remote GitHub repository creation/push, issue hierarchy apply, signed release,
+- Remote GitHub repository creation/push, issue/Project/control-plane apply, signed release,
   crates.io publication and registry submission were not performed.
 - Acceptance by the official MCP Registry, Glama, Smithery, JOSS or any journal.
 
@@ -119,3 +129,11 @@ The next safe gate is to generate and commit `Cargo.lock`, run the full
 cross-platform compiler/test/security harness, then execute producer–consumer
 fixtures and Sourceright dual-run parity before any deletion or public release
 claim.
+
+## Delivery handoff
+
+`CODEX_HANDOFF.md` is the single execution contract for compiler verification,
+remote creation, Project synchronisation and CI closure.
+`scripts/package_complete_delivery.py` creates and verifies the full Git ZIP,
+source archives, Git bundle, checksums and delivery receipt from a clean,
+remote-free repository.

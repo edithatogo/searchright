@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/backup-manifest.v1.schema.json",
+  "title": "Backup manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "backup_id",
+    "scope_id",
+    "kind",
+    "parent_backup_id",
+    "digest_algorithm",
+    "digest",
+    "encrypted",
+    "key_reference",
+    "content_classes",
+    "created_at",
+    "retention_days",
+    "restore_test_required"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.backup-manifest.v1"
+    },
+    "backup_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "enum": [
+        "full",
+        "incremental",
+        "research_object"
+      ]
+    },
+    "parent_backup_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "digest_algorithm": {
+      "type": "string",
+      "minLength": 1
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "encrypted": {
+      "type": "boolean"
+    },
+    "key_reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "content_classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retention_days": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "restore_test_required": {
+      "type": "boolean"
+    }
+  }
+}

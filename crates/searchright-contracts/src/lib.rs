@@ -2,11 +2,13 @@
 
 #![forbid(unsafe_code)]
 
+mod access;
 mod amendment;
 mod audit;
 mod assurance;
 mod benchmark;
 mod diagnostic;
+mod delivery;
 mod discovery;
 mod document;
 mod governance;
@@ -15,6 +17,7 @@ mod interchange;
 mod living;
 mod licensed;
 mod migration;
+mod ops;
 mod plan;
 mod plugin;
 mod policy;
@@ -28,11 +31,18 @@ mod standards;
 mod study;
 mod validation;
 
+pub use access::{AccessDecision, AccessRequest, AccessScope, PrincipalKind, TenantPolicy};
 pub use amendment::{AmendmentChange, AmendmentDecision, AmendmentKind, ProtocolAmendment};
 pub use audit::{Actor, AuditEvent, AuditEventDraft};
 pub use assurance::{LifecycleStage, LifecycleTransition, TransitionActorKind, WorkflowTrace};
 pub use benchmark::{BenchmarkMetric, BenchmarkReport};
 pub use diagnostic::{Diagnostic, DiagnosticLocale, DiagnosticSeverity};
+pub use delivery::{
+    GitHubRepositorySettings, IntegrationReleaseTrain, ReleaseRehearsal,
+    ReleaseRehearsalStatus, ReleaseTrainComponent, ReleaseTrainStage,
+    RepositoryFeatures, RepositoryMergePolicy, RepositoryRuleset,
+    RepositorySecurityControls, RepositoryVisibility, RulesetEnforcement,
+};
 pub use discovery::{DiscoveryEdge, DiscoveryMethod, DiscoveryRun};
 pub use document::{
     CitationCalloutEvidence, DocumentEvidence, DocumentExtractionProvenance, DocumentSpan,
@@ -45,14 +55,17 @@ pub use governance::{
 pub use integration::{
     ConsumerContractInteraction, ConsumerContractStatus, ConsumerContractSuite,
     DependencyDirection, GitHubIssueHierarchy, GitHubIssueKind, GitHubIssueNode,
-    IntegrationContractReference, IntegrationMode, IntegrationPassport,
-    IntegrationVerificationGate,
+    GitHubProjectField, GitHubProjectFieldDataType, GitHubProjectFieldValue,
+    GitHubProjectManifest, GitHubProjectOwnerType, GitHubProjectSyncPolicy,
+    GitHubProjectView, GitHubProjectViewLayout, IntegrationContractReference,
+    IntegrationMode, IntegrationPassport, IntegrationVerificationGate,
 };
 pub use interchange::{InterchangeFormat, InterchangeReceipt};
 pub use living::{LivingUpdateRun, RecordChange, RecordChangeKind, UpdateCursor, UpdateRunStatus};
 pub use licensed::LicensedAdapterProfile;
 pub use migration::{ParityDimensionResult, SourcerightParityReport};
 pub use plugin::{ComponentCapability, ProviderComponentManifest};
+pub use ops::{BackupKind, BackupManifest, ComponentHealth, HealthState, IncidentRecord, IncidentSeverity, TelemetryPolicy};
 pub use plan::{
     EligibilityCriterion, EligibilitySet, FrameworkKind, InformationSource, InformationSourceKind,
     ProtocolRegistration, QuestionFramework, ResearchQuestion, ReviewGovernance, ReviewKind,
@@ -153,7 +166,9 @@ pub const DOCUMENT_EVIDENCE_SCHEMA_VERSION: &str = "org.searchright.document-evi
 pub const INTEGRATION_PASSPORT_SCHEMA_VERSION: &str = "org.searchright.integration-passport.v1";
 /// Canonical generated GitHub issue-hierarchy contract version.
 pub const GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION: &str =
-    "org.searchright.github-issue-hierarchy.v1";
+    "org.searchright.github-issue-hierarchy.v2";
+/// Canonical GitHub Project v2 projection manifest contract version.
+pub const GITHUB_PROJECT_SCHEMA_VERSION: &str = "org.searchright.github-project.v1";
 /// Canonical consumer-driven integration contract-suite version.
 pub const CONSUMER_CONTRACT_SUITE_SCHEMA_VERSION: &str =
     "org.searchright.consumer-contract-suite.v1";
@@ -169,6 +184,29 @@ pub const DATA_HANDLING_REQUEST_SCHEMA_VERSION: &str =
 /// Canonical institutional data-handling decision contract version.
 pub const DATA_HANDLING_DECISION_SCHEMA_VERSION: &str =
     "org.searchright.data-handling-decision.v1";
+
+/// Canonical component-health contract version.
+pub const COMPONENT_HEALTH_SCHEMA_VERSION: &str = "org.searchright.component-health.v1";
+/// Canonical telemetry-policy contract version.
+pub const TELEMETRY_POLICY_SCHEMA_VERSION: &str = "org.searchright.telemetry-policy.v1";
+/// Canonical backup-manifest contract version.
+pub const BACKUP_MANIFEST_SCHEMA_VERSION: &str = "org.searchright.backup-manifest.v1";
+/// Canonical incident-record contract version.
+pub const INCIDENT_RECORD_SCHEMA_VERSION: &str = "org.searchright.incident-record.v1";
+/// Canonical tenant-policy contract version.
+pub const TENANT_POLICY_SCHEMA_VERSION: &str = "org.searchright.tenant-policy.v1";
+/// Canonical access-request contract version.
+pub const ACCESS_REQUEST_SCHEMA_VERSION: &str = "org.searchright.access-request.v1";
+/// Canonical access-decision contract version.
+pub const ACCESS_DECISION_SCHEMA_VERSION: &str = "org.searchright.access-decision.v1";
+/// Canonical GitHub repository-settings manifest version.
+pub const GITHUB_REPOSITORY_SETTINGS_SCHEMA_VERSION: &str =
+    "org.searchright.github-repository-settings.v1";
+/// Canonical cross-repository release-train version.
+pub const INTEGRATION_RELEASE_TRAIN_SCHEMA_VERSION: &str =
+    "org.searchright.integration-release-train.v1";
+/// Canonical release-rehearsal version.
+pub const RELEASE_REHEARSAL_SCHEMA_VERSION: &str = "org.searchright.release-rehearsal.v1";
 
 /// Error returned by contract validation.
 #[derive(Debug, thiserror::Error, Clone, PartialEq, Eq)]

@@ -1,0 +1,64 @@
+{
+  "schema_version": "org.searchright.github-repository-settings.v1",
+  "repository": "edithatogo/searchright",
+  "visibility": "public",
+  "description": "Contract-first Rust infrastructure for programmable and agentic systematic literature searches.",
+  "homepage": "https://edithatogo.github.io/searchright/",
+  "features": {
+    "issues": true,
+    "projects": true,
+    "discussions": true,
+    "wiki": false
+  },
+  "merge_policy": {
+    "squash": true,
+    "rebase": true,
+    "merge_commit": false,
+    "delete_head_branch": true,
+    "allow_auto_merge": true,
+    "allow_update_branch": true
+  },
+  "topics": [
+    "systematic-review",
+    "literature-search",
+    "evidence-synthesis",
+    "prisma",
+    "rust",
+    "mcp",
+    "research-software"
+  ],
+  "environments": [
+    "github-issue-write",
+    "github-project-write",
+    "release"
+  ],
+  "security": {
+    "vulnerability_alerts": true,
+    "automated_security_fixes": true,
+    "secret_scanning": true,
+    "push_protection": true,
+    "private_vulnerability_reporting": true
+  },
+  "ruleset": {
+    "name": "main-protection",
+    "target": "branch",
+    "enforcement": "active",
+    "include": [
+      "~DEFAULT_BRANCH"
+    ],
+    "required_status_checks": [
+      "Static contracts and roadmap evidence",
+      "Rust (ubuntu-latest)",
+      "Declared Rust version",
+      "Rust supply-chain policy",
+      "CodeQL",
+      "Workflow policy"
+    ],
+    "required_linear_history": true,
+    "required_signed_commits": false,
+    "deletion": false,
+    "non_fast_forward": false
+  },
+  "apply_permitted": false,
+  "claim_boundary": "Prepared repository settings are not observed remote settings until an explicit bootstrap receipt records them."
+}

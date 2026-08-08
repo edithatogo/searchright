@@ -7,7 +7,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     CONSUMER_CONTRACT_SUITE_SCHEMA_VERSION, ContractError,
-    GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION, INTEGRATION_PASSPORT_SCHEMA_VERSION, Validate,
+    GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION, GITHUB_PROJECT_SCHEMA_VERSION,
+    INTEGRATION_PASSPORT_SCHEMA_VERSION, Validate,
     require_schema_version, require_text,
 };
 
@@ -185,6 +186,18 @@ pub enum GitHubIssueKind {
     Track,
     /// One subissue corresponding to a plan phase.
     Phase,
+    /// One subissue corresponding to a top-level Conductor plan task.
+    Task,
+}
+
+/// Scalar value projected into one GitHub Project custom field.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(untagged)]
+pub enum GitHubProjectFieldValue {
+    /// Text or single-select option name.
+    Text(String),
+    /// Integral number for deterministic phase/task identifiers.
+    Number(u32),
 }
 
 /// One generated GitHub issue or subissue.
@@ -196,7 +209,7 @@ pub struct GitHubIssueNode {
     pub title: String,
     /// Hierarchy kind.
     pub kind: GitHubIssueKind,
-    /// Parent idempotency key for a track or phase.
+    /// Parent idempotency key for a track, phase or task.
     pub parent_key: Option<String>,
     /// Repository-relative rendered Markdown body path.
     pub body_path: String,
@@ -204,6 +217,16 @@ pub struct GitHubIssueNode {
     pub labels: Vec<String>,
     /// Local planning state; not a claim about remote GitHub state.
     pub status: String,
+    /// Canonical desired issue state; only task state may be remotely mirrored.
+    pub desired_state: String,
+    /// Track identifier when applicable.
+    pub track_id: Option<String>,
+    /// Phase number when applicable.
+    pub phase_number: Option<u8>,
+    /// Top-level task number when applicable.
+    pub task_number: Option<u32>,
+    /// Manifest-owned GitHub Project field projection.
+    pub project_fields: BTreeMap<String, GitHubProjectFieldValue>,
 }
 
 /// Deterministic roadmap-to-GitHub issue hierarchy.
@@ -221,6 +244,128 @@ pub struct GitHubIssueHierarchy {
     pub generated_at: String,
     /// Whether this artefact itself authorises remote mutation.
     pub apply_permitted: bool,
+    /// Remote issue-state policy.
+    pub state_sync_policy: String,
+    /// Canonical GitHub Project manifest path.
+    pub project_manifest: String,
+}
+
+/// Owner kind for a GitHub Project v2.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum GitHubProjectOwnerType {
+    /// Project owned by a user account.
+    User,
+    /// Project owned by an organisation.
+    Organization,
+}
+
+/// Supported custom-field data types.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub enum GitHubProjectFieldDataType {
+    /// Single-select field.
+    #[serde(rename = "SINGLE_SELECT")]
+    SingleSelect,
+    /// Free text field.
+    #[serde(rename = "TEXT")]
+    Text,
+    /// Numeric field.
+    #[serde(rename = "NUMBER")]
+    Number,
+    /// Date field.
+    #[serde(rename = "DATE")]
+    Date,
+}
+
+/// One manifest-owned GitHub Project custom field.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct GitHubProjectField {
+    /// Exact custom-field name.
+    pub name: String,
+    /// GitHub Project data type.
+    pub data_type: GitHubProjectFieldDataType,
+    /// Allowed option names for single-select fields.
+    #[serde(default)]
+    pub options: Vec<String>,
+}
+
+/// Supported GitHub Project view layouts.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub enum GitHubProjectViewLayout {
+    /// Board view.
+    #[serde(rename = "BOARD_LAYOUT")]
+    Board,
+    /// Roadmap view.
+    #[serde(rename = "ROADMAP_LAYOUT")]
+    Roadmap,
+    /// Table view.
+    #[serde(rename = "TABLE_LAYOUT")]
+    Table,
+}
+
+/// One requested GitHub Project view.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct GitHubProjectView {
+    /// View name.
+    pub name: String,
+    /// View layout.
+    pub layout: GitHubProjectViewLayout,
+    /// GitHub Project filter string.
+    pub filter: String,
+}
+
+/// Non-destructive Project synchronisation policy.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct GitHubProjectSyncPolicy {
+    /// Canonical issue hierarchy path.
+    pub hierarchy_path: String,
+    /// Canonical label manifest path.
+    pub labels_path: String,
+    /// Stable identity custom field.
+    pub identity_field: String,
+    /// Issue-state policy.
+    pub state_policy: String,
+    /// Deletion policy.
+    pub delete_policy: String,
+    /// Archival policy.
+    pub archive_policy: String,
+    /// Custom-field ownership policy.
+    pub field_policy: String,
+    /// Evidence-promotion policy.
+    pub promotion_policy: String,
+}
+
+/// Declarative GitHub Project v2 projection manifest.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct GitHubProjectManifest {
+    /// Contract identifier.
+    pub schema_version: String,
+    /// Project owner login.
+    pub owner: String,
+    /// Owner kind.
+    pub owner_type: GitHubProjectOwnerType,
+    /// Linked repository in owner/name form.
+    pub repository: String,
+    /// Project title.
+    pub title: String,
+    /// Short Project description.
+    pub short_description: String,
+    /// Repository-relative Project README path.
+    pub readme_path: String,
+    /// Public/private visibility label.
+    pub visibility: String,
+    /// Remote number remains absent in the source manifest.
+    pub project_number: Option<u64>,
+    /// Whether the repository should be linked.
+    pub link_repository: bool,
+    /// Source manifests never authorise remote mutation.
+    pub apply_permitted: bool,
+    /// Manifest-owned custom fields.
+    pub fields: Vec<GitHubProjectField>,
+    /// Requested Project views.
+    pub views: Vec<GitHubProjectView>,
+    /// Synchronisation policy.
+    pub sync: GitHubProjectSyncPolicy,
 }
 
 fn is_hex_revision(value: &str) -> bool {
@@ -392,6 +537,12 @@ impl Validate for GitHubIssueHierarchy {
                 "rendered issue hierarchy must not authorise remote writes".to_owned(),
             ));
         }
+        if self.state_sync_policy != "task_issues_only" {
+            return Err(ContractError::Invariant(
+                "only task issue state may be synchronised".to_owned(),
+            ));
+        }
+        require_text(&self.project_manifest, "github_issue_hierarchy.project_manifest")?;
         if self.nodes.is_empty() {
             return Err(ContractError::EmptyCollection("github_issue_hierarchy.nodes"));
         }
@@ -401,6 +552,17 @@ impl Validate for GitHubIssueHierarchy {
             require_text(&node.title, "github_issue_hierarchy.node.title")?;
             require_text(&node.body_path, "github_issue_hierarchy.node.body_path")?;
             require_text(&node.status, "github_issue_hierarchy.node.status")?;
+            require_text(&node.desired_state, "github_issue_hierarchy.node.desired_state")?;
+            if node.status != "prepared_not_synced" {
+                return Err(ContractError::Invariant(
+                    "local issue nodes must remain prepared_not_synced".to_owned(),
+                ));
+            }
+            if !matches!(node.desired_state.as_str(), "open" | "closed") {
+                return Err(ContractError::Invariant(format!(
+                    "issue `{}` has invalid desired state", node.key
+                )));
+            }
             if by_key.insert(node.key.as_str(), node).is_some() {
                 return Err(ContractError::Invariant(format!(
                     "duplicate issue key `{}`",
@@ -439,24 +601,93 @@ impl Validate for GitHubIssueHierarchy {
                 GitHubIssueKind::Phase => {
                     let Some(parent_key) = node.parent_key.as_deref() else {
                         return Err(ContractError::Invariant(format!(
-                            "phase issue `{}` requires a parent track",
-                            node.key
+                            "phase issue `{}` requires a parent track", node.key
                         )));
                     };
                     let Some(parent) = by_key.get(parent_key) else {
                         return Err(ContractError::Invariant(format!(
-                            "phase issue `{}` refers to unknown parent `{parent_key}`",
-                            node.key
+                            "phase issue `{}` refers to unknown parent `{parent_key}`", node.key
                         )));
                     };
                     if parent.kind != GitHubIssueKind::Track {
                         return Err(ContractError::Invariant(format!(
-                            "phase issue `{}` parent must be a track",
-                            node.key
+                            "phase issue `{}` parent must be a track", node.key
+                        )));
+                    }
+                }
+                GitHubIssueKind::Task => {
+                    let Some(parent_key) = node.parent_key.as_deref() else {
+                        return Err(ContractError::Invariant(format!(
+                            "task issue `{}` requires a parent phase", node.key
+                        )));
+                    };
+                    let Some(parent) = by_key.get(parent_key) else {
+                        return Err(ContractError::Invariant(format!(
+                            "task issue `{}` refers to unknown parent `{parent_key}`", node.key
+                        )));
+                    };
+                    if parent.kind != GitHubIssueKind::Phase {
+                        return Err(ContractError::Invariant(format!(
+                            "task issue `{}` parent must be a phase", node.key
                         )));
                     }
                 }
             }
+        }
+        Ok(())
+    }
+}
+
+impl Validate for GitHubProjectManifest {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_schema_version(
+            &self.schema_version,
+            GITHUB_PROJECT_SCHEMA_VERSION,
+            "github_project.schema_version",
+        )?;
+        for (value, field) in [
+            (&self.owner, "github_project.owner"),
+            (&self.repository, "github_project.repository"),
+            (&self.title, "github_project.title"),
+            (&self.short_description, "github_project.short_description"),
+            (&self.readme_path, "github_project.readme_path"),
+            (&self.visibility, "github_project.visibility"),
+        ] {
+            require_text(value, field)?;
+        }
+        if self.project_number.is_some() || self.apply_permitted {
+            return Err(ContractError::Invariant(
+                "source Project manifest cannot contain a remote number or authorise writes".to_owned(),
+            ));
+        }
+        if self.fields.is_empty() || self.views.is_empty() {
+            return Err(ContractError::EmptyCollection("github_project.fields_or_views"));
+        }
+        let mut field_names = BTreeSet::new();
+        for field in &self.fields {
+            require_text(&field.name, "github_project.field.name")?;
+            if !field_names.insert(field.name.as_str()) {
+                return Err(ContractError::Invariant(format!(
+                    "duplicate Project field `{}`", field.name
+                )));
+            }
+            if field.data_type == GitHubProjectFieldDataType::SingleSelect {
+                if field.options.is_empty() {
+                    return Err(ContractError::EmptyCollection("github_project.field.options"));
+                }
+            } else if !field.options.is_empty() {
+                return Err(ContractError::Invariant(format!(
+                    "non-select Project field `{}` declares options", field.name
+                )));
+            }
+        }
+        if self.sync.delete_policy != "never"
+            || self.sync.archive_policy != "never_automatic"
+            || self.sync.promotion_policy != "remote_state_cannot_promote_evidence"
+        {
+            return Err(ContractError::Invariant(
+                "Project synchronisation must be non-destructive and evidence-neutral".to_owned(),
+            ));
         }
         Ok(())
     }

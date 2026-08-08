@@ -2,18 +2,11 @@
 # Track 30 / Phase 1: Source implementation
 
 Parent track key: `track-30`
-Conductor plan: `conductor/tracks/30-maturity-1-0/plan.md`
+Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-30-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `docs/maturity/1.0-gate.md`
-  - [x] `conductor/maturity-dossier.json`
-  - [x] `ROADMAP.md`
-  - [x] `PROJECT_STATUS.md`
-  - [x] `conductor/requirements.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-30-phase-1-task-01`)
 
 ## Evidence rule
 

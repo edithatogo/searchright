@@ -1,0 +1,67 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "31",
+  "title": "GitHub remote, nested issues and Project v2 control plane",
+  "status": "integration_prepared",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "conductor/github/project.json",
+    "conductor/github/project-readme.md",
+    "conductor/github/repository-settings.json",
+    "conductor/github/issue-hierarchy.json",
+    "scripts/bootstrap_github.py",
+    "scripts/sync_github_issues.py",
+    "scripts/sync_github_project.py",
+    "scripts/check_github_project.py",
+    ".github/workflows/github-control-plane.yml",
+    "docs/github-operating-system.md",
+    "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+    "contracts/json-schema/github-project.v1.schema.json"
+  ],
+  "static_checks": [
+    "python scripts/render_github_issues.py --check",
+    "python scripts/check_github_issue_hierarchy.py",
+    "python scripts/check_github_project.py",
+    "python scripts/check_workflow_hardening.py"
+  ],
+  "requirements": [
+    "SR-066",
+    "SR-071",
+    "SR-072",
+    "SR-073",
+    "SR-074",
+    "SR-075"
+  ],
+  "blockers": [
+    "Create or verify the public remote and push the committed main branch.",
+    "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+    "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
+  ],
+  "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-31",
+    "phases": [
+      "track-31-phase-1",
+      "track-31-phase-2",
+      "track-31-phase-3",
+      "track-31-phase-4"
+    ],
+    "tasks": [
+      "track-31-phase-1-task-01",
+      "track-31-phase-2-task-01",
+      "track-31-phase-2-task-02",
+      "track-31-phase-3-task-01",
+      "track-31-phase-3-task-02",
+      "track-31-phase-3-task-03",
+      "track-31-phase-4-task-01",
+      "track-31-phase-4-task-02",
+      "track-31-phase-4-task-03",
+      "track-31-phase-4-task-04"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

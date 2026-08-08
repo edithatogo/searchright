@@ -4,17 +4,9 @@
 Parent track key: `track-03`
 Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-03-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/evidence-search-core/src/provider.rs`
-  - [x] `crates/searchright-sourceright-compat/src/lib.rs`
-  - [x] `migration/sourceright/replacement-map.yaml`
-  - [x] `migration/sourceright/parity-cases.json`
-  - [x] `scripts/check_sourceright_migration.py`
-  - [x] `docs/adrs/0012-sourceright-and-estate-migration.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-03-phase-1-task-01`)
 
 ## Evidence rule
 

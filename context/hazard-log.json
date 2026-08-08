@@ -188,6 +188,135 @@
         "integration/consumer-contract-suite.json"
       ],
       "residual_status": "open_downstream_migrations"
+    },
+    {
+      "id": "H-013",
+      "hazard": "GitHub bootstrap or Project synchronisation mutates or deletes remote state beyond the manifest authority.",
+      "severity": "critical",
+      "controls": [
+        "Dry-run unconditional default",
+        "Dual environment opt-in and clean-tree guard",
+        "Additive/idempotent sync with delete/archive policy never",
+        "Observed apply receipts"
+      ],
+      "evidence": [
+        "scripts/bootstrap_github.py",
+        "scripts/sync_github_project.py",
+        "conductor/github/repository-settings.json"
+      ],
+      "residual_status": "open_live_control_plane_rehearsal"
+    },
+    {
+      "id": "H-014",
+      "hazard": "GitHub issue or Project status is mistaken for implementation or evidence completion.",
+      "severity": "high",
+      "controls": [
+        "Remote state cannot promote evidence",
+        "Separate Conductor keys and evidence levels",
+        "Claim-boundary registry"
+      ],
+      "evidence": [
+        "conductor/github/project.json",
+        "context/claim-boundaries.json"
+      ],
+      "residual_status": "source_controlled"
+    },
+    {
+      "id": "H-015",
+      "hazard": "Authenticated remote MCP leaks data or authority across tenant boundaries.",
+      "severity": "critical",
+      "controls": [
+        "Tenant-scoped identities and regions",
+        "Cross-tenant aggregation denied",
+        "Scope and human-approval checks",
+        "Per-tenant task budgets"
+      ],
+      "evidence": [
+        "crates/searchright-contracts/src/access.rs",
+        "docs/security/authenticated-remote-mcp.md"
+      ],
+      "residual_status": "open_adversarial_and_deployment_tests"
+    },
+    {
+      "id": "H-016",
+      "hazard": "Telemetry exports full text, search terms, credentials or sensitive identifiers.",
+      "severity": "critical",
+      "controls": [
+        "Telemetry disabled by default",
+        "Attribute allowlist and prohibited list",
+        "Bounded sampling and retention",
+        "Human approval for enablement"
+      ],
+      "evidence": [
+        "contracts/json-schema/telemetry-policy.v1.schema.json",
+        "crates/searchright-ops/src/lib.rs"
+      ],
+      "residual_status": "open_runtime_redaction_test"
+    },
+    {
+      "id": "H-017",
+      "hazard": "Backups cannot be restored or violate retention, encryption or key-separation policy.",
+      "severity": "high",
+      "controls": [
+        "Content-class and digest manifest",
+        "Encryption/key-reference invariant",
+        "Incremental parent linkage",
+        "Mandatory restore drills before recoverability claims"
+      ],
+      "evidence": [
+        "contracts/json-schema/backup-manifest.v1.schema.json",
+        "docs/operations/backup-restore.md"
+      ],
+      "residual_status": "open_restore_drill"
+    },
+    {
+      "id": "H-018",
+      "hazard": "A Searchright release breaks CiteWeft or Sourceright despite local tests.",
+      "severity": "high",
+      "controls": [
+        "Ordered release train",
+        "Exact integration pins",
+        "Consumer fixtures and downstream canaries",
+        "Feature rollback and prior schema retention"
+      ],
+      "evidence": [
+        "integration/release-train.json",
+        ".github/workflows/integration-release-train.yml"
+      ],
+      "residual_status": "open_downstream_canary"
+    },
+    {
+      "id": "H-019",
+      "hazard": "Remote MCP authentication, replay or resource exhaustion bypasses authority and execution budgets.",
+      "severity": "critical",
+      "controls": [
+        "Authenticated principal and tenant policy",
+        "Nonce/expiry and replay tests in maturity plan",
+        "Bounded long-running tasks",
+        "Rate, concurrency and egress budgets"
+      ],
+      "evidence": [
+        "docs/security/authenticated-remote-mcp.md",
+        "conductor/tracks/34-authenticated-remote-mcp/spec.md"
+      ],
+      "residual_status": "open_runtime_security_evidence"
+    },
+    {
+      "id": "H-020",
+      "hazard": "Prepared release-candidate, pilot or maturity artefacts are overclaimed as passed or published.",
+      "severity": "high",
+      "controls": [
+        "Prepared-not-executed status",
+        "Evidence-gated rehearsal and pilot exits",
+        "Final maturity decision track",
+        "Public claim checks"
+      ],
+      "evidence": [
+        "release/rehearsal.json",
+        "conductor/maturity-dossier.json",
+        "context/claim-boundaries.json"
+      ],
+      "residual_status": "source_controlled"
     }
   ]
 }

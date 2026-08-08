@@ -2,16 +2,13 @@
 # Track 30 / Phase 3: Higher-evidence gates
 
 Parent track key: `track-30`
-Conductor plan: `conductor/tracks/30-maturity-1-0/plan.md`
+Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-30-phase-3 -->
-
-- [ ] Pass compiler, fixture, live-provider, interoperability, security and usability gates.
-- [ ] Complete Sourceright and estate migrations with rollback evidence.
-- [ ] Complete independent methodological evaluation.
-- [ ] Publish signed 1.0 release and record registry/community evidence.
+- [ ] T01: Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain. (`track-30-phase-3-task-01`)
+- [ ] T02: Review and approve any explicit release-risk exception without hiding the open gap. (`track-30-phase-3-task-02`)
+- [ ] T03: Keep autonomous end-to-end review and final agent exclusions outside the release claim. (`track-30-phase-3-task-03`)
 
 ## Evidence rule
 

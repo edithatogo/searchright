@@ -13,6 +13,11 @@ on:
         required: true
         type: string
         default: 'edithatogo/searchright'
+      sync_task_state:
+        description: 'Mirror top-level Conductor task open/closed state'
+        required: true
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -41,7 +46,7 @@ jobs:
     if: ${{ inputs.apply && github.ref == 'refs/heads/main' }}
     needs: dry-run
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 180
     environment: github-issue-write
     permissions:
       contents: read
@@ -55,15 +60,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SEARCHRIGHT_GITHUB_APPLY: '1'
-        run: >-
-          python scripts/sync_github_issues.py
-          --repo '${{ inputs.repository }}'
-          --apply
-          --receipt-path verification/receipts/github-issue-sync.json
-      - name: Preserve apply receipt
+          SEARCHRIGHT_GITHUB_TASK_STATE_APPLY: '1'
+          SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
+        run: |
+          args=(--repo '${{ inputs.repository }}' --apply
+            --checkpoint-path .searchright/receipts/github-issue-sync-checkpoint.json
+            --receipt-path .searchright/receipts/github-issue-sync.json)
+          if [[ '${{ inputs.sync_task_state }}' == 'true' ]]; then args+=(--sync-task-state); fi
+          python scripts/sync_github_issues.py "${args[@]}"
+      - name: Preserve apply receipt and checkpoint
+        if: ${{ always() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: github-issue-sync-receipt
-          path: verification/receipts/github-issue-sync.json
-          if-no-files-found: error
+          path: |
+            .searchright/receipts/github-issue-sync.json
+            .searchright/receipts/github-issue-sync-checkpoint.json
+          if-no-files-found: warn
           retention-days: 90

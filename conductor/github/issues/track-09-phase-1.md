@@ -4,15 +4,9 @@
 Parent track key: `track-09`
 Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-09-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-cli/src/main.rs`
-  - [x] `crates/searchright/src/engine.rs`
-  - [x] `contracts/interface-catalog.json`
-  - [x] `docs/adrs/0007-shared-application-facade.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-09-phase-1-task-01`)
 
 ## Evidence rule
 

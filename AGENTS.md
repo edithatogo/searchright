@@ -4,11 +4,13 @@
 
 Load `CONTEXT.md` and `context/manifest.json` first.
 
-1. `conductor/requirements.md`
-2. `contracts/`
-3. `conductor/design.md` and ADRs
-4. implementation and tests
-5. public documentation
+1. `context/claim-boundaries.json`, capability matrix and hazard log
+2. `conductor/requirements.md` and roadmap coverage
+3. active Conductor track specification, plan, metadata and evidence
+4. `contracts/`
+5. `conductor/design.md` and ADRs
+6. implementation and tests
+7. public documentation
 
 ## Non-negotiable rules
 
@@ -21,12 +23,29 @@ Load `CONTEXT.md` and `context/manifest.json` first.
 - Never auto-exclude a study using an agent unless the review policy explicitly
   permits it and a human confirmation is recorded.
 - Preserve records separately from studies and reports; linkage is explicit.
-- Default to dry-run for external writes and registry submissions.
+- Default to dry-run for external writes, GitHub mutations, release promotion
+  and registry submissions.
+- Treat Conductor as canonical. GitHub issues, nested subissues and Project
+  state are projections and cannot promote source or evidence status.
+- GitHub synchronisers must be additive/idempotent and must not delete or archive
+  remote work automatically.
+- Remote MCP must not inherit local authority implicitly: authenticate the
+  principal, enforce tenant, region, scope, concurrency and approval policy, and
+  preserve an auditable decision.
+- Telemetry is disabled by default; never export full text, credentials or
+  sensitive identifiers without an explicit allowlist and approval.
+- Never claim backup recoverability without a successful restore drill.
 - Use the shared `evidence-search-core`; do not reimplement provider runtime,
   receipt, retry, cache or query primitives in downstream crates.
 - Keep `unsafe` forbidden except in a separately reviewed sandbox/runtime adapter.
+- Do not promote a release train, pilot, registry packet or version 1.0 decision
+  from source completeness alone.
 
 ## Verification
 
 Run `scripts/verify.sh`; when unavailable, record exactly which gates were not run
-in `verification/receipts/` rather than implying success.
+in `verification/receipts/` rather than implying success. Before any remote
+bootstrap, require a clean Git tree, read `CODEX_HANDOFF.md`, and run
+`scripts/run_static_harness.py`. Remote publication work must finish with
+`scripts/audit_github_control_plane.py`; a successful mutation command is not
+proof of converged remote state.

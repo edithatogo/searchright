@@ -4,12 +4,10 @@
 Parent track key: `track-06`
 Conductor plan: `conductor/tracks/06-imports-dedup-linkage/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-06-phase-3 -->
-
-- [ ] Compile and run golden round-trip, property and metamorphic tests.
-- [ ] Evaluate linkage and deduplication against independently adjudicated corpora.
+- [ ] T01: Compile and run golden round-trip, property and metamorphic tests. (`track-06-phase-3-task-01`)
+- [ ] T02: Evaluate linkage and deduplication against independently adjudicated corpora. (`track-06-phase-3-task-02`)
 
 ## Evidence rule
 

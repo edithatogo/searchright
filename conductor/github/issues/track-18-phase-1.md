@@ -4,21 +4,9 @@
 Parent track key: `track-18`
 Conductor plan: `conductor/tracks/18-alpha-release/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-18-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `.github/workflows/release.yml`
-  - [x] `scripts/package_source.py`
-  - [x] `Dockerfile`
-  - [x] `CITATION.cff`
-  - [x] `CHANGELOG.md`
-  - [x] `SECURITY.md`
-  - [x] `.github/workflows/clean-room.yml`
-  - [x] `scripts/check_packaging_reproducibility.py`
-  - [x] `scripts/mcp_smoke.py`
-  - [x] `verification/harness-matrix.json`
+- [x] T01: Implement and document the track's source deliverables. (`track-18-phase-1-task-01`)
 
 ## Evidence rule
 

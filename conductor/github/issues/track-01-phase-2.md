@@ -4,13 +4,10 @@
 Parent track key: `track-01`
 Conductor plan: `conductor/tracks/01-contract-catalog/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-01-phase-2 -->
-
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [x] T01: Run deterministic, network-free contract and policy checks. (`track-01-phase-2-task-01`)
+- [x] T02: Record machine-readable evidence without promoting compiler, live or external claims. (`track-01-phase-2-task-02`)
 
 ## Evidence rule
 

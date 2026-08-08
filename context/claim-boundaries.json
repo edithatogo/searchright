@@ -4,46 +4,88 @@
   "allowed_claims": [
     "The source repository contains versioned contracts, implementation scaffolds and deterministic static checks.",
     "CiteWeft integration is prepared behind an optional one-way adapter.",
-    "GitHub issue bodies and subissue relationships are rendered locally in dry-run form.",
+    "A four-level GitHub issue hierarchy and a declarative Project v2 control plane are source-verified and dry-run-first.",
+    "Repository settings, a cross-repository release train and a release rehearsal are prepared but not remotely applied or executed.",
     "Registry and release packets are prepared but not submitted or accepted.",
-    "Eight consumer-driven integration interactions are prepared and locally checked."
+    "Eight consumer-driven integration interactions are prepared and locally checked.",
+    "Operational, access, tenancy, telemetry, backup and incident contracts are source-implemented but lack runtime receipts."
   ],
   "forbidden_without_additional_evidence": [
-    {
-      "claim": "Rust compiles or tests pass",
-      "required_evidence": "compiler-verified CI receipt and committed Cargo.lock"
-    },
-    {
-      "claim": "provider is supported live",
-      "required_evidence": "authorised redacted live-provider receipt"
-    },
     {
       "claim": "CiteWeft is a GROBID fork, port, reimplementation or compatible replacement",
       "required_evidence": "not an intended claim"
     },
     {
-      "claim": "Sourceright custom code has been replaced",
-      "required_evidence": "downstream dual-run, rollback and merged cutover evidence"
+      "claim": "GitHub Project exists or is synchronised",
+      "required_evidence": "Project apply receipt with observed Project ID, number, URL, fields, views and item count"
     },
     {
       "claim": "GitHub issues or subissues exist remotely",
       "required_evidence": "explicit apply receipt with observed issue numbers and URLs"
     },
     {
-      "claim": "registry listing, publication or release is accepted",
-      "required_evidence": "public URL, version and date"
+      "claim": "Rust compiles or tests pass",
+      "required_evidence": "compiler-verified CI receipt and committed Cargo.lock"
+    },
+    {
+      "claim": "SDK is published or supported",
+      "required_evidence": "public package/version links and clean-environment examples"
+    },
+    {
+      "claim": "Searchright is mature or version 1.0 ready",
+      "required_evidence": "maturity-dossier decision with every required domain at its evidence threshold and no critical blocker"
+    },
+    {
+      "claim": "Sourceright custom code has been replaced",
+      "required_evidence": "downstream dual-run, rollback and merged cutover evidence"
     },
     {
       "claim": "agent may make final exclusion decisions",
       "required_evidence": "review policy plus explicit human authority; default remains denied"
     },
     {
-      "claim": "methodologically comprehensive search",
-      "required_evidence": "topic-specific expert review and empirical recall evidence"
+      "claim": "authenticated remote MCP is available or secure",
+      "required_evidence": "deployed endpoint, identity-verifier, authorisation, rate-limit and adversarial-test receipts"
+    },
+    {
+      "claim": "backups are recoverable",
+      "required_evidence": "successful restore-drill receipt tied to an exact backup manifest and recovery objective"
     },
     {
       "claim": "cross-repository integration is compatible",
       "required_evidence": "matching producer and consumer receipts tied to the same revisions, contracts and fixtures"
+    },
+    {
+      "claim": "cross-repository release train is compatible",
+      "required_evidence": "matching producer/consumer and downstream-canary receipts for exact revisions"
+    },
+    {
+      "claim": "methodologically comprehensive search",
+      "required_evidence": "topic-specific expert review and empirical recall evidence"
+    },
+    {
+      "claim": "multi-tenant isolation is proven",
+      "required_evidence": "tenant-isolation tests, threat-model review and data-residency deployment receipts"
+    },
+    {
+      "claim": "provider is supported live",
+      "required_evidence": "authorised redacted live-provider receipt"
+    },
+    {
+      "claim": "registry listing, publication or release is accepted",
+      "required_evidence": "public URL, version and date"
+    },
+    {
+      "claim": "release candidate or pilot passed",
+      "required_evidence": "executed release-rehearsal and pilot exit receipts with rollback evidence"
+    },
+    {
+      "claim": "remote Searchright repository, settings or branch ruleset exists",
+      "required_evidence": "GitHub bootstrap apply receipt with observed repository URL and settings/ruleset identifiers"
+    },
+    {
+      "claim": "telemetry is privacy-preserving in operation",
+      "required_evidence": "explicit enabled policy, redaction tests and observed telemetry receipt"
     }
   ],
   "language_rules": [
@@ -51,6 +93,10 @@
     "Use source-verified rather than implemented-and-tested when Cargo evidence is absent.",
     "Describe PRISMA-S as reporting guidance, not a conduct certification.",
     "Describe extraction output as evidence, not canonical bibliographic truth.",
-    "Describe a consumer-contract suite as prepared until both producer and consumer receipts exist."
+    "Describe a consumer-contract suite as prepared until both producer and consumer receipts exist.",
+    "Describe Project and issue state as a coordination projection, never as implementation evidence.",
+    "Use prepared_not_executed for release rehearsals and pilots until receipts exist.",
+    "Use authenticated-remote-MCP design or source implementation, not hosted service, until deployment evidence exists.",
+    "Use backup policy prepared, not recoverable, until a restore drill passes."
   ]
 }

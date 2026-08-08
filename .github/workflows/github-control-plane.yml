@@ -1,0 +1,140 @@
+name: GitHub control plane
+
+on:
+  pull_request:
+    paths:
+      - 'conductor/github/**'
+      - 'conductor/tracks/**'
+      - 'conductor/roadmap-coverage.json'
+      - 'scripts/render_github_issues.py'
+      - 'scripts/check_github_issue_hierarchy.py'
+      - 'scripts/check_github_project.py'
+      - 'scripts/sync_github_issues.py'
+      - 'scripts/sync_github_project.py'
+      - 'scripts/bootstrap_github.py'
+      - 'scripts/github_common.py'
+      - 'scripts/audit_github_control_plane.py'
+      - '.github/workflows/github-control-plane.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'conductor/github/**'
+      - 'conductor/tracks/**'
+      - 'conductor/roadmap-coverage.json'
+      - 'scripts/render_github_issues.py'
+      - 'scripts/check_github_issue_hierarchy.py'
+      - 'scripts/check_github_project.py'
+      - 'scripts/sync_github_issues.py'
+      - 'scripts/sync_github_project.py'
+      - 'scripts/bootstrap_github.py'
+      - 'scripts/github_common.py'
+      - 'scripts/audit_github_control_plane.py'
+      - '.github/workflows/github-control-plane.yml'
+  schedule:
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: 'Create/update issues, native subissues and Project items'
+        required: true
+        type: boolean
+        default: false
+      create_project:
+        description: 'Create the Project when it does not yet exist'
+        required: true
+        type: boolean
+        default: true
+      sync_task_state:
+        description: 'Mirror canonical top-level task open/closed state'
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-control-plane-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate GitHub projection
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Validate issue and Project manifests
+        run: |
+          python scripts/render_github_issues.py --check
+          python scripts/check_github_issue_hierarchy.py
+          python scripts/check_github_project.py
+      - name: Print mutation-free issue plan
+        run: python scripts/sync_github_issues.py --repo edithatogo/searchright
+      - name: Print mutation-free Project plan
+        run: python scripts/sync_github_project.py --create-project
+      - name: Print mutation-free full bootstrap plan
+        run: python scripts/bootstrap_github.py --create-project --sync-task-state
+
+  apply:
+    name: Apply issues and Project
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.apply && github.ref == 'refs/heads/main' }}
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    environment: github-project-write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Require Project token
+        env:
+          GH_TOKEN: ${{ secrets.SEARCHRIGHT_PROJECT_TOKEN }}
+        run: |
+          test -n "$GH_TOKEN"
+          gh auth status
+      - name: Synchronise issues and nested subissues
+        env:
+          GH_TOKEN: ${{ secrets.SEARCHRIGHT_PROJECT_TOKEN }}
+          SEARCHRIGHT_GITHUB_APPLY: '1'
+          SEARCHRIGHT_GITHUB_TASK_STATE_APPLY: '1'
+          SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
+        run: |
+          args=(--repo edithatogo/searchright --apply
+            --checkpoint-path .searchright/receipts/github-issue-sync-checkpoint.json
+            --receipt-path .searchright/receipts/github-issue-sync.json)
+          if [[ '${{ inputs.sync_task_state }}' == 'true' ]]; then args+=(--sync-task-state); fi
+          python scripts/sync_github_issues.py "${args[@]}"
+      - name: Create and synchronise Project
+        env:
+          GH_TOKEN: ${{ secrets.SEARCHRIGHT_PROJECT_TOKEN }}
+          SEARCHRIGHT_GITHUB_PROJECT_APPLY: '1'
+          SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
+        run: |
+          args=(--apply
+            --checkpoint-path .searchright/receipts/github-project-sync-checkpoint.json
+            --receipt-path .searchright/receipts/github-project-sync.json)
+          if [[ '${{ inputs.create_project }}' == 'true' ]]; then args+=(--create-project); fi
+          python scripts/sync_github_project.py "${args[@]}"
+      - name: Audit observed GitHub control plane
+        env:
+          GH_TOKEN: ${{ secrets.SEARCHRIGHT_PROJECT_TOKEN }}
+          SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
+        run: >-
+          python scripts/audit_github_control_plane.py
+          --receipt-path .searchright/receipts/github-control-plane-audit.json
+      - name: Upload control-plane receipts and checkpoints
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: github-control-plane-receipts
+          path: |
+            .searchright/receipts/github-*-sync.json
+            .searchright/receipts/github-*-sync-checkpoint.json
+            .searchright/receipts/github-control-plane-audit.json
+          if-no-files-found: warn
+          retention-days: 90

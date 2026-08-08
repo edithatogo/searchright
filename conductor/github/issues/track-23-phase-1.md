@@ -4,15 +4,9 @@
 Parent track key: `track-23`
 Conductor plan: `conductor/tracks/23-active-learning-agents/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-23-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-ranking/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/ranking.rs`
-  - [x] `contracts/examples/ranking-calibration.yaml`
-  - [x] `skills/systematic-search/references/failure-modes.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-23-phase-1-task-01`)
 
 ## Evidence rule
 

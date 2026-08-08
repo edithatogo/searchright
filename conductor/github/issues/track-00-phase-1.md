@@ -4,18 +4,9 @@
 Parent track key: `track-00`
 Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-00-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `Cargo.toml`
-  - [x] `rust-toolchain.toml`
-  - [x] `conductor/upstream.lock.json`
-  - [x] `conductor/product.md`
-  - [x] `conductor/workflow.md`
-  - [x] `scripts/install-conductor.sh`
-  - [x] `scripts/install-conductor.ps1`
+- [x] T01: Implement and document the track's source deliverables. (`track-00-phase-1-task-01`)
 
 ## Evidence rule
 

@@ -4,15 +4,9 @@
 Parent track key: `track-25`
 Conductor plan: `conductor/tracks/25-provenance-research-objects/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-25-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-provenance/src/lib.rs`
-  - [x] `docs/adrs/0009-immutable-lineage-and-research-objects.md`
-  - [x] `docs/standards-and-provenance.md`
-  - [x] `contracts/examples/living-update.yaml`
+- [x] T01: Implement and document the track's source deliverables. (`track-25-phase-1-task-01`)
 
 ## Evidence rule
 

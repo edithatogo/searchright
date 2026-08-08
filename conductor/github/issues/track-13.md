@@ -29,4 +29,4 @@ Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy 
 
 Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed.
 
-> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime/external receipts remain authoritative.
+> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

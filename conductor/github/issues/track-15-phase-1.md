@@ -4,17 +4,9 @@
 Parent track key: `track-15`
 Conductor plan: `conductor/tracks/15-estate-migration/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-15-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `migration/estate/repositories.json`
-  - [x] `migration/estate/patterns.json`
-  - [x] `migration/estate/replacement-decisions.json`
-  - [x] `migration/estate-migration-manifest.yaml`
-  - [x] `scripts/audit_search_code.py`
-  - [x] `docs/estate-integration.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-15-phase-1-task-01`)
 
 ## Evidence rule
 

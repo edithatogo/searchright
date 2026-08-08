@@ -4,18 +4,9 @@
 Parent track key: `track-21`
 Conductor plan: `conductor/tracks/21-licensed-adapters/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-21-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-licensed/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/licensed.rs`
-  - [x] `contracts/licensed/index.json`
-  - [x] `contracts/licensed/embase.yaml`
-  - [x] `contracts/licensed/scopus.yaml`
-  - [x] `contracts/licensed/web-of-science.yaml`
-  - [x] `contracts/examples/licensed-adapter.yaml`
+- [x] T01: Implement and document the track's source deliverables. (`track-21-phase-1-task-01`)
 
 ## Evidence rule
 

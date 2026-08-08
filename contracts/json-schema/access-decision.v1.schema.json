@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/access-decision.v1.schema.json",
+  "title": "Access decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "tenant_id",
+    "permitted",
+    "blockers",
+    "human_approval_required"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.access-decision.v1"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tenant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "permitted": {
+      "type": "boolean"
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "human_approval_required": {
+      "type": "boolean"
+    }
+  }
+}

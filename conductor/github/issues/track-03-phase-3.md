@@ -4,13 +4,11 @@
 Parent track key: `track-03`
 Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-03-phase-3 -->
-
-- [ ] Compile and run the shared provider runtime tests.
-- [ ] Run old/new Sourceright fixtures in the downstream repository.
-- [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
+- [ ] T01: Compile and run the shared provider runtime tests. (`track-03-phase-3-task-01`)
+- [ ] T02: Run old/new Sourceright fixtures in the downstream repository. (`track-03-phase-3-task-02`)
+- [ ] T03: Complete feature-gated Sourceright cutover, semver review and rollback exercise. (`track-03-phase-3-task-03`)
 
 ## Evidence rule
 

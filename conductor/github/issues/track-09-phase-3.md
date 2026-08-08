@@ -4,11 +4,9 @@
 Parent track key: `track-09`
 Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-09-phase-3 -->
-
-- [ ] Compile binaries and run cross-platform help, JSON, error and installation snapshots.
+- [ ] T01: Compile binaries and run cross-platform help, JSON, error and installation snapshots. (`track-09-phase-3-task-01`)
 
 ## Evidence rule
 

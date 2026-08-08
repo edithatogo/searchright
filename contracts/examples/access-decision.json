@@ -1,0 +1,8 @@
+{
+  "schema_version": "org.searchright.access-decision.v1",
+  "request_id": "access-demo-1",
+  "tenant_id": "tenant-demo",
+  "permitted": true,
+  "blockers": [],
+  "human_approval_required": false
+}

@@ -22,8 +22,11 @@ The product is organised into three rates of change:
    living updates, provenance, diagnostics and governance, all reached through
    `SearchrightEngine`.
 3. **Experimental edge** — live providers, licensed adapters, ranking, agents,
-   WASI components and remote MCP transports, each capability-gated and unable
-   to silently alter canonical evidence.
+   WASI components and authenticated remote MCP transports, each capability-
+   gated and unable to silently alter canonical evidence.
+4. **Operational control plane** — GitHub issues/Project, release trains, health,
+   telemetry, backup, incident, pilot and maturity evidence as declarative,
+   additive and receipt-bearing contracts.
 
 This structure contains experimental risk without freezing innovation.
 
@@ -74,6 +77,16 @@ writing another system's canonical state.
     Independent repositories integrate through exact pins, neutral contracts,
     consumer fixtures, compatibility windows and rollback—not submodules,
     copied implementations or unreviewed automatic upgrades.
+11. **Declarative delivery control plane**
+    Conductor remains canonical; GitHub issues, nested subissues and Project
+    fields/views are generated projections with idempotent, non-destructive sync.
+12. **Operational maturity before hosted claims**
+    Remote identity, tenancy, SLOs, telemetry, backup, incident response and
+    restore drills are separate evidence domains, not implicit consequences of
+    an MCP server compiling.
+13. **Release and adoption as experiments**
+    Cross-repository canaries, release rehearsals and bounded pilots precede
+    registry promotion and any version 1.0 decision.
 
 ## Federated repository strategy
 
@@ -98,6 +111,23 @@ its API is stabilised. It should move to an independent repository only when two
 or more consumers require a genuinely independent lifecycle and release process;
 premature extraction would increase coordination overhead without reducing
 coupling.
+
+## Delivery and operational strategy
+
+The repository is intended to be bootstrapped into GitHub from committed source,
+not configured by undocumented clicks. A manifest owns repository features,
+merge policy, security controls, protected environments and the main ruleset.
+Conductor renders the complete epic → track → phase → task issue graph, while a
+Project v2 manifest owns custom fields and views. Apply is additive,
+dry-run-first, clean-tree-gated and receipt-bearing; remote work state can never
+promote implementation evidence.
+
+Operational maturity is pursued in layers: local stdio MCP first, then
+single-tenant authenticated remote MCP, then only evidence-backed institutional
+or broader deployment. Telemetry remains disabled by default. Backup
+recoverability requires restore drills. Cross-repository releases move through
+contract, fixture, compiler, downstream-canary and RC gates with explicit human
+promotion and rollback.
 
 ## Product positioning
 
@@ -128,8 +158,12 @@ The MVP supports a bounded, high-value sequence:
    provider receipts and usability calibration.
 3. **Institutional pilot:** policy packs, least privilege, retention profiles,
    signed releases and repository/review-system handoffs.
-4. **Mature infrastructure:** licensed BYO adapters, living updates, component
-   ecosystem and independent methodological evaluation.
+4. **Operational pilot:** authenticated single-tenant MCP, repository/Project
+   control plane, health, restore and incident exercises, and downstream
+   release-train canaries.
+5. **Mature infrastructure:** licensed BYO adapters, living updates, component
+   ecosystem, external methodological evaluation and an evidence-based 1.0
+   decision.
 
 ## Evaluation strategy
 
@@ -143,8 +177,12 @@ raw receipts and a response-to-findings matrix.
 - autonomous final inclusion or exclusion;
 - scraping or circumventing licensed databases;
 - truth, clinical recommendation or legal-compliance claims;
-- hosted multi-tenant SaaS without a separate tenancy threat model;
+- hosted multi-tenant SaaS without deployed tenancy isolation, data-residency,
+  abuse-budget and adversarial-test receipts;
 - opaque “one-click systematic review” positioning;
 - deleting downstream custom code before fixture parity and rollback evidence;
 - describing CiteWeft as a GROBID port, fork or drop-in replacement;
 - treating prepared consumer contracts as downstream compatibility.
+- remote GitHub repository, issue or Project claims without an observed bootstrap receipt;
+- backup recoverability, telemetry safety or operational SLO claims without exercises;
+- version 1.0 promotion from source completeness alone;

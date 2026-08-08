@@ -4,12 +4,10 @@
 Parent track key: `track-05`
 Conductor plan: `conductor/tracks/05-execution-audit-store/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-05-phase-3 -->
-
-- [ ] Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.
-- [ ] Complete external review of retention and deletion semantics.
+- [ ] T01: Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms. (`track-05-phase-3-task-01`)
+- [ ] T02: Complete external review of retention and deletion semantics. (`track-05-phase-3-task-02`)
 
 ## Evidence rule
 

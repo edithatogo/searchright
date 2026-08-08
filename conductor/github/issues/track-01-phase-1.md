@@ -4,16 +4,9 @@
 Parent track key: `track-01`
 Conductor plan: `conductor/tracks/01-contract-catalog/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-01-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-contracts/src/lib.rs`
-  - [x] `contracts/schema-catalog.json`
-  - [x] `contracts/standards/index.json`
-  - [x] `docs/contracts.md`
-  - [x] `docs/adrs/0008-standards-packs-and-methodology-boundary.md`
+- [x] T01: Implement and document the track's source deliverables. (`track-01-phase-1-task-01`)
 
 ## Evidence rule
 

@@ -4,14 +4,12 @@
 Parent track key: `track-24`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-24-phase-3 -->
-
-- [ ] Compile WASI components and run the component conformance suite.
-- [ ] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
-- [ ] Run MCP version-compatibility, cancellation, task, cache and load tests.
-- [ ] Establish component signing, revocation and distribution evidence.
+- [ ] T01: Compile WASI components and run the component conformance suite. (`track-24-phase-3-task-01`)
+- [ ] T02: Implement and threat-model authenticated Streamable HTTP/OAuth transport. (`track-24-phase-3-task-02`)
+- [ ] T03: Run MCP version-compatibility, cancellation, task, cache and load tests. (`track-24-phase-3-task-03`)
+- [ ] T04: Establish component signing, revocation and distribution evidence. (`track-24-phase-3-task-04`)
 
 ## Evidence rule
 

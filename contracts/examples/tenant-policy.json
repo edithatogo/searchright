@@ -1,0 +1,20 @@
+{
+  "schema_version": "org.searchright.tenant-policy.v1",
+  "tenant_id": "tenant-demo",
+  "allowed_regions": [
+    "AU"
+  ],
+  "allowed_scopes": [
+    "review_read",
+    "review_write",
+    "search_execute",
+    "screening_recommend",
+    "screening_decide"
+  ],
+  "maximum_concurrent_tasks": 4,
+  "external_model_processing_allowed": false,
+  "restricted_full_text_persistence_allowed": false,
+  "cross_tenant_aggregation_allowed": false,
+  "approved_by": "Governance officer",
+  "policy_version": "1"
+}

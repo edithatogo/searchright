@@ -26,6 +26,8 @@ flowchart TB
     LIVING[Living updates]
     REPORT[PRISMA and standards]
     GOV[Diagnostics and governance]
+    ACCESS[Authentication and tenancy policy]
+    OPS[Health, telemetry, backup and incidents]
   end
   subgraph Kernel[evidence-search-core]
     AST[Portable query AST]
@@ -39,7 +41,7 @@ flowchart TB
     LICENSED[BYO licensed adapters]
     RANK[Advisory ranking]
     WASI[WASI components]
-    REMOTE[Future remote MCP]
+    REMOTE[Authenticated remote MCP]
   end
   subgraph Evidence
     STORE[Audit and snapshots]
@@ -53,6 +55,9 @@ flowchart TB
   SKILL --> MCP
   ENGINE --> Services
   Services --> Kernel
+  ENGINE --> ACCESS
+  ENGINE --> OPS
+  ACCESS --> REMOTE
   PROVIDER --> Edge
   Services --> Evidence
   Kernel --> Evidence
@@ -107,8 +112,8 @@ All interfaces call these services through `SearchrightEngine`.
 
 ### Experimental edge
 
-Live providers, licensed adapters, ranking, agents, WASI components and future
-remote transports may change rapidly. They remain constrained by:
+Live providers, licensed adapters, ranking, agents, WASI components and
+authenticated remote transports may change rapidly. They remain constrained by:
 
 - explicit capabilities;
 - host allowlists and HTTPS;
@@ -199,8 +204,48 @@ supply-chain compromise, provenance loss and overclaiming. Controls include:
 - **Local live:** explicit opt-in open-provider calls with rate/cache policy.
 - **Institutional:** policy-approved region, retention, full-text and telemetry
   decisions.
-- **Remote future:** authenticated streamable HTTP MCP with tenancy and OAuth
-  threat model; not claimed by the current stdio server.
+- **Remote single-tenant:** authenticated streamable HTTP MCP with principal,
+  tenant, region, scope, replay, rate, concurrency and audit policy. The source
+  contracts exist; no deployed endpoint is claimed.
+- **Institutional remote:** requires explicit data-residency, backup/restore,
+  incident, telemetry and operational-evidence gates in addition to transport
+  conformance.
+
+## GitHub delivery control plane
+
+Conductor remains canonical planning state. The deterministic renderer projects
+one roadmap epic, 38 track issues, 152 phase subissues and 373 task subissues.
+A Project v2 manifest owns 12 custom fields and five views. Repository settings,
+security controls, environments and the main ruleset are separately declared.
+The bootstrap and synchronisers are dry-run-first, require explicit environment
+opt-ins and a clean Git tree, are additive/idempotent, never auto-delete or
+archive, and emit observed receipts. Remote issue or Project status cannot
+promote an evidence level.
+
+## Operational architecture
+
+The operational layer is contract-first rather than an implicit property of a
+server process:
+
+- component health distinguishes liveness, readiness and degraded state;
+- telemetry is disabled by default and uses an allowlist, prohibited attributes,
+  sampling and retention bounds;
+- backup manifests bind scope, content class, digest, parent, encryption and key
+  reference;
+- restore drills, recovery objectives and incident exercises are required before
+  recoverability or reliability claims;
+- authenticated remote MCP decisions bind principal, tenant, region, scopes,
+  human approval and consequential effects;
+- cross-tenant aggregation and agent-only final exclusion remain denied.
+
+## Cross-repository release and maturity
+
+CiteWeft, Searchright and Sourceright are promoted in order through contract,
+consumer-fixture, compiler, downstream-canary, release-candidate and explicit
+promotion stages. Prior pins and schema versions are retained for rollback. A
+prepared release rehearsal and pilot protocol cannot be promoted to success
+without execution receipts. Version 1.0 is a final evidence decision over the
+maturity dossier, not a source-code milestone.
 
 ## Federated repository integration
 

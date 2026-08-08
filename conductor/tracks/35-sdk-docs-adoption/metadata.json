@@ -1,0 +1,45 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "35",
+  "slug": "sdk-docs-adoption",
+  "title": "Generated SDKs, fixture-backed documentation and adoption operations",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-08",
+  "updated": "2026-08-08",
+  "dependencies": [
+    "10",
+    "18",
+    "27",
+    "31",
+    "34"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/35-sdk-docs-adoption/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-35",
+    "phase_issue_keys": [
+      "track-35-phase-1",
+      "track-35-phase-2",
+      "track-35-phase-3",
+      "track-35-phase-4"
+    ],
+    "task_issue_keys": [
+      "track-35-phase-1-task-01",
+      "track-35-phase-2-task-01",
+      "track-35-phase-2-task-02",
+      "track-35-phase-3-task-01",
+      "track-35-phase-3-task-02",
+      "track-35-phase-3-task-03",
+      "track-35-phase-4-task-01",
+      "track-35-phase-4-task-02",
+      "track-35-phase-4-task-03",
+      "track-35-phase-4-task-04"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": [],
+    "remote_task_issue_numbers": []
+  }
+}

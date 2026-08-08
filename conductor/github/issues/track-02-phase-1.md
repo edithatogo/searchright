@@ -4,15 +4,9 @@
 Parent track key: `track-02`
 Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-02-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-contracts/src/query.rs`
-  - [x] `crates/evidence-search-core/src/compiler.rs`
-  - [x] `contracts/examples/query-ast.yaml`
-  - [x] `contracts/examples/compiled-strategy.yaml`
+- [x] T01: Implement and document the track's source deliverables. (`track-02-phase-1-task-01`)
 
 ## Evidence rule
 

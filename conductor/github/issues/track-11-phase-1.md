@@ -4,15 +4,9 @@
 Parent track key: `track-11`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
 
-## Phase tasks
+## Task subissues
 
-<!-- github-subissue-key: track-11-phase-1 -->
-
-- [x] Implement and document the track's source deliverables.
-  - [x] `skills/systematic-search/SKILL.md`
-  - [x] `skills/systematic-search/workflows/systematic-review.yaml`
-  - [x] `skills/systematic-search/references/authority.md`
-  - [x] `crates/searchright-agent/src/lib.rs`
+- [x] T01: Implement and document the track's source deliverables. (`track-11-phase-1-task-01`)
 
 ## Evidence rule
 

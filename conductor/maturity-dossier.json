@@ -2,18 +2,93 @@
   "schema_version": "org.searchright.maturity-dossier.v1",
   "target_version": "1.0.0",
   "decision": "not_ready",
-  "last_reviewed": "2026-08-06",
+  "last_reviewed": "2026-08-08",
   "domains": [
-    {"domain": "contracts", "state": "source_verified", "critical_blocker": false},
-    {"domain": "compiler", "state": "not_evidenced", "critical_blocker": true},
-    {"domain": "determinism", "state": "source_implemented_unverified", "critical_blocker": true},
-    {"domain": "providers", "state": "fixture_source_only", "critical_blocker": true},
-    {"domain": "methodology", "state": "evaluation_prepared", "critical_blocker": true},
-    {"domain": "security", "state": "automation_prepared", "critical_blocker": true},
-    {"domain": "interfaces", "state": "source_parity_verified", "critical_blocker": true},
-    {"domain": "migration", "state": "integration_prepared", "critical_blocker": true},
-    {"domain": "usability", "state": "not_evidenced", "critical_blocker": true},
-    {"domain": "operations", "state": "release_prepared", "critical_blocker": true}
+    {
+      "domain": "contracts",
+      "state": "source_verified",
+      "critical_blocker": false
+    },
+    {
+      "domain": "compiler",
+      "state": "not_evidenced",
+      "critical_blocker": true
+    },
+    {
+      "domain": "determinism",
+      "state": "source_implemented_unverified",
+      "critical_blocker": true
+    },
+    {
+      "domain": "providers",
+      "state": "fixture_source_only",
+      "critical_blocker": true
+    },
+    {
+      "domain": "methodology",
+      "state": "evaluation_prepared",
+      "critical_blocker": true
+    },
+    {
+      "domain": "security",
+      "state": "automation_prepared",
+      "critical_blocker": true
+    },
+    {
+      "domain": "interfaces",
+      "state": "source_parity_verified",
+      "critical_blocker": true
+    },
+    {
+      "domain": "migration",
+      "state": "integration_prepared",
+      "critical_blocker": true
+    },
+    {
+      "domain": "usability",
+      "state": "not_evidenced",
+      "critical_blocker": true
+    },
+    {
+      "domain": "operations",
+      "state": "release_prepared",
+      "critical_blocker": true
+    },
+    {
+      "domain": "github_control_plane",
+      "state": "source_implemented_unverified",
+      "critical_blocker": true
+    },
+    {
+      "domain": "downstream_compatibility",
+      "state": "release_train_prepared",
+      "critical_blocker": true
+    },
+    {
+      "domain": "access_and_tenancy",
+      "state": "source_implemented_unverified",
+      "critical_blocker": true
+    },
+    {
+      "domain": "backup_restore_incidents",
+      "state": "source_implemented_unverified",
+      "critical_blocker": true
+    },
+    {
+      "domain": "sdk_and_adoption",
+      "state": "generated_clients_planned",
+      "critical_blocker": true
+    },
+    {
+      "domain": "pilots",
+      "state": "rehearsal_prepared",
+      "critical_blocker": true
+    },
+    {
+      "domain": "registries",
+      "state": "packets_prepared_not_submitted",
+      "critical_blocker": true
+    }
   ],
-  "claim": "Searchright is not ready for a 1.0 claim."
+  "claim": "Searchright is source-verified but not ready for a 1.0 claim."
 }

@@ -1,0 +1,68 @@
+{
+  "schema_version": "org.searchright.integration-release-train.v1",
+  "release_train_id": "searchright-ecosystem",
+  "generated_at": "source-epoch:2026-08-08",
+  "automatic_promotion": false,
+  "components": [
+    {
+      "repository": "edithatogo/citeweft",
+      "role": "document-evidence producer",
+      "passport": "integration/passports/citeweft-document-evidence.json",
+      "consumer_contract": "citeweft-to-searchright",
+      "promotion_order": 1
+    },
+    {
+      "repository": "edithatogo/searchright",
+      "role": "systematic-search orchestrator and shared-kernel producer",
+      "passport": null,
+      "consumer_contract": null,
+      "promotion_order": 2
+    },
+    {
+      "repository": "edithatogo/sourceright",
+      "role": "bibliographic verification downstream consumer",
+      "passport": "integration/passports/sourceright-shared-search-core.json",
+      "consumer_contract": "searchright-to-sourceright",
+      "promotion_order": 3
+    }
+  ],
+  "stages": [
+    {
+      "id": "contract",
+      "required_evidence": "contracted",
+      "automatic": false
+    },
+    {
+      "id": "consumer_fixture",
+      "required_evidence": "fixture_proven",
+      "automatic": false
+    },
+    {
+      "id": "compiler",
+      "required_evidence": "compiler_verified",
+      "automatic": false
+    },
+    {
+      "id": "downstream_canary",
+      "required_evidence": "fixture_proven",
+      "automatic": false
+    },
+    {
+      "id": "release_candidate",
+      "required_evidence": "fixture_proven",
+      "automatic": false
+    },
+    {
+      "id": "promotion",
+      "required_evidence": "publicly_accepted",
+      "automatic": false
+    }
+  ],
+  "rollback": [
+    "Restore the prior exact revision in the affected integration passport.",
+    "Disable the adapter feature or compatibility path.",
+    "Re-run consumer fixtures and preserve the failed receipt.",
+    "Do not delete prior schemas, fixtures, tags or migration evidence."
+  ],
+  "claim_boundary": "A release-train plan is not a cross-repository compatibility receipt or a published release."
+}

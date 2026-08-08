@@ -1,21 +1,21 @@
 <!-- searchright-issue-key: track-30 -->
-# Track 30: Mature 1.0 product, community and evaluation
+# Track 30: Maturity gate and gap closure
 
-Reach a stable externally evaluated 1.0 infrastructure product only after every evidence domain passes.
+Maintain one evidence-scaled gap register and block premature release claims while remaining domains are implemented.
 
 ## Source of truth
 
-- Spec: `conductor/tracks/30-maturity-1-0/spec.md`
-- Plan: `conductor/tracks/30-maturity-1-0/plan.md`
-- Evidence: `conductor/tracks/30-maturity-1-0/evidence.json`
+- Spec: `conductor/tracks/30-maturity-gap-closure/spec.md`
+- Plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
+- Evidence: `conductor/tracks/30-maturity-gap-closure/evidence.json`
 
 ## Contract
 
 - Horizon: `mature`
-- Status: `external_evidence_required`
+- Status: `source_implemented_unverified`
 - Evidence: `source_verified`
-- Dependencies: `12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29`
-- Requirements: `SR-050, SR-061`
+- Dependencies: `25, 26, 27, 28, 29`
+- Requirements: `SR-050`
 - External approval required: `true`
 
 ## Phase subissues
@@ -27,6 +27,6 @@ Reach a stable externally evaluated 1.0 infrastructure product only after every 
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+The gap register is source-verified planning evidence; it cannot close the gaps it records.
 
-> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime/external receipts remain authoritative.
+> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

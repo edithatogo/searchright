@@ -58,16 +58,55 @@ def main() -> int:
     if not isinstance(hierarchy, dict) or hierarchy.get("apply_permitted") is not False:
         errors.append("rendered GitHub issue hierarchy must not authorise remote writes")
 
-    sync_source = (ROOT / "scripts/sync_github_issues.py").read_text(encoding="utf-8")
-    required_sync_guards = (
-        "SEARCHRIGHT_GITHUB_APPLY",
-        "--apply",
-        "apply requires a clean Git working tree",
-        "apply repository must match the generated hierarchy",
-    )
-    for guard in required_sync_guards:
-        if guard not in sync_source:
-            errors.append(f"GitHub issue sync is missing guard: {guard}")
+    project = load("conductor/github/project.json")
+    if not isinstance(project, dict) or project.get("apply_permitted") is not False:
+        errors.append("GitHub Project manifest must not authorise remote writes")
+    elif project.get("sync", {}).get("delete_policy") != "never" or project.get("sync", {}).get("archive_policy") != "never_automatic":
+        errors.append("GitHub Project sync must deny deletion and automatic archival")
+
+    settings = load("conductor/github/repository-settings.json")
+    if not isinstance(settings, dict) or settings.get("apply_permitted") is not False:
+        errors.append("repository settings manifest must not authorise remote writes")
+    elif settings.get("ruleset", {}).get("deletion") is not False or settings.get("ruleset", {}).get("non_fast_forward") is not False:
+        errors.append("repository ruleset must deny deletion and non-fast-forward changes")
+
+    release_train = load("integration/release-train.json")
+    if not isinstance(release_train, dict) or release_train.get("automatic_promotion") is not False:
+        errors.append("release train must deny automatic promotion")
+    elif any(stage.get("automatic") is not False for stage in release_train.get("stages", [])):
+        errors.append("every release-train stage must require explicit promotion")
+
+    rehearsal = load("release/rehearsal.json")
+    if not isinstance(rehearsal, dict):
+        errors.append("release rehearsal must be an object")
+    elif rehearsal.get("automatic_release") is not False or rehearsal.get("automatic_registry_submission") is not False or rehearsal.get("rollback_required") is not True:
+        errors.append("release rehearsal must deny automatic release/submission and require rollback")
+
+    telemetry = load("contracts/examples/telemetry-policy.json")
+    if not isinstance(telemetry, dict) or telemetry.get("enabled") is not False:
+        errors.append("canonical telemetry policy must be disabled by default")
+
+    tenant = load("contracts/examples/tenant-policy.json")
+    if not isinstance(tenant, dict) or tenant.get("cross_tenant_aggregation_allowed") is not False:
+        errors.append("canonical tenant policy must deny cross-tenant aggregation")
+
+    common_source = (ROOT / "scripts/github_common.py").read_text(encoding="utf-8")
+    sync_sources = {
+        "GitHub issue sync": (ROOT / "scripts/sync_github_issues.py").read_text(encoding="utf-8"),
+        "GitHub Project sync": (ROOT / "scripts/sync_github_project.py").read_text(encoding="utf-8"),
+        "GitHub bootstrap": (ROOT / "scripts/bootstrap_github.py").read_text(encoding="utf-8"),
+    }
+    required_by_script = {
+        "GitHub issue sync": ("SEARCHRIGHT_GITHUB_APPLY", "--apply", "require_clean_tree", "apply repository must match the generated hierarchy"),
+        "GitHub Project sync": ("SEARCHRIGHT_GITHUB_PROJECT_APPLY", "--apply", "require_clean_tree", "delete_operations"),
+        "GitHub bootstrap": ("SEARCHRIGHT_GITHUB_BOOTSTRAP_APPLY", "--apply", "require_clean_tree", "delete_operations"),
+    }
+    for script_name, source in sync_sources.items():
+        for guard in required_by_script[script_name]:
+            if guard not in source:
+                errors.append(f"{script_name} is missing guard: {guard}")
+    if "remote apply requires a clean Git working tree" not in common_source:
+        errors.append("shared GitHub control plane is missing the clean-tree failure guard")
 
     provider_source = (ROOT / "crates/evidence-search-core/src/provider.rs").read_text(
         encoding="utf-8"
