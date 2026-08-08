@@ -14,12 +14,7 @@ path = "src/main.rs"
 [dependencies]
 anyhow.workspace = true
 clap.workspace = true
-evidence-search-core = { path = "../evidence-search-core" }
-searchright-agent = { path = "../searchright-agent" }
-searchright-connectors = { path = "../searchright-connectors" }
-searchright-contracts = { path = "../searchright-contracts" }
-searchright-dedup = { path = "../searchright-dedup" }
-searchright-prisma = { path = "../searchright-prisma" }
+searchright = { path = "../searchright", version = "=0.1.0-alpha.1" }
 serde.workspace = true
 serde_json.workspace = true
 serde_yaml.workspace = true

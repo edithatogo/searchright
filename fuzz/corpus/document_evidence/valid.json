@@ -1,0 +1,63 @@
+{
+  "schema_version": "org.searchright.document-evidence.v1",
+  "document_id": "report-001",
+  "upstream_schema_version": "citeweft.reference-model.v1",
+  "references": [
+    {
+      "reference_id": "r1",
+      "raw_citation": "Smith J. 2024. Example title. 10.1000/example",
+      "fields": [
+        {
+          "field": "title",
+          "value": "Example title",
+          "span": {
+            "start_byte": 31,
+            "end_byte": 44,
+            "surface": "Example title",
+            "source_id": null,
+            "page": null,
+            "bounding_box": []
+          }
+        }
+      ],
+      "span": {
+        "start_byte": 14,
+        "end_byte": 61,
+        "surface": "1. Smith J. 2024. Example title. 10.1000/example",
+        "source_id": null,
+        "page": null,
+        "bounding_box": []
+      },
+      "confidence": 0.9,
+      "review_required": false
+    }
+  ],
+  "citation_callouts": [
+    {
+      "callout_id": "c1",
+      "surface": "[1]",
+      "span": {
+        "start_byte": 5,
+        "end_byte": 8,
+        "surface": "[1]",
+        "source_id": null,
+        "page": null,
+        "bounding_box": []
+      },
+      "reference_id": "r1",
+      "confidence": 1.0,
+      "review_required": false
+    }
+  ],
+  "diagnostics": [],
+  "provenance": {
+    "backend": "citeweft-deterministic-reference-model",
+    "backend_version": "deterministic-baseline-v1",
+    "configuration": "numbered-entries-numeric-callouts",
+    "input_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "endpoint_class": null,
+    "route_trace_digest": null
+  },
+  "canonical_write_permitted": false,
+  "retained_full_text": false
+}

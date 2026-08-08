@@ -1,0 +1,8 @@
+schema_version: org.searchright.data-handling-decision.v1
+request_id: handling-request-demo-1
+policy_id: institution-policy-demo-1
+permitted: true
+blockers: []
+warnings:
+- governance.dry_run.no_effects
+human_approval_required: true

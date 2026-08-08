@@ -1,0 +1,24 @@
+schema_version: org.searchright.workflow-trace.v1
+review_id: review-example
+initial_stage: draft
+transitions:
+  - transition_id: transition-plan-approved
+    from: draft
+    to: plan_approved
+    actor_kind: human
+    actor_id: principal-investigator
+    occurred_at: "2026-08-06T00:00:00Z"
+    evidence_ids:
+      - review-plan-v1
+      - governance-approval-1
+    approved: true
+  - transition_id: transition-strategy-validated
+    from: plan_approved
+    to: strategy_validated
+    actor_kind: human
+    actor_id: information-specialist
+    occurred_at: "2026-08-06T01:00:00Z"
+    evidence_ids:
+      - press-review-1
+      - seed-validation-1
+    approved: true

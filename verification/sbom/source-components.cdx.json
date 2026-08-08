@@ -1,0 +1,1471 @@
+{
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "bom-ref": "cargo-requirement:anyhow@1.0",
+      "name": "anyhow",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/anyhow@1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "1.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:async-trait@0.1.89",
+      "name": "async-trait",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/async-trait@0.1.89",
+      "scope": "required",
+      "type": "library",
+      "version": "0.1.89"
+    },
+    {
+      "bom-ref": "cargo-requirement:base64@0.23",
+      "name": "base64",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/base64@0.23",
+      "scope": "required",
+      "type": "library",
+      "version": "0.23"
+    },
+    {
+      "bom-ref": "cargo-requirement:blake3@1.8",
+      "name": "blake3",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/blake3@1.8",
+      "scope": "required",
+      "type": "library",
+      "version": "1.8"
+    },
+    {
+      "bom-ref": "cargo-requirement:citeweft@0.1.0",
+      "name": "citeweft",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/citeweft@0.1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "0.1.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:clap@4.5",
+      "name": "clap",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/clap@4.5",
+      "scope": "required",
+      "type": "library",
+      "version": "4.5"
+    },
+    {
+      "bom-ref": "cargo-requirement:futures@0.3",
+      "name": "futures",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/futures@0.3",
+      "scope": "required",
+      "type": "library",
+      "version": "0.3"
+    },
+    {
+      "bom-ref": "cargo-requirement:indexmap@2.12",
+      "name": "indexmap",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/indexmap@2.12",
+      "scope": "required",
+      "type": "library",
+      "version": "2.12"
+    },
+    {
+      "bom-ref": "cargo-requirement:loom@0.7.2",
+      "name": "loom",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/loom@0.7.2",
+      "scope": "required",
+      "type": "library",
+      "version": "0.7.2"
+    },
+    {
+      "bom-ref": "cargo-requirement:proptest@1.8",
+      "name": "proptest",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/proptest@1.8",
+      "scope": "required",
+      "type": "library",
+      "version": "1.8"
+    },
+    {
+      "bom-ref": "cargo-requirement:reqwest@0.13.2",
+      "name": "reqwest",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/reqwest@0.13.2",
+      "scope": "required",
+      "type": "library",
+      "version": "0.13.2"
+    },
+    {
+      "bom-ref": "cargo-requirement:rmcp@3.1.0",
+      "name": "rmcp",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/rmcp@3.1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "3.1.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:schemars@1.0",
+      "name": "schemars",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/schemars@1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "1.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:serde@1.0",
+      "name": "serde",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/serde@1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "1.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:serde_json@1.0",
+      "name": "serde_json",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/serde_json@1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "1.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:serde_yaml@0.9",
+      "name": "serde_yaml",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/serde_yaml@0.9",
+      "scope": "required",
+      "type": "library",
+      "version": "0.9"
+    },
+    {
+      "bom-ref": "cargo-requirement:sha2@0.11",
+      "name": "sha2",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/sha2@0.11",
+      "scope": "required",
+      "type": "library",
+      "version": "0.11"
+    },
+    {
+      "bom-ref": "cargo-requirement:thiserror@2.0",
+      "name": "thiserror",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/thiserror@2.0",
+      "scope": "required",
+      "type": "library",
+      "version": "2.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:time@0.3",
+      "name": "time",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/time@0.3",
+      "scope": "required",
+      "type": "library",
+      "version": "0.3"
+    },
+    {
+      "bom-ref": "cargo-requirement:tokio@1",
+      "name": "tokio",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/tokio@1",
+      "scope": "required",
+      "type": "library",
+      "version": "1"
+    },
+    {
+      "bom-ref": "cargo-requirement:tracing-subscriber@0.3",
+      "name": "tracing-subscriber",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/tracing-subscriber@0.3",
+      "scope": "required",
+      "type": "library",
+      "version": "0.3"
+    },
+    {
+      "bom-ref": "cargo-requirement:tracing@0.1",
+      "name": "tracing",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/tracing@0.1",
+      "scope": "required",
+      "type": "library",
+      "version": "0.1"
+    },
+    {
+      "bom-ref": "cargo-requirement:url@2.5",
+      "name": "url",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/url@2.5",
+      "scope": "required",
+      "type": "library",
+      "version": "2.5"
+    },
+    {
+      "bom-ref": "cargo-requirement:uuid@1.18",
+      "name": "uuid",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/uuid@1.18",
+      "scope": "required",
+      "type": "library",
+      "version": "1.18"
+    },
+    {
+      "bom-ref": "cargo:evidence-search-core@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "evidence-search-core",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/evidence-search-core"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/evidence-search-core@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-agent@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-agent",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-agent"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-agent@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-assurance@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-assurance",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-assurance"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-assurance@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-bench@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-bench",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-bench"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-bench@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-citeweft@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-citeweft",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-citeweft"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-citeweft@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-cli@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-cli",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-cli"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-cli@0.1.0-alpha.1",
+      "type": "application",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-connectors@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-connectors",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-connectors"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-connectors@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-contracts@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-contracts",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-contracts"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-contracts@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-dedup@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-dedup",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-dedup"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-dedup@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-diagnostics@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-diagnostics",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-diagnostics"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-diagnostics@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-discovery@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-discovery",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-discovery"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-discovery@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-governance@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-governance",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-governance"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-governance@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-interchange@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-interchange",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-interchange"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-interchange@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-licensed@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-licensed",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-licensed"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-licensed@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-living@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-living",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-living"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-living@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-mcp@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-mcp",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-mcp"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-mcp@0.1.0-alpha.1",
+      "type": "application",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-plugin-sdk@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-plugin-sdk",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-plugin-sdk"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-plugin-sdk@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-policy@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-policy",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-policy"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-policy@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-prisma@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-prisma",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-prisma"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-prisma@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-provenance@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-provenance",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-provenance"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-provenance@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-ranking@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-ranking",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-ranking"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-ranking@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-screening@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-screening",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-screening"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-screening@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-sourceright-compat@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-sourceright-compat",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-sourceright-compat"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-sourceright-compat@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-store@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-store",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-store"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-store@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-study@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-study",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-study"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-study@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright-validation@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright-validation",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright-validation"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright-validation@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "cargo:searchright@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "searchright",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/searchright"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/searchright@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
+      "bom-ref": "github-action:actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6",
+      "name": "actions/attest",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "1e69f48acb82d1966a394da916b4c1698aa569d6"
+    },
+    {
+      "bom-ref": "github-action:actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "name": "actions/checkout",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "3d3c42e5aac5ba805825da76410c181273ba90b1"
+    },
+    {
+      "bom-ref": "github-action:actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294",
+      "name": "actions/dependency-review-action",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "a1d282b36b6f3519aa1f3fc636f609c47dddb294"
+    },
+    {
+      "bom-ref": "github-action:actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "name": "actions/download-artifact",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c"
+    },
+    {
+      "bom-ref": "github-action:actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+      "name": "actions/setup-python",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "5fda3b95a4ea91299a34e894583c3862153e4b97"
+    },
+    {
+      "bom-ref": "github-action:actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+      "name": "actions/upload-artifact",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+    },
+    {
+      "bom-ref": "github-action:codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f",
+      "name": "codecov/codecov-action",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "fb8b3582c8e4def4969c97caa2f19720cb33a72f"
+    },
+    {
+      "bom-ref": "github-action:github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "name": "github/codeql-action/analyze",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+    },
+    {
+      "bom-ref": "github-action:github/codeql-action/autobuild@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "name": "github/codeql-action/autobuild",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+    },
+    {
+      "bom-ref": "github-action:github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "name": "github/codeql-action/init",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+    },
+    {
+      "bom-ref": "github-action:github/codeql-action/upload-sarif@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "name": "github/codeql-action/upload-sarif",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+    },
+    {
+      "bom-ref": "github-action:gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e",
+      "name": "gitleaks/gitleaks-action",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e"
+    },
+    {
+      "bom-ref": "github-action:model-checking/kani-github-action@2534b7aeb3c6b4b0a5ecc3981bb3e63d47b5b126",
+      "name": "model-checking/kani-github-action",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "2534b7aeb3c6b4b0a5ecc3981bb3e63d47b5b126"
+    },
+    {
+      "bom-ref": "github-action:ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc",
+      "name": "ossf/scorecard-action",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "2d1146689b8cda280b9bc96326124645441f03bc"
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [
+        "cargo-requirement:async-trait@0.1.89",
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:time@0.3",
+        "cargo-requirement:tokio@1",
+        "cargo-requirement:url@2.5",
+        "cargo-requirement:uuid@1.18",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:evidence-search-core@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-agent@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:loom@0.7.2",
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-assurance@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1",
+        "cargo:searchright-dedup@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-bench@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:citeweft@0.1.0",
+        "cargo-requirement:sha2@0.11",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-citeweft@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:anyhow@1.0",
+        "cargo-requirement:clap@4.5",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:serde_yaml@0.9",
+        "cargo:searchright@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-cli@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:async-trait@0.1.89",
+        "cargo-requirement:reqwest@0.13.2",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:url@2.5",
+        "cargo:evidence-search-core@0.1.0-alpha.1",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-connectors@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0"
+      ],
+      "ref": "cargo:searchright-contracts@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:proptest@1.8",
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-dedup@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-diagnostics@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-discovery@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-governance@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:uuid@1.18",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-interchange@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:url@2.5",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-licensed@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-living@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:anyhow@1.0",
+        "cargo-requirement:base64@0.23",
+        "cargo-requirement:rmcp@3.1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:tokio@1",
+        "cargo-requirement:tracing-subscriber@0.3",
+        "cargo-requirement:tracing@0.1",
+        "cargo:searchright@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-mcp@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-plugin-sdk@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:url@2.5",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-policy@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-prisma@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-provenance@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-ranking@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-screening@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:evidence-search-core@0.1.0-alpha.1",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-sourceright-compat@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:uuid@1.18",
+        "cargo:evidence-search-core@0.1.0-alpha.1",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-store@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-study@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo:searchright-contracts@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright-validation@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:url@2.5",
+        "cargo:evidence-search-core@0.1.0-alpha.1",
+        "cargo:searchright-agent@0.1.0-alpha.1",
+        "cargo:searchright-assurance@0.1.0-alpha.1",
+        "cargo:searchright-bench@0.1.0-alpha.1",
+        "cargo:searchright-connectors@0.1.0-alpha.1",
+        "cargo:searchright-contracts@0.1.0-alpha.1",
+        "cargo:searchright-dedup@0.1.0-alpha.1",
+        "cargo:searchright-diagnostics@0.1.0-alpha.1",
+        "cargo:searchright-discovery@0.1.0-alpha.1",
+        "cargo:searchright-governance@0.1.0-alpha.1",
+        "cargo:searchright-interchange@0.1.0-alpha.1",
+        "cargo:searchright-licensed@0.1.0-alpha.1",
+        "cargo:searchright-living@0.1.0-alpha.1",
+        "cargo:searchright-plugin-sdk@0.1.0-alpha.1",
+        "cargo:searchright-policy@0.1.0-alpha.1",
+        "cargo:searchright-prisma@0.1.0-alpha.1",
+        "cargo:searchright-provenance@0.1.0-alpha.1",
+        "cargo:searchright-ranking@0.1.0-alpha.1",
+        "cargo:searchright-screening@0.1.0-alpha.1",
+        "cargo:searchright-store@0.1.0-alpha.1",
+        "cargo:searchright-study@0.1.0-alpha.1",
+        "cargo:searchright-validation@0.1.0-alpha.1"
+      ],
+      "ref": "cargo:searchright@0.1.0-alpha.1"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "name": "searchright",
+      "purl": "pkg:github/edithatogo/searchright@0.1.0-alpha.1",
+      "type": "application",
+      "version": "0.1.0-alpha.1"
+    },
+    "properties": [
+      {
+        "name": "searchright:evidence-level",
+        "value": "source-inventory"
+      },
+      {
+        "name": "searchright:cargo-lock-present",
+        "value": "false"
+      },
+      {
+        "name": "searchright:schema-count",
+        "value": "37"
+      },
+      {
+        "name": "searchright:standard-pack-count",
+        "value": "10"
+      },
+      {
+        "name": "searchright:claim-boundary",
+        "value": "not-a-binary-sbom-without-compiler-and-release-artifact"
+      }
+    ]
+  },
+  "serialNumber": "urn:uuid:f2790207-05ed-5bc2-8eb6-61c37de3c098",
+  "specVersion": "1.6",
+  "version": 1
+}

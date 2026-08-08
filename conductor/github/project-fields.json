@@ -1,0 +1,13 @@
+{
+  "schema_version": "org.searchright.github-project-fields.v1",
+  "project_title": "Searchright roadmap",
+  "fields": [
+    {"name": "Conductor key", "type": "text", "source": "issue key"},
+    {"name": "Track", "type": "text", "source": "track_id"},
+    {"name": "Phase", "type": "number", "source": "phase number"},
+    {"name": "Horizon", "type": "single_select", "options": ["foundation", "mvp", "alpha", "beta", "mature"]},
+    {"name": "Evidence level", "type": "single_select", "options": ["contracted", "source_verified", "compiler_verified", "fixture_proven", "live_proven", "externally_validated", "published"]},
+    {"name": "External approval", "type": "single_select", "options": ["not_required", "required"]}
+  ],
+  "claim_boundary": "This file is a prepared project-field contract, not evidence that a GitHub Project exists."
+}

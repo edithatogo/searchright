@@ -1,0 +1,121 @@
+{
+  "schema_version": "org.searchright.integration-passport-index.v1",
+  "generated_at": "2026-08-06",
+  "passports": [
+    {
+      "integration_id": "citeweft-document-evidence",
+      "repository": "edithatogo/citeweft",
+      "revision": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+      "path": "integration/passports/citeweft-document-evidence.json"
+    },
+    {
+      "integration_id": "sourceright-shared-search-core",
+      "repository": "edithatogo/sourceright",
+      "revision": "89f3d1a08037057160700df5bba319a64500b791",
+      "path": "integration/passports/sourceright-shared-search-core.json"
+    },
+    {
+      "integration_id": "repository-standards-inheritance",
+      "repository": "edithatogo/repository-standards",
+      "revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+      "path": "integration/passports/repository-standards-inheritance.json"
+    },
+    {
+      "integration_id": "api-standards-conformance",
+      "repository": "edithatogo/api-standards",
+      "revision": "5a706a7600c8c54ec63b4ab2716fcf7d8bababcf",
+      "path": "integration/passports/api-standards-conformance.json"
+    },
+    {
+      "integration_id": "prisma-jl-flow-interop",
+      "repository": "edithatogo/PRISMA.jl",
+      "revision": "95d5aa46c6cda6fb2d014391209d666349b577dc",
+      "path": "integration/passports/prisma-jl-flow-interop.json"
+    },
+    {
+      "integration_id": "academic-research-skills-systematic-search",
+      "repository": "edithatogo/academic-research-skills",
+      "revision": "734dd23e03e7261db9204702be9221119a30d7d2",
+      "path": "integration/passports/academic-research-skills-systematic-search.json"
+    },
+    {
+      "integration_id": "standards-check-reporting-packs",
+      "repository": "edithatogo/standards_check",
+      "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+      "path": "integration/passports/standards-check-reporting-packs.json"
+    },
+    {
+      "integration_id": "synergy-screening-benchmark",
+      "repository": "edithatogo/synergy-dataset",
+      "revision": "dc2dadfdbb98eb1b4259604789abd640aa3b693e",
+      "path": "integration/passports/synergy-screening-benchmark.json"
+    }
+  ],
+  "candidate_integrations": [
+    {
+      "repository": "edithatogo/scholarly-publishing-agents",
+      "required_before_activation": [
+        "exact revision pin",
+        "MCP/skill consumer contract",
+        "scenario parity"
+      ]
+    },
+    {
+      "repository": "edithatogo/co-researcher",
+      "required_before_activation": [
+        "exact revision pin",
+        "MCP capability envelope",
+        "human-authority tests"
+      ]
+    },
+    {
+      "repository": "edithatogo/ee_trd",
+      "required_before_activation": [
+        "exact revision pin",
+        "search-log import fixture",
+        "PRISMA-S migration issue"
+      ]
+    },
+    {
+      "repository": "edithatogo/reimbursement-atlas",
+      "required_before_activation": [
+        "exact revision pin",
+        "custom-search inventory",
+        "repository-specific parity set"
+      ]
+    },
+    {
+      "repository": "edithatogo/global-medicines-atlas",
+      "required_before_activation": [
+        "exact revision pin",
+        "custom-search inventory",
+        "repository-specific parity set"
+      ]
+    },
+    {
+      "repository": "edithatogo/osf-mcp-server",
+      "required_before_activation": [
+        "exact revision pin",
+        "deposit/registration contract",
+        "write-preview and approval gate"
+      ]
+    },
+    {
+      "repository": "edithatogo/mcp-registry",
+      "required_before_activation": [
+        "exact revision pin",
+        "submission validation contract",
+        "external approval"
+      ]
+    },
+    {
+      "repository": "edithatogo/authentext",
+      "required_before_activation": [
+        "exact revision pin",
+        "documentation-only capability",
+        "prose quality receipt contract"
+      ]
+    }
+  ],
+  "claim_boundary": "Only entries under passports are active prepared integrations; candidates are not dependencies or compatibility claims."
+}

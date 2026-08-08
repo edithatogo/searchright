@@ -1,43 +1,39 @@
 # Plan: 11 Systematic-search agent skill and workflows
 
-Current status: **scaffolded**.
+Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
 
-## Phase 1: Publish SKILL.md with trigger and non-trigger boundaries / Add planning, strategy, PRESS, execution, screening and reporting references
+GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Publish SKILL.md with trigger and non-trigger boundaries
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add planning, strategy, PRESS, execution, screening and reporting references
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Create subagent role cards and handoff contracts / Add scenario, prompt-injection and authority tests
+<!-- github-subissue-key: track-11-phase-1 -->
 
-- [ ] Create subagent role cards and handoff contracts
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add scenario, prompt-injection and authority tests
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `skills/systematic-search/SKILL.md`
+  - [x] `skills/systematic-search/workflows/systematic-review.yaml`
+  - [x] `skills/systematic-search/references/authority.md`
+  - [x] `crates/searchright-agent/src/lib.rs`
 
-## Phase 3: Integrate into academic-research-skills as a thin caller / Publish skill registry packets after observed validation
+## Phase 2: Source-level verification
 
-- [ ] Integrate into academic-research-skills as a thin caller
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Publish skill registry packets after observed validation
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-11-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-11-phase-3 -->
+
+- [ ] Run scenario-based agent evaluations across supported hosts and models.
+- [ ] Calibrate authority and failure modes with human information specialists.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-11-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

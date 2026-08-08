@@ -1,0 +1,75 @@
+{
+  "schema_version": "org.searchright.standard-pack-index.v1",
+  "packs": [
+    {
+      "pack_id": "prisma-2020",
+      "path": "contracts/standards/packs/prisma-2020.yaml",
+      "family": "prisma2020",
+      "version": "2020",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "prisma-s-2021",
+      "path": "contracts/standards/packs/prisma-s-2021.yaml",
+      "family": "prisma_s",
+      "version": "2021",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "prisma-scr-2018",
+      "path": "contracts/standards/packs/prisma-scr-2018.yaml",
+      "family": "prisma_sc_r",
+      "version": "2018",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "prisma-lsr-2024",
+      "path": "contracts/standards/packs/prisma-lsr-2024.yaml",
+      "family": "prisma_lsr",
+      "version": "2024",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "prisma-p-2015",
+      "path": "contracts/standards/packs/prisma-p-2015.yaml",
+      "family": "prisma_p",
+      "version": "2015",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "press-2015",
+      "path": "contracts/standards/packs/press-2015.yaml",
+      "family": "press2015",
+      "version": "2015",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "cochrane-handbook-6.5.1",
+      "path": "contracts/standards/packs/cochrane-handbook-6.5.1.yaml",
+      "family": "cochrane_handbook",
+      "version": "6.5.1",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "mecir-search",
+      "path": "contracts/standards/packs/mecir-search.yaml",
+      "family": "mecir",
+      "version": "current",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "jbi-search",
+      "path": "contracts/standards/packs/jbi-search.yaml",
+      "family": "jbi",
+      "version": "current",
+      "status": "maintained_summary"
+    },
+    {
+      "pack_id": "campbell-search",
+      "path": "contracts/standards/packs/campbell-search.yaml",
+      "family": "campbell",
+      "version": "current",
+      "status": "maintained_summary"
+    }
+  ]
+}

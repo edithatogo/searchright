@@ -1,37 +1,62 @@
 # GitHub estate integration and migration
 
-## Key finding
+## Repository discovery
 
-The requested `edithatogo/sourcerightlibrary` path was not found. The active
-repository is `edithatogo/sourceright`. Its current `src/live_providers.rs`
-contains provider configuration, retries, cache controls, endpoint construction,
-HTTP execution and fixture parsing. These generic responsibilities are the first
-shared-core extraction target.
+The requested name `edithatogo/sourcerightlibrary` was not present during the
+audit. The active repository is `edithatogo/sourceright`. The migration packet
+is pinned to the inspected `src/live_providers.rs` blob
+`57bc071c6afc7d5a4cb8ead12112919a446ebd24`.
 
-## Repository integration matrix
+## Shared-core decision
 
-| Repository | Reuse or replacement |
+A shared core is warranted, but only for product-neutral behaviour:
+
+- query representation and compilation;
+- provider registration and capability description;
+- host, timeout, rate, retry, pagination and result budgets;
+- cache/replay interfaces;
+- normalised pages, receipts and audit events.
+
+CiteWeft-specific document/reference extraction, spans and routing diagnostics stay in CiteWeft. Sourceright-specific CSL candidate comparison, citation reconciliation and reference verification stay in Sourceright. Searchright-specific protocols, screening and
+PRISMA outputs stay in Searchright.
+
+## Estate matrix
+
+| Repository | Integration decision |
 | --- | --- |
-| `sourceright` | Replace generic provider runtime/query/receipt code with `evidence-search-core`; retain CSL/citation verification. |
-| `citeweft` | Interoperate for bibliography parsing/canonicalisation; no duplicate citation parser. |
-| `academic-research-skills` | Replace custom systematic-review search execution with Searchright MCP tools; retain high-level research orchestration and integrity gates. |
-| `research-skills` / `scholarly-publishing-agents` | Publish thin skills/prompts that call Searchright rather than embedding provider code. |
-| `PRISMA.jl` | Use as a parity comparator and migration source for flow/checklist behaviour; avoid two canonical flow models once Rust parity is proven. |
-| `synergy-dataset` | Use as a screening benchmark and calibration corpus under its licence/provenance. |
-| `standards_check` | Source versioned reporting checklists and provenance sidecars. |
-| `repository-standards` | Register Searchright as high-risk research software and inherit CI/security/release controls. |
-| `api-standards` / conformance repos | Reuse API, contract and receipt conventions. |
-| `osf-mcp-server` | Integrate protocol registration and artefact deposit after Searchright contracts stabilise. |
-| `mcp-registry`, `awesome-mcp-servers`, `awesome-agent-skills` | Submission and discovery targets, not sources of duplicated core code. |
+| `sourceright` | Adopt `evidence-search-core` behind compatibility feature; dual-run fixtures; delete generic runtime only after parity and rollback evidence. |
+| `citeweft` | Reuse optional scholarly extraction evidence, source spans, uncertainty and routing diagnostics through `searchright-citeweft`; canonicalisation and reference verification remain Sourceright responsibilities. |
+| `academic-research-skills` | Replace embedded search execution with Searchright CLI/MCP calls; retain higher-level research orchestration and integrity gates. |
+| `research-skills` / `scholarly-publishing-agents` | Thin skills over Searchright; no provider implementation in prompts. |
+| `PRISMA.jl` | Parity comparator and migration source for checklist/flow behaviour; avoid two canonical flow models after verified parity. |
+| `synergy-dataset` | Rights-aware benchmark and human-calibration corpus. |
+| `standards_check` | Upstream provenance source for versioned reporting checklists. |
+| `repository-standards` | Register Searchright as research software with elevated security/release controls. |
+| `api-standards` / conformance repositories | Reuse API, compatibility and verification-receipt conventions. |
+| `osf-mcp-server` | Protocol registration and artefact deposit adapter after contract stability. |
+| `mcp-registry`, `awesome-mcp-servers`, `awesome-agent-skills` | Distribution targets, not duplicated implementation sources. |
+| research project repositories | Replace one-off PubMed/registry/import/dedup scripts only after the estate scanner classifies and a repository-specific migration issue is approved. |
 
-## Migration sequence
+The machine-readable inventory and patterns live under `migration/estate/`.
 
-1. Publish `evidence-search-core` inside this workspace with fixture parity.
-2. Add a compatibility adapter in Sourceright behind a feature flag.
-3. Run Sourceright's provider fixtures through both implementations.
-4. Switch generic runtime ownership to the shared crate.
-5. Delete superseded code only after parity, semver and rollback evidence.
-6. Repeat the estate audit with GitHub code search and track each replacement in
-   `migration/estate-migration-manifest.yaml`.
+## Safe migration protocol
 
-No remote repository has been modified by this scaffold.
+1. Inventory the downstream code and pin the exact source revision.
+2. Map every legacy symbol and behaviour to a shared-core owner or explicit
+   retention decision.
+3. Import rights-cleared fixtures and preserve their provenance.
+4. Add a compatibility adapter and feature-gated rollback path.
+5. Dual-run old and new implementations over deterministic fixtures.
+6. Compare identifiers, fields, errors, retries, cache behaviour, redaction,
+   receipts and ordering.
+7. Record and approve any intended difference.
+8. Run the downstream repository’s compiler, tests, security and release gates.
+9. Switch the default while retaining rollback for one compatible release.
+10. Delete superseded code only after the evidence receipt is complete.
+
+## Current state
+
+Searchright contains the mapping, parity cases, compatibility helpers and estate
+scanner. No downstream repository was modified, no dual-run was executed and no
+custom code was deleted in this environment. Those are integration-evidence
+tasks, not source tasks that can be closed by changing metadata.

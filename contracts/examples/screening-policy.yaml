@@ -1,0 +1,7 @@
+schema_version: org.searchright.screening-policy.v1
+title_abstract_reviewers: 2
+full_text_reviewers: 2
+agent_authority: advisory_only
+minimum_agent_sensitivity: 0.99
+independent_blinding: true
+adjudication_rule: Resolve disagreement by discussion, then independent human adjudication.

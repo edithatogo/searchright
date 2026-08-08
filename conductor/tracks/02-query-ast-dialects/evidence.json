@@ -1,0 +1,40 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "02",
+  "title": "Portable query AST and dialect compilers",
+  "status": "source_implemented_unverified",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "crates/searchright-contracts/src/query.rs",
+    "crates/evidence-search-core/src/compiler.rs",
+    "contracts/examples/query-ast.yaml",
+    "contracts/examples/compiled-strategy.yaml"
+  ],
+  "static_checks": [
+    "python scripts/validate_repository.py"
+  ],
+  "requirements": [
+    "SR-005",
+    "SR-006",
+    "SR-007"
+  ],
+  "blockers": [
+    "Compile and execute dialect snapshot/property tests.",
+    "Expand the conformance corpus with independently reviewed source strategies."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-02",
+    "phases": [
+      "track-02-phase-1",
+      "track-02-phase-2",
+      "track-02-phase-3",
+      "track-02-phase-4"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

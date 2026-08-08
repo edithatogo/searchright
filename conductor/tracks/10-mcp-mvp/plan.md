@@ -1,43 +1,40 @@
 # Plan: 10 MCP stdio server MVP
 
-Current status: **scaffolded**.
+Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
 
-## Phase 1: Complete contracted planning/execution/screening tools / Return structuredContent matching outputSchema
+GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Complete contracted planning/execution/screening tools
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Return structuredContent matching outputSchema
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Add resources for plans, runs, queues and reports / Add prompts for planning/PRESS/update workflows
+<!-- github-subissue-key: track-10-phase-1 -->
 
-- [ ] Add resources for plans, runs, queues and reports
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add prompts for planning/PRESS/update workflows
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/searchright-mcp/src/main.rs`
+  - [x] `contracts/mcp/tool-catalog.json`
+  - [x] `contracts/interface-catalog.json`
+  - [x] `server.json`
 
-## Phase 3: Run official SDK/examples and protocol transcript conformance / Test cancellation, pagination, errors and backwards compatibility
+## Phase 2: Source-level verification
 
-- [ ] Run official SDK/examples and protocol transcript conformance
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Test cancellation, pagination, errors and backwards compatibility
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-10-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_cli_mcp_parity.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-10-phase-3 -->
+
+- [ ] Compile and run stdio MCP conformance transcripts with current and compatibility clients.
+- [ ] Validate structured output schemas against live client implementations.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-10-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

@@ -1,0 +1,35 @@
+schema_version: org.searchright.search-validation.v1
+review_id: demo-review
+strategy_id: strategy-medline-v1
+strategy_version: '1.0'
+press_reviews:
+- press_review_id: press-1
+  strategy_id: strategy-medline-v1
+  strategy_version: '1.0'
+  reviewer_id: information-specialist-2
+  reviewed_at: '2026-08-06T00:00:00Z'
+  findings:
+  - finding_id: finding-1
+    element: limits_and_filters
+    severity: advisory
+    message: No language limit is applied.
+    recommendation: Retain no language limit and document translation plans.
+    resolved: true
+  decision: approved with advisory note
+seed_records:
+- seed_id: seed-1
+  identifier: 10.1000/example
+  relevance_basis: Protocol-development sentinel study
+  retrieved: true
+  source_id: medline-pubmed
+translation_assessments:
+- strategy_id: strategy-medline-v1
+  target_dialect: pubmed
+  maximum_material_warnings: 0
+  observed_material_warnings: 0
+  human_approved: true
+  notes:
+  - No material translation loss.
+minimum_seed_recall: 1.0
+approved_for_execution: true
+approved_by: review-lead

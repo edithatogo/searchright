@@ -9,7 +9,7 @@ entries:
     responsibility: provider runtime, retries, caching, endpoints and receipts
     replacement: evidence-search-core plus searchright-connectors
     detailed_packet: migration/sourceright/replacement-map.yaml
-    status: planned
+    status: integration_prepared
     evidence_required:
       - fixture parity
       - API compatibility review

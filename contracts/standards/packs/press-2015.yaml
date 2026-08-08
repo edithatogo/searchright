@@ -1,0 +1,39 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: press-2015
+family: press2015
+version: '2015'
+source: PRESS 2015 Guideline Evidence-Based Checklist
+provenance_note: Peer review of electronic search strategies. Consult the authoritative
+  source for exact wording and interpretation.
+items:
+- item_id: press-question
+  label: Translation of question
+  requirement_summary: Assess whether the strategy represents the research question.
+  scope: conduct
+  crosswalks:
+  - prisma-s-14
+- item_id: press-boolean
+  label: Boolean and proximity operators
+  requirement_summary: Assess operator logic, nesting and proximity use.
+  scope: conduct
+  crosswalks: []
+- item_id: press-headings
+  label: Subject headings
+  requirement_summary: Assess controlled vocabulary selection and explosion.
+  scope: conduct
+  crosswalks: []
+- item_id: press-textwords
+  label: Text words
+  requirement_summary: Assess synonyms, spelling variants and free-text concepts.
+  scope: conduct
+  crosswalks: []
+- item_id: press-syntax
+  label: Spelling, syntax and line numbers
+  requirement_summary: Assess typographical and platform-syntax correctness.
+  scope: conduct
+  crosswalks: []
+- item_id: press-limits
+  label: Limits and filters
+  requirement_summary: Assess limits and filters for validity and justification.
+  scope: conduct
+  crosswalks: []

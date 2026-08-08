@@ -1,0 +1,16 @@
+[package]
+name = "searchright-policy"
+description = "Capability envelopes and hostile-content controls for Searchright operations."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+thiserror.workspace = true
+url.workspace = true
+
+[lints]
+workspace = true

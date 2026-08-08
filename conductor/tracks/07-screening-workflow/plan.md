@@ -1,43 +1,40 @@
 # Plan: 07 Governed screening workflow
 
-Current status: **scaffolded**.
+Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
 
-## Phase 1: Persist blinded reviewer decisions / Implement role assignments and adjudication
+GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Persist blinded reviewer decisions
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Implement role assignments and adjudication
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Tie decisions to eligibility version and evidence excerpts / Enforce one primary full-text exclusion reason
+<!-- github-subissue-key: track-07-phase-1 -->
 
-- [ ] Tie decisions to eligibility version and evidence excerpts
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Enforce one primary full-text exclusion reason
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/searchright-screening/src/lib.rs`
+  - [x] `crates/searchright-agent/src/lib.rs`
+  - [x] `contracts/examples/screening-decision.yaml`
+  - [x] `contracts/examples/screening-policy.yaml`
+  - [x] `docs/adrs/0003-agent-authority.md`
 
-## Phase 3: Add audit-preserving amendment/re-screen flows / Add screening exports/adapters for common review tools
+## Phase 2: Source-level verification
 
-- [ ] Add audit-preserving amendment/re-screen flows
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add screening exports/adapters for common review tools
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-07-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-07-phase-3 -->
+
+- [ ] Compile and execute state-machine and authority-negative tests.
+- [ ] Complete reviewer usability and inter-rater calibration evaluation.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-07-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

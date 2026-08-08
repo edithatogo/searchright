@@ -1,0 +1,34 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "29",
+  "slug": "external-evaluation-sustainability",
+  "title": "External methodological evaluation and sustainability",
+  "status": "external_evidence_required",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "13",
+    "17",
+    "18",
+    "19",
+    "25",
+    "27",
+    "28"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": true,
+  "evidence_path": "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-29",
+    "phase_issue_keys": [
+      "track-29-phase-1",
+      "track-29-phase-2",
+      "track-29-phase-3",
+      "track-29-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

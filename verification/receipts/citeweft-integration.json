@@ -1,0 +1,10 @@
+{
+  "checks": 7,
+  "errors": [],
+  "limitations": [
+    "Source-level compatibility only; the pinned git dependency and adapter tests were not compiled in this environment."
+  ],
+  "schema_version": "org.searchright.citeweft-integration-receipt.v1",
+  "status": "passed",
+  "upstream_commit": "8c8932976250f9ca91c2bbda28ed68eeb191fa42"
+}

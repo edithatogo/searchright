@@ -1,0 +1,16 @@
+{
+  "schema_version": "org.searchright.github-labels.v1",
+  "labels": [
+    {"name": "conductor", "color": "1d76db", "description": "Generated from Conductor source-of-truth artefacts"},
+    {"name": "kind:epic", "color": "5319e7", "description": "Roadmap epic"},
+    {"name": "kind:track", "color": "0052cc", "description": "Conductor track"},
+    {"name": "kind:phase", "color": "bfd4f2", "description": "Numbered Conductor plan phase"},
+    {"name": "evidence:source-verified", "color": "0e8a16", "description": "Source-level evidence only"},
+    {"name": "evidence:external-required", "color": "d93f0b", "description": "Needs live, downstream, human or external evidence"},
+    {"name": "horizon:foundation", "color": "c5def5", "description": "Foundation horizon"},
+    {"name": "horizon:mvp", "color": "bfe5bf", "description": "MVP horizon"},
+    {"name": "horizon:alpha", "color": "fbca04", "description": "Alpha horizon"},
+    {"name": "horizon:beta", "color": "f9d0c4", "description": "Beta horizon"},
+    {"name": "horizon:mature", "color": "d4c5f9", "description": "Mature horizon"}
+  ]
+}

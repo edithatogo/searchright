@@ -1,0 +1,13 @@
+schema_version: org.searchright.ranking-calibration.v1
+review_id: demo-review
+ranker_version: lexical-v1
+threshold: 0.5
+counts:
+  true_positive: 98
+  false_positive: 120
+  true_negative: 780
+  false_negative: 2
+minimum_sensitivity: 0.95
+approved_for_prioritisation: true
+auto_exclusion_prohibited: true
+approved_by: screening-lead

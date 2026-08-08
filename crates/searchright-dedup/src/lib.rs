@@ -98,6 +98,10 @@ impl Deduplicator {
     }
 
     /// Cluster duplicate candidates while retaining all source records and evidence.
+    #[allow(
+        clippy::indexing_slicing,
+        reason = "pairwise and component indices are generated within the validated records slice"
+    )]
     pub fn cluster(&self, records: &[BibliographicRecord]) -> Result<DedupResult, DedupError> {
         validate_records(records)?;
         let mut union_find = UnionFind::new(records.len());
@@ -311,6 +315,10 @@ fn normalise_tokens(value: &str) -> BTreeSet<String> {
         .collect()
 }
 
+#[allow(
+    clippy::float_cmp,
+    reason = "the union value is an exactly represented non-negative integer count projected to f64"
+)]
 fn jaccard_similarity(left: &BTreeSet<String>, right: &BTreeSet<String>) -> f64 {
     if left.is_empty() || right.is_empty() {
         return 0.0;
@@ -414,7 +422,7 @@ fn validate_records(records: &[BibliographicRecord]) -> Result<(), DedupError> {
 }
 
 fn usize_to_u64(value: usize) -> u64 {
-    u64::try_from(value).map_or(u64::MAX, |converted| converted)
+    u64::try_from(value).unwrap_or(u64::MAX)
 }
 
 fn usize_to_f64(value: usize) -> f64 {
@@ -473,6 +481,7 @@ mod tests {
 
     fn record(id: &str, doi: Option<&str>, title: &str) -> BibliographicRecord {
         BibliographicRecord {
+            schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
             record_id: id.to_owned(),
             source_receipt_id: "receipt".to_owned(),
             native_id: id.to_owned(),

@@ -1,0 +1,77 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "13",
+  "title": "Integration passports, GitHub issue hierarchy and context spine",
+  "status": "integration_prepared",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "integration/locks.json",
+    "integration/passports/index.json",
+    "contracts/json-schema/integration-passport.v1.schema.json",
+    "contracts/json-schema/github-issue-hierarchy.v1.schema.json",
+    "conductor/github/issue-hierarchy.json",
+    "conductor/github/README.md",
+    "scripts/check_integration_passports.py",
+    "scripts/render_github_issues.py",
+    "scripts/check_github_issue_hierarchy.py",
+    "scripts/sync_github_issues.py",
+    "CONTEXT.md",
+    "context/manifest.json",
+    "context/decision-ledger.json",
+    "context/claim-boundaries.json",
+    "scripts/check_context_integrity.py",
+    "crates/searchright-contracts/src/integration.rs",
+    "contracts/examples/integration-passport.json",
+    "contracts/examples/github-issue-hierarchy.json",
+    "integration/passports/citeweft-document-evidence.json",
+    "scripts/check_integration_drift.py",
+    "scripts/sync_context_lock.py",
+    "context/capability-matrix.json",
+    "context/hazard-log.json",
+    "context/evidence-ledger.json",
+    ".github/workflows/issue-sync.yml",
+    ".github/workflows/integration-drift.yml",
+    "docs/integration-architecture.md",
+    "contracts/json-schema/consumer-contract-suite.v1.schema.json",
+    "contracts/examples/consumer-contract-suite.json",
+    "integration/consumer-contract-suite.json",
+    "scripts/check_consumer_contracts.py",
+    "docs/adrs/0016-federated-consumer-contracts.md"
+  ],
+  "static_checks": [
+    "python scripts/validate_repository.py",
+    "python scripts/check_integration_passports.py",
+    "python scripts/check_consumer_contracts.py",
+    "python scripts/check_github_issue_hierarchy.py",
+    "python scripts/check_context_integrity.py",
+    "python scripts/check_integration_drift.py",
+    "python scripts/render_github_issues.py --check",
+    "python scripts/sync_context_lock.py --check"
+  ],
+  "requirements": [
+    "SR-065",
+    "SR-066",
+    "SR-067",
+    "SR-070"
+  ],
+  "blockers": [
+    "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+    "Execute consumer-driven contract tests in each pinned downstream repository.",
+    "Record scheduled integration-drift receipts against the live repository estate."
+  ],
+  "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-13",
+    "phases": [
+      "track-13-phase-1",
+      "track-13-phase-2",
+      "track-13-phase-3",
+      "track-13-phase-4"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

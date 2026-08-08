@@ -1,0 +1,32 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "28",
+  "slug": "institutional-governance-privacy-collaboration",
+  "title": "Institutional governance, privacy and collaboration",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "05",
+    "07",
+    "13",
+    "24",
+    "27"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": true,
+  "evidence_path": "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-28",
+    "phase_issue_keys": [
+      "track-28-phase-1",
+      "track-28-phase-2",
+      "track-28-phase-3",
+      "track-28-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

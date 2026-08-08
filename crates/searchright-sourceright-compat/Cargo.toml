@@ -1,0 +1,22 @@
+[package]
+name = "searchright-sourceright-compat"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Migration compatibility and parity helpers for Sourceright adoption of evidence-search-core."
+
+[dependencies]
+blake3.workspace = true
+evidence-search-core = { path = "../evidence-search-core", version = "=0.1.0-alpha.1" }
+schemars.workspace = true
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

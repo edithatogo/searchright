@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/interchange-receipt.v1.schema.json",
+  "title": "Searchright Interchange Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "review_id",
+    "input_format",
+    "output_format",
+    "input_digest",
+    "output_digest",
+    "records_read",
+    "records_written",
+    "warnings",
+    "lossless"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.interchange-receipt.v1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_format": {
+      "oneOf": [
+        {
+          "enum": [
+            "searchright_json",
+            "json_lines",
+            "csl_json",
+            "ris",
+            "nbib",
+            "bibtex",
+            "endnote_xml",
+            "csv",
+            "parquet"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "output_format": {
+      "oneOf": [
+        {
+          "enum": [
+            "searchright_json",
+            "json_lines",
+            "csl_json",
+            "ris",
+            "nbib",
+            "bibtex",
+            "endnote_xml",
+            "csv",
+            "parquet"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "input_digest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output_digest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "records_read": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "records_written": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "lossless": {
+      "type": "boolean"
+    }
+  }
+}

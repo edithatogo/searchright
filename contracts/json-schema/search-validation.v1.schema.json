@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/search-validation.v1.schema.json",
+  "title": "Searchright Search Validation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "strategy_id",
+    "strategy_version",
+    "press_reviews",
+    "seed_records",
+    "translation_assessments",
+    "minimum_seed_recall",
+    "approved_for_execution",
+    "approved_by"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.search-validation.v1"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "strategy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "strategy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "press_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "press_review_id",
+          "strategy_id",
+          "strategy_version",
+          "reviewer_id",
+          "reviewed_at",
+          "findings",
+          "decision"
+        ],
+        "properties": {
+          "press_review_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "strategy_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "strategy_version": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reviewer_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reviewed_at": {
+            "type": "string",
+            "minLength": 1
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "finding_id",
+                "element",
+                "severity",
+                "message",
+                "recommendation",
+                "resolved"
+              ],
+              "properties": {
+                "finding_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "enum": [
+                    "translation_of_question",
+                    "boolean_and_proximity",
+                    "subject_headings",
+                    "text_words",
+                    "spelling_syntax_and_lines",
+                    "limits_and_filters"
+                  ]
+                },
+                "severity": {
+                  "enum": [
+                    "note",
+                    "advisory",
+                    "major",
+                    "critical"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "recommendation": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "resolved": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "decision": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "seed_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "seed_id",
+          "identifier",
+          "relevance_basis",
+          "retrieved",
+          "source_id"
+        ],
+        "properties": {
+          "seed_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "identifier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relevance_basis": {
+            "type": "string",
+            "minLength": 1
+          },
+          "retrieved": {
+            "type": "boolean"
+          },
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "translation_assessments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "strategy_id",
+          "target_dialect",
+          "maximum_material_warnings",
+          "observed_material_warnings",
+          "human_approved",
+          "notes"
+        ],
+        "properties": {
+          "strategy_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target_dialect": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maximum_material_warnings": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "observed_material_warnings": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "human_approved": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "minimum_seed_recall": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "approved_for_execution": {
+      "type": "boolean"
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    }
+  }
+}

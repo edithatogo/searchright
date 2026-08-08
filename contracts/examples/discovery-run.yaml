@@ -1,0 +1,16 @@
+schema_version: org.searchright.discovery-run.v1
+review_id: demo-review
+run_id: discovery-1
+method: backward_citation
+seed_ids:
+- report-1
+edges:
+- edge_id: edge-1
+  seed_id: report-1
+  discovered_id: record-3
+  method: backward_citation
+  provider_id: openalex-fixture
+  receipt_id: receipt-3
+maximum_depth: 1
+maximum_records: 500
+requires_human_release: true

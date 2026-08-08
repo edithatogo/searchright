@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/workflow-trace.v1.schema.json",
+  "title": "Searchright workflow trace",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "review_id", "initial_stage", "transitions"],
+  "properties": {
+    "schema_version": {"const": "org.searchright.workflow-trace.v1"},
+    "review_id": {"type": "string", "minLength": 1},
+    "initial_stage": {"$ref": "#/$defs/stage"},
+    "transitions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/transition"}
+    }
+  },
+  "$defs": {
+    "stage": {
+      "enum": [
+        "draft", "plan_approved", "strategy_validated", "execution_approved",
+        "search_executed", "deduplicated", "title_abstract_complete",
+        "full_text_complete", "reported", "update_planned"
+      ]
+    },
+    "actor_kind": {"enum": ["human", "tool", "agent"]},
+    "transition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transition_id", "from", "to", "actor_kind", "actor_id", "occurred_at",
+        "evidence_ids", "approved"
+      ],
+      "properties": {
+        "transition_id": {"type": "string", "minLength": 1},
+        "from": {"$ref": "#/$defs/stage"},
+        "to": {"$ref": "#/$defs/stage"},
+        "actor_kind": {"$ref": "#/$defs/actor_kind"},
+        "actor_id": {"type": "string", "minLength": 1},
+        "occurred_at": {"type": "string", "format": "date-time"},
+        "evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "approved": {"type": "boolean"}
+      }
+    }
+  }
+}

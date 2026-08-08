@@ -4,7 +4,10 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::{ContractError, Validate, require_text};
+use crate::{
+    BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION, ContractError, Validate, require_schema_version,
+    require_text,
+};
 
 /// Common identifiers used for record and report matching.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema, Default)]
@@ -51,6 +54,8 @@ pub enum RecordKind {
 /// Provider-normalised bibliographic record.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 pub struct BibliographicRecord {
+    /// Contract identifier.
+    pub schema_version: String,
     /// Stable Searchright record identifier.
     pub record_id: String,
     /// Source receipt that introduced the record.
@@ -92,6 +97,11 @@ pub struct BibliographicRecord {
 
 impl Validate for BibliographicRecord {
     fn validate(&self) -> Result<(), ContractError> {
+        require_schema_version(
+            &self.schema_version,
+            BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION,
+            "record.schema_version",
+        )?;
         require_text(&self.record_id, "record.record_id")?;
         require_text(&self.source_receipt_id, "record.source_receipt_id")?;
         require_text(&self.native_id, "record.native_id")?;

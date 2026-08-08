@@ -1,0 +1,20 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: jbi-search
+family: jbi
+version: current
+source: JBI evidence synthesis guidance
+provenance_note: Search planning, execution and reporting expectations represented
+  as summaries. Consult the authoritative source for exact wording and interpretation.
+items:
+- item_id: jbi-three-step
+  label: Three-step strategy
+  requirement_summary: Use an initial search, analysis of terms and a comprehensive
+    multi-source search when appropriate.
+  scope: conduct
+  crosswalks: []
+- item_id: jbi-grey-literature
+  label: Unpublished evidence
+  requirement_summary: Consider unpublished and grey literature relevant to the question.
+  scope: conduct
+  crosswalks:
+  - prisma-s-7

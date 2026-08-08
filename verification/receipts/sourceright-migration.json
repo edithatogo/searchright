@@ -1,0 +1,12 @@
+{
+  "schema_version": "org.searchright.sourceright-migration-check.v1",
+  "status": "passed",
+  "source_blob_sha": "57bc071c6afc7d5a4cb8ead12112919a446ebd24",
+  "symbols_mapped": 24,
+  "cases_checked": 7,
+  "declared_dimensions": 10,
+  "errors": [],
+  "limitations": [
+    "No Sourceright checkout, dual-run, compiler gate or remote pull request was executed."
+  ]
+}

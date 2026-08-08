@@ -1,43 +1,41 @@
 # Plan: 08 PRISMA, PRESS and reporting
 
-Current status: **scaffolded**.
+Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
 
-## Phase 1: Complete 16-item PRISMA-S evidence mapping / Implement PRISMA 2020 new/update flow variants
+GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Complete 16-item PRISMA-S evidence mapping
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Implement PRISMA 2020 new/update flow variants
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Add PRISMA-ScR and PRISMA-LSR profiles / Create six-domain PRESS review contract and workflow
+<!-- github-subissue-key: track-08-phase-1 -->
 
-- [ ] Add PRISMA-ScR and PRISMA-LSR profiles
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Create six-domain PRESS review contract and workflow
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/searchright-prisma/src/lib.rs`
+  - [x] `crates/searchright-validation/src/lib.rs`
+  - [x] `contracts/examples/prisma-flow.json`
+  - [x] `contracts/examples/search-validation.yaml`
+  - [x] `contracts/examples/standard-assessment.yaml`
+  - [x] `docs/standards-and-provenance.md`
 
-## Phase 3: Render Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly tables / Establish PRISMA.jl parity then choose canonical ownership
+## Phase 2: Source-level verification
 
-- [ ] Render Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly tables
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Establish PRISMA.jl parity then choose canonical ownership
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-08-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-08-phase-3 -->
+
+- [ ] Compile and run arithmetic, snapshot and standards-pack tests.
+- [ ] Obtain independent PRESS review of representative generated strategies and appendices.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-08-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

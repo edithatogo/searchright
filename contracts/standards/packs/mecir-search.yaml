@@ -1,0 +1,21 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: mecir-search
+family: mecir
+version: current
+source: Cochrane MECIR search expectations
+provenance_note: Implementation-oriented conduct expectations represented as summaries.
+  Consult the authoritative source for exact wording and interpretation.
+items:
+- item_id: mecir-search-specialist
+  label: Information specialist involvement
+  requirement_summary: Use appropriately qualified search expertise for strategy development
+    and review.
+  scope: conduct
+  crosswalks:
+  - press-2015
+- item_id: mecir-update-search
+  label: Search updates
+  requirement_summary: Update searches at an appropriate point before publication.
+  scope: conduct
+  crosswalks:
+  - prisma-lsr-update-frequency

@@ -1,14 +1,28 @@
 {
-  "schema_version": "conductor.track-metadata.v1",
+  "schema_version": "conductor.track-metadata.v3",
   "track_id": "01",
   "slug": "contract-catalog",
   "title": "Contract catalogue and code generation",
-  "status": "scaffolded",
+  "status": "source_implemented",
   "created": "2026-08-05",
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "dependencies": [
     "00"
   ],
-  "evidence_level": "scaffolded",
-  "external_approval_required": false
+  "horizon": "foundation",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/01-contract-catalog/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-01",
+    "phase_issue_keys": [
+      "track-01-phase-1",
+      "track-01-phase-2",
+      "track-01-phase-3",
+      "track-01-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
 }

@@ -1,0 +1,375 @@
+{
+  "schema_version": "org.searchright.schema-catalog.v1",
+  "entries": [
+    {
+      "id": "agent-workflow",
+      "schema": "contracts/json-schema/agent-workflow.v1.schema.json",
+      "example": "contracts/examples/agent-workflow.yaml",
+      "schema_id": "https://schemas.searchright.dev/agent-workflow.v1.schema.json",
+      "rust_type": "AgentWorkflow",
+      "owner_track": "11",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "audit-event",
+      "schema": "contracts/json-schema/audit-event.v1.schema.json",
+      "example": "contracts/examples/audit-event.json",
+      "schema_id": "https://schemas.searchright.dev/audit-event.v1.schema.json",
+      "rust_type": "AuditEvent",
+      "owner_track": "05",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "benchmark-report",
+      "schema": "contracts/json-schema/benchmark-report.v1.schema.json",
+      "example": "contracts/examples/benchmark-report.yaml",
+      "schema_id": "https://schemas.searchright.dev/benchmark-report.v1.schema.json",
+      "rust_type": "BenchmarkReport",
+      "owner_track": "17",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "bibliographic-record",
+      "schema": "contracts/json-schema/bibliographic-record.v1.schema.json",
+      "example": "contracts/examples/bibliographic-record.yaml",
+      "schema_id": "https://schemas.searchright.dev/bibliographic-record.v1.schema.json",
+      "rust_type": "BibliographicRecord",
+      "owner_track": "01",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "compiled-strategy",
+      "schema": "contracts/json-schema/compiled-strategy.v1.schema.json",
+      "example": "contracts/examples/compiled-strategy.yaml",
+      "schema_id": "https://schemas.searchright.dev/compiled-strategy.v1.schema.json",
+      "rust_type": "CompiledStrategy",
+      "owner_track": "02",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "consumer-contract-suite",
+      "schema": "contracts/json-schema/consumer-contract-suite.v1.schema.json",
+      "example": "contracts/examples/consumer-contract-suite.json",
+      "schema_id": "https://schemas.searchright.dev/consumer-contract-suite.v1.schema.json",
+      "rust_type": "ConsumerContractSuite",
+      "owner_track": "13",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "data-handling-decision",
+      "schema": "contracts/json-schema/data-handling-decision.v1.schema.json",
+      "example": "contracts/examples/data-handling-decision.yaml",
+      "schema_id": "https://schemas.searchright.dev/data-handling-decision.v1.schema.json",
+      "rust_type": "DataHandlingDecision",
+      "owner_track": "28",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "data-handling-request",
+      "schema": "contracts/json-schema/data-handling-request.v1.schema.json",
+      "example": "contracts/examples/data-handling-request.yaml",
+      "schema_id": "https://schemas.searchright.dev/data-handling-request.v1.schema.json",
+      "rust_type": "DataHandlingRequest",
+      "owner_track": "28",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "diagnostic",
+      "schema": "contracts/json-schema/diagnostic.v1.schema.json",
+      "example": "contracts/examples/diagnostic.yaml",
+      "schema_id": "https://schemas.searchright.dev/diagnostic.v1.schema.json",
+      "rust_type": "Diagnostic",
+      "owner_track": "27",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "discovery-run",
+      "schema": "contracts/json-schema/discovery-run.v1.schema.json",
+      "example": "contracts/examples/discovery-run.yaml",
+      "schema_id": "https://schemas.searchright.dev/discovery-run.v1.schema.json",
+      "rust_type": "DiscoveryRun",
+      "owner_track": "20",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "document-evidence",
+      "schema": "contracts/json-schema/document-evidence.v1.schema.json",
+      "example": "contracts/examples/document-evidence.json",
+      "schema_id": "https://schemas.searchright.dev/document-evidence.v1.schema.json",
+      "rust_type": "DocumentEvidence",
+      "owner_track": "12",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "execution-envelope",
+      "schema": "contracts/json-schema/execution-envelope.v1.schema.json",
+      "example": "contracts/examples/execution-envelope.yaml",
+      "schema_id": "https://schemas.searchright.dev/execution-envelope.v1.schema.json",
+      "rust_type": "ExecutionEnvelope",
+      "owner_track": "16",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "github-issue-hierarchy",
+      "schema": "contracts/json-schema/github-issue-hierarchy.v1.schema.json",
+      "example": "contracts/examples/github-issue-hierarchy.json",
+      "schema_id": "https://schemas.searchright.dev/github-issue-hierarchy.v1.schema.json",
+      "rust_type": "GitHubIssueHierarchy",
+      "owner_track": "13",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "institutional-policy",
+      "schema": "contracts/json-schema/institutional-policy.v1.schema.json",
+      "example": "contracts/examples/institutional-policy.yaml",
+      "schema_id": "https://schemas.searchright.dev/institutional-policy.v1.schema.json",
+      "rust_type": "InstitutionalPolicy",
+      "owner_track": "28",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "integration-passport",
+      "schema": "contracts/json-schema/integration-passport.v1.schema.json",
+      "example": "contracts/examples/integration-passport.json",
+      "schema_id": "https://schemas.searchright.dev/integration-passport.v1.schema.json",
+      "rust_type": "IntegrationPassport",
+      "owner_track": "13",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "interchange-receipt",
+      "schema": "contracts/json-schema/interchange-receipt.v1.schema.json",
+      "example": "contracts/examples/interchange-receipt.yaml",
+      "schema_id": "https://schemas.searchright.dev/interchange-receipt.v1.schema.json",
+      "rust_type": "InterchangeReceipt",
+      "owner_track": "06",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "licensed-adapter",
+      "schema": "contracts/json-schema/licensed-adapter.v1.schema.json",
+      "example": "contracts/examples/licensed-adapter.yaml",
+      "schema_id": "https://schemas.searchright.dev/licensed-adapter.v1.schema.json",
+      "rust_type": "LicensedAdapterProfile",
+      "owner_track": "21",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "living-update",
+      "schema": "contracts/json-schema/living-update.v1.schema.json",
+      "example": "contracts/examples/living-update.yaml",
+      "schema_id": "https://schemas.searchright.dev/living-update.v1.schema.json",
+      "rust_type": "LivingUpdateRun",
+      "owner_track": "22",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "prisma-flow",
+      "schema": "contracts/json-schema/prisma-flow.v1.schema.json",
+      "example": "contracts/examples/prisma-flow.json",
+      "schema_id": "https://schemas.searchright.dev/prisma-flow.v1.schema.json",
+      "rust_type": "PrismaFlow",
+      "owner_track": "08",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "protocol-amendment",
+      "schema": "contracts/json-schema/protocol-amendment.v1.schema.json",
+      "example": "contracts/examples/protocol-amendment.yaml",
+      "schema_id": "https://schemas.searchright.dev/protocol-amendment.v1.schema.json",
+      "rust_type": "ProtocolAmendment",
+      "owner_track": "22",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "provider-component",
+      "schema": "contracts/json-schema/provider-component.v1.schema.json",
+      "example": "contracts/examples/provider-component.yaml",
+      "schema_id": "https://schemas.searchright.dev/provider-component.v1.schema.json",
+      "rust_type": "ProviderComponentManifest",
+      "owner_track": "24",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "provider-manifest",
+      "schema": "contracts/json-schema/provider-manifest.v1.schema.json",
+      "example": "contracts/examples/provider-manifest.yaml",
+      "schema_id": "https://schemas.searchright.dev/provider-manifest.v1.schema.json",
+      "rust_type": "ProviderManifest",
+      "owner_track": "04",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "provider-page",
+      "schema": "contracts/json-schema/provider-page.v1.schema.json",
+      "example": "contracts/examples/provider-page.yaml",
+      "schema_id": "https://schemas.searchright.dev/provider-page.v1.schema.json",
+      "rust_type": "ProviderPage",
+      "owner_track": "03",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "query-ast",
+      "schema": "contracts/json-schema/query-ast.v1.schema.json",
+      "example": "contracts/examples/query-ast.yaml",
+      "schema_id": "https://schemas.searchright.dev/query-ast.v1.schema.json",
+      "rust_type": "QueryExpr",
+      "owner_track": "02",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "ranking-calibration",
+      "schema": "contracts/json-schema/ranking-calibration.v1.schema.json",
+      "example": "contracts/examples/ranking-calibration.yaml",
+      "schema_id": "https://schemas.searchright.dev/ranking-calibration.v1.schema.json",
+      "rust_type": "RankingCalibration",
+      "owner_track": "23",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "review-plan",
+      "schema": "contracts/json-schema/review-plan.v1.schema.json",
+      "example": "contracts/examples/review-plan.yaml",
+      "schema_id": "https://schemas.searchright.dev/review-plan.v1.schema.json",
+      "rust_type": "ReviewPlan",
+      "owner_track": "01",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "screening-decision",
+      "schema": "contracts/json-schema/screening-decision.v1.schema.json",
+      "example": "contracts/examples/screening-decision.yaml",
+      "schema_id": "https://schemas.searchright.dev/screening-decision.v1.schema.json",
+      "rust_type": "ScreeningDecision",
+      "owner_track": "07",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "screening-policy",
+      "schema": "contracts/json-schema/screening-policy.v1.schema.json",
+      "example": "contracts/examples/screening-policy.yaml",
+      "schema_id": "https://schemas.searchright.dev/screening-policy.v1.schema.json",
+      "rust_type": "ScreeningPolicy",
+      "owner_track": "07",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "search-run",
+      "schema": "contracts/json-schema/search-run.v1.schema.json",
+      "example": "contracts/examples/search-run.yaml",
+      "schema_id": "https://schemas.searchright.dev/search-run.v1.schema.json",
+      "rust_type": "SearchRun",
+      "owner_track": "05",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "search-strategy",
+      "schema": "contracts/json-schema/search-strategy.v1.schema.json",
+      "example": "contracts/examples/search-strategy.yaml",
+      "schema_id": "https://schemas.searchright.dev/search-strategy.v1.schema.json",
+      "rust_type": "SearchStrategy",
+      "owner_track": "02",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "search-validation",
+      "schema": "contracts/json-schema/search-validation.v1.schema.json",
+      "example": "contracts/examples/search-validation.yaml",
+      "schema_id": "https://schemas.searchright.dev/search-validation.v1.schema.json",
+      "rust_type": "SearchValidationReport",
+      "owner_track": "17",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "source-receipt",
+      "schema": "contracts/json-schema/source-receipt.v1.schema.json",
+      "example": "contracts/examples/source-receipt.yaml",
+      "schema_id": "https://schemas.searchright.dev/source-receipt.v1.schema.json",
+      "rust_type": "SourceReceipt",
+      "owner_track": "05",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "sourceright-parity-report",
+      "schema": "contracts/json-schema/sourceright-parity-report.v1.schema.json",
+      "example": "contracts/examples/sourceright-parity-report.yaml",
+      "schema_id": "https://schemas.searchright.dev/sourceright-parity-report.v1.schema.json",
+      "rust_type": "SourcerightParityReport",
+      "owner_track": "14",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "standard-assessment",
+      "schema": "contracts/json-schema/standard-assessment.v1.schema.json",
+      "example": "contracts/examples/standard-assessment.yaml",
+      "schema_id": "https://schemas.searchright.dev/standard-assessment.v1.schema.json",
+      "rust_type": "StandardAssessment",
+      "owner_track": "08",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "standard-pack",
+      "schema": "contracts/json-schema/standard-pack.v1.schema.json",
+      "example": "contracts/examples/standard-pack.yaml",
+      "schema_id": "https://schemas.searchright.dev/standard-pack.v1.schema.json",
+      "rust_type": "StandardPack",
+      "owner_track": "08",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "study-graph",
+      "schema": "contracts/json-schema/study-graph.v1.schema.json",
+      "example": "contracts/examples/study-graph.yaml",
+      "schema_id": "https://schemas.searchright.dev/study-graph.v1.schema.json",
+      "rust_type": "StudyGraph",
+      "owner_track": "06",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "workflow-trace",
+      "schema": "contracts/json-schema/workflow-trace.v1.schema.json",
+      "example": "contracts/examples/workflow-trace.yaml",
+      "schema_id": "https://schemas.searchright.dev/workflow-trace.v1.schema.json",
+      "rust_type": "WorkflowTrace",
+      "owner_track": "26",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    }
+  ]
+}

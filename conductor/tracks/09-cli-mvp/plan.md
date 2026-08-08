@@ -1,43 +1,39 @@
 # Plan: 09 CLI MVP
 
-Current status: **scaffolded**.
+Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
 
-## Phase 1: Add init/plan/source/strategy/run/import/screen/report command hierarchy / Support JSON output and actionable diagnostics everywhere
+GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Add init/plan/source/strategy/run/import/screen/report command hierarchy
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Support JSON output and actionable diagnostics everywhere
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Add dry-run/apply semantics for writes / Add shell completions and man pages
+<!-- github-subissue-key: track-09-phase-1 -->
 
-- [ ] Add dry-run/apply semantics for writes
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add shell completions and man pages
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/searchright-cli/src/main.rs`
+  - [x] `crates/searchright/src/engine.rs`
+  - [x] `contracts/interface-catalog.json`
+  - [x] `docs/adrs/0007-shared-application-facade.md`
 
-## Phase 3: Add snapshot, install and cross-platform end-to-end tests / Publish CLI compatibility policy
+## Phase 2: Source-level verification
 
-- [ ] Add snapshot, install and cross-platform end-to-end tests
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Publish CLI compatibility policy
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-09-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_cli_mcp_parity.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-09-phase-3 -->
+
+- [ ] Compile binaries and run cross-platform help, JSON, error and installation snapshots.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-09-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

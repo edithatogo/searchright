@@ -1,0 +1,13 @@
+schema_version: org.searchright.execution-envelope.v1
+operation_id: operation-1
+review_id: demo-review
+network: allowlisted_https
+allowed_hosts:
+- eutils.ncbi.nlm.nih.gov
+secret_handling: environment_redacted
+full_text_handling: metadata_only
+untrusted_content: sanitise_then_data_only
+maximum_records: 10000
+maximum_seconds: 3600
+dry_run: true
+approved_by: review-lead

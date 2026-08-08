@@ -1,0 +1,66 @@
+{
+  "automatic_updates": false,
+  "claim_boundary": "Drift detection is read-only and never changes a revision, dependency, issue, pull request or public claim.",
+  "errors": [],
+  "integrations": [
+    {
+      "branch": "main",
+      "mode": "offline",
+      "pinned_revision": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+      "repository": "edithatogo/citeweft",
+      "status": "pin_consistent"
+    },
+    {
+      "branch": "main",
+      "mode": "offline",
+      "pinned_revision": "89f3d1a08037057160700df5bba319a64500b791",
+      "repository": "edithatogo/sourceright",
+      "status": "pin_consistent"
+    },
+    {
+      "branch": "main",
+      "mode": "offline",
+      "pinned_revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+      "repository": "edithatogo/repository-standards",
+      "status": "pin_consistent"
+    },
+    {
+      "branch": "main",
+      "mode": "offline",
+      "pinned_revision": "5a706a7600c8c54ec63b4ab2716fcf7d8bababcf",
+      "repository": "edithatogo/api-standards",
+      "status": "pin_consistent"
+    },
+    {
+      "branch": "main",
+      "mode": "offline",
+      "pinned_revision": "95d5aa46c6cda6fb2d014391209d666349b577dc",
+      "repository": "edithatogo/PRISMA.jl",
+      "status": "pin_consistent"
+    },
+    {
+      "branch": "main",
+      "mode": "offline",
+      "pinned_revision": "734dd23e03e7261db9204702be9221119a30d7d2",
+      "repository": "edithatogo/academic-research-skills",
+      "status": "pin_consistent"
+    },
+    {
+      "branch": "main",
+      "mode": "offline",
+      "pinned_revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+      "repository": "edithatogo/standards_check",
+      "status": "pin_consistent"
+    },
+    {
+      "branch": "master",
+      "mode": "offline",
+      "pinned_revision": "dc2dadfdbb98eb1b4259604789abd640aa3b693e",
+      "repository": "edithatogo/synergy-dataset",
+      "status": "pin_consistent"
+    }
+  ],
+  "mode": "offline",
+  "schema_version": "org.searchright.integration-drift-receipt.v1",
+  "status": "passed"
+}

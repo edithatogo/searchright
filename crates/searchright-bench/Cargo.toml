@@ -1,0 +1,17 @@
+[package]
+name = "searchright-bench"
+description = "Deterministic benchmark metrics and regression gates for Searchright."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+searchright-dedup = { path = "../searchright-dedup", version = "=0.1.0-alpha.1" }
+serde.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

@@ -48,6 +48,54 @@ pub trait SearchProvider: Send + Sync {
     }
 }
 
+/// Content-addressed provider-page cache boundary.
+#[async_trait]
+pub trait PageCache: Send + Sync {
+    /// Read one page by a non-secret cache key.
+    async fn get(&self, key: &str) -> Result<Option<ProviderPage>, ProviderError>;
+    /// Store one page by a non-secret cache key.
+    async fn put(&self, key: &str, page: &ProviderPage) -> Result<(), ProviderError>;
+}
+
+/// In-memory cache for deterministic tests and single-process replay.
+#[derive(Default)]
+pub struct MemoryPageCache {
+    pages: Mutex<BTreeMap<String, ProviderPage>>,
+}
+
+impl MemoryPageCache {
+    /// Create an empty memory cache.
+    #[must_use]
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// Number of cached pages.
+    pub async fn len(&self) -> usize {
+        self.pages.lock().await.len()
+    }
+
+    /// Whether the cache is empty.
+    pub async fn is_empty(&self) -> bool {
+        self.pages.lock().await.is_empty()
+    }
+}
+
+#[async_trait]
+impl PageCache for MemoryPageCache {
+    async fn get(&self, key: &str) -> Result<Option<ProviderPage>, ProviderError> {
+        Ok(self.pages.lock().await.get(key).cloned())
+    }
+
+    async fn put(&self, key: &str, page: &ProviderPage) -> Result<(), ProviderError> {
+        self.pages
+            .lock()
+            .await
+            .insert(key.to_owned(), page.clone());
+        Ok(())
+    }
+}
+
 /// Result of bounded multi-page execution.
 #[derive(Debug, Clone)]
 pub struct ExecutionResult {
@@ -91,6 +139,9 @@ pub enum ProviderError {
     /// Provider rejected or could not execute the request.
     #[error("provider `{provider}` failed: {message}")]
     Upstream { provider: String, message: String },
+    /// Cache read or write failed.
+    #[error("provider page cache failed: {0}")]
+    Cache(String),
     /// Receipt serialisation failed.
     #[error(transparent)]
     Serialization(#[from] serde_json::Error),
@@ -108,6 +159,7 @@ struct ProviderSlot {
 #[derive(Default)]
 pub struct ProviderRegistry {
     providers: BTreeMap<String, ProviderSlot>,
+    cache: Option<Arc<dyn PageCache>>,
 }
 
 impl ProviderRegistry {
@@ -115,6 +167,18 @@ impl ProviderRegistry {
     #[must_use]
     pub fn new() -> Self {
         Self::default()
+    }
+
+    /// Attach a page cache and return the configured registry.
+    #[must_use]
+    pub fn with_cache(mut self, cache: Arc<dyn PageCache>) -> Self {
+        self.cache = Some(cache);
+        self
+    }
+
+    /// Replace or remove the configured page cache.
+    pub fn set_cache(&mut self, cache: Option<Arc<dyn PageCache>>) {
+        self.cache = cache;
     }
 
     /// Register a provider under its validated manifest identifier.
@@ -180,6 +244,8 @@ impl ProviderRegistry {
 
         let mut records = Vec::new();
         let mut pages = 0_u32;
+        let mut cache_hits = 0_u32;
+        let mut cache_writes = 0_u32;
         let mut warnings = Vec::new();
         loop {
             if pages >= request.policy.max_pages {
@@ -188,7 +254,7 @@ impl ProviderRegistry {
                 }
                 break;
             }
-            let page = self
+            let (page, cache_hit, cache_write) = self
                 .execute_page_with_retries(
                     slot,
                     provider_id,
@@ -198,6 +264,8 @@ impl ProviderRegistry {
                 )
                 .await?;
             pages += 1;
+            cache_hits = cache_hits.saturating_add(if cache_hit { 1 } else { 0 });
+            cache_writes = cache_writes.saturating_add(if cache_write { 1 } else { 0 });
 
             for record in page.records {
                 if usize_to_u64(records.len()) >= request.policy.max_records {
@@ -221,6 +289,10 @@ impl ProviderRegistry {
             let bytes = serde_json::to_vec(&request_fingerprint)?;
             blake3::hash(&bytes).to_hex().to_string()
         };
+        let result_digest = {
+            let bytes = serde_json::to_vec(&records)?;
+            blake3::hash(&bytes).to_hex().to_string()
+        };
         let receipt_id = uuid::Uuid::now_v7().to_string();
         for record in &mut records {
             record.source_receipt_id.clone_from(&receipt_id);
@@ -231,6 +303,7 @@ impl ProviderRegistry {
             })?;
         }
         let receipt = SourceReceipt {
+            schema_version: searchright_contracts::SOURCE_RECEIPT_SCHEMA_VERSION.to_owned(),
             receipt_id,
             review_id: request.review_id,
             run_id: request.run_id,
@@ -241,9 +314,20 @@ impl ProviderRegistry {
             executed_at,
             records_retrieved: usize_to_u64(records.len()),
             pages_retrieved: pages,
-            execution_mode: mode.as_str().to_owned(),
+            execution_mode: if pages > 0 && cache_hits == pages {
+                "replay".to_owned()
+            } else if cache_hits > 0 {
+                format!("mixed-{}-replay", mode.as_str())
+            } else {
+                mode.as_str().to_owned()
+            },
             endpoint: slot.provider.endpoint_label(),
             policy: request.policy,
+            provider_version: manifest.version,
+            compiler_version: request.strategy.compiler_version,
+            result_digest,
+            cache_hits,
+            cache_writes,
             warnings,
         };
         Ok(ExecutionResult { records, receipt })
@@ -256,7 +340,16 @@ impl ProviderRegistry {
         request: &SearchRequest,
         minimum_interval_ms: u64,
         warnings: &mut Vec<String>,
-    ) -> Result<ProviderPage, ProviderError> {
+    ) -> Result<(ProviderPage, bool, bool), ProviderError> {
+        let cache_key = page_cache_key(provider_id, request)?;
+        if request.policy.replay_enabled
+            && let Some(cache) = &self.cache
+            && let Some(page) = cache.get(&cache_key).await?
+        {
+            warnings.push(format!("provider page replayed from cache `{cache_key}`"));
+            return Ok((page, true, false));
+        }
+
         let mut retry_count = 0_u8;
         loop {
             self.apply_rate_limit(slot, minimum_interval_ms).await;
@@ -272,7 +365,17 @@ impl ProviderRegistry {
             .and_then(|page| page);
 
             match result {
-                Ok(page) => return Ok(page),
+                Ok(page) => {
+                    let mut wrote_cache = false;
+                    if request.policy.cache_write_enabled
+                        && let Some(cache) = &self.cache
+                    {
+                        cache.put(&cache_key, &page).await?;
+                        warnings.push(format!("provider page cached as `{cache_key}`"));
+                        wrote_cache = true;
+                    }
+                    return Ok((page, false, wrote_cache));
+                }
                 Err(error)
                     if retry_count < request.policy.max_retries
                         && slot.provider.is_retryable(&error) =>
@@ -304,6 +407,18 @@ impl ProviderRegistry {
         }
         *last_call = Some(tokio::time::Instant::now());
     }
+}
+
+fn page_cache_key(provider_id: &str, request: &SearchRequest) -> Result<String, ProviderError> {
+    let canonical = canonical_json(&serde_json::json!({
+        "provider_id": provider_id,
+        "strategy_id": request.strategy.strategy_id,
+        "compilation_hash": request.strategy.compilation_hash,
+        "cursor": request.cursor,
+        "page_size": request.page_size,
+    }));
+    let bytes = serde_json::to_vec(&canonical)?;
+    Ok(blake3::hash(&bytes).to_hex().to_string())
 }
 
 fn validate_manifest(
@@ -375,6 +490,14 @@ fn validate_manifest(
 }
 
 fn validate_request(request: &SearchRequest, source_label: &str) -> Result<(), ProviderError> {
+    request
+        .strategy
+        .validate()
+        .map_err(|error| ProviderError::InvalidRequest(error.to_string()))?;
+    request
+        .policy
+        .validate()
+        .map_err(|error| ProviderError::InvalidRequest(error.to_string()))?;
     for (field, value) in [
         ("review_id", request.review_id.as_str()),
         ("run_id", request.run_id.as_str()),
@@ -411,7 +534,7 @@ fn validate_request(request: &SearchRequest, source_label: &str) -> Result<(), P
 }
 
 fn usize_to_u64(value: usize) -> u64 {
-    u64::try_from(value).map_or(u64::MAX, |converted| converted)
+    u64::try_from(value).unwrap_or(u64::MAX)
 }
 
 #[cfg(test)]
@@ -454,6 +577,7 @@ mod tests {
             _request: &SearchRequest,
         ) -> Result<ProviderPage, ProviderError> {
             Ok(ProviderPage {
+                schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
                 records: Vec::new(),
                 next_cursor: None,
                 total_available: Some(0),
@@ -467,10 +591,14 @@ mod tests {
             review_id: "r1".to_owned(),
             run_id: "run1".to_owned(),
             strategy: CompiledStrategy {
+                schema_version: searchright_contracts::COMPILED_STRATEGY_SCHEMA_VERSION.to_owned(),
                 strategy_id: "s1".to_owned(),
                 dialect: SearchDialect::GenericBoolean,
                 query: "example".to_owned(),
                 warnings: Vec::new(),
+                fidelity: searchright_contracts::TranslationFidelity::Exact,
+                review_required: false,
+                loss_codes: Vec::new(),
                 compilation_hash: "hash".to_owned(),
                 compiler_version: "test".to_owned(),
             },
@@ -484,6 +612,7 @@ mod tests {
                 max_retries: 0,
                 min_interval_ms: 0,
                 replay_enabled: true,
+                cache_write_enabled: false,
             },
         }
     }
@@ -497,6 +626,29 @@ mod tests {
         if let Ok(result) = result {
             assert_eq!(result.receipt.execution_mode, "fixture");
             assert_eq!(result.receipt.records_retrieved, 0);
+        }
+    }
+
+    #[tokio::test]
+    async fn page_cache_supports_write_then_replay() {
+        let cache = Arc::new(MemoryPageCache::new());
+        let mut registry = ProviderRegistry::new().with_cache(cache.clone());
+        assert!(registry.register(Arc::new(EmptyFixture)).is_ok());
+        let mut first_request = request();
+        first_request.policy.cache_write_enabled = true;
+        let first = registry.execute("empty", first_request, "fixture").await;
+        assert!(first.is_ok());
+        if let Ok(first) = first {
+            assert_eq!(first.receipt.cache_writes, 1);
+            assert_eq!(first.receipt.cache_hits, 0);
+        }
+        assert_eq!(cache.len().await, 1);
+
+        let replay = registry.execute("empty", request(), "fixture").await;
+        assert!(replay.is_ok());
+        if let Ok(replay) = replay {
+            assert_eq!(replay.receipt.cache_hits, 1);
+            assert_eq!(replay.receipt.execution_mode, "replay");
         }
     }
 

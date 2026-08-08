@@ -1,43 +1,40 @@
 # Plan: 04 Open provider connectors MVP
 
-Current status: **scaffolded**.
+Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
 
-## Phase 1: Finish PubMed ESearch+EFetch/ESummary report retrieval / Harden Europe PMC response normalization
+GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Finish PubMed ESearch+EFetch/ESummary report retrieval
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Harden Europe PMC response normalization
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Add Crossref and OpenAlex discovery adapters / Add NCBI/Europe PMC identification and rate guidance
+<!-- github-subissue-key: track-04-phase-1 -->
 
-- [ ] Add Crossref and OpenAlex discovery adapters
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add NCBI/Europe PMC identification and rate guidance
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/searchright-connectors/src/lib.rs`
+  - [x] `contracts/examples/provider-manifest.yaml`
+  - [x] `contracts/examples/provider-page.yaml`
+  - [x] `contracts/examples/source-receipt.yaml`
 
-## Phase 3: Capture raw response hashes and replay fixtures / Run redacted opt-in live smokes
+## Phase 2: Source-level verification
 
-- [ ] Capture raw response hashes and replay fixtures
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Run redacted opt-in live smokes
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-04-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-04-phase-3 -->
+
+- [ ] Compile and run connector fixtures.
+- [ ] Run authorised, redacted live smokes for each advertised provider.
+- [ ] Verify upstream terms, rate limits and response changes at release time.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-04-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

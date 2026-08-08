@@ -1,0 +1,253 @@
+{
+  "schema_version": "org.searchright.interface-catalog.v1",
+  "entries": [
+    {
+      "operation": "validate-plan",
+      "cli_variant": "ValidatePlan",
+      "mcp_tool": "validate_plan",
+      "facade_method": "validate_plan",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-strategy",
+      "cli_variant": "ValidateStrategy",
+      "mcp_tool": "validate_strategy",
+      "facade_method": "validate_strategy",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-document-evidence",
+      "cli_variant": "ValidateDocumentEvidence",
+      "mcp_tool": "validate_document_evidence",
+      "facade_method": "validate_document_evidence",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "compile",
+      "cli_variant": "Compile",
+      "mcp_tool": "compile_strategy",
+      "facade_method": "compile_strategy",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "deduplicate",
+      "cli_variant": "Deduplicate",
+      "mcp_tool": "deduplicate_records",
+      "facade_method": "deduplicate",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "prisma",
+      "cli_variant": "Prisma",
+      "mcp_tool": "generate_prisma",
+      "facade_method": "prisma",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "verify-audit",
+      "cli_variant": "VerifyAudit",
+      "mcp_tool": "verify_audit",
+      "facade_method": "verify_audit",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "import-records",
+      "cli_variant": "ImportRecords",
+      "mcp_tool": "import_records",
+      "facade_method": "import_records",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "export-records",
+      "cli_variant": "ExportRecords",
+      "mcp_tool": "export_records",
+      "facade_method": "export_records",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "study-graph",
+      "cli_variant": "StudyGraph",
+      "mcp_tool": "assess_study_graph",
+      "facade_method": "assess_study_graph",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-search",
+      "cli_variant": "ValidateSearch",
+      "mcp_tool": "assess_search_validation",
+      "facade_method": "assess_search_validation",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "living-diff",
+      "cli_variant": "LivingDiff",
+      "mcp_tool": "living_diff",
+      "facade_method": "diff_living_records",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-living-lineage",
+      "cli_variant": "ValidateLivingLineage",
+      "mcp_tool": "validate_living_lineage",
+      "facade_method": "validate_living_lineage",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "provenance",
+      "cli_variant": "Provenance",
+      "mcp_tool": "build_provenance",
+      "facade_method": "provenance",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "rank",
+      "cli_variant": "Rank",
+      "mcp_tool": "rank_records",
+      "facade_method": "rank_records",
+      "authority": "advisory_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "inspect-content",
+      "cli_variant": "InspectContent",
+      "mcp_tool": "inspect_untrusted_content",
+      "facade_method": "inspect_content",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "render-diagnostics",
+      "cli_variant": "RenderDiagnostics",
+      "mcp_tool": "render_diagnostics",
+      "facade_method": "render_diagnostics",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "evaluate-governance",
+      "cli_variant": "EvaluateGovernance",
+      "mcp_tool": "evaluate_governance",
+      "facade_method": "evaluate_governance",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "authorise-endpoint",
+      "cli_variant": "AuthoriseEndpoint",
+      "mcp_tool": "authorise_endpoint",
+      "facade_method": "authorise_endpoint",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-amendment",
+      "cli_variant": "ValidateAmendment",
+      "mcp_tool": "validate_amendment",
+      "facade_method": "validate_amendment",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-standard-pack",
+      "cli_variant": "ValidateStandardPack",
+      "mcp_tool": "validate_standard_pack",
+      "facade_method": "validate_standard_pack",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-standard-assessment",
+      "cli_variant": "ValidateStandardAssessment",
+      "mcp_tool": "validate_standard_assessment",
+      "facade_method": "validate_standard_assessment",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-ranking-calibration",
+      "cli_variant": "ValidateRankingCalibration",
+      "mcp_tool": "validate_ranking_calibration",
+      "facade_method": "validate_ranking_calibration",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-discovery-run",
+      "cli_variant": "ValidateDiscoveryRun",
+      "mcp_tool": "validate_discovery_run",
+      "facade_method": "validate_discovery_run",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "verify-workflow-trace",
+      "cli_variant": "VerifyWorkflowTrace",
+      "mcp_tool": "verify_workflow_trace",
+      "facade_method": "verify_workflow_trace",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "discovery-candidates",
+      "cli_variant": "DiscoveryCandidates",
+      "mcp_tool": "discovery_candidates",
+      "facade_method": "discovery_candidates",
+      "authority": "human_release_required",
+      "stability": "alpha"
+    },
+    {
+      "operation": "verify-provider-component",
+      "cli_variant": "VerifyProviderComponent",
+      "mcp_tool": "verify_provider_component",
+      "facade_method": "verify_provider_component",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "plan-licensed-request",
+      "cli_variant": "PlanLicensedRequest",
+      "mcp_tool": "plan_licensed_request",
+      "facade_method": "plan_licensed_request",
+      "authority": "no_network",
+      "stability": "alpha"
+    },
+    {
+      "operation": "validate-benchmark-report",
+      "cli_variant": "ValidateBenchmarkReport",
+      "mcp_tool": "validate_benchmark_report",
+      "facade_method": "validate_benchmark_report",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "providers",
+      "cli_variant": "Providers",
+      "mcp_tool": "list_providers",
+      "facade_method": "default_provider_manifests",
+      "authority": "read_only",
+      "stability": "alpha"
+    },
+    {
+      "operation": "workflow",
+      "cli_variant": "Workflow",
+      "mcp_tool": "workflow",
+      "facade_method": "workflow",
+      "authority": "read_only",
+      "stability": "alpha"
+    }
+  ]
+}

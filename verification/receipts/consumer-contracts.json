@@ -1,0 +1,11 @@
+{
+  "active_integrations": 8,
+  "errors": [],
+  "interactions_checked": 8,
+  "limitations": [
+    "This source-level gate verifies declarations and local fixtures; producer/downstream execution remains separate evidence."
+  ],
+  "local_paths_checked": 29,
+  "schema_version": "org.searchright.consumer-contract-receipt.v1",
+  "status": "passed"
+}

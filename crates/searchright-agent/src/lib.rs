@@ -3,11 +3,15 @@
 #![forbid(unsafe_code)]
 
 use schemars::JsonSchema;
-use searchright_contracts::{AgentAuthority, ReviewPlan, Validate};
+use searchright_contracts::{
+    AGENT_WORKFLOW_SCHEMA_VERSION, AgentAuthority, ContractError, ReviewPlan, Validate,
+};
 use serde::{Deserialize, Serialize};
 
 /// Stage in the systematic-search agent workflow.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema,
+)]
 #[serde(rename_all = "snake_case")]
 pub enum WorkflowStage {
     /// Clarify question and review type.
@@ -90,7 +94,7 @@ impl AgentWorkflow {
             }
         };
         Self {
-            schema_version: "org.searchright.agent-workflow.v1".to_owned(),
+            schema_version: AGENT_WORKFLOW_SCHEMA_VERSION.to_owned(),
             screening_authority: AgentAuthority::AdvisoryOnly,
             steps: vec![
                 step(WorkflowStage::Scope, AuthorityGate::HumanConfirmation, &[], &["review-plan-draft"], &["question unresolved"]),
@@ -106,6 +110,48 @@ impl AgentWorkflow {
                 step(WorkflowStage::Update, AuthorityGate::HumanConfirmation, &["prior search run", "protocol"], &["update plan"], &["amendment not recorded"]),
             ],
         }
+    }
+}
+
+impl Validate for AgentWorkflow {
+    fn validate(&self) -> Result<(), ContractError> {
+        if self.schema_version != AGENT_WORKFLOW_SCHEMA_VERSION {
+            return Err(ContractError::Invariant(format!(
+                "agent workflow schema version must be `{AGENT_WORKFLOW_SCHEMA_VERSION}`"
+            )));
+        }
+        if self.steps.is_empty() {
+            return Err(ContractError::EmptyCollection("agent_workflow.steps"));
+        }
+        let mut seen = std::collections::BTreeSet::new();
+        for step in &self.steps {
+            if !seen.insert(step.stage) {
+                return Err(ContractError::Invariant(
+                    "agent workflow stages must be unique".to_owned(),
+                ));
+            }
+            if step.outputs.is_empty() {
+                return Err(ContractError::Invariant(format!(
+                    "workflow stage {:?} requires at least one output",
+                    step.stage
+                )));
+            }
+            if step.outputs.iter().chain(&step.required_inputs).chain(&step.blocking_conditions).any(|value| value.trim().is_empty()) {
+                return Err(ContractError::Invariant(
+                    "workflow evidence collections must not contain empty values".to_owned(),
+                ));
+            }
+        }
+        let full_text = self
+            .steps
+            .iter()
+            .find(|step| step.stage == WorkflowStage::FullTextScreening);
+        if !matches!(full_text.map(|step| step.authority), Some(AuthorityGate::HumanOnly)) {
+            return Err(ContractError::Invariant(
+                "full-text screening must retain human-only final authority".to_owned(),
+            ));
+        }
+        Ok(())
     }
 }
 

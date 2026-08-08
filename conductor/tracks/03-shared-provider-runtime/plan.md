@@ -1,43 +1,43 @@
 # Plan: 03 Shared provider runtime and Sourceright extraction
 
-Current status: **planned**.
+Current status: **integration_prepared**. Evidence level: **source_verified**.
 
-## Phase 1: Inventory Sourceright live_providers and provider modules / Define compatibility adapter and feature flag
+GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Inventory Sourceright live_providers and provider modules
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Define compatibility adapter and feature flag
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Port retries, cache, endpoint, rate and receipt behavior / Run old/new fixture parity and snapshot differences
+<!-- github-subissue-key: track-03-phase-1 -->
 
-- [ ] Port retries, cache, endpoint, rate and receipt behavior
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Run old/new fixture parity and snapshot differences
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/evidence-search-core/src/provider.rs`
+  - [x] `crates/searchright-sourceright-compat/src/lib.rs`
+  - [x] `migration/sourceright/replacement-map.yaml`
+  - [x] `migration/sourceright/parity-cases.json`
+  - [x] `scripts/check_sourceright_migration.py`
+  - [x] `docs/adrs/0012-sourceright-and-estate-migration.md`
 
-## Phase 3: Review semver/public API implications / Switch Sourceright then remove superseded code after evidence
+## Phase 2: Source-level verification
 
-- [ ] Review semver/public API implications
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Switch Sourceright then remove superseded code after evidence
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-03-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_sourceright_migration.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-03-phase-3 -->
+
+- [ ] Compile and run the shared provider runtime tests.
+- [ ] Run old/new Sourceright fixtures in the downstream repository.
+- [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-03-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

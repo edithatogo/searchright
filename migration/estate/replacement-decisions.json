@@ -1,0 +1,9 @@
+{
+  "schema_version": "org.searchright.estate-replacement-decisions.v1",
+  "decisions": [
+    {"repository":"edithatogo/ee_trd","observed_path":"docs/search_log_PRISMA.csv","current_form":"project-specific aggregate CSV","target":"SearchRun plus SourceReceipt plus generated PrismaFlow","status":"migration_recipe_prepared","deletion_gate":"generated output parity and project-owner review"},
+    {"repository":"edithatogo/reimbursement-atlas","observed_path":"REQUIREMENTS.md","current_form":"project-specific literature-search requirement","target":"Searchright plan/strategy/receipt contracts","status":"audit_required","deletion_gate":"local checkout scan and integration tests"},
+    {"repository":"edithatogo/global-medicines-atlas","observed_path":null,"current_form":"no matching source code confirmed in this pass","target":"Searchright as future evidence-search boundary","status":"monitor","deletion_gate":"none until concrete code is observed"},
+    {"repository":"edithatogo/academic-research-skills","observed_path":"deep-research/references/systematic_review_protocol.md","current_form":"prompt and protocol workflow","target":"Searchright skill for execution plus retained human methodology guidance","status":"adapter_recipe_prepared","deletion_gate":"skill scenario parity and maintainer review"}
+  ]
+}

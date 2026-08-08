@@ -7,7 +7,7 @@ if [[ "${1:-}" == "--static-only" ]]; then
   static_only=true
 fi
 
-python3 scripts/validate_repository.py
+python3 scripts/run_static_harness.py
 
 if $static_only; then
   exit 0
@@ -25,7 +25,11 @@ test -f Cargo.lock || {
 
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
-cargo nextest run --workspace --all-features --locked
+if cargo nextest --version >/dev/null 2>&1; then
+  cargo nextest run --workspace --all-features --locked
+else
+  cargo test --workspace --all-features --locked
+fi
 cargo test --workspace --all-features --doc --locked
 cargo doc --workspace --all-features --no-deps --locked
 cargo deny check

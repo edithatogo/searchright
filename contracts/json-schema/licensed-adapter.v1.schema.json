@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/licensed-adapter.v1.schema.json",
+  "title": "Searchright licensed adapter profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "provider_id", "database", "platform", "dialect",
+    "credential_environment_variable", "live_opt_in_environment_variable", "allowed_hosts",
+    "export_formats", "terms_review", "persist_raw_responses"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.licensed-adapter.v1"},
+    "provider_id": {"type": "string", "minLength": 1},
+    "database": {"type": "string", "minLength": 1},
+    "platform": {"type": "string", "minLength": 1},
+    "dialect": {
+      "enum": ["embase", "scopus", "web_of_science", "ovid_medline", "psyc_info_ovid"]
+    },
+    "credential_environment_variable": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+    "live_opt_in_environment_variable": {"type": "string", "pattern": "^[A-Z0-9_]+$"},
+    "allowed_hosts": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "export_formats": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "terms_review": {"type": "string", "minLength": 1},
+    "persist_raw_responses": {"const": false}
+  }
+}

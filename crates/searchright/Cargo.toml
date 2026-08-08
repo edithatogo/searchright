@@ -16,14 +16,36 @@ default = []
 live = ["searchright-connectors/live"]
 
 [dependencies]
-evidence-search-core = { path = "../evidence-search-core" }
-searchright-agent = { path = "../searchright-agent" }
-searchright-connectors = { path = "../searchright-connectors" }
-searchright-contracts = { path = "../searchright-contracts" }
-searchright-dedup = { path = "../searchright-dedup" }
-searchright-prisma = { path = "../searchright-prisma" }
-searchright-screening = { path = "../searchright-screening" }
-searchright-store = { path = "../searchright-store" }
+evidence-search-core = { path = "../evidence-search-core", version = "=0.1.0-alpha.1" }
+searchright-agent = { path = "../searchright-agent", version = "=0.1.0-alpha.1" }
+searchright-assurance = { path = "../searchright-assurance", version = "=0.1.0-alpha.1" }
+searchright-bench = { path = "../searchright-bench", version = "=0.1.0-alpha.1" }
+searchright-connectors = { path = "../searchright-connectors", version = "=0.1.0-alpha.1" }
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+searchright-dedup = { path = "../searchright-dedup", version = "=0.1.0-alpha.1" }
+searchright-diagnostics = { path = "../searchright-diagnostics", version = "=0.1.0-alpha.1" }
+searchright-discovery = { path = "../searchright-discovery", version = "=0.1.0-alpha.1" }
+searchright-governance = { path = "../searchright-governance", version = "=0.1.0-alpha.1" }
+searchright-interchange = { path = "../searchright-interchange", version = "=0.1.0-alpha.1" }
+searchright-living = { path = "../searchright-living", version = "=0.1.0-alpha.1" }
+searchright-licensed = { path = "../searchright-licensed", version = "=0.1.0-alpha.1" }
+searchright-policy = { path = "../searchright-policy", version = "=0.1.0-alpha.1" }
+searchright-plugin-sdk = { path = "../searchright-plugin-sdk", version = "=0.1.0-alpha.1" }
+searchright-prisma = { path = "../searchright-prisma", version = "=0.1.0-alpha.1" }
+searchright-provenance = { path = "../searchright-provenance", version = "=0.1.0-alpha.1" }
+searchright-ranking = { path = "../searchright-ranking", version = "=0.1.0-alpha.1" }
+searchright-screening = { path = "../searchright-screening", version = "=0.1.0-alpha.1" }
+searchright-store = { path = "../searchright-store", version = "=0.1.0-alpha.1" }
+searchright-study = { path = "../searchright-study", version = "=0.1.0-alpha.1" }
+searchright-validation = { path = "../searchright-validation", version = "=0.1.0-alpha.1" }
+
+serde.workspace = true
+
+serde_json.workspace = true
+
+thiserror.workspace = true
+
+url.workspace = true
 
 [lints]
 workspace = true

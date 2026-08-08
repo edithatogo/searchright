@@ -1,0 +1,44 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "29",
+  "title": "External methodological evaluation and sustainability",
+  "status": "external_evidence_required",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "docs/evaluation/external-methodological-evaluation.md",
+    "docs/evaluation/benchmark-and-calibration-protocol.md",
+    "docs/governance/sustainability.md",
+    "registry/joss/paper.md",
+    "GOVERNANCE.md"
+  ],
+  "static_checks": [
+    "python scripts/validate_repository.py"
+  ],
+  "requirements": [
+    "SR-041",
+    "SR-059",
+    "SR-060",
+    "SR-062"
+  ],
+  "blockers": [
+    "Preregister the independent evaluation protocol.",
+    "Recruit external information specialists and execute blinded evaluation.",
+    "Publish results, limitations and response-to-findings matrix.",
+    "Demonstrate observed maintenance, standards surveillance and succession practice."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-29",
+    "phases": [
+      "track-29-phase-1",
+      "track-29-phase-2",
+      "track-29-phase-3",
+      "track-29-phase-4"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

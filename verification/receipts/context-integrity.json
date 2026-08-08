@@ -1,0 +1,14 @@
+{
+  "capability_components": 8,
+  "claim_boundaries": 9,
+  "decisions": 7,
+  "errors": [],
+  "evidence_domains": 9,
+  "hazards": 12,
+  "limitations": [
+    "Static context consistency only; human interpretation and runtime behaviour remain separate evidence."
+  ],
+  "required_context": 15,
+  "schema_version": "org.searchright.context-integrity-receipt.v1",
+  "status": "passed"
+}

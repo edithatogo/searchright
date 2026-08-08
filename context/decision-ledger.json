@@ -1,0 +1,84 @@
+{
+  "schema_version": "org.searchright.decision-ledger.v1",
+  "decisions": [
+    {
+      "id": "D-001",
+      "status": "accepted",
+      "decision": "Use evidence-search-core as the product-neutral query and provider execution kernel.",
+      "rationale": "Prevents Searchright and Sourceright from maintaining divergent retry, cache, receipt and egress implementations.",
+      "evidence": [
+        "docs/adrs/0001-shared-evidence-search-core.md",
+        "docs/architecture.md"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-002",
+      "status": "accepted",
+      "decision": "Integrate CiteWeft only through the optional searchright-citeweft adapter and neutral DocumentEvidence contract.",
+      "rationale": "Keeps extraction evidence, review workflow and citation canonicalisation as separate domains.",
+      "evidence": [
+        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
+        "integration/passports/citeweft-document-evidence.json"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-003",
+      "status": "accepted",
+      "decision": "Map one roadmap epic to track issues and each four-phase Conductor plan to native GitHub subissues.",
+      "rationale": "Preserves Conductor as source of truth while enabling observable remote planning without flattening the hierarchy.",
+      "evidence": [
+        "docs/adrs/0014-conductor-github-hierarchy.md",
+        "conductor/github/issue-hierarchy.json"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-004",
+      "status": "accepted",
+      "decision": "Deny network, external writes, telemetry and irreversible agent authority by default.",
+      "rationale": "Systematic-search inputs include hostile text, credentials, licensed access and consequential eligibility decisions.",
+      "evidence": [
+        "context/capability-matrix.json",
+        "docs/security/threat-model.md"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-005",
+      "status": "accepted",
+      "decision": "Use an evidence ladder and require receipts before promoting implementation or public claims.",
+      "rationale": "Source completeness, successful compilation, fixture behavior, live behavior and external acceptance are distinct facts.",
+      "evidence": [
+        "conductor/requirements.md",
+        "context/evidence-ledger.json"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-006",
+      "status": "accepted",
+      "decision": "Use pinned integration passports and consumer-driven contracts instead of Git submodules or copied implementation code.",
+      "rationale": "Independent repositories need reversible upgrades, explicit ownership and drift detection without coupled release histories.",
+      "evidence": [
+        "docs/adrs/0015-integration-passports.md",
+        "integration/passports/index.json",
+        "integration/consumer-contract-suite.json"
+      ],
+      "supersedes": []
+    },
+    {
+      "id": "D-007",
+      "status": "accepted",
+      "decision": "Keep CiteWeft and other host-specific integrations in non-publishable leaf adapters until registry-backed dependencies and downstream receipts exist.",
+      "rationale": "The publishable facade and shared kernel must not acquire an unpublished Git-only dependency or imply integration maturity.",
+      "evidence": [
+        "docs/adrs/0016-federated-consumer-contracts.md",
+        "crates/searchright-citeweft/Cargo.toml",
+        "scripts/check_rust_dependency_graph.py"
+      ],
+      "supersedes": []
+    }
+  ]
+}

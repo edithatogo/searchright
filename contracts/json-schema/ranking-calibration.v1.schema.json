@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/ranking-calibration.v1.schema.json",
+  "title": "Searchright Ranking Calibration v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "ranker_version",
+    "threshold",
+    "counts",
+    "minimum_sensitivity",
+    "approved_for_prioritisation",
+    "auto_exclusion_prohibited",
+    "approved_by"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.ranking-calibration.v1"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ranker_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "threshold": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "true_positive",
+        "false_positive",
+        "true_negative",
+        "false_negative"
+      ],
+      "properties": {
+        "true_positive": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "false_positive": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "true_negative": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "false_negative": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "minimum_sensitivity": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "approved_for_prioritisation": {
+      "type": "boolean"
+    },
+    "auto_exclusion_prohibited": {
+      "const": true
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    }
+  }
+}

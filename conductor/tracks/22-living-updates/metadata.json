@@ -1,0 +1,31 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "22",
+  "slug": "living-updates",
+  "title": "Living reviews, amendments and update lineage",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "05",
+    "06",
+    "07",
+    "08"
+  ],
+  "horizon": "beta",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/22-living-updates/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-22",
+    "phase_issue_keys": [
+      "track-22-phase-1",
+      "track-22-phase-2",
+      "track-22-phase-3",
+      "track-22-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

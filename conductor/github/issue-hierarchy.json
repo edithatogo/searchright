@@ -1,0 +1,2067 @@
+{
+  "schema_version": "org.searchright.github-issue-hierarchy.v1",
+  "repository": "edithatogo/searchright",
+  "epic_key": "roadmap-epic",
+  "nodes": [
+    {
+      "key": "roadmap-epic",
+      "title": "Searchright roadmap",
+      "kind": "epic",
+      "parent_key": null,
+      "body_path": "conductor/github/issues/roadmap-epic.md",
+      "labels": [
+        "kind:epic",
+        "conductor"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-00",
+      "title": "Track 00: Foundation, Conductor and toolchain",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-00.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:foundation",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-00-phase-1",
+      "title": "Track 00 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-00",
+      "body_path": "conductor/github/issues/track-00-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:00"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-00-phase-2",
+      "title": "Track 00 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-00",
+      "body_path": "conductor/github/issues/track-00-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:00"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-00-phase-3",
+      "title": "Track 00 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-00",
+      "body_path": "conductor/github/issues/track-00-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:00"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-00-phase-4",
+      "title": "Track 00 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-00",
+      "body_path": "conductor/github/issues/track-00-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:00"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-01",
+      "title": "Track 01: Contract catalogue and code generation",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-01.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:foundation",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-01-phase-1",
+      "title": "Track 01 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-01",
+      "body_path": "conductor/github/issues/track-01-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:01"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-01-phase-2",
+      "title": "Track 01 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-01",
+      "body_path": "conductor/github/issues/track-01-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:01"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-01-phase-3",
+      "title": "Track 01 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-01",
+      "body_path": "conductor/github/issues/track-01-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:01"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-01-phase-4",
+      "title": "Track 01 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-01",
+      "body_path": "conductor/github/issues/track-01-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:01"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-02",
+      "title": "Track 02: Portable query AST and dialect compilers",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-02.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:foundation",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-02-phase-1",
+      "title": "Track 02 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-02",
+      "body_path": "conductor/github/issues/track-02-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:02"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-02-phase-2",
+      "title": "Track 02 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-02",
+      "body_path": "conductor/github/issues/track-02-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:02"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-02-phase-3",
+      "title": "Track 02 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-02",
+      "body_path": "conductor/github/issues/track-02-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:02"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-02-phase-4",
+      "title": "Track 02 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-02",
+      "body_path": "conductor/github/issues/track-02-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:02"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-03",
+      "title": "Track 03: Shared provider runtime and Sourceright extraction",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-03.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:foundation",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-03-phase-1",
+      "title": "Track 03 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-03",
+      "body_path": "conductor/github/issues/track-03-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:03"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-03-phase-2",
+      "title": "Track 03 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-03",
+      "body_path": "conductor/github/issues/track-03-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:03"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-03-phase-3",
+      "title": "Track 03 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-03",
+      "body_path": "conductor/github/issues/track-03-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:03"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-03-phase-4",
+      "title": "Track 03 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-03",
+      "body_path": "conductor/github/issues/track-03-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:03"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-04",
+      "title": "Track 04: Open provider connectors MVP",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-04.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-04-phase-1",
+      "title": "Track 04 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-04",
+      "body_path": "conductor/github/issues/track-04-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:04"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-04-phase-2",
+      "title": "Track 04 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-04",
+      "body_path": "conductor/github/issues/track-04-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:04"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-04-phase-3",
+      "title": "Track 04 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-04",
+      "body_path": "conductor/github/issues/track-04-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:04"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-04-phase-4",
+      "title": "Track 04 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-04",
+      "body_path": "conductor/github/issues/track-04-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:04"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-05",
+      "title": "Track 05: Execution, audit and local storage",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-05.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-05-phase-1",
+      "title": "Track 05 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-05",
+      "body_path": "conductor/github/issues/track-05-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:05"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-05-phase-2",
+      "title": "Track 05 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-05",
+      "body_path": "conductor/github/issues/track-05-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:05"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-05-phase-3",
+      "title": "Track 05 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-05",
+      "body_path": "conductor/github/issues/track-05-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:05"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-05-phase-4",
+      "title": "Track 05 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-05",
+      "body_path": "conductor/github/issues/track-05-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:05"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-06",
+      "title": "Track 06: Imports, deduplication and study linkage",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-06.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-06-phase-1",
+      "title": "Track 06 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-06",
+      "body_path": "conductor/github/issues/track-06-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:06"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-06-phase-2",
+      "title": "Track 06 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-06",
+      "body_path": "conductor/github/issues/track-06-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:06"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-06-phase-3",
+      "title": "Track 06 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-06",
+      "body_path": "conductor/github/issues/track-06-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:06"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-06-phase-4",
+      "title": "Track 06 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-06",
+      "body_path": "conductor/github/issues/track-06-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:06"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-07",
+      "title": "Track 07: Governed screening workflow",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-07.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-07-phase-1",
+      "title": "Track 07 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-07",
+      "body_path": "conductor/github/issues/track-07-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:07"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-07-phase-2",
+      "title": "Track 07 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-07",
+      "body_path": "conductor/github/issues/track-07-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:07"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-07-phase-3",
+      "title": "Track 07 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-07",
+      "body_path": "conductor/github/issues/track-07-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:07"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-07-phase-4",
+      "title": "Track 07 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-07",
+      "body_path": "conductor/github/issues/track-07-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:07"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-08",
+      "title": "Track 08: PRISMA, PRESS and reporting",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-08.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-08-phase-1",
+      "title": "Track 08 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-08",
+      "body_path": "conductor/github/issues/track-08-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:08"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-08-phase-2",
+      "title": "Track 08 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-08",
+      "body_path": "conductor/github/issues/track-08-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:08"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-08-phase-3",
+      "title": "Track 08 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-08",
+      "body_path": "conductor/github/issues/track-08-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:08"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-08-phase-4",
+      "title": "Track 08 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-08",
+      "body_path": "conductor/github/issues/track-08-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:08"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-09",
+      "title": "Track 09: CLI MVP",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-09.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-09-phase-1",
+      "title": "Track 09 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-09",
+      "body_path": "conductor/github/issues/track-09-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:09"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-09-phase-2",
+      "title": "Track 09 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-09",
+      "body_path": "conductor/github/issues/track-09-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:09"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-09-phase-3",
+      "title": "Track 09 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-09",
+      "body_path": "conductor/github/issues/track-09-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:09"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-09-phase-4",
+      "title": "Track 09 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-09",
+      "body_path": "conductor/github/issues/track-09-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:09"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-10",
+      "title": "Track 10: MCP stdio server MVP",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-10.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-10-phase-1",
+      "title": "Track 10 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-10",
+      "body_path": "conductor/github/issues/track-10-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:10"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-10-phase-2",
+      "title": "Track 10 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-10",
+      "body_path": "conductor/github/issues/track-10-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:10"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-10-phase-3",
+      "title": "Track 10 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-10",
+      "body_path": "conductor/github/issues/track-10-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:10"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-10-phase-4",
+      "title": "Track 10 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-10",
+      "body_path": "conductor/github/issues/track-10-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:10"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-11",
+      "title": "Track 11: Systematic-search agent skill and workflows",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-11.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mvp",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-11-phase-1",
+      "title": "Track 11 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-11",
+      "body_path": "conductor/github/issues/track-11-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:11"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-11-phase-2",
+      "title": "Track 11 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-11",
+      "body_path": "conductor/github/issues/track-11-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:11"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-11-phase-3",
+      "title": "Track 11 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-11",
+      "body_path": "conductor/github/issues/track-11-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:11"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-11-phase-4",
+      "title": "Track 11 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-11",
+      "body_path": "conductor/github/issues/track-11-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:11"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-12",
+      "title": "Track 12: CiteWeft scholarly extraction and document evidence",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-12.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-12-phase-1",
+      "title": "Track 12 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-12",
+      "body_path": "conductor/github/issues/track-12-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:12"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-12-phase-2",
+      "title": "Track 12 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-12",
+      "body_path": "conductor/github/issues/track-12-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:12"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-12-phase-3",
+      "title": "Track 12 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-12",
+      "body_path": "conductor/github/issues/track-12-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:12"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-12-phase-4",
+      "title": "Track 12 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-12",
+      "body_path": "conductor/github/issues/track-12-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:12"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-13",
+      "title": "Track 13: Integration passports, GitHub issue hierarchy and context spine",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-13.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-13-phase-1",
+      "title": "Track 13 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-13",
+      "body_path": "conductor/github/issues/track-13-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:13"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-13-phase-2",
+      "title": "Track 13 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-13",
+      "body_path": "conductor/github/issues/track-13-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:13"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-13-phase-3",
+      "title": "Track 13 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-13",
+      "body_path": "conductor/github/issues/track-13-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:13"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-13-phase-4",
+      "title": "Track 13 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-13",
+      "body_path": "conductor/github/issues/track-13-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:13"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-14",
+      "title": "Track 14: Sourceright migration and shared releases",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-14.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-14-phase-1",
+      "title": "Track 14 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-14",
+      "body_path": "conductor/github/issues/track-14-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:14"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-14-phase-2",
+      "title": "Track 14 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-14",
+      "body_path": "conductor/github/issues/track-14-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:14"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-14-phase-3",
+      "title": "Track 14 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-14",
+      "body_path": "conductor/github/issues/track-14-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:14"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-14-phase-4",
+      "title": "Track 14 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-14",
+      "body_path": "conductor/github/issues/track-14-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:14"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-15",
+      "title": "Track 15: GitHub estate audit and custom-code replacement",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-15.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-15-phase-1",
+      "title": "Track 15 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-15",
+      "body_path": "conductor/github/issues/track-15-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:15"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-15-phase-2",
+      "title": "Track 15 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-15",
+      "body_path": "conductor/github/issues/track-15-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:15"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-15-phase-3",
+      "title": "Track 15 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-15",
+      "body_path": "conductor/github/issues/track-15-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:15"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-15-phase-4",
+      "title": "Track 15 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-15",
+      "body_path": "conductor/github/issues/track-15-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:15"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-16",
+      "title": "Track 16: Maximal quality, context and security harness",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-16.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-16-phase-1",
+      "title": "Track 16 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-16",
+      "body_path": "conductor/github/issues/track-16-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:16"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-16-phase-2",
+      "title": "Track 16 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-16",
+      "body_path": "conductor/github/issues/track-16-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:16"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-16-phase-3",
+      "title": "Track 16 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-16",
+      "body_path": "conductor/github/issues/track-16-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:16"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-16-phase-4",
+      "title": "Track 16 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-16",
+      "body_path": "conductor/github/issues/track-16-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:16"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-17",
+      "title": "Track 17: Benchmarks, search validation and human calibration",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-17.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-17-phase-1",
+      "title": "Track 17 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-17",
+      "body_path": "conductor/github/issues/track-17-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:17"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-17-phase-2",
+      "title": "Track 17 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-17",
+      "body_path": "conductor/github/issues/track-17-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:17"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-17-phase-3",
+      "title": "Track 17 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-17",
+      "body_path": "conductor/github/issues/track-17-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:17"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-17-phase-4",
+      "title": "Track 17 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-17",
+      "body_path": "conductor/github/issues/track-17-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:17"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-18",
+      "title": "Track 18: Alpha release and distribution",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-18.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-18-phase-1",
+      "title": "Track 18 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-18",
+      "body_path": "conductor/github/issues/track-18-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:18"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-18-phase-2",
+      "title": "Track 18 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-18",
+      "body_path": "conductor/github/issues/track-18-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:18"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-18-phase-3",
+      "title": "Track 18 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-18",
+      "body_path": "conductor/github/issues/track-18-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:18"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-18-phase-4",
+      "title": "Track 18 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-18",
+      "body_path": "conductor/github/issues/track-18-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:18"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-19",
+      "title": "Track 19: Registries and scholarly publication",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-19.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:alpha",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-19-phase-1",
+      "title": "Track 19 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-19",
+      "body_path": "conductor/github/issues/track-19-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:19"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-19-phase-2",
+      "title": "Track 19 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-19",
+      "body_path": "conductor/github/issues/track-19-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:19"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-19-phase-3",
+      "title": "Track 19 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-19",
+      "body_path": "conductor/github/issues/track-19-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:19"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-19-phase-4",
+      "title": "Track 19 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-19",
+      "body_path": "conductor/github/issues/track-19-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:19"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-20",
+      "title": "Track 20: Grey literature, registers and supplementary discovery",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-20.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:beta",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-20-phase-1",
+      "title": "Track 20 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-20",
+      "body_path": "conductor/github/issues/track-20-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:20"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-20-phase-2",
+      "title": "Track 20 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-20",
+      "body_path": "conductor/github/issues/track-20-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:20"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-20-phase-3",
+      "title": "Track 20 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-20",
+      "body_path": "conductor/github/issues/track-20-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:20"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-20-phase-4",
+      "title": "Track 20 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-20",
+      "body_path": "conductor/github/issues/track-20-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:20"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-21",
+      "title": "Track 21: Licensed BYO-access adapters",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-21.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:beta",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-21-phase-1",
+      "title": "Track 21 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-21",
+      "body_path": "conductor/github/issues/track-21-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:21"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-21-phase-2",
+      "title": "Track 21 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-21",
+      "body_path": "conductor/github/issues/track-21-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:21"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-21-phase-3",
+      "title": "Track 21 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-21",
+      "body_path": "conductor/github/issues/track-21-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:21"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-21-phase-4",
+      "title": "Track 21 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-21",
+      "body_path": "conductor/github/issues/track-21-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:21"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-22",
+      "title": "Track 22: Living reviews, amendments and update lineage",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-22.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:beta",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-22-phase-1",
+      "title": "Track 22 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-22",
+      "body_path": "conductor/github/issues/track-22-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:22"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-22-phase-2",
+      "title": "Track 22 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-22",
+      "body_path": "conductor/github/issues/track-22-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:22"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-22-phase-3",
+      "title": "Track 22 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-22",
+      "body_path": "conductor/github/issues/track-22-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:22"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-22-phase-4",
+      "title": "Track 22 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-22",
+      "body_path": "conductor/github/issues/track-22-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:22"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-23",
+      "title": "Track 23: Active-learning prioritisation and calibrated agents",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-23.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:beta",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-23-phase-1",
+      "title": "Track 23 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-23",
+      "body_path": "conductor/github/issues/track-23-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:23"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-23-phase-2",
+      "title": "Track 23 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-23",
+      "body_path": "conductor/github/issues/track-23-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:23"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-23-phase-3",
+      "title": "Track 23 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-23",
+      "body_path": "conductor/github/issues/track-23-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:23"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-23-phase-4",
+      "title": "Track 23 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-23",
+      "body_path": "conductor/github/issues/track-23-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:23"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-24",
+      "title": "Track 24: WASI components, HTTP MCP and scalable execution",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-24.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:beta",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-24-phase-1",
+      "title": "Track 24 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-24",
+      "body_path": "conductor/github/issues/track-24-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:24"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-24-phase-2",
+      "title": "Track 24 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-24",
+      "body_path": "conductor/github/issues/track-24-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:24"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-24-phase-3",
+      "title": "Track 24 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-24",
+      "body_path": "conductor/github/issues/track-24-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:24"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-24-phase-4",
+      "title": "Track 24 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-24",
+      "body_path": "conductor/github/issues/track-24-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:24"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-25",
+      "title": "Track 25: Provenance and research-object interoperability",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-25.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mature",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-25-phase-1",
+      "title": "Track 25 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-25",
+      "body_path": "conductor/github/issues/track-25-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:25"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-25-phase-2",
+      "title": "Track 25 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-25",
+      "body_path": "conductor/github/issues/track-25-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:25"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-25-phase-3",
+      "title": "Track 25 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-25",
+      "body_path": "conductor/github/issues/track-25-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:25"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-25-phase-4",
+      "title": "Track 25 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-25",
+      "body_path": "conductor/github/issues/track-25-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:25"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-26",
+      "title": "Track 26: Formal assurance and contract evolution",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-26.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mature",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-26-phase-1",
+      "title": "Track 26 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-26",
+      "body_path": "conductor/github/issues/track-26-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:26"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-26-phase-2",
+      "title": "Track 26 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-26",
+      "body_path": "conductor/github/issues/track-26-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:26"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-26-phase-3",
+      "title": "Track 26 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-26",
+      "body_path": "conductor/github/issues/track-26-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:26"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-26-phase-4",
+      "title": "Track 26 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-26",
+      "body_path": "conductor/github/issues/track-26-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:26"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-27",
+      "title": "Track 27: Accessibility, internationalisation and usability",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-27.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mature",
+        "evidence:source-verified"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-27-phase-1",
+      "title": "Track 27 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-27",
+      "body_path": "conductor/github/issues/track-27-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:27"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-27-phase-2",
+      "title": "Track 27 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-27",
+      "body_path": "conductor/github/issues/track-27-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:27"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-27-phase-3",
+      "title": "Track 27 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-27",
+      "body_path": "conductor/github/issues/track-27-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:27"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-27-phase-4",
+      "title": "Track 27 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-27",
+      "body_path": "conductor/github/issues/track-27-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:27"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-28",
+      "title": "Track 28: Institutional governance, privacy and collaboration",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-28.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mature",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-28-phase-1",
+      "title": "Track 28 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-28",
+      "body_path": "conductor/github/issues/track-28-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:28"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-28-phase-2",
+      "title": "Track 28 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-28",
+      "body_path": "conductor/github/issues/track-28-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:28"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-28-phase-3",
+      "title": "Track 28 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-28",
+      "body_path": "conductor/github/issues/track-28-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:28"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-28-phase-4",
+      "title": "Track 28 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-28",
+      "body_path": "conductor/github/issues/track-28-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:28"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-29",
+      "title": "Track 29: External methodological evaluation and sustainability",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-29.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mature",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-29-phase-1",
+      "title": "Track 29 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-29",
+      "body_path": "conductor/github/issues/track-29-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:29"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-29-phase-2",
+      "title": "Track 29 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-29",
+      "body_path": "conductor/github/issues/track-29-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:29"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-29-phase-3",
+      "title": "Track 29 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-29",
+      "body_path": "conductor/github/issues/track-29-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:29"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-29-phase-4",
+      "title": "Track 29 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-29",
+      "body_path": "conductor/github/issues/track-29-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:29"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-30",
+      "title": "Track 30: Mature 1.0 product, community and evaluation",
+      "kind": "track",
+      "parent_key": "roadmap-epic",
+      "body_path": "conductor/github/issues/track-30.md",
+      "labels": [
+        "kind:track",
+        "conductor",
+        "horizon:mature",
+        "evidence:external-required"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-30-phase-1",
+      "title": "Track 30 / Phase 1: Source implementation",
+      "kind": "phase",
+      "parent_key": "track-30",
+      "body_path": "conductor/github/issues/track-30-phase-1.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:30"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-30-phase-2",
+      "title": "Track 30 / Phase 2: Source-level verification",
+      "kind": "phase",
+      "parent_key": "track-30",
+      "body_path": "conductor/github/issues/track-30-phase-2.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:30"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-30-phase-3",
+      "title": "Track 30 / Phase 3: Higher-evidence gates",
+      "kind": "phase",
+      "parent_key": "track-30",
+      "body_path": "conductor/github/issues/track-30-phase-3.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:30"
+      ],
+      "status": "prepared_not_synced"
+    },
+    {
+      "key": "track-30-phase-4",
+      "title": "Track 30 / Phase 4: Review and closeout",
+      "kind": "phase",
+      "parent_key": "track-30",
+      "body_path": "conductor/github/issues/track-30-phase-4.md",
+      "labels": [
+        "kind:phase",
+        "conductor",
+        "track:30"
+      ],
+      "status": "prepared_not_synced"
+    }
+  ],
+  "generated_at": "2026-08-06",
+  "apply_permitted": false
+}

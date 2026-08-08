@@ -1,0 +1,21 @@
+{
+  "schema_version": "org.searchright.citeweft-compatibility.v1",
+  "upstream_repository": "edithatogo/citeweft",
+  "upstream_commit": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+  "upstream_contracts": [
+    "citeweft.scholarly-document.v1",
+    "citeweft.reference-model.v1"
+  ],
+  "downstream_contract": "org.searchright.document-evidence.v1",
+  "adapter_crate": "searchright-citeweft",
+  "feature_flag": "citeweft",
+  "default_enabled": false,
+  "dependency_direction": "searchright-citeweft -> citeweft",
+  "canonical_writes_permitted": false,
+  "full_text_retained_by_default": false,
+  "verification": [
+    "python scripts/check_citeweft_integration.py",
+    "cargo test -p searchright-citeweft",
+    "cargo test -p searchright-contracts"
+  ]
+}

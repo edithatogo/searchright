@@ -1,0 +1,11 @@
+{
+  "checkouts_checked": 23,
+  "errors": [],
+  "jobs_checked": 24,
+  "limitations": [
+    "Static workflow review only; GitHub environment protection, rulesets and runner state require remote evidence."
+  ],
+  "schema_version": "org.searchright.workflow-hardening-receipt.v1",
+  "status": "passed",
+  "workflows_checked": 10
+}

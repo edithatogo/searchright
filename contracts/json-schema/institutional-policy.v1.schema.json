@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/institutional-policy.v1.schema.json",
+  "title": "Institutional Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy_id",
+    "institution",
+    "deployment_modes",
+    "allowed_classifications",
+    "permitted_regions",
+    "maximum_retention_days",
+    "telemetry_allowed",
+    "full_text_persistence_allowed",
+    "external_model_processing_allowed",
+    "cross_border_transfer_allowed",
+    "approved_by",
+    "effective_from",
+    "review_by"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.institutional-policy.v1"
+    },
+    "policy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "institution": {
+      "type": "string",
+      "minLength": 1
+    },
+    "deployment_modes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "local_only",
+          "institution_self_hosted",
+          "hosted_single_tenant",
+          "hosted_multi_tenant"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "allowed_classifications": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "public_metadata",
+          "internal_review_data",
+          "confidential",
+          "restricted_full_text",
+          "sensitive_personal_data"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "permitted_regions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      },
+      "uniqueItems": true
+    },
+    "maximum_retention_days": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4294967295
+    },
+    "telemetry_allowed": {
+      "type": "boolean"
+    },
+    "full_text_persistence_allowed": {
+      "type": "boolean"
+    },
+    "external_model_processing_allowed": {
+      "type": "boolean"
+    },
+    "cross_border_transfer_allowed": {
+      "type": "boolean"
+    },
+    "approved_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effective_from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_by": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

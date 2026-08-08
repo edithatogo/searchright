@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+"""Validate roadmap-to-track coverage and evidence without overstating runtime proof."""
+
+from __future__ import annotations
+
+import json
+import re
+import sys
+from collections.abc import Mapping
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+COVERAGE_PATH = ROOT / "conductor" / "roadmap-coverage.json"
+TRACKS_ROOT = ROOT / "conductor" / "tracks"
+ALLOWED_STATUSES = {
+    "source_implemented",
+    "source_implemented_unverified",
+    "integration_prepared",
+    "release_prepared",
+    "submission_prepared",
+    "external_evidence_required",
+}
+ALLOWED_EVIDENCE = {
+    "contracted",
+    "source_verified",
+    "compiler_verified",
+    "fixture_proven",
+    "live_proven",
+    "externally_validated",
+    "published",
+}
+FINAL_EVIDENCE = {"compiler_verified", "fixture_proven", "live_proven", "externally_validated", "published"}
+
+
+def load_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def error(errors: list[str], message: str) -> None:
+    errors.append(message)
+
+
+def main() -> int:
+    errors: list[str] = []
+    if not COVERAGE_PATH.is_file():
+        print("missing conductor/roadmap-coverage.json", file=sys.stderr)
+        return 1
+
+    coverage = load_json(COVERAGE_PATH)
+    if not isinstance(coverage, Mapping):
+        print("roadmap coverage must be an object", file=sys.stderr)
+        return 1
+    entries = coverage.get("tracks")
+    if not isinstance(entries, list) or not entries:
+        print("roadmap coverage must contain tracks", file=sys.stderr)
+        return 1
+
+    directories = sorted(path for path in TRACKS_ROOT.glob("[0-9][0-9]-*") if path.is_dir())
+    expected_ids = [f"{number:02d}" for number in range(len(directories))]
+    actual_ids = [path.name[:2] for path in directories]
+    if actual_ids != expected_ids:
+        error(errors, f"track IDs are not contiguous: {actual_ids}")
+
+    entries_by_id: dict[str, Mapping[str, Any]] = {}
+    horizons: set[str] = set()
+    requirements_owned: set[str] = set()
+    checked_tasks = 0
+    unchecked_tasks = 0
+
+    for index, value in enumerate(entries):
+        if not isinstance(value, Mapping):
+            error(errors, f"coverage entry {index} is not an object")
+            continue
+        track_id = value.get("track_id")
+        if not isinstance(track_id, str) or not re.fullmatch(r"\d{2}", track_id):
+            error(errors, f"coverage entry {index} has invalid track_id")
+            continue
+        if track_id in entries_by_id:
+            error(errors, f"duplicate coverage track {track_id}")
+        entries_by_id[track_id] = value
+        horizon = value.get("horizon")
+        if isinstance(horizon, str) and horizon:
+            horizons.add(horizon)
+        else:
+            error(errors, f"track {track_id} has no horizon")
+        for requirement in value.get("requirements", []):
+            if isinstance(requirement, str):
+                requirements_owned.add(requirement)
+
+    if set(entries_by_id) != set(actual_ids):
+        error(
+            errors,
+            f"coverage/track parity mismatch: missing={sorted(set(actual_ids)-set(entries_by_id))}, "
+            f"extra={sorted(set(entries_by_id)-set(actual_ids))}",
+        )
+
+    for directory in directories:
+        track_id = directory.name[:2]
+        entry = entries_by_id.get(track_id)
+        if entry is None:
+            continue
+        metadata_path = directory / "metadata.json"
+        evidence_path = directory / "evidence.json"
+        plan_path = directory / "plan.md"
+        for path in (metadata_path, evidence_path, plan_path, directory / "spec.md"):
+            if not path.is_file():
+                error(errors, f"missing {path.relative_to(ROOT)}")
+        if not all(path.is_file() for path in (metadata_path, evidence_path, plan_path)):
+            continue
+
+        metadata = load_json(metadata_path)
+        evidence = load_json(evidence_path)
+        status = entry.get("status")
+        evidence_level = entry.get("evidence_level")
+        if status not in ALLOWED_STATUSES:
+            error(errors, f"track {track_id} has invalid status {status!r}")
+        if evidence_level not in ALLOWED_EVIDENCE:
+            error(errors, f"track {track_id} has invalid evidence level {evidence_level!r}")
+        if metadata.get("track_id") != track_id or evidence.get("track_id") != track_id:
+            error(errors, f"track {track_id} identity mismatch")
+        if metadata.get("status") != status or evidence.get("status") != status:
+            error(errors, f"track {track_id} status differs across coverage/metadata/evidence")
+        if metadata.get("evidence_level") != evidence_level or evidence.get("evidence_level") != evidence_level:
+            error(errors, f"track {track_id} evidence differs across coverage/metadata/evidence")
+        if metadata.get("slug") != directory.name[3:]:
+            error(errors, f"track {track_id} slug mismatch")
+
+        deliverables = entry.get("deliverables")
+        if not isinstance(deliverables, list) or not deliverables:
+            error(errors, f"track {track_id} has no deliverables")
+        else:
+            for relative_path in deliverables:
+                if not isinstance(relative_path, str) or not (ROOT / relative_path).exists():
+                    error(errors, f"track {track_id} missing deliverable {relative_path!r}")
+
+        checks = entry.get("checks")
+        if not isinstance(checks, list) or not checks:
+            error(errors, f"track {track_id} has no static/source checks")
+
+        blockers = entry.get("blockers")
+        if not isinstance(blockers, list):
+            error(errors, f"track {track_id} blockers must be a list")
+            blockers = []
+        if status == "external_evidence_required" and not blockers:
+            error(errors, f"track {track_id} requires external evidence but has no blockers")
+        if not blockers and evidence_level not in FINAL_EVIDENCE and status not in {"source_implemented", "source_implemented_unverified"}:
+            error(errors, f"track {track_id} has no blocker but is not at a final evidence level")
+
+        plan = plan_path.read_text(encoding="utf-8")
+        checked = len(re.findall(r"^- \[x\]", plan, flags=re.MULTILINE | re.IGNORECASE))
+        unchecked = len(re.findall(r"^- \[ \]", plan, flags=re.MULTILINE))
+        checked_tasks += checked
+        unchecked_tasks += unchecked
+        if checked == 0:
+            error(errors, f"track {track_id} has no evidenced completed tasks")
+        if blockers and unchecked == 0:
+            error(errors, f"track {track_id} has blockers but no open task")
+        if "## Phase 4: Review and closeout" not in plan:
+            error(errors, f"track {track_id} lacks review and closeout")
+
+        source_evidence = evidence.get("source_evidence")
+        if not isinstance(source_evidence, list) or sorted(source_evidence) != sorted(deliverables or []):
+            error(errors, f"track {track_id} evidence paths differ from coverage deliverables")
+        if evidence.get("blockers") != blockers:
+            error(errors, f"track {track_id} blockers differ from coverage")
+
+    required_horizons = {"foundation", "mvp", "alpha", "beta", "mature"}
+    if not required_horizons.issubset(horizons):
+        error(errors, f"roadmap horizons incomplete: {sorted(horizons)}")
+
+    requirement_ids = set(re.findall(r"\|\s*(SR-\d{3})\s*\|", (ROOT / "conductor" / "requirements.md").read_text(encoding="utf-8")))
+    missing_requirements = requirement_ids - requirements_owned
+    unknown_requirements = requirements_owned - requirement_ids
+    if missing_requirements:
+        error(errors, f"requirements without a track owner in coverage: {sorted(missing_requirements)}")
+    if unknown_requirements:
+        error(errors, f"coverage refers to unknown requirements: {sorted(unknown_requirements)}")
+
+    receipt = {
+        "schema_version": "org.searchright.roadmap-coverage-receipt.v1",
+        "status": "failed" if errors else "passed",
+        "tracks_checked": len(directories),
+        "horizons": sorted(horizons),
+        "requirements_checked": len(requirement_ids),
+        "checked_tasks": checked_tasks,
+        "open_evidence_tasks": unchecked_tasks,
+        "errors": errors,
+        "limitations": [
+            "Source/evidence validation only; compiler, live-provider and external acceptance gates remain separate.",
+        ],
+    }
+    print(json.dumps(receipt, indent=2, sort_keys=True))
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

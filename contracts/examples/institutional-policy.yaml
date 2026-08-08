@@ -1,0 +1,20 @@
+schema_version: org.searchright.institutional-policy.v1
+policy_id: institution-policy-demo-1
+institution: Example institution
+deployment_modes:
+- local_only
+- institution_self_hosted
+allowed_classifications:
+- public_metadata
+- internal_review_data
+- restricted_full_text
+permitted_regions:
+- AU
+maximum_retention_days: 30
+telemetry_allowed: false
+full_text_persistence_allowed: true
+external_model_processing_allowed: false
+cross_border_transfer_allowed: false
+approved_by: Governance officer
+effective_from: '2026-08-06'
+review_by: '2027-08-06'

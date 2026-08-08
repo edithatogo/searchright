@@ -1,43 +1,41 @@
 # Plan: 06 Imports, deduplication and study linkage
 
-Current status: **partial**.
+Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
 
-## Phase 1: Implement RIS, CSL JSON, nbib/PubMed XML and CSV readers / Preserve source line/range provenance and malformed-record quarantine
+GitHub issue key: `track-06`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Implement RIS, CSL JSON, nbib/PubMed XML and CSV readers
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Preserve source line/range provenance and malformed-record quarantine
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Expand identifier normalization and Unicode title handling / Add report-to-study linkage model and manual merge/split
+<!-- github-subissue-key: track-06-phase-1 -->
 
-- [ ] Expand identifier normalization and Unicode title handling
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add report-to-study linkage model and manual merge/split
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/searchright-dedup/src/lib.rs`
+  - [x] `crates/searchright-interchange/src/lib.rs`
+  - [x] `crates/searchright-study/src/lib.rs`
+  - [x] `contracts/examples/interchange-receipt.yaml`
+  - [x] `contracts/examples/study-graph.yaml`
+  - [x] `docs/adrs/0005-record-report-study-separation.md`
 
-## Phase 3: Add large-corpus blocking/indexing without changing deterministic results / Validate against review datasets and adversarial fixtures
+## Phase 2: Source-level verification
 
-- [ ] Add large-corpus blocking/indexing without changing deterministic results
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Validate against review datasets and adversarial fixtures
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-06-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-06-phase-3 -->
+
+- [ ] Compile and run golden round-trip, property and metamorphic tests.
+- [ ] Evaluate linkage and deduplication against independently adjudicated corpora.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-06-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

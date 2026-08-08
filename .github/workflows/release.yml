@@ -1,38 +1,210 @@
 name: Release
+
 on:
   push:
     tags: ['v*.*.*']
+
 permissions:
-  contents: write
-  packages: write
-  id-token: write
+  contents: read
+
 jobs:
   verify:
+    name: Release verification
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     environment: release
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - run: rustup toolchain install 1.97.1 --profile minimal --component clippy,rustfmt
-      - run: ./scripts/verify.sh
-      - run: cargo package --workspace --locked
-      - run: cargo publish --workspace --locked --dry-run
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/validation.txt
+      - name: Install validation dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements/validation.txt
+      - name: Install Rust and components
+        run: rustup toolchain install 1.97.1 --profile minimal --component clippy,rustfmt
+      - name: Install cargo-nextest
+        run: cargo install cargo-nextest --version 0.9.143 --locked
+      - name: Install cargo-deny
+        run: cargo install cargo-deny --version 0.19.9 --locked
+      - name: Install cargo-machete
+        run: cargo install cargo-machete --version 0.9.2 --locked
+      - name: Verify repository
+        run: ./scripts/verify.sh
+      - name: Generate release inventories
+        run: |
+          python scripts/generate_source_sbom.py
+          python scripts/package_source.py --output-dir dist/source
+      - name: Attest source archives, manifest and SBOM
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: |
+            dist/source/*
+            verification/sbom/source-components.cdx.json
+      - name: Package workspace crates
+        run: cargo package --workspace --locked
+      - name: Dry-run crate publication
+        run: cargo publish --workspace --locked --dry-run
+      - name: Preserve source release evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: searchright-source-release
+          path: |
+            dist/source/*
+            verification/sbom/source-components.cdx.json
+          if-no-files-found: error
+          retention-days: 90
+
   build:
+    name: Build ${{ matrix.target }}
     needs: verify
+    timeout-minutes: 45
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
+            executable_suffix: ""
           - os: macos-latest
             target: aarch64-apple-darwin
+            executable_suffix: ""
           - os: windows-latest
             target: x86_64-pc-windows-msvc
+            executable_suffix: .exe
     runs-on: ${{ matrix.os }}
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - run: rustup toolchain install 1.97.1 --profile minimal --target ${{ matrix.target }}
-      - run: cargo build --release --locked -p searchright-cli -p searchright-mcp --target ${{ matrix.target }}
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          name: searchright-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/searchright*
+          persist-credentials: false
+      - name: Install target
+        run: rustup toolchain install 1.97.1 --profile minimal --target ${{ matrix.target }}
+      - name: Build release binaries
+        run: cargo build --release --locked -p searchright-cli -p searchright-mcp --target ${{ matrix.target }}
+      - name: Stage exact release binaries and checksums
+        shell: bash
+        env:
+          SEARCHRIGHT_TARGET: ${{ matrix.target }}
+          SEARCHRIGHT_EXE_SUFFIX: ${{ matrix.executable_suffix }}
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          import os
+          import shutil
+          from pathlib import Path
+
+          target = os.environ["SEARCHRIGHT_TARGET"]
+          suffix = os.environ["SEARCHRIGHT_EXE_SUFFIX"]
+          source = Path("target") / target / "release"
+          destination = Path("dist") / "bin"
+          destination.mkdir(parents=True, exist_ok=True)
+          staged: list[Path] = []
+          for binary in ("searchright", "searchright-mcp"):
+              source_path = source / f"{binary}{suffix}"
+              if not source_path.is_file():
+                  raise SystemExit(f"missing expected release binary: {source_path}")
+              destination_path = destination / f"{binary}-{target}{suffix}"
+              shutil.copy2(source_path, destination_path)
+              staged.append(destination_path)
+          checksum_path = destination / f"SHA256SUMS-{target}.txt"
+          checksum_path.write_text(
+              "".join(
+                  f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.name}\n"
+                  for path in staged
+              ),
+              encoding="utf-8",
+          )
+          PY
+      - name: Attest exact release binaries
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: dist/bin/searchright*
+      - name: Preserve release binaries
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: searchright-bin-${{ matrix.target }}
+          path: dist/bin/*
+          if-no-files-found: error
+          retention-days: 90
+
+  publish-release:
+    name: Assemble GitHub release
+    needs: [verify, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - name: Download binary artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: searchright-bin-*
+          path: dist/release
+          merge-multiple: true
+      - name: Download source artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: searchright-source-release
+          path: dist/source-artifact
+      - name: Build complete release checksum ledger
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import hashlib
+          from pathlib import Path
+
+          import shutil
+
+          root = Path("dist/release")
+          source_root = Path("dist/source-artifact")
+          root.mkdir(parents=True, exist_ok=True)
+          for path in sorted(source_root.rglob("*")):
+              if not path.is_file():
+                  continue
+              destination = root / path.name
+              if destination.exists():
+                  raise SystemExit(f"release filename collision: {destination.name}")
+              shutil.copy2(path, destination)
+          files = sorted(
+              path for path in root.iterdir()
+              if path.is_file() and path.name != "SHA256SUMS.txt"
+          )
+          if not files:
+              raise SystemExit("release assembly contains no files")
+          (root / "SHA256SUMS.txt").write_text(
+              "".join(
+                  f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.relative_to(root).as_posix()}\n"
+                  for path in files
+              ),
+              encoding="utf-8",
+          )
+          PY
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/release/* --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/release/* --verify-tag --generate-notes
+          fi

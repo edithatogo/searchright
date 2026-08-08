@@ -1,0 +1,13 @@
+{
+  "schema_version": "org.searchright.benchmark-corpus.v1",
+  "corpus_id": "searchright-synthetic-v1",
+  "rights_basis": "CC0 synthetic metadata",
+  "purposes": [
+    "query compiler regression",
+    "deduplication metamorphic tests",
+    "screening state-machine tests",
+    "audit tamper tests",
+    "interchange round trips"
+  ],
+  "external_comparability": false
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "citeweft-document-evidence",
+  "repository": "edithatogo/citeweft",
+  "revision": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+  "default_branch": "main",
+  "mode": "rust_dependency",
+  "dependency_direction": "searchright_consumes_upstream",
+  "feature_flag": "citeweft",
+  "inputs": [
+    {
+      "name": "CiteWeft ScholarlyDocument",
+      "version": "citeweft.scholarly-document.v1",
+      "path": "citeweft::citeweft::ScholarlyDocument",
+      "required": true
+    },
+    {
+      "name": "CiteWeft reference model",
+      "version": "citeweft.reference-model.v1",
+      "path": "citeweft::reference_model::ReferenceModelReport",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Searchright DocumentEvidence",
+      "version": "org.searchright.document-evidence.v1",
+      "path": "contracts/json-schema/document-evidence.v1.schema.json",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "input_file_read",
+    "metadata_write"
+  ],
+  "verification": [
+    {
+      "id": "static-boundary",
+      "command": "python scripts/check_citeweft_integration.py",
+      "evidence_level": "source_verified",
+      "required": true
+    },
+    {
+      "id": "compiled-adapter",
+      "command": "cargo test -p searchright-citeweft --locked",
+      "evidence_level": "fixture_proven",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Disable the citeweft Cargo feature.",
+    "Continue accepting neutral DocumentEvidence fixtures and imports."
+  ],
+  "claim_boundary": "CiteWeft is an optional extraction evidence source; it is GROBID-inspired and does not establish bibliographic truth or GROBID compatibility."
+}

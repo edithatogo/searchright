@@ -1,0 +1,19 @@
+schema_version: org.searchright.protocol-amendment.v1
+amendment_id: amendment-1
+review_id: demo-review
+kind: information_sources
+version_before: '1.0'
+version_after: '1.1'
+proposed_at: '2026-08-06T00:00:00Z'
+proposed_by: review-lead
+decision: approved
+decided_by: information-specialist
+decided_at: '2026-08-06T01:00:00Z'
+changes:
+- path: /information_sources/-
+  before: null
+  after: ClinicalTrials.gov
+  rationale: Trial registries are required for intervention completeness.
+retrospective_impact: The new source will be searched from inception and merged with
+  prior results.
+requires_reprocessing: true

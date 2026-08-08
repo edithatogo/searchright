@@ -1,0 +1,21 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: prisma-scr-2018
+family: prisma_sc_r
+version: '2018'
+source: PRISMA-ScR
+provenance_note: Reporting extension for scoping reviews. Consult the authoritative
+  source for exact wording and interpretation.
+items:
+- item_id: prisma-scr-6
+  label: Information sources
+  requirement_summary: Describe all sources searched or consulted and the last search
+    date.
+  scope: reporting
+  crosswalks:
+  - prisma-2020-6
+- item_id: prisma-scr-7
+  label: Search
+  requirement_summary: Present a reproducible electronic search strategy.
+  scope: reporting
+  crosswalks:
+  - prisma-s-8

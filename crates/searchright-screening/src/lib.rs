@@ -303,6 +303,7 @@ mod tests {
 
     fn policy() -> ScreeningPolicy {
         ScreeningPolicy {
+            schema_version: searchright_contracts::SCREENING_POLICY_SCHEMA_VERSION.to_owned(),
             title_abstract_reviewers: 2,
             full_text_reviewers: 2,
             agent_authority: AgentAuthority::AdvisoryOnly,

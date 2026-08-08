@@ -1,0 +1,32 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "18",
+  "slug": "alpha-release",
+  "title": "Alpha release and distribution",
+  "status": "release_prepared",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "09",
+    "10",
+    "13",
+    "16",
+    "17"
+  ],
+  "horizon": "alpha",
+  "evidence_level": "source_verified",
+  "external_approval_required": true,
+  "evidence_path": "conductor/tracks/18-alpha-release/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-18",
+    "phase_issue_keys": [
+      "track-18-phase-1",
+      "track-18-phase-2",
+      "track-18-phase-3",
+      "track-18-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

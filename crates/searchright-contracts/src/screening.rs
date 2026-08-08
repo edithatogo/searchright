@@ -1,7 +1,10 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use crate::ScreeningStage;
+use crate::{
+    ContractError, SCREENING_POLICY_SCHEMA_VERSION, ScreeningStage, Validate,
+    require_schema_version, require_text,
+};
 
 /// Screening round.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema)]
@@ -105,6 +108,8 @@ pub enum AgentAuthority {
 /// Screening governance policy.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 pub struct ScreeningPolicy {
+    /// Contract identifier.
+    pub schema_version: String,
     /// Independent reviewer count for title/abstract.
     pub title_abstract_reviewers: u8,
     /// Independent reviewer count for full text.
@@ -136,4 +141,36 @@ pub struct ConflictResolution {
     pub rationale: String,
     /// Resolution timestamp.
     pub resolved_at: String,
+}
+
+
+impl Validate for ScreeningPolicy {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_schema_version(
+            &self.schema_version,
+            SCREENING_POLICY_SCHEMA_VERSION,
+            "screening_policy.schema_version",
+        )?;
+        if self.title_abstract_reviewers == 0 || self.full_text_reviewers == 0 {
+            return Err(ContractError::Invariant(
+                "screening stages require at least one reviewer".to_owned(),
+            ));
+        }
+        if let Some(sensitivity) = self.minimum_agent_sensitivity
+            && !(0.0..=1.0).contains(&sensitivity)
+        {
+            return Err(ContractError::Invariant(
+                "minimum agent sensitivity must be between zero and one".to_owned(),
+            ));
+        }
+        if self.agent_authority != AgentAuthority::AdvisoryOnly
+            && self.minimum_agent_sensitivity.is_none()
+        {
+            return Err(ContractError::Invariant(
+                "non-advisory agent authority requires a calibrated minimum sensitivity"
+                    .to_owned(),
+            ));
+        }
+        require_text(&self.adjudication_rule, "screening_policy.adjudication_rule")
+    }
 }

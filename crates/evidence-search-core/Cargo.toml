@@ -10,7 +10,7 @@ repository.workspace = true
 [dependencies]
 async-trait.workspace = true
 blake3.workspace = true
-searchright-contracts = { path = "../searchright-contracts" }
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true

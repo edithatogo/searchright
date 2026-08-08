@@ -1,0 +1,30 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "16",
+  "slug": "quality-security-harness",
+  "title": "Maximal quality, context and security harness",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "00",
+    "01",
+    "13"
+  ],
+  "horizon": "alpha",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/16-quality-security-harness/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-16",
+    "phase_issue_keys": [
+      "track-16-phase-1",
+      "track-16-phase-2",
+      "track-16-phase-3",
+      "track-16-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

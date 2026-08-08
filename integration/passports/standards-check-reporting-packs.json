@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "standards-check-reporting-packs",
+  "repository": "edithatogo/standards_check",
+  "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+  "default_branch": "main",
+  "mode": "documentation_pack",
+  "dependency_direction": "searchright_consumes_upstream",
+  "feature_flag": null,
+  "inputs": [
+    {
+      "name": "Reporting checklist source and sidecar inventory",
+      "version": "observed-2026-06-27",
+      "path": "source/index.yml and schemas/sidecar.schema.json",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Searchright standard pack",
+      "version": "org.searchright.standard-pack.v1",
+      "path": "contracts/json-schema/standard-pack.v1.schema.json",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "documentation_read",
+    "metadata_write"
+  ],
+  "verification": [
+    {
+      "id": "standards-provenance",
+      "command": "python scripts/validate_repository.py",
+      "evidence_level": "source_verified",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Retain the prior versioned Searchright standards pack.",
+    "Do not overwrite a pack until provenance, licence and numbering checks pass."
+  ],
+  "claim_boundary": "standards_check is a provenance upstream; Searchright assessments do not imply endorsement by the reporting-standard authors."
+}

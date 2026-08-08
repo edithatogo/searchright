@@ -1,0 +1,53 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "synergy-screening-benchmark",
+  "repository": "edithatogo/synergy-dataset",
+  "revision": "dc2dadfdbb98eb1b4259604789abd640aa3b693e",
+  "default_branch": "master",
+  "mode": "dataset_fixture",
+  "dependency_direction": "searchright_consumes_upstream",
+  "feature_flag": null,
+  "inputs": [
+    {
+      "name": "SYNERGY study-selection dataset",
+      "version": "pinned-git-revision",
+      "path": "rights-cleared benchmark subset generated outside the source package",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Searchright benchmark report",
+      "version": "org.searchright.benchmark-report.v1",
+      "path": "contracts/json-schema/benchmark-report.v1.schema.json",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "dataset_read",
+    "benchmark_report_write"
+  ],
+  "verification": [
+    {
+      "id": "benchmark-manifest",
+      "command": "python scripts/validate_repository.py",
+      "evidence_level": "source_verified",
+      "required": true
+    },
+    {
+      "id": "calibration-run",
+      "command": "cargo test -p searchright-bench --locked",
+      "evidence_level": "fixture_proven",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Remove the external dataset path from the benchmark configuration.",
+    "Retain synthetic fixtures so default CI remains network-free and distributable."
+  ],
+  "claim_boundary": "SYNERGY is a benchmark upstream; no performance, recall or state-of-the-art claim exists until a versioned run and leakage review are published."
+}

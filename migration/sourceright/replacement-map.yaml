@@ -53,9 +53,9 @@ mappings:
       - cache_path
     existing_responsibility: local response cache
     target_symbols:
-      - shared content-addressed replay/cache service
+      - evidence_search_core::PageCache and evidence_search_core::MemoryPageCache
     retained_in_sourceright: existing implementation until safe parity exists
-    implementation_status: gap_not_implemented
+    implementation_status: source_implemented_uncompiled
   - existing_symbols:
       - europe_pmc_endpoint
       - ncbi_esummary_endpoint
@@ -92,7 +92,7 @@ mappings:
       - searchright_contracts::SourceReceipt
       - Sourceright compatibility report facade
     retained_in_sourceright: public verification-oriented report semantics
-    implementation_status: planned
+    implementation_status: compatibility_harness_source_implemented_uncompiled
 parity_dimensions:
   - provider identity
   - execution mode

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/provider-component.v1.schema.json",
+  "title": "Searchright provider component manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "component_id", "component_version", "abi_version", "capabilities",
+    "allowed_hosts", "max_memory_mib", "max_fuel", "component_digest", "fixture_mode",
+    "authority_rationale"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.provider-component.v1"},
+    "component_id": {"type": "string", "minLength": 1},
+    "component_version": {"type": "string", "minLength": 1},
+    "abi_version": {"type": "string", "minLength": 1},
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "search", "metadata_read", "input_file_read", "workspace_write",
+          "network_read", "telemetry"
+        ]
+      }
+    },
+    "allowed_hosts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "max_memory_mib": {"type": "integer", "minimum": 1},
+    "max_fuel": {"type": "integer", "minimum": 1},
+    "component_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "fixture_mode": {"type": "boolean"},
+    "authority_rationale": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

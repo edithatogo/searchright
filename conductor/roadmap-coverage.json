@@ -1,0 +1,1225 @@
+{
+  "schema_version": "org.searchright.roadmap-coverage.v1",
+  "updated": "2026-08-06",
+  "strategy_improvements": [
+    "Stable auditable kernel with an explicitly experimental adapter and agent edge.",
+    "One application facade with machine-readable CLI/MCP parity.",
+    "Record-report-study graph and immutable living-review lineage.",
+    "Versioned standards packs that separate reporting from methodological conduct.",
+    "Provenance, accessibility, governance and assurance as architectural concerns.",
+    "Evidence-scaled tracks that never equate source implementation with runtime or external proof.",
+    "CiteWeft provides optional source-grounded document evidence without contaminating the search kernel or canonical CSL.",
+    "Pinned integration passports and consumer-driven contracts replace undocumented cross-repository coupling.",
+    "Conductor tracks map deterministically to GitHub issues and each plan phase maps to a native subissue.",
+    "A canonical context spine, claim boundaries and hazard ledger constrain all coding-agent surfaces."
+  ],
+  "tracks": [
+    {
+      "track_id": "00",
+      "slug": "foundation-conductor-toolchain",
+      "title": "Foundation, Conductor and toolchain",
+      "outcome": "Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap.",
+      "horizon": "foundation",
+      "status": "source_implemented",
+      "evidence_level": "source_verified",
+      "requirements": [],
+      "deliverables": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "01",
+      "slug": "contract-catalog",
+      "title": "Contract catalogue and code generation",
+      "outcome": "Maintain versioned schemas, examples, standards packs and Rust wire types from one catalogue.",
+      "horizon": "foundation",
+      "status": "source_implemented",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-001",
+        "SR-002",
+        "SR-003",
+        "SR-004",
+        "SR-017",
+        "SR-049"
+      ],
+      "deliverables": [
+        "crates/searchright-contracts/src/lib.rs",
+        "contracts/schema-catalog.json",
+        "contracts/standards/index.json",
+        "docs/contracts.md",
+        "docs/adrs/0008-standards-packs-and-methodology-boundary.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile Rust contract types and run schema/Rust round-trip tests.",
+        "Generate compatibility fixtures from compiled public types."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "00"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "02",
+      "slug": "query-ast-dialects",
+      "title": "Portable query AST and dialect compilers",
+      "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
+      "horizon": "foundation",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-005",
+        "SR-006",
+        "SR-007"
+      ],
+      "deliverables": [
+        "crates/searchright-contracts/src/query.rs",
+        "crates/evidence-search-core/src/compiler.rs",
+        "contracts/examples/query-ast.yaml",
+        "contracts/examples/compiled-strategy.yaml"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and execute dialect snapshot/property tests.",
+        "Expand the conformance corpus with independently reviewed source strategies."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "01"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "03",
+      "slug": "shared-provider-runtime",
+      "title": "Shared provider runtime and Sourceright extraction",
+      "outcome": "Centralise bounded provider execution, caching, receipts and policy while preparing reversible Sourceright adoption.",
+      "horizon": "foundation",
+      "status": "integration_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-008",
+        "SR-009",
+        "SR-010",
+        "SR-011"
+      ],
+      "deliverables": [
+        "crates/evidence-search-core/src/provider.rs",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "scripts/check_sourceright_migration.py",
+        "docs/adrs/0012-sourceright-and-estate-migration.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "blockers": [
+        "Compile and run the shared provider runtime tests.",
+        "Run old/new Sourceright fixtures in the downstream repository.",
+        "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "01",
+        "02"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "04",
+      "slug": "open-connectors-mvp",
+      "title": "Open provider connectors MVP",
+      "outcome": "Provide deterministic open-source adapters and opt-in live execution for major discovery sources.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-014",
+        "SR-015",
+        "SR-016"
+      ],
+      "deliverables": [
+        "crates/searchright-connectors/src/lib.rs",
+        "contracts/examples/provider-manifest.yaml",
+        "contracts/examples/provider-page.yaml",
+        "contracts/examples/source-receipt.yaml"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run connector fixtures.",
+        "Run authorised, redacted live smokes for each advertised provider.",
+        "Verify upstream terms, rate limits and response changes at release time."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "03"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "05",
+      "slug": "execution-audit-store",
+      "title": "Execution, audit and local storage",
+      "outcome": "Create replayable runs, content-addressed receipts, tamper-evident events and crash-conscious local state.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-012",
+        "SR-013",
+        "SR-014",
+        "SR-048"
+      ],
+      "deliverables": [
+        "crates/evidence-search-core/src/audit.rs",
+        "crates/searchright-store/src/lib.rs",
+        "contracts/examples/search-run.yaml",
+        "contracts/examples/audit-event.json",
+        "docs/adrs/0002-contract-first-and-event-ledger.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.",
+        "Complete external review of retention and deletion semantics."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "03"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "06",
+      "slug": "imports-dedup-linkage",
+      "title": "Imports, deduplication and study linkage",
+      "outcome": "Import/export common bibliographic formats, propose conservative duplicate clusters and distinguish records, reports and studies.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-017",
+        "SR-018",
+        "SR-019"
+      ],
+      "deliverables": [
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "contracts/examples/interchange-receipt.yaml",
+        "contracts/examples/study-graph.yaml",
+        "docs/adrs/0005-record-report-study-separation.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run golden round-trip, property and metamorphic tests.",
+        "Evaluate linkage and deduplication against independently adjudicated corpora."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "01",
+        "05"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "07",
+      "slug": "screening-workflow",
+      "title": "Governed screening workflow",
+      "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-020",
+        "SR-021",
+        "SR-022",
+        "SR-058"
+      ],
+      "deliverables": [
+        "crates/searchright-screening/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/examples/screening-decision.yaml",
+        "contracts/examples/screening-policy.yaml",
+        "docs/adrs/0003-agent-authority.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "01",
+        "06"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "08",
+      "slug": "prisma-press-reporting",
+      "title": "PRISMA, PRESS and reporting",
+      "outcome": "Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-023",
+        "SR-024",
+        "SR-025",
+        "SR-026",
+        "SR-027"
+      ],
+      "deliverables": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "contracts/examples/search-validation.yaml",
+        "contracts/examples/standard-assessment.yaml",
+        "docs/standards-and-provenance.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "01",
+        "05",
+        "07"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "09",
+      "slug": "cli-mvp",
+      "title": "CLI MVP",
+      "outcome": "Expose stable scriptable operations through the shared application facade.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-028"
+      ],
+      "deliverables": [
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "blockers": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "01",
+        "02",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "10",
+      "slug": "mcp-mvp",
+      "title": "MCP stdio server MVP",
+      "outcome": "Expose typed, authority-annotated MCP tools over the same facade with stable structured outputs.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-029"
+      ],
+      "deliverables": [
+        "crates/searchright-mcp/src/main.rs",
+        "contracts/mcp/tool-catalog.json",
+        "contracts/interface-catalog.json",
+        "server.json"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "blockers": [
+        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
+        "Validate structured output schemas against live client implementations."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "09"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "11",
+      "slug": "agentic-skill",
+      "title": "Systematic-search agent skill and workflows",
+      "outcome": "Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints.",
+      "horizon": "mvp",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-022",
+        "SR-026",
+        "SR-031"
+      ],
+      "deliverables": [
+        "skills/systematic-search/SKILL.md",
+        "skills/systematic-search/workflows/systematic-review.yaml",
+        "skills/systematic-search/references/authority.md",
+        "crates/searchright-agent/src/lib.rs"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "10"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "12",
+      "slug": "citeweft-document-evidence",
+      "title": "CiteWeft scholarly extraction and document evidence",
+      "outcome": "Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary.",
+      "horizon": "alpha",
+      "status": "integration_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-063",
+        "SR-064"
+      ],
+      "deliverables": [
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-contracts/src/document.rs",
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "contracts/examples/document-evidence.json",
+        "integration/citeweft-compatibility.json",
+        "docs/citeweft-integration.md",
+        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
+        "scripts/check_citeweft_integration.py"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_citeweft_integration.py",
+        "python scripts/check_rust_dependency_graph.py"
+      ],
+      "blockers": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
+      "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made.",
+      "dependencies": [
+        "01",
+        "06",
+        "07"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "13",
+      "slug": "integration-passports-github-context",
+      "title": "Integration passports, GitHub issue hierarchy and context spine",
+      "outcome": "Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked.",
+      "horizon": "alpha",
+      "status": "integration_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-065",
+        "SR-066",
+        "SR-067",
+        "SR-070"
+      ],
+      "deliverables": [
+        "integration/locks.json",
+        "integration/passports/index.json",
+        "contracts/json-schema/integration-passport.v1.schema.json",
+        "contracts/json-schema/github-issue-hierarchy.v1.schema.json",
+        "conductor/github/issue-hierarchy.json",
+        "conductor/github/README.md",
+        "scripts/check_integration_passports.py",
+        "scripts/render_github_issues.py",
+        "scripts/check_github_issue_hierarchy.py",
+        "scripts/sync_github_issues.py",
+        "CONTEXT.md",
+        "context/manifest.json",
+        "context/decision-ledger.json",
+        "context/claim-boundaries.json",
+        "scripts/check_context_integrity.py",
+        "crates/searchright-contracts/src/integration.rs",
+        "contracts/examples/integration-passport.json",
+        "contracts/examples/github-issue-hierarchy.json",
+        "integration/passports/citeweft-document-evidence.json",
+        "scripts/check_integration_drift.py",
+        "scripts/sync_context_lock.py",
+        "context/capability-matrix.json",
+        "context/hazard-log.json",
+        "context/evidence-ledger.json",
+        ".github/workflows/issue-sync.yml",
+        ".github/workflows/integration-drift.yml",
+        "docs/integration-architecture.md",
+        "contracts/json-schema/consumer-contract-suite.v1.schema.json",
+        "contracts/examples/consumer-contract-suite.json",
+        "integration/consumer-contract-suite.json",
+        "scripts/check_consumer_contracts.py",
+        "docs/adrs/0016-federated-consumer-contracts.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_consumer_contracts.py",
+        "python scripts/check_github_issue_hierarchy.py",
+        "python scripts/check_context_integrity.py",
+        "python scripts/check_integration_drift.py",
+        "python scripts/render_github_issues.py --check",
+        "python scripts/sync_context_lock.py --check"
+      ],
+      "blockers": [
+        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
+      ],
+      "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed.",
+      "dependencies": [
+        "00",
+        "01",
+        "03",
+        "09",
+        "10",
+        "11",
+        "12"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "14",
+      "slug": "sourceright-migration",
+      "title": "Sourceright migration and shared releases",
+      "outcome": "Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics.",
+      "horizon": "alpha",
+      "status": "integration_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-009"
+      ],
+      "deliverables": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "blockers": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "03",
+        "04",
+        "05",
+        "12",
+        "13"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "15",
+      "slug": "estate-migration",
+      "title": "GitHub estate audit and custom-code replacement",
+      "outcome": "Identify and safely replace duplicate systematic-search code across the GitHub estate.",
+      "horizon": "alpha",
+      "status": "integration_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-032"
+      ],
+      "deliverables": [
+        "migration/estate/repositories.json",
+        "migration/estate/patterns.json",
+        "migration/estate/replacement-decisions.json",
+        "migration/estate-migration-manifest.yaml",
+        "scripts/audit_search_code.py",
+        "docs/estate-integration.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/audit_search_code.py --self-test"
+      ],
+      "blockers": [
+        "Run repository-specific scans against current local checkouts or GitHub indexes.",
+        "Open, test and merge replacement changes in each affected repository.",
+        "Delete duplicate code only after repository-specific parity and rollback evidence."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "13",
+        "14"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "16",
+      "slug": "quality-security-harness",
+      "title": "Maximal quality, context and security harness",
+      "outcome": "Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates.",
+      "horizon": "alpha",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-010",
+        "SR-011",
+        "SR-033",
+        "SR-034",
+        "SR-035",
+        "SR-036",
+        "SR-048",
+        "SR-067",
+        "SR-068",
+        "SR-069"
+      ],
+      "deliverables": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/coverage.yml",
+        ".github/workflows/nightly.yml",
+        ".github/workflows/security.yml",
+        "scripts/run_static_harness.py",
+        "scripts/check_rust_dependency_graph.py",
+        "verification/sbom/source-components.cdx.json",
+        "docs/security/threat-model.md",
+        "codecov.yml",
+        ".github/workflows/formal.yml",
+        ".github/workflows/fuzz.yml",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_default_deny.py",
+        "scripts/check_workflow_hardening.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json",
+        "docs/quality/maximal-harness.md",
+        "fuzz/Cargo.toml",
+        "fuzz/fuzz_targets/query_contract.rs",
+        "fuzz/fuzz_targets/document_evidence.rs",
+        "fuzz/fuzz_targets/audit_event.rs",
+        "scripts/generate_source_hash_manifest.py"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_dependency_graph.py",
+        "python scripts/generate_source_sbom.py --check",
+        "python scripts/run_static_harness.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/generate_source_hash_manifest.py --check"
+      ],
+      "blockers": [
+        "Generate and commit Cargo.lock in a networked Rust environment.",
+        "Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans.",
+        "Run clean-room offline builds, binary comparison, install smoke and MCP transcript.",
+        "Resolve every critical/high finding and document justified exclusions."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "00",
+        "01",
+        "13"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "17",
+      "slug": "benchmarks-calibration",
+      "title": "Benchmarks, search validation and human calibration",
+      "outcome": "Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration.",
+      "horizon": "alpha",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-037",
+        "SR-038"
+      ],
+      "deliverables": [
+        "crates/searchright-bench/src/lib.rs",
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/benchmark-report.yaml",
+        "contracts/examples/ranking-calibration.yaml",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "benchmarks/README.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Execute versioned benchmark suites and publish raw receipts.",
+        "Complete the prospective multi-model and information-specialist calibration pilot.",
+        "Assess subgroup, topic and source-specific performance before any ranking claim."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "02",
+        "06",
+        "07",
+        "08",
+        "16"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "18",
+      "slug": "alpha-release",
+      "title": "Alpha release and distribution",
+      "outcome": "Produce locked, signed, attestable cross-platform technical-preview releases with reproducible source archives.",
+      "horizon": "alpha",
+      "status": "release_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-039",
+        "SR-068"
+      ],
+      "deliverables": [
+        ".github/workflows/release.yml",
+        "scripts/package_source.py",
+        "Dockerfile",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "SECURITY.md",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_packaging_reproducibility.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "blockers": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "09",
+        "10",
+        "13",
+        "16",
+        "17"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "19",
+      "slug": "registries-publication",
+      "title": "Registries and scholarly publication",
+      "outcome": "Prepare and submit truthful registry packets and a software paper only after a verified release.",
+      "horizon": "alpha",
+      "status": "submission_prepared",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-040",
+        "SR-041"
+      ],
+      "deliverables": [
+        "registry/status.json",
+        "registry/official-mcp/README.md",
+        "registry/glama/README.md",
+        "registry/smithery/README.md",
+        "registry/joss/paper.md",
+        "server.json",
+        "glama.json"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "13",
+        "18"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "20",
+      "slug": "broader-discovery",
+      "title": "Grey literature, registers and supplementary discovery",
+      "outcome": "Represent bounded trial-register, repository, website, citation-chaining and contact-search methods with explicit limits.",
+      "horizon": "beta",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-042",
+        "SR-043"
+      ],
+      "deliverables": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "docs/provider-model.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "04",
+        "05"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "21",
+      "slug": "licensed-adapters",
+      "title": "Licensed BYO-access adapters",
+      "outcome": "Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science.",
+      "horizon": "beta",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-044"
+      ],
+      "deliverables": [
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-contracts/src/licensed.rs",
+        "contracts/licensed/index.json",
+        "contracts/licensed/embase.yaml",
+        "contracts/licensed/scopus.yaml",
+        "contracts/licensed/web-of-science.yaml",
+        "contracts/examples/licensed-adapter.yaml"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "03",
+        "13",
+        "16"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "22",
+      "slug": "living-updates",
+      "title": "Living reviews, amendments and update lineage",
+      "outcome": "Make updates, protocol changes, prior-run deduplication and cadence explicit and immutable.",
+      "horizon": "beta",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-025",
+        "SR-045",
+        "SR-049",
+        "SR-052"
+      ],
+      "deliverables": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/examples/living-update.yaml",
+        "contracts/examples/protocol-amendment.yaml",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "05",
+        "06",
+        "07",
+        "08"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "23",
+      "slug": "active-learning-agents",
+      "title": "Active-learning prioritisation and calibrated agents",
+      "outcome": "Provide transparent advisory ranking with uncertainty and no default autonomous exclusion.",
+      "horizon": "beta",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-046"
+      ],
+      "deliverables": [
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-contracts/src/ranking.rs",
+        "contracts/examples/ranking-calibration.yaml",
+        "skills/systematic-search/references/failure-modes.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "07",
+        "17",
+        "22"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "24",
+      "slug": "wasi-http-scale",
+      "title": "WASI components, HTTP MCP and scalable execution",
+      "outcome": "Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries.",
+      "horizon": "beta",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-030",
+        "SR-047"
+      ],
+      "deliverables": [
+        "crates/searchright-plugin-sdk/src/lib.rs",
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/wit/search-provider.wit",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "contracts/examples/provider-component.yaml",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "03",
+        "10",
+        "13",
+        "16"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "25",
+      "slug": "provenance-research-objects",
+      "title": "Provenance and research-object interoperability",
+      "outcome": "Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects.",
+      "horizon": "mature",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-051",
+        "SR-052"
+      ],
+      "deliverables": [
+        "crates/searchright-provenance/src/lib.rs",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+        "docs/standards-and-provenance.md",
+        "contracts/examples/living-update.yaml"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run golden provenance export tests.",
+        "Validate produced RO-Crates with independent tooling.",
+        "Pilot OSF/Zenodo/repository deposit without automatic write authority."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "05",
+        "22"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "26",
+      "slug": "formal-assurance-contract-evolution",
+      "title": "Formal assurance and contract evolution",
+      "outcome": "Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback.",
+      "horizon": "mature",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-053",
+        "SR-054",
+        "SR-069"
+      ],
+      "deliverables": [
+        "crates/searchright-assurance/src/lib.rs",
+        "crates/searchright-contracts/src/assurance.rs",
+        "contracts/examples/workflow-trace.yaml",
+        "docs/adrs/0011-assurance-and-evidence-ladder.md",
+        "crates/searchright-assurance/tests/loom_authority.rs",
+        ".github/workflows/formal.yml",
+        "fuzz/Cargo.toml",
+        "verification/harness-matrix.json"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "blockers": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "01",
+        "07",
+        "10",
+        "13",
+        "22"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "27",
+      "slug": "accessibility-internationalisation-usability",
+      "title": "Accessibility, internationalisation and usability",
+      "outcome": "Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology.",
+      "horizon": "mature",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-055",
+        "SR-056"
+      ],
+      "deliverables": [
+        "crates/searchright-diagnostics/src/lib.rs",
+        "crates/searchright-contracts/src/diagnostic.rs",
+        "contracts/examples/diagnostic.yaml",
+        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+        "docs/evaluation/external-methodological-evaluation.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "09",
+        "10",
+        "11"
+      ],
+      "external_approval_required": false
+    },
+    {
+      "track_id": "28",
+      "slug": "institutional-governance-privacy-collaboration",
+      "title": "Institutional governance, privacy and collaboration",
+      "outcome": "Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations.",
+      "horizon": "mature",
+      "status": "source_implemented_unverified",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-057",
+        "SR-058",
+        "SR-062"
+      ],
+      "deliverables": [
+        "crates/searchright-governance/src/lib.rs",
+        "crates/searchright-contracts/src/governance.rs",
+        "contracts/examples/institutional-policy.yaml",
+        "contracts/examples/data-handling-request.yaml",
+        "contracts/examples/data-handling-decision.yaml",
+        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+        "docs/security/threat-model.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Compile and run governance/authority negative scenarios.",
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "05",
+        "07",
+        "13",
+        "24",
+        "27"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "29",
+      "slug": "external-evaluation-sustainability",
+      "title": "External methodological evaluation and sustainability",
+      "outcome": "Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence.",
+      "horizon": "mature",
+      "status": "external_evidence_required",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-041",
+        "SR-059",
+        "SR-060",
+        "SR-062"
+      ],
+      "deliverables": [
+        "docs/evaluation/external-methodological-evaluation.md",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "docs/governance/sustainability.md",
+        "registry/joss/paper.md",
+        "GOVERNANCE.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "blockers": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "13",
+        "17",
+        "18",
+        "19",
+        "25",
+        "27",
+        "28"
+      ],
+      "external_approval_required": true
+    },
+    {
+      "track_id": "30",
+      "slug": "maturity-1-0",
+      "title": "Mature 1.0 product, community and evaluation",
+      "outcome": "Reach a stable externally evaluated 1.0 infrastructure product only after every evidence domain passes.",
+      "horizon": "mature",
+      "status": "external_evidence_required",
+      "evidence_level": "source_verified",
+      "requirements": [
+        "SR-050",
+        "SR-061"
+      ],
+      "deliverables": [
+        "docs/maturity/1.0-gate.md",
+        "conductor/maturity-dossier.json",
+        "ROADMAP.md",
+        "PROJECT_STATUS.md",
+        "conductor/requirements.md"
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py"
+      ],
+      "blockers": [
+        "Pass compiler, fixture, live-provider, interoperability, security and usability gates.",
+        "Complete Sourceright and estate migrations with rollback evidence.",
+        "Complete independent methodological evaluation.",
+        "Publish signed 1.0 release and record registry/community evidence."
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+      "dependencies": [
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29"
+      ],
+      "external_approval_required": true
+    }
+  ]
+}

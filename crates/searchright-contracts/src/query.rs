@@ -4,7 +4,8 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    ContractError, SEARCH_STRATEGY_SCHEMA_VERSION, Validate, require_schema_version, require_text,
+    COMPILED_STRATEGY_SCHEMA_VERSION, ContractError, SEARCH_STRATEGY_SCHEMA_VERSION, Validate,
+    require_schema_version, require_text,
 };
 
 /// Portable search field.
@@ -342,9 +343,25 @@ pub struct StrategyWarning {
     pub review_required: bool,
 }
 
+/// Overall semantic fidelity of a source-specific translation.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum TranslationFidelity {
+    /// The portable expression was rendered without a known semantic change.
+    Exact,
+    /// The target uses different syntax but preserves the requested meaning.
+    SourceEquivalent,
+    /// Some source-specific interpretation or manual completion is required.
+    Approximate,
+    /// One or more requested semantics were degraded or replaced by a fallback.
+    Degraded,
+}
+
 /// Rendered provider query plus translation evidence.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct CompiledStrategy {
+    /// Contract identifier.
+    pub schema_version: String,
     /// Source strategy identifier.
     pub strategy_id: String,
     /// Target dialect.
@@ -354,8 +371,48 @@ pub struct CompiledStrategy {
     /// Translation warnings.
     #[serde(default)]
     pub warnings: Vec<StrategyWarning>,
+    /// Aggregate translation fidelity.
+    pub fidelity: TranslationFidelity,
+    /// Whether execution must pause for human translation review.
+    pub review_required: bool,
+    /// Stable codes for warnings that represent semantic loss or manual work.
+    #[serde(default)]
+    pub loss_codes: Vec<String>,
     /// Deterministic hash of canonical input and compiler version.
     pub compilation_hash: String,
     /// Compiler contract version.
     pub compiler_version: String,
+}
+
+
+impl Validate for CompiledStrategy {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_schema_version(
+            &self.schema_version,
+            COMPILED_STRATEGY_SCHEMA_VERSION,
+            "compiled_strategy.schema_version",
+        )?;
+        require_text(&self.strategy_id, "compiled_strategy.strategy_id")?;
+        require_text(&self.query, "compiled_strategy.query")?;
+        require_text(
+            &self.compilation_hash,
+            "compiled_strategy.compilation_hash",
+        )?;
+        require_text(&self.compiler_version, "compiled_strategy.compiler_version")?;
+        for warning in &self.warnings {
+            require_text(&warning.code, "compiled_strategy.warnings.code")?;
+            require_text(&warning.message, "compiled_strategy.warnings.message")?;
+        }
+        if self.review_required && self.warnings.iter().all(|warning| !warning.review_required) {
+            return Err(ContractError::Invariant(
+                "compiled strategy requires review but has no review-requiring warning".to_owned(),
+            ));
+        }
+        if self.loss_codes.iter().any(|code| code.trim().is_empty()) {
+            return Err(ContractError::Invariant(
+                "compiled-strategy loss codes must not be empty".to_owned(),
+            ));
+        }
+        Ok(())
+    }
 }

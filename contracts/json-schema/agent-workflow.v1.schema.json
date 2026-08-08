@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/agent-workflow.v1.schema.json",
+  "title": "Agent Workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "steps",
+    "screening_authority"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.agent-workflow.v1"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stage",
+          "authority",
+          "required_inputs",
+          "outputs",
+          "blocking_conditions"
+        ],
+        "properties": {
+          "stage": {
+            "enum": [
+              "scope",
+              "eligibility",
+              "source_selection",
+              "strategy_design",
+              "press_review",
+              "execute",
+              "deduplicate",
+              "title_abstract_screening",
+              "full_text_screening",
+              "report",
+              "update"
+            ]
+          },
+          "authority": {
+            "enum": [
+              "read_only_automatic",
+              "human_confirmation",
+              "explicit_approval",
+              "role_policy",
+              "human_only"
+            ]
+          },
+          "required_inputs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "blocking_conditions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "screening_authority": {
+      "enum": [
+        "advisory_only",
+        "include_only",
+        "exclusion_with_human_confirmation"
+      ]
+    }
+  }
+}

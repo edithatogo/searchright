@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/benchmark-report.v1.schema.json",
+  "title": "Searchright benchmark report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "benchmark_id", "corpus_id", "corpus_version", "rights_basis",
+    "implementation_version", "configuration_digest", "leakage_controls", "metrics",
+    "environment", "generated_at", "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.benchmark-report.v1"},
+    "benchmark_id": {"type": "string", "minLength": 1},
+    "corpus_id": {"type": "string", "minLength": 1},
+    "corpus_version": {"type": "string", "minLength": 1},
+    "rights_basis": {"type": "string", "minLength": 1},
+    "implementation_version": {"type": "string", "minLength": 1},
+    "configuration_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "leakage_controls": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "metrics": {
+      "type": "array", "minItems": 1,
+      "items": {"$ref": "#/$defs/metric"}
+    },
+    "environment": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "claim_boundary": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value", "unit", "lower_bound", "upper_bound", "sample_size"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "value": {"type": "number"},
+        "unit": {"type": "string", "minLength": 1},
+        "lower_bound": {"type": ["number", "null"]},
+        "upper_bound": {"type": ["number", "null"]},
+        "sample_size": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

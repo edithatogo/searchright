@@ -1,0 +1,53 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "repository-standards-inheritance",
+  "repository": "edithatogo/repository-standards",
+  "revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+  "default_branch": "main",
+  "mode": "policy_inheritance",
+  "dependency_direction": "searchright_consumes_upstream",
+  "feature_flag": null,
+  "inputs": [
+    {
+      "name": "Repository archetype profiles",
+      "version": "observed-2026-08-03",
+      "path": "profiles/archetype-profiles.json",
+      "required": true
+    },
+    {
+      "name": "Verification receipt schema",
+      "version": "observed-2026-08-03",
+      "path": "schemas/verification-receipt.schema.json",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Searchright conformance receipt",
+      "version": "org.searchright.static-harness-receipt.v1",
+      "path": "verification/receipts/static-harness.json",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "policy_read",
+    "receipt_write"
+  ],
+  "verification": [
+    {
+      "id": "standards-alignment",
+      "command": "python scripts/check_context_integrity.py",
+      "evidence_level": "source_verified",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Retain the pinned profile and receipt schema used for the previous conformance run.",
+    "Record any exception without weakening Searchright-owned safety controls."
+  ],
+  "claim_boundary": "Policy inheritance records conformance intent and receipts; it does not imply that repository settings or external badges are enabled."
+}

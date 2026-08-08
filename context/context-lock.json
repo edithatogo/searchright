@@ -1,0 +1,82 @@
+{
+  "claim_boundary": "Hash parity detects context drift; it does not establish semantic correctness or promote evidence.",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "50da5a08551d102f5e4cc50366acf421d86faba53bf0468b4244bdf70cea2d5d",
+      "size": 1251
+    },
+    {
+      "path": "CONTEXT.md",
+      "sha256": "91564b600f4361f4fcd0dc9064dab53320e7d10bd2c485b5a4410ede743343b6",
+      "size": 1704
+    },
+    {
+      "path": "conductor/github/issue-hierarchy.json",
+      "sha256": "2c43e421df246d17925099db267f854e6023c5e2af102471e27d1b265d9ebf75",
+      "size": 56671
+    },
+    {
+      "path": "conductor/requirements.md",
+      "sha256": "d79004b80935ebd7d7563d9b30ef703b176b252d3b22d7475428087888fac0b1",
+      "size": 19381
+    },
+    {
+      "path": "conductor/roadmap-coverage.json",
+      "sha256": "ce0e69ada20b79321f7646e53ee856354761f668f75c337aabbd13300085fa5a",
+      "size": 46111
+    },
+    {
+      "path": "context/capability-matrix.json",
+      "sha256": "237e0669ccb6f1f86dfe7c760afd81c6b76ac706ccffca213932f74a3e4868ec",
+      "size": 1771
+    },
+    {
+      "path": "context/claim-boundaries.json",
+      "sha256": "3251a01f8c708071d9e34219d85842c9e210b08419c720c5fda169966f8f7d07",
+      "size": 2511
+    },
+    {
+      "path": "context/decision-ledger.json",
+      "sha256": "b4d48fe406227759846180303a4127dd6f5d5e6241e0e2171663ad26af45bb8d",
+      "size": 3521
+    },
+    {
+      "path": "context/evidence-ledger.json",
+      "sha256": "aee62d426dae980543ca8bf9e88a759bd531059fc8ad4b5c8bed0ac9710f7997",
+      "size": 1907
+    },
+    {
+      "path": "context/hazard-log.json",
+      "sha256": "9360715a2953975066961062a2a9cdc2d82f7642fe8a8d1ac4d7ab258a852e42",
+      "size": 5942
+    },
+    {
+      "path": "contracts/schema-catalog.json",
+      "sha256": "035d7c76e15d80ac7aee5726ec1f59dbd74b4c245c724c615c899cee7e1fd262",
+      "size": 14940
+    },
+    {
+      "path": "docs/safety/safety-case.md",
+      "sha256": "e5e932c2aa0d6465e16cd4b6155b9eceef923731ca9895d8352f186b4bfd31d1",
+      "size": 1681
+    },
+    {
+      "path": "docs/security/threat-model.md",
+      "sha256": "a13fa0bc33a1ae7840e50ca503a5c9938f4959ab53c3b914be440705d5e1a5df",
+      "size": 1986
+    },
+    {
+      "path": "integration/consumer-contract-suite.json",
+      "sha256": "c98ad6e69629b77749ba293f6d4a1f90b63491a4a212984936f0fe491e8a7608",
+      "size": 9354
+    },
+    {
+      "path": "integration/passports/index.json",
+      "sha256": "3b6c3416f44bc987f7797ac84a4758acedf16e486ab3b70f4a6f40d1d6446008",
+      "size": 4049
+    }
+  ],
+  "generated_at": "2026-08-06",
+  "schema_version": "org.searchright.context-lock.v1"
+}

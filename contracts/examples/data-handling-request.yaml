@@ -1,0 +1,10 @@
+schema_version: org.searchright.data-handling-request.v1
+request_id: handling-request-demo-1
+review_id: review-demo-1
+classification: restricted_full_text
+operation: full_text_persistence
+deployment_mode: local_only
+region: AU
+retention_days: 7
+cross_border_transfer: false
+dry_run: true

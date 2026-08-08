@@ -1,0 +1,30 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: cochrane-handbook-6.5.1
+family: cochrane_handbook
+version: 6.5.1
+source: Cochrane Handbook for Systematic Reviews of Interventions
+provenance_note: Search conduct and methods guidance used as an optional policy pack.
+  Consult the authoritative source for exact wording and interpretation.
+items:
+- item_id: cochrane-multiple-sources
+  label: Multiple sources
+  requirement_summary: Search multiple appropriate bibliographic and non-bibliographic
+    sources.
+  scope: conduct
+  crosswalks:
+  - prisma-2020-6
+- item_id: cochrane-high-sensitivity
+  label: High sensitivity
+  requirement_summary: Avoid unjustified concepts or filters that materially reduce
+    sensitivity.
+  scope: conduct
+  crosswalks:
+  - search-validation
+- item_id: cochrane-documentation
+  label: Documentation
+  requirement_summary: Retain complete search strategies, dates and result counts.
+  scope: conduct_and_reporting
+  crosswalks:
+  - prisma-s-8
+  - prisma-s-13
+  - prisma-s-15

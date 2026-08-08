@@ -1,43 +1,42 @@
 # Plan: 00 Foundation, Conductor and toolchain
 
-Current status: **active**.
+Current status: **source_implemented**. Evidence level: **source_verified**.
 
-## Phase 1: Record upstream Conductor 0.3.0 and supported host installation paths / Create product, guidelines, stack, workflow, requirements and design context
+GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Record upstream Conductor 0.3.0 and supported host installation paths
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Create product, guidelines, stack, workflow, requirements and design context
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Pin Rust stable and document nightly/experimental policy / Generate and commit Cargo.lock in a networked Rust environment
+<!-- github-subissue-key: track-00-phase-1 -->
 
-- [ ] Pin Rust stable and document nightly/experimental policy
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Generate and commit Cargo.lock in a networked Rust environment
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `Cargo.toml`
+  - [x] `rust-toolchain.toml`
+  - [x] `conductor/upstream.lock.json`
+  - [x] `conductor/product.md`
+  - [x] `conductor/workflow.md`
+  - [x] `scripts/install-conductor.sh`
+  - [x] `scripts/install-conductor.ps1`
 
-## Phase 3: Register repository in repository-standards and run estate conformance / Create one-command bootstrap and verification receipts
+## Phase 2: Source-level verification
 
-- [ ] Register repository in repository-standards and run estate conformance
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Create one-command bootstrap and verification receipts
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-00-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-00-phase-3 -->
+
+- [ ] Install and execute Rust 1.97.1 in a compatible environment.
+- [ ] Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-00-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

@@ -1,0 +1,11 @@
+schema_version: org.searchright.interchange-receipt.v1
+operation_id: operation-2
+review_id: demo-review
+input_format: ris
+output_format: searchright_json
+input_digest: blake3:input
+output_digest: blake3:output
+records_read: 10
+records_written: 10
+warnings: []
+lossless: false

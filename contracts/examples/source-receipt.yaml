@@ -1,0 +1,28 @@
+schema_version: org.searchright.source-receipt.v1
+receipt_id: receipt-demo-1
+review_id: review-demo-1
+run_id: run-demo-1
+provider_id: pubmed-fixture
+source_label: MEDLINE via PubMed
+strategy_id: strategy-demo-1
+query_hash: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+executed_at: '2026-08-06T00:00:00Z'
+records_retrieved: 1
+pages_retrieved: 1
+execution_mode: fixture
+endpoint: eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi
+policy:
+  live_enabled: false
+  max_records: 1000
+  max_pages: 10
+  timeout_seconds: 30
+  max_retries: 2
+  min_interval_ms: 350
+  replay_enabled: true
+  cache_write_enabled: false
+provider_version: fixture/1
+compiler_version: evidence-search-compiler/0.1.0
+result_digest: cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+cache_hits: 0
+cache_writes: 0
+warnings: []

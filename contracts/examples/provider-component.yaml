@@ -1,0 +1,14 @@
+schema_version: org.searchright.provider-component.v1
+component_id: io.github.edithatogo.searchright.fixture
+component_version: 0.1.0
+abi_version: searchright:provider/search-provider@0.1.0
+capabilities:
+  - search
+  - metadata_read
+allowed_hosts: []
+max_memory_mib: 64
+max_fuel: 1000000
+component_digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+fixture_mode: true
+authority_rationale:
+  - Execute deterministic fixture searches without network access.

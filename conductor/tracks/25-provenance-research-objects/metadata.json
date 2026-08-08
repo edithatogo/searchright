@@ -1,0 +1,29 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "25",
+  "slug": "provenance-research-objects",
+  "title": "Provenance and research-object interoperability",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "05",
+    "22"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/25-provenance-research-objects/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-25",
+    "phase_issue_keys": [
+      "track-25-phase-1",
+      "track-25-phase-2",
+      "track-25-phase-3",
+      "track-25-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

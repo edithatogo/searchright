@@ -1,0 +1,193 @@
+{
+  "schema_version": "org.searchright.hazard-log.v1",
+  "hazards": [
+    {
+      "id": "H-001",
+      "hazard": "Provider or full-text content injects instructions into an agent workflow.",
+      "severity": "critical",
+      "controls": [
+        "Treat retrieved content as data",
+        "Untrusted-content policy",
+        "No direct tool execution from records"
+      ],
+      "evidence": [
+        "docs/security/threat-model.md",
+        "crates/searchright-policy/src/lib.rs"
+      ],
+      "residual_status": "open_runtime_evidence"
+    },
+    {
+      "id": "H-002",
+      "hazard": "A crafted provider endpoint causes SSRF or cloud-metadata access.",
+      "severity": "critical",
+      "controls": [
+        "Declared host allowlists",
+        "Block local/link-local/metadata ranges",
+        "Default network denial"
+      ],
+      "evidence": [
+        "docs/security/egress-policy.md",
+        "crates/evidence-search-core/src/provider.rs"
+      ],
+      "residual_status": "open_adversarial_tests"
+    },
+    {
+      "id": "H-003",
+      "hazard": "Credentials or licensed-access details enter logs, receipts or fixtures.",
+      "severity": "critical",
+      "controls": [
+        "Secret-typed configuration",
+        "Redacted receipts",
+        "No live secrets in default CI"
+      ],
+      "evidence": [
+        "docs/security/threat-model.md",
+        "scripts/check_secrets.py"
+      ],
+      "residual_status": "open_live_validation"
+    },
+    {
+      "id": "H-004",
+      "hazard": "Automated screening excludes eligible studies.",
+      "severity": "critical",
+      "controls": [
+        "Human final-exclusion default",
+        "Authority contracts",
+        "Calibration and disagreement queue"
+      ],
+      "evidence": [
+        "crates/searchright-contracts/src/screening.rs",
+        "skills/systematic-search/SKILL.md"
+      ],
+      "residual_status": "open_human_calibration"
+    },
+    {
+      "id": "H-005",
+      "hazard": "Extraction evidence is treated as canonical bibliographic truth.",
+      "severity": "high",
+      "controls": [
+        "DocumentEvidence canonical_write_permitted=false",
+        "One-way CiteWeft adapter",
+        "Sourceright canonicalisation remains downstream"
+      ],
+      "evidence": [
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "docs/citeweft-integration.md"
+      ],
+      "residual_status": "source_controlled"
+    },
+    {
+      "id": "H-006",
+      "hazard": "Whole documents or sensitive full text are retained or exported unnecessarily.",
+      "severity": "high",
+      "controls": [
+        "Metadata-only default",
+        "Retention field and governance policy",
+        "No full text in source packages"
+      ],
+      "evidence": [
+        "context/capability-matrix.json",
+        "crates/searchright-contracts/src/document.rs"
+      ],
+      "residual_status": "open_institutional_review"
+    },
+    {
+      "id": "H-007",
+      "hazard": "Integration drift silently changes behavior or public claims.",
+      "severity": "high",
+      "controls": [
+        "Exact revision passports",
+        "Consumer-driven contract suite",
+        "Read-only drift workflow",
+        "No automatic pin updates or promotion"
+      ],
+      "evidence": [
+        "integration/locks.json",
+        "integration/consumer-contract-suite.json",
+        "scripts/check_integration_passports.py",
+        "scripts/check_consumer_contracts.py"
+      ],
+      "residual_status": "open_scheduled_execution"
+    },
+    {
+      "id": "H-008",
+      "hazard": "Issue synchronisation creates, edits or closes remote work without authority.",
+      "severity": "high",
+      "controls": [
+        "Dry-run default",
+        "Dual apply opt-in",
+        "Clean-tree requirement",
+        "No auto-close behavior"
+      ],
+      "evidence": [
+        "scripts/sync_github_issues.py",
+        "conductor/github/README.md"
+      ],
+      "residual_status": "source_controlled"
+    },
+    {
+      "id": "H-009",
+      "hazard": "Audit events are modified, reordered or incompletely persisted.",
+      "severity": "high",
+      "controls": [
+        "Hash-linked events",
+        "Single-writer store",
+        "Tamper and crash-recovery tests"
+      ],
+      "evidence": [
+        "crates/searchright-contracts/src/audit.rs",
+        "crates/searchright-store/src/lib.rs"
+      ],
+      "residual_status": "open_compiler_and_fault_tests"
+    },
+    {
+      "id": "H-010",
+      "hazard": "Supply-chain compromise changes dependencies, actions or release artefacts.",
+      "severity": "critical",
+      "controls": [
+        "Exact revisions and action SHAs",
+        "Locked builds",
+        "SBOM and attestations",
+        "CodeQL/deny/audit/Scorecard/Gitleaks"
+      ],
+      "evidence": [
+        "docs/security/supply-chain.md",
+        ".github/workflows/security.yml",
+        ".github/workflows/release.yml"
+      ],
+      "residual_status": "open_executed_ci"
+    },
+    {
+      "id": "H-011",
+      "hazard": "Source-level completeness is overclaimed as a mature or validated product.",
+      "severity": "high",
+      "controls": [
+        "Evidence ladder",
+        "Claim-boundary checks",
+        "Maturity dossier blockers"
+      ],
+      "evidence": [
+        "context/claim-boundaries.json",
+        "PROJECT_STATUS.md"
+      ],
+      "residual_status": "source_controlled"
+    },
+    {
+      "id": "H-012",
+      "hazard": "Cross-repository code duplication creates divergent security and methodological behavior.",
+      "severity": "high",
+      "controls": [
+        "Shared core",
+        "Integration passports",
+        "Consumer-driven contracts",
+        "No-submodule/copy policy"
+      ],
+      "evidence": [
+        "docs/integration-architecture.md",
+        "integration/passports/index.json",
+        "integration/consumer-contract-suite.json"
+      ],
+      "residual_status": "open_downstream_migrations"
+    }
+  ]
+}

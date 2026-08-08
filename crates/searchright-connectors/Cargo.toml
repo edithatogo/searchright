@@ -13,9 +13,9 @@ live = ["dep:reqwest"]
 
 [dependencies]
 async-trait.workspace = true
-evidence-search-core = { path = "../evidence-search-core" }
+evidence-search-core = { path = "../evidence-search-core", version = "=0.1.0-alpha.1" }
 reqwest = { workspace = true, optional = true }
-searchright-contracts = { path = "../searchright-contracts" }
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
 serde.workspace = true
 serde_json.workspace = true
 url.workspace = true

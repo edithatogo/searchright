@@ -1,0 +1,43 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "30",
+  "title": "Mature 1.0 product, community and evaluation",
+  "status": "external_evidence_required",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "docs/maturity/1.0-gate.md",
+    "conductor/maturity-dossier.json",
+    "ROADMAP.md",
+    "PROJECT_STATUS.md",
+    "conductor/requirements.md"
+  ],
+  "static_checks": [
+    "python scripts/validate_repository.py",
+    "python scripts/check_roadmap_coverage.py"
+  ],
+  "requirements": [
+    "SR-050",
+    "SR-061"
+  ],
+  "blockers": [
+    "Pass compiler, fixture, live-provider, interoperability, security and usability gates.",
+    "Complete Sourceright and estate migrations with rollback evidence.",
+    "Complete independent methodological evaluation.",
+    "Publish signed 1.0 release and record registry/community evidence."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-30",
+    "phases": [
+      "track-30-phase-1",
+      "track-30-phase-2",
+      "track-30-phase-3",
+      "track-30-phase-4"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

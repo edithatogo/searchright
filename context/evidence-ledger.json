@@ -1,0 +1,78 @@
+{
+  "schema_version": "org.searchright.evidence-ledger.v1",
+  "updated_at": "2026-08-06",
+  "repository_level": "source_verified",
+  "domains": [
+    {
+      "domain": "contracts_and_static_source",
+      "level": "source_verified",
+      "receipt": "verification/receipts/static-harness.json",
+      "blockers": []
+    },
+    {
+      "domain": "rust_compilation",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "Rust toolchain unavailable",
+        "Cargo.lock not generated"
+      ]
+    },
+    {
+      "domain": "fixture_behavior",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "Cargo tests not executed"
+      ]
+    },
+    {
+      "domain": "live_providers",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "No authorised live run"
+      ]
+    },
+    {
+      "domain": "github_issue_hierarchy",
+      "level": "source_verified",
+      "receipt": "conductor/github/issue-hierarchy.json",
+      "blockers": [
+        "No remote Searchright repository or apply receipt"
+      ]
+    },
+    {
+      "domain": "consumer_driven_integrations",
+      "level": "source_verified",
+      "receipt": "integration/consumer-contract-suite.json",
+      "blockers": [
+        "Producer and consumer repositories have not both executed their gates"
+      ]
+    },
+    {
+      "domain": "downstream_migration",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "No downstream dual-run or merged cutover"
+      ]
+    },
+    {
+      "domain": "registry_and_release",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "Prepared not submitted"
+      ]
+    },
+    {
+      "domain": "external_methodological_evaluation",
+      "level": "contracted",
+      "receipt": null,
+      "blockers": [
+        "Preregistered external evaluation not executed"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: prisma-p-2015
+family: prisma_p
+version: '2015'
+source: PRISMA-P
+provenance_note: Reporting guidance for systematic review and meta-analysis protocols.
+  Consult the authoritative source for exact wording and interpretation.
+items:
+- item_id: prisma-p-8
+  label: Information sources
+  requirement_summary: Describe planned information sources and coverage dates.
+  scope: reporting
+  crosswalks:
+  - prisma-2020-6
+- item_id: prisma-p-9
+  label: Search strategy
+  requirement_summary: Present a draft search strategy for at least one database.
+  scope: reporting
+  crosswalks:
+  - prisma-s-8

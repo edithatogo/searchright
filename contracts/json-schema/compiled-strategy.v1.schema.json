@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/compiled-strategy.v1.schema.json",
+  "title": "Compiled Strategy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "strategy_id",
+    "dialect",
+    "query",
+    "warnings",
+    "fidelity",
+    "review_required",
+    "loss_codes",
+    "compilation_hash",
+    "compiler_version"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.compiled-strategy.v1"
+    },
+    "strategy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dialect": {
+      "oneOf": [
+        {
+          "enum": [
+            "pub_med",
+            "ovid_medline",
+            "embase",
+            "europe_pmc",
+            "cinahl_ebsco",
+            "psyc_info_ovid",
+            "scopus",
+            "web_of_science",
+            "crossref",
+            "open_alex",
+            "clinical_trials_gov",
+            "generic_boolean"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "query": {
+      "type": "string",
+      "minLength": 1
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "message",
+          "review_required"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "review_required": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "fidelity": {
+      "enum": [
+        "exact",
+        "source_equivalent",
+        "approximate",
+        "degraded"
+      ]
+    },
+    "review_required": {
+      "type": "boolean"
+    },
+    "loss_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "compilation_hash": {
+      "type": "string",
+      "minLength": 64,
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "compiler_version": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

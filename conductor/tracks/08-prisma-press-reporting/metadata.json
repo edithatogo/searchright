@@ -1,14 +1,30 @@
 {
-  "schema_version": "conductor.track-metadata.v1",
+  "schema_version": "conductor.track-metadata.v3",
   "track_id": "08",
   "slug": "prisma-press-reporting",
   "title": "PRISMA, PRESS and reporting",
-  "status": "scaffolded",
+  "status": "source_implemented_unverified",
   "created": "2026-08-05",
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "dependencies": [
+    "01",
+    "05",
     "07"
   ],
-  "evidence_level": "scaffolded",
-  "external_approval_required": false
+  "horizon": "mvp",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/08-prisma-press-reporting/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-08",
+    "phase_issue_keys": [
+      "track-08-phase-1",
+      "track-08-phase-2",
+      "track-08-phase-3",
+      "track-08-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
 }

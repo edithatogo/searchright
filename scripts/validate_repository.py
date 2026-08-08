@@ -55,15 +55,7 @@ TEXT_SUFFIXES = {
     ".yml",
 }
 SKIP_PARTS = {".git", "target", "__pycache__", ".pytest_cache", ".mypy_cache"}
-SCHEMA_EXAMPLE_PAIRS = {
-    "review-plan.v1.schema.json": "review-plan.yaml",
-    "search-strategy.v1.schema.json": "search-strategy.yaml",
-    "query-ast.v1.schema.json": "query-ast.yaml",
-    "provider-manifest.v1.schema.json": "provider-manifest.yaml",
-    "screening-decision.v1.schema.json": "screening-decision.yaml",
-    "audit-event.v1.schema.json": "audit-event.json",
-    "prisma-flow.v1.schema.json": "prisma-flow.json",
-}
+SCHEMA_CATALOG = ROOT / "contracts" / "schema-catalog.json"
 EXPECTED_SCHEMA_VERSIONS = {
     "review-plan.yaml": "org.searchright.review-plan.v1",
     "search-strategy.yaml": "org.searchright.search-strategy.v1",
@@ -176,52 +168,97 @@ def format_json_path(parts: Iterable[Any]) -> str:
 
 
 def validate_schemas_and_examples() -> dict[str, Any]:
-    """Check all Draft 2020-12 schemas and validate their canonical examples."""
+    """Check the machine-readable schema catalogue and all canonical examples."""
     if any(value is None for value in (Draft202012Validator, FormatChecker, Registry, Resource)):
         error("jsonschema/referencing is unavailable; contracts were not validated")
         return {}
 
+    catalog = load_json(SCHEMA_CATALOG)
+    entries = catalog.get("entries") if isinstance(catalog, Mapping) else None
+    if not isinstance(entries, list) or not entries:
+        error("contracts/schema-catalog.json must contain a non-empty entries list")
+        return {}
+
     schema_dir = ROOT / "contracts" / "json-schema"
     example_dir = ROOT / "contracts" / "examples"
-    schema_paths = sorted(schema_dir.glob("*.schema.json"))
-    actual_names = {path.name for path in schema_paths}
-    expected_names = set(SCHEMA_EXAMPLE_PAIRS)
-    if actual_names != expected_names:
+    actual_schemas = {relative(path) for path in schema_dir.glob("*.schema.json")}
+    actual_examples = {relative(path) for path in example_dir.iterdir() if path.is_file()}
+    declared_schemas: set[str] = set()
+    declared_examples: set[str] = set()
+    entry_ids: set[str] = set()
+    schema_id_values: set[str] = set()
+    catalog_entries: list[tuple[Mapping[str, Any], Path, Path]] = []
+
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, Mapping):
+            error(f"schema catalogue entry {index} must be an object")
+            continue
+        identifier = entry.get("id")
+        schema_value = entry.get("schema")
+        example_value = entry.get("example")
+        schema_id = entry.get("schema_id")
+        if not all(nonempty_text(value) for value in (identifier, schema_value, example_value, schema_id)):
+            error(f"schema catalogue entry {index} has missing identifiers or paths")
+            continue
+        if str(identifier) in entry_ids:
+            error(f"duplicate schema catalogue id: {identifier}")
+        entry_ids.add(str(identifier))
+        if str(schema_id) in schema_id_values:
+            error(f"duplicate schema catalogue schema_id: {schema_id}")
+        schema_id_values.add(str(schema_id))
+        schema_path = ROOT / str(schema_value)
+        example_path = ROOT / str(example_value)
+        declared_schemas.add(relative(schema_path))
+        declared_examples.add(relative(example_path))
+        if not schema_path.is_file():
+            error(f"schema catalogue points to missing schema: {relative(schema_path)}")
+            continue
+        if not example_path.is_file():
+            error(f"schema catalogue points to missing example: {relative(example_path)}")
+            continue
+        catalog_entries.append((entry, schema_path, example_path))
+
+    if actual_schemas != declared_schemas:
         error(
             "schema catalogue mismatch: "
-            f"missing={sorted(expected_names - actual_names)}, "
-            f"unexpected={sorted(actual_names - expected_names)}"
+            f"undeclared={sorted(actual_schemas - declared_schemas)}, "
+            f"missing={sorted(declared_schemas - actual_schemas)}"
+        )
+    if actual_examples != declared_examples:
+        error(
+            "schema-example catalogue mismatch: "
+            f"undeclared={sorted(actual_examples - declared_examples)}, "
+            f"missing={sorted(declared_examples - actual_examples)}"
         )
 
     schemas: dict[str, Any] = {}
     registry = Registry()
-    for path in schema_paths:
+    for entry, path, _ in catalog_entries:
         schema = load_json(path)
         if not isinstance(schema, Mapping):
             continue
         if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
             error(f"schema does not declare Draft 2020-12: {relative(path)}")
         schema_id = schema.get("$id")
+        if schema_id != entry.get("schema_id"):
+            error(f"schema $id disagrees with catalogue: {relative(path)}")
+            continue
         if not isinstance(schema_id, str) or not schema_id.startswith("https://schemas.searchright.dev/"):
             error(f"schema has invalid or missing $id: {relative(path)}")
             continue
         try:
             Draft202012Validator.check_schema(schema)
             registry = registry.with_resource(schema_id, Resource.from_contents(schema))
-            schemas[path.name] = schema
+            schemas[relative(path)] = schema
             passed("draft_2020_12_schemas_checked")
         except Exception as exc:  # noqa: BLE001
             error(f"invalid Draft 2020-12 schema {relative(path)}: {exc}")
 
     examples: dict[str, Any] = {}
-    for schema_name, example_name in SCHEMA_EXAMPLE_PAIRS.items():
-        schema = schemas.get(schema_name)
-        example_path = example_dir / example_name
-        if not example_path.is_file():
-            error(f"missing canonical example: {relative(example_path)}")
-            continue
+    for _entry, schema_path, example_path in catalog_entries:
+        schema = schemas.get(relative(schema_path))
         example = load_data(example_path)
-        examples[example_name] = example
+        examples[example_path.name] = example
         if schema is None or example is None:
             continue
         try:
@@ -243,9 +280,8 @@ def validate_schemas_and_examples() -> dict[str, Any]:
                 passed("schema_examples_validated")
         except Exception as exc:  # noqa: BLE001
             error(f"could not validate {relative(example_path)}: {exc}")
-
+    passed("schema_catalogue_entries_checked", len(catalog_entries))
     return examples
-
 
 def nonempty_text(value: Any) -> bool:
     """Return whether a value is non-empty text."""
@@ -533,8 +569,6 @@ def validate_workspace() -> None:
             "workspace member parity failure: "
             f"undeclared={sorted(actual - declared)}, missing={sorted(declared - actual)}"
         )
-    if len(declared) != 11:
-        error(f"expected 11 workspace crates, found {len(declared)}")
     names: set[str] = set()
     for member in sorted(declared):
         directory = ROOT / member
@@ -576,32 +610,59 @@ def validate_conductor() -> None:
         "requirements.md",
         "design.md",
         "tracks.md",
+        "roadmap-coverage.json",
+        "maturity-dossier.json",
         "upstream.lock.json",
         "upstream-capabilities.md",
     )
     for filename in required:
         if not (conductor / filename).is_file():
             error(f"missing conductor/{filename}")
+
+    coverage = load_json(conductor / "roadmap-coverage.json")
+    coverage_entries = coverage.get("tracks") if isinstance(coverage, Mapping) else None
+    if not isinstance(coverage_entries, list) or not coverage_entries:
+        error("conductor/roadmap-coverage.json must contain tracks")
+        return
+    declared_ids = [str(entry.get("track_id")) for entry in coverage_entries if isinstance(entry, Mapping)]
+
     tracks_dir = conductor / "tracks"
     tracks = sorted(path for path in tracks_dir.glob("[0-9][0-9]-*") if path.is_dir())
-    if len(tracks) != 24:
-        error(f"expected 24 Conductor tracks, found {len(tracks)}")
-    expected_ids = [f"{number:02d}" for number in range(24)]
+    expected_ids = [f"{number:02d}" for number in range(len(tracks))]
     actual_ids = [path.name[:2] for path in tracks]
     if actual_ids != expected_ids:
         error(f"Conductor track IDs are not contiguous: {actual_ids}")
-    allowed_statuses = {"planned", "active", "partial", "scaffolded", "prepared", "blocked", "completed"}
-    allowed_evidence = {"contracted", "scaffolded", "fixture_proven", "live_proven", "published"}
+    if actual_ids != declared_ids:
+        error(f"Conductor coverage order differs from track directories: {declared_ids}")
+
+    allowed_statuses = {
+        "source_implemented",
+        "source_implemented_unverified",
+        "integration_prepared",
+        "release_prepared",
+        "submission_prepared",
+        "external_evidence_required",
+    }
+    allowed_evidence = {
+        "contracted",
+        "source_verified",
+        "compiler_verified",
+        "fixture_proven",
+        "live_proven",
+        "externally_validated",
+        "published",
+    }
     for track in tracks:
-        for filename in ("spec.md", "plan.md", "metadata.json"):
+        for filename in ("spec.md", "plan.md", "metadata.json", "evidence.json"):
             if not (track / filename).is_file():
                 error(f"missing {filename} in {relative(track)}")
         metadata = load_json(track / "metadata.json")
-        if not isinstance(metadata, Mapping):
+        evidence_record = load_json(track / "evidence.json")
+        if not isinstance(metadata, Mapping) or not isinstance(evidence_record, Mapping):
             continue
         track_id = track.name[:2]
-        if metadata.get("track_id") != track_id:
-            error(f"track metadata ID mismatch in {relative(track)}")
+        if metadata.get("track_id") != track_id or evidence_record.get("track_id") != track_id:
+            error(f"track identity mismatch in {relative(track)}")
         if metadata.get("slug") != track.name[3:]:
             error(f"track metadata slug mismatch in {relative(track)}")
         status = metadata.get("status")
@@ -610,12 +671,17 @@ def validate_conductor() -> None:
             error(f"invalid Conductor status {status!r} in {relative(track)}")
         if evidence not in allowed_evidence:
             error(f"invalid evidence level {evidence!r} in {relative(track)}")
-        plan_path = track / "plan.md"
-        plan = read_text(plan_path)
-        if re.search(r"^- \[x\]", plan, flags=re.MULTILINE | re.IGNORECASE) and status != "completed":
-            error(f"unchecked evidence rule violated: incomplete track has checked tasks in {relative(plan_path)}")
-        if "## Review and closeout" not in plan:
-            error(f"track lacks review/closeout phase: {relative(plan_path)}")
+        if evidence_record.get("status") != status or evidence_record.get("evidence_level") != evidence:
+            error(f"track evidence differs from metadata in {relative(track)}")
+        plan = read_text(track / "plan.md")
+        if not re.search(r"^- \[x\]", plan, flags=re.MULTILINE | re.IGNORECASE):
+            error(f"track has no source-evidenced completed task: {relative(track / 'plan.md')}")
+        blockers = evidence_record.get("blockers")
+        if isinstance(blockers, list) and blockers and not re.search(r"^- \[ \]", plan, flags=re.MULTILINE):
+            error(f"track blockers have no open plan task: {relative(track / 'plan.md')}")
+        if "## Phase 4: Review and closeout" not in plan:
+            error(f"track lacks review/closeout phase: {relative(track / 'plan.md')}")
+
     requirements = read_text(conductor / "requirements.md")
     priorities = set(re.findall(r"\|\s*(Must|Should|Could|Won[’']t now)\s*\|", requirements))
     required_priorities = {"Must", "Should", "Could"}
@@ -627,8 +693,8 @@ def validate_conductor() -> None:
         error("conductor/design.md must contain non-empty Mermaid diagrams")
     else:
         passed("mermaid_design_blocks_checked", len(mermaid_blocks))
-    if len(tracks) == 24:
-        passed("conductor_tracks_checked", 24)
+    if len(tracks) == len(coverage_entries):
+        passed("conductor_tracks_checked", len(tracks))
 
 
 def validate_action_and_tool_pins() -> None:
@@ -649,12 +715,14 @@ def validate_action_and_tool_pins() -> None:
         for line_number, line in enumerate(text.splitlines(), start=1):
             if "cargo install " not in line:
                 continue
-            if " --version " not in line or " --locked" not in line:
-                error(f"Cargo-installed CI tool lacks exact version/lock at {relative(path)}:{line_number}")
             command = line.split("cargo install ", 1)[1]
-            before_version = command.split(" --version ", 1)[0].strip()
-            if " " in before_version:
-                error(f"install Cargo CI tools one at a time for independent pins at {relative(path)}:{line_number}")
+            local_path_install = " --path " in line
+            if " --locked" not in line or (not local_path_install and " --version " not in line):
+                error(f"Cargo-installed CI tool lacks exact version/lock at {relative(path)}:{line_number}")
+            if not local_path_install:
+                before_version = command.split(" --version ", 1)[0].strip()
+                if " " in before_version:
+                    error(f"install Cargo CI tools one at a time for independent pins at {relative(path)}:{line_number}")
     passed("github_action_commit_pins_checked", uses_count)
 
 
@@ -747,8 +815,13 @@ def validate_status_and_receipts() -> None:
         ]
         if false_claims:
             error(f"generation receipt contains unsupported Cargo claims: {false_claims}")
-    if receipt.get("claim") != "contracted_and_scaffolded_not_compiled":
-        error("generation receipt claim must remain contracted_and_scaffolded_not_compiled")
+    expected_claim = (
+        "source_verified_not_compiler_verified"
+        if receipt.get("schema_version") == "org.searchright.generation-environment.v3"
+        else "contracted_and_scaffolded_not_compiled"
+    )
+    if receipt.get("claim") != expected_claim:
+        error(f"generation receipt claim must remain {expected_claim}")
     passed("status_and_receipt_truthfulness_checked")
 
 

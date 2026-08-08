@@ -1,0 +1,101 @@
+name: Clean-room reproducibility
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '37 5 * * 3'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clean-room-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  clean-room:
+    name: Vendored offline build and install smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Checkout full source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/validation.txt
+      - name: Install validation dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements/validation.txt
+      - name: Install pinned Rust
+        run: rustup toolchain install 1.97.1 --profile minimal
+      - name: Require lockfile and fetch exact dependencies
+        run: |
+          test -f Cargo.lock
+          cargo fetch --locked
+      - name: Vendor the exact dependency graph
+        run: cargo vendor --locked vendor > vendor-config.toml
+      - name: Prove source-package reproducibility
+        run: python scripts/check_packaging_reproducibility.py
+      - name: Create clean-room source tree
+        env:
+          CLEAN_ROOT: ${{ runner.temp }}/searchright-clean
+        run: |
+          rm -rf "$CLEAN_ROOT"
+          mkdir -p "$CLEAN_ROOT"
+          python scripts/package_source.py --output-dir "$RUNNER_TEMP/source-package"
+          tar -xzf "$RUNNER_TEMP/source-package/searchright-source.tar.gz" -C "$CLEAN_ROOT"
+          mkdir -p "$CLEAN_ROOT/searchright/.cargo"
+          cat > "$CLEAN_ROOT/searchright/.cargo/config.toml" <<CONFIG
+          [source.crates-io]
+          replace-with = "vendored-sources"
+
+          [source.vendored-sources]
+          directory = "$GITHUB_WORKSPACE/vendor"
+
+          [net]
+          offline = true
+          CONFIG
+      - name: Build twice without network and compare binaries
+        env:
+          CLEAN_SOURCE: ${{ runner.temp }}/searchright-clean/searchright
+          SOURCE_DATE_EPOCH: '1785984000'
+        run: |
+          cd "$CLEAN_SOURCE"
+          CARGO_TARGET_DIR="$RUNNER_TEMP/target-a" cargo build --release --locked --offline -p searchright-cli -p searchright-mcp
+          CARGO_TARGET_DIR="$RUNNER_TEMP/target-b" cargo build --release --locked --offline -p searchright-cli -p searchright-mcp
+          cmp "$RUNNER_TEMP/target-a/release/searchright" "$RUNNER_TEMP/target-b/release/searchright"
+          cmp "$RUNNER_TEMP/target-a/release/searchright-mcp" "$RUNNER_TEMP/target-b/release/searchright-mcp"
+      - name: Install exact local binaries offline
+        env:
+          CLEAN_SOURCE: ${{ runner.temp }}/searchright-clean/searchright
+          INSTALL_ROOT: ${{ runner.temp }}/searchright-install
+        run: |
+          cd "$CLEAN_SOURCE"
+          cargo install --path crates/searchright-cli --locked --offline --root "$INSTALL_ROOT"
+          cargo install --path crates/searchright-mcp --locked --offline --root "$INSTALL_ROOT"
+          "$INSTALL_ROOT/bin/searchright" --help
+      - name: Exercise MCP discovery transcript
+        env:
+          INSTALL_ROOT: ${{ runner.temp }}/searchright-install
+        run: >-
+          python scripts/mcp_smoke.py
+          --receipt verification/receipts/mcp-clean-room.json
+          "$INSTALL_ROOT/bin/searchright-mcp"
+      - name: Preserve clean-room receipts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: clean-room-receipts
+          path: |
+            verification/receipts/mcp-clean-room.json
+            ${{ runner.temp }}/source-package/*
+          if-no-files-found: warn
+          retention-days: 30

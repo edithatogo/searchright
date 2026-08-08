@@ -1,0 +1,112 @@
+{
+  "schema_version": "org.searchright.estate-repositories.v1",
+  "owner": "edithatogo",
+  "observed_at": "2026-08-06",
+  "repositories": [
+    {
+      "repository": "edithatogo/sourceright",
+      "role": "reference verification and provider evidence",
+      "decision": "adopt_shared_core_after_parity",
+      "priority": "must",
+      "evidence": "migration/sourceright/replacement-map.yaml"
+    },
+    {
+      "repository": "edithatogo/academic-research-skills",
+      "role": "agentic systematic-review workflow",
+      "decision": "replace_execution_with_searchright_skill_and_mcp",
+      "priority": "must",
+      "evidence": "skills/systematic-search/SKILL.md"
+    },
+    {
+      "repository": "edithatogo/PRISMA.jl",
+      "role": "PRISMA checklist and flow generation",
+      "decision": "compatibility_first_then_optional_adapter",
+      "priority": "should",
+      "evidence": "docs/estate-integration.md"
+    },
+    {
+      "repository": "edithatogo/standards_check",
+      "role": "reporting-checklist provenance",
+      "decision": "reuse_as_standards_upstream",
+      "priority": "must",
+      "evidence": "contracts/standards/index.json"
+    },
+    {
+      "repository": "edithatogo/synergy-dataset",
+      "role": "screening benchmark corpus",
+      "decision": "reuse_as_benchmark_upstream",
+      "priority": "must",
+      "evidence": "benchmarks/README.md"
+    },
+    {
+      "repository": "edithatogo/citeweft",
+      "role": "scholarly document and reference extraction evidence",
+      "decision": "reuse_through_optional_document_evidence_adapter",
+      "priority": "must",
+      "evidence": "docs/citeweft-integration.md"
+    },
+    {
+      "repository": "edithatogo/scholarly-publishing-agents",
+      "role": "citation integrity and publication agents",
+      "decision": "delegate_search_execution_to_searchright",
+      "priority": "should",
+      "evidence": "docs/estate-integration.md"
+    },
+    {
+      "repository": "edithatogo/co-researcher",
+      "role": "research orchestration",
+      "decision": "integrate_through_mcp",
+      "priority": "should",
+      "evidence": "docs/estate-integration.md"
+    },
+    {
+      "repository": "edithatogo/ee_trd",
+      "role": "project-specific PRISMA search log",
+      "decision": "replace_custom_logs_with_receipts_and_prisma_ledger",
+      "priority": "must",
+      "evidence": "migration/estate/replacement-decisions.json"
+    },
+    {
+      "repository": "edithatogo/reimbursement-atlas",
+      "role": "evidence search consumer",
+      "decision": "audit_and_replace_project_specific_search_code",
+      "priority": "should",
+      "evidence": "migration/estate/replacement-decisions.json"
+    },
+    {
+      "repository": "edithatogo/global-medicines-atlas",
+      "role": "evidence search consumer",
+      "decision": "audit_and_replace_project_specific_search_code",
+      "priority": "should",
+      "evidence": "migration/estate/replacement-decisions.json"
+    },
+    {
+      "repository": "edithatogo/osf-mcp-server",
+      "role": "OSF registration and artefact integration",
+      "decision": "reuse_for_protocol_and_archive_handoff",
+      "priority": "could",
+      "evidence": "docs/estate-integration.md"
+    },
+    {
+      "repository": "edithatogo/mcp-registry",
+      "role": "MCP registry tooling",
+      "decision": "reuse_for_submission_validation",
+      "priority": "should",
+      "evidence": "registry/status.json"
+    },
+    {
+      "repository": "edithatogo/repository-standards",
+      "role": "estate-wide engineering controls",
+      "decision": "inherit_and_report_conformance",
+      "priority": "must",
+      "evidence": "docs/repository-standards-alignment.md"
+    },
+    {
+      "repository": "edithatogo/authentext",
+      "role": "prose quality tooling",
+      "decision": "optional_documentation_quality_integration",
+      "priority": "could",
+      "evidence": "docs/estate-integration.md"
+    }
+  ]
+}

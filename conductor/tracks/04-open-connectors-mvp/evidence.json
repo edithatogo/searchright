@@ -1,0 +1,41 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "04",
+  "title": "Open provider connectors MVP",
+  "status": "source_implemented_unverified",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "crates/searchright-connectors/src/lib.rs",
+    "contracts/examples/provider-manifest.yaml",
+    "contracts/examples/provider-page.yaml",
+    "contracts/examples/source-receipt.yaml"
+  ],
+  "static_checks": [
+    "python scripts/validate_repository.py"
+  ],
+  "requirements": [
+    "SR-014",
+    "SR-015",
+    "SR-016"
+  ],
+  "blockers": [
+    "Compile and run connector fixtures.",
+    "Run authorised, redacted live smokes for each advertised provider.",
+    "Verify upstream terms, rate limits and response changes at release time."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-04",
+    "phases": [
+      "track-04-phase-1",
+      "track-04-phase-2",
+      "track-04-phase-3",
+      "track-04-phase-4"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

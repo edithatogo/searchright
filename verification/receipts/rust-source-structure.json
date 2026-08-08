@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "crate_manifests_checked": 27,
+    "delimiter_balanced_files": 57,
+    "enums_checked": 84,
+    "impl_blocks_checked": 109,
+    "module_declarations_checked": 29,
+    "possibly_unused_dependencies": 67,
+    "rust_files_checked": 57,
+    "structs_checked": 146,
+    "workspace_members_checked": 27
+  },
+  "errors": [],
+  "limitations": [
+    "This is lexical and structural validation, not Rust parsing, type checking, macro expansion, linking or execution."
+  ],
+  "schema_version": "org.searchright.rust-source-structure-receipt.v1",
+  "status": "passed"
+}

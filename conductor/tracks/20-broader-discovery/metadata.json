@@ -1,0 +1,29 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "20",
+  "slug": "broader-discovery",
+  "title": "Grey literature, registers and supplementary discovery",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "04",
+    "05"
+  ],
+  "horizon": "beta",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/20-broader-discovery/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-20",
+    "phase_issue_keys": [
+      "track-20-phase-1",
+      "track-20-phase-2",
+      "track-20-phase-3",
+      "track-20-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

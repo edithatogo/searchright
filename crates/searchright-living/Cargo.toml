@@ -1,0 +1,17 @@
+[package]
+name = "searchright-living"
+description = "Immutable run lineage and change detection for living reviews."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+blake3.workspace = true
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+serde_json.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

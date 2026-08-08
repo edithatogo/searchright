@@ -1,0 +1,17 @@
+[package]
+name = "searchright-provenance"
+description = "RO-Crate and W3C PROV exports for Searchright evidence-search artefacts."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

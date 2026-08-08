@@ -1,0 +1,41 @@
+schema_version: org.searchright.study-graph.v1
+review_id: demo-review
+reports:
+- report_id: report-1
+  record_ids:
+  - record-1
+  title: Primary trial report
+  publication_year: 2024
+  doi: 10.1000/example
+  pmid: null
+  registry_ids:
+  - NCT00000001
+  retrieval_attempts:
+  - attempt_id: retrieve-1
+    report_id: report-1
+    attempted_at: '2026-08-06T00:00:00Z'
+    method: publisher
+    status: retrieved
+    note: Open-access full text retrieved
+    rights_basis: open access
+    content_digest: blake3:example
+studies:
+- study_id: study-1
+  report_ids:
+  - report-1
+  label: Example trial
+  study_design: randomised trial
+  registration_ids:
+  - NCT00000001
+  notes:
+  - Linked by registration identifier
+links:
+- link_id: link-1
+  from_id: report-1
+  to_id: study-1
+  relationship: report_of_study
+  confidence: 1.0
+  evidence:
+  - shared registration identifier
+  asserted_by: reviewer-1
+  asserted_at: '2026-08-06T00:10:00Z'

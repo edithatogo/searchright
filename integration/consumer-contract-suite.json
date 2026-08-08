@@ -1,0 +1,224 @@
+{
+  "schema_version": "org.searchright.consumer-contract-suite.v1",
+  "generated_at": "2026-08-06",
+  "interactions": [
+    {
+      "id": "citeweft-to-searchright-document-evidence",
+      "integration_id": "citeweft-document-evidence",
+      "producer": "edithatogo/citeweft",
+      "consumer": "edithatogo/searchright",
+      "contract_version": "org.searchright.document-evidence.v1",
+      "producer_contracts": [
+        "external://edithatogo/citeweft/src/citeweft.rs@8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+        "external://edithatogo/citeweft/src/reference_model.rs@8c8932976250f9ca91c2bbda28ed68eeb191fa42"
+      ],
+      "consumer_contracts": [
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "crates/searchright-citeweft/src/lib.rs"
+      ],
+      "fixture_paths": [
+        "contracts/examples/document-evidence.json",
+        "integration/citeweft-compatibility.json"
+      ],
+      "producer_gates": [
+        "external: cargo test --locked"
+      ],
+      "consumer_gates": [
+        "python scripts/check_citeweft_integration.py"
+      ],
+      "failure_semantics": "Block CiteWeft pin promotion, keep the adapter optional and preserve raw extraction evidence for review.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "searchright-to-sourceright-shared-runtime",
+      "integration_id": "sourceright-shared-search-core",
+      "producer": "edithatogo/searchright",
+      "consumer": "edithatogo/sourceright",
+      "contract_version": "org.searchright.sourceright-parity-report.v1",
+      "producer_contracts": [
+        "contracts/json-schema/sourceright-parity-report.v1.schema.json",
+        "crates/evidence-search-core/src/provider.rs"
+      ],
+      "consumer_contracts": [
+        "external://edithatogo/sourceright/src/live_providers.rs@89f3d1a08037057160700df5bba319a64500b791",
+        "external://edithatogo/sourceright/src/providers.rs@89f3d1a08037057160700df5bba319a64500b791"
+      ],
+      "fixture_paths": [
+        "migration/sourceright/parity-cases.json",
+        "contracts/examples/sourceright-parity-report.yaml"
+      ],
+      "producer_gates": [
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "consumer_gates": [
+        "external: cargo test --locked"
+      ],
+      "failure_semantics": "Do not cut over or delete Sourceright runtime code; retain dual-run and rollback paths.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "repository-standards-to-searchright-policy",
+      "integration_id": "repository-standards-inheritance",
+      "producer": "edithatogo/repository-standards",
+      "consumer": "edithatogo/searchright",
+      "contract_version": "org.searchright.repository-standards-inheritance.v1",
+      "producer_contracts": [
+        "external://edithatogo/repository-standards/profiles/archetype-profiles.json@ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+        "external://edithatogo/repository-standards/schemas/verification-receipt.schema.json@ad67bedaa0c4d0769bd54fd76354bac65b25b88c"
+      ],
+      "consumer_contracts": [
+        "docs/security/supply-chain.md",
+        "verification/harness-matrix.json"
+      ],
+      "fixture_paths": [
+        "integration/passports/repository-standards-inheritance.json"
+      ],
+      "producer_gates": [
+        "external: python scripts/audit_estate_conformance.py"
+      ],
+      "consumer_gates": [
+        "python scripts/check_default_deny.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "failure_semantics": "Treat policy inheritance as review-required and retain Searchright-owned exceptions until conformance is evidenced.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "api-standards-to-searchright-openapi",
+      "integration_id": "api-standards-conformance",
+      "producer": "edithatogo/api-standards",
+      "consumer": "edithatogo/searchright",
+      "contract_version": "openapi-3.1-searchright-v1",
+      "producer_contracts": [
+        "external://edithatogo/api-standards/@5a706a7600c8c54ec63b4ab2716fcf7d8bababcf"
+      ],
+      "consumer_contracts": [
+        "contracts/openapi/searchright-http.openapi.yaml"
+      ],
+      "fixture_paths": [
+        "integration/passports/api-standards-conformance.json"
+      ],
+      "producer_gates": [
+        "external: repository conformance workflow"
+      ],
+      "consumer_gates": [
+        "python scripts/validate_repository.py"
+      ],
+      "failure_semantics": "Do not publish the HTTP adapter or claim API-standard conformance until both repositories produce compatible receipts.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "prisma-jl-to-searchright-flow-interop",
+      "integration_id": "prisma-jl-flow-interop",
+      "producer": "edithatogo/PRISMA.jl",
+      "consumer": "edithatogo/searchright",
+      "contract_version": "org.searchright.prisma-flow.v1",
+      "producer_contracts": [
+        "external://edithatogo/PRISMA.jl/README.md@95d5aa46c6cda6fb2d014391209d666349b577dc"
+      ],
+      "consumer_contracts": [
+        "contracts/json-schema/prisma-flow.v1.schema.json",
+        "crates/searchright-prisma/src/lib.rs"
+      ],
+      "fixture_paths": [
+        "contracts/examples/prisma-flow.json",
+        "integration/passports/prisma-jl-flow-interop.json"
+      ],
+      "producer_gates": [
+        "external: Julia package tests"
+      ],
+      "consumer_gates": [
+        "python scripts/validate_repository.py"
+      ],
+      "failure_semantics": "Keep interchange file-based and report semantic differences instead of silently coercing flow counts.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "searchright-to-academic-research-skills",
+      "integration_id": "academic-research-skills-systematic-search",
+      "producer": "edithatogo/searchright",
+      "consumer": "edithatogo/academic-research-skills",
+      "contract_version": "org.searchright.interface-catalog.v1",
+      "producer_contracts": [
+        "contracts/interface-catalog.json",
+        "skills/systematic-search/SKILL.md"
+      ],
+      "consumer_contracts": [
+        "external://edithatogo/academic-research-skills/deep-research/references/systematic_review_protocol.md@734dd23e03e7261db9204702be9221119a30d7d2"
+      ],
+      "fixture_paths": [
+        "contracts/examples/review-plan.yaml",
+        "integration/passports/academic-research-skills-systematic-search.json"
+      ],
+      "producer_gates": [
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "consumer_gates": [
+        "external: skill contract tests"
+      ],
+      "failure_semantics": "Disable automated tool invocation and fall back to a documented human-controlled handoff.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "standards-check-to-searchright-packs",
+      "integration_id": "standards-check-reporting-packs",
+      "producer": "edithatogo/standards_check",
+      "consumer": "edithatogo/searchright",
+      "contract_version": "org.searchright.standard-pack.v1",
+      "producer_contracts": [
+        "external://edithatogo/standards_check/schemas/sidecar.schema.json@f54b25aec7e206881e2d5542e42cfda43c96921c"
+      ],
+      "consumer_contracts": [
+        "contracts/json-schema/standard-pack.v1.schema.json",
+        "contracts/standards/index.json"
+      ],
+      "fixture_paths": [
+        "contracts/examples/standard-pack.yaml",
+        "integration/passports/standards-check-reporting-packs.json"
+      ],
+      "producer_gates": [
+        "external: bash scripts/validate_repo.sh"
+      ],
+      "consumer_gates": [
+        "python scripts/validate_repository.py"
+      ],
+      "failure_semantics": "Quarantine the affected standard pack and preserve the previously verified version.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "synergy-to-searchright-calibration",
+      "integration_id": "synergy-screening-benchmark",
+      "producer": "edithatogo/synergy-dataset",
+      "consumer": "edithatogo/searchright",
+      "contract_version": "org.searchright.benchmark-report.v1",
+      "producer_contracts": [
+        "external://edithatogo/synergy-dataset/README.md@dc2dadfdbb98eb1b4259604789abd640aa3b693e"
+      ],
+      "consumer_contracts": [
+        "contracts/json-schema/benchmark-report.v1.schema.json",
+        "crates/searchright-bench/src/lib.rs"
+      ],
+      "fixture_paths": [
+        "benchmarks/synthetic/manifest.json",
+        "integration/passports/synergy-screening-benchmark.json"
+      ],
+      "producer_gates": [
+        "external: dataset integrity and attribution checks"
+      ],
+      "consumer_gates": [
+        "python scripts/validate_repository.py"
+      ],
+      "failure_semantics": "Do not publish benchmark comparisons or calibrate screening thresholds from an unverified dataset snapshot.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    }
+  ],
+  "claim_boundary": "Prepared interactions and local fixture paths do not establish downstream compatibility; promotion requires producer and consumer receipts plus explicit review."
+}

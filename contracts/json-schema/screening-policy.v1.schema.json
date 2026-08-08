@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/screening-policy.v1.schema.json",
+  "title": "Screening Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "title_abstract_reviewers",
+    "full_text_reviewers",
+    "agent_authority",
+    "minimum_agent_sensitivity",
+    "independent_blinding",
+    "adjudication_rule"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.screening-policy.v1"
+    },
+    "title_abstract_reviewers": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 255
+    },
+    "full_text_reviewers": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 255
+    },
+    "agent_authority": {
+      "enum": [
+        "advisory_only",
+        "include_only",
+        "exclusion_with_human_confirmation"
+      ]
+    },
+    "minimum_agent_sensitivity": {
+      "oneOf": [
+        {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "independent_blinding": {
+      "type": "boolean"
+    },
+    "adjudication_rule": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

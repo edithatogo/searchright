@@ -1,125 +1,168 @@
 # Design
 
-## Context and product boundary
+## Context
 
 ```mermaid
 C4Context
   title Searchright context
   Person(reviewer, "Review team", "Researchers, information specialists and screeners")
-  System(searchright, "Searchright", "Contracts, search execution, screening and reporting")
-  System_Ext(sourceright, "Sourceright", "Citation and reference verification")
-  System_Ext(databases, "Information sources", "Databases, registers, repositories and websites")
-  System_Ext(reviewtools, "Review/citation tools", "Zotero, EndNote, Rayyan, Covidence, ASReview")
-  System_Ext(registries, "Distribution registries", "MCP Registry, Glama, Smithery, crates.io")
-  Rel(reviewer, searchright, "Plans, approves and reviews")
-  Rel(searchright, databases, "Authorised bounded queries")
-  Rel(searchright, reviewtools, "Imports/exports and adapters")
-  Rel(searchright, sourceright, "Shares evidence-search-core")
-  Rel(searchright, registries, "Publishes signed releases")
+  System(searchright, "Searchright", "Contract-first search, screening and reporting infrastructure")
+  System_Ext(citeweft, "CiteWeft", "Scholarly-document extraction evidence")
+  System_Ext(sourceright, "Sourceright", "Canonical citation and reference verification")
+  System_Ext(sources, "Information sources", "Databases, registers, repositories and websites")
+  System_Ext(reviewtools, "Review tools", "Reference managers and screening platforms")
+  System_Ext(registries, "Distribution and research registries", "MCP, crates.io, OSF, JOSS and directories")
+  Rel(reviewer, searchright, "Plans, approves, screens and audits")
+  Rel(searchright, sources, "Executes authorised bounded searches")
+  Rel(searchright, reviewtools, "Imports, exports and hands off evidence")
+  Rel(citeweft, searchright, "Provides source-grounded DocumentEvidence")
+  Rel(searchright, sourceright, "Provides reviewed records and shares evidence-search-core")
+  Rel(searchright, registries, "Publishes evidence-gated artefacts")
 ```
 
-## Container design
+## Containers
 
 ```mermaid
 flowchart TB
-  subgraph Interfaces
+  subgraph Hosts
     CLI[searchright CLI]
-    MCP[searchright-mcp]
-    API[Rust facade]
+    MCP[searchright-mcp stdio]
+    API[Rust API]
     SKILL[systematic-search skill]
   end
-  subgraph Product
-    PLAN[Planning]
-    RUN[Run orchestration]
-    DEDUP[Deduplication]
-    SCREEN[Screening]
-    REPORT[PRISMA/PRESS reports]
+  subgraph Application
+    ENGINE[SearchrightEngine]
+    PLAN[Planning/amendments]
+    VALIDATE[PRESS/seed validation]
+    REVIEW[Dedup/study/screening]
+    REPORT[PRISMA/standards/living]
+    GOV[Diagnostics/governance/assurance]
   end
   subgraph Kernel[evidence-search-core]
     AST[Portable query AST]
     COMP[Dialect compiler]
     PROVIDER[Provider runtime]
-    RECEIPT[Source receipts]
-    AUDIT[Hash-chained events]
+    RECEIPT[Source receipt]
+    AUDIT[Hash-linked events]
   end
   subgraph Adapters
-    OPEN[Open API adapters]
-    IMPORT[File imports]
+    OPEN[Open provider adapters]
+    IMPORT[Interchange adapters]
     LICENSED[BYO licensed adapters]
-    WASI[WASI components]
+    WASI[Verified WASI components]
   end
-  subgraph Stores
-    JSONL[JSONL + replace-style snapshots]
-    ANALYTIC[Arrow/Parquet/DuckDB]
-    ROCRATE[RO-Crate/OSF export]
+  subgraph Evidence
+    STORE[Audit and snapshots]
+    PROV[RO-Crate / PROV]
+    BENCH[Benchmark/calibration receipts]
   end
 
   SKILL --> MCP
-  CLI --> API
-  MCP --> API
-  API --> Product
-  Product --> Kernel
+  CLI --> ENGINE
+  MCP --> ENGINE
+  API --> ENGINE
+  ENGINE --> PLAN
+  ENGINE --> VALIDATE
+  ENGINE --> REVIEW
+  ENGINE --> REPORT
+  ENGINE --> GOV
+  Application --> Kernel
   PROVIDER --> Adapters
-  RECEIPT --> Stores
-  AUDIT --> Stores
+  Kernel --> Evidence
+  Application --> Evidence
 ```
 
-## Review state machine
+## Lifecycle assurance
 
 ```mermaid
 stateDiagram-v2
-  [*] --> DraftPlan
-  DraftPlan --> ApprovedPlan: human approval
-  ApprovedPlan --> StrategyDraft
-  StrategyDraft --> PressReview
-  PressReview --> StrategyDraft: blocking findings
-  PressReview --> ApprovedStrategy: reviewer approval
-  ApprovedStrategy --> Executing: explicit live/write approval
-  Executing --> Retrieved
-  Retrieved --> DedupPreview
-  DedupPreview --> ScreeningTA: apply reviewed clusters
-  ScreeningTA --> TAConflict: disagreement
-  TAConflict --> ScreeningTA: human adjudication
-  ScreeningTA --> ScreeningFT: progress records
-  ScreeningFT --> FTConflict: disagreement
-  FTConflict --> ScreeningFT: human adjudication
-  ScreeningFT --> Included
-  Included --> Reported
-  Reported --> UpdatePlanned: living/update cadence
-  UpdatePlanned --> ApprovedStrategy: amendment or rerun
+  [*] --> Draft
+  Draft --> PlanApproved: human approval
+  PlanApproved --> StrategyValidated: PRESS/seed/translation approval
+  StrategyValidated --> ExecutionApproved: human release
+  ExecutionApproved --> SearchExecuted: bounded provider run
+  SearchExecuted --> Deduplicated: reviewed clusters
+  Deduplicated --> TitleAbstractComplete: dual screening/reconciliation
+  TitleAbstractComplete --> FullTextComplete: human full-text closure
+  FullTextComplete --> Reported: validated counts and artefacts
+  Reported --> UpdatePlanned: living cadence/amendment
+  UpdatePlanned --> StrategyValidated: revalidation
 ```
 
-## Provider execution sequence
+## Provider execution
 
 ```mermaid
 sequenceDiagram
-  participant U as Human/agent caller
-  participant I as CLI or MCP
-  participant C as Core runtime
+  participant U as Human or authorised agent
+  participant H as CLI/MCP host
+  participant E as SearchrightEngine
+  participant K as evidence-search-core
   participant P as Provider adapter
-  participant S as Audit store
-  U->>I: execute_search(strategy, policy)
-  I->>C: validated contract + explicit approval
-  C->>C: check mode, host, budgets, redaction
+  participant S as Evidence store
+  U->>H: strategy + envelope + approval
+  H->>E: canonical operation
+  E->>K: validated request
+  K->>K: check host, capability, budgets and cache mode
   loop bounded pages
-    C->>P: execute_page(cursor)
-    P-->>C: normalised records + next cursor
+    K->>P: page request
+    P-->>K: normalised page and cursor
   end
-  C->>C: build source receipt and query hash
-  C->>S: append execution event + receipt
-  C-->>I: records, receipt, warnings
-  I-->>U: structured result
+  K->>K: digest query and evidence
+  K->>S: append receipt and audit event
+  K-->>E: records, receipt and warnings
+  E-->>H: canonical result
+  H-->>U: reviewable output
 ```
 
-## Security boundary
+## Security and evidence boundary
 
 ```mermaid
 flowchart LR
-  INPUT[Untrusted query/provider data] --> VALIDATE[Schema + semantic validation]
-  VALIDATE --> POLICY[Capability, host and authority policy]
-  POLICY --> BUDGET[Timeout, page, record and rate budgets]
-  BUDGET --> ADAPTER[Sandboxed adapter]
-  ADAPTER --> REDACT[Secret and payload redaction]
-  REDACT --> RECEIPT[Signed/hash-linked evidence]
-  RECEIPT --> HUMAN[Human review for consequential changes]
+  INPUT[Untrusted plan, query, metadata or full text] --> SCHEMA[Schema and semantic validation]
+  SCHEMA --> AUTH[Authority and institutional policy]
+  AUTH --> CAP[Capability and endpoint allowlist]
+  CAP --> LIMIT[Rate, page, record, size and duration budgets]
+  LIMIT --> ADAPTER[Fixture/replay/live adapter]
+  ADAPTER --> REDACT[Secret and hostile-content controls]
+  REDACT --> RECEIPT[Digest, receipt and audit chain]
+  RECEIPT --> HUMAN[Human gate for consequential transitions]
+  RECEIPT --> CLAIM[Evidence-level claim gate]
 ```
+
+## Scholarly-domain integration
+
+```mermaid
+flowchart LR
+  DOC[Scholarly document] --> CW[CiteWeft]
+  CW --> DE[DocumentEvidence]
+  DE --> SRCH[Searchright]
+  SRCH --> SR[Sourceright]
+  CORE[evidence-search-core] --> SRCH
+  CORE --> SR
+  CW -. extraction evidence only .-> DE
+```
+
+## Conductor and GitHub hierarchy
+
+```mermaid
+flowchart TB
+  COV[roadmap-coverage.json] --> TRACKS[31 Conductor tracks]
+  TRACKS --> PLANS[Four phases per track]
+  COV --> RENDER[Deterministic issue renderer]
+  RENDER --> EPIC[One roadmap epic]
+  EPIC --> ISSUES[31 track issues]
+  ISSUES --> SUB[124 phase subissues]
+  SUB --> APPLY[Approval-gated idempotent apply]
+  APPLY --> RECEIPT[Observed remote receipt]
+```
+
+## Key decisions
+
+- One application facade prevents CLI/MCP drift.
+- Record, report and study are separate entities.
+- Standards packs report evidence and gaps; they do not certify quality.
+- Provider content is inert data, never agent instruction.
+- Live and licensed access are explicit opt-ins.
+- Ranking is advisory and requires calibration; no automatic final exclusion.
+- Downstream migration is dual-run and reversible.
+- Contract evolution and public claims are evidence-gated.

@@ -1,43 +1,40 @@
 # Plan: 01 Contract catalogue and code generation
 
-Current status: **scaffolded**.
+Current status: **source_implemented**. Evidence level: **source_verified**.
 
-## Phase 1: Validate all JSON Schemas and examples / Generate schemas from Rust types and diff against checked-in canonical forms
+GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered native subissue.
 
-- [ ] Validate all JSON Schemas and examples
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Generate schemas from Rust types and diff against checked-in canonical forms
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+## Phase 1: Source implementation
 
-## Phase 2: Add compatibility fixtures and migration/version rules / Add report/study linkage and protocol-amendment contracts
+<!-- github-subissue-key: track-01-phase-1 -->
 
-- [ ] Add compatibility fixtures and migration/version rules
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Add report/study linkage and protocol-amendment contracts
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+- [x] Implement and document the track's source deliverables.
+  - [x] `crates/searchright-contracts/src/lib.rs`
+  - [x] `contracts/schema-catalog.json`
+  - [x] `contracts/standards/index.json`
+  - [x] `docs/contracts.md`
+  - [x] `docs/adrs/0008-standards-packs-and-methodology-boundary.md`
 
-## Phase 3: Generate TypeScript/Python bindings only as thin contract packages / Publish contract conformance matrix
+## Phase 2: Source-level verification
 
-- [ ] Generate TypeScript/Python bindings only as thin contract packages
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
-- [ ] Publish contract conformance matrix
-  - [ ] Add or update governing contract/ADR.
-  - [ ] Add deterministic tests and fixtures.
-  - [ ] Update docs, evidence level and migration manifest.
+<!-- github-subissue-key: track-01-phase-2 -->
 
-## Review and closeout
+- [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/validate_repository.py`
+- [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
-- [ ] Run repository verification and track-specific gates.
-- [ ] Record evidence receipt and unresolved blockers.
-- [ ] Run Conductor review; append a review-fixes phase for any gaps.
-- [ ] Update `conductor/tracks.md` without overstating external completion.
+## Phase 3: Higher-evidence gates
+
+<!-- github-subissue-key: track-01-phase-3 -->
+
+- [ ] Compile Rust contract types and run schema/Rust round-trip tests.
+- [ ] Generate compatibility fixtures from compiled public types.
+
+## Phase 4: Review and closeout
+
+<!-- github-subissue-key: track-01-phase-4 -->
+
+- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

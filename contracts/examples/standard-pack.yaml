@@ -1,0 +1,20 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: prisma-s-2021
+family: prisma_s
+version: '2021'
+source: PRISMA-S reporting extension
+provenance_note: Machine-readable summaries are maintained with source attribution;
+  users should consult the authoritative publication.
+items:
+- item_id: prisma-s-1
+  label: Database name
+  requirement_summary: Identify each database and platform used.
+  scope: reporting
+  crosswalks:
+  - prisma-2020-6
+- item_id: prisma-s-14
+  label: Peer review
+  requirement_summary: Describe whether and how the search strategy was peer reviewed.
+  scope: reporting
+  crosswalks:
+  - press-2015

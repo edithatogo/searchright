@@ -2,6 +2,8 @@
 
 ## Source of truth
 
+Load `CONTEXT.md` and `context/manifest.json` first.
+
 1. `conductor/requirements.md`
 2. `contracts/`
 3. `conductor/design.md` and ADRs

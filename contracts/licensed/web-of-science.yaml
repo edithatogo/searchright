@@ -1,0 +1,14 @@
+schema_version: org.searchright.licensed-adapter.v1
+provider_id: web-of-science-byo
+database: Web of Science Core Collection
+platform: Clarivate Web of Science API
+dialect: web_of_science
+credential_environment_variable: SEARCHRIGHT_WOS_API_KEY
+live_opt_in_environment_variable: SEARCHRIGHT_WOS_LIVE
+allowed_hosts:
+  - api.clarivate.com
+export_formats:
+  - ris
+  - csv
+terms_review: Caller must confirm API entitlement, permitted fields and retention conditions.
+persist_raw_responses: false

@@ -1,0 +1,35 @@
+{
+  "schema_version": "org.searchright.consumer-contract-suite.v1",
+  "generated_at": "2026-08-06",
+  "interactions": [
+    {
+      "id": "citeweft-to-searchright-document-evidence",
+      "integration_id": "citeweft-document-evidence",
+      "producer": "edithatogo/citeweft",
+      "consumer": "edithatogo/searchright",
+      "contract_version": "org.searchright.document-evidence.v1",
+      "producer_contracts": [
+        "external://edithatogo/citeweft/src/citeweft.rs@8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+        "external://edithatogo/citeweft/src/reference_model.rs@8c8932976250f9ca91c2bbda28ed68eeb191fa42"
+      ],
+      "consumer_contracts": [
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "crates/searchright-citeweft/src/lib.rs"
+      ],
+      "fixture_paths": [
+        "contracts/examples/document-evidence.json",
+        "integration/citeweft-compatibility.json"
+      ],
+      "producer_gates": [
+        "external: cargo test --locked"
+      ],
+      "consumer_gates": [
+        "python scripts/check_citeweft_integration.py"
+      ],
+      "failure_semantics": "Block CiteWeft pin promotion, keep the adapter optional and preserve raw extraction evidence for review.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    }
+  ],
+  "claim_boundary": "Prepared interactions and local fixture paths do not establish downstream compatibility; promotion requires producer and consumer receipts plus explicit review."
+}

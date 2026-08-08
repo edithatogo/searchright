@@ -1,14 +1,28 @@
 {
-  "schema_version": "conductor.track-metadata.v1",
+  "schema_version": "conductor.track-metadata.v3",
   "track_id": "10",
   "slug": "mcp-mvp",
   "title": "MCP stdio server MVP",
-  "status": "scaffolded",
+  "status": "source_implemented_unverified",
   "created": "2026-08-05",
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "dependencies": [
     "09"
   ],
-  "evidence_level": "scaffolded",
-  "external_approval_required": false
+  "horizon": "mvp",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/10-mcp-mvp/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-10",
+    "phase_issue_keys": [
+      "track-10-phase-1",
+      "track-10-phase-2",
+      "track-10-phase-3",
+      "track-10-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
 }

@@ -1,0 +1,41 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "27",
+  "title": "Accessibility, internationalisation and usability",
+  "status": "source_implemented_unverified",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "crates/searchright-diagnostics/src/lib.rs",
+    "crates/searchright-contracts/src/diagnostic.rs",
+    "contracts/examples/diagnostic.yaml",
+    "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+    "docs/evaluation/external-methodological-evaluation.md"
+  ],
+  "static_checks": [
+    "python scripts/validate_repository.py"
+  ],
+  "requirements": [
+    "SR-055",
+    "SR-056"
+  ],
+  "blockers": [
+    "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+    "Create message catalogues and execute locale-fallback tests.",
+    "Complete keyboard, screen-reader and information-specialist usability evaluation."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-27",
+    "phases": [
+      "track-27-phase-1",
+      "track-27-phase-2",
+      "track-27-phase-3",
+      "track-27-phase-4"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

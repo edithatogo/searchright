@@ -1,0 +1,22 @@
+schema_version: org.searchright.benchmark-report.v1
+benchmark_id: synthetic-dedup-2026-08-06
+corpus_id: searchright-synthetic-dedup
+corpus_version: v1
+rights_basis: CC0 synthetic metadata
+implementation_version: 0.1.0-alpha.1
+configuration_digest: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+leakage_controls:
+  - Synthetic test cases are independent from any calibration corpus.
+metrics:
+  - name: dedup.recall
+    value: 1.0
+    unit: proportion
+    lower_bound: null
+    upper_bound: null
+    sample_size: 2
+environment:
+  - fixture-only execution
+  - network disabled
+  - compiler verification pending
+generated_at: "2026-08-06T00:00:00Z"
+claim_boundary: Synthetic fixtures support regression testing only and do not establish external performance.

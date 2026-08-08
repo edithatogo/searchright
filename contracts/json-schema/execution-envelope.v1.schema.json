@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/execution-envelope.v1.schema.json",
+  "title": "Searchright Execution Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "operation_id",
+    "review_id",
+    "network",
+    "allowed_hosts",
+    "secret_handling",
+    "full_text_handling",
+    "untrusted_content",
+    "maximum_records",
+    "maximum_seconds",
+    "dry_run",
+    "approved_by"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.execution-envelope.v1"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "network": {
+      "enum": [
+        "disabled",
+        "allowlisted_https",
+        "licensed_allowlist"
+      ]
+    },
+    "allowed_hosts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "secret_handling": {
+      "enum": [
+        "none",
+        "environment_redacted",
+        "host_managed_reference"
+      ]
+    },
+    "full_text_handling": {
+      "enum": [
+        "metadata_only",
+        "local_rights_compliant",
+        "minimal_evidence_excerpt"
+      ]
+    },
+    "untrusted_content": {
+      "enum": [
+        "data_only",
+        "sanitise_then_data_only",
+        "human_inspection_required"
+      ]
+    },
+    "maximum_records": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maximum_seconds": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "dry_run": {
+      "type": "boolean"
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "27",
+  "slug": "accessibility-internationalisation-usability",
+  "title": "Accessibility, internationalisation and usability",
+  "status": "source_implemented_unverified",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "09",
+    "10",
+    "11"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-27",
+    "phase_issue_keys": [
+      "track-27-phase-1",
+      "track-27-phase-2",
+      "track-27-phase-3",
+      "track-27-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

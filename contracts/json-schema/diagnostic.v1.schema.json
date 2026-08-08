@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/diagnostic.v1.schema.json",
+  "title": "Diagnostic",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "code",
+    "severity",
+    "message",
+    "remediation",
+    "evidence_ids",
+    "path",
+    "line",
+    "column",
+    "locale",
+    "blocking"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.diagnostic.v1"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9_.-]+$"
+    },
+    "severity": {
+      "enum": [
+        "information",
+        "warning",
+        "error",
+        "blocking"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "path": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "line": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "column": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "locale": {
+      "oneOf": [
+        {
+          "enum": [
+            "en_au",
+            "en_nz",
+            "en_us",
+            "mi_nz"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "custom"
+          ],
+          "properties": {
+            "custom": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "blocking": {
+      "type": "boolean"
+    }
+  }
+}

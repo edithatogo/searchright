@@ -1,0 +1,73 @@
+{
+  "schema_version": "searchright.sourceright-parity-cases.v1",
+  "source_blob_sha": "57bc071c6afc7d5a4cb8ead12112919a446ebd24",
+  "cases": [
+    {
+      "case_id": "disabled-live",
+      "dimensions": [
+        "execution mode",
+        "error classification",
+        "endpoint and secret redaction",
+        "disabled-live negative behaviour"
+      ],
+      "fixture": "configuration only",
+      "expected_shared_behavior": "A live provider is rejected before any network operation."
+    },
+    {
+      "case_id": "fixture-identifiers",
+      "dimensions": [
+        "provider identity",
+        "identifiers",
+        "normalised fields"
+      ],
+      "fixture": "synthetic provider record",
+      "expected_shared_behavior": "Identifiers and record fields are deterministic and source-linked."
+    },
+    {
+      "case_id": "bounded-retry",
+      "dimensions": [
+        "retry and rate behaviour",
+        "error classification"
+      ],
+      "fixture": "retryable failure followed by success",
+      "expected_shared_behavior": "Attempts never exceed max_retries plus the initial request."
+    },
+    {
+      "case_id": "cache-write-replay",
+      "dimensions": [
+        "execution mode",
+        "replay and cache behaviour",
+        "receipt counts"
+      ],
+      "fixture": "one-page fixture",
+      "expected_shared_behavior": "A written page can be replayed with explicit cache-hit evidence."
+    },
+    {
+      "case_id": "malformed-payload",
+      "dimensions": [
+        "error classification",
+        "malformed and adversarial response handling"
+      ],
+      "fixture": "missing required provider response fields",
+      "expected_shared_behavior": "Malformed payloads fail deterministically and do not create canonical records."
+    },
+    {
+      "case_id": "undeclared-host",
+      "dimensions": [
+        "host policy",
+        "malformed and adversarial response handling"
+      ],
+      "fixture": "loopback or metadata endpoint",
+      "expected_shared_behavior": "The execution envelope rejects the endpoint before connection."
+    },
+    {
+      "case_id": "secret-redaction",
+      "dimensions": [
+        "endpoint and secret redaction",
+        "cache key redaction"
+      ],
+      "fixture": "credential-bearing configuration",
+      "expected_shared_behavior": "Secrets do not appear in receipts, diagnostics, cache keys or audit events."
+    }
+  ]
+}

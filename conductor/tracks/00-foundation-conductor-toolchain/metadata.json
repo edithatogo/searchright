@@ -1,12 +1,26 @@
 {
-  "schema_version": "conductor.track-metadata.v1",
+  "schema_version": "conductor.track-metadata.v3",
   "track_id": "00",
   "slug": "foundation-conductor-toolchain",
   "title": "Foundation, Conductor and toolchain",
-  "status": "active",
+  "status": "source_implemented",
   "created": "2026-08-05",
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "dependencies": [],
-  "evidence_level": "scaffolded",
-  "external_approval_required": false
+  "horizon": "foundation",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/00-foundation-conductor-toolchain/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-00",
+    "phase_issue_keys": [
+      "track-00-phase-1",
+      "track-00-phase-2",
+      "track-00-phase-3",
+      "track-00-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
 }

@@ -1,0 +1,46 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "api-standards-conformance",
+  "repository": "edithatogo/api-standards",
+  "revision": "5a706a7600c8c54ec63b4ab2716fcf7d8bababcf",
+  "default_branch": "main",
+  "mode": "documentation_pack",
+  "dependency_direction": "no_runtime_dependency",
+  "feature_flag": null,
+  "inputs": [
+    {
+      "name": "API design conventions",
+      "version": "observed-2026-06-29",
+      "path": "repository documentation and conformance conventions",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Searchright OpenAPI contract",
+      "version": "0.1.0",
+      "path": "contracts/openapi/searchright.openapi.yaml",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "documentation_read"
+  ],
+  "verification": [
+    {
+      "id": "openapi-static",
+      "command": "python scripts/validate_repository.py",
+      "evidence_level": "source_verified",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Keep Searchright OpenAPI ownership local and versioned.",
+    "Remove non-binding documentation references if upstream conventions diverge."
+  ],
+  "claim_boundary": "Searchright reuses compatible conventions only; it does not claim certification by or runtime dependence on api-standards."
+}

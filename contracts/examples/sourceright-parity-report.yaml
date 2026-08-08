@@ -1,0 +1,17 @@
+schema_version: org.searchright.sourceright-parity-report.v1
+legacy_revision: 57bc071c6afc7d5a4cb8ead12112919a446ebd24
+shared_revision: source-uncompiled
+case_ids:
+- disabled-live
+- fixture-identifiers
+dimensions:
+- dimension: provider_identity
+  legacy_digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  shared_digest: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  equivalent: true
+  approved_difference_id: null
+  note: Synthetic normalized observations match.
+cutover_ready: false
+blockers:
+- compiler and Sourceright dual-run evidence are unavailable
+generated_at: source-epoch:1785984000

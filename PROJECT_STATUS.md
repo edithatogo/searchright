@@ -1,71 +1,121 @@
-# Project Status
+# Project status
 
-Date: 2026-08-05
+**Status date:** 6 August 2026
 
-## Evidence level
+**Evidence level:** source-verified alpha
 
-The repository is a **substantial alpha source scaffold, statically validated but
-not compiler-verified**. It contains a contract-first product architecture,
-implementation source, quality harness and ordered delivery programme. It is not
-yet a compiled, live-provider-tested or published release.
+## Headline status
 
-## Completed in this generation
+Searchright has a broad contract-first source implementation covering the entire
+roadmap. It is managed in Git and organised into 31 evidence-aware Conductor
+tracks. The network-free harness passes its individual source gates; compiler,
+live, downstream and external-evaluation gates remain separate and open where
+this environment could not execute them.
 
-- Product vision, mission, purpose, strategic alignment and phased roadmap.
-- MoSCoW requirements, Mermaid design sources and 24 ordered Conductor tracks.
-- Eleven-crate Rust workspace source covering contracts, shared execution core,
-  connectors, deduplication, screening, PRISMA, storage, agent policy, public
-  facade, CLI and MCP server.
-- Seven Draft 2020-12 JSON Schemas and seven canonical examples, plus OpenAPI,
-  WIT and MCP catalogue contracts.
-- Human-authority screening policy, bounded agent workflow, hash-chained audit
-  events, provider host allowlists and explicit live/replay capability gates.
-- PRISMA 2020 arithmetic and Mermaid source generation, with a PRISMA-S evidence
-  ledger and PRESS-oriented planning workflow.
-- Sourceright shared-core migration packet pinned to the inspected
-  `src/live_providers.rs` blob, including exact symbol mapping, parity gates,
-  rollback rules and an explicit response-cache gap.
-- Registry and publication packets for GitHub, crates.io, the official MCP
-  Registry, Glama, Smithery and JOSS; every external submission remains
-  approval-gated and truthfully marked as not submitted.
-- Commit-pinned GitHub Actions, exact-pinned validation/security/coverage/mutation
-  tools, Renovate, Codecov configuration, dependency policy and release gates.
-- Python repository verifier covering schema/example conformance, cross-document
-  semantic invariants, workspace and Conductor completeness, action/tool pins,
-  registry truthfulness, Rust lexical policy and text hygiene.
-- Python `compileall` execution for repository scripts.
-- Conservative working-tree secret-signature heuristic with zero matches; the
-  full-history Gitleaks job is configured but was not executed locally.
+## Source implementation completed
 
-The latest machine-readable static validation receipt records the exact check
-counts. Stable headline totals are: 7 schemas, 7 schema examples, 24 Conductor
-tracks, 11 workspace crates, 21 Rust source files and 18 immutable GitHub Action
-references.
+- 27-crate Rust 2024 workspace with a shared application facade, CLI and stdio
+  MCP server.
+- CiteWeft isolated behind a one-way, non-publishable leaf adapter and a neutral
+  `DocumentEvidence` contract.
+- 37 Draft 2020-12 schemas, 37 canonical examples and a complete schema
+  catalogue.
+- 31 mapped operations across Rust facade, CLI and MCP.
+- Review planning, protocol amendments, standards packs and evidence-linked
+  assessments.
+- Portable query AST, source dialects, explicit translation fidelity and loss
+  approval.
+- Bounded fixture/live/replay provider architecture with host, budget, retry,
+  cache and receipt contracts.
+- Append-only hash-linked audit events and crash-conscious single-writer
+  snapshots.
+- Deterministic import/export, conservative deduplication and record–report–study
+  linkage.
+- Human-governed title/abstract and full-text screening with conflicts and
+  explicit exclusion reasons.
+- PRISMA arithmetic, Mermaid flow rendering, PRISMA-S reporting evidence, PRESS
+  and seed-set validation.
+- Living-review lineage, supplementary discovery, explainable ranking and
+  calibration contracts.
+- RO-Crate/W3C PROV-style exports, accessible diagnostics and institutional
+  governance decisions.
+- Kani proof harnesses, Loom concurrency models, Miri/`cargo-careful` jobs and
+  three cargo-fuzz targets.
+- Eight exact-revision integration passports, eight consumer-contract
+  interactions and read-only drift surveillance.
+- Sourceright symbol/parity/cutover packet and a 15-repository estate migration
+  inventory.
+- One roadmap epic, 31 track issue bodies and 124 phase subissue bodies, with
+  dry-run-first idempotent synchronisation.
+- CI, CodeQL, dependency review, cargo-deny/audit/machete, Scorecard, Gitleaks,
+  Codecov, coverage, mutation, SBOM, clean-room builds, reproducible packaging
+  and build attestations.
+- Registry/JOSS packets held at prepared-not-submitted status.
 
-## Not completed or not claimed
+## Current source evidence
 
-- **Rust compilation**, formatting, Clippy, unit/integration/end-to-end/property/
-  metamorphic/contract tests, documentation build, coverage, mutation testing or
-  fuzzing.
-- `Cargo.lock` generation or dependency resolution against crates.io.
-- **Live provider calls**, licensed-database adapters or remote MCP client
-  interoperability testing.
-- Actual removal of custom code from Sourceright or any other repository; the
-  supplied migration packet requires dual-run parity before deletion.
-- **GitHub repository creation/push**, pull requests, tags, releases or package
-  publication.
-- **Conductor plugin installation** in the generation runtime; version-aware
-  installation/bootstrap scripts and all Conductor project artefacts are
-  prepared, but no compatible Gemini/Antigravity/Claude host executable was
-  available here.
-- Registry submission, verification, acceptance or listing by the official MCP
-  Registry, Glama, Smithery, crates.io, GitHub Marketplace or JOSS.
-- Browser rendering of every Mermaid diagram. The container architecture was
-  rendered successfully; the remaining diagrams were source-checked only.
-- Crash-consistency, multi-writer locking and cross-platform replacement parity
-  for the local store.
+The source tree currently contains and checks:
 
-These limitations are release blockers, not deferred evidence. The first safe
-cutover target is a compiler-verified deterministic MVP followed by a
-fixture-parity Sourceright integration; autonomous exclusion and mature hosted
-operation remain later tracks.
+- 37 schemas and 37 schema examples;
+- 31 Conductor tracks and 70 MoSCoW requirements;
+- 218 declared source deliverables, 56 deterministic source checks and 87
+  explicit higher-evidence blockers;
+- 27 crate manifests and 57 Rust source files;
+- 31 CLI/MCP/facade operations;
+- 8 integration passports and 8 consumer-contract interactions;
+- 156 prepared GitHub hierarchy nodes;
+- 24 mapped Sourceright symbols, 7 parity cases and 10 parity dimensions;
+- 47 immutable GitHub Action references;
+- a 20-dimension assurance matrix and 22-command aggregate static harness;
+- source-component SBOM and deterministic source-package consistency.
+
+These checks are lexical, structural and contract-semantic. They are not a Rust
+compiler substitute.
+
+## Open evidence gates
+
+### Local environment blockers
+
+- Rust compilation has not yet been evidenced in this session.
+- `Cargo.lock` has not yet been generated and committed.
+- Formatting, Clippy, compilation, unit/integration/property/metamorphic tests,
+  documentation, coverage, mutation, fuzzing, Kani, Loom, Miri and
+  `cargo-careful` have source/configuration but no local execution receipt.
+
+### Integration blockers
+
+- No producer and consumer repository have both executed the prepared
+  consumer-contract suite.
+- No dual-run was executed in a checked-out Sourceright repository.
+- No custom search code was removed from downstream repositories.
+- **Live provider calls** were not executed; no PubMed, Europe PMC, Crossref,
+  OpenAlex or ClinicalTrials.gov receipt was produced.
+- Licensed platforms require user-provided access, terms review and redacted live
+  evidence.
+- Remote HTTP/OAuth MCP and WASI runtime conformance remain higher-evidence work.
+- Conductor plugin installation was not performed because no compatible host
+  executable was present; host-aware installers and setup artefacts are checked
+  in.
+
+### Human and external blockers
+
+- PRESS review and usability testing by information specialists.
+- Human calibration of advisory ranking and agent recommendations.
+- Independent methodological, security and privacy evaluation.
+- Remote GitHub repository creation/push, issue hierarchy apply, signed release,
+  crates.io publication and registry submission were not performed.
+- Acceptance by the official MCP Registry, Glama, Smithery, JOSS or any journal.
+
+## Git and claim boundary
+
+Git is the local source of truth. Generated Conductor evidence, context locks and
+GitHub issue bodies are reproducible projections from committed source data.
+The source may be described as **source-implemented and statically validated**.
+It must not yet be described as compiler-verified, production-ready,
+live-provider proven, downstream-compatible, registry-listed, independently
+validated or as having replaced downstream code.
+
+The next safe gate is to generate and commit `Cargo.lock`, run the full
+cross-platform compiler/test/security harness, then execute producer–consumer
+fixtures and Sourceright dual-run parity before any deletion or public release
+claim.

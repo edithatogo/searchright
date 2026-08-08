@@ -1,0 +1,56 @@
+{
+  "schema_version": "org.searchright.integration-locks.v1",
+  "generated_at": "2026-08-06",
+  "automatic_updates": false,
+  "repositories": [
+    {
+      "repository": "edithatogo/citeweft",
+      "revision": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+      "default_branch": "main",
+      "passport": "integration/passports/citeweft-document-evidence.json"
+    },
+    {
+      "repository": "edithatogo/sourceright",
+      "revision": "89f3d1a08037057160700df5bba319a64500b791",
+      "default_branch": "main",
+      "passport": "integration/passports/sourceright-shared-search-core.json"
+    },
+    {
+      "repository": "edithatogo/repository-standards",
+      "revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+      "default_branch": "main",
+      "passport": "integration/passports/repository-standards-inheritance.json"
+    },
+    {
+      "repository": "edithatogo/api-standards",
+      "revision": "5a706a7600c8c54ec63b4ab2716fcf7d8bababcf",
+      "default_branch": "main",
+      "passport": "integration/passports/api-standards-conformance.json"
+    },
+    {
+      "repository": "edithatogo/PRISMA.jl",
+      "revision": "95d5aa46c6cda6fb2d014391209d666349b577dc",
+      "default_branch": "main",
+      "passport": "integration/passports/prisma-jl-flow-interop.json"
+    },
+    {
+      "repository": "edithatogo/academic-research-skills",
+      "revision": "734dd23e03e7261db9204702be9221119a30d7d2",
+      "default_branch": "main",
+      "passport": "integration/passports/academic-research-skills-systematic-search.json"
+    },
+    {
+      "repository": "edithatogo/standards_check",
+      "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+      "default_branch": "main",
+      "passport": "integration/passports/standards-check-reporting-packs.json"
+    },
+    {
+      "repository": "edithatogo/synergy-dataset",
+      "revision": "dc2dadfdbb98eb1b4259604789abd640aa3b693e",
+      "default_branch": "master",
+      "passport": "integration/passports/synergy-screening-benchmark.json"
+    }
+  ],
+  "update_policy": "Scheduled checks may report drift but cannot change a pin, dependency, issue, pull request or public claim."
+}

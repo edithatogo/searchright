@@ -1,14 +1,28 @@
 {
-  "schema_version": "conductor.track-metadata.v1",
+  "schema_version": "conductor.track-metadata.v3",
   "track_id": "05",
   "slug": "execution-audit-store",
   "title": "Execution, audit and local storage",
-  "status": "scaffolded",
+  "status": "source_implemented_unverified",
   "created": "2026-08-05",
-  "updated": "2026-08-05",
+  "updated": "2026-08-06",
   "dependencies": [
-    "04"
+    "03"
   ],
-  "evidence_level": "scaffolded",
-  "external_approval_required": false
+  "horizon": "mvp",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/05-execution-audit-store/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-05",
+    "phase_issue_keys": [
+      "track-05-phase-1",
+      "track-05-phase-2",
+      "track-05-phase-3",
+      "track-05-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
 }

@@ -1,0 +1,110 @@
+{
+  "schema_version": "org.searchright.context-manifest.v1",
+  "updated_at": "2026-08-06",
+  "evidence_ceiling": "source_verified",
+  "load_order": [
+    "AGENTS.md",
+    "CONTEXT.md",
+    "context/claim-boundaries.json",
+    "context/decision-ledger.json",
+    "context/capability-matrix.json",
+    "context/hazard-log.json",
+    "conductor/requirements.md",
+    "conductor/roadmap-coverage.json",
+    "integration/consumer-contract-suite.json",
+    "verification/harness-matrix.json"
+  ],
+  "required_context": [
+    {
+      "path": "AGENTS.md",
+      "role": "non-negotiable agent and authority rules"
+    },
+    {
+      "path": "CONTEXT.md",
+      "role": "context entry point and evidence ceiling"
+    },
+    {
+      "path": "context/claim-boundaries.json",
+      "role": "allowed and forbidden public claims"
+    },
+    {
+      "path": "context/decision-ledger.json",
+      "role": "architectural decisions and supersession"
+    },
+    {
+      "path": "context/capability-matrix.json",
+      "role": "default-deny component authority"
+    },
+    {
+      "path": "context/hazard-log.json",
+      "role": "safety hazards, controls and evidence"
+    },
+    {
+      "path": "context/evidence-ledger.json",
+      "role": "repository-wide evidence status"
+    },
+    {
+      "path": "conductor/requirements.md",
+      "role": "versioned product requirements"
+    },
+    {
+      "path": "conductor/roadmap-coverage.json",
+      "role": "track ownership and evidence blockers"
+    },
+    {
+      "path": "contracts/schema-catalog.json",
+      "role": "public persisted contract catalogue"
+    },
+    {
+      "path": "integration/passports/index.json",
+      "role": "active and candidate repository integrations"
+    },
+    {
+      "path": "integration/consumer-contract-suite.json",
+      "role": "consumer-driven cross-repository interaction catalogue"
+    },
+    {
+      "path": "conductor/github/issue-hierarchy.json",
+      "role": "prepared GitHub issue/subissue projection"
+    },
+    {
+      "path": "docs/security/threat-model.md",
+      "role": "security trust boundaries and mitigations"
+    },
+    {
+      "path": "docs/safety/safety-case.md",
+      "role": "structured safety argument and evidence gaps"
+    }
+  ],
+  "context_tiers": {
+    "policy": [
+      "AGENTS.md",
+      "CONTEXT.md",
+      "context/claim-boundaries.json",
+      "context/capability-matrix.json"
+    ],
+    "planning": [
+      "conductor/requirements.md",
+      "conductor/roadmap-coverage.json",
+      "conductor/tracks.md"
+    ],
+    "architecture": [
+      "conductor/design.md",
+      "docs/architecture.md",
+      "docs/adrs/"
+    ],
+    "integration": [
+      "integration/passports/",
+      "migration/",
+      "conductor/github/",
+      "integration/consumer-contract-suite.json"
+    ],
+    "verification": [
+      "scripts/",
+      "verification/receipts/",
+      ".github/workflows/",
+      "verification/harness-matrix.json"
+    ]
+  },
+  "claim_boundary": "Context artefacts constrain work and claims but cannot promote their own evidence level."
+}

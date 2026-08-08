@@ -1,0 +1,22 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: campbell-search
+family: campbell
+version: current
+source: Campbell Collaboration evidence synthesis guidance
+provenance_note: Search conduct and documentation expectations represented as summaries.
+  Consult the authoritative source for exact wording and interpretation.
+items:
+- item_id: campbell-grey
+  label: Grey literature
+  requirement_summary: Search appropriate grey literature to reduce dissemination
+    bias.
+  scope: conduct
+  crosswalks:
+  - jbi-grey-literature
+- item_id: campbell-search-log
+  label: Search log
+  requirement_summary: Retain source, platform, query, date and result-count evidence.
+  scope: conduct_and_reporting
+  crosswalks:
+  - prisma-s-13
+  - prisma-s-15

@@ -1,0 +1,21 @@
+schema_version: org.searchright.agent-workflow.v1
+steps:
+- stage: scope
+  authority: human_confirmation
+  required_inputs: []
+  outputs:
+  - review-plan-draft
+  blocking_conditions:
+  - question unresolved
+- stage: full_text_screening
+  authority: human_only
+  required_inputs:
+  - full text
+  - eligibility contract
+  outputs:
+  - screening decisions
+  - exclusion reasons
+  blocking_conditions:
+  - missing full text
+  - unresolved conflict
+screening_authority: advisory_only

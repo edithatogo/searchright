@@ -9,5 +9,6 @@ mod provider;
 pub use audit::{AuditError, AuditLedger, AuditVerification};
 pub use compiler::{COMPILER_VERSION, QueryCompiler};
 pub use provider::{
-    ExecutionResult, ProviderError, ProviderMode, ProviderRegistry, SearchProvider,
+    ExecutionResult, MemoryPageCache, PageCache, ProviderError, ProviderMode, ProviderRegistry,
+    SearchProvider,
 };

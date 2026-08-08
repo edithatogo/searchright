@@ -1,0 +1,14 @@
+schema_version: org.searchright.licensed-adapter.v1
+provider_id: embase-byo
+database: Embase
+platform: Embase.com
+dialect: embase
+credential_environment_variable: SEARCHRIGHT_EMBASE_TOKEN
+live_opt_in_environment_variable: SEARCHRIGHT_EMBASE_LIVE
+allowed_hosts:
+  - embase.com
+export_formats:
+  - ris
+  - csv
+terms_review: Institutional access and current Elsevier platform terms require local review.
+persist_raw_responses: false

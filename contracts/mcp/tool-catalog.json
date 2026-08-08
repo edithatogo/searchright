@@ -17,6 +17,13 @@
       "implementation_status": "implemented"
     },
     {
+      "name": "validate_document_evidence",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "document-evidence.v1",
+      "implementation_status": "implemented"
+    },
+    {
       "name": "compile_strategy",
       "effect": "read_only",
       "authority": "automatic",

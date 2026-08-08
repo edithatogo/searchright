@@ -1,20 +1,44 @@
 name: Coverage
+
 on:
   pull_request:
   push:
     branches: [main]
   workflow_dispatch:
+
 permissions:
   contents: read
+  id-token: write
+
 jobs:
   llvm-cov:
+    name: LLVM coverage
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - run: rustup toolchain install 1.97.1 --profile minimal --component llvm-tools-preview
-      - run: cargo install cargo-llvm-cov --version 0.8.7 --locked
-      - run: cargo llvm-cov --workspace --all-features --locked --lcov --output-path lcov.info --fail-under-lines 91
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust coverage support
+        run: rustup toolchain install 1.97.1 --profile minimal --component llvm-tools-preview
+      - name: Install cargo-llvm-cov
+        run: cargo install cargo-llvm-cov --version 0.8.7 --locked
+      - name: Generate line and branch coverage
+        run: >-
+          cargo llvm-cov --workspace --all-features --locked
+          --branch --lcov --output-path lcov.info --fail-under-lines 91
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        with:
+          files: lcov.info
+          use_oidc: true
+          fail_ci_if_error: true
+          verbose: true
+      - name: Preserve coverage evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: coverage-lcov
           path: lcov.info
+          if-no-files-found: error
+          retention-days: 30

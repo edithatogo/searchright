@@ -1,6 +1,6 @@
 use searchright_contracts::{
     CompiledStrategy, ContractError, QueryExpr, SearchDialect, SearchField, SearchStrategy,
-    SearchTerm, StrategyWarning, Validate,
+    SearchTerm, StrategyWarning, TranslationFidelity, Validate,
 };
 use serde_json::json;
 
@@ -38,11 +38,31 @@ impl QueryCompiler {
         }));
         let hash_bytes = serde_json::to_vec(&hash_input)?;
 
+        let review_required = warnings.iter().any(|item| item.review_required);
+        let loss_codes = warnings
+            .iter()
+            .filter(|item| warning_represents_loss(&item.code))
+            .map(|item| item.code.clone())
+            .collect::<Vec<_>>();
+        let fidelity = if warnings.is_empty() {
+            TranslationFidelity::Exact
+        } else if !loss_codes.is_empty() {
+            TranslationFidelity::Degraded
+        } else if review_required {
+            TranslationFidelity::Approximate
+        } else {
+            TranslationFidelity::SourceEquivalent
+        };
+
         Ok(CompiledStrategy {
+            schema_version: searchright_contracts::COMPILED_STRATEGY_SCHEMA_VERSION.to_owned(),
             strategy_id: strategy.strategy_id.clone(),
             dialect,
             query: rendered,
             warnings,
+            fidelity,
+            review_required,
+            loss_codes,
             compilation_hash: blake3::hash(&hash_bytes).to_hex().to_string(),
             compiler_version: COMPILER_VERSION.to_owned(),
         })
@@ -425,6 +445,21 @@ fn append_limits(
     }
 }
 
+
+fn warning_represents_loss(code: &str) -> bool {
+    [
+        ".lossy",
+        ".degraded",
+        ".generic",
+        ".manual",
+        ".fallback",
+        ".review",
+        "target_differs",
+    ]
+    .iter()
+    .any(|marker| code.contains(marker))
+}
+
 fn escape_quotes(value: &str) -> String {
     value.replace('"', "\\\"")
 }
@@ -490,6 +525,20 @@ mod tests {
             assert_eq!(left, right);
             assert!(left.query.contains("[Title/Abstract]"));
             assert!(left.query.contains("[MeSH Terms]"));
+            assert_eq!(left.fidelity, TranslationFidelity::Exact);
+            assert!(!left.review_required);
+            assert!(left.loss_codes.is_empty());
+        }
+    }
+
+    #[test]
+    fn lossy_target_requires_review_and_exposes_codes() {
+        let result = QueryCompiler::compile(&strategy(), SearchDialect::Crossref);
+        assert!(result.is_ok());
+        if let Ok(result) = result {
+            assert_eq!(result.fidelity, TranslationFidelity::Degraded);
+            assert!(result.review_required);
+            assert!(!result.loss_codes.is_empty());
         }
     }
 }

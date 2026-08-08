@@ -1,0 +1,19 @@
+{
+  "schema_version": "org.searchright.maturity-dossier.v1",
+  "target_version": "1.0.0",
+  "decision": "not_ready",
+  "last_reviewed": "2026-08-06",
+  "domains": [
+    {"domain": "contracts", "state": "source_verified", "critical_blocker": false},
+    {"domain": "compiler", "state": "not_evidenced", "critical_blocker": true},
+    {"domain": "determinism", "state": "source_implemented_unverified", "critical_blocker": true},
+    {"domain": "providers", "state": "fixture_source_only", "critical_blocker": true},
+    {"domain": "methodology", "state": "evaluation_prepared", "critical_blocker": true},
+    {"domain": "security", "state": "automation_prepared", "critical_blocker": true},
+    {"domain": "interfaces", "state": "source_parity_verified", "critical_blocker": true},
+    {"domain": "migration", "state": "integration_prepared", "critical_blocker": true},
+    {"domain": "usability", "state": "not_evidenced", "critical_blocker": true},
+    {"domain": "operations", "state": "release_prepared", "critical_blocker": true}
+  ],
+  "claim": "Searchright is not ready for a 1.0 claim."
+}

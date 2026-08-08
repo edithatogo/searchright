@@ -1,0 +1,66 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "sourceright-shared-search-core",
+  "repository": "edithatogo/sourceright",
+  "revision": "89f3d1a08037057160700df5bba319a64500b791",
+  "default_branch": "main",
+  "mode": "generated_adapter",
+  "dependency_direction": "bidirectional_via_neutral_contract",
+  "feature_flag": "sourceright-compat",
+  "inputs": [
+    {
+      "name": "Sourceright provider parity fixtures",
+      "version": "sourceright.live_provider_smoke.v1",
+      "path": "migration/sourceright/parity-cases.json",
+      "required": true
+    },
+    {
+      "name": "Sourceright extraction adapter output",
+      "version": "sourceright verification sidecar",
+      "path": "src/citeweft_adapter.rs",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Evidence search core provider runtime",
+      "version": "org.searchright.provider-page.v1",
+      "path": "contracts/json-schema/provider-page.v1.schema.json",
+      "required": true
+    },
+    {
+      "name": "Sourceright parity report",
+      "version": "org.searchright.sourceright-parity-report.v1",
+      "path": "contracts/json-schema/sourceright-parity-report.v1.schema.json",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "fixture_read",
+    "metadata_read",
+    "parity_report_write"
+  ],
+  "verification": [
+    {
+      "id": "migration-map",
+      "command": "python scripts/check_sourceright_migration.py",
+      "evidence_level": "source_verified",
+      "required": true
+    },
+    {
+      "id": "dual-run",
+      "command": "cargo test -p searchright-sourceright-compat --locked",
+      "evidence_level": "fixture_proven",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Keep the Sourceright legacy provider runtime behind its compatibility feature.",
+    "Switch the downstream default back without deleting shared receipts or parity evidence."
+  ],
+  "claim_boundary": "Searchright only prepares the shared runtime and parity contract; Sourceright code is not replaced until downstream dual-run and rollback evidence exists."
+}

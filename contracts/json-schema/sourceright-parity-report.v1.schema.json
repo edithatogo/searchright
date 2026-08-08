@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/sourceright-parity-report.v1.schema.json",
+  "title": "Sourceright Parity Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "legacy_revision",
+    "shared_revision",
+    "case_ids",
+    "dimensions",
+    "cutover_ready",
+    "blockers",
+    "generated_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.sourceright-parity-report.v1"
+    },
+    "legacy_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "shared_revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "case_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dimension",
+          "legacy_digest",
+          "shared_digest",
+          "equivalent",
+          "approved_difference_id",
+          "note"
+        ],
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "minLength": 1
+          },
+          "legacy_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "shared_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "equivalent": {
+            "type": "boolean"
+          },
+          "approved_difference_id": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "cutover_ready": {
+      "type": "boolean"
+    },
+    "blockers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

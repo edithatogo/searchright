@@ -1,0 +1,60 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "academic-research-skills-systematic-search",
+  "repository": "edithatogo/academic-research-skills",
+  "revision": "734dd23e03e7261db9204702be9221119a30d7d2",
+  "default_branch": "main",
+  "mode": "mcp",
+  "dependency_direction": "downstream_consumes_searchright",
+  "feature_flag": null,
+  "inputs": [
+    {
+      "name": "Systematic-review workflow requirements",
+      "version": "observed-2026-05-03",
+      "path": "deep-research/references/systematic_review_protocol.md",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Searchright systematic-search skill",
+      "version": "1",
+      "path": "skills/systematic-search/SKILL.md",
+      "required": true
+    },
+    {
+      "name": "Searchright MCP tool catalogue",
+      "version": "0.1.0",
+      "path": "contracts/mcp/tool-catalog.json",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "mcp_read",
+    "mcp_tool_call",
+    "workspace_write_preview"
+  ],
+  "verification": [
+    {
+      "id": "skill-contract",
+      "command": "python scripts/check_context_integrity.py",
+      "evidence_level": "source_verified",
+      "required": true
+    },
+    {
+      "id": "mcp-transcript",
+      "command": "cargo test -p searchright-mcp --locked",
+      "evidence_level": "fixture_proven",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Retain the downstream skill execution path behind a feature or configuration switch.",
+    "Fall back to human-guided protocol steps without provider execution."
+  ],
+  "claim_boundary": "Searchright supplies execution and evidence tools; academic-research-skills retains higher-level orchestration and human integrity gates."
+}

@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/study-graph.v1.schema.json",
+  "title": "Searchright Study Graph v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "reports",
+    "studies",
+    "links"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.study-graph.v1"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "report_id",
+          "record_ids",
+          "title",
+          "publication_year",
+          "doi",
+          "pmid",
+          "registry_ids",
+          "retrieval_attempts"
+        ],
+        "properties": {
+          "report_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "record_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publication_year": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": -10000,
+            "maximum": 30000
+          },
+          "doi": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "pmid": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "registry_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "retrieval_attempts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "attempt_id",
+                "report_id",
+                "attempted_at",
+                "method",
+                "status",
+                "note",
+                "rights_basis",
+                "content_digest"
+              ],
+              "properties": {
+                "attempt_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "report_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "attempted_at": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "method": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "oneOf": [
+                    {
+                      "enum": [
+                        "not_attempted",
+                        "retrieved",
+                        "not_retrieved",
+                        "restricted",
+                        "unavailable",
+                        "awaiting_contact"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "other"
+                      ],
+                      "properties": {
+                        "other": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    }
+                  ]
+                },
+                "note": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "rights_basis": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "content_digest": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "studies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "study_id",
+          "report_ids",
+          "label",
+          "study_design",
+          "registration_ids",
+          "notes"
+        ],
+        "properties": {
+          "study_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "report_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "study_design": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "registration_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "link_id",
+          "from_id",
+          "to_id",
+          "relationship",
+          "confidence",
+          "evidence",
+          "asserted_by",
+          "asserted_at"
+        ],
+        "properties": {
+          "link_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "from_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "to_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relationship": {
+            "oneOf": [
+              {
+                "enum": [
+                  "record_describes_report",
+                  "report_of_study",
+                  "protocol_for_study",
+                  "secondary_analysis_of_study",
+                  "updates_report",
+                  "duplicate_of"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "custom"
+                ],
+                "properties": {
+                  "custom": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "asserted_by": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asserted_at": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

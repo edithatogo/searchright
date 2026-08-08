@@ -1,0 +1,56 @@
+{
+  "schema_version": "org.searchright.claim-boundaries.v1",
+  "current_evidence_ceiling": "source_verified",
+  "allowed_claims": [
+    "The source repository contains versioned contracts, implementation scaffolds and deterministic static checks.",
+    "CiteWeft integration is prepared behind an optional one-way adapter.",
+    "GitHub issue bodies and subissue relationships are rendered locally in dry-run form.",
+    "Registry and release packets are prepared but not submitted or accepted.",
+    "Eight consumer-driven integration interactions are prepared and locally checked."
+  ],
+  "forbidden_without_additional_evidence": [
+    {
+      "claim": "Rust compiles or tests pass",
+      "required_evidence": "compiler-verified CI receipt and committed Cargo.lock"
+    },
+    {
+      "claim": "provider is supported live",
+      "required_evidence": "authorised redacted live-provider receipt"
+    },
+    {
+      "claim": "CiteWeft is a GROBID fork, port, reimplementation or compatible replacement",
+      "required_evidence": "not an intended claim"
+    },
+    {
+      "claim": "Sourceright custom code has been replaced",
+      "required_evidence": "downstream dual-run, rollback and merged cutover evidence"
+    },
+    {
+      "claim": "GitHub issues or subissues exist remotely",
+      "required_evidence": "explicit apply receipt with observed issue numbers and URLs"
+    },
+    {
+      "claim": "registry listing, publication or release is accepted",
+      "required_evidence": "public URL, version and date"
+    },
+    {
+      "claim": "agent may make final exclusion decisions",
+      "required_evidence": "review policy plus explicit human authority; default remains denied"
+    },
+    {
+      "claim": "methodologically comprehensive search",
+      "required_evidence": "topic-specific expert review and empirical recall evidence"
+    },
+    {
+      "claim": "cross-repository integration is compatible",
+      "required_evidence": "matching producer and consumer receipts tied to the same revisions, contracts and fixtures"
+    }
+  ],
+  "language_rules": [
+    "Use prepared_not_submitted rather than submitted for registry packets.",
+    "Use source-verified rather than implemented-and-tested when Cargo evidence is absent.",
+    "Describe PRISMA-S as reporting guidance, not a conduct certification.",
+    "Describe extraction output as evidence, not canonical bibliographic truth.",
+    "Describe a consumer-contract suite as prepared until both producer and consumer receipts exist."
+  ]
+}

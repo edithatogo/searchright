@@ -1,0 +1,17 @@
+schema_version: org.searchright.standard-assessment.v1
+review_id: demo-review
+pack_id: prisma-s-2021
+pack_version: '2021'
+assessed_at: '2026-08-06T00:00:00Z'
+assessed_by: reporting-auditor
+items:
+- item_id: prisma-s-1
+  state: met
+  evidence:
+  - review-plan.yaml#/information_sources
+  note: Database and platform are recorded.
+- item_id: prisma-s-14
+  state: met
+  evidence:
+  - search-validation.yaml#/press_reviews/0
+  note: PRESS review is documented.

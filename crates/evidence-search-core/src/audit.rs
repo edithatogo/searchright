@@ -1,6 +1,7 @@
 use std::collections::BTreeSet;
 
 use searchright_contracts::{AuditEvent, AuditEventDraft, ContractError, Validate};
+use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 
 /// Append-only in-memory audit ledger. Persistence adapters write these events as JSONL.
@@ -10,7 +11,7 @@ pub struct AuditLedger {
 }
 
 /// Result of verifying an audit chain.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct AuditVerification {
     /// Number of verified events.
     pub event_count: usize,

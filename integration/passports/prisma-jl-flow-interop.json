@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.integration-passport.v1",
+  "default_network": false,
+  "default_external_writes": false,
+  "default_telemetry": false,
+  "automatic_revision_updates": false,
+  "integration_id": "prisma-jl-flow-interop",
+  "repository": "edithatogo/PRISMA.jl",
+  "revision": "95d5aa46c6cda6fb2d014391209d666349b577dc",
+  "default_branch": "main",
+  "mode": "cli_json",
+  "dependency_direction": "bidirectional_via_neutral_contract",
+  "feature_flag": null,
+  "inputs": [
+    {
+      "name": "PRISMA.jl comparison fixtures",
+      "version": "observed-2024-12-23",
+      "path": "PRISMA.jl checklist and flow outputs",
+      "required": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Searchright PRISMA flow",
+      "version": "org.searchright.prisma-flow.v1",
+      "path": "contracts/json-schema/prisma-flow.v1.schema.json",
+      "required": true
+    }
+  ],
+  "allowed_capabilities": [
+    "fixture_read",
+    "json_write"
+  ],
+  "verification": [
+    {
+      "id": "flow-parity-fixtures",
+      "command": "python scripts/validate_repository.py",
+      "evidence_level": "source_verified",
+      "required": true
+    }
+  ],
+  "rollback": [
+    "Keep PRISMA.jl as an independent comparator.",
+    "Do not remove either implementation until cross-language fixture parity is independently reviewed."
+  ],
+  "claim_boundary": "Interop is comparison-first; neither implementation is declared canonical for the other repository without downstream agreement."
+}

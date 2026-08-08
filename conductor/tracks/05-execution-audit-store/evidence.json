@@ -1,0 +1,42 @@
+{
+  "schema_version": "org.searchright.track-evidence.v2",
+  "track_id": "05",
+  "title": "Execution, audit and local storage",
+  "status": "source_implemented_unverified",
+  "evidence_level": "source_verified",
+  "source_verified_on": "2026-08-06",
+  "source_evidence": [
+    "crates/evidence-search-core/src/audit.rs",
+    "crates/searchright-store/src/lib.rs",
+    "contracts/examples/search-run.yaml",
+    "contracts/examples/audit-event.json",
+    "docs/adrs/0002-contract-first-and-event-ledger.md"
+  ],
+  "static_checks": [
+    "python scripts/validate_repository.py"
+  ],
+  "requirements": [
+    "SR-012",
+    "SR-013",
+    "SR-014",
+    "SR-048"
+  ],
+  "blockers": [
+    "Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.",
+    "Complete external review of retention and deletion semantics."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "github_issue_keys": {
+    "epic": "roadmap-epic",
+    "track": "track-05",
+    "phases": [
+      "track-05-phase-1",
+      "track-05-phase-2",
+      "track-05-phase-3",
+      "track-05-phase-4"
+    ]
+  },
+  "remote_github_evidence": [],
+  "runtime_evidence": [],
+  "external_evidence": []
+}

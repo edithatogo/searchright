@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/consumer-contract-suite.v1.schema.json",
+  "title": "Searchright consumer-driven integration contract suite",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "interactions",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.consumer-contract-suite.v1"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interactions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/interaction"
+      }
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "integration_id",
+        "producer",
+        "consumer",
+        "contract_version",
+        "producer_contracts",
+        "consumer_contracts",
+        "fixture_paths",
+        "producer_gates",
+        "consumer_gates",
+        "failure_semantics",
+        "automatic_promotion",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "integration_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": {
+          "type": "string",
+          "pattern": "^[^/\\s]+/[^/\\s]+$"
+        },
+        "consumer": {
+          "type": "string",
+          "pattern": "^[^/\\s]+/[^/\\s]+$"
+        },
+        "contract_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer_contracts": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "consumer_contracts": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "fixture_paths": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "producer_gates": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "consumer_gates": {
+          "$ref": "#/$defs/nonempty_strings"
+        },
+        "failure_semantics": {
+          "type": "string",
+          "minLength": 1
+        },
+        "automatic_promotion": {
+          "const": false
+        },
+        "status": {
+          "enum": [
+            "prepared_not_executed",
+            "fixture_verified",
+            "downstream_verified",
+            "suspended"
+          ]
+        }
+      }
+    },
+    "nonempty_strings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

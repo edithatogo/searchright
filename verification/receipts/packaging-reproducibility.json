@@ -1,0 +1,10 @@
+{
+  "artifacts_compared": 4,
+  "errors": [],
+  "files_checked": 687,
+  "limitations": [
+    "Source archive reproducibility only; release binaries and signed provenance require the release workflow."
+  ],
+  "schema_version": "org.searchright.packaging-reproducibility-receipt.v1",
+  "status": "passed"
+}

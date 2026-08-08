@@ -1,0 +1,30 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "12",
+  "slug": "citeweft-document-evidence",
+  "title": "CiteWeft scholarly extraction and document evidence",
+  "status": "integration_prepared",
+  "created": "2026-08-06",
+  "updated": "2026-08-06",
+  "dependencies": [
+    "01",
+    "06",
+    "07"
+  ],
+  "horizon": "alpha",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/12-citeweft-document-evidence/evidence.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-12",
+    "phase_issue_keys": [
+      "track-12-phase-1",
+      "track-12-phase-2",
+      "track-12-phase-3",
+      "track-12-phase-4"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": []
+  }
+}

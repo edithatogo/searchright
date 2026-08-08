@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/discovery-run.v1.schema.json",
+  "title": "Searchright Discovery Run v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "review_id",
+    "run_id",
+    "method",
+    "seed_ids",
+    "edges",
+    "maximum_depth",
+    "maximum_records",
+    "requires_human_release"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.discovery-run.v1"
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method": {
+      "oneOf": [
+        {
+          "enum": [
+            "backward_citation",
+            "forward_citation",
+            "similar_articles",
+            "trial_registry",
+            "repository",
+            "grey_literature",
+            "handsearch",
+            "contact"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "other"
+          ],
+          "properties": {
+            "other": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "seed_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "edge_id",
+          "seed_id",
+          "discovered_id",
+          "method",
+          "provider_id",
+          "receipt_id"
+        ],
+        "properties": {
+          "edge_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "seed_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "discovered_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method": {
+            "oneOf": [
+              {
+                "enum": [
+                  "backward_citation",
+                  "forward_citation",
+                  "similar_articles",
+                  "trial_registry",
+                  "repository",
+                  "grey_literature",
+                  "handsearch",
+                  "contact"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "other"
+                ],
+                "properties": {
+                  "other": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          },
+          "provider_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receipt_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "maximum_depth": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 255
+    },
+    "maximum_records": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requires_human_release": {
+      "type": "boolean"
+    }
+  }
+}

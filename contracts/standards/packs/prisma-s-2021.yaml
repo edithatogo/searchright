@@ -1,0 +1,36 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: prisma-s-2021
+family: prisma_s
+version: '2021'
+source: PRISMA-S reporting extension
+provenance_note: Reporting extension for literature searches in systematic reviews.
+  Consult the authoritative source for exact wording and interpretation.
+items:
+- item_id: prisma-s-1
+  label: Database name
+  requirement_summary: Identify each database and platform used.
+  scope: reporting
+  crosswalks:
+  - prisma-2020-6
+- item_id: prisma-s-8
+  label: Full search strategies
+  requirement_summary: Report reproducible source-specific strategies.
+  scope: reporting
+  crosswalks:
+  - prisma-2020-7
+- item_id: prisma-s-13
+  label: Dates of searches
+  requirement_summary: Report the date each source was last searched.
+  scope: reporting
+  crosswalks: []
+- item_id: prisma-s-14
+  label: Peer review
+  requirement_summary: Describe whether and how the search strategy was peer reviewed.
+  scope: reporting
+  crosswalks:
+  - press-2015
+- item_id: prisma-s-16
+  label: Deduplication
+  requirement_summary: Describe deduplication methods and software.
+  scope: reporting
+  crosswalks: []

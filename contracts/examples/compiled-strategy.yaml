@@ -1,0 +1,10 @@
+schema_version: org.searchright.compiled-strategy.v1
+strategy_id: strategy-demo-1
+dialect: pub_med
+query: ("inborn errors of metabolism"[Title/Abstract]) AND (genom*[Title/Abstract])
+warnings: []
+fidelity: exact
+review_required: false
+loss_codes: []
+compilation_hash: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+compiler_version: evidence-search-compiler/0.1.0

@@ -1,22 +1,49 @@
 name: Nightly robustness
+
 on:
   schedule:
     - cron: '41 4 * * 2'
   workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
   mutation:
+    name: Mutation testing
     runs-on: ubuntu-latest
+    timeout-minutes: 180
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - run: rustup toolchain install 1.97.1 --profile minimal
-      - run: cargo install cargo-mutants --version 27.1.0 --locked
-      - run: cargo mutants --workspace --timeout 120 --jobs 2
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Rust
+        run: rustup toolchain install 1.97.1 --profile minimal
+      - name: Install cargo-mutants
+        run: cargo install cargo-mutants --version 27.1.0 --locked
+      - name: Run bounded mutation suite
+        run: cargo mutants --workspace --timeout 120 --jobs 2 --output target/mutants
+      - name: Preserve mutation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: mutation-report
+          path: target/mutants
+          if-no-files-found: warn
+          retention-days: 30
+
   nightly-toolchain:
+    name: Forward-compatibility probe
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     continue-on-error: true
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - run: rustup toolchain install nightly --profile minimal
-      - run: cargo +nightly check --workspace --all-targets --all-features
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install nightly Rust
+        run: rustup toolchain install nightly --profile minimal
+      - name: Check workspace on nightly
+        run: cargo +nightly check --workspace --all-targets --all-features

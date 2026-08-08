@@ -1,0 +1,12 @@
+schema_version: org.searchright.diagnostic.v1
+code: strategy.translation.review_required
+severity: blocking
+message: Human translation review is required.
+remediation: Review each material dialect warning.
+evidence_ids:
+- strategy-demo-1
+path: strategies/pubmed.json
+line: 4
+column: 2
+locale: en_au
+blocking: true

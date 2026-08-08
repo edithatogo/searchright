@@ -1,0 +1,20 @@
+schema_version: org.searchright.standard-pack.v1
+pack_id: prisma-lsr-2024
+family: prisma_lsr
+version: '2024'
+source: PRISMA-LSR
+provenance_note: Additional reporting considerations for living systematic reviews
+  and their updates. Consult the authoritative source for exact wording and interpretation.
+items:
+- item_id: prisma-lsr-update-frequency
+  label: Update frequency
+  requirement_summary: Report the planned and actual search/update cadence.
+  scope: reporting
+  crosswalks:
+  - living-update
+- item_id: prisma-lsr-version-lineage
+  label: Version lineage
+  requirement_summary: Link each update to its prior review version and protocol amendments.
+  scope: reporting
+  crosswalks:
+  - protocol-amendment

@@ -1,0 +1,32 @@
+<!-- searchright-issue-key: track-11 -->
+# Track 11: Systematic-search agent skill and workflows
+
+Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints.
+
+## Source of truth
+
+- Spec: `conductor/tracks/11-agentic-skill/spec.md`
+- Plan: `conductor/tracks/11-agentic-skill/plan.md`
+- Evidence: `conductor/tracks/11-agentic-skill/evidence.json`
+
+## Contract
+
+- Horizon: `mvp`
+- Status: `source_implemented_unverified`
+- Evidence: `source_verified`
+- Dependencies: `10`
+- Requirements: `SR-022, SR-026, SR-031`
+- External approval required: `false`
+
+## Phase subissues
+
+- [ ] Phase 1: Source implementation (`track-11-phase-1`)
+- [ ] Phase 2: Source-level verification (`track-11-phase-2`)
+- [ ] Phase 3: Higher-evidence gates (`track-11-phase-3`)
+- [ ] Phase 4: Review and closeout (`track-11-phase-4`)
+
+## Claim boundary
+
+Source-verified implementation only; higher evidence levels require the named open gates.
+
+> Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime/external receipts remain authoritative.

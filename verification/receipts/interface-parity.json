@@ -1,0 +1,9 @@
+{
+  "schema_version": "org.searchright.interface-parity-receipt.v1",
+  "status": "passed",
+  "operations_checked": 31,
+  "errors": [],
+  "limitations": [
+    "Source-level parity only; no CLI binary or MCP protocol transcript was executed."
+  ]
+}

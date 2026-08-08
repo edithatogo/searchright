@@ -1,0 +1,20 @@
+coverage:
+  precision: 2
+  round: down
+  range: 80..100
+  status:
+    project:
+      default:
+        target: 91%
+        threshold: 1%
+    patch:
+      default:
+        target: 90%
+        threshold: 1%
+comment:
+  layout: reach,diff,flags,tree
+  behavior: default
+  require_changes: true
+ignore:
+  - "contracts/**"
+  - "verification/**"

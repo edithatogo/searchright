@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/provider-page.v1.schema.json",
+  "title": "Provider Page",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "records",
+    "next_cursor",
+    "total_available",
+    "diagnostics"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.provider-page.v1"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.searchright.dev/bibliographic-record.v1.schema.json"
+      }
+    },
+    "next_cursor": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_available": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "diagnostics": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {}
+    }
+  }
+}

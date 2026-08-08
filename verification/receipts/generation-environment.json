@@ -1,70 +1,93 @@
 {
-  "claim": "contracted_and_scaffolded_not_compiled",
+  "claim": "source_verified_not_compiler_verified",
   "environment": {
     "cargo_available": false,
     "compatible_conductor_host_available": false,
     "git_version": "2.47.3",
     "github_connector_read_access": true,
-    "github_connector_write_access": false,
+    "github_connector_write_surface_used": false,
     "network_from_container_runtime": false,
     "operating_system": "Linux x86_64",
     "python_version": "3.13.5",
+    "remote_searchright_repository_observed": false,
     "rust_toolchain_available": false,
     "rustc_available": false,
     "rustup_available": false
   },
   "executed": [
-    "Python repository verifier",
     "Draft 2020-12 schema and canonical-example validation",
     "Cross-document semantic invariant validation",
-    "JSON, YAML and TOML parse validation",
-    "MoSCoW and 24-track Conductor completeness validation",
-    "GitHub Action and validation-tool pin validation",
-    "Registry-state truthfulness validation",
-    "Conservative Rust lexical and source-policy validation",
-    "Text hygiene validation",
-    "Python compileall for repository scripts",
-    "Read-only GitHub inspection of Sourceright and relevant repository standards",
-    "Browser rendering of the Searchright container architecture through Mermaid Chart",
-    "Conservative working-tree secret-signature heuristic with zero matches"
+    "CiteWeft adapter symbol and boundary validation against its exact Git revision",
+    "Integration-passport and consumer-driven contract validation",
+    "Offline integration drift validation",
+    "Conductor track, requirement, phase and GitHub issue/subissue hierarchy validation",
+    "Context-lock, hazard, authority, capability and public-claim consistency validation",
+    "CLI, MCP and Rust facade source-parity validation",
+    "Sourceright migration symbol and parity-case validation",
+    "Rust workspace dependency and lexical/source-structure validation",
+    "Workflow least-privilege and immutable-action-reference validation",
+    "GitHub-estate scanner self-test",
+    "Source-component CycloneDX SBOM generation",
+    "Repository-local SHA-256 source-manifest generation",
+    "Deterministic ZIP and tar.gz packaging reproducibility and archive-manifest validation",
+    "Working-tree and complete reachable Git-history secret-signature scan",
+    "Twenty-two-command network-free aggregate static harness",
+    "Read-only inspection of current upstream Conductor, MCP SDK, CiteWeft, Sourceright, GitHub subissues and relevant edithatogo repositories"
   ],
-  "generated_at": "2026-08-05T14:36:00Z",
-  "mermaid_browser_rendering_performed": true,
-  "mermaid_diagrams_rendered": [
-    "conductor/design.md: container design"
+  "generated_at": "2026-08-06T08:16:29.646451Z",
+  "git": {
+    "branch": "main",
+    "configured_remotes": [],
+    "implementation_commit_count": 9,
+    "implementation_head_before_receipts": "771df138e33fd5760c8d0ef96fa097698e232eae",
+    "receipt_refresh_state": "Derived receipt files were already being refreshed while the final source-integrity fix was committed.",
+    "working_tree_clean_before_receipts": false
+  },
+  "implemented_source": {
+    "active_integration_passports": 8,
+    "canonical_schema_examples": 37,
+    "conductor_tracks": 31,
+    "consumer_contract_interactions": 8,
+    "declared_deterministic_checks": 56,
+    "declared_higher_evidence_blockers": 87,
+    "declared_source_deliverables": 218,
+    "interface_operations": 31,
+    "json_schemas": 37,
+    "prepared_github_hierarchy_nodes": 156,
+    "roadmap_requirements": 70,
+    "rust_source_files": 57,
+    "static_harness_gates": 22,
+    "workspace_crates": 27
+  },
+  "limitations": [
+    "The environment lacked an installed Rust toolchain and blocked the attempted official component downloads.",
+    "Static Rust checks do not prove parsing, macro expansion, type checking, linking or execution.",
+    "Prepared cross-repository and GitHub artefacts are not downstream compatibility or remote-state evidence.",
+    "Prepared release and registry surfaces are not public acceptance evidence."
   ],
   "not_executed": [
-    "cargo check or cargo build",
-    "cargo fmt",
-    "cargo clippy",
-    "cargo test or nextest",
-    "cargo llvm-cov",
-    "cargo mutants",
-    "cargo fuzz",
-    "live provider execution",
-    "licensed source execution",
-    "MCP client interoperability testing",
+    "cargo generate-lockfile, metadata, check or build",
+    "cargo fmt or clippy",
+    "cargo test, nextest or documentation tests",
+    "cargo llvm-cov, mutants, fuzz, Kani, Loom, Miri or cargo-careful",
+    "live open-provider execution",
+    "licensed-source execution",
+    "MCP client protocol transcript",
     "Conductor host installation",
-    "remote GitHub write, pull request or release",
-    "registry or package publication",
-    "browser rendering of all remaining Mermaid diagrams",
-    "Gitleaks committed-secret scan"
+    "CiteWeft, Sourceright or estate producer-consumer dual-run/cutover",
+    "remote GitHub repository creation, issue apply, pull request, tag or release",
+    "registry, package or JOSS submission",
+    "external information-specialist, usability, security, privacy or methodological evaluation"
   ],
-  "prepared_artifacts": {
-    "canonical_schema_examples": 7,
-    "conductor_tracks": 24,
-    "github_action_commit_pins": 18,
-    "json_schemas": 7,
-    "rust_source_files": 21,
-    "workspace_crates": 11
-  },
   "rust_compilation_performed": false,
-  "schema_version": "searchright.verification-receipt.v1",
-  "source_observations": {
-    "inspected_blob_sha": "57bc071c6afc7d5a4cb8ead12112919a446ebd24",
-    "inspected_branch": "main",
-    "inspected_path": "src/live_providers.rs",
-    "requested_sourceright_repository": "edithatogo/sourcerightlibrary",
-    "resolved_sourceright_repository": "edithatogo/sourceright"
-  }
+  "schema_version": "org.searchright.generation-environment.v3",
+  "source_implementation_commit": "771df138e33fd5760c8d0ef96fa097698e232eae",
+  "toolchain_attempts": [
+    {
+      "claim_boundary": "No compiler installation or Rust execution is claimed.",
+      "method": "official component archives through the available controlled downloader",
+      "result": "download_failed",
+      "toolchain": "Rust 1.97.1"
+    }
+  ]
 }

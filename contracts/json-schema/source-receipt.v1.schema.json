@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/source-receipt.v1.schema.json",
+  "title": "Source Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "review_id",
+    "run_id",
+    "provider_id",
+    "source_label",
+    "strategy_id",
+    "query_hash",
+    "executed_at",
+    "records_retrieved",
+    "pages_retrieved",
+    "execution_mode",
+    "endpoint",
+    "policy",
+    "provider_version",
+    "compiler_version",
+    "result_digest",
+    "cache_hits",
+    "cache_writes",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.source-receipt.v1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "strategy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "query_hash": {
+      "type": "string",
+      "minLength": 64,
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "executed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "records_retrieved": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "pages_retrieved": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "execution_mode": {
+      "enum": [
+        "fixture",
+        "replay",
+        "live",
+        "mixed-fixture-replay",
+        "mixed-live-replay"
+      ]
+    },
+    "endpoint": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "live_enabled",
+        "max_records",
+        "max_pages",
+        "timeout_seconds",
+        "max_retries",
+        "min_interval_ms",
+        "replay_enabled",
+        "cache_write_enabled"
+      ],
+      "properties": {
+        "live_enabled": {
+          "type": "boolean"
+        },
+        "max_records": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_pages": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "min_interval_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "replay_enabled": {
+          "type": "boolean"
+        },
+        "cache_write_enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "provider_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "compiler_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "result_digest": {
+      "type": "string",
+      "minLength": 64,
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "cache_hits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "cache_writes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

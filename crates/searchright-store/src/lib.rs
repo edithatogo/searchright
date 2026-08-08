@@ -10,12 +10,36 @@ use std::{
 
 use evidence_search_core::{AuditLedger, AuditVerification};
 use searchright_contracts::AuditEvent;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 /// Filesystem-backed review store.
 #[derive(Debug, Clone)]
 pub struct FileReviewStore {
     root: PathBuf,
+}
+
+
+/// Evidence emitted after an atomic derived-snapshot replacement.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct SnapshotReceipt {
+    /// Snapshot name.
+    pub name: String,
+    /// Repository-relative or caller-visible path.
+    pub path: PathBuf,
+    /// BLAKE3 digest of the exact bytes written.
+    pub digest: String,
+    /// Number of bytes written.
+    pub bytes: u64,
+}
+
+struct ReviewLock {
+    path: PathBuf,
+}
+
+impl Drop for ReviewLock {
+    fn drop(&mut self) {
+        let _result = fs::remove_file(&self.path);
+    }
 }
 
 impl FileReviewStore {
@@ -38,6 +62,7 @@ impl FileReviewStore {
     /// This method is safe against accidental chain divergence in a single writer.
     /// Multi-process writers require the file-locking track before they are supported.
     pub fn append_event(&self, event: &AuditEvent) -> Result<(), StoreError> {
+        let _lock = self.acquire_write_lock("append-audit-event")?;
         let mut events = self.read_events()?;
         AuditLedger::from_events(events.clone()).verify()?;
         if events.iter().any(|existing| existing.event_id == event.event_id) {
@@ -106,22 +131,72 @@ impl FileReviewStore {
     /// This is not a cross-filesystem transaction. Directory durability and replacement
     /// semantics remain platform-specific until the crash-consistency hardening track lands.
     pub fn write_snapshot<T: Serialize>(&self, name: &str, value: &T) -> Result<PathBuf, StoreError> {
+        Ok(self.write_snapshot_with_receipt(name, value)?.path)
+    }
+
+    /// Replace a derived snapshot and return a content-addressed receipt.
+    pub fn write_snapshot_with_receipt<T: Serialize>(
+        &self,
+        name: &str,
+        value: &T,
+    ) -> Result<SnapshotReceipt, StoreError> {
         validate_snapshot_name(name)?;
+        let _lock = self.acquire_write_lock("replace-snapshot")?;
         let target = self.root.join("snapshots").join(format!("{name}.json"));
         let temporary = self
             .root
             .join("snapshots")
             .join(format!(".{name}.{}.tmp", uuid::Uuid::now_v7()));
+        let mut bytes = serde_json::to_vec_pretty(value)?;
+        bytes.push(b'\n');
         {
             let file = File::create(&temporary)?;
             let mut writer = BufWriter::new(file);
-            serde_json::to_writer_pretty(&mut writer, value)?;
-            writer.write_all(b"\n")?;
+            writer.write_all(&bytes)?;
             writer.flush()?;
             writer.get_ref().sync_all()?;
         }
         fs::rename(&temporary, &target)?;
-        Ok(target)
+        sync_directory(target.parent())?;
+        Ok(SnapshotReceipt {
+            name: name.to_owned(),
+            path: target,
+            digest: blake3::hash(&bytes).to_hex().to_string(),
+            bytes: u64::try_from(bytes.len()).unwrap_or(u64::MAX),
+        })
+    }
+
+    /// Remove a stale writer lock after an operator has established that no writer is active.
+    pub fn clear_stale_write_lock(&self) -> Result<bool, StoreError> {
+        let path = self.root.join(".write.lock");
+        if path.exists() {
+            fs::remove_file(path)?;
+            Ok(true)
+        } else {
+            Ok(false)
+        }
+    }
+
+    fn acquire_write_lock(&self, operation: &str) -> Result<ReviewLock, StoreError> {
+        let path = self.root.join(".write.lock");
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(&path)
+            .map_err(|source| {
+                if source.kind() == std::io::ErrorKind::AlreadyExists {
+                    StoreError::WriterLocked
+                } else {
+                    StoreError::Io(source)
+                }
+            })?;
+        writeln!(
+            file,
+            "pid={} operation={operation}",
+            std::process::id()
+        )?;
+        file.sync_all()?;
+        Ok(ReviewLock { path })
     }
 }
 
@@ -146,6 +221,9 @@ pub enum StoreError {
     /// Snapshot name could escape its directory.
     #[error("invalid snapshot name")]
     InvalidSnapshotName,
+    /// Another process or operation currently holds the single-writer lock.
+    #[error("review store is locked by another writer; inspect or explicitly clear a stale lock")]
+    WriterLocked,
     /// Event identifier was already present in the ledger.
     #[error("audit event identifier `{0}` is already present")]
     DuplicateEventId(String),
@@ -155,6 +233,22 @@ pub enum StoreError {
     /// Candidate event did not point to the current persisted head.
     #[error("audit previous-hash mismatch: expected `{expected}`, found `{actual}`")]
     PreviousHashMismatch { expected: String, actual: String },
+}
+
+#[cfg(unix)]
+fn sync_directory(path: Option<&Path>) -> Result<(), StoreError> {
+    if let Some(path) = path {
+        File::open(path)?.sync_all()?;
+    }
+    Ok(())
+}
+
+#[cfg(not(unix))]
+fn sync_directory(_path: Option<&Path>) -> Result<(), StoreError> {
+    // Rust's standard library does not expose a portable directory fsync primitive.
+    // File contents are still synced before rename; platform-specific durability is
+    // reported as a capability limitation rather than silently overclaimed.
+    Ok(())
 }
 
 fn validate_snapshot_name(name: &str) -> Result<(), StoreError> {
@@ -179,6 +273,28 @@ mod tests {
     use serde_json::json;
 
     use super::*;
+
+    #[test]
+    fn snapshot_receipt_matches_exact_bytes() {
+        let directory = std::env::temp_dir().join(format!(
+            "searchright-snapshot-test-{}",
+            uuid::Uuid::now_v7()
+        ));
+        let store = FileReviewStore::open(&directory);
+        assert!(store.is_ok());
+        if let Ok(store) = store {
+            let receipt = store.write_snapshot_with_receipt("records", &json!({"a": 1}));
+            assert!(receipt.is_ok());
+            if let Ok(receipt) = receipt {
+                let bytes = fs::read(&receipt.path);
+                assert!(bytes.is_ok());
+                if let Ok(bytes) = bytes {
+                    assert_eq!(receipt.digest, blake3::hash(&bytes).to_hex().to_string());
+                }
+            }
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
 
     #[test]
     fn persisted_ledger_round_trips() {

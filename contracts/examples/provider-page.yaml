@@ -1,0 +1,34 @@
+schema_version: org.searchright.provider-page.v1
+records:
+- schema_version: org.searchright.bibliographic-record.v1
+  record_id: record-demo-1
+  source_receipt_id: receipt-demo-1
+  native_id: PMID:12345678
+  kind: journal_article
+  identifiers:
+    doi: 10.1000/searchright.demo
+    pmid: '12345678'
+    pmcid: null
+    trial_registration: null
+    openalex: null
+    isbn: null
+    other: {}
+  title: Synthetic bibliographic record for Searchright contract testing
+  abstract_text: Synthetic content only; not a real study.
+  authors:
+  - Searchright Fixture
+  container_title: Searchright Test Corpus
+  publication_year: 2026
+  publication_date: '2026-08-06'
+  languages:
+  - en
+  subjects:
+  - systematic review
+  urls:
+  - https://example.invalid/record-demo-1
+  provider_metadata:
+    synthetic: true
+next_cursor: null
+total_available: 1
+diagnostics:
+  fixture: true

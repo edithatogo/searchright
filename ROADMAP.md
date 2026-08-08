@@ -1,46 +1,76 @@
 # Roadmap
 
-## Horizon 0 — Foundation and executable contracts
+The roadmap is implementation- and evidence-driven. Every track has source
+artefacts, a machine-readable `evidence.json`, explicit higher-evidence blockers
+and an ordered dependency graph in `conductor/roadmap-coverage.json`. Each track
+maps to a GitHub issue; each of its four phases maps to a native subissue.
 
-- Establish shared-core architecture, Conductor context and repository standards.
-- Stabilise review-plan/query/receipt/audit/screening/PRISMA schemas.
-- Compile and pass strict deterministic gates.
+## Horizon 0 — Foundation (`00`–`03`)
 
-## Horizon 1 — MVP
+- Git, Conductor, toolchain and repository-standard bootstrap.
+- Versioned contract and standards catalogues.
+- Portable query AST with deterministic, review-required loss reporting.
+- Shared bounded provider runtime and reversible Sourceright compatibility.
 
-- PubMed, Europe PMC, Crossref, OpenAlex and import-only RIS/CSL/CSV connectors.
-- Query translation, execution receipts, local append-only store and deduplication.
-- Dual-reviewer screening, exclusion reasons and conflict resolution.
-- CLI, MCP stdio server and systematic-search agent skill.
-- PRISMA-S appendix and PRISMA 2020 flow outputs.
-- Sourceright adoption of `evidence-search-core`.
+**Exit gate:** source-verified architecture plus compiler/fixture evidence for the
+stable kernel; downstream migration remains separately gated.
 
-## Horizon 2 — Public beta
+## Horizon 1 — MVP (`04`–`11`)
 
-- Trial registries, repositories, grey-literature and citation-chaining adapters.
-- PRESS workflow, gold-set recall testing and strategy regression snapshots.
-- MCP Streamable HTTP, OAuth, tasks, subscriptions and response caching.
-- Signed binaries, OCI image, SBOM/provenance and registry submissions.
-- SYNERGY-based screening benchmark and human calibration pilot.
+- Open provider adapters and replay fixtures.
+- Audit, receipts, crash-conscious local storage and deterministic import/export.
+- Conservative deduplication and record-report-study linkage.
+- Governed dual-phase screening and exclusion reasons.
+- PRISMA/PRISMA-S, PRESS and complete search-strategy outputs.
+- Shared Rust facade, CLI, MCP stdio server and systematic-search agent skill.
 
-## Horizon 3 — Product maturity
+**Exit gate:** cross-platform compilation, complete deterministic tests, CLI
+install smoke and MCP protocol transcripts.
 
-- Licensed BYO-access adapters for Embase, Scopus and Web of Science.
-- Search-dialect conformance corpus and cross-platform translation testing.
-- Record-to-report-to-study graph, active-learning prioritisation and living-search
-  updates with amendment tracking.
-- WASI component provider SDK and signed capability manifests.
-- Review-system and citation-manager adapters.
+## Horizon 2 — Alpha integration and release (`12`–`19`)
 
-## Horizon 4 — Bleeding-edge research platform
+- CiteWeft document-evidence adapter with source-span and uncertainty
+  preservation.
+- Pinned integration passports, producer–consumer contract suites, native GitHub
+  issue/subissue mapping and a canonical context spine.
+- Sourceright dual-run adoption and rollback.
+- GitHub-estate code inventory and repository-specific replacements.
+- Maximal quality/security harness, source SBOM and supply-chain policy.
+- Search, deduplication and prioritisation benchmark infrastructure.
+- Signed reproducible alpha release and truthful registry/JOSS packets.
 
-- Agent teams for strategy generation, adversarial PRESS review and update
-  surveillance with calibrated uncertainty.
-- Retrieval simulation, metamorphic search tests and sensitivity/precision
-  estimation against benchmark corpora.
-- Privacy-preserving institutional deployment and federated review artefacts.
-- Formal contract refinement and model checking for workflow invariants.
-- External methodological evaluation and software paper.
+**Exit gate:** committed lockfile, >90% evidenced coverage, mutation/security
+receipts, signed artefacts, producer–consumer receipts and downstream migration
+proof. Prepared packets are not submission or acceptance.
 
-Detailed sequencing, acceptance criteria and evidence gates are in
-`conductor/tracks.md` and each track's `spec.md`/`plan.md`.
+## Horizon 3 — Public beta and experimental edge (`20`–`24`)
+
+- Grey literature, registers, repositories, citation chaining and contacts.
+- Licensed BYO-access profiles and user-authorised transports.
+- Living-review updates, amendments and prior-run lineage.
+- Transparent calibrated prioritisation with no autonomous exclusion.
+- Sandboxed WASI providers and authenticated remote MCP design.
+
+**Exit gate:** source-specific live receipts, human calibration, component
+conformance, transport threat model and backward-compatible MCP evidence.
+
+## Horizon 4 — Mature research infrastructure (`25`–`30`)
+
+- RO-Crate and W3C PROV research-object exports.
+- Formal workflow assurance and contract-evolution policy.
+- Accessible diagnostics, internationalisation readiness and usability testing.
+- Institutional data governance, least privilege and collaboration controls.
+- Independent methodological evaluation and sustainability evidence.
+- Multi-domain version 1.0 maturity dossier.
+
+**Exit gate:** compiler, fixture, live-provider, interoperability, migration,
+security, usability and external-evaluation evidence with no critical blocker.
+
+## Current position
+
+All 31 tracks have source deliverables and evidence-aware plans. The generated
+planning projection contains one epic, 31 track issues and 124 phase subissues.
+Source-level implementation is broad, but compiler, live-provider,
+downstream-repository, human-evaluation and external-publication gates remain
+open where not executed. `PROJECT_STATUS.md` and the machine-readable receipts
+are the claim authority.

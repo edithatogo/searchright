@@ -1,0 +1,10 @@
+{
+  "candidate_integrations": 8,
+  "errors": [],
+  "limitations": [
+    "Source-level validation only; downstream compilation and consumer-driven tests remain separate evidence."
+  ],
+  "passports_checked": 8,
+  "schema_version": "org.searchright.integration-passport-receipt.v1",
+  "status": "passed"
+}

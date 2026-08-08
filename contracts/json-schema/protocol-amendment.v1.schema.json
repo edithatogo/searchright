@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/protocol-amendment.v1.schema.json",
+  "title": "Searchright Protocol Amendment v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "amendment_id",
+    "review_id",
+    "kind",
+    "version_before",
+    "version_after",
+    "proposed_at",
+    "proposed_by",
+    "decision",
+    "decided_by",
+    "decided_at",
+    "changes",
+    "retrospective_impact",
+    "requires_reprocessing"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.protocol-amendment.v1"
+    },
+    "amendment_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "oneOf": [
+        {
+          "enum": [
+            "scope",
+            "eligibility",
+            "information_sources",
+            "search_strategy",
+            "screening",
+            "analysis",
+            "governance"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "other"
+          ],
+          "properties": {
+            "other": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      ]
+    },
+    "version_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version_after": {
+      "type": "string",
+      "minLength": 1
+    },
+    "proposed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "proposed_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision": {
+      "enum": [
+        "proposed",
+        "approved",
+        "rejected",
+        "withdrawn"
+      ]
+    },
+    "decided_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "decided_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "before",
+          "after",
+          "rationale"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "before": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1
+          },
+          "after": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "retrospective_impact": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requires_reprocessing": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "org.searchright.licensed-adapter-index.v1",
+  "profiles": [
+    "embase.yaml",
+    "scopus.yaml",
+    "web-of-science.yaml"
+  ],
+  "default_execution": "disabled",
+  "credential_values_must_never_be_logged": true,
+  "raw_response_persistence": "disabled_by_default"
+}

@@ -1,0 +1,26 @@
+schema_version: org.searchright.living-update.v1
+review_id: demo-review
+run_id: run-2
+parent_run_id: run-1
+status: completed
+started_at: '2026-08-06T00:00:00Z'
+completed_at: '2026-08-06T00:20:00Z'
+protocol_version: '1.1'
+cursors_before:
+- provider_id: pubmed
+  cursor_kind: date
+  value: '2026-07-01'
+  retrieved_through: '2026-07-31'
+cursors_after:
+- provider_id: pubmed
+  cursor_kind: date
+  value: '2026-08-01'
+  retrieved_through: '2026-08-05'
+changes:
+- record_id: record-2
+  kind: added
+  before_digest: null
+  after_digest: blake3:new-record
+  note: Newly returned by the update search.
+requires_human_release: true
+supersedes_run_id: run-1

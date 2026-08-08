@@ -1,0 +1,9 @@
+{
+  "components_checked": 23,
+  "errors": [],
+  "limitations": [
+    "Static source-policy validation only; runtime sandboxing and host enforcement require compiler and execution evidence."
+  ],
+  "schema_version": "org.searchright.default-deny-receipt.v1",
+  "status": "passed"
+}
