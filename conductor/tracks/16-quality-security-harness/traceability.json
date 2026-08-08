@@ -88,12 +88,21 @@
         "supply-chain/audits.toml",
         ".github/workflows/security.yml",
         ".github/workflows/public-api.yml",
-        "requirements/rust-tools.json"
+        "requirements/rust-tools.json",
+        "verification/gate-catalog.json",
+        "verification/architecture-policy.json",
+        "scripts/check_gate_catalog.py",
+        "scripts/check_architecture_fitness.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_gate_catalog.py::main",
+        "scripts/check_architecture_fitness.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_toolchain_manifest.py",
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/check_gate_catalog.py --check",
+        "python scripts/check_architecture_fitness.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/16-quality-security-harness/evidence.json"
@@ -101,7 +110,7 @@
       "open_gates": [
         "Install and execute cargo-deny, audit, vet, semver, public-api and other configured tools."
       ],
-      "permitted_claim": "Security and API assurance gates are pinned and configured; tool execution is not inferred."
+      "permitted_claim": "Security, supply-chain, API and architecture gates are explicitly catalogued with source-level evidence ceilings; compiler-backed tool execution remains open."
     },
     {
       "assertion_id": "T16-A005",
@@ -111,12 +120,20 @@
       "implementation_paths": [
         "scripts/check_default_deny.py",
         "scripts/check_secrets.py",
-        "context/hazard-log.json"
+        "context/hazard-log.json",
+        "policy/redaction-profile.json",
+        "scripts/redaction.py",
+        "scripts/check_redaction_policy.py",
+        "docs/security/redaction-and-data-minimisation.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/redaction.py::redact_value",
+        "scripts/check_redaction_policy.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_default_deny.py",
-        "python scripts/check_secrets.py"
+        "python scripts/check_secrets.py",
+        "python scripts/check_redaction_policy.py --self-test"
       ],
       "evidence_receipts": [
         "conductor/tracks/16-quality-security-harness/evidence.json"
@@ -124,7 +141,7 @@
       "open_gates": [
         "Compile and run SSRF, parser bomb and resource-exhaustion adversarial tests."
       ],
-      "permitted_claim": "Static authority, secret and hazard controls exist; complete adversarial runtime testing remains open."
+      "permitted_claim": "Static authority, secret, redaction and hazard controls pass deterministic adversarial cases; complete runtime abuse and resource-exhaustion testing remains open."
     },
     {
       "assertion_id": "T16-A006",
@@ -136,14 +153,24 @@
         "scripts/run_static_harness.py",
         "scripts/review_bundle.py",
         "verification/vertical-slice",
-        "scripts/check_vertical_slice.py"
+        "scripts/check_vertical_slice.py",
+        "verification/gate-catalog.json",
+        "verification/evidence-debt.json",
+        "scripts/check_gate_catalog.py",
+        "scripts/generate_evidence_debt.py",
+        "docs/quality/gate-catalog-and-evidence-ceilings.md",
+        "docs/quality/evidence-debt.md"
       ],
       "implementation_symbols": [
-        "scripts/run_static_harness.py::main"
+        "scripts/run_static_harness.py::main",
+        "scripts/check_gate_catalog.py::main",
+        "scripts/generate_evidence_debt.py::main"
       ],
       "deterministic_tests": [
         "python scripts/run_static_harness.py",
-        "python scripts/check_vertical_slice.py"
+        "python scripts/check_vertical_slice.py",
+        "python scripts/check_gate_catalog.py --check",
+        "python scripts/generate_evidence_debt.py --check"
       ],
       "evidence_receipts": [
         "conductor/tracks/16-quality-security-harness/evidence.json"
@@ -151,7 +178,7 @@
       "open_gates": [
         "Generate compiler, coverage, live, external and release receipts at the corresponding evidence levels."
       ],
-      "permitted_claim": "Machine-readable static receipts are produced; higher evidence receipts are not fabricated."
+      "permitted_claim": "Machine-readable static receipts, gate evidence ceilings and evidence-debt registers are produced; higher evidence receipts are not fabricated."
     }
   ]
 }

@@ -44,7 +44,7 @@
       "assertion_id": "T33-A002",
       "statement": "Encrypted backup and restore rehearsal",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-ops/src/lib.rs",
         "crates/searchright-contracts/src/ops.rs",
@@ -55,13 +55,20 @@
         "docs/operations/reliability.md",
         "docs/operations/backup-restore.md",
         "docs/operations/incident-response.md",
-        ".github/workflows/resilience.yml"
+        ".github/workflows/resilience.yml",
+        "scripts/recovery_rehearsal.py",
+        "verification/recovery/rehearsal.json",
+        "docs/operations/recovery-reference-rehearsal.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/recovery_rehearsal.py::run_rehearsal",
+        "scripts/recovery_rehearsal.py::restore"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/recovery_rehearsal.py --self-test"
       ],
       "evidence_receipts": [
         "conductor/tracks/33-operational-reliability/evidence.json"
@@ -71,7 +78,7 @@
         "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
         "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Atomic replacement, local hash-addressed restore idempotency and tamper rejection pass a deterministic reference rehearsal; encryption and production recovery objectives are not proven."
     },
     {
       "assertion_id": "T33-A003",

@@ -8,8 +8,8 @@ Conductor programme. Conductor and its evidence records remain canonical.
 - one roadmap epic;
 - 38 Conductor track issues;
 - 152 nested phase subissues;
-- 373 nested task subissues corresponding to every top-level Conductor task;
-- 564 Project items and 563 native parent-child relationships in total.
+- 377 nested task subissues corresponding to every top-level Conductor task;
+- 568 Project items and 567 native parent-child relationships in total.
 
 ## Evidence rules
 

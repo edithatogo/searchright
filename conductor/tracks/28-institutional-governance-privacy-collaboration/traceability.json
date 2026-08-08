@@ -19,11 +19,17 @@
         "contracts/examples/data-handling-request.yaml",
         "contracts/examples/data-handling-decision.yaml",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/security/threat-model.md"
+        "docs/security/threat-model.md",
+        "policy/redaction-profile.json",
+        "scripts/redaction.py",
+        "scripts/check_redaction_policy.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/redaction.py::redact_value"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_redaction_policy.py --self-test"
       ],
       "evidence_receipts": [
         "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json"
@@ -39,7 +45,7 @@
       "assertion_id": "T28-A002",
       "statement": "Data classification, purpose, storage and retention rules.",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-governance/src/lib.rs",
         "crates/searchright-contracts/src/governance.rs",
@@ -47,11 +53,19 @@
         "contracts/examples/data-handling-request.yaml",
         "contracts/examples/data-handling-decision.yaml",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/security/threat-model.md"
+        "docs/security/threat-model.md",
+        "policy/redaction-profile.json",
+        "scripts/redaction.py",
+        "scripts/check_redaction_policy.py",
+        "docs/security/redaction-and-data-minimisation.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/redaction.py::redact_url",
+        "scripts/redaction.py::redact_value"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_redaction_policy.py --self-test"
       ],
       "evidence_receipts": [
         "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json"
@@ -61,7 +75,7 @@
         "Obtain institutional privacy, records and security review for a deployment profile.",
         "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Data classification and default receipt minimisation are explicit and adversarially exercised; de-identification and institutional approval are not claimed."
     },
     {
       "assertion_id": "T28-A003",

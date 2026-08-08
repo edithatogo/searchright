@@ -9,7 +9,7 @@ use std::{collections::BTreeMap, sync::Arc};
 
 use async_trait::async_trait;
 use evidence_search_core::{ProviderError, ProviderMode, ProviderRegistry, SearchProvider};
-use searchright_contracts::{
+use evidence_search_contracts::{
     BibliographicRecord, ProviderCapability, ProviderManifest, ProviderPage, ProviderSupportLevel,
     RecordIdentifiers, RecordKind, SearchRequest,
 };
@@ -59,7 +59,7 @@ impl FixtureProvider {
         pages.insert(
             None,
             ProviderPage {
-                schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
                 total_available: Some(
                     u64::try_from(records.len()).unwrap_or(u64::MAX),
                 ),
@@ -121,7 +121,7 @@ pub fn register_mvp_fixtures(registry: &mut ProviderRegistry) -> Result<(), Prov
 
 fn demo_record(provider_id: &str, native_id: &str) -> BibliographicRecord {
     BibliographicRecord {
-        schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+        schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
         record_id: format!("{provider_id}-record-1"),
         source_receipt_id: "fixture-receipt".to_owned(),
         native_id: native_id.to_owned(),
@@ -298,7 +298,7 @@ pub fn parse_pubmed_summary_page(
                         .collect()
                 });
             BibliographicRecord {
-                schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
                 record_id: format!("pubmed-{pmid}"),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id: pmid.to_owned(),
@@ -336,7 +336,7 @@ pub fn parse_pubmed_summary_page(
         })
         .collect::<Vec<_>>();
     Ok(ProviderPage {
-        schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+        schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         total_available: Some(u64::try_from(records.len()).unwrap_or(u64::MAX)),
         records,
         next_cursor: None,
@@ -451,7 +451,7 @@ pub fn parse_europe_pmc_page(
         .iter()
         .enumerate()
         .map(|(index, value)| BibliographicRecord {
-            schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+            schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
             record_id: value
                 .get("id")
                 .and_then(Value::as_str)
@@ -498,7 +498,7 @@ pub fn parse_europe_pmc_page(
         })
         .collect();
     Ok(ProviderPage {
-        schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+        schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         records,
         next_cursor: payload
             .get("nextCursorMark")
@@ -532,7 +532,7 @@ pub fn parse_crossref_page(payload: &serde_json::Value) -> Result<ProviderPage, 
             let doi = value.get("DOI").and_then(Value::as_str).map(str::to_owned);
             let native_id = doi.clone().unwrap_or_else(|| format!("crossref-{index}"));
             BibliographicRecord {
-                schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
                 record_id: format!("crossref-{native_id}"),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id,
@@ -574,7 +574,7 @@ pub fn parse_crossref_page(payload: &serde_json::Value) -> Result<ProviderPage, 
         })
         .collect();
     Ok(ProviderPage {
-        schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+        schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         records,
         next_cursor: message
             .get("next-cursor")
@@ -602,7 +602,7 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
             let openalex = value.get("id").and_then(Value::as_str).map(str::to_owned);
             let native_id = openalex.clone().unwrap_or_else(|| format!("openalex-{index}"));
             BibliographicRecord {
-                schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
                 record_id: format!("openalex-{index}"),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id,
@@ -674,7 +674,7 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
         })
         .collect();
     Ok(ProviderPage {
-        schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+        schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         records,
         next_cursor: payload
             .get("meta")
@@ -726,7 +726,7 @@ pub fn parse_clinical_trials_page(
                     items.iter().filter_map(Value::as_str).map(str::to_owned).collect()
                 });
             BibliographicRecord {
-                schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
                 record_id: format!("clinicaltrials-{native_id}"),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id,
@@ -758,7 +758,7 @@ pub fn parse_clinical_trials_page(
         })
         .collect();
     Ok(ProviderPage {
-        schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+        schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         records,
         next_cursor: payload
             .get("nextPageToken")
@@ -880,9 +880,13 @@ mod live {
             .get(endpoint)
             .send()
             .await
-            .map_err(|error| ProviderError::Upstream {
+            .map_err(|_| ProviderError::Upstream {
                 provider: provider.to_owned(),
-                message: error.to_string(),
+                message: concat!(
+                    "network request failed before a response was available; ",
+                    "endpoint and query details were redacted"
+                )
+                .to_owned(),
             })?;
         let status = response.status();
         let retry_after_ms = retry_after_ms(response.headers());
@@ -903,9 +907,13 @@ mod live {
         let bytes = response
             .bytes()
             .await
-            .map_err(|error| ProviderError::Upstream {
+            .map_err(|_| ProviderError::Upstream {
                 provider: provider.to_owned(),
-                message: error.to_string(),
+                message: concat!(
+                    "response body retrieval failed; ",
+                    "endpoint and query details were redacted"
+                )
+                .to_owned(),
             })?;
         let maximum = request
             .policy
@@ -1039,7 +1047,7 @@ mod live {
                 .collect::<Vec<_>>();
             if pmids.is_empty() {
                 return Ok(ProviderPage {
-                    schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+                    schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
                     records: Vec::new(),
                     next_cursor: None,
                     total_available: count,

@@ -3,6 +3,14 @@
   "dimensions": [
     {
       "blocking": true,
+      "dimension": "architecture_fitness",
+      "evidence": "default-deny dependency, network, authority, write-gate and publication placement receipt",
+      "frequency": "every_change",
+      "gate": "scripts/check_architecture_fitness.py",
+      "status": "configured"
+    },
+    {
+      "blocking": true,
       "dimension": "assertion_traceability",
       "evidence": "assertion-to-symbol/test/gate receipt",
       "frequency": "every_change",
@@ -110,6 +118,14 @@
     },
     {
       "blocking": true,
+      "dimension": "evidence_debt_visibility",
+      "evidence": "deterministically derived assertion, gate, provider-policy and maturity debt register",
+      "frequency": "every_change",
+      "gate": "scripts/generate_evidence_debt.py --check",
+      "status": "configured"
+    },
+    {
+      "blocking": true,
       "dimension": "formal_authority",
       "evidence": "proof report",
       "frequency": "changed_assurance_and_weekly",
@@ -123,6 +139,14 @@
       "frequency": "weekly_and_changed_contracts",
       "gate": "cargo-fuzz 0.13.2",
       "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "gate_evidence_ceilings",
+      "evidence": "complete command catalogue with capabilities, assertion coverage and claim ceilings",
+      "frequency": "every_change",
+      "gate": "scripts/check_gate_catalog.py --check",
+      "status": "configured"
     },
     {
       "blocking": true,
@@ -206,6 +230,14 @@
     },
     {
       "blocking": true,
+      "dimension": "provider_policy_governance",
+      "evidence": "endpoint-aligned policy manifests plus current legal/policy review receipts",
+      "frequency": "provider_change_and_release",
+      "gate": "scripts/check_provider_policies.py plus accountable policy review",
+      "status": "static_configured_reviews_open"
+    },
+    {
+      "blocking": true,
       "dimension": "public_api_and_semver",
       "evidence": "public API snapshots, contract-surface review and SemVer reports",
       "frequency": "public_contract_change_and_release",
@@ -214,11 +246,35 @@
     },
     {
       "blocking": true,
+      "dimension": "receipt_redaction",
+      "evidence": "deterministic adversarial minimisation receipt plus runtime leak tests",
+      "frequency": "every_change_and_live_canary",
+      "gate": "scripts/check_redaction_policy.py --self-test plus live receipt inspection",
+      "status": "static_reference_passed_runtime_open"
+    },
+    {
+      "blocking": true,
+      "dimension": "recovery_reference_mechanics",
+      "evidence": "atomic replace, idempotent restore and tamper-rejection reference receipt",
+      "frequency": "every_change",
+      "gate": "scripts/recovery_rehearsal.py --self-test",
+      "status": "reference_rehearsal_passed_production_open"
+    },
+    {
+      "blocking": true,
       "dimension": "release_candidate_and_pilots",
       "evidence": "RC, pilot exit and rollback receipts",
       "frequency": "release_candidate",
       "gate": "scripts/check_release_rehearsal.py and release-candidate workflow",
       "status": "prepared_not_executed"
+    },
+    {
+      "blocking": true,
+      "dimension": "schema_migration_governance",
+      "evidence": "version-family, non-destructive migration, backup and rollback policy receipt",
+      "frequency": "contract_version_change",
+      "gate": "scripts/check_schema_migrations.py plus compiled representative migrations",
+      "status": "static_configured_runtime_open"
     },
     {
       "blocking": true,
@@ -287,5 +343,5 @@
   ],
   "evidence_ceiling": "source_verified",
   "schema_version": "org.searchright.harness-matrix.v1",
-  "updated_at": "2026-08-08"
+  "updated_at": "2026-08-09"
 }

@@ -467,7 +467,7 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
         "repository": "edithatogo/searchright",
         "epic_key": "roadmap-epic",
         "nodes": nodes,
-        "generated_at": "source-epoch:2026-08-08",
+        "generated_at": "source-epoch:2026-08-09",
         "apply_permitted": False,
         "state_sync_policy": "task_issues_only",
         "project_manifest": "conductor/github/project.json",

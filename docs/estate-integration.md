@@ -83,7 +83,7 @@ was changed in this local pass.
 
 ## Portfolio and release governance
 
-The 564-item Searchright delivery Project remains separate from the strategic
+The 568-item Searchright delivery Project remains separate from the strategic
 Evidence Infrastructure Portfolio. The portfolio contains only cross-repository
 contracts, migration, licence and release-train items. The ecosystem lock fixes
 observed component identities and local contract/package digests; it does not

@@ -1,0 +1,11 @@
+{
+  "interfaces": 3,
+  "limitations": [
+    "Exact-byte baseline only; semantic and downstream compatibility require separate evidence."
+  ],
+  "mode": "check",
+  "schema_version": "org.searchright.contract-surface-sync-receipt.v1",
+  "schemas": 60,
+  "stale": false,
+  "status": "passed"
+}

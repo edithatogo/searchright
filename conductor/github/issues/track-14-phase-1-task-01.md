@@ -13,6 +13,8 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `migration/sourceright/parity-cases.json`
   - [x] Present source path: `crates/searchright-sourceright-compat/src/lib.rs`
   - [x] Present source path: `scripts/check_sourceright_migration.py`
+  - [x] Present source path: `migration/companion-repositories/sourceright.json`
+  - [x] Present source path: `docs/integration-architecture.md`
   - [x] Assertion ledger: `conductor/tracks/14-sourceright-migration/traceability.json`
 
 ## Completion and evidence contract

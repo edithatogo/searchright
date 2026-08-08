@@ -13,6 +13,11 @@ GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `conductor/maturity-dossier.json`
   - [x] Present source path: `scripts/check_maturity_dossier.py`
   - [x] Present source path: `PROJECT_STATUS.md`
+  - [x] Present source path: `verification/evidence-debt.json`
+  - [x] Present source path: `scripts/generate_evidence_debt.py`
+  - [x] Present source path: `verification/gate-catalog.json`
+  - [x] Present source path: `scripts/check_gate_catalog.py`
+  - [x] Present source path: `docs/quality/evidence-debt.md`
   - [x] Assertion ledger: `conductor/tracks/30-maturity-gap-closure/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -22,6 +27,8 @@ GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered nati
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/check_maturity_dossier.py`
   - [x] `python scripts/check_roadmap_coverage.py`
+  - [x] `python scripts/generate_evidence_debt.py --check`
+  - [x] `python scripts/check_gate_catalog.py --check`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

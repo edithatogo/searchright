@@ -6,13 +6,22 @@ Searchright uses an evidence-layered harness rather than one undifferentiated
 
 ## Always-on source gates
 
-The network-free static harness validates contracts and examples, Conductor
-coverage, GitHub issue projection, integration passports, consumer-driven
-contract suites, context hashes, default-deny policy, workflow hardening, CLI/MCP/facade parity, migration
-packets, Rust source structure, secret signatures, the source SBOM and
-reproducible archives.
+The network-free static harness currently executes 51 gates. A 53-command
+catalogue also covers auxiliary traceability commands and assigns every command
+an explicit evidence ceiling. The harness validates contracts and examples,
+Conductor coverage, evidence debt, architecture fitness, GitHub issue
+projection, schema migration policy, provider policy manifests, receipt
+redaction, local recovery mechanics, integration passports, consumer-driven
+contract suites, context hashes, default-deny policy, workflow hardening,
+CLI/MCP/facade parity, migration packets, Rust source structure, secret
+signatures, the source SBOM and reproducible archives.
 
 These gates establish only **source-verified** evidence.
+
+The gate catalogue is intentionally not a scorecard. It records what a command
+can prove and prevents static results from being promoted to compiler, live,
+legal, methodological, operational or external evidence. The derived
+`verification/evidence-debt.json` register exposes the remaining proof work.
 
 ## Compiler-backed gates
 

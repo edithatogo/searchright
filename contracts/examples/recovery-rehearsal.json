@@ -1,0 +1,12 @@
+{
+  "atomic_replace_checked": true,
+  "claim_boundary": "This reference rehearsal validates deterministic local file mechanics only. It does not prove encryption, platform-specific durability, production recovery objectives or operational readiness.",
+  "errors": [],
+  "files": 3,
+  "restore_idempotency_checked": true,
+  "scenario_id": "network-free-reference-recovery",
+  "schema_version": "org.searchright.recovery-rehearsal.v1",
+  "stale_temporary_checked": true,
+  "status": "passed",
+  "tamper_detection_checked": true
+}

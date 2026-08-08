@@ -87,21 +87,28 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "integration/provider-contract-baselines.json",
-        "crates/searchright-connectors/src/lib.rs"
+        "crates/searchright-connectors/src/lib.rs",
+        "integration/provider-policies/index.json",
+        "scripts/check_provider_policies.py",
+        "docs/provider-governance.md",
+        "policy/redaction-profile.json"
       ],
       "implementation_symbols": [
-        "searchright_connectors::LiveProviderConfig"
+        "searchright_connectors::LiveProviderConfig",
+        "scripts/check_provider_policies.py::main"
       ],
       "deterministic_tests": [
-        "python scripts/check_provider_contract_baselines.py"
+        "python scripts/check_provider_contract_baselines.py",
+        "python scripts/check_provider_policies.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json"
       ],
       "open_gates": [
-        "Compile fixture parsers and compare canonical ProviderPage output."
+        "Compile fixture parsers and compare canonical ProviderPage output.",
+        "Review current source policies and rate guidance before promoting each live provider."
       ],
-      "permitted_claim": "HTTPS hosts and bounded runtime inputs are recorded; provider-policy review and live quota evidence remain open."
+      "permitted_claim": "Provider policy surfaces and conservative rate/identity defaults are source-identified and cross-checked; legal approval and current live compatibility are not claimed."
     },
     {
       "assertion_id": "T04-A005",
@@ -133,17 +140,22 @@
       "state": "scaffolded",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "integration/provider-contract-baselines.json"
+        "integration/provider-contract-baselines.json",
+        "integration/provider-policies/index.json",
+        "scripts/check_redaction_policy.py"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_provider_contract_baselines.py"
+        "python scripts/check_provider_contract_baselines.py",
+        "python scripts/check_provider_policies.py",
+        "python scripts/check_redaction_policy.py --self-test"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json"
       ],
       "open_gates": [
-        "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts."
+        "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts.",
+        "Execute authorised live canaries with redacted receipts and current provider-policy review evidence."
       ],
       "permitted_claim": "No live-provider result is claimed."
     }

@@ -1,6 +1,7 @@
 {
   "automatic_promotions": 0,
   "components": 3,
+  "control_surfaces": 3,
   "errors": [],
   "limitations": [
     "Static release-train consistency only; producer and consumer repositories were not built or released."

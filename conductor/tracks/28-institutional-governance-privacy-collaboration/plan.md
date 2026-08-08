@@ -16,6 +16,10 @@ GitHub issue key: `track-28`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `contracts/examples/data-handling-decision.yaml`
   - [x] Present source path: `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
   - [x] Present source path: `docs/security/threat-model.md`
+  - [x] Present source path: `policy/redaction-profile.json`
+  - [x] Present source path: `scripts/redaction.py`
+  - [x] Present source path: `scripts/check_redaction_policy.py`
+  - [x] Present source path: `docs/security/redaction-and-data-minimisation.md`
   - [x] Assertion ledger: `conductor/tracks/28-institutional-governance-privacy-collaboration/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -24,6 +28,7 @@ GitHub issue key: `track-28`. Each numbered phase maps to the same-numbered nati
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_redaction_policy.py --self-test`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

@@ -1,0 +1,11 @@
+{
+  "catalog_families": 59,
+  "errors": [],
+  "limitations": [
+    "Declarative history validation only; compiled readers/writers and representative persisted-data migrations remain higher evidence."
+  ],
+  "migration_plans": 1,
+  "multi_version_families": 1,
+  "schema_version": "org.searchright.schema-migration-receipt.v1",
+  "status": "passed"
+}

@@ -2194,6 +2194,39 @@
       }
     },
     {
+      "key": "track-04-phase-3-task-04",
+      "title": "Track 04 / P3 / T04: Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion",
+      "kind": "task",
+      "parent_key": "track-04-phase-3",
+      "body_path": "conductor/github/issues/track-04-phase-3-task-04.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:04",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "04",
+      "phase_number": 3,
+      "task_number": 4,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Mvp",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-04-phase-3-task-04",
+        "Conductor path": "conductor/tracks/04-open-connectors-mvp/plan.md",
+        "Track ID": "04",
+        "Phase": 3,
+        "Task": 4
+      }
+    },
+    {
       "key": "track-04-phase-4",
       "title": "Track 04 / Phase 4: Review and closeout",
       "kind": "phase",
@@ -6777,6 +6810,39 @@
         "Track ID": "14",
         "Phase": 3,
         "Task": 3
+      }
+    },
+    {
+      "key": "track-14-phase-3-task-04",
+      "title": "Track 14 / P3 / T04: Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review",
+      "kind": "task",
+      "parent_key": "track-14-phase-3",
+      "body_path": "conductor/github/issues/track-14-phase-3-task-04.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:14",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "14",
+      "phase_number": 3,
+      "task_number": 4,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-14-phase-3-task-04",
+        "Conductor path": "conductor/tracks/14-sourceright-migration/plan.md",
+        "Track ID": "14",
+        "Phase": 3,
+        "Task": 4
       }
     },
     {
@@ -12699,6 +12765,39 @@
       }
     },
     {
+      "key": "track-26-phase-3-task-05",
+      "title": "Track 26 / P3 / T05: Compile and execute representative persisted-data migrations, backward readers and rollback projections",
+      "kind": "task",
+      "parent_key": "track-26-phase-3",
+      "body_path": "conductor/github/issues/track-26-phase-3-task-05.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:26",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "26",
+      "phase_number": 3,
+      "task_number": 5,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Mature",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-26-phase-3-task-05",
+        "Conductor path": "conductor/tracks/26-formal-assurance-contract-evolution/plan.md",
+        "Track ID": "26",
+        "Phase": 3,
+        "Task": 5
+      }
+    },
+    {
       "key": "track-26-phase-4",
       "title": "Track 26 / Phase 4: Review and closeout",
       "kind": "phase",
@@ -16127,6 +16226,39 @@
       }
     },
     {
+      "key": "track-33-phase-3-task-04",
+      "title": "Track 33 / P3 / T04: Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives",
+      "kind": "task",
+      "parent_key": "track-33-phase-3",
+      "body_path": "conductor/github/issues/track-33-phase-3-task-04.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:33",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "33",
+      "phase_number": 3,
+      "task_number": 4,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Mature",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-33-phase-3-task-04",
+        "Conductor path": "conductor/tracks/33-operational-reliability/plan.md",
+        "Track ID": "33",
+        "Phase": 3,
+        "Task": 4
+      }
+    },
+    {
       "key": "track-33-phase-4",
       "title": "Track 33 / Phase 4: Review and closeout",
       "kind": "phase",
@@ -18230,7 +18362,7 @@
       }
     }
   ],
-  "generated_at": "source-epoch:2026-08-08",
+  "generated_at": "source-epoch:2026-08-09",
   "apply_permitted": false,
   "state_sync_policy": "task_issues_only",
   "project_manifest": "conductor/github/project.json"

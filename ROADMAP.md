@@ -96,17 +96,17 @@ decision with no unaccepted critical hazard.
 ## Current position
 
 All 38 maturity tracks remain present, but their status has been rebaselined
-against 198 acceptance assertions. Sixty-five assertions currently have
+against 199 acceptance assertions. Seventy-two assertions currently have
 individual symbol/test/gate mappings; other assertions remain conservatively
 track-level. No track is complete merely because its source paths, GitHub issues
 or Project items exist.
 
-The planning projection still contains 564 nodes: one epic, 38 track issues, 152
-phase subissues and 373 task subissues. The delivery Project now separates
+The planning projection contains 568 nodes: one epic, 38 track issues, 152
+phase subissues and 377 task subissues. The delivery Project separates
 implementation state from evidence level and has 13 fields and six views. A
 second, non-mutating portfolio projection tracks cross-repository contracts,
-licence decisions, migrations and the release train without importing all 564
-task items.
+licence decisions, migrations and the release train without importing all 568
+work items.
 
 The local source has added neutral contracts, four provider baselines, a
 seven-dialect native-query corpus, a deterministic review-state reducer, a

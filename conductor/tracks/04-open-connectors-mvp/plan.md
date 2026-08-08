@@ -20,6 +20,10 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `contracts/examples/provider-manifest.yaml`
   - [x] Present source path: `contracts/examples/provider-page.yaml`
   - [x] Present source path: `contracts/examples/source-receipt.yaml`
+  - [x] Present source path: `integration/provider-policies/index.json`
+  - [x] Present source path: `scripts/check_provider_policies.py`
+  - [x] Present source path: `docs/provider-governance.md`
+  - [x] Present source path: `policy/redaction-profile.json`
   - [x] Assertion ledger: `conductor/tracks/04-open-connectors-mvp/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -29,6 +33,7 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_provider_contract_baselines.py`
+  - [x] `python scripts/check_provider_policies.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
@@ -38,6 +43,7 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 - [ ] Compile and run connector fixtures.
 - [ ] Run authorised, redacted live smokes for each advertised provider.
 - [ ] Verify upstream terms, rate limits and response changes at release time.
+- [ ] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
 
 ## Phase 4: Review and closeout
 

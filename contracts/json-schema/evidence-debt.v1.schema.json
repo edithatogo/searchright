@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/evidence-debt.v1.schema.json",
+  "title": "Searchright evidence debt register",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_ceiling",
+    "tracks",
+    "assertions",
+    "static_gates",
+    "maturity",
+    "publication",
+    "provider_policy",
+    "priority_queue",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.evidence-debt.v1"
+    },
+    "evidence_ceiling": {
+      "const": "source_verified"
+    },
+    "tracks": {
+      "type": "object",
+      "required": [
+        "total",
+        "by_state"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "by_state": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "assertions": {
+      "type": "object",
+      "required": [
+        "total",
+        "by_state",
+        "by_mapping_confidence",
+        "track_level_only",
+        "without_symbol_mapping",
+        "open_gate_entries"
+      ],
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "by_state": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "by_mapping_confidence": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "track_level_only": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "without_symbol_mapping": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "open_gate_entries": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "static_gates": {
+      "type": "object",
+      "required": [
+        "catalogued",
+        "harness",
+        "unregistered_assertion_commands"
+      ],
+      "properties": {
+        "catalogued": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "harness": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unregistered_assertion_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "maturity": {
+      "type": "object",
+      "required": [
+        "decision",
+        "critical_blockers"
+      ],
+      "properties": {
+        "decision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "critical_blockers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "publication": {
+      "type": "object",
+      "required": [
+        "candidate_packages",
+        "publish_ready"
+      ],
+      "properties": {
+        "candidate_packages": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "publish_ready": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "provider_policy": {
+      "type": "object",
+      "required": [
+        "providers",
+        "reviewed_with_evidence"
+      ],
+      "properties": {
+        "providers": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reviewed_with_evidence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "priority_queue": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "priority",
+          "debt",
+          "reason",
+          "closure_evidence"
+        ],
+        "properties": {
+          "priority": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "debt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "closure_evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/schema-migration-plan.v1.schema.json",
+  "title": "Searchright schema migration plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "migration_id",
+    "family",
+    "from_version",
+    "to_version",
+    "classification",
+    "automatic_apply",
+    "destructive",
+    "backup_required",
+    "preconditions",
+    "transformations",
+    "rollback",
+    "verification",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.schema-migration-plan.v1"
+    },
+    "migration_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "from_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "to_version": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "classification": {
+      "type": "string",
+      "minLength": 1
+    },
+    "automatic_apply": {
+      "const": false
+    },
+    "destructive": {
+      "const": false
+    },
+    "backup_required": {
+      "const": true
+    },
+    "preconditions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "transformations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operation",
+          "path",
+          "description"
+        ],
+        "properties": {
+          "operation": {
+            "enum": [
+              "preserve",
+              "derive",
+              "rename",
+              "transform"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supported",
+        "strategy",
+        "losses"
+      ],
+      "properties": {
+        "supported": {
+          "const": true
+        },
+        "strategy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "losses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "verification": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "assertions": 199,
+  "errors": [],
+  "individually_mapped_assertions": 72,
+  "limitations": [
+    "Track-level mappings are intentionally not accepted as proof of complete behaviour.",
+    "Compiler, runtime, live-provider and external validation remain separate evidence levels."
+  ],
+  "schema_version": "org.searchright.traceability-receipt.v1",
+  "status": "passed",
+  "tracks": 38
+}

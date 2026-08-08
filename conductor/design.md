@@ -148,12 +148,12 @@ flowchart LR
 flowchart TB
   COV[roadmap-coverage.json] --> TRACKS[38 Conductor tracks]
   TRACKS --> PLANS[Four phases per track]
-  PLANS --> TASKS[373 top-level tasks]
+  PLANS --> TASKS[377 top-level tasks]
   COV --> RENDER[Deterministic issue renderer]
   RENDER --> EPIC[One roadmap epic]
   EPIC --> ISSUES[38 track issues]
   ISSUES --> PHASES[152 phase subissues]
-  PHASES --> TSUB[373 task subissues]
+  PHASES --> TSUB[377 task subissues]
   TSUB --> PROJECT[Project v2: 13 custom fields / 6 views]
   SETTINGS[Repository settings + main ruleset] --> BOOT[Dry-run-first bootstrap]
   PROJECT --> BOOT

@@ -93,6 +93,18 @@ writing another system's canonical state.
 14. **Release and adoption as experiments**
     Cross-repository canaries, release rehearsals and bounded pilots precede
     registry promotion and any version 1.0 decision.
+15. **Evidence ceilings and visible proof debt**
+    Every automated gate declares the strongest claim it can support. Unmapped
+    assertions, unexecuted tools, policy approvals and external validation stay
+    visible in a deterministic evidence-debt register rather than being hidden
+    by an aggregate score.
+16. **Technical compatibility is not permission**
+    Provider endpoint and parser compatibility are assessed separately from
+    terms, licensing, credentials, data classification and retention approval.
+17. **Reversible data evolution**
+    Persisted contract changes require declared readers, writers, migration,
+    backup, rollback and receipt behaviour. Unknown or destructive upgrades
+    fail closed.
 
 ## Federated repository strategy
 
@@ -135,6 +147,12 @@ or broader deployment. Telemetry remains disabled by default. Backup
 recoverability requires restore drills. Cross-repository releases move through
 contract, fixture, compiler, downstream-canary and RC gates with explicit human
 promotion and rollback.
+
+The engineering control plane follows the same separation. Architecture-fitness
+checks constrain where network, final-authority and external-write capability
+may live. The gate catalogue constrains what each local checker may prove.
+Receipt minimisation is tested independently of provider correctness, and the
+reference recovery rehearsal is kept below production recoverability claims.
 
 ## Product positioning
 

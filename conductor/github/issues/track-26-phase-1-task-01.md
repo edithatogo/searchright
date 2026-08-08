@@ -16,6 +16,10 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `.github/workflows/formal.yml`
   - [x] Present source path: `fuzz/Cargo.toml`
   - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Present source path: `contracts/migrations/registry.json`
+  - [x] Present source path: `contracts/migrations/github-issue-hierarchy-v1-to-v2.json`
+  - [x] Present source path: `scripts/check_schema_migrations.py`
+  - [x] Present source path: `docs/contracts/schema-evolution.md`
   - [x] Assertion ledger: `conductor/tracks/26-formal-assurance-contract-evolution/traceability.json`
 
 ## Completion and evidence contract

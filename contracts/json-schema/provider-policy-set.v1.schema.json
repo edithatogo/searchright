@@ -1,0 +1,173 @@
+{
+  "$id": "https://schemas.searchright.dev/provider-policy-set.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "automatic_approval": {
+      "const": false
+    },
+    "claim_boundary": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "providers": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "access_class": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contact_identity_required": {
+            "type": "boolean"
+          },
+          "credential_environment_variables": {
+            "items": {
+              "pattern": "^[A-Z][A-Z0-9_]+$",
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "credential_receipt_policy": {
+            "enum": [
+              "never_persist",
+              "contact_value_redacted",
+              "not_applicable"
+            ]
+          },
+          "documentation_url": {
+            "format": "uri",
+            "pattern": "^https://",
+            "type": "string"
+          },
+          "endpoint": {
+            "format": "uri",
+            "pattern": "^https://",
+            "type": "string"
+          },
+          "live_canary_requires_opt_in": {
+            "const": true
+          },
+          "manual_review_required_before_live_release": {
+            "const": true
+          },
+          "minimum_interval_ms_with_key": {
+            "minimum": 0,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "minimum_interval_ms_without_key": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "notes": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "policy_review_status": {
+            "enum": [
+              "source_identified_not_legally_approved",
+              "reviewed_with_evidence",
+              "blocked"
+            ]
+          },
+          "privacy_url": {
+            "format": "uri",
+            "pattern": "^https://",
+            "type": "string"
+          },
+          "provider_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "query_classification": {
+            "enum": [
+              "public_metadata",
+              "internal_review_data",
+              "confidential"
+            ]
+          },
+          "raw_response_retention": {
+            "const": "disabled_by_default"
+          },
+          "redistribution_policy": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "response_classification": {
+            "const": "public_metadata"
+          },
+          "review_due": {
+            "format": "date",
+            "type": "string"
+          },
+          "review_evidence": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "source_checked_at": {
+            "format": "date",
+            "type": "string"
+          },
+          "terms_or_usage_url": {
+            "format": "uri",
+            "pattern": "^https://",
+            "type": "string"
+          }
+        },
+        "required": [
+          "provider_id",
+          "endpoint",
+          "documentation_url",
+          "terms_or_usage_url",
+          "privacy_url",
+          "access_class",
+          "credential_environment_variables",
+          "credential_receipt_policy",
+          "query_classification",
+          "response_classification",
+          "raw_response_retention",
+          "redistribution_policy",
+          "minimum_interval_ms_without_key",
+          "minimum_interval_ms_with_key",
+          "contact_identity_required",
+          "live_canary_requires_opt_in",
+          "policy_review_status",
+          "review_evidence",
+          "notes",
+          "source_checked_at",
+          "review_due",
+          "manual_review_required_before_live_release"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "org.searchright.provider-policy-set.v1"
+    },
+    "source_epoch": {
+      "format": "date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "source_epoch",
+    "automatic_approval",
+    "providers",
+    "claim_boundary"
+  ],
+  "title": "Searchright provider policy set",
+  "type": "object"
+}

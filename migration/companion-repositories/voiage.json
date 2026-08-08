@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/voiage",
   "revision": "ed227f25955f3bba4101dc5bfa67990bac9d9d93",
   "role": "evidence-analysis consumer with custom bibliographic enrichment",
@@ -53,6 +53,20 @@
       "owner": "project owner",
       "required_evidence": [
         "rollback test"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "receipt-and-bundle-boundary",
+      "action": "Consume verified Searchright discovery bundles and Sourceright reconciliation receipts without embedding provider query details or credentials in the analytical repository.",
+      "target_paths": [
+        "inputs/evidence/**",
+        "docs/data-provenance.md"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "redaction inspection",
+        "bundle and reconciliation receipt"
       ],
       "automatic_apply": false
     }

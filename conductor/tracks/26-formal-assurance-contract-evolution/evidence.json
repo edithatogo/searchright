@@ -14,13 +14,18 @@
     "crates/searchright-assurance/tests/loom_authority.rs",
     ".github/workflows/formal.yml",
     "fuzz/Cargo.toml",
-    "verification/harness-matrix.json"
+    "verification/harness-matrix.json",
+    "contracts/migrations/registry.json",
+    "contracts/migrations/github-issue-hierarchy-v1-to-v2.json",
+    "scripts/check_schema_migrations.py",
+    "docs/contracts/schema-evolution.md"
   ],
   "traceability": "conductor/tracks/26-formal-assurance-contract-evolution/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_rust_source_structure.py",
-    "python scripts/check_workflow_hardening.py"
+    "python scripts/check_workflow_hardening.py",
+    "python scripts/check_schema_migrations.py"
   ],
   "requirements": [
     "SR-053",
@@ -31,7 +36,8 @@
     "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
     "Compile and execute model-check traces and forbidden-transition tests.",
     "Add compatibility fixtures for each public contract version.",
-    "Run semver and cross-version MCP/CLI contract tests."
+    "Run semver and cross-version MCP/CLI contract tests.",
+    "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
   ],
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
@@ -51,6 +57,7 @@
       "track-26-phase-3-task-02",
       "track-26-phase-3-task-03",
       "track-26-phase-3-task-04",
+      "track-26-phase-3-task-05",
       "track-26-phase-4-task-01",
       "track-26-phase-4-task-02",
       "track-26-phase-4-task-03",

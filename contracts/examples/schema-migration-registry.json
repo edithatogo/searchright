@@ -1,0 +1,32 @@
+{
+  "schema_version": "org.searchright.schema-migration-registry.v1",
+  "automatic_migration": false,
+  "families": [
+    {
+      "family": "github-issue-hierarchy",
+      "versions": [
+        {
+          "version": 1,
+          "schema_id": "https://schemas.searchright.dev/github-issue-hierarchy.v1.schema.json",
+          "status": "supported_read_only"
+        },
+        {
+          "version": 2,
+          "schema_id": "https://schemas.searchright.dev/github-issue-hierarchy.v2.schema.json",
+          "status": "current"
+        }
+      ],
+      "migrations": ["contracts/migrations/github-issue-hierarchy-v1-to-v2.json"],
+      "minimum_read_version": 1,
+      "current_write_version": 2
+    }
+  ],
+  "default_policy": {
+    "unknown_version": "reject",
+    "destructive_migration": "deny",
+    "implicit_write_upgrade": "deny",
+    "backup_required": true,
+    "receipt_required": true
+  },
+  "claim_boundary": "The registry makes known contract evolution explicit. It does not establish executable migration correctness until migration tests run against representative persisted data."
+}

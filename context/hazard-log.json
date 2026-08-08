@@ -400,6 +400,105 @@
       "id": "H-025",
       "residual_status": "source_controlled_compiler_gate_open",
       "severity": "high"
+    },
+    {
+      "controls": [
+        "generated gate catalogue",
+        "per-gate evidence ceiling",
+        "claim-boundary review",
+        "evidence-debt register"
+      ],
+      "evidence": [
+        "verification/gate-catalog.json",
+        "scripts/check_gate_catalog.py",
+        "verification/evidence-debt.json"
+      ],
+      "hazard": "A passing static checker is misrepresented as compiler, live, legal, methodological or operational evidence.",
+      "id": "H-026",
+      "residual_status": "source_controlled_communication_review_open",
+      "severity": "high"
+    },
+    {
+      "controls": [
+        "provider policy set",
+        "response baseline linkage",
+        "automatic approval disabled",
+        "release-time source-policy review"
+      ],
+      "evidence": [
+        "integration/provider-policies/index.json",
+        "scripts/check_provider_policies.py"
+      ],
+      "hazard": "Provider terms, privacy, authentication or rate policy changes after the connector fixture was created.",
+      "id": "H-027",
+      "residual_status": "source_identified_current_policy_review_open",
+      "severity": "high"
+    },
+    {
+      "controls": [
+        "default redaction profile",
+        "adversarial deterministic test",
+        "generic live connector request errors",
+        "raw response retention disabled"
+      ],
+      "evidence": [
+        "policy/redaction-profile.json",
+        "scripts/check_redaction_policy.py",
+        "crates/searchright-connectors/src/lib.rs"
+      ],
+      "hazard": "A receipt, error or URL leaks a search query, contact identity, credential, cookie or high-entropy secret.",
+      "id": "H-028",
+      "residual_status": "source_controlled_live_receipt_inspection_open",
+      "severity": "critical"
+    },
+    {
+      "controls": [
+        "schema migration registry",
+        "destructive and implicit upgrade denial",
+        "backup and rollback requirements",
+        "migration receipts"
+      ],
+      "evidence": [
+        "contracts/migrations/registry.json",
+        "scripts/check_schema_migrations.py"
+      ],
+      "hazard": "A contract upgrade silently drops, rewrites or makes persisted review evidence unreadable.",
+      "id": "H-029",
+      "residual_status": "source_controlled_compiled_migration_tests_open",
+      "severity": "high"
+    },
+    {
+      "controls": [
+        "reference recovery receipt",
+        "tamper and idempotency checks",
+        "explicit claim boundary",
+        "production restore drill remains blocking"
+      ],
+      "evidence": [
+        "verification/recovery/rehearsal.json",
+        "docs/operations/recovery-reference-rehearsal.md"
+      ],
+      "hazard": "A passing local backup self-test is overclaimed as encrypted, cross-platform or production recoverability.",
+      "id": "H-030",
+      "residual_status": "reference_rehearsed_deployment_restore_drill_open",
+      "severity": "high"
+    },
+    {
+      "controls": [
+        "advisory-only signal contract",
+        "human-only final eligibility authority",
+        "source and retrieval provenance",
+        "conflict and false-positive review"
+      ],
+      "evidence": [
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md",
+        "crates/searchright-screening/src/lib.rs"
+      ],
+      "hazard": "A stale, incomplete or falsely linked scholarly-integrity signal causes automatic study exclusion or an unsupported misconduct inference.",
+      "id": "H-031",
+      "residual_status": "contracted_consumer_fixture_and_downstream_evidence_open",
+      "severity": "critical"
     }
   ],
   "schema_version": "org.searchright.hazard-log.v1"

@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.ecosystem-lock.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "release_train": "searchright-evidence-infrastructure",
   "automatic_updates": false,
   "components": [
@@ -10,7 +10,7 @@
       "repository": "edithatogo/searchright",
       "version": "0.1.0-alpha.1",
       "revision": "record_in_release_receipt",
-      "source_contracts_sha256": "2b7951d13a39a5bbccaa8d5e00519b2392d0e05b65bb1023eb1599150daf5c1c",
+      "source_contracts_sha256": "fe341fc10eb937665e3d77982bf4e945e22efec7d02b3af7f19d91d445c1b02d",
       "public_package_policy_sha256": "6321ec318a8e48965317fdc7f0bac90d2b49e2b91e8dddc682497974756b8aee",
       "rust_toolchain": "1.97.1"
     },

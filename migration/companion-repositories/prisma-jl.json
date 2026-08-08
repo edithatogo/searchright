@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/PRISMA.jl",
   "revision": "95d5aa46c6cda6fb2d014391209d666349b577dc",
   "role": "optional PRISMA rendering interoperability reference",
@@ -9,25 +9,55 @@
     {
       "id": "canonical-upstream",
       "action": "Record ceceoco/PRISMA.jl as canonical upstream and inventory any local delta before treating the fork as maintained software.",
-      "target_paths": ["UPSTREAM.md", "README.md"],
+      "target_paths": [
+        "UPSTREAM.md",
+        "README.md"
+      ],
       "owner": "repository owner",
-      "required_evidence": ["upstream revision", "local delta inventory"],
+      "required_evidence": [
+        "upstream revision",
+        "local delta inventory"
+      ],
       "automatic_apply": false
     },
     {
       "id": "interop-only",
       "action": "Keep Searchright PRISMA arithmetic canonical and use PRISMA.jl only as an optional renderer interoperability target through versioned fixtures.",
-      "target_paths": ["fixtures/searchright", "interop tests"],
+      "target_paths": [
+        "fixtures/searchright",
+        "interop tests"
+      ],
       "owner": "Searchright and PRISMA.jl maintainers",
-      "required_evidence": ["flow fixture parity", "rendering difference report"],
+      "required_evidence": [
+        "flow fixture parity",
+        "rendering difference report"
+      ],
       "automatic_apply": false
     },
     {
       "id": "archive-or-maintain",
       "action": "Archive the personal fork if there are no intentional patches, or establish independent CI, release and upstream-sync policy if it will be maintained.",
-      "target_paths": ["repository settings", ".github/workflows/**"],
+      "target_paths": [
+        "repository settings",
+        ".github/workflows/**"
+      ],
       "owner": "repository owner",
-      "required_evidence": ["maintenance decision"],
+      "required_evidence": [
+        "maintenance decision"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "projection-only-boundary",
+      "action": "Treat PRISMA.jl as an optional presentation renderer consuming validated Searchright flow contracts, not as the canonical arithmetic or review-state authority.",
+      "target_paths": [
+        "interop/**",
+        "README.md"
+      ],
+      "owner": "integration maintainer",
+      "required_evidence": [
+        "projection parity fixtures"
+      ],
       "automatic_apply": false
     }
   ],

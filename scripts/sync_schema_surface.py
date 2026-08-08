@@ -42,7 +42,7 @@ def render() -> dict:
     return {
         "schema_version": "org.searchright.contract-surface-baseline.v1",
         "surface_version": "0.1.0-alpha.1",
-        "source_epoch": "2026-08-08",
+        "source_epoch": "2026-08-09",
         "automatic_updates": False,
         "schemas": schemas,
         "interfaces": interfaces,

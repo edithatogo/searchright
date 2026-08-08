@@ -1,0 +1,46 @@
+{
+  "schema_version": "org.searchright.schema-migration-plan.v1",
+  "migration_id": "github-issue-hierarchy-v1-to-v2",
+  "family": "github-issue-hierarchy",
+  "from_version": 1,
+  "to_version": 2,
+  "classification": "additive_with_explicit_hierarchy_expansion",
+  "automatic_apply": false,
+  "destructive": false,
+  "backup_required": true,
+  "preconditions": [
+    "input validates against github-issue-hierarchy.v1",
+    "stable issue keys are unique",
+    "no remote identifiers are treated as canonical source"
+  ],
+  "transformations": [
+    {
+      "operation": "preserve",
+      "path": "/nodes/*",
+      "description": "Preserve existing epic, track and phase identities."
+    },
+    {
+      "operation": "derive",
+      "path": "/nodes/task-*",
+      "description": "Derive task nodes from explicit Conductor checklist tasks using stable generated keys."
+    },
+    {
+      "operation": "derive",
+      "path": "/relationships",
+      "description": "Create explicit epic-to-track, track-to-phase and phase-to-task native subissue relationships."
+    }
+  ],
+  "rollback": {
+    "supported": true,
+    "strategy": "project_v2_to_v1_projection",
+    "losses": ["task-level native relationships are omitted from the v1 projection but remain in the v2 source"]
+  },
+  "verification": [
+    "validate source against v1 schema",
+    "validate result against v2 schema",
+    "preserve all v1 issue keys",
+    "verify deterministic result on repeated execution",
+    "write migration receipt before remote synchronisation"
+  ],
+  "claim_boundary": "This declarative plan documents the intended transformation. No migration execution or remote update is claimed."
+}

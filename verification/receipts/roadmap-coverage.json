@@ -1,5 +1,5 @@
 {
-  "checked_tasks": 190,
+  "checked_tasks": 154,
   "errors": [],
   "horizons": [
     "alpha",
@@ -11,7 +11,7 @@
   "limitations": [
     "Source/evidence validation only; compiler, live-provider and external acceptance gates remain separate."
   ],
-  "open_evidence_tasks": 183,
+  "open_evidence_tasks": 223,
   "requirements_checked": 92,
   "schema_version": "org.searchright.roadmap-coverage-receipt.v1",
   "status": "passed",

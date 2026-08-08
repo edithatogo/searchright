@@ -43,12 +43,28 @@
       "notes": "May recommend and prepare; consequential actions require human authority."
     },
     {
+      "component": "architecture fitness checker",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Reads manifests and source only; cannot promote compiler or runtime evidence."
+    },
+    {
       "component": "cross-repository release train",
       "network": false,
       "external_writes": false,
       "telemetry": false,
       "final_exclusion": false,
       "notes": "Read-only plan by default; no automatic revision or release promotion."
+    },
+    {
+      "component": "evidence debt generator",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Derives visible gaps; cannot close or waive them."
     },
     {
       "component": "evidence-search-core",
@@ -59,12 +75,44 @@
       "notes": "Fixture/replay are default; providers need declared hosts and budgets."
     },
     {
+      "component": "provider policy registry",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Records conservative defaults; cannot accept terms or approve live support automatically."
+    },
+    {
+      "component": "receipt redactor",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Minimises common sensitive fields before persistence; does not certify de-identification."
+    },
+    {
+      "component": "recovery reference rehearsal",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Uses temporary local files only; no production backup or restore authority."
+    },
+    {
       "component": "release rehearsal",
       "network": false,
       "external_writes": false,
       "telemetry": false,
       "final_exclusion": false,
       "notes": "Prepares gates and pilots only; cannot publish, submit registries or declare success automatically."
+    },
+    {
+      "component": "schema migration registry",
+      "network": false,
+      "external_writes": false,
+      "telemetry": false,
+      "final_exclusion": false,
+      "notes": "Automatic and destructive migration remain denied; runtime application requires explicit authority and receipts."
     },
     {
       "component": "searchright CLI",

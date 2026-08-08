@@ -13,11 +13,16 @@
     "contracts/examples/data-handling-request.yaml",
     "contracts/examples/data-handling-decision.yaml",
     "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-    "docs/security/threat-model.md"
+    "docs/security/threat-model.md",
+    "policy/redaction-profile.json",
+    "scripts/redaction.py",
+    "scripts/check_redaction_policy.py",
+    "docs/security/redaction-and-data-minimisation.md"
   ],
   "traceability": "conductor/tracks/28-institutional-governance-privacy-collaboration/traceability.json",
   "static_checks": [
-    "python scripts/validate_repository.py"
+    "python scripts/validate_repository.py",
+    "python scripts/check_redaction_policy.py --self-test"
   ],
   "requirements": [
     "SR-057",

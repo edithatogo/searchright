@@ -2,6 +2,14 @@
   "domains": [
     {
       "blockers": [
+        "Compiler dependency resolution and runtime sandbox evidence remain open"
+      ],
+      "domain": "architecture_fitness",
+      "level": "source_verified",
+      "receipt": "verification/architecture-policy.json"
+    },
+    {
+      "blockers": [
         "133 assertions remain inherited, partial, scaffolded or external rather than individually source implemented"
       ],
       "domain": "assertion_traceability",
@@ -76,6 +84,14 @@
     },
     {
       "blockers": [
+        "Register exposes but does not close compiler, live, methodological, migration or external evidence debt"
+      ],
+      "domain": "evidence_debt_visibility",
+      "level": "source_verified",
+      "receipt": "verification/evidence-debt.json"
+    },
+    {
+      "blockers": [
         "Preregistered external evaluation not executed"
       ],
       "domain": "external_methodological_evaluation",
@@ -92,8 +108,16 @@
     },
     {
       "blockers": [
+        "Static ceilings cannot establish higher evidence"
+      ],
+      "domain": "gate_evidence_ceilings",
+      "level": "source_verified",
+      "receipt": "verification/gate-catalog.json"
+    },
+    {
+      "blockers": [
         "No remote repository/bootstrap apply receipt",
-        "No observed Project ID, fields, views or 564-item sync receipt"
+        "No observed Project ID, fields, views or 568-item sync receipt"
       ],
       "domain": "github_control_plane",
       "level": "source_verified",
@@ -145,7 +169,7 @@
     {
       "blockers": [
         "No health SLO run",
-        "No backup restore drill",
+        "No encrypted deployment restore drill or approved recovery objectives",
         "No incident exercise",
         "Telemetry not runtime-tested"
       ],
@@ -173,12 +197,38 @@
     },
     {
       "blockers": [
+        "No provider policy is reviewed_with_evidence",
+        "Live canaries are not executed"
+      ],
+      "domain": "provider_policy_governance",
+      "level": "source_verified",
+      "receipt": "integration/provider-policies/index.json"
+    },
+    {
+      "blockers": [
         "All packages remain publish=false",
         "No compiler/API/SemVer/release evidence"
       ],
       "domain": "public_package_release",
       "level": "contracted",
       "receipt": "release/public-packages.json"
+    },
+    {
+      "blockers": [
+        "Pattern minimisation is not de-identification",
+        "Live receipt inspection remains open"
+      ],
+      "domain": "receipt_redaction",
+      "level": "source_verified",
+      "receipt": "policy/redaction-profile.json"
+    },
+    {
+      "blockers": [
+        "Encryption, cross-platform durability and production recovery objectives remain open"
+      ],
+      "domain": "recovery_reference_mechanics",
+      "level": "source_verified",
+      "receipt": "verification/recovery/rehearsal.json"
     },
     {
       "blockers": [
@@ -208,6 +258,23 @@
     },
     {
       "blockers": [
+        "Compiled migration tests against representative persisted data remain open"
+      ],
+      "domain": "schema_migration_governance",
+      "level": "source_verified",
+      "receipt": "contracts/migrations/registry.json"
+    },
+    {
+      "blockers": [
+        "Sourceright producer contract and fixture corpus do not yet exist",
+        "No Searchright consumer contract or false-positive evaluation receipt"
+      ],
+      "domain": "scholarly_integrity_signal_interop",
+      "level": "contracted",
+      "receipt": null
+    },
+    {
+      "blockers": [
         "Decision remains not_ready",
         "Compiler, runtime, downstream, human and external gates remain open"
       ],
@@ -218,5 +285,5 @@
   ],
   "repository_level": "source_verified",
   "schema_version": "org.searchright.evidence-ledger.v1",
-  "updated_at": "2026-08-08"
+  "updated_at": "2026-08-09"
 }

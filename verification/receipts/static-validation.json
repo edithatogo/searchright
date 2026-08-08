@@ -2,9 +2,9 @@
   "checks": {
     "audit_event_semantic_invariants": 1,
     "conductor_tracks_checked": 38,
-    "draft_2020_12_schemas_checked": 49,
-    "github_action_commit_pins_checked": 58,
-    "json_documents_parsed": 365,
+    "draft_2020_12_schemas_checked": 60,
+    "github_action_commit_pins_checked": 60,
+    "json_documents_parsed": 514,
     "mermaid_design_blocks_checked": 9,
     "prisma_arithmetic_invariants": 1,
     "provider_manifest_semantic_invariants": 1,
@@ -12,22 +12,22 @@
     "python_validation_dependency_pins_checked": 6,
     "registry_targets_truthfulness_checked": 9,
     "review_plan_semantic_invariants": 1,
-    "rust_sources_lexically_checked": 62,
-    "schema_catalogue_entries_checked": 49,
-    "schema_examples_validated": 49,
+    "rust_sources_lexically_checked": 64,
+    "schema_catalogue_entries_checked": 60,
+    "schema_examples_validated": 60,
     "screening_semantic_invariants": 1,
     "search_strategy_semantic_invariants": 1,
     "status_and_receipt_truthfulness_checked": 1,
-    "text_files_hygiene_checked": 1186,
-    "toml_documents_parsed": 70,
-    "workspace_crates_checked": 29,
-    "yaml_documents_parsed": 100
+    "text_files_hygiene_checked": 1368,
+    "toml_documents_parsed": 74,
+    "workspace_crates_checked": 30,
+    "yaml_documents_parsed": 101
   },
   "error_count": 0,
   "limitations": [
     "No Rust parsing, compilation, tests, coverage, mutation or fuzzing were executed.",
     "No live provider, remote GitHub, Conductor host or registry operation was executed."
   ],
-  "repository": "/mnt/data/searchright-repo",
+  "repository": "/mnt/data/searchright-next/searchright",
   "status": "passed"
 }

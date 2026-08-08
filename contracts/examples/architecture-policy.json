@@ -1,0 +1,57 @@
+{
+  "schema_version": "org.searchright.architecture-policy.v1",
+  "default_policy": "deny",
+  "neutral_crates": [
+    "evidence-search-contracts",
+    "evidence-search-core"
+  ],
+  "forbidden_dependency_prefixes_for_neutral_crates": [
+    "searchright-"
+  ],
+  "forbidden_internal_edges": [
+    {
+      "from": "searchright-connectors",
+      "to": "searchright-contracts",
+      "reason": "Provider adapters consume product-neutral evidence-search contracts."
+    }
+  ],
+  "network_dependencies": {
+    "reqwest": [
+      "searchright-connectors"
+    ]
+  },
+  "provider_endpoint_source_roots": [
+    "crates/searchright-connectors/src"
+  ],
+  "final_eligibility_authority_source_roots": [
+    "crates/searchright-access/src",
+    "crates/searchright-agent/src",
+    "crates/searchright-contracts/src/access.rs",
+    "crates/searchright-contracts/src/screening.rs",
+    "crates/searchright-screening/src"
+  ],
+  "external_write_scripts": [
+    {
+      "path": "scripts/bootstrap_github.py",
+      "apply_flag": "--apply",
+      "environment_gate": "SEARCHRIGHT_GITHUB_BOOTSTRAP_APPLY=1"
+    },
+    {
+      "path": "scripts/sync_github_issues.py",
+      "apply_flag": "--apply",
+      "environment_gate": "SEARCHRIGHT_GITHUB_APPLY=1"
+    },
+    {
+      "path": "scripts/sync_github_project.py",
+      "apply_flag": "--apply",
+      "environment_gate": "SEARCHRIGHT_GITHUB_PROJECT_APPLY=1"
+    },
+    {
+      "path": "scripts/submit-registries.sh",
+      "apply_flag": "explicit-environment-only",
+      "environment_gate": "SEARCHRIGHT_ALLOW_EXTERNAL_SUBMISSION=YES"
+    }
+  ],
+  "public_package_default": "deny",
+  "claim_boundary": "This policy statically constrains dependency and source placement. Runtime sandboxing, network interception, compiler checks and deployment isolation remain separate evidence."
+}

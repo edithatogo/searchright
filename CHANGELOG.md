@@ -11,13 +11,13 @@ matching receipts.
 - Added a product-neutral `evidence-search-contracts` crate beneath
   `evidence-search-core`, with Searchright-specific review contracts kept in
   `searchright-contracts`.
-- Added assertion-level roadmap traceability across 38 Conductor tracks and 198
+- Added assertion-level roadmap traceability across 38 Conductor tracks and 199
   acceptance assertions, including explicit scaffolded, partial, source and
   external-evidence states and permitted claims.
 - Added a default-deny package-publication policy: all 30 workspace crates are
   non-publishable, with only three future public-package candidates and none
   marked ready.
-- Added a frozen alpha contract surface covering 52 JSON Schemas, WIT, OpenAPI
+- Added a frozen alpha contract surface covering 60 JSON Schemas, WIT, OpenAPI
   and MCP metadata, plus configured Rust public-API and SemVer gates.
 - Added source implementations and rights-clear response baselines for PubMed
   ESearch/ESummary, Europe PMC, Crossref and OpenAlex, including bounded runtime,
@@ -38,8 +38,22 @@ matching receipts.
 - Added a cross-repository ecosystem lock, release-train promotion controls and
   a separate evidence-infrastructure portfolio Project manifest.
 - Added configured `cargo-vet`, `cargo-semver-checks` and `cargo-public-api`
-  assurance surfaces and expanded the network-free aggregate harness to 44
-  gates and the assurance matrix to 35 dimensions.
+  assurance surfaces and expanded the network-free aggregate harness to 51
+  gates, the registered gate catalogue to 53 commands and the assurance matrix
+  to 42 dimensions.
+- Added explicit gate evidence ceilings and a deterministic evidence-debt
+  register so static, compiler, live, downstream, legal and external evidence
+  cannot be silently conflated.
+- Added executable architecture-fitness policy, including neutral-layer,
+  network-dependency, provider-endpoint, final-authority and external-write
+  boundaries. The connector crate now consumes the neutral contract layer
+  directly rather than Searchright review contracts.
+- Added provider terms/data-handling manifests, deterministic receipt
+  minimisation tests, versioned schema migration/rollback plans and a
+  network-free recovery reference rehearsal with tamper and idempotency checks.
+- Added a tracked Sourceright interoperability proposal for provenance-bearing
+  retraction, correction, expression-of-concern, duplicate-publication and
+  version signals, with a Searchright advisory-only/human-authority boundary.
 
 ### Changed
 
@@ -53,7 +67,7 @@ matching receipts.
 - Reclassified forked integrations against canonical upstreams and made unclear
   content or code licences reference-only or review-required.
 - Expanded the generated GitHub delivery Project to 13 fields and six views,
-  including a dedicated implementation-gap view, while preserving the 564-node
+  including a dedicated implementation-gap view, while preserving the 568-node
   epic → track → phase → task hierarchy.
 - Updated project status, strategy, architecture, context, hazards, decisions and
   claim boundaries to distinguish scaffolding, source behaviour, compiler proof,

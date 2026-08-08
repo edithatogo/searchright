@@ -10,6 +10,8 @@ Canonical task state: **source task complete**.
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/check_maturity_dossier.py`
   - [x] `python scripts/check_roadmap_coverage.py`
+  - [x] `python scripts/generate_evidence_debt.py --check`
+  - [x] `python scripts/check_gate_catalog.py --check`
 
 ## Completion and evidence contract
 

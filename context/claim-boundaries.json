@@ -1,7 +1,7 @@
 {
   "allowed_claims": [
     "The source repository contains versioned contracts, implementation scaffolds, assertion-level traceability and deterministic static checks.",
-    "The roadmap contains 198 acceptance assertions, of which 65 have individual symbol/test/evidence mappings; unmapped or partial assertions remain visibly below source implemented.",
+    "The roadmap contains 199 acceptance assertions, of which 72 have individual symbol/test/evidence mappings; unmapped or partial assertions remain visibly below source implemented.",
     "Four MVP connector vertical slices and rights-clear response baselines are present in source, but compilation and authorised live execution are not proven.",
     "Native strategy text, spans and translation-loss diagnostics are preserved for seven database dialect families; semantic parsing and equivalence remain deliberately partial.",
     "A deterministic review-bundle pack/verify self-test and a deterministic noncanonical review-state reducer pass locally.",
@@ -9,7 +9,13 @@
     "CiteWeft integration is prepared behind an optional one-way adapter.",
     "A four-level GitHub issue hierarchy and a declarative Project v2 control plane are source-verified and dry-run-first.",
     "A separate cross-repository portfolio Project manifest, ecosystem lock and companion change packets are prepared but not remotely applied.",
-    "Registry, release, pilot and maturity packets are prepared but not submitted, executed or accepted."
+    "Registry, release, pilot and maturity packets are prepared but not submitted, executed or accepted.",
+    "Every registered static gate has an explicit no-network/no-write capability profile, assertion coverage and source-level evidence ceiling.",
+    "Provider policy surfaces and conservative local defaults are recorded for all five MVP provider baselines, but none is legally approved or live-proven.",
+    "A deterministic receipt-redaction profile passes adversarial local cases; it is a minimisation control rather than de-identification proof.",
+    "Known multi-version schema families have explicit non-destructive migration, backup and rollback plans; migration execution remains unproven.",
+    "A network-free reference recovery rehearsal passes atomic-replace, idempotent restore and tamper-rejection cases; production recoverability is not claimed.",
+    "A deterministic evidence-debt register exposes remaining compiler, provider, methodological, migration and external-review blockers."
   ],
   "current_evidence_ceiling": "source_verified",
   "forbidden_without_additional_evidence": [
@@ -120,6 +126,30 @@
     {
       "claim": "A local fork is the canonical upstream",
       "required_evidence": "documented independent maintenance decision, licence review and explicit supersession of the upstream role"
+    },
+    {
+      "claim": "A static gate proves compilation, live compatibility, legal approval, methodological adequacy or production operations",
+      "required_evidence": "the distinct compiler, runtime, accountable review, methodological or operational receipt named by the gate catalogue"
+    },
+    {
+      "claim": "Provider terms, privacy or redistribution approval is current",
+      "required_evidence": "current accountable policy/legal review tied to the exact provider policy source and release"
+    },
+    {
+      "claim": "Redaction proves that arbitrary content contains no personal, licensed, confidential or credential material",
+      "required_evidence": "content-specific classification, minimisation review and observed runtime receipt inspection; pattern redaction alone is insufficient"
+    },
+    {
+      "claim": "A schema migration has executed safely",
+      "required_evidence": "compiled migration run against representative persisted data with backup, validation, rollback and exact receipt"
+    },
+    {
+      "claim": "The reference recovery rehearsal proves production recoverability",
+      "required_evidence": "deployment-specific encrypted backup and clean-room restore drill meeting approved recovery objectives"
+    },
+    {
+      "claim": "Searchright automatically excludes studies or infers misconduct from a retraction, correction or expression-of-concern signal",
+      "required_evidence": "not an intended authority path; signals remain advisory and require human interpretation"
     }
   ],
   "language_rules": [
@@ -137,7 +167,13 @@
     "Describe review bundles as integrity-preserving portable artefacts, not methodological certification.",
     "Describe review-state snapshots as disposable derived projections, never canonical decision stores.",
     "Describe public packages as candidates until release/public-packages.json explicitly promotes them with evidence.",
-    "Name canonical upstreams separately from local forks and do not infer redistribution rights from fork ownership."
+    "Name canonical upstreams separately from local forks and do not infer redistribution rights from fork ownership.",
+    "Describe static gates using their catalogued evidence ceiling; never promote a source gate into compiler, live, legal, methodological or operational evidence.",
+    "Describe provider policy as source-identified and conservatively configured until review_evidence is present.",
+    "Describe redaction as receipt minimisation, not de-identification or proof of absence.",
+    "Describe schema migrations as planned until representative compiled migrations and rollback tests execute.",
+    "Describe the local recovery self-test as a reference rehearsal, not production recoverability.",
+    "Treat evidence-debt counts as a gap register, never a quality or completion score."
   ],
   "schema_version": "org.searchright.claim-boundaries.v1"
 }

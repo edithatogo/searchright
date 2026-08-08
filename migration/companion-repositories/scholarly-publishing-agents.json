@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/scholarly-publishing-agents",
   "revision": "4fb15b2c5f7b4b8aa90e79272fa8d09eb350da9a",
   "role": "publication workflow orchestration",
@@ -40,6 +40,20 @@
       "owner": "skill maintainer",
       "required_evidence": [
         "default-deny test"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "portable-review-bundle",
+      "action": "Accept verified .srpack review bundles as the evidence input for manuscript methods and appendices rather than reconstructing search history from prose.",
+      "target_paths": [
+        "workflows/01-manuscript-preparation/**",
+        "skills/prisma-compliance.md"
+      ],
+      "owner": "workflow maintainer",
+      "required_evidence": [
+        "bundle verification scenario",
+        "methods-rendering fixture"
       ],
       "automatic_apply": false
     }

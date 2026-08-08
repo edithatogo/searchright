@@ -75,7 +75,7 @@
       "assertion_id": "T26-A003",
       "statement": "Compatibility classification and migration receipts.",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-assurance/src/lib.rs",
         "crates/searchright-contracts/src/assurance.rs",
@@ -84,13 +84,20 @@
         "crates/searchright-assurance/tests/loom_authority.rs",
         ".github/workflows/formal.yml",
         "fuzz/Cargo.toml",
-        "verification/harness-matrix.json"
+        "verification/harness-matrix.json",
+        "contracts/migrations/registry.json",
+        "contracts/migrations/github-issue-hierarchy-v1-to-v2.json",
+        "scripts/check_schema_migrations.py",
+        "docs/contracts/schema-evolution.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_schema_migrations.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/check_schema_migrations.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
@@ -101,13 +108,13 @@
         "Add compatibility fixtures for each public contract version.",
         "Run semver and cross-version MCP/CLI contract tests."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Known multi-version contract families have explicit non-destructive migration and receipt requirements; executable data migration remains unproven."
     },
     {
       "assertion_id": "T26-A004",
       "statement": "Schema/API deprecation and rollback rules.",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-assurance/src/lib.rs",
         "crates/searchright-contracts/src/assurance.rs",
@@ -116,13 +123,19 @@
         "crates/searchright-assurance/tests/loom_authority.rs",
         ".github/workflows/formal.yml",
         "fuzz/Cargo.toml",
-        "verification/harness-matrix.json"
+        "verification/harness-matrix.json",
+        "contracts/migrations/registry.json",
+        "contracts/migrations/github-issue-hierarchy-v1-to-v2.json",
+        "scripts/check_schema_migrations.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_schema_migrations.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/check_schema_migrations.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
@@ -133,7 +146,7 @@
         "Add compatibility fixtures for each public contract version.",
         "Run semver and cross-version MCP/CLI contract tests."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Unknown versions, destructive changes and implicit write upgrades are denied by source policy; compiled backward compatibility remains open."
     },
     {
       "assertion_id": "T26-A005",

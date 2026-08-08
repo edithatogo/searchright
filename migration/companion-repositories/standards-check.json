@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/standards_check",
   "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
   "role": "reporting and methodology standard provenance",
@@ -56,6 +56,20 @@
       "owner": "standards maintainer",
       "required_evidence": [
         "consumer-driven contract receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "pack-schema-migrations",
+      "action": "Publish explicit pack-version migration plans and backward-reader fixtures so Searchright never silently rewrites reporting-standard assessments.",
+      "target_paths": [
+        "migrations/**",
+        "tests/compatibility/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "migration corpus",
+        "rollback and compatibility receipt"
       ],
       "automatic_apply": false
     }

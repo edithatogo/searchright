@@ -1,0 +1,12 @@
+{
+  "errors": [],
+  "limitations": [
+    "Static response-shape and fixture-integrity checks only; upstream APIs were not contacted.",
+    "Rust parser behaviour requires compiler-backed fixture tests before promotion."
+  ],
+  "mode": "check",
+  "providers_checked": 5,
+  "schema_version": "org.searchright.provider-contract-baseline-receipt.v1",
+  "status": "passed",
+  "warnings": []
+}

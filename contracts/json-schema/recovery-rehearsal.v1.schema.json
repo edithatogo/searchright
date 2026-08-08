@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/recovery-rehearsal.v1.schema.json",
+  "title": "Searchright recovery rehearsal receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "scenario_id",
+    "files",
+    "atomic_replace_checked",
+    "stale_temporary_checked",
+    "restore_idempotency_checked",
+    "tamper_detection_checked",
+    "errors",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.recovery-rehearsal.v1"
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed"
+      ]
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "files": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "atomic_replace_checked": {
+      "type": "boolean"
+    },
+    "stale_temporary_checked": {
+      "type": "boolean"
+    },
+    "restore_idempotency_checked": {
+      "type": "boolean"
+    },
+    "tamper_detection_checked": {
+      "type": "boolean"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

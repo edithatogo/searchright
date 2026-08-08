@@ -19,6 +19,9 @@ GitHub issue key: `track-33`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `docs/operations/backup-restore.md`
   - [x] Present source path: `docs/operations/incident-response.md`
   - [x] Present source path: `.github/workflows/resilience.yml`
+  - [x] Present source path: `scripts/recovery_rehearsal.py`
+  - [x] Present source path: `verification/recovery/rehearsal.json`
+  - [x] Present source path: `docs/operations/recovery-reference-rehearsal.md`
   - [x] Assertion ledger: `conductor/tracks/33-operational-reliability/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -29,6 +32,7 @@ GitHub issue key: `track-33`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_rust_source_structure.py`
   - [x] `python scripts/check_workflow_hardening.py`
+  - [x] `python scripts/recovery_rehearsal.py --self-test`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
@@ -38,6 +42,7 @@ GitHub issue key: `track-33`. Each numbered phase maps to the same-numbered nati
 - [ ] Compile and execute operations policy tests and failure-injection scenarios.
 - [ ] Run encrypted clean-room backup and restore rehearsals with audit-chain verification.
 - [ ] Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.
+- [ ] Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives.
 
 ## Phase 4: Review and closeout
 

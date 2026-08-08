@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/UOGTO",
   "revision": "ac5b8e86c4a3547d008e83ba4cfcbb5f3ba95f25",
   "role": "systematic-review consumer with custom search code",
@@ -64,6 +64,21 @@
       "owner": "project owner",
       "required_evidence": [
         "round-trip receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "portable-review-bundle",
+      "action": "Persist the migrated review as a verified Searchright bundle and compare legacy outputs before deleting direct clients or snowballing scripts.",
+      "target_paths": [
+        "review-bundles/**",
+        "tests/fixtures/searchright-migration/**"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "bundle identity",
+        "legacy parity report",
+        "rollback plan"
       ],
       "automatic_apply": false
     }

@@ -32,6 +32,16 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "architecture-policy",
+      "schema": "contracts/json-schema/architecture-policy.v1.schema.json",
+      "example": "contracts/examples/architecture-policy.json",
+      "schema_id": "https://schemas.searchright.dev/architecture-policy.v1.schema.json",
+      "rust_type": "ArchitecturePolicy",
+      "owner_track": "16",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "audit-event",
       "schema": "contracts/json-schema/audit-event.v1.schema.json",
       "example": "contracts/examples/audit-event.json",
@@ -152,11 +162,31 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "evidence-debt",
+      "schema": "contracts/json-schema/evidence-debt.v1.schema.json",
+      "example": "contracts/examples/evidence-debt.json",
+      "schema_id": "https://schemas.searchright.dev/evidence-debt.v1.schema.json",
+      "rust_type": "EvidenceDebtRegister",
+      "owner_track": "30",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "execution-envelope",
       "schema": "contracts/json-schema/execution-envelope.v1.schema.json",
       "example": "contracts/examples/execution-envelope.yaml",
       "schema_id": "https://schemas.searchright.dev/execution-envelope.v1.schema.json",
       "rust_type": "ExecutionEnvelope",
+      "owner_track": "16",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "gate-catalog",
+      "schema": "contracts/json-schema/gate-catalog.v1.schema.json",
+      "example": "contracts/examples/gate-catalog.json",
+      "schema_id": "https://schemas.searchright.dev/gate-catalog.v1.schema.json",
+      "rust_type": "GateCatalog",
       "owner_track": "16",
       "stability": "alpha",
       "evidence_level": "static_verified"
@@ -332,6 +362,16 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "provider-policy-set",
+      "schema": "contracts/json-schema/provider-policy-set.v1.schema.json",
+      "example": "contracts/examples/provider-policy-set.json",
+      "schema_id": "https://schemas.searchright.dev/provider-policy-set.v1.schema.json",
+      "rust_type": "ProviderPolicySet",
+      "owner_track": "04",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "query-ast",
       "schema": "contracts/json-schema/query-ast.v1.schema.json",
       "example": "contracts/examples/query-ast.yaml",
@@ -348,6 +388,26 @@
       "schema_id": "https://schemas.searchright.dev/ranking-calibration.v1.schema.json",
       "rust_type": "RankingCalibration",
       "owner_track": "23",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "recovery-rehearsal",
+      "schema": "contracts/json-schema/recovery-rehearsal.v1.schema.json",
+      "example": "contracts/examples/recovery-rehearsal.json",
+      "schema_id": "https://schemas.searchright.dev/recovery-rehearsal.v1.schema.json",
+      "rust_type": "RecoveryRehearsal",
+      "owner_track": "33",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "redaction-profile",
+      "schema": "contracts/json-schema/redaction-profile.v1.schema.json",
+      "example": "contracts/examples/redaction-profile.json",
+      "schema_id": "https://schemas.searchright.dev/redaction-profile.v1.schema.json",
+      "rust_type": "RedactionProfile",
+      "owner_track": "28",
       "stability": "alpha",
       "evidence_level": "static_verified"
     },
@@ -388,6 +448,26 @@
       "schema_id": "https://schemas.searchright.dev/review-state-snapshot.v1.schema.json",
       "rust_type": "DerivedReviewStateSnapshot",
       "owner_track": "05",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "schema-migration-plan",
+      "schema": "contracts/json-schema/schema-migration-plan.v1.schema.json",
+      "example": "contracts/examples/schema-migration-plan.json",
+      "schema_id": "https://schemas.searchright.dev/schema-migration-plan.v1.schema.json",
+      "rust_type": "SchemaMigrationPlan",
+      "owner_track": "26",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "schema-migration-registry",
+      "schema": "contracts/json-schema/schema-migration-registry.v1.schema.json",
+      "example": "contracts/examples/schema-migration-registry.json",
+      "schema_id": "https://schemas.searchright.dev/schema-migration-registry.v1.schema.json",
+      "rust_type": "SchemaMigrationRegistry",
+      "owner_track": "26",
       "stability": "alpha",
       "evidence_level": "static_verified"
     },

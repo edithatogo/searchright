@@ -17,6 +17,10 @@ GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `.github/workflows/formal.yml`
   - [x] Present source path: `fuzz/Cargo.toml`
   - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Present source path: `contracts/migrations/registry.json`
+  - [x] Present source path: `contracts/migrations/github-issue-hierarchy-v1-to-v2.json`
+  - [x] Present source path: `scripts/check_schema_migrations.py`
+  - [x] Present source path: `docs/contracts/schema-evolution.md`
   - [x] Assertion ledger: `conductor/tracks/26-formal-assurance-contract-evolution/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -27,6 +31,7 @@ GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_rust_source_structure.py`
   - [x] `python scripts/check_workflow_hardening.py`
+  - [x] `python scripts/check_schema_migrations.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
@@ -37,6 +42,7 @@ GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered nati
 - [ ] Compile and execute model-check traces and forbidden-transition tests.
 - [ ] Add compatibility fixtures for each public contract version.
 - [ ] Run semver and cross-version MCP/CLI contract tests.
+- [ ] Compile and execute representative persisted-data migrations, backward readers and rollback projections.
 
 ## Phase 4: Review and closeout
 

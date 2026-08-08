@@ -6,7 +6,8 @@
       "docs/architecture.md",
       "docs/vertical-slice-definition-of-done.md",
       "docs/msrv-and-package-policy.md",
-      "docs/adrs/"
+      "docs/adrs/",
+      "docs/quality/architecture-fitness.md"
     ],
     "integration": [
       "integration/passports/",
@@ -17,7 +18,8 @@
       "integration/release-train.json",
       "integration/ecosystem-lock.json",
       "integration/provider-contract-baselines.json",
-      "integration/github/portfolio-project.json"
+      "integration/github/portfolio-project.json",
+      "integration/provider-policies/index.json"
     ],
     "planning": [
       "conductor/requirements.md",
@@ -32,7 +34,8 @@
       "AGENTS.md",
       "CONTEXT.md",
       "context/claim-boundaries.json",
-      "context/capability-matrix.json"
+      "context/capability-matrix.json",
+      "policy/redaction-profile.json"
     ],
     "verification": [
       "scripts/",
@@ -43,7 +46,12 @@
       "benchmarks/methodology/manifest.json",
       "release/rehearsal.json",
       "requirements/rust-tools.json",
-      "verification/vertical-slice/README.md"
+      "verification/vertical-slice/README.md",
+      "verification/gate-catalog.json",
+      "verification/architecture-policy.json",
+      "verification/evidence-debt.json",
+      "contracts/migrations/registry.json",
+      "verification/recovery/rehearsal.json"
     ]
   },
   "evidence_ceiling": "source_verified",
@@ -56,6 +64,13 @@
     "context/capability-matrix.json",
     "context/hazard-log.json",
     "context/evidence-ledger.json",
+    "verification/recovery/rehearsal.json",
+    "contracts/migrations/registry.json",
+    "policy/redaction-profile.json",
+    "integration/provider-policies/index.json",
+    "verification/evidence-debt.json",
+    "verification/architecture-policy.json",
+    "verification/gate-catalog.json",
     "conductor/requirements.md",
     "conductor/traceability-overrides.json",
     "conductor/roadmap-coverage.json",
@@ -209,8 +224,36 @@
     {
       "path": "verification/vertical-slice/README.md",
       "role": "rights-clear end-to-end contract reference path and claim boundary"
+    },
+    {
+      "path": "verification/gate-catalog.json",
+      "role": "executable static-gate capabilities, assertion coverage and evidence ceilings"
+    },
+    {
+      "path": "verification/architecture-policy.json",
+      "role": "default-deny dependency, network, authority, write and publication boundaries"
+    },
+    {
+      "path": "verification/evidence-debt.json",
+      "role": "derived unresolved implementation and proof register"
+    },
+    {
+      "path": "integration/provider-policies/index.json",
+      "role": "provider usage, classification, retention and review state"
+    },
+    {
+      "path": "policy/redaction-profile.json",
+      "role": "default receipt minimisation policy"
+    },
+    {
+      "path": "contracts/migrations/registry.json",
+      "role": "known contract-version families and explicit migration policy"
+    },
+    {
+      "path": "verification/recovery/rehearsal.json",
+      "role": "network-free reference recovery mechanics and claim boundary"
     }
   ],
   "schema_version": "org.searchright.context-manifest.v1",
-  "updated_at": "2026-08-08"
+  "updated_at": "2026-08-09"
 }

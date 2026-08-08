@@ -223,6 +223,79 @@
       "rationale": "Fork ownership does not make upstream code or content permissively reusable, and benchmark leakage invalidates performance evidence.",
       "status": "accepted",
       "supersedes": []
+    },
+    {
+      "decision": "Assign every executable static gate an explicit capability profile and evidence ceiling before it may support a claim.",
+      "evidence": [
+        "verification/gate-catalog.json",
+        "scripts/check_gate_catalog.py",
+        "docs/quality/gate-catalog-and-evidence-ceilings.md"
+      ],
+      "id": "D-020",
+      "rationale": "Prevents a passing source checker from being laundered into compiler, runtime, legal, methodological or operational evidence.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Enforce neutral dependency direction, network placement, authority placement, external-write gates and package publication through executable architecture fitness policy.",
+      "evidence": [
+        "verification/architecture-policy.json",
+        "scripts/check_architecture_fitness.py",
+        "docs/quality/architecture-fitness.md"
+      ],
+      "id": "D-021",
+      "rationale": "Makes high-consequence architectural boundaries continuously testable instead of relying on documentation review alone.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Treat provider implementation, current source policy review, live compatibility and redistribution permission as independent evidence domains.",
+      "evidence": [
+        "integration/provider-policies/index.json",
+        "scripts/check_provider_policies.py",
+        "docs/provider-governance.md"
+      ],
+      "id": "D-022",
+      "rationale": "An available endpoint or open metadata statement does not by itself establish legal approval, live support or blanket record-content reuse.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Reject unknown, destructive and implicit contract write migrations; require explicit version-family plans, backup, rollback and receipts.",
+      "evidence": [
+        "contracts/migrations/registry.json",
+        "scripts/check_schema_migrations.py",
+        "docs/contracts/schema-evolution.md"
+      ],
+      "id": "D-023",
+      "rationale": "Persisted review evidence must remain interpretable and recoverable across contract evolution.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Minimise receipt content before persistence and separate reference recovery mechanics from production recoverability claims.",
+      "evidence": [
+        "policy/redaction-profile.json",
+        "scripts/check_redaction_policy.py",
+        "scripts/recovery_rehearsal.py",
+        "verification/recovery/rehearsal.json"
+      ],
+      "id": "D-024",
+      "rationale": "Search queries and diagnostics may be confidential, while a local restore self-test cannot establish encrypted operational resilience.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Treat retraction, correction, expression-of-concern, duplicate-publication and version/update signals as provenance-bearing advisory evidence only.",
+      "evidence": [
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md",
+        "crates/searchright-screening/src/lib.rs"
+      ],
+      "id": "D-025",
+      "rationale": "Integrity signals can be incomplete, delayed, source-specific or falsely matched; human review must determine their effect on study eligibility and interpretation.",
+      "status": "accepted",
+      "supersedes": []
     }
   ],
   "schema_version": "org.searchright.decision-ledger.v1"

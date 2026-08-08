@@ -14,6 +14,8 @@ GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `migration/sourceright/parity-cases.json`
   - [x] Present source path: `crates/searchright-sourceright-compat/src/lib.rs`
   - [x] Present source path: `scripts/check_sourceright_migration.py`
+  - [x] Present source path: `migration/companion-repositories/sourceright.json`
+  - [x] Present source path: `docs/integration-architecture.md`
   - [x] Assertion ledger: `conductor/tracks/14-sourceright-migration/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -32,6 +34,7 @@ GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered nati
 - [ ] Open and merge the downstream Sourceright integration after dual-run parity.
 - [ ] Generate compiled parity receipts and exercise rollback.
 - [ ] Remove superseded downstream code only after the deletion gate passes.
+- [ ] Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review.
 
 ## Phase 4: Review and closeout
 

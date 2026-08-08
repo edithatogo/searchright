@@ -39,6 +39,19 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `scripts/check_public_package_policy.py`
   - [x] Present source path: `scripts/sync_schema_surface.py`
   - [x] Present source path: `docs/vertical-slice-definition-of-done.md`
+  - [x] Present source path: `verification/gate-catalog.json`
+  - [x] Present source path: `scripts/check_gate_catalog.py`
+  - [x] Present source path: `verification/architecture-policy.json`
+  - [x] Present source path: `scripts/check_architecture_fitness.py`
+  - [x] Present source path: `verification/evidence-debt.json`
+  - [x] Present source path: `scripts/generate_evidence_debt.py`
+  - [x] Present source path: `policy/redaction-profile.json`
+  - [x] Present source path: `scripts/redaction.py`
+  - [x] Present source path: `scripts/check_redaction_policy.py`
+  - [x] Present source path: `docs/quality/gate-catalog-and-evidence-ceilings.md`
+  - [x] Present source path: `docs/quality/evidence-debt.md`
+  - [x] Present source path: `docs/quality/architecture-fitness.md`
+  - [x] Present source path: `docs/security/redaction-and-data-minimisation.md`
   - [x] Assertion ledger: `conductor/tracks/16-quality-security-harness/traceability.json`
 
 ## Completion and evidence contract

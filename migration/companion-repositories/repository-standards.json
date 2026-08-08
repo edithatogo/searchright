@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/repository-standards",
   "revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
   "role": "estate policy authority",
@@ -53,6 +53,21 @@
       "owner": "standards maintainer",
       "required_evidence": [
         "canary and rollback receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "research-infrastructure-evidence-ceilings",
+      "action": "Add reusable gate-catalog, evidence-debt, architecture-fitness, schema-migration and redaction controls to the research-infrastructure repository profile.",
+      "target_paths": [
+        "profiles/rust-research-infrastructure/**",
+        "reusable-workflows/**",
+        "schemas/**"
+      ],
+      "owner": "repository standards maintainer",
+      "required_evidence": [
+        "profile conformance fixture",
+        "canary repository receipt"
       ],
       "automatic_apply": false
     }

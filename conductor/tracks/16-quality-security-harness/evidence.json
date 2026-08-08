@@ -37,7 +37,20 @@
     "scripts/check_traceability.py",
     "scripts/check_public_package_policy.py",
     "scripts/sync_schema_surface.py",
-    "docs/vertical-slice-definition-of-done.md"
+    "docs/vertical-slice-definition-of-done.md",
+    "verification/gate-catalog.json",
+    "scripts/check_gate_catalog.py",
+    "verification/architecture-policy.json",
+    "scripts/check_architecture_fitness.py",
+    "verification/evidence-debt.json",
+    "scripts/generate_evidence_debt.py",
+    "policy/redaction-profile.json",
+    "scripts/redaction.py",
+    "scripts/check_redaction_policy.py",
+    "docs/quality/gate-catalog-and-evidence-ceilings.md",
+    "docs/quality/evidence-debt.md",
+    "docs/quality/architecture-fitness.md",
+    "docs/security/redaction-and-data-minimisation.md"
   ],
   "traceability": "conductor/tracks/16-quality-security-harness/traceability.json",
   "static_checks": [
@@ -50,7 +63,11 @@
     "python scripts/generate_source_hash_manifest.py --check",
     "python scripts/check_traceability.py",
     "python scripts/check_public_package_policy.py",
-    "python scripts/sync_schema_surface.py --check"
+    "python scripts/sync_schema_surface.py --check",
+    "python scripts/check_gate_catalog.py --check",
+    "python scripts/generate_evidence_debt.py --check",
+    "python scripts/check_architecture_fitness.py",
+    "python scripts/check_redaction_policy.py --self-test"
   ],
   "requirements": [
     "SR-010",

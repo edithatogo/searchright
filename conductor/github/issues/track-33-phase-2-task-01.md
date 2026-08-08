@@ -11,6 +11,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_rust_source_structure.py`
   - [x] `python scripts/check_workflow_hardening.py`
+  - [x] `python scripts/recovery_rehearsal.py --self-test`
 
 ## Completion and evidence contract
 

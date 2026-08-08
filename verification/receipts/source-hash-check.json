@@ -1,8 +1,10 @@
 {
+  "algorithm": "sha256",
   "limitations": [
-    "Integrity membership and hashes only; no semantic, compiler or external evidence is implied."
+    "The manifest excludes Git metadata, build output and derived verification receipts; it is source-integrity evidence, not compiler or runtime evidence."
   ],
-  "result": "verified 1167 source files",
-  "schema_version": "org.searchright.source-hash-check.v1",
+  "manifest": "verification/receipts/source-manifest.sha256",
+  "schema_version": "org.searchright.source-hash-check-receipt.v1",
+  "source_files": 1328,
   "status": "passed"
 }

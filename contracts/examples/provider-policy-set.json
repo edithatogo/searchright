@@ -1,0 +1,144 @@
+{
+  "automatic_approval": false,
+  "claim_boundary": "These manifests record identified source-policy surfaces and conservative local defaults. They are not legal advice, terms acceptance, current upstream compatibility evidence or permission to redistribute record content.",
+  "providers": [
+    {
+      "access_class": "open_with_optional_key",
+      "contact_identity_required": true,
+      "credential_environment_variables": [
+        "NCBI_API_KEY"
+      ],
+      "credential_receipt_policy": "never_persist",
+      "documentation_url": "https://www.ncbi.nlm.nih.gov/books/NBK25499/",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+      "live_canary_requires_opt_in": true,
+      "manual_review_required_before_live_release": true,
+      "minimum_interval_ms_with_key": 110,
+      "minimum_interval_ms_without_key": 350,
+      "notes": [
+        "Tool and contact identity should be supplied where the source policy requires them."
+      ],
+      "policy_review_status": "source_identified_not_legally_approved",
+      "privacy_url": "https://www.nlm.nih.gov/web_policies.html",
+      "provider_id": "pubmed-esearch",
+      "query_classification": "confidential",
+      "raw_response_retention": "disabled_by_default",
+      "redistribution_policy": "metadata_subject_to_source_record_rights",
+      "response_classification": "public_metadata",
+      "review_due": "2026-11-09",
+      "review_evidence": [],
+      "source_checked_at": "2026-08-09",
+      "terms_or_usage_url": "https://www.ncbi.nlm.nih.gov/books/NBK25497/"
+    },
+    {
+      "access_class": "open_with_optional_key",
+      "contact_identity_required": true,
+      "credential_environment_variables": [
+        "NCBI_API_KEY"
+      ],
+      "credential_receipt_policy": "never_persist",
+      "documentation_url": "https://www.ncbi.nlm.nih.gov/books/NBK25499/",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi",
+      "live_canary_requires_opt_in": true,
+      "manual_review_required_before_live_release": true,
+      "minimum_interval_ms_with_key": 110,
+      "minimum_interval_ms_without_key": 350,
+      "notes": [
+        "Identifier batches should be bounded and receipts must omit contact and API-key values."
+      ],
+      "policy_review_status": "source_identified_not_legally_approved",
+      "privacy_url": "https://www.nlm.nih.gov/web_policies.html",
+      "provider_id": "pubmed-esummary",
+      "query_classification": "internal_review_data",
+      "raw_response_retention": "disabled_by_default",
+      "redistribution_policy": "metadata_subject_to_source_record_rights",
+      "response_classification": "public_metadata",
+      "review_due": "2026-11-09",
+      "review_evidence": [],
+      "source_checked_at": "2026-08-09",
+      "terms_or_usage_url": "https://www.ncbi.nlm.nih.gov/books/NBK25497/"
+    },
+    {
+      "access_class": "open",
+      "contact_identity_required": false,
+      "credential_environment_variables": [],
+      "credential_receipt_policy": "not_applicable",
+      "documentation_url": "https://europepmc.org/RestfulWebService",
+      "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+      "live_canary_requires_opt_in": true,
+      "manual_review_required_before_live_release": true,
+      "minimum_interval_ms_with_key": null,
+      "minimum_interval_ms_without_key": 1000,
+      "notes": [
+        "Full-text availability does not imply permission to persist or redistribute full text."
+      ],
+      "policy_review_status": "source_identified_not_legally_approved",
+      "privacy_url": "https://www.ebi.ac.uk/data-protection/privacy-notice/europe-pmc",
+      "provider_id": "europe-pmc",
+      "query_classification": "confidential",
+      "raw_response_retention": "disabled_by_default",
+      "redistribution_policy": "metadata_subject_to_source_and_record_rights",
+      "response_classification": "public_metadata",
+      "review_due": "2026-11-09",
+      "review_evidence": [],
+      "source_checked_at": "2026-08-09",
+      "terms_or_usage_url": "https://europepmc.org/terms"
+    },
+    {
+      "access_class": "open_with_optional_polite_identity",
+      "contact_identity_required": false,
+      "credential_environment_variables": [],
+      "credential_receipt_policy": "contact_value_redacted",
+      "documentation_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "endpoint": "https://api.crossref.org/works",
+      "live_canary_requires_opt_in": true,
+      "manual_review_required_before_live_release": true,
+      "minimum_interval_ms_with_key": null,
+      "minimum_interval_ms_without_key": 1000,
+      "notes": [
+        "Use source-reported rate-limit headers and identify the client when configured."
+      ],
+      "policy_review_status": "source_identified_not_legally_approved",
+      "privacy_url": "https://www.crossref.org/privacy/",
+      "provider_id": "crossref",
+      "query_classification": "confidential",
+      "raw_response_retention": "disabled_by_default",
+      "redistribution_policy": "metadata_generally_reusable_but_record_level_rights_apply",
+      "response_classification": "public_metadata",
+      "review_due": "2026-11-09",
+      "review_evidence": [],
+      "source_checked_at": "2026-08-09",
+      "terms_or_usage_url": "https://www.crossref.org/terms/"
+    },
+    {
+      "access_class": "open_with_optional_key_or_identity",
+      "contact_identity_required": false,
+      "credential_environment_variables": [
+        "OPENALEX_API_KEY"
+      ],
+      "credential_receipt_policy": "never_persist",
+      "documentation_url": "https://docs.openalex.org/",
+      "endpoint": "https://api.openalex.org/works",
+      "live_canary_requires_opt_in": true,
+      "manual_review_required_before_live_release": true,
+      "minimum_interval_ms_with_key": 100,
+      "minimum_interval_ms_without_key": 1000,
+      "notes": [
+        "Terms and rate policy must be re-reviewed before each supported live release."
+      ],
+      "policy_review_status": "source_identified_not_legally_approved",
+      "privacy_url": "https://openalex.org/privacy",
+      "provider_id": "openalex",
+      "query_classification": "confidential",
+      "raw_response_retention": "disabled_by_default",
+      "redistribution_policy": "metadata_subject_to_source_and_record_rights",
+      "response_classification": "public_metadata",
+      "review_due": "2026-11-09",
+      "review_evidence": [],
+      "source_checked_at": "2026-08-09",
+      "terms_or_usage_url": "https://openalex.org/terms"
+    }
+  ],
+  "schema_version": "org.searchright.provider-policy-set.v1",
+  "source_epoch": "2026-08-09"
+}

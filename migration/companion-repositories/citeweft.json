@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/citeweft",
   "revision": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
   "role": "neutral scholarly document extraction",
@@ -73,6 +73,21 @@
       "required_evidence": [
         "signed tag",
         "release attestation"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "fitness-redaction-contracts",
+      "action": "Adopt a neutral-core architecture fitness policy and explicit diagnostic/full-text redaction profile so backend errors cannot leak document content, credentials or request details.",
+      "target_paths": [
+        "verification/architecture-policy.json",
+        "policy/redaction-profile.json",
+        "tests/security/**"
+      ],
+      "owner": "CiteWeft maintainer",
+      "required_evidence": [
+        "architecture fitness receipt",
+        "adversarial redaction tests"
       ],
       "automatic_apply": false
     }

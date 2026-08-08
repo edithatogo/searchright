@@ -40,6 +40,19 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `scripts/check_public_package_policy.py`
   - [x] Present source path: `scripts/sync_schema_surface.py`
   - [x] Present source path: `docs/vertical-slice-definition-of-done.md`
+  - [x] Present source path: `verification/gate-catalog.json`
+  - [x] Present source path: `scripts/check_gate_catalog.py`
+  - [x] Present source path: `verification/architecture-policy.json`
+  - [x] Present source path: `scripts/check_architecture_fitness.py`
+  - [x] Present source path: `verification/evidence-debt.json`
+  - [x] Present source path: `scripts/generate_evidence_debt.py`
+  - [x] Present source path: `policy/redaction-profile.json`
+  - [x] Present source path: `scripts/redaction.py`
+  - [x] Present source path: `scripts/check_redaction_policy.py`
+  - [x] Present source path: `docs/quality/gate-catalog-and-evidence-ceilings.md`
+  - [x] Present source path: `docs/quality/evidence-debt.md`
+  - [x] Present source path: `docs/quality/architecture-fitness.md`
+  - [x] Present source path: `docs/security/redaction-and-data-minimisation.md`
   - [x] Assertion ledger: `conductor/tracks/16-quality-security-harness/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -57,6 +70,10 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/check_traceability.py`
   - [x] `python scripts/check_public_package_policy.py`
   - [x] `python scripts/sync_schema_surface.py --check`
+  - [x] `python scripts/check_gate_catalog.py --check`
+  - [x] `python scripts/generate_evidence_debt.py --check`
+  - [x] `python scripts/check_architecture_fitness.py`
+  - [x] `python scripts/check_redaction_policy.py --self-test`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

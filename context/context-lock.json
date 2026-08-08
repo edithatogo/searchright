@@ -8,12 +8,12 @@
     },
     {
       "path": "CODEX_HANDOFF.md",
-      "sha256": "6ca8f58bc3c6855fadf2d6c02c1d91babb534d6cdf097c794b238142fbfc1b9e",
-      "size": 8649
+      "sha256": "e217926f097495530f5b0de30a6125367a795f27fa375e092330fde05d674dad",
+      "size": 9007
     },
     {
       "path": "CONTEXT.md",
-      "sha256": "e763ec60cc85fee5c016af1b7c6cbf09f1c96fb3616ddb2a2cadb3ac5ba16bc2",
+      "sha256": "d91a14ff32401fc332ddbc61467bf2899e558ee1c52a4f5b6e73afe3bee146cf",
       "size": 4186
     },
     {
@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "9805c55048e9fed0898e4a3d2ed9ee3c5cab565a6a59367461016c6fb6d4ae07",
-      "size": 584501
+      "sha256": "54df61d2c0dd6f71f5acccf9d54236f0b93acb3c1d770eafb9b467574ea126cf",
+      "size": 589023
     },
     {
       "path": "conductor/github/project.json",
@@ -38,7 +38,7 @@
     },
     {
       "path": "conductor/maturity-dossier.json",
-      "sha256": "7310c3c9cbd8375d61d6c033d9d089db279cf54315f83070aca372f0aff6959b",
+      "sha256": "3e34cd8b8365eb2ed728843566a5b447685c322093c54587864bb7d856ffc943",
       "size": 2237
     },
     {
@@ -48,48 +48,53 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "540557eeddc34e35057b43824ac3ae146c16ea6ee29df6827cf6c187b3a3bc71",
-      "size": 67341
+      "sha256": "988036759a4107c4dc3987905e10ddf34cdb0ec808b702178ac34699784f6ccc",
+      "size": 70089
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "6919b67f1ede6809f067f561d7cfc15b10955cc24a4b209e299b8fd941c23f6c",
-      "size": 49381
+      "sha256": "fcea1395a706fcf76cd4bb4f43522c6ad1f3554cebbc7386906a1da52f4a84f3",
+      "size": 79196
     },
     {
       "path": "context/capability-matrix.json",
-      "sha256": "8a0a92f7c7d393bdf6a0d9f7c7a5bfb5f95c40275ceb4538fa1fb9ccd3820f10",
-      "size": 3832
+      "sha256": "944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2",
+      "size": 5475
     },
     {
       "path": "context/claim-boundaries.json",
-      "sha256": "e12c425c565fb158e3b32d62e1b81f7cd7478b5ae219f23c0495ea35dd789773",
-      "size": 8163
+      "sha256": "1d66cc63a5f9f91ce165a2583bbb4890c2c909504407c3fda1f2634e18e29fbb",
+      "size": 11280
     },
     {
       "path": "context/decision-ledger.json",
-      "sha256": "682822269d330d68cdb6a7dd0ef1b54bd64f80b925b32cfe3210943af2046f1a",
-      "size": 9817
+      "sha256": "757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553",
+      "size": 13274
     },
     {
       "path": "context/evidence-ledger.json",
-      "sha256": "fd68be9e41de9e3e9eb68f3f6954f24e039d74a574fe4c783cbb64fed490cf1f",
-      "size": 6398
+      "sha256": "e3d57d1948aebe24f198bef43acdb85e3839d20bf0c2ee4578d7a94ac897325a",
+      "size": 8597
     },
     {
       "path": "context/hazard-log.json",
-      "sha256": "4416c4a941b10f07fe94de305c8caca651dde92923b278709743ce3b6f9f256b",
-      "size": 13623
+      "sha256": "2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244",
+      "size": 17239
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "a788ab15ecf42e622401267a62a7f3df6e8945d15fa2963a6bf4a99bd78feaeb",
-      "size": 18856
+      "sha256": "207afb0014c76b237ff189142d1493394e0deae3ca6f32ee0028324ef79c7ac5",
+      "size": 21624
+    },
+    {
+      "path": "contracts/migrations/registry.json",
+      "sha256": "04b2572b10547307d3c4ced3af5c0e9325cb4613d7cc58c1fe855ba294daf3b2",
+      "size": 1099
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "2b7951d13a39a5bbccaa8d5e00519b2392d0e05b65bb1023eb1599150daf5c1c",
-      "size": 21102
+      "sha256": "fe341fc10eb937665e3d77982bf4e945e22efec7d02b3af7f19d91d445c1b02d",
+      "size": 24387
     },
     {
       "path": "docs/safety/safety-case.md",
@@ -113,7 +118,7 @@
     },
     {
       "path": "integration/ecosystem-lock.json",
-      "sha256": "9a36e64fd6f04e6a382cd5feef10409f44932cb432cb8ad970449a86faf4b38c",
+      "sha256": "46abe6884ddeb880160eab941a9ecafcbc96a91a1893b294ed8a17dadecca486",
       "size": 2783
     },
     {
@@ -132,14 +137,24 @@
       "size": 3603
     },
     {
+      "path": "integration/provider-policies/index.json",
+      "sha256": "aab02dbf1470b130b0601f8b5977ab39a8828daf809d6d68192a8e09e005d6c3",
+      "size": 6665
+    },
+    {
       "path": "integration/release-train.json",
       "sha256": "3b2f0d531267c34939ba80e3b318fa89b006e06574ea437ade9032dcf7298550",
       "size": 2274
     },
     {
       "path": "migration/companion-repositories/index.json",
-      "sha256": "4aa133a1dea2aba0a090aa4c708b6eeb84981d89c2613e31174a013699053baf",
+      "sha256": "4faff25256e9baf0336651b544494c241f1102e985bf7ade33fc5b7add24d177",
       "size": 2003
+    },
+    {
+      "path": "policy/redaction-profile.json",
+      "sha256": "77258ee68dce2527e86f83082e0e8853ed66fc3db2cb0cc4092f5e6bd038155a",
+      "size": 1232
     },
     {
       "path": "release/public-packages.json",
@@ -157,9 +172,29 @@
       "size": 2358
     },
     {
+      "path": "verification/architecture-policy.json",
+      "sha256": "85704ee898a02fc2ac0be5b6bc0e8891a207e35d529bb71fe19dc813f85d6d15",
+      "size": 1813
+    },
+    {
+      "path": "verification/evidence-debt.json",
+      "sha256": "11f4eeebfbef6c06fbeca3e9a72042014d9bb203b1264d03acd754f86ef55bc6",
+      "size": 3255
+    },
+    {
+      "path": "verification/gate-catalog.json",
+      "sha256": "a82f7a9f73d0935d87ef540355ef62f39730c0455a3b7b22329c8f35be88a12a",
+      "size": 40862
+    },
+    {
       "path": "verification/harness-matrix.json",
-      "sha256": "b74d8e1b76b0d331716d823dd39c39c1c110f07428446d16aa7d3a6726610eb9",
-      "size": 10348
+      "sha256": "3061e4e8e617eed3a4f1be8465be811bce0522006e93b6f968b10527298f6837",
+      "size": 12721
+    },
+    {
+      "path": "verification/recovery/rehearsal.json",
+      "sha256": "78160001694a8e0a0bee9617d83011cb898cacadcccf4c8481f073c864bbed61",
+      "size": 528
     },
     {
       "path": "verification/vertical-slice/README.md",
@@ -167,6 +202,6 @@
       "size": 556
     }
   ],
-  "generated_at": "source-epoch:2026-08-08",
+  "generated_at": "source-epoch:2026-08-09",
   "schema_version": "org.searchright.context-lock.v1"
 }

@@ -1,0 +1,11 @@
+{
+  "claim_boundary": "Passing this gate keeps publication default-deny; it does not establish compiler, API, SemVer, licence, registry or release evidence.",
+  "development_toolchain": "1.97.1",
+  "errors": [],
+  "public_candidates": 3,
+  "publish_ready": 0,
+  "schema_version": "org.searchright.public-package-policy-receipt.v1",
+  "shared_layer_msrv": "1.88",
+  "status": "passed",
+  "workspace_packages": 30
+}

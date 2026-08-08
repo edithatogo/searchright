@@ -1,0 +1,11 @@
+{
+  "adversarial_cases": 1,
+  "errors": [],
+  "limitations": [
+    "Pattern-based receipt minimisation cannot prove that arbitrary free text contains no personal, licensed or confidential information. Raw payload persistence remains disabled by default."
+  ],
+  "profile_id": "searchright-default-receipt-redaction",
+  "replacement_count": 7,
+  "schema_version": "org.searchright.redaction-policy-receipt.v1",
+  "status": "passed"
+}

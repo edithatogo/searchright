@@ -184,9 +184,13 @@ sequenceDiagram
 
 Rights-clear response baselines exist for PubMed ESearch and ESummary, Europe
 PMC, Crossref and OpenAlex. They pin exact fixture hashes, expected JSON pointers,
-HTTPS origins and hosts. They detect local or expected-shape drift only; Rust
-parser equivalence and current upstream compatibility require compiled fixture
-and redacted live canary receipts.
+HTTPS origins and hosts. Separate provider-policy manifests record query and
+response classification, credential handling, raw-response retention and the
+absence or presence of terms/legal review. Technical compatibility cannot
+promote policy approval, and policy metadata cannot prove live compatibility.
+The baselines detect local or expected-shape drift only; Rust parser equivalence
+and current upstream compatibility require compiled fixture and redacted live
+canary receipts.
 
 ## Data model
 
@@ -212,6 +216,12 @@ without evidence-bearing linkage.
   to exercise final screening authority.
 - Living-review runs point to immutable parents and amendments are first-class
   evidence.
+- Persisted contract evolution is declared in a migration registry. Unknown,
+  destructive or implicit write upgrades fail closed; representative compiled
+  readers/writers and real persisted-data rehearsals remain higher evidence.
+- The network-free recovery rehearsal checks atomic replacement, stale temporary
+  files, backup hashes, repeated restore and tamper rejection. It is a reference
+  mechanics proof, not production durability, encryption or RTO/RPO evidence.
 
 ## Portable review bundle
 
@@ -259,7 +269,7 @@ material and evidence-level claim gates.
 ## GitHub delivery and portfolio control planes
 
 Conductor remains canonical planning state. The deterministic renderer projects
-one roadmap epic, 38 track issues, 152 phase subissues and 373 task subissues.
+one roadmap epic, 38 track issues, 152 phase subissues and 377 task subissues.
 The delivery Project owns 13 custom fields and six views and explicitly separates
 implementation state from evidence level.
 

@@ -43,7 +43,7 @@ layers.
 
 ## Implementation truth rule
 
-The roadmap contains 198 acceptance assertions. A track status is bounded by its
+The roadmap contains 199 acceptance assertions. A track status is bounded by its
 assertions; path existence is not behaviour proof. Use
 `conductor/tracks/NN-*/traceability.json` and the latest receipt to determine what
 may be claimed. The vertical-slice completion rule is in

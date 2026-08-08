@@ -16,13 +16,17 @@
     "docs/operations/reliability.md",
     "docs/operations/backup-restore.md",
     "docs/operations/incident-response.md",
-    ".github/workflows/resilience.yml"
+    ".github/workflows/resilience.yml",
+    "scripts/recovery_rehearsal.py",
+    "verification/recovery/rehearsal.json",
+    "docs/operations/recovery-reference-rehearsal.md"
   ],
   "traceability": "conductor/tracks/33-operational-reliability/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_rust_source_structure.py",
-    "python scripts/check_workflow_hardening.py"
+    "python scripts/check_workflow_hardening.py",
+    "python scripts/recovery_rehearsal.py --self-test"
   ],
   "requirements": [
     "SR-078",
@@ -33,7 +37,8 @@
   "blockers": [
     "Compile and execute operations policy tests and failure-injection scenarios.",
     "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
-    "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+    "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
+    "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
   ],
   "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
@@ -52,6 +57,7 @@
       "track-33-phase-3-task-01",
       "track-33-phase-3-task-02",
       "track-33-phase-3-task-03",
+      "track-33-phase-3-task-04",
       "track-33-phase-4-task-01",
       "track-33-phase-4-task-02",
       "track-33-phase-4-task-03",

@@ -116,7 +116,7 @@ crates/searchright-ops/                Health, telemetry, backup and incident co
 
 ### Contracts, integration and standards
 
-- **52** Draft 2020-12 JSON Schemas with 52 conforming examples.
+- **60** Draft 2020-12 JSON Schemas with 60 conforming examples.
 - A machine-readable schema catalogue and a **31-operation**
   CLI–MCP–facade interface catalogue.
 - OpenAPI and WIT boundary contracts.
@@ -135,7 +135,7 @@ submodules, copied implementation code and automatic dependency promotion.
 ## Implementation truth model
 
 Every one of the 38 Conductor tracks now has assertion-level traceability. The
-current 198 acceptance assertions include 65 with explicit symbol/test/gate
+current 199 acceptance assertions include 72 with explicit symbol/test/gate
 mappings; the remainder retain conservative track-level status. A track cannot
 be promoted merely because a named file exists, an issue is closed or a remote
 Project field changes.
@@ -154,6 +154,14 @@ Additional local controls now freeze the exact JSON Schema, WIT, OpenAPI and MCP
 surface; prohibit publishing any workspace crate by default; pin rights-clear
 provider response baselines; distinguish canonical upstreams from personal
 forks; and reject unclear-licence integrations from redistributed code/content.
+
+The verification system also assigns every registered gate an explicit evidence
+ceiling, enforces architectural capability placement, records evidence debt as
+a derived gap register, separates provider terms and data-handling review from
+technical compatibility, applies deterministic receipt minimisation, and
+requires declared migration and rollback paths for evolving persisted schemas.
+These controls prevent a passing static check from being misreported as
+compiler, legal, live-provider, recovery or methodological evidence.
 
 A deterministic `.srpack` review bundle can package and verify review artefacts,
 while a derived review-state reducer binds to an externally verified audit head
@@ -175,18 +183,18 @@ MoSCoW requirements and **38 ordered tracks** spanning foundation through a
 version 1.0 maturity dossier. Every track has `spec.md`, a four-phase `plan.md`,
 `metadata.json`, `evidence.json`, source work and higher-evidence blockers.
 
-The canonical roadmap deterministically renders **564 GitHub work items** in a four-level hierarchy:
+The canonical roadmap deterministically renders **568 GitHub work items** in a four-level hierarchy:
 
 - one roadmap epic;
 - 38 track issues;
 - 152 phase subissues, four under each track;
-- 373 task subissues corresponding to every top-level Conductor task.
+- 377 task subissues corresponding to every top-level Conductor task.
 
 Remote mutation is dry-run first and requires an explicit workflow input, a
 protected write environment, issue/project scopes, a clean Git tree and a
 second environment opt-in. A declarative GitHub Project v2 manifest owns 12
 custom fields and six views, including a separate implementation-gap view; an additive synchroniser creates or updates the
-Project and places all 564 issue nodes into it without deleting or archiving
+Project and places all 568 issue nodes into it without deleting or archiving
 remote work. A one-command bootstrap controller can create the remote repository,
 apply settings and the main-branch ruleset, synchronise the issue hierarchy, and
 create/populate the Project. No remote Searchright repository, issue or Project
@@ -216,7 +224,15 @@ coverage, mutation, fuzzing, Kani proofs, Loom concurrency exploration, Miri,
 offline builds, reproducible archives and binaries, attestations, MCP transcripts
 and human methodological evaluation.
 
-The network-free aggregate harness currently runs **44 static gates**, including assertion traceability, package-surface policy, contract-surface freezing, provider baselines, a rights-clear end-to-end contract reference slice, review-bundle and review-state self-tests, benchmark leakage controls, licence firewalls, portfolio consistency and exact CI/developer-tool pin parity. Configured
+The network-free aggregate harness currently runs **51 static gates**, with a
+**53-command gate catalogue** covering the harness and auxiliary traceability
+commands. Gates include assertion traceability, evidence ceilings and debt,
+architectural fitness, package-surface policy, contract-surface freezing,
+schema migration governance, provider policy manifests, receipt redaction,
+reference recovery mechanics, provider baselines, a rights-clear end-to-end
+contract reference slice, review-bundle and review-state self-tests, benchmark
+leakage controls, licence firewalls, portfolio consistency and exact
+CI/developer-tool pin parity. Configured
 compiler, runtime, live and external gates do not become passing evidence until
 their receipts are observed.
 

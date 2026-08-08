@@ -18,6 +18,10 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_traceability.py`
   - [x] `python scripts/check_public_package_policy.py`
   - [x] `python scripts/sync_schema_surface.py --check`
+  - [x] `python scripts/check_gate_catalog.py --check`
+  - [x] `python scripts/generate_evidence_debt.py --check`
+  - [x] `python scripts/check_architecture_fitness.py`
+  - [x] `python scripts/check_redaction_policy.py --self-test`
 
 ## Completion and evidence contract
 

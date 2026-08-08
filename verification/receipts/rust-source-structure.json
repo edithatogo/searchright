@@ -1,14 +1,14 @@
 {
   "checks": {
-    "crate_manifests_checked": 29,
-    "delimiter_balanced_files": 62,
-    "enums_checked": 98,
-    "impl_blocks_checked": 120,
-    "module_declarations_checked": 32,
-    "possibly_unused_dependencies": 69,
-    "rust_files_checked": 62,
-    "structs_checked": 167,
-    "workspace_members_checked": 29
+    "crate_manifests_checked": 30,
+    "delimiter_balanced_files": 64,
+    "enums_checked": 103,
+    "impl_blocks_checked": 128,
+    "module_declarations_checked": 33,
+    "possibly_unused_dependencies": 71,
+    "rust_files_checked": 64,
+    "structs_checked": 176,
+    "workspace_members_checked": 30
   },
   "errors": [],
   "limitations": [

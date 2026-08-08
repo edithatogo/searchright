@@ -1,6 +1,6 @@
 # Project status
 
-**Status date:** 8 August 2026
+**Status date:** 9 August 2026
 
 **Evidence ceiling:** source-verified alpha
 
@@ -16,7 +16,8 @@ Each scope statement is now an acceptance assertion with an implementation
 state, symbol/path mapping, deterministic gate, open evidence requirements and
 permitted claim.
 
-The network-free local harness covers 44 gates. Rust compilation, live provider
+The network-free local harness covers 51 gates, backed by a 53-command gate
+catalogue with explicit evidence ceilings. Rust compilation, live provider
 execution, downstream cutover and external methodological evaluation remain
 open, separately named evidence levels.
 
@@ -27,7 +28,7 @@ open, separately named evidence levels.
   `evidence-search-core`, avoiding a Searchright-specific dependency inversion.
 - Only three future public package candidates, all explicitly `publish_ready:
   false` pending compiler, SemVer, consumer and supply-chain evidence.
-- 52 Draft 2020-12 schemas and 52 canonical examples.
+- 60 Draft 2020-12 schemas and 60 canonical examples.
 - Exact contract-surface baseline for JSON Schema, WIT, OpenAPI and MCP server
   metadata; any byte drift requires an explicit compatibility update.
 - 31 mapped operations across the shared Rust facade, CLI and MCP adapters.
@@ -38,6 +39,15 @@ open, separately named evidence levels.
   budgets, cache fingerprints and rate controls.
 - Source adapters and rights-clear response baselines for PubMed ESearch and
   ESummary, Europe PMC, Crossref and OpenAlex.
+- Provider-policy manifests that separately track technical endpoint identity,
+  credential handling, raw-response retention, data classification and the
+  absence of legal/terms approval evidence.
+- Executable architecture-fitness checks that keep neutral contracts/core below
+  product services, confine network dependencies and provider endpoints to the
+  connector boundary, and default external writes to explicit dual opt-in.
+- Deterministic receipt-redaction tests, declared schema migration/rollback
+  plans, and a local recovery reference rehearsal with tamper and idempotency
+  checks. None is represented as legal approval or production recoverability.
 - Append-only audit ledger, single-writer filesystem store and deterministic
   derived review-state reducer. The reducer requires an externally verified
   BLAKE3 head and rejects non-human final screening authority.
@@ -53,6 +63,9 @@ open, separately named evidence levels.
 - Eleven non-mutating companion-repository change packets and an estate scanner
   covering known direct-provider, insecure endpoint, direct-writeback and
   title-only deduplication patterns.
+- The Sourceright packet now includes a provenance-bearing scholarly-integrity
+  signal boundary: retractions, corrections, expressions of concern and version
+  relationships remain advisory and cannot cause automatic study exclusion.
 - Separate Searchright delivery Project and strategic evidence-infrastructure
   portfolio projection.
 - `cargo-vet`, cargo-semver-checks and cargo-public-api policy/workflows added;
@@ -65,21 +78,24 @@ open, separately named evidence levels.
 | Surface | Current value |
 | --- | ---: |
 | Conductor tracks | 38 |
-| Acceptance assertions | 198 |
-| Individually mapped assertions | 65 |
+| Acceptance assertions | 199 |
+| Individually mapped assertions | 72 |
 | MoSCoW requirements | 92 |
 | Checked source tasks | 154 |
-| Open higher-evidence tasks | 219 |
+| Open higher-evidence tasks | 223 |
 | Rust crates | 30 |
 | Rust source files | 64 |
 | Rust test functions in source | 42 |
-| JSON Schemas / examples | 52 / 52 |
+| JSON Schemas / examples | 60 / 60 |
 | CLI/MCP/facade operations | 31 |
-| GitHub hierarchy nodes | 564 |
+| GitHub hierarchy nodes | 568 |
 | Project fields / views | 13 / 6 |
 | Integration passports / consumer interactions | 8 / 8 |
-| Companion change packets | 11 |
-| Network-free aggregate gates | 44 |
+| Companion change packets / planned changes | 11 / 55 |
+| Network-free aggregate gates | 51 |
+| Registered gate commands | 53 |
+| Assurance dimensions | 42 |
+| Provider policies with approval evidence | 0 / 5 |
 | Public packages marked ready | 0 |
 
 These are source, contract and static-policy measurements. They are not a

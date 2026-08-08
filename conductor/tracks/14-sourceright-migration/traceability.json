@@ -17,7 +17,9 @@
         "migration/sourceright/replacement-map.yaml",
         "migration/sourceright/parity-cases.json",
         "crates/searchright-sourceright-compat/src/lib.rs",
-        "scripts/check_sourceright_migration.py"
+        "scripts/check_sourceright_migration.py",
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
@@ -30,7 +32,8 @@
       "open_gates": [
         "Open and merge the downstream Sourceright integration after dual-run parity.",
         "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes."
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -44,7 +47,9 @@
         "migration/sourceright/replacement-map.yaml",
         "migration/sourceright/parity-cases.json",
         "crates/searchright-sourceright-compat/src/lib.rs",
-        "scripts/check_sourceright_migration.py"
+        "scripts/check_sourceright_migration.py",
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
@@ -57,7 +62,8 @@
       "open_gates": [
         "Open and merge the downstream Sourceright integration after dual-run parity.",
         "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes."
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -71,7 +77,9 @@
         "migration/sourceright/replacement-map.yaml",
         "migration/sourceright/parity-cases.json",
         "crates/searchright-sourceright-compat/src/lib.rs",
-        "scripts/check_sourceright_migration.py"
+        "scripts/check_sourceright_migration.py",
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
@@ -84,7 +92,8 @@
       "open_gates": [
         "Open and merge the downstream Sourceright integration after dual-run parity.",
         "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes."
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -98,7 +107,9 @@
         "migration/sourceright/replacement-map.yaml",
         "migration/sourceright/parity-cases.json",
         "crates/searchright-sourceright-compat/src/lib.rs",
-        "scripts/check_sourceright_migration.py"
+        "scripts/check_sourceright_migration.py",
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
@@ -111,7 +122,8 @@
       "open_gates": [
         "Open and merge the downstream Sourceright integration after dual-run parity.",
         "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes."
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -125,7 +137,9 @@
         "migration/sourceright/replacement-map.yaml",
         "migration/sourceright/parity-cases.json",
         "crates/searchright-sourceright-compat/src/lib.rs",
-        "scripts/check_sourceright_migration.py"
+        "scripts/check_sourceright_migration.py",
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
@@ -138,7 +152,8 @@
       "open_gates": [
         "Open and merge the downstream Sourceright integration after dual-run parity.",
         "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes."
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -152,7 +167,9 @@
         "migration/sourceright/replacement-map.yaml",
         "migration/sourceright/parity-cases.json",
         "crates/searchright-sourceright-compat/src/lib.rs",
-        "scripts/check_sourceright_migration.py"
+        "scripts/check_sourceright_migration.py",
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
@@ -165,9 +182,35 @@
       "open_gates": [
         "Open and merge the downstream Sourceright integration after dual-run parity.",
         "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes."
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T14-A007",
+      "statement": "Expose provenance-bearing scholarly-integrity signals through an advisory, human-governed Searchright consumer boundary",
+      "state": "scaffolded",
+      "mapping_confidence": "contract_mapped",
+      "implementation_paths": [
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md",
+        "crates/searchright-screening/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_companion_change_packets.py",
+        "python scripts/check_context_integrity.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/14-sourceright-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Publish a Sourceright producer schema and fixture corpus.",
+        "Add a Searchright advisory consumer contract and evaluate false-positive linkage.",
+        "Verify that integrity signals cannot bypass human final eligibility authority."
+      ],
+      "permitted_claim": "A downstream change contract and human-authority boundary are recorded; no integrity-signal producer, consumer or evaluation result is claimed."
     }
   ]
 }

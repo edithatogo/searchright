@@ -12,6 +12,8 @@ Adopt evidence-search-core in Sourceright and coordinate compatible versioning/r
 - Document retained Sourceright-specific responsibilities
 - Publish coordinated crates/releases and migration guide
 - Remove deprecated paths after one release cycle
+- Expose provenance-bearing scholarly-integrity signals through an advisory,
+  human-governed Searchright consumer boundary
 
 ## Requirements owned
 

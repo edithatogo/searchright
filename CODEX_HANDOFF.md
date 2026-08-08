@@ -37,6 +37,9 @@ AGENTS.md
 CONTEXT.md
 context/manifest.json
 context/claim-boundaries.json
+verification/gate-catalog.json
+verification/evidence-debt.json
+verification/architecture-policy.json
 conductor/requirements.md
 conductor/traceability-overrides.json
 conductor/design.md
@@ -45,6 +48,10 @@ conductor/roadmap-coverage.json
 release/public-packages.json
 contracts/compatibility/schema-surface-0.1.0-alpha.1.json
 integration/provider-contract-baselines.json
+integration/provider-policies/index.json
+policy/redaction-profile.json
+contracts/migrations/registry.json
+verification/recovery/rehearsal.json
 integration/ecosystem-lock.json
 integration/release-train.json
 migration/companion-repositories/index.json
@@ -79,7 +86,9 @@ cargo generate-lockfile
 ./scripts/verify.sh
 ```
 
-The static harness currently has 44 gates. Its success does not substitute for
+The static harness currently has 51 gates, while the gate catalogue contains 53
+harness and auxiliary traceability commands with explicit evidence ceilings.
+Its success does not substitute for
 Cargo evidence. Keep assertion states conservative: a path, issue closure or
 successful Python reference check cannot promote an assertion beyond its
 permitted claim.
@@ -181,9 +190,9 @@ Expected canonical projection:
 - 1 roadmap epic;
 - 38 track issues;
 - 152 phase subissues;
-- 373 task subissues;
-- 564 Project items in total;
-- 563 native parent-child relationships;
+- 377 task subissues;
+- 568 Project items in total;
+- 567 native parent-child relationships;
 - 13 custom Project fields;
 - 6 Project views.
 

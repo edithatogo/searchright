@@ -1,5 +1,5 @@
 {
-  "declared_tools": 8,
+  "declared_tools": 11,
   "errors": [],
   "limitations": [
     "Static pin parity only; installation and execution require compiler-backed evidence."
@@ -30,6 +30,15 @@
     ],
     "cargo-nextest": [
       "0.9.143"
+    ],
+    "cargo-public-api": [
+      "0.52.0"
+    ],
+    "cargo-semver-checks": [
+      "0.50.0"
+    ],
+    "cargo-vet": [
+      "0.10.2"
     ]
   }
 }

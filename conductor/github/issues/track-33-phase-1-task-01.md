@@ -18,6 +18,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `docs/operations/backup-restore.md`
   - [x] Present source path: `docs/operations/incident-response.md`
   - [x] Present source path: `.github/workflows/resilience.yml`
+  - [x] Present source path: `scripts/recovery_rehearsal.py`
+  - [x] Present source path: `verification/recovery/rehearsal.json`
+  - [x] Present source path: `docs/operations/recovery-reference-rehearsal.md`
   - [x] Assertion ledger: `conductor/tracks/33-operational-reliability/traceability.json`
 
 ## Completion and evidence contract

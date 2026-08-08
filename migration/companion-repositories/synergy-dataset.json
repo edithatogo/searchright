@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/synergy-dataset",
   "revision": "dc2dadfdbb98eb1b4259604789abd640aa3b693e",
   "role": "screening benchmark mirror or patch carrier",
@@ -9,25 +9,59 @@
     {
       "id": "canonical-release",
       "action": "Pin canonical ASReview SYNERGY releases and DOI-level dataset identities; do not use the personal fork commit as the benchmark's scientific identity.",
-      "target_paths": ["benchmark metadata", "README.md", "UPSTREAM.md"],
+      "target_paths": [
+        "benchmark metadata",
+        "README.md",
+        "UPSTREAM.md"
+      ],
       "owner": "benchmark maintainer",
-      "required_evidence": ["canonical release/DOI", "content digest"],
+      "required_evidence": [
+        "canonical release/DOI",
+        "content digest"
+      ],
       "automatic_apply": false
     },
     {
       "id": "sealed-evaluation",
       "action": "Separate development fixtures from hidden final labels and record corpus, split and licence digests for every Searchright evaluation.",
-      "target_paths": ["benchmark manifests", "evaluation scripts"],
+      "target_paths": [
+        "benchmark manifests",
+        "evaluation scripts"
+      ],
       "owner": "methodology owner",
-      "required_evidence": ["sealed-label policy", "leakage review", "environment receipt"],
+      "required_evidence": [
+        "sealed-label policy",
+        "leakage review",
+        "environment receipt"
+      ],
       "automatic_apply": false
     },
     {
       "id": "fork-role",
       "action": "Archive the fork if unmodified, or document and test only intentional patches while continuously comparing with canonical upstream.",
-      "target_paths": ["UPSTREAM.md", ".github/workflows/upstream-drift.yml"],
+      "target_paths": [
+        "UPSTREAM.md",
+        ".github/workflows/upstream-drift.yml"
+      ],
       "owner": "repository owner",
-      "required_evidence": ["local delta inventory", "maintenance decision"],
+      "required_evidence": [
+        "local delta inventory",
+        "maintenance decision"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "benchmark-evidence-ceiling",
+      "action": "Publish split and leakage metadata that distinguishes development, visible validation and sealed evaluation evidence; never treat a visible fork run as final generalisation evidence.",
+      "target_paths": [
+        "benchmark manifests",
+        "evaluation policy"
+      ],
+      "owner": "methodology owner",
+      "required_evidence": [
+        "split digest",
+        "leakage audit"
+      ],
       "automatic_apply": false
     }
   ],

@@ -1,0 +1,11 @@
+{
+  "declared_external_write_scripts": 4,
+  "errors": [],
+  "limitations": [
+    "Static source and manifest analysis only; compiler resolution, runtime egress controls and operating-system sandboxing remain separate evidence."
+  ],
+  "neutral_crates": 2,
+  "packages": 30,
+  "schema_version": "org.searchright.architecture-fitness-receipt.v1",
+  "status": "passed"
+}

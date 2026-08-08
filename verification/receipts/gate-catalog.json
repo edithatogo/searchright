@@ -1,0 +1,13 @@
+{
+  "assertions_with_gate_coverage": 199,
+  "errors": [],
+  "gates": 53,
+  "harness_gates": 51,
+  "limitations": [
+    "The catalogue constrains source-level claims; it does not upgrade evidence beyond each gate's declared ceiling."
+  ],
+  "mode": "check",
+  "schema_version": "org.searchright.gate-catalog-receipt.v1",
+  "stale": false,
+  "status": "passed"
+}

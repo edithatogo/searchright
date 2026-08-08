@@ -55,7 +55,7 @@ def render_metadata(entry: dict) -> str:
         "status": entry["status"],
         "implementation_state": entry["implementation_state"],
         "created": "2026-08-05" if int(track_id) <= 11 else ("2026-08-06" if int(track_id) <= 30 else "2026-08-08"),
-        "updated": "2026-08-08",
+        "updated": "2026-08-09",
         "dependencies": entry.get("dependencies", []),
         "horizon": entry["horizon"],
         "evidence_level": entry["evidence_level"],

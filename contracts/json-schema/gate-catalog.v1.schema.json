@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/gate-catalog.v1.schema.json",
+  "title": "Searchright executable gate catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_from",
+    "default_capabilities",
+    "gates"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.gate-catalog.v1"
+    },
+    "generated_from": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "default_capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "network",
+        "external_writes",
+        "compiler_required"
+      ],
+      "properties": {
+        "network": {
+          "const": false
+        },
+        "external_writes": {
+          "const": false
+        },
+        "compiler_required": {
+          "const": false
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "gate_id",
+          "command",
+          "script",
+          "category",
+          "harness_gate",
+          "network",
+          "external_writes",
+          "compiler_required",
+          "evidence_ceiling",
+          "covered_assertions",
+          "claim_boundary"
+        ],
+        "properties": {
+          "gate_id": {
+            "type": "string",
+            "pattern": "^SR-GATE-[A-Z0-9-]+$"
+          },
+          "command": {
+            "type": "string",
+            "pattern": "^python scripts/"
+          },
+          "script": {
+            "type": "string",
+            "pattern": "^scripts/"
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "harness_gate": {
+            "type": "boolean"
+          },
+          "network": {
+            "const": false
+          },
+          "external_writes": {
+            "const": false
+          },
+          "compiler_required": {
+            "const": false
+          },
+          "evidence_ceiling": {
+            "enum": [
+              "source_verified",
+              "source_reproducible"
+            ]
+          },
+          "covered_assertions": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^T[0-9]{2}-A[0-9]{3}$"
+            }
+          },
+          "claim_boundary": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,81 +1,112 @@
 {
-  "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
-  "repository": "edithatogo/sourceright",
-  "revision": "89f3d1a08037057160700df5bba319a64500b791",
-  "role": "bibliographic canonicalisation and verification",
-  "priority": "must",
   "changes": [
     {
-      "id": "neutral-contracts",
       "action": "Consume evidence-search-contracts directly and keep CSL/reconciliation contracts in Sourceright.",
-      "target_paths": [
-        "Cargo.toml",
-        "src/providers.rs",
-        "src/live_providers.rs"
-      ],
+      "automatic_apply": false,
+      "id": "neutral-contracts",
       "owner": "Sourceright maintainer",
       "required_evidence": [
         "dependency graph receipt",
         "public API diff"
       ],
-      "automatic_apply": false
+      "target_paths": [
+        "Cargo.toml",
+        "src/providers.rs",
+        "src/live_providers.rs"
+      ]
     },
     {
-      "id": "dual-runtime",
       "action": "Run legacy and evidence-search-core provider runtimes behind explicit feature flags for one compatible release.",
-      "target_paths": [
-        "src/live_providers.rs",
-        "tests/provider_parity.rs"
-      ],
+      "automatic_apply": false,
+      "id": "dual-runtime",
       "owner": "Sourceright maintainer",
       "required_evidence": [
         "dual-run receipt",
         "rollback rehearsal"
       ],
-      "automatic_apply": false
+      "target_paths": [
+        "src/live_providers.rs",
+        "tests/provider_parity.rs"
+      ]
     },
     {
-      "id": "parity-matrix",
       "action": "Compare fields, ordering, retries, errors, cache/replay, redaction and receipts across all migrated providers.",
-      "target_paths": [
-        "provider-fixtures/**",
-        "conductor/**"
-      ],
+      "automatic_apply": false,
+      "id": "parity-matrix",
       "owner": "Sourceright maintainer",
       "required_evidence": [
         "parity matrix",
         "approved intended differences"
       ],
-      "automatic_apply": false
+      "target_paths": [
+        "provider-fixtures/**",
+        "conductor/**"
+      ]
     },
     {
-      "id": "semver",
       "action": "Add cargo-semver-checks and public-api snapshots for shared surfaces.",
-      "target_paths": [
-        ".github/workflows/public-api.yml",
-        "public-api/**"
-      ],
+      "automatic_apply": false,
+      "id": "semver",
       "owner": "release owner",
       "required_evidence": [
         "SemVer receipt"
       ],
-      "automatic_apply": false
+      "target_paths": [
+        ".github/workflows/public-api.yml",
+        "public-api/**"
+      ]
     },
     {
-      "id": "deprecation",
       "action": "Delete legacy runtime only after downstream canaries and one release-cycle rollback evidence.",
-      "target_paths": [
-        "conductor/deprecation-policy.md"
-      ],
+      "automatic_apply": false,
+      "id": "deprecation",
       "owner": "release owner",
       "required_evidence": [
         "deprecation receipt"
       ],
-      "automatic_apply": false
+      "target_paths": [
+        "conductor/deprecation-policy.md"
+      ]
+    },
+    {
+      "action": "Pair each shared provider adapter with a versioned usage/privacy/rate policy manifest and replace query-bearing transport errors with minimised diagnostics.",
+      "automatic_apply": false,
+      "id": "provider-policy-and-error-minimisation",
+      "owner": "Sourceright maintainer",
+      "required_evidence": [
+        "policy review receipt",
+        "redacted live-canary receipt"
+      ],
+      "target_paths": [
+        "integration/provider-policies/**",
+        "src/live_providers.rs",
+        "tests/provider_redaction.rs"
+      ]
+    },
+    {
+      "action": "Expose provenance-bearing retraction, correction, expression-of-concern, duplicate-publication and version/update signals as advisory bibliographic-integrity evidence; Searchright must never convert the signal alone into automatic study exclusion.",
+      "automatic_apply": false,
+      "id": "scholarly-integrity-signals",
+      "owner": "Sourceright maintainer",
+      "required_evidence": [
+        "source-specific fixture corpus",
+        "provenance and false-positive review",
+        "Searchright advisory-authority consumer contract"
+      ],
+      "target_paths": [
+        "src/integrity.rs",
+        "schemas/scholarly-integrity-signal.schema.json",
+        "tests/integrity_signals.rs"
+      ]
     }
   ],
-  "remote_mutation_permitted": false,
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released.",
   "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
-  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+  "priority": "must",
+  "remote_mutation_permitted": false,
+  "repository": "edithatogo/sourceright",
+  "revision": "89f3d1a08037057160700df5bba319a64500b791",
+  "role": "bibliographic canonicalisation and verification",
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-09"
 }

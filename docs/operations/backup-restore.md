@@ -9,3 +9,10 @@ integrity, schema compatibility, tenant isolation and audit-chain continuity.
 Restore requires an authenticated, explicitly authorised operator and produces a
 separate receipt. Production recovery objectives remain deployment-specific and
 must be approved before a hosted service claim.
+
+## Network-free reference rehearsal
+
+The deterministic local mechanics are exercised by
+`scripts/recovery_rehearsal.py --self-test`; see
+`docs/operations/recovery-reference-rehearsal.md`. A passing reference rehearsal
+must not be promoted to a production recoverability claim.

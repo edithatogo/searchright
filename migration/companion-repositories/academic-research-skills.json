@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.companion-change-packet.v1",
-  "source_epoch": "2026-08-08",
+  "source_epoch": "2026-08-09",
   "repository": "edithatogo/academic-research-skills",
   "revision": "734dd23e03e7261db9204702be9221119a30d7d2",
   "role": "high-level research workflow orchestration",
@@ -53,6 +53,20 @@
       "owner": "skill maintainer",
       "required_evidence": [
         "cross-tool scenario tests"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "evidence-ceiling-language",
+      "action": "Consume Searchright gate/evidence metadata and prohibit agent prose from promoting source checks into comprehensive-search, live-provider or final-screening claims.",
+      "target_paths": [
+        "skills/**",
+        "capabilities/**",
+        "evaluation/**"
+      ],
+      "owner": "skill maintainer",
+      "required_evidence": [
+        "claim-boundary scenario tests"
       ],
       "automatic_apply": false
     }

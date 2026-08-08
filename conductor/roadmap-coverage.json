@@ -1,6 +1,5 @@
 {
   "schema_version": "org.searchright.roadmap-coverage.v1",
-  "updated": "2026-08-08",
   "strategy_improvements": [
     "Stable auditable kernel with an explicitly experimental adapter and agent edge.",
     "One application facade with machine-readable CLI/MCP parity.",
@@ -20,14 +19,14 @@
   ],
   "tracks": [
     {
-      "track_id": "00",
-      "slug": "foundation-conductor-toolchain",
-      "title": "Foundation, Conductor and toolchain",
-      "outcome": "Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap.",
-      "horizon": "foundation",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [],
+      "blockers": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "Cargo.toml",
         "rust-toolchain.toml",
@@ -37,34 +36,29 @@
         "scripts/install-conductor.sh",
         "scripts/install-conductor.ps1"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Install and execute Rust 1.97.1 in a compatible environment.",
-        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "foundation",
+      "implementation_state": "partially_implemented",
+      "outcome": "Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap.",
+      "requirements": [],
+      "slug": "foundation-conductor-toolchain",
+      "status": "partially_implemented",
+      "title": "Foundation, Conductor and toolchain",
+      "track_id": "00"
     },
     {
-      "track_id": "01",
-      "slug": "contract-catalog",
-      "title": "Contract catalogue and code generation",
-      "outcome": "Maintain versioned schemas, examples, standards packs and Rust wire types from one catalogue.",
-      "horizon": "foundation",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-001",
-        "SR-002",
-        "SR-003",
-        "SR-004",
-        "SR-017",
-        "SR-049"
+      "blockers": [
+        "Compile Rust contract types and run schema/Rust round-trip tests.",
+        "Generate compatibility fixtures from compiled public types."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/check_public_package_policy.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/evidence-search-contracts/src/lib.rs",
         "crates/searchright-contracts/src/lib.rs",
@@ -75,35 +69,36 @@
         "scripts/check_public_package_policy.py",
         "docs/msrv-and-package-policy.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/sync_schema_surface.py --check",
-        "python scripts/check_public_package_policy.py"
-      ],
-      "blockers": [
-        "Compile Rust contract types and run schema/Rust round-trip tests.",
-        "Generate compatibility fixtures from compiled public types."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "00"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "foundation",
+      "implementation_state": "partially_implemented",
+      "outcome": "Maintain versioned schemas, examples, standards packs and Rust wire types from one catalogue.",
+      "requirements": [
+        "SR-001",
+        "SR-002",
+        "SR-003",
+        "SR-004",
+        "SR-017",
+        "SR-049"
+      ],
+      "slug": "contract-catalog",
+      "status": "partially_implemented",
+      "title": "Contract catalogue and code generation",
+      "track_id": "01"
     },
     {
-      "track_id": "02",
-      "slug": "query-ast-dialects",
-      "title": "Portable query AST and dialect compilers",
-      "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
-      "horizon": "foundation",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-005",
-        "SR-006",
-        "SR-007"
+      "blockers": [
+        "Compile and execute dialect snapshot/property tests.",
+        "Expand the conformance corpus with independently reviewed source strategies."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
@@ -114,34 +109,36 @@
         "scripts/check_native_query_corpus.py",
         "docs/msrv-and-package-policy.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and execute dialect snapshot/property tests.",
-        "Expand the conformance corpus with independently reviewed source strategies."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "foundation",
+      "implementation_state": "partially_implemented",
+      "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
+      "requirements": [
+        "SR-005",
+        "SR-006",
+        "SR-007"
+      ],
+      "slug": "query-ast-dialects",
+      "status": "partially_implemented",
+      "title": "Portable query AST and dialect compilers",
+      "track_id": "02"
     },
     {
-      "track_id": "03",
-      "slug": "shared-provider-runtime",
-      "title": "Shared provider runtime and Sourceright extraction",
-      "outcome": "Centralise bounded provider execution, caching, receipts and policy while preparing reversible Sourceright adoption.",
-      "horizon": "foundation",
-      "status": "integration_prepared",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-008",
-        "SR-009",
-        "SR-010",
-        "SR-011"
+      "blockers": [
+        "Compile and run the shared provider runtime tests.",
+        "Run old/new Sourceright fixtures in the downstream repository.",
+        "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py",
+        "python scripts/check_public_package_policy.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/evidence-search-core/src/provider.rs",
         "crates/searchright-sourceright-compat/src/lib.rs",
@@ -152,37 +149,39 @@
         "public-api/README.md",
         "docs/msrv-and-package-policy.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_sourceright_migration.py",
-        "python scripts/check_public_package_policy.py"
-      ],
-      "blockers": [
-        "Compile and run the shared provider runtime tests.",
-        "Run old/new Sourceright fixtures in the downstream repository.",
-        "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01",
         "02"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "foundation",
+      "implementation_state": "partially_implemented",
+      "outcome": "Centralise bounded provider execution, caching, receipts and policy while preparing reversible Sourceright adoption.",
+      "requirements": [
+        "SR-008",
+        "SR-009",
+        "SR-010",
+        "SR-011"
+      ],
+      "slug": "shared-provider-runtime",
+      "status": "integration_prepared",
+      "title": "Shared provider runtime and Sourceright extraction",
+      "track_id": "03"
     },
     {
-      "track_id": "04",
-      "slug": "open-connectors-mvp",
-      "title": "Open provider connectors MVP",
-      "outcome": "Provide deterministic open-source adapters and opt-in live execution for major discovery sources.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-014",
-        "SR-015",
-        "SR-016"
+      "blockers": [
+        "Compile and run connector fixtures.",
+        "Run authorised, redacted live smokes for each advertised provider.",
+        "Verify upstream terms, rate limits and response changes at release time.",
+        "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_provider_contract_baselines.py",
+        "python scripts/check_provider_policies.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-connectors/src/lib.rs",
         "integration/provider-contract-baselines.json",
@@ -194,38 +193,40 @@
         "scripts/check_provider_contract_baselines.py",
         "contracts/examples/provider-manifest.yaml",
         "contracts/examples/provider-page.yaml",
-        "contracts/examples/source-receipt.yaml"
+        "contracts/examples/source-receipt.yaml",
+        "integration/provider-policies/index.json",
+        "scripts/check_provider_policies.py",
+        "docs/provider-governance.md",
+        "policy/redaction-profile.json"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_provider_contract_baselines.py"
-      ],
-      "blockers": [
-        "Compile and run connector fixtures.",
-        "Run authorised, redacted live smokes for each advertised provider.",
-        "Verify upstream terms, rate limits and response changes at release time."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "03"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Provide deterministic open-source adapters and opt-in live execution for major discovery sources.",
+      "requirements": [
+        "SR-014",
+        "SR-015",
+        "SR-016"
+      ],
+      "slug": "open-connectors-mvp",
+      "status": "partially_implemented",
+      "title": "Open provider connectors MVP",
+      "track_id": "04"
     },
     {
-      "track_id": "05",
-      "slug": "execution-audit-store",
-      "title": "Execution, audit and local storage",
-      "outcome": "Create replayable runs, content-addressed receipts, tamper-evident events and crash-conscious local state.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-012",
-        "SR-013",
-        "SR-014",
-        "SR-048"
+      "blockers": [
+        "Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.",
+        "Complete external review of retention and deletion semantics."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/reduce_review_events.py --self-test"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/evidence-search-core/src/audit.rs",
         "crates/searchright-store/src/lib.rs",
@@ -235,34 +236,34 @@
         "contracts/examples/audit-event.json",
         "docs/vertical-slice-definition-of-done.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/reduce_review_events.py --self-test"
-      ],
-      "blockers": [
-        "Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.",
-        "Complete external review of retention and deletion semantics."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "03"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Create replayable runs, content-addressed receipts, tamper-evident events and crash-conscious local state.",
+      "requirements": [
+        "SR-012",
+        "SR-013",
+        "SR-014",
+        "SR-048"
+      ],
+      "slug": "execution-audit-store",
+      "status": "partially_implemented",
+      "title": "Execution, audit and local storage",
+      "track_id": "05"
     },
     {
-      "track_id": "06",
-      "slug": "imports-dedup-linkage",
-      "title": "Imports, deduplication and study linkage",
-      "outcome": "Import/export common bibliographic formats, propose conservative duplicate clusters and distinguish records, reports and studies.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-017",
-        "SR-018",
-        "SR-019"
+      "blockers": [
+        "Compile and run golden round-trip, property and metamorphic tests.",
+        "Evaluate linkage and deduplication against independently adjudicated corpora."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-dedup/src/lib.rs",
         "crates/searchright-interchange/src/lib.rs",
@@ -271,35 +272,34 @@
         "contracts/examples/study-graph.yaml",
         "docs/adrs/0005-record-report-study-separation.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
-        "Evaluate linkage and deduplication against independently adjudicated corpora."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01",
         "05"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Import/export common bibliographic formats, propose conservative duplicate clusters and distinguish records, reports and studies.",
+      "requirements": [
+        "SR-017",
+        "SR-018",
+        "SR-019"
+      ],
+      "slug": "imports-dedup-linkage",
+      "status": "partially_implemented",
+      "title": "Imports, deduplication and study linkage",
+      "track_id": "06"
     },
     {
-      "track_id": "07",
-      "slug": "screening-workflow",
-      "title": "Governed screening workflow",
-      "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-020",
-        "SR-021",
-        "SR-022",
-        "SR-058"
+      "blockers": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-screening/src/lib.rs",
         "crates/searchright-agent/src/lib.rs",
@@ -307,36 +307,35 @@
         "contracts/examples/screening-policy.yaml",
         "docs/adrs/0003-agent-authority.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and execute state-machine and authority-negative tests.",
-        "Complete reviewer usability and inter-rater calibration evaluation."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01",
         "06"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
+      "requirements": [
+        "SR-020",
+        "SR-021",
+        "SR-022",
+        "SR-058"
+      ],
+      "slug": "screening-workflow",
+      "status": "partially_implemented",
+      "title": "Governed screening workflow",
+      "track_id": "07"
     },
     {
-      "track_id": "08",
-      "slug": "prisma-press-reporting",
-      "title": "PRISMA, PRESS and reporting",
-      "outcome": "Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-023",
-        "SR-024",
-        "SR-025",
-        "SR-026",
-        "SR-027"
+      "blockers": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-prisma/src/lib.rs",
         "crates/searchright-validation/src/lib.rs",
@@ -345,47 +344,43 @@
         "contracts/examples/standard-assessment.yaml",
         "docs/standards-and-provenance.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and run arithmetic, snapshot and standards-pack tests.",
-        "Obtain independent PRESS review of representative generated strategies and appendices."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01",
         "05",
         "07"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct.",
+      "requirements": [
+        "SR-023",
+        "SR-024",
+        "SR-025",
+        "SR-026",
+        "SR-027"
+      ],
+      "slug": "prisma-press-reporting",
+      "status": "partially_implemented",
+      "title": "PRISMA, PRESS and reporting",
+      "track_id": "08"
     },
     {
-      "track_id": "09",
-      "slug": "cli-mvp",
-      "title": "CLI MVP",
-      "outcome": "Expose stable scriptable operations through the shared application facade.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-028"
+      "blockers": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-cli/src/main.rs",
         "crates/searchright/src/engine.rs",
         "contracts/interface-catalog.json",
         "docs/adrs/0007-shared-application-facade.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
-      ],
-      "blockers": [
-        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01",
         "02",
@@ -395,86 +390,96 @@
         "07",
         "08"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Expose stable scriptable operations through the shared application facade.",
+      "requirements": [
+        "SR-028"
+      ],
+      "slug": "cli-mvp",
+      "status": "partially_implemented",
+      "title": "CLI MVP",
+      "track_id": "09"
     },
     {
-      "track_id": "10",
-      "slug": "mcp-mvp",
-      "title": "MCP stdio server MVP",
-      "outcome": "Expose typed, authority-annotated MCP tools over the same facade with stable structured outputs.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-029"
+      "blockers": [
+        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
+        "Validate structured output schemas against live client implementations."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-mcp/src/main.rs",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
         "server.json"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
-      ],
-      "blockers": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
-        "Validate structured output schemas against live client implementations."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "09"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Expose typed, authority-annotated MCP tools over the same facade with stable structured outputs.",
+      "requirements": [
+        "SR-029"
+      ],
+      "slug": "mcp-mvp",
+      "status": "partially_implemented",
+      "title": "MCP stdio server MVP",
+      "track_id": "10"
     },
     {
-      "track_id": "11",
-      "slug": "agentic-skill",
-      "title": "Systematic-search agent skill and workflows",
-      "outcome": "Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints.",
-      "horizon": "mvp",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-022",
-        "SR-026",
-        "SR-031"
+      "blockers": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "skills/systematic-search/SKILL.md",
         "skills/systematic-search/workflows/systematic-review.yaml",
         "skills/systematic-search/references/authority.md",
         "crates/searchright-agent/src/lib.rs"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Run scenario-based agent evaluations across supported hosts and models.",
-        "Calibrate authority and failure modes with human information specialists."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "10"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mvp",
+      "implementation_state": "partially_implemented",
+      "outcome": "Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints.",
+      "requirements": [
+        "SR-022",
+        "SR-026",
+        "SR-031"
+      ],
+      "slug": "agentic-skill",
+      "status": "partially_implemented",
+      "title": "Systematic-search agent skill and workflows",
+      "track_id": "11"
     },
     {
-      "track_id": "12",
-      "slug": "citeweft-document-evidence",
-      "title": "CiteWeft scholarly extraction and document evidence",
-      "outcome": "Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary.",
-      "horizon": "alpha",
-      "status": "integration_prepared",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-063",
-        "SR-064"
+      "blockers": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_citeweft_integration.py",
+        "python scripts/check_rust_dependency_graph.py"
+      ],
+      "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-citeweft/src/lib.rs",
         "crates/searchright-contracts/src/document.rs",
@@ -485,39 +490,44 @@
         "docs/adrs/0013-citeweft-document-evidence-boundary.md",
         "scripts/check_citeweft_integration.py"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_citeweft_integration.py",
-        "python scripts/check_rust_dependency_graph.py"
-      ],
-      "blockers": [
-        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
-        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
-        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
-      ],
-      "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01",
         "06",
         "07"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "alpha",
+      "implementation_state": "partially_implemented",
+      "outcome": "Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary.",
+      "requirements": [
+        "SR-063",
+        "SR-064"
+      ],
+      "slug": "citeweft-document-evidence",
+      "status": "integration_prepared",
+      "title": "CiteWeft scholarly extraction and document evidence",
+      "track_id": "12"
     },
     {
-      "track_id": "13",
-      "slug": "integration-passports-github-context",
-      "title": "Integration passports, GitHub issue hierarchy and context spine",
-      "outcome": "Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked.",
-      "horizon": "alpha",
-      "status": "source_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-065",
-        "SR-066",
-        "SR-067",
-        "SR-070"
+      "blockers": [
+        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_consumer_contracts.py",
+        "python scripts/check_github_issue_hierarchy.py",
+        "python scripts/check_context_integrity.py",
+        "python scripts/check_integration_drift.py",
+        "python scripts/render_github_issues.py --check",
+        "python scripts/sync_context_lock.py --check",
+        "python scripts/check_portfolio_project.py",
+        "python scripts/check_licence_firewall.py"
+      ],
+      "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "integration/locks.json",
         "integration/passports/index.json",
@@ -557,24 +567,6 @@
         "scripts/plan_github_portfolio.py",
         "scripts/check_licence_firewall.py"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_integration_passports.py",
-        "python scripts/check_consumer_contracts.py",
-        "python scripts/check_github_issue_hierarchy.py",
-        "python scripts/check_context_integrity.py",
-        "python scripts/check_integration_drift.py",
-        "python scripts/render_github_issues.py --check",
-        "python scripts/sync_context_lock.py --check",
-        "python scripts/check_portfolio_project.py",
-        "python scripts/check_licence_firewall.py"
-      ],
-      "blockers": [
-        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
-        "Execute consumer-driven contract tests in each pinned downstream repository.",
-        "Record scheduled integration-drift receipts against the live repository estate."
-      ],
-      "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "00",
         "01",
@@ -584,37 +576,43 @@
         "11",
         "12"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "source_implemented"
+      "horizon": "alpha",
+      "implementation_state": "source_implemented",
+      "outcome": "Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked.",
+      "requirements": [
+        "SR-065",
+        "SR-066",
+        "SR-067",
+        "SR-070"
+      ],
+      "slug": "integration-passports-github-context",
+      "status": "source_implemented",
+      "title": "Integration passports, GitHub issue hierarchy and context spine",
+      "track_id": "13"
     },
     {
-      "track_id": "14",
-      "slug": "sourceright-migration",
-      "title": "Sourceright migration and shared releases",
-      "outcome": "Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics.",
-      "horizon": "alpha",
-      "status": "integration_prepared",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-009"
-      ],
-      "deliverables": [
-        "migration/sourceright/README.md",
-        "migration/sourceright/replacement-map.yaml",
-        "migration/sourceright/parity-cases.json",
-        "crates/searchright-sourceright-compat/src/lib.rs",
-        "scripts/check_sourceright_migration.py"
+      "blockers": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_sourceright_migration.py"
       ],
-      "blockers": [
-        "Open and merge the downstream Sourceright integration after dual-run parity.",
-        "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes."
-      ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "deliverables": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py",
+        "migration/companion-repositories/sourceright.json",
+        "docs/integration-architecture.md"
+      ],
       "dependencies": [
         "03",
         "04",
@@ -622,20 +620,30 @@
         "12",
         "13"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "partially_implemented"
+      "horizon": "alpha",
+      "implementation_state": "partially_implemented",
+      "outcome": "Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics.",
+      "requirements": [
+        "SR-009"
+      ],
+      "slug": "sourceright-migration",
+      "status": "integration_prepared",
+      "title": "Sourceright migration and shared releases",
+      "track_id": "14"
     },
     {
-      "track_id": "15",
-      "slug": "estate-migration",
-      "title": "GitHub estate audit and custom-code replacement",
-      "outcome": "Identify and safely replace duplicate systematic-search code across the GitHub estate.",
-      "horizon": "alpha",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-032"
+      "blockers": [
+        "Run repository-specific scans against current local checkouts or GitHub indexes.",
+        "Open, test and merge replacement changes in each affected repository.",
+        "Delete duplicate code only after repository-specific parity and rollback evidence."
       ],
+      "checks": [
+        "python scripts/audit_search_code.py --self-test",
+        "python scripts/check_companion_change_packets.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "migration/estate/repositories.json",
         "migration/estate/patterns.json",
@@ -645,43 +653,47 @@
         "scripts/check_companion_change_packets.py",
         "docs/estate-integration.md"
       ],
-      "checks": [
-        "python scripts/audit_search_code.py --self-test",
-        "python scripts/check_companion_change_packets.py"
-      ],
-      "blockers": [
-        "Run repository-specific scans against current local checkouts or GitHub indexes.",
-        "Open, test and merge replacement changes in each affected repository.",
-        "Delete duplicate code only after repository-specific parity and rollback evidence."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "13",
         "14"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "partially_implemented"
+      "horizon": "alpha",
+      "implementation_state": "partially_implemented",
+      "outcome": "Identify and safely replace duplicate systematic-search code across the GitHub estate.",
+      "requirements": [
+        "SR-032"
+      ],
+      "slug": "estate-migration",
+      "status": "partially_implemented",
+      "title": "GitHub estate audit and custom-code replacement",
+      "track_id": "15"
     },
     {
-      "track_id": "16",
-      "slug": "quality-security-harness",
-      "title": "Maximal quality, context and security harness",
-      "outcome": "Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates.",
-      "horizon": "alpha",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-010",
-        "SR-011",
-        "SR-033",
-        "SR-034",
-        "SR-035",
-        "SR-036",
-        "SR-048",
-        "SR-067",
-        "SR-068",
-        "SR-069"
+      "blockers": [
+        "Generate and commit Cargo.lock in a networked Rust environment.",
+        "Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans.",
+        "Run clean-room offline builds, binary comparison, install smoke and MCP transcript.",
+        "Resolve every critical/high finding and document justified exclusions."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_dependency_graph.py",
+        "python scripts/generate_source_sbom.py --check",
+        "python scripts/run_static_harness.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/generate_source_hash_manifest.py --check",
+        "python scripts/check_traceability.py",
+        "python scripts/check_public_package_policy.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/check_gate_catalog.py --check",
+        "python scripts/generate_evidence_debt.py --check",
+        "python scripts/check_architecture_fitness.py",
+        "python scripts/check_redaction_policy.py --self-test"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         ".github/workflows/ci.yml",
         ".github/workflows/coverage.yml",
@@ -713,47 +725,59 @@
         "scripts/check_traceability.py",
         "scripts/check_public_package_policy.py",
         "scripts/sync_schema_surface.py",
-        "docs/vertical-slice-definition-of-done.md"
+        "docs/vertical-slice-definition-of-done.md",
+        "verification/gate-catalog.json",
+        "scripts/check_gate_catalog.py",
+        "verification/architecture-policy.json",
+        "scripts/check_architecture_fitness.py",
+        "verification/evidence-debt.json",
+        "scripts/generate_evidence_debt.py",
+        "policy/redaction-profile.json",
+        "scripts/redaction.py",
+        "scripts/check_redaction_policy.py",
+        "docs/quality/gate-catalog-and-evidence-ceilings.md",
+        "docs/quality/evidence-debt.md",
+        "docs/quality/architecture-fitness.md",
+        "docs/security/redaction-and-data-minimisation.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_rust_dependency_graph.py",
-        "python scripts/generate_source_sbom.py --check",
-        "python scripts/run_static_harness.py",
-        "python scripts/check_default_deny.py",
-        "python scripts/check_workflow_hardening.py",
-        "python scripts/generate_source_hash_manifest.py --check",
-        "python scripts/check_traceability.py",
-        "python scripts/check_public_package_policy.py",
-        "python scripts/sync_schema_surface.py --check"
-      ],
-      "blockers": [
-        "Generate and commit Cargo.lock in a networked Rust environment.",
-        "Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans.",
-        "Run clean-room offline builds, binary comparison, install smoke and MCP transcript.",
-        "Resolve every critical/high finding and document justified exclusions."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "00",
         "01",
         "13"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "alpha",
+      "implementation_state": "partially_implemented",
+      "outcome": "Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates.",
+      "requirements": [
+        "SR-010",
+        "SR-011",
+        "SR-033",
+        "SR-034",
+        "SR-035",
+        "SR-036",
+        "SR-048",
+        "SR-067",
+        "SR-068",
+        "SR-069"
+      ],
+      "slug": "quality-security-harness",
+      "status": "partially_implemented",
+      "title": "Maximal quality, context and security harness",
+      "track_id": "16"
     },
     {
-      "track_id": "17",
-      "slug": "benchmarks-calibration",
-      "title": "Benchmarks, search validation and human calibration",
-      "outcome": "Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration.",
-      "horizon": "alpha",
-      "status": "scaffolded",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-037",
-        "SR-038"
+      "blockers": [
+        "Execute versioned benchmark suites and publish raw receipts.",
+        "Complete the prospective multi-model and information-specialist calibration pilot.",
+        "Assess subgroup, topic and source-specific performance before any ranking claim."
       ],
+      "checks": [
+        "python scripts/check_methodology_benchmarks.py",
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "benchmarks/methodology/manifest.json",
         "benchmarks/methodology/README.md",
@@ -763,16 +787,6 @@
         "crates/searchright-validation/src/lib.rs",
         "docs/evaluation/benchmark-and-calibration-protocol.md"
       ],
-      "checks": [
-        "python scripts/check_methodology_benchmarks.py",
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Execute versioned benchmark suites and publish raw receipts.",
-        "Complete the prospective multi-model and information-specialist calibration pilot.",
-        "Assess subgroup, topic and source-specific performance before any ranking claim."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "02",
         "06",
@@ -780,21 +794,32 @@
         "08",
         "16"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "alpha",
+      "implementation_state": "partially_implemented",
+      "outcome": "Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration.",
+      "requirements": [
+        "SR-037",
+        "SR-038"
+      ],
+      "slug": "benchmarks-calibration",
+      "status": "scaffolded",
+      "title": "Benchmarks, search validation and human calibration",
+      "track_id": "17"
     },
     {
-      "track_id": "18",
-      "slug": "alpha-release",
-      "title": "Alpha release and distribution",
-      "outcome": "Produce locked, signed, attestable cross-platform technical-preview releases with reproducible source archives.",
-      "horizon": "alpha",
-      "status": "release_prepared",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-039",
-        "SR-068"
+      "blockers": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         ".github/workflows/release.yml",
         "scripts/package_source.py",
@@ -807,17 +832,6 @@
         "scripts/mcp_smoke.py",
         "verification/harness-matrix.json"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_packaging_reproducibility.py",
-        "python scripts/check_workflow_hardening.py"
-      ],
-      "blockers": [
-        "Generate Cargo.lock and pass the full release workflow.",
-        "Build/install-smoke supported binaries and OCI image.",
-        "Create signed tag, checksums, attestations and public release artefacts."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "09",
         "10",
@@ -825,21 +839,31 @@
         "16",
         "17"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "scaffolded"
+      "horizon": "alpha",
+      "implementation_state": "scaffolded",
+      "outcome": "Produce locked, signed, attestable cross-platform technical-preview releases with reproducible source archives.",
+      "requirements": [
+        "SR-039",
+        "SR-068"
+      ],
+      "slug": "alpha-release",
+      "status": "release_prepared",
+      "title": "Alpha release and distribution",
+      "track_id": "18"
     },
     {
-      "track_id": "19",
-      "slug": "registries-publication",
-      "title": "Registries and scholarly publication",
-      "outcome": "Prepare and submit truthful registry packets and a software paper only after a verified release.",
-      "horizon": "alpha",
-      "status": "submission_prepared",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-040",
-        "SR-041"
+      "blockers": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "registry/status.json",
         "registry/official-mcp/README.md",
@@ -849,68 +873,68 @@
         "server.json",
         "glama.json"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Publish a verified release that registry packets can reference.",
-        "Submit to each external registry with maintainer approval.",
-        "Record public listing, rejection or revision evidence.",
-        "Complete JOSS submission requirements and independent review."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "13",
         "18"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "scaffolded"
+      "horizon": "alpha",
+      "implementation_state": "scaffolded",
+      "outcome": "Prepare and submit truthful registry packets and a software paper only after a verified release.",
+      "requirements": [
+        "SR-040",
+        "SR-041"
+      ],
+      "slug": "registries-publication",
+      "status": "submission_prepared",
+      "title": "Registries and scholarly publication",
+      "track_id": "19"
     },
     {
-      "track_id": "20",
-      "slug": "broader-discovery",
-      "title": "Grey literature, registers and supplementary discovery",
-      "outcome": "Represent bounded trial-register, repository, website, citation-chaining and contact-search methods with explicit limits.",
-      "horizon": "beta",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-042",
-        "SR-043"
+      "blockers": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-discovery/src/lib.rs",
         "crates/searchright-contracts/src/discovery.rs",
         "contracts/examples/discovery-run.yaml",
         "docs/provider-model.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and run citation-chaining and supplementary-discovery scenarios.",
-        "Add authorised source-specific live adapters or documented manual methods.",
-        "Review website and grey-literature methods with information specialists."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "04",
         "05"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "beta",
+      "implementation_state": "partially_implemented",
+      "outcome": "Represent bounded trial-register, repository, website, citation-chaining and contact-search methods with explicit limits.",
+      "requirements": [
+        "SR-042",
+        "SR-043"
+      ],
+      "slug": "broader-discovery",
+      "status": "partially_implemented",
+      "title": "Grey literature, registers and supplementary discovery",
+      "track_id": "20"
     },
     {
-      "track_id": "21",
-      "slug": "licensed-adapters",
-      "title": "Licensed BYO-access adapters",
-      "outcome": "Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science.",
-      "horizon": "beta",
-      "status": "scaffolded",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-044"
+      "blockers": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-licensed/src/lib.rs",
         "crates/searchright-contracts/src/licensed.rs",
@@ -920,37 +944,33 @@
         "contracts/licensed/web-of-science.yaml",
         "contracts/examples/licensed-adapter.yaml"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Obtain authorised user credentials and confirm current vendor terms.",
-        "Implement/test vendor-specific live transports without storing credentials.",
-        "Record redacted user-run smoke receipts; no bundled access is permitted."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "03",
         "13",
         "16"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "scaffolded"
+      "horizon": "beta",
+      "implementation_state": "scaffolded",
+      "outcome": "Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science.",
+      "requirements": [
+        "SR-044"
+      ],
+      "slug": "licensed-adapters",
+      "status": "scaffolded",
+      "title": "Licensed BYO-access adapters",
+      "track_id": "21"
     },
     {
-      "track_id": "22",
-      "slug": "living-updates",
-      "title": "Living reviews, amendments and update lineage",
-      "outcome": "Make updates, protocol changes, prior-run deduplication and cadence explicit and immutable.",
-      "horizon": "beta",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-025",
-        "SR-045",
-        "SR-049",
-        "SR-052"
+      "blockers": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-living/src/lib.rs",
         "crates/searchright-contracts/src/living.rs",
@@ -959,69 +979,73 @@
         "contracts/examples/protocol-amendment.yaml",
         "docs/adrs/0009-immutable-lineage-and-research-objects.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and run multi-cycle living-review and amendment scenarios.",
-        "Pilot a real update and independently reproduce change attribution."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "05",
         "06",
         "07",
         "08"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "beta",
+      "implementation_state": "partially_implemented",
+      "outcome": "Make updates, protocol changes, prior-run deduplication and cadence explicit and immutable.",
+      "requirements": [
+        "SR-025",
+        "SR-045",
+        "SR-049",
+        "SR-052"
+      ],
+      "slug": "living-updates",
+      "status": "partially_implemented",
+      "title": "Living reviews, amendments and update lineage",
+      "track_id": "22"
     },
     {
-      "track_id": "23",
-      "slug": "active-learning-agents",
-      "title": "Active-learning prioritisation and calibrated agents",
-      "outcome": "Provide transparent advisory ranking with uncertainty and no default autonomous exclusion.",
-      "horizon": "beta",
-      "status": "scaffolded",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-046"
+      "blockers": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
         "contracts/examples/ranking-calibration.yaml",
         "skills/systematic-search/references/failure-modes.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Run SYNERGY and topic-held-out calibration benchmarks.",
-        "Complete prospective human calibration and subgroup error analysis.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "07",
         "17",
         "22"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "scaffolded"
+      "horizon": "beta",
+      "implementation_state": "scaffolded",
+      "outcome": "Provide transparent advisory ranking with uncertainty and no default autonomous exclusion.",
+      "requirements": [
+        "SR-046"
+      ],
+      "slug": "active-learning-agents",
+      "status": "scaffolded",
+      "title": "Active-learning prioritisation and calibrated agents",
+      "track_id": "23"
     },
     {
-      "track_id": "24",
-      "slug": "wasi-http-scale",
-      "title": "WASI components, HTTP MCP and scalable execution",
-      "outcome": "Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries.",
-      "horizon": "beta",
-      "status": "scaffolded",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-030",
-        "SR-047"
+      "blockers": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-plugin-sdk/src/lib.rs",
         "crates/searchright-policy/src/lib.rs",
@@ -1030,37 +1054,37 @@
         "contracts/examples/provider-component.yaml",
         "docs/adrs/0004-provider-plugin-sandbox.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile WASI components and run the component conformance suite.",
-        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
-        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
-        "Establish component signing, revocation and distribution evidence."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "03",
         "10",
         "13",
         "16"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "scaffolded"
+      "horizon": "beta",
+      "implementation_state": "scaffolded",
+      "outcome": "Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries.",
+      "requirements": [
+        "SR-030",
+        "SR-047"
+      ],
+      "slug": "wasi-http-scale",
+      "status": "scaffolded",
+      "title": "WASI components, HTTP MCP and scalable execution",
+      "track_id": "24"
     },
     {
-      "track_id": "25",
-      "slug": "provenance-research-objects",
-      "title": "Provenance and research-object interoperability",
-      "outcome": "Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects.",
-      "horizon": "mature",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-051",
-        "SR-052"
+      "blockers": [
+        "Compile and run golden provenance export tests.",
+        "Validate produced RO-Crates with independent tooling.",
+        "Pilot OSF/Zenodo/repository deposit without automatic write authority."
       ],
+      "checks": [
+        "python scripts/review_bundle.py self-test",
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-provenance/src/lib.rs",
         "scripts/review_bundle.py",
@@ -1070,36 +1094,39 @@
         "docs/standards-and-provenance.md",
         "docs/vertical-slice-definition-of-done.md"
       ],
-      "checks": [
-        "python scripts/review_bundle.py self-test",
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and run golden provenance export tests.",
-        "Validate produced RO-Crates with independent tooling.",
-        "Pilot OSF/Zenodo/repository deposit without automatic write authority."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "05",
         "22"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mature",
+      "implementation_state": "partially_implemented",
+      "outcome": "Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects.",
+      "requirements": [
+        "SR-051",
+        "SR-052"
+      ],
+      "slug": "provenance-research-objects",
+      "status": "partially_implemented",
+      "title": "Provenance and research-object interoperability",
+      "track_id": "25"
     },
     {
-      "track_id": "26",
-      "slug": "formal-assurance-contract-evolution",
-      "title": "Formal assurance and contract evolution",
-      "outcome": "Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback.",
-      "horizon": "mature",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-053",
-        "SR-054",
-        "SR-069"
+      "blockers": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests.",
+        "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/check_schema_migrations.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-assurance/src/lib.rs",
         "crates/searchright-contracts/src/assurance.rs",
@@ -1108,20 +1135,12 @@
         "crates/searchright-assurance/tests/loom_authority.rs",
         ".github/workflows/formal.yml",
         "fuzz/Cargo.toml",
-        "verification/harness-matrix.json"
+        "verification/harness-matrix.json",
+        "contracts/migrations/registry.json",
+        "contracts/migrations/github-issue-hierarchy-v1-to-v2.json",
+        "scripts/check_schema_migrations.py",
+        "docs/contracts/schema-evolution.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
-      ],
-      "blockers": [
-        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
-        "Compile and execute model-check traces and forbidden-transition tests.",
-        "Add compatibility fixtures for each public contract version.",
-        "Run semver and cross-version MCP/CLI contract tests."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "01",
         "07",
@@ -1129,21 +1148,31 @@
         "13",
         "22"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "partially_implemented"
+      "horizon": "mature",
+      "implementation_state": "partially_implemented",
+      "outcome": "Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback.",
+      "requirements": [
+        "SR-053",
+        "SR-054",
+        "SR-069"
+      ],
+      "slug": "formal-assurance-contract-evolution",
+      "status": "partially_implemented",
+      "title": "Formal assurance and contract evolution",
+      "track_id": "26"
     },
     {
-      "track_id": "27",
-      "slug": "accessibility-internationalisation-usability",
-      "title": "Accessibility, internationalisation and usability",
-      "outcome": "Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology.",
-      "horizon": "mature",
-      "status": "scaffolded",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-055",
-        "SR-056"
+      "blockers": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
       ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-diagnostics/src/lib.rs",
         "crates/searchright-contracts/src/diagnostic.rs",
@@ -1151,36 +1180,36 @@
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
         "docs/evaluation/external-methodological-evaluation.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
-        "Create message catalogues and execute locale-fallback tests.",
-        "Complete keyboard, screen-reader and information-specialist usability evaluation."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "09",
         "10",
         "11"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "scaffolded"
+      "horizon": "mature",
+      "implementation_state": "scaffolded",
+      "outcome": "Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology.",
+      "requirements": [
+        "SR-055",
+        "SR-056"
+      ],
+      "slug": "accessibility-internationalisation-usability",
+      "status": "scaffolded",
+      "title": "Accessibility, internationalisation and usability",
+      "track_id": "27"
     },
     {
-      "track_id": "28",
-      "slug": "institutional-governance-privacy-collaboration",
-      "title": "Institutional governance, privacy and collaboration",
-      "outcome": "Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations.",
-      "horizon": "mature",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-057",
-        "SR-058",
-        "SR-062"
+      "blockers": [
+        "Compile and run governance/authority negative scenarios.",
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_redaction_policy.py --self-test"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-governance/src/lib.rs",
         "crates/searchright-contracts/src/governance.rs",
@@ -1188,17 +1217,12 @@
         "contracts/examples/data-handling-request.yaml",
         "contracts/examples/data-handling-decision.yaml",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/security/threat-model.md"
+        "docs/security/threat-model.md",
+        "policy/redaction-profile.json",
+        "scripts/redaction.py",
+        "scripts/check_redaction_policy.py",
+        "docs/security/redaction-and-data-minimisation.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Compile and run governance/authority negative scenarios.",
-        "Obtain institutional privacy, records and security review for a deployment profile.",
-        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "05",
         "07",
@@ -1206,23 +1230,32 @@
         "24",
         "27"
       ],
-      "external_approval_required": true,
-      "implementation_state": "partially_implemented"
-    },
-    {
-      "track_id": "29",
-      "slug": "external-evaluation-sustainability",
-      "title": "External methodological evaluation and sustainability",
-      "outcome": "Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence.",
-      "horizon": "mature",
-      "status": "external_evidence_required",
       "evidence_level": "source_verified",
+      "external_approval_required": true,
+      "horizon": "mature",
+      "implementation_state": "partially_implemented",
+      "outcome": "Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations.",
       "requirements": [
-        "SR-041",
-        "SR-059",
-        "SR-060",
+        "SR-057",
+        "SR-058",
         "SR-062"
       ],
+      "slug": "institutional-governance-privacy-collaboration",
+      "status": "partially_implemented",
+      "title": "Institutional governance, privacy and collaboration",
+      "track_id": "28"
+    },
+    {
+      "blockers": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "checks": [
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "docs/evaluation/external-methodological-evaluation.md",
         "docs/evaluation/benchmark-and-calibration-protocol.md",
@@ -1230,16 +1263,6 @@
         "registry/joss/paper.md",
         "GOVERNANCE.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Preregister the independent evaluation protocol.",
-        "Recruit external information specialists and execute blinded evaluation.",
-        "Publish results, limitations and response-to-findings matrix.",
-        "Demonstrate observed maintenance, standards surveillance and succession practice."
-      ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "13",
         "17",
@@ -1249,36 +1272,46 @@
         "27",
         "28"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "external_evidence_required"
+      "horizon": "mature",
+      "implementation_state": "external_evidence_required",
+      "outcome": "Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence.",
+      "requirements": [
+        "SR-041",
+        "SR-059",
+        "SR-060",
+        "SR-062"
+      ],
+      "slug": "external-evaluation-sustainability",
+      "status": "external_evidence_required",
+      "title": "External methodological evaluation and sustainability",
+      "track_id": "29"
     },
     {
-      "track_id": "30",
-      "slug": "maturity-gap-closure",
-      "title": "Maturity gate and gap closure",
-      "outcome": "Maintain one evidence-scaled gap register and block premature release claims while remaining domains are implemented.",
-      "horizon": "mature",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-050"
-      ],
-      "deliverables": [
-        "docs/maturity/gap-register.md",
-        "conductor/maturity-dossier.json",
-        "scripts/check_maturity_dossier.py",
-        "PROJECT_STATUS.md"
-      ],
-      "checks": [
-        "python scripts/check_maturity_dossier.py",
-        "python scripts/check_roadmap_coverage.py"
-      ],
       "blockers": [
         "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
         "Review and approve any explicit release-risk exception without hiding the open gap.",
         "Keep autonomous end-to-end review and final agent exclusions outside the release claim."
       ],
+      "checks": [
+        "python scripts/check_maturity_dossier.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/generate_evidence_debt.py --check",
+        "python scripts/check_gate_catalog.py --check"
+      ],
       "claim_boundary": "The gap register is source-verified planning evidence; it cannot close the gaps it records. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "deliverables": [
+        "docs/maturity/gap-register.md",
+        "conductor/maturity-dossier.json",
+        "scripts/check_maturity_dossier.py",
+        "PROJECT_STATUS.md",
+        "verification/evidence-debt.json",
+        "scripts/generate_evidence_debt.py",
+        "verification/gate-catalog.json",
+        "scripts/check_gate_catalog.py",
+        "docs/quality/evidence-debt.md"
+      ],
       "dependencies": [
         "25",
         "26",
@@ -1286,25 +1319,32 @@
         "28",
         "29"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "partially_implemented"
+      "horizon": "mature",
+      "implementation_state": "partially_implemented",
+      "outcome": "Maintain one evidence-scaled gap register and block premature release claims while remaining domains are implemented.",
+      "requirements": [
+        "SR-050"
+      ],
+      "slug": "maturity-gap-closure",
+      "status": "partially_implemented",
+      "title": "Maturity gate and gap closure",
+      "track_id": "30"
     },
     {
-      "track_id": "31",
-      "slug": "github-control-plane",
-      "title": "GitHub remote, nested issues and Project v2 control plane",
-      "outcome": "Create and synchronise the remote repository, epic, tracks, phases, tasks, Project fields/views and repository protections from declarative source.",
-      "horizon": "mature",
-      "status": "source_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-066",
-        "SR-071",
-        "SR-072",
-        "SR-073",
-        "SR-074",
-        "SR-075"
+      "blockers": [
+        "Create or verify the public remote and push the committed main branch.",
+        "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+        "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
       ],
+      "checks": [
+        "python scripts/render_github_issues.py --check",
+        "python scripts/check_github_issue_hierarchy.py",
+        "python scripts/check_github_project.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "conductor/github/project.json",
         "conductor/github/project-readme.md",
@@ -1319,41 +1359,45 @@
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
         "contracts/json-schema/github-project.v1.schema.json"
       ],
-      "checks": [
-        "python scripts/render_github_issues.py --check",
-        "python scripts/check_github_issue_hierarchy.py",
-        "python scripts/check_github_project.py",
-        "python scripts/check_workflow_hardening.py"
-      ],
-      "blockers": [
-        "Create or verify the public remote and push the committed main branch.",
-        "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
-        "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
-      ],
-      "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "00",
         "13",
         "16",
         "30"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "source_implemented"
+      "horizon": "mature",
+      "implementation_state": "source_implemented",
+      "outcome": "Create and synchronise the remote repository, epic, tracks, phases, tasks, Project fields/views and repository protections from declarative source.",
+      "requirements": [
+        "SR-066",
+        "SR-071",
+        "SR-072",
+        "SR-073",
+        "SR-074",
+        "SR-075"
+      ],
+      "slug": "github-control-plane",
+      "status": "source_implemented",
+      "title": "GitHub remote, nested issues and Project v2 control plane",
+      "track_id": "31"
     },
     {
-      "track_id": "32",
-      "slug": "cross-repository-release-train",
-      "title": "Cross-repository contract release train and downstream canaries",
-      "outcome": "Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions.",
-      "horizon": "mature",
-      "status": "integration_prepared",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-065",
-        "SR-070",
-        "SR-076",
-        "SR-077"
+      "blockers": [
+        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+        "Approve promotion or rollback explicitly and record cross-repository receipts."
       ],
+      "checks": [
+        "python scripts/check_release_train.py",
+        "python scripts/sync_ecosystem_lock.py --check",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_consumer_contracts.py",
+        "python scripts/check_integration_drift.py"
+      ],
+      "claim_boundary": "A source-verified release train does not prove producer-consumer compatibility or publish any component. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "integration/release-train.json",
         "integration/ecosystem-lock.json",
@@ -1366,20 +1410,6 @@
         "integration/consumer-contract-suite.json",
         "integration/passports/index.json"
       ],
-      "checks": [
-        "python scripts/check_release_train.py",
-        "python scripts/sync_ecosystem_lock.py --check",
-        "python scripts/sync_schema_surface.py --check",
-        "python scripts/check_integration_passports.py",
-        "python scripts/check_consumer_contracts.py",
-        "python scripts/check_integration_drift.py"
-      ],
-      "blockers": [
-        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
-        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
-        "Approve promotion or rollback explicitly and record cross-repository receipts."
-      ],
-      "claim_boundary": "A source-verified release train does not prove producer-consumer compatibility or publish any component. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "13",
         "14",
@@ -1387,23 +1417,36 @@
         "18",
         "31"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "partially_implemented"
+      "horizon": "mature",
+      "implementation_state": "partially_implemented",
+      "outcome": "Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions.",
+      "requirements": [
+        "SR-065",
+        "SR-070",
+        "SR-076",
+        "SR-077"
+      ],
+      "slug": "cross-repository-release-train",
+      "status": "integration_prepared",
+      "title": "Cross-repository contract release train and downstream canaries",
+      "track_id": "32"
     },
     {
-      "track_id": "33",
-      "slug": "operational-reliability",
-      "title": "Operational observability, backup, restore and incident response",
-      "outcome": "Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments.",
-      "horizon": "mature",
-      "status": "partially_implemented",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-078",
-        "SR-079",
-        "SR-080",
-        "SR-081"
+      "blockers": [
+        "Compile and execute operations policy tests and failure-injection scenarios.",
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
+        "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/recovery_rehearsal.py --self-test"
+      ],
+      "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-ops/src/lib.rs",
         "crates/searchright-contracts/src/ops.rs",
@@ -1414,19 +1457,11 @@
         "docs/operations/reliability.md",
         "docs/operations/backup-restore.md",
         "docs/operations/incident-response.md",
-        ".github/workflows/resilience.yml"
+        ".github/workflows/resilience.yml",
+        "scripts/recovery_rehearsal.py",
+        "verification/recovery/rehearsal.json",
+        "docs/operations/recovery-reference-rehearsal.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
-      ],
-      "blockers": [
-        "Compile and execute operations policy tests and failure-injection scenarios.",
-        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
-        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
-      ],
-      "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "05",
         "16",
@@ -1434,24 +1469,34 @@
         "28",
         "30"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "partially_implemented"
+      "horizon": "mature",
+      "implementation_state": "partially_implemented",
+      "outcome": "Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments.",
+      "requirements": [
+        "SR-078",
+        "SR-079",
+        "SR-080",
+        "SR-081"
+      ],
+      "slug": "operational-reliability",
+      "status": "partially_implemented",
+      "title": "Operational observability, backup, restore and incident response",
+      "track_id": "33"
     },
     {
-      "track_id": "34",
-      "slug": "authenticated-remote-mcp",
-      "title": "Authenticated remote MCP, tenancy and data residency",
-      "outcome": "Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment.",
-      "horizon": "mature",
-      "status": "scaffolded",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-047",
-        "SR-082",
-        "SR-083",
-        "SR-084",
-        "SR-085"
+      "blockers": [
+        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
+        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
       ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py"
+      ],
+      "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-access/src/lib.rs",
         "crates/searchright-contracts/src/access.rs",
@@ -1462,39 +1507,41 @@
         "contracts/openapi/searchright-http.openapi.yaml",
         "docs/security/threat-model.md"
       ],
-      "checks": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_default_deny.py",
-        "python scripts/check_rust_source_structure.py"
-      ],
-      "blockers": [
-        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
-        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
-        "Complete independent security/privacy review before any hosted or multi-tenant claim."
-      ],
-      "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "10",
         "24",
         "28",
         "33"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "scaffolded"
+      "horizon": "mature",
+      "implementation_state": "scaffolded",
+      "outcome": "Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment.",
+      "requirements": [
+        "SR-047",
+        "SR-082",
+        "SR-083",
+        "SR-084",
+        "SR-085"
+      ],
+      "slug": "authenticated-remote-mcp",
+      "status": "scaffolded",
+      "title": "Authenticated remote MCP, tenancy and data residency",
+      "track_id": "34"
     },
     {
-      "track_id": "35",
-      "slug": "sdk-docs-adoption",
-      "title": "Generated SDKs, fixture-backed documentation and adoption operations",
-      "outcome": "Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core.",
-      "horizon": "mature",
-      "status": "scaffolded",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-086",
-        "SR-087",
-        "SR-088"
+      "blockers": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
       ],
+      "checks": [
+        "python scripts/check_sdk_examples.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/validate_repository.py"
+      ],
+      "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "sdk/manifest.json",
         "scripts/check_sdk_examples.py",
@@ -1504,17 +1551,6 @@
         "README.md",
         "GOVERNANCE.md"
       ],
-      "checks": [
-        "python scripts/check_sdk_examples.py",
-        "python scripts/check_cli_mcp_parity.py",
-        "python scripts/validate_repository.py"
-      ],
-      "blockers": [
-        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-        "Run documentation tests and information-specialist tutorial walkthroughs.",
-        "Observe support, deprecation and compatibility operations across at least one release cycle."
-      ],
-      "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "10",
         "18",
@@ -1522,25 +1558,33 @@
         "31",
         "34"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": false,
-      "implementation_state": "scaffolded"
+      "horizon": "mature",
+      "implementation_state": "scaffolded",
+      "outcome": "Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core.",
+      "requirements": [
+        "SR-086",
+        "SR-087",
+        "SR-088"
+      ],
+      "slug": "sdk-docs-adoption",
+      "status": "scaffolded",
+      "title": "Generated SDKs, fixture-backed documentation and adoption operations",
+      "track_id": "35"
     },
     {
-      "track_id": "36",
-      "slug": "release-candidate-pilots",
-      "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
-      "outcome": "Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals.",
-      "horizon": "mature",
-      "status": "release_prepared",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-039",
-        "SR-040",
-        "SR-068",
-        "SR-089",
-        "SR-090",
-        "SR-091"
+      "blockers": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
       ],
+      "checks": [
+        "python scripts/check_release_rehearsal.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_maturity_dossier.py"
+      ],
+      "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "release/rehearsal.json",
         "scripts/check_release_rehearsal.py",
@@ -1550,17 +1594,6 @@
         "registry/status.json",
         "scripts/package_source.py"
       ],
-      "checks": [
-        "python scripts/check_release_rehearsal.py",
-        "python scripts/check_packaging_reproducibility.py",
-        "python scripts/check_maturity_dossier.py"
-      ],
-      "blockers": [
-        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
-        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
-        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
-      ],
-      "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "18",
         "19",
@@ -1572,22 +1605,36 @@
         "34",
         "35"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "scaffolded"
+      "horizon": "mature",
+      "implementation_state": "scaffolded",
+      "outcome": "Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals.",
+      "requirements": [
+        "SR-039",
+        "SR-040",
+        "SR-068",
+        "SR-089",
+        "SR-090",
+        "SR-091"
+      ],
+      "slug": "release-candidate-pilots",
+      "status": "release_prepared",
+      "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+      "track_id": "36"
     },
     {
-      "track_id": "37",
-      "slug": "maturity-1-0",
-      "title": "Final mature 1.0 release and long-term operations",
-      "outcome": "Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness.",
-      "horizon": "mature",
-      "status": "external_evidence_required",
-      "evidence_level": "source_verified",
-      "requirements": [
-        "SR-050",
-        "SR-061",
-        "SR-092"
+      "blockers": [
+        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
       ],
+      "checks": [
+        "python scripts/check_maturity_dossier.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/run_static_harness.py"
+      ],
+      "claim_boundary": "Searchright remains below 1.0 maturity until all named evidence and external decisions exist. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "docs/maturity/1.0-gate.md",
         "docs/maturity/release-decision.md",
@@ -1596,17 +1643,6 @@
         "ROADMAP.md",
         "PROJECT_STATUS.md"
       ],
-      "checks": [
-        "python scripts/check_maturity_dossier.py",
-        "python scripts/check_roadmap_coverage.py",
-        "python scripts/run_static_harness.py"
-      ],
-      "blockers": [
-        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
-        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
-        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
-      ],
-      "claim_boundary": "Searchright remains below 1.0 maturity until all named evidence and external decisions exist. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "dependencies": [
         "30",
         "31",
@@ -1616,8 +1652,21 @@
         "35",
         "36"
       ],
+      "evidence_level": "source_verified",
       "external_approval_required": true,
-      "implementation_state": "external_evidence_required"
+      "horizon": "mature",
+      "implementation_state": "external_evidence_required",
+      "outcome": "Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness.",
+      "requirements": [
+        "SR-050",
+        "SR-061",
+        "SR-092"
+      ],
+      "slug": "maturity-1-0",
+      "status": "external_evidence_required",
+      "title": "Final mature 1.0 release and long-term operations",
+      "track_id": "37"
     }
-  ]
+  ],
+  "updated": "2026-08-09"
 }

@@ -1,0 +1,1072 @@
+{
+  "default_capabilities": {
+    "compiler_required": false,
+    "external_writes": false,
+    "network": false
+  },
+  "gates": [
+    {
+      "category": "contract_validation",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/validate_repository.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T00-A001",
+        "T00-A002",
+        "T00-A003",
+        "T00-A004",
+        "T00-A005",
+        "T00-A006",
+        "T01-A001",
+        "T01-A002",
+        "T01-A004",
+        "T02-A001",
+        "T02-A002",
+        "T02-A004",
+        "T05-A001",
+        "T05-A002",
+        "T05-A003",
+        "T05-A005",
+        "T06-A001",
+        "T06-A002",
+        "T06-A003",
+        "T06-A004",
+        "T06-A005",
+        "T06-A006",
+        "T07-A001",
+        "T07-A002",
+        "T07-A003",
+        "T07-A004",
+        "T07-A005",
+        "T07-A006",
+        "T08-A001",
+        "T08-A002",
+        "T08-A003",
+        "T08-A004",
+        "T08-A005",
+        "T08-A006",
+        "T09-A001",
+        "T09-A002",
+        "T09-A003",
+        "T09-A004",
+        "T09-A005",
+        "T09-A006",
+        "T10-A001",
+        "T10-A002",
+        "T10-A003",
+        "T10-A004",
+        "T10-A005",
+        "T10-A006",
+        "T11-A001",
+        "T11-A002",
+        "T11-A003",
+        "T11-A004",
+        "T11-A005",
+        "T11-A006",
+        "T12-A001",
+        "T12-A002",
+        "T12-A003",
+        "T12-A004",
+        "T14-A001",
+        "T14-A002",
+        "T14-A003",
+        "T14-A004",
+        "T14-A005",
+        "T14-A006",
+        "T18-A001",
+        "T18-A002",
+        "T18-A003",
+        "T18-A004",
+        "T18-A005",
+        "T18-A006",
+        "T19-A001",
+        "T19-A002",
+        "T19-A003",
+        "T19-A004",
+        "T19-A005",
+        "T19-A006",
+        "T20-A001",
+        "T20-A002",
+        "T20-A003",
+        "T20-A004",
+        "T20-A005",
+        "T20-A006",
+        "T21-A001",
+        "T21-A002",
+        "T21-A003",
+        "T21-A004",
+        "T21-A005",
+        "T21-A006",
+        "T22-A001",
+        "T22-A002",
+        "T22-A003",
+        "T22-A004",
+        "T22-A005",
+        "T22-A006",
+        "T23-A001",
+        "T23-A002",
+        "T23-A003",
+        "T23-A004",
+        "T23-A005",
+        "T23-A006",
+        "T24-A001",
+        "T24-A002",
+        "T24-A003",
+        "T24-A004",
+        "T24-A005",
+        "T24-A006",
+        "T25-A002",
+        "T25-A003",
+        "T25-A004",
+        "T26-A001",
+        "T26-A002",
+        "T26-A003",
+        "T26-A004",
+        "T26-A005",
+        "T27-A001",
+        "T27-A002",
+        "T27-A003",
+        "T27-A004",
+        "T27-A005",
+        "T28-A001",
+        "T28-A002",
+        "T28-A003",
+        "T28-A004",
+        "T28-A005",
+        "T29-A001",
+        "T29-A002",
+        "T29-A003",
+        "T29-A004",
+        "T29-A005",
+        "T29-A006",
+        "T33-A001",
+        "T33-A002",
+        "T33-A003",
+        "T34-A001",
+        "T34-A002",
+        "T34-A003",
+        "T35-A001",
+        "T35-A002",
+        "T35-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-VALIDATE-REPOSITORY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/validate_repository.py"
+    },
+    {
+      "category": "claim_evidence",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_traceability.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T01-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-TRACEABILITY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_traceability.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_gate_catalog.py --check",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A004",
+        "T16-A006",
+        "T30-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-GATE-CATALOG-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_gate_catalog.py"
+    },
+    {
+      "category": "claim_evidence",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/generate_evidence_debt.py --check",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A006",
+        "T30-A001",
+        "T30-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-GENERATE-EVIDENCE-DEBT-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/generate_evidence_debt.py"
+    },
+    {
+      "category": "source_structure",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_public_package_policy.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T01-A005",
+        "T03-A005",
+        "T32-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-PUBLIC-PACKAGE-POLICY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_public_package_policy.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_architecture_fitness.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-ARCHITECTURE-FITNESS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_architecture_fitness.py"
+    },
+    {
+      "category": "contract_validation",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/sync_schema_surface.py --check",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T01-A003",
+        "T32-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-SYNC-SCHEMA-SURFACE-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/sync_schema_surface.py"
+    },
+    {
+      "category": "contract_validation",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_schema_migrations.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T26-A003",
+        "T26-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-SCHEMA-MIGRATIONS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_schema_migrations.py"
+    },
+    {
+      "category": "search_method",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_native_query_corpus.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T02-A002",
+        "T02-A003",
+        "T02-A005",
+        "T02-A006",
+        "T17-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-NATIVE-QUERY-CORPUS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_native_query_corpus.py"
+    },
+    {
+      "category": "search_method",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_provider_contract_baselines.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T03-A003",
+        "T04-A001",
+        "T04-A002",
+        "T04-A003",
+        "T04-A004",
+        "T04-A005",
+        "T04-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-PROVIDER-CONTRACT-BASELINES",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_provider_contract_baselines.py"
+    },
+    {
+      "category": "search_method",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_provider_policies.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T04-A004",
+        "T04-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-PROVIDER-POLICIES",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_provider_policies.py"
+    },
+    {
+      "category": "deterministic_reference_model",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/review_bundle.py self-test",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T05-A006",
+        "T25-A001",
+        "T25-A002",
+        "T25-A005",
+        "T25-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-REVIEW-BUNDLE-SELF-TEST",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/review_bundle.py"
+    },
+    {
+      "category": "deterministic_reference_model",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_vertical_slice.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A002",
+        "T16-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-VERTICAL-SLICE",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_vertical_slice.py"
+    },
+    {
+      "category": "deterministic_reference_model",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/reduce_review_events.py --self-test",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T05-A003",
+        "T05-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-REDUCE-REVIEW-EVENTS-SELF-TEST",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/reduce_review_events.py"
+    },
+    {
+      "category": "deterministic_reference_model",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/recovery_rehearsal.py --self-test",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T33-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-RECOVERY-REHEARSAL-SELF-TEST",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/recovery_rehearsal.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_methodology_benchmarks.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A001",
+        "T17-A002",
+        "T17-A003",
+        "T17-A004",
+        "T17-A005",
+        "T17-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-METHODOLOGY-BENCHMARKS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_methodology_benchmarks.py"
+    },
+    {
+      "category": "safety_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_licence_firewall.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-LICENCE-FIREWALL",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_licence_firewall.py"
+    },
+    {
+      "category": "ecosystem_compatibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_companion_change_packets.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T14-A007",
+        "T15-A002",
+        "T15-A003",
+        "T15-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-COMPANION-CHANGE-PACKETS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_companion_change_packets.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_portfolio_project.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T15-A003",
+        "T15-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-PORTFOLIO-PROJECT",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_portfolio_project.py"
+    },
+    {
+      "category": "ecosystem_compatibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/sync_ecosystem_lock.py --check",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T15-A006",
+        "T32-A001"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-SYNC-ECOSYSTEM-LOCK-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/sync_ecosystem_lock.py"
+    },
+    {
+      "category": "ecosystem_compatibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_citeweft_integration.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T12-A001",
+        "T12-A002",
+        "T12-A003",
+        "T12-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CITEWEFT-INTEGRATION",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_citeweft_integration.py"
+    },
+    {
+      "category": "ecosystem_compatibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_integration_passports.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A001",
+        "T15-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-INTEGRATION-PASSPORTS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_integration_passports.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_consumer_contracts.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A001",
+        "T15-A005",
+        "T32-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CONSUMER-CONTRACTS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_consumer_contracts.py"
+    },
+    {
+      "category": "ecosystem_compatibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_integration_drift.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A001"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-INTEGRATION-DRIFT",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_integration_drift.py"
+    },
+    {
+      "category": "control_plane_dry_run",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/render_github_issues.py --check",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-RENDER-GITHUB-ISSUES-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/render_github_issues.py"
+    },
+    {
+      "category": "control_plane_dry_run",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_github_issue_hierarchy.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-GITHUB-ISSUE-HIERARCHY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_github_issue_hierarchy.py"
+    },
+    {
+      "category": "control_plane_dry_run",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_github_project.py",
+      "compiler_required": false,
+      "covered_assertions": [],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-GITHUB-PROJECT",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_github_project.py"
+    },
+    {
+      "category": "control_plane_dry_run",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/sync_github_issues.py --repo edithatogo/searchright",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A003",
+        "T31-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-SYNC-GITHUB-ISSUES-REPO",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/sync_github_issues.py"
+    },
+    {
+      "category": "control_plane_dry_run",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/sync_github_project.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A003",
+        "T31-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-SYNC-GITHUB-PROJECT",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/sync_github_project.py"
+    },
+    {
+      "category": "control_plane_dry_run",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/bootstrap_github.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A003",
+        "T31-A001"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-BOOTSTRAP-GITHUB",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/bootstrap_github.py"
+    },
+    {
+      "category": "context_integrity",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_context_integrity.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A004",
+        "T14-A007"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CONTEXT-INTEGRITY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_context_integrity.py"
+    },
+    {
+      "category": "context_integrity",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/sync_context_lock.py --check",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T13-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-SYNC-CONTEXT-LOCK-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/sync_context_lock.py"
+    },
+    {
+      "category": "safety_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_default_deny.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A005",
+        "T34-A001",
+        "T34-A002",
+        "T34-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-DEFAULT-DENY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_default_deny.py"
+    },
+    {
+      "category": "deterministic_reference_model",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_redaction_policy.py --self-test",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T04-A006",
+        "T16-A005",
+        "T28-A001",
+        "T28-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-REDACTION-POLICY-SELF-TEST",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_redaction_policy.py"
+    },
+    {
+      "category": "safety_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_workflow_hardening.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A003",
+        "T16-A004",
+        "T18-A001",
+        "T18-A002",
+        "T18-A003",
+        "T18-A004",
+        "T18-A005",
+        "T18-A006",
+        "T26-A001",
+        "T26-A002",
+        "T26-A003",
+        "T26-A004",
+        "T26-A005",
+        "T33-A001",
+        "T33-A002",
+        "T33-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-WORKFLOW-HARDENING",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_workflow_hardening.py"
+    },
+    {
+      "category": "source_structure",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_toolchain_manifest.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A001",
+        "T16-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-TOOLCHAIN-MANIFEST",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_toolchain_manifest.py"
+    },
+    {
+      "category": "interface_parity",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_cli_mcp_parity.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T09-A001",
+        "T09-A002",
+        "T09-A003",
+        "T09-A004",
+        "T09-A005",
+        "T09-A006",
+        "T10-A001",
+        "T10-A002",
+        "T10-A003",
+        "T10-A004",
+        "T10-A005",
+        "T10-A006",
+        "T35-A001",
+        "T35-A002",
+        "T35-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CLI-MCP-PARITY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_cli_mcp_parity.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_sourceright_migration.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T03-A001",
+        "T03-A002",
+        "T03-A004",
+        "T14-A001",
+        "T14-A002",
+        "T14-A003",
+        "T14-A004",
+        "T14-A005",
+        "T14-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-SOURCERIGHT-MIGRATION",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_sourceright_migration.py"
+    },
+    {
+      "category": "claim_evidence",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_roadmap_coverage.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T30-A001",
+        "T30-A002",
+        "T30-A003",
+        "T37-A001",
+        "T37-A002",
+        "T37-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-ROADMAP-COVERAGE",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_roadmap_coverage.py"
+    },
+    {
+      "category": "ecosystem_compatibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_release_train.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T03-A006",
+        "T32-A001",
+        "T32-A002",
+        "T32-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-RELEASE-TRAIN",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_release_train.py"
+    },
+    {
+      "category": "interface_parity",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_sdk_examples.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T35-A001",
+        "T35-A002",
+        "T35-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-SDK-EXAMPLES",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_sdk_examples.py"
+    },
+    {
+      "category": "release_preparation",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_release_rehearsal.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T36-A001",
+        "T36-A002",
+        "T36-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-RELEASE-REHEARSAL",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_release_rehearsal.py"
+    },
+    {
+      "category": "claim_evidence",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_maturity_dossier.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T30-A001",
+        "T30-A002",
+        "T30-A003",
+        "T36-A001",
+        "T36-A002",
+        "T36-A003",
+        "T37-A001",
+        "T37-A002",
+        "T37-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-MATURITY-DOSSIER",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_maturity_dossier.py"
+    },
+    {
+      "category": "claim_evidence",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/sync_track_evidence.py --check",
+      "compiler_required": false,
+      "covered_assertions": [],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-SYNC-TRACK-EVIDENCE-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/sync_track_evidence.py"
+    },
+    {
+      "category": "source_structure",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_rust_dependency_graph.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T12-A001",
+        "T12-A002",
+        "T12-A003",
+        "T12-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-RUST-DEPENDENCY-GRAPH",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_rust_dependency_graph.py"
+    },
+    {
+      "category": "source_structure",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_rust_source_structure.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T26-A001",
+        "T26-A002",
+        "T26-A003",
+        "T26-A004",
+        "T26-A005",
+        "T33-A001",
+        "T33-A002",
+        "T33-A003",
+        "T34-A001",
+        "T34-A002",
+        "T34-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-RUST-SOURCE-STRUCTURE",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_rust_source_structure.py"
+    },
+    {
+      "category": "search_method",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/audit_search_code.py --self-test",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T15-A001"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-AUDIT-SEARCH-CODE-SELF-TEST",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/audit_search_code.py"
+    },
+    {
+      "category": "safety_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_secrets.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A005"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-SECRETS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_secrets.py"
+    },
+    {
+      "category": "source_reproducibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/generate_source_sbom.py --check",
+      "compiler_required": false,
+      "covered_assertions": [],
+      "evidence_ceiling": "source_reproducible",
+      "external_writes": false,
+      "gate_id": "SR-GATE-GENERATE-SOURCE-SBOM-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/generate_source_sbom.py"
+    },
+    {
+      "category": "source_reproducibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/generate_source_hash_manifest.py --check",
+      "compiler_required": false,
+      "covered_assertions": [],
+      "evidence_ceiling": "source_reproducible",
+      "external_writes": false,
+      "gate_id": "SR-GATE-GENERATE-SOURCE-HASH-MANIFEST-CHECK",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/generate_source_hash_manifest.py"
+    },
+    {
+      "category": "source_reproducibility",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_packaging_reproducibility.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T18-A001",
+        "T18-A002",
+        "T18-A003",
+        "T18-A004",
+        "T18-A005",
+        "T18-A006",
+        "T36-A001",
+        "T36-A002",
+        "T36-A003"
+      ],
+      "evidence_ceiling": "source_reproducible",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-PACKAGING-REPRODUCIBILITY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_packaging_reproducibility.py"
+    },
+    {
+      "category": "control_plane_dry_run",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/audit_github_control_plane.py --help",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T31-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-AUDIT-GITHUB-CONTROL-PLANE-HELP",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/audit_github_control_plane.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/run_static_harness.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A002",
+        "T16-A006",
+        "T37-A001",
+        "T37-A002",
+        "T37-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-RUN-STATIC-HARNESS",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/run_static_harness.py"
+    }
+  ],
+  "generated_from": [
+    "scripts/run_static_harness.py",
+    "conductor/tracks/*/traceability.json",
+    "scripts/check_gate_catalog.py"
+  ],
+  "schema_version": "org.searchright.gate-catalog.v1"
+}

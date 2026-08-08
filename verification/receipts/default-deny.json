@@ -1,5 +1,5 @@
 {
-  "components_checked": 29,
+  "components_checked": 35,
   "errors": [],
   "limitations": [
     "Static source-policy validation only; runtime sandboxing and host enforcement require compiler and execution evidence."

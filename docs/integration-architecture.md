@@ -15,6 +15,12 @@ CiteWeft is the extraction layer, Searchright is the review/search workflow, and
 Sourceright is the citation/reference verification layer. None may silently
 write another domain's canonical state.
 
+Sourceright should additionally expose provenance-bearing scholarly-integrity
+signals for retractions, corrections, expressions of concern, duplicate
+publications and version/update relationships. Searchright may surface these as
+review-priority and human-inspection evidence, but a signal alone must never
+become an automatic study-exclusion decision.
+
 ## Integration mechanisms
 
 1. JSON Schema/WIT/OpenAPI contracts and golden fixtures.
