@@ -36,8 +36,10 @@ This structure contains experimental risk without freezing innovation.
   uncertainty and diagnostics and may route to GROBID or other backends.
 - **Searchright** is the review-methodology and search-workflow layer.
 - **Sourceright** is the canonical citation/reference-verification layer.
-- **`evidence-search-core`** is the product-neutral query/provider/audit kernel
-  intended for reuse by Searchright and Sourceright.
+- **`evidence-search-contracts`** is the neutral query/provider/receipt/record
+  contract layer.
+- **`evidence-search-core`** is the product-neutral compiler/provider/audit
+  runtime intended for reuse by Searchright and Sourceright.
 
 Extraction evidence is not canonical bibliography. Screening state is not
 citation truth. Citation verification is not review eligibility. Keeping those
@@ -49,9 +51,10 @@ writing another system's canonical state.
 1. **Contract first**
    Review intent, query semantics, provenance, authority, screening and reports
    are versioned before adapters or interfaces.
-2. **Shared kernel and facade**
-   Product-neutral provider behaviour belongs in `evidence-search-core`; CLI,
-   MCP and library interfaces delegate to one application facade.
+2. **Neutral contracts, shared kernel and facade**
+   Product-neutral wire types belong in `evidence-search-contracts`; provider
+   behaviour belongs in `evidence-search-core`; CLI, MCP and library interfaces
+   delegate to one application facade.
 3. **Deterministic before probabilistic**
    Fixtures, replay, canonical serialisation, conservative baselines and audit
    chains precede live APIs and agentic optimisation.
@@ -64,27 +67,30 @@ writing another system's canonical state.
 6. **Provenance and living lineage**
    Reviews, strategies, runs, decisions and amendments form an immutable graph
    exportable as RO-Crate and W3C PROV artefacts.
-7. **Quality and security by construction**
+7. **Implementation truth before roadmap optics**
+   Scope is decomposed into acceptance assertions. File presence, issue state
+   and Project fields cannot promote behaviour or evidence.
+8. **Quality and security by construction**
    Host allowlists, budget limits, hostile-content handling, least privilege,
    dependency policy, source inventories and evidence receipts are default.
-8. **Institutional and accessible operation**
+9. **Institutional and accessible operation**
    Stable diagnostic codes, plain/JSON/JSONL output, data-handling decisions and
    retention/export policy are shared across hosts.
-9. **Evidence before claims**
+10. **Evidence before claims**
    Contracted → source-verified → compiler-verified → fixture-proven → opt-in
    live proven → externally validated → publicly accepted.
-10. **Federated repositories without hidden coupling**
+11. **Federated repositories without hidden coupling**
     Independent repositories integrate through exact pins, neutral contracts,
     consumer fixtures, compatibility windows and rollback—not submodules,
     copied implementations or unreviewed automatic upgrades.
-11. **Declarative delivery control plane**
+12. **Declarative delivery control plane**
     Conductor remains canonical; GitHub issues, nested subissues and Project
     fields/views are generated projections with idempotent, non-destructive sync.
-12. **Operational maturity before hosted claims**
+13. **Operational maturity before hosted claims**
     Remote identity, tenancy, SLOs, telemetry, backup, incident response and
     restore drills are separate evidence domains, not implicit consequences of
     an MCP server compiling.
-13. **Release and adoption as experiments**
+14. **Release and adoption as experiments**
     Cross-repository canaries, release rehearsals and bounded pilots precede
     registry promotion and any version 1.0 decision.
 
@@ -106,11 +112,12 @@ uses a federation protocol instead:
 6. **Compatibility window:** schema and package versions remain available long
    enough for independent repository release cycles.
 
-`evidence-search-core` remains a separately publishable workspace package while
-its API is stabilised. It should move to an independent repository only when two
-or more consumers require a genuinely independent lifecycle and release process;
-premature extraction would increase coordination overhead without reducing
-coupling.
+The neutral contracts and core remain non-publishable workspace packages while
+their APIs are stabilised. They may become public packages only after compiler,
+SemVer, consumer, licence and cargo-vet evidence. A standalone repository is
+warranted only when Searchright and Sourceright both consume a stable release and
+require an independent lifecycle; premature extraction would increase
+coordination overhead without reducing coupling.
 
 ## Delivery and operational strategy
 
@@ -186,3 +193,27 @@ raw receipts and a response-to-findings matrix.
 - remote GitHub repository, issue or Project claims without an observed bootstrap receipt;
 - backup recoverability, telemetry safety or operational SLO claims without exercises;
 - version 1.0 promotion from source completeness alone;
+
+
+## Immediate execution strategy
+
+The next programme is vertical rather than horizontal. Searchright should not
+add another broad connector or agent tranche until PubMed, Europe PMC, Crossref
+and OpenAlex each satisfy the applicable requirements in
+`docs/vertical-slice-definition-of-done.md`.
+
+Strategic order:
+
+1. compiler and lockfile closure;
+2. provider fixture-to-canonical-page golden tests;
+3. native query parser and conformance depth;
+4. shared-core consumer proof in Sourceright;
+5. CiteWeft branch/release hardening and a document-evidence canary;
+6. downstream custom-code migrations with retained rollback;
+7. sealed methodological evaluation;
+8. hosted MCP and broad distribution only after those proofs.
+
+A portable `.srpack` bundle is the primary reproducibility unit for review
+artefacts. The ecosystem lock is the primary release-train unit for software and
+contract compatibility. Neither unit can promote itself: human approval and the
+corresponding evidence receipts remain required.

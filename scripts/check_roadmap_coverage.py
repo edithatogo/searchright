@@ -14,6 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 COVERAGE_PATH = ROOT / "conductor" / "roadmap-coverage.json"
 TRACKS_ROOT = ROOT / "conductor" / "tracks"
 ALLOWED_STATUSES = {
+    "contracted",
+    "scaffolded",
+    "partially_implemented",
     "source_implemented",
     "source_implemented_unverified",
     "integration_prepared",
@@ -31,6 +34,9 @@ ALLOWED_EVIDENCE = {
     "published",
 }
 FINAL_EVIDENCE = {"compiler_verified", "fixture_proven", "live_proven", "externally_validated", "published"}
+ALLOWED_IMPLEMENTATION_STATES = {
+    "contracted", "scaffolded", "partially_implemented", "source_implemented", "external_evidence_required"
+}
 
 
 def load_json(path: Path) -> Any:
@@ -113,14 +119,24 @@ def main() -> int:
         evidence = load_json(evidence_path)
         status = entry.get("status")
         evidence_level = entry.get("evidence_level")
+        implementation_state = entry.get("implementation_state")
         if status not in ALLOWED_STATUSES:
             error(errors, f"track {track_id} has invalid status {status!r}")
         if evidence_level not in ALLOWED_EVIDENCE:
             error(errors, f"track {track_id} has invalid evidence level {evidence_level!r}")
+        if implementation_state not in ALLOWED_IMPLEMENTATION_STATES:
+            error(errors, f"track {track_id} has invalid implementation state {implementation_state!r}")
         if metadata.get("track_id") != track_id or evidence.get("track_id") != track_id:
             error(errors, f"track {track_id} identity mismatch")
         if metadata.get("status") != status or evidence.get("status") != status:
             error(errors, f"track {track_id} status differs across coverage/metadata/evidence")
+        if metadata.get("implementation_state") != implementation_state or evidence.get("implementation_state") != implementation_state:
+            error(errors, f"track {track_id} implementation state differs across coverage/metadata/evidence")
+        expected_trace = f"conductor/tracks/{track_id}-{entry['slug']}/traceability.json"
+        if metadata.get("traceability_path") != expected_trace or evidence.get("traceability") != expected_trace:
+            error(errors, f"track {track_id} traceability path differs across metadata/evidence")
+        if not (ROOT / expected_trace).is_file():
+            error(errors, f"track {track_id} has no assertion traceability ledger")
         if metadata.get("evidence_level") != evidence_level or evidence.get("evidence_level") != evidence_level:
             error(errors, f"track {track_id} evidence differs across coverage/metadata/evidence")
         if metadata.get("slug") != directory.name[3:]:
@@ -144,7 +160,7 @@ def main() -> int:
             blockers = []
         if status == "external_evidence_required" and not blockers:
             error(errors, f"track {track_id} requires external evidence but has no blockers")
-        if not blockers and evidence_level not in FINAL_EVIDENCE and status not in {"source_implemented", "source_implemented_unverified"}:
+        if not blockers and evidence_level not in FINAL_EVIDENCE and status not in {"source_implemented", "source_implemented_unverified", "partially_implemented", "scaffolded", "contracted"}:
             error(errors, f"track {track_id} has no blocker but is not at a final evidence level")
 
         plan = plan_path.read_text(encoding="utf-8")

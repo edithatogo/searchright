@@ -4,6 +4,7 @@
   "slug": "external-evaluation-sustainability",
   "title": "External methodological evaluation and sustainability",
   "status": "external_evidence_required",
+  "implementation_state": "external_evidence_required",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -19,6 +20,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+  "traceability_path": "conductor/tracks/29-external-evaluation-sustainability/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-29",

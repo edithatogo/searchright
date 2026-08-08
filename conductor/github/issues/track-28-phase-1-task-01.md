@@ -3,18 +3,19 @@
 
 Parent phase key: `track-28-phase-1`
 Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaboration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-governance/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/governance.rs`
-  - [x] `contracts/examples/institutional-policy.yaml`
-  - [x] `contracts/examples/data-handling-request.yaml`
-  - [x] `contracts/examples/data-handling-decision.yaml`
-  - [x] `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
-  - [x] `docs/security/threat-model.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-governance/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/governance.rs`
+  - [x] Present source path: `contracts/examples/institutional-policy.yaml`
+  - [x] Present source path: `contracts/examples/data-handling-request.yaml`
+  - [x] Present source path: `contracts/examples/data-handling-decision.yaml`
+  - [x] Present source path: `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
+  - [x] Present source path: `docs/security/threat-model.md`
+  - [x] Assertion ledger: `conductor/tracks/28-institutional-governance-privacy-collaboration/traceability.json`
 
 ## Completion and evidence contract
 

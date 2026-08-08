@@ -1,6 +1,6 @@
 # Plan: 17 Benchmarks, search validation and human calibration
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **scaffolded**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-17`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,20 +8,22 @@ GitHub issue key: `track-17`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-17-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-bench/src/lib.rs`
-  - [x] `crates/searchright-ranking/src/lib.rs`
-  - [x] `crates/searchright-validation/src/lib.rs`
-  - [x] `contracts/examples/benchmark-report.yaml`
-  - [x] `contracts/examples/ranking-calibration.yaml`
-  - [x] `docs/evaluation/benchmark-and-calibration-protocol.md`
-  - [x] `benchmarks/README.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `benchmarks/methodology/manifest.json`
+  - [x] Present source path: `benchmarks/methodology/README.md`
+  - [x] Present source path: `scripts/check_methodology_benchmarks.py`
+  - [x] Present source path: `crates/searchright-bench/src/lib.rs`
+  - [x] Present source path: `crates/searchright-ranking/src/lib.rs`
+  - [x] Present source path: `crates/searchright-validation/src/lib.rs`
+  - [x] Present source path: `docs/evaluation/benchmark-and-calibration-protocol.md`
+  - [x] Assertion ledger: `conductor/tracks/17-benchmarks-calibration/traceability.json`
 
 ## Phase 2: Source-level verification
 
 <!-- github-subissue-key: track-17-phase-2 -->
 
 - [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/check_methodology_benchmarks.py`
   - [x] `python scripts/validate_repository.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 

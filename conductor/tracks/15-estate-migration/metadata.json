@@ -3,7 +3,8 @@
   "track_id": "15",
   "slug": "estate-migration",
   "title": "GitHub estate audit and custom-code replacement",
-  "status": "integration_prepared",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -14,6 +15,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/15-estate-migration/evidence.json",
+  "traceability_path": "conductor/tracks/15-estate-migration/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-15",

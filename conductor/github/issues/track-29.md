@@ -13,6 +13,7 @@ Complete independent methodological/usability evaluation and establish durable g
 
 - Horizon: `mature`
 - Status: `external_evidence_required`
+- Implementation: `external_evidence_required`
 - Evidence: `source_verified`
 - Dependencies: `13, 17, 18, 19, 25, 27, 28`
 - Requirements: `SR-041, SR-059, SR-060, SR-062`
@@ -27,6 +28,6 @@ Complete independent methodological/usability evaluation and establish durable g
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

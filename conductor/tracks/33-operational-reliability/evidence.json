@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "33",
   "title": "Operational observability, backup, restore and incident response",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -17,6 +18,7 @@
     "docs/operations/incident-response.md",
     ".github/workflows/resilience.yml"
   ],
+  "traceability": "conductor/tracks/33-operational-reliability/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_rust_source_structure.py",
@@ -33,7 +35,7 @@
     "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
     "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
   ],
-  "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run.",
+  "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-33",

@@ -1,6 +1,6 @@
 # Plan: 14 Sourceright migration and shared releases
 
-Current status: **integration_prepared**. Evidence level: **source_verified**.
+Current status: **integration_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,12 +8,13 @@ GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-14-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `migration/sourceright/README.md`
-  - [x] `migration/sourceright/replacement-map.yaml`
-  - [x] `migration/sourceright/parity-cases.json`
-  - [x] `crates/searchright-sourceright-compat/src/lib.rs`
-  - [x] `scripts/check_sourceright_migration.py`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `migration/sourceright/README.md`
+  - [x] Present source path: `migration/sourceright/replacement-map.yaml`
+  - [x] Present source path: `migration/sourceright/parity-cases.json`
+  - [x] Present source path: `crates/searchright-sourceright-compat/src/lib.rs`
+  - [x] Present source path: `scripts/check_sourceright_migration.py`
+  - [x] Assertion ledger: `conductor/tracks/14-sourceright-migration/traceability.json`
 
 ## Phase 2: Source-level verification
 

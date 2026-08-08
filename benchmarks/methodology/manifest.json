@@ -1,0 +1,86 @@
+{
+  "schema_version": "org.searchright.methodology-benchmark-suite.v1",
+  "suite_id": "searchright-methodology-v1",
+  "source_epoch": "2026-08-08",
+  "status": "synthetic_fixture_ready_external_validation_pending",
+  "tasks": [
+    {
+      "id": "native_query_preservation",
+      "fixture": "contracts/query-corpus/index.json",
+      "partitions": ["validation"],
+      "metrics": ["parse_success", "source_span_coverage", "round_trip_byte_preservation", "review_required_rate"],
+      "claim_boundary": "Preserving source text does not prove semantic equivalence across databases."
+    },
+    {
+      "id": "record_deduplication",
+      "fixture": "benchmarks/methodology/fixtures/validation/dedup-cases.json",
+      "partitions": ["train", "validation", "sealed_test"],
+      "metrics": ["cluster_precision", "cluster_recall", "pairwise_f1", "false_merge_rate"],
+      "claim_boundary": "Synthetic performance is not external benchmark performance."
+    },
+    {
+      "id": "report_study_linkage",
+      "fixture": "benchmarks/methodology/fixtures/validation/study-linkage-cases.json",
+      "partitions": ["train", "validation", "sealed_test"],
+      "metrics": ["link_precision", "link_recall", "study_cluster_f1", "abstention_rate"],
+      "claim_boundary": "Linkage remains reviewable and must not silently merge reports or studies."
+    },
+    {
+      "id": "screening_prioritisation",
+      "fixture": "benchmarks/methodology/fixtures/validation/screening-cases.json",
+      "partitions": ["train", "validation", "sealed_test"],
+      "metrics": ["recall_at_95_percent", "work_saved_over_sampling", "calibration_error", "abstention_rate"],
+      "claim_boundary": "Ranking is advisory and cannot make final exclusions."
+    },
+    {
+      "id": "prisma_arithmetic",
+      "fixture": "contracts/examples/prisma-flow.json",
+      "partitions": ["validation"],
+      "metrics": ["invariant_pass_rate", "diagnostic_precision"],
+      "claim_boundary": "Arithmetic consistency does not establish PRISMA reporting completeness."
+    },
+    {
+      "id": "living_review_change_detection",
+      "fixture": "benchmarks/methodology/fixtures/validation/living-update-cases.json",
+      "partitions": ["validation", "sealed_test"],
+      "metrics": ["new_record_recall", "changed_record_precision", "lineage_integrity"],
+      "claim_boundary": "Change detection does not replace protocol-governed human review."
+    }
+  ],
+  "partitions": {
+    "train": {
+      "labels_visible": true,
+      "purpose": "implementation development and property generation"
+    },
+    "validation": {
+      "labels_visible": true,
+      "purpose": "local regression and calibration"
+    },
+    "sealed_test": {
+      "labels_visible": false,
+      "manifest": "benchmarks/methodology/fixtures/sealed/manifest.json",
+      "purpose": "independent final evaluation; labels remain external to the repository"
+    }
+  },
+  "external_upstreams": [
+    {
+      "name": "SYNERGY",
+      "canonical_repository": "asreview/synergy-dataset",
+      "local_fork": "edithatogo/synergy-dataset",
+      "local_fork_role": "mirror_or_patch_carrier_only",
+      "version_policy": "pin a canonical upstream release or commit and dataset digest before each run",
+      "licence": "CC0-1.0",
+      "labels_may_enter_prompts": false,
+      "status": "external_run_not_executed"
+    }
+  ],
+  "leakage_controls": {
+    "sealed_labels_committed": false,
+    "sealed_labels_available_to_agents": false,
+    "benchmark_test_ids_may_enter_training_prompts": false,
+    "final_metric_computation_requires_external_label_mount": true,
+    "configuration_digest_required": true,
+    "environment_receipt_required": true
+  },
+  "claim_boundary": "This manifest defines a benchmark protocol and rights-clear synthetic fixtures; it contains no external performance result or state-of-the-art claim."
+}

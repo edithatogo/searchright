@@ -1,6 +1,6 @@
 # Plan: 26 Formal assurance and contract evolution
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,15 +8,16 @@ GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-26-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-assurance/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/assurance.rs`
-  - [x] `contracts/examples/workflow-trace.yaml`
-  - [x] `docs/adrs/0011-assurance-and-evidence-ladder.md`
-  - [x] `crates/searchright-assurance/tests/loom_authority.rs`
-  - [x] `.github/workflows/formal.yml`
-  - [x] `fuzz/Cargo.toml`
-  - [x] `verification/harness-matrix.json`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-assurance/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/assurance.rs`
+  - [x] Present source path: `contracts/examples/workflow-trace.yaml`
+  - [x] Present source path: `docs/adrs/0011-assurance-and-evidence-ladder.md`
+  - [x] Present source path: `crates/searchright-assurance/tests/loom_authority.rs`
+  - [x] Present source path: `.github/workflows/formal.yml`
+  - [x] Present source path: `fuzz/Cargo.toml`
+  - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Assertion ledger: `conductor/tracks/26-formal-assurance-contract-evolution/traceability.json`
 
 ## Phase 2: Source-level verification
 

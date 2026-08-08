@@ -1,6 +1,6 @@
 # Plan: 35 Generated SDKs, fixture-backed documentation and adoption operations
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-35`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,14 +8,15 @@ GitHub issue key: `track-35`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-35-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `sdk/manifest.json`
-  - [x] `scripts/check_sdk_examples.py`
-  - [x] `docs/sdk-and-adoption.md`
-  - [x] `examples/quickstart/README.md`
-  - [x] `contracts/interface-catalog.json`
-  - [x] `README.md`
-  - [x] `GOVERNANCE.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `sdk/manifest.json`
+  - [x] Present source path: `scripts/check_sdk_examples.py`
+  - [x] Present source path: `docs/sdk-and-adoption.md`
+  - [x] Present source path: `examples/quickstart/README.md`
+  - [x] Present source path: `contracts/interface-catalog.json`
+  - [x] Present source path: `README.md`
+  - [x] Present source path: `GOVERNANCE.md`
+  - [x] Assertion ledger: `conductor/tracks/35-sdk-docs-adoption/traceability.json`
 
 ## Phase 2: Source-level verification
 

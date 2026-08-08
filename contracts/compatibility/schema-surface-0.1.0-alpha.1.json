@@ -1,0 +1,443 @@
+{
+  "schema_version": "org.searchright.contract-surface-baseline.v1",
+  "surface_version": "0.1.0-alpha.1",
+  "source_epoch": "2026-08-08",
+  "automatic_updates": false,
+  "schemas": [
+    {
+      "id": "access-decision",
+      "schema_id": "https://schemas.searchright.dev/access-decision.v1.schema.json",
+      "path": "contracts/json-schema/access-decision.v1.schema.json",
+      "sha256": "692564f9fbac58c4ba822d7b9645b09bed8937b2f61dae4e9dbfd59a8ea9ea4c",
+      "stability": "alpha",
+      "owner_track": "34"
+    },
+    {
+      "id": "access-request",
+      "schema_id": "https://schemas.searchright.dev/access-request.v1.schema.json",
+      "path": "contracts/json-schema/access-request.v1.schema.json",
+      "sha256": "eb70bd733eec2e02df71e8fd76639f88516a1f9256da7470a9f64d492e3ceab3",
+      "stability": "alpha",
+      "owner_track": "34"
+    },
+    {
+      "id": "agent-workflow",
+      "schema_id": "https://schemas.searchright.dev/agent-workflow.v1.schema.json",
+      "path": "contracts/json-schema/agent-workflow.v1.schema.json",
+      "sha256": "37bd971fecdc0df65ee8dd257170acfc3933d7c4410e7132a3c39300e4db55f2",
+      "stability": "alpha",
+      "owner_track": "11"
+    },
+    {
+      "id": "audit-event",
+      "schema_id": "https://schemas.searchright.dev/audit-event.v1.schema.json",
+      "path": "contracts/json-schema/audit-event.v1.schema.json",
+      "sha256": "86fa678c4797d39b78a8b3ce185e68d2e00557bdd7340c6fb0c431181f7ad0df",
+      "stability": "alpha",
+      "owner_track": "05"
+    },
+    {
+      "id": "backup-manifest",
+      "schema_id": "https://schemas.searchright.dev/backup-manifest.v1.schema.json",
+      "path": "contracts/json-schema/backup-manifest.v1.schema.json",
+      "sha256": "1ee7185f3e67d29ce6bc99fadc61241a1e0d835ccb90ba01b4c7f8a5716aee85",
+      "stability": "alpha",
+      "owner_track": "33"
+    },
+    {
+      "id": "benchmark-report",
+      "schema_id": "https://schemas.searchright.dev/benchmark-report.v1.schema.json",
+      "path": "contracts/json-schema/benchmark-report.v1.schema.json",
+      "sha256": "54998f4119ece1c09041df4849a1d731713fd9a4ae0f687845e986ddba187f0b",
+      "stability": "alpha",
+      "owner_track": "17"
+    },
+    {
+      "id": "bibliographic-record",
+      "schema_id": "https://schemas.searchright.dev/bibliographic-record.v1.schema.json",
+      "path": "contracts/json-schema/bibliographic-record.v1.schema.json",
+      "sha256": "081f00731c0e1a8ab227f1b2a5c2b60f2c5c7d56b4b2d204ea9e7a33a4d45b4d",
+      "stability": "alpha",
+      "owner_track": "01"
+    },
+    {
+      "id": "compiled-strategy",
+      "schema_id": "https://schemas.searchright.dev/compiled-strategy.v1.schema.json",
+      "path": "contracts/json-schema/compiled-strategy.v1.schema.json",
+      "sha256": "c0924941be8f9ea8a578fcbabe36065798f0f917553a556f604923e7317e1a46",
+      "stability": "alpha",
+      "owner_track": "02"
+    },
+    {
+      "id": "component-health",
+      "schema_id": "https://schemas.searchright.dev/component-health.v1.schema.json",
+      "path": "contracts/json-schema/component-health.v1.schema.json",
+      "sha256": "ce8bf7fb3f7127ecc06c21b60a00c64c4d217232b150ff69e8310036a860699a",
+      "stability": "alpha",
+      "owner_track": "33"
+    },
+    {
+      "id": "consumer-contract-suite",
+      "schema_id": "https://schemas.searchright.dev/consumer-contract-suite.v1.schema.json",
+      "path": "contracts/json-schema/consumer-contract-suite.v1.schema.json",
+      "sha256": "67dd4bdf7f783544f86695bdb11c4d4cb922c3f5abb6dcf50ab91d75ce9e6ea2",
+      "stability": "alpha",
+      "owner_track": "13"
+    },
+    {
+      "id": "data-handling-decision",
+      "schema_id": "https://schemas.searchright.dev/data-handling-decision.v1.schema.json",
+      "path": "contracts/json-schema/data-handling-decision.v1.schema.json",
+      "sha256": "590e5a39075bc7b02262de7c2c927e8b831652c31c6a81832c79149dac55b8a9",
+      "stability": "alpha",
+      "owner_track": "28"
+    },
+    {
+      "id": "data-handling-request",
+      "schema_id": "https://schemas.searchright.dev/data-handling-request.v1.schema.json",
+      "path": "contracts/json-schema/data-handling-request.v1.schema.json",
+      "sha256": "4ba322b4432eaa95151d0b5d9e5eb59af3a781753f8a36e5efb506641d954ca6",
+      "stability": "alpha",
+      "owner_track": "28"
+    },
+    {
+      "id": "diagnostic",
+      "schema_id": "https://schemas.searchright.dev/diagnostic.v1.schema.json",
+      "path": "contracts/json-schema/diagnostic.v1.schema.json",
+      "sha256": "a7f842158ef7fff2e626862a9ebd382c45df49b65858bec04d589e05673246e0",
+      "stability": "alpha",
+      "owner_track": "27"
+    },
+    {
+      "id": "discovery-run",
+      "schema_id": "https://schemas.searchright.dev/discovery-run.v1.schema.json",
+      "path": "contracts/json-schema/discovery-run.v1.schema.json",
+      "sha256": "db4e9b6a463286292ce301cdd19a8de4ab1a90a7b969d8d78fe8e99c33937cd8",
+      "stability": "alpha",
+      "owner_track": "20"
+    },
+    {
+      "id": "document-evidence",
+      "schema_id": "https://schemas.searchright.dev/document-evidence.v1.schema.json",
+      "path": "contracts/json-schema/document-evidence.v1.schema.json",
+      "sha256": "a80b62289db4c926fc16b5d12fccbede1b724e6c308f263b4e10ce5b2dd20442",
+      "stability": "alpha",
+      "owner_track": "12"
+    },
+    {
+      "id": "execution-envelope",
+      "schema_id": "https://schemas.searchright.dev/execution-envelope.v1.schema.json",
+      "path": "contracts/json-schema/execution-envelope.v1.schema.json",
+      "sha256": "8a8b75af3f9d14cadb8d5be1f23d7478d8055627d9ce169a1849e238200d9ebc",
+      "stability": "alpha",
+      "owner_track": "16"
+    },
+    {
+      "id": "github-issue-hierarchy",
+      "schema_id": "https://schemas.searchright.dev/github-issue-hierarchy.v1.schema.json",
+      "path": "contracts/json-schema/github-issue-hierarchy.v1.schema.json",
+      "sha256": "bd6bf35197d6e57d1eecea6e7c97a4eac9462b936e7c4be549703f0152f86579",
+      "stability": "alpha",
+      "owner_track": "13"
+    },
+    {
+      "id": "github-issue-hierarchy-v2",
+      "schema_id": "https://schemas.searchright.dev/github-issue-hierarchy.v2.schema.json",
+      "path": "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+      "sha256": "a51659b28687c6b30a2bcb604e206433ddc510fa0aed64143ea4bf8394e13e19",
+      "stability": "alpha",
+      "owner_track": "31"
+    },
+    {
+      "id": "github-project",
+      "schema_id": "https://schemas.searchright.dev/github-project.v1.schema.json",
+      "path": "contracts/json-schema/github-project.v1.schema.json",
+      "sha256": "73e7947af7250463fb9046ead7c95a9c51556e0087c70e68b9952fb09cb5caca",
+      "stability": "alpha",
+      "owner_track": "31"
+    },
+    {
+      "id": "github-repository-settings",
+      "schema_id": "https://schemas.searchright.dev/github-repository-settings.v1.schema.json",
+      "path": "contracts/json-schema/github-repository-settings.v1.schema.json",
+      "sha256": "56be2ca4cb4d43a41583807f6d269643e4c54cb97fa4ffb20052b180aa9ed2a1",
+      "stability": "alpha",
+      "owner_track": "31"
+    },
+    {
+      "id": "incident-record",
+      "schema_id": "https://schemas.searchright.dev/incident-record.v1.schema.json",
+      "path": "contracts/json-schema/incident-record.v1.schema.json",
+      "sha256": "f8abc8c9090441b3cd2bf0495bfca157417eee7fe50de5620903d74a4dc3a8fe",
+      "stability": "alpha",
+      "owner_track": "33"
+    },
+    {
+      "id": "institutional-policy",
+      "schema_id": "https://schemas.searchright.dev/institutional-policy.v1.schema.json",
+      "path": "contracts/json-schema/institutional-policy.v1.schema.json",
+      "sha256": "de8a3fc7f223932694eed413c66f12574d30a93687df27aac47ae5b8bd885a42",
+      "stability": "alpha",
+      "owner_track": "28"
+    },
+    {
+      "id": "integration-passport",
+      "schema_id": "https://schemas.searchright.dev/integration-passport.v1.schema.json",
+      "path": "contracts/json-schema/integration-passport.v1.schema.json",
+      "sha256": "d3e7e074ec63d95683a02976775e80406e29da395f1c455e5175bd4f158f560a",
+      "stability": "alpha",
+      "owner_track": "13"
+    },
+    {
+      "id": "integration-release-train",
+      "schema_id": "https://schemas.searchright.dev/integration-release-train.v1.schema.json",
+      "path": "contracts/json-schema/integration-release-train.v1.schema.json",
+      "sha256": "3721b008c47df198e322c3acaffc09efdd4b0a08ee0fb4be6233814095883b2a",
+      "stability": "alpha",
+      "owner_track": "32"
+    },
+    {
+      "id": "interchange-receipt",
+      "schema_id": "https://schemas.searchright.dev/interchange-receipt.v1.schema.json",
+      "path": "contracts/json-schema/interchange-receipt.v1.schema.json",
+      "sha256": "523057e7ba947892ed3278e4d06decffdad6d6bf6820442be05555abb4bc53f8",
+      "stability": "alpha",
+      "owner_track": "06"
+    },
+    {
+      "id": "licensed-adapter",
+      "schema_id": "https://schemas.searchright.dev/licensed-adapter.v1.schema.json",
+      "path": "contracts/json-schema/licensed-adapter.v1.schema.json",
+      "sha256": "b4e9e5bbe642b20086812c2c3c9a383bbd251bd7432a514cf0f08336030b409d",
+      "stability": "alpha",
+      "owner_track": "21"
+    },
+    {
+      "id": "living-update",
+      "schema_id": "https://schemas.searchright.dev/living-update.v1.schema.json",
+      "path": "contracts/json-schema/living-update.v1.schema.json",
+      "sha256": "1551e2656a10eea260f8bbfde76410a802793f81ef73fcf1be6191587c546ab0",
+      "stability": "alpha",
+      "owner_track": "22"
+    },
+    {
+      "id": "native-search-strategy",
+      "schema_id": "https://schemas.searchright.dev/native-search-strategy.v1.schema.json",
+      "path": "contracts/json-schema/native-search-strategy.v1.schema.json",
+      "sha256": "a8839a516a8cf0298e5a3912c94f4ff57046b00c6fd953c9004010c12f0235a3",
+      "stability": "alpha",
+      "owner_track": "02"
+    },
+    {
+      "id": "prisma-flow",
+      "schema_id": "https://schemas.searchright.dev/prisma-flow.v1.schema.json",
+      "path": "contracts/json-schema/prisma-flow.v1.schema.json",
+      "sha256": "541c777d68190cf31def9b7f890611bb1b3afc9b474853bab417547910d4e332",
+      "stability": "alpha",
+      "owner_track": "08"
+    },
+    {
+      "id": "protocol-amendment",
+      "schema_id": "https://schemas.searchright.dev/protocol-amendment.v1.schema.json",
+      "path": "contracts/json-schema/protocol-amendment.v1.schema.json",
+      "sha256": "d01763bda29129cf769a1d4ebb1701dca1ba7ef00111293ce8f75a9f32784475",
+      "stability": "alpha",
+      "owner_track": "22"
+    },
+    {
+      "id": "provider-component",
+      "schema_id": "https://schemas.searchright.dev/provider-component.v1.schema.json",
+      "path": "contracts/json-schema/provider-component.v1.schema.json",
+      "sha256": "c1d4af35d6ad3f6ed147860cb66b0e7f576de428a4486fe04f4033cb5a07486c",
+      "stability": "alpha",
+      "owner_track": "24"
+    },
+    {
+      "id": "provider-manifest",
+      "schema_id": "https://schemas.searchright.dev/provider-manifest.v1.schema.json",
+      "path": "contracts/json-schema/provider-manifest.v1.schema.json",
+      "sha256": "3f597da0002ef827ea3c51d431b6b1b7287e1ecfeee2e2ad69f0aca0233cd72b",
+      "stability": "alpha",
+      "owner_track": "04"
+    },
+    {
+      "id": "provider-page",
+      "schema_id": "https://schemas.searchright.dev/provider-page.v1.schema.json",
+      "path": "contracts/json-schema/provider-page.v1.schema.json",
+      "sha256": "6938e17f676d4bd54c3946bfb13bfbf6fc9ac7798f72fc3d3ac5ff278efa6131",
+      "stability": "alpha",
+      "owner_track": "03"
+    },
+    {
+      "id": "query-ast",
+      "schema_id": "https://schemas.searchright.dev/query-ast.v1.schema.json",
+      "path": "contracts/json-schema/query-ast.v1.schema.json",
+      "sha256": "d27f81140fa51229c45d19be43d78ea7cc9a52b630cb4cfa16b2567a85f30c81",
+      "stability": "alpha",
+      "owner_track": "02"
+    },
+    {
+      "id": "ranking-calibration",
+      "schema_id": "https://schemas.searchright.dev/ranking-calibration.v1.schema.json",
+      "path": "contracts/json-schema/ranking-calibration.v1.schema.json",
+      "sha256": "44b4c48883e139ecb50c2a09568089826507baa007387a5a91a0b7a3cb8e2a72",
+      "stability": "alpha",
+      "owner_track": "23"
+    },
+    {
+      "id": "release-rehearsal",
+      "schema_id": "https://schemas.searchright.dev/release-rehearsal.v1.schema.json",
+      "path": "contracts/json-schema/release-rehearsal.v1.schema.json",
+      "sha256": "b325ab4d5f74e8acaa1a920fcd1ae486831cb8dd9d63d878c98d849cf75dede7",
+      "stability": "alpha",
+      "owner_track": "36"
+    },
+    {
+      "id": "review-bundle-manifest",
+      "schema_id": "https://schemas.searchright.dev/review-bundle-manifest.v1.schema.json",
+      "path": "contracts/json-schema/review-bundle-manifest.v1.schema.json",
+      "sha256": "c70e80544debda2aaf1ffe330283edaa9d1cc66172da10215d65d2bc0a933cf0",
+      "stability": "alpha",
+      "owner_track": "25"
+    },
+    {
+      "id": "review-plan",
+      "schema_id": "https://schemas.searchright.dev/review-plan.v1.schema.json",
+      "path": "contracts/json-schema/review-plan.v1.schema.json",
+      "sha256": "599c61b2c37ca7177b1b859015186f223180995511db7bb5a2b6a4cc12dac7f7",
+      "stability": "alpha",
+      "owner_track": "01"
+    },
+    {
+      "id": "review-state-snapshot",
+      "schema_id": "https://schemas.searchright.dev/review-state-snapshot.v1.schema.json",
+      "path": "contracts/json-schema/review-state-snapshot.v1.schema.json",
+      "sha256": "38b0e5890d7731d70b8610445f1a2639a7aed92ca55b437b9eacb3e561d3b363",
+      "stability": "alpha",
+      "owner_track": "05"
+    },
+    {
+      "id": "screening-decision",
+      "schema_id": "https://schemas.searchright.dev/screening-decision.v1.schema.json",
+      "path": "contracts/json-schema/screening-decision.v1.schema.json",
+      "sha256": "31a7c0fbfa2e38d17efb327a60ce739a3fa76dfca92504ecc54ba7fb8fc1cafb",
+      "stability": "alpha",
+      "owner_track": "07"
+    },
+    {
+      "id": "screening-policy",
+      "schema_id": "https://schemas.searchright.dev/screening-policy.v1.schema.json",
+      "path": "contracts/json-schema/screening-policy.v1.schema.json",
+      "sha256": "598dd21e3f6e5844adb401c2f66e40f3212c8def693a4b150f58dba240dadfd3",
+      "stability": "alpha",
+      "owner_track": "07"
+    },
+    {
+      "id": "search-run",
+      "schema_id": "https://schemas.searchright.dev/search-run.v1.schema.json",
+      "path": "contracts/json-schema/search-run.v1.schema.json",
+      "sha256": "f9bc94ae9140e62ca6069c9ac3063caf0f7e2b878a472844e01430093fdb74df",
+      "stability": "alpha",
+      "owner_track": "05"
+    },
+    {
+      "id": "search-strategy",
+      "schema_id": "https://schemas.searchright.dev/search-strategy.v1.schema.json",
+      "path": "contracts/json-schema/search-strategy.v1.schema.json",
+      "sha256": "ac00e65e2a67b4c189f0516b975f97c0dca6d09816da79ee3ed11648ed4d4f7c",
+      "stability": "alpha",
+      "owner_track": "02"
+    },
+    {
+      "id": "search-validation",
+      "schema_id": "https://schemas.searchright.dev/search-validation.v1.schema.json",
+      "path": "contracts/json-schema/search-validation.v1.schema.json",
+      "sha256": "20a2a49f2a701dfa453a339c5652a6c1df8d6d4f9a43f93f80ec01d86c6fe11a",
+      "stability": "alpha",
+      "owner_track": "17"
+    },
+    {
+      "id": "source-receipt",
+      "schema_id": "https://schemas.searchright.dev/source-receipt.v1.schema.json",
+      "path": "contracts/json-schema/source-receipt.v1.schema.json",
+      "sha256": "2ab4fe163ff9398d2df831c837db63156df844704ebfe455ac01c1e7ce4316fc",
+      "stability": "alpha",
+      "owner_track": "05"
+    },
+    {
+      "id": "sourceright-parity-report",
+      "schema_id": "https://schemas.searchright.dev/sourceright-parity-report.v1.schema.json",
+      "path": "contracts/json-schema/sourceright-parity-report.v1.schema.json",
+      "sha256": "151e490b52c431947f2249ad11e284b987ec2415ef0fc13958addf7330b51d55",
+      "stability": "alpha",
+      "owner_track": "14"
+    },
+    {
+      "id": "standard-assessment",
+      "schema_id": "https://schemas.searchright.dev/standard-assessment.v1.schema.json",
+      "path": "contracts/json-schema/standard-assessment.v1.schema.json",
+      "sha256": "c06800746c53bd0dbb182a15eea25c01e4a545483ffb4e8c90e8c681c432b6d2",
+      "stability": "alpha",
+      "owner_track": "08"
+    },
+    {
+      "id": "standard-pack",
+      "schema_id": "https://schemas.searchright.dev/standard-pack.v1.schema.json",
+      "path": "contracts/json-schema/standard-pack.v1.schema.json",
+      "sha256": "33ba981156e62f346a8fbbc5e801d72695a29de765c7b3409609642fbc7a7359",
+      "stability": "alpha",
+      "owner_track": "08"
+    },
+    {
+      "id": "study-graph",
+      "schema_id": "https://schemas.searchright.dev/study-graph.v1.schema.json",
+      "path": "contracts/json-schema/study-graph.v1.schema.json",
+      "sha256": "e6e957c01ead1b6c1ad31a5df967d2482136601c7baeab5df7c7bafce732d10f",
+      "stability": "alpha",
+      "owner_track": "06"
+    },
+    {
+      "id": "telemetry-policy",
+      "schema_id": "https://schemas.searchright.dev/telemetry-policy.v1.schema.json",
+      "path": "contracts/json-schema/telemetry-policy.v1.schema.json",
+      "sha256": "4975ba4d5fdca3bf7adc60573484ad4fab1cfb0cd9279a063a8b483f8a46f392",
+      "stability": "alpha",
+      "owner_track": "33"
+    },
+    {
+      "id": "tenant-policy",
+      "schema_id": "https://schemas.searchright.dev/tenant-policy.v1.schema.json",
+      "path": "contracts/json-schema/tenant-policy.v1.schema.json",
+      "sha256": "0eb2c2e2ba2502421707faf06bc187fdcac6225f38bf3ae0198b37607488db4c",
+      "stability": "alpha",
+      "owner_track": "34"
+    },
+    {
+      "id": "workflow-trace",
+      "schema_id": "https://schemas.searchright.dev/workflow-trace.v1.schema.json",
+      "path": "contracts/json-schema/workflow-trace.v1.schema.json",
+      "sha256": "aa1fda2a57cccfd9e730388c169e9704557456bc65d49a60d8a6826152dd0230",
+      "stability": "alpha",
+      "owner_track": "26"
+    }
+  ],
+  "interfaces": [
+    {
+      "path": "contracts/wit/search-provider.wit",
+      "sha256": "e43d691e2176a231ca60a3202471cc3ac61a7a6e71abaae1a0d211d1c3fbff51"
+    },
+    {
+      "path": "contracts/openapi/searchright-http.openapi.yaml",
+      "sha256": "28f042817333e9860817e4b5f9ac81d81c544a337e9943aaeec1a3acf62fc312"
+    },
+    {
+      "path": "server.json",
+      "sha256": "6fdcb99fbd7c14aefb175d3fbddb8b8c19b58292999586b9f80a282e4e296a8c"
+    }
+  ],
+  "change_policy": {
+    "alpha": "Every hash, identifier, removal or addition requires an explicit baseline update and compatibility note.",
+    "stable": "Breaking changes require a major version, migration fixture and downstream consumer evidence."
+  },
+  "claim_boundary": "Hash equality detects exact surface drift; semantic compatibility still requires schema, API and consumer-specific analysis."
+}

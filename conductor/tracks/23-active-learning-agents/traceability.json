@@ -1,0 +1,161 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "23",
+  "title": "Active-learning prioritisation and calibrated agents",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/23-active-learning-agents/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T23-A001",
+      "statement": "Define outcome-gradable screening benchmark and thresholds",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-contracts/src/ranking.rs",
+        "contracts/examples/ranking-calibration.yaml",
+        "skills/systematic-search/references/failure-modes.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/23-active-learning-agents/evidence.json"
+      ],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T23-A002",
+      "statement": "Compare deterministic, classical IR and model rankings",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-contracts/src/ranking.rs",
+        "contracts/examples/ranking-calibration.yaml",
+        "skills/systematic-search/references/failure-modes.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/23-active-learning-agents/evidence.json"
+      ],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T23-A003",
+      "statement": "Calibrate uncertainty/FNR/FPR with human gold decisions",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-contracts/src/ranking.rs",
+        "contracts/examples/ranking-calibration.yaml",
+        "skills/systematic-search/references/failure-modes.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/23-active-learning-agents/evidence.json"
+      ],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T23-A004",
+      "statement": "Add independent strategy generator and PRESS adversary roles",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-contracts/src/ranking.rs",
+        "contracts/examples/ranking-calibration.yaml",
+        "skills/systematic-search/references/failure-modes.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/23-active-learning-agents/evidence.json"
+      ],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T23-A005",
+      "statement": "Prevent shared-context leakage and sycophantic concession",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-contracts/src/ranking.rs",
+        "contracts/examples/ranking-calibration.yaml",
+        "skills/systematic-search/references/failure-modes.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/23-active-learning-agents/evidence.json"
+      ],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T23-A006",
+      "statement": "Allow stopping rules only under explicit protocol and external validation",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ranking/src/lib.rs",
+        "crates/searchright-contracts/src/ranking.rs",
+        "contracts/examples/ranking-calibration.yaml",
+        "skills/systematic-search/references/failure-modes.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/23-active-learning-agents/evidence.json"
+      ],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

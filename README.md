@@ -8,11 +8,14 @@ living literature searches. One product facade exposes the same governed
 operations through a Rust API, CLI, Model Context Protocol (MCP) server and
 agent skill.
 
-> **Current evidence level — source-verified alpha.** The repository contains a
-> broad implementation and passes its deterministic static harness. This
-> execution environment has not yet produced Rust compilation, a committed
-> `Cargo.lock`, live-provider receipts, downstream cutover, registry acceptance
-> or external methodological validation.
+> **Current evidence level — source-verified alpha, assertion-rebaselined.**
+> The repository has a broad source surface and a passing network-free harness,
+> but roadmap scope is no longer inferred from file presence. Each track is
+> decomposed into acceptance assertions classified as contracted, scaffolded or
+> partially implemented unless stronger evidence exists. This environment has
+> not produced Rust compilation, a committed `Cargo.lock`, live-provider
+> receipts, downstream cutover, registry acceptance or external methodological
+> validation.
 
 ## Why Searchright
 
@@ -40,10 +43,12 @@ The repository estate now has three distinct scholarly domains:
 - **Sourceright** owns canonical CSL, provider-backed citation verification,
   citation reconciliation and reference-integrity workflows.
 
-The product-neutral **`evidence-search-core`** owns the portable query AST,
-dialect compiler, provider runtime, rate/retry/budget policy, cache/replay
-interfaces, source receipts and hash-linked audit events. Searchright and
-Sourceright are intended to consume that kernel without copying it.
+The product-neutral **`evidence-search-contracts`** crate owns portable query,
+provider, receipt, record and audit contracts. **`evidence-search-core`** sits
+above it and owns dialect compilation, provider execution, rate/retry/budget
+policy, cache/replay interfaces and audit-ledger behaviour. Searchright and
+Sourceright are intended to consume those neutral layers without importing
+review-specific contracts or copying runtime code.
 
 Only the non-publishable leaf crate `searchright-citeweft` depends on CiteWeft.
 The Searchright facade, shared kernel, CLI and MCP server remain extraction-
@@ -74,9 +79,10 @@ maintain separate methodological logic.
 
 ### Executable Rust components
 
-The workspace currently contains **29 crates**:
+The workspace currently contains **30 internal crates**. All packages are non-publishable by default; only three neutral/SDK candidates may be promoted after compiler, SemVer, consumer and supply-chain evidence:
 
 ```text
+crates/evidence-search-contracts/      Neutral query/provider/receipt/audit contracts
 crates/evidence-search-core/           Shared query/provider/audit kernel
 crates/searchright-contracts/          Canonical Rust contract types
 crates/searchright-citeweft/           Optional one-way CiteWeft evidence adapter
@@ -110,7 +116,7 @@ crates/searchright-ops/                Health, telemetry, backup and incident co
 
 ### Contracts, integration and standards
 
-- **49** Draft 2020-12 JSON Schemas with 49 conforming examples.
+- **52** Draft 2020-12 JSON Schemas with 52 conforming examples.
 - A machine-readable schema catalogue and a **31-operation**
   CLI–MCP–facade interface catalogue.
 - OpenAPI and WIT boundary contracts.
@@ -125,6 +131,34 @@ crates/searchright-ops/                Health, telemetry, backup and incident co
 Cross-repository integration uses exact pins, neutral schemas, golden fixtures,
 consumer-driven contracts and optional leaf adapters. It deliberately avoids Git
 submodules, copied implementation code and automatic dependency promotion.
+
+## Implementation truth model
+
+Every one of the 38 Conductor tracks now has assertion-level traceability. The
+current 198 acceptance assertions include 65 with explicit symbol/test/gate
+mappings; the remainder retain conservative track-level status. A track cannot
+be promoted merely because a named file exists, an issue is closed or a remote
+Project field changes.
+
+The repository distinguishes:
+
+- **contracted** — requirement exists;
+- **scaffolded** — interface or placeholder exists, without behaviour claim;
+- **partially implemented** — some behaviour is mapped, while scope remains open;
+- **source implemented** — every assertion maps to symbols and deterministic
+  tests, while compiler/runtime evidence remains separate;
+- **higher evidence** — compiler, fixture, live, downstream, external and public
+  acceptance receipts, each independently earned.
+
+Additional local controls now freeze the exact JSON Schema, WIT, OpenAPI and MCP
+surface; prohibit publishing any workspace crate by default; pin rights-clear
+provider response baselines; distinguish canonical upstreams from personal
+forks; and reject unclear-licence integrations from redistributed code/content.
+
+A deterministic `.srpack` review bundle can package and verify review artefacts,
+while a derived review-state reducer binds to an externally verified audit head
+and rejects non-human attempts to exercise final screening authority. These are
+local source/fixture proofs, not claims of a completed systematic review.
 
 ## Agentic workflow
 
@@ -151,7 +185,7 @@ The canonical roadmap deterministically renders **564 GitHub work items** in a f
 Remote mutation is dry-run first and requires an explicit workflow input, a
 protected write environment, issue/project scopes, a clean Git tree and a
 second environment opt-in. A declarative GitHub Project v2 manifest owns 12
-custom fields and five views; an additive synchroniser creates or updates the
+custom fields and six views, including a separate implementation-gap view; an additive synchroniser creates or updates the
 Project and places all 564 issue nodes into it without deleting or archiving
 remote work. A one-command bootstrap controller can create the remote repository,
 apply settings and the main-branch ruleset, synchronise the issue hierarchy, and
@@ -182,7 +216,7 @@ coverage, mutation, fuzzing, Kani proofs, Loom concurrency exploration, Miri,
 offline builds, reproducible archives and binaries, attestations, MCP transcripts
 and human methodological evaluation.
 
-The network-free aggregate harness currently runs 31 static gates, including exact CI/developer-tool pin parity. Configured
+The network-free aggregate harness currently runs **44 static gates**, including assertion traceability, package-surface policy, contract-surface freezing, provider baselines, a rights-clear end-to-end contract reference slice, review-bundle and review-state self-tests, benchmark leakage controls, licence firewalls, portfolio consistency and exact CI/developer-tool pin parity. Configured
 compiler, runtime, live and external gates do not become passing evidence until
 their receipts are observed.
 

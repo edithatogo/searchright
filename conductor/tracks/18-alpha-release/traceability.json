@@ -1,0 +1,209 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "18",
+  "title": "Alpha release and distribution",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/18-alpha-release/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T18-A001",
+      "statement": "Set semver/public API policy and generate Cargo.lock",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/release.yml",
+        "scripts/package_source.py",
+        "Dockerfile",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "SECURITY.md",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_packaging_reproducibility.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/18-alpha-release/evidence.json"
+      ],
+      "open_gates": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T18-A002",
+      "statement": "Create cross-platform release matrix",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/release.yml",
+        "scripts/package_source.py",
+        "Dockerfile",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "SECURITY.md",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_packaging_reproducibility.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/18-alpha-release/evidence.json"
+      ],
+      "open_gates": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T18-A003",
+      "statement": "Generate checksums, SBOM, signatures and provenance",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/release.yml",
+        "scripts/package_source.py",
+        "Dockerfile",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "SECURITY.md",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_packaging_reproducibility.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/18-alpha-release/evidence.json"
+      ],
+      "open_gates": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T18-A004",
+      "statement": "Install-smoke CLI/MCP and package dry-runs",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/release.yml",
+        "scripts/package_source.py",
+        "Dockerfile",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "SECURITY.md",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_packaging_reproducibility.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/18-alpha-release/evidence.json"
+      ],
+      "open_gates": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T18-A005",
+      "statement": "Publish docs site, changelog and migration notes",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/release.yml",
+        "scripts/package_source.py",
+        "Dockerfile",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "SECURITY.md",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_packaging_reproducibility.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/18-alpha-release/evidence.json"
+      ],
+      "open_gates": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T18-A006",
+      "statement": "Tag only after release evidence contract passes",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/release.yml",
+        "scripts/package_source.py",
+        "Dockerfile",
+        "CITATION.cff",
+        "CHANGELOG.md",
+        "SECURITY.md",
+        ".github/workflows/clean-room.yml",
+        "scripts/check_packaging_reproducibility.py",
+        "scripts/mcp_smoke.py",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/18-alpha-release/evidence.json"
+      ],
+      "open_gates": [
+        "Generate Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

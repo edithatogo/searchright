@@ -1,6 +1,6 @@
 # Plan: 34 Authenticated remote MCP, tenancy and data residency
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-34`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,15 +8,16 @@ GitHub issue key: `track-34`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-34-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-access/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/access.rs`
-  - [x] `contracts/examples/tenant-policy.json`
-  - [x] `contracts/examples/access-request.json`
-  - [x] `contracts/examples/access-decision.json`
-  - [x] `docs/security/authenticated-remote-mcp.md`
-  - [x] `contracts/openapi/searchright-http.openapi.yaml`
-  - [x] `docs/security/threat-model.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-access/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/access.rs`
+  - [x] Present source path: `contracts/examples/tenant-policy.json`
+  - [x] Present source path: `contracts/examples/access-request.json`
+  - [x] Present source path: `contracts/examples/access-decision.json`
+  - [x] Present source path: `docs/security/authenticated-remote-mcp.md`
+  - [x] Present source path: `contracts/openapi/searchright-http.openapi.yaml`
+  - [x] Present source path: `docs/security/threat-model.md`
+  - [x] Assertion ledger: `conductor/tracks/34-authenticated-remote-mcp/traceability.json`
 
 ## Phase 2: Source-level verification
 

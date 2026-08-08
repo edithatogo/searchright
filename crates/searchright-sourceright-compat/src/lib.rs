@@ -37,8 +37,12 @@ impl LegacyRuntimeConfig {
             max_records,
             max_pages,
             timeout_seconds: self.timeout_secs,
+            total_timeout_seconds: Some(self.timeout_secs.saturating_mul(u64::from(max_pages.max(1)))),
             max_retries: self.max_retries,
             min_interval_ms: self.min_interval_ms,
+            retry_base_delay_ms: Some(self.min_interval_ms.max(100)),
+            retry_max_delay_ms: Some(self.min_interval_ms.max(100).saturating_mul(16)),
+            max_response_bytes: Some(16 * 1024 * 1024),
             replay_enabled: self.cache_enabled,
             cache_write_enabled: self.cache_enabled,
         }

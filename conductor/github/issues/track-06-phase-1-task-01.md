@@ -3,17 +3,18 @@
 
 Parent phase key: `track-06-phase-1`
 Conductor plan: `conductor/tracks/06-imports-dedup-linkage/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-dedup/src/lib.rs`
-  - [x] `crates/searchright-interchange/src/lib.rs`
-  - [x] `crates/searchright-study/src/lib.rs`
-  - [x] `contracts/examples/interchange-receipt.yaml`
-  - [x] `contracts/examples/study-graph.yaml`
-  - [x] `docs/adrs/0005-record-report-study-separation.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-dedup/src/lib.rs`
+  - [x] Present source path: `crates/searchright-interchange/src/lib.rs`
+  - [x] Present source path: `crates/searchright-study/src/lib.rs`
+  - [x] Present source path: `contracts/examples/interchange-receipt.yaml`
+  - [x] Present source path: `contracts/examples/study-graph.yaml`
+  - [x] Present source path: `docs/adrs/0005-record-report-study-separation.md`
+  - [x] Assertion ledger: `conductor/tracks/06-imports-dedup-linkage/traceability.json`
 
 ## Completion and evidence contract
 

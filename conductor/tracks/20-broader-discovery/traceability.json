@@ -1,0 +1,161 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "20",
+  "title": "Grey literature, registers and supplementary discovery",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/20-broader-discovery/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T20-A001",
+      "statement": "ClinicalTrials.gov, WHO ICTRP pathway and ANZCTR contracts",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "docs/provider-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/20-broader-discovery/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T20-A002",
+      "statement": "Repositories: OSF, Zenodo, Figshare, Dataverse and institutional search",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "docs/provider-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/20-broader-discovery/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T20-A003",
+      "statement": "Conference, thesis, policy and organisational website strategies",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "docs/provider-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/20-broader-discovery/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T20-A004",
+      "statement": "Backward/forward citation chaining with OpenCitations and provider evidence",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "docs/provider-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/20-broader-discovery/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T20-A005",
+      "statement": "Contact and handsearch logs",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "docs/provider-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/20-broader-discovery/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T20-A006",
+      "statement": "Source coverage/risk matrix and manual-method reporting",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "docs/provider-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/20-broader-discovery/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Review website and grey-literature methods with information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

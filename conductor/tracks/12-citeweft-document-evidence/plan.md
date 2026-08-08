@@ -1,6 +1,6 @@
 # Plan: 12 CiteWeft scholarly extraction and document evidence
 
-Current status: **integration_prepared**. Evidence level: **source_verified**.
+Current status: **integration_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,15 +8,16 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-12-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-citeweft/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/document.rs`
-  - [x] `contracts/json-schema/document-evidence.v1.schema.json`
-  - [x] `contracts/examples/document-evidence.json`
-  - [x] `integration/citeweft-compatibility.json`
-  - [x] `docs/citeweft-integration.md`
-  - [x] `docs/adrs/0013-citeweft-document-evidence-boundary.md`
-  - [x] `scripts/check_citeweft_integration.py`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-citeweft/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/document.rs`
+  - [x] Present source path: `contracts/json-schema/document-evidence.v1.schema.json`
+  - [x] Present source path: `contracts/examples/document-evidence.json`
+  - [x] Present source path: `integration/citeweft-compatibility.json`
+  - [x] Present source path: `docs/citeweft-integration.md`
+  - [x] Present source path: `docs/adrs/0013-citeweft-document-evidence-boundary.md`
+  - [x] Present source path: `scripts/check_citeweft_integration.py`
+  - [x] Assertion ledger: `conductor/tracks/12-citeweft-document-evidence/traceability.json`
 
 ## Phase 2: Source-level verification
 

@@ -3,7 +3,8 @@
   "track_id": "13",
   "slug": "integration-passports-github-context",
   "title": "Integration passports, GitHub issue hierarchy and context spine",
-  "status": "integration_prepared",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -19,6 +20,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/13-integration-passports-github-context/evidence.json",
+  "traceability_path": "conductor/tracks/13-integration-passports-github-context/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-13",

@@ -1,0 +1,130 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "13",
+  "title": "Integration passports, GitHub issue hierarchy and context spine",
+  "implementation_state": "source_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/13-integration-passports-github-context/spec.md#scope",
+  "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T13-A001",
+      "statement": "Create pinned integration passports, consumer-driven contract suites and drift checks",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/passports/index.json",
+        "integration/consumer-contract-suite.json",
+        "scripts/check_integration_passports.py",
+        "scripts/check_consumer_contracts.py",
+        "scripts/check_integration_drift.py"
+      ],
+      "implementation_symbols": [
+        "scripts/check_integration_passports.py::main",
+        "scripts/check_consumer_contracts.py::main",
+        "scripts/check_integration_drift.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_consumer_contracts.py",
+        "python scripts/check_integration_drift.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+      ],
+      "open_gates": [
+        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    },
+    {
+      "assertion_id": "T13-A002",
+      "statement": "Map the roadmap epic to track issues and plan phases to native subissues",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "conductor/github/issue-hierarchy.json",
+        "scripts/render_github_issues.py",
+        "scripts/check_github_issue_hierarchy.py"
+      ],
+      "implementation_symbols": [
+        "scripts/render_github_issues.py::main",
+        "scripts/check_github_issue_hierarchy.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/render_github_issues.py --check",
+        "python scripts/check_github_issue_hierarchy.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+      ],
+      "open_gates": [
+        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    },
+    {
+      "assertion_id": "T13-A003",
+      "statement": "Provide dry-run-first idempotent GitHub synchronisation",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "scripts/sync_github_issues.py",
+        "scripts/sync_github_project.py",
+        "scripts/bootstrap_github.py"
+      ],
+      "implementation_symbols": [
+        "scripts/sync_github_issues.py::main",
+        "scripts/sync_github_project.py::main",
+        "scripts/bootstrap_github.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/sync_github_issues.py --repo edithatogo/searchright",
+        "python scripts/sync_github_project.py",
+        "python scripts/bootstrap_github.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+      ],
+      "open_gates": [
+        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    },
+    {
+      "assertion_id": "T13-A004",
+      "statement": "Maintain a canonical context, decision, hazard and claim-boundary spine",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "CONTEXT.md",
+        "context/manifest.json",
+        "context/context-lock.json",
+        "scripts/check_context_integrity.py"
+      ],
+      "implementation_symbols": [
+        "scripts/check_context_integrity.py::main",
+        "scripts/sync_context_lock.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_context_integrity.py",
+        "python scripts/sync_context_lock.py --check"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+      ],
+      "open_gates": [
+        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    }
+  ]
+}

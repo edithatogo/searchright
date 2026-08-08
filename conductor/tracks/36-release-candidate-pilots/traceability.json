@@ -1,0 +1,101 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "36",
+  "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/36-release-candidate-pilots/spec.md#scope",
+  "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T36-A001",
+      "statement": "Clean-room release-candidate rehearsal",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "release/rehearsal.json",
+        "scripts/check_release_rehearsal.py",
+        ".github/workflows/release-candidate.yml",
+        "docs/releases/release-candidate.md",
+        "docs/pilots/pilot-protocol.md",
+        "registry/status.json",
+        "scripts/package_source.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_release_rehearsal.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_maturity_dossier.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/36-release-candidate-pilots/evidence.json"
+      ],
+      "open_gates": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T36-A002",
+      "statement": "Staged local, institutional and remote pilots",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "release/rehearsal.json",
+        "scripts/check_release_rehearsal.py",
+        ".github/workflows/release-candidate.yml",
+        "docs/releases/release-candidate.md",
+        "docs/pilots/pilot-protocol.md",
+        "registry/status.json",
+        "scripts/package_source.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_release_rehearsal.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_maturity_dossier.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/36-release-candidate-pilots/evidence.json"
+      ],
+      "open_gates": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T36-A003",
+      "statement": "Rollback and registry/ecosystem rehearsal",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "release/rehearsal.json",
+        "scripts/check_release_rehearsal.py",
+        ".github/workflows/release-candidate.yml",
+        "docs/releases/release-candidate.md",
+        "docs/pilots/pilot-protocol.md",
+        "registry/status.json",
+        "scripts/package_source.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_release_rehearsal.py",
+        "python scripts/check_packaging_reproducibility.py",
+        "python scripts/check_maturity_dossier.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/36-release-candidate-pilots/evidence.json"
+      ],
+      "open_gates": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

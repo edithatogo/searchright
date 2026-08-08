@@ -3,17 +3,19 @@
 
 Parent phase key: `track-15-phase-1`
 Conductor plan: `conductor/tracks/15-estate-migration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `migration/estate/repositories.json`
-  - [x] `migration/estate/patterns.json`
-  - [x] `migration/estate/replacement-decisions.json`
-  - [x] `migration/estate-migration-manifest.yaml`
-  - [x] `scripts/audit_search_code.py`
-  - [x] `docs/estate-integration.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `migration/estate/repositories.json`
+  - [x] Present source path: `migration/estate/patterns.json`
+  - [x] Present source path: `migration/estate/replacement-decisions.json`
+  - [x] Present source path: `migration/companion-repositories/index.json`
+  - [x] Present source path: `scripts/audit_search_code.py`
+  - [x] Present source path: `scripts/check_companion_change_packets.py`
+  - [x] Present source path: `docs/estate-integration.md`
+  - [x] Assertion ledger: `conductor/tracks/15-estate-migration/traceability.json`
 
 ## Completion and evidence contract
 

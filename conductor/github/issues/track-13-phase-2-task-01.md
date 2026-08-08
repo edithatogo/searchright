@@ -16,6 +16,8 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_integration_drift.py`
   - [x] `python scripts/render_github_issues.py --check`
   - [x] `python scripts/sync_context_lock.py --check`
+  - [x] `python scripts/check_portfolio_project.py`
+  - [x] `python scripts/check_licence_firewall.py`
 
 ## Completion and evidence contract
 

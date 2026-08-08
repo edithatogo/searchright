@@ -12,7 +12,8 @@ Add default-deny principal, scope, tenant and region policy before any hosted St
 ## Contract
 
 - Horizon: `mature`
-- Status: `source_implemented_unverified`
+- Status: `scaffolded`
+- Implementation: `scaffolded`
 - Evidence: `source_verified`
 - Dependencies: `10, 24, 28, 33`
 - Requirements: `SR-047, SR-082, SR-083, SR-084, SR-085`
@@ -27,6 +28,6 @@ Add default-deny principal, scope, tenant and region policy before any hosted St
 
 ## Claim boundary
 
-Access-policy source code is not an authenticated, isolated or production-ready remote MCP service.
+Access-policy source code is not an authenticated, isolated or production-ready remote MCP service. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

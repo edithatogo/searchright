@@ -3,6 +3,7 @@
   "track_id": "12",
   "title": "CiteWeft scholarly extraction and document evidence",
   "status": "integration_prepared",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -15,6 +16,7 @@
     "docs/adrs/0013-citeweft-document-evidence-boundary.md",
     "scripts/check_citeweft_integration.py"
   ],
+  "traceability": "conductor/tracks/12-citeweft-document-evidence/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_citeweft_integration.py",
@@ -29,7 +31,7 @@
     "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
     "Run downstream Sourceright consumer-driven compatibility and rollback tests."
   ],
-  "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made.",
+  "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-12",

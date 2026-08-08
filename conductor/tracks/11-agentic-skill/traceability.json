@@ -1,0 +1,155 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "11",
+  "title": "Systematic-search agent skill and workflows",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/11-agentic-skill/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T11-A001",
+      "statement": "Publish SKILL.md with trigger and non-trigger boundaries",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "skills/systematic-search/SKILL.md",
+        "skills/systematic-search/workflows/systematic-review.yaml",
+        "skills/systematic-search/references/authority.md",
+        "crates/searchright-agent/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/11-agentic-skill/evidence.json"
+      ],
+      "open_gates": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T11-A002",
+      "statement": "Add planning, strategy, PRESS, execution, screening and reporting references",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "skills/systematic-search/SKILL.md",
+        "skills/systematic-search/workflows/systematic-review.yaml",
+        "skills/systematic-search/references/authority.md",
+        "crates/searchright-agent/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/11-agentic-skill/evidence.json"
+      ],
+      "open_gates": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T11-A003",
+      "statement": "Create subagent role cards and handoff contracts",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "skills/systematic-search/SKILL.md",
+        "skills/systematic-search/workflows/systematic-review.yaml",
+        "skills/systematic-search/references/authority.md",
+        "crates/searchright-agent/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/11-agentic-skill/evidence.json"
+      ],
+      "open_gates": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T11-A004",
+      "statement": "Add scenario, prompt-injection and authority tests",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "skills/systematic-search/SKILL.md",
+        "skills/systematic-search/workflows/systematic-review.yaml",
+        "skills/systematic-search/references/authority.md",
+        "crates/searchright-agent/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/11-agentic-skill/evidence.json"
+      ],
+      "open_gates": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T11-A005",
+      "statement": "Integrate into academic-research-skills as a thin caller",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "skills/systematic-search/SKILL.md",
+        "skills/systematic-search/workflows/systematic-review.yaml",
+        "skills/systematic-search/references/authority.md",
+        "crates/searchright-agent/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/11-agentic-skill/evidence.json"
+      ],
+      "open_gates": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T11-A006",
+      "statement": "Publish skill registry packets after observed validation",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "skills/systematic-search/SKILL.md",
+        "skills/systematic-search/workflows/systematic-review.yaml",
+        "skills/systematic-search/references/authority.md",
+        "crates/searchright-agent/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/11-agentic-skill/evidence.json"
+      ],
+      "open_gates": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

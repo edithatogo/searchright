@@ -1,6 +1,6 @@
 # Plan: 31 GitHub remote, nested issues and Project v2 control plane
 
-Current status: **integration_prepared**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,19 +8,20 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-31-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `conductor/github/project.json`
-  - [x] `conductor/github/project-readme.md`
-  - [x] `conductor/github/repository-settings.json`
-  - [x] `conductor/github/issue-hierarchy.json`
-  - [x] `scripts/bootstrap_github.py`
-  - [x] `scripts/sync_github_issues.py`
-  - [x] `scripts/sync_github_project.py`
-  - [x] `scripts/check_github_project.py`
-  - [x] `.github/workflows/github-control-plane.yml`
-  - [x] `docs/github-operating-system.md`
-  - [x] `contracts/json-schema/github-issue-hierarchy.v2.schema.json`
-  - [x] `contracts/json-schema/github-project.v1.schema.json`
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
+  - [x] Present source path: `conductor/github/project.json`
+  - [x] Present source path: `conductor/github/project-readme.md`
+  - [x] Present source path: `conductor/github/repository-settings.json`
+  - [x] Present source path: `conductor/github/issue-hierarchy.json`
+  - [x] Present source path: `scripts/bootstrap_github.py`
+  - [x] Present source path: `scripts/sync_github_issues.py`
+  - [x] Present source path: `scripts/sync_github_project.py`
+  - [x] Present source path: `scripts/check_github_project.py`
+  - [x] Present source path: `.github/workflows/github-control-plane.yml`
+  - [x] Present source path: `docs/github-operating-system.md`
+  - [x] Present source path: `contracts/json-schema/github-issue-hierarchy.v2.schema.json`
+  - [x] Present source path: `contracts/json-schema/github-project.v1.schema.json`
+  - [x] Assertion ledger: `conductor/tracks/31-github-control-plane/traceability.json`
 
 ## Phase 2: Source-level verification
 

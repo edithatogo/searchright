@@ -1,0 +1,14 @@
+[cargo-vet]
+version = "0.10"
+
+[imports.mozilla]
+url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
+
+[policy.searchright]
+audit-as-crates-io = false
+
+[policy.searchright-cli]
+audit-as-crates-io = false
+
+[policy.searchright-mcp]
+audit-as-crates-io = false

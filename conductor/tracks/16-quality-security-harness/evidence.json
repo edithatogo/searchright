@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "16",
   "title": "Maximal quality, context and security harness",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -27,8 +28,18 @@
     "fuzz/fuzz_targets/query_contract.rs",
     "fuzz/fuzz_targets/document_evidence.rs",
     "fuzz/fuzz_targets/audit_event.rs",
-    "scripts/generate_source_hash_manifest.py"
+    "scripts/generate_source_hash_manifest.py",
+    "supply-chain/config.toml",
+    "supply-chain/audits.toml",
+    "supply-chain/README.md",
+    "public-api/README.md",
+    ".github/workflows/public-api.yml",
+    "scripts/check_traceability.py",
+    "scripts/check_public_package_policy.py",
+    "scripts/sync_schema_surface.py",
+    "docs/vertical-slice-definition-of-done.md"
   ],
+  "traceability": "conductor/tracks/16-quality-security-harness/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_rust_dependency_graph.py",
@@ -36,7 +47,10 @@
     "python scripts/run_static_harness.py",
     "python scripts/check_default_deny.py",
     "python scripts/check_workflow_hardening.py",
-    "python scripts/generate_source_hash_manifest.py --check"
+    "python scripts/generate_source_hash_manifest.py --check",
+    "python scripts/check_traceability.py",
+    "python scripts/check_public_package_policy.py",
+    "python scripts/sync_schema_surface.py --check"
   ],
   "requirements": [
     "SR-010",
@@ -56,7 +70,7 @@
     "Run clean-room offline builds, binary comparison, install smoke and MCP transcript.",
     "Resolve every critical/high finding and document justified exclusions."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-16",

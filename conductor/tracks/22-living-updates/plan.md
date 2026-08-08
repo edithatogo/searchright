@@ -1,6 +1,6 @@
 # Plan: 22 Living reviews, amendments and update lineage
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-22`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,13 +8,14 @@ GitHub issue key: `track-22`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-22-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-living/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/living.rs`
-  - [x] `crates/searchright-contracts/src/amendment.rs`
-  - [x] `contracts/examples/living-update.yaml`
-  - [x] `contracts/examples/protocol-amendment.yaml`
-  - [x] `docs/adrs/0009-immutable-lineage-and-research-objects.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-living/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/living.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/amendment.rs`
+  - [x] Present source path: `contracts/examples/living-update.yaml`
+  - [x] Present source path: `contracts/examples/protocol-amendment.yaml`
+  - [x] Present source path: `docs/adrs/0009-immutable-lineage-and-research-objects.md`
+  - [x] Assertion ledger: `conductor/tracks/22-living-updates/traceability.json`
 
 ## Phase 2: Source-level verification
 

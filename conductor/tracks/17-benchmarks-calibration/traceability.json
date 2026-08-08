@@ -1,0 +1,139 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "17",
+  "title": "Benchmarks, search validation and human calibration",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/17-benchmarks-calibration/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T17-A001",
+      "statement": "Define benchmark report and anti-leakage contracts",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "benchmarks/methodology/manifest.json",
+        "scripts/check_methodology_benchmarks.py"
+      ],
+      "implementation_symbols": [
+        "scripts/check_methodology_benchmarks.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_methodology_benchmarks.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+      ],
+      "open_gates": [
+        "Add compiled benchmark runners and independently controlled labels."
+      ],
+      "permitted_claim": "Benchmark tasks, rights and anti-leakage policy are machine-readable and statically checked."
+    },
+    {
+      "assertion_id": "T17-A002",
+      "statement": "Integrate SYNERGY with dataset provenance and splits",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "benchmarks/methodology/manifest.json",
+        "integration/passports/synergy-screening-benchmark.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_methodology_benchmarks.py",
+        "python scripts/check_licence_firewall.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+      ],
+      "open_gates": [
+        "Pin a canonical upstream data release/DOI per executed benchmark and create train/validation/test split receipts."
+      ],
+      "permitted_claim": "SYNERGY provenance distinguishes canonical upstream from the local fork; no benchmark data were executed."
+    },
+    {
+      "assertion_id": "T17-A003",
+      "statement": "Create search-strategy gold sets and known-item recall tests",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "benchmarks/methodology/manifest.json",
+        "contracts/query-corpus/index.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_methodology_benchmarks.py",
+        "python scripts/check_native_query_corpus.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+      ],
+      "open_gates": [
+        "Create rights-cleared, independently reviewed search-strategy gold labels and known-item recall runs."
+      ],
+      "permitted_claim": "Corpus and task definitions exist; gold recall results do not."
+    },
+    {
+      "assertion_id": "T17-A004",
+      "statement": "Measure dedup precision/recall and cluster review burden",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "benchmarks/methodology/fixtures/validation/dedup-cases.json",
+        "benchmarks/methodology/manifest.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_methodology_benchmarks.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+      ],
+      "open_gates": [
+        "Run deduplication precision, recall and review-burden evaluation against sealed labels."
+      ],
+      "permitted_claim": "Synthetic validation fixtures exist; performance is not claimed."
+    },
+    {
+      "assertion_id": "T17-A005",
+      "statement": "Run prospective multi-model pilot and human calibration",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "docs/evaluation/benchmark-and-calibration-protocol.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_methodology_benchmarks.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+      ],
+      "open_gates": [
+        "Conduct prospective multi-model and human calibration under an approved protocol."
+      ],
+      "permitted_claim": "No prospective model or human calibration has been run."
+    },
+    {
+      "assertion_id": "T17-A006",
+      "statement": "Publish limitations and reproducible benchmark artefacts",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "benchmarks/methodology/manifest.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_methodology_benchmarks.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+      ],
+      "open_gates": [
+        "Publish rights-cleared benchmark artifacts and limitations with an immutable release receipt."
+      ],
+      "permitted_claim": "No external benchmark artifact or performance claim has been published."
+    }
+  ]
+}

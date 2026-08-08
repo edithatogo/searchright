@@ -3,19 +3,20 @@
 
 Parent phase key: `track-26-phase-1`
 Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-assurance/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/assurance.rs`
-  - [x] `contracts/examples/workflow-trace.yaml`
-  - [x] `docs/adrs/0011-assurance-and-evidence-ladder.md`
-  - [x] `crates/searchright-assurance/tests/loom_authority.rs`
-  - [x] `.github/workflows/formal.yml`
-  - [x] `fuzz/Cargo.toml`
-  - [x] `verification/harness-matrix.json`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-assurance/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/assurance.rs`
+  - [x] Present source path: `contracts/examples/workflow-trace.yaml`
+  - [x] Present source path: `docs/adrs/0011-assurance-and-evidence-ladder.md`
+  - [x] Present source path: `crates/searchright-assurance/tests/loom_authority.rs`
+  - [x] Present source path: `.github/workflows/formal.yml`
+  - [x] Present source path: `fuzz/Cargo.toml`
+  - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Assertion ledger: `conductor/tracks/26-formal-assurance-contract-evolution/traceability.json`
 
 ## Completion and evidence contract
 

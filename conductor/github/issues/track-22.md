@@ -12,7 +12,8 @@ Make updates, protocol changes, prior-run deduplication and cadence explicit and
 ## Contract
 
 - Horizon: `beta`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `05, 06, 07, 08`
 - Requirements: `SR-025, SR-045, SR-049, SR-052`
@@ -27,6 +28,6 @@ Make updates, protocol changes, prior-run deduplication and cadence explicit and
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

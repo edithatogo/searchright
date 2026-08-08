@@ -12,7 +12,8 @@ Create and synchronise the remote repository, epic, tracks, phases, tasks, Proje
 ## Contract
 
 - Horizon: `mature`
-- Status: `integration_prepared`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `00, 13, 16, 30`
 - Requirements: `SR-066, SR-071, SR-072, SR-073, SR-074, SR-075`
@@ -27,6 +28,6 @@ Create and synchronise the remote repository, epic, tracks, phases, tasks, Proje
 
 ## Claim boundary
 
-The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists.
+The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

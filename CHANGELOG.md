@@ -1,50 +1,76 @@
 # Changelog
 
 All notable changes are recorded here. Semantic-version compatibility claims
-begin only after the public API and contract migration policy are compiler- and
-fixture-verified.
+begin only after the public API, compiler and contract-migration policies have
+matching receipts.
 
 ## [Unreleased]
 
 ### Added
 
-- Expanded the workspace from 11 to 26 Rust crates covering study linkage,
-  living updates, provenance, validation, assurance, discovery, governance,
-  diagnostics, licensed planning, component policy and benchmarking.
-- Expanded the canonical contract catalogue from 7 to 33 Draft 2020-12 schemas
-  with conforming examples and explicit ownership tracks.
-- Added a shared `SearchrightEngine` facade and a 30-operation CLI–MCP–facade
-  parity catalogue.
-- Added versioned PRISMA, PRESS, Cochrane, MECIR, JBI and Campbell standards
-  packs and evidence-linked assessments.
-- Added record–report–study modelling, retrieval attempts, protocol amendments,
-  living-review lineage, RO-Crate/PROV exports and finite-state workflow
-  assurance.
-- Added bounded citation discovery, transparent ranking calibration,
-  institutional data governance and accessible diagnostics.
-- Added Sourceright parity cases, a broader GitHub-estate migration inventory
-  and reversible cutover contracts.
-- Expanded Conductor to 29 evidence-aware tracks and 62 requirements through a
-  version 1.0 maturity dossier.
-- Added source SBOM, deterministic source packaging, packaging reproducibility,
-  local history/worktree secret signatures and release binary staging,
-  checksums, attestations and GitHub release assembly.
+- Added a product-neutral `evidence-search-contracts` crate beneath
+  `evidence-search-core`, with Searchright-specific review contracts kept in
+  `searchright-contracts`.
+- Added assertion-level roadmap traceability across 38 Conductor tracks and 198
+  acceptance assertions, including explicit scaffolded, partial, source and
+  external-evidence states and permitted claims.
+- Added a default-deny package-publication policy: all 30 workspace crates are
+  non-publishable, with only three future public-package candidates and none
+  marked ready.
+- Added a frozen alpha contract surface covering 52 JSON Schemas, WIT, OpenAPI
+  and MCP metadata, plus configured Rust public-API and SemVer gates.
+- Added source implementations and rights-clear response baselines for PubMed
+  ESearch/ESummary, Europe PMC, Crossref and OpenAlex, including bounded runtime,
+  retryability, total/request budgets, response-size limits and raw digests.
+- Added source-preserving native strategy contracts and a seven-dialect lexical
+  corpus for PubMed, Ovid MEDLINE, Embase, CINAHL, PsycINFO, Scopus and Web of
+  Science, with explicit translation-loss semantics.
+- Added deterministic `.srpack` review-bundle creation and verification with
+  path, symlink, size, likely-secret, SHA-256, Merkle-root and tamper controls.
+- Added a deterministic, noncanonical review-state reducer that binds to a
+  caller-verified audit head and rejects non-human final screening authority.
+- Added a rights-clear end-to-end contract reference slice spanning planning,
+  native strategy, source receipts, deduplication, human screening, PRISMA
+  arithmetic and deterministic bundle generation.
+- Added sealed-label methodological benchmark fixtures, provider contract-drift
+  checks, canonical-upstream/fork classification, licence and redistribution
+  firewalls, and eleven companion-repository change packets.
+- Added a cross-repository ecosystem lock, release-train promotion controls and
+  a separate evidence-infrastructure portfolio Project manifest.
+- Added configured `cargo-vet`, `cargo-semver-checks` and `cargo-public-api`
+  assurance surfaces and expanded the network-free aggregate harness to 44
+  gates and the assurance matrix to 35 dimensions.
 
 ### Changed
 
-- Reframed roadmap completion around an evidence ladder rather than binary task
-  labels.
-- Strengthened the boundary between the stable search kernel, product services
-  and experimental providers/agents/transports.
-- Updated CI actions and security/release tooling to current commit-pinned
-  versions as of 6 August 2026.
+- Replaced path-presence completion with assertion-to-symbol/test/evidence
+  traceability. Track and GitHub status can no longer promote implementation or
+  evidence by themselves.
+- Reduced the intended public crate surface and separated the current
+  development toolchain from lower shared-contract/shared-core MSRV targets.
+- Reframed query translation as native source plus semantic representation and
+  fidelity diagnostics rather than presumed cross-database equivalence.
+- Reclassified forked integrations against canonical upstreams and made unclear
+  content or code licences reference-only or review-required.
+- Expanded the generated GitHub delivery Project to 13 fields and six views,
+  including a dedicated implementation-gap view, while preserving the 564-node
+  epic → track → phase → task hierarchy.
+- Updated project status, strategy, architecture, context, hazards, decisions and
+  claim boundaries to distinguish scaffolding, source behaviour, compiler proof,
+  live behaviour, downstream compatibility, external validation and public
+  acceptance.
 
 ### Evidence limitations
 
-- Source/static checks pass, but a Rust toolchain and crate resolution were not
-  available in the implementation environment.
-- Compilation, `Cargo.lock`, live providers, downstream cutover, external
-  evaluation and registry acceptance remain explicit higher-evidence gates.
+- Rust 1.97.1 and Cargo remain unavailable in the implementation environment;
+  `Cargo.lock`, compilation, rustfmt, Clippy and Rust tests have not run.
+- Configured coverage, mutation, fuzz, Kani, Loom, Miri, `cargo-careful`,
+  `cargo-vet`, public-API and SemVer jobs have not produced execution receipts.
+- No provider API, licensed source, downstream repository, GitHub remote,
+  registry, pilot or external methodological evaluator was invoked.
+- Provider baselines prove local fixture and expected-shape integrity only; the
+  vertical slice proves contract coherence only; neither establishes search
+  recall, screening validity or methodological adequacy.
 
 ## [0.1.0-alpha.1] - unpublished
 

@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/33-operational-reliability/plan.md`
 
 ## Task subissues
 
-- [x] T01: Implement and document the track's source deliverables. (`track-33-phase-1-task-01`)
+- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-33-phase-1-task-01`)
 
 ## Evidence rule
 

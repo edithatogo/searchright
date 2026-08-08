@@ -3,7 +3,8 @@
   "track_id": "10",
   "slug": "mcp-mvp",
   "title": "MCP stdio server MVP",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-05",
   "updated": "2026-08-08",
   "dependencies": [
@@ -13,6 +14,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/10-mcp-mvp/evidence.json",
+  "traceability_path": "conductor/tracks/10-mcp-mvp/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-10",

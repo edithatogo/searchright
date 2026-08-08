@@ -9,6 +9,8 @@ Canonical task state: **source task complete**.
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/check_release_train.py`
+  - [x] `python scripts/sync_ecosystem_lock.py --check`
+  - [x] `python scripts/sync_schema_surface.py --check`
   - [x] `python scripts/check_integration_passports.py`
   - [x] `python scripts/check_consumer_contracts.py`
   - [x] `python scripts/check_integration_drift.py`

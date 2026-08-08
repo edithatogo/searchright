@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/37-maturity-1-0/plan.md`
 
 ## Task subissues
 
-- [x] T01: Implement and document the track's source deliverables. (`track-37-phase-1-task-01`)
+- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-37-phase-1-task-01`)
 
 ## Evidence rule
 

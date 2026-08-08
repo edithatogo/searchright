@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
 
 ## Task subissues
 
-- [x] T01: Implement and document the track's source deliverables. (`track-00-phase-1-task-01`)
+- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-00-phase-1-task-01`)
 
 ## Evidence rule
 

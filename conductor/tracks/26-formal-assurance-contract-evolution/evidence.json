@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "26",
   "title": "Formal assurance and contract evolution",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -15,6 +16,7 @@
     "fuzz/Cargo.toml",
     "verification/harness-matrix.json"
   ],
+  "traceability": "conductor/tracks/26-formal-assurance-contract-evolution/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_rust_source_structure.py",
@@ -31,7 +33,7 @@
     "Add compatibility fixtures for each public contract version.",
     "Run semver and cross-version MCP/CLI contract tests."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-26",

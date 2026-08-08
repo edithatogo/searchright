@@ -3,19 +3,20 @@
 
 Parent phase key: `track-34-phase-1`
 Conductor plan: `conductor/tracks/34-authenticated-remote-mcp/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-access/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/access.rs`
-  - [x] `contracts/examples/tenant-policy.json`
-  - [x] `contracts/examples/access-request.json`
-  - [x] `contracts/examples/access-decision.json`
-  - [x] `docs/security/authenticated-remote-mcp.md`
-  - [x] `contracts/openapi/searchright-http.openapi.yaml`
-  - [x] `docs/security/threat-model.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-access/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/access.rs`
+  - [x] Present source path: `contracts/examples/tenant-policy.json`
+  - [x] Present source path: `contracts/examples/access-request.json`
+  - [x] Present source path: `contracts/examples/access-decision.json`
+  - [x] Present source path: `docs/security/authenticated-remote-mcp.md`
+  - [x] Present source path: `contracts/openapi/searchright-http.openapi.yaml`
+  - [x] Present source path: `docs/security/threat-model.md`
+  - [x] Assertion ledger: `conductor/tracks/34-authenticated-remote-mcp/traceability.json`
 
 ## Completion and evidence contract
 

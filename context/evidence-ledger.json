@@ -1,134 +1,222 @@
 {
-  "schema_version": "org.searchright.evidence-ledger.v1",
-  "updated_at": "2026-08-08",
-  "repository_level": "source_verified",
   "domains": [
     {
-      "domain": "authenticated_remote_mcp",
+      "blockers": [
+        "133 assertions remain inherited, partial, scaffolded or external rather than individually source implemented"
+      ],
+      "domain": "assertion_traceability",
       "level": "source_verified",
-      "receipt": "contracts/examples/tenant-policy.json",
+      "receipt": "conductor/traceability-overrides.json"
+    },
+    {
       "blockers": [
         "No deployed authenticated endpoint",
         "No adversarial tenancy/replay/abuse receipt"
-      ]
+      ],
+      "domain": "authenticated_remote_mcp",
+      "level": "source_verified",
+      "receipt": "contracts/examples/tenant-policy.json"
     },
     {
-      "domain": "consumer_driven_integrations",
-      "level": "source_verified",
-      "receipt": "integration/consumer-contract-suite.json",
       "blockers": [
         "Producer and consumer repositories have not both executed their gates"
-      ]
+      ],
+      "domain": "consumer_driven_integrations",
+      "level": "source_verified",
+      "receipt": "integration/consumer-contract-suite.json"
     },
     {
+      "blockers": [
+        "Rust engine path not compiler-executed",
+        "No live provider, recall or external methodological evidence"
+      ],
+      "domain": "contract_reference_vertical_slice",
+      "level": "source_verified",
+      "receipt": "verification/vertical-slice/expected.json"
+    },
+    {
+      "blockers": [],
       "domain": "contracts_and_static_source",
       "level": "source_verified",
-      "receipt": "verification/receipts/static-harness.json",
-      "blockers": []
+      "receipt": "verification/receipts/static-harness.json"
     },
     {
-      "domain": "cross_repository_release_train",
+      "blockers": [
+        "No remote portfolio Project or linked issues"
+      ],
+      "domain": "cross_repository_portfolio",
       "level": "source_verified",
-      "receipt": "integration/release-train.json",
+      "receipt": "integration/github/portfolio-project.json"
+    },
+    {
       "blockers": [
         "No producer/consumer run across exact revisions",
         "No downstream canary"
-      ]
+      ],
+      "domain": "cross_repository_release_train",
+      "level": "source_verified",
+      "receipt": "integration/release-train.json"
     },
     {
-      "domain": "downstream_migration",
-      "level": "contracted",
-      "receipt": null,
+      "blockers": [
+        "Rust audit-chain verification not compiler-tested",
+        "Crash/fault and multi-writer tests remain open"
+      ],
+      "domain": "derived_review_state",
+      "level": "source_verified",
+      "receipt": "contracts/examples/review-state-snapshot.json"
+    },
+    {
       "blockers": [
         "No downstream dual-run or merged cutover"
-      ]
+      ],
+      "domain": "downstream_migration",
+      "level": "contracted",
+      "receipt": null
     },
     {
-      "domain": "external_methodological_evaluation",
-      "level": "contracted",
-      "receipt": null,
       "blockers": [
         "Preregistered external evaluation not executed"
-      ]
+      ],
+      "domain": "external_methodological_evaluation",
+      "level": "contracted",
+      "receipt": null
     },
     {
-      "domain": "fixture_behavior",
-      "level": "contracted",
-      "receipt": null,
       "blockers": [
         "Cargo tests not executed"
-      ]
+      ],
+      "domain": "fixture_behavior",
+      "level": "contracted",
+      "receipt": null
     },
     {
-      "domain": "github_control_plane",
-      "level": "source_verified",
-      "receipt": "conductor/github/project.json",
       "blockers": [
         "No remote repository/bootstrap apply receipt",
         "No observed Project ID, fields, views or 564-item sync receipt"
-      ]
+      ],
+      "domain": "github_control_plane",
+      "level": "source_verified",
+      "receipt": "conductor/github/project.json"
     },
     {
-      "domain": "github_issue_hierarchy",
-      "level": "source_verified",
-      "receipt": "conductor/github/issue-hierarchy.json",
       "blockers": [
         "No remote Searchright repository or apply receipt"
-      ]
+      ],
+      "domain": "github_issue_hierarchy",
+      "level": "source_verified",
+      "receipt": "conductor/github/issue-hierarchy.json"
     },
     {
-      "domain": "live_providers",
-      "level": "contracted",
-      "receipt": null,
+      "blockers": [
+        "standards_check content licence requires human review",
+        "Reference-only forks remain non-redistributable"
+      ],
+      "domain": "licence_and_origin_firewall",
+      "level": "source_verified",
+      "receipt": "integration/passports/index.json"
+    },
+    {
       "blockers": [
         "No authorised live run"
-      ]
+      ],
+      "domain": "live_providers",
+      "level": "contracted",
+      "receipt": null
     },
     {
-      "domain": "operational_reliability",
+      "blockers": [
+        "Independent sealed labels not mounted",
+        "No methodological performance run"
+      ],
+      "domain": "methodology_benchmark_fixtures",
       "level": "source_verified",
-      "receipt": "release/rehearsal.json",
+      "receipt": "benchmarks/methodology/manifest.json"
+    },
+    {
+      "blockers": [
+        "Semantic parsing is deliberately partial",
+        "No external information-specialist conformance review"
+      ],
+      "domain": "native_query_dual_representation",
+      "level": "source_verified",
+      "receipt": "contracts/query-corpus/index.json"
+    },
+    {
       "blockers": [
         "No health SLO run",
         "No backup restore drill",
         "No incident exercise",
         "Telemetry not runtime-tested"
-      ]
+      ],
+      "domain": "operational_reliability",
+      "level": "source_verified",
+      "receipt": "release/rehearsal.json"
     },
     {
-      "domain": "registry_and_release",
+      "blockers": [
+        "No external interoperability consumer",
+        "No signature/transparency-log release evidence"
+      ],
+      "domain": "portable_review_bundle",
+      "level": "source_verified",
+      "receipt": "contracts/examples/review-bundle-manifest.json"
+    },
+    {
+      "blockers": [
+        "Rust parsers not compiler-tested",
+        "No authorised redacted live canary"
+      ],
+      "domain": "provider_contract_baselines",
+      "level": "source_verified",
+      "receipt": "integration/provider-contract-baselines.json"
+    },
+    {
+      "blockers": [
+        "All packages remain publish=false",
+        "No compiler/API/SemVer/release evidence"
+      ],
+      "domain": "public_package_release",
       "level": "contracted",
-      "receipt": null,
+      "receipt": "release/public-packages.json"
+    },
+    {
       "blockers": [
         "Prepared not submitted"
-      ]
+      ],
+      "domain": "registry_and_release",
+      "level": "contracted",
+      "receipt": null
     },
     {
-      "domain": "release_candidate_and_pilots",
-      "level": "contracted",
-      "receipt": "release/rehearsal.json",
       "blockers": [
         "Rehearsal prepared_not_executed",
         "No pilot exit or rollback receipt"
-      ]
+      ],
+      "domain": "release_candidate_and_pilots",
+      "level": "contracted",
+      "receipt": "release/rehearsal.json"
     },
     {
-      "domain": "rust_compilation",
-      "level": "contracted",
-      "receipt": null,
       "blockers": [
         "Rust toolchain unavailable",
         "Cargo.lock not generated"
-      ]
+      ],
+      "domain": "rust_compilation",
+      "level": "contracted",
+      "receipt": null
     },
     {
-      "domain": "version_1_maturity",
-      "level": "contracted",
-      "receipt": "conductor/maturity-dossier.json",
       "blockers": [
         "Decision remains not_ready",
         "Compiler, runtime, downstream, human and external gates remain open"
-      ]
+      ],
+      "domain": "version_1_maturity",
+      "level": "contracted",
+      "receipt": "conductor/maturity-dossier.json"
     }
-  ]
+  ],
+  "repository_level": "source_verified",
+  "schema_version": "org.searchright.evidence-ledger.v1",
+  "updated_at": "2026-08-08"
 }

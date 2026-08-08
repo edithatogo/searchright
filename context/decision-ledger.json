@@ -1,153 +1,229 @@
 {
-  "schema_version": "org.searchright.decision-ledger.v1",
   "decisions": [
     {
-      "id": "D-001",
-      "status": "accepted",
       "decision": "Use evidence-search-core as the product-neutral query and provider execution kernel.",
-      "rationale": "Prevents Searchright and Sourceright from maintaining divergent retry, cache, receipt and egress implementations.",
       "evidence": [
         "docs/adrs/0001-shared-evidence-search-core.md",
         "docs/architecture.md"
       ],
+      "id": "D-001",
+      "rationale": "Prevents Searchright and Sourceright from maintaining divergent retry, cache, receipt and egress implementations.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-002",
-      "status": "accepted",
       "decision": "Integrate CiteWeft only through the optional searchright-citeweft adapter and neutral DocumentEvidence contract.",
-      "rationale": "Keeps extraction evidence, review workflow and citation canonicalisation as separate domains.",
       "evidence": [
         "docs/adrs/0013-citeweft-document-evidence-boundary.md",
         "integration/passports/citeweft-document-evidence.json"
       ],
+      "id": "D-002",
+      "rationale": "Keeps extraction evidence, review workflow and citation canonicalisation as separate domains.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-003",
-      "status": "accepted",
       "decision": "Map one roadmap epic to track issues and each four-phase Conductor plan to native GitHub subissues.",
-      "rationale": "Preserves Conductor as source of truth while enabling observable remote planning without flattening the hierarchy.",
       "evidence": [
         "docs/adrs/0014-conductor-github-hierarchy.md",
         "conductor/github/issue-hierarchy.json"
       ],
+      "id": "D-003",
+      "rationale": "Preserves Conductor as source of truth while enabling observable remote planning without flattening the hierarchy.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-004",
-      "status": "accepted",
       "decision": "Deny network, external writes, telemetry and irreversible agent authority by default.",
-      "rationale": "Systematic-search inputs include hostile text, credentials, licensed access and consequential eligibility decisions.",
       "evidence": [
         "context/capability-matrix.json",
         "docs/security/threat-model.md"
       ],
+      "id": "D-004",
+      "rationale": "Systematic-search inputs include hostile text, credentials, licensed access and consequential eligibility decisions.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-005",
-      "status": "accepted",
       "decision": "Use an evidence ladder and require receipts before promoting implementation or public claims.",
-      "rationale": "Source completeness, successful compilation, fixture behavior, live behavior and external acceptance are distinct facts.",
       "evidence": [
         "conductor/requirements.md",
         "context/evidence-ledger.json"
       ],
+      "id": "D-005",
+      "rationale": "Source completeness, successful compilation, fixture behavior, live behavior and external acceptance are distinct facts.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-006",
-      "status": "accepted",
       "decision": "Use pinned integration passports and consumer-driven contracts instead of Git submodules or copied implementation code.",
-      "rationale": "Independent repositories need reversible upgrades, explicit ownership and drift detection without coupled release histories.",
       "evidence": [
         "docs/adrs/0015-integration-passports.md",
         "integration/passports/index.json",
         "integration/consumer-contract-suite.json"
       ],
+      "id": "D-006",
+      "rationale": "Independent repositories need reversible upgrades, explicit ownership and drift detection without coupled release histories.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-007",
-      "status": "accepted",
       "decision": "Keep CiteWeft and other host-specific integrations in non-publishable leaf adapters until registry-backed dependencies and downstream receipts exist.",
-      "rationale": "The publishable facade and shared kernel must not acquire an unpublished Git-only dependency or imply integration maturity.",
       "evidence": [
         "docs/adrs/0016-federated-consumer-contracts.md",
         "crates/searchright-citeweft/Cargo.toml",
         "scripts/check_rust_dependency_graph.py"
       ],
+      "id": "D-007",
+      "rationale": "The publishable facade and shared kernel must not acquire an unpublished Git-only dependency or imply integration maturity.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-008",
-      "status": "accepted",
       "decision": "Project every Conductor track, phase and top-level task into native GitHub issue/subissue relationships and a manifest-owned Project v2.",
-      "rationale": "A four-level work graph preserves executable task granularity while keeping Conductor as source of truth.",
       "evidence": [
         "docs/github-operating-system.md",
         "conductor/github/issue-hierarchy.json",
         "conductor/github/project.json"
       ],
+      "id": "D-008",
+      "rationale": "A four-level work graph preserves executable task granularity while keeping Conductor as source of truth.",
+      "status": "accepted",
       "supersedes": [
         "D-003"
       ]
     },
     {
-      "id": "D-009",
-      "status": "accepted",
       "decision": "Create and wire the remote repository only through a dry-run-first, additive GitHub bootstrap controller.",
-      "rationale": "Repository settings, issue writes and Project mutations require explicit authority, clean state and observed receipts.",
       "evidence": [
         "scripts/bootstrap_github.py",
         "conductor/github/repository-settings.json"
       ],
+      "id": "D-009",
+      "rationale": "Repository settings, issue writes and Project mutations require explicit authority, clean state and observed receipts.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-010",
-      "status": "accepted",
       "decision": "Keep authenticated remote MCP and tenant authorisation separate from the local stdio MCP default.",
-      "rationale": "Remote identity, tenancy, data residency and abuse budgets introduce distinct trust boundaries that must not weaken local defaults.",
       "evidence": [
         "docs/security/authenticated-remote-mcp.md",
         "crates/searchright-access/src/lib.rs"
       ],
+      "id": "D-010",
+      "rationale": "Remote identity, tenancy, data residency and abuse budgets introduce distinct trust boundaries that must not weaken local defaults.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-011",
-      "status": "accepted",
       "decision": "Represent health, telemetry, backup and incidents as versioned operational contracts with telemetry disabled by default.",
-      "rationale": "Operational maturity requires observable and testable reliability without silently exporting sensitive review content.",
       "evidence": [
         "docs/operations/reliability.md",
         "crates/searchright-ops/src/lib.rs"
       ],
+      "id": "D-011",
+      "rationale": "Operational maturity requires observable and testable reliability without silently exporting sensitive review content.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-012",
-      "status": "accepted",
       "decision": "Promote CiteWeft, Searchright and Sourceright changes through an explicit cross-repository release train with downstream canaries and rollback.",
-      "rationale": "Exact pins and consumer fixtures still require coordinated compatibility evidence before ecosystem promotion.",
       "evidence": [
         "integration/release-train.json",
         "docs/release-train.md"
       ],
+      "id": "D-012",
+      "rationale": "Exact pins and consumer fixtures still require coordinated compatibility evidence before ecosystem promotion.",
+      "status": "accepted",
       "supersedes": []
     },
     {
-      "id": "D-013",
-      "status": "accepted",
       "decision": "Make version 1.0 a recorded evidence decision, not a date or source-completeness milestone.",
-      "rationale": "Maturity depends on compiler, runtime, integration, security, usability, methodological and operational evidence.",
       "evidence": [
         "conductor/maturity-dossier.json",
         "docs/maturity/release-decision.md"
       ],
+      "id": "D-013",
+      "rationale": "Maturity depends on compiler, runtime, integration, security, usability, methodological and operational evidence.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Place product-neutral search, provider, receipt, audit and record types in evidence-search-contracts below Searchright and Sourceright.",
+      "evidence": [
+        "docs/architecture.md",
+        "crates/evidence-search-contracts/Cargo.toml",
+        "scripts/check_rust_dependency_graph.py"
+      ],
+      "id": "D-014",
+      "rationale": "A shared runtime must not depend on Searchright-specific review workflow contracts or create a product ownership inversion.",
+      "status": "accepted",
+      "supersedes": [
+        "D-001"
+      ]
+    },
+    {
+      "decision": "Determine implementation state from assertion-level traceability, not file or path presence.",
+      "evidence": [
+        "conductor/traceability-overrides.json",
+        "scripts/check_traceability.py",
+        "docs/vertical-slice-definition-of-done.md"
+      ],
+      "id": "D-015",
+      "rationale": "Scaffolding, partial behaviour, source implementation, compiler proof and external proof are different facts and require different claims.",
+      "status": "accepted",
+      "supersedes": [
+        "D-005"
+      ]
+    },
+    {
+      "decision": "Default every workspace crate to publish=false and allow only a small, explicitly promoted public package surface.",
+      "evidence": [
+        "release/public-packages.json",
+        "docs/msrv-and-package-policy.md",
+        "scripts/check_public_package_policy.py"
+      ],
+      "id": "D-016",
+      "rationale": "Internal architectural boundaries do not each justify an independent SemVer and release obligation.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Preserve native database strategy text and spans alongside a normalised semantic representation and explicit translation-loss diagnostics.",
+      "evidence": [
+        "crates/evidence-search-core/src/native.rs",
+        "contracts/json-schema/native-search-strategy.v1.schema.json",
+        "contracts/query-corpus/index.json"
+      ],
+      "id": "D-017",
+      "rationale": "Database dialects differ materially; a single simplified Boolean AST cannot establish cross-database equivalence.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Treat review-state snapshots and review bundles as derived, reproducible evidence products rather than canonical authority.",
+      "evidence": [
+        "scripts/reduce_review_events.py",
+        "scripts/review_bundle.py",
+        "contracts/json-schema/review-state-snapshot.v1.schema.json"
+      ],
+      "id": "D-018",
+      "rationale": "Canonical authority remains in append-only verified events and human decisions; portable bundles must be independently verifiable without silently changing that authority.",
+      "status": "accepted",
+      "supersedes": []
+    },
+    {
+      "decision": "Distinguish canonical upstreams, local forks, licences and redistribution rights in every integration and benchmark source.",
+      "evidence": [
+        "scripts/check_licence_firewall.py",
+        "integration/passports/index.json",
+        "benchmarks/methodology/manifest.json"
+      ],
+      "id": "D-019",
+      "rationale": "Fork ownership does not make upstream code or content permissively reusable, and benchmark leakage invalidates performance evidence.",
+      "status": "accepted",
       "supersedes": []
     }
-  ]
+  ],
+  "schema_version": "org.searchright.decision-ledger.v1"
 }

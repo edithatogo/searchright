@@ -3,17 +3,18 @@
 
 Parent phase key: `track-22-phase-1`
 Conductor plan: `conductor/tracks/22-living-updates/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-living/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/living.rs`
-  - [x] `crates/searchright-contracts/src/amendment.rs`
-  - [x] `contracts/examples/living-update.yaml`
-  - [x] `contracts/examples/protocol-amendment.yaml`
-  - [x] `docs/adrs/0009-immutable-lineage-and-research-objects.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-living/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/living.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/amendment.rs`
+  - [x] Present source path: `contracts/examples/living-update.yaml`
+  - [x] Present source path: `contracts/examples/protocol-amendment.yaml`
+  - [x] Present source path: `docs/adrs/0009-immutable-lineage-and-research-objects.md`
+  - [x] Assertion ledger: `conductor/tracks/22-living-updates/traceability.json`
 
 ## Completion and evidence contract
 

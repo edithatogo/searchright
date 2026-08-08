@@ -3,7 +3,8 @@
   "track_id": "21",
   "slug": "licensed-adapters",
   "title": "Licensed BYO-access adapters",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -15,6 +16,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/21-licensed-adapters/evidence.json",
+  "traceability_path": "conductor/tracks/21-licensed-adapters/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-21",

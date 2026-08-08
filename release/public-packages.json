@@ -1,0 +1,46 @@
+{
+  "development_toolchain": "1.97.1",
+  "packages": [
+    {
+      "evidence_receipts": [],
+      "name": "evidence-search-contracts",
+      "publication_status": "blocked",
+      "publish_ready": false,
+      "required_before_publish": [
+        "compiled schema and Rust round-trip tests",
+        "cargo semver-checks baseline",
+        "Sourceright consumer contract",
+        "licence and provenance review"
+      ],
+      "role": "neutral_contract_candidate"
+    },
+    {
+      "evidence_receipts": [],
+      "name": "evidence-search-core",
+      "publication_status": "blocked",
+      "publish_ready": false,
+      "required_before_publish": [
+        "Sourceright dual-run parity",
+        "provider replay and failure conformance",
+        "declared MSRV proof",
+        "cargo-vet review"
+      ],
+      "role": "shared_runtime_candidate"
+    },
+    {
+      "evidence_receipts": [],
+      "name": "searchright-plugin-sdk",
+      "publication_status": "blocked",
+      "publish_ready": false,
+      "required_before_publish": [
+        "WASI component conformance",
+        "capability sandbox tests",
+        "public API review"
+      ],
+      "role": "component_sdk_candidate"
+    }
+  ],
+  "policy": "deny_unlisted_and_require_compiler_semver_supply_chain_evidence",
+  "schema_version": "org.searchright.public-packages.v1",
+  "shared_layer_msrv": "1.88"
+}

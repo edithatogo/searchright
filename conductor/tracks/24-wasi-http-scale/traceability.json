@@ -1,0 +1,179 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "24",
+  "title": "WASI components, HTTP MCP and scalable execution",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/24-wasi-http-scale/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T24-A001",
+      "statement": "Implement WIT host/guest SDK and signed manifest verification",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-plugin-sdk/src/lib.rs",
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/wit/search-provider.wit",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "contracts/examples/provider-component.yaml",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/24-wasi-http-scale/evidence.json"
+      ],
+      "open_gates": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T24-A002",
+      "statement": "Adopt Wasmtime resource/fuel/network capability controls",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-plugin-sdk/src/lib.rs",
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/wit/search-provider.wit",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "contracts/examples/provider-component.yaml",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/24-wasi-http-scale/evidence.json"
+      ],
+      "open_gates": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T24-A003",
+      "statement": "Add Arrow/Parquet/DuckDB feature for large corpora",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-plugin-sdk/src/lib.rs",
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/wit/search-provider.wit",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "contracts/examples/provider-component.yaml",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/24-wasi-http-scale/evidence.json"
+      ],
+      "open_gates": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T24-A004",
+      "statement": "Implement MCP discovery/tasks/subscriptions/cache/Streamable HTTP",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-plugin-sdk/src/lib.rs",
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/wit/search-provider.wit",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "contracts/examples/provider-component.yaml",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/24-wasi-http-scale/evidence.json"
+      ],
+      "open_gates": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T24-A005",
+      "statement": "Add OAuth, tenancy, quotas, observability and deployment threat model",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-plugin-sdk/src/lib.rs",
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/wit/search-provider.wit",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "contracts/examples/provider-component.yaml",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/24-wasi-http-scale/evidence.json"
+      ],
+      "open_gates": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T24-A006",
+      "statement": "Load/chaos/failover and compatibility testing",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-plugin-sdk/src/lib.rs",
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/wit/search-provider.wit",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "contracts/examples/provider-component.yaml",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/24-wasi-http-scale/evidence.json"
+      ],
+      "open_gates": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Establish component signing, revocation and distribution evidence."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

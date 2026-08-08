@@ -3,28 +3,33 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "sha256": "fb45f9d7890ee7344ef967d0fc31336d0f107d848c10a21008bb10f3ae035ed8",
-      "size": 2499
+      "sha256": "2db64dab2ff371661fe64121233700e93ed72e9fe58974cdf4cb672cbd16a8cf",
+      "size": 3453
     },
     {
       "path": "CODEX_HANDOFF.md",
-      "sha256": "b2fe8d2106b6360a956930f48d3d2176d3e076edf29b10ce4af9ef9491dfe7c1",
-      "size": 6494
+      "sha256": "6ca8f58bc3c6855fadf2d6c02c1d91babb534d6cdf097c794b238142fbfc1b9e",
+      "size": 8649
     },
     {
       "path": "CONTEXT.md",
-      "sha256": "76b85c1e15c82474101b9f35aef615f7f1523b185dc56ae9035e3211b3a92ae2",
-      "size": 2970
+      "sha256": "e763ec60cc85fee5c016af1b7c6cbf09f1c96fb3616ddb2a2cadb3ac5ba16bc2",
+      "size": 4186
+    },
+    {
+      "path": "benchmarks/methodology/manifest.json",
+      "sha256": "f892858cee4491a0832926f6fe44be0049265bff5ff69d50757d198eeacc42b3",
+      "size": 3851
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "5f5f86adbe54c12f6ca727a486385135ce5a31e903ec09dcfd6cd92fae7ffaa0",
-      "size": 552739
+      "sha256": "9805c55048e9fed0898e4a3d2ed9ee3c5cab565a6a59367461016c6fb6d4ae07",
+      "size": 584501
     },
     {
       "path": "conductor/github/project.json",
-      "sha256": "bd7887d6e9288cf7265328f18f194c11348aab0f378b0d15bf075c9ec921decd",
-      "size": 3327
+      "sha256": "cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d",
+      "size": 3775
     },
     {
       "path": "conductor/github/repository-settings.json",
@@ -43,8 +48,13 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "b4a588743d5c6d1a7260f89b3dc46c1ee133502904b3024fd3dc236218f5a022",
-      "size": 58949
+      "sha256": "540557eeddc34e35057b43824ac3ae146c16ea6ee29df6827cf6c187b3a3bc71",
+      "size": 67341
+    },
+    {
+      "path": "conductor/traceability-overrides.json",
+      "sha256": "6919b67f1ede6809f067f561d7cfc15b10955cc24a4b209e299b8fd941c23f6c",
+      "size": 49381
     },
     {
       "path": "context/capability-matrix.json",
@@ -53,28 +63,33 @@
     },
     {
       "path": "context/claim-boundaries.json",
-      "sha256": "6879bc1ef36d9e05c81321743a099baf7bd11439d81198229cb991cbf4f91641",
-      "size": 5050
+      "sha256": "e12c425c565fb158e3b32d62e1b81f7cd7478b5ae219f23c0495ea35dd789773",
+      "size": 8163
     },
     {
       "path": "context/decision-ledger.json",
-      "sha256": "bf8c7690d8561a2d5d77b3a0b4474ed39e4f11829d28725ab5552860582010c8",
-      "size": 6454
+      "sha256": "682822269d330d68cdb6a7dd0ef1b54bd64f80b925b32cfe3210943af2046f1a",
+      "size": 9817
     },
     {
       "path": "context/evidence-ledger.json",
-      "sha256": "84cb8713e2672d3c9a8dd60ab476dd8967a989c395e674595aa2270197e0eb63",
-      "size": 3564
+      "sha256": "fd68be9e41de9e3e9eb68f3f6954f24e039d74a574fe4c783cbb64fed490cf1f",
+      "size": 6398
     },
     {
       "path": "context/hazard-log.json",
-      "sha256": "8f17b9f9a1f8bbe047fa14f5cb736c9345c694f0a17c570390acda3b04db1438",
-      "size": 10458
+      "sha256": "4416c4a941b10f07fe94de305c8caca651dde92923b278709743ce3b6f9f256b",
+      "size": 13623
+    },
+    {
+      "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
+      "sha256": "a788ab15ecf42e622401267a62a7f3df6e8945d15fa2963a6bf4a99bd78feaeb",
+      "size": 18856
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "6a82cd80d2f55956cba4449b2057fa0ef8aedf9776ba594f2fd53b27219f975f",
-      "size": 19831
+      "sha256": "2b7951d13a39a5bbccaa8d5e00519b2392d0e05b65bb1023eb1599150daf5c1c",
+      "size": 21102
     },
     {
       "path": "docs/safety/safety-case.md",
@@ -87,9 +102,24 @@
       "size": 1982
     },
     {
+      "path": "docs/vertical-slice-definition-of-done.md",
+      "sha256": "41e2c3eb06d14f2738a3d8d7ad508bd48c6bce719f66ed2bfe893fdd49f9bcbc",
+      "size": 4383
+    },
+    {
       "path": "integration/consumer-contract-suite.json",
       "sha256": "c98ad6e69629b77749ba293f6d4a1f90b63491a4a212984936f0fe491e8a7608",
       "size": 9354
+    },
+    {
+      "path": "integration/ecosystem-lock.json",
+      "sha256": "9a36e64fd6f04e6a382cd5feef10409f44932cb432cb8ad970449a86faf4b38c",
+      "size": 2783
+    },
+    {
+      "path": "integration/github/portfolio-project.json",
+      "sha256": "e98f74fca744bb3cf7874f78b2aadb6c9329f6b2b8bcba32706169ef444f2b9c",
+      "size": 13773
     },
     {
       "path": "integration/passports/index.json",
@@ -97,9 +127,24 @@
       "size": 4049
     },
     {
+      "path": "integration/provider-contract-baselines.json",
+      "sha256": "de035848fd479299176f646f3566b3b12bd4602600a2caf8398990f6c4d38c41",
+      "size": 3603
+    },
+    {
       "path": "integration/release-train.json",
-      "sha256": "85675deae56d2c061a00e08701cb6a708120cc76a6af7b74ddc69e08103e5824",
-      "size": 2077
+      "sha256": "3b2f0d531267c34939ba80e3b318fa89b006e06574ea437ade9032dcf7298550",
+      "size": 2274
+    },
+    {
+      "path": "migration/companion-repositories/index.json",
+      "sha256": "4aa133a1dea2aba0a090aa4c708b6eeb84981d89c2613e31174a013699053baf",
+      "size": 2003
+    },
+    {
+      "path": "release/public-packages.json",
+      "sha256": "6321ec318a8e48965317fdc7f0bac90d2b49e2b91e8dddc682497974756b8aee",
+      "size": 1368
     },
     {
       "path": "release/rehearsal.json",
@@ -108,8 +153,18 @@
     },
     {
       "path": "requirements/rust-tools.json",
-      "sha256": "fb3e546f1251ce7dde96cf3ba056178e0fddc1da167100e8a657f40bdec95cb1",
-      "size": 1557
+      "sha256": "50479a0ef82e8a6d7ee4043ab312785ab208ca98c7169f589693e32601c27db3",
+      "size": 2358
+    },
+    {
+      "path": "verification/harness-matrix.json",
+      "sha256": "b74d8e1b76b0d331716d823dd39c39c1c110f07428446d16aa7d3a6726610eb9",
+      "size": 10348
+    },
+    {
+      "path": "verification/vertical-slice/README.md",
+      "sha256": "d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01",
+      "size": 556
     }
   ],
   "generated_at": "source-epoch:2026-08-08",

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/native-search-strategy.v1.schema.json",
+  "title": "Searchright Native Search Strategy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "strategy_id", "dialect", "raw_text", "lines",
+    "semantic_strategy", "normalisation_state", "diagnostics", "parser_version"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.native-search-strategy.v1"},
+    "strategy_id": {"type": "string", "minLength": 1},
+    "dialect": {
+      "oneOf": [
+        {"enum": ["pub_med", "ovid_medline", "embase", "europe_pmc", "cinahl_ebsco", "psyc_info_ovid", "scopus", "web_of_science", "crossref", "open_alex", "clinical_trials_gov", "generic_boolean"]},
+        {"type": "object", "additionalProperties": false, "required": ["custom"], "properties": {"custom": {"type": "string", "minLength": 1}}}
+      ]
+    },
+    "raw_text": {"type": "string", "minLength": 1},
+    "lines": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["line_id", "native_set_id", "text", "kind", "span"],
+        "properties": {
+          "line_id": {"type": "string", "minLength": 1},
+          "native_set_id": {"type": ["string", "null"], "minLength": 1},
+          "text": {"type": "string"},
+          "kind": {"enum": ["expression", "set_combination", "limit", "comment", "blank", "unknown"]},
+          "span": {"$ref": "#/$defs/span"}
+        }
+      }
+    },
+    "semantic_strategy": {"oneOf": [{"type": "null"}, {"$ref": "search-strategy.v1.schema.json"}]},
+    "normalisation_state": {"enum": ["raw_only", "partial", "complete"]},
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "severity", "message", "span", "review_required"],
+        "properties": {
+          "code": {"type": "string", "minLength": 1},
+          "severity": {"enum": ["info", "warning", "error"]},
+          "message": {"type": "string", "minLength": 1},
+          "span": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/span"}]},
+          "review_required": {"type": "boolean"}
+        }
+      }
+    },
+    "parser_version": {"type": "string", "minLength": 1}
+  },
+  "$defs": {
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start_byte", "end_byte"],
+      "properties": {
+        "start_byte": {"type": "integer", "minimum": 0},
+        "end_byte": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

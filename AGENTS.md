@@ -37,6 +37,13 @@ Load `CONTEXT.md` and `context/manifest.json` first.
 - Never claim backup recoverability without a successful restore drill.
 - Use the shared `evidence-search-core`; do not reimplement provider runtime,
   receipt, retry, cache or query primitives in downstream crates.
+- Determine implementation state from assertion-level traceability; file or path presence is never sufficient proof.
+- Keep neutral provider/query/receipt/audit types in `evidence-search-contracts`; do not introduce Searchright review-workflow dependencies below the neutral core.
+- Preserve exact native search text and source spans; never claim cross-database semantic equivalence without a complete loss report and expert evidence.
+- Keep all crates non-publishable unless `release/public-packages.json` explicitly promotes one after compiler, API, SemVer, licence and supply-chain evidence.
+- Keep benchmark labels sealed and external to development prompts, fixtures and ranking agents.
+- Do not redistribute reference-only or licence-review-required integrations, standards text or fork content.
+- Treat review-state snapshots and `.srpack` bundles as derived integrity artefacts, not canonical screening authority or methodological certification.
 - Keep `unsafe` forbidden except in a separately reviewed sandbox/runtime adapter.
 - Do not promote a release train, pilot, registry packet or version 1.0 decision
   from source completeness alone.

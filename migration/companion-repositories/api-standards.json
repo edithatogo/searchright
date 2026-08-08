@@ -1,0 +1,37 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/api-standards",
+  "revision": "5a706a7600c8c54ec63b4ab2716fcf7d8bababcf",
+  "role": "external health API and security policy reference",
+  "priority": "should",
+  "changes": [
+    {
+      "id": "canonical-upstream",
+      "action": "Record tewhatuora/api-standards as canonical upstream and the edithatogo fork as a mirror or patch carrier rather than an independently governed standard.",
+      "target_paths": ["README.md", "UPSTREAM.md", "integration metadata"],
+      "owner": "repository owner",
+      "required_evidence": ["upstream relationship receipt", "local delta inventory"],
+      "automatic_apply": false
+    },
+    {
+      "id": "licence-firewall",
+      "action": "Resolve code and content reuse rights before copying standards text or generated derivatives into Searchright; retain reference-only status until then.",
+      "target_paths": ["LICENSE", "NOTICE", "policy metadata"],
+      "owner": "licence reviewer",
+      "required_evidence": ["licence determination", "redistribution decision"],
+      "automatic_apply": false
+    },
+    {
+      "id": "upstream-drift",
+      "action": "Add read-only upstream drift reporting and decide whether local patches should be proposed upstream, retained, or removed.",
+      "target_paths": [".github/workflows/upstream-drift.yml", "UPSTREAM.md"],
+      "owner": "repository maintainer",
+      "required_evidence": ["drift receipt", "patch disposition"],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "Canonical-upstream, licence and local-delta decisions are recorded without implying redistribution rights.",
+  "claim_boundary": "This packet treats API standards as an external reference; it is not a licence determination or evidence that the fork was changed."
+}

@@ -1,6 +1,6 @@
 # Plan: 20 Grey literature, registers and supplementary discovery
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-20`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,11 +8,12 @@ GitHub issue key: `track-20`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-20-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-discovery/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/discovery.rs`
-  - [x] `contracts/examples/discovery-run.yaml`
-  - [x] `docs/provider-model.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-discovery/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/discovery.rs`
+  - [x] Present source path: `contracts/examples/discovery-run.yaml`
+  - [x] Present source path: `docs/provider-model.md`
+  - [x] Assertion ledger: `conductor/tracks/20-broader-discovery/traceability.json`
 
 ## Phase 2: Source-level verification
 

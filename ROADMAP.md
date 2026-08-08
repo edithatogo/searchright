@@ -95,11 +95,40 @@ decision with no unaccepted critical hazard.
 
 ## Current position
 
-All **38 tracks** contain source deliverables and evidence-aware plans. The
-planning projection contains **564 nodes**: one epic, 38 track issues, 152 phase
-subissues and 373 task subissues. The corresponding GitHub Project v2, repository
-settings and synchronisers are source-verified but have not been applied to a
-remote repository in this environment. Compiler, live-provider, downstream,
-operational-drill, human-evaluation and external-publication gates remain open
-where receipts do not exist. `PROJECT_STATUS.md`, the context spine and
-machine-readable receipts are the claim authority.
+All 38 maturity tracks remain present, but their status has been rebaselined
+against 198 acceptance assertions. Sixty-five assertions currently have
+individual symbol/test/gate mappings; other assertions remain conservatively
+track-level. No track is complete merely because its source paths, GitHub issues
+or Project items exist.
+
+The planning projection still contains 564 nodes: one epic, 38 track issues, 152
+phase subissues and 373 task subissues. The delivery Project now separates
+implementation state from evidence level and has 13 fields and six views. A
+second, non-mutating portfolio projection tracks cross-repository contracts,
+licence decisions, migrations and the release train without importing all 564
+task items.
+
+The local source has added neutral contracts, four provider baselines, a
+seven-dialect native-query corpus, a deterministic review-state reducer, a
+portable review bundle, benchmark leakage controls, licence-aware integration
+passports, companion change packets, a frozen contract surface and public-package
+policy. These improvements advance multiple tracks but do not erase their open
+compiler, fixture, live, downstream and external gates.
+
+## Near-term execution order
+
+1. Generate `Cargo.lock`, compile and repair the complete workspace.
+2. Run provider fixture golden tests and finish one complete PubMed vertical
+   slice before broadening provider scope.
+3. Add database-specific native parsers and independently reviewed query gold
+   sets.
+4. Prove the neutral contract/core API in Sourceright and CiteWeft consumer
+   canaries.
+5. Execute the prepared UOGTO, VOIAGE and agent-repository migrations without
+   deleting rollback paths.
+6. Run sealed methodological benchmarks and human information-specialist review.
+7. Apply the GitHub control plane, release train and registry submissions only
+   after the required receipts exist.
+
+`PROJECT_STATUS.md`, assertion-level traceability and machine-readable receipts
+are the claim authority.

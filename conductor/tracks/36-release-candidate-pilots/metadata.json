@@ -4,6 +4,7 @@
   "slug": "release-candidate-pilots",
   "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
   "status": "release_prepared",
+  "implementation_state": "scaffolded",
   "created": "2026-08-08",
   "updated": "2026-08-08",
   "dependencies": [
@@ -21,6 +22,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/36-release-candidate-pilots/evidence.json",
+  "traceability_path": "conductor/tracks/36-release-candidate-pilots/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-36",

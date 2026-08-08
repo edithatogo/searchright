@@ -1,0 +1,157 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "16",
+  "title": "Maximal quality, context and security harness",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/16-quality-security-harness/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T16-A001",
+      "statement": "Generate lockfile and make deterministic CI green",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "rust-toolchain.toml",
+        ".github/workflows/ci.yml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_toolchain_manifest.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/16-quality-security-harness/evidence.json"
+      ],
+      "open_gates": [
+        "Install Rust 1.97.1, generate Cargo.lock and make compiler CI green."
+      ],
+      "permitted_claim": "No lockfile or compiler-green claim is made."
+    },
+    {
+      "assertion_id": "T16-A002",
+      "statement": "Unit/integration/e2e/property/metamorphic/DST/CDC/fuzz/mutation tests",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "tests",
+        "fuzz",
+        ".github/workflows/nightly.yml",
+        ".github/workflows/fuzz.yml",
+        ".github/workflows/formal.yml",
+        "scripts/run_static_harness.py",
+        "verification/vertical-slice",
+        "scripts/check_vertical_slice.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/run_static_harness.py",
+        "python scripts/check_vertical_slice.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/16-quality-security-harness/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute Rust unit, integration, property, metamorphic, CDC, fuzz and mutation suites."
+      ],
+      "permitted_claim": "Network-free static gates and Rust test source exist; Rust test execution remains open."
+    },
+    {
+      "assertion_id": "T16-A003",
+      "statement": "Configure llvm-cov >90% and Codecov",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "codecov.yml",
+        ".github/workflows/coverage.yml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/16-quality-security-harness/evidence.json"
+      ],
+      "open_gates": [
+        "Run llvm-cov and enforce measured coverage above the declared threshold."
+      ],
+      "permitted_claim": "Coverage automation is configured but no coverage result is claimed."
+    },
+    {
+      "assertion_id": "T16-A004",
+      "statement": "Run cargo-deny/audit/semver/machete, CodeQL, Scorecard, zizmor, actionlint",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "deny.toml",
+        "supply-chain/config.toml",
+        "supply-chain/audits.toml",
+        ".github/workflows/security.yml",
+        ".github/workflows/public-api.yml",
+        "requirements/rust-tools.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_toolchain_manifest.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/16-quality-security-harness/evidence.json"
+      ],
+      "open_gates": [
+        "Install and execute cargo-deny, audit, vet, semver, public-api and other configured tools."
+      ],
+      "permitted_claim": "Security and API assurance gates are pinned and configured; tool execution is not inferred."
+    },
+    {
+      "assertion_id": "T16-A005",
+      "statement": "Add SSRF, secret leakage, parser bomb and resource exhaustion tests",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "scripts/check_default_deny.py",
+        "scripts/check_secrets.py",
+        "context/hazard-log.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_default_deny.py",
+        "python scripts/check_secrets.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/16-quality-security-harness/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run SSRF, parser bomb and resource-exhaustion adversarial tests."
+      ],
+      "permitted_claim": "Static authority, secret and hazard controls exist; complete adversarial runtime testing remains open."
+    },
+    {
+      "assertion_id": "T16-A006",
+      "statement": "Produce machine-readable verification receipt on every release",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "verification/receipts",
+        "scripts/run_static_harness.py",
+        "scripts/review_bundle.py",
+        "verification/vertical-slice",
+        "scripts/check_vertical_slice.py"
+      ],
+      "implementation_symbols": [
+        "scripts/run_static_harness.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/run_static_harness.py",
+        "python scripts/check_vertical_slice.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/16-quality-security-harness/evidence.json"
+      ],
+      "open_gates": [
+        "Generate compiler, coverage, live, external and release receipts at the corresponding evidence levels."
+      ],
+      "permitted_claim": "Machine-readable static receipts are produced; higher evidence receipts are not fabricated."
+    }
+  ]
+}

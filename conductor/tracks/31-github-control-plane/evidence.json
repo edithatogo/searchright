@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "31",
   "title": "GitHub remote, nested issues and Project v2 control plane",
-  "status": "integration_prepared",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -19,6 +20,7 @@
     "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
     "contracts/json-schema/github-project.v1.schema.json"
   ],
+  "traceability": "conductor/tracks/31-github-control-plane/traceability.json",
   "static_checks": [
     "python scripts/render_github_issues.py --check",
     "python scripts/check_github_issue_hierarchy.py",
@@ -38,7 +40,7 @@
     "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
     "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
   ],
-  "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists.",
+  "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-31",

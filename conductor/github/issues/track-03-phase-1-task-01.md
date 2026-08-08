@@ -3,17 +3,20 @@
 
 Parent phase key: `track-03-phase-1`
 Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/evidence-search-core/src/provider.rs`
-  - [x] `crates/searchright-sourceright-compat/src/lib.rs`
-  - [x] `migration/sourceright/replacement-map.yaml`
-  - [x] `migration/sourceright/parity-cases.json`
-  - [x] `scripts/check_sourceright_migration.py`
-  - [x] `docs/adrs/0012-sourceright-and-estate-migration.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/evidence-search-core/src/provider.rs`
+  - [x] Present source path: `crates/searchright-sourceright-compat/src/lib.rs`
+  - [x] Present source path: `migration/sourceright/replacement-map.yaml`
+  - [x] Present source path: `migration/sourceright/parity-cases.json`
+  - [x] Present source path: `scripts/check_sourceright_migration.py`
+  - [x] Present source path: `release/public-packages.json`
+  - [x] Present source path: `public-api/README.md`
+  - [x] Present source path: `docs/msrv-and-package-policy.md`
+  - [x] Assertion ledger: `conductor/tracks/03-shared-provider-runtime/traceability.json`
 
 ## Completion and evidence contract
 

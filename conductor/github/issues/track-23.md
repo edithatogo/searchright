@@ -12,7 +12,8 @@ Provide transparent advisory ranking with uncertainty and no default autonomous 
 ## Contract
 
 - Horizon: `beta`
-- Status: `source_implemented_unverified`
+- Status: `scaffolded`
+- Implementation: `scaffolded`
 - Evidence: `source_verified`
 - Dependencies: `07, 17, 22`
 - Requirements: `SR-046`
@@ -27,6 +28,6 @@ Provide transparent advisory ranking with uncertainty and no default autonomous 
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

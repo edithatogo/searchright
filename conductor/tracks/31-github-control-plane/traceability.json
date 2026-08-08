@@ -1,0 +1,151 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "31",
+  "title": "GitHub remote, nested issues and Project v2 control plane",
+  "implementation_state": "source_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/31-github-control-plane/spec.md#scope",
+  "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T31-A001",
+      "statement": "Remote repository bootstrap and origin wiring",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "conductor/github/project.json",
+        "conductor/github/project-readme.md",
+        "conductor/github/repository-settings.json",
+        "conductor/github/issue-hierarchy.json",
+        "scripts/bootstrap_github.py",
+        "scripts/sync_github_issues.py",
+        "scripts/sync_github_project.py",
+        "scripts/check_github_project.py",
+        ".github/workflows/github-control-plane.yml",
+        "docs/github-operating-system.md",
+        "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+        "contracts/json-schema/github-project.v1.schema.json"
+      ],
+      "implementation_symbols": [
+        "scripts/bootstrap_github.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/bootstrap_github.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/31-github-control-plane/evidence.json"
+      ],
+      "open_gates": [
+        "Create or verify the public remote and push the committed main branch.",
+        "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+        "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    },
+    {
+      "assertion_id": "T31-A002",
+      "statement": "Epic, track, phase and task native subissues",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "conductor/github/project.json",
+        "conductor/github/project-readme.md",
+        "conductor/github/repository-settings.json",
+        "conductor/github/issue-hierarchy.json",
+        "scripts/bootstrap_github.py",
+        "scripts/sync_github_issues.py",
+        "scripts/sync_github_project.py",
+        "scripts/check_github_project.py",
+        ".github/workflows/github-control-plane.yml",
+        "docs/github-operating-system.md",
+        "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+        "contracts/json-schema/github-project.v1.schema.json"
+      ],
+      "implementation_symbols": [
+        "scripts/sync_github_issues.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/sync_github_issues.py --repo edithatogo/searchright"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/31-github-control-plane/evidence.json"
+      ],
+      "open_gates": [
+        "Create or verify the public remote and push the committed main branch.",
+        "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+        "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    },
+    {
+      "assertion_id": "T31-A003",
+      "statement": "Project v2 fields, views and item synchronisation",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "conductor/github/project.json",
+        "conductor/github/project-readme.md",
+        "conductor/github/repository-settings.json",
+        "conductor/github/issue-hierarchy.json",
+        "scripts/bootstrap_github.py",
+        "scripts/sync_github_issues.py",
+        "scripts/sync_github_project.py",
+        "scripts/check_github_project.py",
+        ".github/workflows/github-control-plane.yml",
+        "docs/github-operating-system.md",
+        "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+        "contracts/json-schema/github-project.v1.schema.json"
+      ],
+      "implementation_symbols": [
+        "scripts/sync_github_project.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/sync_github_project.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/31-github-control-plane/evidence.json"
+      ],
+      "open_gates": [
+        "Create or verify the public remote and push the committed main branch.",
+        "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+        "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    },
+    {
+      "assertion_id": "T31-A004",
+      "statement": "Repository settings, environments, security controls and ruleset",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "conductor/github/project.json",
+        "conductor/github/project-readme.md",
+        "conductor/github/repository-settings.json",
+        "conductor/github/issue-hierarchy.json",
+        "scripts/bootstrap_github.py",
+        "scripts/sync_github_issues.py",
+        "scripts/sync_github_project.py",
+        "scripts/check_github_project.py",
+        ".github/workflows/github-control-plane.yml",
+        "docs/github-operating-system.md",
+        "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+        "contracts/json-schema/github-project.v1.schema.json"
+      ],
+      "implementation_symbols": [
+        "scripts/audit_github_control_plane.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/audit_github_control_plane.py --help"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/31-github-control-plane/evidence.json"
+      ],
+      "open_gates": [
+        "Create or verify the public remote and push the committed main branch.",
+        "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+        "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
+      ],
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+    }
+  ]
+}

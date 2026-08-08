@@ -1,0 +1,3 @@
+#1 'genomics'/exp OR genome*:ti,ab,kw
+#2 'mass screening'/exp OR screen*:ti,ab,kw
+#3 #1 AND #2

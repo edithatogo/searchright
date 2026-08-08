@@ -12,7 +12,8 @@ Import/export common bibliographic formats, propose conservative duplicate clust
 ## Contract
 
 - Horizon: `mvp`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `01, 05`
 - Requirements: `SR-017, SR-018, SR-019`
@@ -27,6 +28,6 @@ Import/export common bibliographic formats, propose conservative duplicate clust
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

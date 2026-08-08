@@ -12,7 +12,8 @@ Identify and safely replace duplicate systematic-search code across the GitHub e
 ## Contract
 
 - Horizon: `alpha`
-- Status: `integration_prepared`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `13, 14`
 - Requirements: `SR-032`
@@ -27,6 +28,6 @@ Identify and safely replace duplicate systematic-search code across the GitHub e
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -1,6 +1,6 @@
 # Plan: 36 Release-candidate rehearsal, staged pilots and ecosystem rehearsal
 
-Current status: **release_prepared**. Evidence level: **source_verified**.
+Current status: **release_prepared**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,14 +8,15 @@ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-36-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `release/rehearsal.json`
-  - [x] `scripts/check_release_rehearsal.py`
-  - [x] `.github/workflows/release-candidate.yml`
-  - [x] `docs/releases/release-candidate.md`
-  - [x] `docs/pilots/pilot-protocol.md`
-  - [x] `registry/status.json`
-  - [x] `scripts/package_source.py`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `release/rehearsal.json`
+  - [x] Present source path: `scripts/check_release_rehearsal.py`
+  - [x] Present source path: `.github/workflows/release-candidate.yml`
+  - [x] Present source path: `docs/releases/release-candidate.md`
+  - [x] Present source path: `docs/pilots/pilot-protocol.md`
+  - [x] Present source path: `registry/status.json`
+  - [x] Present source path: `scripts/package_source.py`
+  - [x] Assertion ledger: `conductor/tracks/36-release-candidate-pilots/traceability.json`
 
 ## Phase 2: Source-level verification
 

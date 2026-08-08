@@ -4,7 +4,6 @@
 
 mod access;
 mod amendment;
-mod audit;
 mod assurance;
 mod benchmark;
 mod diagnostic;
@@ -22,18 +21,28 @@ mod plan;
 mod plugin;
 mod policy;
 mod prisma;
-mod provider;
-mod query;
 mod ranking;
-mod record;
 mod screening;
 mod standards;
 mod study;
 mod validation;
 
+pub use evidence_search_contracts::{
+    Actor, AuditEvent, AuditEventDraft, BibliographicRecord, CompiledStrategy, ContractError,
+    DateLimit, ExecutionPolicy, NativeNormalisationState, NativeParseDiagnostic,
+    NativeParseSeverity, NativeQueryLine, NativeQueryLineKind, NativeSearchStrategy,
+    NativeSourceSpan, ProviderCapability, ProviderManifest, ProviderPage,
+    ProviderSupportLevel, QueryExpr, RecordIdentifiers, RecordKind, SearchDialect, SearchField,
+    SearchLimit, SearchRequest, SearchRun, SearchStrategy, SearchTerm, SourceReceipt,
+    StrategyWarning, TranslationFidelity, Validate, AUDIT_EVENT_SCHEMA_VERSION,
+    BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION, COMPILED_STRATEGY_SCHEMA_VERSION, CONTRACT_FAMILY,
+    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION, PROVIDER_PAGE_SCHEMA_VERSION, SEARCH_RUN_SCHEMA_VERSION, SEARCH_STRATEGY_SCHEMA_VERSION,
+    SOURCE_RECEIPT_SCHEMA_VERSION,
+};
+pub(crate) use evidence_search_contracts::{require_schema_version, require_text};
+
 pub use access::{AccessDecision, AccessRequest, AccessScope, PrincipalKind, TenantPolicy};
 pub use amendment::{AmendmentChange, AmendmentDecision, AmendmentKind, ProtocolAmendment};
-pub use audit::{Actor, AuditEvent, AuditEventDraft};
 pub use assurance::{LifecycleStage, LifecycleTransition, TransitionActorKind, WorkflowTrace};
 pub use benchmark::{BenchmarkMetric, BenchmarkReport};
 pub use diagnostic::{Diagnostic, DiagnosticLocale, DiagnosticSeverity};
@@ -76,16 +85,7 @@ pub use policy::{
     UntrustedContentPolicy,
 };
 pub use prisma::{ExclusionCount, PrismaFlow, PrismaSItem, PrismaSItemStatus, PrismaSLedger};
-pub use provider::{
-    ExecutionPolicy, ProviderCapability, ProviderManifest, ProviderPage, ProviderSupportLevel,
-    SearchRequest, SearchRun, SourceReceipt,
-};
-pub use query::{
-    CompiledStrategy, DateLimit, QueryExpr, SearchDialect, SearchField, SearchLimit, SearchStrategy,
-    SearchTerm, StrategyWarning, TranslationFidelity,
-};
 pub use ranking::{CalibrationCounts, RankingCalibration, RankingFeature, RankingScore};
-pub use record::{BibliographicRecord, RecordIdentifiers, RecordKind};
 pub use screening::{
     AgentAuthority, ConflictResolution, DecisionValue, ExclusionReason, ReviewerKind,
     ScreeningDecision, ScreeningPolicy, ScreeningRound,
@@ -102,30 +102,12 @@ pub use validation::{
     TranslationLossAssessment,
 };
 
-/// Current repository-wide contract family identifier.
-pub const CONTRACT_FAMILY: &str = "org.searchright";
-
-/// Canonical provider-normalised bibliographic-record contract version.
-pub const BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION: &str =
-    "org.searchright.bibliographic-record.v1";
-/// Canonical compiled-strategy contract version.
-pub const COMPILED_STRATEGY_SCHEMA_VERSION: &str = "org.searchright.compiled-strategy.v1";
-/// Canonical provider-page contract version.
-pub const PROVIDER_PAGE_SCHEMA_VERSION: &str = "org.searchright.provider-page.v1";
-/// Canonical source-receipt contract version.
-pub const SOURCE_RECEIPT_SCHEMA_VERSION: &str = "org.searchright.source-receipt.v1";
-/// Canonical search-run contract version.
-pub const SEARCH_RUN_SCHEMA_VERSION: &str = "org.searchright.search-run.v1";
 /// Canonical screening-policy contract version.
 pub const SCREENING_POLICY_SCHEMA_VERSION: &str = "org.searchright.screening-policy.v1";
 /// Canonical deterministic agent-workflow contract version.
 pub const AGENT_WORKFLOW_SCHEMA_VERSION: &str = "org.searchright.agent-workflow.v1";
 /// Canonical review-plan contract version.
 pub const REVIEW_PLAN_SCHEMA_VERSION: &str = "org.searchright.review-plan.v1";
-/// Canonical search-strategy contract version.
-pub const SEARCH_STRATEGY_SCHEMA_VERSION: &str = "org.searchright.search-strategy.v1";
-/// Canonical audit-event contract version.
-pub const AUDIT_EVENT_SCHEMA_VERSION: &str = "org.searchright.audit-event.v1";
 /// Canonical PRISMA-flow contract version.
 pub const PRISMA_FLOW_SCHEMA_VERSION: &str = "org.searchright.prisma-flow.v1";
 /// Canonical record-report-study graph contract version.
@@ -207,46 +189,3 @@ pub const INTEGRATION_RELEASE_TRAIN_SCHEMA_VERSION: &str =
     "org.searchright.integration-release-train.v1";
 /// Canonical release-rehearsal version.
 pub const RELEASE_REHEARSAL_SCHEMA_VERSION: &str = "org.searchright.release-rehearsal.v1";
-
-/// Error returned by contract validation.
-#[derive(Debug, thiserror::Error, Clone, PartialEq, Eq)]
-pub enum ContractError {
-    /// A required field was empty.
-    #[error("required field `{0}` is empty")]
-    EmptyField(&'static str),
-    /// A collection that must contain at least one value was empty.
-    #[error("collection `{0}` must not be empty")]
-    EmptyCollection(&'static str),
-    /// A value violated a cross-field invariant.
-    #[error("contract invariant failed: {0}")]
-    Invariant(String),
-}
-
-/// Contract types implement lightweight semantic validation in addition to JSON Schema.
-pub trait Validate {
-    /// Validate semantic and cross-field invariants.
-    fn validate(&self) -> Result<(), ContractError>;
-}
-
-pub(crate) fn require_text(value: &str, field: &'static str) -> Result<(), ContractError> {
-    if value.trim().is_empty() {
-        Err(ContractError::EmptyField(field))
-    } else {
-        Ok(())
-    }
-}
-
-pub(crate) fn require_schema_version(
-    value: &str,
-    expected: &'static str,
-    field: &'static str,
-) -> Result<(), ContractError> {
-    require_text(value, field)?;
-    if value == expected {
-        Ok(())
-    } else {
-        Err(ContractError::Invariant(format!(
-            "`{field}` must be `{expected}`, found `{value}`"
-        )))
-    }
-}

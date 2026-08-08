@@ -1,0 +1,13 @@
+{
+  "schema_version": "org.searchright.native-query-corpus.v1",
+  "claim_boundary": "Source-preserving lexical fixtures only; these examples do not prove full source-dialect semantic parsing or cross-database equivalence.",
+  "fixtures": [
+    {"id": "pubmed-basic", "dialect": "pub_med", "path": "contracts/query-corpus/pubmed.txt", "minimum_lines": 1},
+    {"id": "ovid-medline-lines", "dialect": "ovid_medline", "path": "contracts/query-corpus/ovid-medline.txt", "minimum_lines": 7},
+    {"id": "embase-sets", "dialect": "embase", "path": "contracts/query-corpus/embase.txt", "minimum_lines": 3},
+    {"id": "cinahl-sets", "dialect": "cinahl_ebsco", "path": "contracts/query-corpus/cinahl-ebsco.txt", "minimum_lines": 3},
+    {"id": "psycinfo-ovid-lines", "dialect": "psyc_info_ovid", "path": "contracts/query-corpus/psycinfo-ovid.txt", "minimum_lines": 5},
+    {"id": "scopus-basic", "dialect": "scopus", "path": "contracts/query-corpus/scopus.txt", "minimum_lines": 1},
+    {"id": "web-of-science-basic", "dialect": "web_of_science", "path": "contracts/query-corpus/web-of-science.txt", "minimum_lines": 1}
+  ]
+}

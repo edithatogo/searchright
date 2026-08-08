@@ -4,11 +4,18 @@
   "observed_at": "2026-08-06",
   "repositories": [
     {
-      "repository": "edithatogo/sourceright",
-      "role": "reference verification and provider evidence",
-      "decision": "adopt_shared_core_after_parity",
+      "repository": "edithatogo/PRISMA.jl",
+      "role": "PRISMA checklist and flow generation",
+      "decision": "compatibility_first_then_optional_adapter",
+      "priority": "should",
+      "evidence": "docs/estate-integration.md"
+    },
+    {
+      "repository": "edithatogo/UOGTO",
+      "role": "systematic-review consumer with direct database and snowballing code",
+      "decision": "replace_with_searchright_after_fixture_parity",
       "priority": "must",
-      "evidence": "migration/sourceright/replacement-map.yaml"
+      "evidence": "migration/companion-repositories/uogto.json"
     },
     {
       "repository": "edithatogo/academic-research-skills",
@@ -18,25 +25,11 @@
       "evidence": "skills/systematic-search/SKILL.md"
     },
     {
-      "repository": "edithatogo/PRISMA.jl",
-      "role": "PRISMA checklist and flow generation",
-      "decision": "compatibility_first_then_optional_adapter",
-      "priority": "should",
+      "repository": "edithatogo/authentext",
+      "role": "prose quality tooling",
+      "decision": "optional_documentation_quality_integration",
+      "priority": "could",
       "evidence": "docs/estate-integration.md"
-    },
-    {
-      "repository": "edithatogo/standards_check",
-      "role": "reporting-checklist provenance",
-      "decision": "reuse_as_standards_upstream",
-      "priority": "must",
-      "evidence": "contracts/standards/index.json"
-    },
-    {
-      "repository": "edithatogo/synergy-dataset",
-      "role": "screening benchmark corpus",
-      "decision": "reuse_as_benchmark_upstream",
-      "priority": "must",
-      "evidence": "benchmarks/README.md"
     },
     {
       "repository": "edithatogo/citeweft",
@@ -44,13 +37,6 @@
       "decision": "reuse_through_optional_document_evidence_adapter",
       "priority": "must",
       "evidence": "docs/citeweft-integration.md"
-    },
-    {
-      "repository": "edithatogo/scholarly-publishing-agents",
-      "role": "citation integrity and publication agents",
-      "decision": "delegate_search_execution_to_searchright",
-      "priority": "should",
-      "evidence": "docs/estate-integration.md"
     },
     {
       "repository": "edithatogo/co-researcher",
@@ -67,25 +53,11 @@
       "evidence": "migration/estate/replacement-decisions.json"
     },
     {
-      "repository": "edithatogo/reimbursement-atlas",
-      "role": "evidence search consumer",
-      "decision": "audit_and_replace_project_specific_search_code",
-      "priority": "should",
-      "evidence": "migration/estate/replacement-decisions.json"
-    },
-    {
       "repository": "edithatogo/global-medicines-atlas",
       "role": "evidence search consumer",
       "decision": "audit_and_replace_project_specific_search_code",
       "priority": "should",
       "evidence": "migration/estate/replacement-decisions.json"
-    },
-    {
-      "repository": "edithatogo/osf-mcp-server",
-      "role": "OSF registration and artefact integration",
-      "decision": "reuse_for_protocol_and_archive_handoff",
-      "priority": "could",
-      "evidence": "docs/estate-integration.md"
     },
     {
       "repository": "edithatogo/mcp-registry",
@@ -95,6 +67,20 @@
       "evidence": "registry/status.json"
     },
     {
+      "repository": "edithatogo/osf-mcp-server",
+      "role": "OSF registration and artefact integration",
+      "decision": "reuse_for_protocol_and_archive_handoff",
+      "priority": "could",
+      "evidence": "docs/estate-integration.md"
+    },
+    {
+      "repository": "edithatogo/reimbursement-atlas",
+      "role": "evidence search consumer",
+      "decision": "audit_and_replace_project_specific_search_code",
+      "priority": "should",
+      "evidence": "migration/estate/replacement-decisions.json"
+    },
+    {
       "repository": "edithatogo/repository-standards",
       "role": "estate-wide engineering controls",
       "decision": "inherit_and_report_conformance",
@@ -102,11 +88,39 @@
       "evidence": "docs/repository-standards-alignment.md"
     },
     {
-      "repository": "edithatogo/authentext",
-      "role": "prose quality tooling",
-      "decision": "optional_documentation_quality_integration",
-      "priority": "could",
+      "repository": "edithatogo/scholarly-publishing-agents",
+      "role": "citation integrity and publication agents",
+      "decision": "delegate_search_execution_to_searchright",
+      "priority": "should",
       "evidence": "docs/estate-integration.md"
+    },
+    {
+      "repository": "edithatogo/sourceright",
+      "role": "reference verification and provider evidence",
+      "decision": "adopt_shared_core_after_parity",
+      "priority": "must",
+      "evidence": "migration/sourceright/replacement-map.yaml"
+    },
+    {
+      "repository": "edithatogo/standards_check",
+      "role": "reporting-checklist provenance",
+      "decision": "reuse_as_standards_upstream",
+      "priority": "must",
+      "evidence": "contracts/standards/index.json"
+    },
+    {
+      "repository": "edithatogo/synergy-dataset",
+      "role": "screening benchmark corpus",
+      "decision": "reuse_as_benchmark_upstream",
+      "priority": "must",
+      "evidence": "benchmarks/README.md"
+    },
+    {
+      "repository": "edithatogo/voiage",
+      "role": "bibliographic verification consumer with direct Crossref/BibTeX code",
+      "decision": "replace_with_sourceright_preview_apply",
+      "priority": "must",
+      "evidence": "migration/companion-repositories/voiage.json"
     }
   ]
 }

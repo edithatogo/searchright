@@ -1,0 +1,113 @@
+{
+  "schema_version": "org.searchright.provider-contract-baselines.v1",
+  "source_epoch": "2026-08-08",
+  "automatic_updates": false,
+  "providers": [
+    {
+      "provider_id": "pubmed-esearch",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+      "allowed_hosts": [
+        "eutils.ncbi.nlm.nih.gov"
+      ],
+      "parser_symbol": "PubMedSearchProvider::execute_page",
+      "fixture": "provider-fixtures/mvp/pubmed-esearch.json",
+      "fixture_sha256": "45b822567cbc086000bf2091b255d6f7dd37435291bb719a58e732cbde7adb17",
+      "shape_assertions": [
+        {
+          "pointer": "/esearchresult/count",
+          "equals": "2"
+        },
+        {
+          "pointer": "/esearchresult/idlist/0",
+          "equals": "00000001"
+        }
+      ],
+      "live_canary_status": "not_executed"
+    },
+    {
+      "provider_id": "pubmed-esummary",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi",
+      "allowed_hosts": [
+        "eutils.ncbi.nlm.nih.gov"
+      ],
+      "parser_symbol": "parse_pubmed_summary_page",
+      "fixture": "provider-fixtures/mvp/pubmed-esummary.json",
+      "fixture_sha256": "e46220d6432c94fb376450f952677a8993a50a7a60fb4eb4893f2b3b9359a714",
+      "shape_assertions": [
+        {
+          "pointer": "/result/uids/0",
+          "equals": "00000001"
+        },
+        {
+          "pointer": "/result/00000001/articleids/0/value",
+          "equals": "10.1000/searchright.1"
+        }
+      ],
+      "live_canary_status": "not_executed"
+    },
+    {
+      "provider_id": "europe-pmc",
+      "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+      "allowed_hosts": [
+        "www.ebi.ac.uk"
+      ],
+      "parser_symbol": "parse_europe_pmc_page",
+      "fixture": "provider-fixtures/mvp/europe-pmc.json",
+      "fixture_sha256": "60c45faedb991cf37c75a563af968e6945b4146a17eef67621e64d2e37b73516",
+      "shape_assertions": [
+        {
+          "pointer": "/hitCount",
+          "equals": 1
+        },
+        {
+          "pointer": "/resultList/result/0/doi",
+          "equals": "10.1000/searchright.3"
+        }
+      ],
+      "live_canary_status": "not_executed"
+    },
+    {
+      "provider_id": "crossref",
+      "endpoint": "https://api.crossref.org/works",
+      "allowed_hosts": [
+        "api.crossref.org"
+      ],
+      "parser_symbol": "parse_crossref_page",
+      "fixture": "provider-fixtures/mvp/crossref.json",
+      "fixture_sha256": "a053da795feb62ff4b3cd46904ba08007432a6542e0a0a46f57b04c8c03d7d2c",
+      "shape_assertions": [
+        {
+          "pointer": "/message/total-results",
+          "equals": 1
+        },
+        {
+          "pointer": "/message/items/0/DOI",
+          "equals": "10.1000/searchright.4"
+        }
+      ],
+      "live_canary_status": "not_executed"
+    },
+    {
+      "provider_id": "openalex",
+      "endpoint": "https://api.openalex.org/works",
+      "allowed_hosts": [
+        "api.openalex.org"
+      ],
+      "parser_symbol": "parse_openalex_page",
+      "fixture": "provider-fixtures/mvp/openalex.json",
+      "fixture_sha256": "c61f93fa81f6e49dda9c78797ecd828654df041565e5dbb25fcec667245ce446",
+      "shape_assertions": [
+        {
+          "pointer": "/meta/count",
+          "equals": 1
+        },
+        {
+          "pointer": "/results/0/id",
+          "equals": "https://openalex.org/W000000005"
+        }
+      ],
+      "live_canary_status": "not_executed"
+    }
+  ],
+  "claim_boundary": "A pinned response baseline detects local fixture and expected-shape drift; it does not prove current upstream API compatibility."
+}

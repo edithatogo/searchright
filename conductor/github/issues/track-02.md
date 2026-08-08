@@ -12,7 +12,8 @@ Deliver deterministic, reviewable query translation with explicit fidelity and l
 ## Contract
 
 - Horizon: `foundation`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `01`
 - Requirements: `SR-005, SR-006, SR-007`
@@ -27,6 +28,6 @@ Deliver deterministic, reviewable query translation with explicit fidelity and l
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

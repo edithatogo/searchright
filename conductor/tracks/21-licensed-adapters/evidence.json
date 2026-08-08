@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "21",
   "title": "Licensed BYO-access adapters",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -14,6 +15,7 @@
     "contracts/licensed/web-of-science.yaml",
     "contracts/examples/licensed-adapter.yaml"
   ],
+  "traceability": "conductor/tracks/21-licensed-adapters/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py"
   ],
@@ -25,7 +27,7 @@
     "Implement/test vendor-specific live transports without storing credentials.",
     "Record redacted user-run smoke receipts; no bundled access is permitted."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-21",

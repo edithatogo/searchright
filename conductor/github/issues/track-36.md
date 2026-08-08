@@ -13,6 +13,7 @@ Exercise the complete candidate in clean-room builds, downstream canaries, bound
 
 - Horizon: `mature`
 - Status: `release_prepared`
+- Implementation: `scaffolded`
 - Evidence: `source_verified`
 - Dependencies: `18, 19, 29, 30, 31, 32, 33, 34, 35`
 - Requirements: `SR-039, SR-040, SR-068, SR-089, SR-090, SR-091`
@@ -27,6 +28,6 @@ Exercise the complete candidate in clean-room builds, downstream canaries, bound
 
 ## Claim boundary
 
-The release candidate and pilot programme are prepared, not executed or accepted.
+The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/13-integration-passports-github-context/plan.m
 
 ## Task subissues
 
-- [x] T01: Implement and document the track's source deliverables. (`track-13-phase-1-task-01`)
+- [x] T01: Implement and document every acceptance assertion with symbol- and test-level mappings. (`track-13-phase-1-task-01`)
 
 ## Evidence rule
 

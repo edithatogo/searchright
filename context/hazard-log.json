@@ -1,10 +1,6 @@
 {
-  "schema_version": "org.searchright.hazard-log.v1",
   "hazards": [
     {
-      "id": "H-001",
-      "hazard": "Provider or full-text content injects instructions into an agent workflow.",
-      "severity": "critical",
       "controls": [
         "Treat retrieved content as data",
         "Untrusted-content policy",
@@ -14,12 +10,12 @@
         "docs/security/threat-model.md",
         "crates/searchright-policy/src/lib.rs"
       ],
-      "residual_status": "open_runtime_evidence"
+      "hazard": "Provider or full-text content injects instructions into an agent workflow.",
+      "id": "H-001",
+      "residual_status": "open_runtime_evidence",
+      "severity": "critical"
     },
     {
-      "id": "H-002",
-      "hazard": "A crafted provider endpoint causes SSRF or cloud-metadata access.",
-      "severity": "critical",
       "controls": [
         "Declared host allowlists",
         "Block local/link-local/metadata ranges",
@@ -29,12 +25,12 @@
         "docs/security/egress-policy.md",
         "crates/evidence-search-core/src/provider.rs"
       ],
-      "residual_status": "open_adversarial_tests"
+      "hazard": "A crafted provider endpoint causes SSRF or cloud-metadata access.",
+      "id": "H-002",
+      "residual_status": "open_adversarial_tests",
+      "severity": "critical"
     },
     {
-      "id": "H-003",
-      "hazard": "Credentials or licensed-access details enter logs, receipts or fixtures.",
-      "severity": "critical",
       "controls": [
         "Secret-typed configuration",
         "Redacted receipts",
@@ -44,12 +40,12 @@
         "docs/security/threat-model.md",
         "scripts/check_secrets.py"
       ],
-      "residual_status": "open_live_validation"
+      "hazard": "Credentials or licensed-access details enter logs, receipts or fixtures.",
+      "id": "H-003",
+      "residual_status": "open_live_validation",
+      "severity": "critical"
     },
     {
-      "id": "H-004",
-      "hazard": "Automated screening excludes eligible studies.",
-      "severity": "critical",
       "controls": [
         "Human final-exclusion default",
         "Authority contracts",
@@ -59,12 +55,12 @@
         "crates/searchright-contracts/src/screening.rs",
         "skills/systematic-search/SKILL.md"
       ],
-      "residual_status": "open_human_calibration"
+      "hazard": "Automated screening excludes eligible studies.",
+      "id": "H-004",
+      "residual_status": "open_human_calibration",
+      "severity": "critical"
     },
     {
-      "id": "H-005",
-      "hazard": "Extraction evidence is treated as canonical bibliographic truth.",
-      "severity": "high",
       "controls": [
         "DocumentEvidence canonical_write_permitted=false",
         "One-way CiteWeft adapter",
@@ -74,12 +70,12 @@
         "contracts/json-schema/document-evidence.v1.schema.json",
         "docs/citeweft-integration.md"
       ],
-      "residual_status": "source_controlled"
+      "hazard": "Extraction evidence is treated as canonical bibliographic truth.",
+      "id": "H-005",
+      "residual_status": "source_controlled",
+      "severity": "high"
     },
     {
-      "id": "H-006",
-      "hazard": "Whole documents or sensitive full text are retained or exported unnecessarily.",
-      "severity": "high",
       "controls": [
         "Metadata-only default",
         "Retention field and governance policy",
@@ -89,12 +85,12 @@
         "context/capability-matrix.json",
         "crates/searchright-contracts/src/document.rs"
       ],
-      "residual_status": "open_institutional_review"
+      "hazard": "Whole documents or sensitive full text are retained or exported unnecessarily.",
+      "id": "H-006",
+      "residual_status": "open_institutional_review",
+      "severity": "high"
     },
     {
-      "id": "H-007",
-      "hazard": "Integration drift silently changes behavior or public claims.",
-      "severity": "high",
       "controls": [
         "Exact revision passports",
         "Consumer-driven contract suite",
@@ -107,12 +103,12 @@
         "scripts/check_integration_passports.py",
         "scripts/check_consumer_contracts.py"
       ],
-      "residual_status": "open_scheduled_execution"
+      "hazard": "Integration drift silently changes behavior or public claims.",
+      "id": "H-007",
+      "residual_status": "open_scheduled_execution",
+      "severity": "high"
     },
     {
-      "id": "H-008",
-      "hazard": "Issue synchronisation creates, edits or closes remote work without authority.",
-      "severity": "high",
       "controls": [
         "Dry-run default",
         "Dual apply opt-in",
@@ -123,27 +119,27 @@
         "scripts/sync_github_issues.py",
         "conductor/github/README.md"
       ],
-      "residual_status": "source_controlled"
+      "hazard": "Issue synchronisation creates, edits or closes remote work without authority.",
+      "id": "H-008",
+      "residual_status": "source_controlled",
+      "severity": "high"
     },
     {
-      "id": "H-009",
-      "hazard": "Audit events are modified, reordered or incompletely persisted.",
-      "severity": "high",
       "controls": [
         "Hash-linked events",
         "Single-writer store",
         "Tamper and crash-recovery tests"
       ],
       "evidence": [
-        "crates/searchright-contracts/src/audit.rs",
+        "crates/evidence-search-contracts/src/audit.rs",
         "crates/searchright-store/src/lib.rs"
       ],
-      "residual_status": "open_compiler_and_fault_tests"
+      "hazard": "Audit events are modified, reordered or incompletely persisted.",
+      "id": "H-009",
+      "residual_status": "open_compiler_and_fault_tests",
+      "severity": "high"
     },
     {
-      "id": "H-010",
-      "hazard": "Supply-chain compromise changes dependencies, actions or release artefacts.",
-      "severity": "critical",
       "controls": [
         "Exact revisions and action SHAs",
         "Locked builds",
@@ -155,12 +151,12 @@
         ".github/workflows/security.yml",
         ".github/workflows/release.yml"
       ],
-      "residual_status": "open_executed_ci"
+      "hazard": "Supply-chain compromise changes dependencies, actions or release artefacts.",
+      "id": "H-010",
+      "residual_status": "open_executed_ci",
+      "severity": "critical"
     },
     {
-      "id": "H-011",
-      "hazard": "Source-level completeness is overclaimed as a mature or validated product.",
-      "severity": "high",
       "controls": [
         "Evidence ladder",
         "Claim-boundary checks",
@@ -170,12 +166,12 @@
         "context/claim-boundaries.json",
         "PROJECT_STATUS.md"
       ],
-      "residual_status": "source_controlled"
+      "hazard": "Source-level completeness is overclaimed as a mature or validated product.",
+      "id": "H-011",
+      "residual_status": "source_controlled",
+      "severity": "high"
     },
     {
-      "id": "H-012",
-      "hazard": "Cross-repository code duplication creates divergent security and methodological behavior.",
-      "severity": "high",
       "controls": [
         "Shared core",
         "Integration passports",
@@ -187,12 +183,12 @@
         "integration/passports/index.json",
         "integration/consumer-contract-suite.json"
       ],
-      "residual_status": "open_downstream_migrations"
+      "hazard": "Cross-repository code duplication creates divergent security and methodological behavior.",
+      "id": "H-012",
+      "residual_status": "open_downstream_migrations",
+      "severity": "high"
     },
     {
-      "id": "H-013",
-      "hazard": "GitHub bootstrap or Project synchronisation mutates or deletes remote state beyond the manifest authority.",
-      "severity": "critical",
       "controls": [
         "Dry-run unconditional default",
         "Dual environment opt-in and clean-tree guard",
@@ -204,12 +200,12 @@
         "scripts/sync_github_project.py",
         "conductor/github/repository-settings.json"
       ],
-      "residual_status": "open_live_control_plane_rehearsal"
+      "hazard": "GitHub bootstrap or Project synchronisation mutates or deletes remote state beyond the manifest authority.",
+      "id": "H-013",
+      "residual_status": "open_live_control_plane_rehearsal",
+      "severity": "critical"
     },
     {
-      "id": "H-014",
-      "hazard": "GitHub issue or Project status is mistaken for implementation or evidence completion.",
-      "severity": "high",
       "controls": [
         "Remote state cannot promote evidence",
         "Separate Conductor keys and evidence levels",
@@ -219,12 +215,12 @@
         "conductor/github/project.json",
         "context/claim-boundaries.json"
       ],
-      "residual_status": "source_controlled"
+      "hazard": "GitHub issue or Project status is mistaken for implementation or evidence completion.",
+      "id": "H-014",
+      "residual_status": "source_controlled",
+      "severity": "high"
     },
     {
-      "id": "H-015",
-      "hazard": "Authenticated remote MCP leaks data or authority across tenant boundaries.",
-      "severity": "critical",
       "controls": [
         "Tenant-scoped identities and regions",
         "Cross-tenant aggregation denied",
@@ -235,12 +231,12 @@
         "crates/searchright-contracts/src/access.rs",
         "docs/security/authenticated-remote-mcp.md"
       ],
-      "residual_status": "open_adversarial_and_deployment_tests"
+      "hazard": "Authenticated remote MCP leaks data or authority across tenant boundaries.",
+      "id": "H-015",
+      "residual_status": "open_adversarial_and_deployment_tests",
+      "severity": "critical"
     },
     {
-      "id": "H-016",
-      "hazard": "Telemetry exports full text, search terms, credentials or sensitive identifiers.",
-      "severity": "critical",
       "controls": [
         "Telemetry disabled by default",
         "Attribute allowlist and prohibited list",
@@ -251,12 +247,12 @@
         "contracts/json-schema/telemetry-policy.v1.schema.json",
         "crates/searchright-ops/src/lib.rs"
       ],
-      "residual_status": "open_runtime_redaction_test"
+      "hazard": "Telemetry exports full text, search terms, credentials or sensitive identifiers.",
+      "id": "H-016",
+      "residual_status": "open_runtime_redaction_test",
+      "severity": "critical"
     },
     {
-      "id": "H-017",
-      "hazard": "Backups cannot be restored or violate retention, encryption or key-separation policy.",
-      "severity": "high",
       "controls": [
         "Content-class and digest manifest",
         "Encryption/key-reference invariant",
@@ -267,12 +263,12 @@
         "contracts/json-schema/backup-manifest.v1.schema.json",
         "docs/operations/backup-restore.md"
       ],
-      "residual_status": "open_restore_drill"
+      "hazard": "Backups cannot be restored or violate retention, encryption or key-separation policy.",
+      "id": "H-017",
+      "residual_status": "open_restore_drill",
+      "severity": "high"
     },
     {
-      "id": "H-018",
-      "hazard": "A Searchright release breaks CiteWeft or Sourceright despite local tests.",
-      "severity": "high",
       "controls": [
         "Ordered release train",
         "Exact integration pins",
@@ -283,12 +279,12 @@
         "integration/release-train.json",
         ".github/workflows/integration-release-train.yml"
       ],
-      "residual_status": "open_downstream_canary"
+      "hazard": "A Searchright release breaks CiteWeft or Sourceright despite local tests.",
+      "id": "H-018",
+      "residual_status": "open_downstream_canary",
+      "severity": "high"
     },
     {
-      "id": "H-019",
-      "hazard": "Remote MCP authentication, replay or resource exhaustion bypasses authority and execution budgets.",
-      "severity": "critical",
       "controls": [
         "Authenticated principal and tenant policy",
         "Nonce/expiry and replay tests in maturity plan",
@@ -299,12 +295,12 @@
         "docs/security/authenticated-remote-mcp.md",
         "conductor/tracks/34-authenticated-remote-mcp/spec.md"
       ],
-      "residual_status": "open_runtime_security_evidence"
+      "hazard": "Remote MCP authentication, replay or resource exhaustion bypasses authority and execution budgets.",
+      "id": "H-019",
+      "residual_status": "open_runtime_security_evidence",
+      "severity": "critical"
     },
     {
-      "id": "H-020",
-      "hazard": "Prepared release-candidate, pilot or maturity artefacts are overclaimed as passed or published.",
-      "severity": "high",
       "controls": [
         "Prepared-not-executed status",
         "Evidence-gated rehearsal and pilot exits",
@@ -316,7 +312,95 @@
         "conductor/maturity-dossier.json",
         "context/claim-boundaries.json"
       ],
-      "residual_status": "source_controlled"
+      "hazard": "Prepared release-candidate, pilot or maturity artefacts are overclaimed as passed or published.",
+      "id": "H-020",
+      "residual_status": "source_controlled",
+      "severity": "high"
+    },
+    {
+      "controls": [
+        "Exact rights-clear response baselines",
+        "Expected JSON-pointer assertions",
+        "Raw response digest and parser/runtime versioning",
+        "Redacted opt-in live canaries before support claims"
+      ],
+      "evidence": [
+        "integration/provider-contract-baselines.json",
+        "scripts/check_provider_contract_baselines.py",
+        "provider-fixtures/mvp/"
+      ],
+      "hazard": "A provider API changes response shape or semantics while cached fixtures continue to pass.",
+      "id": "H-021",
+      "residual_status": "open_live_canary",
+      "severity": "high"
+    },
+    {
+      "controls": [
+        "Canonical-upstream and fork classification",
+        "Separate code/content/data/model licence fields",
+        "Reference-only and blocked redistribution states",
+        "Licence-firewall gate"
+      ],
+      "evidence": [
+        "scripts/check_licence_firewall.py",
+        "integration/passports/index.json",
+        "migration/companion-repositories/index.json"
+      ],
+      "hazard": "Code, standards text, prompts or datasets with unclear rights contaminate a distributable Searchright artefact.",
+      "id": "H-022",
+      "residual_status": "open_human_licence_review",
+      "severity": "critical"
+    },
+    {
+      "controls": [
+        "Sealed benchmark identifiers",
+        "No hidden labels in repository",
+        "Independent mounted evaluation set",
+        "Environment and corpus digest receipts"
+      ],
+      "evidence": [
+        "benchmarks/methodology/manifest.json",
+        "scripts/check_methodology_benchmarks.py"
+      ],
+      "hazard": "Benchmark labels or evaluation answers leak into development fixtures, prompts or ranking agents.",
+      "id": "H-023",
+      "residual_status": "open_independent_evaluation",
+      "severity": "high"
+    },
+    {
+      "controls": [
+        "Caller-supplied verified audit head",
+        "Human-only final decision invariant",
+        "Derived/noncanonical schema markers",
+        "Bundle manifests preserve hashes without granting authority"
+      ],
+      "evidence": [
+        "scripts/reduce_review_events.py",
+        "scripts/review_bundle.py",
+        "contracts/json-schema/review-state-snapshot.v1.schema.json"
+      ],
+      "hazard": "A derived review-state snapshot or portable bundle is mistaken for canonical screening authority.",
+      "id": "H-024",
+      "residual_status": "source_controlled_runtime_fault_tests_open",
+      "severity": "critical"
+    },
+    {
+      "controls": [
+        "Workspace-wide publish=false default",
+        "Explicit public-package allowlist",
+        "Frozen contract surface",
+        "Public API and SemVer workflows"
+      ],
+      "evidence": [
+        "release/public-packages.json",
+        "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
+        ".github/workflows/public-api.yml"
+      ],
+      "hazard": "An internal workspace crate or unstable contract is published prematurely and creates unsupported SemVer obligations.",
+      "id": "H-025",
+      "residual_status": "source_controlled_compiler_gate_open",
+      "severity": "high"
     }
-  ]
+  ],
+  "schema_version": "org.searchright.hazard-log.v1"
 }

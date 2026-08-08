@@ -1,0 +1,148 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "01",
+  "title": "Contract catalogue and code generation",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/01-contract-catalog/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T01-A001",
+      "statement": "Validate all JSON Schemas and examples",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "contracts/schema-catalog.json",
+        "scripts/validate_repository.py"
+      ],
+      "implementation_symbols": [
+        "scripts/validate_repository.py::validate_schemas_and_examples"
+      ],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/01-contract-catalog/evidence.json"
+      ],
+      "open_gates": [
+        "Generate and compare Rust-derived schemas after compiler bootstrap."
+      ],
+      "permitted_claim": "All checked-in JSON Schemas and examples are statically validated; Rust-generation parity is not yet proven."
+    },
+    {
+      "assertion_id": "T01-A002",
+      "statement": "Generate schemas from Rust types and diff against checked-in canonical forms",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/evidence-search-contracts",
+        "contracts/schema-catalog.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/01-contract-catalog/evidence.json"
+      ],
+      "open_gates": [
+        "Install Rust and generate schemas from Rust types.",
+        "Diff generated output against canonical schemas."
+      ],
+      "permitted_claim": "Rust types and canonical schemas coexist, but code-generation parity is not claimed."
+    },
+    {
+      "assertion_id": "T01-A003",
+      "statement": "Add compatibility fixtures and migration/version rules",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
+        "scripts/sync_schema_surface.py"
+      ],
+      "implementation_symbols": [
+        "scripts/sync_schema_surface.py::render"
+      ],
+      "deterministic_tests": [
+        "python scripts/sync_schema_surface.py --check"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/01-contract-catalog/evidence.json"
+      ],
+      "open_gates": [
+        "Add semantic compatibility fixtures and migration tests before a stable release."
+      ],
+      "permitted_claim": "Exact schema, WIT, OpenAPI and MCP surface drift is gated; semantic compatibility remains separate."
+    },
+    {
+      "assertion_id": "T01-A004",
+      "statement": "Add report/study linkage and protocol-amendment contracts",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-contracts/src/study.rs",
+        "crates/searchright-contracts/src/plan.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/json-schema/study-graph.v1.schema.json",
+        "contracts/json-schema/protocol-amendment.v1.schema.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/01-contract-catalog/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and exercise report/study and amendment invariants."
+      ],
+      "permitted_claim": "Report/study linkage and protocol-amendment contracts are checked in and statically validated."
+    },
+    {
+      "assertion_id": "T01-A005",
+      "statement": "Generate TypeScript/Python bindings only as thin contract packages",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "sdk/manifest.json",
+        "release/public-packages.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_public_package_policy.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/01-contract-catalog/evidence.json"
+      ],
+      "open_gates": [
+        "Generate thin TypeScript and Python contract packages only after the neutral schema surface stabilises."
+      ],
+      "permitted_claim": "Bindings are planned but not implemented."
+    },
+    {
+      "assertion_id": "T01-A006",
+      "statement": "Publish contract conformance matrix",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "contracts/schema-catalog.json",
+        "conductor/traceability-overrides.json",
+        "scripts/check_traceability.py"
+      ],
+      "implementation_symbols": [
+        "scripts/check_traceability.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/01-contract-catalog/evidence.json"
+      ],
+      "open_gates": [
+        "Add compiler and downstream-consumer columns to release evidence."
+      ],
+      "permitted_claim": "The schema catalogue and assertion traceability form a static conformance matrix; runtime conformance is not claimed."
+    }
+  ]
+}

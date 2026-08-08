@@ -1,0 +1,50 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/scholarly-publishing-agents",
+  "revision": "4fb15b2c5f7b4b8aa90e79272fa8d09eb350da9a",
+  "role": "publication workflow orchestration",
+  "priority": "should",
+  "changes": [
+    {
+      "id": "thin-systematic-search-skill",
+      "action": "Replace procedural provider and PRISMA implementation instructions with the Searchright systematic-search skill.",
+      "target_paths": [
+        "workflows/01-manuscript-preparation/literature-review.md"
+      ],
+      "owner": "skill maintainer",
+      "required_evidence": [
+        "scenario parity"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "thin-citation-verification",
+      "action": "Delegate citation validation to Sourceright rather than maintaining parallel logic.",
+      "target_paths": [
+        "skills/citation-verification.md",
+        "rules/citation-integrity.md"
+      ],
+      "owner": "skill maintainer",
+      "required_evidence": [
+        "citation scenario tests"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "capability-manifest",
+      "action": "Declare MCP tools, read/write authority and compatible contract versions.",
+      "target_paths": [
+        "capabilities/**"
+      ],
+      "owner": "skill maintainer",
+      "required_evidence": [
+        "default-deny test"
+      ],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+}

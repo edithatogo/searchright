@@ -3,6 +3,7 @@
   "track_id": "36",
   "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
   "status": "release_prepared",
+  "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -14,6 +15,7 @@
     "registry/status.json",
     "scripts/package_source.py"
   ],
+  "traceability": "conductor/tracks/36-release-candidate-pilots/traceability.json",
   "static_checks": [
     "python scripts/check_release_rehearsal.py",
     "python scripts/check_packaging_reproducibility.py",
@@ -32,7 +34,7 @@
     "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
     "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
   ],
-  "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted.",
+  "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-36",

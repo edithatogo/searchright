@@ -3,15 +3,16 @@
 
 Parent phase key: `track-09-phase-1`
 Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-cli/src/main.rs`
-  - [x] `crates/searchright/src/engine.rs`
-  - [x] `contracts/interface-catalog.json`
-  - [x] `docs/adrs/0007-shared-application-facade.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-cli/src/main.rs`
+  - [x] Present source path: `crates/searchright/src/engine.rs`
+  - [x] Present source path: `contracts/interface-catalog.json`
+  - [x] Present source path: `docs/adrs/0007-shared-application-facade.md`
+  - [x] Assertion ledger: `conductor/tracks/09-cli-mvp/traceability.json`
 
 ## Completion and evidence contract
 

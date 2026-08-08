@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "13",
   "title": "Integration passports, GitHub issue hierarchy and context spine",
-  "status": "integration_prepared",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -37,8 +38,14 @@
     "contracts/examples/consumer-contract-suite.json",
     "integration/consumer-contract-suite.json",
     "scripts/check_consumer_contracts.py",
-    "docs/adrs/0016-federated-consumer-contracts.md"
+    "docs/adrs/0016-federated-consumer-contracts.md",
+    "integration/github/portfolio-project.json",
+    "integration/github/portfolio-readme.md",
+    "scripts/check_portfolio_project.py",
+    "scripts/plan_github_portfolio.py",
+    "scripts/check_licence_firewall.py"
   ],
+  "traceability": "conductor/tracks/13-integration-passports-github-context/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_integration_passports.py",
@@ -47,7 +54,9 @@
     "python scripts/check_context_integrity.py",
     "python scripts/check_integration_drift.py",
     "python scripts/render_github_issues.py --check",
-    "python scripts/sync_context_lock.py --check"
+    "python scripts/sync_context_lock.py --check",
+    "python scripts/check_portfolio_project.py",
+    "python scripts/check_licence_firewall.py"
   ],
   "requirements": [
     "SR-065",
@@ -60,7 +69,7 @@
     "Execute consumer-driven contract tests in each pinned downstream repository.",
     "Record scheduled integration-drift receipts against the live repository estate."
   ],
-  "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed.",
+  "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-13",

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/review-bundle-manifest.v1.schema.json",
+  "title": "Searchright deterministic review bundle manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "format_version", "bundle_id", "review_id", "source_epoch",
+    "entries", "payload_bytes", "entry_count", "descriptor_merkle_root", "policy",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.review-bundle-manifest.v1"},
+    "format_version": {"const": "1"},
+    "bundle_id": {"type": "string", "minLength": 1},
+    "review_id": {"type": "string", "minLength": 1},
+    "source_epoch": {"type": "string", "minLength": 1},
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "archive_path", "role", "media_type", "size", "sha256"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1, "not": {"pattern": "(^/|(^|/)\\.\\.(/|$)|\\\\)"}},
+          "archive_path": {"type": "string", "pattern": "^payload/[^/].*"},
+          "role": {"type": "string", "minLength": 1},
+          "media_type": {"type": "string", "minLength": 1},
+          "size": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    },
+    "payload_bytes": {"type": "integer", "minimum": 0},
+    "entry_count": {"type": "integer", "minimum": 1},
+    "descriptor_merkle_root": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deterministic", "network_required", "symlinks_allowed", "external_writes_allowed",
+        "secret_scan_required", "max_files", "max_total_bytes", "max_file_bytes"
+      ],
+      "properties": {
+        "deterministic": {"const": true},
+        "network_required": {"const": false},
+        "symlinks_allowed": {"const": false},
+        "external_writes_allowed": {"const": false},
+        "secret_scan_required": {"const": true},
+        "max_files": {"type": "integer", "minimum": 1},
+        "max_total_bytes": {"type": "integer", "minimum": 1},
+        "max_file_bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "claim_boundary": {"type": "string", "minLength": 1}
+  }
+}

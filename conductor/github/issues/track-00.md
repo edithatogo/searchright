@@ -12,7 +12,8 @@ Establish the Git repository, Conductor context, pinned toolchain, standards inh
 ## Contract
 
 - Horizon: `foundation`
-- Status: `source_implemented`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `none`
 - Requirements: `none`
@@ -27,6 +28,6 @@ Establish the Git repository, Conductor context, pinned toolchain, standards inh
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

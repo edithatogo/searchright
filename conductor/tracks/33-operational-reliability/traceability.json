@@ -1,0 +1,110 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "33",
+  "title": "Operational observability, backup, restore and incident response",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/33-operational-reliability/spec.md#scope",
+  "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T33-A001",
+      "statement": "Health/readiness and privacy-preserving telemetry",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ops/src/lib.rs",
+        "crates/searchright-contracts/src/ops.rs",
+        "contracts/examples/component-health.json",
+        "contracts/examples/telemetry-policy.json",
+        "contracts/examples/backup-manifest.json",
+        "contracts/examples/incident-record.json",
+        "docs/operations/reliability.md",
+        "docs/operations/backup-restore.md",
+        "docs/operations/incident-response.md",
+        ".github/workflows/resilience.yml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/33-operational-reliability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute operations policy tests and failure-injection scenarios.",
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T33-A002",
+      "statement": "Encrypted backup and restore rehearsal",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ops/src/lib.rs",
+        "crates/searchright-contracts/src/ops.rs",
+        "contracts/examples/component-health.json",
+        "contracts/examples/telemetry-policy.json",
+        "contracts/examples/backup-manifest.json",
+        "contracts/examples/incident-record.json",
+        "docs/operations/reliability.md",
+        "docs/operations/backup-restore.md",
+        "docs/operations/incident-response.md",
+        ".github/workflows/resilience.yml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/33-operational-reliability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute operations policy tests and failure-injection scenarios.",
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T33-A003",
+      "statement": "Incident response, cancellation and resilience objectives",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-ops/src/lib.rs",
+        "crates/searchright-contracts/src/ops.rs",
+        "contracts/examples/component-health.json",
+        "contracts/examples/telemetry-policy.json",
+        "contracts/examples/backup-manifest.json",
+        "contracts/examples/incident-record.json",
+        "docs/operations/reliability.md",
+        "docs/operations/backup-restore.md",
+        "docs/operations/incident-response.md",
+        ".github/workflows/resilience.yml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/33-operational-reliability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute operations policy tests and failure-injection scenarios.",
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

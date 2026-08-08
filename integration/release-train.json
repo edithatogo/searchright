@@ -64,5 +64,8 @@
     "Re-run consumer fixtures and preserve the failed receipt.",
     "Do not delete prior schemas, fixtures, tags or migration evidence."
   ],
-  "claim_boundary": "A release-train plan is not a cross-repository compatibility receipt or a published release."
+  "claim_boundary": "A release-train plan is not a cross-repository compatibility receipt or a published release.",
+  "ecosystem_lock": "integration/ecosystem-lock.json",
+  "contract_surface": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
+  "public_package_policy": "release/public-packages.json"
 }

@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "10",
   "title": "MCP stdio server MVP",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -11,6 +12,7 @@
     "contracts/interface-catalog.json",
     "server.json"
   ],
+  "traceability": "conductor/tracks/10-mcp-mvp/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_cli_mcp_parity.py"
@@ -22,7 +24,7 @@
     "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
     "Validate structured output schemas against live client implementations."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-10",

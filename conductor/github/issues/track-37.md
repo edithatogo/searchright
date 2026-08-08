@@ -13,6 +13,7 @@ Release version 1.0 only after every maturity domain has current evidence, no cr
 
 - Horizon: `mature`
 - Status: `external_evidence_required`
+- Implementation: `external_evidence_required`
 - Evidence: `source_verified`
 - Dependencies: `30, 31, 32, 33, 34, 35, 36`
 - Requirements: `SR-050, SR-061, SR-092`
@@ -27,6 +28,6 @@ Release version 1.0 only after every maturity domain has current evidence, no cr
 
 ## Claim boundary
 
-Searchright remains below 1.0 maturity until all named evidence and external decisions exist.
+Searchright remains below 1.0 maturity until all named evidence and external decisions exist. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

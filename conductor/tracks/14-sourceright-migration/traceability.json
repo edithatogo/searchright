@@ -1,0 +1,173 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "14",
+  "title": "Sourceright migration and shared releases",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/14-sourceright-migration/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T14-A001",
+      "statement": "Create Sourceright branch/PR and compatibility facade",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/14-sourceright-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T14-A002",
+      "statement": "Run all existing Sourceright fixtures through shared core",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/14-sourceright-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T14-A003",
+      "statement": "Replace custom generic code in bounded commits",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/14-sourceright-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T14-A004",
+      "statement": "Document retained Sourceright-specific responsibilities",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/14-sourceright-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T14-A005",
+      "statement": "Publish coordinated crates/releases and migration guide",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/14-sourceright-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T14-A006",
+      "statement": "Remove deprecated paths after one release cycle",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "migration/sourceright/README.md",
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "scripts/check_sourceright_migration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/14-sourceright-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

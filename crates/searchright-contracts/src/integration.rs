@@ -48,6 +48,47 @@ pub enum DependencyDirection {
     NoRuntimeDependency,
 }
 
+/// Relationship between the pinned repository and any canonical upstream.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum LocalForkRole {
+    /// Independently maintained original repository.
+    Original,
+    /// Passive or periodically refreshed mirror of another repository.
+    Mirror,
+    /// Fork that carries an explicit, reviewable local delta.
+    PatchCarrier,
+    /// Independently versioned product derived from an upstream codebase.
+    DerivedProduct,
+}
+
+/// Licence and redistribution review state for an integration.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum LicenceReviewStatus {
+    /// Code/content use and redistribution have an identified licence basis.
+    Cleared,
+    /// The integration is used only as a policy or documentation reference.
+    ReferenceOnly,
+    /// Reuse remains blocked until a licence review is recorded.
+    ReviewRequired,
+    /// The local fork inherits a verified upstream licence without broadening it.
+    UpstreamLicenceInherited,
+}
+
+/// Canonical upstream identity for a forked or derived integration.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct CanonicalUpstreamReference {
+    /// Canonical repository in `owner/name` form.
+    pub repository: String,
+    /// Exact upstream revision when it has been independently pinned.
+    pub revision: Option<String>,
+    /// Observed canonical default branch when known.
+    pub default_branch: Option<String>,
+    /// Explicit boundary on what was verified about the upstream.
+    pub verification_status: String,
+}
+
 /// One named contract crossing a repository boundary.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct IntegrationContractReference {
@@ -87,6 +128,22 @@ pub struct IntegrationPassport {
     pub revision: String,
     /// Observed default branch.
     pub default_branch: String,
+    /// Canonical upstream for a fork or derived product; absent for originals.
+    pub canonical_upstream: Option<CanonicalUpstreamReference>,
+    /// Relationship between the pinned repository and its canonical upstream.
+    pub local_fork_role: LocalForkRole,
+    /// SPDX expression or `NOASSERTION` for executable source.
+    pub code_license: String,
+    /// SPDX expression or `NOASSERTION` for documentation, standards or data content.
+    pub content_license: String,
+    /// Optional model licence where model weights or services enter the integration.
+    pub model_license: Option<String>,
+    /// Human-readable redistribution and derivative-use boundary.
+    pub redistribution: String,
+    /// Current licence-review state.
+    pub licence_review_status: LicenceReviewStatus,
+    /// Policy for detecting and reviewing upstream/local drift.
+    pub drift_policy: String,
     /// Integration mechanism.
     pub mode: IntegrationMode,
     /// Dependency direction.
@@ -382,6 +439,13 @@ impl Validate for IntegrationPassport {
         require_text(&self.integration_id, "integration_passport.integration_id")?;
         require_text(&self.repository, "integration_passport.repository")?;
         require_text(&self.default_branch, "integration_passport.default_branch")?;
+        require_text(&self.code_license, "integration_passport.code_license")?;
+        require_text(&self.content_license, "integration_passport.content_license")?;
+        if let Some(model_license) = &self.model_license {
+            require_text(model_license, "integration_passport.model_license")?;
+        }
+        require_text(&self.redistribution, "integration_passport.redistribution")?;
+        require_text(&self.drift_policy, "integration_passport.drift_policy")?;
         require_text(&self.claim_boundary, "integration_passport.claim_boundary")?;
         let mut repository_parts = self.repository.split('/');
         let owner = repository_parts.next().unwrap_or_default();
@@ -396,6 +460,51 @@ impl Validate for IntegrationPassport {
                 "integration revision must be an exact 40-character hexadecimal Git revision"
                     .to_owned(),
             ));
+        }
+        match (&self.local_fork_role, &self.canonical_upstream) {
+            (LocalForkRole::Original, None) => {}
+            (LocalForkRole::Original, Some(_)) => {
+                return Err(ContractError::Invariant(
+                    "original integrations must not declare a canonical upstream".to_owned(),
+                ));
+            }
+            (_, None) => {
+                return Err(ContractError::Invariant(
+                    "mirrors, patch carriers and derived products must declare a canonical upstream".to_owned(),
+                ));
+            }
+            (_, Some(upstream)) => {
+                require_text(
+                    &upstream.repository,
+                    "integration_passport.canonical_upstream.repository",
+                )?;
+                let mut parts = upstream.repository.split('/');
+                if parts.next().unwrap_or_default().is_empty()
+                    || parts.next().unwrap_or_default().is_empty()
+                    || parts.next().is_some()
+                {
+                    return Err(ContractError::Invariant(
+                        "canonical upstream repository must use owner/name form".to_owned(),
+                    ));
+                }
+                if let Some(revision) = &upstream.revision
+                    && !is_hex_revision(revision)
+                {
+                    return Err(ContractError::Invariant(
+                        "canonical upstream revision must be an exact 40-character hexadecimal Git revision".to_owned(),
+                    ));
+                }
+                if let Some(branch) = &upstream.default_branch {
+                    require_text(
+                        branch,
+                        "integration_passport.canonical_upstream.default_branch",
+                    )?;
+                }
+                require_text(
+                    &upstream.verification_status,
+                    "integration_passport.canonical_upstream.verification_status",
+                )?;
+            }
         }
         if self.default_network || self.default_external_writes || self.default_telemetry {
             return Err(ContractError::Invariant(

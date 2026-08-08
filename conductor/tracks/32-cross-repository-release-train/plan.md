@@ -1,6 +1,6 @@
 # Plan: 32 Cross-repository contract release train and downstream canaries
 
-Current status: **integration_prepared**. Evidence level: **source_verified**.
+Current status: **integration_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-32`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,13 +8,18 @@ GitHub issue key: `track-32`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-32-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `integration/release-train.json`
-  - [x] `scripts/check_release_train.py`
-  - [x] `.github/workflows/integration-release-train.yml`
-  - [x] `docs/release-train.md`
-  - [x] `integration/consumer-contract-suite.json`
-  - [x] `integration/passports/index.json`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `integration/release-train.json`
+  - [x] Present source path: `integration/ecosystem-lock.json`
+  - [x] Present source path: `release/public-packages.json`
+  - [x] Present source path: `contracts/compatibility/schema-surface-0.1.0-alpha.1.json`
+  - [x] Present source path: `scripts/check_release_train.py`
+  - [x] Present source path: `scripts/sync_ecosystem_lock.py`
+  - [x] Present source path: `.github/workflows/integration-release-train.yml`
+  - [x] Present source path: `docs/release-train.md`
+  - [x] Present source path: `integration/consumer-contract-suite.json`
+  - [x] Present source path: `integration/passports/index.json`
+  - [x] Assertion ledger: `conductor/tracks/32-cross-repository-release-train/traceability.json`
 
 ## Phase 2: Source-level verification
 
@@ -22,6 +27,8 @@ GitHub issue key: `track-32`. Each numbered phase maps to the same-numbered nati
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/check_release_train.py`
+  - [x] `python scripts/sync_ecosystem_lock.py --check`
+  - [x] `python scripts/sync_schema_surface.py --check`
   - [x] `python scripts/check_integration_passports.py`
   - [x] `python scripts/check_consumer_contracts.py`
   - [x] `python scripts/check_integration_drift.py`

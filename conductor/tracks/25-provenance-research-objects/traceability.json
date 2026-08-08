@@ -1,0 +1,145 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "25",
+  "title": "Provenance and research-object interoperability",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/25-provenance-research-objects/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T25-A001",
+      "statement": "Immutable identifiers and predecessor relationships.",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-provenance/src/lib.rs",
+        "contracts/json-schema/review-bundle-manifest.v1.schema.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/review_bundle.py self-test"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/25-provenance-research-objects/evidence.json"
+      ],
+      "open_gates": [
+        "Compile provenance tests and assign durable identifiers in an executed review."
+      ],
+      "permitted_claim": "Immutable bundle entry hashes and identifiers are implemented; institutional persistent identifiers are not claimed."
+    },
+    {
+      "assertion_id": "T25-A002",
+      "statement": "Review, strategy, run, receipt, amendment and decision entities.",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "contracts/schema-catalog.json",
+        "contracts/json-schema/review-state-snapshot.v1.schema.json",
+        "scripts/review_bundle.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/review_bundle.py self-test"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/25-provenance-research-objects/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and round-trip all entity relationships."
+      ],
+      "permitted_claim": "Review, run, receipt, amendment, decision and state contracts are catalogued and bundleable."
+    },
+    {
+      "assertion_id": "T25-A003",
+      "statement": "RO-Crate 1.3-compatible JSON-LD export boundary.",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-provenance/src/lib.rs",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/25-provenance-research-objects/evidence.json"
+      ],
+      "open_gates": [
+        "Validate generated JSON-LD against RO-Crate 1.3 profiles."
+      ],
+      "permitted_claim": "An RO-Crate-compatible boundary is designed; formal conformance is not claimed."
+    },
+    {
+      "assertion_id": "T25-A004",
+      "statement": "W3C PROV entity/activity/agent export.",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-provenance/src/lib.rs",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/25-provenance-research-objects/evidence.json"
+      ],
+      "open_gates": [
+        "Validate W3C PROV output and golden fixtures."
+      ],
+      "permitted_claim": "PROV export source exists; external validation is open."
+    },
+    {
+      "assertion_id": "T25-A005",
+      "statement": "OSF, Zenodo and repository handoff packets without automatic deposit.",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "scripts/review_bundle.py",
+        "examples/review-bundle/example.srpack",
+        "contracts/json-schema/review-bundle-manifest.v1.schema.json"
+      ],
+      "implementation_symbols": [
+        "scripts/review_bundle.py::pack_bundle",
+        "scripts/review_bundle.py::verify_bundle"
+      ],
+      "deterministic_tests": [
+        "python scripts/review_bundle.py self-test"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/25-provenance-research-objects/evidence.json"
+      ],
+      "open_gates": [
+        "Add repository-specific OSF and Zenodo handoff profiles and test them without depositing."
+      ],
+      "permitted_claim": "A deterministic, self-verifying review bundle is implemented; automatic deposit is prohibited."
+    },
+    {
+      "assertion_id": "T25-A006",
+      "statement": "Round-trip and golden-fixture contracts.",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "examples/review-bundle/example.srpack",
+        "scripts/review_bundle.py"
+      ],
+      "implementation_symbols": [
+        "scripts/review_bundle.py::self_test"
+      ],
+      "deterministic_tests": [
+        "python scripts/review_bundle.py self-test"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/25-provenance-research-objects/evidence.json"
+      ],
+      "open_gates": [
+        "Compile Rust interop and add RO-Crate/PROV golden round trips."
+      ],
+      "permitted_claim": "Bundle determinism, integrity, tamper and secret-rejection tests pass locally."
+    }
+  ]
+}

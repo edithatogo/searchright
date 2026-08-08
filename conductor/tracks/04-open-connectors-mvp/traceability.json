@@ -1,0 +1,151 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "04",
+  "title": "Open provider connectors MVP",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/04-open-connectors-mvp/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T04-A001",
+      "statement": "Finish PubMed ESearch+EFetch/ESummary report retrieval",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-connectors/src/lib.rs",
+        "provider-fixtures/mvp/pubmed-esearch.json",
+        "provider-fixtures/mvp/pubmed-esummary.json"
+      ],
+      "implementation_symbols": [
+        "searchright_connectors::PubMedSearchProvider",
+        "searchright_connectors::parse_pubmed_summary_page"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_provider_contract_baselines.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile fixture parsers and compare canonical ProviderPage output."
+      ],
+      "permitted_claim": "PubMed ESearch and ESummary source paths and fixtures exist; EFetch/full report retrieval and compiler evidence remain open."
+    },
+    {
+      "assertion_id": "T04-A002",
+      "statement": "Harden Europe PMC response normalization",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-connectors/src/lib.rs",
+        "provider-fixtures/mvp/europe-pmc.json"
+      ],
+      "implementation_symbols": [
+        "searchright_connectors::parse_europe_pmc_page"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_provider_contract_baselines.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile fixture parsers and compare canonical ProviderPage output."
+      ],
+      "permitted_claim": "Europe PMC normalisation and response baselines are source implemented but not compiler- or live-proven."
+    },
+    {
+      "assertion_id": "T04-A003",
+      "statement": "Add Crossref and OpenAlex discovery adapters",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-connectors/src/lib.rs",
+        "provider-fixtures/mvp/crossref.json",
+        "provider-fixtures/mvp/openalex.json"
+      ],
+      "implementation_symbols": [
+        "searchright_connectors::parse_crossref_page",
+        "searchright_connectors::parse_openalex_page"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_provider_contract_baselines.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile fixture parsers and compare canonical ProviderPage output."
+      ],
+      "permitted_claim": "Crossref and OpenAlex source adapters and baselines exist; live compatibility is not claimed."
+    },
+    {
+      "assertion_id": "T04-A004",
+      "statement": "Add NCBI/Europe PMC identification and rate guidance",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/provider-contract-baselines.json",
+        "crates/searchright-connectors/src/lib.rs"
+      ],
+      "implementation_symbols": [
+        "searchright_connectors::LiveProviderConfig"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_provider_contract_baselines.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile fixture parsers and compare canonical ProviderPage output."
+      ],
+      "permitted_claim": "HTTPS hosts and bounded runtime inputs are recorded; provider-policy review and live quota evidence remain open."
+    },
+    {
+      "assertion_id": "T04-A005",
+      "statement": "Capture raw response hashes and replay fixtures",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/provider-contract-baselines.json",
+        "provider-fixtures/mvp",
+        "scripts/check_provider_contract_baselines.py"
+      ],
+      "implementation_symbols": [
+        "scripts/check_provider_contract_baselines.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_provider_contract_baselines.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile fixture parsers and compare canonical ProviderPage output."
+      ],
+      "permitted_claim": "Rights-clear raw response baselines are hash-pinned; Rust replay output still requires compiler-backed golden tests."
+    },
+    {
+      "assertion_id": "T04-A006",
+      "statement": "Run redacted opt-in live smokes",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/provider-contract-baselines.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_provider_contract_baselines.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts."
+      ],
+      "permitted_claim": "No live-provider result is claimed."
+    }
+  ]
+}

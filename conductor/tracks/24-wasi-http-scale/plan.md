@@ -1,6 +1,6 @@
 # Plan: 24 WASI components, HTTP MCP and scalable execution
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,13 +8,14 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-24-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-plugin-sdk/src/lib.rs`
-  - [x] `crates/searchright-policy/src/lib.rs`
-  - [x] `contracts/wit/search-provider.wit`
-  - [x] `contracts/openapi/searchright-http.openapi.yaml`
-  - [x] `contracts/examples/provider-component.yaml`
-  - [x] `docs/adrs/0004-provider-plugin-sandbox.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-plugin-sdk/src/lib.rs`
+  - [x] Present source path: `crates/searchright-policy/src/lib.rs`
+  - [x] Present source path: `contracts/wit/search-provider.wit`
+  - [x] Present source path: `contracts/openapi/searchright-http.openapi.yaml`
+  - [x] Present source path: `contracts/examples/provider-component.yaml`
+  - [x] Present source path: `docs/adrs/0004-provider-plugin-sandbox.md`
+  - [x] Assertion ledger: `conductor/tracks/24-wasi-http-scale/traceability.json`
 
 ## Phase 2: Source-level verification
 

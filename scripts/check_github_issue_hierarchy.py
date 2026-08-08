@@ -61,6 +61,7 @@ def main() -> int:
         "Work kind",
         "Horizon",
         "Evidence level",
+        "Implementation state",
         "MoSCoW",
         "External gate",
         "Conductor key",

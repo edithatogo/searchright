@@ -12,7 +12,8 @@ Expose typed, authority-annotated MCP tools over the same facade with stable str
 ## Contract
 
 - Horizon: `mvp`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `09`
 - Requirements: `SR-029`
@@ -27,6 +28,6 @@ Expose typed, authority-annotated MCP tools over the same facade with stable str
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

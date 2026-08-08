@@ -16,8 +16,12 @@ policy:
   max_records: 1000
   max_pages: 10
   timeout_seconds: 30
+  total_timeout_seconds: 300
   max_retries: 2
   min_interval_ms: 350
+  retry_base_delay_ms: 350
+  retry_max_delay_ms: 5600
+  max_response_bytes: 16777216
   replay_enabled: true
   cache_write_enabled: false
 provider_version: fixture/1

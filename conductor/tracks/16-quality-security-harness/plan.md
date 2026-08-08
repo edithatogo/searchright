@@ -1,6 +1,6 @@
 # Plan: 16 Maximal quality, context and security harness
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,29 +8,39 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-16-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `.github/workflows/ci.yml`
-  - [x] `.github/workflows/coverage.yml`
-  - [x] `.github/workflows/nightly.yml`
-  - [x] `.github/workflows/security.yml`
-  - [x] `scripts/run_static_harness.py`
-  - [x] `scripts/check_rust_dependency_graph.py`
-  - [x] `verification/sbom/source-components.cdx.json`
-  - [x] `docs/security/threat-model.md`
-  - [x] `codecov.yml`
-  - [x] `.github/workflows/formal.yml`
-  - [x] `.github/workflows/fuzz.yml`
-  - [x] `.github/workflows/clean-room.yml`
-  - [x] `scripts/check_default_deny.py`
-  - [x] `scripts/check_workflow_hardening.py`
-  - [x] `scripts/mcp_smoke.py`
-  - [x] `verification/harness-matrix.json`
-  - [x] `docs/quality/maximal-harness.md`
-  - [x] `fuzz/Cargo.toml`
-  - [x] `fuzz/fuzz_targets/query_contract.rs`
-  - [x] `fuzz/fuzz_targets/document_evidence.rs`
-  - [x] `fuzz/fuzz_targets/audit_event.rs`
-  - [x] `scripts/generate_source_hash_manifest.py`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `.github/workflows/ci.yml`
+  - [x] Present source path: `.github/workflows/coverage.yml`
+  - [x] Present source path: `.github/workflows/nightly.yml`
+  - [x] Present source path: `.github/workflows/security.yml`
+  - [x] Present source path: `scripts/run_static_harness.py`
+  - [x] Present source path: `scripts/check_rust_dependency_graph.py`
+  - [x] Present source path: `verification/sbom/source-components.cdx.json`
+  - [x] Present source path: `docs/security/threat-model.md`
+  - [x] Present source path: `codecov.yml`
+  - [x] Present source path: `.github/workflows/formal.yml`
+  - [x] Present source path: `.github/workflows/fuzz.yml`
+  - [x] Present source path: `.github/workflows/clean-room.yml`
+  - [x] Present source path: `scripts/check_default_deny.py`
+  - [x] Present source path: `scripts/check_workflow_hardening.py`
+  - [x] Present source path: `scripts/mcp_smoke.py`
+  - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Present source path: `docs/quality/maximal-harness.md`
+  - [x] Present source path: `fuzz/Cargo.toml`
+  - [x] Present source path: `fuzz/fuzz_targets/query_contract.rs`
+  - [x] Present source path: `fuzz/fuzz_targets/document_evidence.rs`
+  - [x] Present source path: `fuzz/fuzz_targets/audit_event.rs`
+  - [x] Present source path: `scripts/generate_source_hash_manifest.py`
+  - [x] Present source path: `supply-chain/config.toml`
+  - [x] Present source path: `supply-chain/audits.toml`
+  - [x] Present source path: `supply-chain/README.md`
+  - [x] Present source path: `public-api/README.md`
+  - [x] Present source path: `.github/workflows/public-api.yml`
+  - [x] Present source path: `scripts/check_traceability.py`
+  - [x] Present source path: `scripts/check_public_package_policy.py`
+  - [x] Present source path: `scripts/sync_schema_surface.py`
+  - [x] Present source path: `docs/vertical-slice-definition-of-done.md`
+  - [x] Assertion ledger: `conductor/tracks/16-quality-security-harness/traceability.json`
 
 ## Phase 2: Source-level verification
 
@@ -44,6 +54,9 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/check_default_deny.py`
   - [x] `python scripts/check_workflow_hardening.py`
   - [x] `python scripts/generate_source_hash_manifest.py --check`
+  - [x] `python scripts/check_traceability.py`
+  - [x] `python scripts/check_public_package_policy.py`
+  - [x] `python scripts/sync_schema_surface.py --check`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

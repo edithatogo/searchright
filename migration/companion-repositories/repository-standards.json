@@ -1,0 +1,63 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/repository-standards",
+  "revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+  "role": "estate policy authority",
+  "priority": "must",
+  "changes": [
+    {
+      "id": "research-infrastructure-profile",
+      "action": "Add a rust-research-infrastructure profile covering MCP, research data, benchmarks, human authority, provider credentials and evidence levels.",
+      "target_paths": [
+        "profiles/**",
+        "schemas/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "profile fixture",
+        "policy-gate receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "reusable-workflows",
+      "action": "Publish immutable reusable workflows for Rust assurance, research-contract validation and release provenance.",
+      "target_paths": [
+        ".github/workflows/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "canary repository receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "portfolio-registry",
+      "action": "Register Searchright, Sourceright and CiteWeft as one evidence-infrastructure family with separate maturity states.",
+      "target_paths": [
+        "registry/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "registry regeneration receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "policy-canary",
+      "action": "Require canary adoption before estate-wide policy promotion.",
+      "target_paths": [
+        "governance/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "canary and rollback receipt"
+      ],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+}

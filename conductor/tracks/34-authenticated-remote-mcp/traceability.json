@@ -1,0 +1,104 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "34",
+  "title": "Authenticated remote MCP, tenancy and data residency",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/34-authenticated-remote-mcp/spec.md#scope",
+  "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T34-A001",
+      "statement": "Authenticated remote MCP deployment boundary",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-access/src/lib.rs",
+        "crates/searchright-contracts/src/access.rs",
+        "contracts/examples/tenant-policy.json",
+        "contracts/examples/access-request.json",
+        "contracts/examples/access-decision.json",
+        "docs/security/authenticated-remote-mcp.md",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "docs/security/threat-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
+      ],
+      "open_gates": [
+        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
+        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T34-A002",
+      "statement": "Default-deny scopes and human-only final decisions",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-access/src/lib.rs",
+        "crates/searchright-contracts/src/access.rs",
+        "contracts/examples/tenant-policy.json",
+        "contracts/examples/access-request.json",
+        "contracts/examples/access-decision.json",
+        "docs/security/authenticated-remote-mcp.md",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "docs/security/threat-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
+      ],
+      "open_gates": [
+        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
+        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T34-A003",
+      "statement": "Tenant isolation, residency, rate and cancellation budgets",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-access/src/lib.rs",
+        "crates/searchright-contracts/src/access.rs",
+        "contracts/examples/tenant-policy.json",
+        "contracts/examples/access-request.json",
+        "contracts/examples/access-decision.json",
+        "docs/security/authenticated-remote-mcp.md",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "docs/security/threat-model.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
+      ],
+      "open_gates": [
+        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
+        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

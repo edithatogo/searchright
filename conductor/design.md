@@ -154,7 +154,7 @@ flowchart TB
   EPIC --> ISSUES[38 track issues]
   ISSUES --> PHASES[152 phase subissues]
   PHASES --> TSUB[373 task subissues]
-  TSUB --> PROJECT[Project v2: 12 custom fields / 5 views]
+  TSUB --> PROJECT[Project v2: 13 custom fields / 6 views]
   SETTINGS[Repository settings + main ruleset] --> BOOT[Dry-run-first bootstrap]
   PROJECT --> BOOT
   TSUB --> BOOT

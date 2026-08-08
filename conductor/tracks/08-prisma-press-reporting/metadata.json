@@ -3,7 +3,8 @@
   "track_id": "08",
   "slug": "prisma-press-reporting",
   "title": "PRISMA, PRESS and reporting",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-05",
   "updated": "2026-08-08",
   "dependencies": [
@@ -15,6 +16,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/08-prisma-press-reporting/evidence.json",
+  "traceability_path": "conductor/tracks/08-prisma-press-reporting/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-08",

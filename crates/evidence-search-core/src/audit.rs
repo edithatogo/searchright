@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
 
-use searchright_contracts::{AuditEvent, AuditEventDraft, ContractError, Validate};
+use evidence_search_contracts::{AuditEvent, AuditEventDraft, ContractError, Validate};
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 
@@ -209,7 +209,7 @@ pub fn canonical_json(value: &Value) -> Value {
 
 #[cfg(test)]
 mod tests {
-    use searchright_contracts::{Actor, AuditEventDraft};
+    use evidence_search_contracts::{Actor, AuditEventDraft};
     use serde_json::json;
 
     use super::*;

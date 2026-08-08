@@ -1,6 +1,6 @@
 # Plan: 11 Systematic-search agent skill and workflows
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,11 +8,12 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-11-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `skills/systematic-search/SKILL.md`
-  - [x] `skills/systematic-search/workflows/systematic-review.yaml`
-  - [x] `skills/systematic-search/references/authority.md`
-  - [x] `crates/searchright-agent/src/lib.rs`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `skills/systematic-search/SKILL.md`
+  - [x] Present source path: `skills/systematic-search/workflows/systematic-review.yaml`
+  - [x] Present source path: `skills/systematic-search/references/authority.md`
+  - [x] Present source path: `crates/searchright-agent/src/lib.rs`
+  - [x] Assertion ledger: `conductor/tracks/11-agentic-skill/traceability.json`
 
 ## Phase 2: Source-level verification
 

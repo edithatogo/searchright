@@ -12,7 +12,8 @@ Provide stable accessible diagnostics and locale-neutral contracts, then validat
 ## Contract
 
 - Horizon: `mature`
-- Status: `source_implemented_unverified`
+- Status: `scaffolded`
+- Implementation: `scaffolded`
 - Evidence: `source_verified`
 - Dependencies: `09, 10, 11`
 - Requirements: `SR-055, SR-056`
@@ -27,6 +28,6 @@ Provide stable accessible diagnostics and locale-neutral contracts, then validat
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

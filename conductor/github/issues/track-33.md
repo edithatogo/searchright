@@ -12,7 +12,8 @@ Provide default-private health, telemetry, backup, restore, resilience and incid
 ## Contract
 
 - Horizon: `mature`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `05, 16, 25, 28, 30`
 - Requirements: `SR-078, SR-079, SR-080, SR-081`
@@ -27,6 +28,6 @@ Provide default-private health, telemetry, backup, restore, resilience and incid
 
 ## Claim boundary
 
-Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run.
+Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

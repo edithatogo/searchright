@@ -1,6 +1,6 @@
 # Plan: 21 Licensed BYO-access adapters
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-21`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,14 +8,15 @@ GitHub issue key: `track-21`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-21-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-licensed/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/licensed.rs`
-  - [x] `contracts/licensed/index.json`
-  - [x] `contracts/licensed/embase.yaml`
-  - [x] `contracts/licensed/scopus.yaml`
-  - [x] `contracts/licensed/web-of-science.yaml`
-  - [x] `contracts/examples/licensed-adapter.yaml`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-licensed/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/licensed.rs`
+  - [x] Present source path: `contracts/licensed/index.json`
+  - [x] Present source path: `contracts/licensed/embase.yaml`
+  - [x] Present source path: `contracts/licensed/scopus.yaml`
+  - [x] Present source path: `contracts/licensed/web-of-science.yaml`
+  - [x] Present source path: `contracts/examples/licensed-adapter.yaml`
+  - [x] Assertion ledger: `conductor/tracks/21-licensed-adapters/traceability.json`
 
 ## Phase 2: Source-level verification
 

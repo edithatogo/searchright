@@ -1,6 +1,6 @@
 # Plan: 05 Execution, audit and local storage
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,12 +8,15 @@ GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-05-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/evidence-search-core/src/audit.rs`
-  - [x] `crates/searchright-store/src/lib.rs`
-  - [x] `contracts/examples/search-run.yaml`
-  - [x] `contracts/examples/audit-event.json`
-  - [x] `docs/adrs/0002-contract-first-and-event-ledger.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/evidence-search-core/src/audit.rs`
+  - [x] Present source path: `crates/searchright-store/src/lib.rs`
+  - [x] Present source path: `scripts/reduce_review_events.py`
+  - [x] Present source path: `contracts/json-schema/review-state-snapshot.v1.schema.json`
+  - [x] Present source path: `contracts/examples/review-state-snapshot.json`
+  - [x] Present source path: `contracts/examples/audit-event.json`
+  - [x] Present source path: `docs/vertical-slice-definition-of-done.md`
+  - [x] Assertion ledger: `conductor/tracks/05-execution-audit-store/traceability.json`
 
 ## Phase 2: Source-level verification
 
@@ -21,6 +24,7 @@ GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered nati
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/reduce_review_events.py --self-test`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

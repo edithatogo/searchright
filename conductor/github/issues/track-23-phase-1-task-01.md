@@ -3,15 +3,16 @@
 
 Parent phase key: `track-23-phase-1`
 Conductor plan: `conductor/tracks/23-active-learning-agents/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-ranking/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/ranking.rs`
-  - [x] `contracts/examples/ranking-calibration.yaml`
-  - [x] `skills/systematic-search/references/failure-modes.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-ranking/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/ranking.rs`
+  - [x] Present source path: `contracts/examples/ranking-calibration.yaml`
+  - [x] Present source path: `skills/systematic-search/references/failure-modes.md`
+  - [x] Assertion ledger: `conductor/tracks/23-active-learning-agents/traceability.json`
 
 ## Completion and evidence contract
 

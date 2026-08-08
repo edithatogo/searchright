@@ -3,7 +3,8 @@
   "track_id": "24",
   "slug": "wasi-http-scale",
   "title": "WASI components, HTTP MCP and scalable execution",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -16,6 +17,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/24-wasi-http-scale/evidence.json",
+  "traceability_path": "conductor/tracks/24-wasi-http-scale/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-24",

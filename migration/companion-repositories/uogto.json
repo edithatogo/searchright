@@ -1,0 +1,74 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/UOGTO",
+  "revision": "ac5b8e86c4a3547d008e83ba4cfcbb5f3ba95f25",
+  "role": "systematic-review consumer with custom search code",
+  "priority": "must",
+  "changes": [
+    {
+      "id": "replace-query-clients",
+      "action": "Replace direct OpenAlex, Europe PMC, arXiv and Crossref clients with Searchright provider execution and receipts.",
+      "target_paths": [
+        "scripts/review/query_databases.py"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "legacy-output import fixture",
+        "provider parity receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "replace-snowball",
+      "action": "Replace hard-coded OpenAlex snowballing with bounded supplementary discovery.",
+      "target_paths": [
+        "scripts/review/snowball.py"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "seed and yield parity"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "replace-title-dedup",
+      "action": "Replace lower-cased title-only deduplication with Searchright record/report/study linkage.",
+      "target_paths": [
+        "scripts/review/snowball.py"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "false-merge review"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "https-and-errors",
+      "action": "Remove HTTP endpoints and silent exception suppression during the transition.",
+      "target_paths": [
+        "scripts/review/*.py"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "security regression test"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "compatibility-import",
+      "action": "Preserve existing JSON outputs as import fixtures before deleting custom code.",
+      "target_paths": [
+        "tests/fixtures/searchright-migration/**"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "round-trip receipt"
+      ],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+}

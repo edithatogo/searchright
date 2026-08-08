@@ -1,0 +1,11 @@
+{
+  "schema_version": "org.searchright.screening-benchmark-fixture.v1",
+  "partition": "validation",
+  "records": [
+    {"id": "s1", "title": "Eligible intervention study", "abstract": "Population and outcome match the protocol.", "label": "include"},
+    {"id": "s2", "title": "Wrong population", "abstract": "The population is outside the protocol.", "label": "exclude"},
+    {"id": "s3", "title": "Uncertain conference abstract", "abstract": "Insufficient information for a final decision.", "label": "human_review"}
+  ],
+  "rights_basis": "CC0 synthetic metadata",
+  "authority_boundary": "Labels are benchmark gold standards, not automatic production decisions."
+}

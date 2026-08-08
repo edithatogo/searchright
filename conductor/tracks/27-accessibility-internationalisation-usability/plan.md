@@ -1,6 +1,6 @@
 # Plan: 27 Accessibility, internationalisation and usability
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,12 +8,13 @@ GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-27-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-diagnostics/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/diagnostic.rs`
-  - [x] `contracts/examples/diagnostic.yaml`
-  - [x] `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
-  - [x] `docs/evaluation/external-methodological-evaluation.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-diagnostics/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/diagnostic.rs`
+  - [x] Present source path: `contracts/examples/diagnostic.yaml`
+  - [x] Present source path: `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
+  - [x] Present source path: `docs/evaluation/external-methodological-evaluation.md`
+  - [x] Assertion ledger: `conductor/tracks/27-accessibility-internationalisation-usability/traceability.json`
 
 ## Phase 2: Source-level verification
 

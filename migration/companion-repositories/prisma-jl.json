@@ -1,0 +1,37 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/PRISMA.jl",
+  "revision": "95d5aa46c6cda6fb2d014391209d666349b577dc",
+  "role": "optional PRISMA rendering interoperability reference",
+  "priority": "could",
+  "changes": [
+    {
+      "id": "canonical-upstream",
+      "action": "Record ceceoco/PRISMA.jl as canonical upstream and inventory any local delta before treating the fork as maintained software.",
+      "target_paths": ["UPSTREAM.md", "README.md"],
+      "owner": "repository owner",
+      "required_evidence": ["upstream revision", "local delta inventory"],
+      "automatic_apply": false
+    },
+    {
+      "id": "interop-only",
+      "action": "Keep Searchright PRISMA arithmetic canonical and use PRISMA.jl only as an optional renderer interoperability target through versioned fixtures.",
+      "target_paths": ["fixtures/searchright", "interop tests"],
+      "owner": "Searchright and PRISMA.jl maintainers",
+      "required_evidence": ["flow fixture parity", "rendering difference report"],
+      "automatic_apply": false
+    },
+    {
+      "id": "archive-or-maintain",
+      "action": "Archive the personal fork if there are no intentional patches, or establish independent CI, release and upstream-sync policy if it will be maintained.",
+      "target_paths": ["repository settings", ".github/workflows/**"],
+      "owner": "repository owner",
+      "required_evidence": ["maintenance decision"],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "The fork has a documented upstream/maintenance role and Searchright interoperability remains optional and fixture-proven.",
+  "claim_boundary": "This packet does not change the fork or make PRISMA.jl authoritative for Searchright arithmetic."
+}

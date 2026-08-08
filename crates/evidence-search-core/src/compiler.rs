@@ -1,4 +1,4 @@
-use searchright_contracts::{
+use evidence_search_contracts::{
     CompiledStrategy, ContractError, QueryExpr, SearchDialect, SearchField, SearchStrategy,
     SearchTerm, StrategyWarning, TranslationFidelity, Validate,
 };
@@ -55,7 +55,7 @@ impl QueryCompiler {
         };
 
         Ok(CompiledStrategy {
-            schema_version: searchright_contracts::COMPILED_STRATEGY_SCHEMA_VERSION.to_owned(),
+            schema_version: evidence_search_contracts::COMPILED_STRATEGY_SCHEMA_VERSION.to_owned(),
             strategy_id: strategy.strategy_id.clone(),
             dialect,
             query: rendered,
@@ -474,7 +474,7 @@ fn warning(code: &str, message: &str, review_required: bool) -> StrategyWarning 
 
 #[cfg(test)]
 mod tests {
-    use searchright_contracts::{SearchLimit, SearchTerm};
+    use evidence_search_contracts::{SearchLimit, SearchTerm};
 
     use super::*;
 

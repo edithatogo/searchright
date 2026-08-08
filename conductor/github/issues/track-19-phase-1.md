@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/19-registries-publication/plan.md`
 
 ## Task subissues
 
-- [x] T01: Implement and document the track's source deliverables. (`track-19-phase-1-task-01`)
+- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-19-phase-1-task-01`)
 
 ## Evidence rule
 

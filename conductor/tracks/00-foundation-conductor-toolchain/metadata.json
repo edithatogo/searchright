@@ -3,7 +3,8 @@
   "track_id": "00",
   "slug": "foundation-conductor-toolchain",
   "title": "Foundation, Conductor and toolchain",
-  "status": "source_implemented",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-05",
   "updated": "2026-08-08",
   "dependencies": [],
@@ -11,6 +12,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/00-foundation-conductor-toolchain/evidence.json",
+  "traceability_path": "conductor/tracks/00-foundation-conductor-toolchain/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-00",

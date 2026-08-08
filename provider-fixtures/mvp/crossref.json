@@ -1,0 +1,20 @@
+{
+  "status": "ok",
+  "message-type": "work-list",
+  "message-version": "1.0.0",
+  "message": {
+    "total-results": 1,
+    "next-cursor": "DnF1ZXJ5VGhlbkZldGNoBQAAAAA=",
+    "items": [
+      {
+        "DOI": "10.1000/searchright.4",
+        "title": ["Synthetic Crossref fixture"],
+        "author": [{"given": "Fixture", "family": "D"}],
+        "container-title": ["Searchright Fixture Journal"],
+        "published-online": {"date-parts": [[2026, 2, 1]]},
+        "URL": "https://doi.org/10.1000/searchright.4",
+        "type": "journal-article"
+      }
+    ]
+  }
+}

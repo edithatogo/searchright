@@ -1,0 +1,66 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/standards_check",
+  "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+  "role": "reporting and methodology standard provenance",
+  "priority": "must",
+  "changes": [
+    {
+      "id": "licence-inventory",
+      "action": "Record code, checklist-text, summary and generated-pack rights separately for every standard source.",
+      "target_paths": [
+        "sources/**",
+        "licences/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "rights inventory",
+        "review decisions"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "versioned-packs",
+      "action": "Emit signed, checksummed versioned packs rather than requiring consumers to copy from main.",
+      "target_paths": [
+        "dist/**",
+        "release workflow"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "pack signature",
+        "source checksum"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "stable-item-uris",
+      "action": "Give each checklist item a stable URI, source location, effective date, supersession link and semantic change record.",
+      "target_paths": [
+        "schemas/**",
+        "packs/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "schema conformance"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "consumer-contract",
+      "action": "Add Searchright consumer fixtures that verify pack compatibility and reject unreviewed text redistribution.",
+      "target_paths": [
+        "tests/consumers/searchright/**"
+      ],
+      "owner": "standards maintainer",
+      "required_evidence": [
+        "consumer-driven contract receipt"
+      ],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+}

@@ -3,15 +3,16 @@
 
 Parent phase key: `track-20-phase-1`
 Conductor plan: `conductor/tracks/20-broader-discovery/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-discovery/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/discovery.rs`
-  - [x] `contracts/examples/discovery-run.yaml`
-  - [x] `docs/provider-model.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-discovery/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/discovery.rs`
+  - [x] Present source path: `contracts/examples/discovery-run.yaml`
+  - [x] Present source path: `docs/provider-model.md`
+  - [x] Assertion ledger: `conductor/tracks/20-broader-discovery/traceability.json`
 
 ## Completion and evidence contract
 

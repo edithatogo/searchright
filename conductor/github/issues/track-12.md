@@ -13,6 +13,7 @@ Integrate CiteWeft through a pinned optional adapter while preserving spans, unc
 
 - Horizon: `alpha`
 - Status: `integration_prepared`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `01, 06, 07`
 - Requirements: `SR-063, SR-064`
@@ -27,6 +28,6 @@ Integrate CiteWeft through a pinned optional adapter while preserving spans, unc
 
 ## Claim boundary
 
-CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made.
+CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

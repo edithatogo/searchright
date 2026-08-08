@@ -1,0 +1,141 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "27",
+  "title": "Accessibility, internationalisation and usability",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/27-accessibility-internationalisation-usability/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T27-A001",
+      "statement": "Stable diagnostic codes and severity/action fields.",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-diagnostics/src/lib.rs",
+        "crates/searchright-contracts/src/diagnostic.rs",
+        "contracts/examples/diagnostic.yaml",
+        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+        "docs/evaluation/external-methodological-evaluation.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T27-A002",
+      "statement": "Plain text, JSON and JSONL rendering.",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-diagnostics/src/lib.rs",
+        "crates/searchright-contracts/src/diagnostic.rs",
+        "contracts/examples/diagnostic.yaml",
+        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+        "docs/evaluation/external-methodological-evaluation.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T27-A003",
+      "statement": "Locale-neutral identifiers and separable messages.",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-diagnostics/src/lib.rs",
+        "crates/searchright-contracts/src/diagnostic.rs",
+        "contracts/examples/diagnostic.yaml",
+        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+        "docs/evaluation/external-methodological-evaluation.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T27-A004",
+      "statement": "Keyboard, screen-reader and terminal-width design contracts.",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-diagnostics/src/lib.rs",
+        "crates/searchright-contracts/src/diagnostic.rs",
+        "contracts/examples/diagnostic.yaml",
+        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+        "docs/evaluation/external-methodological-evaluation.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T27-A005",
+      "statement": "Information-specialist usability protocol and issue taxonomy.",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-diagnostics/src/lib.rs",
+        "crates/searchright-contracts/src/diagnostic.rs",
+        "contracts/examples/diagnostic.yaml",
+        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+        "docs/evaluation/external-methodological-evaluation.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

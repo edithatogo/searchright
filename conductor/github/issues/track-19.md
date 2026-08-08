@@ -13,6 +13,7 @@ Prepare and submit truthful registry packets and a software paper only after a v
 
 - Horizon: `alpha`
 - Status: `submission_prepared`
+- Implementation: `scaffolded`
 - Evidence: `source_verified`
 - Dependencies: `13, 18`
 - Requirements: `SR-040, SR-041`
@@ -27,6 +28,6 @@ Prepare and submit truthful registry packets and a software paper only after a v
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

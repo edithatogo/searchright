@@ -8,6 +8,7 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run deterministic, network-free contract and policy checks.
+  - [x] `python scripts/check_methodology_benchmarks.py`
   - [x] `python scripts/validate_repository.py`
 
 ## Completion and evidence contract

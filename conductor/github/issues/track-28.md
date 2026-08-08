@@ -12,7 +12,8 @@ Evaluate data handling and least-privilege collaboration policy before sensitive
 ## Contract
 
 - Horizon: `mature`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `05, 07, 13, 24, 27`
 - Requirements: `SR-057, SR-058, SR-062`
@@ -27,6 +28,6 @@ Evaluate data handling and least-privilege collaboration policy before sensitive
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

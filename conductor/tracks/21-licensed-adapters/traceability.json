@@ -1,0 +1,179 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "21",
+  "title": "Licensed BYO-access adapters",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/21-licensed-adapters/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T21-A001",
+      "statement": "Legal/licence/terms review and adapter boundary",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-contracts/src/licensed.rs",
+        "contracts/licensed/index.json",
+        "contracts/licensed/embase.yaml",
+        "contracts/licensed/scopus.yaml",
+        "contracts/licensed/web-of-science.yaml",
+        "contracts/examples/licensed-adapter.yaml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/21-licensed-adapters/evidence.json"
+      ],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T21-A002",
+      "statement": "Credential redaction and local-only secret injection",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-contracts/src/licensed.rs",
+        "contracts/licensed/index.json",
+        "contracts/licensed/embase.yaml",
+        "contracts/licensed/scopus.yaml",
+        "contracts/licensed/web-of-science.yaml",
+        "contracts/examples/licensed-adapter.yaml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/21-licensed-adapters/evidence.json"
+      ],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T21-A003",
+      "statement": "Provider-specific pagination/rate/cache contracts",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-contracts/src/licensed.rs",
+        "contracts/licensed/index.json",
+        "contracts/licensed/embase.yaml",
+        "contracts/licensed/scopus.yaml",
+        "contracts/licensed/web-of-science.yaml",
+        "contracts/examples/licensed-adapter.yaml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/21-licensed-adapters/evidence.json"
+      ],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T21-A004",
+      "statement": "Synthetic and user-supplied fixture conformance",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-contracts/src/licensed.rs",
+        "contracts/licensed/index.json",
+        "contracts/licensed/embase.yaml",
+        "contracts/licensed/scopus.yaml",
+        "contracts/licensed/web-of-science.yaml",
+        "contracts/examples/licensed-adapter.yaml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/21-licensed-adapters/evidence.json"
+      ],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T21-A005",
+      "statement": "Opt-in smoke tooling that stores no licensed payload by default",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-contracts/src/licensed.rs",
+        "contracts/licensed/index.json",
+        "contracts/licensed/embase.yaml",
+        "contracts/licensed/scopus.yaml",
+        "contracts/licensed/web-of-science.yaml",
+        "contracts/examples/licensed-adapter.yaml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/21-licensed-adapters/evidence.json"
+      ],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T21-A006",
+      "statement": "Separate support claims per provider/platform",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-contracts/src/licensed.rs",
+        "contracts/licensed/index.json",
+        "contracts/licensed/embase.yaml",
+        "contracts/licensed/scopus.yaml",
+        "contracts/licensed/web-of-science.yaml",
+        "contracts/examples/licensed-adapter.yaml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/21-licensed-adapters/evidence.json"
+      ],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

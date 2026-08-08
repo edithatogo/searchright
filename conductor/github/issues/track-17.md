@@ -12,7 +12,8 @@ Evaluate translation, retrieval, deduplication and prioritisation with leakage c
 ## Contract
 
 - Horizon: `alpha`
-- Status: `source_implemented_unverified`
+- Status: `scaffolded`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `02, 06, 07, 08, 16`
 - Requirements: `SR-037, SR-038`
@@ -27,6 +28,6 @@ Evaluate translation, retrieval, deduplication and prioritisation with leakage c
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

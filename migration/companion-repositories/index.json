@@ -1,0 +1,63 @@
+{
+  "automatic_apply": false,
+  "claim_boundary": "Packets identify proposed downstream work only; no remote repository mutation is represented.",
+  "packets": [
+    {
+      "path": "migration/companion-repositories/academic-research-skills.json",
+      "priority": "should",
+      "repository": "edithatogo/academic-research-skills"
+    },
+    {
+      "path": "migration/companion-repositories/api-standards.json",
+      "priority": "should",
+      "repository": "edithatogo/api-standards"
+    },
+    {
+      "path": "migration/companion-repositories/citeweft.json",
+      "priority": "must",
+      "repository": "edithatogo/citeweft"
+    },
+    {
+      "path": "migration/companion-repositories/prisma-jl.json",
+      "priority": "could",
+      "repository": "edithatogo/PRISMA.jl"
+    },
+    {
+      "path": "migration/companion-repositories/repository-standards.json",
+      "priority": "must",
+      "repository": "edithatogo/repository-standards"
+    },
+    {
+      "path": "migration/companion-repositories/scholarly-publishing-agents.json",
+      "priority": "should",
+      "repository": "edithatogo/scholarly-publishing-agents"
+    },
+    {
+      "path": "migration/companion-repositories/sourceright.json",
+      "priority": "must",
+      "repository": "edithatogo/sourceright"
+    },
+    {
+      "path": "migration/companion-repositories/standards-check.json",
+      "priority": "must",
+      "repository": "edithatogo/standards_check"
+    },
+    {
+      "path": "migration/companion-repositories/synergy-dataset.json",
+      "priority": "must",
+      "repository": "edithatogo/synergy-dataset"
+    },
+    {
+      "path": "migration/companion-repositories/uogto.json",
+      "priority": "must",
+      "repository": "edithatogo/UOGTO"
+    },
+    {
+      "path": "migration/companion-repositories/voiage.json",
+      "priority": "must",
+      "repository": "edithatogo/voiage"
+    }
+  ],
+  "schema_version": "org.searchright.companion-change-packet-index.v1",
+  "source_epoch": "2026-08-08"
+}

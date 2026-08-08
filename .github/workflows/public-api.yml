@@ -1,0 +1,60 @@
+name: Public API and SemVer
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-api-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  candidate-public-api:
+    name: Candidate public API and SemVer
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || 'HEAD^' }}
+    steps:
+      - name: Checkout full comparison history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install stable and pinned rustdoc JSON nightly
+        run: |
+          rustup toolchain install 1.97.1 --profile minimal
+          rustup toolchain install nightly-2025-08-02 --profile minimal
+          rustup default 1.97.1
+      - name: Require committed lockfile
+        run: test -f Cargo.lock
+      - name: Install exact API tools
+        run: |
+          cargo install cargo-semver-checks --version 0.50.0 --locked
+          cargo install cargo-public-api --version 0.52.0 --locked
+      - name: Capture candidate public APIs
+        run: |
+          mkdir -p target/public-api
+          for package in evidence-search-contracts evidence-search-core searchright-plugin-sdk; do
+            (cd "crates/${package}" && cargo public-api -sss) > "target/public-api/${package}.txt"
+          done
+      - name: Check SemVer against the Git baseline where available
+        run: |
+          for package in evidence-search-contracts evidence-search-core searchright-plugin-sdk; do
+            manifest="crates/${package}/Cargo.toml"
+            if git cat-file -e "${BASE_REF}:${manifest}" 2>/dev/null; then
+              cargo semver-checks --package "${package}" --baseline-rev "${BASE_REF}"
+            else
+              echo "${package}: no baseline package; initial API capture only"
+            fi
+          done
+      - name: Upload API evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: candidate-public-api
+          path: target/public-api
+          if-no-files-found: error

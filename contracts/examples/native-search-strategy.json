@@ -1,0 +1,15 @@
+{
+  "schema_version": "org.searchright.native-search-strategy.v1",
+  "strategy_id": "native-ovid-demo",
+  "dialect": "ovid_medline",
+  "raw_text": "1. exp Genomics/\n2. genome*.ti,ab.\n3. 1 or 2\n",
+  "lines": [
+    {"line_id": "line-0001", "native_set_id": "1", "text": "1. exp Genomics/", "kind": "expression", "span": {"start_byte": 0, "end_byte": 16}},
+    {"line_id": "line-0002", "native_set_id": "2", "text": "2. genome*.ti,ab.", "kind": "expression", "span": {"start_byte": 17, "end_byte": 35}},
+    {"line_id": "line-0003", "native_set_id": "3", "text": "3. 1 or 2", "kind": "set_combination", "span": {"start_byte": 36, "end_byte": 45}}
+  ],
+  "semantic_strategy": null,
+  "normalisation_state": "raw_only",
+  "diagnostics": [],
+  "parser_version": "evidence-search-native/0.1.0-alpha.1"
+}

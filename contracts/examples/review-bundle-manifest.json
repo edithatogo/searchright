@@ -1,0 +1,39 @@
+{
+  "bundle_id": "searchright-review-bundle-example-v1",
+  "claim_boundary": "This bundle proves byte integrity and declared provenance only; it does not prove methodological adequacy, bibliographic truth, screening correctness, or registry acceptance.",
+  "descriptor_merkle_root": "5fd7cd6d3b2068858183a62affefc4a19b8eaae773c6ab8d3068cc6218835bd5",
+  "entries": [
+    {
+      "archive_path": "payload/execution/source-receipts.jsonl",
+      "media_type": "application/x-ndjson",
+      "path": "execution/source-receipts.jsonl",
+      "role": "source_receipts",
+      "sha256": "55aa7657fac42b276a68ddb1981f7c305684547b3dda0f8b34f8cb9f99629cea",
+      "size": 124
+    },
+    {
+      "archive_path": "payload/protocol/review-plan.json",
+      "media_type": "application/json",
+      "path": "protocol/review-plan.json",
+      "role": "review_protocol",
+      "sha256": "5b680dd98715a04ecf4ec71947e134f40d7ab7c6f610eaf829188233e0542eeb",
+      "size": 184
+    }
+  ],
+  "entry_count": 2,
+  "format_version": "1",
+  "payload_bytes": 308,
+  "policy": {
+    "deterministic": true,
+    "external_writes_allowed": false,
+    "max_file_bytes": 536870912,
+    "max_files": 10000,
+    "max_total_bytes": 2147483648,
+    "network_required": false,
+    "secret_scan_required": true,
+    "symlinks_allowed": false
+  },
+  "review_id": "review-bundle-example",
+  "schema_version": "org.searchright.review-bundle-manifest.v1",
+  "source_epoch": "2026-08-08"
+}

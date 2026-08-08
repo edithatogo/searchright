@@ -1,0 +1,146 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "03",
+  "title": "Shared provider runtime and Sourceright extraction",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/03-shared-provider-runtime/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T03-A001",
+      "statement": "Inventory Sourceright live_providers and provider modules",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/sourceright/replacement-map.yaml",
+        "migration/sourceright/parity-cases.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+      ],
+      "open_gates": [
+        "Refresh against the current Sourceright revision before cutover."
+      ],
+      "permitted_claim": "The observed Sourceright provider surface is inventoried at a pinned revision."
+    },
+    {
+      "assertion_id": "T03-A002",
+      "statement": "Define compatibility adapter and feature flag",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-sourceright-compat/src/lib.rs",
+        "release/public-packages.json"
+      ],
+      "implementation_symbols": [
+        "searchright_sourceright_compat::legacy_runtime_controls"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+      ],
+      "open_gates": [
+        "Compile the compatibility adapter in Searchright and Sourceright.",
+        "Add a downstream feature-flag canary."
+      ],
+      "permitted_claim": "A source compatibility adapter exists; downstream compilation is not proven."
+    },
+    {
+      "assertion_id": "T03-A003",
+      "statement": "Port retries, cache, endpoint, rate and receipt behavior",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/evidence-search-core/src/provider.rs",
+        "integration/provider-contract-baselines.json"
+      ],
+      "implementation_symbols": [
+        "evidence_search_core::provider::ProviderRegistry",
+        "evidence_search_core::provider::ExecutionPolicy"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_provider_contract_baselines.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+      ],
+      "open_gates": [
+        "Compile runtime tests.",
+        "Prove cache and error parity against Sourceright."
+      ],
+      "permitted_claim": "Bounded retry, timing, rate, cache-key and receipt source logic is implemented but not compiler- or parity-proven."
+    },
+    {
+      "assertion_id": "T03-A004",
+      "statement": "Run old/new fixture parity and snapshot differences",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/sourceright/parity-cases.json",
+        "integration/consumer-contract-suite.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+      ],
+      "open_gates": [
+        "Run old/new fixtures and compare every parity dimension."
+      ],
+      "permitted_claim": "Parity cases are defined; dual-run results do not yet exist."
+    },
+    {
+      "assertion_id": "T03-A005",
+      "statement": "Review semver/public API implications",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "release/public-packages.json",
+        "public-api/README.md",
+        ".github/workflows/public-api.yml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_public_package_policy.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+      ],
+      "open_gates": [
+        "Run cargo-semver-checks and public API snapshots after compiler bootstrap."
+      ],
+      "permitted_claim": "SemVer and public API gates are configured but not executed."
+    },
+    {
+      "assertion_id": "T03-A006",
+      "statement": "Switch Sourceright then remove superseded code after evidence",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/companion-repositories/sourceright.json",
+        "integration/release-train.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_release_train.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+      ],
+      "open_gates": [
+        "Modify and test Sourceright through an approved downstream pull request.",
+        "Retain rollback for at least one compatible release."
+      ],
+      "permitted_claim": "No Sourceright code has been removed or switched by this repository."
+    }
+  ]
+}

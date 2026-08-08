@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/review-state-snapshot.v1.schema.json",
+  "title": "Searchright derived review state snapshot v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "review_id", "state_version", "source_event_count",
+    "source_head_hash", "last_event_id", "status", "plan_validated",
+    "search_runs", "protocol_amendments", "screening", "event_type_counts",
+    "unknown_event_types", "claim_boundary", "state_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.review-state-snapshot.v1"},
+    "review_id": {"type": "string", "minLength": 1},
+    "state_version": {"const": 1},
+    "source_event_count": {"type": "integer", "minimum": 1},
+    "source_head_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "last_event_id": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "minLength": 1},
+    "plan_validated": {"type": "boolean"},
+    "search_runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["run_id", "source_id", "record_count", "event_id"],
+        "properties": {
+          "run_id": {"type": "string", "minLength": 1},
+          "source_id": {"type": ["string", "null"]},
+          "record_count": {"type": ["integer", "null"], "minimum": 0},
+          "event_id": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "protocol_amendments": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "screening": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["final_decisions", "final_decision_counts", "advisory_recommendation_count", "rejected_final_authority_event_ids"],
+      "properties": {
+        "final_decisions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["record_id", "stage", "decision", "reviewer_id", "event_id"],
+            "properties": {
+              "record_id": {"type": "string", "minLength": 1},
+              "stage": {"type": ["string", "null"]},
+              "decision": {"type": ["string", "null"]},
+              "reviewer_id": {"type": ["string", "null"]},
+              "event_id": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "final_decision_counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+        "advisory_recommendation_count": {"type": "integer", "minimum": 0},
+        "rejected_final_authority_event_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "event_type_counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 1}},
+    "unknown_event_types": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "claim_boundary": {"type": "string", "minLength": 1},
+    "state_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "org.searchright.study-linkage-benchmark-fixture.v1",
+  "partition": "validation",
+  "reports": [
+    {"id": "r1", "registration": "NCT00000001", "kind": "protocol"},
+    {"id": "r2", "registration": "NCT00000001", "kind": "results"},
+    {"id": "r3", "registration": "NCT00000002", "kind": "results"}
+  ],
+  "gold_studies": [["r1", "r2"], ["r3"]],
+  "rights_basis": "CC0 synthetic metadata"
+}

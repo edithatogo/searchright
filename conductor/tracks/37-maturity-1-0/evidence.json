@@ -3,6 +3,7 @@
   "track_id": "37",
   "title": "Final mature 1.0 release and long-term operations",
   "status": "external_evidence_required",
+  "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -13,6 +14,7 @@
     "ROADMAP.md",
     "PROJECT_STATUS.md"
   ],
+  "traceability": "conductor/tracks/37-maturity-1-0/traceability.json",
   "static_checks": [
     "python scripts/check_maturity_dossier.py",
     "python scripts/check_roadmap_coverage.py",
@@ -28,7 +30,7 @@
     "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
     "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
   ],
-  "claim_boundary": "Searchright remains below 1.0 maturity until all named evidence and external decisions exist.",
+  "claim_boundary": "Searchright remains below 1.0 maturity until all named evidence and external decisions exist. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-37",

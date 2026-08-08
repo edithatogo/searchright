@@ -1,15 +1,17 @@
 {
-  "schema_version": "org.searchright.claim-boundaries.v1",
-  "current_evidence_ceiling": "source_verified",
   "allowed_claims": [
-    "The source repository contains versioned contracts, implementation scaffolds and deterministic static checks.",
+    "The source repository contains versioned contracts, implementation scaffolds, assertion-level traceability and deterministic static checks.",
+    "The roadmap contains 198 acceptance assertions, of which 65 have individual symbol/test/evidence mappings; unmapped or partial assertions remain visibly below source implemented.",
+    "Four MVP connector vertical slices and rights-clear response baselines are present in source, but compilation and authorised live execution are not proven.",
+    "Native strategy text, spans and translation-loss diagnostics are preserved for seven database dialect families; semantic parsing and equivalence remain deliberately partial.",
+    "A deterministic review-bundle pack/verify self-test and a deterministic noncanonical review-state reducer pass locally.",
+    "All workspace crates are non-publishable by default; three future public-package candidates are identified but none is publication-ready.",
     "CiteWeft integration is prepared behind an optional one-way adapter.",
     "A four-level GitHub issue hierarchy and a declarative Project v2 control plane are source-verified and dry-run-first.",
-    "Repository settings, a cross-repository release train and a release rehearsal are prepared but not remotely applied or executed.",
-    "Registry and release packets are prepared but not submitted or accepted.",
-    "Eight consumer-driven integration interactions are prepared and locally checked.",
-    "Operational, access, tenancy, telemetry, backup and incident contracts are source-implemented but lack runtime receipts."
+    "A separate cross-repository portfolio Project manifest, ecosystem lock and companion change packets are prepared but not remotely applied.",
+    "Registry, release, pilot and maturity packets are prepared but not submitted, executed or accepted."
   ],
+  "current_evidence_ceiling": "source_verified",
   "forbidden_without_additional_evidence": [
     {
       "claim": "CiteWeft is a GROBID fork, port, reimplementation or compatible replacement",
@@ -86,6 +88,38 @@
     {
       "claim": "telemetry is privacy-preserving in operation",
       "required_evidence": "explicit enabled policy, redaction tests and observed telemetry receipt"
+    },
+    {
+      "claim": "Every roadmap capability is implemented",
+      "required_evidence": "assertion-level traceability showing every applicable acceptance assertion source implemented, followed by compiler and required runtime/external receipts"
+    },
+    {
+      "claim": "A provider is implemented end to end",
+      "required_evidence": "matching parser, runtime, pagination, retry, receipt, deterministic fixture, compiler and authorised live canary evidence"
+    },
+    {
+      "claim": "Native query translation is equivalent across databases",
+      "required_evidence": "expert-reviewed semantic conformance evidence with no unresolved approximated, omitted or unsupported constructs"
+    },
+    {
+      "claim": "A review bundle proves methodological adequacy",
+      "required_evidence": "independent methodological review and topic-specific search validation; bundle verification proves integrity only"
+    },
+    {
+      "claim": "A review-state snapshot is canonical or authoritative",
+      "required_evidence": "verified append-only event chain and human authority record; snapshots remain derived"
+    },
+    {
+      "claim": "Any Searchright crate is ready to publish",
+      "required_evidence": "compiler, test, API snapshot, SemVer, licence, documentation, release and registry evidence plus explicit promotion in release/public-packages.json"
+    },
+    {
+      "claim": "Benchmark performance is established",
+      "required_evidence": "independent execution against sealed labels with corpus, environment, model and code digests and leakage review"
+    },
+    {
+      "claim": "A local fork is the canonical upstream",
+      "required_evidence": "documented independent maintenance decision, licence review and explicit supersession of the upstream role"
     }
   ],
   "language_rules": [
@@ -97,6 +131,13 @@
     "Describe Project and issue state as a coordination projection, never as implementation evidence.",
     "Use prepared_not_executed for release rehearsals and pilots until receipts exist.",
     "Use authenticated-remote-MCP design or source implementation, not hosted service, until deployment evidence exists.",
-    "Use backup policy prepared, not recoverable, until a restore drill passes."
-  ]
+    "Use backup policy prepared, not recoverable, until a restore drill passes.",
+    "Use scaffolded or partially implemented when one or more acceptance assertions lack complete symbol-and-test mappings.",
+    "Describe provider response baselines as drift controls, not live-provider proof.",
+    "Describe review bundles as integrity-preserving portable artefacts, not methodological certification.",
+    "Describe review-state snapshots as disposable derived projections, never canonical decision stores.",
+    "Describe public packages as candidates until release/public-packages.json explicitly promotes them with evidence.",
+    "Name canonical upstreams separately from local forks and do not infer redistribution rights from fork ownership."
+  ],
+  "schema_version": "org.searchright.claim-boundaries.v1"
 }

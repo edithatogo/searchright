@@ -832,7 +832,248 @@ fn openalex_kind(value: Option<&str>) -> RecordKind {
 #[cfg(feature = "live")]
 mod live {
     use super::*;
+    use reqwest::header::{HeaderMap, RETRY_AFTER};
     use serde_json::Value;
+
+    const DEFAULT_MAX_RESPONSE_BYTES: u64 = 16 * 1024 * 1024;
+
+    /// Non-secret configuration for the four open MVP providers.
+    #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+    pub struct LiveProviderConfig {
+        /// NCBI tool identifier.
+        pub ncbi_tool: Option<String>,
+        /// NCBI contact email supplied by the operator.
+        pub ncbi_email: Option<String>,
+        /// Crossref polite-pool contact email.
+        pub crossref_mailto: Option<String>,
+        /// OpenAlex polite-pool contact email.
+        pub openalex_mailto: Option<String>,
+    }
+
+    fn build_client(provider: &str) -> Result<reqwest::Client, ProviderError> {
+        reqwest::Client::builder()
+            .https_only(true)
+            .redirect(reqwest::redirect::Policy::none())
+            .user_agent(concat!("searchright/", env!("CARGO_PKG_VERSION")))
+            .build()
+            .map_err(|error| ProviderError::Upstream {
+                provider: provider.to_owned(),
+                message: format!("could not construct HTTP client: {error}"),
+            })
+    }
+
+    fn retry_after_ms(headers: &HeaderMap) -> Option<u64> {
+        headers
+            .get(RETRY_AFTER)
+            .and_then(|value| value.to_str().ok())
+            .and_then(|value| value.parse::<u64>().ok())
+            .map(|seconds| seconds.saturating_mul(1_000))
+    }
+
+    async fn fetch_json(
+        client: &reqwest::Client,
+        provider: &str,
+        endpoint: url::Url,
+        request: &SearchRequest,
+    ) -> Result<(Value, String), ProviderError> {
+        let response = client
+            .get(endpoint)
+            .send()
+            .await
+            .map_err(|error| ProviderError::Upstream {
+                provider: provider.to_owned(),
+                message: error.to_string(),
+            })?;
+        let status = response.status();
+        let retry_after_ms = retry_after_ms(response.headers());
+        if status.as_u16() == 429 {
+            return Err(ProviderError::RateLimited {
+                provider: provider.to_owned(),
+                retry_after_ms,
+            });
+        }
+        if !status.is_success() {
+            return Err(ProviderError::HttpStatus {
+                provider: provider.to_owned(),
+                status: status.as_u16(),
+                retry_after_ms,
+                message: status.to_string(),
+            });
+        }
+        let bytes = response
+            .bytes()
+            .await
+            .map_err(|error| ProviderError::Upstream {
+                provider: provider.to_owned(),
+                message: error.to_string(),
+            })?;
+        let maximum = request
+            .policy
+            .max_response_bytes
+            .unwrap_or(DEFAULT_MAX_RESPONSE_BYTES);
+        let size = u64::try_from(bytes.len()).unwrap_or(u64::MAX);
+        if size > maximum {
+            return Err(ProviderError::BudgetExceeded {
+                kind: "response_bytes",
+                limit: maximum,
+            });
+        }
+        let digest = blake3::hash(&bytes).to_hex().to_string();
+        let payload = serde_json::from_slice(&bytes).map_err(|error| {
+            ProviderError::MalformedResponse {
+                provider: provider.to_owned(),
+                format: "JSON",
+                message: error.to_string(),
+            }
+        })?;
+        Ok((payload, digest))
+    }
+
+    fn open_manifest(
+        provider_id: &str,
+        display_name: &str,
+        allowed_hosts: &[&str],
+        interval_ms: u64,
+    ) -> ProviderManifest {
+        ProviderManifest {
+            provider_id: provider_id.to_owned(),
+            display_name: display_name.to_owned(),
+            version: env!("CARGO_PKG_VERSION").to_owned(),
+            support_level: ProviderSupportLevel::OptInLive,
+            capabilities: vec![ProviderCapability::Search, ProviderCapability::Pagination],
+            allowed_hosts: allowed_hosts.iter().map(|value| (*value).to_owned()).collect(),
+            authentication_required: false,
+            licensed: false,
+            default_min_interval_ms: interval_ms,
+            policy_notes: vec![
+                "live execution is feature-gated and also requires explicit execution-policy approval"
+                    .to_owned(),
+                "responses are bounded, hashed before normalisation and never written unless a cache is explicitly configured"
+                    .to_owned(),
+            ],
+        }
+    }
+
+    /// Opt-in PubMed ESearch plus ESummary adapter.
+    #[derive(Debug, Clone)]
+    pub struct PubMedProvider {
+        client: reqwest::Client,
+        tool: Option<String>,
+        email: Option<String>,
+    }
+
+    impl PubMedProvider {
+        /// Construct a PubMed adapter with optional NCBI identity fields.
+        pub fn new(tool: Option<String>, email: Option<String>) -> Result<Self, ProviderError> {
+            Ok(Self {
+                client: build_client("pubmed")?,
+                tool,
+                email,
+            })
+        }
+    }
+
+    #[async_trait]
+    impl SearchProvider for PubMedProvider {
+        fn manifest(&self) -> ProviderManifest {
+            open_manifest(
+                "pubmed",
+                "PubMed",
+                &["eutils.ncbi.nlm.nih.gov"],
+                if self.email.is_some() { 350 } else { 1_000 },
+            )
+        }
+
+        fn mode(&self) -> ProviderMode {
+            ProviderMode::Live
+        }
+
+        fn endpoint_label(&self) -> Option<String> {
+            Some("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi".to_owned())
+        }
+
+        async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+            let offset = request
+                .cursor
+                .as_deref()
+                .unwrap_or("0")
+                .parse::<u32>()
+                .map_err(|error| ProviderError::InvalidRequest(format!(
+                    "PubMed cursor must be a result offset: {error}"
+                )))?;
+            let endpoint = PubMedSearchRequest {
+                query: request.strategy.query.clone(),
+                page_size: request.page_size,
+                offset,
+                tool: self.tool.clone(),
+                email: self.email.clone(),
+            }
+            .endpoint()
+            .map_err(|error| ProviderError::Upstream {
+                provider: "pubmed".to_owned(),
+                message: error.to_string(),
+            })?;
+            let (search, search_digest) = fetch_json(&self.client, "pubmed", endpoint, request).await?;
+            let result = search.get("esearchresult").ok_or_else(|| {
+                ProviderError::MalformedResponse {
+                    provider: "pubmed".to_owned(),
+                    format: "JSON",
+                    message: "response omitted esearchresult".to_owned(),
+                }
+            })?;
+            let count = result
+                .get("count")
+                .and_then(Value::as_str)
+                .and_then(|value| value.parse::<u64>().ok());
+            let pmids = result
+                .get("idlist")
+                .and_then(Value::as_array)
+                .ok_or_else(|| ProviderError::MalformedResponse {
+                    provider: "pubmed".to_owned(),
+                    format: "JSON",
+                    message: "response omitted esearchresult.idlist".to_owned(),
+                })?
+                .iter()
+                .filter_map(Value::as_str)
+                .map(str::to_owned)
+                .collect::<Vec<_>>();
+            if pmids.is_empty() {
+                return Ok(ProviderPage {
+                    schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+                    records: Vec::new(),
+                    next_cursor: None,
+                    total_available: count,
+                    diagnostics: BTreeMap::from([(
+                        "raw_response_digest".to_owned(),
+                        Value::String(search_digest),
+                    )]),
+                });
+            }
+            let summary_endpoint = PubMedSummaryRequest {
+                pmids: pmids.clone(),
+                tool: self.tool.clone(),
+                email: self.email.clone(),
+            }
+            .endpoint()
+            .map_err(|error| ProviderError::Upstream {
+                provider: "pubmed".to_owned(),
+                message: error.to_string(),
+            })?;
+            let (summary, summary_digest) =
+                fetch_json(&self.client, "pubmed", summary_endpoint, request).await?;
+            let mut page = parse_pubmed_summary_page(&summary)?;
+            let next = offset.saturating_add(u32::try_from(pmids.len()).unwrap_or(u32::MAX));
+            page.total_available = count;
+            page.next_cursor = count
+                .filter(|total| u64::from(next) < *total)
+                .map(|_| next.to_string());
+            page.diagnostics.insert(
+                "raw_response_digests".to_owned(),
+                Value::Array(vec![Value::String(search_digest), Value::String(summary_digest)]),
+            );
+            Ok(page)
+        }
+    }
 
     /// Opt-in Europe PMC live adapter.
     #[derive(Debug, Clone)]
@@ -843,37 +1084,16 @@ mod live {
     impl EuropePmcProvider {
         /// Construct a redirect-disabled HTTPS-only client for Europe PMC.
         pub fn new() -> Result<Self, ProviderError> {
-            let client = reqwest::Client::builder()
-                .https_only(true)
-                .redirect(reqwest::redirect::Policy::none())
-                .user_agent(concat!("searchright/", env!("CARGO_PKG_VERSION")))
-                .build()
-                .map_err(|error| ProviderError::Upstream {
-                    provider: "europe-pmc".to_owned(),
-                    message: format!("could not construct HTTP client: {error}"),
-                })?;
-            Ok(Self { client })
+            Ok(Self {
+                client: build_client("europe-pmc")?,
+            })
         }
     }
 
     #[async_trait]
     impl SearchProvider for EuropePmcProvider {
         fn manifest(&self) -> ProviderManifest {
-            ProviderManifest {
-                provider_id: "europe-pmc".to_owned(),
-                display_name: "Europe PMC".to_owned(),
-                version: env!("CARGO_PKG_VERSION").to_owned(),
-                support_level: ProviderSupportLevel::OptInLive,
-                capabilities: vec![ProviderCapability::Search, ProviderCapability::Pagination],
-                allowed_hosts: vec!["www.ebi.ac.uk".to_owned()],
-                authentication_required: false,
-                licensed: false,
-                default_min_interval_ms: 1_000,
-                policy_notes: vec![
-                    "live execution is feature-gated and additionally requires request policy approval"
-                        .to_owned(),
-                ],
-            }
+            open_manifest("europe-pmc", "Europe PMC", &["www.ebi.ac.uk"], 1_000)
         }
 
         fn mode(&self) -> ProviderMode {
@@ -895,32 +1115,139 @@ mod live {
                 provider: "europe-pmc".to_owned(),
                 message: error.to_string(),
             })?;
-            let payload: Value = self
-                .client
-                .get(endpoint)
-                .send()
-                .await
-                .and_then(reqwest::Response::error_for_status)
-                .map_err(|error| ProviderError::Upstream {
-                    provider: "europe-pmc".to_owned(),
-                    message: error.to_string(),
-                })?
-                .json()
-                .await
-                .map_err(|error| ProviderError::Upstream {
-                    provider: "europe-pmc".to_owned(),
-                    message: error.to_string(),
-                })?;
-            parse_europe_pmc_page(&payload)
+            let (payload, digest) =
+                fetch_json(&self.client, "europe-pmc", endpoint, request).await?;
+            let mut page = parse_europe_pmc_page(&payload)?;
+            page.diagnostics
+                .insert("raw_response_digest".to_owned(), Value::String(digest));
+            Ok(page)
         }
     }
 
+    /// Opt-in Crossref Works adapter.
+    #[derive(Debug, Clone)]
+    pub struct CrossrefProvider {
+        client: reqwest::Client,
+        mailto: Option<String>,
+    }
 
-    pub use EuropePmcProvider as PublicEuropePmcProvider;
+    impl CrossrefProvider {
+        /// Construct a Crossref adapter with an optional polite-pool contact.
+        pub fn new(mailto: Option<String>) -> Result<Self, ProviderError> {
+            Ok(Self {
+                client: build_client("crossref")?,
+                mailto,
+            })
+        }
+    }
+
+    #[async_trait]
+    impl SearchProvider for CrossrefProvider {
+        fn manifest(&self) -> ProviderManifest {
+            open_manifest("crossref", "Crossref", &["api.crossref.org"], 1_000)
+        }
+
+        fn mode(&self) -> ProviderMode {
+            ProviderMode::Live
+        }
+
+        fn endpoint_label(&self) -> Option<String> {
+            Some("https://api.crossref.org/works".to_owned())
+        }
+
+        async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+            let endpoint = CrossrefRequest {
+                query: request.strategy.query.clone(),
+                rows: request.page_size,
+                cursor: request.cursor.clone().or_else(|| Some("*".to_owned())),
+                mailto: self.mailto.clone(),
+            }
+            .endpoint()
+            .map_err(|error| ProviderError::Upstream {
+                provider: "crossref".to_owned(),
+                message: error.to_string(),
+            })?;
+            let (payload, digest) = fetch_json(&self.client, "crossref", endpoint, request).await?;
+            let mut page = parse_crossref_page(&payload)?;
+            page.diagnostics
+                .insert("raw_response_digest".to_owned(), Value::String(digest));
+            Ok(page)
+        }
+    }
+
+    /// Opt-in OpenAlex Works adapter.
+    #[derive(Debug, Clone)]
+    pub struct OpenAlexProvider {
+        client: reqwest::Client,
+        mailto: Option<String>,
+    }
+
+    impl OpenAlexProvider {
+        /// Construct an OpenAlex adapter with an optional polite-pool contact.
+        pub fn new(mailto: Option<String>) -> Result<Self, ProviderError> {
+            Ok(Self {
+                client: build_client("openalex")?,
+                mailto,
+            })
+        }
+    }
+
+    #[async_trait]
+    impl SearchProvider for OpenAlexProvider {
+        fn manifest(&self) -> ProviderManifest {
+            open_manifest("openalex", "OpenAlex", &["api.openalex.org"], 1_000)
+        }
+
+        fn mode(&self) -> ProviderMode {
+            ProviderMode::Live
+        }
+
+        fn endpoint_label(&self) -> Option<String> {
+            Some("https://api.openalex.org/works".to_owned())
+        }
+
+        async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+            let endpoint = OpenAlexRequest {
+                query: request.strategy.query.clone(),
+                per_page: request.page_size,
+                cursor: request.cursor.clone(),
+                mailto: self.mailto.clone(),
+            }
+            .endpoint()
+            .map_err(|error| ProviderError::Upstream {
+                provider: "openalex".to_owned(),
+                message: error.to_string(),
+            })?;
+            let (payload, digest) = fetch_json(&self.client, "openalex", endpoint, request).await?;
+            let mut page = parse_openalex_page(&payload)?;
+            page.diagnostics
+                .insert("raw_response_digest".to_owned(), Value::String(digest));
+            Ok(page)
+        }
+    }
+
+    /// Register the four open MVP live providers. Live execution still requires
+    /// the Cargo feature and each request's explicit `live_enabled` policy.
+    pub fn register_mvp_live_providers(
+        registry: &mut ProviderRegistry,
+        config: LiveProviderConfig,
+    ) -> Result<(), ProviderError> {
+        registry.register(Arc::new(PubMedProvider::new(
+            config.ncbi_tool,
+            config.ncbi_email,
+        )?))?;
+        registry.register(Arc::new(EuropePmcProvider::new()?))?;
+        registry.register(Arc::new(CrossrefProvider::new(config.crossref_mailto)?))?;
+        registry.register(Arc::new(OpenAlexProvider::new(config.openalex_mailto)?))?;
+        Ok(())
+    }
 }
 
 #[cfg(feature = "live")]
-pub use live::PublicEuropePmcProvider as EuropePmcProvider;
+pub use live::{
+    CrossrefProvider, EuropePmcProvider, LiveProviderConfig, OpenAlexProvider, PubMedProvider,
+    register_mvp_live_providers,
+};
 
 #[cfg(test)]
 mod tests {

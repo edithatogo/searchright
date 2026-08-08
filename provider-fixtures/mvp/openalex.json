@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "count": 1,
+    "db_response_time_ms": 1,
+    "page": null,
+    "per_page": 1,
+    "next_cursor": "IlsxMDAuMCwgJ2h0dHBzOi8vb3BlbmFsZXgub3JnL1cwMDAwMDAwMDUnXSI="
+  },
+  "results": [
+    {
+      "id": "https://openalex.org/W000000005",
+      "doi": "https://doi.org/10.1000/searchright.5",
+      "title": "Synthetic OpenAlex fixture",
+      "publication_year": 2026,
+      "publication_date": "2026-03-01",
+      "type": "article",
+      "authorships": [
+        {"author": {"id": "https://openalex.org/A000000005", "display_name": "Fixture E"}}
+      ],
+      "primary_location": {
+        "source": {"display_name": "Searchright Fixture Journal"},
+        "landing_page_url": "https://doi.org/10.1000/searchright.5"
+      },
+      "abstract_inverted_index": {"Synthetic": [0], "fixture": [1]}
+    }
+  ]
+}

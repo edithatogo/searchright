@@ -3,15 +3,16 @@
 
 Parent phase key: `track-11-phase-1`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `skills/systematic-search/SKILL.md`
-  - [x] `skills/systematic-search/workflows/systematic-review.yaml`
-  - [x] `skills/systematic-search/references/authority.md`
-  - [x] `crates/searchright-agent/src/lib.rs`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `skills/systematic-search/SKILL.md`
+  - [x] Present source path: `skills/systematic-search/workflows/systematic-review.yaml`
+  - [x] Present source path: `skills/systematic-search/references/authority.md`
+  - [x] Present source path: `crates/searchright-agent/src/lib.rs`
+  - [x] Assertion ledger: `conductor/tracks/11-agentic-skill/traceability.json`
 
 ## Completion and evidence contract
 

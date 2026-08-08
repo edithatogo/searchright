@@ -3,7 +3,8 @@
   "track_id": "06",
   "slug": "imports-dedup-linkage",
   "title": "Imports, deduplication and study linkage",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-05",
   "updated": "2026-08-08",
   "dependencies": [
@@ -14,6 +15,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/06-imports-dedup-linkage/evidence.json",
+  "traceability_path": "conductor/tracks/06-imports-dedup-linkage/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-06",

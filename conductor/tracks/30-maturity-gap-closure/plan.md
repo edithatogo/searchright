@@ -1,6 +1,6 @@
 # Plan: 30 Maturity gate and gap closure
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,11 +8,12 @@ GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-30-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `docs/maturity/gap-register.md`
-  - [x] `conductor/maturity-dossier.json`
-  - [x] `scripts/check_maturity_dossier.py`
-  - [x] `PROJECT_STATUS.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `docs/maturity/gap-register.md`
+  - [x] Present source path: `conductor/maturity-dossier.json`
+  - [x] Present source path: `scripts/check_maturity_dossier.py`
+  - [x] Present source path: `PROJECT_STATUS.md`
+  - [x] Assertion ledger: `conductor/tracks/30-maturity-gap-closure/traceability.json`
 
 ## Phase 2: Source-level verification
 

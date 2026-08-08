@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "00",
   "title": "Foundation, Conductor and toolchain",
-  "status": "source_implemented",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -14,6 +15,7 @@
     "scripts/install-conductor.sh",
     "scripts/install-conductor.ps1"
   ],
+  "traceability": "conductor/tracks/00-foundation-conductor-toolchain/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py"
   ],
@@ -22,7 +24,7 @@
     "Install and execute Rust 1.97.1 in a compatible environment.",
     "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-00",

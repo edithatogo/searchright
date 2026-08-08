@@ -2,18 +2,25 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "01",
   "title": "Contract catalogue and code generation",
-  "status": "source_implemented",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
+    "crates/evidence-search-contracts/src/lib.rs",
     "crates/searchright-contracts/src/lib.rs",
     "contracts/schema-catalog.json",
-    "contracts/standards/index.json",
-    "docs/contracts.md",
-    "docs/adrs/0008-standards-packs-and-methodology-boundary.md"
+    "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
+    "scripts/sync_schema_surface.py",
+    "release/public-packages.json",
+    "scripts/check_public_package_policy.py",
+    "docs/msrv-and-package-policy.md"
   ],
+  "traceability": "conductor/tracks/01-contract-catalog/traceability.json",
   "static_checks": [
-    "python scripts/validate_repository.py"
+    "python scripts/validate_repository.py",
+    "python scripts/sync_schema_surface.py --check",
+    "python scripts/check_public_package_policy.py"
   ],
   "requirements": [
     "SR-001",
@@ -27,7 +34,7 @@
     "Compile Rust contract types and run schema/Rust round-trip tests.",
     "Generate compatibility fixtures from compiled public types."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-01",

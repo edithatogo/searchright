@@ -3,6 +3,7 @@
   "track_id": "03",
   "title": "Shared provider runtime and Sourceright extraction",
   "status": "integration_prepared",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -11,11 +12,15 @@
     "migration/sourceright/replacement-map.yaml",
     "migration/sourceright/parity-cases.json",
     "scripts/check_sourceright_migration.py",
-    "docs/adrs/0012-sourceright-and-estate-migration.md"
+    "release/public-packages.json",
+    "public-api/README.md",
+    "docs/msrv-and-package-policy.md"
   ],
+  "traceability": "conductor/tracks/03-shared-provider-runtime/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
-    "python scripts/check_sourceright_migration.py"
+    "python scripts/check_sourceright_migration.py",
+    "python scripts/check_public_package_policy.py"
   ],
   "requirements": [
     "SR-008",
@@ -28,7 +33,7 @@
     "Run old/new Sourceright fixtures in the downstream repository.",
     "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-03",

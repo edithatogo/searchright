@@ -1,6 +1,6 @@
 # Plan: 29 External methodological evaluation and sustainability
 
-Current status: **external_evidence_required**. Evidence level: **source_verified**.
+Current status: **external_evidence_required**. Implementation state: **external_evidence_required**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,12 +8,13 @@ GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-29-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `docs/evaluation/external-methodological-evaluation.md`
-  - [x] `docs/evaluation/benchmark-and-calibration-protocol.md`
-  - [x] `docs/governance/sustainability.md`
-  - [x] `registry/joss/paper.md`
-  - [x] `GOVERNANCE.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `docs/evaluation/external-methodological-evaluation.md`
+  - [x] Present source path: `docs/evaluation/benchmark-and-calibration-protocol.md`
+  - [x] Present source path: `docs/governance/sustainability.md`
+  - [x] Present source path: `registry/joss/paper.md`
+  - [x] Present source path: `GOVERNANCE.md`
+  - [x] Assertion ledger: `conductor/tracks/29-external-evaluation-sustainability/traceability.json`
 
 ## Phase 2: Source-level verification
 

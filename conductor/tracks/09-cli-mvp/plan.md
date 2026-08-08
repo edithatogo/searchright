@@ -1,6 +1,6 @@
 # Plan: 09 CLI MVP
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,11 +8,12 @@ GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-09-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-cli/src/main.rs`
-  - [x] `crates/searchright/src/engine.rs`
-  - [x] `contracts/interface-catalog.json`
-  - [x] `docs/adrs/0007-shared-application-facade.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-cli/src/main.rs`
+  - [x] Present source path: `crates/searchright/src/engine.rs`
+  - [x] Present source path: `contracts/interface-catalog.json`
+  - [x] Present source path: `docs/adrs/0007-shared-application-facade.md`
+  - [x] Assertion ledger: `conductor/tracks/09-cli-mvp/traceability.json`
 
 ## Phase 2: Source-level verification
 

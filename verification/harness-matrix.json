@@ -3,11 +3,27 @@
   "dimensions": [
     {
       "blocking": true,
+      "dimension": "assertion_traceability",
+      "evidence": "assertion-to-symbol/test/gate receipt",
+      "frequency": "every_change",
+      "gate": "scripts/check_traceability.py",
+      "status": "configured"
+    },
+    {
+      "blocking": true,
       "dimension": "authenticated_remote_mcp",
       "evidence": "deployed authenticated MCP and isolation receipts",
       "frequency": "remote_transport_change_and_release",
       "gate": "tenant/scope/replay/rate/egress adversarial suite",
       "status": "source_contracts_not_deployed"
+    },
+    {
+      "blocking": true,
+      "dimension": "benchmark_leakage",
+      "evidence": "sealed-label, corpus-digest and environment receipt",
+      "frequency": "benchmark_change_and_evaluation",
+      "gate": "scripts/check_methodology_benchmarks.py plus independent mounted labels",
+      "status": "static_configured_independent_run_open"
     },
     {
       "blocking": true,
@@ -48,6 +64,14 @@
       "frequency": "every_change",
       "gate": "scripts/check_integration_passports.py and scripts/check_consumer_contracts.py",
       "status": "configured"
+    },
+    {
+      "blocking": true,
+      "dimension": "contract_reference_vertical_slice",
+      "evidence": "network-free end-to-end contract reference receipt",
+      "frequency": "every_change",
+      "gate": "scripts/check_vertical_slice.py",
+      "status": "configured_rust_and_live_evidence_open"
     },
     {
       "blocking": true,
@@ -126,6 +150,14 @@
     },
     {
       "blocking": true,
+      "dimension": "licence_origin_firewall",
+      "evidence": "canonical-upstream, fork-role and redistribution decision receipt",
+      "frequency": "every_integration_or_distribution_change",
+      "gate": "scripts/check_licence_firewall.py",
+      "status": "configured_human_reviews_open"
+    },
+    {
+      "blocking": true,
       "dimension": "maturity_decision",
       "evidence": "version 1.0 decision receipt with no critical blocker",
       "frequency": "release_milestone",
@@ -150,11 +182,35 @@
     },
     {
       "blocking": true,
+      "dimension": "portable_review_bundle",
+      "evidence": "deterministic pack, verify, tamper and secret-rejection receipt",
+      "frequency": "every_change",
+      "gate": "scripts/review_bundle.py self-test",
+      "status": "configured"
+    },
+    {
+      "blocking": true,
       "dimension": "property_metamorphic",
       "evidence": "test report",
       "frequency": "every_change",
       "gate": "proptest and transformation invariants",
       "status": "configured_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "provider_contract_drift",
+      "evidence": "exact fixture digests and expected response-shape assertions",
+      "frequency": "every_change_and_live_canary",
+      "gate": "scripts/check_provider_contract_baselines.py plus authorised redacted canaries",
+      "status": "static_configured_live_not_run"
+    },
+    {
+      "blocking": true,
+      "dimension": "public_api_and_semver",
+      "evidence": "public API snapshots, contract-surface review and SemVer reports",
+      "frequency": "public_contract_change_and_release",
+      "gate": "scripts/sync_schema_surface.py --check plus cargo-public-api and cargo-semver-checks",
+      "status": "static_surface_frozen_compiler_tools_not_run"
     },
     {
       "blocking": true,

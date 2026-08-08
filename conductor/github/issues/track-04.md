@@ -12,7 +12,8 @@ Provide deterministic open-source adapters and opt-in live execution for major d
 ## Contract
 
 - Horizon: `mvp`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `03`
 - Requirements: `SR-014, SR-015, SR-016`
@@ -27,6 +28,6 @@ Provide deterministic open-source adapters and opt-in live execution for major d
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

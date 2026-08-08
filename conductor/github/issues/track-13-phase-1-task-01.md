@@ -7,39 +7,45 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `integration/locks.json`
-  - [x] `integration/passports/index.json`
-  - [x] `contracts/json-schema/integration-passport.v1.schema.json`
-  - [x] `contracts/json-schema/github-issue-hierarchy.v1.schema.json`
-  - [x] `conductor/github/issue-hierarchy.json`
-  - [x] `conductor/github/README.md`
-  - [x] `scripts/check_integration_passports.py`
-  - [x] `scripts/render_github_issues.py`
-  - [x] `scripts/check_github_issue_hierarchy.py`
-  - [x] `scripts/sync_github_issues.py`
-  - [x] `CONTEXT.md`
-  - [x] `context/manifest.json`
-  - [x] `context/decision-ledger.json`
-  - [x] `context/claim-boundaries.json`
-  - [x] `scripts/check_context_integrity.py`
-  - [x] `crates/searchright-contracts/src/integration.rs`
-  - [x] `contracts/examples/integration-passport.json`
-  - [x] `contracts/examples/github-issue-hierarchy.json`
-  - [x] `integration/passports/citeweft-document-evidence.json`
-  - [x] `scripts/check_integration_drift.py`
-  - [x] `scripts/sync_context_lock.py`
-  - [x] `context/capability-matrix.json`
-  - [x] `context/hazard-log.json`
-  - [x] `context/evidence-ledger.json`
-  - [x] `.github/workflows/issue-sync.yml`
-  - [x] `.github/workflows/integration-drift.yml`
-  - [x] `docs/integration-architecture.md`
-  - [x] `contracts/json-schema/consumer-contract-suite.v1.schema.json`
-  - [x] `contracts/examples/consumer-contract-suite.json`
-  - [x] `integration/consumer-contract-suite.json`
-  - [x] `scripts/check_consumer_contracts.py`
-  - [x] `docs/adrs/0016-federated-consumer-contracts.md`
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
+  - [x] Present source path: `integration/locks.json`
+  - [x] Present source path: `integration/passports/index.json`
+  - [x] Present source path: `contracts/json-schema/integration-passport.v1.schema.json`
+  - [x] Present source path: `contracts/json-schema/github-issue-hierarchy.v1.schema.json`
+  - [x] Present source path: `conductor/github/issue-hierarchy.json`
+  - [x] Present source path: `conductor/github/README.md`
+  - [x] Present source path: `scripts/check_integration_passports.py`
+  - [x] Present source path: `scripts/render_github_issues.py`
+  - [x] Present source path: `scripts/check_github_issue_hierarchy.py`
+  - [x] Present source path: `scripts/sync_github_issues.py`
+  - [x] Present source path: `CONTEXT.md`
+  - [x] Present source path: `context/manifest.json`
+  - [x] Present source path: `context/decision-ledger.json`
+  - [x] Present source path: `context/claim-boundaries.json`
+  - [x] Present source path: `scripts/check_context_integrity.py`
+  - [x] Present source path: `crates/searchright-contracts/src/integration.rs`
+  - [x] Present source path: `contracts/examples/integration-passport.json`
+  - [x] Present source path: `contracts/examples/github-issue-hierarchy.json`
+  - [x] Present source path: `integration/passports/citeweft-document-evidence.json`
+  - [x] Present source path: `scripts/check_integration_drift.py`
+  - [x] Present source path: `scripts/sync_context_lock.py`
+  - [x] Present source path: `context/capability-matrix.json`
+  - [x] Present source path: `context/hazard-log.json`
+  - [x] Present source path: `context/evidence-ledger.json`
+  - [x] Present source path: `.github/workflows/issue-sync.yml`
+  - [x] Present source path: `.github/workflows/integration-drift.yml`
+  - [x] Present source path: `docs/integration-architecture.md`
+  - [x] Present source path: `contracts/json-schema/consumer-contract-suite.v1.schema.json`
+  - [x] Present source path: `contracts/examples/consumer-contract-suite.json`
+  - [x] Present source path: `integration/consumer-contract-suite.json`
+  - [x] Present source path: `scripts/check_consumer_contracts.py`
+  - [x] Present source path: `docs/adrs/0016-federated-consumer-contracts.md`
+  - [x] Present source path: `integration/github/portfolio-project.json`
+  - [x] Present source path: `integration/github/portfolio-readme.md`
+  - [x] Present source path: `scripts/check_portfolio_project.py`
+  - [x] Present source path: `scripts/plan_github_portfolio.py`
+  - [x] Present source path: `scripts/check_licence_firewall.py`
+  - [x] Assertion ledger: `conductor/tracks/13-integration-passports-github-context/traceability.json`
 
 ## Completion and evidence contract
 

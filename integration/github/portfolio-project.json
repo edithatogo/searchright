@@ -1,0 +1,386 @@
+{
+  "claim_boundary": "This is a prepared portfolio projection. It neither creates a GitHub Project nor proves any cross-repository change or compatibility result.",
+  "fields": [
+    {
+      "data_type": "TEXT",
+      "name": "Repository"
+    },
+    {
+      "data_type": "SINGLE_SELECT",
+      "name": "Work kind",
+      "options": [
+        "Contract",
+        "Migration",
+        "Release train",
+        "Standard pack"
+      ]
+    },
+    {
+      "data_type": "SINGLE_SELECT",
+      "name": "Implementation state",
+      "options": [
+        "Prepared",
+        "Scaffolded",
+        "Partially implemented",
+        "Source implemented",
+        "Externally blocked"
+      ]
+    },
+    {
+      "data_type": "SINGLE_SELECT",
+      "name": "Evidence level",
+      "options": [
+        "Contracted",
+        "Source verified",
+        "Compiler verified",
+        "Fixture proven",
+        "Live proven",
+        "Externally validated",
+        "Published"
+      ]
+    },
+    {
+      "data_type": "SINGLE_SELECT",
+      "name": "Compatibility state",
+      "options": [
+        "Not executed",
+        "Local only",
+        "Consumer fixture",
+        "Downstream verified",
+        "Suspended"
+      ]
+    },
+    {
+      "data_type": "SINGLE_SELECT",
+      "name": "Licence state",
+      "options": [
+        "Cleared",
+        "Declared",
+        "Reference only",
+        "Review required"
+      ]
+    },
+    {
+      "data_type": "TEXT",
+      "name": "Release train"
+    },
+    {
+      "data_type": "TEXT",
+      "name": "Producer"
+    },
+    {
+      "data_type": "TEXT",
+      "name": "Consumer"
+    },
+    {
+      "data_type": "TEXT",
+      "name": "Contract family"
+    },
+    {
+      "data_type": "TEXT",
+      "name": "Next proof"
+    },
+    {
+      "data_type": "TEXT",
+      "name": "Searchright track"
+    }
+  ],
+  "items": [
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/academic-research-skills",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/academic-research-skills",
+      "kind": "migration",
+      "licence_state": "Review required",
+      "linked_track": "15",
+      "next_proof": "upstream drift receipt",
+      "producer": "edithatogo/academic-research-skills",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/academic-research-skills",
+      "source_path": "migration/companion-repositories/academic-research-skills.json",
+      "title": "Integrate academic-research-skills with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Reference only",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "external-policy-reference",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/api-standards",
+      "kind": "licence_and_upstream",
+      "licence_state": "Review required",
+      "linked_track": "13",
+      "next_proof": "licence determination and local delta inventory",
+      "producer": "tewhatuora/api-standards",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/api-standards",
+      "source_path": "migration/companion-repositories/api-standards.json",
+      "title": "Resolve api-standards upstream and redistribution posture"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/citeweft",
+      "kind": "migration",
+      "licence_state": "Declared",
+      "linked_track": "12",
+      "next_proof": "protected branch receipt",
+      "producer": "edithatogo/citeweft",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/citeweft",
+      "source_path": "migration/companion-repositories/citeweft.json",
+      "title": "Integrate citeweft with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Optional not executed",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "prisma-renderer-interop",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/PRISMA.jl",
+      "kind": "upstream_and_interop",
+      "licence_state": "Upstream MIT",
+      "linked_track": "15",
+      "next_proof": "local delta inventory and flow fixture parity",
+      "producer": "ceceoco/PRISMA.jl",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/PRISMA.jl",
+      "source_path": "migration/companion-repositories/prisma-jl.json",
+      "title": "Clarify PRISMA.jl fork role and optional rendering interoperability"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/repository-standards",
+      "kind": "migration",
+      "licence_state": "Declared",
+      "linked_track": "15",
+      "next_proof": "profile fixture",
+      "producer": "edithatogo/repository-standards",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/repository-standards",
+      "source_path": "migration/companion-repositories/repository-standards.json",
+      "title": "Integrate repository-standards with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/scholarly-publishing-agents",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/scholarly-publishing-agents",
+      "kind": "migration",
+      "licence_state": "Declared",
+      "linked_track": "15",
+      "next_proof": "scenario parity",
+      "producer": "edithatogo/scholarly-publishing-agents",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/scholarly-publishing-agents",
+      "source_path": "migration/companion-repositories/scholarly-publishing-agents.json",
+      "title": "Integrate scholarly-publishing-agents with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/sourceright",
+      "kind": "migration",
+      "licence_state": "Declared",
+      "linked_track": "14",
+      "next_proof": "dependency graph receipt",
+      "producer": "edithatogo/sourceright",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/sourceright",
+      "source_path": "migration/companion-repositories/sourceright.json",
+      "title": "Integrate sourceright with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/standards_check",
+      "kind": "migration",
+      "licence_state": "Review required",
+      "linked_track": "15",
+      "next_proof": "rights inventory",
+      "producer": "edithatogo/standards_check",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/standards_check",
+      "source_path": "migration/companion-repositories/standards-check.json",
+      "title": "Integrate standards_check with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "screening-benchmark",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/synergy-dataset",
+      "kind": "benchmark_governance",
+      "licence_state": "Upstream CC0",
+      "linked_track": "17",
+      "next_proof": "canonical DOI/digest and leakage review",
+      "producer": "asreview/synergy-dataset",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/synergy-dataset",
+      "source_path": "migration/companion-repositories/synergy-dataset.json",
+      "title": "Use canonical SYNERGY releases with sealed evaluation labels"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/UOGTO",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/UOGTO",
+      "kind": "migration",
+      "licence_state": "Declared",
+      "linked_track": "15",
+      "next_proof": "legacy-output import fixture",
+      "producer": "edithatogo/UOGTO",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/UOGTO",
+      "source_path": "migration/companion-repositories/uogto.json",
+      "title": "Integrate UOGTO with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/voiage",
+      "contract_family": "companion-change-packet.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "companion:edithatogo/voiage",
+      "kind": "migration",
+      "licence_state": "Declared",
+      "linked_track": "15",
+      "next_proof": "legacy fixture parity",
+      "producer": "edithatogo/voiage",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/voiage",
+      "source_path": "migration/companion-repositories/voiage.json",
+      "title": "Integrate voiage with the evidence infrastructure"
+    },
+    {
+      "compatibility_state": "Local only",
+      "consumer": "Searchright and Sourceright",
+      "contract_family": "evidence-search-contracts",
+      "evidence_level": "Source verified",
+      "implementation_state": "Partially implemented",
+      "issue_url": null,
+      "key": "contracts:neutral-core",
+      "kind": "contract",
+      "licence_state": "Cleared",
+      "linked_track": "01",
+      "next_proof": "compiler, API snapshot and Sourceright consumer receipt",
+      "producer": "edithatogo/searchright",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/searchright",
+      "source_path": "crates/evidence-search-contracts",
+      "title": "Stabilise neutral evidence-search contracts below product-specific domains"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "multiple",
+      "contract_family": "integration-release-train.v1",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "release-train:core",
+      "kind": "release_train",
+      "licence_state": "Declared",
+      "linked_track": "32",
+      "next_proof": "consumer fixture and compiler receipts",
+      "producer": "edithatogo/searchright",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/searchright",
+      "source_path": "integration/release-train.json",
+      "title": "Prove the CiteWeft \u2192 Searchright \u2192 Sourceright release train"
+    },
+    {
+      "compatibility_state": "Not executed",
+      "consumer": "edithatogo/searchright",
+      "contract_family": "standard-pack",
+      "evidence_level": "Contracted",
+      "implementation_state": "Prepared",
+      "issue_url": null,
+      "key": "standards:versioned-packs",
+      "kind": "standard_pack",
+      "licence_state": "Review required",
+      "linked_track": "08",
+      "next_proof": "rights inventory and signed pack fixture",
+      "producer": "edithatogo/standards_check",
+      "release_train": "Evidence infrastructure",
+      "repository": "edithatogo/standards_check",
+      "source_path": "migration/companion-repositories/standards-check.json",
+      "title": "Publish rights-aware versioned reporting standard packs"
+    }
+  ],
+  "owner": "edithatogo",
+  "owner_type": "user",
+  "project_number": null,
+  "readme_path": "integration/github/portfolio-readme.md",
+  "remote_mutation_permitted": false,
+  "schema_version": "org.searchright.evidence-infrastructure-portfolio.v1",
+  "sync_policy": {
+    "archive": "never_automatic",
+    "automatic_promotion": false,
+    "canonical_issue_required_before_close": true,
+    "delete": "never",
+    "draft_items_allowed": true,
+    "identity": "key",
+    "receipt_directory": ".searchright/receipts"
+  },
+  "title": "Evidence Infrastructure Portfolio",
+  "views": [
+    {
+      "filter": "\"Work kind\":Contract,\"Release train\"",
+      "layout": "TABLE_LAYOUT",
+      "name": "Architecture"
+    },
+    {
+      "filter": "\"Work kind\":Migration",
+      "layout": "BOARD_LAYOUT",
+      "name": "Migrations"
+    },
+    {
+      "filter": "\"Evidence level\":Contracted,\"Source verified\"",
+      "layout": "TABLE_LAYOUT",
+      "name": "Evidence blockers"
+    },
+    {
+      "filter": "\"Licence state\":\"Review required\",\"Reference only\"",
+      "layout": "TABLE_LAYOUT",
+      "name": "Licence review"
+    },
+    {
+      "filter": "\"Release train\":\"Evidence infrastructure\"",
+      "layout": "ROADMAP_LAYOUT",
+      "name": "Release train"
+    }
+  ],
+  "visibility": "public"
+}

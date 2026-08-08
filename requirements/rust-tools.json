@@ -3,54 +3,100 @@
   "toolchain": "1.97.1",
   "tools": [
     {
-      "crate": "cargo-nextest",
-      "version": "0.9.143",
-      "profiles": ["core", "all"],
-      "purpose": "parallel and partitionable Rust test execution"
-    },
-    {
-      "crate": "cargo-deny",
-      "version": "0.19.9",
-      "profiles": ["core", "all"],
-      "purpose": "licence, advisory, source and dependency policy"
-    },
-    {
       "crate": "cargo-audit",
       "version": "0.22.2",
-      "profiles": ["core", "all"],
+      "profiles": [
+        "core",
+        "all"
+      ],
       "purpose": "RustSec advisory audit"
-    },
-    {
-      "crate": "cargo-machete",
-      "version": "0.9.2",
-      "profiles": ["core", "all"],
-      "purpose": "unused dependency detection"
-    },
-    {
-      "crate": "cargo-llvm-cov",
-      "version": "0.8.7",
-      "profiles": ["all"],
-      "purpose": "LLVM source coverage"
-    },
-    {
-      "crate": "cargo-mutants",
-      "version": "27.1.0",
-      "profiles": ["all"],
-      "purpose": "mutation testing"
-    },
-    {
-      "crate": "cargo-fuzz",
-      "version": "0.13.2",
-      "profiles": ["all"],
-      "purpose": "libFuzzer harness execution"
     },
     {
       "crate": "cargo-careful",
       "version": "0.4.10",
-      "profiles": ["all"],
+      "profiles": [
+        "all"
+      ],
       "purpose": "runtime standard-library debug checking"
+    },
+    {
+      "crate": "cargo-deny",
+      "version": "0.19.9",
+      "profiles": [
+        "core",
+        "all"
+      ],
+      "purpose": "licence, advisory, source and dependency policy"
+    },
+    {
+      "crate": "cargo-fuzz",
+      "version": "0.13.2",
+      "profiles": [
+        "all"
+      ],
+      "purpose": "libFuzzer harness execution"
+    },
+    {
+      "crate": "cargo-llvm-cov",
+      "version": "0.8.7",
+      "profiles": [
+        "all"
+      ],
+      "purpose": "LLVM source coverage"
+    },
+    {
+      "crate": "cargo-machete",
+      "version": "0.9.2",
+      "profiles": [
+        "core",
+        "all"
+      ],
+      "purpose": "unused dependency detection"
+    },
+    {
+      "crate": "cargo-mutants",
+      "version": "27.1.0",
+      "profiles": [
+        "all"
+      ],
+      "purpose": "mutation testing"
+    },
+    {
+      "crate": "cargo-nextest",
+      "version": "0.9.143",
+      "profiles": [
+        "core",
+        "all"
+      ],
+      "purpose": "parallel and partitionable Rust test execution"
+    },
+    {
+      "crate": "cargo-public-api",
+      "version": "0.52.0",
+      "profiles": [
+        "all"
+      ],
+      "purpose": "reviewable Rust public API surface snapshots"
+    },
+    {
+      "crate": "cargo-semver-checks",
+      "version": "0.50.0",
+      "profiles": [
+        "all"
+      ],
+      "purpose": "SemVer compatibility checks for candidate public crates"
+    },
+    {
+      "crate": "cargo-vet",
+      "version": "0.10.2",
+      "profiles": [
+        "core",
+        "all"
+      ],
+      "purpose": "trusted third-party dependency audit policy"
     }
   ],
   "update_policy": "Renovate or a dedicated dependency track proposes exact upgrades; CI and this manifest must change together.",
-  "claim_boundary": "Pinned tool declarations are not evidence that the tools were installed or executed."
+  "claim_boundary": "Pinned tool declarations and workflow configuration are not evidence that the tools were installed or executed.",
+  "public_api_nightly": "nightly-2025-08-02"
 }

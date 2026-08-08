@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "35",
   "title": "Generated SDKs, fixture-backed documentation and adoption operations",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -14,6 +15,7 @@
     "README.md",
     "GOVERNANCE.md"
   ],
+  "traceability": "conductor/tracks/35-sdk-docs-adoption/traceability.json",
   "static_checks": [
     "python scripts/check_sdk_examples.py",
     "python scripts/check_cli_mcp_parity.py",
@@ -29,7 +31,7 @@
     "Run documentation tests and information-specialist tutorial walkthroughs.",
     "Observe support, deprecation and compatibility operations across at least one release cycle."
   ],
-  "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published.",
+  "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-35",

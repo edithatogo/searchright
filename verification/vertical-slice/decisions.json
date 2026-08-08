@@ -1,0 +1,7 @@
+[
+  {"decision_id":"d1","subject_id":"record-a","stage":"title_abstract","reviewer_id":"human-1","reviewer_kind":"human","decision":"exclude","reason":"no_original_cohort"},
+  {"decision_id":"d2","subject_id":"record-b","stage":"title_abstract","reviewer_id":"human-1","reviewer_kind":"human","decision":"include","reason":null},
+  {"decision_id":"d3","subject_id":"record-c","stage":"title_abstract","reviewer_id":"human-1","reviewer_kind":"human","decision":"include","reason":null},
+  {"decision_id":"d4","subject_id":"record-b","stage":"full_text","reviewer_id":"human-2","reviewer_kind":"human","decision":"exclude","reason":"wrong_population"},
+  {"decision_id":"d5","subject_id":"record-c","stage":"full_text","reviewer_id":"human-2","reviewer_kind":"human","decision":"include","reason":null}
+]

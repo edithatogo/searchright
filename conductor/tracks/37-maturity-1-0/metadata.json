@@ -4,6 +4,7 @@
   "slug": "maturity-1-0",
   "title": "Final mature 1.0 release and long-term operations",
   "status": "external_evidence_required",
+  "implementation_state": "external_evidence_required",
   "created": "2026-08-08",
   "updated": "2026-08-08",
   "dependencies": [
@@ -19,6 +20,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/37-maturity-1-0/evidence.json",
+  "traceability_path": "conductor/tracks/37-maturity-1-0/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-37",

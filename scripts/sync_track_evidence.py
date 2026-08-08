@@ -53,6 +53,7 @@ def render_metadata(entry: dict) -> str:
         "slug": entry["slug"],
         "title": entry["title"],
         "status": entry["status"],
+        "implementation_state": entry["implementation_state"],
         "created": "2026-08-05" if int(track_id) <= 11 else ("2026-08-06" if int(track_id) <= 30 else "2026-08-08"),
         "updated": "2026-08-08",
         "dependencies": entry.get("dependencies", []),
@@ -60,6 +61,7 @@ def render_metadata(entry: dict) -> str:
         "evidence_level": entry["evidence_level"],
         "external_approval_required": bool(entry.get("external_approval_required", False)),
         "evidence_path": f"conductor/tracks/{track_id}-{entry['slug']}/evidence.json",
+        "traceability_path": f"conductor/tracks/{track_id}-{entry['slug']}/traceability.json",
         "github": issue_keys(track_id, entry),
     }
     return json.dumps(value, indent=2) + "\n"
@@ -73,9 +75,11 @@ def render_evidence(entry: dict) -> str:
         "track_id": track_id,
         "title": entry["title"],
         "status": entry["status"],
+        "implementation_state": entry["implementation_state"],
         "evidence_level": entry["evidence_level"],
         "source_verified_on": "2026-08-06",
         "source_evidence": entry["deliverables"],
+        "traceability": f"conductor/tracks/{track_id}-{entry['slug']}/traceability.json",
         "static_checks": entry["checks"],
         "requirements": entry["requirements"],
         "blockers": entry["blockers"],
@@ -98,7 +102,7 @@ def render_plan(entry: dict) -> str:
     lines = [
         f"# Plan: {track_id} {entry['title']}",
         "",
-        f"Current status: **{entry['status']}**. Evidence level: **{entry['evidence_level']}**.",
+        f"Current status: **{entry['status']}**. Implementation state: **{entry['implementation_state']}**. Evidence level: **{entry['evidence_level']}**.",
         "",
         f"GitHub issue key: `track-{track_id}`. Each numbered phase maps to the same-numbered native subissue.",
         "",
@@ -106,10 +110,15 @@ def render_plan(entry: dict) -> str:
         "",
         f"<!-- github-subissue-key: track-{track_id}-phase-1 -->",
         "",
-        "- [x] Implement and document the track's source deliverables.",
+        (
+            "- [x] Implement and document every acceptance assertion with symbol- and test-level mappings."
+            if entry["implementation_state"] == "source_implemented"
+            else "- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only."
+        ),
     ]
     for path in entry["deliverables"]:
-        lines.append(f"  - [x] `{path}`")
+        lines.append(f"  - [x] Present source path: `{path}`")
+    lines.append(f"  - [x] Assertion ledger: `conductor/tracks/{track_id}-{entry['slug']}/traceability.json`")
     lines.extend(
         [
             "",
@@ -157,9 +166,9 @@ def render_tracks(entries: list[dict]) -> str:
     lines = [
         "# Tracks",
         "",
-        "Track status is evidence-scaled. `source_implemented_unverified` means the",
-        "contracts and source exist and pass the static harness; it does not mean Rust",
-        "compiled, providers ran, users evaluated the workflow or a registry accepted it.",
+        "Track status, implementation completeness and evidence level are separate.",
+        "`scaffolded` and `partially_implemented` prevent path presence from being",
+        "misrepresented as completed behaviour; `traceability.json` owns assertion-level claims.",
         "",
         "Each track maps to `track-NN`; each phase maps to `track-NN-phase-M`; and",
         "each top-level plan task maps to `track-NN-phase-M-task-TT`. The generated",
@@ -173,7 +182,7 @@ def render_tracks(entries: list[dict]) -> str:
         path = f"tracks/{entry['track_id']}-{entry['slug']}/spec.md"
         lines.append(
             f"| {entry['track_id']} | [{entry['title']}]({path}) | {entry['horizon']} | "
-            f"{entry['status']} | {entry['evidence_level']} | {entry['outcome']} |"
+            f"{entry['status']} | {entry['implementation_state']} | {entry['evidence_level']} | {entry['outcome']} |"
         )
     lines.extend(
         [

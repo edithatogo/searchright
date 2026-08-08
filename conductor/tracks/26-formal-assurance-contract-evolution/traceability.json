@@ -1,0 +1,171 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "26",
+  "title": "Formal assurance and contract evolution",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/26-formal-assurance-contract-evolution/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T26-A001",
+      "statement": "Finite-state workflow traces and forbidden transitions.",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-assurance/src/lib.rs",
+        "crates/searchright-contracts/src/assurance.rs",
+        "contracts/examples/workflow-trace.yaml",
+        "docs/adrs/0011-assurance-and-evidence-ladder.md",
+        "crates/searchright-assurance/tests/loom_authority.rs",
+        ".github/workflows/formal.yml",
+        "fuzz/Cargo.toml",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T26-A002",
+      "statement": "Authority invariants for amendment, execution and screening actions.",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-assurance/src/lib.rs",
+        "crates/searchright-contracts/src/assurance.rs",
+        "contracts/examples/workflow-trace.yaml",
+        "docs/adrs/0011-assurance-and-evidence-ladder.md",
+        "crates/searchright-assurance/tests/loom_authority.rs",
+        ".github/workflows/formal.yml",
+        "fuzz/Cargo.toml",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T26-A003",
+      "statement": "Compatibility classification and migration receipts.",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-assurance/src/lib.rs",
+        "crates/searchright-contracts/src/assurance.rs",
+        "contracts/examples/workflow-trace.yaml",
+        "docs/adrs/0011-assurance-and-evidence-ladder.md",
+        "crates/searchright-assurance/tests/loom_authority.rs",
+        ".github/workflows/formal.yml",
+        "fuzz/Cargo.toml",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T26-A004",
+      "statement": "Schema/API deprecation and rollback rules.",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-assurance/src/lib.rs",
+        "crates/searchright-contracts/src/assurance.rs",
+        "contracts/examples/workflow-trace.yaml",
+        "docs/adrs/0011-assurance-and-evidence-ladder.md",
+        "crates/searchright-assurance/tests/loom_authority.rs",
+        ".github/workflows/formal.yml",
+        "fuzz/Cargo.toml",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T26-A005",
+      "statement": "Metamorphic, property and model-check scenario catalogues.",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-assurance/src/lib.rs",
+        "crates/searchright-contracts/src/assurance.rs",
+        "contracts/examples/workflow-trace.yaml",
+        "docs/adrs/0011-assurance-and-evidence-ladder.md",
+        "crates/searchright-assurance/tests/loom_authority.rs",
+        ".github/workflows/formal.yml",
+        "fuzz/Cargo.toml",
+        "verification/harness-matrix.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/check_workflow_hardening.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

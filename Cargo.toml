@@ -1,5 +1,6 @@
 [workspace]
 members = [
+  "crates/evidence-search-contracts",
   "crates/evidence-search-core",
   "crates/searchright",
   "crates/searchright-agent",

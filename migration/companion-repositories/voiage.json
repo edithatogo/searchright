@@ -1,0 +1,63 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/voiage",
+  "revision": "ed227f25955f3bba4101dc5bfa67990bac9d9d93",
+  "role": "evidence-analysis consumer with custom bibliographic enrichment",
+  "priority": "must",
+  "changes": [
+    {
+      "id": "replace-crossref-enrichment",
+      "action": "Replace direct Crossref validation/enrichment with Sourceright preview/apply workflow.",
+      "target_paths": [
+        "scripts/validate_and_enrich_bibliography.py"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "legacy fixture parity",
+        "dry-run write plan"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "replace-regex-bibtex",
+      "action": "Replace regex BibTeX parsing with a standards-aware importer/exporter.",
+      "target_paths": [
+        "scripts/validate_and_enrich_bibliography.py"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "round-trip corpus"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "separate-search-verification",
+      "action": "Use Searchright for discovery/review evidence and Sourceright for bibliography truth/reconciliation.",
+      "target_paths": [
+        "docs/**",
+        "workflow/**"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "boundary contract"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "reversible-writeback",
+      "action": "Require preview, schema validation, audit log and explicit apply for bibliography mutation.",
+      "target_paths": [
+        "scripts/**"
+      ],
+      "owner": "project owner",
+      "required_evidence": [
+        "rollback test"
+      ],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+}

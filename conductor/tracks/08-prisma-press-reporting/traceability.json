@@ -1,0 +1,167 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "08",
+  "title": "PRISMA, PRESS and reporting",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/08-prisma-press-reporting/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T08-A001",
+      "statement": "Complete 16-item PRISMA-S evidence mapping",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "contracts/examples/search-validation.yaml",
+        "contracts/examples/standard-assessment.yaml",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T08-A002",
+      "statement": "Implement PRISMA 2020 new/update flow variants",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "contracts/examples/search-validation.yaml",
+        "contracts/examples/standard-assessment.yaml",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T08-A003",
+      "statement": "Add PRISMA-ScR and PRISMA-LSR profiles",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "contracts/examples/search-validation.yaml",
+        "contracts/examples/standard-assessment.yaml",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T08-A004",
+      "statement": "Create six-domain PRESS review contract and workflow",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "contracts/examples/search-validation.yaml",
+        "contracts/examples/standard-assessment.yaml",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T08-A005",
+      "statement": "Render Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly tables",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "contracts/examples/search-validation.yaml",
+        "contracts/examples/standard-assessment.yaml",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T08-A006",
+      "statement": "Establish PRISMA.jl parity then choose canonical ownership",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "contracts/examples/search-validation.yaml",
+        "contracts/examples/standard-assessment.yaml",
+        "docs/standards-and-provenance.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Obtain independent PRESS review of representative generated strategies and appendices."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

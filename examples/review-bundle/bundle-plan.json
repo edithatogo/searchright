@@ -1,0 +1,20 @@
+{
+  "schema_version": "org.searchright.review-bundle-plan.v1",
+  "bundle_id": "searchright-review-bundle-example-v1",
+  "review_id": "review-bundle-example",
+  "source_epoch": "2026-08-08",
+  "entries": [
+    {
+      "source": "input/protocol/review-plan.json",
+      "path": "protocol/review-plan.json",
+      "role": "review_protocol",
+      "media_type": "application/json"
+    },
+    {
+      "source": "input/execution/source-receipts.jsonl",
+      "path": "execution/source-receipts.jsonl",
+      "role": "source_receipts",
+      "media_type": "application/x-ndjson"
+    }
+  ]
+}

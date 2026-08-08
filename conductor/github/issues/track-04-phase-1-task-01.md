@@ -3,15 +3,23 @@
 
 Parent phase key: `track-04-phase-1`
 Conductor plan: `conductor/tracks/04-open-connectors-mvp/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-connectors/src/lib.rs`
-  - [x] `contracts/examples/provider-manifest.yaml`
-  - [x] `contracts/examples/provider-page.yaml`
-  - [x] `contracts/examples/source-receipt.yaml`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-connectors/src/lib.rs`
+  - [x] Present source path: `integration/provider-contract-baselines.json`
+  - [x] Present source path: `provider-fixtures/mvp/pubmed-esearch.json`
+  - [x] Present source path: `provider-fixtures/mvp/pubmed-esummary.json`
+  - [x] Present source path: `provider-fixtures/mvp/europe-pmc.json`
+  - [x] Present source path: `provider-fixtures/mvp/crossref.json`
+  - [x] Present source path: `provider-fixtures/mvp/openalex.json`
+  - [x] Present source path: `scripts/check_provider_contract_baselines.py`
+  - [x] Present source path: `contracts/examples/provider-manifest.yaml`
+  - [x] Present source path: `contracts/examples/provider-page.yaml`
+  - [x] Present source path: `contracts/examples/source-receipt.yaml`
+  - [x] Assertion ledger: `conductor/tracks/04-open-connectors-mvp/traceability.json`
 
 ## Completion and evidence contract
 

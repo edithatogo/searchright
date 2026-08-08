@@ -1,9 +1,69 @@
 {
   "schema_version": "org.searchright.estate-replacement-decisions.v1",
   "decisions": [
-    {"repository":"edithatogo/ee_trd","observed_path":"docs/search_log_PRISMA.csv","current_form":"project-specific aggregate CSV","target":"SearchRun plus SourceReceipt plus generated PrismaFlow","status":"migration_recipe_prepared","deletion_gate":"generated output parity and project-owner review"},
-    {"repository":"edithatogo/reimbursement-atlas","observed_path":"REQUIREMENTS.md","current_form":"project-specific literature-search requirement","target":"Searchright plan/strategy/receipt contracts","status":"audit_required","deletion_gate":"local checkout scan and integration tests"},
-    {"repository":"edithatogo/global-medicines-atlas","observed_path":null,"current_form":"no matching source code confirmed in this pass","target":"Searchright as future evidence-search boundary","status":"monitor","deletion_gate":"none until concrete code is observed"},
-    {"repository":"edithatogo/academic-research-skills","observed_path":"deep-research/references/systematic_review_protocol.md","current_form":"prompt and protocol workflow","target":"Searchright skill for execution plus retained human methodology guidance","status":"adapter_recipe_prepared","deletion_gate":"skill scenario parity and maintainer review"}
+    {
+      "repository": "edithatogo/UOGTO",
+      "observed_path": "scripts/review/query_databases.py",
+      "current_form": "direct OpenAlex, Europe PMC, arXiv and Crossref clients",
+      "target": "Searchright provider execution, receipts and replay fixtures",
+      "status": "migration_packet_prepared",
+      "deletion_gate": "legacy-output import, provider parity, HTTPS and project-owner review"
+    },
+    {
+      "repository": "edithatogo/UOGTO",
+      "observed_path": "scripts/review/snowball.py",
+      "current_form": "hard-coded backward citation search and lower-cased-title deduplication",
+      "target": "Searchright supplementary discovery plus record/report/study linkage",
+      "status": "migration_packet_prepared",
+      "deletion_gate": "seed-yield parity, false-merge review and rollback fixture"
+    },
+    {
+      "repository": "edithatogo/academic-research-skills",
+      "observed_path": "deep-research/references/systematic_review_protocol.md",
+      "current_form": "prompt and protocol workflow",
+      "target": "Searchright skill for execution plus retained human methodology guidance",
+      "status": "adapter_recipe_prepared",
+      "deletion_gate": "skill scenario parity and maintainer review"
+    },
+    {
+      "repository": "edithatogo/ee_trd",
+      "observed_path": "docs/search_log_PRISMA.csv",
+      "current_form": "project-specific aggregate CSV",
+      "target": "SearchRun plus SourceReceipt plus generated PrismaFlow",
+      "status": "migration_recipe_prepared",
+      "deletion_gate": "generated output parity and project-owner review"
+    },
+    {
+      "repository": "edithatogo/global-medicines-atlas",
+      "observed_path": null,
+      "current_form": "no matching source code confirmed in this pass",
+      "target": "Searchright as future evidence-search boundary",
+      "status": "monitor",
+      "deletion_gate": "none until concrete code is observed"
+    },
+    {
+      "repository": "edithatogo/reimbursement-atlas",
+      "observed_path": "REQUIREMENTS.md",
+      "current_form": "project-specific literature-search requirement",
+      "target": "Searchright plan/strategy/receipt contracts",
+      "status": "audit_required",
+      "deletion_gate": "local checkout scan and integration tests"
+    },
+    {
+      "repository": "edithatogo/scholarly-publishing-agents",
+      "observed_path": "workflows/01-manuscript-preparation/literature-review.md",
+      "current_form": "prompt-level search, screening, PRISMA and provider procedure",
+      "target": "thin orchestration over Searchright, Sourceright and CiteWeft",
+      "status": "migration_packet_prepared",
+      "deletion_gate": "scenario parity and authority-boundary review"
+    },
+    {
+      "repository": "edithatogo/voiage",
+      "observed_path": "scripts/validate_and_enrich_bibliography.py",
+      "current_form": "direct Crossref calls, regex BibTeX parsing and direct file writeback",
+      "target": "Sourceright preview/apply citation verification and standards-aware interchange",
+      "status": "migration_packet_prepared",
+      "deletion_gate": "round-trip corpus, dry-run plan, audit log and explicit apply test"
+    }
   ]
 }

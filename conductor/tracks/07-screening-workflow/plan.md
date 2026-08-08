@@ -1,6 +1,6 @@
 # Plan: 07 Governed screening workflow
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,12 +8,13 @@ GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-07-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-screening/src/lib.rs`
-  - [x] `crates/searchright-agent/src/lib.rs`
-  - [x] `contracts/examples/screening-decision.yaml`
-  - [x] `contracts/examples/screening-policy.yaml`
-  - [x] `docs/adrs/0003-agent-authority.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-screening/src/lib.rs`
+  - [x] Present source path: `crates/searchright-agent/src/lib.rs`
+  - [x] Present source path: `contracts/examples/screening-decision.yaml`
+  - [x] Present source path: `contracts/examples/screening-policy.yaml`
+  - [x] Present source path: `docs/adrs/0003-agent-authority.md`
+  - [x] Assertion ledger: `conductor/tracks/07-screening-workflow/traceability.json`
 
 ## Phase 2: Source-level verification
 

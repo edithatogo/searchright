@@ -3,7 +3,8 @@
   "track_id": "11",
   "slug": "agentic-skill",
   "title": "Systematic-search agent skill and workflows",
-  "status": "source_implemented_unverified",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-05",
   "updated": "2026-08-08",
   "dependencies": [
@@ -13,6 +14,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/11-agentic-skill/evidence.json",
+  "traceability_path": "conductor/tracks/11-agentic-skill/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-11",

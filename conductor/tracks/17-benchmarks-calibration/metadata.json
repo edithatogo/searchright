@@ -3,7 +3,8 @@
   "track_id": "17",
   "slug": "benchmarks-calibration",
   "title": "Benchmarks, search validation and human calibration",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -17,6 +18,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/17-benchmarks-calibration/evidence.json",
+  "traceability_path": "conductor/tracks/17-benchmarks-calibration/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-17",

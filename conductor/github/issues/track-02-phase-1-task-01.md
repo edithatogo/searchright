@@ -3,15 +3,20 @@
 
 Parent phase key: `track-02-phase-1`
 Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-contracts/src/query.rs`
-  - [x] `crates/evidence-search-core/src/compiler.rs`
-  - [x] `contracts/examples/query-ast.yaml`
-  - [x] `contracts/examples/compiled-strategy.yaml`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/evidence-search-contracts/src/query.rs`
+  - [x] Present source path: `crates/evidence-search-core/src/compiler.rs`
+  - [x] Present source path: `crates/evidence-search-core/src/native.rs`
+  - [x] Present source path: `contracts/query-corpus/index.json`
+  - [x] Present source path: `contracts/json-schema/native-search-strategy.v1.schema.json`
+  - [x] Present source path: `contracts/examples/native-search-strategy.json`
+  - [x] Present source path: `scripts/check_native_query_corpus.py`
+  - [x] Present source path: `docs/msrv-and-package-policy.md`
+  - [x] Assertion ledger: `conductor/tracks/02-query-ast-dialects/traceability.json`
 
 ## Completion and evidence contract
 

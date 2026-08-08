@@ -1,6 +1,6 @@
 # Plan: 03 Shared provider runtime and Sourceright extraction
 
-Current status: **integration_prepared**. Evidence level: **source_verified**.
+Current status: **integration_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,13 +8,16 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-03-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/evidence-search-core/src/provider.rs`
-  - [x] `crates/searchright-sourceright-compat/src/lib.rs`
-  - [x] `migration/sourceright/replacement-map.yaml`
-  - [x] `migration/sourceright/parity-cases.json`
-  - [x] `scripts/check_sourceright_migration.py`
-  - [x] `docs/adrs/0012-sourceright-and-estate-migration.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/evidence-search-core/src/provider.rs`
+  - [x] Present source path: `crates/searchright-sourceright-compat/src/lib.rs`
+  - [x] Present source path: `migration/sourceright/replacement-map.yaml`
+  - [x] Present source path: `migration/sourceright/parity-cases.json`
+  - [x] Present source path: `scripts/check_sourceright_migration.py`
+  - [x] Present source path: `release/public-packages.json`
+  - [x] Present source path: `public-api/README.md`
+  - [x] Present source path: `docs/msrv-and-package-policy.md`
+  - [x] Assertion ledger: `conductor/tracks/03-shared-provider-runtime/traceability.json`
 
 ## Phase 2: Source-level verification
 
@@ -23,6 +26,7 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_sourceright_migration.py`
+  - [x] `python scripts/check_public_package_policy.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

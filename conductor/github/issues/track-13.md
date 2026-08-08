@@ -12,7 +12,8 @@ Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy 
 ## Contract
 
 - Horizon: `alpha`
-- Status: `integration_prepared`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `00, 01, 03, 09, 10, 11, 12`
 - Requirements: `SR-065, SR-066, SR-067, SR-070`
@@ -27,6 +28,6 @@ Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy 
 
 ## Claim boundary
 
-Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed.
+Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -3,18 +3,19 @@
 
 Parent phase key: `track-17-phase-1`
 Conductor plan: `conductor/tracks/17-benchmarks-calibration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-bench/src/lib.rs`
-  - [x] `crates/searchright-ranking/src/lib.rs`
-  - [x] `crates/searchright-validation/src/lib.rs`
-  - [x] `contracts/examples/benchmark-report.yaml`
-  - [x] `contracts/examples/ranking-calibration.yaml`
-  - [x] `docs/evaluation/benchmark-and-calibration-protocol.md`
-  - [x] `benchmarks/README.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `benchmarks/methodology/manifest.json`
+  - [x] Present source path: `benchmarks/methodology/README.md`
+  - [x] Present source path: `scripts/check_methodology_benchmarks.py`
+  - [x] Present source path: `crates/searchright-bench/src/lib.rs`
+  - [x] Present source path: `crates/searchright-ranking/src/lib.rs`
+  - [x] Present source path: `crates/searchright-validation/src/lib.rs`
+  - [x] Present source path: `docs/evaluation/benchmark-and-calibration-protocol.md`
+  - [x] Assertion ledger: `conductor/tracks/17-benchmarks-calibration/traceability.json`
 
 ## Completion and evidence contract
 

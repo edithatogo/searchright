@@ -80,10 +80,18 @@ pub struct ExecutionPolicy {
     pub max_pages: u32,
     /// Per-request timeout.
     pub timeout_seconds: u64,
+    /// Optional total execution timeout across every page and retry.
+    pub total_timeout_seconds: Option<u64>,
     /// Maximum retry count.
     pub max_retries: u8,
     /// Minimum interval between calls.
     pub min_interval_ms: u64,
+    /// Optional base delay for bounded exponential retry backoff.
+    pub retry_base_delay_ms: Option<u64>,
+    /// Optional maximum delay for bounded exponential retry backoff.
+    pub retry_max_delay_ms: Option<u64>,
+    /// Optional maximum response size accepted from one provider request.
+    pub max_response_bytes: Option<u64>,
     /// Whether a fixture/replay cache may be read.
     pub replay_enabled: bool,
     /// Whether successful pages may be written to the configured cache.
@@ -199,6 +207,27 @@ impl Validate for ExecutionPolicy {
             return Err(ContractError::Invariant(
                 "execution budgets and timeout must be greater than zero".to_owned(),
             ));
+        }
+        if let Some(total) = self.total_timeout_seconds {
+            if total == 0 || total < self.timeout_seconds {
+                return Err(ContractError::Invariant(
+                    "total_timeout_seconds must be at least the per-request timeout".to_owned(),
+                ));
+            }
+        }
+        if let Some(max_bytes) = self.max_response_bytes {
+            if max_bytes == 0 {
+                return Err(ContractError::Invariant(
+                    "max_response_bytes must be greater than zero when supplied".to_owned(),
+                ));
+            }
+        }
+        if let (Some(base), Some(maximum)) = (self.retry_base_delay_ms, self.retry_max_delay_ms) {
+            if base == 0 || maximum < base {
+                return Err(ContractError::Invariant(
+                    "retry delays require a positive base no greater than the maximum".to_owned(),
+                ));
+            }
         }
         if self.cache_write_enabled && !self.replay_enabled {
             return Err(ContractError::Invariant(

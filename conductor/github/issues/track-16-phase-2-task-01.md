@@ -15,6 +15,9 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_default_deny.py`
   - [x] `python scripts/check_workflow_hardening.py`
   - [x] `python scripts/generate_source_hash_manifest.py --check`
+  - [x] `python scripts/check_traceability.py`
+  - [x] `python scripts/check_public_package_policy.py`
+  - [x] `python scripts/sync_schema_surface.py --check`
 
 ## Completion and evidence contract
 

@@ -6,8 +6,10 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
+publish = false
 
 [dependencies]
+evidence-search-contracts = { path = "../evidence-search-contracts", version = "=0.1.0-alpha.1" }
 schemars.workspace = true
 serde.workspace = true
 serde_json.workspace = true

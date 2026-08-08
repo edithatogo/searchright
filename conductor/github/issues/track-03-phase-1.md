@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
 
 ## Task subissues
 
-- [x] T01: Implement and document the track's source deliverables. (`track-03-phase-1-task-01`)
+- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-03-phase-1-task-01`)
 
 ## Evidence rule
 

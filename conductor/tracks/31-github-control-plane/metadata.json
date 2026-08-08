@@ -3,7 +3,8 @@
   "track_id": "31",
   "slug": "github-control-plane",
   "title": "GitHub remote, nested issues and Project v2 control plane",
-  "status": "integration_prepared",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-08",
   "updated": "2026-08-08",
   "dependencies": [
@@ -16,6 +17,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/31-github-control-plane/evidence.json",
+  "traceability_path": "conductor/tracks/31-github-control-plane/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-31",

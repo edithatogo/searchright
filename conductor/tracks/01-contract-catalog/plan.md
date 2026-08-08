@@ -1,6 +1,6 @@
 # Plan: 01 Contract catalogue and code generation
 
-Current status: **source_implemented**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,12 +8,16 @@ GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-01-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-contracts/src/lib.rs`
-  - [x] `contracts/schema-catalog.json`
-  - [x] `contracts/standards/index.json`
-  - [x] `docs/contracts.md`
-  - [x] `docs/adrs/0008-standards-packs-and-methodology-boundary.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/evidence-search-contracts/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/lib.rs`
+  - [x] Present source path: `contracts/schema-catalog.json`
+  - [x] Present source path: `contracts/compatibility/schema-surface-0.1.0-alpha.1.json`
+  - [x] Present source path: `scripts/sync_schema_surface.py`
+  - [x] Present source path: `release/public-packages.json`
+  - [x] Present source path: `scripts/check_public_package_policy.py`
+  - [x] Present source path: `docs/msrv-and-package-policy.md`
+  - [x] Assertion ledger: `conductor/tracks/01-contract-catalog/traceability.json`
 
 ## Phase 2: Source-level verification
 
@@ -21,6 +25,8 @@ GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered nati
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/sync_schema_surface.py --check`
+  - [x] `python scripts/check_public_package_policy.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

@@ -1,6 +1,6 @@
 # Plan: 10 MCP stdio server MVP
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,11 +8,12 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-10-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-mcp/src/main.rs`
-  - [x] `contracts/mcp/tool-catalog.json`
-  - [x] `contracts/interface-catalog.json`
-  - [x] `server.json`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-mcp/src/main.rs`
+  - [x] Present source path: `contracts/mcp/tool-catalog.json`
+  - [x] Present source path: `contracts/interface-catalog.json`
+  - [x] Present source path: `server.json`
+  - [x] Assertion ledger: `conductor/tracks/10-mcp-mvp/traceability.json`
 
 ## Phase 2: Source-level verification
 

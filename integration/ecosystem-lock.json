@@ -1,0 +1,81 @@
+{
+  "schema_version": "org.searchright.ecosystem-lock.v1",
+  "source_epoch": "2026-08-08",
+  "release_train": "searchright-evidence-infrastructure",
+  "automatic_updates": false,
+  "components": [
+    {
+      "id": "searchright",
+      "kind": "product",
+      "repository": "edithatogo/searchright",
+      "version": "0.1.0-alpha.1",
+      "revision": "record_in_release_receipt",
+      "source_contracts_sha256": "2b7951d13a39a5bbccaa8d5e00519b2392d0e05b65bb1023eb1599150daf5c1c",
+      "public_package_policy_sha256": "6321ec318a8e48965317fdc7f0bac90d2b49e2b91e8dddc682497974756b8aee",
+      "rust_toolchain": "1.97.1"
+    },
+    {
+      "id": "citeweft",
+      "kind": "product",
+      "repository": "edithatogo/citeweft",
+      "version": "0.1.0",
+      "revision": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+      "passport": "integration/passports/citeweft-document-evidence.json"
+    },
+    {
+      "id": "sourceright",
+      "kind": "product",
+      "repository": "edithatogo/sourceright",
+      "version": "0.1.20-observed",
+      "revision": "89f3d1a08037057160700df5bba319a64500b791",
+      "passport": "integration/passports/sourceright-shared-search-core.json"
+    },
+    {
+      "id": "mcp-rust-sdk",
+      "kind": "protocol_sdk",
+      "package": "rmcp",
+      "version": "3.1.0",
+      "protocol_policy": "MCP protocol negotiation and transcript evidence required"
+    },
+    {
+      "id": "reporting-standard-packs",
+      "kind": "content_pack",
+      "repository": "edithatogo/standards_check",
+      "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+      "passport": "integration/passports/standards-check-reporting-packs.json",
+      "licence_gate": "review_required"
+    },
+    {
+      "id": "repository-policy",
+      "kind": "policy_pack",
+      "repository": "edithatogo/repository-standards",
+      "revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+      "passport": "integration/passports/repository-standards-inheritance.json"
+    },
+    {
+      "id": "screening-benchmark",
+      "kind": "benchmark",
+      "canonical_repository": "asreview/synergy-dataset",
+      "local_fork": "edithatogo/synergy-dataset",
+      "local_revision": "dc2dadfdbb98eb1b4259604789abd640aa3b693e",
+      "run_pin": "required_per_benchmark_receipt"
+    }
+  ],
+  "promotion_order": [
+    "contracts",
+    "citeweft",
+    "searchright",
+    "sourceright",
+    "standard-packs-and-benchmarks"
+  ],
+  "required_receipts": [
+    "compiler",
+    "consumer-fixture",
+    "downstream-canary",
+    "licence",
+    "SBOM",
+    "reproducibility",
+    "attestation"
+  ],
+  "claim_boundary": "The lock fixes observed component identities and local contract digests; the Searchright release commit and external corpus release must be added to the executed release receipt."
+}

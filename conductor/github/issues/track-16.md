@@ -12,7 +12,8 @@ Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz
 ## Contract
 
 - Horizon: `alpha`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `00, 01, 13`
 - Requirements: `SR-010, SR-011, SR-033, SR-034, SR-035, SR-036, SR-048, SR-067, SR-068, SR-069`
@@ -27,6 +28,6 @@ Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

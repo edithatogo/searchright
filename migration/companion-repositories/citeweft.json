@@ -1,0 +1,83 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/citeweft",
+  "revision": "8c8932976250f9ca91c2bbda28ed68eeb191fa42",
+  "role": "neutral scholarly document extraction",
+  "priority": "must",
+  "changes": [
+    {
+      "id": "protect-main",
+      "action": "Apply branch protection/rulesets matching the mature Sourceright baseline plus extraction contract and benchmark gates.",
+      "target_paths": [
+        ".github/workflows/**",
+        "repository settings"
+      ],
+      "owner": "repository owner",
+      "required_evidence": [
+        "protected branch receipt",
+        "required-check inventory"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "schema-surface",
+      "action": "Publish JSON Schema/WIT equivalents for ScholarlyDocument, ReferenceModelReport, spans, diagnostics and backend manifests.",
+      "target_paths": [
+        "schemas/**",
+        "wit/**"
+      ],
+      "owner": "CiteWeft maintainer",
+      "required_evidence": [
+        "schema examples",
+        "compatibility diff"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "backend-boundary",
+      "action": "Keep the core network-free and place GROBID/JATS/TEI/native-PDF integrations in separately capability-bounded adapters.",
+      "target_paths": [
+        "crates/citeweft-core",
+        "crates/citeweft-grobid",
+        "crates/citeweft-jats"
+      ],
+      "owner": "CiteWeft maintainer",
+      "required_evidence": [
+        "backend conformance fixtures",
+        "capability manifest"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "benchmark-corpus",
+      "action": "Create a rights-cleared extraction corpus with field, callout, page-span, layout and abstention metrics.",
+      "target_paths": [
+        "benchmarks/**"
+      ],
+      "owner": "methodology owner",
+      "required_evidence": [
+        "corpus rights receipt",
+        "hidden test partition"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "release-identity",
+      "action": "Use personal noreply identity and signed tags; add .mailmap for historical attribution without rewriting history.",
+      "target_paths": [
+        ".mailmap",
+        "release workflow"
+      ],
+      "owner": "repository owner",
+      "required_evidence": [
+        "signed tag",
+        "release attestation"
+      ],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+}

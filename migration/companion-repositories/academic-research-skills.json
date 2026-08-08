@@ -1,0 +1,63 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/academic-research-skills",
+  "revision": "734dd23e03e7261db9204702be9221119a30d7d2",
+  "role": "high-level research workflow orchestration",
+  "priority": "should",
+  "changes": [
+    {
+      "id": "upstream-rebase",
+      "action": "Compare the local fork with Imbad0202/academic-research-skills, record local delta and either rebase or retire it as a passive mirror.",
+      "target_paths": [
+        "UPSTREAM.md",
+        "PATCHES.md"
+      ],
+      "owner": "fork maintainer",
+      "required_evidence": [
+        "upstream drift receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "delegate-search",
+      "action": "Replace embedded provider/search execution with Searchright MCP/CLI calls.",
+      "target_paths": [
+        "deep-research/**",
+        "skills/**"
+      ],
+      "owner": "skill maintainer",
+      "required_evidence": [
+        "scenario parity receipt"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "authority-manifest",
+      "action": "Publish allowed tools, compatible contract versions, prompt-injection rules and final-decision authority boundaries.",
+      "target_paths": [
+        "capabilities/**"
+      ],
+      "owner": "skill maintainer",
+      "required_evidence": [
+        "authority tests"
+      ],
+      "automatic_apply": false
+    },
+    {
+      "id": "delegate-verification",
+      "action": "Delegate bibliographic verification to Sourceright and document extraction to CiteWeft.",
+      "target_paths": [
+        "skills/**"
+      ],
+      "owner": "skill maintainer",
+      "required_evidence": [
+        "cross-tool scenario tests"
+      ],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "All required evidence is attached in the companion repository and the cross-repository compatibility audit passes.",
+  "claim_boundary": "This packet is a prepared change contract; it is not evidence that the companion repository was modified, compiled, tested or released."
+}

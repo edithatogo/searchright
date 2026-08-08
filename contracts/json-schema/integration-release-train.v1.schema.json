@@ -9,6 +9,9 @@
     "release_train_id",
     "generated_at",
     "automatic_promotion",
+    "public_package_policy",
+    "contract_surface",
+    "ecosystem_lock",
     "components",
     "stages",
     "rollback",
@@ -105,6 +108,18 @@
       }
     },
     "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ecosystem_lock": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contract_surface": {
+      "type": "string",
+      "minLength": 1
+    },
+    "public_package_policy": {
       "type": "string",
       "minLength": 1
     }

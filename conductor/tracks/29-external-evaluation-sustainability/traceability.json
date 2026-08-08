@@ -1,0 +1,173 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "29",
+  "title": "External methodological evaluation and sustainability",
+  "implementation_state": "external_evidence_required",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/29-external-evaluation-sustainability/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T29-A001",
+      "statement": "Preregistered external evaluation protocol.",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "docs/evaluation/external-methodological-evaluation.md",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "docs/governance/sustainability.md",
+        "registry/joss/paper.md",
+        "GOVERNANCE.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+      ],
+      "open_gates": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+    },
+    {
+      "assertion_id": "T29-A002",
+      "statement": "Information-specialist, multi-topic and living-review evaluation.",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "docs/evaluation/external-methodological-evaluation.md",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "docs/governance/sustainability.md",
+        "registry/joss/paper.md",
+        "GOVERNANCE.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+      ],
+      "open_gates": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+    },
+    {
+      "assertion_id": "T29-A003",
+      "statement": "Blinded adjudication and response-to-findings matrix.",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "docs/evaluation/external-methodological-evaluation.md",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "docs/governance/sustainability.md",
+        "registry/joss/paper.md",
+        "GOVERNANCE.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+      ],
+      "open_gates": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+    },
+    {
+      "assertion_id": "T29-A004",
+      "statement": "JOSS/software-paper evidence package.",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "docs/evaluation/external-methodological-evaluation.md",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "docs/governance/sustainability.md",
+        "registry/joss/paper.md",
+        "GOVERNANCE.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+      ],
+      "open_gates": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+    },
+    {
+      "assertion_id": "T29-A005",
+      "statement": "Standards surveillance, deprecation and succession governance.",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "docs/evaluation/external-methodological-evaluation.md",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "docs/governance/sustainability.md",
+        "registry/joss/paper.md",
+        "GOVERNANCE.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+      ],
+      "open_gates": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+    },
+    {
+      "assertion_id": "T29-A006",
+      "statement": "Funding and conflict-of-interest disclosure.",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "docs/evaluation/external-methodological-evaluation.md",
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "docs/governance/sustainability.md",
+        "registry/joss/paper.md",
+        "GOVERNANCE.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+      ],
+      "open_gates": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+    }
+  ]
+}

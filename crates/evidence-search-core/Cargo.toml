@@ -3,14 +3,15 @@ name = "evidence-search-core"
 description = "Product-neutral query, provider, evidence-receipt and audit kernel for Searchright and Sourceright."
 version.workspace = true
 edition.workspace = true
-rust-version.workspace = true
+rust-version = "1.88"
 license.workspace = true
 repository.workspace = true
+publish = false
 
 [dependencies]
 async-trait.workspace = true
 blake3.workspace = true
-searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+evidence-search-contracts = { path = "../evidence-search-contracts", version = "=0.1.0-alpha.1" }
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true

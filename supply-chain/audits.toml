@@ -1,0 +1,5 @@
+# Searchright-local cargo-vet audits.
+#
+# No local audit or exemption is asserted before Cargo.lock exists and a human
+# reviewer has inspected the exact dependency version. Imported audits remain
+# distinct from local review evidence.

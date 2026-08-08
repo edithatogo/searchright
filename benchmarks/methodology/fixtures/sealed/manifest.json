@@ -1,0 +1,10 @@
+{
+  "schema_version": "org.searchright.sealed-benchmark-manifest.v1",
+  "partition": "sealed_test",
+  "case_ids": ["sealed-dedup-v1", "sealed-linkage-v1", "sealed-screening-v1", "sealed-living-v1"],
+  "labels_present": false,
+  "labels_location": "external controlled evaluation mount",
+  "label_digest": null,
+  "release_condition": "An independent evaluator records the corpus version, label digest, configuration digest and environment receipt.",
+  "claim_boundary": "Case identifiers do not expose labels or permit a performance claim."
+}

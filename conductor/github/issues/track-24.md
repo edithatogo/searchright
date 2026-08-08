@@ -12,7 +12,8 @@ Define sandboxed provider components, integrity/capability checks and future rem
 ## Contract
 
 - Horizon: `beta`
-- Status: `source_implemented_unverified`
+- Status: `scaffolded`
+- Implementation: `scaffolded`
 - Evidence: `source_verified`
 - Dependencies: `03, 10, 13, 16`
 - Requirements: `SR-030, SR-047`
@@ -27,6 +28,6 @@ Define sandboxed provider components, integrity/capability checks and future rem
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

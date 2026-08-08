@@ -1,0 +1,83 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "32",
+  "title": "Cross-repository contract release train and downstream canaries",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/32-cross-repository-release-train/spec.md#scope",
+  "claim_boundary": "A source-verified release train does not prove producer-consumer compatibility or publish any component. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T32-A001",
+      "statement": "Pinned producer-consumer promotion order",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/release-train.json",
+        "integration/ecosystem-lock.json",
+        "scripts/sync_ecosystem_lock.py"
+      ],
+      "implementation_symbols": [
+        "scripts/sync_ecosystem_lock.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/check_release_train.py",
+        "python scripts/sync_ecosystem_lock.py --check"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/32-cross-repository-release-train/evidence.json"
+      ],
+      "open_gates": [
+        "Record the executed Searchright commit and companion release revisions in a release receipt."
+      ],
+      "permitted_claim": "Pinned producer-consumer order and observed component identities are source verified; no release was promoted."
+    },
+    {
+      "assertion_id": "T32-A002",
+      "statement": "Cross-repository consumer fixtures and canaries",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/consumer-contract-suite.json",
+        ".github/workflows/integration-release-train.yml",
+        "migration/sourceright/parity-cases.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_consumer_contracts.py",
+        "python scripts/check_release_train.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/32-cross-repository-release-train/evidence.json"
+      ],
+      "open_gates": [
+        "Run compiler-backed consumer fixtures and downstream canaries in all three repositories."
+      ],
+      "permitted_claim": "Consumer and canary contracts are prepared; cross-repository results do not exist."
+    },
+    {
+      "assertion_id": "T32-A003",
+      "statement": "Explicit promotion, rollback and receipt authority",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/release-train.json",
+        "release/public-packages.json",
+        "contracts/compatibility/schema-surface-0.1.0-alpha.1.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_release_train.py",
+        "python scripts/check_public_package_policy.py",
+        "python scripts/sync_schema_surface.py --check"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/32-cross-repository-release-train/evidence.json"
+      ],
+      "open_gates": [
+        "Exercise rollback in a release-candidate rehearsal and obtain human promotion approval."
+      ],
+      "permitted_claim": "Promotion is default-deny, rollback is explicit and public packages remain not ready."
+    }
+  ]
+}

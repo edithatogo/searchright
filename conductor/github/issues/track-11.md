@@ -12,7 +12,8 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 ## Contract
 
 - Horizon: `mvp`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `10`
 - Requirements: `SR-022, SR-026, SR-031`
@@ -27,6 +28,6 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

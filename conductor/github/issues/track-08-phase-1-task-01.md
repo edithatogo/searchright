@@ -3,17 +3,18 @@
 
 Parent phase key: `track-08-phase-1`
 Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-prisma/src/lib.rs`
-  - [x] `crates/searchright-validation/src/lib.rs`
-  - [x] `contracts/examples/prisma-flow.json`
-  - [x] `contracts/examples/search-validation.yaml`
-  - [x] `contracts/examples/standard-assessment.yaml`
-  - [x] `docs/standards-and-provenance.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-prisma/src/lib.rs`
+  - [x] Present source path: `crates/searchright-validation/src/lib.rs`
+  - [x] Present source path: `contracts/examples/prisma-flow.json`
+  - [x] Present source path: `contracts/examples/search-validation.yaml`
+  - [x] Present source path: `contracts/examples/standard-assessment.yaml`
+  - [x] Present source path: `docs/standards-and-provenance.md`
+  - [x] Assertion ledger: `conductor/tracks/08-prisma-press-reporting/traceability.json`
 
 ## Completion and evidence contract
 

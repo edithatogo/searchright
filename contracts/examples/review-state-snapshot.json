@@ -1,0 +1,45 @@
+{
+  "claim_boundary": "Derived disposable state from an audit stream whose BLAKE3 head was verified externally; the snapshot is not the canonical audit ledger and non-human final decisions are rejected.",
+  "event_type_counts": {
+    "review_plan_validated": 1,
+    "screening_decision_recorded": 2,
+    "search_run_completed": 1
+  },
+  "last_event_id": "e4",
+  "plan_validated": true,
+  "protocol_amendments": [],
+  "review_id": "review-demo",
+  "schema_version": "org.searchright.review-state-snapshot.v1",
+  "screening": {
+    "advisory_recommendation_count": 0,
+    "final_decision_counts": {
+      "include": 1
+    },
+    "final_decisions": [
+      {
+        "decision": "include",
+        "event_id": "e4",
+        "record_id": "record-1",
+        "reviewer_id": "reviewer-1",
+        "stage": "title_abstract"
+      }
+    ],
+    "rejected_final_authority_event_ids": [
+      "e3"
+    ]
+  },
+  "search_runs": [
+    {
+      "event_id": "e2",
+      "record_count": 42,
+      "run_id": "run-1",
+      "source_id": "pubmed"
+    }
+  ],
+  "source_event_count": 4,
+  "source_head_hash": "4444444444444444444444444444444444444444444444444444444444444444",
+  "state_sha256": "81403943e4eecfd6009568669bd633167c5bb3d9ef3ac87656853f6f053a6e33",
+  "state_version": 1,
+  "status": "screening",
+  "unknown_event_types": []
+}

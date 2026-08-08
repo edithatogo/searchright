@@ -1,0 +1,173 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "00",
+  "title": "Foundation, Conductor and toolchain",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/00-foundation-conductor-toolchain/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T00-A001",
+      "statement": "Record upstream Conductor 0.3.0 and supported host installation paths",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+      ],
+      "open_gates": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T00-A002",
+      "statement": "Create product, guidelines, stack, workflow, requirements and design context",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+      ],
+      "open_gates": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T00-A003",
+      "statement": "Pin Rust stable and document nightly/experimental policy",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+      ],
+      "open_gates": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T00-A004",
+      "statement": "Generate and commit Cargo.lock in a networked Rust environment",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+      ],
+      "open_gates": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T00-A005",
+      "statement": "Register repository in repository-standards and run estate conformance",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+      ],
+      "open_gates": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T00-A006",
+      "statement": "Create one-command bootstrap and verification receipts",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+      ],
+      "open_gates": [
+        "Install and execute Rust 1.97.1 in a compatible environment.",
+        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

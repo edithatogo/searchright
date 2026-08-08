@@ -1,0 +1,9 @@
+{
+  "schema_version": "org.searchright.living-update-benchmark-fixture.v1",
+  "partition": "validation",
+  "parent_ids": ["l1", "l2"],
+  "current_ids": ["l1", "l2", "l3"],
+  "expected_new_ids": ["l3"],
+  "expected_removed_ids": [],
+  "rights_basis": "CC0 synthetic identifiers"
+}

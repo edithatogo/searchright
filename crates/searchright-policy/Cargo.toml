@@ -6,6 +6,7 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
+publish = false
 
 [dependencies]
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }

@@ -1,0 +1,3 @@
+S1 (MH "Genomics+") OR TI genome* OR AB genome*
+S2 (MH "Health Screening+") OR TI screen* OR AB screen*
+S3 S1 AND S2

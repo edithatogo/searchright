@@ -1,0 +1,167 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "22",
+  "title": "Living reviews, amendments and update lineage",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/22-living-updates/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T22-A001",
+      "statement": "Immutable run lineage and supersession model",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/examples/living-update.yaml",
+        "contracts/examples/protocol-amendment.yaml",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/22-living-updates/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T22-A002",
+      "statement": "Date/cursor/high-water update strategies",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/examples/living-update.yaml",
+        "contracts/examples/protocol-amendment.yaml",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/22-living-updates/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T22-A003",
+      "statement": "Cross-run deduplication and changed-record detection",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/examples/living-update.yaml",
+        "contracts/examples/protocol-amendment.yaml",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/22-living-updates/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T22-A004",
+      "statement": "Alerting with human triage and no automatic inclusion",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/examples/living-update.yaml",
+        "contracts/examples/protocol-amendment.yaml",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/22-living-updates/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T22-A005",
+      "statement": "PRISMA-LSR reporting and cadence dashboard",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/examples/living-update.yaml",
+        "contracts/examples/protocol-amendment.yaml",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/22-living-updates/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T22-A006",
+      "statement": "Reproducible scheduled execution with approval policy",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-contracts/src/amendment.rs",
+        "contracts/examples/living-update.yaml",
+        "contracts/examples/protocol-amendment.yaml",
+        "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/22-living-updates/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

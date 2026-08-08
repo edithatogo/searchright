@@ -4,6 +4,7 @@
   "slug": "registries-publication",
   "title": "Registries and scholarly publication",
   "status": "submission_prepared",
+  "implementation_state": "scaffolded",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -14,6 +15,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/19-registries-publication/evidence.json",
+  "traceability_path": "conductor/tracks/19-registries-publication/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-19",

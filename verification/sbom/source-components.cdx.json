@@ -338,6 +338,30 @@
       "version": "1.18"
     },
     {
+      "bom-ref": "cargo:evidence-search-contracts@0.1.0-alpha.1",
+      "licenses": [
+        {
+          "expression": {
+            "workspace": true
+          }
+        }
+      ],
+      "name": "evidence-search-contracts",
+      "properties": [
+        {
+          "name": "searchright:path",
+          "value": "crates/evidence-search-contracts"
+        },
+        {
+          "name": "searchright:component-kind",
+          "value": "workspace-crate"
+        }
+      ],
+      "purl": "pkg:cargo/evidence-search-contracts@0.1.0-alpha.1",
+      "type": "library",
+      "version": "0.1.0-alpha.1"
+    },
+    {
       "bom-ref": "cargo:evidence-search-core@0.1.0-alpha.1",
       "licenses": [
         {
@@ -1217,6 +1241,15 @@
   "dependencies": [
     {
       "dependsOn": [
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:thiserror@2.0"
+      ],
+      "ref": "cargo:evidence-search-contracts@0.1.0-alpha.1"
+    },
+    {
+      "dependsOn": [
         "cargo-requirement:async-trait@0.1.89",
         "cargo-requirement:blake3@1.8",
         "cargo-requirement:serde@1.0",
@@ -1226,7 +1259,7 @@
         "cargo-requirement:tokio@1",
         "cargo-requirement:url@2.5",
         "cargo-requirement:uuid@1.18",
-        "cargo:searchright-contracts@0.1.0-alpha.1"
+        "cargo:evidence-search-contracts@0.1.0-alpha.1"
       ],
       "ref": "cargo:evidence-search-core@0.1.0-alpha.1"
     },
@@ -1286,6 +1319,7 @@
     {
       "dependsOn": [
         "cargo-requirement:async-trait@0.1.89",
+        "cargo-requirement:blake3@1.8",
         "cargo-requirement:reqwest@0.13.2",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
@@ -1300,7 +1334,8 @@
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:thiserror@2.0"
+        "cargo-requirement:thiserror@2.0",
+        "cargo:evidence-search-contracts@0.1.0-alpha.1"
       ],
       "ref": "cargo:searchright-contracts@0.1.0-alpha.1"
     },
@@ -1527,7 +1562,7 @@
       },
       {
         "name": "searchright:schema-count",
-        "value": "49"
+        "value": "52"
       },
       {
         "name": "searchright:standard-pack-count",
@@ -1539,7 +1574,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:47d798ce-ecc9-5253-b677-b142bdbd07a3",
+  "serialNumber": "urn:uuid:799f02c3-5d92-589a-932a-ff8bb6ed5eb2",
   "specVersion": "1.6",
   "version": 1
 }

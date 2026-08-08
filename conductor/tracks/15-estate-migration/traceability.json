@@ -1,0 +1,144 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "15",
+  "title": "GitHub estate audit and custom-code replacement",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/15-estate-migration/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T15-A001",
+      "statement": "Run code/repository search for providers, PubMed, PRISMA, dedup and screening",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/estate/patterns.json",
+        "scripts/audit_search_code.py"
+      ],
+      "implementation_symbols": [
+        "scripts/audit_search_code.py::main"
+      ],
+      "deterministic_tests": [
+        "python scripts/audit_search_code.py --self-test"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/15-estate-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Run the scanner against current clones of every in-scope repository."
+      ],
+      "permitted_claim": "Search-code patterns and a self-test exist; the whole estate was not rescanned locally."
+    },
+    {
+      "assertion_id": "T15-A002",
+      "statement": "Populate migration manifest with exact files/owners/status",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/estate/repositories.json",
+        "migration/estate/replacement-decisions.json",
+        "migration/companion-repositories/index.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_companion_change_packets.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/15-estate-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Refresh exact revisions and owners before each migration."
+      ],
+      "permitted_claim": "A source-verified migration inventory exists for observed repositories."
+    },
+    {
+      "assertion_id": "T15-A003",
+      "statement": "Prioritise active research repos and shared skill repos",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/companion-repositories/index.json",
+        "integration/github/portfolio-project.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_companion_change_packets.py",
+        "python scripts/check_portfolio_project.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/15-estate-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Confirm priority with active project owners and current repository state."
+      ],
+      "permitted_claim": "Priority and portfolio projections are prepared, not remotely applied."
+    },
+    {
+      "assertion_id": "T15-A004",
+      "statement": "Create thin adapters or issues per repository",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/companion-repositories",
+        "integration/passports"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_companion_change_packets.py",
+        "python scripts/check_integration_passports.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/15-estate-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Implement approved changes in each companion repository and run its native tests."
+      ],
+      "permitted_claim": "Change packets and integration passports are prepared; companion repositories were not modified."
+    },
+    {
+      "assertion_id": "T15-A005",
+      "statement": "Verify behavior before deletion and preserve provenance",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "migration/companion-repositories",
+        "integration/consumer-contract-suite.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_consumer_contracts.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/15-estate-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Dual-run old and new paths before deleting any custom code.",
+        "Preserve rollback and provenance receipts."
+      ],
+      "permitted_claim": "No external custom code has been deleted."
+    },
+    {
+      "assertion_id": "T15-A006",
+      "statement": "Re-run estate conformance and close superseded tracks",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "integration/github/portfolio-project.json",
+        "integration/ecosystem-lock.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/check_portfolio_project.py",
+        "python scripts/sync_ecosystem_lock.py --check"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/15-estate-migration/evidence.json"
+      ],
+      "open_gates": [
+        "Run estate conformance against current remotes and close only evidence-proven migrations."
+      ],
+      "permitted_claim": "Estate closure remains externally gated."
+    }
+  ]
+}

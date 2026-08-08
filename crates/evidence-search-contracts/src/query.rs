@@ -332,6 +332,175 @@ impl Validate for SearchStrategy {
     }
 }
 
+
+/// Byte span in an immutable native search strategy.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct NativeSourceSpan {
+    /// Inclusive byte offset.
+    pub start_byte: u64,
+    /// Exclusive byte offset.
+    pub end_byte: u64,
+}
+
+/// Classification of one native strategy line.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum NativeQueryLineKind {
+    /// Provider-native search expression.
+    Expression,
+    /// Combination of previously defined line or set identifiers.
+    SetCombination,
+    /// Source-native limit or filter command.
+    Limit,
+    /// Human comment retained verbatim.
+    Comment,
+    /// Blank line retained to preserve exact source text.
+    Blank,
+    /// Syntax preserved but not yet classified by the parser.
+    Unknown,
+}
+
+/// One immutable line in a native search strategy.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct NativeQueryLine {
+    /// Stable line identity within the strategy.
+    pub line_id: String,
+    /// Optional provider set/line identifier parsed from the native text.
+    pub native_set_id: Option<String>,
+    /// Exact source text excluding its line ending.
+    pub text: String,
+    /// Source classification.
+    pub kind: NativeQueryLineKind,
+    /// Byte span into `NativeSearchStrategy.raw_text`.
+    pub span: NativeSourceSpan,
+}
+
+/// Severity of a native-query parser diagnostic.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum NativeParseSeverity {
+    /// Informational parser observation.
+    Info,
+    /// Potentially lossy or ambiguous interpretation.
+    Warning,
+    /// Parser could not establish a safe interpretation.
+    Error,
+}
+
+/// Source-grounded parser diagnostic.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct NativeParseDiagnostic {
+    /// Stable diagnostic code.
+    pub code: String,
+    /// Severity.
+    pub severity: NativeParseSeverity,
+    /// Human-readable explanation.
+    pub message: String,
+    /// Optional source span.
+    pub span: Option<NativeSourceSpan>,
+    /// Whether execution or translation requires human review.
+    pub review_required: bool,
+}
+
+/// Relationship between preserved native text and the portable semantic model.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum NativeNormalisationState {
+    /// Only source-preserving lexical structure is available.
+    RawOnly,
+    /// Some semantics were parsed, but unsupported constructs remain.
+    Partial,
+    /// The portable model represents every known native construct without loss.
+    Complete,
+}
+
+/// Dual-representation search strategy preserving native text and optional semantics.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct NativeSearchStrategy {
+    /// Contract identifier.
+    pub schema_version: String,
+    /// Stable strategy identifier.
+    pub strategy_id: String,
+    /// Source dialect.
+    pub dialect: SearchDialect,
+    /// Exact source text, including original line endings.
+    pub raw_text: String,
+    /// Source-preserving lexical lines.
+    pub lines: Vec<NativeQueryLine>,
+    /// Optional portable semantic representation.
+    pub semantic_strategy: Option<SearchStrategy>,
+    /// Current normalisation state.
+    pub normalisation_state: NativeNormalisationState,
+    /// Parser diagnostics.
+    #[serde(default)]
+    pub diagnostics: Vec<NativeParseDiagnostic>,
+    /// Parser implementation version.
+    pub parser_version: String,
+}
+
+impl Validate for NativeSearchStrategy {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_schema_version(
+            &self.schema_version,
+            NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION,
+            "native_search_strategy.schema_version",
+        )?;
+        require_text(&self.strategy_id, "native_search_strategy.strategy_id")?;
+        require_text(&self.raw_text, "native_search_strategy.raw_text")?;
+        require_text(&self.parser_version, "native_search_strategy.parser_version")?;
+        if self.lines.is_empty() {
+            return Err(ContractError::EmptyCollection("native_search_strategy.lines"));
+        }
+        let raw_len = u64::try_from(self.raw_text.len()).unwrap_or(u64::MAX);
+        let mut identifiers = BTreeSet::new();
+        let mut previous_end = 0_u64;
+        for line in &self.lines {
+            require_text(&line.line_id, "native_search_strategy.lines.line_id")?;
+            if !identifiers.insert(line.line_id.as_str()) {
+                return Err(ContractError::Invariant(
+                    "native search line identifiers must be unique".to_owned(),
+                ));
+            }
+            if line.span.start_byte < previous_end
+                || line.span.end_byte < line.span.start_byte
+                || line.span.end_byte > raw_len
+            {
+                return Err(ContractError::Invariant(
+                    "native search line spans must be ordered and remain within raw_text".to_owned(),
+                ));
+            }
+            previous_end = line.span.end_byte;
+        }
+        for diagnostic in &self.diagnostics {
+            require_text(&diagnostic.code, "native_search_strategy.diagnostics.code")?;
+            require_text(&diagnostic.message, "native_search_strategy.diagnostics.message")?;
+            if let Some(span) = diagnostic.span
+                && (span.end_byte < span.start_byte || span.end_byte > raw_len)
+            {
+                return Err(ContractError::Invariant(
+                    "native parser diagnostic span is outside raw_text".to_owned(),
+                ));
+            }
+        }
+        if let Some(strategy) = &self.semantic_strategy {
+            strategy.validate()?;
+            if strategy.strategy_id != self.strategy_id {
+                return Err(ContractError::Invariant(
+                    "native and semantic strategy identifiers must match".to_owned(),
+                ));
+            }
+        }
+        if self.normalisation_state == NativeNormalisationState::Complete
+            && self.semantic_strategy.is_none()
+        {
+            return Err(ContractError::Invariant(
+                "complete native normalisation requires a semantic strategy".to_owned(),
+            ));
+        }
+        Ok(())
+    }
+}
+
 /// Warning produced while translating a portable query.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct StrategyWarning {

@@ -12,7 +12,8 @@ Expose thin contract-generated clients and evidence-scaled tutorials without dup
 ## Contract
 
 - Horizon: `mature`
-- Status: `source_implemented_unverified`
+- Status: `scaffolded`
+- Implementation: `scaffolded`
 - Evidence: `source_verified`
 - Dependencies: `10, 18, 27, 31, 34`
 - Requirements: `SR-086, SR-087, SR-088`
@@ -27,6 +28,6 @@ Expose thin contract-generated clients and evidence-scaled tutorials without dup
 
 ## Claim boundary
 
-The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published.
+The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -13,6 +13,7 @@ Centralise bounded provider execution, caching, receipts and policy while prepar
 
 - Horizon: `foundation`
 - Status: `integration_prepared`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `01, 02`
 - Requirements: `SR-008, SR-009, SR-010, SR-011`
@@ -27,6 +28,6 @@ Centralise bounded provider execution, caching, receipts and policy while prepar
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

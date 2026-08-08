@@ -1,0 +1,153 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "05",
+  "title": "Execution, audit and local storage",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/05-execution-audit-store/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T05-A001",
+      "statement": "Add canonical query+parameter hashing",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/evidence-search-core/src/provider.rs",
+        "crates/evidence-search-core/src/audit.rs"
+      ],
+      "implementation_symbols": [
+        "evidence_search_core::provider::cache_key",
+        "evidence_search_core::audit::canonical_json"
+      ],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/05-execution-audit-store/evidence.json"
+      ],
+      "open_gates": [
+        "Compile deterministic hashing tests."
+      ],
+      "permitted_claim": "Canonicalisation and request/runtime fingerprint source logic exists; compiler evidence is open."
+    },
+    {
+      "assertion_id": "T05-A002",
+      "statement": "Persist records and receipts transactionally",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-store/src/lib.rs"
+      ],
+      "implementation_symbols": [
+        "searchright_store::FileReviewStore::append_event",
+        "searchright_store::FileReviewStore::write_snapshot_with_receipt"
+      ],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/05-execution-audit-store/evidence.json"
+      ],
+      "open_gates": [
+        "Compile store tests.",
+        "Run crash/restart and multi-process failure tests."
+      ],
+      "permitted_claim": "Single-writer append and replace-style snapshot source exists; transactional durability is not overclaimed."
+    },
+    {
+      "assertion_id": "T05-A003",
+      "statement": "Add event schema registry and migration",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "contracts/json-schema/audit-event.v1.schema.json",
+        "contracts/json-schema/review-state-snapshot.v1.schema.json",
+        "scripts/reduce_review_events.py"
+      ],
+      "implementation_symbols": [
+        "scripts/reduce_review_events.py::reduce_events"
+      ],
+      "deterministic_tests": [
+        "python scripts/reduce_review_events.py --self-test",
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/05-execution-audit-store/evidence.json"
+      ],
+      "open_gates": [
+        "Add versioned event-type registry and migration fixtures.",
+        "Verify BLAKE3 ledger before every reduction using the Rust verifier."
+      ],
+      "permitted_claim": "A deterministic derived-state reducer enforces human final authority and verified-head binding; a complete event migration registry is not yet implemented."
+    },
+    {
+      "assertion_id": "T05-A004",
+      "statement": "Add crash/restart/idempotency tests",
+      "state": "scaffolded",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-store/src/lib.rs",
+        "scripts/reduce_review_events.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/reduce_review_events.py --self-test"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/05-execution-audit-store/evidence.json"
+      ],
+      "open_gates": [
+        "Execute compiled crash, restart, duplicate and idempotency tests on supported filesystems."
+      ],
+      "permitted_claim": "Deterministic reducer failure cases exist; storage crash consistency is not proven."
+    },
+    {
+      "assertion_id": "T05-A005",
+      "statement": "Implement privacy/retention/export/delete policy",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "crates/searchright-policy/src/lib.rs",
+        "contracts/json-schema/institutional-policy.v1.schema.json",
+        "contracts/json-schema/data-handling-decision.v1.schema.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/05-execution-audit-store/evidence.json"
+      ],
+      "open_gates": [
+        "Compile policy tests and exercise retention/export/delete flows."
+      ],
+      "permitted_claim": "Privacy and retention contracts exist; production enforcement is not claimed."
+    },
+    {
+      "assertion_id": "T05-A006",
+      "statement": "Add RO-Crate and OSF artefact export plan",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
+      "implementation_paths": [
+        "scripts/review_bundle.py",
+        "contracts/json-schema/review-bundle-manifest.v1.schema.json",
+        "examples/review-bundle/example.srpack"
+      ],
+      "implementation_symbols": [
+        "scripts/review_bundle.py::pack_bundle",
+        "scripts/review_bundle.py::verify_bundle"
+      ],
+      "deterministic_tests": [
+        "python scripts/review_bundle.py self-test"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/05-execution-audit-store/evidence.json"
+      ],
+      "open_gates": [
+        "Add RO-Crate/OSF profile conformance and repository handoff fixtures."
+      ],
+      "permitted_claim": "A deterministic portable review bundle exists; automatic deposit and full RO-Crate conformance are not claimed."
+    }
+  ]
+}

@@ -3,33 +3,43 @@
 
 Parent phase key: `track-16-phase-1`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `.github/workflows/ci.yml`
-  - [x] `.github/workflows/coverage.yml`
-  - [x] `.github/workflows/nightly.yml`
-  - [x] `.github/workflows/security.yml`
-  - [x] `scripts/run_static_harness.py`
-  - [x] `scripts/check_rust_dependency_graph.py`
-  - [x] `verification/sbom/source-components.cdx.json`
-  - [x] `docs/security/threat-model.md`
-  - [x] `codecov.yml`
-  - [x] `.github/workflows/formal.yml`
-  - [x] `.github/workflows/fuzz.yml`
-  - [x] `.github/workflows/clean-room.yml`
-  - [x] `scripts/check_default_deny.py`
-  - [x] `scripts/check_workflow_hardening.py`
-  - [x] `scripts/mcp_smoke.py`
-  - [x] `verification/harness-matrix.json`
-  - [x] `docs/quality/maximal-harness.md`
-  - [x] `fuzz/Cargo.toml`
-  - [x] `fuzz/fuzz_targets/query_contract.rs`
-  - [x] `fuzz/fuzz_targets/document_evidence.rs`
-  - [x] `fuzz/fuzz_targets/audit_event.rs`
-  - [x] `scripts/generate_source_hash_manifest.py`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `.github/workflows/ci.yml`
+  - [x] Present source path: `.github/workflows/coverage.yml`
+  - [x] Present source path: `.github/workflows/nightly.yml`
+  - [x] Present source path: `.github/workflows/security.yml`
+  - [x] Present source path: `scripts/run_static_harness.py`
+  - [x] Present source path: `scripts/check_rust_dependency_graph.py`
+  - [x] Present source path: `verification/sbom/source-components.cdx.json`
+  - [x] Present source path: `docs/security/threat-model.md`
+  - [x] Present source path: `codecov.yml`
+  - [x] Present source path: `.github/workflows/formal.yml`
+  - [x] Present source path: `.github/workflows/fuzz.yml`
+  - [x] Present source path: `.github/workflows/clean-room.yml`
+  - [x] Present source path: `scripts/check_default_deny.py`
+  - [x] Present source path: `scripts/check_workflow_hardening.py`
+  - [x] Present source path: `scripts/mcp_smoke.py`
+  - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Present source path: `docs/quality/maximal-harness.md`
+  - [x] Present source path: `fuzz/Cargo.toml`
+  - [x] Present source path: `fuzz/fuzz_targets/query_contract.rs`
+  - [x] Present source path: `fuzz/fuzz_targets/document_evidence.rs`
+  - [x] Present source path: `fuzz/fuzz_targets/audit_event.rs`
+  - [x] Present source path: `scripts/generate_source_hash_manifest.py`
+  - [x] Present source path: `supply-chain/config.toml`
+  - [x] Present source path: `supply-chain/audits.toml`
+  - [x] Present source path: `supply-chain/README.md`
+  - [x] Present source path: `public-api/README.md`
+  - [x] Present source path: `.github/workflows/public-api.yml`
+  - [x] Present source path: `scripts/check_traceability.py`
+  - [x] Present source path: `scripts/check_public_package_policy.py`
+  - [x] Present source path: `scripts/sync_schema_surface.py`
+  - [x] Present source path: `docs/vertical-slice-definition-of-done.md`
+  - [x] Assertion ledger: `conductor/tracks/16-quality-security-harness/traceability.json`
 
 ## Completion and evidence contract
 

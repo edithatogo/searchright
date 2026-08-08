@@ -1,0 +1,161 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "07",
+  "title": "Governed screening workflow",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/07-screening-workflow/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T07-A001",
+      "statement": "Persist blinded reviewer decisions",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-screening/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/examples/screening-decision.yaml",
+        "contracts/examples/screening-policy.yaml",
+        "docs/adrs/0003-agent-authority.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/07-screening-workflow/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T07-A002",
+      "statement": "Implement role assignments and adjudication",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-screening/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/examples/screening-decision.yaml",
+        "contracts/examples/screening-policy.yaml",
+        "docs/adrs/0003-agent-authority.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/07-screening-workflow/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T07-A003",
+      "statement": "Tie decisions to eligibility version and evidence excerpts",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-screening/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/examples/screening-decision.yaml",
+        "contracts/examples/screening-policy.yaml",
+        "docs/adrs/0003-agent-authority.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/07-screening-workflow/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T07-A004",
+      "statement": "Enforce one primary full-text exclusion reason",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-screening/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/examples/screening-decision.yaml",
+        "contracts/examples/screening-policy.yaml",
+        "docs/adrs/0003-agent-authority.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/07-screening-workflow/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T07-A005",
+      "statement": "Add audit-preserving amendment/re-screen flows",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-screening/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/examples/screening-decision.yaml",
+        "contracts/examples/screening-policy.yaml",
+        "docs/adrs/0003-agent-authority.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/07-screening-workflow/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T07-A006",
+      "statement": "Add screening exports/adapters for common review tools",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-screening/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/examples/screening-decision.yaml",
+        "contracts/examples/screening-policy.yaml",
+        "docs/adrs/0003-agent-authority.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/07-screening-workflow/evidence.json"
+      ],
+      "open_gates": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

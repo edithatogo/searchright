@@ -12,7 +12,8 @@ Render PRISMA flow/appendix outputs and PRESS/standards assessments directly fro
 ## Contract
 
 - Horizon: `mvp`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `01, 05, 07`
 - Requirements: `SR-023, SR-024, SR-025, SR-026, SR-027`
@@ -27,6 +28,6 @@ Render PRISMA flow/appendix outputs and PRESS/standards assessments directly fro
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

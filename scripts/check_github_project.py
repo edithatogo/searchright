@@ -17,6 +17,7 @@ REQUIRED_FIELDS = {
     "Work kind",
     "Horizon",
     "Evidence level",
+    "Implementation state",
     "MoSCoW",
     "External gate",
     "Track ID",
@@ -70,7 +71,7 @@ def main() -> int:
     view_names = [view.get("name") for view in views if isinstance(view, dict)]
     if len(view_names) != len(set(view_names)) or any(not name for name in view_names):
         errors.append("project view names must be unique and non-empty")
-    if not {"Delivery board", "Roadmap", "Evidence blockers", "MVP", "Open tasks"}.issubset(set(view_names)):
+    if not {"Delivery board", "Roadmap", "Evidence blockers", "MVP", "Open tasks", "Implementation gaps"}.issubset(set(view_names)):
         errors.append("required project views are missing")
     for view in views:
         if not isinstance(view, dict) or view.get("layout") not in ALLOWED_LAYOUTS or not isinstance(view.get("filter"), str):

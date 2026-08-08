@@ -1,0 +1,12 @@
+{
+  "schema_version": "org.searchright.dedup-benchmark-fixture.v1",
+  "partition": "validation",
+  "records": [
+    {"id": "d1", "title": "A systematic review of alpha", "doi": "10.1000/alpha"},
+    {"id": "d2", "title": "A systematic review of alpha", "doi": "https://doi.org/10.1000/ALPHA"},
+    {"id": "d3", "title": "A systematic review of beta", "doi": "10.1000/beta"},
+    {"id": "d4", "title": "Systematic review of beta: protocol", "doi": "10.1000/beta-protocol"}
+  ],
+  "gold_clusters": [["d1", "d2"], ["d3"], ["d4"]],
+  "rights_basis": "CC0 synthetic metadata"
+}

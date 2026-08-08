@@ -1,13 +1,65 @@
 {
   "schema_version": "org.searchright.estate-search-patterns.v1",
   "patterns": [
-    {"id":"pubmed_endpoint","regex":"eutils\\.ncbi\\.nlm\\.nih\\.gov|esearch\\.fcgi|efetch\\.fcgi","replacement":"searchright-connectors PubMed adapter"},
-    {"id":"europe_pmc_endpoint","regex":"europepmc|ebi\\.ac\\.uk/europepmc","replacement":"searchright-connectors Europe PMC adapter"},
-    {"id":"openalex_endpoint","regex":"api\\.openalex\\.org","replacement":"searchright-connectors OpenAlex adapter"},
-    {"id":"crossref_endpoint","regex":"api\\.crossref\\.org","replacement":"searchright-connectors Crossref adapter"},
-    {"id":"manual_prisma_log","regex":"search_log_PRISMA|records_screened|duplicates_removed","replacement":"SourceReceipt, SearchRun and PrismaFlow contracts"},
-    {"id":"ad_hoc_dedup","regex":"dedup|duplicate.*doi|fuzzy.*title","replacement":"searchright-dedup"},
-    {"id":"ad_hoc_screening","regex":"title.abstract.*screen|full.text.*exclude|inclusion.*criterion","replacement":"searchright-screening and screening contracts"},
-    {"id":"search_strategy_string","regex":"\\b(PubMed|Embase|Scopus|MEDLINE)\\b.*\\b(AND|OR|NOT)\\b","replacement":"SearchStrategy and query AST"}
+    {
+      "id": "pubmed_endpoint",
+      "regex": "eutils\\.ncbi\\.nlm\\.nih\\.gov|esearch\\.fcgi|efetch\\.fcgi",
+      "replacement": "searchright-connectors PubMed adapter"
+    },
+    {
+      "id": "europe_pmc_endpoint",
+      "regex": "europepmc|ebi\\.ac\\.uk/europepmc",
+      "replacement": "searchright-connectors Europe PMC adapter"
+    },
+    {
+      "id": "openalex_endpoint",
+      "regex": "api\\.openalex\\.org",
+      "replacement": "searchright-connectors OpenAlex adapter"
+    },
+    {
+      "id": "crossref_endpoint",
+      "regex": "api\\.crossref\\.org",
+      "replacement": "searchright-connectors Crossref adapter"
+    },
+    {
+      "id": "manual_prisma_log",
+      "regex": "search_log_PRISMA|records_screened|duplicates_removed",
+      "replacement": "SourceReceipt, SearchRun and PrismaFlow contracts"
+    },
+    {
+      "id": "ad_hoc_dedup",
+      "regex": "dedup|duplicate.*doi|fuzzy.*title",
+      "replacement": "searchright-dedup"
+    },
+    {
+      "id": "ad_hoc_screening",
+      "regex": "title.abstract.*screen|full.text.*exclude|inclusion.*criterion",
+      "replacement": "searchright-screening and screening contracts"
+    },
+    {
+      "id": "search_strategy_string",
+      "regex": "\\b(PubMed|Embase|Scopus|MEDLINE)\\b.*\\b(AND|OR|NOT)\\b",
+      "replacement": "SearchStrategy and query AST"
+    },
+    {
+      "id": "insecure_arxiv_endpoint",
+      "regex": "http://export\\.arxiv\\.org",
+      "replacement": "Searchright HTTPS-only arXiv/provider adapter"
+    },
+    {
+      "id": "direct_bibliographic_writeback",
+      "regex": "references_(?:enriched|corrected)\\.bib|format_bibtex_entry",
+      "replacement": "Sourceright preview/apply workflow"
+    },
+    {
+      "id": "title_only_dedup",
+      "regex": "title\\s*=.*strip\\(\\)\\.lower\\(\\)|seen\\.add\\(title\\)",
+      "replacement": "Searchright dedup and study linkage"
+    },
+    {
+      "id": "silent_provider_error",
+      "regex": "except Exception(?: as \\w+)?:\\s*\\n\\s*return \\[\\]",
+      "replacement": "typed provider error and receipt"
+    }
   ]
 }

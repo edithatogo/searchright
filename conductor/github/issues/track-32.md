@@ -13,6 +13,7 @@ Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility witho
 
 - Horizon: `mature`
 - Status: `integration_prepared`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `13, 14, 15, 18, 31`
 - Requirements: `SR-065, SR-070, SR-076, SR-077`
@@ -27,6 +28,6 @@ Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility witho
 
 ## Claim boundary
 
-A source-verified release train does not prove producer-consumer compatibility or publish any component.
+A source-verified release train does not prove producer-consumer compatibility or publish any component. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

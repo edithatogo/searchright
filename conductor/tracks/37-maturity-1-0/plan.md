@@ -1,6 +1,6 @@
 # Plan: 37 Final mature 1.0 release and long-term operations
 
-Current status: **external_evidence_required**. Evidence level: **source_verified**.
+Current status: **external_evidence_required**. Implementation state: **external_evidence_required**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-37`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,13 +8,14 @@ GitHub issue key: `track-37`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-37-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `docs/maturity/1.0-gate.md`
-  - [x] `docs/maturity/release-decision.md`
-  - [x] `conductor/maturity-dossier.json`
-  - [x] `scripts/check_maturity_dossier.py`
-  - [x] `ROADMAP.md`
-  - [x] `PROJECT_STATUS.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `docs/maturity/1.0-gate.md`
+  - [x] Present source path: `docs/maturity/release-decision.md`
+  - [x] Present source path: `conductor/maturity-dossier.json`
+  - [x] Present source path: `scripts/check_maturity_dossier.py`
+  - [x] Present source path: `ROADMAP.md`
+  - [x] Present source path: `PROJECT_STATUS.md`
+  - [x] Assertion ledger: `conductor/tracks/37-maturity-1-0/traceability.json`
 
 ## Phase 2: Source-level verification
 

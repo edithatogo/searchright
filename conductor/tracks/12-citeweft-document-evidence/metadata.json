@@ -4,6 +4,7 @@
   "slug": "citeweft-document-evidence",
   "title": "CiteWeft scholarly extraction and document evidence",
   "status": "integration_prepared",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -15,6 +16,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/12-citeweft-document-evidence/evidence.json",
+  "traceability_path": "conductor/tracks/12-citeweft-document-evidence/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-12",

@@ -1,7 +1,7 @@
 use std::{collections::BTreeMap, sync::Arc, time::Duration};
 
 use async_trait::async_trait;
-use searchright_contracts::{
+use evidence_search_contracts::{
     BibliographicRecord, ProviderCapability, ProviderManifest, ProviderPage, SearchRequest,
     SourceReceipt, Validate,
 };
@@ -44,7 +44,13 @@ pub trait SearchProvider: Send + Sync {
     async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError>;
     /// Whether an adapter failure is safe to retry under the bounded policy.
     fn is_retryable(&self, error: &ProviderError) -> bool {
-        matches!(error, ProviderError::Upstream { .. })
+        matches!(
+            error,
+            ProviderError::Upstream { .. }
+                | ProviderError::Timeout { .. }
+                | ProviderError::RateLimited { .. }
+                | ProviderError::HttpStatus { status: 429 | 500..=599, .. }
+        )
     }
 }
 
@@ -136,6 +142,29 @@ pub enum ProviderError {
         record_id: String,
         message: String,
     },
+    /// Provider request exceeded its per-request timeout.
+    #[error("provider `{provider}` timed out after {timeout_seconds} seconds")]
+    Timeout { provider: String, timeout_seconds: u64 },
+    /// Provider explicitly rate limited the request.
+    #[error("provider `{provider}` rate limited the request")]
+    RateLimited { provider: String, retry_after_ms: Option<u64> },
+    /// Provider returned a non-success HTTP status.
+    #[error("provider `{provider}` returned HTTP {status}: {message}")]
+    HttpStatus {
+        provider: String,
+        status: u16,
+        retry_after_ms: Option<u64>,
+        message: String,
+    },
+    /// Provider response could not be decoded into its declared format.
+    #[error("provider `{provider}` returned malformed {format}: {message}")]
+    MalformedResponse { provider: String, format: &'static str, message: String },
+    /// Provider or caller attempted an operation outside the capability policy.
+    #[error("provider policy violation for `{provider}`: {message}")]
+    PolicyViolation { provider: String, message: String },
+    /// Execution was explicitly cancelled by a caller or task supervisor.
+    #[error("provider `{provider}` execution was cancelled")]
+    Cancelled { provider: String },
     /// Provider rejected or could not execute the request.
     #[error("provider `{provider}` failed: {message}")]
     Upstream { provider: String, message: String },
@@ -230,12 +259,16 @@ impl ProviderRegistry {
         }
 
         let manifest = slot.provider.manifest();
+        let started = tokio::time::Instant::now();
+        let total_timeout = request.policy.total_timeout_seconds.map(Duration::from_secs);
         let minimum_interval_ms = request
             .policy
             .min_interval_ms
             .max(manifest.default_min_interval_ms);
         let request_fingerprint = canonical_json(&serde_json::json!({
             "provider_id": provider_id,
+            "provider_version": &manifest.version,
+            "runtime_version": env!("CARGO_PKG_VERSION"),
             "strategy": &request.strategy,
             "initial_cursor": &request.cursor,
             "page_size": request.page_size,
@@ -248,6 +281,14 @@ impl ProviderRegistry {
         let mut cache_writes = 0_u32;
         let mut warnings = Vec::new();
         loop {
+            if let Some(limit) = total_timeout
+                && started.elapsed() >= limit
+            {
+                return Err(ProviderError::BudgetExceeded {
+                    kind: "total_timeout_seconds",
+                    limit: limit.as_secs(),
+                });
+            }
             if pages >= request.policy.max_pages {
                 if request.cursor.is_some() {
                     warnings.push("pagination stopped at max_pages budget".to_owned());
@@ -258,6 +299,7 @@ impl ProviderRegistry {
                 .execute_page_with_retries(
                     slot,
                     provider_id,
+                    &manifest.version,
                     &request,
                     minimum_interval_ms,
                     &mut warnings,
@@ -303,7 +345,7 @@ impl ProviderRegistry {
             })?;
         }
         let receipt = SourceReceipt {
-            schema_version: searchright_contracts::SOURCE_RECEIPT_SCHEMA_VERSION.to_owned(),
+            schema_version: evidence_search_contracts::SOURCE_RECEIPT_SCHEMA_VERSION.to_owned(),
             receipt_id,
             review_id: request.review_id,
             run_id: request.run_id,
@@ -337,11 +379,12 @@ impl ProviderRegistry {
         &self,
         slot: &ProviderSlot,
         provider_id: &str,
+        provider_version: &str,
         request: &SearchRequest,
         minimum_interval_ms: u64,
         warnings: &mut Vec<String>,
     ) -> Result<(ProviderPage, bool, bool), ProviderError> {
-        let cache_key = page_cache_key(provider_id, request)?;
+        let cache_key = page_cache_key(provider_id, provider_version, request)?;
         if request.policy.replay_enabled
             && let Some(cache) = &self.cache
             && let Some(page) = cache.get(&cache_key).await?
@@ -358,9 +401,9 @@ impl ProviderRegistry {
                 slot.provider.execute_page(request),
             )
             .await
-            .map_err(|_| ProviderError::Upstream {
+            .map_err(|_| ProviderError::Timeout {
                 provider: provider_id.to_owned(),
-                message: "request timed out".to_owned(),
+                timeout_seconds: request.policy.timeout_seconds,
             })
             .and_then(|page| page);
 
@@ -384,12 +427,24 @@ impl ProviderRegistry {
                     warnings.push(format!(
                         "provider page retried after attempt {retry_count}: {error}"
                     ));
-                    let backoff = Duration::from_millis(
-                        minimum_interval_ms
-                            .max(100)
-                            .saturating_mul(u64::from(retry_count)),
-                    );
-                    tokio::time::sleep(backoff).await;
+                    let provider_retry_after = match &error {
+                        ProviderError::RateLimited { retry_after_ms, .. }
+                        | ProviderError::HttpStatus { retry_after_ms, .. } => *retry_after_ms,
+                        _ => None,
+                    };
+                    let base = request
+                        .policy
+                        .retry_base_delay_ms
+                        .unwrap_or_else(|| minimum_interval_ms.max(100));
+                    let maximum = request
+                        .policy
+                        .retry_max_delay_ms
+                        .unwrap_or_else(|| base.saturating_mul(16));
+                    let exponent = u32::from(retry_count.saturating_sub(1)).min(20);
+                    let calculated = base.saturating_mul(1_u64 << exponent).min(maximum);
+                    let delay_ms = provider_retry_after.unwrap_or(calculated).min(maximum);
+                    warnings.push(format!("bounded retry delay: {delay_ms} ms"));
+                    tokio::time::sleep(Duration::from_millis(delay_ms)).await;
                 }
                 Err(error) => return Err(error),
             }
@@ -397,25 +452,36 @@ impl ProviderRegistry {
     }
 
     async fn apply_rate_limit(&self, slot: &ProviderSlot, min_interval_ms: u64) {
-        let mut last_call = slot.last_call.lock().await;
-        if let Some(previous) = *last_call {
-            let minimum = Duration::from_millis(min_interval_ms);
-            let elapsed = previous.elapsed();
-            if elapsed < minimum {
-                tokio::time::sleep(minimum - elapsed).await;
-            }
+        let delay = {
+            let mut reserved = slot.last_call.lock().await;
+            let now = tokio::time::Instant::now();
+            let next = reserved
+                .map(|previous| previous + Duration::from_millis(min_interval_ms))
+                .map_or(now, |candidate| candidate.max(now));
+            *reserved = Some(next);
+            next.saturating_duration_since(now)
+        };
+        if !delay.is_zero() {
+            tokio::time::sleep(delay).await;
         }
-        *last_call = Some(tokio::time::Instant::now());
     }
 }
 
-fn page_cache_key(provider_id: &str, request: &SearchRequest) -> Result<String, ProviderError> {
+fn page_cache_key(
+    provider_id: &str,
+    provider_version: &str,
+    request: &SearchRequest,
+) -> Result<String, ProviderError> {
     let canonical = canonical_json(&serde_json::json!({
         "provider_id": provider_id,
+        "provider_version": provider_version,
+        "runtime_version": env!("CARGO_PKG_VERSION"),
         "strategy_id": request.strategy.strategy_id,
         "compilation_hash": request.strategy.compilation_hash,
+        "compiler_version": request.strategy.compiler_version,
         "cursor": request.cursor,
         "page_size": request.page_size,
+        "policy": request.policy,
     }));
     let bytes = serde_json::to_vec(&canonical)?;
     Ok(blake3::hash(&bytes).to_hex().to_string())
@@ -539,7 +605,7 @@ fn usize_to_u64(value: usize) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use searchright_contracts::{
+    use evidence_search_contracts::{
         CompiledStrategy, ExecutionPolicy, ProviderSupportLevel, SearchDialect,
     };
 
@@ -577,7 +643,7 @@ mod tests {
             _request: &SearchRequest,
         ) -> Result<ProviderPage, ProviderError> {
             Ok(ProviderPage {
-                schema_version: searchright_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
                 records: Vec::new(),
                 next_cursor: None,
                 total_available: Some(0),
@@ -591,12 +657,12 @@ mod tests {
             review_id: "r1".to_owned(),
             run_id: "run1".to_owned(),
             strategy: CompiledStrategy {
-                schema_version: searchright_contracts::COMPILED_STRATEGY_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::COMPILED_STRATEGY_SCHEMA_VERSION.to_owned(),
                 strategy_id: "s1".to_owned(),
                 dialect: SearchDialect::GenericBoolean,
                 query: "example".to_owned(),
                 warnings: Vec::new(),
-                fidelity: searchright_contracts::TranslationFidelity::Exact,
+                fidelity: evidence_search_contracts::TranslationFidelity::Exact,
                 review_required: false,
                 loss_codes: Vec::new(),
                 compilation_hash: "hash".to_owned(),
@@ -609,8 +675,12 @@ mod tests {
                 max_records: 100,
                 max_pages: 2,
                 timeout_seconds: 2,
+                total_timeout_seconds: Some(5),
                 max_retries: 0,
                 min_interval_ms: 0,
+                retry_base_delay_ms: Some(100),
+                retry_max_delay_ms: Some(1_000),
+                max_response_bytes: Some(1_000_000),
                 replay_enabled: true,
                 cache_write_enabled: false,
             },

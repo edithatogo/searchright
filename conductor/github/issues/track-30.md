@@ -12,7 +12,8 @@ Maintain one evidence-scaled gap register and block premature release claims whi
 ## Contract
 
 - Horizon: `mature`
-- Status: `source_implemented_unverified`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `25, 26, 27, 28, 29`
 - Requirements: `SR-050`
@@ -27,6 +28,6 @@ Maintain one evidence-scaled gap register and block premature release claims whi
 
 ## Claim boundary
 
-The gap register is source-verified planning evidence; it cannot close the gaps it records.
+The gap register is source-verified planning evidence; it cannot close the gaps it records. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

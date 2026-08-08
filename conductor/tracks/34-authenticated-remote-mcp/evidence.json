@@ -2,7 +2,8 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "34",
   "title": "Authenticated remote MCP, tenancy and data residency",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
@@ -15,6 +16,7 @@
     "contracts/openapi/searchright-http.openapi.yaml",
     "docs/security/threat-model.md"
   ],
+  "traceability": "conductor/tracks/34-authenticated-remote-mcp/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_default_deny.py",
@@ -32,7 +34,7 @@
     "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
     "Complete independent security/privacy review before any hosted or multi-tenant claim."
   ],
-  "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service.",
+  "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-34",

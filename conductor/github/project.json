@@ -46,6 +46,18 @@
       ]
     },
     {
+      "name": "Implementation state",
+      "data_type": "SINGLE_SELECT",
+      "options": [
+        "Contracted",
+        "Scaffolded",
+        "Partially Implemented",
+        "Source Implemented",
+        "External Evidence Required",
+        "Mixed"
+      ]
+    },
+    {
       "name": "Evidence level",
       "data_type": "SINGLE_SELECT",
       "options": [
@@ -127,6 +139,11 @@
       "name": "Open tasks",
       "layout": "TABLE_LAYOUT",
       "filter": "is:open \"Work kind\":Task"
+    },
+    {
+      "name": "Implementation gaps",
+      "layout": "TABLE_LAYOUT",
+      "filter": "\"Implementation state\":\"Partially Implemented\",Scaffolded,Contracted"
     }
   ],
   "sync": {

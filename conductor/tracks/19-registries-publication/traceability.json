@@ -1,0 +1,185 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "19",
+  "title": "Registries and scholarly publication",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/19-registries-publication/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T19-A001",
+      "statement": "Validate server.json against official MCP Registry schema",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "registry/status.json",
+        "registry/official-mcp/README.md",
+        "registry/glama/README.md",
+        "registry/smithery/README.md",
+        "registry/joss/paper.md",
+        "server.json",
+        "glama.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/19-registries-publication/evidence.json"
+      ],
+      "open_gates": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T19-A002",
+      "statement": "Publish Glama and Smithery/MCPB metadata",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "registry/status.json",
+        "registry/official-mcp/README.md",
+        "registry/glama/README.md",
+        "registry/smithery/README.md",
+        "registry/joss/paper.md",
+        "server.json",
+        "glama.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/19-registries-publication/evidence.json"
+      ],
+      "open_gates": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T19-A003",
+      "statement": "Publish crates.io and GitHub release artefacts",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "registry/status.json",
+        "registry/official-mcp/README.md",
+        "registry/glama/README.md",
+        "registry/smithery/README.md",
+        "registry/joss/paper.md",
+        "server.json",
+        "glama.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/19-registries-publication/evidence.json"
+      ],
+      "open_gates": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T19-A004",
+      "statement": "Submit official MCP Registry after package availability",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "registry/status.json",
+        "registry/official-mcp/README.md",
+        "registry/glama/README.md",
+        "registry/smithery/README.md",
+        "registry/joss/paper.md",
+        "server.json",
+        "glama.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/19-registries-publication/evidence.json"
+      ],
+      "open_gates": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T19-A005",
+      "statement": "Record public acceptance URLs/version/dates",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "registry/status.json",
+        "registry/official-mcp/README.md",
+        "registry/glama/README.md",
+        "registry/smithery/README.md",
+        "registry/joss/paper.md",
+        "server.json",
+        "glama.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/19-registries-publication/evidence.json"
+      ],
+      "open_gates": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T19-A006",
+      "statement": "Prepare JOSS/Zenodo/OSF artefacts and citation metadata",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "registry/status.json",
+        "registry/official-mcp/README.md",
+        "registry/glama/README.md",
+        "registry/smithery/README.md",
+        "registry/joss/paper.md",
+        "server.json",
+        "glama.json"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/19-registries-publication/evidence.json"
+      ],
+      "open_gates": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Plan: 15 GitHub estate audit and custom-code replacement
 
-Current status: **integration_prepared**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-15`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,21 +8,23 @@ GitHub issue key: `track-15`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-15-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `migration/estate/repositories.json`
-  - [x] `migration/estate/patterns.json`
-  - [x] `migration/estate/replacement-decisions.json`
-  - [x] `migration/estate-migration-manifest.yaml`
-  - [x] `scripts/audit_search_code.py`
-  - [x] `docs/estate-integration.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `migration/estate/repositories.json`
+  - [x] Present source path: `migration/estate/patterns.json`
+  - [x] Present source path: `migration/estate/replacement-decisions.json`
+  - [x] Present source path: `migration/companion-repositories/index.json`
+  - [x] Present source path: `scripts/audit_search_code.py`
+  - [x] Present source path: `scripts/check_companion_change_packets.py`
+  - [x] Present source path: `docs/estate-integration.md`
+  - [x] Assertion ledger: `conductor/tracks/15-estate-migration/traceability.json`
 
 ## Phase 2: Source-level verification
 
 <!-- github-subissue-key: track-15-phase-2 -->
 
 - [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/audit_search_code.py --self-test`
+  - [x] `python scripts/check_companion_change_packets.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

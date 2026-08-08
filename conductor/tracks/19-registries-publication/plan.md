@@ -1,6 +1,6 @@
 # Plan: 19 Registries and scholarly publication
 
-Current status: **submission_prepared**. Evidence level: **source_verified**.
+Current status: **submission_prepared**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,14 +8,15 @@ GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-19-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `registry/status.json`
-  - [x] `registry/official-mcp/README.md`
-  - [x] `registry/glama/README.md`
-  - [x] `registry/smithery/README.md`
-  - [x] `registry/joss/paper.md`
-  - [x] `server.json`
-  - [x] `glama.json`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `registry/status.json`
+  - [x] Present source path: `registry/official-mcp/README.md`
+  - [x] Present source path: `registry/glama/README.md`
+  - [x] Present source path: `registry/smithery/README.md`
+  - [x] Present source path: `registry/joss/paper.md`
+  - [x] Present source path: `server.json`
+  - [x] Present source path: `glama.json`
+  - [x] Assertion ledger: `conductor/tracks/19-registries-publication/traceability.json`
 
 ## Phase 2: Source-level verification
 

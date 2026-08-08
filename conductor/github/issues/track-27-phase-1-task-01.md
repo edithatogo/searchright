@@ -3,16 +3,17 @@
 
 Parent phase key: `track-27-phase-1`
 Conductor plan: `conductor/tracks/27-accessibility-internationalisation-usability/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-diagnostics/src/lib.rs`
-  - [x] `crates/searchright-contracts/src/diagnostic.rs`
-  - [x] `contracts/examples/diagnostic.yaml`
-  - [x] `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
-  - [x] `docs/evaluation/external-methodological-evaluation.md`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-diagnostics/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/diagnostic.rs`
+  - [x] Present source path: `contracts/examples/diagnostic.yaml`
+  - [x] Present source path: `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
+  - [x] Present source path: `docs/evaluation/external-methodological-evaluation.md`
+  - [x] Assertion ledger: `conductor/tracks/27-accessibility-internationalisation-usability/traceability.json`
 
 ## Completion and evidence contract
 

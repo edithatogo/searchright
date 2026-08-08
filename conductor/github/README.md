@@ -13,8 +13,8 @@ deterministic projection into GitHub Issues and Projects:
 
 The canonical projection currently contains **564 issues/Project items**: one
 roadmap epic, 38 track issues, 152 phase subissues and 373 task subissues, joined
-by 563 native parent-child relationships. The Project manifest owns 12 custom
-fields and five views. These counts are generated and validated; changing them
+by 563 native parent-child relationships. The Project manifest owns 13 custom
+fields and six views. These counts are generated and validated; changing them
 requires changing Conductor first.
 
 `render_github_issues.py` owns the Markdown bodies, labels and hierarchy.

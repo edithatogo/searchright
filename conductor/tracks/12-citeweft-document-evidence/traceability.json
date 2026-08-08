@@ -1,0 +1,135 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "12",
+  "title": "CiteWeft scholarly extraction and document evidence",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/12-citeweft-document-evidence/spec.md#scope",
+  "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T12-A001",
+      "statement": "Pin the CiteWeft revision and feature-gate the adapter",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-contracts/src/document.rs",
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "contracts/examples/document-evidence.json",
+        "integration/citeweft-compatibility.json",
+        "docs/citeweft-integration.md",
+        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
+        "scripts/check_citeweft_integration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_citeweft_integration.py",
+        "python scripts/check_rust_dependency_graph.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+      ],
+      "open_gates": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T12-A002",
+      "statement": "Preserve references, callouts, source spans, uncertainty, diagnostics and provenance",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-contracts/src/document.rs",
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "contracts/examples/document-evidence.json",
+        "integration/citeweft-compatibility.json",
+        "docs/citeweft-integration.md",
+        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
+        "scripts/check_citeweft_integration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_citeweft_integration.py",
+        "python scripts/check_rust_dependency_graph.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+      ],
+      "open_gates": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T12-A003",
+      "statement": "Forbid canonical writes and default full-text retention",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-contracts/src/document.rs",
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "contracts/examples/document-evidence.json",
+        "integration/citeweft-compatibility.json",
+        "docs/citeweft-integration.md",
+        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
+        "scripts/check_citeweft_integration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_citeweft_integration.py",
+        "python scripts/check_rust_dependency_graph.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+      ],
+      "open_gates": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T12-A004",
+      "statement": "Prepare downstream Sourceright compatibility and rollback",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-contracts/src/document.rs",
+        "contracts/json-schema/document-evidence.v1.schema.json",
+        "contracts/examples/document-evidence.json",
+        "integration/citeweft-compatibility.json",
+        "docs/citeweft-integration.md",
+        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
+        "scripts/check_citeweft_integration.py"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_citeweft_integration.py",
+        "python scripts/check_rust_dependency_graph.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+      ],
+      "open_gates": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

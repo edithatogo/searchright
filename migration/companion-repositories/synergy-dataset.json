@@ -1,0 +1,37 @@
+{
+  "schema_version": "org.searchright.companion-change-packet.v1",
+  "source_epoch": "2026-08-08",
+  "repository": "edithatogo/synergy-dataset",
+  "revision": "dc2dadfdbb98eb1b4259604789abd640aa3b693e",
+  "role": "screening benchmark mirror or patch carrier",
+  "priority": "must",
+  "changes": [
+    {
+      "id": "canonical-release",
+      "action": "Pin canonical ASReview SYNERGY releases and DOI-level dataset identities; do not use the personal fork commit as the benchmark's scientific identity.",
+      "target_paths": ["benchmark metadata", "README.md", "UPSTREAM.md"],
+      "owner": "benchmark maintainer",
+      "required_evidence": ["canonical release/DOI", "content digest"],
+      "automatic_apply": false
+    },
+    {
+      "id": "sealed-evaluation",
+      "action": "Separate development fixtures from hidden final labels and record corpus, split and licence digests for every Searchright evaluation.",
+      "target_paths": ["benchmark manifests", "evaluation scripts"],
+      "owner": "methodology owner",
+      "required_evidence": ["sealed-label policy", "leakage review", "environment receipt"],
+      "automatic_apply": false
+    },
+    {
+      "id": "fork-role",
+      "action": "Archive the fork if unmodified, or document and test only intentional patches while continuously comparing with canonical upstream.",
+      "target_paths": ["UPSTREAM.md", ".github/workflows/upstream-drift.yml"],
+      "owner": "repository owner",
+      "required_evidence": ["local delta inventory", "maintenance decision"],
+      "automatic_apply": false
+    }
+  ],
+  "remote_mutation_permitted": false,
+  "completion_condition": "Benchmark identity, hidden-label controls and fork role are explicit and reproducible.",
+  "claim_boundary": "This packet does not modify the dataset fork or establish Searchright screening performance."
+}

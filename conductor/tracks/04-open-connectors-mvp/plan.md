@@ -1,6 +1,6 @@
 # Plan: 04 Open provider connectors MVP
 
-Current status: **source_implemented_unverified**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,11 +8,19 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-04-phase-1 -->
 
-- [x] Implement and document the track's source deliverables.
-  - [x] `crates/searchright-connectors/src/lib.rs`
-  - [x] `contracts/examples/provider-manifest.yaml`
-  - [x] `contracts/examples/provider-page.yaml`
-  - [x] `contracts/examples/source-receipt.yaml`
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+  - [x] Present source path: `crates/searchright-connectors/src/lib.rs`
+  - [x] Present source path: `integration/provider-contract-baselines.json`
+  - [x] Present source path: `provider-fixtures/mvp/pubmed-esearch.json`
+  - [x] Present source path: `provider-fixtures/mvp/pubmed-esummary.json`
+  - [x] Present source path: `provider-fixtures/mvp/europe-pmc.json`
+  - [x] Present source path: `provider-fixtures/mvp/crossref.json`
+  - [x] Present source path: `provider-fixtures/mvp/openalex.json`
+  - [x] Present source path: `scripts/check_provider_contract_baselines.py`
+  - [x] Present source path: `contracts/examples/provider-manifest.yaml`
+  - [x] Present source path: `contracts/examples/provider-page.yaml`
+  - [x] Present source path: `contracts/examples/source-receipt.yaml`
+  - [x] Assertion ledger: `conductor/tracks/04-open-connectors-mvp/traceability.json`
 
 ## Phase 2: Source-level verification
 
@@ -20,6 +28,7 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_provider_contract_baselines.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates

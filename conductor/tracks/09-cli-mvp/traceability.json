@@ -1,0 +1,155 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "09",
+  "title": "CLI MVP",
+  "implementation_state": "partially_implemented",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/09-cli-mvp/spec.md#scope",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T09-A001",
+      "statement": "Add init/plan/source/strategy/run/import/screen/report command hierarchy",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T09-A002",
+      "statement": "Support JSON output and actionable diagnostics everywhere",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T09-A003",
+      "statement": "Add dry-run/apply semantics for writes",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T09-A004",
+      "statement": "Add shell completions and man pages",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T09-A005",
+      "statement": "Add snapshot, install and cross-platform end-to-end tests",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    },
+    {
+      "assertion_id": "T09-A006",
+      "statement": "Publish CLI compatibility policy",
+      "state": "partially_implemented",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
+      "open_gates": [
+        "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+      ],
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+    }
+  ]
+}

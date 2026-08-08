@@ -4,6 +4,7 @@
   "slug": "shared-provider-runtime",
   "title": "Shared provider runtime and Sourceright extraction",
   "status": "integration_prepared",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-05",
   "updated": "2026-08-08",
   "dependencies": [
@@ -14,6 +15,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/03-shared-provider-runtime/evidence.json",
+  "traceability_path": "conductor/tracks/03-shared-provider-runtime/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-03",

@@ -272,6 +272,16 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "native-search-strategy",
+      "schema": "contracts/json-schema/native-search-strategy.v1.schema.json",
+      "example": "contracts/examples/native-search-strategy.json",
+      "schema_id": "https://schemas.searchright.dev/native-search-strategy.v1.schema.json",
+      "rust_type": "NativeSearchStrategy",
+      "owner_track": "02",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "prisma-flow",
       "schema": "contracts/json-schema/prisma-flow.v1.schema.json",
       "example": "contracts/examples/prisma-flow.json",
@@ -352,12 +362,32 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "review-bundle-manifest",
+      "schema": "contracts/json-schema/review-bundle-manifest.v1.schema.json",
+      "example": "contracts/examples/review-bundle-manifest.json",
+      "schema_id": "https://schemas.searchright.dev/review-bundle-manifest.v1.schema.json",
+      "rust_type": null,
+      "owner_track": "25",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "review-plan",
       "schema": "contracts/json-schema/review-plan.v1.schema.json",
       "example": "contracts/examples/review-plan.yaml",
       "schema_id": "https://schemas.searchright.dev/review-plan.v1.schema.json",
       "rust_type": "ReviewPlan",
       "owner_track": "01",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "review-state-snapshot",
+      "schema": "contracts/json-schema/review-state-snapshot.v1.schema.json",
+      "example": "contracts/examples/review-state-snapshot.json",
+      "schema_id": "https://schemas.searchright.dev/review-state-snapshot.v1.schema.json",
+      "rust_type": "DerivedReviewStateSnapshot",
+      "owner_track": "05",
       "stability": "alpha",
       "evidence_level": "static_verified"
     },

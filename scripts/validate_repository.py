@@ -637,6 +637,9 @@ def validate_conductor() -> None:
 
     allowed_statuses = {
         "source_implemented",
+        "contracted",
+        "scaffolded",
+        "partially_implemented",
         "source_implemented_unverified",
         "integration_prepared",
         "release_prepared",

@@ -3,7 +3,8 @@
   "track_id": "23",
   "slug": "active-learning-agents",
   "title": "Active-learning prioritisation and calibrated agents",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
   "created": "2026-08-06",
   "updated": "2026-08-08",
   "dependencies": [
@@ -15,6 +16,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/23-active-learning-agents/evidence.json",
+  "traceability_path": "conductor/tracks/23-active-learning-agents/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-23",

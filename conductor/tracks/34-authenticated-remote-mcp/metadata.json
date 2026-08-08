@@ -3,7 +3,8 @@
   "track_id": "34",
   "slug": "authenticated-remote-mcp",
   "title": "Authenticated remote MCP, tenancy and data residency",
-  "status": "source_implemented_unverified",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
   "created": "2026-08-08",
   "updated": "2026-08-08",
   "dependencies": [
@@ -16,6 +17,7 @@
   "evidence_level": "source_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/34-authenticated-remote-mcp/evidence.json",
+  "traceability_path": "conductor/tracks/34-authenticated-remote-mcp/traceability.json",
   "github": {
     "epic_issue_key": "roadmap-epic",
     "track_issue_key": "track-34",

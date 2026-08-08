@@ -36,10 +36,18 @@ Read, in this order:
 AGENTS.md
 CONTEXT.md
 context/manifest.json
+context/claim-boundaries.json
 conductor/requirements.md
+conductor/traceability-overrides.json
 conductor/design.md
 conductor/tracks.md
 conductor/roadmap-coverage.json
+release/public-packages.json
+contracts/compatibility/schema-surface-0.1.0-alpha.1.json
+integration/provider-contract-baselines.json
+integration/ecosystem-lock.json
+integration/release-train.json
+migration/companion-repositories/index.json
 conductor/github/issue-hierarchy.json
 conductor/github/project.json
 conductor/github/repository-settings.json
@@ -62,13 +70,19 @@ python -m pip install --disable-pip-version-check -r requirements/validation.txt
 python scripts/install_dev_tools.py --profile core
 ```
 
-Then run:
+Then run the static and compiler-backed baselines separately:
 
 ```bash
+python scripts/run_static_harness.py
 cargo generate-lockfile
 ./scripts/bootstrap.sh
 ./scripts/verify.sh
 ```
+
+The static harness currently has 44 gates. Its success does not substitute for
+Cargo evidence. Keep assertion states conservative: a path, issue closure or
+successful Python reference check cannot promote an assertion beyond its
+permitted claim.
 
 Repair all failures at their source. Keep dependency and feature choices
 bleeding-edge unless an incompatibility is demonstrated and recorded in an ADR.
@@ -82,6 +96,31 @@ Install the extended pinned tools and run the applicable deeper gates:
 python scripts/install_dev_tools.py --profile all
 cargo llvm-cov nextest --workspace --all-features --fail-under-lines 91
 cargo mutants --workspace
+cargo vet
+```
+
+For the three future public-package candidates, capture API baselines without
+publishing them:
+
+```bash
+cargo semver-checks --package evidence-search-contracts --baseline-rev HEAD^
+cargo semver-checks --package evidence-search-core --baseline-rev HEAD^
+cargo semver-checks --package searchright-plugin-sdk --baseline-rev HEAD^
+cargo +nightly public-api -p evidence-search-contracts -sss
+cargo +nightly public-api -p evidence-search-core -sss
+cargo +nightly public-api -p searchright-plugin-sdk -sss
+```
+
+If `HEAD^` is not an appropriate API baseline, use the last reviewed contract
+surface or an explicit baseline worktree and record that choice. Do not change
+`publish = false` or mark a package ready merely because these commands pass.
+
+Test the lower shared-layer MSRV independently from the 1.97.1 development
+baseline:
+
+```bash
+cargo +1.88 check -p evidence-search-contracts
+cargo +1.88 check -p evidence-search-core
 ```
 
 Run configured fuzz, Miri, Kani, Loom and `cargo-careful` workflows where the
@@ -145,8 +184,8 @@ Expected canonical projection:
 - 373 task subissues;
 - 564 Project items in total;
 - 563 native parent-child relationships;
-- 12 custom Project fields;
-- 5 Project views.
+- 13 custom Project fields;
+- 6 Project views.
 
 Run the read-only remote audit:
 
@@ -156,7 +195,10 @@ python scripts/audit_github_control_plane.py \
 ```
 
 The audit must pass. Resolve drift through the manifests and synchronisers,
-never by weakening the expected counts or deleting canonical work.
+never by weakening the expected counts or deleting canonical work. Create the
+separate strategic portfolio Project only after the delivery control plane
+converges; `integration/github/portfolio-project.json` is a prepared manifest,
+not evidence that a portfolio exists.
 
 ## 5. Verify CI, Project and repository wiring
 
@@ -193,3 +235,8 @@ Report:
 
 Do not call a source-complete task mature, production-ready, externally
 validated, registered or published without the corresponding observed receipt.
+Do not call the whole roadmap implemented: inspect every track's
+`traceability.json`, preserve partial/scaffolded states, and report the exact
+assertions promoted by compiler or runtime evidence. Apply companion-repository
+change packets as separate reviewed changes; never delete UOGTO, VOIAGE,
+Sourceright or CiteWeft code before dual-run parity and rollback evidence.

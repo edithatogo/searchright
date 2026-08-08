@@ -1,0 +1,1202 @@
+{
+  "schema_version": "org.searchright.traceability-overrides.v1",
+  "tracks": {
+    "13": {
+      "assertions": {
+        "T13-A001": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/passports/index.json",
+            "integration/consumer-contract-suite.json",
+            "scripts/check_integration_passports.py",
+            "scripts/check_consumer_contracts.py",
+            "scripts/check_integration_drift.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_integration_passports.py::main",
+            "scripts/check_consumer_contracts.py::main",
+            "scripts/check_integration_drift.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_integration_passports.py",
+            "python scripts/check_consumer_contracts.py",
+            "python scripts/check_integration_drift.py"
+          ]
+        },
+        "T13-A002": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "conductor/github/issue-hierarchy.json",
+            "scripts/render_github_issues.py",
+            "scripts/check_github_issue_hierarchy.py"
+          ],
+          "implementation_symbols": [
+            "scripts/render_github_issues.py::main",
+            "scripts/check_github_issue_hierarchy.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/render_github_issues.py --check",
+            "python scripts/check_github_issue_hierarchy.py"
+          ]
+        },
+        "T13-A003": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "scripts/sync_github_issues.py",
+            "scripts/sync_github_project.py",
+            "scripts/bootstrap_github.py"
+          ],
+          "implementation_symbols": [
+            "scripts/sync_github_issues.py::main",
+            "scripts/sync_github_project.py::main",
+            "scripts/bootstrap_github.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/sync_github_issues.py --repo edithatogo/searchright",
+            "python scripts/sync_github_project.py",
+            "python scripts/bootstrap_github.py"
+          ]
+        },
+        "T13-A004": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "CONTEXT.md",
+            "context/manifest.json",
+            "context/context-lock.json",
+            "scripts/check_context_integrity.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_context_integrity.py::main",
+            "scripts/sync_context_lock.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_context_integrity.py",
+            "python scripts/sync_context_lock.py --check"
+          ]
+        }
+      }
+    },
+    "31": {
+      "assertions": {
+        "T31-A001": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_symbols": [
+            "scripts/bootstrap_github.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/bootstrap_github.py"
+          ]
+        },
+        "T31-A002": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_symbols": [
+            "scripts/sync_github_issues.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/sync_github_issues.py --repo edithatogo/searchright"
+          ]
+        },
+        "T31-A003": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_symbols": [
+            "scripts/sync_github_project.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/sync_github_project.py"
+          ]
+        },
+        "T31-A004": {
+          "state": "source_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_symbols": [
+            "scripts/audit_github_control_plane.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/audit_github_control_plane.py --help"
+          ]
+        }
+      }
+    },
+    "02": {
+      "assertions": {
+        "T02-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-contracts/src/query.rs",
+            "crates/evidence-search-core/src/compiler.rs"
+          ],
+          "implementation_symbols": [
+            "evidence_search_contracts::query::QueryExpr",
+            "evidence_search_contracts::query::SearchTerm",
+            "evidence_search_core::compiler::compile_strategy"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Compile and execute compiler tests.",
+            "Expand proximity, wildcard, controlled-vocabulary, subheading and line-set conformance against independently reviewed strategies."
+          ],
+          "permitted_claim": "A portable query model and source-aware compiler are implemented for declared subsets; complete database semantics are not claimed."
+        },
+        "T02-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-contracts/src/query.rs",
+            "crates/evidence-search-core/src/native.rs",
+            "contracts/json-schema/native-search-strategy.v1.schema.json"
+          ],
+          "implementation_symbols": [
+            "evidence_search_contracts::query::NativeSearchStrategy",
+            "evidence_search_contracts::query::NativeStrategyLine",
+            "evidence_search_core::native::parse_native_strategy"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_native_query_corpus.py",
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Compile and execute native strategy unit tests."
+          ],
+          "permitted_claim": "Line-numbered native strategy source, spans, diagnostics and raw-source preservation are source implemented; semantic parsing remains deliberately partial."
+        },
+        "T02-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "path_and_gate_mapped",
+          "implementation_paths": [
+            "contracts/query-corpus/index.json",
+            "contracts/query-corpus/pubmed.txt",
+            "contracts/query-corpus/ovid-medline.txt",
+            "contracts/query-corpus/embase.txt",
+            "contracts/query-corpus/cinahl-ebsco.txt",
+            "contracts/query-corpus/psycinfo-ovid.txt",
+            "contracts/query-corpus/scopus.txt",
+            "contracts/query-corpus/web-of-science.txt",
+            "scripts/check_native_query_corpus.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_native_query_corpus.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_native_query_corpus.py"
+          ],
+          "open_gates": [
+            "Replace or supplement synthetic examples with rights-cleared, independently PRESS-reviewed strategies."
+          ],
+          "permitted_claim": "A seven-dialect source-preservation corpus exists and is statically validated; it is not an external conformance benchmark."
+        },
+        "T02-A004": {
+          "state": "scaffolded",
+          "mapping_confidence": "contract_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-contracts/src/query.rs",
+            "contracts/standards/index.json"
+          ],
+          "implementation_symbols": [
+            "evidence_search_contracts::query::SearchLimit"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Define versioned named-filter records with source citation, checksum, applicability and expiry."
+          ],
+          "permitted_claim": "Filter names and rationales can be recorded; validated named-filter packs are not yet implemented."
+        },
+        "T02-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-core/src/native.rs",
+            "contracts/query-corpus/index.json"
+          ],
+          "implementation_symbols": [
+            "evidence_search_core::native::parse_native_strategy"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_native_query_corpus.py"
+          ],
+          "open_gates": [
+            "Implement dialect-specific lexical and syntactic parsers with structured unsupported-node diagnostics.",
+            "Compile and execute parser tests."
+          ],
+          "permitted_claim": "A lossless line-oriented native parser exists; database-specific syntax parsers are not claimed."
+        },
+        "T02-A006": {
+          "state": "scaffolded",
+          "mapping_confidence": "test_plan_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-core/src/compiler.rs",
+            "crates/evidence-search-core/src/native.rs",
+            "contracts/query-corpus/index.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_native_query_corpus.py"
+          ],
+          "open_gates": [
+            "Implement and compile metamorphic and round-trip tests for the supported syntax subsets."
+          ],
+          "permitted_claim": "The corpus and compiler provide inputs for round-trip testing; metamorphic equivalence is not yet proven."
+        }
+      }
+    },
+    "01": {
+      "assertions": {
+        "T01-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "contracts/schema-catalog.json",
+            "scripts/validate_repository.py"
+          ],
+          "implementation_symbols": [
+            "scripts/validate_repository.py::validate_schemas_and_examples"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Generate and compare Rust-derived schemas after compiler bootstrap."
+          ],
+          "permitted_claim": "All checked-in JSON Schemas and examples are statically validated; Rust-generation parity is not yet proven."
+        },
+        "T01-A002": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-contracts",
+            "contracts/schema-catalog.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Install Rust and generate schemas from Rust types.",
+            "Diff generated output against canonical schemas."
+          ],
+          "permitted_claim": "Rust types and canonical schemas coexist, but code-generation parity is not claimed."
+        },
+        "T01-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
+            "scripts/sync_schema_surface.py"
+          ],
+          "implementation_symbols": [
+            "scripts/sync_schema_surface.py::render"
+          ],
+          "deterministic_tests": [
+            "python scripts/sync_schema_surface.py --check"
+          ],
+          "open_gates": [
+            "Add semantic compatibility fixtures and migration tests before a stable release."
+          ],
+          "permitted_claim": "Exact schema, WIT, OpenAPI and MCP surface drift is gated; semantic compatibility remains separate."
+        },
+        "T01-A004": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-contracts/src/study.rs",
+            "crates/searchright-contracts/src/plan.rs",
+            "crates/searchright-contracts/src/amendment.rs",
+            "contracts/json-schema/study-graph.v1.schema.json",
+            "contracts/json-schema/protocol-amendment.v1.schema.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Compile and exercise report/study and amendment invariants."
+          ],
+          "permitted_claim": "Report/study linkage and protocol-amendment contracts are checked in and statically validated."
+        },
+        "T01-A005": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "sdk/manifest.json",
+            "release/public-packages.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_public_package_policy.py"
+          ],
+          "open_gates": [
+            "Generate thin TypeScript and Python contract packages only after the neutral schema surface stabilises."
+          ],
+          "permitted_claim": "Bindings are planned but not implemented."
+        },
+        "T01-A006": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "contracts/schema-catalog.json",
+            "conductor/traceability-overrides.json",
+            "scripts/check_traceability.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_traceability.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_traceability.py"
+          ],
+          "open_gates": [
+            "Add compiler and downstream-consumer columns to release evidence."
+          ],
+          "permitted_claim": "The schema catalogue and assertion traceability form a static conformance matrix; runtime conformance is not claimed."
+        }
+      }
+    },
+    "03": {
+      "assertions": {
+        "T03-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/sourceright/replacement-map.yaml",
+            "migration/sourceright/parity-cases.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_sourceright_migration.py"
+          ],
+          "open_gates": [
+            "Refresh against the current Sourceright revision before cutover."
+          ],
+          "permitted_claim": "The observed Sourceright provider surface is inventoried at a pinned revision."
+        },
+        "T03-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-sourceright-compat/src/lib.rs",
+            "release/public-packages.json"
+          ],
+          "implementation_symbols": [
+            "searchright_sourceright_compat::legacy_runtime_controls"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_sourceright_migration.py"
+          ],
+          "open_gates": [
+            "Compile the compatibility adapter in Searchright and Sourceright.",
+            "Add a downstream feature-flag canary."
+          ],
+          "permitted_claim": "A source compatibility adapter exists; downstream compilation is not proven."
+        },
+        "T03-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-core/src/provider.rs",
+            "integration/provider-contract-baselines.json"
+          ],
+          "implementation_symbols": [
+            "evidence_search_core::provider::ProviderRegistry",
+            "evidence_search_core::provider::ExecutionPolicy"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_provider_contract_baselines.py"
+          ],
+          "open_gates": [
+            "Compile runtime tests.",
+            "Prove cache and error parity against Sourceright."
+          ],
+          "permitted_claim": "Bounded retry, timing, rate, cache-key and receipt source logic is implemented but not compiler- or parity-proven."
+        },
+        "T03-A004": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/sourceright/parity-cases.json",
+            "integration/consumer-contract-suite.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_sourceright_migration.py"
+          ],
+          "open_gates": [
+            "Run old/new fixtures and compare every parity dimension."
+          ],
+          "permitted_claim": "Parity cases are defined; dual-run results do not yet exist."
+        },
+        "T03-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "release/public-packages.json",
+            "public-api/README.md",
+            ".github/workflows/public-api.yml"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_public_package_policy.py"
+          ],
+          "open_gates": [
+            "Run cargo-semver-checks and public API snapshots after compiler bootstrap."
+          ],
+          "permitted_claim": "SemVer and public API gates are configured but not executed."
+        },
+        "T03-A006": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/companion-repositories/sourceright.json",
+            "integration/release-train.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_release_train.py"
+          ],
+          "open_gates": [
+            "Modify and test Sourceright through an approved downstream pull request.",
+            "Retain rollback for at least one compatible release."
+          ],
+          "permitted_claim": "No Sourceright code has been removed or switched by this repository."
+        }
+      }
+    },
+    "04": {
+      "assertions": {
+        "T04-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-connectors/src/lib.rs",
+            "provider-fixtures/mvp/pubmed-esearch.json",
+            "provider-fixtures/mvp/pubmed-esummary.json"
+          ],
+          "implementation_symbols": [
+            "searchright_connectors::PubMedSearchProvider",
+            "searchright_connectors::parse_pubmed_summary_page"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_provider_contract_baselines.py"
+          ],
+          "open_gates": [
+            "Compile fixture parsers and compare canonical ProviderPage output."
+          ],
+          "permitted_claim": "PubMed ESearch and ESummary source paths and fixtures exist; EFetch/full report retrieval and compiler evidence remain open."
+        },
+        "T04-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-connectors/src/lib.rs",
+            "provider-fixtures/mvp/europe-pmc.json"
+          ],
+          "implementation_symbols": [
+            "searchright_connectors::parse_europe_pmc_page"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_provider_contract_baselines.py"
+          ],
+          "open_gates": [
+            "Compile fixture parsers and compare canonical ProviderPage output."
+          ],
+          "permitted_claim": "Europe PMC normalisation and response baselines are source implemented but not compiler- or live-proven."
+        },
+        "T04-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-connectors/src/lib.rs",
+            "provider-fixtures/mvp/crossref.json",
+            "provider-fixtures/mvp/openalex.json"
+          ],
+          "implementation_symbols": [
+            "searchright_connectors::parse_crossref_page",
+            "searchright_connectors::parse_openalex_page"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_provider_contract_baselines.py"
+          ],
+          "open_gates": [
+            "Compile fixture parsers and compare canonical ProviderPage output."
+          ],
+          "permitted_claim": "Crossref and OpenAlex source adapters and baselines exist; live compatibility is not claimed."
+        },
+        "T04-A004": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/provider-contract-baselines.json",
+            "crates/searchright-connectors/src/lib.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_connectors::LiveProviderConfig"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_provider_contract_baselines.py"
+          ],
+          "open_gates": [
+            "Compile fixture parsers and compare canonical ProviderPage output."
+          ],
+          "permitted_claim": "HTTPS hosts and bounded runtime inputs are recorded; provider-policy review and live quota evidence remain open."
+        },
+        "T04-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/provider-contract-baselines.json",
+            "provider-fixtures/mvp",
+            "scripts/check_provider_contract_baselines.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_provider_contract_baselines.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_provider_contract_baselines.py"
+          ],
+          "open_gates": [
+            "Compile fixture parsers and compare canonical ProviderPage output."
+          ],
+          "permitted_claim": "Rights-clear raw response baselines are hash-pinned; Rust replay output still requires compiler-backed golden tests."
+        },
+        "T04-A006": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/provider-contract-baselines.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_provider_contract_baselines.py"
+          ],
+          "open_gates": [
+            "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts."
+          ],
+          "permitted_claim": "No live-provider result is claimed."
+        }
+      }
+    },
+    "05": {
+      "assertions": {
+        "T05-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/evidence-search-core/src/provider.rs",
+            "crates/evidence-search-core/src/audit.rs"
+          ],
+          "implementation_symbols": [
+            "evidence_search_core::provider::cache_key",
+            "evidence_search_core::audit::canonical_json"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Compile deterministic hashing tests."
+          ],
+          "permitted_claim": "Canonicalisation and request/runtime fingerprint source logic exists; compiler evidence is open."
+        },
+        "T05-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-store/src/lib.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_store::FileReviewStore::append_event",
+            "searchright_store::FileReviewStore::write_snapshot_with_receipt"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Compile store tests.",
+            "Run crash/restart and multi-process failure tests."
+          ],
+          "permitted_claim": "Single-writer append and replace-style snapshot source exists; transactional durability is not overclaimed."
+        },
+        "T05-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "contracts/json-schema/audit-event.v1.schema.json",
+            "contracts/json-schema/review-state-snapshot.v1.schema.json",
+            "scripts/reduce_review_events.py"
+          ],
+          "implementation_symbols": [
+            "scripts/reduce_review_events.py::reduce_events"
+          ],
+          "deterministic_tests": [
+            "python scripts/reduce_review_events.py --self-test",
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Add versioned event-type registry and migration fixtures.",
+            "Verify BLAKE3 ledger before every reduction using the Rust verifier."
+          ],
+          "permitted_claim": "A deterministic derived-state reducer enforces human final authority and verified-head binding; a complete event migration registry is not yet implemented."
+        },
+        "T05-A004": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-store/src/lib.rs",
+            "scripts/reduce_review_events.py"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/reduce_review_events.py --self-test"
+          ],
+          "open_gates": [
+            "Execute compiled crash, restart, duplicate and idempotency tests on supported filesystems."
+          ],
+          "permitted_claim": "Deterministic reducer failure cases exist; storage crash consistency is not proven."
+        },
+        "T05-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-policy/src/lib.rs",
+            "contracts/json-schema/institutional-policy.v1.schema.json",
+            "contracts/json-schema/data-handling-decision.v1.schema.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Compile policy tests and exercise retention/export/delete flows."
+          ],
+          "permitted_claim": "Privacy and retention contracts exist; production enforcement is not claimed."
+        },
+        "T05-A006": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "scripts/review_bundle.py",
+            "contracts/json-schema/review-bundle-manifest.v1.schema.json",
+            "examples/review-bundle/example.srpack"
+          ],
+          "implementation_symbols": [
+            "scripts/review_bundle.py::pack_bundle",
+            "scripts/review_bundle.py::verify_bundle"
+          ],
+          "deterministic_tests": [
+            "python scripts/review_bundle.py self-test"
+          ],
+          "open_gates": [
+            "Add RO-Crate/OSF profile conformance and repository handoff fixtures."
+          ],
+          "permitted_claim": "A deterministic portable review bundle exists; automatic deposit and full RO-Crate conformance are not claimed."
+        }
+      }
+    },
+    "15": {
+      "assertions": {
+        "T15-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/estate/patterns.json",
+            "scripts/audit_search_code.py"
+          ],
+          "implementation_symbols": [
+            "scripts/audit_search_code.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/audit_search_code.py --self-test"
+          ],
+          "open_gates": [
+            "Run the scanner against current clones of every in-scope repository."
+          ],
+          "permitted_claim": "Search-code patterns and a self-test exist; the whole estate was not rescanned locally."
+        },
+        "T15-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/estate/repositories.json",
+            "migration/estate/replacement-decisions.json",
+            "migration/companion-repositories/index.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_companion_change_packets.py"
+          ],
+          "open_gates": [
+            "Refresh exact revisions and owners before each migration."
+          ],
+          "permitted_claim": "A source-verified migration inventory exists for observed repositories."
+        },
+        "T15-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/companion-repositories/index.json",
+            "integration/github/portfolio-project.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_companion_change_packets.py",
+            "python scripts/check_portfolio_project.py"
+          ],
+          "open_gates": [
+            "Confirm priority with active project owners and current repository state."
+          ],
+          "permitted_claim": "Priority and portfolio projections are prepared, not remotely applied."
+        },
+        "T15-A004": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/companion-repositories",
+            "integration/passports"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_companion_change_packets.py",
+            "python scripts/check_integration_passports.py"
+          ],
+          "open_gates": [
+            "Implement approved changes in each companion repository and run its native tests."
+          ],
+          "permitted_claim": "Change packets and integration passports are prepared; companion repositories were not modified."
+        },
+        "T15-A005": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "migration/companion-repositories",
+            "integration/consumer-contract-suite.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_consumer_contracts.py"
+          ],
+          "open_gates": [
+            "Dual-run old and new paths before deleting any custom code.",
+            "Preserve rollback and provenance receipts."
+          ],
+          "permitted_claim": "No external custom code has been deleted."
+        },
+        "T15-A006": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/github/portfolio-project.json",
+            "integration/ecosystem-lock.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_portfolio_project.py",
+            "python scripts/sync_ecosystem_lock.py --check"
+          ],
+          "open_gates": [
+            "Run estate conformance against current remotes and close only evidence-proven migrations."
+          ],
+          "permitted_claim": "Estate closure remains externally gated."
+        }
+      }
+    },
+    "16": {
+      "assertions": {
+        "T16-A001": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "rust-toolchain.toml",
+            ".github/workflows/ci.yml"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_toolchain_manifest.py"
+          ],
+          "open_gates": [
+            "Install Rust 1.97.1, generate Cargo.lock and make compiler CI green."
+          ],
+          "permitted_claim": "No lockfile or compiler-green claim is made."
+        },
+        "T16-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "tests",
+            "fuzz",
+            ".github/workflows/nightly.yml",
+            ".github/workflows/fuzz.yml",
+            ".github/workflows/formal.yml",
+            "scripts/run_static_harness.py",
+            "verification/vertical-slice",
+            "scripts/check_vertical_slice.py"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/run_static_harness.py",
+            "python scripts/check_vertical_slice.py"
+          ],
+          "open_gates": [
+            "Compile and execute Rust unit, integration, property, metamorphic, CDC, fuzz and mutation suites."
+          ],
+          "permitted_claim": "Network-free static gates and Rust test source exist; Rust test execution remains open."
+        },
+        "T16-A003": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "codecov.yml",
+            ".github/workflows/coverage.yml"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_workflow_hardening.py"
+          ],
+          "open_gates": [
+            "Run llvm-cov and enforce measured coverage above the declared threshold."
+          ],
+          "permitted_claim": "Coverage automation is configured but no coverage result is claimed."
+        },
+        "T16-A004": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "deny.toml",
+            "supply-chain/config.toml",
+            "supply-chain/audits.toml",
+            ".github/workflows/security.yml",
+            ".github/workflows/public-api.yml",
+            "requirements/rust-tools.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_toolchain_manifest.py",
+            "python scripts/check_workflow_hardening.py"
+          ],
+          "open_gates": [
+            "Install and execute cargo-deny, audit, vet, semver, public-api and other configured tools."
+          ],
+          "permitted_claim": "Security and API assurance gates are pinned and configured; tool execution is not inferred."
+        },
+        "T16-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "scripts/check_default_deny.py",
+            "scripts/check_secrets.py",
+            "context/hazard-log.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_default_deny.py",
+            "python scripts/check_secrets.py"
+          ],
+          "open_gates": [
+            "Compile and run SSRF, parser bomb and resource-exhaustion adversarial tests."
+          ],
+          "permitted_claim": "Static authority, secret and hazard controls exist; complete adversarial runtime testing remains open."
+        },
+        "T16-A006": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "verification/receipts",
+            "scripts/run_static_harness.py",
+            "scripts/review_bundle.py",
+            "verification/vertical-slice",
+            "scripts/check_vertical_slice.py"
+          ],
+          "implementation_symbols": [
+            "scripts/run_static_harness.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/run_static_harness.py",
+            "python scripts/check_vertical_slice.py"
+          ],
+          "open_gates": [
+            "Generate compiler, coverage, live, external and release receipts at the corresponding evidence levels."
+          ],
+          "permitted_claim": "Machine-readable static receipts are produced; higher evidence receipts are not fabricated."
+        }
+      }
+    },
+    "17": {
+      "assertions": {
+        "T17-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "benchmarks/methodology/manifest.json",
+            "scripts/check_methodology_benchmarks.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_methodology_benchmarks.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_methodology_benchmarks.py"
+          ],
+          "open_gates": [
+            "Add compiled benchmark runners and independently controlled labels."
+          ],
+          "permitted_claim": "Benchmark tasks, rights and anti-leakage policy are machine-readable and statically checked."
+        },
+        "T17-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "benchmarks/methodology/manifest.json",
+            "integration/passports/synergy-screening-benchmark.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_methodology_benchmarks.py",
+            "python scripts/check_licence_firewall.py"
+          ],
+          "open_gates": [
+            "Pin a canonical upstream data release/DOI per executed benchmark and create train/validation/test split receipts."
+          ],
+          "permitted_claim": "SYNERGY provenance distinguishes canonical upstream from the local fork; no benchmark data were executed."
+        },
+        "T17-A003": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "benchmarks/methodology/manifest.json",
+            "contracts/query-corpus/index.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_methodology_benchmarks.py",
+            "python scripts/check_native_query_corpus.py"
+          ],
+          "open_gates": [
+            "Create rights-cleared, independently reviewed search-strategy gold labels and known-item recall runs."
+          ],
+          "permitted_claim": "Corpus and task definitions exist; gold recall results do not."
+        },
+        "T17-A004": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "benchmarks/methodology/fixtures/validation/dedup-cases.json",
+            "benchmarks/methodology/manifest.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_methodology_benchmarks.py"
+          ],
+          "open_gates": [
+            "Run deduplication precision, recall and review-burden evaluation against sealed labels."
+          ],
+          "permitted_claim": "Synthetic validation fixtures exist; performance is not claimed."
+        },
+        "T17-A005": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "docs/evaluation/benchmark-and-calibration-protocol.md"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_methodology_benchmarks.py"
+          ],
+          "open_gates": [
+            "Conduct prospective multi-model and human calibration under an approved protocol."
+          ],
+          "permitted_claim": "No prospective model or human calibration has been run."
+        },
+        "T17-A006": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "benchmarks/methodology/manifest.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_methodology_benchmarks.py"
+          ],
+          "open_gates": [
+            "Publish rights-cleared benchmark artifacts and limitations with an immutable release receipt."
+          ],
+          "permitted_claim": "No external benchmark artifact or performance claim has been published."
+        }
+      }
+    },
+    "25": {
+      "assertions": {
+        "T25-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-provenance/src/lib.rs",
+            "contracts/json-schema/review-bundle-manifest.v1.schema.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/review_bundle.py self-test"
+          ],
+          "open_gates": [
+            "Compile provenance tests and assign durable identifiers in an executed review."
+          ],
+          "permitted_claim": "Immutable bundle entry hashes and identifiers are implemented; institutional persistent identifiers are not claimed."
+        },
+        "T25-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "contracts/schema-catalog.json",
+            "contracts/json-schema/review-state-snapshot.v1.schema.json",
+            "scripts/review_bundle.py"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python scripts/review_bundle.py self-test"
+          ],
+          "open_gates": [
+            "Compile and round-trip all entity relationships."
+          ],
+          "permitted_claim": "Review, run, receipt, amendment, decision and state contracts are catalogued and bundleable."
+        },
+        "T25-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-provenance/src/lib.rs",
+            "docs/standards-and-provenance.md"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Validate generated JSON-LD against RO-Crate 1.3 profiles."
+          ],
+          "permitted_claim": "An RO-Crate-compatible boundary is designed; formal conformance is not claimed."
+        },
+        "T25-A004": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-provenance/src/lib.rs",
+            "docs/standards-and-provenance.md"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "open_gates": [
+            "Validate W3C PROV output and golden fixtures."
+          ],
+          "permitted_claim": "PROV export source exists; external validation is open."
+        },
+        "T25-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "scripts/review_bundle.py",
+            "examples/review-bundle/example.srpack",
+            "contracts/json-schema/review-bundle-manifest.v1.schema.json"
+          ],
+          "implementation_symbols": [
+            "scripts/review_bundle.py::pack_bundle",
+            "scripts/review_bundle.py::verify_bundle"
+          ],
+          "deterministic_tests": [
+            "python scripts/review_bundle.py self-test"
+          ],
+          "open_gates": [
+            "Add repository-specific OSF and Zenodo handoff profiles and test them without depositing."
+          ],
+          "permitted_claim": "A deterministic, self-verifying review bundle is implemented; automatic deposit is prohibited."
+        },
+        "T25-A006": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "examples/review-bundle/example.srpack",
+            "scripts/review_bundle.py"
+          ],
+          "implementation_symbols": [
+            "scripts/review_bundle.py::self_test"
+          ],
+          "deterministic_tests": [
+            "python scripts/review_bundle.py self-test"
+          ],
+          "open_gates": [
+            "Compile Rust interop and add RO-Crate/PROV golden round trips."
+          ],
+          "permitted_claim": "Bundle determinism, integrity, tamper and secret-rejection tests pass locally."
+        }
+      }
+    },
+    "32": {
+      "assertions": {
+        "T32-A001": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/release-train.json",
+            "integration/ecosystem-lock.json",
+            "scripts/sync_ecosystem_lock.py"
+          ],
+          "implementation_symbols": [
+            "scripts/sync_ecosystem_lock.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/check_release_train.py",
+            "python scripts/sync_ecosystem_lock.py --check"
+          ],
+          "open_gates": [
+            "Record the executed Searchright commit and companion release revisions in a release receipt."
+          ],
+          "permitted_claim": "Pinned producer-consumer order and observed component identities are source verified; no release was promoted."
+        },
+        "T32-A002": {
+          "state": "scaffolded",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/consumer-contract-suite.json",
+            ".github/workflows/integration-release-train.yml",
+            "migration/sourceright/parity-cases.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_consumer_contracts.py",
+            "python scripts/check_release_train.py"
+          ],
+          "open_gates": [
+            "Run compiler-backed consumer fixtures and downstream canaries in all three repositories."
+          ],
+          "permitted_claim": "Consumer and canary contracts are prepared; cross-repository results do not exist."
+        },
+        "T32-A003": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "integration/release-train.json",
+            "release/public-packages.json",
+            "contracts/compatibility/schema-surface-0.1.0-alpha.1.json"
+          ],
+          "implementation_symbols": [],
+          "deterministic_tests": [
+            "python scripts/check_release_train.py",
+            "python scripts/check_public_package_policy.py",
+            "python scripts/sync_schema_surface.py --check"
+          ],
+          "open_gates": [
+            "Exercise rollback in a release-candidate rehearsal and obtain human promotion approval."
+          ],
+          "permitted_claim": "Promotion is default-deny, rollback is explicit and public packages remain not ready."
+        }
+      }
+    }
+  }
+}
