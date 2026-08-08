@@ -1,17 +1,18 @@
 {
   "errors": [],
-  "internal_edges": 51,
+  "internal_edges": 53,
   "limitations": [
     "Lexical source-reference analysis only; Cargo feature resolution and compilation were not executed."
   ],
   "non_publishable_packages": 2,
-  "publishable_packages": 25,
+  "publishable_packages": 27,
   "schema_version": "org.searchright.rust-dependency-graph-receipt.v1",
-  "source_references": 48,
+  "source_references": 50,
   "status": "passed",
   "topological_order": [
     "searchright-contracts",
     "evidence-search-core",
+    "searchright-access",
     "searchright-agent",
     "searchright-assurance",
     "searchright-citeweft",
@@ -22,6 +23,7 @@
     "searchright-interchange",
     "searchright-licensed",
     "searchright-living",
+    "searchright-ops",
     "searchright-plugin-sdk",
     "searchright-policy",
     "searchright-prisma",
@@ -38,5 +40,5 @@
     "searchright-cli",
     "searchright-mcp"
   ],
-  "workspace_packages": 27
+  "workspace_packages": 29
 }

@@ -1,0 +1,26 @@
+{
+  "errors": [],
+  "hierarchy_depth": 4,
+  "limitations": [
+    "Static validation only; no remote repository, Project, field, view or item is claimed."
+  ],
+  "maximum_children_observed": 38,
+  "node_field_counts": {
+    "Conductor key": 564,
+    "Conductor path": 564,
+    "Delivery status": 564,
+    "Evidence level": 564,
+    "External gate": 564,
+    "Horizon": 564,
+    "MoSCoW": 564,
+    "Phase": 525,
+    "Task": 373,
+    "Track ID": 563,
+    "Work kind": 564
+  },
+  "project_fields": 12,
+  "project_items": 564,
+  "project_views": 5,
+  "schema_version": "org.searchright.github-project-validation-receipt.v1",
+  "status": "passed"
+}

@@ -1,0 +1,11 @@
+{
+  "automatic_promotions": 0,
+  "components": 3,
+  "errors": [],
+  "limitations": [
+    "Static release-train consistency only; producer and consumer repositories were not built or released."
+  ],
+  "schema_version": "org.searchright.integration-release-train-receipt.v1",
+  "stages": 6,
+  "status": "passed"
+}

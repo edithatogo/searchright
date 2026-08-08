@@ -1,0 +1,10 @@
+{
+  "errors": [],
+  "gates": 11,
+  "limitations": [
+    "Static rehearsal contract only; no release candidate, pilot or rollback was executed."
+  ],
+  "pilot_profiles": 3,
+  "schema_version": "org.searchright.release-rehearsal-receipt.v1",
+  "status": "passed"
+}

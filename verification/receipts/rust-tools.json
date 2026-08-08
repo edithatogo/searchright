@@ -1,0 +1,35 @@
+{
+  "declared_tools": 8,
+  "errors": [],
+  "limitations": [
+    "Static pin parity only; installation and execution require compiler-backed evidence."
+  ],
+  "schema_version": "org.searchright.rust-tools-validation.v1",
+  "status": "passed",
+  "workflow_tools": {
+    "cargo-audit": [
+      "0.22.2"
+    ],
+    "cargo-careful": [
+      "0.4.10"
+    ],
+    "cargo-deny": [
+      "0.19.9"
+    ],
+    "cargo-fuzz": [
+      "0.13.2"
+    ],
+    "cargo-llvm-cov": [
+      "0.8.7"
+    ],
+    "cargo-machete": [
+      "0.9.2"
+    ],
+    "cargo-mutants": [
+      "27.1.0"
+    ],
+    "cargo-nextest": [
+      "0.9.143"
+    ]
+  }
+}

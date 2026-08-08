@@ -1,7 +1,13 @@
 {
-  "issue_bodies": 156,
-  "nodes": 156,
-  "schema_version": "org.searchright.github-issue-render-receipt.v1",
+  "issue_bodies": 564,
+  "kinds": {
+    "epic": 1,
+    "phase": 152,
+    "task": 373,
+    "track": 38
+  },
+  "nodes": 564,
+  "schema_version": "org.searchright.github-issue-render-receipt.v2",
   "stale": [],
   "status": "passed"
 }

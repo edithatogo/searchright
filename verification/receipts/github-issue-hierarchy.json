@@ -1,11 +1,13 @@
 {
   "errors": [],
   "limitations": [
-    "No remote GitHub repository, issue number or subissue relationship is claimed."
+    "No remote GitHub repository, issue number, subissue relationship or Project item is claimed."
   ],
-  "nodes_checked": 156,
-  "phase_subissues": 124,
-  "schema_version": "org.searchright.github-issue-hierarchy-receipt.v1",
+  "maximum_depth": 4,
+  "nodes_checked": 564,
+  "phase_subissues": 152,
+  "schema_version": "org.searchright.github-issue-hierarchy-receipt.v2",
   "status": "passed",
-  "track_issues": 31
+  "task_subissues": 373,
+  "track_issues": 38
 }

@@ -1,0 +1,28 @@
+{
+  "critical_blockers": [
+    "access_and_tenancy",
+    "backup_restore_incidents",
+    "compiler",
+    "determinism",
+    "downstream_compatibility",
+    "github_control_plane",
+    "interfaces",
+    "methodology",
+    "migration",
+    "operations",
+    "pilots",
+    "providers",
+    "registries",
+    "sdk_and_adoption",
+    "security",
+    "usability"
+  ],
+  "decision": "not_ready",
+  "domains": 17,
+  "errors": [],
+  "limitations": [
+    "Static dossier consistency only; it cannot generate missing compiler, live, human or external evidence."
+  ],
+  "schema_version": "org.searchright.maturity-dossier-receipt.v1",
+  "status": "passed"
+}

@@ -1,0 +1,25 @@
+{
+  "create_project": false,
+  "delete_operations": 0,
+  "environments": [
+    "github-issue-write",
+    "github-project-write",
+    "release"
+  ],
+  "issues": 564,
+  "mode": "dry_run",
+  "operations": [
+    "create_or_verify_remote",
+    "push_main",
+    "apply_repository_settings",
+    "enable_security_controls_where_supported",
+    "create_protected_environments",
+    "upsert_main_ruleset",
+    "synchronise_issue_hierarchy",
+    "create_and_synchronise_project"
+  ],
+  "project": "Searchright delivery roadmap",
+  "repository": "edithatogo/searchright",
+  "schema_version": "org.searchright.github-bootstrap-plan.v1",
+  "sync_task_state": false
+}
