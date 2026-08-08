@@ -2,7 +2,7 @@
   "gates": [
     {
       "command": "/opt/pyvenv/bin/python scripts/validate_repository.py",
-      "duration_ms": 2926,
+      "duration_ms": 2888,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"checks\": {\n    \"audit_event_semantic_invariants\": 1,\n    \"conductor_tracks_checked\": 38,\n    \"draft_2020_12_schemas_checked\": 49,\n    \"github_action_commit_pins_checked\": 58,\n    \"json_documents_parsed\": 365,\n    \"mermaid_design_blocks_checked\": 9,\n    \"prisma_arithmetic_invariants\": 1,\n    \"provider_manifest_semantic_invariants\": 1,\n    \"publication_packets_checked\": 7,\n    \"python_validation_dependency_pins_checked\": 6,\n    \"registry_targets_truthfulness_checked\": 9,\n    \"review_plan_semantic_invariants\": 1,\n    \"rust_sources_lexically_checked\": 62,\n    \"schema_catalogue_entries_checked\": 49,\n    \"schema_examples_validated\": 49,\n    \"screening_semantic_invariants\": 1,\n    \"search_strategy_semantic_invariants\": 1,\n    \"status_and_receipt_truthfulness_checked\": 1,\n    \"text_files_hygiene_checked\": 1186,\n    \"toml_documents_parsed\": 70,\n    \"workspace_crates_checked\": 29,\n    \"yaml_documents_parsed\": 100\n  },\n  \"error_count\": 0,\n  \"limitations\": [\n    \"No Rust parsing, compilation, tests, coverage, mutation or fuzzing were executed.\",\n    \"No live provider, remote GitHub, Conductor host or registry operation was executed.\"\n  ],\n  \"repository\": \"/mnt/data/searchright-repo\",\n  \"status\": \"passed\"\n}",
@@ -10,7 +10,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_citeweft_integration.py",
-      "duration_ms": 541,
+      "duration_ms": 562,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"checks\": 7,\n  \"errors\": [],\n  \"limitations\": [\n    \"Source-level compatibility only; the pinned git dependency and adapter tests were not compiled in this environment.\"\n  ],\n  \"schema_version\": \"org.searchright.citeweft-integration-receipt.v1\",\n  \"status\": \"passed\",\n  \"upstream_commit\": \"8c8932976250f9ca91c2bbda28ed68eeb191fa42\"\n}",
@@ -18,7 +18,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_integration_passports.py",
-      "duration_ms": 522,
+      "duration_ms": 534,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"candidate_integrations\": 8,\n  \"errors\": [],\n  \"limitations\": [\n    \"Source-level validation only; downstream compilation and consumer-driven tests remain separate evidence.\"\n  ],\n  \"passports_checked\": 8,\n  \"schema_version\": \"org.searchright.integration-passport-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -26,7 +26,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_consumer_contracts.py",
-      "duration_ms": 524,
+      "duration_ms": 523,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"active_integrations\": 8,\n  \"errors\": [],\n  \"interactions_checked\": 8,\n  \"limitations\": [\n    \"This source-level gate verifies declarations and local fixtures; producer/downstream execution remains separate evidence.\"\n  ],\n  \"local_paths_checked\": 29,\n  \"schema_version\": \"org.searchright.consumer-contract-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -34,7 +34,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_integration_drift.py",
-      "duration_ms": 517,
+      "duration_ms": 523,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"automatic_updates\": false,\n  \"claim_boundary\": \"Drift detection is read-only and never changes a revision, dependency, issue, pull request or public claim.\",\n  \"errors\": [],\n  \"integrations\": [\n    {\n      \"branch\": \"main\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"8c8932976250f9ca91c2bbda28ed68eeb191fa42\",\n      \"repository\": \"edithatogo/citeweft\",\n      \"status\": \"pin_consistent\"\n    },\n    {\n      \"branch\": \"main\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"89f3d1a08037057160700df5bba319a64500b791\",\n      \"repository\": \"edithatogo/sourceright\",\n      \"status\": \"pin_consistent\"\n    },\n    {\n      \"branch\": \"main\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"ad67bedaa0c4d0769bd54fd76354bac65b25b88c\",\n      \"repository\": \"edithatogo/repository-standards\",\n      \"status\": \"pin_consistent\"\n    },\n    {\n      \"branch\": \"main\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"5a706a7600c8c54ec63b4ab2716fcf7d8bababcf\",\n      \"repository\": \"edithatogo/api-standards\",\n      \"status\": \"pin_consistent\"\n    },\n    {\n      \"branch\": \"main\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"95d5aa46c6cda6fb2d014391209d666349b577dc\",\n      \"repository\": \"edithatogo/PRISMA.jl\",\n      \"status\": \"pin_consistent\"\n    },\n    {\n      \"branch\": \"main\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"734dd23e03e7261db9204702be9221119a30d7d2\",\n      \"repository\": \"edithatogo/academic-research-skills\",\n      \"status\": \"pin_consistent\"\n    },\n    {\n      \"branch\": \"main\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"f54b25aec7e206881e2d5542e42cfda43c96921c\",\n      \"repository\": \"edithatogo/standards_check\",\n      \"status\": \"pin_consistent\"\n    },\n    {\n      \"branch\": \"master\",\n      \"mode\": \"offline\",\n      \"pinned_revision\": \"dc2dadfdbb98eb1b4259604789abd640aa3b693e\",\n      \"repository\": \"edithatogo/synergy-dataset\",\n      \"status\": \"pin_consistent\"\n    }\n  ],\n  \"mode\": \"offline\",\n  \"schema_version\": \"org.searchright.integration-drift-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -42,7 +42,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/render_github_issues.py --check",
-      "duration_ms": 527,
+      "duration_ms": 545,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"issue_bodies\": 564,\n  \"kinds\": {\n    \"epic\": 1,\n    \"phase\": 152,\n    \"task\": 373,\n    \"track\": 38\n  },\n  \"nodes\": 564,\n  \"schema_version\": \"org.searchright.github-issue-render-receipt.v2\",\n  \"stale\": [],\n  \"status\": \"passed\"\n}",
@@ -50,7 +50,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_github_issue_hierarchy.py",
-      "duration_ms": 521,
+      "duration_ms": 545,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"errors\": [],\n  \"limitations\": [\n    \"No remote GitHub repository, issue number, subissue relationship or Project item is claimed.\"\n  ],\n  \"maximum_depth\": 4,\n  \"nodes_checked\": 564,\n  \"phase_subissues\": 152,\n  \"schema_version\": \"org.searchright.github-issue-hierarchy-receipt.v2\",\n  \"status\": \"passed\",\n  \"task_subissues\": 373,\n  \"track_issues\": 38\n}",
@@ -58,7 +58,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_github_project.py",
-      "duration_ms": 524,
+      "duration_ms": 516,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"errors\": [],\n  \"hierarchy_depth\": 4,\n  \"limitations\": [\n    \"Static validation only; no remote repository, Project, field, view or item is claimed.\"\n  ],\n  \"maximum_children_observed\": 38,\n  \"node_field_counts\": {\n    \"Conductor key\": 564,\n    \"Conductor path\": 564,\n    \"Delivery status\": 564,\n    \"Evidence level\": 564,\n    \"External gate\": 564,\n    \"Horizon\": 564,\n    \"MoSCoW\": 564,\n    \"Phase\": 525,\n    \"Task\": 373,\n    \"Track ID\": 563,\n    \"Work kind\": 564\n  },\n  \"project_fields\": 12,\n  \"project_items\": 564,\n  \"project_views\": 5,\n  \"schema_version\": \"org.searchright.github-project-validation-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -66,7 +66,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/sync_github_issues.py --repo edithatogo/searchright",
-      "duration_ms": 523,
+      "duration_ms": 520,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"canonical_issues\": 564,\n  \"delete_operations\": 0,\n  \"mode\": \"dry_run\",\n  \"next_resume_after\": null,\n  \"remaining_after_run\": 0,\n  \"repository\": \"edithatogo/searchright\",\n  \"resume_after\": null,\n  \"schema_version\": \"org.searchright.github-issue-sync-plan.v2\",\n  \"selected_issues\": 564,\n  \"selected_relationships\": 563,\n  \"selected_task_states\": 373,\n  \"task_state_apply\": false\n}",
@@ -74,7 +74,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/sync_github_project.py",
-      "duration_ms": 549,
+      "duration_ms": 556,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"canonical_items\": 564,\n  \"claim_boundary\": \"A Project is a coordination projection and cannot promote Conductor evidence.\",\n  \"create_project\": false,\n  \"delete_operations\": 0,\n  \"fields\": 12,\n  \"mode\": \"dry_run\",\n  \"next_resume_after\": null,\n  \"project\": \"Searchright delivery roadmap\",\n  \"remaining_after_run\": 0,\n  \"repository\": \"edithatogo/searchright\",\n  \"resume_after\": null,\n  \"schema_version\": \"org.searchright.github-project-sync-plan.v1\",\n  \"selected_items\": 564,\n  \"views\": 5\n}",
@@ -82,7 +82,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/bootstrap_github.py",
-      "duration_ms": 581,
+      "duration_ms": 607,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"create_project\": false,\n  \"delete_operations\": 0,\n  \"environments\": [\n    \"github-issue-write\",\n    \"github-project-write\",\n    \"release\"\n  ],\n  \"issues\": 564,\n  \"mode\": \"dry_run\",\n  \"operations\": [\n    \"create_or_verify_remote\",\n    \"push_main\",\n    \"apply_repository_settings\",\n    \"enable_security_controls_where_supported\",\n    \"create_protected_environments\",\n    \"upsert_main_ruleset\",\n    \"synchronise_issue_hierarchy\",\n    \"create_and_synchronise_project\"\n  ],\n  \"project\": \"Searchright delivery roadmap\",\n  \"repository\": \"edithatogo/searchright\",\n  \"schema_version\": \"org.searchright.github-bootstrap-plan.v1\",\n  \"sync_task_state\": false\n}",
@@ -90,7 +90,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_context_integrity.py",
-      "duration_ms": 779,
+      "duration_ms": 532,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"capability_components\": 14,\n  \"claim_boundaries\": 19,\n  \"decisions\": 13,\n  \"errors\": [],\n  \"evidence_domains\": 15,\n  \"hazards\": 20,\n  \"limitations\": [\n    \"Static context consistency only; human interpretation and runtime behaviour remain separate evidence.\"\n  ],\n  \"required_context\": 22,\n  \"schema_version\": \"org.searchright.context-integrity-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -98,7 +98,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/sync_context_lock.py --check",
-      "duration_ms": 528,
+      "duration_ms": 531,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"schema_version\": \"org.searchright.context-lock-receipt.v1\",\n  \"status\": \"passed\",\n  \"files\": 22\n}",
@@ -106,7 +106,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_default_deny.py",
-      "duration_ms": 565,
+      "duration_ms": 578,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"components_checked\": 29,\n  \"errors\": [],\n  \"limitations\": [\n    \"Static source-policy validation only; runtime sandboxing and host enforcement require compiler and execution evidence.\"\n  ],\n  \"schema_version\": \"org.searchright.default-deny-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -114,7 +114,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_workflow_hardening.py",
-      "duration_ms": 583,
+      "duration_ms": 613,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"checkouts_checked\": 29,\n  \"errors\": [],\n  \"jobs_checked\": 30,\n  \"limitations\": [\n    \"Static workflow review only; GitHub environment protection, rulesets and runner state require remote evidence.\"\n  ],\n  \"schema_version\": \"org.searchright.workflow-hardening-receipt.v1\",\n  \"status\": \"passed\",\n  \"workflows_checked\": 14\n}",
@@ -122,7 +122,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_toolchain_manifest.py",
-      "duration_ms": 532,
+      "duration_ms": 1012,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"declared_tools\": 8,\n  \"errors\": [],\n  \"limitations\": [\n    \"Static pin parity only; installation and execution require compiler-backed evidence.\"\n  ],\n  \"schema_version\": \"org.searchright.rust-tools-validation.v1\",\n  \"status\": \"passed\",\n  \"workflow_tools\": {\n    \"cargo-audit\": [\n      \"0.22.2\"\n    ],\n    \"cargo-careful\": [\n      \"0.4.10\"\n    ],\n    \"cargo-deny\": [\n      \"0.19.9\"\n    ],\n    \"cargo-fuzz\": [\n      \"0.13.2\"\n    ],\n    \"cargo-llvm-cov\": [\n      \"0.8.7\"\n    ],\n    \"cargo-machete\": [\n      \"0.9.2\"\n    ],\n    \"cargo-mutants\": [\n      \"27.1.0\"\n    ],\n    \"cargo-nextest\": [\n      \"0.9.143\"\n    ]\n  }\n}",
@@ -130,7 +130,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_cli_mcp_parity.py",
-      "duration_ms": 612,
+      "duration_ms": 675,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"schema_version\": \"org.searchright.interface-parity-receipt.v1\",\n  \"status\": \"passed\",\n  \"operations_checked\": 31,\n  \"errors\": [],\n  \"limitations\": [\n    \"Source-level parity only; no CLI binary or MCP protocol transcript was executed.\"\n  ]\n}",
@@ -138,7 +138,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_sourceright_migration.py",
-      "duration_ms": 547,
+      "duration_ms": 676,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"schema_version\": \"org.searchright.sourceright-migration-check.v1\",\n  \"status\": \"passed\",\n  \"source_blob_sha\": \"57bc071c6afc7d5a4cb8ead12112919a446ebd24\",\n  \"symbols_mapped\": 24,\n  \"cases_checked\": 7,\n  \"declared_dimensions\": 10,\n  \"errors\": [],\n  \"limitations\": [\n    \"No Sourceright checkout, dual-run, compiler gate or remote pull request was executed.\"\n  ]\n}",
@@ -146,7 +146,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_roadmap_coverage.py",
-      "duration_ms": 518,
+      "duration_ms": 679,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"checked_tasks\": 190,\n  \"errors\": [],\n  \"horizons\": [\n    \"alpha\",\n    \"beta\",\n    \"foundation\",\n    \"mature\",\n    \"mvp\"\n  ],\n  \"limitations\": [\n    \"Source/evidence validation only; compiler, live-provider and external acceptance gates remain separate.\"\n  ],\n  \"open_evidence_tasks\": 183,\n  \"requirements_checked\": 92,\n  \"schema_version\": \"org.searchright.roadmap-coverage-receipt.v1\",\n  \"status\": \"passed\",\n  \"tracks_checked\": 38\n}",
@@ -154,7 +154,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_release_train.py",
-      "duration_ms": 558,
+      "duration_ms": 645,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"automatic_promotions\": 0,\n  \"components\": 3,\n  \"errors\": [],\n  \"limitations\": [\n    \"Static release-train consistency only; producer and consumer repositories were not built or released.\"\n  ],\n  \"schema_version\": \"org.searchright.integration-release-train-receipt.v1\",\n  \"stages\": 6,\n  \"status\": \"passed\"\n}",
@@ -162,7 +162,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_sdk_examples.py",
-      "duration_ms": 530,
+      "duration_ms": 628,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"errors\": [],\n  \"limitations\": [\n    \"Static SDK intent only; Python/TypeScript packages were not generated, compiled or published.\"\n  ],\n  \"schema_version\": \"org.searchright.sdk-examples-receipt.v1\",\n  \"status\": \"passed\",\n  \"targets\": 3\n}",
@@ -170,7 +170,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_release_rehearsal.py",
-      "duration_ms": 551,
+      "duration_ms": 626,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"errors\": [],\n  \"gates\": 11,\n  \"limitations\": [\n    \"Static rehearsal contract only; no release candidate, pilot or rollback was executed.\"\n  ],\n  \"pilot_profiles\": 3,\n  \"schema_version\": \"org.searchright.release-rehearsal-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -178,7 +178,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_maturity_dossier.py",
-      "duration_ms": 524,
+      "duration_ms": 564,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"critical_blockers\": [\n    \"access_and_tenancy\",\n    \"backup_restore_incidents\",\n    \"compiler\",\n    \"determinism\",\n    \"downstream_compatibility\",\n    \"github_control_plane\",\n    \"interfaces\",\n    \"methodology\",\n    \"migration\",\n    \"operations\",\n    \"pilots\",\n    \"providers\",\n    \"registries\",\n    \"sdk_and_adoption\",\n    \"security\",\n    \"usability\"\n  ],\n  \"decision\": \"not_ready\",\n  \"domains\": 17,\n  \"errors\": [],\n  \"limitations\": [\n    \"Static dossier consistency only; it cannot generate missing compiler, live, human or external evidence.\"\n  ],\n  \"schema_version\": \"org.searchright.maturity-dossier-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -186,7 +186,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/sync_track_evidence.py --check",
-      "duration_ms": 555,
+      "duration_ms": 527,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"status\": \"passed\",\n  \"files\": 115,\n  \"mode\": \"check\"\n}",
@@ -194,7 +194,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_rust_dependency_graph.py",
-      "duration_ms": 823,
+      "duration_ms": 785,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"errors\": [],\n  \"internal_edges\": 53,\n  \"limitations\": [\n    \"Lexical source-reference analysis only; Cargo feature resolution and compilation were not executed.\"\n  ],\n  \"non_publishable_packages\": 2,\n  \"publishable_packages\": 27,\n  \"schema_version\": \"org.searchright.rust-dependency-graph-receipt.v1\",\n  \"source_references\": 50,\n  \"status\": \"passed\",\n  \"topological_order\": [\n    \"searchright-contracts\",\n    \"evidence-search-core\",\n    \"searchright-access\",\n    \"searchright-agent\",\n    \"searchright-assurance\",\n    \"searchright-citeweft\",\n    \"searchright-dedup\",\n    \"searchright-diagnostics\",\n    \"searchright-discovery\",\n    \"searchright-governance\",\n    \"searchright-interchange\",\n    \"searchright-licensed\",\n    \"searchright-living\",\n    \"searchright-ops\",\n    \"searchright-plugin-sdk\",\n    \"searchright-policy\",\n    \"searchright-prisma\",\n    \"searchright-provenance\",\n    \"searchright-ranking\",\n    \"searchright-screening\",\n    \"searchright-study\",\n    \"searchright-validation\",\n    \"searchright-connectors\",\n    \"searchright-sourceright-compat\",\n    \"searchright-store\",\n    \"searchright-bench\",\n    \"searchright\",\n    \"searchright-cli\",\n    \"searchright-mcp\"\n  ],\n  \"workspace_packages\": 29\n}",
@@ -202,7 +202,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_rust_source_structure.py",
-      "duration_ms": 963,
+      "duration_ms": 928,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"checks\": {\n    \"crate_manifests_checked\": 29,\n    \"delimiter_balanced_files\": 62,\n    \"enums_checked\": 98,\n    \"impl_blocks_checked\": 120,\n    \"module_declarations_checked\": 32,\n    \"possibly_unused_dependencies\": 69,\n    \"rust_files_checked\": 62,\n    \"structs_checked\": 167,\n    \"workspace_members_checked\": 29\n  },\n  \"errors\": [],\n  \"limitations\": [\n    \"This is lexical and structural validation, not Rust parsing, type checking, macro expansion, linking or execution.\"\n  ],\n  \"schema_version\": \"org.searchright.rust-source-structure-receipt.v1\",\n  \"status\": \"passed\"\n}",
@@ -210,7 +210,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/audit_search_code.py --self-test",
-      "duration_ms": 513,
+      "duration_ms": 512,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"status\": \"passed\",\n  \"patterns\": 8\n}",
@@ -218,15 +218,15 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_secrets.py",
-      "duration_ms": 895,
+      "duration_ms": 964,
       "returncode": 0,
       "stderr": "",
-      "stdout": "{\n  \"finding_count\": 0,\n  \"findings\": [],\n  \"git_commits_scanned\": 6,\n  \"limitations\": [\n    \"Signature scan only; CI still runs full-history Gitleaks for entropy and rule-set coverage.\",\n    \"Encrypted, compressed and non-UTF-8 content is not semantically inspected.\"\n  ],\n  \"patterns\": [\n    \"aws_access_key\",\n    \"github_token\",\n    \"google_api_key\",\n    \"openai_token\",\n    \"private_key_pem\",\n    \"slack_token\"\n  ],\n  \"schema_version\": \"org.searchright.local-secret-scan.v1\",\n  \"status\": \"passed\",\n  \"worktree_text_files_scanned\": 1190\n}",
+      "stdout": "{\n  \"finding_count\": 0,\n  \"findings\": [],\n  \"git_commits_scanned\": 8,\n  \"limitations\": [\n    \"Signature scan only; CI still runs full-history Gitleaks for entropy and rule-set coverage.\",\n    \"Encrypted, compressed and non-UTF-8 content is not semantically inspected.\"\n  ],\n  \"patterns\": [\n    \"aws_access_key\",\n    \"github_token\",\n    \"google_api_key\",\n    \"openai_token\",\n    \"private_key_pem\",\n    \"slack_token\"\n  ],\n  \"schema_version\": \"org.searchright.local-secret-scan.v1\",\n  \"status\": \"passed\",\n  \"worktree_text_files_scanned\": 1190\n}",
       "timed_out": false
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/generate_source_sbom.py --check",
-      "duration_ms": 514,
+      "duration_ms": 549,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"status\": \"passed\",\n  \"path\": \"verification/sbom/source-components.cdx.json\"\n}",
@@ -234,7 +234,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/generate_source_hash_manifest.py --check",
-      "duration_ms": 652,
+      "duration_ms": 692,
       "returncode": 0,
       "stderr": "",
       "stdout": "verified 1167 source files",
@@ -242,7 +242,7 @@
     },
     {
       "command": "/opt/pyvenv/bin/python scripts/check_packaging_reproducibility.py",
-      "duration_ms": 2362,
+      "duration_ms": 2406,
       "returncode": 0,
       "stderr": "",
       "stdout": "{\n  \"artifacts_compared\": 4,\n  \"errors\": [],\n  \"files_checked\": 1190,\n  \"limitations\": [\n    \"Source archive reproducibility only; release binaries and signed provenance require the release workflow.\"\n  ],\n  \"schema_version\": \"org.searchright.packaging-reproducibility-receipt.v1\",\n  \"status\": \"passed\"\n}",
