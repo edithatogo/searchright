@@ -31,8 +31,20 @@ GIT_EXCLUDES = {
 }
 
 
-def command(args: list[str], *, cwd: Path = ROOT) -> str:
-    process = subprocess.run(args, cwd=cwd, text=True, capture_output=True, check=False)
+def command(
+    args: list[str],
+    *,
+    cwd: Path = ROOT,
+    env: dict[str, str] | None = None,
+) -> str:
+    process = subprocess.run(
+        args,
+        cwd=cwd,
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
     if process.returncode != 0:
         raise RuntimeError(
             f"command failed ({process.returncode}): {' '.join(args)}\n"
@@ -111,6 +123,33 @@ def extract_preserving_modes(archive_path: Path, destination: Path) -> Path:
     if len(roots) != 1:
         raise RuntimeError(f"complete ZIP must contain one root, observed {sorted(roots)}")
     return destination / next(iter(roots))
+
+
+def initialize_ephemeral_git(path: Path, epoch: int) -> dict[str, Any]:
+    """Create a deterministic temporary Git context for source-only verification.
+
+    The source archive intentionally omits ``.git``. Several static gates use
+    ``git ls-files`` to prove exact tracked membership, so verification creates
+    a disposable repository *after extraction*. This repository is never copied
+    back into the source artifact.
+    """
+    command(["git", "init", "-b", "main"], cwd=path)
+    command(["git", "config", "user.name", "Searchright Source Verifier"], cwd=path)
+    command(["git", "config", "user.email", "noreply@searchright.local"], cwd=path)
+    command(["git", "add", "--all"], cwd=path)
+    date = f"@{epoch} +0000"
+    commit_env = dict(os.environ)
+    commit_env.update({"GIT_AUTHOR_DATE": date, "GIT_COMMITTER_DATE": date})
+    command(
+        ["git", "commit", "--no-gpg-sign", "-m", "verify source archive"],
+        cwd=path,
+        env=commit_env,
+    )
+    return {
+        "head": command(["git", "rev-parse", "HEAD"], cwd=path).strip(),
+        "tracked_files": len(command(["git", "ls-files"], cwd=path).splitlines()),
+        "configured_remotes": len(command(["git", "remote"], cwd=path).splitlines()),
+    }
 
 
 def verify_repository(path: Path, *, expected_head: str, run_harness: bool) -> dict[str, Any]:
@@ -196,10 +235,12 @@ def main() -> int:
             run_harness=not args.skip_harness,
         )
         source_root = extract_preserving_modes(source_zip, temporary_path / "source")
+        source_verification_context: dict[str, Any] | None = None
         source_harness = "not_requested"
         if not args.skip_harness:
+            source_verification_context = initialize_ephemeral_git(source_root, epoch)
             command(["python", "scripts/run_static_harness.py"], cwd=source_root)
-            source_harness = "passed"
+            source_harness = "passed_with_ephemeral_git_context"
 
     artifacts = [
         complete_zip,
@@ -226,6 +267,7 @@ def main() -> int:
         "complete_zip_verification": complete_verification,
         "bundle_verification": bundle_verification,
         "source_zip_static_harness": source_harness,
+        "source_zip_verification_context": source_verification_context,
         "artifacts": [artifact(path) for path in [*artifacts, checksums_path]],
         "claim_boundary": "Packaging and static verification do not establish compiler, live-provider, external-validation or publication evidence.",
     }
