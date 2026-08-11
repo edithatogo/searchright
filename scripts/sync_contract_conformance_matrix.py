@@ -16,10 +16,12 @@ MATRIX = ROOT / "contracts" / "compatibility" / "contract-conformance-matrix.jso
 RUST_SCHEMA_SOURCE = ROOT / "crates" / "evidence-search-contracts" / "src" / "schema.rs"
 
 
-def rust_owned_ids() -> set[str]:
+def rust_owned_entries() -> list[tuple[str, str]]:
     """Read the explicit Rust-owned root registry without treating every DTO as generated."""
     source = RUST_SCHEMA_SOURCE.read_text(encoding="utf-8")
-    return set(re.findall(r'entry::<[^>]+>\(\s*"([^"]+)"', source))
+    return re.findall(
+        r'entry::<[^>]+>\(\s*"([^"]+)",\s*"([^"]+)"', source
+    )
 
 
 def sha256(path: Path) -> str:
@@ -31,7 +33,8 @@ def render() -> dict:
     surface = json.loads(SURFACE.read_text(encoding="utf-8"))
     sdk = json.loads(SDK_MANIFEST.read_text(encoding="utf-8"))
     baselines = {entry["id"]: entry for entry in surface["schemas"]}
-    rust_roots = rust_owned_ids()
+    rust_entries = rust_owned_entries()
+    rust_roots = {contract_id for contract_id, _ in rust_entries}
 
     contracts = []
     for entry in sorted(catalog["entries"], key=lambda item: item["id"]):
@@ -60,9 +63,10 @@ def render() -> dict:
                 },
                 "rust": {
                     "declared_type": entry["rust_type"],
-                    "compiler_conformance": (
-                        "root_field_parity" if entry["id"] in rust_roots else "not_evidenced"
+                    "registry_status": (
+                        "registered_root" if entry["id"] in rust_roots else "not_registered"
                     ),
+                    "compiler_conformance": "not_evidenced",
                     "round_trip_conformance": "not_evidenced",
                 },
                 "downstream_consumer_conformance": "not_evidenced",
@@ -89,7 +93,7 @@ def render() -> dict:
         "rust_schema_parity": {
             "registered_roots": len(rust_roots),
             "exact_parity": False,
-            "loss_report": "evidence_search_contracts::rust_schema_parity_report"
+            "scope_declaration": "evidence_search_contracts::rust_schema_parity_scope"
         },
         "claim_boundary": (
             "This matrix proves catalogue presence, declared static validation, and "
@@ -110,6 +114,20 @@ def main() -> int:
     expected = json.dumps(rendered, indent=2, ensure_ascii=False) + "\n"
     stale = not MATRIX.is_file() or MATRIX.read_text(encoding="utf-8") != expected
     errors = []
+    catalogue_pairs = {
+        (entry["id"], entry["schema"])
+        for entry in json.loads(CATALOG.read_text(encoding="utf-8"))["entries"]
+    }
+    rust_entries = rust_owned_entries()
+    if len(rust_entries) != len(set(rust_entries)):
+        errors.append("Rust schema registry contains a duplicate id/path pair")
+    if len({item[0] for item in rust_entries}) != len(rust_entries):
+        errors.append("Rust schema registry contains a duplicate catalogue id")
+    if len({item[1] for item in rust_entries}) != len(rust_entries):
+        errors.append("Rust schema registry contains a duplicate canonical path")
+    for item in rust_entries:
+        if item not in catalogue_pairs:
+            errors.append(f"Rust schema registry id/path is not canonical: {item[0]} -> {item[1]}")
     for contract in rendered["contracts"]:
         if not contract["schema"]["present"]:
             errors.append(f"{contract['id']}: schema missing")

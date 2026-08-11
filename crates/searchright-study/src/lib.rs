@@ -198,10 +198,10 @@ mod tests {
             retrieval_attempts: Vec::new(),
         };
         let invalid_link = EvidenceLink {
-            link_id: "link-2".to_owned(),
+            link_id: "link-1".to_owned(),
             from_id: "report-2".to_owned(),
             to_id: "study-1".to_owned(),
-            relationship: EvidenceRelationship::UpdatesReport,
+            relationship: EvidenceRelationship::ReportOfStudy,
             confidence: 1.0,
             evidence: vec!["test evidence".to_owned()],
             asserted_by: "human-1".to_owned(),
@@ -210,7 +210,7 @@ mod tests {
 
         assert!(matches!(
             attach_report(&mut graph, report, "study-1", invalid_link),
-            Err(StudyGraphError::InvalidAttachmentLink)
+            Err(StudyGraphError::Contract(_))
         ));
         assert_eq!(graph, original);
     }

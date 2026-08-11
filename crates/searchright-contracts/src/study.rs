@@ -325,4 +325,13 @@ mod tests {
             matches!(graph.validate(), Err(ContractError::Invariant(message)) if message.contains("duplicate report"))
         );
     }
+
+    #[test]
+    fn permits_one_report_to_describe_multiple_studies() {
+        let graph = graph(vec![
+            study("study-1", &["report-1"]),
+            study("study-2", &["report-1"]),
+        ]);
+        assert!(graph.validate().is_ok());
+    }
 }

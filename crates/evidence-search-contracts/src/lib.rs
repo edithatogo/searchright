@@ -25,7 +25,7 @@ pub use query::{
 };
 pub use record::{BibliographicRecord, RecordIdentifiers, RecordKind};
 pub use schema::{
-    RustOwnedSchema, RustSchemaParityReport, rust_owned_schemas, rust_schema_parity_report,
+    RustOwnedSchema, RustSchemaParityScope, rust_owned_schemas, rust_schema_parity_scope,
 };
 
 /// Compatibility contract family retained for the 0.1 wire generation.
