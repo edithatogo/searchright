@@ -1,0 +1,40 @@
+{
+  "schema_version": "org.searchright.verification-receipt.v1",
+  "track_id": "03",
+  "source_revision": "a488631",
+  "recorded_at": "2026-08-12",
+  "environment": {
+    "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+    "network": "disabled/not used",
+    "target_directory": "target-track03-gnu"
+  },
+  "checks": [
+    {
+      "command": "cargo +1.97.1-x86_64-pc-windows-gnu test -p evidence-search-core",
+      "result": "passed",
+      "tests_passed": 36
+    },
+    {
+      "command": "cargo +1.97.1-x86_64-pc-windows-gnu clippy -p evidence-search-core --all-targets --all-features -- -D warnings",
+      "result": "passed"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "result": "passed_after_format"
+    }
+  ],
+  "security_evidence": {
+    "literal_host_denials": [
+      "localhost",
+      "subdomain.localhost",
+      "IPv4 loopback",
+      "IPv4 private",
+      "IPv4 link-local/cloud metadata",
+      "IPv6 loopback",
+      "IPv6 link-local"
+    ],
+    "resolved_answer_policy": "empty answers and any answer containing a prohibited IPv4 or IPv6 address fail closed",
+    "residual_blocker": "live connector transports do not yet demonstrate resolve-validate-pin behavior, so DNS rebinding resistance and H-002 closure are not claimed"
+  },
+  "claim_boundary": "Compiler-backed deterministic endpoint-policy evidence only; no live provider, downstream Sourceright parity, cutover, SemVer or rollback claim."
+}

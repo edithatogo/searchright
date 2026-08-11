@@ -29,8 +29,7 @@
     "SR-011"
   ],
   "blockers": [
-    "Compile and run the shared provider runtime tests.",
-    "Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence.",
+    "Resolve, validate and pin accepted DNS answers in every live connector transport before closing H-002; literal and supplied-resolution denial logic is compiler-tested.",
     "Run old/new Sourceright fixtures in the downstream repository.",
     "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
   ],
@@ -59,6 +58,8 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "runtime_evidence": [
+    "verification/receipts/track-03-provider-runtime-review.json"
+  ],
   "external_evidence": []
 }

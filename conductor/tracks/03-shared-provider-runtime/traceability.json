@@ -66,17 +66,18 @@
         "evidence_search_core::provider::ExecutionPolicy"
       ],
       "deterministic_tests": [
-        "python scripts/check_provider_contract_baselines.py"
+        "python scripts/check_provider_contract_baselines.py",
+        "cargo +1.97.1-x86_64-pc-windows-gnu test -p evidence-search-core"
       ],
       "evidence_receipts": [
-        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+        "conductor/tracks/03-shared-provider-runtime/evidence.json",
+        "verification/receipts/track-03-provider-runtime-review.json"
       ],
       "open_gates": [
-        "Compile runtime tests.",
         "Prove cache and error parity against Sourceright.",
-        "Close hazard H-002 with deterministic literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial tests."
+        "Resolve, validate and pin accepted DNS answers in every live connector transport before closing H-002; literal and supplied-resolution denial logic is compiler-tested."
       ],
-      "permitted_claim": "Bounded retry, timing, rate, cache-key and receipt source logic is implemented but not compiler- or parity-proven."
+      "permitted_claim": "The shared runtime and endpoint-address denial logic are compiler-tested; Sourceright parity and live transport DNS pinning are not proven."
     },
     {
       "assertion_id": "T03-A004",
