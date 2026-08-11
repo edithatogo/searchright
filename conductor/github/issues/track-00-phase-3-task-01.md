@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Install and execute Rust 1.97.1 in a compatible environment.
+- [ ] Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision.
 
 ## Completion and evidence contract
 

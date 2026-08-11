@@ -11,12 +11,6 @@
       "command": "python scripts/validate_repository.py",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A001",
-        "T00-A002",
-        "T00-A003",
-        "T00-A004",
-        "T00-A005",
-        "T00-A006",
         "T01-A001",
         "T01-A002",
         "T01-A004",
@@ -432,6 +426,7 @@
       "command": "python scripts/check_companion_change_packets.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A005",
         "T14-A007",
         "T15-A002",
         "T15-A003",
@@ -500,6 +495,7 @@
       "command": "python scripts/check_integration_passports.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A005",
         "T13-A001",
         "T15-A004"
       ],
@@ -533,6 +529,7 @@
       "command": "python scripts/check_integration_drift.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A005",
         "T13-A001"
       ],
       "evidence_ceiling": "source_verified",
@@ -639,6 +636,8 @@
       "command": "python scripts/check_context_integrity.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A001",
+        "T00-A002",
         "T13-A004",
         "T14-A007"
       ],
@@ -655,6 +654,7 @@
       "command": "python scripts/sync_context_lock.py --check",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A002",
         "T13-A004"
       ],
       "evidence_ceiling": "source_verified",
@@ -736,6 +736,7 @@
       "command": "python scripts/check_toolchain_manifest.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A003",
         "T16-A001",
         "T16-A004"
       ],
@@ -912,6 +913,7 @@
       "command": "python scripts/check_rust_dependency_graph.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A004",
         "T12-A001",
         "T12-A002",
         "T12-A003",
@@ -1049,6 +1051,7 @@
       "command": "python scripts/run_static_harness.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A006",
         "T16-A002",
         "T16-A006",
         "T37-A001",

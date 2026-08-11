@@ -7,24 +7,19 @@
       "size": 3453
     },
     {
-      "path": "CODEX_HANDOFF.md",
-      "sha256": "e217926f097495530f5b0de30a6125367a795f27fa375e092330fde05d674dad",
-      "size": 9007
-    },
-    {
-      "path": "CONTEXT.md",
-      "sha256": "d91a14ff32401fc332ddbc61467bf2899e558ee1c52a4f5b6e73afe3bee146cf",
-      "size": 4186
-    },
-    {
       "path": "benchmarks/methodology/manifest.json",
       "sha256": "f892858cee4491a0832926f6fe44be0049265bff5ff69d50757d198eeacc42b3",
       "size": 3851
     },
     {
+      "path": "CODEX_HANDOFF.md",
+      "sha256": "d34e54a8ecfeede955f98d364fdeac1023b4673ad3b666ef0f19d4e8f23ac8e4",
+      "size": 3620
+    },
+    {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "54df61d2c0dd6f71f5acccf9d54236f0b93acb3c1d770eafb9b467574ea126cf",
-      "size": 589023
+      "sha256": "5d3de8b7769b0dee191ea818b68fff79c9efb4fe965db35763cebc1c27928865",
+      "size": 607544
     },
     {
       "path": "conductor/github/project.json",
@@ -48,8 +43,8 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "988036759a4107c4dc3987905e10ddf34cdb0ec808b702178ac34699784f6ccc",
-      "size": 70089
+      "sha256": "de53146f2e9f770550ee706c7b3c1d5967d49fe23d4d16a3bc766d849e156768",
+      "size": 70484
     },
     {
       "path": "conductor/traceability-overrides.json",
@@ -80,6 +75,11 @@
       "path": "context/hazard-log.json",
       "sha256": "2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244",
       "size": 17239
+    },
+    {
+      "path": "CONTEXT.md",
+      "sha256": "d91a14ff32401fc332ddbc61467bf2899e558ee1c52a4f5b6e73afe3bee146cf",
+      "size": 4186
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
@@ -178,13 +178,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "11f4eeebfbef6c06fbeca3e9a72042014d9bb203b1264d03acd754f86ef55bc6",
-      "size": 3255
+      "sha256": "c3243509e309799897c1f4b6f0d9fabd390c20a614c9307109a9f341d31c250c",
+      "size": 3376
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "a82f7a9f73d0935d87ef540355ef62f39730c0455a3b7b22329c8f35be88a12a",
-      "size": 40862
+      "sha256": "807c601c851e81e327ad4a91d748a3de0e6d26c74543084fbb3aebb9b89fb243",
+      "size": 41997
     },
     {
       "path": "verification/harness-matrix.json",

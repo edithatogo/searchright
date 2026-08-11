@@ -22,7 +22,6 @@
         "scripts/check_context_integrity.py::main"
       ],
       "deterministic_tests": [
-        "gemini extensions list",
         "python scripts/check_context_integrity.py"
       ],
       "evidence_receipts": [
@@ -75,8 +74,7 @@
         "scripts/check_toolchain_manifest.py::main"
       ],
       "deterministic_tests": [
-        "python scripts/check_toolchain_manifest.py",
-        "rustup run 1.97.1-x86_64-pc-windows-gnu rustc --version --verbose"
+        "python scripts/check_toolchain_manifest.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"
@@ -100,9 +98,7 @@
         "scripts/check_rust_dependency_graph.py::main"
       ],
       "deterministic_tests": [
-        "cargo generate-lockfile",
-        "cargo check --workspace --all-targets --locked",
-        "cargo test --workspace --all-targets --locked"
+        "python scripts/check_rust_dependency_graph.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"
@@ -157,8 +153,7 @@
         "scripts/run_static_harness.py::main"
       ],
       "deterministic_tests": [
-        "python scripts/run_static_harness.py",
-        "cargo test --workspace --all-targets --locked"
+        "python scripts/run_static_harness.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"

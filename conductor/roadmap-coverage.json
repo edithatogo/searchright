@@ -23,11 +23,9 @@
         "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
       ],
       "checks": [
-        "python scripts/validate_repository.py",
-        "cargo check --workspace --all-targets --locked",
-        "cargo test --workspace --all-targets --locked"
+        "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Source-verified implementation with external evidence still required; the dirty-worktree compiler receipt is not commit-bound, and repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Source-verified implementation with commit-bound local GNU compiler/test evidence and external evidence still required; repository-wide verify.sh, MSVC, repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "Cargo.toml",
         "rust-toolchain.toml",

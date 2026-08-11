@@ -34,6 +34,7 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-03-phase-3 -->
 
 - [ ] Compile and run the shared provider runtime tests.
+- [ ] Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence.
 - [ ] Run old/new Sourceright fixtures in the downstream repository.
 - [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 

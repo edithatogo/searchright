@@ -1,13 +1,13 @@
-<!-- searchright-issue-key: track-00-phase-3-task-02 -->
-# Track 00 / Phase 3 / Task 02
+<!-- searchright-issue-key: track-03-phase-3-task-04 -->
+# Track 03 / Phase 3 / Task 04
 
-Parent phase key: `track-00-phase-3`
-Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
+Parent phase key: `track-03-phase-3`
+Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
 Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt.
+- [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 
 ## Completion and evidence contract
 

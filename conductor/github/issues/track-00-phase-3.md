@@ -6,8 +6,7 @@ Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Install and execute Rust 1.97.1 in a compatible environment. (`track-00-phase-3-task-01`)
-- [ ] T02: Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt. (`track-00-phase-3-task-02`)
+- [ ] T01: Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision. (`track-00-phase-3-task-01`)
 
 ## Evidence rule
 

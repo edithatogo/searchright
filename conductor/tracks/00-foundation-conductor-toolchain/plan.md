@@ -8,7 +8,7 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-00-phase-1 -->
 
-- [ ] Complete every acceptance assertion; the local implementation is commit-bound, but external evidence remains open.
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
   - [x] Present source path: `Cargo.toml`
   - [x] Present source path: `rust-toolchain.toml`
   - [x] Present source path: `conductor/upstream.lock.json`
@@ -34,13 +34,7 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-00-phase-3 -->
 
-- [x] Install and execute Rust 1.97.1 in a compatible environment.
-  - [x] Exact GNU workspace check passed against implementation commit `3f62b5ebc3efe3e619c05dfacdabc01b159f1aec` with the committed `Cargo.lock`.
-  - [x] All 55 workspace tests passed against that exact implementation commit.
-  - [ ] MSVC validation remains invalid because Git's POSIX `link.exe` shadows the intended linker; this is recorded as an environment limitation, not a source failure.
-- [x] Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt.
-  - [x] Gemini CLI reports Conductor 0.4.1 enabled for both user and workspace scopes.
-- [ ] Register Searchright in `edithatogo/repository-standards` and run estate conformance. *(external blocker: no entry exists at the pinned revision or current main, and the companion packet denies remote mutation without separate authority)*
+- [ ] Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision.
 
 ## Phase 4: Review and closeout
 
@@ -48,5 +42,5 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [x] Run compiler-backed Conductor review and apply receipt-integrity, cache-authority, endpoint-redaction and status-reconciliation fixes.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

@@ -7,8 +7,9 @@ Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
 ## Task subissues
 
 - [ ] T01: Compile and run the shared provider runtime tests. (`track-03-phase-3-task-01`)
-- [ ] T02: Run old/new Sourceright fixtures in the downstream repository. (`track-03-phase-3-task-02`)
-- [ ] T03: Complete feature-gated Sourceright cutover, semver review and rollback exercise. (`track-03-phase-3-task-03`)
+- [ ] T02: Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence. (`track-03-phase-3-task-02`)
+- [ ] T03: Run old/new Sourceright fixtures in the downstream repository. (`track-03-phase-3-task-03`)
+- [ ] T04: Complete feature-gated Sourceright cutover, semver review and rollback exercise. (`track-03-phase-3-task-04`)
 
 ## Evidence rule
 
