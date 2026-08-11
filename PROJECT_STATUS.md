@@ -121,10 +121,14 @@ compiler or methodological-performance result.
 - Repository-wide rustfmt, Clippy `-D warnings`, Cargo doc and the 55-test GNU
   workspace suite pass locally on Rust 1.97.1. Hosted cross-platform and MSRV
   jobs remain admission evidence and are not promoted while PR #569 is open.
-- Coverage has executed but has not yet produced successful evidence on the
-  current revision. Mutation, fuzzing, Kani, Miri and `cargo-careful` remain
-  configured rather than successfully evidenced; the deterministic Loom test
-  is included in the passing workspace suite.
+- Coverage executed on PR #569 head `3dbb109`: the hosted report measured
+  45.24% lines (9,567 total; 5,239 missed), 44.97% regions and 42.79%
+  functions. LCOV was preserved, but the >90% requirement correctly remains
+  failed; this is a coverage deficit, not an infrastructure failure.
+- Kani, Miri, Loom and `cargo-careful` passed their hosted bounded suites on
+  that head. Mutation evidence remains absent and the fuzz jobs were still in
+  progress at observation time; none of these results establishes product or
+  methodological correctness.
 - cargo-vet, cargo-semver-checks and cargo-public-api require compiler/tool
   bootstrap and baseline receipts.
 
