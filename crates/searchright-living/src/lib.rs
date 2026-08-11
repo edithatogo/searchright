@@ -138,11 +138,18 @@ pub enum LivingError {
     DuplicateRun(String),
     /// Parent run was not present.
     #[error("run `{run_id}` references unknown parent `{parent_id}`")]
-    UnknownParent { run_id: String, parent_id: String },
+    UnknownParent {
+        /// Identifier of the run containing the invalid parent reference.
+        run_id: String,
+        /// Referenced parent identifier that was not found.
+        parent_id: String,
+    },
     /// Superseded run was not present.
     #[error("run `{run_id}` references unknown superseded run `{superseded_id}`")]
     UnknownSuperseded {
+        /// Identifier of the run containing the invalid supersession reference.
         run_id: String,
+        /// Referenced superseded-run identifier that was not found.
         superseded_id: String,
     },
     /// Parent links formed a cycle.

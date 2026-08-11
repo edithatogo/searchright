@@ -321,15 +321,23 @@ pub enum PrismaError {
     /// The flow used a contract version unsupported by this crate.
     #[error("unsupported PRISMA schema version `{actual}`; expected `{expected}`")]
     SchemaVersion {
+        /// PRISMA contract version implemented by this crate.
         expected: &'static str,
+        /// Contract version supplied by the flow being validated.
         actual: String,
     },
     /// A required identifier was empty.
     #[error("required PRISMA field `{field}` is empty")]
-    EmptyField { field: &'static str },
+    EmptyField {
+        /// Name of the required field whose value was empty.
+        field: &'static str,
+    },
     /// Addition overflowed the count representation.
     #[error("PRISMA count overflow while calculating `{field}`")]
-    CountOverflow { field: &'static str },
+    CountOverflow {
+        /// Name of the derived count that could not be represented.
+        field: &'static str,
+    },
     /// Pre-screen removals exceed identified records.
     #[error("records removed before screening exceed identified records")]
     RemovedExceedsIdentified,
@@ -342,8 +350,11 @@ pub enum PrismaError {
     /// Cross-field count mismatch.
     #[error("{field} count mismatch: expected {expected}, found {actual}")]
     CountMismatch {
+        /// Name of the count whose arithmetic invariant was violated.
         field: &'static str,
+        /// Count implied by the related PRISMA flow fields.
         expected: u64,
+        /// Count recorded in the field being validated.
         actual: u64,
     },
     /// The same full-text reason identifier appeared twice.

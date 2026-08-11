@@ -148,50 +148,82 @@ pub enum ProviderError {
     ReplayDisabled(String),
     /// Runtime budget was exceeded.
     #[error("provider execution exceeded {kind} budget of {limit}")]
-    BudgetExceeded { kind: &'static str, limit: u64 },
+    BudgetExceeded {
+        /// Name of the exhausted execution budget.
+        kind: &'static str,
+        /// Configured upper bound for that budget.
+        limit: u64,
+    },
     /// Provider returned a record that violated the canonical record contract.
     #[error("provider `{provider}` returned invalid record `{record_id}`: {message}")]
     InvalidRecord {
+        /// Identifier of the provider that returned the record.
         provider: String,
+        /// Provider-native identifier of the invalid record.
         record_id: String,
+        /// Contract validation failure detail.
         message: String,
     },
     /// Provider request exceeded its per-request timeout.
     #[error("provider `{provider}` timed out after {timeout_seconds} seconds")]
     Timeout {
+        /// Identifier of the provider whose request timed out.
         provider: String,
+        /// Applied per-request timeout in seconds.
         timeout_seconds: u64,
     },
     /// Provider explicitly rate limited the request.
     #[error("provider `{provider}` rate limited the request")]
     RateLimited {
+        /// Identifier of the provider that applied the rate limit.
         provider: String,
+        /// Provider-supplied retry delay, when available.
         retry_after_ms: Option<u64>,
     },
     /// Provider returned a non-success HTTP status.
     #[error("provider `{provider}` returned HTTP {status}: {message}")]
     HttpStatus {
+        /// Identifier of the provider that returned the status.
         provider: String,
+        /// Non-success HTTP status code.
         status: u16,
+        /// Provider-supplied retry delay, when available.
         retry_after_ms: Option<u64>,
+        /// Redacted response detail suitable for diagnostics.
         message: String,
     },
     /// Provider response could not be decoded into its declared format.
     #[error("provider `{provider}` returned malformed {format}: {message}")]
     MalformedResponse {
+        /// Identifier of the provider that returned the response.
         provider: String,
+        /// Declared response format that could not be decoded.
         format: &'static str,
+        /// Redacted decoding failure detail.
         message: String,
     },
     /// Provider or caller attempted an operation outside the capability policy.
     #[error("provider policy violation for `{provider}`: {message}")]
-    PolicyViolation { provider: String, message: String },
+    PolicyViolation {
+        /// Identifier of the provider involved in the denied operation.
+        provider: String,
+        /// Capability-policy denial detail.
+        message: String,
+    },
     /// Execution was explicitly cancelled by a caller or task supervisor.
     #[error("provider `{provider}` execution was cancelled")]
-    Cancelled { provider: String },
+    Cancelled {
+        /// Identifier of the provider whose execution was cancelled.
+        provider: String,
+    },
     /// Provider rejected or could not execute the request.
     #[error("provider `{provider}` failed: {message}")]
-    Upstream { provider: String, message: String },
+    Upstream {
+        /// Identifier of the provider that could not execute the request.
+        provider: String,
+        /// Redacted upstream failure detail.
+        message: String,
+    },
     /// Cache read or write failed.
     #[error("provider page cache failed: {0}")]
     Cache(String),

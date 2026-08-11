@@ -137,19 +137,33 @@ pub enum AuditError {
     InvalidTimestamp(#[from] time::error::Parse),
     /// A hash was not a canonical BLAKE3 hexadecimal digest.
     #[error("audit `{field}` is not a canonical BLAKE3 digest")]
-    InvalidHash { field: &'static str },
+    InvalidHash {
+        /// Name of the field containing the invalid digest.
+        field: &'static str,
+    },
     /// An event identifier appeared more than once.
     #[error("audit event identifier `{0}` is duplicated")]
     DuplicateEventId(String),
     /// Events from different reviews were mixed in one ledger.
     #[error("audit review identifier mismatch: expected `{expected}`, found `{actual}`")]
-    ReviewMismatch { expected: String, actual: String },
+    ReviewMismatch {
+        /// Review identifier established by the ledger.
+        expected: String,
+        /// Review identifier found on the mismatched event.
+        actual: String,
+    },
     /// Previous hash is inconsistent.
     #[error("audit event {index} does not point to the previous event")]
-    PreviousHashMismatch { index: usize },
+    PreviousHashMismatch {
+        /// Zero-based index of the event with the invalid predecessor link.
+        index: usize,
+    },
     /// Event content does not match its stored hash.
     #[error("audit event {index} hash does not match canonical content")]
-    EventHashMismatch { index: usize },
+    EventHashMismatch {
+        /// Zero-based index of the event whose content digest is invalid.
+        index: usize,
+    },
     /// Append succeeded but the event could not be borrowed.
     #[error("internal append error")]
     InternalAppend,

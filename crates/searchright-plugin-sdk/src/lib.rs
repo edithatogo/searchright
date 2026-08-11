@@ -60,10 +60,20 @@ pub enum PluginError {
     Json(#[from] serde_json::Error),
     /// WIT world/ABI was incompatible.
     #[error("provider ABI mismatch: expected `{expected}`, found `{actual}`")]
-    AbiMismatch { expected: String, actual: String },
+    AbiMismatch {
+        /// WIT world or ABI identifier required by the host.
+        expected: String,
+        /// WIT world or ABI identifier declared by the component.
+        actual: String,
+    },
     /// Component bytes did not match the reviewed digest.
     #[error("provider component digest mismatch: expected `{expected}`, found `{actual}`")]
-    DigestMismatch { expected: String, actual: String },
+    DigestMismatch {
+        /// Reviewed component digest recorded in the manifest.
+        expected: String,
+        /// Digest calculated from the supplied component bytes.
+        actual: String,
+    },
     /// A capability was not granted.
     #[error("provider component capability `{0:?}` is not authorised")]
     CapabilityDenied(ComponentCapability),

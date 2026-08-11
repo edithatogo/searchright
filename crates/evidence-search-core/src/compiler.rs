@@ -81,7 +81,9 @@ pub enum CompileError {
     /// A query shape cannot be represented safely.
     #[error("unsupported query construct for {dialect:?}: {detail}")]
     Unsupported {
+        /// Target dialect that cannot represent the query construct safely.
         dialect: SearchDialect,
+        /// Human-readable description of the unsupported construct.
         detail: String,
     },
 }

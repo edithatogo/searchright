@@ -215,7 +215,9 @@ pub enum StoreError {
     /// One JSONL line was malformed.
     #[error("audit JSONL line {line} is malformed: {source}")]
     MalformedLine {
+        /// One-based line number of the malformed ledger entry.
         line: usize,
+        /// JSON parser error produced for the malformed line.
         source: serde_json::Error,
     },
     /// Audit verification failed.
@@ -232,10 +234,20 @@ pub enum StoreError {
     DuplicateEventId(String),
     /// A review store was used for a different review identifier.
     #[error("review identifier mismatch: expected `{expected}`, found `{actual}`")]
-    ReviewMismatch { expected: String, actual: String },
+    ReviewMismatch {
+        /// Review identifier bound to the store.
+        expected: String,
+        /// Review identifier supplied by the attempted operation.
+        actual: String,
+    },
     /// Candidate event did not point to the current persisted head.
     #[error("audit previous-hash mismatch: expected `{expected}`, found `{actual}`")]
-    PreviousHashMismatch { expected: String, actual: String },
+    PreviousHashMismatch {
+        /// Hash of the current persisted ledger head.
+        expected: String,
+        /// Previous-event hash declared by the candidate event.
+        actual: String,
+    },
 }
 
 #[cfg(unix)]

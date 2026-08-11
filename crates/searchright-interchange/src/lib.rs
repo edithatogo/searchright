@@ -518,7 +518,9 @@ pub enum InterchangeError {
     /// One JSONL line was malformed.
     #[error("JSONL line {line} is malformed: {source}")]
     MalformedLine {
+        /// One-based line number of the malformed JSONL record.
         line: usize,
+        /// JSON parser error reported for the malformed line.
         source: serde_json::Error,
     },
     /// Contract validation failed.

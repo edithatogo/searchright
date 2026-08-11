@@ -1,3 +1,8 @@
+//! Command-line interface for Searchright's contract-first review operations.
+//!
+//! The binary exposes explicit subcommands for validating, compiling, and
+//! transforming review artefacts through the shared [`SearchrightEngine`].
+
 #![forbid(unsafe_code)]
 #![allow(
     clippy::print_stdout,

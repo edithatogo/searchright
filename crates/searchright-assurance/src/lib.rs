@@ -149,25 +149,35 @@ pub enum AssuranceError {
         "workflow transition {index} starts at {actual:?}, but the prior state is {expected:?}"
     )]
     Discontinuous {
+        /// Zero-based position of the transition that breaks continuity.
         index: usize,
+        /// Lifecycle stage produced by the preceding transition.
         expected: LifecycleStage,
+        /// Lifecycle stage from which the discontinuous transition starts.
         actual: LifecycleStage,
     },
     /// The finite policy model has no such edge.
     #[error("workflow transition from {from:?} to {to:?} is not permitted")]
     TransitionDenied {
+        /// Lifecycle stage from which the denied transition starts.
         from: LifecycleStage,
+        /// Lifecycle stage the denied transition attempts to enter.
         to: LifecycleStage,
     },
     /// A critical edge was not human-approved.
     #[error("workflow transition from {from:?} to {to:?} requires explicit human approval")]
     HumanApprovalRequired {
+        /// Lifecycle stage from which the approval-gated transition starts.
         from: LifecycleStage,
+        /// Lifecycle stage whose entry requires explicit human approval.
         to: LifecycleStage,
     },
     /// Agent authority was insufficient for the destination state.
     #[error("agent authority cannot close lifecycle stage {to:?}")]
-    AgentAuthorityDenied { to: LifecycleStage },
+    AgentAuthorityDenied {
+        /// Lifecycle stage that the agent lacks authority to close.
+        to: LifecycleStage,
+    },
 }
 
 #[cfg(test)]
