@@ -365,7 +365,8 @@ fn apply_field(
             SearchField::Journal => format!("JOURNAL:{literal}"),
             SearchField::Identifier => format!("EXT_ID:{literal}"),
             SearchField::SubjectHeading => format!("MESH:{literal}"),
-            _ => literal.to_owned(),
+            SearchField::All | SearchField::Keyword => literal.to_owned(),
+            SearchField::Custom(_) => degraded_field(literal, warnings),
         },
         SearchDialect::CinahlEbsco => match field {
             SearchField::Title => format!("TI {literal}"),
@@ -374,7 +375,14 @@ fn apply_field(
             SearchField::Author => format!("AU {literal}"),
             SearchField::Journal => format!("JN {literal}"),
             SearchField::SubjectHeading => format!("MH {literal}"),
-            _ => literal.to_owned(),
+            SearchField::All | SearchField::Keyword | SearchField::Identifier => {
+                if matches!(field, SearchField::Identifier) {
+                    degraded_field(literal, warnings)
+                } else {
+                    literal.to_owned()
+                }
+            }
+            SearchField::Custom(_) => degraded_field(literal, warnings),
         },
         SearchDialect::Scopus => match field {
             SearchField::Title => format!("TITLE({literal})"),
@@ -384,13 +392,33 @@ fn apply_field(
             }
             SearchField::Author => format!("AUTH({literal})"),
             SearchField::Journal => format!("SRCTITLE({literal})"),
-            _ => literal.to_owned(),
+            SearchField::All | SearchField::Identifier | SearchField::SubjectHeading => {
+                if matches!(field, SearchField::All) {
+                    literal.to_owned()
+                } else {
+                    degraded_field(literal, warnings)
+                }
+            }
+            SearchField::Custom(_) => degraded_field(literal, warnings),
         },
         SearchDialect::WebOfScience => match field {
             SearchField::Title => format!("TI=({literal})"),
             SearchField::Author => format!("AU=({literal})"),
             SearchField::Journal => format!("SO=({literal})"),
-            _ => format!("TS=({literal})"),
+            SearchField::All
+            | SearchField::Abstract
+            | SearchField::TitleAbstract
+            | SearchField::Keyword
+            | SearchField::SubjectHeading => format!("TS=({literal})"),
+            SearchField::Identifier | SearchField::Custom(_) => {
+                let rendered = format!("TS=({literal})");
+                warnings.push(warning(
+                    "translation.field.degraded",
+                    "The target source cannot express the requested portable field exactly.",
+                    true,
+                ));
+                rendered
+            }
         },
         SearchDialect::Crossref
         | SearchDialect::OpenAlex
@@ -407,6 +435,15 @@ fn apply_field(
             literal.to_owned()
         }
     }
+}
+
+fn degraded_field(literal: &str, warnings: &mut Vec<StrategyWarning>) -> String {
+    warnings.push(warning(
+        "translation.field.degraded",
+        "The target source cannot express the requested portable field exactly.",
+        true,
+    ));
+    literal.to_owned()
 }
 
 fn append_limits(
@@ -479,6 +516,8 @@ fn warning(code: &str, message: &str, review_required: bool) -> StrategyWarning 
 
 #[cfg(test)]
 mod tests {
+    use std::collections::BTreeSet;
+
     use evidence_search_contracts::{SearchLimit, SearchTerm};
 
     use super::*;
@@ -545,5 +584,75 @@ mod tests {
             assert!(result.review_required);
             assert!(!result.loss_codes.is_empty());
         }
+    }
+
+    #[test]
+    fn unsupported_fields_never_degrade_silently() -> Result<(), Box<dyn std::error::Error>> {
+        for dialect in [
+            SearchDialect::EuropePmc,
+            SearchDialect::CinahlEbsco,
+            SearchDialect::Scopus,
+            SearchDialect::WebOfScience,
+        ] {
+            let mut input = strategy();
+            input.dialect = dialect.clone();
+            input.query = QueryExpr::Term {
+                term: SearchTerm {
+                    text: "10.1234/example".to_owned(),
+                    fields: vec![SearchField::Custom("unsupported".to_owned())],
+                    vocabulary: None,
+                    explode: false,
+                    phrase: false,
+                    truncation: false,
+                },
+            };
+            let compiled = QueryCompiler::compile(&input, dialect)?;
+            assert_eq!(compiled.fidelity, TranslationFidelity::Degraded);
+            assert!(compiled.review_required);
+            assert!(
+                compiled
+                    .loss_codes
+                    .iter()
+                    .any(|code| code == "translation.field.degraded")
+            );
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn canonical_json_round_trip_preserves_compilation() -> Result<(), Box<dyn std::error::Error>> {
+        let input = strategy();
+        let encoded = serde_json::to_vec(&input)?;
+        let decoded: SearchStrategy = serde_json::from_slice(&encoded)?;
+        assert_eq!(
+            QueryCompiler::compile(&input, SearchDialect::PubMed)?,
+            QueryCompiler::compile(&decoded, SearchDialect::PubMed)?
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn redundant_grouping_is_compilation_invariant() -> Result<(), Box<dyn std::error::Error>> {
+        let left = strategy();
+        let mut right = left.clone();
+        if let QueryExpr::And { children } = &mut right.query {
+            children.swap(0, 1);
+        }
+        let left_compiled = QueryCompiler::compile(&left, SearchDialect::PubMed)?;
+        let right_compiled = QueryCompiler::compile(&right, SearchDialect::PubMed)?;
+        let left_terms = left_compiled
+            .query
+            .trim_start_matches('(')
+            .trim_end_matches(')')
+            .split(" AND ")
+            .collect::<BTreeSet<_>>();
+        let right_terms = right_compiled
+            .query
+            .trim_start_matches('(')
+            .trim_end_matches(')')
+            .split(" AND ")
+            .collect::<BTreeSet<_>>();
+        assert_eq!(left_terms, right_terms);
+        Ok(())
     }
 }

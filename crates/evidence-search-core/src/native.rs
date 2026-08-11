@@ -208,4 +208,32 @@ mod tests {
         assert!(parsed.diagnostics.iter().any(|item| item.review_required));
         assert!(parsed.validate().is_err());
     }
+
+    #[test]
+    fn validation_rejects_line_text_that_does_not_match_its_source_span() {
+        let mut parsed = parse_native_strategy(
+            "tampered",
+            SearchDialect::OvidMedline,
+            "1. exp Genomics/\n2. genome*.ti,ab.\n",
+        );
+        assert!(!parsed.lines.is_empty());
+        if let Some(line) = parsed.lines.first_mut() {
+            line.text = "1. exp Other/".to_owned();
+        }
+        assert!(parsed.validate().is_err());
+    }
+
+    #[test]
+    fn validation_rejects_duplicate_native_set_identifiers() {
+        let mut parsed = parse_native_strategy(
+            "duplicate",
+            SearchDialect::OvidMedline,
+            "1. exp Genomics/\n2. genome*.ti,ab.\n",
+        );
+        assert!(parsed.lines.len() >= 2);
+        if let Some(line) = parsed.lines.get_mut(1) {
+            line.native_set_id = Some("1".to_owned());
+        }
+        assert!(parsed.validate().is_err());
+    }
 }
