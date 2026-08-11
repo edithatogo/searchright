@@ -17,6 +17,7 @@ Canonical task state: **source task complete**.
   - [x] Present source path: `crates/evidence-search-contracts/tests/schema_parity.rs`
   - [x] Present source path: `scripts/sync_schema_surface.py`
   - [x] Present source path: `scripts/sync_contract_conformance_matrix.py`
+  - [x] Present source path: `verification/receipts/track-01-compiler-verification.json`
   - [x] Present source path: `release/public-packages.json`
   - [x] Present source path: `scripts/check_public_package_policy.py`
   - [x] Present source path: `docs/msrv-and-package-policy.md`
