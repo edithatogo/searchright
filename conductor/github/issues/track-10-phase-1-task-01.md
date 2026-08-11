@@ -11,6 +11,8 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `crates/searchright-mcp/src/main.rs`
   - [x] Present source path: `contracts/mcp/tool-catalog.json`
   - [x] Present source path: `contracts/interface-catalog.json`
+  - [x] Present source path: `docs/mcp-compatibility.md`
+  - [x] Present source path: `scripts/mcp_smoke.py`
   - [x] Present source path: `server.json`
   - [x] Assertion ledger: `conductor/tracks/10-mcp-mvp/traceability.json`
 

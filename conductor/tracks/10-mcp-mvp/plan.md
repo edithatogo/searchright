@@ -12,6 +12,8 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `crates/searchright-mcp/src/main.rs`
   - [x] Present source path: `contracts/mcp/tool-catalog.json`
   - [x] Present source path: `contracts/interface-catalog.json`
+  - [x] Present source path: `docs/mcp-compatibility.md`
+  - [x] Present source path: `scripts/mcp_smoke.py`
   - [x] Present source path: `server.json`
   - [x] Assertion ledger: `conductor/tracks/10-mcp-mvp/traceability.json`
 
@@ -22,13 +24,14 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_cli_mcp_parity.py`
+  - [x] `python scripts/mcp_smoke.py target/debug/searchright-mcp`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-10-phase-3 -->
 
-- [ ] Compile and run stdio MCP conformance transcripts with current and compatibility clients.
+- [ ] Run compatibility clients for the previous supported MCP era and retain exact transcripts.
 - [ ] Validate structured output schemas against live client implementations.
 
 ## Phase 4: Review and closeout

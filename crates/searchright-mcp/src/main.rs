@@ -769,26 +769,24 @@ mod tests {
     use super::*;
 
     #[test]
-    fn json_success_emits_matching_structured_content() {
+    fn json_success_emits_matching_structured_content() -> Result<(), Box<dyn std::error::Error>> {
         let value = serde_json::json!({"valid": true, "contract": "review_plan"});
-        let result = json_success(&value).expect("serialisable JSON must succeed");
+        let result = json_success(&value)?;
 
-        assert_eq!(result.structured_content, Some(value.clone()));
+        assert_eq!(result.structured_content.as_ref(), Some(&value));
         assert_eq!(result.is_error, Some(false));
         assert_eq!(result.content.len(), 1);
-        assert!(
-            serde_json::to_string(&result.content)
-                .unwrap()
-                .contains("review_plan")
-        );
+        assert!(serde_json::to_string(&result.content)?.contains("review_plan"));
+        Ok(())
     }
 
     #[test]
-    fn tool_errors_are_stable_and_do_not_reflect_sensitive_values() {
+    fn tool_errors_are_stable_and_do_not_reflect_sensitive_values()
+    -> Result<(), Box<dyn std::error::Error>> {
         let secret = "https://user:password@example.test/search?api_key=secret";
         let first = tool_error(secret.to_owned());
         let second = tool_error("a different internal failure".to_owned());
-        let first_json = serde_json::to_value(&first).unwrap();
+        let first_json = serde_json::to_value(&first)?;
 
         assert_eq!(first, second);
         assert_eq!(first.is_error, Some(true));
@@ -799,5 +797,6 @@ mod tests {
         assert!(!first_json.to_string().contains("password"));
         assert!(!first_json.to_string().contains("api_key"));
         assert!(!first_json.to_string().contains("secret"));
+        Ok(())
     }
 }

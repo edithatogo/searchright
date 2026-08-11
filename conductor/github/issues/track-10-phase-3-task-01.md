@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and run stdio MCP conformance transcripts with current and compatibility clients.
+- [ ] Run compatibility clients for the previous supported MCP era and retain exact transcripts.
 
 ## Completion and evidence contract
 

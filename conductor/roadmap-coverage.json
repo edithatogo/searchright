@@ -460,18 +460,21 @@
     },
     {
       "blockers": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
+        "Run compatibility clients for the previous supported MCP era and retain exact transcripts.",
         "Validate structured output schemas against live client implementations."
       ],
       "checks": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/mcp_smoke.py target/debug/searchright-mcp"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-mcp/src/main.rs",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
+        "docs/mcp-compatibility.md",
+        "scripts/mcp_smoke.py",
         "server.json"
       ],
       "dependencies": [
