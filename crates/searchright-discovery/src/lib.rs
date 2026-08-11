@@ -58,10 +58,12 @@ pub fn bounded_candidates(run: &DiscoveryRun) -> Result<Vec<DiscoveredCandidate>
         }
         for edge in adjacency.get(&source).into_iter().flatten() {
             let next_depth = depth.saturating_add(1);
+            let mut path_evidence = evidence.get(&source).cloned().unwrap_or_default();
+            path_evidence.insert(edge.edge_id.clone());
             evidence
                 .entry(edge.discovered_id.clone())
                 .or_default()
-                .insert(edge.edge_id.clone());
+                .extend(path_evidence);
             let should_visit = seen_depth
                 .get(&edge.discovered_id)
                 .is_none_or(|known| next_depth < *known);
@@ -246,6 +248,25 @@ mod tests {
         assert_eq!(
             candidates
                 .first()
+                .map(|candidate| candidate.edge_ids.clone()),
+            Some(vec!["edge-1".to_owned(), "edge-2".to_owned()])
+        );
+    }
+
+    #[test]
+    fn retains_complete_evidence_for_multihop_candidates() {
+        let candidates = bounded_candidates(&run(vec![
+            edge("edge-1", "seed", "candidate-a"),
+            edge("edge-2", "candidate-a", "candidate-b"),
+        ]));
+
+        let Ok(candidates) = candidates else {
+            panic!("fixture discovery run should be valid");
+        };
+        assert_eq!(
+            candidates
+                .iter()
+                .find(|candidate| candidate.discovered_id == "candidate-b")
                 .map(|candidate| candidate.edge_ids.clone()),
             Some(vec!["edge-1".to_owned(), "edge-2".to_owned()])
         );
