@@ -121,7 +121,8 @@
     },
     {
       "blockers": [
-        "Compile and execute dialect snapshot/property tests.",
+        "Complete dialect-specific semantic parsers and full translation snapshot/property coverage.",
+        "Define versioned named-filter records and validated filter packs.",
         "Expand the conformance corpus with independently reviewed source strategies."
       ],
       "checks": [
@@ -151,6 +152,10 @@
         "SR-006",
         "SR-007"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-02-compiler-review.json"
+      ],
+      "review_completed": true,
       "slug": "query-ast-dialects",
       "status": "partially_implemented",
       "title": "Portable query AST and dialect compilers",
@@ -158,8 +163,7 @@
     },
     {
       "blockers": [
-        "Compile and run the shared provider runtime tests.",
-        "Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence.",
+        "Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport.",
         "Run old/new Sourceright fixtures in the downstream repository.",
         "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
       ],
@@ -194,6 +198,10 @@
         "SR-010",
         "SR-011"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-03-provider-runtime-review.json"
+      ],
+      "review_completed": true,
       "slug": "shared-provider-runtime",
       "status": "integration_prepared",
       "title": "Shared provider runtime and Sourceright extraction",
@@ -201,7 +209,6 @@
     },
     {
       "blockers": [
-        "Compile and run connector fixtures.",
         "Run authorised, redacted live smokes for each advertised provider.",
         "Verify upstream terms, rate limits and response changes at release time.",
         "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
@@ -242,6 +249,9 @@
         "SR-015",
         "SR-016"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-04-fixture-compiler.json"
+      ],
       "slug": "open-connectors-mvp",
       "status": "partially_implemented",
       "title": "Open provider connectors MVP",
@@ -249,7 +259,7 @@
     },
     {
       "blockers": [
-        "Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.",
+        "Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection.",
         "Complete external review of retention and deletion semantics."
       ],
       "checks": [
@@ -280,6 +290,10 @@
         "SR-014",
         "SR-048"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-05-store-review.json"
+      ],
+      "review_completed": true,
       "slug": "execution-audit-store",
       "status": "partially_implemented",
       "title": "Execution, audit and local storage",
@@ -287,7 +301,7 @@
     },
     {
       "blockers": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
+        "Compile and run golden import/export round-trip tests across every supported format.",
         "Evaluate linkage and deduplication against independently adjudicated corpora."
       ],
       "checks": [
@@ -316,6 +330,10 @@
         "SR-018",
         "SR-019"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-06-dedup-linkage-review.json"
+      ],
+      "review_completed": true,
       "slug": "imports-dedup-linkage",
       "status": "partially_implemented",
       "title": "Imports, deduplication and study linkage",
@@ -323,7 +341,6 @@
     },
     {
       "blockers": [
-        "Compile and execute state-machine and authority-negative tests.",
         "Complete reviewer usability and inter-rater calibration evaluation."
       ],
       "checks": [
@@ -352,6 +369,10 @@
         "SR-022",
         "SR-058"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-07-screening-review.json"
+      ],
+      "review_completed": true,
       "slug": "screening-workflow",
       "status": "partially_implemented",
       "title": "Governed screening workflow",
@@ -359,7 +380,7 @@
     },
     {
       "blockers": [
-        "Compile and run arithmetic, snapshot and standards-pack tests.",
+        "Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.",
         "Obtain independent PRESS review of representative generated strategies and appendices."
       ],
       "checks": [
@@ -391,6 +412,10 @@
         "SR-026",
         "SR-027"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-08-reporting-review.json"
+      ],
+      "review_completed": true,
       "slug": "prisma-press-reporting",
       "status": "partially_implemented",
       "title": "PRISMA, PRESS and reporting",
@@ -702,7 +727,7 @@
     },
     {
       "blockers": [
-        "Generate and commit Cargo.lock in a networked Rust environment.",
+        "Verify the committed Cargo.lock against the exact supported toolchains and clean-room dependency policy.",
         "Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans.",
         "Run clean-room offline builds, binary comparison, install smoke and MCP transcript.",
         "Resolve every critical/high finding and document justified exclusions."
@@ -840,7 +865,7 @@
     },
     {
       "blockers": [
-        "Generate Cargo.lock and pass the full release workflow.",
+        "Verify the committed Cargo.lock and pass the full release workflow.",
         "Build/install-smoke supported binaries and OCI image.",
         "Create signed tag, checksums, attestations and public release artefacts."
       ],
@@ -1605,7 +1630,7 @@
     },
     {
       "blockers": [
-        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
         "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
         "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
       ],
