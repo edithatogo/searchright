@@ -10,15 +10,18 @@ use citeweft::{
     reference_model::{ExtractionStatus, ReferenceModelReport, SourceSpan},
 };
 use searchright_contracts::{
-    CitationCalloutEvidence, DocumentEvidence, DocumentExtractionProvenance, DocumentSpan,
-    ExtractedFieldEvidence, ExtractedReferenceEvidence, ExtractionDiagnostic,
-    DOCUMENT_EVIDENCE_SCHEMA_VERSION,
+    CitationCalloutEvidence, DOCUMENT_EVIDENCE_SCHEMA_VERSION, DocumentEvidence,
+    DocumentExtractionProvenance, DocumentSpan, ExtractedFieldEvidence, ExtractedReferenceEvidence,
+    ExtractionDiagnostic,
 };
 use sha2::{Digest, Sha256};
 
 /// Convert CiteWeft's full scholarly-document output into neutral Searchright evidence.
 #[must_use]
-pub fn from_scholarly_document(document_id: &str, document: &ScholarlyDocument) -> DocumentEvidence {
+pub fn from_scholarly_document(
+    document_id: &str,
+    document: &ScholarlyDocument,
+) -> DocumentEvidence {
     let references = document
         .references
         .iter()
@@ -46,7 +49,10 @@ pub fn from_scholarly_document(document_id: &str, document: &ScholarlyDocument) 
                 fields.push(field("pages", value));
             }
             for identifier in &reference.identifiers {
-                fields.push(field(&format!("identifier:{}", identifier.scheme), &identifier.value));
+                fields.push(field(
+                    &format!("identifier:{}", identifier.scheme),
+                    &identifier.value,
+                ));
             }
             ExtractedReferenceEvidence {
                 reference_id: reference.id.clone(),
@@ -161,7 +167,9 @@ pub fn from_reference_model_report(
     }
 }
 
-fn reference_fields(reference: &citeweft::reference_model::ReferenceCandidate) -> Vec<ExtractedFieldEvidence> {
+fn reference_fields(
+    reference: &citeweft::reference_model::ReferenceCandidate,
+) -> Vec<ExtractedFieldEvidence> {
     let mut values = Vec::new();
     for (name, evidence) in [
         ("authors", reference.fields.authors.as_ref()),
@@ -200,7 +208,10 @@ fn source_span(span: &SourceSpan) -> DocumentSpan {
 }
 
 fn hex_digest(input: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(input))
+    Sha256::digest(input)
+        .iter()
+        .map(|byte| format!("{byte:02x}"))
+        .collect()
 }
 
 #[cfg(test)]
@@ -221,7 +232,12 @@ mod tests {
             assert!(!evidence.canonical_write_permitted);
             assert!(!evidence.retained_full_text);
             assert_eq!(evidence.citation_callouts.len(), 1);
-            assert!(evidence.references.first().is_some_and(|value| value.span.is_some()));
+            assert!(
+                evidence
+                    .references
+                    .first()
+                    .is_some_and(|value| value.span.is_some())
+            );
         }
     }
 }

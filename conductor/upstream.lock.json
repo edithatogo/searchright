@@ -3,14 +3,44 @@
   "repository": "https://github.com/gemini-cli-extensions/conductor",
   "observed_version": "0.3.0",
   "observed_date": "2026-08-05",
-  "installation": {
-    "gemini_cli": "gemini extensions install https://github.com/gemini-cli-extensions/conductor --auto-update",
-    "antigravity": "agy plugins install https://github.com/gemini-cli-extensions/conductor",
-    "claude_code": [
-      "/plugin marketplace add gemini-cli-extensions/conductor",
-      "/plugin install conductor"
-    ]
+  "baseline_release_tag": "conductor-v0.3.0",
+  "baseline_commit": "32f44820450576e60a0685de602fff38bfd85609",
+  "baseline_ref_verification": {
+    "verified_on": "2026-08-12",
+    "command": "git ls-remote --tags https://github.com/gemini-cli-extensions/conductor.git refs/tags/conductor-v0.3.0",
+    "observed_ref": "32f44820450576e60a0685de602fff38bfd85609 refs/tags/conductor-v0.3.0"
   },
+  "installation": {
+    "gemini_cli": {
+      "supported": true,
+      "command": "gemini extensions install https://github.com/gemini-cli-extensions/conductor --ref 32f44820450576e60a0685de602fff38bfd85609",
+      "exact_ref": "32f44820450576e60a0685de602fff38bfd85609",
+      "release_tag": "conductor-v0.3.0",
+      "auto_update": false,
+      "existing_install_policy": "Refuse replacement so an existing moving or auto-updating installation cannot be silently inherited."
+    },
+    "antigravity": {
+      "supported": false,
+      "reason": "The observed host installer does not expose verified exact-ref and auto-update controls."
+    },
+    "claude_code": {
+      "supported": false,
+      "reason": "The recorded marketplace flow does not expose verified exact-ref and auto-update controls."
+    }
+  },
+  "installed_host_receipts": [
+    {
+      "observed_at": "2026-08-12T00:11:34+10:00",
+      "host": "gemini_cli",
+      "host_version": "0.54.0-preview.0",
+      "extension_version": "0.4.1",
+      "release_tag": "conductor-v0.4.1",
+      "source": "https://github.com/gemini-cli-extensions/conductor",
+      "enabled_user": true,
+      "enabled_workspace": true,
+      "baseline_relationship": "newer_than_recorded_0.3.0_baseline"
+    }
+  ],
   "enabled_repository_capabilities": [
     "context artefacts",
     "spec and plan tracks",
@@ -19,5 +49,5 @@
     "review-fixes flow"
   ],
   "undocumented_experimental_flags_enabled": false,
-  "note": "The generation runtime had no compatible agent host or networked git, so the repository contains an idempotent installer and full Conductor artefacts but does not claim a successful runtime installation."
+  "note": "The repository baseline remains Conductor 0.3.0 at the exact recorded commit. Fresh Gemini installations use that commit without auto-update; installers fail closed for existing installations and hosts without verified pin semantics. A separate newer Conductor 0.4.1 extension is installed and enabled in Gemini CLI; this observed host receipt does not silently redefine the baseline or prove compatibility beyond the verified repository context and workflow surfaces."
 }

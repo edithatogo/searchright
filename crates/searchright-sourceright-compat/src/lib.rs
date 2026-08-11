@@ -31,13 +31,16 @@ pub struct LegacyRuntimeConfig {
 impl LegacyRuntimeConfig {
     /// Translate legacy controls to a bounded shared-core execution policy.
     #[must_use]
-    pub const fn execution_policy(&self, max_records: u64, max_pages: u32) -> ExecutionPolicy {
+    pub fn execution_policy(&self, max_records: u64, max_pages: u32) -> ExecutionPolicy {
         ExecutionPolicy {
             live_enabled: self.enabled && self.smoke_enabled,
             max_records,
             max_pages,
             timeout_seconds: self.timeout_secs,
-            total_timeout_seconds: Some(self.timeout_secs.saturating_mul(u64::from(max_pages.max(1)))),
+            total_timeout_seconds: Some(
+                self.timeout_secs
+                    .saturating_mul(u64::from(max_pages.max(1))),
+            ),
             max_retries: self.max_retries,
             min_interval_ms: self.min_interval_ms,
             retry_base_delay_ms: Some(self.min_interval_ms.max(100)),

@@ -4,8 +4,8 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    COMPILED_STRATEGY_SCHEMA_VERSION, ContractError, SEARCH_STRATEGY_SCHEMA_VERSION, Validate,
-    require_schema_version, require_text,
+    COMPILED_STRATEGY_SCHEMA_VERSION, ContractError, NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION,
+    SEARCH_STRATEGY_SCHEMA_VERSION, Validate, require_schema_version, require_text,
 };
 
 /// Portable search field.
@@ -82,8 +82,7 @@ impl Validate for SearchTerm {
                 .any(|field| !matches!(field, SearchField::SubjectHeading))
         {
             return Err(ContractError::Invariant(
-                "controlled-vocabulary terms may target only the subject-heading field"
-                    .to_owned(),
+                "controlled-vocabulary terms may target only the subject-heading field".to_owned(),
             ));
         }
         let mut seen = BTreeSet::new();
@@ -99,8 +98,7 @@ impl Validate for SearchTerm {
             if let SearchField::Custom(name) = field {
                 require_text(name, "query.term.fields.custom")?;
                 if !name.chars().all(|character| {
-                    character.is_ascii_alphanumeric()
-                        || matches!(character, '_' | '-' | '.' | '/')
+                    character.is_ascii_alphanumeric() || matches!(character, '_' | '-' | '.' | '/')
                 }) {
                     return Err(ContractError::Invariant(
                         "custom field names may contain only ASCII letters, digits, `_`, `-`, `.`, or `/`"
@@ -332,7 +330,6 @@ impl Validate for SearchStrategy {
     }
 }
 
-
 /// Byte span in an immutable native search strategy.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct NativeSourceSpan {
@@ -447,9 +444,14 @@ impl Validate for NativeSearchStrategy {
         )?;
         require_text(&self.strategy_id, "native_search_strategy.strategy_id")?;
         require_text(&self.raw_text, "native_search_strategy.raw_text")?;
-        require_text(&self.parser_version, "native_search_strategy.parser_version")?;
+        require_text(
+            &self.parser_version,
+            "native_search_strategy.parser_version",
+        )?;
         if self.lines.is_empty() {
-            return Err(ContractError::EmptyCollection("native_search_strategy.lines"));
+            return Err(ContractError::EmptyCollection(
+                "native_search_strategy.lines",
+            ));
         }
         let raw_len = u64::try_from(self.raw_text.len()).unwrap_or(u64::MAX);
         let mut identifiers = BTreeSet::new();
@@ -466,14 +468,18 @@ impl Validate for NativeSearchStrategy {
                 || line.span.end_byte > raw_len
             {
                 return Err(ContractError::Invariant(
-                    "native search line spans must be ordered and remain within raw_text".to_owned(),
+                    "native search line spans must be ordered and remain within raw_text"
+                        .to_owned(),
                 ));
             }
             previous_end = line.span.end_byte;
         }
         for diagnostic in &self.diagnostics {
             require_text(&diagnostic.code, "native_search_strategy.diagnostics.code")?;
-            require_text(&diagnostic.message, "native_search_strategy.diagnostics.message")?;
+            require_text(
+                &diagnostic.message,
+                "native_search_strategy.diagnostics.message",
+            )?;
             if let Some(span) = diagnostic.span
                 && (span.end_byte < span.start_byte || span.end_byte > raw_len)
             {
@@ -553,7 +559,6 @@ pub struct CompiledStrategy {
     pub compiler_version: String,
 }
 
-
 impl Validate for CompiledStrategy {
     fn validate(&self) -> Result<(), ContractError> {
         require_schema_version(
@@ -563,10 +568,7 @@ impl Validate for CompiledStrategy {
         )?;
         require_text(&self.strategy_id, "compiled_strategy.strategy_id")?;
         require_text(&self.query, "compiled_strategy.query")?;
-        require_text(
-            &self.compilation_hash,
-            "compiled_strategy.compilation_hash",
-        )?;
+        require_text(&self.compilation_hash, "compiled_strategy.compilation_hash")?;
         require_text(&self.compiler_version, "compiled_strategy.compiler_version")?;
         for warning in &self.warnings {
             require_text(&warning.code, "compiled_strategy.warnings.code")?;

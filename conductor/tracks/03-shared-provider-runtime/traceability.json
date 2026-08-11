@@ -73,7 +73,8 @@
       ],
       "open_gates": [
         "Compile runtime tests.",
-        "Prove cache and error parity against Sourceright."
+        "Prove cache and error parity against Sourceright.",
+        "Close hazard H-002 with deterministic literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial tests."
       ],
       "permitted_claim": "Bounded retry, timing, rate, cache-key and receipt source logic is implemented but not compiler- or parity-proven."
     },

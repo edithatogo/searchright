@@ -8,11 +8,11 @@
 use std::{collections::BTreeMap, sync::Arc};
 
 use async_trait::async_trait;
-use evidence_search_core::{ProviderError, ProviderMode, ProviderRegistry, SearchProvider};
 use evidence_search_contracts::{
     BibliographicRecord, ProviderCapability, ProviderManifest, ProviderPage, ProviderSupportLevel,
     RecordIdentifiers, RecordKind, SearchRequest,
 };
+use evidence_search_core::{ProviderError, ProviderMode, ProviderRegistry, SearchProvider};
 use serde::{Deserialize, Serialize};
 
 /// A deterministic provider backed by checked-in or caller-supplied pages.
@@ -60,9 +60,7 @@ impl FixtureProvider {
             None,
             ProviderPage {
                 schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
-                total_available: Some(
-                    u64::try_from(records.len()).unwrap_or(u64::MAX),
-                ),
+                total_available: Some(u64::try_from(records.len()).unwrap_or(u64::MAX)),
                 records,
                 next_cursor: None,
                 diagnostics: BTreeMap::new(),
@@ -102,8 +100,16 @@ pub fn register_mvp_fixtures(registry: &mut ProviderRegistry) -> Result<(), Prov
     for (provider_id, display_name, native_id) in [
         ("pubmed-fixture", "PubMed fixture", "pmid:00000001"),
         ("europe-pmc-fixture", "Europe PMC fixture", "epmc:00000001"),
-        ("crossref-fixture", "Crossref fixture", "doi:10.1000/searchright"),
-        ("openalex-fixture", "OpenAlex fixture", "openalex:W000000001"),
+        (
+            "crossref-fixture",
+            "Crossref fixture",
+            "doi:10.1000/searchright",
+        ),
+        (
+            "openalex-fixture",
+            "OpenAlex fixture",
+            "openalex:W000000001",
+        ),
         (
             "clinicaltrials-gov-fixture",
             "ClinicalTrials.gov fixture",
@@ -131,8 +137,12 @@ fn demo_record(provider_id: &str, native_id: &str) -> BibliographicRecord {
             RecordKind::JournalArticle
         },
         identifiers: RecordIdentifiers {
-            doi: provider_id.contains("crossref").then(|| "10.1000/searchright".to_owned()),
-            pmid: provider_id.contains("pubmed").then(|| "00000001".to_owned()),
+            doi: provider_id
+                .contains("crossref")
+                .then(|| "10.1000/searchright".to_owned()),
+            pmid: provider_id
+                .contains("pubmed")
+                .then(|| "00000001".to_owned()),
             trial_registration: provider_id
                 .contains("clinicaltrials")
                 .then(|| "NCT00000001".to_owned()),
@@ -203,7 +213,8 @@ pub struct PubMedSearchRequest {
 impl PubMedSearchRequest {
     /// Build the NCBI ESearch endpoint without performing a request.
     pub fn endpoint(&self) -> Result<url::Url, url::ParseError> {
-        let mut url = url::Url::parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi")?;
+        let mut url =
+            url::Url::parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi")?;
         {
             let mut pairs = url.query_pairs_mut();
             pairs.append_pair("db", "pubmed");
@@ -222,8 +233,6 @@ impl PubMedSearchRequest {
     }
 }
 
-
-
 /// Redacted endpoint construction for PubMed ESummary metadata retrieval.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PubMedSummaryRequest {
@@ -238,7 +247,8 @@ pub struct PubMedSummaryRequest {
 impl PubMedSummaryRequest {
     /// Build the NCBI ESummary endpoint without performing a request.
     pub fn endpoint(&self) -> Result<url::Url, url::ParseError> {
-        let mut url = url::Url::parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi")?;
+        let mut url =
+            url::Url::parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi")?;
         {
             let mut pairs = url.query_pairs_mut();
             pairs.append_pair("db", "pubmed");
@@ -260,10 +270,12 @@ pub fn parse_pubmed_summary_page(
     payload: &serde_json::Value,
 ) -> Result<ProviderPage, ProviderError> {
     use serde_json::Value;
-    let result = payload.get("result").ok_or_else(|| ProviderError::Upstream {
-        provider: "pubmed".to_owned(),
-        message: "response omitted result".to_owned(),
-    })?;
+    let result = payload
+        .get("result")
+        .ok_or_else(|| ProviderError::Upstream {
+            provider: "pubmed".to_owned(),
+            message: "response omitted result".to_owned(),
+        })?;
     let uids = result
         .get("uids")
         .and_then(Value::as_array)
@@ -287,18 +299,19 @@ pub fn parse_pubmed_summary_page(
                     .flatten()
                     .map(str::to_owned)
             });
-            let authors = item
-                .get("authors")
-                .and_then(Value::as_array)
-                .map_or_else(Vec::new, |values| {
-                    values
-                        .iter()
-                        .filter_map(|author| author.get("name").and_then(Value::as_str))
-                        .map(str::to_owned)
-                        .collect()
-                });
+            let authors =
+                item.get("authors")
+                    .and_then(Value::as_array)
+                    .map_or_else(Vec::new, |values| {
+                        values
+                            .iter()
+                            .filter_map(|author| author.get("name").and_then(Value::as_str))
+                            .map(str::to_owned)
+                            .collect()
+                    });
             BibliographicRecord {
-                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
+                    .to_owned(),
                 record_id: format!("pubmed-{pmid}"),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id: pmid.to_owned(),
@@ -435,9 +448,7 @@ impl ClinicalTrialsGovRequest {
 }
 
 /// Parse a Europe PMC fixture or live response into the canonical page contract.
-pub fn parse_europe_pmc_page(
-    payload: &serde_json::Value,
-) -> Result<ProviderPage, ProviderError> {
+pub fn parse_europe_pmc_page(payload: &serde_json::Value) -> Result<ProviderPage, ProviderError> {
     use serde_json::Value;
     let list = payload
         .get("resultList")
@@ -451,7 +462,8 @@ pub fn parse_europe_pmc_page(
         .iter()
         .enumerate()
         .map(|(index, value)| BibliographicRecord {
-            schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+            schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
+                .to_owned(),
             record_id: value
                 .get("id")
                 .and_then(Value::as_str)
@@ -466,7 +478,10 @@ pub fn parse_europe_pmc_page(
             identifiers: RecordIdentifiers {
                 doi: value.get("doi").and_then(Value::as_str).map(str::to_owned),
                 pmid: value.get("pmid").and_then(Value::as_str).map(str::to_owned),
-                pmcid: value.get("pmcid").and_then(Value::as_str).map(str::to_owned),
+                pmcid: value
+                    .get("pmcid")
+                    .and_then(Value::as_str)
+                    .map(str::to_owned),
                 ..RecordIdentifiers::default()
             },
             title: value
@@ -532,7 +547,8 @@ pub fn parse_crossref_page(payload: &serde_json::Value) -> Result<ProviderPage, 
             let doi = value.get("DOI").and_then(Value::as_str).map(str::to_owned);
             let native_id = doi.clone().unwrap_or_else(|| format!("crossref-{index}"));
             BibliographicRecord {
-                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
+                    .to_owned(),
                 record_id: format!("crossref-{native_id}"),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id,
@@ -541,16 +557,18 @@ pub fn parse_crossref_page(payload: &serde_json::Value) -> Result<ProviderPage, 
                     doi,
                     ..RecordIdentifiers::default()
                 },
-                title: first_string(value.get("title")).unwrap_or("[untitled]").to_owned(),
-                abstract_text: value.get("abstract").and_then(Value::as_str).map(str::to_owned),
+                title: first_string(value.get("title"))
+                    .unwrap_or("[untitled]")
+                    .to_owned(),
+                abstract_text: value
+                    .get("abstract")
+                    .and_then(Value::as_str)
+                    .map(str::to_owned),
                 authors: value
                     .get("author")
                     .and_then(Value::as_array)
                     .map_or_else(Vec::new, |authors| {
-                        authors
-                            .iter()
-                            .filter_map(render_crossref_author)
-                            .collect()
+                        authors.iter().filter_map(render_crossref_author).collect()
                     }),
                 container_title: first_string(value.get("container-title")).map(str::to_owned),
                 publication_year: crossref_year(value),
@@ -559,12 +577,16 @@ pub fn parse_crossref_page(payload: &serde_json::Value) -> Result<ProviderPage, 
                     .get("language")
                     .and_then(Value::as_str)
                     .map_or_else(Vec::new, |language| vec![language.to_owned()]),
-                subjects: value
-                    .get("subject")
-                    .and_then(Value::as_array)
-                    .map_or_else(Vec::new, |subjects| {
-                        subjects.iter().filter_map(Value::as_str).map(str::to_owned).collect()
-                    }),
+                subjects: value.get("subject").and_then(Value::as_array).map_or_else(
+                    Vec::new,
+                    |subjects| {
+                        subjects
+                            .iter()
+                            .filter_map(Value::as_str)
+                            .map(str::to_owned)
+                            .collect()
+                    },
+                ),
                 urls: value
                     .get("URL")
                     .and_then(Value::as_str)
@@ -600,9 +622,12 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
         .enumerate()
         .map(|(index, value)| {
             let openalex = value.get("id").and_then(Value::as_str).map(str::to_owned);
-            let native_id = openalex.clone().unwrap_or_else(|| format!("openalex-{index}"));
+            let native_id = openalex
+                .clone()
+                .unwrap_or_else(|| format!("openalex-{index}"));
             BibliographicRecord {
-                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
+                    .to_owned(),
                 record_id: format!("openalex-{index}"),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id,
@@ -654,16 +679,16 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
                     .get("language")
                     .and_then(Value::as_str)
                     .map_or_else(Vec::new, |language| vec![language.to_owned()]),
-                subjects: value
-                    .get("topics")
-                    .and_then(Value::as_array)
-                    .map_or_else(Vec::new, |topics| {
+                subjects: value.get("topics").and_then(Value::as_array).map_or_else(
+                    Vec::new,
+                    |topics| {
                         topics
                             .iter()
                             .filter_map(|topic| topic.get("display_name").and_then(Value::as_str))
                             .map(str::to_owned)
                             .collect()
-                    }),
+                    },
+                ),
                 urls: value
                     .get("primary_location")
                     .and_then(|location| location.get("landing_page_url"))
@@ -723,13 +748,18 @@ pub fn parse_clinical_trials_page(
                 .and_then(|module| module.get("conditions"))
                 .and_then(Value::as_array)
                 .map_or_else(Vec::new, |items| {
-                    items.iter().filter_map(Value::as_str).map(str::to_owned).collect()
+                    items
+                        .iter()
+                        .filter_map(Value::as_str)
+                        .map(str::to_owned)
+                        .collect()
                 });
             BibliographicRecord {
-                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
+                    .to_owned(),
                 record_id: format!("clinicaltrials-{native_id}"),
                 source_receipt_id: "pending-receipt".to_owned(),
-                native_id,
+                native_id: native_id.clone(),
                 kind: RecordKind::TrialRegistry,
                 identifiers: RecordIdentifiers {
                     trial_registration: nct,
@@ -777,8 +807,14 @@ fn first_string(value: Option<&serde_json::Value>) -> Option<&str> {
 }
 
 fn render_crossref_author(value: &serde_json::Value) -> Option<String> {
-    let family = value.get("family").and_then(serde_json::Value::as_str).unwrap_or("");
-    let given = value.get("given").and_then(serde_json::Value::as_str).unwrap_or("");
+    let family = value
+        .get("family")
+        .and_then(serde_json::Value::as_str)
+        .unwrap_or("");
+    let given = value
+        .get("given")
+        .and_then(serde_json::Value::as_str)
+        .unwrap_or("");
     let rendered = format!("{family}, {given}")
         .trim_matches([',', ' '])
         .to_owned();
@@ -927,13 +963,12 @@ mod live {
             });
         }
         let digest = blake3::hash(&bytes).to_hex().to_string();
-        let payload = serde_json::from_slice(&bytes).map_err(|error| {
-            ProviderError::MalformedResponse {
+        let payload =
+            serde_json::from_slice(&bytes).map_err(|error| ProviderError::MalformedResponse {
                 provider: provider.to_owned(),
                 format: "JSON",
                 message: error.to_string(),
-            }
-        })?;
+            })?;
         Ok((payload, digest))
     }
 
@@ -1000,15 +1035,20 @@ mod live {
             Some("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi".to_owned())
         }
 
-        async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+        async fn execute_page(
+            &self,
+            request: &SearchRequest,
+        ) -> Result<ProviderPage, ProviderError> {
             let offset = request
                 .cursor
                 .as_deref()
                 .unwrap_or("0")
                 .parse::<u32>()
-                .map_err(|error| ProviderError::InvalidRequest(format!(
-                    "PubMed cursor must be a result offset: {error}"
-                )))?;
+                .map_err(|error| {
+                    ProviderError::InvalidRequest(format!(
+                        "PubMed cursor must be a result offset: {error}"
+                    ))
+                })?;
             let endpoint = PubMedSearchRequest {
                 query: request.strategy.query.clone(),
                 page_size: request.page_size,
@@ -1021,14 +1061,16 @@ mod live {
                 provider: "pubmed".to_owned(),
                 message: error.to_string(),
             })?;
-            let (search, search_digest) = fetch_json(&self.client, "pubmed", endpoint, request).await?;
-            let result = search.get("esearchresult").ok_or_else(|| {
-                ProviderError::MalformedResponse {
-                    provider: "pubmed".to_owned(),
-                    format: "JSON",
-                    message: "response omitted esearchresult".to_owned(),
-                }
-            })?;
+            let (search, search_digest) =
+                fetch_json(&self.client, "pubmed", endpoint, request).await?;
+            let result =
+                search
+                    .get("esearchresult")
+                    .ok_or_else(|| ProviderError::MalformedResponse {
+                        provider: "pubmed".to_owned(),
+                        format: "JSON",
+                        message: "response omitted esearchresult".to_owned(),
+                    })?;
             let count = result
                 .get("count")
                 .and_then(Value::as_str)
@@ -1047,7 +1089,8 @@ mod live {
                 .collect::<Vec<_>>();
             if pmids.is_empty() {
                 return Ok(ProviderPage {
-                    schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
+                    schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION
+                        .to_owned(),
                     records: Vec::new(),
                     next_cursor: None,
                     total_available: count,
@@ -1077,7 +1120,10 @@ mod live {
                 .map(|_| next.to_string());
             page.diagnostics.insert(
                 "raw_response_digests".to_owned(),
-                Value::Array(vec![Value::String(search_digest), Value::String(summary_digest)]),
+                Value::Array(vec![
+                    Value::String(search_digest),
+                    Value::String(summary_digest),
+                ]),
             );
             Ok(page)
         }
@@ -1112,7 +1158,10 @@ mod live {
             Some("https://www.ebi.ac.uk/europepmc/webservices/rest/search".to_owned())
         }
 
-        async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+        async fn execute_page(
+            &self,
+            request: &SearchRequest,
+        ) -> Result<ProviderPage, ProviderError> {
             let endpoint = EuropePmcRequest {
                 query: request.strategy.query.clone(),
                 page_size: request.page_size,
@@ -1163,7 +1212,10 @@ mod live {
             Some("https://api.crossref.org/works".to_owned())
         }
 
-        async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+        async fn execute_page(
+            &self,
+            request: &SearchRequest,
+        ) -> Result<ProviderPage, ProviderError> {
             let endpoint = CrossrefRequest {
                 query: request.strategy.query.clone(),
                 rows: request.page_size,
@@ -1214,7 +1266,10 @@ mod live {
             Some("https://api.openalex.org/works".to_owned())
         }
 
-        async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+        async fn execute_page(
+            &self,
+            request: &SearchRequest,
+        ) -> Result<ProviderPage, ProviderError> {
             let endpoint = OpenAlexRequest {
                 query: request.strategy.query.clone(),
                 per_page: request.page_size,

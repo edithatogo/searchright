@@ -5,13 +5,14 @@
 use std::collections::BTreeMap;
 
 use searchright_contracts::{
-    BibliographicRecord, InterchangeFormat, InterchangeReceipt, RecordIdentifiers, RecordKind,
-    INTERCHANGE_RECEIPT_SCHEMA_VERSION, Validate,
+    BibliographicRecord, INTERCHANGE_RECEIPT_SCHEMA_VERSION, InterchangeFormat, InterchangeReceipt,
+    RecordIdentifiers, RecordKind, Validate,
 };
+use serde::Serialize;
 use serde_json::{Value, json};
 
 /// Result of importing bibliographic records.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct ImportResult {
     /// Canonical records.
     pub records: Vec<BibliographicRecord>,
@@ -110,10 +111,7 @@ fn import_json_lines(input: &str) -> Result<ImportResult, InterchangeError> {
     })
 }
 
-fn import_csl_json(
-    input: &str,
-    source_receipt_id: &str,
-) -> Result<ImportResult, InterchangeError> {
+fn import_csl_json(input: &str, source_receipt_id: &str) -> Result<ImportResult, InterchangeError> {
     let items: Vec<Value> = serde_json::from_str(input)?;
     let mut records = Vec::with_capacity(items.len());
     let mut warnings = Vec::new();
@@ -127,20 +125,22 @@ fn import_csl_json(
             .get("id")
             .and_then(Value::as_str)
             .map_or_else(|| format!("csl-{}", index.saturating_add(1)), str::to_owned);
-        let authors = item
-            .get("author")
-            .and_then(Value::as_array)
-            .map_or_else(Vec::new, |authors| {
-                authors
-                    .iter()
-                    .filter_map(|author| {
-                        let family = author.get("family").and_then(Value::as_str).unwrap_or("");
-                        let given = author.get("given").and_then(Value::as_str).unwrap_or("");
-                        let rendered = format!("{family}, {given}").trim_matches([',', ' ']).to_owned();
-                        (!rendered.is_empty()).then_some(rendered)
-                    })
-                    .collect()
-            });
+        let authors =
+            item.get("author")
+                .and_then(Value::as_array)
+                .map_or_else(Vec::new, |authors| {
+                    authors
+                        .iter()
+                        .filter_map(|author| {
+                            let family = author.get("family").and_then(Value::as_str).unwrap_or("");
+                            let given = author.get("given").and_then(Value::as_str).unwrap_or("");
+                            let rendered = format!("{family}, {given}")
+                                .trim_matches([',', ' '])
+                                .to_owned();
+                            (!rendered.is_empty()).then_some(rendered)
+                        })
+                        .collect()
+                });
         let publication_year = item
             .get("issued")
             .and_then(|issued| issued.get("date-parts"))
@@ -162,7 +162,10 @@ fn import_csl_json(
                 ..RecordIdentifiers::default()
             },
             title,
-            abstract_text: item.get("abstract").and_then(Value::as_str).map(str::to_owned),
+            abstract_text: item
+                .get("abstract")
+                .and_then(Value::as_str)
+                .map(str::to_owned),
             authors,
             container_title: item
                 .get("container-title")
@@ -232,8 +235,10 @@ fn import_tagged(
     let mut records = Vec::with_capacity(blocks.len());
     let mut warnings = Vec::new();
     for (index, block) in blocks.iter().enumerate() {
-        let native_id = first(block, &["ID", "AN", "PMID"])
-            .map_or_else(|| format!("tagged-{}", index.saturating_add(1)), str::to_owned);
+        let native_id = first(block, &["ID", "AN", "PMID"]).map_or_else(
+            || format!("tagged-{}", index.saturating_add(1)),
+            str::to_owned,
+        );
         let title = first(block, &["TI", "T1", "BT"])
             .unwrap_or("Untitled imported record")
             .to_owned();
@@ -377,7 +382,10 @@ fn export_csv(records: &[BibliographicRecord]) -> String {
             record.native_id.clone(),
             record.title.clone(),
             record.authors.join("; "),
-            record.publication_year.map(|year| year.to_string()).unwrap_or_default(),
+            record
+                .publication_year
+                .map(|year| year.to_string())
+                .unwrap_or_default(),
             record.identifiers.doi.clone().unwrap_or_default(),
             record.identifiers.pmid.clone().unwrap_or_default(),
             record.container_title.clone().unwrap_or_default(),
@@ -402,8 +410,12 @@ fn validate_records(records: &[BibliographicRecord]) -> Result<(), InterchangeEr
 }
 
 fn first<'a>(block: &'a BTreeMap<String, Vec<String>>, tags: &[&str]) -> Option<&'a str> {
-    tags.iter()
-        .find_map(|tag| block.get(*tag).and_then(|values| values.first()).map(String::as_str))
+    tags.iter().find_map(|tag| {
+        block
+            .get(*tag)
+            .and_then(|values| values.first())
+            .map(String::as_str)
+    })
 }
 
 fn values(block: &BTreeMap<String, Vec<String>>, tags: &[&str]) -> Vec<String> {
@@ -531,7 +543,10 @@ mod tests {
         assert!(imported.is_ok());
         if let Ok(imported) = imported {
             assert_eq!(imported.records.len(), 1);
-            assert_eq!(imported.records.first().map(|record| record.title.as_str()), Some("Test article"));
+            assert_eq!(
+                imported.records.first().map(|record| record.title.as_str()),
+                Some("Test article")
+            );
             assert!(export_records(&imported.records, InterchangeFormat::Ris).is_ok());
         }
     }

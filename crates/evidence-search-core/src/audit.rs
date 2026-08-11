@@ -41,7 +41,11 @@ impl AuditLedger {
     /// Append an event and assign its previous/event hashes.
     pub fn append(&mut self, draft: AuditEventDraft) -> Result<&AuditEvent, AuditError> {
         validate_draft(&draft)?;
-        if self.events.iter().any(|event| event.event_id == draft.event_id) {
+        if self
+            .events
+            .iter()
+            .any(|event| event.event_id == draft.event_id)
+        {
             return Err(AuditError::DuplicateEventId(draft.event_id));
         }
         if let Some(first) = self.events.first()
@@ -157,10 +161,7 @@ fn validate_draft(draft: &AuditEventDraft) -> Result<(), AuditError> {
 }
 
 fn validate_timestamp(timestamp: &str) -> Result<(), AuditError> {
-    time::OffsetDateTime::parse(
-        timestamp,
-        &time::format_description::well_known::Rfc3339,
-    )?;
+    time::OffsetDateTime::parse(timestamp, &time::format_description::well_known::Rfc3339)?;
     Ok(())
 }
 
@@ -191,7 +192,7 @@ fn hash_draft(draft: &AuditEventDraft, previous_hash: &str) -> Result<String, Au
 
 /// Convert a JSON value into recursively key-sorted canonical form.
 #[must_use]
-pub fn canonical_json(value: &Value) -> Value {
+pub(crate) fn canonical_json(value: &Value) -> Value {
     match value {
         Value::Array(values) => Value::Array(values.iter().map(canonical_json).collect()),
         Value::Object(object) => {

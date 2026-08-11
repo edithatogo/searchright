@@ -200,7 +200,6 @@ pub struct SearchRun {
     pub supersedes_run_id: Option<String>,
 }
 
-
 impl Validate for ExecutionPolicy {
     fn validate(&self) -> Result<(), ContractError> {
         if self.max_records == 0 || self.max_pages == 0 || self.timeout_seconds == 0 {
@@ -208,26 +207,26 @@ impl Validate for ExecutionPolicy {
                 "execution budgets and timeout must be greater than zero".to_owned(),
             ));
         }
-        if let Some(total) = self.total_timeout_seconds {
-            if total == 0 || total < self.timeout_seconds {
-                return Err(ContractError::Invariant(
-                    "total_timeout_seconds must be at least the per-request timeout".to_owned(),
-                ));
-            }
+        if let Some(total) = self.total_timeout_seconds
+            && (total == 0 || total < self.timeout_seconds)
+        {
+            return Err(ContractError::Invariant(
+                "total_timeout_seconds must be at least the per-request timeout".to_owned(),
+            ));
         }
-        if let Some(max_bytes) = self.max_response_bytes {
-            if max_bytes == 0 {
-                return Err(ContractError::Invariant(
-                    "max_response_bytes must be greater than zero when supplied".to_owned(),
-                ));
-            }
+        if let Some(max_bytes) = self.max_response_bytes
+            && max_bytes == 0
+        {
+            return Err(ContractError::Invariant(
+                "max_response_bytes must be greater than zero when supplied".to_owned(),
+            ));
         }
-        if let (Some(base), Some(maximum)) = (self.retry_base_delay_ms, self.retry_max_delay_ms) {
-            if base == 0 || maximum < base {
-                return Err(ContractError::Invariant(
-                    "retry delays require a positive base no greater than the maximum".to_owned(),
-                ));
-            }
+        if let (Some(base), Some(maximum)) = (self.retry_base_delay_ms, self.retry_max_delay_ms)
+            && (base == 0 || maximum < base)
+        {
+            return Err(ContractError::Invariant(
+                "retry delays require a positive base no greater than the maximum".to_owned(),
+            ));
         }
         if self.cache_write_enabled && !self.replay_enabled {
             return Err(ContractError::Invariant(
@@ -282,12 +281,18 @@ impl Validate for SourceReceipt {
                 "a receipt cannot report records without a retrieved page".to_owned(),
             ));
         }
-        if self.cache_hits.saturating_add(self.cache_writes) > self.pages_retrieved.saturating_mul(2) {
+        if self.cache_hits.saturating_add(self.cache_writes)
+            > self.pages_retrieved.saturating_mul(2)
+        {
             return Err(ContractError::Invariant(
                 "cache counters are inconsistent with retrieved pages".to_owned(),
             ));
         }
-        if self.warnings.iter().any(|warning| warning.trim().is_empty()) {
+        if self
+            .warnings
+            .iter()
+            .any(|warning| warning.trim().is_empty())
+        {
             return Err(ContractError::Invariant(
                 "source-receipt warnings must not be empty".to_owned(),
             ));
