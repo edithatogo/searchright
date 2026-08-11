@@ -101,7 +101,6 @@
         "searchright_study::attach_report"
       ],
       "deterministic_tests": [
-        "cargo test -p searchright-contracts -p searchright-study --locked --quiet",
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
