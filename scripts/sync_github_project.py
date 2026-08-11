@@ -262,21 +262,33 @@ def option_id(field: dict[str, Any], value: str) -> str:
     raise GitHubCommandError(f"Project field {field.get('name')!r} has no option {value!r}")
 
 
-def set_field(project_id: str, item_id: str, field: dict[str, Any], value: Any) -> None:
+def field_value_literal(field: dict[str, Any], value: Any) -> str:
     data_type = field_data_type(field)
-    command = [
-        "gh", "project", "item-edit", "--id", item_id,
-        "--project-id", project_id, "--field-id", str(field["id"]),
-    ]
     if data_type == "SINGLE_SELECT":
-        command.extend(["--single-select-option-id", option_id(field, str(value))])
-    elif data_type == "NUMBER":
-        command.extend(["--number", str(value)])
-    elif data_type == "DATE":
-        command.extend(["--date", str(value)])
-    else:
-        command.extend(["--text", str(value)])
-    run(command)
+        return f"singleSelectOptionId: {json.dumps(option_id(field, str(value)))}"
+    if data_type == "NUMBER":
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise GitHubCommandError(f"Project field {field.get('name')!r} requires a number")
+        return f"number: {json.dumps(value)}"
+    if data_type == "DATE":
+        return f"date: {json.dumps(str(value))}"
+    return f"text: {json.dumps(str(value))}"
+
+
+def set_fields(project_id: str, item_id: str, changes: list[tuple[dict[str, Any], Any]]) -> None:
+    """Update one item's changed fields in a single atomic GraphQL request."""
+    if not changes:
+        return
+    mutations = []
+    for index, (field, value) in enumerate(changes):
+        mutations.append(
+            f"f{index}: updateProjectV2ItemFieldValue(input: {{"
+            f"projectId: {json.dumps(project_id)}, itemId: {json.dumps(item_id)}, "
+            f"fieldId: {json.dumps(str(field['id']))}, value: {{{field_value_literal(field, value)}}}"
+            "}) { projectV2Item { id } }"
+        )
+    query = "mutation { " + " ".join(mutations) + " }"
+    run_json(["gh", "api", "graphql", "-f", f"query={query}"])
 
 
 def key_variants(name: str) -> list[str]:
@@ -446,6 +458,7 @@ def main() -> int:
         desired_fields["Last sync"] = sync_date
         changed_fields: list[str] = []
         skipped_fields: list[str] = []
+        pending_changes: list[tuple[dict[str, Any], Any]] = []
         for field_name, value in desired_fields.items():
             if field_name not in fields:
                 raise GitHubCommandError(f"Project field {field_name!r} is absent")
@@ -454,9 +467,10 @@ def main() -> int:
                 skipped_fields.append(field_name)
                 field_skips += 1
                 continue
-            set_field(project_id, item_id, fields[field_name], value)
             changed_fields.append(field_name)
-            field_updates += 1
+            pending_changes.append((fields[field_name], value))
+        set_fields(project_id, item_id, pending_changes)
+        field_updates += len(pending_changes)
         synced.append({
             "key": node["key"],
             "issue_url": url,
