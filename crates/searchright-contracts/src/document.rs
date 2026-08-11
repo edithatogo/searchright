@@ -186,6 +186,17 @@ impl Validate for DocumentEvidence {
             &self.provenance.configuration,
             "document_evidence.provenance.configuration",
         )?;
+        if let Some(digest) = &self.provenance.input_sha256
+            && (digest.len() != 64
+                || !digest
+                    .bytes()
+                    .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte)))
+        {
+            return Err(ContractError::Invariant(
+                "document evidence input_sha256 must be 64 lowercase hexadecimal characters"
+                    .to_owned(),
+            ));
+        }
         if self.canonical_write_permitted {
             return Err(ContractError::Invariant(
                 "document evidence must never permit canonical writes".to_owned(),
@@ -248,8 +259,61 @@ impl Validate for DocumentEvidence {
                 &diagnostic.severity,
                 "document_evidence.diagnostic.severity",
             )?;
+            if !matches!(diagnostic.severity.as_str(), "info" | "warning" | "error") {
+                return Err(ContractError::Invariant(format!(
+                    "unsupported extraction diagnostic severity `{}`",
+                    diagnostic.severity
+                )));
+            }
             require_text(&diagnostic.message, "document_evidence.diagnostic.message")?;
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn evidence() -> DocumentEvidence {
+        DocumentEvidence {
+            schema_version: DOCUMENT_EVIDENCE_SCHEMA_VERSION.to_owned(),
+            document_id: "doc-1".to_owned(),
+            upstream_schema_version: "upstream.v1".to_owned(),
+            references: Vec::new(),
+            citation_callouts: Vec::new(),
+            diagnostics: Vec::new(),
+            provenance: DocumentExtractionProvenance {
+                backend: "fixture".to_owned(),
+                backend_version: Some("1".to_owned()),
+                configuration: "deterministic".to_owned(),
+                input_sha256: Some("a".repeat(64)),
+                endpoint_class: None,
+                route_trace_digest: None,
+            },
+            canonical_write_permitted: false,
+            retained_full_text: false,
+        }
+    }
+
+    #[test]
+    fn rejects_unbounded_diagnostic_severity() {
+        let mut value = evidence();
+        value.diagnostics.push(ExtractionDiagnostic {
+            code: "fixture".to_owned(),
+            severity: "fatal".to_owned(),
+            message: "fixture diagnostic".to_owned(),
+            subject_id: None,
+        });
+
+        assert!(value.validate().is_err());
+    }
+
+    #[test]
+    fn rejects_noncanonical_input_digest() {
+        let mut value = evidence();
+        value.provenance.input_sha256 = Some("A".repeat(64));
+
+        assert!(value.validate().is_err());
     }
 }

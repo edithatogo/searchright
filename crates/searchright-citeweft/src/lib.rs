@@ -225,19 +225,40 @@ mod tests {
     fn deterministic_report_preserves_spans_and_requires_review_where_upstream_does() {
         let input = b"Body [1].\n\nReferences\n1. Smith J. 2024. Example title. 10.1000/test";
         let result = DeterministicReferenceModel::default().extract(input);
-        assert!(result.is_ok());
-        if let Ok(report) = result {
-            let evidence = from_reference_model_report("doc-1", input, &report);
-            assert!(evidence.validate().is_ok());
-            assert!(!evidence.canonical_write_permitted);
-            assert!(!evidence.retained_full_text);
-            assert_eq!(evidence.citation_callouts.len(), 1);
-            assert!(
-                evidence
-                    .references
-                    .first()
-                    .is_some_and(|value| value.span.is_some())
-            );
-        }
+        let Ok(report) = result else {
+            panic!("the deterministic CiteWeft fixture must extract successfully");
+        };
+        let evidence = from_reference_model_report("doc-1", input, &report);
+        assert!(evidence.validate().is_ok());
+        assert!(!evidence.canonical_write_permitted);
+        assert!(!evidence.retained_full_text);
+        assert_eq!(evidence.citation_callouts.len(), 1);
+        assert_eq!(evidence.provenance.input_sha256, Some(hex_digest(input)));
+
+        let Some(reference) = evidence.references.first() else {
+            panic!("the deterministic CiteWeft fixture must contain a reference");
+        };
+        let Some(span) = reference.span.as_ref() else {
+            panic!("the extracted reference must retain its source span");
+        };
+        assert_span_matches(input, span);
+
+        let Some(callout) = evidence.citation_callouts.first() else {
+            panic!("the deterministic CiteWeft fixture must contain a callout");
+        };
+        assert_span_matches(input, &callout.span);
+    }
+
+    fn assert_span_matches(input: &[u8], span: &DocumentSpan) {
+        let (Some(start), Some(end)) = (span.start_byte, span.end_byte) else {
+            panic!("the extracted span must retain byte offsets");
+        };
+        let (Ok(start), Ok(end)) = (usize::try_from(start), usize::try_from(end)) else {
+            panic!("the extracted span offsets must fit the current platform");
+        };
+        let Some(surface) = input.get(start..end) else {
+            panic!("the extracted span offsets must fall within the source document");
+        };
+        assert_eq!(surface, span.surface.as_bytes());
     }
 }
