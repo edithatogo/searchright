@@ -105,7 +105,7 @@ compiler or methodological-performance result.
 ## Explicit non-executed disclosures
 
 - **Live provider calls:** not executed; all provider baselines are rights-clear local fixtures.
-- **GitHub repository creation/push:** not executed; remote repository, issues and Projects remain prepared projections.
+- **GitHub repository creation/push:** the public [Searchright repository](https://github.com/edithatogo/searchright), 568-issue native subissue hierarchy and [delivery Project](https://github.com/users/edithatogo/projects/40) were created and audited on 2026-08-12. The audit observed 568/568 items, 567/567 parent-child relationships and zero content, label, task-state or recognised Project-field drift. The current remediation remains on PR #569 rather than protected `main`.
 - **Conductor plugin installation:** Gemini CLI reported Conductor 0.4.1 enabled for user and workspace scopes on 2026-08-12. The repository baseline remains Conductor 0.3.0, and the host receipt does not establish broader 0.4.1 compatibility.
 - **Git submodule pinning for Conductor:** not adopted; the repository currently uses host-installed upstream/pinned passport patterns instead of an embedded submodule.
 
@@ -118,11 +118,13 @@ compiler or methodological-performance result.
   invalid because Git's POSIX `link.exe` shadows the intended linker.
 - `Cargo.lock` has been generated; commit-bound verification is recorded in the
   Track 00 receipt after the coherent source slice is committed.
-- Targeted rustfmt and Cargo check/test have run. Repository-wide rustfmt,
-  Clippy `-D warnings`, Cargo doc, cross-platform and MSRV jobs remain open and
-  are enumerated in the Track 00 receipt.
-- Coverage, mutation, fuzzing, Kani, Loom, Miri and `cargo-careful` remain
-  configured rather than executed.
+- Repository-wide rustfmt, Clippy `-D warnings`, Cargo doc and the 55-test GNU
+  workspace suite pass locally on Rust 1.97.1. Hosted cross-platform and MSRV
+  jobs remain admission evidence and are not promoted while PR #569 is open.
+- Coverage has executed but has not yet produced successful evidence on the
+  current revision. Mutation, fuzzing, Kani, Miri and `cargo-careful` remain
+  configured rather than successfully evidenced; the deterministic Loom test
+  is included in the passing workspace suite.
 - cargo-vet, cargo-semver-checks and cargo-public-api require compiler/tool
   bootstrap and baseline receipts.
 
@@ -144,8 +146,9 @@ compiler or methodological-performance result.
 - The prepared dual-run and consumer-contract suites have not executed in the
   companion repositories.
 - No custom code has been deleted from UOGTO, VOIAGE or other downstream repos.
-- No Searchright remote, issue hierarchy, Project, portfolio Project, release,
-  package or registry entry was created in this local pass.
+- The Searchright remote, native issue hierarchy and repository delivery
+  Project exist and passed the additive control-plane audit. No portfolio
+  Project, release, public package or registry entry was created.
 - Licence review remains required for `standards_check`; `api-standards` and
   `academic-research-skills` are reference-only until reuse rights are clear.
 

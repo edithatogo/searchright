@@ -195,7 +195,7 @@ impl EuropePmcRequest {
     }
 }
 
-/// Redacted endpoint construction for PubMed ESearch.
+/// Redacted endpoint construction for PubMed `ESearch`.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PubMedSearchRequest {
     /// Query text.
@@ -211,7 +211,7 @@ pub struct PubMedSearchRequest {
 }
 
 impl PubMedSearchRequest {
-    /// Build the NCBI ESearch endpoint without performing a request.
+    /// Build the NCBI `ESearch` endpoint without performing a request.
     pub fn endpoint(&self) -> Result<url::Url, url::ParseError> {
         let mut url =
             url::Url::parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi")?;
@@ -233,7 +233,7 @@ impl PubMedSearchRequest {
     }
 }
 
-/// Redacted endpoint construction for PubMed ESummary metadata retrieval.
+/// Redacted endpoint construction for PubMed `ESummary` metadata retrieval.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PubMedSummaryRequest {
     /// PubMed identifiers to retrieve.
@@ -245,7 +245,7 @@ pub struct PubMedSummaryRequest {
 }
 
 impl PubMedSummaryRequest {
-    /// Build the NCBI ESummary endpoint without performing a request.
+    /// Build the NCBI `ESummary` endpoint without performing a request.
     pub fn endpoint(&self) -> Result<url::Url, url::ParseError> {
         let mut url =
             url::Url::parse("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi")?;
@@ -265,7 +265,7 @@ impl PubMedSummaryRequest {
     }
 }
 
-/// Parse an NCBI ESummary response into canonical bibliographic records.
+/// Parse an NCBI `ESummary` response into canonical bibliographic records.
 pub fn parse_pubmed_summary_page(
     payload: &serde_json::Value,
 ) -> Result<ProviderPage, ProviderError> {
@@ -867,7 +867,13 @@ fn openalex_kind(value: Option<&str>) -> RecordKind {
 
 #[cfg(feature = "live")]
 mod live {
-    use super::*;
+    use super::{
+        Arc, BTreeMap, CrossrefRequest, Deserialize, EuropePmcRequest, OpenAlexRequest,
+        ProviderCapability, ProviderError, ProviderManifest, ProviderMode, ProviderPage,
+        ProviderRegistry, ProviderSupportLevel, PubMedSearchRequest, PubMedSummaryRequest,
+        SearchProvider, SearchRequest, Serialize, async_trait, parse_crossref_page,
+        parse_europe_pmc_page, parse_openalex_page, parse_pubmed_summary_page,
+    };
     use reqwest::header::{HeaderMap, RETRY_AFTER};
     use serde_json::Value;
 
@@ -997,7 +1003,7 @@ mod live {
         }
     }
 
-    /// Opt-in PubMed ESearch plus ESummary adapter.
+    /// Opt-in PubMed `ESearch` plus `ESummary` adapter.
     #[derive(Debug, Clone)]
     pub struct PubMedProvider {
         client: reqwest::Client,

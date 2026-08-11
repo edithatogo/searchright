@@ -22,7 +22,7 @@ pub enum ProviderMode {
 }
 
 impl ProviderMode {
-    fn as_str(self) -> &'static str {
+    const fn as_str(self) -> &'static str {
         match self {
             Self::Fixture => "fixture",
             Self::Replay => "replay",
@@ -389,8 +389,8 @@ impl ProviderRegistry {
                 )
                 .await?;
             pages += 1;
-            cache_hits = cache_hits.saturating_add(if cache_hit { 1 } else { 0 });
-            cache_writes = cache_writes.saturating_add(if cache_write { 1 } else { 0 });
+            cache_hits = cache_hits.saturating_add(u32::from(cache_hit));
+            cache_writes = cache_writes.saturating_add(u32::from(cache_write));
 
             for record in page.records {
                 if usize_to_u64(records.len()) >= request.policy.max_records {
@@ -550,7 +550,7 @@ impl ProviderRegistry {
                                 request.policy.timeout_seconds,
                             )?,
                             cache.put(
-                                &cache_key,
+                                cache_key,
                                 &CachedProviderPage {
                                     request_key: cache_key.to_owned(),
                                     response_digest: provider_page_digest(&page)?,
@@ -608,6 +608,7 @@ impl ProviderRegistry {
                 .map(|previous| previous + Duration::from_millis(min_interval_ms))
                 .map_or(now, |candidate| candidate.max(now));
             *reserved = Some(next);
+            drop(reserved);
             next.saturating_duration_since(now)
         };
         if !delay.is_zero() {

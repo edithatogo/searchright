@@ -14,7 +14,7 @@ pub struct BenchmarkMetric {
     pub name: String,
     /// Observed point estimate.
     pub value: f64,
-    /// Unit such as proportion, seconds or records_per_second.
+    /// Unit such as proportion, seconds or `records_per_second`.
     pub unit: String,
     /// Optional lower uncertainty bound.
     pub lower_bound: Option<f64>,

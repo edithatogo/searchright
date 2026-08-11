@@ -234,12 +234,12 @@ impl Validate for DocumentEvidence {
             }
             callout.span.validate()?;
             validate_confidence(callout.confidence, "document_evidence.callout.confidence")?;
-            if let Some(reference_id) = &callout.reference_id {
-                if !reference_ids.contains(reference_id.as_str()) {
-                    return Err(ContractError::Invariant(format!(
-                        "citation callout refers to unknown reference `{reference_id}`"
-                    )));
-                }
+            if let Some(reference_id) = &callout.reference_id
+                && !reference_ids.contains(reference_id.as_str())
+            {
+                return Err(ContractError::Invariant(format!(
+                    "citation callout refers to unknown reference `{reference_id}`"
+                )));
             }
         }
         for diagnostic in &self.diagnostics {

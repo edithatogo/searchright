@@ -489,8 +489,7 @@ fn escape_mermaid(value: &str) -> String {
         .replace('<', "&lt;")
         .replace('>', "&gt;")
         .replace('"', "'")
-        .replace('\r', " ")
-        .replace('\n', " ")
+        .replace(['\r', '\n'], " ")
 }
 
 #[cfg(test)]

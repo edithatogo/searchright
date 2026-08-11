@@ -20,9 +20,9 @@ pub enum InterchangeFormat {
     Ris,
     /// PubMed/NLM tagged text.
     Nbib,
-    /// BibTeX.
+    /// `BibTeX`.
     Bibtex,
-    /// EndNote XML.
+    /// `EndNote` XML.
     EndnoteXml,
     /// UTF-8 CSV.
     Csv,

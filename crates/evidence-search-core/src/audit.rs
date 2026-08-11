@@ -28,7 +28,7 @@ impl AuditLedger {
 
     /// Load existing events without assuming they are valid.
     #[must_use]
-    pub fn from_events(events: Vec<AuditEvent>) -> Self {
+    pub const fn from_events(events: Vec<AuditEvent>) -> Self {
         Self { events }
     }
 
@@ -211,7 +211,7 @@ pub(crate) fn canonical_json(value: &Value) -> Value {
         Value::Array(values) => Value::Array(values.iter().map(canonical_json).collect()),
         Value::Object(object) => {
             let mut pairs: Vec<_> = object.iter().collect();
-            pairs.sort_by(|(left, _), (right, _)| left.cmp(right));
+            pairs.sort_by_key(|(left, _)| *left);
             let mut sorted = Map::new();
             for (key, value) in pairs {
                 sorted.insert(key.clone(), canonical_json(value));

@@ -35,7 +35,7 @@ pub struct PlanAssessment {
 }
 
 /// Serialisable PRISMA rendering selected by a caller.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "artifact_type", content = "artifact", rename_all = "snake_case")]
 pub enum PrismaArtifact {
     /// Validated canonical flow.
@@ -58,7 +58,7 @@ pub enum PrismaOutput {
 }
 
 /// Compact study-graph assessment.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct StudyGraphAssessment {
     /// Number of reports.
     pub reports: usize,
@@ -73,7 +73,7 @@ pub struct StudyGraphAssessment {
 }
 
 /// Complete record-interchange operation result.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct InterchangeExport {
     /// Serialised output.
     pub document: String,

@@ -145,9 +145,21 @@ mod tests {
         );
         assert!(parsed.validate().is_ok());
         assert_eq!(parsed.lines.len(), 4);
-        assert_eq!(parsed.lines[0].native_set_id.as_deref(), Some("1"));
-        assert_eq!(parsed.lines[2].kind, NativeQueryLineKind::SetCombination);
-        assert_eq!(parsed.lines[3].kind, NativeQueryLineKind::Limit);
+        assert_eq!(
+            parsed
+                .lines
+                .first()
+                .and_then(|line| line.native_set_id.as_deref()),
+            Some("1")
+        );
+        assert_eq!(
+            parsed.lines.get(2).map(|line| line.kind),
+            Some(NativeQueryLineKind::SetCombination)
+        );
+        assert_eq!(
+            parsed.lines.get(3).map(|line| line.kind),
+            Some(NativeQueryLineKind::Limit)
+        );
     }
 
     #[test]

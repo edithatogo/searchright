@@ -12,7 +12,7 @@ use serde::Serialize;
 use serde_json::{Value, json};
 
 /// Result of importing bibliographic records.
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct ImportResult {
     /// Canonical records.
     pub records: Vec<BibliographicRecord>,
@@ -458,7 +458,7 @@ fn csl_kind(value: Option<&str>) -> RecordKind {
     }
 }
 
-fn csl_type(kind: &RecordKind) -> &str {
+const fn csl_type(kind: &RecordKind) -> &str {
     match kind {
         RecordKind::JournalArticle => "article-journal",
         RecordKind::Conference => "paper-conference",
@@ -469,7 +469,7 @@ fn csl_type(kind: &RecordKind) -> &str {
     }
 }
 
-fn ris_type(kind: &RecordKind) -> &str {
+const fn ris_type(kind: &RecordKind) -> &str {
     match kind {
         RecordKind::JournalArticle => "JOUR",
         RecordKind::Conference => "CONF",

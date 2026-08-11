@@ -274,7 +274,7 @@ def package_to_ident(name: str) -> str:
 
 
 def check_workspace() -> None:
-    root_manifest = tomllib.loads((ROOT / "Cargo.toml").read_text())
+    root_manifest = tomllib.loads((ROOT / "Cargo.toml").read_text(encoding="utf-8"))
     members = root_manifest.get("workspace", {}).get("members", [])
     member_paths = {str(item) for item in members}
     actual = {p.parent.relative_to(ROOT).as_posix() for p in (ROOT / "crates").glob("*/Cargo.toml")}
@@ -289,7 +289,7 @@ def check_workspace() -> None:
         "alloc", "core", "proc_macro", "std", "test", "crate", "self", "super",
     }
     for manifest_path in sorted((ROOT / "crates").glob("*/Cargo.toml")):
-        manifest = tomllib.loads(manifest_path.read_text())
+        manifest = tomllib.loads(manifest_path.read_text(encoding="utf-8"))
         package = manifest.get("package", {})
         crate_name = package_to_ident(str(package.get("name", manifest_path.parent.name)))
         deps = manifest.get("dependencies", {})
@@ -299,10 +299,14 @@ def check_workspace() -> None:
         source_files = sorted((manifest_path.parent / "src").rglob("*.rs"))
         imports: set[str] = set()
         for source_path in source_files:
-            imports |= crate_imports(strip_comments_and_literals(source_path.read_text()))
+            imports |= crate_imports(
+                strip_comments_and_literals(source_path.read_text(encoding="utf-8"))
+            )
         local_modules: set[str] = set()
         for source_path in source_files:
-            local_clean = strip_comments_and_literals(source_path.read_text())
+            local_clean = strip_comments_and_literals(
+                source_path.read_text(encoding="utf-8")
+            )
             local_modules.update(re.findall(rf"(?m)^\s*(?:pub(?:\([^)]*\))?\s+)?mod\s+({IDENT})\s*(?:;|\{{)", local_clean))
         undeclared = sorted(imports - declared - known_std - local_modules - {crate_name})
         # Macros can import companion crates indirectly; all currently used crates should still be explicit.

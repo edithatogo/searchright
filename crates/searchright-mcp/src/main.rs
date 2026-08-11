@@ -35,17 +35,17 @@ struct DocumentInput {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct CompileInput {
-    /// JSON or YAML SearchStrategy document.
+    /// JSON or YAML `SearchStrategy` document.
     document: String,
     /// `json` or `yaml`; defaults to JSON.
     format: Option<String>,
-    /// Target dialect such as pubmed, embase or europe_pmc.
+    /// Target dialect such as pubmed, embase or `europe_pmc`.
     dialect: String,
 }
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct DedupInput {
-    /// JSON array of BibliographicRecord contracts.
+    /// JSON array of `BibliographicRecord` contracts.
     records_json: String,
     /// Optional title-similarity threshold, zero to one.
     title_threshold: Option<f64>,
@@ -53,7 +53,7 @@ struct DedupInput {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct PrismaInput {
-    /// JSON PrismaFlow contract.
+    /// JSON `PrismaFlow` contract.
     flow_json: String,
     /// `json`, `mermaid` or `prisma_s_ledger`.
     output: String,
@@ -77,7 +77,7 @@ struct ImportInput {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct ExportInput {
-    /// JSON array of canonical BibliographicRecord contracts.
+    /// JSON array of canonical `BibliographicRecord` contracts.
     records_json: String,
     /// Review identifier for the conversion receipt.
     review_id: String,
@@ -97,17 +97,17 @@ struct LivingDiffInput {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct ProvenanceInput {
-    /// JSON ReviewPlan contract.
+    /// JSON `ReviewPlan` contract.
     plan_json: String,
-    /// JSON array of SourceReceipt contracts.
+    /// JSON array of `SourceReceipt` contracts.
     receipts_json: String,
-    /// JSON array of AuditEvent contracts.
+    /// JSON array of `AuditEvent` contracts.
     events_json: String,
 }
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct RankInput {
-    /// JSON array of canonical BibliographicRecord contracts.
+    /// JSON array of canonical `BibliographicRecord` contracts.
     records_json: String,
     /// Transparent query terms used for advisory ranking.
     query_terms: Vec<String>,
@@ -135,15 +135,15 @@ struct DiagnosticsInput {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct GovernanceInput {
-    /// JSON InstitutionalPolicy contract.
+    /// JSON `InstitutionalPolicy` contract.
     policy_json: String,
-    /// JSON DataHandlingRequest contract.
+    /// JSON `DataHandlingRequest` contract.
     request_json: String,
 }
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct EndpointInput {
-    /// JSON ExecutionEnvelope contract.
+    /// JSON `ExecutionEnvelope` contract.
     envelope_json: String,
     /// Requested HTTPS endpoint.
     endpoint: String,
@@ -151,7 +151,7 @@ struct EndpointInput {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct ComponentInput {
-    /// JSON ProviderComponentManifest contract.
+    /// JSON `ProviderComponentManifest` contract.
     manifest_json: String,
     /// Base64-encoded exact component bytes.
     component_base64: String,
@@ -159,9 +159,9 @@ struct ComponentInput {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct LicensedPlanInput {
-    /// JSON LicensedAdapterProfile contract.
+    /// JSON `LicensedAdapterProfile` contract.
     profile_json: String,
-    /// JSON CompiledStrategy contract.
+    /// JSON `CompiledStrategy` contract.
     compiled_strategy_json: String,
     /// Redacted HTTPS endpoint to authorise.
     endpoint: String,

@@ -75,7 +75,7 @@ pub const fn provider_mode(value: LegacyExecution) -> Option<ProviderMode> {
 }
 
 /// One old/new parity observation supplied by a dual-run harness.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct ParityObservation {
     /// Stable dimension.
     pub dimension: String,

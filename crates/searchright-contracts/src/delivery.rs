@@ -11,7 +11,7 @@ use crate::{
     require_schema_version, require_text,
 };
 
-/// GitHub repository visibility.
+/// `GitHub` repository visibility.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RepositoryVisibility {
@@ -24,13 +24,13 @@ pub enum RepositoryVisibility {
 /// Feature switches controlled by the repository-settings manifest.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct RepositoryFeatures {
-    /// GitHub Issues are enabled.
+    /// `GitHub` Issues are enabled.
     pub issues: bool,
-    /// GitHub Projects are enabled.
+    /// `GitHub` Projects are enabled.
     pub projects: bool,
-    /// GitHub Discussions are enabled.
+    /// `GitHub` Discussions are enabled.
     pub discussions: bool,
-    /// GitHub Wiki is enabled.
+    /// `GitHub` Wiki is enabled.
     pub wiki: bool,
 }
 
@@ -66,7 +66,7 @@ pub struct RepositorySecurityControls {
     pub private_vulnerability_reporting: bool,
 }
 
-/// GitHub ruleset enforcement mode.
+/// `GitHub` ruleset enforcement mode.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RulesetEnforcement {
@@ -101,7 +101,7 @@ pub struct RepositoryRuleset {
     pub non_fast_forward: bool,
 }
 
-/// Declarative GitHub repository control-plane manifest.
+/// Declarative `GitHub` repository control-plane manifest.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct GitHubRepositorySettings {
     /// Contract identifier.
