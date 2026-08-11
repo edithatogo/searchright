@@ -272,4 +272,45 @@ mod tests {
             Err(AuditError::EventHashMismatch { index: 0 })
         ));
     }
+
+    #[test]
+    fn duplicate_event_identifier_is_rejected_without_mutation() {
+        let mut ledger = AuditLedger::new();
+        assert!(ledger.append(draft("event-1")).is_ok());
+        let original = ledger.events().to_vec();
+
+        assert!(matches!(
+            ledger.append(draft("event-1")),
+            Err(AuditError::DuplicateEventId(event_id)) if event_id == "event-1"
+        ));
+        assert_eq!(ledger.events(), original);
+    }
+
+    #[test]
+    fn mixed_review_chain_is_rejected() {
+        let mut ledger = AuditLedger::new();
+        assert!(ledger.append(draft("event-1")).is_ok());
+        let mut foreign = draft("event-2");
+        foreign.review_id = "review-2".to_owned();
+
+        assert!(matches!(
+            ledger.append(foreign),
+            Err(AuditError::ReviewMismatch { expected, actual })
+                if expected == "review-1" && actual == "review-2"
+        ));
+        assert_eq!(ledger.events().len(), 1);
+    }
+
+    #[test]
+    fn canonical_hash_is_independent_of_object_key_order() {
+        let mut left = draft("event-1");
+        left.payload = json!({"a": {"b": 1, "d": 2}, "z": 1});
+        let mut right = draft("event-1");
+        right.payload = json!({"z": 1, "a": {"d": 2, "b": 1}});
+
+        let left_hash = hash_draft(&left, "GENESIS");
+        let right_hash = hash_draft(&right, "GENESIS");
+        assert!(left_hash.is_ok());
+        assert_eq!(left_hash.ok(), right_hash.ok());
+    }
 }
