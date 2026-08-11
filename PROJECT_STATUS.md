@@ -129,8 +129,10 @@ compiler or methodological-performance result.
   that head. Mutation evidence remains absent and the fuzz jobs were still in
   progress at observation time; none of these results establishes product or
   methodological correctness.
-- cargo-vet, cargo-semver-checks and cargo-public-api require compiler/tool
-  bootstrap and baseline receipts.
+- The hosted public-API and SemVer job passes with its pinned rustdoc nightly.
+  The valid cargo-vet store contains no local audits or exemptions and fails
+  closed on 273 unvetted dependencies: 252 require `safe-to-deploy` evidence
+  and 21 dev-only dependencies require `safe-to-run` evidence.
 
 ### Provider and methodological evidence
 
