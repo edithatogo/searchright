@@ -1,0 +1,50 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "00",
+  "observed_at": "2026-08-12T05:34:49+10:00",
+  "reviewed_revision": "2651b5b",
+  "reviewed_revision_full": "2651b5bfb7ea7d64ed0d779eeceaa5a27132dac7",
+  "status": "review_fixes_verified_with_external_blockers",
+  "checks": [
+    {
+      "command": "cargo fmt --all -- --check",
+      "status": "passed"
+    },
+    {
+      "command": "rustup run 1.97.1-x86_64-pc-windows-gnu cargo test -p evidence-search-core --locked --quiet",
+      "status": "passed",
+      "tests_passed": 26
+    },
+    {
+      "command": "rustup run 1.97.1-x86_64-pc-windows-gnu cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings",
+      "status": "passed",
+      "notes": "The existing clippy.toml/Cargo.toml MSRV configuration warning is not a Rust lint diagnostic."
+    },
+    {
+      "command": "uv run --no-project --with-requirements requirements/validation.txt python scripts/run_static_harness.py",
+      "status": "failed",
+      "gates_passed": 50,
+      "gates_total": 51,
+      "notes": "Only generate_evidence_debt.py --check failed because the review changed the assertion ledger; the generated debt ledger was refreshed immediately afterward."
+    },
+    {
+      "command": "uv run --no-project python scripts/generate_evidence_debt.py --write",
+      "status": "passed",
+      "assertions": 199,
+      "critical_blockers": 16,
+      "track_level_only": 121
+    }
+  ],
+  "review_fixes": [
+    "Bound provider calls, rate-limit waits and retry delays by the declared total execution deadline.",
+    "Added deterministic paused-time regressions for all three total-budget paths.",
+    "Reconciled Track 00 claim boundaries, hosted compiler evidence and GitHub control-plane evidence.",
+    "Removed resolved context-lock and hosted compiler gates without promoting aggregate verification."
+  ],
+  "open_blockers": [
+    "Searchright is not registered in the live edithatogo/repository-standards registry and no estate-conformance receipt exists.",
+    "The required Rust supply-chain policy check fails closed because 273 dependencies lack reviewed cargo-vet evidence.",
+    "PR #569 is open and blocked; Track 00 changes are not merged to protected main."
+  ],
+  "claim_boundary": "This receipt verifies the Track 00 review fixes at the named revision. It does not establish repository-standards conformance, dependency trust, a green aggregate verify.sh, merge admission or Track 00 completion."
+}
