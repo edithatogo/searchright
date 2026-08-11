@@ -1,6 +1,6 @@
 # Project status
 
-**Status date:** 9 August 2026
+**Status date:** 12 August 2026
 
 **Evidence ceiling:** source-verified alpha
 
@@ -17,9 +17,10 @@ state, symbol/path mapping, deterministic gate, open evidence requirements and
 permitted claim.
 
 The network-free local harness covers 51 gates, backed by a 53-command gate
-catalogue with explicit evidence ceilings. Rust compilation, live provider
+catalogue with explicit evidence ceilings. Local GNU and hosted cross-platform
+Rust compilation pass, while dependency-trust admission, live provider
 execution, downstream cutover and external methodological evaluation remain
-open, separately named evidence levels.
+open as separately named evidence levels.
 
 ## Implemented local source and policy surfaces
 
@@ -121,14 +122,13 @@ compiler or methodological-performance result.
 - Repository-wide rustfmt, Clippy `-D warnings`, Cargo doc and the 55-test GNU
   workspace suite pass locally on Rust 1.97.1. Hosted cross-platform and MSRV
   jobs remain admission evidence and are not promoted while PR #569 is open.
-- Coverage executed on PR #569 head `3dbb109`: the hosted report measured
+- Coverage executed on PR #569 head `9fc3fb6`: the hosted report measured
   45.24% lines (9,567 total; 5,239 missed), 44.97% regions and 42.79%
   functions. LCOV was preserved, but the >90% requirement correctly remains
   failed; this is a coverage deficit, not an infrastructure failure.
-- Kani, Miri, Loom and `cargo-careful` passed their hosted bounded suites on
-  that head. Mutation evidence remains absent and the fuzz jobs were still in
-  progress at observation time; none of these results establishes product or
-  methodological correctness.
+- Kani, Miri, Loom, `cargo-careful` and all three fuzz jobs passed their hosted
+  bounded suites on that head. Mutation evidence remains absent; none of these
+  results establishes product or methodological correctness.
 - The hosted public-API and SemVer job passes with its pinned rustdoc nightly.
   The valid cargo-vet store contains no local audits or exemptions and fails
   closed on 273 unvetted dependencies: 252 require `safe-to-deploy` evidence

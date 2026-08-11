@@ -55,7 +55,7 @@ def render_metadata(entry: dict) -> str:
         "status": entry["status"],
         "implementation_state": entry["implementation_state"],
         "created": "2026-08-05" if int(track_id) <= 11 else ("2026-08-06" if int(track_id) <= 30 else "2026-08-08"),
-        "updated": "2026-08-09",
+        "updated": entry.get("updated", "2026-08-09"),
         "dependencies": entry.get("dependencies", []),
         "horizon": entry["horizon"],
         "evidence_level": entry["evidence_level"],
@@ -77,7 +77,7 @@ def render_evidence(entry: dict) -> str:
         "status": entry["status"],
         "implementation_state": entry["implementation_state"],
         "evidence_level": entry["evidence_level"],
-        "source_verified_on": "2026-08-06",
+        "source_verified_on": entry.get("source_verified_on", "2026-08-06"),
         "source_evidence": entry["deliverables"],
         "traceability": f"conductor/tracks/{track_id}-{entry['slug']}/traceability.json",
         "static_checks": entry["checks"],
@@ -90,9 +90,9 @@ def render_evidence(entry: dict) -> str:
             "phases": keys["phase_issue_keys"],
             "tasks": keys["task_issue_keys"],
         },
-        "remote_github_evidence": [],
-        "runtime_evidence": [],
-        "external_evidence": [],
+        "remote_github_evidence": entry.get("remote_github_evidence", []),
+        "runtime_evidence": entry.get("runtime_evidence", []),
+        "external_evidence": entry.get("external_evidence", []),
     }
     return json.dumps(value, indent=2) + "\n"
 
@@ -154,7 +154,11 @@ def render_plan(entry: dict) -> str:
             "",
             "- [x] Reconcile source paths, requirements, interface effects and claim boundaries.",
             "- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.",
-            "- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.",
+            (
+                "- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute."
+                if entry.get("review_completed", False)
+                else "- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute."
+            ),
             "- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.",
             "",
         ]

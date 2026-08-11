@@ -25,7 +25,7 @@
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Source-verified implementation with commit-bound local GNU compiler/test evidence and external evidence still required; repository-wide verify.sh, MSVC, repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Source-verified implementation with commit-bound local GNU compiler/test evidence, hosted cross-platform compiler checks and an audited GitHub control plane. Full verify.sh remains red on dependency-trust evidence, and upstream repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "Cargo.toml",
         "rust-toolchain.toml",
@@ -46,10 +46,18 @@
       "implementation_state": "external_evidence_required",
       "outcome": "Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap.",
       "requirements": [],
+      "remote_github_evidence": [
+        "verification/receipts/github-control-plane-audit.json"
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-00-local-verification.json"
+      ],
+      "source_verified_on": "2026-08-12",
       "slug": "foundation-conductor-toolchain",
       "status": "external_evidence_required",
       "title": "Foundation, Conductor and toolchain",
-      "track_id": "00"
+      "track_id": "00",
+      "updated": "2026-08-12"
     },
     {
       "blockers": [
