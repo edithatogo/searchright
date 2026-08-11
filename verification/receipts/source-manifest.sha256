@@ -23,6 +23,7 @@ ff41ade11fbea69c279832cb21a11514ae7b7597904d603672adfc81132d7c24  ./.github/work
 0c53e108c6b7d1231cf2b744fc2520544674564e7beeb169fa092773f875d3c4  ./.github/workflows/resilience.yml
 f15b0f1e32a9511e2a1193df4b1915f7eb711bf2b6d808a496af24a89c4093cd  ./.github/workflows/security.yml
 56f81f200de693af722e40fe1979aef13db55b9bfdb497ae3554213dc55b4172  ./.gitignore
+ed5f8c3a259fbdfb99d06d519b5dd72f7838bcc0fb0e810545683725d6b6b0b7  ./.gitleaks.toml
 6594d7d20dad9cb44f9393d5da8163a12170b357a9a77bbfa3ec131b1bd0bdb1  ./.markdownlint-cli2.jsonc
 9ed9cb84a6594f41b50938a3fccfa8e6b0c470927a8143978443e564393f8ba6  ./.vale.ini
 8a5376570af4908c830d7aadfd5a4466d3630712377cd1a9a28249af754a254c  ./.vale/config/vocabularies/Searchright/accept.txt
@@ -847,7 +848,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 2480395a1b729a91443c67c12f65fe2fa6c75e8981a4553b90d636917a50f4fe  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 1d66cc63a5f9f91ce165a2583bbb4890c2c909504407c3fda1f2634e18e29fbb  ./context/claim-boundaries.json
-6cf46ac5c51a9a4e05e7782b635a7c7e8dbbe050ded6256c8345e79e1c6ae478  ./context/context-lock.json
+440a52fcae7e6d7da68b9cad2b9291fe2fda37268698bdb01b9f1af7fb02468c  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 e3d57d1948aebe24f198bef43acdb85e3839d20bf0c2ee4578d7a94ac897325a  ./context/evidence-ledger.json
 2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244  ./context/hazard-log.json
@@ -1227,7 +1228,7 @@ be1b1cd3b45e0441f56229e7319f09a05fe9f41a2ec86e0b3b3adaeebb1d0966  ./registry/gla
 197eb2b8f2db0b830d27fe9a42110a2c37fb9a02d2d3787aaec62afbe3b97c82  ./release/rehearsal.json
 7ec7bc4e0af8a552dca307f23b6f5f128a668fa64966fb26454a99a1bd5a9268  ./renovate.json5
 3b22b9a0551f64707cea3b7dd46ce9c01d399f8c6c23e5b5f518257fc648c352  ./requirements/README.md
-1866d3ae38fe7ab6dd13c62e72927134acfd10bc9f498fde772ab9ecd0f54d7e  ./requirements/rust-tools.json
+dad121df6e518f76a6b477c5a4a7ad9a6d9bc5ced98733d93a9af4e0618a2686  ./requirements/rust-tools.json
 1148fc068b1ba1086a7d97c16e9d36bbe852e080f6e6d5f7adcb2f0aaba8ae96  ./requirements/validation.in
 4b9da07aa9656653624ca72af846c428e7c75f72aacf6dbfbdfde99e6d2e6e3b  ./requirements/validation.txt
 f41009d830d096b82054f8f748a6835082a3e485edfba646af5de8691721693c  ./rust-toolchain.toml
