@@ -36,11 +36,11 @@
     "SR-075"
   ],
   "blockers": [
-    "Push the current local commit wave to remote main and re-run the read-only convergence audit against that exact revision.",
-    "Resolve or explicitly accept the audit warning that the GitHub CLI JSON shape did not expose 1,135 custom-field values.",
-    "Re-run the Track 31 static and control-plane checks after the current generated-ledger reconciliation settles."
+    "Create or verify the public remote and push the committed main branch.",
+    "Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.",
+    "Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts."
   ],
-  "claim_boundary": "The public repository, nested issue hierarchy and Project control plane were observed by a read-only audit with zero mutation operations. This receipt does not expose every custom-field value, does not cover later unpushed commits and cannot promote product maturity.",
+  "claim_boundary": "The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-31",
@@ -63,26 +63,7 @@
       "track-31-phase-4-task-04"
     ]
   },
-  "remote_github_evidence": [
-    {
-      "path": "verification/receipts/github-control-plane-audit.json",
-      "sha256": "1b20a65c2f2a154c38bc24f3a89870cb8aaa87a91f6f72be1f406d4cdb0b9673",
-      "status": "passed_with_warning",
-      "observed": {
-        "repository": "https://github.com/edithatogo/searchright",
-        "default_branch": "main",
-        "issues": 568,
-        "native_subissue_relationships": 567,
-        "project_url": "https://github.com/users/edithatogo/projects/40",
-        "project_fields": 26,
-        "project_views": 7,
-        "project_items": 568,
-        "ruleset_matches": 1,
-        "mutation_operations": 0
-      },
-      "warning": "GitHub CLI JSON shape did not expose 1,135 custom-field values; item membership and recognised values were still verified."
-    }
-  ],
+  "remote_github_evidence": [],
   "runtime_evidence": [],
   "external_evidence": []
 }

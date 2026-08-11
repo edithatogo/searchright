@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Expand the conformance corpus with independently reviewed source strategies.
+- [ ] Define versioned named-filter records and validated filter packs.
 
 ## Completion and evidence contract
 

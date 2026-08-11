@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and run the shared provider runtime tests.
+- [ ] Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport.
 
 ## Completion and evidence contract
 

@@ -29,7 +29,7 @@
     "SR-011"
   ],
   "blockers": [
-    "Resolve, validate and pin accepted DNS answers in every live connector transport before closing H-002; literal and supplied-resolution denial logic is compiler-tested.",
+    "Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport.",
     "Run old/new Sourceright fixtures in the downstream repository.",
     "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
   ],
@@ -50,7 +50,6 @@
       "track-03-phase-3-task-01",
       "track-03-phase-3-task-02",
       "track-03-phase-3-task-03",
-      "track-03-phase-3-task-04",
       "track-03-phase-4-task-01",
       "track-03-phase-4-task-02",
       "track-03-phase-4-task-03",

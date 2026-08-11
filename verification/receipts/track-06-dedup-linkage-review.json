@@ -1,0 +1,24 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "06",
+  "observed_at": "2026-08-12T06:50:00+10:00",
+  "source_revision": "b5f31a8db941f88d929ee8b831014360f3f9b236",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_explicit_blockers",
+  "checks": [
+    {
+      "command": "cargo test -p searchright-dedup -p searchright-study --locked",
+      "status": "passed",
+      "tests_passed": 8
+    },
+    {
+      "command": "cargo clippy -p searchright-dedup -p searchright-study --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "limits": [
+    "Deduplication remains a review-required proposal and does not auto-merge records.",
+    "No independently adjudicated corpus calibration was performed.",
+    "All import/export formats still require golden round-trip evidence."
+  ]
+}

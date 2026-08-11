@@ -1,0 +1,13 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "25",
+  "observed_at": "2026-08-12",
+  "source_revision": "623110e39a51fc250aac25a9bd45b621f1e37f4c",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {"command": "cargo test -p searchright-provenance --locked", "status": "passed", "tests_passed": 4},
+    {"command": "cargo clippy -p searchright-provenance --locked --all-targets -- -D warnings", "status": "passed"}
+  ],
+  "limits": ["Independent RO-Crate and W3C PROV validation remains open.", "Repository profiles and authorised pilot deposits remain open."]
+}

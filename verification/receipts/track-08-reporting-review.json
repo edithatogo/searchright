@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "08",
+  "observed_at": "2026-08-12T06:58:00+10:00",
+  "source_revision": "0239b875ee280b6d57065133793b59a06270cbf5",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "cargo test -p searchright-prisma -p searchright-validation --locked",
+      "status": "passed",
+      "tests_passed": 10
+    },
+    {
+      "command": "cargo clippy -p searchright-prisma -p searchright-validation --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "limits": [
+    "PRISMA and PRISMA-S outputs are derived reporting evidence, not conduct certification.",
+    "Independent PRESS review, wider render-format coverage and PRISMA.jl parity remain open."
+  ]
+}

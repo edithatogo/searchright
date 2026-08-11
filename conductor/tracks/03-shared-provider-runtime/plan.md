@@ -33,10 +33,7 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-03-phase-3 -->
 
-- [x] Compile and run the shared provider runtime tests.
-- [ ] Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence.
-  - [x] Reject prohibited literal hosts and validate complete supplied DNS answer sets deterministically.
-  - [ ] Resolve, validate and pin accepted DNS answers in every live connector transport to prevent rebinding.
+- [ ] Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport.
 - [ ] Run old/new Sourceright fixtures in the downstream repository.
 - [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 

@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and run arithmetic, snapshot and standards-pack tests.
+- [ ] Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.
 
 ## Completion and evidence contract
 

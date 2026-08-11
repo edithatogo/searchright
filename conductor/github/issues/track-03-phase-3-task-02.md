@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence.
+- [ ] Run old/new Sourceright fixtures in the downstream repository.
 
 ## Completion and evidence contract
 

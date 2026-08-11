@@ -1,0 +1,13 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "22",
+  "observed_at": "2026-08-12",
+  "source_revision": "b7ff04d2166c81ef20684a486742533e4610ab4f",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {"command": "cargo test -p searchright-contracts -p searchright-living --locked", "status": "passed", "tests_passed": 16},
+    {"command": "cargo clippy -p searchright-contracts -p searchright-living --all-targets --locked -- -D warnings", "status": "passed"}
+  ],
+  "limits": ["Real update pilots and independent change-attribution reproduction remain open.", "Scheduled approval and human operational evidence remain open."]
+}

@@ -6,8 +6,9 @@ Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Compile and execute dialect snapshot/property tests. (`track-02-phase-3-task-01`)
-- [ ] T02: Expand the conformance corpus with independently reviewed source strategies. (`track-02-phase-3-task-02`)
+- [ ] T01: Complete dialect-specific semantic parsers and full translation snapshot/property coverage. (`track-02-phase-3-task-01`)
+- [ ] T02: Define versioned named-filter records and validated filter packs. (`track-02-phase-3-task-02`)
+- [ ] T03: Expand the conformance corpus with independently reviewed source strategies. (`track-02-phase-3-task-03`)
 
 ## Evidence rule
 

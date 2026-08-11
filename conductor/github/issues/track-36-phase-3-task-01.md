@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
+- [ ] Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
 
 ## Completion and evidence contract
 

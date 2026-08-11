@@ -1,0 +1,14 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "26",
+  "observed_at": "2026-08-12",
+  "source_revision": "7748e76ecd95c68c4635e6ab9d9b5c7ad3bfea92",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_open_gates",
+  "checks": [
+    {"command": "cargo test -p searchright-assurance --locked", "status": "passed", "tests_passed": 9},
+    {"command": "cargo clippy -p searchright-assurance --all-targets --locked -- -D warnings", "status": "passed"},
+    {"command": "python scripts/check_schema_migrations.py", "status": "passed", "families_checked": 59}
+  ],
+  "limits": ["Kani, Miri and cargo-careful receipts remain open.", "Cross-version compatibility and executable migration/rollback evidence remain open."]
+}

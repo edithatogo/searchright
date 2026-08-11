@@ -80,7 +80,7 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-16-phase-3 -->
 
-- [x] Verify the committed Cargo.lock with the exact Rust 1.97.1 GNU host toolchain and locked workspace tests.
+- [ ] Verify the committed Cargo.lock against the exact supported toolchains and clean-room dependency policy.
 - [ ] Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans.
 - [ ] Run clean-room offline builds, binary comparison, install smoke and MCP transcript.
 - [ ] Resolve every critical/high finding and document justified exclusions.
@@ -91,5 +91,5 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [x] Run a bounded compiler-backed Conductor review and append the reproducible PRESS coverage fix.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

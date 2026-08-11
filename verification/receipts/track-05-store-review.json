@@ -1,0 +1,24 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "05",
+  "observed_at": "2026-08-12T06:46:00+10:00",
+  "source_revision": "55a22fe9303620690e64cf2b9e4e62372a48ddde",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_explicit_blockers",
+  "checks": [
+    {
+      "command": "cargo test -p evidence-search-core -p searchright-store --locked",
+      "status": "passed",
+      "tests_passed": 42
+    },
+    {
+      "command": "cargo clippy -p evidence-search-core -p searchright-store --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "limits": [
+    "Partial-write corruption is detected fail-closed; automated filesystem crash recovery is not proven.",
+    "Multi-process and supported-platform durability remain open.",
+    "Retention, export and deletion semantics require external policy review and a contracted deletion operation."
+  ]
+}

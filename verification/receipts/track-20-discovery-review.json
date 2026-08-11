@@ -1,0 +1,16 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "20",
+  "observed_at": "2026-08-12",
+  "source_revision": "940894163946834e5f3e1fd26b30ac460f6e4784",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {"command": "cargo test -p searchright-contracts -p searchright-discovery --locked", "status": "passed", "tests_passed": 16},
+    {"command": "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets --locked -- -D warnings", "status": "passed"}
+  ],
+  "limits": [
+    "Authorised live adapters and information-specialist review remain open.",
+    "The bounded graph does not establish support for named registers or repositories."
+  ]
+}

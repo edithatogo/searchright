@@ -27,7 +27,7 @@
     "SR-048"
   ],
   "blockers": [
-    "Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.",
+    "Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection.",
     "Complete external review of retention and deletion semantics."
   ],
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
@@ -53,6 +53,8 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "runtime_evidence": [
+    "verification/receipts/track-05-store-review.json"
+  ],
   "external_evidence": []
 }

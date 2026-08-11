@@ -36,7 +36,7 @@
     {
       "assertion_id": "T02-A002",
       "statement": "Add line-numbered native strategy representation",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-contracts/src/query.rs",
@@ -152,8 +152,7 @@
         "evidence_search_core::compiler::tests::redundant_grouping_is_compilation_invariant"
       ],
       "deterministic_tests": [
-        "python scripts/check_native_query_corpus.py",
-        "cargo test -p evidence-search-core"
+        "python scripts/check_native_query_corpus.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/02-query-ast-dialects/evidence.json",

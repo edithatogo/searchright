@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and execute dialect snapshot/property tests.
+- [ ] Complete dialect-specific semantic parsers and full translation snapshot/property coverage.
 
 ## Completion and evidence contract
 

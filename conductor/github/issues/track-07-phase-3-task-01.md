@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and execute state-machine and authority-negative tests.
+- [ ] Complete reviewer usability and inter-rater calibration evaluation.
 
 ## Completion and evidence contract
 

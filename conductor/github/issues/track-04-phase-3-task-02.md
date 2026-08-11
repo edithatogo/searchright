@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run authorised, redacted live smokes for each advertised provider.
+- [ ] Verify upstream terms, rate limits and response changes at release time.
 
 ## Completion and evidence contract
 
