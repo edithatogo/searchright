@@ -14,15 +14,14 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: fuzz-${{ github.ref }}-${{ matrix.target }}
-  cancel-in-progress: true
-
 jobs:
   fuzz:
     name: Fuzz ${{ matrix.target }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    concurrency:
+      group: fuzz-${{ github.ref }}-${{ matrix.target }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
