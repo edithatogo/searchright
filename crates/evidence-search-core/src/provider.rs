@@ -520,17 +520,25 @@ impl ProviderRegistry {
             if slot.mode == ProviderMode::Live && !request.policy.live_enabled {
                 return Err(ProviderError::LiveDisabled(provider_id.to_owned()));
             }
-            self.apply_rate_limit(slot, minimum_interval_ms).await;
-            let result = tokio::time::timeout(
-                Duration::from_secs(request.policy.timeout_seconds),
-                slot.provider.execute_page(request),
-            )
-            .await
-            .map_err(|_| ProviderError::Timeout {
-                provider: provider_id.to_owned(),
-                timeout_seconds: request.policy.timeout_seconds,
-            })
-            .and_then(|page| page);
+            self.apply_rate_limit(slot, minimum_interval_ms, started, total_timeout)
+                .await?;
+            let operation_timeout = remaining_operation_timeout(
+                started,
+                total_timeout,
+                request.policy.timeout_seconds,
+            )?;
+            let result =
+                tokio::time::timeout(operation_timeout, slot.provider.execute_page(request))
+                    .await
+                    .map_err(|_| {
+                        operation_timeout_error(
+                            provider_id,
+                            request.policy.timeout_seconds,
+                            started,
+                            total_timeout,
+                        )
+                    })
+                    .and_then(|page| page);
 
             match result {
                 Ok(page) => {
@@ -593,14 +601,25 @@ impl ProviderRegistry {
                     let calculated = base.saturating_mul(1_u64 << exponent).min(maximum);
                     let delay_ms = provider_retry_after.unwrap_or(calculated).min(maximum);
                     warnings.push(format!("bounded retry delay: {delay_ms} ms"));
-                    tokio::time::sleep(Duration::from_millis(delay_ms)).await;
+                    sleep_within_total_budget(
+                        Duration::from_millis(delay_ms),
+                        started,
+                        total_timeout,
+                    )
+                    .await?;
                 }
                 Err(error) => return Err(error),
             }
         }
     }
 
-    async fn apply_rate_limit(&self, slot: &ProviderSlot, min_interval_ms: u64) {
+    async fn apply_rate_limit(
+        &self,
+        slot: &ProviderSlot,
+        min_interval_ms: u64,
+        started: tokio::time::Instant,
+        total_timeout: Option<Duration>,
+    ) -> Result<(), ProviderError> {
         let delay = {
             let mut reserved = slot.last_call.lock().await;
             let now = tokio::time::Instant::now();
@@ -612,8 +631,9 @@ impl ProviderRegistry {
             next.saturating_duration_since(now)
         };
         if !delay.is_zero() {
-            tokio::time::sleep(delay).await;
+            sleep_within_total_budget(delay, started, total_timeout).await?;
         }
+        Ok(())
     }
 }
 
@@ -821,6 +841,48 @@ fn remaining_operation_timeout(
     Ok(per_operation)
 }
 
+fn operation_timeout_error(
+    provider_id: &str,
+    per_operation_seconds: u64,
+    started: tokio::time::Instant,
+    total_timeout: Option<Duration>,
+) -> ProviderError {
+    if total_timeout.is_some_and(|limit| started.elapsed() >= limit) {
+        ProviderError::BudgetExceeded {
+            kind: "total_timeout_seconds",
+            limit: total_timeout.map_or(0, |limit| limit.as_secs()),
+        }
+    } else {
+        ProviderError::Timeout {
+            provider: provider_id.to_owned(),
+            timeout_seconds: per_operation_seconds,
+        }
+    }
+}
+
+async fn sleep_within_total_budget(
+    duration: Duration,
+    started: tokio::time::Instant,
+    total_timeout: Option<Duration>,
+) -> Result<(), ProviderError> {
+    let Some(limit) = total_timeout else {
+        tokio::time::sleep(duration).await;
+        return Ok(());
+    };
+    let remaining = limit.saturating_sub(started.elapsed());
+    if remaining.is_zero()
+        || tokio::time::timeout(remaining, tokio::time::sleep(duration))
+            .await
+            .is_err()
+    {
+        return Err(ProviderError::BudgetExceeded {
+            kind: "total_timeout_seconds",
+            limit: limit.as_secs(),
+        });
+    }
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use std::sync::atomic::{AtomicUsize, Ordering};
@@ -851,6 +913,55 @@ mod tests {
 
     struct PendingCache;
     struct PendingWriteCache;
+    struct PendingProvider;
+    struct RetryableProvider;
+
+    #[async_trait]
+    impl SearchProvider for PendingProvider {
+        fn manifest(&self) -> ProviderManifest {
+            EmptyFixture.manifest()
+        }
+
+        fn mode(&self) -> ProviderMode {
+            ProviderMode::Fixture
+        }
+
+        fn endpoint_label(&self) -> Option<String> {
+            None
+        }
+
+        async fn execute_page(
+            &self,
+            _request: &SearchRequest,
+        ) -> Result<ProviderPage, ProviderError> {
+            std::future::pending().await
+        }
+    }
+
+    #[async_trait]
+    impl SearchProvider for RetryableProvider {
+        fn manifest(&self) -> ProviderManifest {
+            EmptyFixture.manifest()
+        }
+
+        fn mode(&self) -> ProviderMode {
+            ProviderMode::Fixture
+        }
+
+        fn endpoint_label(&self) -> Option<String> {
+            None
+        }
+
+        async fn execute_page(
+            &self,
+            _request: &SearchRequest,
+        ) -> Result<ProviderPage, ProviderError> {
+            Err(ProviderError::RateLimited {
+                provider: "empty".to_owned(),
+                retry_after_ms: Some(2_000),
+            })
+        }
+    }
 
     #[async_trait]
     impl PageCache for TamperCache {
@@ -1404,6 +1515,64 @@ mod tests {
         bounded.policy.cache_write_enabled = true;
         let result = registry.execute("empty", bounded, "fixture").await;
         assert!(matches!(result, Err(ProviderError::Timeout { .. })));
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn provider_calls_cannot_exceed_the_total_timeout() {
+        let mut registry = ProviderRegistry::new();
+        assert!(registry.register(Arc::new(PendingProvider)).is_ok());
+        let mut bounded = request();
+        bounded.policy.timeout_seconds = 1;
+        bounded.policy.total_timeout_seconds = Some(1);
+        let result = registry.execute("empty", bounded, "fixture").await;
+        assert!(matches!(
+            result,
+            Err(ProviderError::BudgetExceeded {
+                kind: "total_timeout_seconds",
+                limit: 1
+            })
+        ));
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn rate_limit_waits_cannot_exceed_the_total_timeout() {
+        let mut registry = ProviderRegistry::new();
+        assert!(registry.register(Arc::new(EmptyFixture)).is_ok());
+        let mut first = request();
+        first.policy.min_interval_ms = 2_000;
+        assert!(registry.execute("empty", first, "fixture").await.is_ok());
+
+        let mut bounded = request();
+        bounded.policy.timeout_seconds = 1;
+        bounded.policy.min_interval_ms = 2_000;
+        bounded.policy.total_timeout_seconds = Some(1);
+        let result = registry.execute("empty", bounded, "fixture").await;
+        assert!(matches!(
+            result,
+            Err(ProviderError::BudgetExceeded {
+                kind: "total_timeout_seconds",
+                limit: 1
+            })
+        ));
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn retry_delays_cannot_exceed_the_total_timeout() {
+        let mut registry = ProviderRegistry::new();
+        assert!(registry.register(Arc::new(RetryableProvider)).is_ok());
+        let mut bounded = request();
+        bounded.policy.timeout_seconds = 1;
+        bounded.policy.max_retries = 1;
+        bounded.policy.retry_max_delay_ms = Some(2_000);
+        bounded.policy.total_timeout_seconds = Some(1);
+        let result = registry.execute("empty", bounded, "fixture").await;
+        assert!(matches!(
+            result,
+            Err(ProviderError::BudgetExceeded {
+                kind: "total_timeout_seconds",
+                limit: 1
+            })
+        ));
     }
 
     #[test]

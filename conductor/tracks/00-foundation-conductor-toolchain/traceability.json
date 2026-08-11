@@ -5,7 +5,7 @@
   "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/00-foundation-conductor-toolchain/spec.md#scope",
-  "claim_boundary": "Five foundation assertions are source implemented with commit-bound local GNU compiler/test evidence, while upstream repository-standards registration and estate conformance remain externally blocked. Local compiler evidence is not a green aggregate verify.sh or compiler-verified CI receipt.",
+  "claim_boundary": "Five of six foundation assertions are source implemented with commit-bound local GNU compiler/test evidence and hosted cross-platform compiler checks. Upstream repository-standards registration and estate conformance remain externally blocked, and the required dependency-trust gate is red; this is not a green aggregate verify.sh receipt.",
   "assertions": [
     {
       "assertion_id": "T00-A001",
@@ -54,9 +54,7 @@
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"
       ],
-      "open_gates": [
-        "Regenerate the context lock after unrelated dirty Conductor artefacts are reconciled."
-      ],
+      "open_gates": [],
       "permitted_claim": "The Conductor handshake and all linked project context documents exist and resolve locally."
     },
     {
@@ -79,10 +77,8 @@
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"
       ],
-      "open_gates": [
-        "Repair the local MSVC linker environment before claiming MSVC validation."
-      ],
-      "permitted_claim": "Rust 1.97.1 is pinned and exact GNU compiler execution passed locally; MSVC validation is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Rust 1.97.1 is pinned; exact GNU compiler execution passed locally and hosted Windows, macOS, Linux and declared-version jobs passed on PR #569."
     },
     {
       "assertion_id": "T00-A004",
@@ -159,9 +155,10 @@
         "verification/receipts/track-00-local-verification.json"
       ],
       "open_gates": [
-        "Run the complete aggregate harness from a clean tree with declared Python validation dependencies and a valid native linker environment."
+        "Supply reviewed cargo-vet audit evidence for 273 dependencies; do not substitute unaudited exemptions.",
+        "Complete repository-wide verify.sh only after every required gate passes."
       ],
-      "permitted_claim": "One-command bootstrap and verification entry points exist, and local compiler/test results are recorded; the repository-wide aggregate harness is not green."
+      "permitted_claim": "One-command bootstrap and verification entry points exist; the 51-gate static harness and compiler/test jobs pass, while the required dependency-trust gate keeps the repository-wide aggregate harness red."
     }
   ]
 }

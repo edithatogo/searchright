@@ -5,7 +5,7 @@
   "status": "external_evidence_required",
   "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-08-12",
   "source_evidence": [
     "Cargo.toml",
     "rust-toolchain.toml",
@@ -27,7 +27,7 @@
   "blockers": [
     "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
   ],
-  "claim_boundary": "Source-verified implementation with commit-bound local GNU compiler/test evidence and external evidence still required; repository-wide verify.sh, MSVC, repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Source-verified implementation with commit-bound local GNU compiler/test evidence, hosted cross-platform compiler checks and an audited GitHub control plane. Full verify.sh remains red on dependency-trust evidence, and upstream repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-00",
@@ -48,7 +48,11 @@
       "track-00-phase-4-task-04"
     ]
   },
-  "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "remote_github_evidence": [
+    "verification/receipts/github-control-plane-audit.json"
+  ],
+  "runtime_evidence": [
+    "verification/receipts/track-00-local-verification.json"
+  ],
   "external_evidence": []
 }

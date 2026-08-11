@@ -28,6 +28,6 @@ Establish the Git repository, Conductor context, pinned toolchain, standards inh
 
 ## Claim boundary
 
-Source-verified implementation with commit-bound local GNU compiler/test evidence and external evidence still required; repository-wide verify.sh, MSVC, repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Source-verified implementation with commit-bound local GNU compiler/test evidence, hosted cross-platform compiler checks and an audited GitHub control plane. Full verify.sh remains red on dependency-trust evidence, and upstream repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
