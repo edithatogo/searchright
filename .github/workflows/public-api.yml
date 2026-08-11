@@ -28,7 +28,7 @@ jobs:
       - name: Install stable and pinned rustdoc JSON nightly
         run: |
           rustup toolchain install 1.97.1 --profile minimal
-          rustup toolchain install nightly-2025-08-02 --profile minimal
+          rustup toolchain install nightly-2026-08-11 --profile minimal
           rustup default 1.97.1
       - name: Require committed lockfile
         run: test -f Cargo.lock
@@ -40,7 +40,7 @@ jobs:
         run: |
           mkdir -p target/public-api
           for package in evidence-search-contracts evidence-search-core searchright-plugin-sdk; do
-            (cd "crates/${package}" && cargo public-api -sss) > "target/public-api/${package}.txt"
+            (cd "crates/${package}" && cargo +nightly-2026-08-11 public-api -sss) > "target/public-api/${package}.txt"
           done
       - name: Check SemVer against the Git baseline where available
         run: |

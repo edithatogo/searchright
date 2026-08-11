@@ -17,7 +17,7 @@ cce714669169df331306081360d5d495e972a1278bb5afdd4b4056bf74fa249a  ./.github/work
 9a8b47929c65aefcc5b03db5665ee9db2d2a7521637c0ab8716f884b33dc46b2  ./.github/workflows/integration-release-train.yml
 49502be90d24abcf52e8a6b8891bb1532fc7786c48f9a422cd9e197bfc45776a  ./.github/workflows/issue-sync.yml
 e94ca8c59f7fe3660c064069b579167e5923e754160b8a2c6648f2ff7dac54a0  ./.github/workflows/nightly.yml
-63496a558d5bb839f85ec555fc211fbac7927632d85ae1e17f1aafa0cebfa270  ./.github/workflows/public-api.yml
+5995257bccc044979cf2147ab57eb9b1e2165c41ba0af201dcf0668a061601de  ./.github/workflows/public-api.yml
 c140651c6e1464302dcd41723f278b4e2aac10ecff7b73ec2a89862802e721e0  ./.github/workflows/release-candidate.yml
 ff41ade11fbea69c279832cb21a11514ae7b7597904d603672adfc81132d7c24  ./.github/workflows/release.yml
 0c53e108c6b7d1231cf2b744fc2520544674564e7beeb169fa092773f875d3c4  ./.github/workflows/resilience.yml
@@ -37,7 +37,7 @@ d34e54a8ecfeede955f98d364fdeac1023b4673ad3b666ef0f19d4e8f23ac8e4  ./CODEX_HANDOF
 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
 d91a14ff32401fc332ddbc61467bf2899e558ee1c52a4f5b6e73afe3bee146cf  ./CONTEXT.md
 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
-9c1113e24dcfcaf9d0d24ed308ecc00a0c2a39928822c7c28f94794698af8446  ./Cargo.lock
+a771fdb157cd5698a692b2b32437abc381ddb3251740ce630208ba738317d8e3  ./Cargo.lock
 56086974cc7931a513f31885d65dd91b3d863cf356a5b62984bd2c5249dfbb75  ./Cargo.toml
 c01619a340bc72f11fd220edfadc87227e481748dcb30dc01dce93dddc809780  ./Dockerfile
 578a4b18c4f2cb587a64af04b36d81ca8fdb30eb63de45233728adf4cd2c7bdf  ./GEMINI.md
@@ -847,7 +847,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 2480395a1b729a91443c67c12f65fe2fa6c75e8981a4553b90d636917a50f4fe  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 1d66cc63a5f9f91ce165a2583bbb4890c2c909504407c3fda1f2634e18e29fbb  ./context/claim-boundaries.json
-911966ab39da2e14e47857c04a13ea22b0c02445c0cfc7419ffdbcd16c0ea082  ./context/context-lock.json
+6cf46ac5c51a9a4e05e7782b635a7c7e8dbbe050ded6256c8345e79e1c6ae478  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 e3d57d1948aebe24f198bef43acdb85e3839d20bf0c2ee4578d7a94ac897325a  ./context/evidence-ledger.json
 2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244  ./context/hazard-log.json
@@ -1024,7 +1024,7 @@ bfec5668dc82ac9cbcb1af8e53a88a87ed75f5f5d55f78d3796bcd98185e354e  ./crates/searc
 bdc99842d381b1ccdd7a248529382d4fa6e5dd763f8e131bbf62bcad77da3205  ./crates/searchright-assurance/Cargo.toml
 8d748ab9f96adf07a39684fcd1b0447b40e0697263cc972a4711dc02eec797f5  ./crates/searchright-assurance/src/lib.rs
 c807a6ad11a5181c72a9dc8e07a7a8aa1e1557213a1fbae2d47583090f2833d1  ./crates/searchright-assurance/tests/loom_authority.rs
-4754fdc0f692284cff35c92c418da1714b177f1603189dbf7f688eff16edaab6  ./crates/searchright-bench/Cargo.toml
+dd0ce1dbfbcbe1fd64eddeb664d275884ac5acd5acf20f22e9f028e7924a3328  ./crates/searchright-bench/Cargo.toml
 2f47767bc3503934024205f1ec91d72290ffb56a4985716639c91f754f688c3a  ./crates/searchright-bench/src/lib.rs
 05e31b77575c98705d49cb06f567ece6a8cf07c50494268e0ad4475b8022f256  ./crates/searchright-citeweft/Cargo.toml
 b6b0836877c60be0beeee6af183949bb73429b274749e3eaca67952e3dbb5302  ./crates/searchright-citeweft/src/lib.rs
@@ -1032,7 +1032,7 @@ b6b0836877c60be0beeee6af183949bb73429b274749e3eaca67952e3dbb5302  ./crates/searc
 b0785a9695a1b02b2ca8c9281e8dd57147d08f84026920fce38b54774ec65539  ./crates/searchright-cli/src/main.rs
 d80ee5bc0d2bed7173c13119c3e437765e9e70a311d970165968dce0cc58c415  ./crates/searchright-connectors/Cargo.toml
 8085b798b0927b9843effe8b35b853624479538dc179330ecda65adffb01a367  ./crates/searchright-connectors/src/lib.rs
-ef5dca8a87f487c9f31ad2a53e80ae928586d707b1d2fdbd2e43ca0722fe0c9f  ./crates/searchright-contracts/Cargo.toml
+9a88412dafca5d94be8b5d611e3da7d62d172015c04e7cfcc4840cbb9e374345  ./crates/searchright-contracts/Cargo.toml
 43dae39179286f90f83ebfc4771d5195d592d8f14ddca24fc1c152c5dee66059  ./crates/searchright-contracts/src/access.rs
 66624473ec05bbc5deb71afba62a07e4459cc31b2677b79e57811951330d1aee  ./crates/searchright-contracts/src/amendment.rs
 5ff68628d471c8d449b02f7a6566f7f386fbfba439e59429296a53790de8bc0c  ./crates/searchright-contracts/src/assurance.rs
@@ -1072,11 +1072,11 @@ d43709e351b5133ba207e6ebdc8bfeee06770474f0cae566683729f6e5abd855  ./crates/searc
 e191fdf57e152bd3588d95cd547527d4b9e2560d24d3034845f8fc1c6bc778cc  ./crates/searchright-licensed/src/lib.rs
 1d1629cb5c2467807539ead9ad08b05be6190a755b33f3f3f99759aab0ff0730  ./crates/searchright-living/Cargo.toml
 9bc6f57483535f016ef1fb2f19f8619588ec5f8f6bf11aea33d8365b4a6cb5eb  ./crates/searchright-living/src/lib.rs
-6575dfe7361a5721c5e6cddc53bb7c25ffb13835a49996c2ffa588d78649dfbd  ./crates/searchright-mcp/Cargo.toml
+779fd06758ea286803ff72cc3143283771be69e2450899561284d6f966ebc30b  ./crates/searchright-mcp/Cargo.toml
 1511be49e38d98891b5c1a3c1296db82cbf65606d7aa996f2387f0c5104e594c  ./crates/searchright-mcp/src/main.rs
 279a68319858f647f450e3b8a9f75656438c6a78586898fb700722fdf2dfd23b  ./crates/searchright-ops/Cargo.toml
 227c977c2d7446ce8ac81a91383f3f0788813fde02a03e8511bf58ee0c340e8c  ./crates/searchright-ops/src/lib.rs
-080e29464a69b8abe8fb0b2bf6cb3f1f05c76ccc46e8b41ceaa31166ebf8fb7c  ./crates/searchright-plugin-sdk/Cargo.toml
+1623df1a6980c21619819b57ca61de1f969131f5de7ba04735ba4476b2bbbeb7  ./crates/searchright-plugin-sdk/Cargo.toml
 452e3c5c35b875af6970ec24a69fa546efde4096de9699954e9a0de9e1d40d83  ./crates/searchright-plugin-sdk/src/lib.rs
 3dd96976e8914a94a4b7fddb1e31bb5fdf5dd3041a0b9082f1398fc3e12f4da1  ./crates/searchright-policy/Cargo.toml
 6090816a7ec030c1f24d60fc9b2ce52c4edf4f6398a504f9117df306332bfda7  ./crates/searchright-policy/src/lib.rs
@@ -1227,7 +1227,7 @@ be1b1cd3b45e0441f56229e7319f09a05fe9f41a2ec86e0b3b3adaeebb1d0966  ./registry/gla
 197eb2b8f2db0b830d27fe9a42110a2c37fb9a02d2d3787aaec62afbe3b97c82  ./release/rehearsal.json
 7ec7bc4e0af8a552dca307f23b6f5f128a668fa64966fb26454a99a1bd5a9268  ./renovate.json5
 3b22b9a0551f64707cea3b7dd46ce9c01d399f8c6c23e5b5f518257fc648c352  ./requirements/README.md
-50479a0ef82e8a6d7ee4043ab312785ab208ca98c7169f589693e32601c27db3  ./requirements/rust-tools.json
+1866d3ae38fe7ab6dd13c62e72927134acfd10bc9f498fde772ab9ecd0f54d7e  ./requirements/rust-tools.json
 1148fc068b1ba1086a7d97c16e9d36bbe852e080f6e6d5f7adcb2f0aaba8ae96  ./requirements/validation.in
 4b9da07aa9656653624ca72af846c428e7c75f72aacf6dbfbdfde99e6d2e6e3b  ./requirements/validation.txt
 f41009d830d096b82054f8f748a6835082a3e485edfba646af5de8691721693c  ./rust-toolchain.toml
