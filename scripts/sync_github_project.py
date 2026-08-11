@@ -90,17 +90,21 @@ def ensure_project(manifest: dict[str, Any], create: bool) -> dict[str, Any]:
     return detail
 
 
-def list_fields(owner: str, number: str) -> dict[str, dict[str, Any]]:
+def list_fields(project_id: str) -> dict[str, dict[str, Any]]:
+    query = """query($id: ID!) { node(id: $id) { ... on ProjectV2 { fields(first: 100) { nodes { __typename ... on ProjectV2Field { id name dataType } ... on ProjectV2SingleSelectField { id name options { id name } } } } } } }"""
     payload = run_json([
-        "gh", "project", "field-list", number, "--owner", owner,
-        "--limit", "100", "--format", "json",
+        "gh", "api", "graphql", "-f", f"query={query}", "-F", f"id={project_id}",
     ])
-    return {item.get("name"): item for item in collection(payload, "fields") if item.get("name")}
+    fields = (((payload or {}).get("data") or {}).get("node") or {}).get("fields", {}).get("nodes", [])
+    return {item.get("name"): item for item in fields if isinstance(item, dict) and item.get("name")}
 
 
 def validate_field(requested: dict[str, Any], current: dict[str, Any]) -> None:
     name = requested["name"]
-    actual_type = str(current.get("dataType") or current.get("type") or "").upper()
+    typename = str(current.get("__typename") or "").upper()
+    actual_type = str(current.get("dataType") or "").upper()
+    if typename == "PROJECTV2SINGLESELECTFIELD":
+        actual_type = "SINGLE_SELECT"
     if actual_type and actual_type != requested["data_type"]:
         raise GitHubCommandError(
             f"Project field {name!r} has type {actual_type}, expected {requested['data_type']}"
@@ -118,8 +122,8 @@ def validate_field(requested: dict[str, Any], current: dict[str, Any]) -> None:
             )
 
 
-def ensure_fields(owner: str, number: str, manifest: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    existing = list_fields(owner, number)
+def ensure_fields(owner: str, number: str, project_id: str, manifest: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    existing = list_fields(project_id)
     for requested in manifest["fields"]:
         if requested["name"] in existing:
             continue
@@ -130,7 +134,7 @@ def ensure_fields(owner: str, number: str, manifest: dict[str, Any]) -> dict[str
         if requested["data_type"] == "SINGLE_SELECT":
             command.extend(["--single-select-options", ",".join(requested["options"])])
         run(command)
-    observed = list_fields(owner, number)
+    observed = list_fields(project_id)
     for requested in manifest["fields"]:
         current = observed.get(requested["name"])
         if current is None:
@@ -398,7 +402,7 @@ def main() -> int:
     project_id = str(detail.get("id") or "")
     if not project_number or not project_id:
         raise GitHubCommandError("Project number/id missing after creation or lookup")
-    fields = ensure_fields(manifest["owner"], project_number, manifest)
+    fields = ensure_fields(manifest["owner"], project_number, project_id, manifest)
     views = ensure_views(project_id, manifest["views"])
 
     issues = existing_issues(manifest["repository"])
