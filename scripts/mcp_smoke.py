@@ -91,31 +91,75 @@ def main() -> int:
     lines = start_reader(process.stdout)
     errors: list[str] = []
     observed: set[str] = set()
+    protocol_meta = {
+        "io.modelcontextprotocol/protocolVersion": "2026-07-28",
+        "io.modelcontextprotocol/clientInfo": {
+            "name": "searchright-smoke",
+            "version": "0.1.0",
+        },
+        "io.modelcontextprotocol/clientCapabilities": {},
+    }
+
+    def params(**values: object) -> dict[str, object]:
+        return {**values, "_meta": protocol_meta}
+
     try:
         send(
             process,
             {
                 "jsonrpc": "2.0",
                 "id": 1,
-                "method": "initialize",
-                "params": {
-                    "protocolVersion": "2026-07-28",
-                    "capabilities": {},
-                    "clientInfo": {"name": "searchright-smoke", "version": "0.1.0"},
-                },
+                "method": "server/discover",
+                "params": params(),
             },
         )
-        initialize = receive(process, lines, 1)
-        if "error" in initialize:
-            errors.append(f"initialize failed: {initialize['error']}")
-        send(process, {"jsonrpc": "2.0", "method": "notifications/initialized"})
-        send(process, {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}})
+        discovery = receive(process, lines, 1)
+        if "error" in discovery:
+            errors.append(f"server/discover failed: {discovery['error']}")
+        else:
+            result = discovery.get("result", {})
+            versions = result.get("supportedVersions", []) if isinstance(result, dict) else []
+            if "2026-07-28" not in versions:
+                errors.append("server/discover did not advertise MCP 2026-07-28")
+            if not isinstance(result, dict) or result.get("resultType") != "complete":
+                errors.append("server/discover did not return a complete result")
+            elif not isinstance(result.get("ttlMs"), int) or result.get("cacheScope") not in {
+                "private",
+                "public",
+            }:
+                errors.append("server/discover omitted MCP cache metadata")
+
+        send(
+            process,
+            {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": params()},
+        )
         tools_response = receive(process, lines, 2)
         if "error" in tools_response:
             errors.append(f"tools/list failed: {tools_response['error']}")
         else:
             result = tools_response.get("result", {})
             tools = result.get("tools", []) if isinstance(result, dict) else []
+            if not isinstance(result, dict) or result.get("resultType") != "complete":
+                errors.append("tools/list did not return a complete result")
+            elif not isinstance(result.get("ttlMs"), int) or result.get("cacheScope") not in {
+                "private",
+                "public",
+            }:
+                errors.append("tools/list omitted MCP cache metadata")
+            names = [
+                str(tool.get("name"))
+                for tool in tools
+                if isinstance(tool, dict) and isinstance(tool.get("name"), str)
+            ]
+            if names != sorted(names):
+                errors.append("tools/list is not deterministically sorted by tool name")
+            for tool in tools:
+                if not isinstance(tool, dict):
+                    errors.append("tools/list returned a non-object tool definition")
+                    continue
+                schema = tool.get("inputSchema")
+                if not isinstance(schema, dict) or schema.get("type") != "object":
+                    errors.append(f"tool {tool.get('name')} lacks an object inputSchema")
             observed = {
                 str(tool.get("name"))
                 for tool in tools
@@ -127,6 +171,26 @@ def main() -> int:
                 errors.append(f"MCP tools missing from server: {missing}")
             if unexpected:
                 errors.append(f"MCP server exposes tools absent from interface catalogue: {unexpected}")
+
+        send(
+            process,
+            {
+                "jsonrpc": "2.0",
+                "id": 3,
+                "method": "tools/call",
+                "params": params(name="workflow", arguments={}),
+            },
+        )
+        call_response = receive(process, lines, 3)
+        if "error" in call_response:
+            errors.append(f"tools/call failed: {call_response['error']}")
+        else:
+            result = call_response.get("result", {})
+            if not isinstance(result, dict) or result.get("resultType") != "complete":
+                errors.append("tools/call did not return a complete MCP result")
+            elif not isinstance(result.get("structuredContent"), dict):
+                errors.append("tools/call did not return structuredContent")
+
     except (OSError, RuntimeError, TimeoutError, json.JSONDecodeError) as exc:
         errors.append(str(exc))
     finally:
@@ -141,6 +205,7 @@ def main() -> int:
         "schema_version": "org.searchright.mcp-smoke-receipt.v1",
         "status": "failed" if errors else "passed",
         "protocol_version": "2026-07-28",
+        "rust_sdk": "rmcp 3.1.2",
         "expected_tools": len(expected),
         "observed_tools": len(observed),
         "errors": errors,
