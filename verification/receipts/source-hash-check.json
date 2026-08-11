@@ -1,10 +1,11 @@
 {
   "algorithm": "sha256",
   "limitations": [
-    "The manifest excludes Git metadata, build output and derived verification receipts; it is source-integrity evidence, not compiler or runtime evidence."
+    "The manifest covers tracked source while excluding derived verification receipts; it is source-integrity evidence, not compiler or runtime evidence.",
+    "Without Git metadata, verification checks every listed file but cannot detect additional unlisted files."
   ],
   "manifest": "verification/receipts/source-manifest.sha256",
   "schema_version": "org.searchright.source-hash-check-receipt.v1",
-  "source_files": 1341,
+  "source_files": 1333,
   "status": "passed"
 }

@@ -7,14 +7,19 @@
       "size": 3453
     },
     {
-      "path": "benchmarks/methodology/manifest.json",
-      "sha256": "f892858cee4491a0832926f6fe44be0049265bff5ff69d50757d198eeacc42b3",
-      "size": 3851
-    },
-    {
       "path": "CODEX_HANDOFF.md",
       "sha256": "d34e54a8ecfeede955f98d364fdeac1023b4673ad3b666ef0f19d4e8f23ac8e4",
       "size": 3620
+    },
+    {
+      "path": "CONTEXT.md",
+      "sha256": "d91a14ff32401fc332ddbc61467bf2899e558ee1c52a4f5b6e73afe3bee146cf",
+      "size": 4186
+    },
+    {
+      "path": "benchmarks/methodology/manifest.json",
+      "sha256": "f892858cee4491a0832926f6fe44be0049265bff5ff69d50757d198eeacc42b3",
+      "size": 3851
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
@@ -75,11 +80,6 @@
       "path": "context/hazard-log.json",
       "sha256": "2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244",
       "size": 17239
-    },
-    {
-      "path": "CONTEXT.md",
-      "sha256": "d91a14ff32401fc332ddbc61467bf2899e558ee1c52a4f5b6e73afe3bee146cf",
-      "size": 4186
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
