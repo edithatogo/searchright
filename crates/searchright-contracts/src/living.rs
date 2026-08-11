@@ -164,6 +164,11 @@ impl Validate for LivingUpdateRun {
             }
             UpdateRunStatus::Failed | UpdateRunStatus::Cancelled => {}
         }
+        if self.status != UpdateRunStatus::Completed && self.supersedes_run_id.is_some() {
+            return Err(ContractError::Invariant(
+                "only a completed living update may supersede an earlier run".to_owned(),
+            ));
+        }
         let mut providers = BTreeSet::new();
         for cursor in &self.cursors_after {
             cursor.validate()?;
@@ -174,8 +179,15 @@ impl Validate for LivingUpdateRun {
                 )));
             }
         }
+        let mut prior_providers = BTreeSet::new();
         for cursor in &self.cursors_before {
             cursor.validate()?;
+            if !prior_providers.insert(cursor.provider_id.as_str()) {
+                return Err(ContractError::Invariant(format!(
+                    "living update contains duplicate before-cursor for `{}`",
+                    cursor.provider_id
+                )));
+            }
         }
         let mut records = BTreeSet::new();
         for change in &self.changes {
@@ -187,6 +199,70 @@ impl Validate for LivingUpdateRun {
                 )));
             }
         }
+        if !self.changes.is_empty() && !self.requires_human_release {
+            return Err(ContractError::Invariant(
+                "living-update record changes require human release before downstream screening"
+                    .to_owned(),
+            ));
+        }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn completed_run() -> LivingUpdateRun {
+        LivingUpdateRun {
+            schema_version: LIVING_UPDATE_SCHEMA_VERSION.to_owned(),
+            review_id: "review-1".to_owned(),
+            run_id: "run-1".to_owned(),
+            parent_run_id: None,
+            status: UpdateRunStatus::Completed,
+            started_at: "2026-08-01T00:00:00Z".to_owned(),
+            completed_at: Some("2026-08-01T01:00:00Z".to_owned()),
+            protocol_version: "protocol-v1".to_owned(),
+            cursors_before: Vec::new(),
+            cursors_after: Vec::new(),
+            changes: Vec::new(),
+            requires_human_release: true,
+            supersedes_run_id: None,
+        }
+    }
+
+    #[test]
+    fn changed_records_require_human_release() {
+        let mut update = completed_run();
+        update.requires_human_release = false;
+        update.changes.push(RecordChange {
+            record_id: "record-1".to_owned(),
+            kind: RecordChangeKind::Added,
+            before_digest: None,
+            after_digest: Some("digest-1".to_owned()),
+            note: "newly observed".to_owned(),
+        });
+
+        assert!(matches!(
+            update.validate(),
+            Err(ContractError::Invariant(_))
+        ));
+    }
+
+    #[test]
+    fn duplicate_before_cursors_are_rejected() {
+        let cursor = UpdateCursor {
+            provider_id: "pubmed".to_owned(),
+            cursor_kind: "date".to_owned(),
+            value: "2026-08-01".to_owned(),
+            retrieved_through: Some("2026-08-01".to_owned()),
+        };
+        let mut update = completed_run();
+        update.cursors_before = vec![cursor.clone(), cursor];
+
+        assert!(matches!(
+            update.validate(),
+            Err(ContractError::Invariant(_))
+        ));
     }
 }
