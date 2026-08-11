@@ -40,7 +40,6 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-04-phase-3 -->
 
-- [ ] Compile and run connector fixtures.
 - [ ] Run authorised, redacted live smokes for each advertised provider.
 - [ ] Verify upstream terms, rate limits and response changes at release time.
 - [ ] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.

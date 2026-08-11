@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Verify upstream terms, rate limits and response changes at release time.
+- [ ] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
 
 ## Completion and evidence contract
 

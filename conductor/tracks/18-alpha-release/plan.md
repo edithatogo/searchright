@@ -35,7 +35,7 @@ GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-18-phase-3 -->
 
-- [ ] Generate Cargo.lock and pass the full release workflow.
+- [ ] Verify the committed Cargo.lock and pass the full release workflow.
 - [ ] Build/install-smoke supported binaries and OCI image.
 - [ ] Create signed tag, checksums, attestations and public release artefacts.
 

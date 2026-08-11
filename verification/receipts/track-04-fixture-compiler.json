@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.track-compiler-verification.v1",
+  "track_id": "04",
+  "observed_at": "2026-08-12T06:45:00+10:00",
+  "source_revision": "503043e980576a833283a502541a7344488192c5",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_explicit_limits",
+  "checks": [
+    {
+      "command": "cargo test -p searchright-connectors --all-features --locked --quiet",
+      "status": "passed",
+      "tests_passed": 5
+    },
+    {
+      "command": "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "limits": [
+    "The checked-in rights-clear fixtures compile through the canonical parsers; current upstream API compatibility is not established.",
+    "No live request, credential, provider-policy approval or redistribution review was performed."
+  ]
+}

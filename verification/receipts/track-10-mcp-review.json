@@ -1,0 +1,19 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "10",
+  "observed_at": "2026-08-12",
+  "source_revision": "bce22ab43749b2d5e074b30b8ccb2a02ca7e4cc4",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_open_gates",
+  "checks": [
+    {
+      "command": "rustup run 1.97.1-x86_64-pc-windows-gnu cargo test -p searchright-mcp --locked",
+      "status": "passed",
+      "tests_passed": 2
+    }
+  ],
+  "limits": [
+    "Remote MCP authentication, tenancy, region and approval enforcement remain open.",
+    "Resources, prompts, cancellation, pagination and compatibility-client evidence remain open."
+  ]
+}

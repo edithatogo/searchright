@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "09",
+  "observed_at": "2026-08-12",
+  "source_revision": "e0019329c63536078328a2717b7aed6784035704",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_open_gates",
+  "checks": [
+    {
+      "command": "cargo test -p searchright-cli --locked",
+      "status": "passed",
+      "tests_passed": 4
+    },
+    {
+      "command": "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "limits": [
+    "Binary stdout/stderr snapshots, installation tests, completions and manual pages remain open.",
+    "Hosted cross-platform execution and a published CLI compatibility policy remain open."
+  ]
+}

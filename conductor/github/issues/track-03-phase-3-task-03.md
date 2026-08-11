@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run old/new Sourceright fixtures in the downstream repository.
+- [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 
 ## Completion and evidence contract
 

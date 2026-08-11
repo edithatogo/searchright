@@ -35,7 +35,6 @@
     "SR-016"
   ],
   "blockers": [
-    "Compile and run connector fixtures.",
     "Run authorised, redacted live smokes for each advertised provider.",
     "Verify upstream terms, rate limits and response changes at release time.",
     "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
@@ -57,7 +56,6 @@
       "track-04-phase-3-task-01",
       "track-04-phase-3-task-02",
       "track-04-phase-3-task-03",
-      "track-04-phase-3-task-04",
       "track-04-phase-4-task-01",
       "track-04-phase-4-task-02",
       "track-04-phase-4-task-03",
@@ -65,6 +63,8 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "runtime_evidence": [
+    "verification/receipts/track-04-fixture-compiler.json"
+  ],
   "external_evidence": []
 }

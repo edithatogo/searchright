@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Generate Cargo.lock and pass the full release workflow.
+- [ ] Verify the committed Cargo.lock and pass the full release workflow.
 
 ## Completion and evidence contract
 

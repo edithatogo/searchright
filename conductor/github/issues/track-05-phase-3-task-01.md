@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms.
+- [ ] Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection.
 
 ## Completion and evidence contract
 

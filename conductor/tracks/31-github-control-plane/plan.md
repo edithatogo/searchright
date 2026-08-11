@@ -38,9 +38,9 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-31-phase-3 -->
 
-- [ ] Verify the public remote and origin wiring; the audit observed `https://github.com/edithatogo/searchright` with `main` as its default branch, but must be rerun after the current local commit wave is pushed.
-- [ ] Verify the protected GitHub write environments exist (`github-issue-write`, `github-project-write`, and `release`), then resolve or explicitly accept the audit warning that the GitHub CLI JSON shape did not expose 1,135 custom-field values.
-- [x] Preserve a read-only convergence receipt covering the repository, ruleset, 568 issues, 567 native subissue relationships, Project 40, 26 fields, seven views, and 568 Project items.
+- [ ] Create or verify the public remote and push the committed main branch.
+- [ ] Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.
+- [ ] Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts.
 
 ## Phase 4: Review and closeout
 
@@ -48,5 +48,5 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Complete Conductor review: the remote receipt is reconciled into assertion-level Track 31 evidence without promoting product maturity, but the Track 31 static and control-plane checks must be rerun after generated-ledger reconciliation settles.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

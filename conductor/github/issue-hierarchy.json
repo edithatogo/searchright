@@ -1159,7 +1159,7 @@
     },
     {
       "key": "track-02-phase-3-task-01",
-      "title": "Track 02 / P3 / T01: Compile and execute dialect snapshot/property tests",
+      "title": "Track 02 / P3 / T01: Complete dialect-specific semantic parsers and full translation snapshot/property coverage",
       "kind": "task",
       "parent_key": "track-02-phase-3",
       "body_path": "conductor/github/issues/track-02-phase-3-task-01.md",
@@ -1192,7 +1192,7 @@
     },
     {
       "key": "track-02-phase-3-task-02",
-      "title": "Track 02 / P3 / T02: Expand the conformance corpus with independently reviewed source strategies",
+      "title": "Track 02 / P3 / T02: Define versioned named-filter records and validated filter packs",
       "kind": "task",
       "parent_key": "track-02-phase-3",
       "body_path": "conductor/github/issues/track-02-phase-3-task-02.md",
@@ -1221,6 +1221,39 @@
         "Track ID": "02",
         "Phase": 3,
         "Task": 2
+      }
+    },
+    {
+      "key": "track-02-phase-3-task-03",
+      "title": "Track 02 / P3 / T03: Expand the conformance corpus with independently reviewed source strategies",
+      "kind": "task",
+      "parent_key": "track-02-phase-3",
+      "body_path": "conductor/github/issues/track-02-phase-3-task-03.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:02",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "02",
+      "phase_number": 3,
+      "task_number": 3,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Foundation",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-02-phase-3-task-03",
+        "Conductor path": "conductor/tracks/02-query-ast-dialects/plan.md",
+        "Track ID": "02",
+        "Phase": 3,
+        "Task": 3
       }
     },
     {
@@ -1331,15 +1364,15 @@
         "conductor",
         "track:02",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "02",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Source Verified",
@@ -1611,7 +1644,7 @@
     },
     {
       "key": "track-03-phase-3-task-01",
-      "title": "Track 03 / P3 / T01: Compile and run the shared provider runtime tests",
+      "title": "Track 03 / P3 / T01: Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-01.md",
@@ -1644,7 +1677,7 @@
     },
     {
       "key": "track-03-phase-3-task-02",
-      "title": "Track 03 / P3 / T02: Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence",
+      "title": "Track 03 / P3 / T02: Run old/new Sourceright fixtures in the downstream repository",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-02.md",
@@ -1677,7 +1710,7 @@
     },
     {
       "key": "track-03-phase-3-task-03",
-      "title": "Track 03 / P3 / T03: Run old/new Sourceright fixtures in the downstream repository",
+      "title": "Track 03 / P3 / T03: Complete feature-gated Sourceright cutover, semver review and rollback exercise",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-03.md",
@@ -1706,39 +1739,6 @@
         "Track ID": "03",
         "Phase": 3,
         "Task": 3
-      }
-    },
-    {
-      "key": "track-03-phase-3-task-04",
-      "title": "Track 03 / P3 / T04: Complete feature-gated Sourceright cutover, semver review and rollback exercise",
-      "kind": "task",
-      "parent_key": "track-03-phase-3",
-      "body_path": "conductor/github/issues/track-03-phase-3-task-04.md",
-      "labels": [
-        "kind:task",
-        "conductor",
-        "track:03",
-        "phase:3",
-        "state:evidence-open"
-      ],
-      "status": "prepared_not_synced",
-      "desired_state": "open",
-      "track_id": "03",
-      "phase_number": 3,
-      "task_number": 4,
-      "project_fields": {
-        "Delivery status": "Evidence blocked",
-        "Work kind": "Task",
-        "Horizon": "Foundation",
-        "Evidence level": "Source Verified",
-        "Implementation state": "Partially Implemented",
-        "MoSCoW": "Must",
-        "External gate": "Yes",
-        "Conductor key": "track-03-phase-3-task-04",
-        "Conductor path": "conductor/tracks/03-shared-provider-runtime/plan.md",
-        "Track ID": "03",
-        "Phase": 3,
-        "Task": 4
       }
     },
     {
@@ -1849,15 +1849,15 @@
         "conductor",
         "track:03",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "03",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Source Verified",
@@ -2129,7 +2129,7 @@
     },
     {
       "key": "track-04-phase-3-task-01",
-      "title": "Track 04 / P3 / T01: Compile and run connector fixtures",
+      "title": "Track 04 / P3 / T01: Run authorised, redacted live smokes for each advertised provider",
       "kind": "task",
       "parent_key": "track-04-phase-3",
       "body_path": "conductor/github/issues/track-04-phase-3-task-01.md",
@@ -2162,7 +2162,7 @@
     },
     {
       "key": "track-04-phase-3-task-02",
-      "title": "Track 04 / P3 / T02: Run authorised, redacted live smokes for each advertised provider",
+      "title": "Track 04 / P3 / T02: Verify upstream terms, rate limits and response changes at release time",
       "kind": "task",
       "parent_key": "track-04-phase-3",
       "body_path": "conductor/github/issues/track-04-phase-3-task-02.md",
@@ -2195,7 +2195,7 @@
     },
     {
       "key": "track-04-phase-3-task-03",
-      "title": "Track 04 / P3 / T03: Verify upstream terms, rate limits and response changes at release time",
+      "title": "Track 04 / P3 / T03: Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion",
       "kind": "task",
       "parent_key": "track-04-phase-3",
       "body_path": "conductor/github/issues/track-04-phase-3-task-03.md",
@@ -2224,39 +2224,6 @@
         "Track ID": "04",
         "Phase": 3,
         "Task": 3
-      }
-    },
-    {
-      "key": "track-04-phase-3-task-04",
-      "title": "Track 04 / P3 / T04: Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion",
-      "kind": "task",
-      "parent_key": "track-04-phase-3",
-      "body_path": "conductor/github/issues/track-04-phase-3-task-04.md",
-      "labels": [
-        "kind:task",
-        "conductor",
-        "track:04",
-        "phase:3",
-        "state:evidence-open"
-      ],
-      "status": "prepared_not_synced",
-      "desired_state": "open",
-      "track_id": "04",
-      "phase_number": 3,
-      "task_number": 4,
-      "project_fields": {
-        "Delivery status": "Evidence blocked",
-        "Work kind": "Task",
-        "Horizon": "Mvp",
-        "Evidence level": "Source Verified",
-        "Implementation state": "Partially Implemented",
-        "MoSCoW": "Must",
-        "External gate": "Yes",
-        "Conductor key": "track-04-phase-3-task-04",
-        "Conductor path": "conductor/tracks/04-open-connectors-mvp/plan.md",
-        "Track ID": "04",
-        "Phase": 3,
-        "Task": 4
       }
     },
     {
@@ -2647,7 +2614,7 @@
     },
     {
       "key": "track-05-phase-3-task-01",
-      "title": "Track 05 / P3 / T01: Compile and run audit tamper, replay, lock and crash-recovery tests on supported platforms",
+      "title": "Track 05 / P3 / T01: Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection",
       "kind": "task",
       "parent_key": "track-05-phase-3",
       "body_path": "conductor/github/issues/track-05-phase-3-task-01.md",
@@ -2819,15 +2786,15 @@
         "conductor",
         "track:05",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Source Verified",
@@ -3099,7 +3066,7 @@
     },
     {
       "key": "track-06-phase-3-task-01",
-      "title": "Track 06 / P3 / T01: Compile and run golden round-trip, property and metamorphic tests",
+      "title": "Track 06 / P3 / T01: Compile and run golden import/export round-trip tests across every supported format",
       "kind": "task",
       "parent_key": "track-06-phase-3",
       "body_path": "conductor/github/issues/track-06-phase-3-task-01.md",
@@ -3271,15 +3238,15 @@
         "conductor",
         "track:06",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Source Verified",
@@ -3551,7 +3518,7 @@
     },
     {
       "key": "track-07-phase-3-task-01",
-      "title": "Track 07 / P3 / T01: Compile and execute state-machine and authority-negative tests",
+      "title": "Track 07 / P3 / T01: Complete reviewer usability and inter-rater calibration evaluation",
       "kind": "task",
       "parent_key": "track-07-phase-3",
       "body_path": "conductor/github/issues/track-07-phase-3-task-01.md",
@@ -3580,39 +3547,6 @@
         "Track ID": "07",
         "Phase": 3,
         "Task": 1
-      }
-    },
-    {
-      "key": "track-07-phase-3-task-02",
-      "title": "Track 07 / P3 / T02: Complete reviewer usability and inter-rater calibration evaluation",
-      "kind": "task",
-      "parent_key": "track-07-phase-3",
-      "body_path": "conductor/github/issues/track-07-phase-3-task-02.md",
-      "labels": [
-        "kind:task",
-        "conductor",
-        "track:07",
-        "phase:3",
-        "state:evidence-open"
-      ],
-      "status": "prepared_not_synced",
-      "desired_state": "open",
-      "track_id": "07",
-      "phase_number": 3,
-      "task_number": 2,
-      "project_fields": {
-        "Delivery status": "Evidence blocked",
-        "Work kind": "Task",
-        "Horizon": "Mvp",
-        "Evidence level": "Source Verified",
-        "Implementation state": "Partially Implemented",
-        "MoSCoW": "Must",
-        "External gate": "Yes",
-        "Conductor key": "track-07-phase-3-task-02",
-        "Conductor path": "conductor/tracks/07-screening-workflow/plan.md",
-        "Track ID": "07",
-        "Phase": 3,
-        "Task": 2
       }
     },
     {
@@ -3723,15 +3657,15 @@
         "conductor",
         "track:07",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "07",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Source Verified",
@@ -4003,7 +3937,7 @@
     },
     {
       "key": "track-08-phase-3-task-01",
-      "title": "Track 08 / P3 / T01: Compile and run arithmetic, snapshot and standards-pack tests",
+      "title": "Track 08 / P3 / T01: Complete wider render-format coverage and PRISMA.jl parity/ownership evidence",
       "kind": "task",
       "parent_key": "track-08-phase-3",
       "body_path": "conductor/github/issues/track-08-phase-3-task-01.md",
@@ -4175,15 +4109,15 @@
         "conductor",
         "track:08",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "08",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Source Verified",
@@ -7751,7 +7685,7 @@
     },
     {
       "key": "track-16-phase-3-task-01",
-      "title": "Track 16 / P3 / T01: Generate and commit Cargo.lock in a networked Rust environment",
+      "title": "Track 16 / P3 / T01: Verify the committed Cargo.lock against the exact supported toolchains and clean-room dependency policy",
       "kind": "task",
       "parent_key": "track-16-phase-3",
       "body_path": "conductor/github/issues/track-16-phase-3-task-01.md",
@@ -8754,7 +8688,7 @@
     },
     {
       "key": "track-18-phase-3-task-01",
-      "title": "Track 18 / P3 / T01: Generate Cargo.lock and pass the full release workflow",
+      "title": "Track 18 / P3 / T01: Verify the committed Cargo.lock and pass the full release workflow",
       "kind": "task",
       "parent_key": "track-18-phase-3",
       "body_path": "conductor/github/issues/track-18-phase-3-task-01.md",
@@ -17649,7 +17583,7 @@
     },
     {
       "key": "track-36-phase-3-task-01",
-      "title": "Track 36 / P3 / T01: Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix",
+      "title": "Track 36 / P3 / T01: Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix",
       "kind": "task",
       "parent_key": "track-36-phase-3",
       "body_path": "conductor/github/issues/track-36-phase-3-task-01.md",

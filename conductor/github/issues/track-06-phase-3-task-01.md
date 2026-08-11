@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and run golden round-trip, property and metamorphic tests.
+- [ ] Compile and run golden import/export round-trip tests across every supported format.
 
 ## Completion and evidence contract
 

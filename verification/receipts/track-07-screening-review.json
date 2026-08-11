@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "07",
+  "observed_at": "2026-08-12T06:55:00+10:00",
+  "source_revision": "4aa71f3038e5ed782a1e1ca569d516ff585d9a44",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "cargo test -p searchright-screening --locked",
+      "status": "passed",
+      "tests_passed": 9
+    },
+    {
+      "command": "cargo clippy -p searchright-screening --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "limits": [
+    "Agent exclusions require explicit matching human confirmation and remain non-authoritative before confirmation.",
+    "Reviewer usability and inter-rater calibration require external human evidence."
+  ]
+}

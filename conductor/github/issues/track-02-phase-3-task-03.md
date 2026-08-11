@@ -1,13 +1,13 @@
-<!-- searchright-issue-key: track-07-phase-3-task-02 -->
-# Track 07 / Phase 3 / Task 02
+<!-- searchright-issue-key: track-02-phase-3-task-03 -->
+# Track 02 / Phase 3 / Task 03
 
-Parent phase key: `track-07-phase-3`
-Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
+Parent phase key: `track-02-phase-3`
+Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
 Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete reviewer usability and inter-rater calibration evaluation.
+- [ ] Expand the conformance corpus with independently reviewed source strategies.
 
 ## Completion and evidence contract
 

@@ -6,8 +6,7 @@ Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Compile and execute state-machine and authority-negative tests. (`track-07-phase-3-task-01`)
-- [ ] T02: Complete reviewer usability and inter-rater calibration evaluation. (`track-07-phase-3-task-02`)
+- [ ] T01: Complete reviewer usability and inter-rater calibration evaluation. (`track-07-phase-3-task-01`)
 
 ## Evidence rule
 

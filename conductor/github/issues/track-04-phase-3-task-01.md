@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile and run connector fixtures.
+- [ ] Run authorised, redacted live smokes for each advertised provider.
 
 ## Completion and evidence contract
 

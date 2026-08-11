@@ -31,9 +31,8 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-02-phase-3 -->
 
-- [x] Compile and execute the implemented dialect snapshot/property tests.
-  - [x] GNU compiler tests and all-target/all-feature Clippy recorded in `verification/receipts/track-02-compiler-review.json`.
-- [ ] Complete dialect-specific semantic parser and translation coverage.
+- [ ] Complete dialect-specific semantic parsers and full translation snapshot/property coverage.
+- [ ] Define versioned named-filter records and validated filter packs.
 - [ ] Expand the conformance corpus with independently reviewed source strategies.
 
 ## Phase 4: Review and closeout

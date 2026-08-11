@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Generate and commit Cargo.lock in a networked Rust environment.
+- [ ] Verify the committed Cargo.lock against the exact supported toolchains and clean-room dependency policy.
 
 ## Completion and evidence contract
 

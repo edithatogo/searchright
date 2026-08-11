@@ -32,7 +32,7 @@ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-36-phase-3 -->
 
-- [ ] Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
+- [ ] Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
 - [ ] Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.
 - [ ] Validate exact release candidate packets and obtain explicit approval before any release or registry submission.
 

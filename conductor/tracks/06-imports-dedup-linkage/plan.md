@@ -29,7 +29,7 @@ GitHub issue key: `track-06`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-06-phase-3 -->
 
-- [ ] Compile and run golden round-trip, property and metamorphic tests.
+- [ ] Compile and run golden import/export round-trip tests across every supported format.
 - [ ] Evaluate linkage and deduplication against independently adjudicated corpora.
 
 ## Phase 4: Review and closeout
@@ -38,5 +38,5 @@ GitHub issue key: `track-06`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

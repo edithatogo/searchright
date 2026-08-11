@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Compile and run arithmetic, snapshot and standards-pack tests. (`track-08-phase-3-task-01`)
+- [ ] T01: Complete wider render-format coverage and PRISMA.jl parity/ownership evidence. (`track-08-phase-3-task-01`)
 - [ ] T02: Obtain independent PRESS review of representative generated strategies and appendices. (`track-08-phase-3-task-02`)
 
 ## Evidence rule
