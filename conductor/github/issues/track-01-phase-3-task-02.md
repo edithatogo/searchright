@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run downstream consumer and generated-binding conformance under Track 35 / SR-086.
+- [ ] Generate and compile the thin TypeScript/Python contract packages required by the original Track 01 scope.
 
 ## Completion and evidence contract
 

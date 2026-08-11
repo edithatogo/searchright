@@ -1,0 +1,42 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "01",
+  "observed_at": "2026-08-12T06:09:27+10:00",
+  "source_revision": "1a16c62888e5ce2076c359e99ff92a25e0b679a3",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_explicit_blockers",
+  "checks": [
+    {
+      "command": "cargo test -p evidence-search-contracts -p searchright-contracts -p searchright-study --locked --quiet",
+      "status": "passed",
+      "tests_passed": 11
+    },
+    {
+      "command": "cargo clippy -p evidence-search-contracts -p searchright-contracts -p searchright-study --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/validate_repository.py",
+      "status": "passed",
+      "schemas_and_examples": 60
+    },
+    {
+      "command": "python scripts/sync_contract_conformance_matrix.py --check",
+      "status": "passed",
+      "contracts": 60,
+      "registered_rust_roots": 9
+    }
+  ],
+  "review_fixes": [
+    "Removed an unmeasured public parity success count and replaced it with a fail-closed scope declaration.",
+    "Separated Rust registry membership from compiler conformance in the static matrix.",
+    "Bound Rust registry identifiers and paths to the canonical catalogue with duplicate rejection.",
+    "Made transactional attachment testing fail during candidate validation and protected report-to-multiple-study cardinality.",
+    "Restored the original thin-binding acceptance assertion and downgraded its state to scaffolded."
+  ],
+  "blockers": [
+    "Exact generated/canonical schema constraint parity is not established.",
+    "Thin TypeScript/Python packages have not been generated, compiled or install-smoked.",
+    "Round-trip and downstream consumer conformance remain not evidenced."
+  ]
+}

@@ -2,10 +2,10 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "01",
   "title": "Contract catalogue and code generation",
-  "status": "source_implemented",
-  "implementation_state": "source_implemented",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-08-12",
   "source_evidence": [
     "crates/evidence-search-contracts/src/lib.rs",
     "crates/searchright-contracts/src/lib.rs",
@@ -17,6 +17,7 @@
     "scripts/sync_schema_surface.py",
     "scripts/sync_contract_conformance_matrix.py",
     "verification/receipts/track-01-compiler-verification.json",
+    "verification/receipts/track-01-review-verification.json",
     "release/public-packages.json",
     "scripts/check_public_package_policy.py",
     "docs/msrv-and-package-policy.md"
@@ -38,6 +39,7 @@
   ],
   "blockers": [
     "Resolve the recorded Schemars/canonical constraint losses before claiming exact semantic schema parity.",
+    "Generate and compile the thin TypeScript/Python contract packages required by the original Track 01 scope.",
     "Run downstream consumer and generated-binding conformance under Track 35 / SR-086."
   ],
   "claim_boundary": "Source implementation is compiler-backed for contract invariants and nine explicitly Rust-owned schema roots. All 60 canonical schemas/examples and exact digests are statically checked, but generated/canonical constraint losses, downstream consumers and Track 35 bindings remain separate evidence gates.",
@@ -56,6 +58,7 @@
       "track-01-phase-2-task-02",
       "track-01-phase-3-task-01",
       "track-01-phase-3-task-02",
+      "track-01-phase-3-task-03",
       "track-01-phase-4-task-01",
       "track-01-phase-4-task-02",
       "track-01-phase-4-task-03",
@@ -64,7 +67,8 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-01-compiler-verification.json"
+    "verification/receipts/track-01-compiler-verification.json",
+    "verification/receipts/track-01-review-verification.json"
   ],
   "external_evidence": []
 }

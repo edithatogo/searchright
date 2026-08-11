@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "01",
   "title": "Contract catalogue and code generation",
-  "implementation_state": "source_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/01-contract-catalog/spec.md#scope",
   "claim_boundary": "Source implementation is compiler-backed for contract invariants and nine explicitly Rust-owned schema roots. All 60 canonical schemas/examples and exact digests are statically checked, but generated/canonical constraint losses, downstream consumers and Track 35 bindings remain separate evidence gates.",
@@ -10,7 +10,7 @@
     {
       "assertion_id": "T01-A001",
       "statement": "Validate all JSON Schemas and examples",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "contracts/schema-catalog.json",
@@ -36,7 +36,7 @@
     {
       "assertion_id": "T01-A002",
       "statement": "Generate schemas from Rust types and diff against checked-in canonical forms",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-contracts",
@@ -46,7 +46,7 @@
       ],
       "implementation_symbols": [
         "evidence_search_contracts::rust_owned_schemas",
-        "evidence_search_contracts::rust_schema_parity_report"
+        "evidence_search_contracts::rust_schema_parity_scope"
       ],
       "deterministic_tests": [
         "python scripts/sync_contract_conformance_matrix.py --check"
@@ -57,12 +57,12 @@
       "open_gates": [
         "Resolve additional-properties, uniqueness, constant, range and string-length losses before claiming exact semantic equality."
       ],
-      "permitted_claim": "Nine neutral-core root schemas are generated from compiled Rust types and structurally diffed against canonical forms; the machine-readable loss report denies exact semantic parity."
+      "permitted_claim": "Nine neutral-core root schemas are generated from compiled Rust types and their root property names are diffed against canonical forms; the scope declaration denies exact constraint and semantic parity."
     },
     {
       "assertion_id": "T01-A003",
       "statement": "Add compatibility fixtures and migration/version rules",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
@@ -86,7 +86,7 @@
     {
       "assertion_id": "T01-A004",
       "statement": "Add report/study linkage and protocol-amendment contracts",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-contracts/src/study.rs",
@@ -101,18 +101,20 @@
         "searchright_study::attach_report"
       ],
       "deterministic_tests": [
+        "cargo test -p searchright-contracts -p searchright-study --locked --quiet",
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/01-contract-catalog/evidence.json"
+        "conductor/tracks/01-contract-catalog/evidence.json",
+        "verification/receipts/track-01-review-verification.json"
       ],
       "open_gates": [],
       "permitted_claim": "Report/study linkage and protocol-amendment invariants are compiler-tested, including duplicate report references within a study, duplicate amendment paths and transactional attachment failure."
     },
     {
       "assertion_id": "T01-A005",
-      "statement": "Define the thin-binding generation contract and delegate executable TypeScript/Python generation to Track 35 / SR-086",
-      "state": "source_implemented",
+      "statement": "Generate TypeScript/Python bindings only as thin contract packages",
+      "state": "scaffolded",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "sdk/manifest.json",
@@ -133,12 +135,12 @@
       "open_gates": [
         "Generate, compile and install-smoke thin TypeScript/Python packages under Track 35 / SR-086 after the neutral schema surface stabilises."
       ],
-      "permitted_claim": "Thin-binding ownership, package identities and no-domain-logic policy are explicit; executable binding generation remains delegated to Track 35 and is not claimed here."
+      "permitted_claim": "Thin-binding ownership, package identities and no-domain-logic policy are explicit; executable binding generation remains incomplete and is owned by Track 35 / SR-086."
     },
     {
       "assertion_id": "T01-A006",
       "statement": "Publish contract conformance matrix",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "contracts/schema-catalog.json",
