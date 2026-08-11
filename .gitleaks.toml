@@ -1,0 +1,14 @@
+title = "Searchright Gitleaks policy"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "Pinned rustdoc nightly values are toolchain identifiers, not API credentials."
+condition = "AND"
+regexTarget = "line"
+regexes = ['''"public_api_nightly"\s*:\s*"nightly-\d{4}-\d{2}-\d{2}"''']
+paths = ['''^requirements/rust-tools\.json$''']
