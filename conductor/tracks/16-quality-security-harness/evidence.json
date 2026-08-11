@@ -82,7 +82,7 @@
     "SR-069"
   ],
   "blockers": [
-    "Generate and commit Cargo.lock in a networked Rust environment.",
+    "Obtain green hosted and cross-platform deterministic CI receipts for the committed Cargo.lock.",
     "Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans.",
     "Run clean-room offline builds, binary comparison, install smoke and MCP transcript.",
     "Resolve every critical/high finding and document justified exclusions."
@@ -112,6 +112,8 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "runtime_evidence": [
+    "verification/receipts/track-16-local-compiler-review.json"
+  ],
   "external_evidence": []
 }

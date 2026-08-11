@@ -6,7 +6,7 @@ Achieve >90% tested, secure, reproducible and supply-chain-hardened engineering.
 
 ## Scope
 
-- Generate lockfile and make deterministic CI green
+- Verify the committed lockfile and make deterministic CI green
 - Unit/integration/e2e/property/metamorphic/DST/CDC/fuzz/mutation tests
 - Configure llvm-cov >90% and Codecov
 - Run cargo-deny/audit/semver/machete, CodeQL, Scorecard, zizmor, actionlint

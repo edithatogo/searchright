@@ -1,0 +1,45 @@
+{
+  "schema_version": "org.searchright.verification-receipt.v1",
+  "track_id": "16",
+  "recorded_on": "2026-08-12",
+  "source_revision_before_review": "503043e",
+  "environment": {
+    "host": "x86_64-pc-windows-gnu",
+    "rustc": "1.97.1",
+    "cargo": "1.97.1",
+    "network_required": false
+  },
+  "passed": [
+    {
+      "command": "cargo +1.97.1-x86_64-pc-windows-gnu test --workspace --all-features --locked",
+      "result": "workspace unit, integration and documentation tests passed"
+    },
+    {
+      "command": "cargo +1.97.1-x86_64-pc-windows-gnu clippy -p searchright-prisma --lib --locked -- -D warnings",
+      "result": "passed after replacing the non-compiling PRESS BTreeSet collection with an exhaustive bitset"
+    },
+    {
+      "command": "cargo +1.97.1-x86_64-pc-windows-gnu fmt --all -- --check",
+      "result": "passed with stable-channel warnings for configured nightly-only formatting options"
+    }
+  ],
+  "not_admitted": [
+    {
+      "gate": "workspace_all_targets_clippy",
+      "reason": "production libraries compiled, but existing test-only indexing, expect-used and missing-docs lints remain in searchright-prisma tests"
+    },
+    {
+      "gate": "static_harness",
+      "reason": "uv-run harness attempt exceeded the bounded 120-second local execution window; no pass is claimed"
+    },
+    {
+      "gate": "cargo_security_tools",
+      "reason": "cargo-deny, cargo-audit, cargo-vet and cargo-machete are not installed in this environment"
+    },
+    {
+      "gate": "coverage_mutation_fuzz_formal_external",
+      "reason": "no llvm-cov, mutation, fuzz, Kani, Miri, CodeQL, Scorecard or full-history secret-scan receipt was produced"
+    }
+  ],
+  "claim_boundary": "This receipt proves one local GNU-host locked workspace test run and a focused library Clippy pass. It does not prove hosted, cross-platform, coverage, supply-chain, mutation, fuzz, formal or external gates."
+}

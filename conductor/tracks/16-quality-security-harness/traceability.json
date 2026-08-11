@@ -9,8 +9,8 @@
   "assertions": [
     {
       "assertion_id": "T16-A001",
-      "statement": "Generate lockfile and make deterministic CI green",
-      "state": "scaffolded",
+      "statement": "Verify the committed lockfile and make deterministic CI green",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "rust-toolchain.toml",
@@ -24,9 +24,9 @@
         "conductor/tracks/16-quality-security-harness/evidence.json"
       ],
       "open_gates": [
-        "Install Rust 1.97.1, generate Cargo.lock and make compiler CI green."
+        "Run deterministic CI on every supported host and obtain a green hosted receipt."
       ],
-      "permitted_claim": "No lockfile or compiler-green claim is made."
+      "permitted_claim": "The committed lockfile passed locked workspace tests on the local Rust 1.97.1 GNU host; hosted and cross-platform CI remain open."
     },
     {
       "assertion_id": "T16-A002",
