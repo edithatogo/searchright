@@ -739,13 +739,21 @@ fn operation_result<T: serde::Serialize>(
 }
 
 fn json_success(value: &impl serde::Serialize) -> Result<CallToolResult, McpError> {
-    serde_json::to_string_pretty(value)
-        .map(|json| CallToolResult::success(vec![ContentBlock::text(json)]))
+    serde_json::to_value(value)
+        .map(CallToolResult::structured)
         .map_err(|error| McpError::internal_error(error.to_string(), None))
 }
 
-fn tool_error(message: String) -> CallToolResult {
-    CallToolResult::error(vec![ContentBlock::text(message)])
+fn tool_error(_message: String) -> CallToolResult {
+    // Facade errors can contain user-controlled identifiers, endpoints or
+    // provider diagnostics. Keep the MCP transcript deterministic and do not
+    // reflect those values across the protocol boundary.
+    CallToolResult::structured_error(serde_json::json!({
+        "error": {
+            "code": "operation_rejected",
+            "message": "operation rejected by the shared Searchright facade"
+        }
+    }))
 }
 
 fn json_invalid_params(error: serde_json::Error) -> McpError {
@@ -754,4 +762,42 @@ fn json_invalid_params(error: serde_json::Error) -> McpError {
 
 fn invalid_params(message: String) -> McpError {
     McpError::invalid_params(message, None)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn json_success_emits_matching_structured_content() {
+        let value = serde_json::json!({"valid": true, "contract": "review_plan"});
+        let result = json_success(&value).expect("serialisable JSON must succeed");
+
+        assert_eq!(result.structured_content, Some(value.clone()));
+        assert_eq!(result.is_error, Some(false));
+        assert_eq!(result.content.len(), 1);
+        assert!(
+            serde_json::to_string(&result.content)
+                .unwrap()
+                .contains("review_plan")
+        );
+    }
+
+    #[test]
+    fn tool_errors_are_stable_and_do_not_reflect_sensitive_values() {
+        let secret = "https://user:password@example.test/search?api_key=secret";
+        let first = tool_error(secret.to_owned());
+        let second = tool_error("a different internal failure".to_owned());
+        let first_json = serde_json::to_value(&first).unwrap();
+
+        assert_eq!(first, second);
+        assert_eq!(first.is_error, Some(true));
+        assert_eq!(
+            first_json.pointer("/structuredContent/error/code"),
+            Some(&serde_json::json!("operation_rejected"))
+        );
+        assert!(!first_json.to_string().contains("password"));
+        assert!(!first_json.to_string().contains("api_key"));
+        assert!(!first_json.to_string().contains("secret"));
+    }
 }
