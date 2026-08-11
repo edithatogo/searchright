@@ -152,8 +152,11 @@ pub enum BenchmarkError {
         "metric regressed from {baseline} to {candidate}; maximum permitted drop is {maximum_absolute_drop}"
     )]
     Regression {
+        /// Previously accepted metric value used as the comparison baseline.
         baseline: f64,
+        /// Newly measured metric value being evaluated by the gate.
         candidate: f64,
+        /// Largest absolute decrease allowed before the gate reports a regression.
         maximum_absolute_drop: f64,
     },
 }

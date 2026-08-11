@@ -7,6 +7,10 @@ use crate::{
 };
 
 /// Actor responsible for an audit event.
+#[expect(
+    clippy::struct_field_names,
+    reason = "actor_id and actor_type are stable serialized contract field names"
+)]
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct Actor {
     /// Stable actor identifier or pseudonym.
@@ -18,7 +22,7 @@ pub struct Actor {
 }
 
 /// Event before hash-chain fields are assigned.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct AuditEventDraft {
     /// Contract identifier.
     pub schema_version: String,
@@ -37,7 +41,7 @@ pub struct AuditEventDraft {
 }
 
 /// Hash-chained audit event.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct AuditEvent {
     /// Contract identifier.
     pub schema_version: String,

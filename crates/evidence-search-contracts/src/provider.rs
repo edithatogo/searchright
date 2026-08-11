@@ -117,7 +117,7 @@ pub struct SearchRequest {
 }
 
 /// One page returned by a provider.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct ProviderPage {
     /// Contract identifier.
     pub schema_version: String,

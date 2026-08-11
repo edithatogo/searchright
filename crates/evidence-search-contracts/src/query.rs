@@ -42,7 +42,7 @@ pub struct SearchTerm {
     /// Target fields.
     #[serde(default)]
     pub fields: Vec<SearchField>,
-    /// Optional controlled-vocabulary system such as MeSH or Emtree.
+    /// Optional controlled-vocabulary system such as `MeSH` or Emtree.
     pub vocabulary: Option<String>,
     /// Whether narrower headings should be exploded.
     #[serde(default)]
@@ -116,21 +116,36 @@ impl Validate for SearchTerm {
 #[serde(tag = "op", rename_all = "snake_case")]
 pub enum QueryExpr {
     /// Leaf term.
-    Term { term: SearchTerm },
+    Term {
+        /// The portable search term at this leaf.
+        term: SearchTerm,
+    },
     /// All children must match.
-    And { children: Vec<QueryExpr> },
+    And {
+        /// The expressions that must all match.
+        children: Vec<Self>,
+    },
     /// At least one child must match.
-    Or { children: Vec<QueryExpr> },
+    Or {
+        /// The expressions of which at least one must match.
+        children: Vec<Self>,
+    },
     /// Include one expression while excluding another.
     Not {
-        include: Box<QueryExpr>,
-        exclude: Box<QueryExpr>,
+        /// The expression whose matches are retained.
+        include: Box<Self>,
+        /// The expression whose matches are excluded.
+        exclude: Box<Self>,
     },
     /// Terms must occur within a distance.
     Proximity {
-        left: Box<QueryExpr>,
-        right: Box<QueryExpr>,
+        /// The left-hand expression.
+        left: Box<Self>,
+        /// The right-hand expression.
+        right: Box<Self>,
+        /// The maximum allowed distance between the expressions.
         distance: u16,
+        /// Whether the expressions must occur in the declared order.
         ordered: bool,
     },
 }
@@ -184,9 +199,9 @@ pub enum SearchDialect {
     Embase,
     /// Europe PMC syntax.
     EuropePmc,
-    /// CINAHL via EBSCOhost.
+    /// CINAHL via `EBSCOhost`.
     CinahlEbsco,
-    /// PsycINFO via Ovid.
+    /// `PsycINFO` via Ovid.
     PsycInfoOvid,
     /// Scopus advanced search.
     Scopus,

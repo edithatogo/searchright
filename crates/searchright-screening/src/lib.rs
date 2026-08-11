@@ -13,7 +13,12 @@ use searchright_contracts::{
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ScreeningStatus {
     /// No or insufficient independent decisions.
-    Pending { submitted: usize, required: usize },
+    Pending {
+        /// Number of independent decisions submitted so far.
+        submitted: usize,
+        /// Number of independent decisions required by policy.
+        required: usize,
+    },
     /// Required decisions agree.
     Consensus(DecisionValue),
     /// Submitted decisions disagree.
@@ -157,13 +162,22 @@ pub enum ScreeningError {
     MissingAdjudicationRule,
     /// A required decision or resolution field was empty.
     #[error("required screening field `{field}` is empty")]
-    EmptyField { field: &'static str },
+    EmptyField {
+        /// Name of the required field that was empty.
+        field: &'static str,
+    },
     /// The same reviewer submitted more than once for a subject/round.
     #[error("reviewer `{reviewer_id}` has already submitted a decision")]
-    DuplicateReviewer { reviewer_id: String },
+    DuplicateReviewer {
+        /// Identifier of the reviewer whose additional decision was rejected.
+        reviewer_id: String,
+    },
     /// A decision identifier was reused within a subject/round.
     #[error("decision identifier `{decision_id}` is already present")]
-    DuplicateDecisionId { decision_id: String },
+    DuplicateDecisionId {
+        /// Reused decision identifier that caused the conflict.
+        decision_id: String,
+    },
     /// Agent attempted a prohibited exclusion.
     #[error("agent exclusion is not permitted by the current screening policy")]
     AgentExclusionDenied,

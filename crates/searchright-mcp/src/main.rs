@@ -1,3 +1,8 @@
+//! Standard-I/O MCP server for Searchright's governed review operations.
+//!
+//! The server maps MCP tools onto the shared [`SearchrightEngine`] while
+//! retaining Searchright's contract validation and explicit operation inputs.
+
 #![forbid(unsafe_code)]
 
 use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
