@@ -30,3 +30,8 @@ external contribution or institutional adoption, not by premature committees.
 Future grants, commercial support, database-provider relationships and paid
 integration work must be disclosed with their effect on roadmap priority and
 benchmark independence.
+
+The required observation categories are recorded in
+`evaluation/external-evaluation.json`. The source contract remains
+`prepared_not_observed`; repository documentation and a static check do not
+demonstrate maintenance history, standards surveillance or succession practice.

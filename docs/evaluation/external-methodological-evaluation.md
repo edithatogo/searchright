@@ -32,3 +32,9 @@ inter-rater agreement and trust calibration.
 
 This document is a prepared protocol outline. It is not preregistration,
 recruitment, execution, ethics approval or external validation evidence.
+
+The machine-readable preparation contract is
+`evaluation/external-evaluation.json`. Its network-free checker deliberately
+rejects any promotion beyond `prepared_not_preregistered`; external receipts
+must be reviewed and governed separately rather than inserted into source as a
+self-attestation.
