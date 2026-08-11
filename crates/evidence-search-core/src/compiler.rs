@@ -365,8 +365,8 @@ fn apply_field(
             SearchField::Journal => format!("JOURNAL:{literal}"),
             SearchField::Identifier => format!("EXT_ID:{literal}"),
             SearchField::SubjectHeading => format!("MESH:{literal}"),
-            SearchField::All | SearchField::Keyword => literal.to_owned(),
-            SearchField::Custom(_) => degraded_field(literal, warnings),
+            SearchField::All => literal.to_owned(),
+            SearchField::Keyword | SearchField::Custom(_) => degraded_field(literal, warnings),
         },
         SearchDialect::CinahlEbsco => match field {
             SearchField::Title => format!("TI {literal}"),
@@ -375,14 +375,10 @@ fn apply_field(
             SearchField::Author => format!("AU {literal}"),
             SearchField::Journal => format!("JN {literal}"),
             SearchField::SubjectHeading => format!("MH {literal}"),
-            SearchField::All | SearchField::Keyword | SearchField::Identifier => {
-                if matches!(field, SearchField::Identifier) {
-                    degraded_field(literal, warnings)
-                } else {
-                    literal.to_owned()
-                }
+            SearchField::All => literal.to_owned(),
+            SearchField::Keyword | SearchField::Identifier | SearchField::Custom(_) => {
+                degraded_field(literal, warnings)
             }
-            SearchField::Custom(_) => degraded_field(literal, warnings),
         },
         SearchDialect::Scopus => match field {
             SearchField::Title => format!("TITLE({literal})"),
@@ -405,11 +401,10 @@ fn apply_field(
             SearchField::Title => format!("TI=({literal})"),
             SearchField::Author => format!("AU=({literal})"),
             SearchField::Journal => format!("SO=({literal})"),
-            SearchField::All
-            | SearchField::Abstract
-            | SearchField::TitleAbstract
-            | SearchField::Keyword
-            | SearchField::SubjectHeading => format!("TS=({literal})"),
+            SearchField::All | SearchField::SubjectHeading => format!("TS=({literal})"),
+            SearchField::Abstract | SearchField::TitleAbstract | SearchField::Keyword => {
+                degraded_rendering(format!("TS=({literal})"), warnings)
+            }
             SearchField::Identifier | SearchField::Custom(_) => {
                 let rendered = format!("TS=({literal})");
                 warnings.push(warning(
@@ -438,12 +433,16 @@ fn apply_field(
 }
 
 fn degraded_field(literal: &str, warnings: &mut Vec<StrategyWarning>) -> String {
+    degraded_rendering(literal.to_owned(), warnings)
+}
+
+fn degraded_rendering(rendered: String, warnings: &mut Vec<StrategyWarning>) -> String {
     warnings.push(warning(
         "translation.field.degraded",
         "The target source cannot express the requested portable field exactly.",
         true,
     ));
-    literal.to_owned()
+    rendered
 }
 
 fn append_limits(
@@ -632,7 +631,8 @@ mod tests {
     }
 
     #[test]
-    fn redundant_grouping_is_compilation_invariant() -> Result<(), Box<dyn std::error::Error>> {
+    fn boolean_conjunction_reordering_preserves_term_set() -> Result<(), Box<dyn std::error::Error>>
+    {
         let left = strategy();
         let mut right = left.clone();
         if let QueryExpr::And { children } = &mut right.query {
