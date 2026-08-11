@@ -281,13 +281,35 @@ fn validate_snapshot_name(name: &str) -> Result<(), StoreError> {
 
 #[cfg(test)]
 mod tests {
-    use std::fs;
+    use std::{fs, fs::OpenOptions, io::Write};
 
     use evidence_search_core::AuditLedger;
     use searchright_contracts::{Actor, AuditEventDraft};
     use serde_json::json;
 
     use super::*;
+
+    fn test_directory(label: &str) -> PathBuf {
+        std::env::temp_dir().join(format!("searchright-{label}-{}", uuid::Uuid::now_v7()))
+    }
+
+    fn event(id: &str, ledger: &mut AuditLedger) -> AuditEvent {
+        let appended = ledger.append(AuditEventDraft {
+            schema_version: "org.searchright.audit-event.v1".to_owned(),
+            event_id: id.to_owned(),
+            review_id: "review-1".to_owned(),
+            event_type: "created".to_owned(),
+            occurred_at: "2026-08-05T00:00:00Z".to_owned(),
+            actor: Actor {
+                actor_id: "test".to_owned(),
+                actor_type: "human".to_owned(),
+                provenance: None,
+            },
+            payload: json!({"ok": true}),
+        });
+        assert!(appended.is_ok());
+        appended.cloned().unwrap_or_else(|_| unreachable!())
+    }
 
     #[test]
     fn snapshot_receipt_matches_exact_bytes() {
@@ -337,6 +359,105 @@ mod tests {
                 assert!(store.append_event(event).is_ok());
             }
             assert!(store.verify_audit().is_ok());
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
+
+    #[test]
+    fn restart_verifies_and_continues_from_persisted_head() {
+        let directory = test_directory("restart-test");
+        let mut ledger = AuditLedger::new();
+        let first = event("event-1", &mut ledger);
+        {
+            let store = FileReviewStore::open(&directory);
+            assert!(store.is_ok());
+            if let Ok(store) = store {
+                assert!(store.append_event(&first).is_ok());
+            }
+        }
+
+        let reopened = FileReviewStore::open(&directory);
+        assert!(reopened.is_ok());
+        if let Ok(reopened) = reopened {
+            let second = event("event-2", &mut ledger);
+            assert!(reopened.append_event(&second).is_ok());
+            let verification = reopened.verify_audit();
+            assert!(verification.is_ok());
+            if let Ok(verification) = verification {
+                assert_eq!(verification.event_count, 2);
+                assert_eq!(verification.head_hash, Some(second.event_hash));
+            }
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
+
+    #[test]
+    fn duplicate_append_is_idempotent_at_the_storage_boundary() {
+        let directory = test_directory("idempotency-test");
+        let store = FileReviewStore::open(&directory);
+        assert!(store.is_ok());
+        if let Ok(store) = store {
+            let mut ledger = AuditLedger::new();
+            let first = event("event-1", &mut ledger);
+            assert!(store.append_event(&first).is_ok());
+            let path = directory.join("audit.jsonl");
+            let before = fs::read(&path);
+            assert!(before.is_ok());
+
+            assert!(matches!(
+                store.append_event(&first),
+                Err(StoreError::DuplicateEventId(event_id)) if event_id == "event-1"
+            ));
+            assert_eq!(before.ok(), fs::read(path).ok());
+            assert!(store.verify_audit().is_ok());
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
+
+    #[test]
+    fn incomplete_trailing_write_fails_closed_after_restart() {
+        let directory = test_directory("crash-test");
+        let store = FileReviewStore::open(&directory);
+        assert!(store.is_ok());
+        if let Ok(store) = store {
+            let mut ledger = AuditLedger::new();
+            let first = event("event-1", &mut ledger);
+            assert!(store.append_event(&first).is_ok());
+            let file = OpenOptions::new()
+                .append(true)
+                .open(directory.join("audit.jsonl"));
+            assert!(file.is_ok());
+            if let Ok(mut file) = file {
+                assert!(file.write_all(b"{\"schema_version\":").is_ok());
+                assert!(file.sync_all().is_ok());
+            }
+        }
+
+        let reopened = FileReviewStore::open(&directory);
+        assert!(reopened.is_ok());
+        if let Ok(reopened) = reopened {
+            assert!(matches!(
+                reopened.verify_audit(),
+                Err(StoreError::MalformedLine { line: 2, .. })
+            ));
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
+
+    #[test]
+    fn active_writer_lock_blocks_all_mutations() {
+        let directory = test_directory("lock-test");
+        let store = FileReviewStore::open(&directory);
+        assert!(store.is_ok());
+        if let Ok(store) = store {
+            let lock = store.acquire_write_lock("test-holder");
+            assert!(lock.is_ok());
+            assert!(matches!(
+                store.write_snapshot("records", &json!({"a": 1})),
+                Err(StoreError::WriterLocked)
+            ));
+            drop(lock);
+            assert!(store.write_snapshot("records", &json!({"a": 1})).is_ok());
         }
         let _cleanup = fs::remove_dir_all(directory);
     }
