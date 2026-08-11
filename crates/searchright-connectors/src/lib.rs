@@ -1321,6 +1321,7 @@ pub use live::{
 #[cfg(test)]
 mod tests {
     use super::*;
+    use evidence_search_contracts::Validate;
 
     #[test]
     fn pubmed_endpoint_percent_encodes_query() {
@@ -1399,5 +1400,45 @@ mod tests {
         assert!(crossref.is_ok());
         assert!(openalex.is_ok());
         assert!(trials.is_ok());
+    }
+
+    #[test]
+    fn checked_in_open_provider_fixtures_compile_to_valid_canonical_pages()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let fixtures = [
+            (
+                include_str!("../../../provider-fixtures/mvp/pubmed-esummary.json"),
+                parse_pubmed_summary_page
+                    as fn(&serde_json::Value) -> Result<ProviderPage, ProviderError>,
+                "10.1000/searchright.1",
+            ),
+            (
+                include_str!("../../../provider-fixtures/mvp/europe-pmc.json"),
+                parse_europe_pmc_page,
+                "10.1000/searchright.3",
+            ),
+            (
+                include_str!("../../../provider-fixtures/mvp/crossref.json"),
+                parse_crossref_page,
+                "10.1000/searchright.4",
+            ),
+            (
+                include_str!("../../../provider-fixtures/mvp/openalex.json"),
+                parse_openalex_page,
+                "10.1000/searchright.5",
+            ),
+        ];
+
+        for (fixture, parser, expected_doi) in fixtures {
+            let payload: serde_json::Value = serde_json::from_str(fixture)?;
+            let page = parser(&payload)?;
+            page.validate()?;
+            assert!(
+                page.records
+                    .iter()
+                    .any(|record| { record.identifiers.doi.as_deref() == Some(expected_doi) })
+            );
+        }
+        Ok(())
     }
 }
