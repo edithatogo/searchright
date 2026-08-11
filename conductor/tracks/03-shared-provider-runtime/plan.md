@@ -33,8 +33,10 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-03-phase-3 -->
 
-- [ ] Compile and run the shared provider runtime tests.
+- [x] Compile and run the shared provider runtime tests.
 - [ ] Close hazard H-002 with literal-private, loopback, link-local, metadata-address and resolved-address SSRF denial evidence.
+  - [x] Reject prohibited literal hosts and validate complete supplied DNS answer sets deterministically.
+  - [ ] Resolve, validate and pin accepted DNS answers in every live connector transport to prevent rebinding.
 - [ ] Run old/new Sourceright fixtures in the downstream repository.
 - [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 
@@ -44,5 +46,5 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
