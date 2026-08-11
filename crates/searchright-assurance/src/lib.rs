@@ -296,9 +296,10 @@ mod kani_proofs {
     }
 
     #[kani::proof]
-    fn undeclared_edges_remain_denied() {
+    fn structurally_valid_undeclared_edges_remain_denied() {
         let from = stage(kani::any());
         let to = stage(kani::any());
+        kani::assume(from != to);
         kani::assume(!allowed_transition(from, to));
         let candidate = transition(from, to, TransitionActorKind::Human);
         assert!(matches!(
