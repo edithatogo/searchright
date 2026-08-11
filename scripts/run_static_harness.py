@@ -18,6 +18,7 @@ COMMANDS = [
     [sys.executable, "scripts/check_public_package_policy.py"],
     [sys.executable, "scripts/check_architecture_fitness.py"],
     [sys.executable, "scripts/sync_schema_surface.py", "--check"],
+    [sys.executable, "scripts/sync_contract_conformance_matrix.py", "--check"],
     [sys.executable, "scripts/check_schema_migrations.py"],
     [sys.executable, "scripts/check_native_query_corpus.py"],
     [sys.executable, "scripts/check_provider_contract_baselines.py"],

@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -122,8 +124,15 @@ impl Validate for ProtocolAmendment {
         if self.changes.is_empty() {
             return Err(ContractError::EmptyCollection("amendment.changes"));
         }
+        let mut change_paths = BTreeSet::new();
         for change in &self.changes {
             change.validate()?;
+            if !change_paths.insert(change.path.as_str()) {
+                return Err(ContractError::Invariant(format!(
+                    "protocol amendment contains duplicate change path `{}`",
+                    change.path
+                )));
+            }
         }
         match self.decision {
             AmendmentDecision::Proposed => {
@@ -151,5 +160,66 @@ impl Validate for ProtocolAmendment {
             }
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn amendment(decision: AmendmentDecision) -> ProtocolAmendment {
+        ProtocolAmendment {
+            schema_version: PROTOCOL_AMENDMENT_SCHEMA_VERSION.to_owned(),
+            amendment_id: "amendment-1".to_owned(),
+            review_id: "review-1".to_owned(),
+            kind: AmendmentKind::Eligibility,
+            version_before: "1.0".to_owned(),
+            version_after: "1.1".to_owned(),
+            proposed_at: "2026-08-12T00:00:00Z".to_owned(),
+            proposed_by: "reviewer-1".to_owned(),
+            decision,
+            decided_by: None,
+            decided_at: None,
+            changes: vec![AmendmentChange {
+                path: "/eligibility/population".to_owned(),
+                before: Some("adults".to_owned()),
+                after: "adults and adolescents".to_owned(),
+                rationale: "Protocol clarification".to_owned(),
+            }],
+            retrospective_impact: "Previously screened records require reassessment".to_owned(),
+            requires_reprocessing: true,
+        }
+    }
+
+    #[test]
+    fn proposed_amendment_rejects_decision_metadata() {
+        let mut value = amendment(AmendmentDecision::Proposed);
+        value.decided_by = Some("reviewer-2".to_owned());
+        assert!(
+            matches!(value.validate(), Err(ContractError::Invariant(message)) if message.contains("must not contain decision metadata"))
+        );
+    }
+
+    #[test]
+    fn decided_amendment_requires_complete_decision_metadata() {
+        let mut value = amendment(AmendmentDecision::Approved);
+        value.decided_by = Some("reviewer-2".to_owned());
+        assert!(
+            matches!(value.validate(), Err(ContractError::Invariant(message)) if message.contains("decision timestamp"))
+        );
+    }
+
+    #[test]
+    fn amendment_rejects_duplicate_change_paths() {
+        let mut value = amendment(AmendmentDecision::Proposed);
+        value.changes.push(AmendmentChange {
+            path: "/eligibility/population".to_owned(),
+            before: Some("adults".to_owned()),
+            after: "adults and adolescents".to_owned(),
+            rationale: "Second conflicting change".to_owned(),
+        });
+        assert!(
+            matches!(value.validate(), Err(ContractError::Invariant(message)) if message.contains("duplicate change path"))
+        );
     }
 }

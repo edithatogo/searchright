@@ -3,16 +3,20 @@
 
 Parent phase key: `track-01-phase-1`
 Conductor plan: `conductor/tracks/01-contract-catalog/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/evidence-search-contracts/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/lib.rs`
   - [x] Present source path: `contracts/schema-catalog.json`
   - [x] Present source path: `contracts/compatibility/schema-surface-0.1.0-alpha.1.json`
+  - [x] Present source path: `contracts/compatibility/contract-conformance-matrix.json`
+  - [x] Present source path: `crates/evidence-search-contracts/src/schema.rs`
+  - [x] Present source path: `crates/evidence-search-contracts/tests/schema_parity.rs`
   - [x] Present source path: `scripts/sync_schema_surface.py`
+  - [x] Present source path: `scripts/sync_contract_conformance_matrix.py`
   - [x] Present source path: `release/public-packages.json`
   - [x] Present source path: `scripts/check_public_package_policy.py`
   - [x] Present source path: `docs/msrv-and-package-policy.md`

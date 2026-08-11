@@ -69,6 +69,7 @@ pub fn attach_report(
     study_id: &str,
     link: EvidenceLink,
 ) -> Result<(), StudyGraphError> {
+    validate_graph(graph)?;
     if graph
         .reports
         .iter()
@@ -76,10 +77,10 @@ pub fn attach_report(
     {
         return Err(StudyGraphError::DuplicateObject(report.report_id));
     }
-    let study = graph
+    let study_index = graph
         .studies
-        .iter_mut()
-        .find(|item| item.study_id == study_id)
+        .iter()
+        .position(|item| item.study_id == study_id)
         .ok_or_else(|| StudyGraphError::UnknownObject(study_id.to_owned()))?;
     if link.relationship != EvidenceRelationship::ReportOfStudy
         || link.from_id != report.report_id
@@ -87,10 +88,18 @@ pub fn attach_report(
     {
         return Err(StudyGraphError::InvalidAttachmentLink);
     }
-    study.report_ids.push(report.report_id.clone());
-    graph.reports.push(report);
-    graph.links.push(link);
-    validate_graph(graph)
+    let mut candidate = graph.clone();
+    candidate
+        .studies
+        .get_mut(study_index)
+        .ok_or_else(|| StudyGraphError::UnknownObject(study_id.to_owned()))?
+        .report_ids
+        .push(report.report_id.clone());
+    candidate.reports.push(report);
+    candidate.links.push(link);
+    validate_graph(&candidate)?;
+    *graph = candidate;
+    Ok(())
 }
 
 /// Count reports per study.
@@ -172,5 +181,37 @@ mod tests {
         let graph = graph();
         assert!(validate_graph(&graph).is_ok());
         assert!(unlinked_reports(&graph).is_empty());
+    }
+
+    #[test]
+    fn failed_attachment_does_not_mutate_graph() {
+        let mut graph = graph();
+        let original = graph.clone();
+        let report = Report {
+            report_id: "report-2".to_owned(),
+            record_ids: vec!["record-2".to_owned()],
+            title: "Secondary report".to_owned(),
+            publication_year: None,
+            doi: None,
+            pmid: None,
+            registry_ids: Vec::new(),
+            retrieval_attempts: Vec::new(),
+        };
+        let invalid_link = EvidenceLink {
+            link_id: "link-2".to_owned(),
+            from_id: "report-2".to_owned(),
+            to_id: "study-1".to_owned(),
+            relationship: EvidenceRelationship::UpdatesReport,
+            confidence: 1.0,
+            evidence: vec!["test evidence".to_owned()],
+            asserted_by: "human-1".to_owned(),
+            asserted_at: "2026-08-12T00:00:00Z".to_owned(),
+        };
+
+        assert!(matches!(
+            attach_report(&mut graph, report, "study-1", invalid_link),
+            Err(StudyGraphError::InvalidAttachmentLink)
+        ));
+        assert_eq!(graph, original);
     }
 }

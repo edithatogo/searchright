@@ -1,0 +1,1351 @@
+{
+  "schema_version": "org.searchright.contract-conformance-matrix.v1",
+  "surface_version": "0.1.0-alpha.1",
+  "contracts": [
+    {
+      "id": "access-decision",
+      "owner_track": "34",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/access-decision.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/access-decision.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/access-decision.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "AccessDecision",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "access-request",
+      "owner_track": "34",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/access-request.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/access-request.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/access-request.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "AccessRequest",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "agent-workflow",
+      "owner_track": "11",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/agent-workflow.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/agent-workflow.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/agent-workflow.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "AgentWorkflow",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "architecture-policy",
+      "owner_track": "16",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/architecture-policy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/architecture-policy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/architecture-policy.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ArchitecturePolicy",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "audit-event",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/audit-event.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/audit-event.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/audit-event.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "AuditEvent",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "backup-manifest",
+      "owner_track": "33",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/backup-manifest.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/backup-manifest.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/backup-manifest.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "BackupManifest",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "benchmark-report",
+      "owner_track": "17",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/benchmark-report.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/benchmark-report.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/benchmark-report.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "BenchmarkReport",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "bibliographic-record",
+      "owner_track": "01",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/bibliographic-record.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/bibliographic-record.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/bibliographic-record.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "BibliographicRecord",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "compiled-strategy",
+      "owner_track": "02",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/compiled-strategy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/compiled-strategy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/compiled-strategy.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "CompiledStrategy",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "component-health",
+      "owner_track": "33",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/component-health.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/component-health.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/component-health.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ComponentHealth",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "consumer-contract-suite",
+      "owner_track": "13",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/consumer-contract-suite.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/consumer-contract-suite.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/consumer-contract-suite.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ConsumerContractSuite",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "data-handling-decision",
+      "owner_track": "28",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/data-handling-decision.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/data-handling-decision.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/data-handling-decision.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "DataHandlingDecision",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "data-handling-request",
+      "owner_track": "28",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/data-handling-request.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/data-handling-request.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/data-handling-request.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "DataHandlingRequest",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "diagnostic",
+      "owner_track": "27",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/diagnostic.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/diagnostic.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/diagnostic.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "Diagnostic",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "discovery-run",
+      "owner_track": "20",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/discovery-run.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/discovery-run.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/discovery-run.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "DiscoveryRun",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "document-evidence",
+      "owner_track": "12",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/document-evidence.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/document-evidence.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/document-evidence.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "DocumentEvidence",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "evidence-debt",
+      "owner_track": "30",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/evidence-debt.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/evidence-debt.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/evidence-debt.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "EvidenceDebtRegister",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "execution-envelope",
+      "owner_track": "16",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/execution-envelope.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/execution-envelope.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/execution-envelope.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ExecutionEnvelope",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "gate-catalog",
+      "owner_track": "16",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/gate-catalog.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/gate-catalog.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/gate-catalog.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "GateCatalog",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "github-issue-hierarchy",
+      "owner_track": "13",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/github-issue-hierarchy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/github-issue-hierarchy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/github-issue-hierarchy.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "GitHubIssueHierarchy",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "github-issue-hierarchy-v2",
+      "owner_track": "31",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/github-issue-hierarchy.v2.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/github-issue-hierarchy.v2.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "GitHubIssueHierarchy",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "github-project",
+      "owner_track": "31",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/github-project.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/github-project.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/github-project.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "GitHubProjectManifest",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "github-repository-settings",
+      "owner_track": "31",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/github-repository-settings.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/github-repository-settings.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/github-repository-settings.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "GitHubRepositorySettings",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "incident-record",
+      "owner_track": "33",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/incident-record.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/incident-record.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/incident-record.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "IncidentRecord",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "institutional-policy",
+      "owner_track": "28",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/institutional-policy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/institutional-policy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/institutional-policy.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "InstitutionalPolicy",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "integration-passport",
+      "owner_track": "13",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/integration-passport.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/integration-passport.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/integration-passport.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "IntegrationPassport",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "integration-release-train",
+      "owner_track": "32",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/integration-release-train.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/integration-release-train.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/integration-release-train.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "IntegrationReleaseTrain",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "interchange-receipt",
+      "owner_track": "06",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/interchange-receipt.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/interchange-receipt.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/interchange-receipt.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "InterchangeReceipt",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "licensed-adapter",
+      "owner_track": "21",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/licensed-adapter.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/licensed-adapter.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/licensed-adapter.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "LicensedAdapterProfile",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "living-update",
+      "owner_track": "22",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/living-update.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/living-update.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/living-update.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "LivingUpdateRun",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "native-search-strategy",
+      "owner_track": "02",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/native-search-strategy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/native-search-strategy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/native-search-strategy.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "NativeSearchStrategy",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "prisma-flow",
+      "owner_track": "08",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/prisma-flow.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/prisma-flow.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/prisma-flow.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "PrismaFlow",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "protocol-amendment",
+      "owner_track": "22",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/protocol-amendment.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/protocol-amendment.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/protocol-amendment.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ProtocolAmendment",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "provider-component",
+      "owner_track": "24",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/provider-component.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/provider-component.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/provider-component.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ProviderComponentManifest",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "provider-manifest",
+      "owner_track": "04",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/provider-manifest.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/provider-manifest.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/provider-manifest.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ProviderManifest",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "provider-page",
+      "owner_track": "03",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/provider-page.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/provider-page.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/provider-page.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ProviderPage",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "provider-policy-set",
+      "owner_track": "04",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/provider-policy-set.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/provider-policy-set.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/provider-policy-set.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ProviderPolicySet",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "query-ast",
+      "owner_track": "02",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/query-ast.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/query-ast.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/query-ast.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "QueryExpr",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "ranking-calibration",
+      "owner_track": "23",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/ranking-calibration.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/ranking-calibration.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/ranking-calibration.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "RankingCalibration",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "recovery-rehearsal",
+      "owner_track": "33",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/recovery-rehearsal.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/recovery-rehearsal.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/recovery-rehearsal.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "RecoveryRehearsal",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "redaction-profile",
+      "owner_track": "28",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/redaction-profile.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/redaction-profile.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/redaction-profile.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "RedactionProfile",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "release-rehearsal",
+      "owner_track": "36",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/release-rehearsal.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/release-rehearsal.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/release-rehearsal.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ReleaseRehearsal",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "review-bundle-manifest",
+      "owner_track": "25",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/review-bundle-manifest.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/review-bundle-manifest.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/review-bundle-manifest.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": null,
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "review-plan",
+      "owner_track": "01",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/review-plan.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/review-plan.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/review-plan.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ReviewPlan",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "review-state-snapshot",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/review-state-snapshot.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/review-state-snapshot.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/review-state-snapshot.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "DerivedReviewStateSnapshot",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "schema-migration-plan",
+      "owner_track": "26",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/schema-migration-plan.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/schema-migration-plan.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/schema-migration-plan.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "SchemaMigrationPlan",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "schema-migration-registry",
+      "owner_track": "26",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/schema-migration-registry.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/schema-migration-registry.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/schema-migration-registry.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "SchemaMigrationRegistry",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "screening-decision",
+      "owner_track": "07",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/screening-decision.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/screening-decision.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/screening-decision.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ScreeningDecision",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "screening-policy",
+      "owner_track": "07",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/screening-policy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/screening-policy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/screening-policy.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ScreeningPolicy",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "search-run",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/search-run.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/search-run.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/search-run.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "SearchRun",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "search-strategy",
+      "owner_track": "02",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/search-strategy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/search-strategy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/search-strategy.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "SearchStrategy",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "search-validation",
+      "owner_track": "17",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/search-validation.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/search-validation.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/search-validation.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "SearchValidationReport",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "source-receipt",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/source-receipt.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/source-receipt.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/source-receipt.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "SourceReceipt",
+        "compiler_conformance": "root_field_parity",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "sourceright-parity-report",
+      "owner_track": "14",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/sourceright-parity-report.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/sourceright-parity-report.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/sourceright-parity-report.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "SourcerightParityReport",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "standard-assessment",
+      "owner_track": "08",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/standard-assessment.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/standard-assessment.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/standard-assessment.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "StandardAssessment",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "standard-pack",
+      "owner_track": "08",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/standard-pack.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/standard-pack.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/standard-pack.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "StandardPack",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "study-graph",
+      "owner_track": "06",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/study-graph.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/study-graph.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/study-graph.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "StudyGraph",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "telemetry-policy",
+      "owner_track": "33",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/telemetry-policy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/telemetry-policy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/telemetry-policy.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "TelemetryPolicy",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "tenant-policy",
+      "owner_track": "34",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/tenant-policy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/tenant-policy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/tenant-policy.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "TenantPolicy",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "workflow-trace",
+      "owner_track": "26",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/workflow-trace.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/workflow-trace.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/workflow-trace.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "WorkflowTrace",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    }
+  ],
+  "bindings": {
+    "python": {
+      "package": "searchright-client",
+      "status": "generated_client_planned"
+    },
+    "rust": {
+      "package": "searchright",
+      "status": "native_facade"
+    },
+    "typescript": {
+      "package": "@searchright/client",
+      "status": "generated_client_planned"
+    }
+  },
+  "binding_ownership": {
+    "track": "35",
+    "requirement": "SR-086",
+    "policy": "generated_clients_must_not_reimplement_domain_logic"
+  },
+  "rust_schema_parity": {
+    "registered_roots": 9,
+    "exact_parity": false,
+    "loss_report": "evidence_search_contracts::rust_schema_parity_report"
+  },
+  "claim_boundary": "This matrix proves catalogue presence, declared static validation, and exact canonical digest equality only. It does not prove Rust compiler, round-trip, generated binding, install, or downstream conformance."
+}
