@@ -99,12 +99,17 @@ def list_fields(project_id: str) -> dict[str, dict[str, Any]]:
     return {item.get("name"): item for item in fields if isinstance(item, dict) and item.get("name")}
 
 
+def field_data_type(field: dict[str, Any]) -> str:
+    """Normalize GitHub's GraphQL field union to manifest/CLI data types."""
+    typename = str(field.get("__typename") or "").upper()
+    if typename == "PROJECTV2SINGLESELECTFIELD":
+        return "SINGLE_SELECT"
+    return str(field.get("dataType") or field.get("type") or "").upper()
+
+
 def validate_field(requested: dict[str, Any], current: dict[str, Any]) -> None:
     name = requested["name"]
-    typename = str(current.get("__typename") or "").upper()
-    actual_type = str(current.get("dataType") or "").upper()
-    if typename == "PROJECTV2SINGLESELECTFIELD":
-        actual_type = "SINGLE_SELECT"
+    actual_type = field_data_type(current)
     if actual_type and actual_type != requested["data_type"]:
         raise GitHubCommandError(
             f"Project field {name!r} has type {actual_type}, expected {requested['data_type']}"
@@ -258,7 +263,7 @@ def option_id(field: dict[str, Any], value: str) -> str:
 
 
 def set_field(project_id: str, item_id: str, field: dict[str, Any], value: Any) -> None:
-    data_type = str(field.get("dataType") or field.get("type") or "").upper()
+    data_type = field_data_type(field)
     command = [
         "gh", "project", "item-edit", "--id", item_id,
         "--project-id", project_id, "--field-id", str(field["id"]),
