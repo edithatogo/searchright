@@ -12,5 +12,9 @@ publish = false
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
 thiserror.workspace = true
 
+[dev-dependencies]
+serde_json.workspace = true
+serde_yaml.workspace = true
+
 [lints]
 workspace = true
