@@ -18,6 +18,7 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `Cargo.lock`
   - [x] Present source path: `docs/repository-standards-alignment.md`
   - [x] Present source path: `verification/receipts/track-00-local-verification.json`
+  - [x] Present source path: `verification/receipts/track-00-conductor-review.json`
   - [x] Present source path: `scripts/install-conductor.sh`
   - [x] Present source path: `scripts/install-conductor.ps1`
   - [x] Assertion ledger: `conductor/tracks/00-foundation-conductor-toolchain/traceability.json`
@@ -42,5 +43,5 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

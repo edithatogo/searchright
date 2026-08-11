@@ -17,6 +17,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `Cargo.lock`
   - [x] Present source path: `docs/repository-standards-alignment.md`
   - [x] Present source path: `verification/receipts/track-00-local-verification.json`
+  - [x] Present source path: `verification/receipts/track-00-conductor-review.json`
   - [x] Present source path: `scripts/install-conductor.sh`
   - [x] Present source path: `scripts/install-conductor.ps1`
   - [x] Assertion ledger: `conductor/tracks/00-foundation-conductor-toolchain/traceability.json`
