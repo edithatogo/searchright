@@ -1,0 +1,104 @@
+{
+  "schema_version": "org.searchright.track-local-verification.v1",
+  "track_id": "00",
+  "observed_at": "2026-08-12T00:58:47+10:00",
+  "source_revision": "3f62b5ebc3efe3e619c05dfacdabc01b159f1aec",
+  "baseline_revision": "2f00db672f690323f7af721db1bf6d5cdbb6e4b7",
+  "source_tree_binding": "tested_implementation_paths_match_source_revision",
+  "working_tree_clean": false,
+  "tested_implementation_paths_clean": true,
+  "toolchains": {
+    "rust": {
+      "version": "1.97.1",
+      "host": "x86_64-pc-windows-gnu",
+      "commit": "8bab26f4f68e0e26f0bb7960be334d5b520ea452"
+    },
+    "conductor": {
+      "host": "gemini_cli",
+      "host_version": "0.54.0-preview.0",
+      "extension_version": "0.4.1",
+      "release_tag": "conductor-v0.4.1",
+      "enabled_user": true,
+      "enabled_workspace": true
+    }
+  },
+  "artifacts": {
+    "cargo_lock_sha256": "9c1113e24dcfcaf9d0d24ed308ecc00a0c2a39928822c7c28f94794698af8446",
+    "conductor_index_sha256": "5a01460eb3ccc008a5717a7a8adaf4c49a6a95c2cd05ca2adc3d3b736660685b"
+  },
+  "gates": [
+    {
+      "command": "cargo generate-lockfile",
+      "status": "passed"
+    },
+    {
+      "command": "rustup run 1.97.1-x86_64-pc-windows-gnu cargo check --workspace --all-targets --offline",
+      "status": "passed"
+    },
+    {
+      "command": "rustup run 1.97.1-x86_64-pc-windows-gnu cargo test --workspace --all-targets --locked",
+      "status": "passed",
+      "tests_passed": 55,
+      "tests_failed": 0
+    },
+    {
+      "command": "python scripts/run_static_harness.py",
+      "status": "failed",
+      "gates_passed": 38,
+      "gates_failed": 13,
+      "reason": "Missing Python validation dependencies, Windows default encoding, and pre-existing generated Conductor drift. Dependency- and encoding-sensitive gates subsequently passed in an isolated UTF-8 uv environment; unrelated dirty generated track files were preserved."
+    },
+    {
+      "command": "cargo check --workspace --all-targets",
+      "status": "invalid_environment",
+      "host": "x86_64-pc-windows-msvc",
+      "reason": "Git's POSIX link.exe shadowed the intended MSVC linker and rejected MSVC arguments."
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "status": "failed",
+      "reason": "Repository-wide pre-existing Rust formatting debt remains outside the targeted Track 00 formatting slice."
+    },
+    {
+      "command": "cargo clippy --workspace --all-targets --all-features --locked -- -D warnings",
+      "status": "failed",
+      "reason": "Existing deny-level Clippy and documentation findings remain across the workspace; targeted Track 00 collapsible-if blockers were repaired."
+    },
+    {
+      "command": "cargo test --workspace --all-features --locked",
+      "status": "not_run",
+      "reason": "The exact commit-bound suite used --all-targets without --all-features; the broader verify.sh gate remains open."
+    },
+    {
+      "command": "cargo test --workspace --all-features --doc --locked",
+      "status": "not_run"
+    },
+    {
+      "command": "cargo doc --workspace --all-features --no-deps --locked",
+      "status": "not_run"
+    },
+    {
+      "command": "cargo deny check",
+      "status": "unavailable",
+      "reason": "cargo-deny is not installed in the observed environment."
+    },
+    {
+      "command": "cargo machete",
+      "status": "unavailable",
+      "reason": "cargo-machete is not installed in the observed environment."
+    }
+  ],
+  "external_gates": [
+    {
+      "gate": "repository_standards_registration_and_estate_conformance",
+      "status": "not_satisfied",
+      "observed_repository": "edithatogo/repository-standards",
+      "pinned_revision": "ad67bedaa0c4d0769bd54fd76354bac65b25b88c",
+      "current_main_checked": true,
+      "registration_found": false,
+      "conformance_found": false,
+      "remote_mutation_permitted": false
+    }
+  ],
+  "claim_boundary": "This receipt records commit-bound exact GNU toolchain compilation and 55 workspace tests plus an enabled Conductor host. Evidence/status files were dirty after the implementation commit, but all tested implementation paths matched source_revision. It does not establish a green aggregate verify.sh, CI or MSVC conformance, repository-standards registration, estate conformance, remote GitHub bootstrap, live-provider support, publication readiness, or external validation."
+}

@@ -2,172 +2,171 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "00",
   "title": "Foundation, Conductor and toolchain",
-  "implementation_state": "partially_implemented",
+  "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/00-foundation-conductor-toolchain/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Five foundation assertions are source implemented with commit-bound local GNU compiler/test evidence, while upstream repository-standards registration and estate conformance remain externally blocked. Local compiler evidence is not a green aggregate verify.sh or compiler-verified CI receipt.",
   "assertions": [
     {
       "assertion_id": "T00-A001",
       "statement": "Record upstream Conductor 0.3.0 and supported host installation paths",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "path_and_gate_mapped",
       "implementation_paths": [
-        "Cargo.toml",
-        "rust-toolchain.toml",
         "conductor/upstream.lock.json",
-        "conductor/product.md",
-        "conductor/workflow.md",
         "scripts/install-conductor.sh",
-        "scripts/install-conductor.ps1"
+        "scripts/install-conductor.ps1",
+        "verification/receipts/track-00-local-verification.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_context_integrity.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "gemini extensions list",
+        "python scripts/check_context_integrity.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+        "verification/receipts/track-00-local-verification.json"
       ],
-      "open_gates": [
-        "Install and execute Rust 1.97.1 in a compatible environment.",
-        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "The 0.3.0 repository baseline and supported installers are recorded; Gemini CLI has a separately recorded enabled Conductor 0.4.1 host."
     },
     {
       "assertion_id": "T00-A002",
       "statement": "Create product, guidelines, stack, workflow, requirements and design context",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "path_and_gate_mapped",
       "implementation_paths": [
-        "Cargo.toml",
-        "rust-toolchain.toml",
-        "conductor/upstream.lock.json",
+        "conductor/index.md",
         "conductor/product.md",
+        "conductor/product-guidelines.md",
+        "conductor/tech-stack.md",
         "conductor/workflow.md",
-        "scripts/install-conductor.sh",
-        "scripts/install-conductor.ps1"
+        "conductor/requirements.md",
+        "conductor/design.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_context_integrity.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/check_context_integrity.py",
+        "python scripts/sync_context_lock.py --check"
       ],
       "evidence_receipts": [
-        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+        "verification/receipts/track-00-local-verification.json"
       ],
       "open_gates": [
-        "Install and execute Rust 1.97.1 in a compatible environment.",
-        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+        "Regenerate the context lock after unrelated dirty Conductor artefacts are reconciled."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "The Conductor handshake and all linked project context documents exist and resolve locally."
     },
     {
       "assertion_id": "T00-A003",
       "statement": "Pin Rust stable and document nightly/experimental policy",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "path_and_gate_mapped",
       "implementation_paths": [
-        "Cargo.toml",
         "rust-toolchain.toml",
-        "conductor/upstream.lock.json",
-        "conductor/product.md",
-        "conductor/workflow.md",
-        "scripts/install-conductor.sh",
-        "scripts/install-conductor.ps1"
+        "conductor/tech-stack.md",
+        "docs/msrv-and-package-policy.md",
+        "verification/receipts/track-00-local-verification.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_toolchain_manifest.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/check_toolchain_manifest.py",
+        "rustup run 1.97.1-x86_64-pc-windows-gnu rustc --version --verbose"
       ],
       "evidence_receipts": [
-        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+        "verification/receipts/track-00-local-verification.json"
       ],
       "open_gates": [
-        "Install and execute Rust 1.97.1 in a compatible environment.",
-        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+        "Repair the local MSVC linker environment before claiming MSVC validation."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Rust 1.97.1 is pinned and exact GNU compiler execution passed locally; MSVC validation is not claimed."
     },
     {
       "assertion_id": "T00-A004",
       "statement": "Generate and commit Cargo.lock in a networked Rust environment",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "path_and_gate_mapped",
       "implementation_paths": [
+        "Cargo.lock",
         "Cargo.toml",
-        "rust-toolchain.toml",
-        "conductor/upstream.lock.json",
-        "conductor/product.md",
-        "conductor/workflow.md",
-        "scripts/install-conductor.sh",
-        "scripts/install-conductor.ps1"
+        "verification/receipts/track-00-local-verification.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_rust_dependency_graph.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "cargo generate-lockfile",
+        "cargo check --workspace --all-targets --locked",
+        "cargo test --workspace --all-targets --locked"
       ],
       "evidence_receipts": [
-        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+        "verification/receipts/track-00-local-verification.json"
       ],
-      "open_gates": [
-        "Install and execute Rust 1.97.1 in a compatible environment.",
-        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Cargo.lock is committed at implementation revision 3f62b5ebc3efe3e619c05dfacdabc01b159f1aec, and exact Rust 1.97.1 GNU workspace check plus 55 tests passed against that revision."
     },
     {
       "assertion_id": "T00-A005",
       "statement": "Register repository in repository-standards and run estate conformance",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "external_evidence_required",
+      "mapping_confidence": "path_and_gate_mapped",
       "implementation_paths": [
-        "Cargo.toml",
-        "rust-toolchain.toml",
-        "conductor/upstream.lock.json",
-        "conductor/product.md",
-        "conductor/workflow.md",
-        "scripts/install-conductor.sh",
-        "scripts/install-conductor.ps1"
+        "integration/passports/repository-standards-inheritance.json",
+        "migration/estate/repositories.json",
+        "migration/companion-repositories/repository-standards.json",
+        "docs/repository-standards-alignment.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_integration_passports.py::main",
+        "scripts/check_integration_drift.py::main",
+        "scripts/check_companion_change_packets.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_integration_drift.py",
+        "python scripts/check_companion_change_packets.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+        "verification/receipts/track-00-local-verification.json"
       ],
       "open_gates": [
-        "Install and execute Rust 1.97.1 in a compatible environment.",
-        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+        "Obtain explicit authority to modify edithatogo/repository-standards despite the prepared packet's remote_mutation_permitted=false policy.",
+        "Add edithatogo/searchright to the upstream registry and run estate conformance against the exact Searchright revision.",
+        "Record the observed upstream commit and conformance receipt."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Policy inheritance and a prepared registration packet exist; upstream registration and estate conformance do not."
     },
     {
       "assertion_id": "T00-A006",
       "statement": "Create one-command bootstrap and verification receipts",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "path_and_gate_mapped",
       "implementation_paths": [
-        "Cargo.toml",
-        "rust-toolchain.toml",
-        "conductor/upstream.lock.json",
-        "conductor/product.md",
-        "conductor/workflow.md",
-        "scripts/install-conductor.sh",
-        "scripts/install-conductor.ps1"
+        "scripts/bootstrap.sh",
+        "scripts/bootstrap.ps1",
+        "scripts/verify.sh",
+        "scripts/run_static_harness.py",
+        "verification/receipts/track-00-local-verification.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/run_static_harness.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/run_static_harness.py",
+        "cargo test --workspace --all-targets --locked"
       ],
       "evidence_receipts": [
-        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
+        "verification/receipts/track-00-local-verification.json"
       ],
       "open_gates": [
-        "Install and execute Rust 1.97.1 in a compatible environment.",
-        "Install Conductor in an available Gemini, Antigravity or Claude host and record the host receipt."
+        "Run the complete aggregate harness from a clean tree with declared Python validation dependencies and a valid native linker environment."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "One-command bootstrap and verification entry points exist, and local compiler/test results are recorded; the repository-wide aggregate harness is not green."
     }
   ]
 }

@@ -85,7 +85,7 @@ open, separately named evidence levels.
 | Open higher-evidence tasks | 223 |
 | Rust crates | 30 |
 | Rust source files | 64 |
-| Rust test functions in source | 42 |
+| Rust test functions in source | 55 |
 | JSON Schemas / examples | 60 / 60 |
 | CLI/MCP/facade operations | 31 |
 | GitHub hierarchy nodes | 568 |
@@ -106,16 +106,21 @@ compiler or methodological-performance result.
 
 - **Live provider calls:** not executed; all provider baselines are rights-clear local fixtures.
 - **GitHub repository creation/push:** not executed; remote repository, issues and Projects remain prepared projections.
-- **Conductor plugin installation:** not executed because no compatible Gemini, Antigravity or Claude host executable is available locally; the checked-in installer and lifecycle artefacts remain prepared.
+- **Conductor plugin installation:** Gemini CLI reported Conductor 0.4.1 enabled for user and workspace scopes on 2026-08-12. The repository baseline remains Conductor 0.3.0, and the host receipt does not establish broader 0.4.1 compatibility.
+- **Git submodule pinning for Conductor:** not adopted; the repository currently uses host-installed upstream/pinned passport patterns instead of an embedded submodule.
 
 ## Open evidence gates
 
 ### Compiler and executable evidence
 
-- Rust 1.97.1 is not installed in this environment.
-- `Cargo.lock` has not been generated or committed.
-- rustfmt, Clippy, Cargo metadata/check/build/test/doc, cross-platform and MSRV
-  jobs have not run locally.
+- Rust 1.97.1 is installed for the GNU and MSVC Windows targets. The exact GNU
+  workspace check and 55-test workspace suite pass; MSVC evidence remains
+  invalid because Git's POSIX `link.exe` shadows the intended linker.
+- `Cargo.lock` has been generated; commit-bound verification is recorded in the
+  Track 00 receipt after the coherent source slice is committed.
+- Targeted rustfmt and Cargo check/test have run. Repository-wide rustfmt,
+  Clippy `-D warnings`, Cargo doc, cross-platform and MSRV jobs remain open and
+  are enumerated in the Track 00 receipt.
 - Coverage, mutation, fuzzing, Kani, Loom, Miri and `cargo-careful` remain
   configured rather than executed.
 - cargo-vet, cargo-semver-checks and cargo-public-api require compiler/tool
@@ -134,7 +139,8 @@ compiler or methodological-performance result.
 
 ### Cross-repository and remote evidence
 
-- CiteWeft and Sourceright have not compiled against the neutral contracts/core.
+- The local CiteWeft and Sourceright compatibility crates compile in the GNU
+  workspace. Companion-repository consumer canaries have not run.
 - The prepared dual-run and consumer-contract suites have not executed in the
   companion repositories.
 - No custom code has been deleted from UOGTO, VOIAGE or other downstream repos.
@@ -145,21 +151,20 @@ compiler or methodological-performance result.
 
 ## Claim boundary
 
-The repository may be described as **source-verified, assertion-rebaselined and
-statically validated**. It must not be described as fully implemented across its
-roadmap, compiler-verified, fixture-proven end to end, live-provider compatible,
+The repository may be described as **source-verified, assertion-rebaselined,
+statically validated and locally compiler-tested on the pinned GNU toolchain**.
+It must not be described as fully implemented across its roadmap, CI-verified,
+fixture-proven end to end, live-provider compatible,
 downstream-integrated, production-ready, independently validated, published or
 registry-accepted.
 
 The next safe sequence is:
 
-1. install Rust 1.97.1 and the declared MSRV toolchains;
-2. generate and commit `Cargo.lock`;
-3. compile and repair the 30-crate workspace;
-4. run Rust parser/runtime tests against the provider and workflow fixtures;
-5. capture SemVer/public-API/supply-chain receipts;
-6. execute CiteWeft and Sourceright consumer canaries;
-7. only then migrate downstream custom code or make public readiness claims.
+1. finish the repository-wide formatting, lint, documentation and supply-chain gates;
+2. validate the MSVC and declared MSRV toolchains in non-shadowed environments;
+3. capture SemVer/public-API/supply-chain receipts;
+4. execute CiteWeft and Sourceright consumer canaries;
+5. only then migrate downstream custom code or make public readiness claims.
 
 `CODEX_HANDOFF.md` remains the remote/bootstrap contract. The portable review
 bundle and complete Git delivery are separate artefacts: `.srpack` packages a
