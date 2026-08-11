@@ -470,6 +470,7 @@ impl Validate for NativeSearchStrategy {
         }
         let raw_len = u64::try_from(self.raw_text.len()).unwrap_or(u64::MAX);
         let mut identifiers = BTreeSet::new();
+        let mut native_set_ids = BTreeSet::new();
         let mut previous_end = 0_u64;
         for line in &self.lines {
             require_text(&line.line_id, "native_search_strategy.lines.line_id")?;
@@ -488,6 +489,25 @@ impl Validate for NativeSearchStrategy {
                 ));
             }
             previous_end = line.span.end_byte;
+            let start = usize::try_from(line.span.start_byte).map_err(|_| {
+                ContractError::Invariant("native search line span cannot be indexed".to_owned())
+            })?;
+            let end = usize::try_from(line.span.end_byte).map_err(|_| {
+                ContractError::Invariant("native search line span cannot be indexed".to_owned())
+            })?;
+            if self.raw_text.as_bytes().get(start..end) != Some(line.text.as_bytes()) {
+                return Err(ContractError::Invariant(
+                    "native search line text must exactly match its raw_text byte span".to_owned(),
+                ));
+            }
+            if let Some(native_set_id) = &line.native_set_id {
+                require_text(native_set_id, "native_search_strategy.lines.native_set_id")?;
+                if !native_set_ids.insert(native_set_id.as_str()) {
+                    return Err(ContractError::Invariant(
+                        "native search set identifiers must be unique".to_owned(),
+                    ));
+                }
+            }
         }
         for diagnostic in &self.diagnostics {
             require_text(&diagnostic.code, "native_search_strategy.diagnostics.code")?;
