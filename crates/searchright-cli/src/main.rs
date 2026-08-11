@@ -5,17 +5,20 @@
 
 #![forbid(unsafe_code)]
 #![allow(
+    clippy::match_same_arms,
+    clippy::print_stderr,
     clippy::print_stdout,
-    reason = "the CLI must emit explicitly requested command output to stdout"
+    reason = "legacy compatibility aliases deliberately delegate to the same facade operations; the CLI emits requested output to stdout and stable errors to stderr"
 )]
 
 use std::{
     fs,
     path::{Path, PathBuf},
+    process::ExitCode,
 };
 
 use anyhow::{Context, Result, bail};
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{Parser, Subcommand, ValueEnum, error::ErrorKind};
 use searchright::contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, CompiledStrategy, DataHandlingRequest,
     Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
@@ -41,6 +44,49 @@ struct Cli {
 
 #[derive(Debug, Subcommand)]
 enum Command {
+    /// Preview or apply creation of a conservative local CLI configuration.
+    Init {
+        #[arg(long, default_value = ".searchright.json")]
+        target: PathBuf,
+        /// Apply the write. Without this flag the command is a dry run.
+        #[arg(long)]
+        apply: bool,
+    },
+    /// Review-plan operations.
+    Plan {
+        #[command(subcommand)]
+        command: PlanCommand,
+    },
+    /// Source and provider operations.
+    Source {
+        #[command(subcommand)]
+        command: SourceCommand,
+    },
+    /// Search-strategy operations.
+    Strategy {
+        #[command(subcommand)]
+        command: StrategyCommand,
+    },
+    /// Bounded execution-authority operations.
+    Run {
+        #[command(subcommand)]
+        command: RunCommand,
+    },
+    /// Record import operations.
+    Import {
+        #[command(subcommand)]
+        command: ImportCommand,
+    },
+    /// Human-governed screening support operations.
+    Screen {
+        #[command(subcommand)]
+        command: ScreenCommand,
+    },
+    /// Reporting and provenance operations.
+    Report {
+        #[command(subcommand)]
+        command: ReportCommand,
+    },
     /// Validate a review plan and report readiness findings.
     ValidatePlan { input: PathBuf },
     /// Validate a source-specific search strategy.
@@ -150,6 +196,72 @@ enum Command {
     Providers,
     /// Print the conservative agent workflow policy.
     Workflow,
+}
+
+#[derive(Debug, Subcommand)]
+enum PlanCommand {
+    /// Validate a review plan and report readiness findings.
+    Validate { input: PathBuf },
+}
+
+#[derive(Debug, Subcommand)]
+enum SourceCommand {
+    /// List fixture-backed providers available without network access.
+    List,
+}
+
+#[derive(Debug, Subcommand)]
+enum StrategyCommand {
+    /// Validate a source-specific search strategy.
+    Validate { input: PathBuf },
+    /// Compile a portable strategy into source syntax.
+    Compile {
+        input: PathBuf,
+        #[arg(long, value_enum)]
+        dialect: DialectArg,
+    },
+}
+
+#[derive(Debug, Subcommand)]
+enum RunCommand {
+    /// Check endpoint authority without executing a request.
+    AuthoriseEndpoint { input: PathBuf, endpoint: String },
+}
+
+#[derive(Debug, Subcommand)]
+enum ImportCommand {
+    /// Import bibliographic records and preserve source provenance.
+    Records {
+        input: PathBuf,
+        #[arg(long, value_enum)]
+        format: InterchangeArg,
+        #[arg(long)]
+        source_receipt_id: String,
+    },
+}
+
+#[derive(Debug, Subcommand)]
+enum ScreenCommand {
+    /// Rank records for prioritisation without making exclusion decisions.
+    Rank {
+        input: PathBuf,
+        #[arg(long, required = true)]
+        query_term: Vec<String>,
+    },
+    /// Validate and summarise explicit record-report-study linkage.
+    StudyGraph { input: PathBuf },
+}
+
+#[derive(Debug, Subcommand)]
+enum ReportCommand {
+    /// Validate or render a PRISMA flow contract.
+    Prisma {
+        input: PathBuf,
+        #[arg(long, value_enum, default_value_t = PrismaFormat::Json)]
+        format: PrismaFormat,
+    },
+    /// Build RO-Crate and W3C PROV-compatible exports.
+    Provenance { input: PathBuf },
 }
 
 #[derive(Debug, Clone, Copy, ValueEnum)]
@@ -274,9 +386,114 @@ struct ProvenanceInput {
     events: Vec<AuditEvent>,
 }
 
-fn main() -> Result<()> {
-    let cli = Cli::parse();
+fn main() -> ExitCode {
+    match Cli::try_parse() {
+        Ok(cli) => match execute(cli) {
+            Ok(()) => ExitCode::SUCCESS,
+            Err(error) => emit_error(&error, 3),
+        },
+        Err(error)
+            if matches!(
+                error.kind(),
+                ErrorKind::DisplayHelp | ErrorKind::DisplayVersion
+            ) =>
+        {
+            print!("{error}");
+            ExitCode::SUCCESS
+        }
+        Err(error) => {
+            let message = error.to_string();
+            emit_error(&anyhow::anyhow!(message.trim().to_owned()), 2)
+        }
+    }
+}
+
+fn execute(cli: Cli) -> Result<()> {
     match cli.command {
+        Command::Init { target, apply } => initialise(&target, apply)?,
+        Command::Plan {
+            command: PlanCommand::Validate { input },
+        } => {
+            let plan: ReviewPlan = read_document(&input)?;
+            print_json(&SearchrightEngine::validate_plan(&plan)?)?;
+        }
+        Command::Source {
+            command: SourceCommand::List,
+        } => print_json(&SearchrightEngine::default_provider_manifests()?)?,
+        Command::Strategy {
+            command: StrategyCommand::Validate { input },
+        } => {
+            let strategy: SearchStrategy = read_document(&input)?;
+            SearchrightEngine::validate_strategy(&strategy)
+                .context("search strategy is invalid")?;
+            print_json(&serde_json::json!({
+                "valid": true,
+                "strategy_id": strategy.strategy_id,
+            }))?;
+        }
+        Command::Strategy {
+            command: StrategyCommand::Compile { input, dialect },
+        } => {
+            let strategy: SearchStrategy = read_document(&input)?;
+            print_json(&SearchrightEngine::compile_strategy(
+                &strategy,
+                dialect.into(),
+            )?)?;
+        }
+        Command::Run {
+            command: RunCommand::AuthoriseEndpoint { input, endpoint },
+        } => {
+            let envelope: ExecutionEnvelope = read_document(&input)?;
+            SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
+            print_json(&serde_json::json!({"authorised": true, "endpoint": endpoint}))?;
+        }
+        Command::Import {
+            command:
+                ImportCommand::Records {
+                    input,
+                    format,
+                    source_receipt_id,
+                },
+        } => {
+            let document = fs::read_to_string(&input)
+                .with_context(|| format!("could not read {}", input.display()))?;
+            print_json(&SearchrightEngine::import_records(
+                &document,
+                format.into(),
+                &source_receipt_id,
+            )?)?;
+        }
+        Command::Screen {
+            command: ScreenCommand::Rank { input, query_term },
+        } => {
+            let records: Vec<BibliographicRecord> = read_document(&input)?;
+            print_json(&SearchrightEngine::rank_records(&records, &query_term)?)?;
+        }
+        Command::Screen {
+            command: ScreenCommand::StudyGraph { input },
+        } => {
+            let graph: StudyGraph = read_document(&input)?;
+            print_json(&SearchrightEngine::assess_study_graph(&graph)?)?;
+        }
+        Command::Report {
+            command: ReportCommand::Prisma { input, format },
+        } => {
+            let flow: PrismaFlow = read_document(&input)?;
+            match SearchrightEngine::prisma(&flow, format.into())? {
+                PrismaArtifact::Mermaid(document) => println!("{document}"),
+                artifact => print_json(&artifact)?,
+            }
+        }
+        Command::Report {
+            command: ReportCommand::Provenance { input },
+        } => {
+            let provenance: ProvenanceInput = read_document(&input)?;
+            print_json(&SearchrightEngine::provenance(
+                &provenance.plan,
+                &provenance.receipts,
+                &provenance.events,
+            )?)?;
+        }
         Command::ValidatePlan { input } => {
             let plan: ReviewPlan = read_document(&input)?;
             print_json(&SearchrightEngine::validate_plan(&plan)?)?;
@@ -491,6 +708,49 @@ fn main() -> Result<()> {
     Ok(())
 }
 
+fn initialise(target: &Path, apply: bool) -> Result<()> {
+    let document = serde_json::json!({
+        "schema_version": "org.searchright.cli-config.v1",
+        "network_enabled": false,
+        "write_authority": "explicit_apply",
+    });
+    if apply {
+        if target.exists() {
+            bail!(
+                "refusing to overwrite existing configuration at {}",
+                target.display()
+            );
+        }
+        let encoded = format!("{}\n", serde_json::to_string_pretty(&document)?);
+        fs::write(target, encoded)
+            .with_context(|| format!("could not write configuration to {}", target.display()))?;
+    }
+    print_json(&serde_json::json!({
+        "schema_version": "org.searchright.cli-result.v1",
+        "operation": "init",
+        "mode": if apply { "apply" } else { "dry_run" },
+        "target": target,
+        "changed": apply,
+        "configuration": document,
+    }))
+}
+
+fn emit_error(error: &anyhow::Error, exit_code: u8) -> ExitCode {
+    let envelope = serde_json::json!({
+        "schema_version": "org.searchright.cli-error.v1",
+        "code": if exit_code == 2 { "cli.usage" } else { "cli.operation_failed" },
+        "message": error.to_string(),
+        "corrective_action": if exit_code == 2 {
+            "Run searchright --help and correct the command arguments."
+        } else {
+            "Review the named input or authority policy, then retry."
+        },
+        "partial_output_safe": false,
+    });
+    eprintln!("{envelope}");
+    ExitCode::from(exit_code)
+}
+
 fn read_document<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
     let content =
         fs::read_to_string(path).with_context(|| format!("could not read {}", path.display()))?;
@@ -526,4 +786,58 @@ fn valid_receipt(contract: &str) -> Result<()> {
 fn print_json(value: &impl serde::Serialize) -> Result<()> {
     println!("{}", serde_json::to_string_pretty(value)?);
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use clap::CommandFactory;
+
+    #[test]
+    fn grouped_command_hierarchy_is_stable() {
+        let command = Cli::command();
+        let names = command
+            .get_subcommands()
+            .map(clap::Command::get_name)
+            .collect::<Vec<_>>();
+        for expected in [
+            "init", "plan", "source", "strategy", "run", "import", "screen", "report",
+        ] {
+            assert!(names.contains(&expected), "missing {expected} command");
+        }
+    }
+
+    #[test]
+    fn init_defaults_to_dry_run() {
+        let cli = Cli::try_parse_from(["searchright", "init", "--target", "not-created.json"])
+            .unwrap_or_else(|error| panic!("command should parse: {error}"));
+        assert!(matches!(cli.command, Command::Init { apply: false, .. }));
+    }
+
+    #[test]
+    fn init_refuses_to_overwrite() {
+        let result = initialise(Path::new("Cargo.toml"), true);
+        let Err(error) = result else {
+            panic!("existing files must not be overwritten");
+        };
+        assert!(error.to_string().contains("refusing to overwrite"));
+    }
+
+    #[test]
+    fn grouped_run_only_checks_authority() {
+        let cli = Cli::try_parse_from([
+            "searchright",
+            "run",
+            "authorise-endpoint",
+            "envelope.json",
+            "https://example.org",
+        ])
+        .unwrap_or_else(|error| panic!("command should parse: {error}"));
+        assert!(matches!(
+            cli.command,
+            Command::Run {
+                command: RunCommand::AuthoriseEndpoint { .. }
+            }
+        ));
+    }
 }
