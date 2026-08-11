@@ -5,9 +5,44 @@
 use std::collections::BTreeSet;
 
 use searchright_contracts::{
-    PRISMA_FLOW_SCHEMA_VERSION, PrismaFlow, PrismaSItem, PrismaSItemStatus, PrismaSLedger,
-    SearchRun,
+    FindingSeverity, PRISMA_FLOW_SCHEMA_VERSION, PressElement, PressReview, PrismaFlow,
+    PrismaSItem, PrismaSItemStatus, PrismaSLedger, SearchRun,
 };
+
+/// PRISMA 2020 flow context selected by the review protocol.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PrismaFlowVariant {
+    /// A newly initiated review.
+    NewReview,
+    /// An update of a prior review, which requires explicit lineage evidence.
+    UpdatedReview,
+}
+
+/// Evidence ceiling for the PRESS portion of a derived report.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PressEvidenceState {
+    /// No peer-review record was supplied.
+    MissingReview,
+    /// A review exists, but one or more of the six PRESS domains lacks evidence.
+    IncompleteDomainEvidence,
+    /// All domains are represented, but material findings remain unresolved.
+    UnresolvedMaterialFindings,
+    /// All domains are evidence-linked and no material finding remains unresolved.
+    EvidenceLinked,
+}
+
+/// Derived reporting projection. This is never methodological certification.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DerivedReportingAssessment {
+    /// Selected PRISMA flow context.
+    pub flow_variant: PrismaFlowVariant,
+    /// Six-domain PRESS evidence state.
+    pub press_state: PressEvidenceState,
+    /// PRISMA-S reporting ledger.
+    pub prisma_s_items: Vec<PrismaSLedger>,
+    /// Explicit claim boundary for consumers and renderers.
+    pub claim_boundary: &'static str,
+}
 
 /// Evidence available for PRISMA-S reporting.
 #[derive(Debug, Clone, Default)]
@@ -117,6 +152,87 @@ pub fn validate_flow(flow: &PrismaFlow) -> Result<(), PrismaError> {
         return Err(PrismaError::StudiesExceedReports);
     }
     Ok(())
+}
+
+/// Validate a flow in its new-review or update context.
+pub fn validate_flow_variant(
+    flow: &PrismaFlow,
+    variant: PrismaFlowVariant,
+    prior_review_id: Option<&str>,
+) -> Result<(), PrismaError> {
+    validate_flow(flow)?;
+    match variant {
+        PrismaFlowVariant::NewReview => {
+            if prior_review_id.is_some_and(|value| !value.trim().is_empty()) {
+                return Err(PrismaError::UnexpectedUpdateLineage);
+            }
+        }
+        PrismaFlowVariant::UpdatedReview => {
+            let prior_review_id = prior_review_id.ok_or(PrismaError::MissingUpdateLineage)?;
+            require_text(prior_review_id, "prior_review_id")?;
+            if prior_review_id == flow.review_id {
+                return Err(PrismaError::SelfReferentialUpdateLineage);
+            }
+        }
+    }
+    Ok(())
+}
+
+/// Assess the evidence boundary of one or more PRESS reviews.
+///
+/// A complete state means only that all six domains have evidence-bearing review
+/// entries and no material finding remains unresolved. It does not certify search
+/// quality, comprehensiveness or compliance.
+#[must_use]
+pub fn press_evidence_state(reviews: &[PressReview]) -> PressEvidenceState {
+    if reviews.is_empty() {
+        return PressEvidenceState::MissingReview;
+    }
+    let mut covered = 0_u8;
+    for finding in reviews.iter().flat_map(|review| &review.findings) {
+        covered |= match finding.element {
+            PressElement::TranslationOfQuestion => 1 << 0,
+            PressElement::BooleanAndProximity => 1 << 1,
+            PressElement::SubjectHeadings => 1 << 2,
+            PressElement::TextWords => 1 << 3,
+            PressElement::SpellingSyntaxAndLines => 1 << 4,
+            PressElement::LimitsAndFilters => 1 << 5,
+        };
+    }
+    if covered != 0b11_1111 {
+        return PressEvidenceState::IncompleteDomainEvidence;
+    }
+    if reviews
+        .iter()
+        .flat_map(|review| &review.findings)
+        .any(|finding| {
+            !finding.resolved
+                && matches!(
+                    finding.severity,
+                    FindingSeverity::Major | FindingSeverity::Critical
+                )
+        })
+    {
+        return PressEvidenceState::UnresolvedMaterialFindings;
+    }
+    PressEvidenceState::EvidenceLinked
+}
+
+/// Derive a reporting projection from canonical evidence without certifying conduct.
+pub fn derive_reporting_assessment(
+    flow: &PrismaFlow,
+    variant: PrismaFlowVariant,
+    prior_review_id: Option<&str>,
+    reporting_evidence: &SearchReportingEvidence,
+    press_reviews: &[PressReview],
+) -> Result<DerivedReportingAssessment, PrismaError> {
+    validate_flow_variant(flow, variant, prior_review_id)?;
+    Ok(DerivedReportingAssessment {
+        flow_variant: variant,
+        press_state: press_evidence_state(press_reviews),
+        prisma_s_items: prisma_s_ledger(reporting_evidence),
+        claim_boundary: "Derived reporting evidence only; not methodological certification.",
+    })
 }
 
 /// Render a PRISMA-style flow diagram as Mermaid source.
@@ -363,6 +479,15 @@ pub enum PrismaError {
     /// More studies than reports were recorded.
     #[error("included studies cannot exceed reports of included studies")]
     StudiesExceedReports,
+    /// A new-review flow unexpectedly declared update lineage.
+    #[error("new-review PRISMA flow must not declare prior-review lineage")]
+    UnexpectedUpdateLineage,
+    /// An update flow omitted prior-review lineage.
+    #[error("updated-review PRISMA flow requires a prior review identifier")]
+    MissingUpdateLineage,
+    /// An update flow points to itself as its prior review.
+    #[error("updated-review PRISMA flow cannot use its own review identifier as prior lineage")]
+    SelfReferentialUpdateLineage,
 }
 
 fn identified_total(flow: &PrismaFlow) -> Result<u64, PrismaError> {
@@ -494,7 +619,7 @@ fn escape_mermaid(value: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use searchright_contracts::ExclusionCount;
+    use searchright_contracts::{ExclusionCount, PressFinding};
 
     use super::*;
 
@@ -557,5 +682,136 @@ mod tests {
                 field: "records_identified"
             })
         ));
+    }
+
+    #[test]
+    fn every_flow_arithmetic_boundary_is_checked() {
+        let mut flow = valid_flow();
+        flow.duplicates_removed = 111;
+        assert_eq!(
+            validate_flow(&flow),
+            Err(PrismaError::RemovedExceedsIdentified)
+        );
+
+        let mut flow = valid_flow();
+        flow.records_excluded = 101;
+        assert_eq!(
+            validate_flow(&flow),
+            Err(PrismaError::ExcludedExceedsScreened)
+        );
+
+        let mut flow = valid_flow();
+        flow.reports_not_retrieved = 21;
+        assert_eq!(
+            validate_flow(&flow),
+            Err(PrismaError::NotRetrievedExceedsSought)
+        );
+
+        let mut flow = valid_flow();
+        if let Some(reason) = flow.full_text_exclusions.first_mut() {
+            reason.count = 14;
+        }
+        assert!(matches!(
+            validate_flow(&flow),
+            Err(PrismaError::CountMismatch {
+                field: "reports_assessed_outcomes",
+                ..
+            })
+        ));
+
+        let mut flow = valid_flow();
+        flow.studies_included = 6;
+        assert_eq!(validate_flow(&flow), Err(PrismaError::StudiesExceedReports));
+    }
+
+    #[test]
+    fn update_variant_requires_distinct_lineage() {
+        let flow = valid_flow();
+        assert_eq!(
+            validate_flow_variant(&flow, PrismaFlowVariant::UpdatedReview, None),
+            Err(PrismaError::MissingUpdateLineage)
+        );
+        assert_eq!(
+            validate_flow_variant(&flow, PrismaFlowVariant::UpdatedReview, Some("r1")),
+            Err(PrismaError::SelfReferentialUpdateLineage)
+        );
+        assert!(validate_flow_variant(&flow, PrismaFlowVariant::UpdatedReview, Some("r0")).is_ok());
+        assert_eq!(
+            validate_flow_variant(&flow, PrismaFlowVariant::NewReview, Some("r0")),
+            Err(PrismaError::UnexpectedUpdateLineage)
+        );
+    }
+
+    fn press_review(elements: &[PressElement], unresolved: bool) -> PressReview {
+        PressReview {
+            press_review_id: "press-1".to_owned(),
+            strategy_id: "strategy-1".to_owned(),
+            strategy_version: "1".to_owned(),
+            reviewer_id: "reviewer-1".to_owned(),
+            reviewed_at: "2026-08-12T00:00:00Z".to_owned(),
+            findings: elements
+                .iter()
+                .enumerate()
+                .map(|(index, element)| PressFinding {
+                    finding_id: format!("finding-{index}"),
+                    element: *element,
+                    severity: if unresolved && index == 0 {
+                        FindingSeverity::Major
+                    } else {
+                        FindingSeverity::Note
+                    },
+                    message: "Domain reviewed against the native strategy.".to_owned(),
+                    recommendation: "Retain the evidence with the review record.".to_owned(),
+                    resolved: !(unresolved && index == 0),
+                })
+                .collect(),
+            decision: "evidence recorded".to_owned(),
+        }
+    }
+
+    #[test]
+    fn press_state_is_fail_closed_across_all_six_domains() {
+        const ELEMENTS: [PressElement; 6] = [
+            PressElement::TranslationOfQuestion,
+            PressElement::BooleanAndProximity,
+            PressElement::SubjectHeadings,
+            PressElement::TextWords,
+            PressElement::SpellingSyntaxAndLines,
+            PressElement::LimitsAndFilters,
+        ];
+        assert_eq!(press_evidence_state(&[]), PressEvidenceState::MissingReview);
+        assert_eq!(
+            press_evidence_state(&[press_review(&ELEMENTS[..5], false)]),
+            PressEvidenceState::IncompleteDomainEvidence
+        );
+        assert_eq!(
+            press_evidence_state(&[press_review(&ELEMENTS, true)]),
+            PressEvidenceState::UnresolvedMaterialFindings
+        );
+        assert_eq!(
+            press_evidence_state(&[press_review(&ELEMENTS, false)]),
+            PressEvidenceState::EvidenceLinked
+        );
+    }
+
+    #[test]
+    fn report_derivation_preserves_non_certification_boundary() {
+        let report = derive_reporting_assessment(
+            &valid_flow(),
+            PrismaFlowVariant::NewReview,
+            None,
+            &SearchReportingEvidence::default(),
+            &[],
+        );
+        assert!(report.is_ok());
+        if let Ok(report) = report {
+            assert_eq!(report.prisma_s_items.len(), 16);
+            assert_eq!(report.press_state, PressEvidenceState::MissingReview);
+            assert!(
+                report
+                    .claim_boundary
+                    .contains("not methodological certification")
+            );
+        }
     }
 }
