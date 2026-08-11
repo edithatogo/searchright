@@ -58,8 +58,7 @@ impl Validate for LicensedAdapterProfile {
         }
         if self.allowed_hosts.is_empty() || self.export_formats.is_empty() {
             return Err(ContractError::Invariant(
-                "licensed adapters require allowed hosts and at least one export format"
-                    .to_owned(),
+                "licensed adapters require allowed hosts and at least one export format".to_owned(),
             ));
         }
         if self.allowed_hosts.iter().any(|host| {
@@ -75,15 +74,18 @@ impl Validate for LicensedAdapterProfile {
         if !self
             .credential_environment_variable
             .chars()
-            .all(|character| character.is_ascii_uppercase() || character.is_ascii_digit() || character == '_')
+            .all(|character| {
+                character.is_ascii_uppercase() || character.is_ascii_digit() || character == '_'
+            })
             || !self
                 .live_opt_in_environment_variable
                 .chars()
-                .all(|character| character.is_ascii_uppercase() || character.is_ascii_digit() || character == '_')
+                .all(|character| {
+                    character.is_ascii_uppercase() || character.is_ascii_digit() || character == '_'
+                })
         {
             return Err(ContractError::Invariant(
-                "licensed-adapter environment variables must use uppercase ASCII names"
-                    .to_owned(),
+                "licensed-adapter environment variables must use uppercase ASCII names".to_owned(),
             ));
         }
         if self.persist_raw_responses {

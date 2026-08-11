@@ -84,30 +84,95 @@ impl AgentWorkflow {
     /// Conservative default workflow. Agents cannot exclude records.
     #[must_use]
     pub fn systematic_search() -> Self {
-        let step = |stage, authority, inputs: &[&str], outputs: &[&str], blockers: &[&str]| {
-            WorkflowStep {
+        let step =
+            |stage, authority, inputs: &[&str], outputs: &[&str], blockers: &[&str]| WorkflowStep {
                 stage,
                 authority,
                 required_inputs: inputs.iter().map(|value| (*value).to_owned()).collect(),
                 outputs: outputs.iter().map(|value| (*value).to_owned()).collect(),
                 blocking_conditions: blockers.iter().map(|value| (*value).to_owned()).collect(),
-            }
-        };
+            };
         Self {
             schema_version: AGENT_WORKFLOW_SCHEMA_VERSION.to_owned(),
             screening_authority: AgentAuthority::AdvisoryOnly,
             steps: vec![
-                step(WorkflowStage::Scope, AuthorityGate::HumanConfirmation, &[], &["review-plan-draft"], &["question unresolved"]),
-                step(WorkflowStage::Eligibility, AuthorityGate::HumanConfirmation, &["review-plan-draft"], &["eligibility-contract"], &["criteria not operational"]),
-                step(WorkflowStage::SourceSelection, AuthorityGate::HumanConfirmation, &["review-plan-draft"], &["information-source-plan"], &["required source or access path unresolved"]),
-                step(WorkflowStage::StrategyDesign, AuthorityGate::HumanConfirmation, &["review-plan", "information-source-plan"], &["search-strategy"], &["lossy translation not reviewed"]),
-                step(WorkflowStage::PressReview, AuthorityGate::HumanOnly, &["search-strategy"], &["press-review"], &["blocking PRESS finding"]),
-                step(WorkflowStage::Execute, AuthorityGate::ExplicitApproval, &["approved strategy", "execution policy"], &["source receipts", "records"], &["live permission absent", "secrets unavailable"]),
-                step(WorkflowStage::Deduplicate, AuthorityGate::HumanConfirmation, &["records"], &["duplicate clusters", "deduplication log"], &["ambiguous fuzzy cluster"]),
-                step(WorkflowStage::TitleAbstractScreening, AuthorityGate::RolePolicy, &["deduplicated records", "eligibility contract"], &["screening decisions"], &["unresolved conflict"]),
-                step(WorkflowStage::FullTextScreening, AuthorityGate::HumanOnly, &["full text", "eligibility contract"], &["screening decisions", "exclusion reasons"], &["missing full text", "unresolved conflict"]),
-                step(WorkflowStage::Report, AuthorityGate::ReadOnlyAutomatic, &["audit ledger"], &["PRISMA-S ledger", "PRISMA flow", "search appendix"], &["flow arithmetic invalid"]),
-                step(WorkflowStage::Update, AuthorityGate::HumanConfirmation, &["prior search run", "protocol"], &["update plan"], &["amendment not recorded"]),
+                step(
+                    WorkflowStage::Scope,
+                    AuthorityGate::HumanConfirmation,
+                    &[],
+                    &["review-plan-draft"],
+                    &["question unresolved"],
+                ),
+                step(
+                    WorkflowStage::Eligibility,
+                    AuthorityGate::HumanConfirmation,
+                    &["review-plan-draft"],
+                    &["eligibility-contract"],
+                    &["criteria not operational"],
+                ),
+                step(
+                    WorkflowStage::SourceSelection,
+                    AuthorityGate::HumanConfirmation,
+                    &["review-plan-draft"],
+                    &["information-source-plan"],
+                    &["required source or access path unresolved"],
+                ),
+                step(
+                    WorkflowStage::StrategyDesign,
+                    AuthorityGate::HumanConfirmation,
+                    &["review-plan", "information-source-plan"],
+                    &["search-strategy"],
+                    &["lossy translation not reviewed"],
+                ),
+                step(
+                    WorkflowStage::PressReview,
+                    AuthorityGate::HumanOnly,
+                    &["search-strategy"],
+                    &["press-review"],
+                    &["blocking PRESS finding"],
+                ),
+                step(
+                    WorkflowStage::Execute,
+                    AuthorityGate::ExplicitApproval,
+                    &["approved strategy", "execution policy"],
+                    &["source receipts", "records"],
+                    &["live permission absent", "secrets unavailable"],
+                ),
+                step(
+                    WorkflowStage::Deduplicate,
+                    AuthorityGate::HumanConfirmation,
+                    &["records"],
+                    &["duplicate clusters", "deduplication log"],
+                    &["ambiguous fuzzy cluster"],
+                ),
+                step(
+                    WorkflowStage::TitleAbstractScreening,
+                    AuthorityGate::RolePolicy,
+                    &["deduplicated records", "eligibility contract"],
+                    &["screening decisions"],
+                    &["unresolved conflict"],
+                ),
+                step(
+                    WorkflowStage::FullTextScreening,
+                    AuthorityGate::HumanOnly,
+                    &["full text", "eligibility contract"],
+                    &["screening decisions", "exclusion reasons"],
+                    &["missing full text", "unresolved conflict"],
+                ),
+                step(
+                    WorkflowStage::Report,
+                    AuthorityGate::ReadOnlyAutomatic,
+                    &["audit ledger"],
+                    &["PRISMA-S ledger", "PRISMA flow", "search appendix"],
+                    &["flow arithmetic invalid"],
+                ),
+                step(
+                    WorkflowStage::Update,
+                    AuthorityGate::HumanConfirmation,
+                    &["prior search run", "protocol"],
+                    &["update plan"],
+                    &["amendment not recorded"],
+                ),
             ],
         }
     }
@@ -136,7 +201,13 @@ impl Validate for AgentWorkflow {
                     step.stage
                 )));
             }
-            if step.outputs.iter().chain(&step.required_inputs).chain(&step.blocking_conditions).any(|value| value.trim().is_empty()) {
+            if step
+                .outputs
+                .iter()
+                .chain(&step.required_inputs)
+                .chain(&step.blocking_conditions)
+                .any(|value| value.trim().is_empty())
+            {
                 return Err(ContractError::Invariant(
                     "workflow evidence collections must not contain empty values".to_owned(),
                 ));
@@ -146,7 +217,10 @@ impl Validate for AgentWorkflow {
             .steps
             .iter()
             .find(|step| step.stage == WorkflowStage::FullTextScreening);
-        if !matches!(full_text.map(|step| step.authority), Some(AuthorityGate::HumanOnly)) {
+        if !matches!(
+            full_text.map(|step| step.authority),
+            Some(AuthorityGate::HumanOnly)
+        ) {
             return Err(ContractError::Invariant(
                 "full-text screening must retain human-only final authority".to_owned(),
             ));
@@ -189,7 +263,8 @@ pub fn assess_plan_readiness(plan: &ReviewPlan) -> Vec<ReadinessFinding> {
         findings.push(ReadinessFinding {
             code: "plan.press.not_required".to_owned(),
             blocking: false,
-            message: "PRESS-style peer review is disabled in governance; record the rationale.".to_owned(),
+            message: "PRESS-style peer review is disabled in governance; record the rationale."
+                .to_owned(),
         });
     }
     findings

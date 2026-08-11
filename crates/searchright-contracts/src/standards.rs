@@ -5,8 +5,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     ContractError, STANDARD_ASSESSMENT_SCHEMA_VERSION, STANDARD_PACK_SCHEMA_VERSION, Validate,
-    require_schema_version,
-    require_text,
+    require_schema_version, require_text,
 };
 
 /// Reporting or conduct standard family.

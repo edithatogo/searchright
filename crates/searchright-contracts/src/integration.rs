@@ -6,9 +6,8 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CONSUMER_CONTRACT_SUITE_SCHEMA_VERSION, ContractError,
-    GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION, GITHUB_PROJECT_SCHEMA_VERSION,
-    INTEGRATION_PASSPORT_SCHEMA_VERSION, Validate,
+    CONSUMER_CONTRACT_SUITE_SCHEMA_VERSION, ContractError, GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION,
+    GITHUB_PROJECT_SCHEMA_VERSION, INTEGRATION_PASSPORT_SCHEMA_VERSION, Validate,
     require_schema_version, require_text,
 };
 
@@ -440,7 +439,10 @@ impl Validate for IntegrationPassport {
         require_text(&self.repository, "integration_passport.repository")?;
         require_text(&self.default_branch, "integration_passport.default_branch")?;
         require_text(&self.code_license, "integration_passport.code_license")?;
-        require_text(&self.content_license, "integration_passport.content_license")?;
+        require_text(
+            &self.content_license,
+            "integration_passport.content_license",
+        )?;
         if let Some(model_license) = &self.model_license {
             require_text(model_license, "integration_passport.model_license")?;
         }
@@ -571,7 +573,10 @@ impl Validate for ConsumerContractSuite {
             "consumer_contract_suite.schema_version",
         )?;
         require_text(&self.generated_at, "consumer_contract_suite.generated_at")?;
-        require_text(&self.claim_boundary, "consumer_contract_suite.claim_boundary")?;
+        require_text(
+            &self.claim_boundary,
+            "consumer_contract_suite.claim_boundary",
+        )?;
         if self.interactions.is_empty() {
             return Err(ContractError::EmptyCollection(
                 "consumer_contract_suite.interactions",
@@ -584,8 +589,14 @@ impl Validate for ConsumerContractSuite {
                 &interaction.integration_id,
                 "consumer_contract_interaction.integration_id",
             )?;
-            require_text(&interaction.producer, "consumer_contract_interaction.producer")?;
-            require_text(&interaction.consumer, "consumer_contract_interaction.consumer")?;
+            require_text(
+                &interaction.producer,
+                "consumer_contract_interaction.producer",
+            )?;
+            require_text(
+                &interaction.consumer,
+                "consumer_contract_interaction.consumer",
+            )?;
             require_text(
                 &interaction.contract_version,
                 "consumer_contract_interaction.contract_version",
@@ -651,9 +662,14 @@ impl Validate for GitHubIssueHierarchy {
                 "only task issue state may be synchronised".to_owned(),
             ));
         }
-        require_text(&self.project_manifest, "github_issue_hierarchy.project_manifest")?;
+        require_text(
+            &self.project_manifest,
+            "github_issue_hierarchy.project_manifest",
+        )?;
         if self.nodes.is_empty() {
-            return Err(ContractError::EmptyCollection("github_issue_hierarchy.nodes"));
+            return Err(ContractError::EmptyCollection(
+                "github_issue_hierarchy.nodes",
+            ));
         }
         let mut by_key = BTreeMap::new();
         for node in &self.nodes {
@@ -661,7 +677,10 @@ impl Validate for GitHubIssueHierarchy {
             require_text(&node.title, "github_issue_hierarchy.node.title")?;
             require_text(&node.body_path, "github_issue_hierarchy.node.body_path")?;
             require_text(&node.status, "github_issue_hierarchy.node.status")?;
-            require_text(&node.desired_state, "github_issue_hierarchy.node.desired_state")?;
+            require_text(
+                &node.desired_state,
+                "github_issue_hierarchy.node.desired_state",
+            )?;
             if node.status != "prepared_not_synced" {
                 return Err(ContractError::Invariant(
                     "local issue nodes must remain prepared_not_synced".to_owned(),
@@ -669,7 +688,8 @@ impl Validate for GitHubIssueHierarchy {
             }
             if !matches!(node.desired_state.as_str(), "open" | "closed") {
                 return Err(ContractError::Invariant(format!(
-                    "issue `{}` has invalid desired state", node.key
+                    "issue `{}` has invalid desired state",
+                    node.key
                 )));
             }
             if by_key.insert(node.key.as_str(), node).is_some() {
@@ -688,10 +708,7 @@ impl Validate for GitHubIssueHierarchy {
                 "issue hierarchy requires exactly one root epic matching epic_key".to_owned(),
             ));
         };
-        if epics.next().is_some()
-            || epic.key != self.epic_key
-            || epic.parent_key.is_some()
-        {
+        if epics.next().is_some() || epic.key != self.epic_key || epic.parent_key.is_some() {
             return Err(ContractError::Invariant(
                 "issue hierarchy requires exactly one root epic matching epic_key".to_owned(),
             ));
@@ -710,34 +727,40 @@ impl Validate for GitHubIssueHierarchy {
                 GitHubIssueKind::Phase => {
                     let Some(parent_key) = node.parent_key.as_deref() else {
                         return Err(ContractError::Invariant(format!(
-                            "phase issue `{}` requires a parent track", node.key
+                            "phase issue `{}` requires a parent track",
+                            node.key
                         )));
                     };
                     let Some(parent) = by_key.get(parent_key) else {
                         return Err(ContractError::Invariant(format!(
-                            "phase issue `{}` refers to unknown parent `{parent_key}`", node.key
+                            "phase issue `{}` refers to unknown parent `{parent_key}`",
+                            node.key
                         )));
                     };
                     if parent.kind != GitHubIssueKind::Track {
                         return Err(ContractError::Invariant(format!(
-                            "phase issue `{}` parent must be a track", node.key
+                            "phase issue `{}` parent must be a track",
+                            node.key
                         )));
                     }
                 }
                 GitHubIssueKind::Task => {
                     let Some(parent_key) = node.parent_key.as_deref() else {
                         return Err(ContractError::Invariant(format!(
-                            "task issue `{}` requires a parent phase", node.key
+                            "task issue `{}` requires a parent phase",
+                            node.key
                         )));
                     };
                     let Some(parent) = by_key.get(parent_key) else {
                         return Err(ContractError::Invariant(format!(
-                            "task issue `{}` refers to unknown parent `{parent_key}`", node.key
+                            "task issue `{}` refers to unknown parent `{parent_key}`",
+                            node.key
                         )));
                     };
                     if parent.kind != GitHubIssueKind::Phase {
                         return Err(ContractError::Invariant(format!(
-                            "task issue `{}` parent must be a phase", node.key
+                            "task issue `{}` parent must be a phase",
+                            node.key
                         )));
                     }
                 }
@@ -766,27 +789,34 @@ impl Validate for GitHubProjectManifest {
         }
         if self.project_number.is_some() || self.apply_permitted {
             return Err(ContractError::Invariant(
-                "source Project manifest cannot contain a remote number or authorise writes".to_owned(),
+                "source Project manifest cannot contain a remote number or authorise writes"
+                    .to_owned(),
             ));
         }
         if self.fields.is_empty() || self.views.is_empty() {
-            return Err(ContractError::EmptyCollection("github_project.fields_or_views"));
+            return Err(ContractError::EmptyCollection(
+                "github_project.fields_or_views",
+            ));
         }
         let mut field_names = BTreeSet::new();
         for field in &self.fields {
             require_text(&field.name, "github_project.field.name")?;
             if !field_names.insert(field.name.as_str()) {
                 return Err(ContractError::Invariant(format!(
-                    "duplicate Project field `{}`", field.name
+                    "duplicate Project field `{}`",
+                    field.name
                 )));
             }
             if field.data_type == GitHubProjectFieldDataType::SingleSelect {
                 if field.options.is_empty() {
-                    return Err(ContractError::EmptyCollection("github_project.field.options"));
+                    return Err(ContractError::EmptyCollection(
+                        "github_project.field.options",
+                    ));
                 }
             } else if !field.options.is_empty() {
                 return Err(ContractError::Invariant(format!(
-                    "non-select Project field `{}` declares options", field.name
+                    "non-select Project field `{}` declares options",
+                    field.name
                 )));
             }
         }
@@ -816,8 +846,9 @@ mod tests {
                 producer: "example/producer".to_owned(),
                 consumer: "example/consumer".to_owned(),
                 contract_version: "example.contract.v1".to_owned(),
-                producer_contracts: vec!["external://example/producer/schema.json@deadbeef"
-                    .to_owned()],
+                producer_contracts: vec![
+                    "external://example/producer/schema.json@deadbeef".to_owned(),
+                ],
                 consumer_contracts: vec!["contracts/schema.json".to_owned()],
                 fixture_paths: vec!["contracts/example.json".to_owned()],
                 producer_gates: vec!["external: producer-test".to_owned()],

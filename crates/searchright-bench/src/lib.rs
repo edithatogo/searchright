@@ -26,10 +26,7 @@ pub struct BinaryMetrics {
 
 /// Compare expected and observed identifier sets.
 #[must_use]
-pub fn binary_metrics(
-    expected: &BTreeSet<String>,
-    observed: &BTreeSet<String>,
-) -> BinaryMetrics {
+pub fn binary_metrics(expected: &BTreeSet<String>, observed: &BTreeSet<String>) -> BinaryMetrics {
     let true_positive = usize_to_u64(expected.intersection(observed).count());
     let false_positive = usize_to_u64(observed.difference(expected).count());
     let false_negative = usize_to_u64(expected.difference(observed).count());
@@ -51,11 +48,7 @@ pub fn binary_metrics(
 
 /// Measure known-relevant recall among the first `k` advisory ranking results.
 #[must_use]
-pub fn recall_at_k(
-    scores: &[RankingScore],
-    relevant: &BTreeSet<String>,
-    k: usize,
-) -> Option<f64> {
+pub fn recall_at_k(scores: &[RankingScore], relevant: &BTreeSet<String>, k: usize) -> Option<f64> {
     if relevant.is_empty() {
         return None;
     }

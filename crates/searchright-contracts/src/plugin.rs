@@ -4,7 +4,8 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    ContractError, PROVIDER_COMPONENT_SCHEMA_VERSION, Validate, require_schema_version, require_text,
+    ContractError, PROVIDER_COMPONENT_SCHEMA_VERSION, Validate, require_schema_version,
+    require_text,
 };
 
 /// Capability requested by a sandboxed provider component.
@@ -93,14 +94,18 @@ impl Validate for ProviderComponentManifest {
                     .to_owned(),
             ));
         }
-        if self.capabilities.contains(&ComponentCapability::NetworkRead)
+        if self
+            .capabilities
+            .contains(&ComponentCapability::NetworkRead)
             && self.allowed_hosts.is_empty()
         {
             return Err(ContractError::Invariant(
                 "network-read provider components must declare allowed hosts".to_owned(),
             ));
         }
-        if !self.capabilities.contains(&ComponentCapability::NetworkRead)
+        if !self
+            .capabilities
+            .contains(&ComponentCapability::NetworkRead)
             && !self.allowed_hosts.is_empty()
         {
             return Err(ContractError::Invariant(

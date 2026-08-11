@@ -6,7 +6,9 @@ use crate::{
 };
 
 /// Severity assigned to a stable Searchright diagnostic.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema,
+)]
 #[serde(rename_all = "snake_case")]
 pub enum DiagnosticSeverity {
     /// Informational context that does not require action.
@@ -73,10 +75,11 @@ impl Validate for Diagnostic {
         require_text(&self.code, "diagnostic.code")?;
         require_text(&self.message, "diagnostic.message")?;
         if !self.code.contains('.')
-            || self
-                .code
-                .chars()
-                .any(|character| !(character.is_ascii_lowercase() || character.is_ascii_digit() || matches!(character, '.' | '_' | '-')))
+            || self.code.chars().any(|character| {
+                !(character.is_ascii_lowercase()
+                    || character.is_ascii_digit()
+                    || matches!(character, '.' | '_' | '-'))
+            })
         {
             return Err(ContractError::Invariant(
                 "diagnostic code must be a lower-case namespaced identifier".to_owned(),
@@ -85,7 +88,11 @@ impl Validate for Diagnostic {
         if let Some(remediation) = self.remediation.as_deref() {
             require_text(remediation, "diagnostic.remediation")?;
         }
-        if self.evidence_ids.iter().any(|value| value.trim().is_empty()) {
+        if self
+            .evidence_ids
+            .iter()
+            .any(|value| value.trim().is_empty())
+        {
             return Err(ContractError::Invariant(
                 "diagnostic evidence identifiers must not be empty".to_owned(),
             ));

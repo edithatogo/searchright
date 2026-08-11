@@ -160,7 +160,9 @@ impl Deduplicator {
                     .then_with(|| left.right_record_id.cmp(&right.right_record_id))
             });
             let cluster_material = record_ids.join("\n");
-            let cluster_digest = blake3::hash(cluster_material.as_bytes()).to_hex().to_string();
+            let cluster_digest = blake3::hash(cluster_material.as_bytes())
+                .to_hex()
+                .to_string();
             let cluster_suffix: String = cluster_digest.chars().take(16).collect();
             clusters.push(DuplicateCluster {
                 cluster_id: format!("dup-{cluster_suffix}"),
@@ -195,11 +197,18 @@ impl Deduplicator {
             });
         }
 
-        let title_score = jaccard_similarity(&normalise_tokens(&left.title), &normalise_tokens(&right.title));
+        let title_score = jaccard_similarity(
+            &normalise_tokens(&left.title),
+            &normalise_tokens(&right.title),
+        );
         if title_score < self.config.title_similarity_threshold {
             return None;
         }
-        if !years_compatible(left.publication_year, right.publication_year, self.config.year_tolerance) {
+        if !years_compatible(
+            left.publication_year,
+            right.publication_year,
+            self.config.year_tolerance,
+        ) {
             return None;
         }
         let author_match = first_authors_compatible(left, right);
@@ -209,7 +218,10 @@ impl Deduplicator {
 
         let mut details = BTreeMap::new();
         details.insert("title_similarity".to_owned(), format!("{title_score:.4}"));
-        details.insert("first_author_compatible".to_owned(), author_match.to_string());
+        details.insert(
+            "first_author_compatible".to_owned(),
+            author_match.to_string(),
+        );
         details.insert(
             "publication_years".to_owned(),
             format!("{:?}/{:?}", left.publication_year, right.publication_year),

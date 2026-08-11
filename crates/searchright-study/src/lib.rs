@@ -38,7 +38,9 @@ pub fn retrieval_statuses(graph: &StudyGraph) -> BTreeMap<String, RetrievalStatu
             let status = report
                 .retrieval_attempts
                 .last()
-                .map_or(RetrievalStatus::NotAttempted, |attempt| attempt.status.clone());
+                .map_or(RetrievalStatus::NotAttempted, |attempt| {
+                    attempt.status.clone()
+                });
             (report.report_id.clone(), status)
         })
         .collect()
@@ -67,7 +69,11 @@ pub fn attach_report(
     study_id: &str,
     link: EvidenceLink,
 ) -> Result<(), StudyGraphError> {
-    if graph.reports.iter().any(|item| item.report_id == report.report_id) {
+    if graph
+        .reports
+        .iter()
+        .any(|item| item.report_id == report.report_id)
+    {
         return Err(StudyGraphError::DuplicateObject(report.report_id));
     }
     let study = graph
@@ -121,8 +127,7 @@ pub enum StudyGraphError {
 #[cfg(test)]
 mod tests {
     use searchright_contracts::{
-        EvidenceLink, EvidenceRelationship, Report, Study, StudyGraph,
-        STUDY_GRAPH_SCHEMA_VERSION,
+        EvidenceLink, EvidenceRelationship, Report, STUDY_GRAPH_SCHEMA_VERSION, Study, StudyGraph,
     };
 
     use super::*;

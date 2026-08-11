@@ -1,7 +1,10 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use crate::{ContractError, EXECUTION_ENVELOPE_SCHEMA_VERSION, Validate, require_schema_version, require_text};
+use crate::{
+    ContractError, EXECUTION_ENVELOPE_SCHEMA_VERSION, Validate, require_schema_version,
+    require_text,
+};
 
 /// Network capability for one execution.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]

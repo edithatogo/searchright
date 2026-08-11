@@ -18,7 +18,6 @@ pub struct FileReviewStore {
     root: PathBuf,
 }
 
-
 /// Evidence emitted after an atomic derived-snapshot replacement.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SnapshotReceipt {
@@ -65,7 +64,10 @@ impl FileReviewStore {
         let _lock = self.acquire_write_lock("append-audit-event")?;
         let mut events = self.read_events()?;
         AuditLedger::from_events(events.clone()).verify()?;
-        if events.iter().any(|existing| existing.event_id == event.event_id) {
+        if events
+            .iter()
+            .any(|existing| existing.event_id == event.event_id)
+        {
             return Err(StoreError::DuplicateEventId(event.event_id.clone()));
         }
         if let Some(first) = events.first()
@@ -111,10 +113,11 @@ impl FileReviewStore {
             if line.trim().is_empty() {
                 continue;
             }
-            let event = serde_json::from_str(&line).map_err(|source| StoreError::MalformedLine {
-                line: line_number + 1,
-                source,
-            })?;
+            let event =
+                serde_json::from_str(&line).map_err(|source| StoreError::MalformedLine {
+                    line: line_number + 1,
+                    source,
+                })?;
             events.push(event);
         }
         Ok(events)
@@ -130,7 +133,11 @@ impl FileReviewStore {
     ///
     /// This is not a cross-filesystem transaction. Directory durability and replacement
     /// semantics remain platform-specific until the crash-consistency hardening track lands.
-    pub fn write_snapshot<T: Serialize>(&self, name: &str, value: &T) -> Result<PathBuf, StoreError> {
+    pub fn write_snapshot<T: Serialize>(
+        &self,
+        name: &str,
+        value: &T,
+    ) -> Result<PathBuf, StoreError> {
         Ok(self.write_snapshot_with_receipt(name, value)?.path)
     }
 
@@ -190,11 +197,7 @@ impl FileReviewStore {
                     StoreError::Io(source)
                 }
             })?;
-        writeln!(
-            file,
-            "pid={} operation={operation}",
-            std::process::id()
-        )?;
+        writeln!(file, "pid={} operation={operation}", std::process::id())?;
         file.sync_all()?;
         Ok(ReviewLock { path })
     }
@@ -298,7 +301,8 @@ mod tests {
 
     #[test]
     fn persisted_ledger_round_trips() {
-        let directory = std::env::temp_dir().join(format!("searchright-test-{}", uuid::Uuid::now_v7()));
+        let directory =
+            std::env::temp_dir().join(format!("searchright-test-{}", uuid::Uuid::now_v7()));
         let store = FileReviewStore::open(&directory);
         assert!(store.is_ok());
         if let Ok(store) = store {
@@ -309,7 +313,11 @@ mod tests {
                 review_id: "review-1".to_owned(),
                 event_type: "created".to_owned(),
                 occurred_at: "2026-08-05T00:00:00Z".to_owned(),
-                actor: Actor { actor_id: "test".to_owned(), actor_type: "human".to_owned(), provenance: None },
+                actor: Actor {
+                    actor_id: "test".to_owned(),
+                    actor_type: "human".to_owned(),
+                    provenance: None,
+                },
                 payload: json!({"ok": true}),
             });
             assert!(appended.is_ok());

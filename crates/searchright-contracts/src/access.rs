@@ -111,15 +111,26 @@ pub struct AccessDecision {
 
 impl Validate for TenantPolicy {
     fn validate(&self) -> Result<(), ContractError> {
-        require_schema_version(&self.schema_version, TENANT_POLICY_SCHEMA_VERSION, "tenant_policy.schema_version")?;
+        require_schema_version(
+            &self.schema_version,
+            TENANT_POLICY_SCHEMA_VERSION,
+            "tenant_policy.schema_version",
+        )?;
         require_text(&self.tenant_id, "tenant_policy.tenant_id")?;
         require_text(&self.approved_by, "tenant_policy.approved_by")?;
         require_text(&self.policy_version, "tenant_policy.policy_version")?;
-        if self.allowed_regions.is_empty() || self.allowed_scopes.is_empty() || self.maximum_concurrent_tasks == 0 {
-            return Err(ContractError::Invariant("tenant policy requires regions, scopes and a positive task bound".to_owned()));
+        if self.allowed_regions.is_empty()
+            || self.allowed_scopes.is_empty()
+            || self.maximum_concurrent_tasks == 0
+        {
+            return Err(ContractError::Invariant(
+                "tenant policy requires regions, scopes and a positive task bound".to_owned(),
+            ));
         }
         if self.cross_tenant_aggregation_allowed {
-            return Err(ContractError::Invariant("cross-tenant aggregation is not permitted by the v1 policy".to_owned()));
+            return Err(ContractError::Invariant(
+                "cross-tenant aggregation is not permitted by the v1 policy".to_owned(),
+            ));
         }
         Ok(())
     }
@@ -127,7 +138,11 @@ impl Validate for TenantPolicy {
 
 impl Validate for AccessRequest {
     fn validate(&self) -> Result<(), ContractError> {
-        require_schema_version(&self.schema_version, ACCESS_REQUEST_SCHEMA_VERSION, "access_request.schema_version")?;
+        require_schema_version(
+            &self.schema_version,
+            ACCESS_REQUEST_SCHEMA_VERSION,
+            "access_request.schema_version",
+        )?;
         require_text(&self.request_id, "access_request.request_id")?;
         require_text(&self.principal_id, "access_request.principal_id")?;
         require_text(&self.tenant_id, "access_request.tenant_id")?;
@@ -141,14 +156,22 @@ impl Validate for AccessRequest {
 
 impl Validate for AccessDecision {
     fn validate(&self) -> Result<(), ContractError> {
-        require_schema_version(&self.schema_version, ACCESS_DECISION_SCHEMA_VERSION, "access_decision.schema_version")?;
+        require_schema_version(
+            &self.schema_version,
+            ACCESS_DECISION_SCHEMA_VERSION,
+            "access_decision.schema_version",
+        )?;
         require_text(&self.request_id, "access_decision.request_id")?;
         require_text(&self.tenant_id, "access_decision.tenant_id")?;
         if self.permitted && (!self.blockers.is_empty() || self.human_approval_required) {
-            return Err(ContractError::Invariant("permitted access decisions cannot retain blockers or pending approval".to_owned()));
+            return Err(ContractError::Invariant(
+                "permitted access decisions cannot retain blockers or pending approval".to_owned(),
+            ));
         }
         if !self.permitted && self.blockers.is_empty() {
-            return Err(ContractError::Invariant("denied access decisions require a blocker".to_owned()));
+            return Err(ContractError::Invariant(
+                "denied access decisions require a blocker".to_owned(),
+            ));
         }
         Ok(())
     }

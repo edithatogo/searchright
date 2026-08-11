@@ -152,7 +152,7 @@ fn render_proximity(
                 ));
             }
             format!("({left} NEAR/{distance} {right})")
-        },
+        }
         SearchDialect::Scopus => {
             let operator = if ordered { "PRE" } else { "W" };
             format!("({left} {operator}/{distance} {right})")
@@ -259,7 +259,9 @@ fn render_subject_heading(
                 format!("'{escaped}'/de")
             }
         }
-        SearchDialect::CinahlEbsco => format!("MH \"{escaped}{}\"", if term.explode { "+" } else { "" }),
+        SearchDialect::CinahlEbsco => {
+            format!("MH \"{escaped}{}\"", if term.explode { "+" } else { "" })
+        }
         SearchDialect::EuropePmc => format!("MESH:\"{escaped}\""),
         _ => {
             warnings.push(warning(
@@ -375,7 +377,9 @@ fn apply_field(
         SearchDialect::Scopus => match field {
             SearchField::Title => format!("TITLE({literal})"),
             SearchField::Abstract => format!("ABS({literal})"),
-            SearchField::TitleAbstract | SearchField::Keyword => format!("TITLE-ABS-KEY({literal})"),
+            SearchField::TitleAbstract | SearchField::Keyword => {
+                format!("TITLE-ABS-KEY({literal})")
+            }
             SearchField::Author => format!("AUTH({literal})"),
             SearchField::Journal => format!("SRCTITLE({literal})"),
             _ => literal.to_owned(),
@@ -444,7 +448,6 @@ fn append_limits(
         ));
     }
 }
-
 
 fn warning_represents_loss(code: &str) -> bool {
     [

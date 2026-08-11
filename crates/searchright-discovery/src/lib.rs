@@ -33,7 +33,10 @@ pub fn bounded_candidates(run: &DiscoveryRun) -> Result<Vec<DiscoveredCandidate>
         if !edge_ids.insert(edge.edge_id.as_str()) {
             return Err(DiscoveryError::DuplicateEdge(edge.edge_id.clone()));
         }
-        adjacency.entry(edge.seed_id.clone()).or_default().push(edge);
+        adjacency
+            .entry(edge.seed_id.clone())
+            .or_default()
+            .push(edge);
     }
 
     let mut queue = run
@@ -89,9 +92,7 @@ pub fn bounded_candidates(run: &DiscoveryRun) -> Result<Vec<DiscoveredCandidate>
             .then_with(|| left.discovered_id.cmp(&right.discovered_id))
     });
     if u64::try_from(candidates.len()).unwrap_or(u64::MAX) > run.maximum_records {
-        candidates.truncate(
-            usize::try_from(run.maximum_records).unwrap_or(usize::MAX),
-        );
+        candidates.truncate(usize::try_from(run.maximum_records).unwrap_or(usize::MAX));
     }
     Ok(candidates)
 }
@@ -150,7 +151,10 @@ mod tests {
         assert!(candidates.is_ok());
         if let Ok(candidates) = candidates {
             assert_eq!(candidates.len(), 1);
-            assert_eq!(candidates.first().map(|item| item.discovered_id.as_str()), Some("candidate-1"));
+            assert_eq!(
+                candidates.first().map(|item| item.discovered_id.as_str()),
+                Some("candidate-1")
+            );
             assert!(candidates.iter().all(|item| item.requires_human_release));
         }
     }

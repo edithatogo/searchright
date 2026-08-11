@@ -108,8 +108,7 @@ impl Validate for BenchmarkReport {
                 .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
         {
             return Err(ContractError::Invariant(
-                "benchmark configuration digest must be canonical BLAKE3 hexadecimal"
-                    .to_owned(),
+                "benchmark configuration digest must be canonical BLAKE3 hexadecimal".to_owned(),
             ));
         }
         if self.metrics.is_empty() {
@@ -131,9 +130,7 @@ impl Validate for BenchmarkReport {
                 .iter()
                 .any(|value| value.trim().is_empty())
         {
-            return Err(ContractError::EmptyCollection(
-                "benchmark.leakage_controls",
-            ));
+            return Err(ContractError::EmptyCollection("benchmark.leakage_controls"));
         }
         Ok(())
     }

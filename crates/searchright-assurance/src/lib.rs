@@ -70,9 +70,7 @@ pub fn verify_transition(transition: &LifecycleTransition) -> Result<(), Assuran
             LifecycleStage::FullTextComplete | LifecycleStage::Reported
         )
     {
-        return Err(AssuranceError::AgentAuthorityDenied {
-            to: transition.to,
-        });
+        return Err(AssuranceError::AgentAuthorityDenied { to: transition.to });
     }
     Ok(())
 }
@@ -83,7 +81,10 @@ pub fn allowed_transition(from: LifecycleStage, to: LifecycleStage) -> bool {
     matches!(
         (from, to),
         (LifecycleStage::Draft, LifecycleStage::PlanApproved)
-            | (LifecycleStage::PlanApproved, LifecycleStage::StrategyValidated)
+            | (
+                LifecycleStage::PlanApproved,
+                LifecycleStage::StrategyValidated
+            )
             | (
                 LifecycleStage::StrategyValidated,
                 LifecycleStage::ExecutionApproved
@@ -116,7 +117,10 @@ pub fn requires_human_approval(from: LifecycleStage, to: LifecycleStage) -> bool
     matches!(
         (from, to),
         (LifecycleStage::Draft, LifecycleStage::PlanApproved)
-            | (LifecycleStage::PlanApproved, LifecycleStage::StrategyValidated)
+            | (
+                LifecycleStage::PlanApproved,
+                LifecycleStage::StrategyValidated
+            )
             | (
                 LifecycleStage::StrategyValidated,
                 LifecycleStage::ExecutionApproved
@@ -206,7 +210,10 @@ mod tests {
         for from in stages.iter().copied() {
             for to in stages.iter().copied() {
                 let candidate = transition(from, to, TransitionActorKind::Human);
-                assert_eq!(verify_transition(&candidate).is_ok(), allowed_transition(from, to));
+                assert_eq!(
+                    verify_transition(&candidate).is_ok(),
+                    allowed_transition(from, to)
+                );
             }
         }
     }
@@ -227,9 +234,7 @@ mod tests {
 
 #[cfg(kani)]
 mod kani_proofs {
-    use searchright_contracts::{
-        LifecycleStage, LifecycleTransition, TransitionActorKind,
-    };
+    use searchright_contracts::{LifecycleStage, LifecycleTransition, TransitionActorKind};
 
     use super::{AssuranceError, allowed_transition, verify_transition};
 

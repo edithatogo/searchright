@@ -1,7 +1,10 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use crate::{ContractError, INTERCHANGE_RECEIPT_SCHEMA_VERSION, Validate, require_schema_version, require_text};
+use crate::{
+    ContractError, INTERCHANGE_RECEIPT_SCHEMA_VERSION, Validate, require_schema_version,
+    require_text,
+};
 
 /// Supported import or export format.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
@@ -68,9 +71,12 @@ impl Validate for InterchangeReceipt {
         require_text(&self.review_id, "interchange.review_id")?;
         require_text(&self.input_digest, "interchange.input_digest")?;
         require_text(&self.output_digest, "interchange.output_digest")?;
-        if self.records_written > self.records_read && !self.warnings.iter().any(|item| item.contains("expanded")) {
+        if self.records_written > self.records_read
+            && !self.warnings.iter().any(|item| item.contains("expanded"))
+        {
             return Err(ContractError::Invariant(
-                "interchange output count exceeds input count without an expansion warning".to_owned(),
+                "interchange output count exceeds input count without an expansion warning"
+                    .to_owned(),
             ));
         }
         Ok(())

@@ -6,12 +6,12 @@ use evidence_search_core::{AuditLedger, AuditVerification, QueryCompiler};
 use searchright_agent::{AgentWorkflow, ReadinessFinding, assess_plan_readiness};
 use searchright_contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, ContentSafetyFinding, DataHandlingDecision,
-    DataHandlingRequest, Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
-    InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PrismaFlow,
-    PrismaSLedger, ProtocolAmendment, ProviderComponentManifest, ProviderManifest, RankingCalibration, RankingScore,
-    RecordChange, RetrievalStatus, ReviewPlan, SearchDialect, SearchStrategy,
-    SearchValidationReport, SourceReceipt, StandardAssessment, StandardPack, StudyGraph,
-    UntrustedContentPolicy, Validate, WorkflowTrace,
+    DataHandlingRequest, Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope,
+    InstitutionalPolicy, InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PrismaFlow,
+    PrismaSLedger, ProtocolAmendment, ProviderComponentManifest, ProviderManifest,
+    RankingCalibration, RankingScore, RecordChange, RetrievalStatus, ReviewPlan, SearchDialect,
+    SearchStrategy, SearchValidationReport, SourceReceipt, StandardAssessment, StandardPack,
+    StudyGraph, UntrustedContentPolicy, Validate, WorkflowTrace,
 };
 use searchright_dedup::{DedupConfig, DedupResult, Deduplicator};
 use searchright_interchange::ImportResult;
@@ -121,10 +121,7 @@ impl SearchrightEngine {
     }
 
     /// Validate and render one PRISMA artefact.
-    pub fn prisma(
-        flow: &PrismaFlow,
-        output: PrismaOutput,
-    ) -> Result<PrismaArtifact, EngineError> {
+    pub fn prisma(flow: &PrismaFlow, output: PrismaOutput) -> Result<PrismaArtifact, EngineError> {
         searchright_prisma::validate_flow(flow)?;
         match output {
             PrismaOutput::Json => Ok(PrismaArtifact::Flow(flow.clone())),
@@ -216,7 +213,9 @@ impl SearchrightEngine {
         receipts: &[SourceReceipt],
         events: &[AuditEvent],
     ) -> Result<ProvenanceBundle, EngineError> {
-        Ok(searchright_provenance::build_bundle(plan, receipts, events)?)
+        Ok(searchright_provenance::build_bundle(
+            plan, receipts, events,
+        )?)
     }
 
     /// Rank records transparently for prioritisation only.
@@ -319,7 +318,9 @@ impl SearchrightEngine {
         strategy: &searchright_contracts::CompiledStrategy,
         endpoint: &str,
     ) -> Result<searchright_licensed::LicensedRequestPlan, EngineError> {
-        Ok(searchright_licensed::plan_request(profile, strategy, endpoint)?)
+        Ok(searchright_licensed::plan_request(
+            profile, strategy, endpoint,
+        )?)
     }
 
     /// Validate a benchmark report and its claim boundary.

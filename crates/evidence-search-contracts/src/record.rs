@@ -94,7 +94,6 @@ pub struct BibliographicRecord {
     pub provider_metadata: Value,
 }
 
-
 impl Validate for BibliographicRecord {
     fn validate(&self) -> Result<(), ContractError> {
         require_schema_version(

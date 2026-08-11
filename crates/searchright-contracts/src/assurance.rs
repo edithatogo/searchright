@@ -8,7 +8,9 @@ use crate::{
 };
 
 /// High-level lifecycle stage used by the executable workflow assurance model.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema,
+)]
 #[serde(rename_all = "snake_case")]
 pub enum LifecycleStage {
     /// Review intent exists but has not been approved as a plan.
@@ -94,7 +96,11 @@ impl Validate for LifecycleTransition {
                 "workflow.transition.evidence_ids",
             ));
         }
-        if self.evidence_ids.iter().any(|value| value.trim().is_empty()) {
+        if self
+            .evidence_ids
+            .iter()
+            .any(|value| value.trim().is_empty())
+        {
             return Err(ContractError::Invariant(
                 "workflow transition evidence identifiers must not be empty".to_owned(),
             ));

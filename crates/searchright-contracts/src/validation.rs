@@ -175,7 +175,10 @@ impl Validate for SeedRecord {
 
 impl Validate for TranslationLossAssessment {
     fn validate(&self) -> Result<(), ContractError> {
-        require_text(&self.strategy_id, "search_validation.translation.strategy_id")?;
+        require_text(
+            &self.strategy_id,
+            "search_validation.translation.strategy_id",
+        )?;
         require_text(
             &self.target_dialect,
             "search_validation.translation.target_dialect",

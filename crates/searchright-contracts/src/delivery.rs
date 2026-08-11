@@ -6,9 +6,9 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    GITHUB_REPOSITORY_SETTINGS_SCHEMA_VERSION, INTEGRATION_RELEASE_TRAIN_SCHEMA_VERSION,
-    RELEASE_REHEARSAL_SCHEMA_VERSION, ContractError, Validate, require_schema_version,
-    require_text,
+    ContractError, GITHUB_REPOSITORY_SETTINGS_SCHEMA_VERSION,
+    INTEGRATION_RELEASE_TRAIN_SCHEMA_VERSION, RELEASE_REHEARSAL_SCHEMA_VERSION, Validate,
+    require_schema_version, require_text,
 };
 
 /// GitHub repository visibility.
@@ -233,7 +233,10 @@ impl Validate for GitHubRepositorySettings {
         require_text(&self.repository, "github_repository_settings.repository")?;
         require_text(&self.description, "github_repository_settings.description")?;
         require_text(&self.homepage, "github_repository_settings.homepage")?;
-        require_text(&self.claim_boundary, "github_repository_settings.claim_boundary")?;
+        require_text(
+            &self.claim_boundary,
+            "github_repository_settings.claim_boundary",
+        )?;
         if !owner_name(&self.repository) {
             return Err(ContractError::Invariant(
                 "GitHub repository must use non-empty owner/name form".to_owned(),
@@ -280,9 +283,15 @@ impl Validate for IntegrationReleaseTrain {
             INTEGRATION_RELEASE_TRAIN_SCHEMA_VERSION,
             "integration_release_train.schema_version",
         )?;
-        require_text(&self.release_train_id, "integration_release_train.release_train_id")?;
+        require_text(
+            &self.release_train_id,
+            "integration_release_train.release_train_id",
+        )?;
         require_text(&self.generated_at, "integration_release_train.generated_at")?;
-        require_text(&self.claim_boundary, "integration_release_train.claim_boundary")?;
+        require_text(
+            &self.claim_boundary,
+            "integration_release_train.claim_boundary",
+        )?;
         if self.automatic_promotion {
             return Err(ContractError::Invariant(
                 "release-train promotion must remain explicit".to_owned(),

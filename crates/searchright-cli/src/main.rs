@@ -11,16 +11,16 @@ use std::{
 
 use anyhow::{Context, Result, bail};
 use clap::{Parser, Subcommand, ValueEnum};
-use searchright::{PrismaArtifact, PrismaOutput, SearchrightEngine};
 use searchright::contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, CompiledStrategy, DataHandlingRequest,
-    Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy, InterchangeFormat,
-    LicensedAdapterProfile, LivingUpdateRun, PrismaFlow,
-    ProtocolAmendment, ProviderComponentManifest, RankingCalibration, ReviewPlan, SearchDialect,
-    SearchStrategy, SearchValidationReport, SourceReceipt, StandardAssessment, StandardPack,
-    StudyGraph, UntrustedContentPolicy, WorkflowTrace,
+    Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
+    InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PrismaFlow, ProtocolAmendment,
+    ProviderComponentManifest, RankingCalibration, ReviewPlan, SearchDialect, SearchStrategy,
+    SearchValidationReport, SourceReceipt, StandardAssessment, StandardPack, StudyGraph,
+    UntrustedContentPolicy, WorkflowTrace,
 };
 use searchright::dedup::DedupConfig;
+use searchright::{PrismaArtifact, PrismaOutput, SearchrightEngine};
 use serde::Deserialize;
 
 #[derive(Debug, Parser)]
@@ -129,7 +129,10 @@ enum Command {
     /// Resolve bounded supplementary-discovery candidates for human release.
     DiscoveryCandidates { input: PathBuf },
     /// Verify a WASI provider-component manifest against exact component bytes.
-    VerifyProviderComponent { manifest: PathBuf, component: PathBuf },
+    VerifyProviderComponent {
+        manifest: PathBuf,
+        component: PathBuf,
+    },
     /// Build a redacted bring-your-own-access request plan.
     PlanLicensedRequest {
         profile: PathBuf,
@@ -239,7 +242,6 @@ impl From<ContentPolicyArg> for UntrustedContentPolicy {
     }
 }
 
-
 #[derive(Debug, Clone, Copy, ValueEnum, Default)]
 enum DiagnosticFormatArg {
     #[default]
@@ -295,7 +297,10 @@ fn main() -> Result<()> {
         }
         Command::Compile { input, dialect } => {
             let strategy: SearchStrategy = read_document(&input)?;
-            print_json(&SearchrightEngine::compile_strategy(&strategy, dialect.into())?)?;
+            print_json(&SearchrightEngine::compile_strategy(
+                &strategy,
+                dialect.into(),
+            )?)?;
         }
         Command::Deduplicate {
             input,
@@ -361,7 +366,9 @@ fn main() -> Result<()> {
         Command::LivingDiff { previous, current } => {
             let previous: Vec<BibliographicRecord> = read_document(&previous)?;
             let current: Vec<BibliographicRecord> = read_document(&current)?;
-            print_json(&SearchrightEngine::diff_living_records(&previous, &current)?)?;
+            print_json(&SearchrightEngine::diff_living_records(
+                &previous, &current,
+            )?)?;
         }
         Command::ValidateLivingLineage { input } => {
             let runs: Vec<LivingUpdateRun> = read_document(&input)?;
@@ -441,7 +448,10 @@ fn main() -> Result<()> {
             let run: DiscoveryRun = read_document(&input)?;
             print_json(&SearchrightEngine::discovery_candidates(&run)?)?;
         }
-        Command::VerifyProviderComponent { manifest, component } => {
+        Command::VerifyProviderComponent {
+            manifest,
+            component,
+        } => {
             let manifest: ProviderComponentManifest = read_document(&manifest)?;
             let bytes = fs::read(&component)
                 .with_context(|| format!("could not read {}", component.display()))?;
@@ -460,9 +470,7 @@ fn main() -> Result<()> {
             let profile: LicensedAdapterProfile = read_document(&profile)?;
             let strategy: CompiledStrategy = read_document(&strategy)?;
             print_json(&SearchrightEngine::plan_licensed_request(
-                &profile,
-                &strategy,
-                &endpoint,
+                &profile, &strategy, &endpoint,
             )?)?;
         }
         Command::ValidateBenchmarkReport { input } => {
@@ -479,8 +487,8 @@ fn main() -> Result<()> {
 }
 
 fn read_document<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
-    let content = fs::read_to_string(path)
-        .with_context(|| format!("could not read {}", path.display()))?;
+    let content =
+        fs::read_to_string(path).with_context(|| format!("could not read {}", path.display()))?;
     match path.extension().and_then(|extension| extension.to_str()) {
         Some("yaml" | "yml") => serde_yaml::from_str(&content)
             .with_context(|| format!("invalid YAML in {}", path.display())),
@@ -490,16 +498,18 @@ fn read_document<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
 }
 
 fn read_jsonl<T: serde::de::DeserializeOwned>(path: &Path) -> Result<Vec<T>> {
-    let content = fs::read_to_string(path)
-        .with_context(|| format!("could not read {}", path.display()))?;
+    let content =
+        fs::read_to_string(path).with_context(|| format!("could not read {}", path.display()))?;
     let mut values = Vec::new();
     for (index, line) in content.lines().enumerate() {
         if line.trim().is_empty() {
             continue;
         }
-        values.push(serde_json::from_str(line).with_context(|| {
-            format!("invalid JSONL value at line {}", index.saturating_add(1))
-        })?);
+        values.push(
+            serde_json::from_str(line).with_context(|| {
+                format!("invalid JSONL value at line {}", index.saturating_add(1))
+            })?,
+        );
     }
     Ok(values)
 }

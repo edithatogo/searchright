@@ -57,7 +57,9 @@ pub struct QuestionFramework {
 impl Validate for QuestionFramework {
     fn validate(&self) -> Result<(), ContractError> {
         if self.elements.is_empty() {
-            return Err(ContractError::EmptyCollection("question.framework.elements"));
+            return Err(ContractError::EmptyCollection(
+                "question.framework.elements",
+            ));
         }
         for (name, value) in &self.elements {
             if name.trim().is_empty() || value.trim().is_empty() {
@@ -250,7 +252,11 @@ impl Validate for ProtocolRegistration {
                 ));
             }
         }
-        if self.amendments.iter().any(|amendment| amendment.trim().is_empty()) {
+        if self
+            .amendments
+            .iter()
+            .any(|amendment| amendment.trim().is_empty())
+        {
             return Err(ContractError::Invariant(
                 "protocol amendments must not contain empty values".to_owned(),
             ));

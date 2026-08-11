@@ -88,11 +88,8 @@ impl ScreeningBoard {
             .filter(|decision| decision.reviewer_kind != ReviewerKind::Agent)
             .map(|decision| decision.decision_id.as_str())
             .collect();
-        let supplied_ids: BTreeSet<&str> = resolution
-            .decision_ids
-            .iter()
-            .map(String::as_str)
-            .collect();
+        let supplied_ids: BTreeSet<&str> =
+            resolution.decision_ids.iter().map(String::as_str).collect();
         if supplied_ids.iter().any(|id| !known_human_ids.contains(id)) {
             return Err(ScreeningError::UnknownDecision);
         }
@@ -271,7 +268,10 @@ fn validate_decision(
 fn validate_resolution_fields(resolution: &ConflictResolution) -> Result<(), ScreeningError> {
     for (field, value) in [
         ("resolution.subject_id", resolution.subject_id.as_str()),
-        ("resolution.adjudicator_id", resolution.adjudicator_id.as_str()),
+        (
+            "resolution.adjudicator_id",
+            resolution.adjudicator_id.as_str(),
+        ),
         ("resolution.rationale", resolution.rationale.as_str()),
         ("resolution.resolved_at", resolution.resolved_at.as_str()),
     ] {

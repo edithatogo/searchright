@@ -3,12 +3,13 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     ContractError, DATA_HANDLING_DECISION_SCHEMA_VERSION, DATA_HANDLING_REQUEST_SCHEMA_VERSION,
-    INSTITUTIONAL_POLICY_SCHEMA_VERSION,
-    Validate, require_schema_version, require_text,
+    INSTITUTIONAL_POLICY_SCHEMA_VERSION, Validate, require_schema_version, require_text,
 };
 
 /// Classification assigned to data handled by a Searchright operation.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema,
+)]
 #[serde(rename_all = "snake_case")]
 pub enum DataClassification {
     /// Public bibliographic metadata.
@@ -143,10 +144,7 @@ impl Validate for InstitutionalPolicy {
         require_text(&self.policy_id, "institutional_policy.policy_id")?;
         require_text(&self.institution, "institutional_policy.institution")?;
         require_text(&self.approved_by, "institutional_policy.approved_by")?;
-        require_text(
-            &self.effective_from,
-            "institutional_policy.effective_from",
-        )?;
+        require_text(&self.effective_from, "institutional_policy.effective_from")?;
         if self.deployment_modes.is_empty() {
             return Err(ContractError::EmptyCollection(
                 "institutional_policy.deployment_modes",
@@ -163,7 +161,10 @@ impl Validate for InstitutionalPolicy {
             ));
         }
         if self.permitted_regions.iter().any(|region| {
-            region.len() != 2 || !region.chars().all(|character| character.is_ascii_uppercase())
+            region.len() != 2
+                || !region
+                    .chars()
+                    .all(|character| character.is_ascii_uppercase())
         }) {
             return Err(ContractError::Invariant(
                 "permitted regions must use upper-case ISO 3166-1 alpha-2 codes".to_owned(),
@@ -215,7 +216,6 @@ impl Validate for DataHandlingRequest {
     }
 }
 
-
 impl Validate for DataHandlingDecision {
     fn validate(&self) -> Result<(), ContractError> {
         require_schema_version(
@@ -235,7 +235,12 @@ impl Validate for DataHandlingDecision {
                 "a denied data-handling decision requires at least one blocker".to_owned(),
             ));
         }
-        if self.blockers.iter().chain(&self.warnings).any(|value| value.trim().is_empty()) {
+        if self
+            .blockers
+            .iter()
+            .chain(&self.warnings)
+            .any(|value| value.trim().is_empty())
+        {
             return Err(ContractError::Invariant(
                 "data-handling blocker and warning codes must be non-empty".to_owned(),
             ));

@@ -61,9 +61,20 @@ def main() -> int:
     parser.add_argument("--prefix", default="searchright")
     args = parser.parse_args()
     output_dir = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
-    status = subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True)
+    # Packaging is based exclusively on ``git ls-files`` below, so deliberate
+    # untracked build inputs (for example ``cargo vendor`` output in clean-room
+    # CI) cannot affect the archive. Still reject staged or unstaged changes to
+    # tracked source, which would make the package differ from the committed
+    # revision it claims to represent.
+    status = subprocess.check_output(
+        ["git", "status", "--porcelain", "--untracked-files=no"],
+        cwd=ROOT,
+        text=True,
+    )
     if status.strip():
-        raise SystemExit("source packaging requires a clean Git working tree")
+        raise SystemExit(
+            "source packaging requires no staged or unstaged changes to tracked files"
+        )
     output_dir.mkdir(parents=True, exist_ok=True)
     source_epoch = epoch()
     members = files()

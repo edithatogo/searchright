@@ -8,7 +8,10 @@ use searchright_contracts::{
 };
 
 /// Evaluate one request under a tenant policy.
-pub fn authorise(policy: &TenantPolicy, request: &AccessRequest) -> Result<AccessDecision, AccessError> {
+pub fn authorise(
+    policy: &TenantPolicy,
+    request: &AccessRequest,
+) -> Result<AccessDecision, AccessError> {
     policy.validate()?;
     request.validate()?;
     let mut blockers = Vec::new();
@@ -18,7 +21,11 @@ pub fn authorise(policy: &TenantPolicy, request: &AccessRequest) -> Result<Acces
     if request.tenant_id != policy.tenant_id {
         blockers.push("access.tenant.mismatch".to_owned());
     }
-    if !policy.allowed_regions.iter().any(|region| region == &request.region) {
+    if !policy
+        .allowed_regions
+        .iter()
+        .any(|region| region == &request.region)
+    {
         blockers.push("access.region.denied".to_owned());
     }
     for scope in &request.scopes {
@@ -38,9 +45,9 @@ pub fn authorise(policy: &TenantPolicy, request: &AccessRequest) -> Result<Acces
     {
         blockers.push("access.final_decision.human_only".to_owned());
     }
-    let human_approval_required = blockers.iter().any(|code| {
-        code.contains("external_write") || code.contains("final_decision")
-    });
+    let human_approval_required = blockers
+        .iter()
+        .any(|code| code.contains("external_write") || code.contains("final_decision"));
     Ok(AccessDecision {
         schema_version: ACCESS_DECISION_SCHEMA_VERSION.to_owned(),
         request_id: request.request_id.clone(),
