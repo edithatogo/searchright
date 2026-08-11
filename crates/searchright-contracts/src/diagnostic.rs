@@ -74,6 +74,7 @@ impl Validate for Diagnostic {
         )?;
         require_text(&self.code, "diagnostic.code")?;
         require_text(&self.message, "diagnostic.message")?;
+        reject_control_characters(&self.message, "diagnostic.message")?;
         if !self.code.contains('.')
             || self.code.chars().any(|character| {
                 !(character.is_ascii_lowercase()
@@ -87,6 +88,7 @@ impl Validate for Diagnostic {
         }
         if let Some(remediation) = self.remediation.as_deref() {
             require_text(remediation, "diagnostic.remediation")?;
+            reject_control_characters(remediation, "diagnostic.remediation")?;
         }
         if self
             .evidence_ids
@@ -124,5 +126,56 @@ impl Validate for Diagnostic {
             }
         }
         Ok(())
+    }
+}
+
+fn reject_control_characters(value: &str, field: &str) -> Result<(), ContractError> {
+    if value
+        .chars()
+        .any(|character| character.is_control() && !matches!(character, '\n' | '\t'))
+    {
+        return Err(ContractError::Invariant(format!(
+            "{field} must not contain terminal control characters"
+        )));
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn diagnostic() -> Diagnostic {
+        Diagnostic {
+            schema_version: DIAGNOSTIC_SCHEMA_VERSION.to_owned(),
+            code: "strategy.translation.review_required".to_owned(),
+            severity: DiagnosticSeverity::Warning,
+            message: "Translation review is required.".to_owned(),
+            remediation: Some("Review each material warning.".to_owned()),
+            evidence_ids: Vec::new(),
+            path: None,
+            line: None,
+            column: None,
+            locale: DiagnosticLocale::EnAu,
+            blocking: false,
+        }
+    }
+
+    #[test]
+    fn rejects_terminal_escape_sequences_in_human_text() {
+        let mut value = diagnostic();
+        value.message = "\u{1b}[31mwarning".to_owned();
+        assert!(value.validate().is_err());
+
+        let mut value = diagnostic();
+        value.remediation = Some("reset\u{7}".to_owned());
+        assert!(value.validate().is_err());
+    }
+
+    #[test]
+    fn permits_readable_multiline_text() {
+        let mut value = diagnostic();
+        value.message = "First line\nSecond\tcolumn".to_owned();
+        assert!(value.validate().is_ok());
     }
 }

@@ -2,6 +2,8 @@
 
 #![forbid(unsafe_code)]
 
+use std::collections::BTreeMap;
+
 use searchright_contracts::{Diagnostic, DiagnosticLocale, DiagnosticSeverity, Validate};
 
 /// Stable output representation for diagnostics.
@@ -13,6 +15,67 @@ pub enum DiagnosticOutput {
     Json,
     /// One compact JSON document per line.
     JsonLines,
+}
+
+/// Localised human-readable fields for one stable diagnostic code.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DiagnosticMessage {
+    /// Human-readable message in the catalogue locale.
+    pub message: String,
+    /// Optional corrective action in the catalogue locale.
+    pub remediation: Option<String>,
+}
+
+/// An explicit, deterministic message catalogue for one locale.
+///
+/// Codes remain stable machine identifiers. A missing entry never silently
+/// changes the source diagnostic: callers must choose whether fallback is
+/// permitted.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DiagnosticMessageCatalog {
+    /// Locale supplied by every entry in this catalogue.
+    pub locale: DiagnosticLocale,
+    /// Messages keyed by stable diagnostic code.
+    pub messages: BTreeMap<String, DiagnosticMessage>,
+}
+
+/// Policy applied when a requested catalogue lacks a diagnostic code.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum MissingMessagePolicy {
+    /// Preserve the source message and locale.
+    PreserveSource,
+    /// Reject rendering so incomplete translation coverage is visible.
+    Reject,
+}
+
+/// Apply an explicit message catalogue without changing diagnostic semantics.
+pub fn localize(
+    diagnostics: &[Diagnostic],
+    catalog: &DiagnosticMessageCatalog,
+    missing: MissingMessagePolicy,
+) -> Result<Vec<Diagnostic>, DiagnosticError> {
+    let mut localized = Vec::with_capacity(diagnostics.len());
+    for diagnostic in diagnostics {
+        diagnostic.validate()?;
+        let Some(message) = catalog.messages.get(&diagnostic.code) else {
+            match missing {
+                MissingMessagePolicy::PreserveSource => {
+                    localized.push(diagnostic.clone());
+                    continue;
+                }
+                MissingMessagePolicy::Reject => {
+                    return Err(DiagnosticError::MissingMessage(diagnostic.code.clone()));
+                }
+            }
+        };
+        let mut translated = diagnostic.clone();
+        translated.message.clone_from(&message.message);
+        translated.remediation.clone_from(&message.remediation);
+        translated.locale = catalog.locale.clone();
+        translated.validate()?;
+        localized.push(translated);
+    }
+    Ok(localized)
 }
 
 /// Validate, sort and render diagnostics in a stable representation.
@@ -114,6 +177,9 @@ pub enum DiagnosticError {
     /// JSON rendering failed.
     #[error(transparent)]
     Json(#[from] serde_json::Error),
+    /// A strict message catalogue did not contain the stable diagnostic code.
+    #[error("message catalogue has no entry for diagnostic code `{0}`")]
+    MissingMessage(String),
 }
 
 #[cfg(test)]
@@ -145,5 +211,113 @@ mod tests {
             assert!(rendered.contains("BLOCKING strategy.translation.review_required"));
             assert!(!rendered.contains('\u{1b}'));
         }
+    }
+
+    fn sample(code: &str, severity: DiagnosticSeverity) -> Diagnostic {
+        Diagnostic {
+            schema_version: DIAGNOSTIC_SCHEMA_VERSION.to_owned(),
+            code: code.to_owned(),
+            severity,
+            message: "Human translation review is required.".to_owned(),
+            remediation: Some("Review each material dialect warning.".to_owned()),
+            evidence_ids: vec!["strategy-1".to_owned()],
+            path: Some("strategies/medline.json".to_owned()),
+            line: Some(4),
+            column: Some(2),
+            locale: DiagnosticLocale::EnAu,
+            blocking: severity == DiagnosticSeverity::Blocking,
+        }
+    }
+
+    #[test]
+    fn all_formats_are_deterministic_and_machine_formats_round_trip() {
+        let diagnostics = vec![
+            sample("strategy.warning", DiagnosticSeverity::Warning),
+            sample("strategy.blocking", DiagnosticSeverity::Blocking),
+        ];
+        for output in [
+            DiagnosticOutput::PlainText,
+            DiagnosticOutput::Json,
+            DiagnosticOutput::JsonLines,
+        ] {
+            let first = render(&diagnostics, output);
+            let second = render(&diagnostics, output);
+            assert_eq!(first.ok(), second.ok());
+        }
+
+        let json = render(&diagnostics, DiagnosticOutput::Json).unwrap_or_default();
+        let decoded: Result<Vec<Diagnostic>, _> = serde_json::from_str(&json);
+        assert!(matches!(decoded, Ok(items) if items.len() == 2));
+
+        let jsonl = render(&diagnostics, DiagnosticOutput::JsonLines).unwrap_or_default();
+        assert_eq!(jsonl.lines().count(), 2);
+        assert!(
+            jsonl
+                .lines()
+                .all(|line| serde_json::from_str::<Diagnostic>(line).is_ok())
+        );
+    }
+
+    #[test]
+    fn plain_output_uses_words_and_does_not_depend_on_terminal_width() {
+        let rendered = render(
+            &[sample("strategy.warning", DiagnosticSeverity::Warning)],
+            DiagnosticOutput::PlainText,
+        )
+        .unwrap_or_default();
+        assert!(rendered.starts_with("WARNING strategy.warning:"));
+        assert!(rendered.contains("  remediation:"));
+        assert!(!rendered.contains('\r'));
+        assert!(
+            !rendered
+                .chars()
+                .any(|character| matches!(character, '⚠' | '✗' | '✓'))
+        );
+    }
+
+    #[test]
+    fn catalogue_changes_only_human_fields_and_locale() {
+        let source = sample("strategy.warning", DiagnosticSeverity::Warning);
+        let catalog = DiagnosticMessageCatalog {
+            locale: DiagnosticLocale::MiNz,
+            messages: BTreeMap::from([(
+                source.code.clone(),
+                DiagnosticMessage {
+                    message: "Me arotake tēnei whakamāoritanga.".to_owned(),
+                    remediation: Some("Arotakengia ngā whakatūpato.".to_owned()),
+                },
+            )]),
+        };
+        let localized =
+            localize(&[source.clone()], &catalog, MissingMessagePolicy::Reject).unwrap_or_default();
+        assert_eq!(localized.len(), 1);
+        let translated = &localized[0];
+        assert_eq!(translated.code, source.code);
+        assert_eq!(translated.severity, source.severity);
+        assert_eq!(translated.blocking, source.blocking);
+        assert_eq!(translated.evidence_ids, source.evidence_ids);
+        assert_eq!(translated.locale, DiagnosticLocale::MiNz);
+        assert_ne!(translated.message, source.message);
+    }
+
+    #[test]
+    fn missing_catalogue_entries_are_explicit_or_preserve_source() {
+        let source = sample("strategy.warning", DiagnosticSeverity::Warning);
+        let catalog = DiagnosticMessageCatalog {
+            locale: DiagnosticLocale::EnNz,
+            messages: BTreeMap::new(),
+        };
+        assert!(matches!(
+            localize(&[source.clone()], &catalog, MissingMessagePolicy::Reject),
+            Err(DiagnosticError::MissingMessage(code)) if code == source.code
+        ));
+        assert!(matches!(
+            localize(
+                &[source.clone()],
+                &catalog,
+                MissingMessagePolicy::PreserveSource
+            ),
+            Ok(items) if items == vec![source]
+        ));
     }
 }
