@@ -1,0 +1,50 @@
+{
+  "schema_version": "org.searchright.external-evaluation.v1",
+  "status": "prepared_not_preregistered",
+  "independence": {
+    "minimum_information_specialists": 2,
+    "development_team_excluded_from_adjudication": true,
+    "conflicts_must_be_disclosed": true
+  },
+  "design": {
+    "blinded_adjudication": true,
+    "living_review_required": true,
+    "topic_strata": [
+      "clinical",
+      "economic",
+      "policy",
+      "scoping"
+    ],
+    "required_outcomes": [
+      "seed_set_recall",
+      "critical_press_findings",
+      "unreported_lossy_translations",
+      "reproduction_success",
+      "consequential_error_rate",
+      "unassisted_task_completion"
+    ],
+    "sealed_labels_required": true
+  },
+  "external_evidence": {
+    "preregistration": null,
+    "participant_attestation": null,
+    "results": null,
+    "response_to_findings": null
+  },
+  "sustainability": {
+    "status": "prepared_not_observed",
+    "required_observations": [
+      "maintenance_release_history",
+      "standards_surveillance_history",
+      "deprecation_or_migration_exercise",
+      "succession_rehearsal"
+    ],
+    "observation_receipts": []
+  },
+  "disclosures": {
+    "funding": "No external evaluation funding is declared in this prepared contract.",
+    "conflicts": "Evaluator and provider conflicts must be recorded before recruitment.",
+    "provider_relationships": "No provider relationship is declared in this prepared contract."
+  },
+  "claim_boundary": "This contract prepares an evaluation; it is not preregistration, recruitment, execution, external validation, publication or observed sustainability evidence."
+}
