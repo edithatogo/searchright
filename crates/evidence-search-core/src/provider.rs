@@ -284,7 +284,10 @@ fn is_prohibited_endpoint_address(address: IpAddr) -> bool {
                 || address.octets()[0] >= 240
         }
         IpAddr::V6(address) => {
-            address.is_loopback()
+            address
+                .to_ipv4_mapped()
+                .is_some_and(|mapped| is_prohibited_endpoint_address(IpAddr::V4(mapped)))
+                || address.is_loopback()
                 || address.is_unspecified()
                 || address.is_multicast()
                 || ipv6_in_prefix(address, Ipv6Addr::new(0xfc00, 0, 0, 0, 0, 0, 0, 0), 7)
@@ -1749,9 +1752,16 @@ mod tests {
         let private = "10.0.0.8".parse::<IpAddr>();
         let metadata = "169.254.169.254".parse::<IpAddr>();
         let ipv6_loopback = "::1".parse::<IpAddr>();
-        assert!(public.is_ok() && private.is_ok() && metadata.is_ok() && ipv6_loopback.is_ok());
-        if let (Ok(public), Ok(private), Ok(metadata), Ok(ipv6_loopback)) =
-            (public, private, metadata, ipv6_loopback)
+        let mapped_loopback = "::ffff:127.0.0.1".parse::<IpAddr>();
+        assert!(
+            public.is_ok()
+                && private.is_ok()
+                && metadata.is_ok()
+                && ipv6_loopback.is_ok()
+                && mapped_loopback.is_ok()
+        );
+        if let (Ok(public), Ok(private), Ok(metadata), Ok(ipv6_loopback), Ok(mapped_loopback)) =
+            (public, private, metadata, ipv6_loopback, mapped_loopback)
         {
             assert!(validate_resolved_endpoint_addresses("test", "example.test", &[]).is_err());
             assert!(
@@ -1766,6 +1776,10 @@ mod tests {
             );
             assert!(
                 validate_resolved_endpoint_addresses("test", "example.test", &[ipv6_loopback])
+                    .is_err()
+            );
+            assert!(
+                validate_resolved_endpoint_addresses("test", "example.test", &[mapped_loopback])
                     .is_err()
             );
         }
