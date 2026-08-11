@@ -1290,7 +1290,6 @@
     },
     {
       "dependsOn": [
-        "cargo-requirement:serde@1.0",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1",
         "cargo:searchright-dedup@0.1.0-alpha.1"
@@ -1333,8 +1332,6 @@
       "dependsOn": [
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
-        "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:thiserror@2.0",
         "cargo:evidence-search-contracts@0.1.0-alpha.1"
       ],
       "ref": "cargo:searchright-contracts@0.1.0-alpha.1"
@@ -1414,7 +1411,6 @@
         "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:tokio@1",
         "cargo-requirement:tracing-subscriber@0.3",
-        "cargo-requirement:tracing@0.1",
         "cargo:searchright@0.1.0-alpha.1"
       ],
       "ref": "cargo:searchright-mcp@0.1.0-alpha.1"
@@ -1429,7 +1425,6 @@
     {
       "dependsOn": [
         "cargo-requirement:blake3@1.8",
-        "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
