@@ -12,8 +12,8 @@ Maintain versioned schemas, examples, standards packs and Rust wire types from o
 ## Contract
 
 - Horizon: `foundation`
-- Status: `source_implemented`
-- Implementation: `source_implemented`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `00`
 - Requirements: `SR-001, SR-002, SR-003, SR-004, SR-017, SR-049`
