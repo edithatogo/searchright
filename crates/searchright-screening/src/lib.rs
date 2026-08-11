@@ -48,7 +48,7 @@ impl ScreeningBoard {
 
     /// Borrow the policy enforced by this board.
     #[must_use]
-    pub fn policy(&self) -> &ScreeningPolicy {
+    pub const fn policy(&self) -> &ScreeningPolicy {
         &self.policy
     }
 
@@ -149,7 +149,7 @@ impl ScreeningBoard {
 }
 
 /// Screening-policy error.
-#[derive(Debug, thiserror::Error, PartialEq)]
+#[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum ScreeningError {
     /// The policy requested no reviewer at a stage.
     #[error("at least one independent human reviewer is required at each screening stage")]

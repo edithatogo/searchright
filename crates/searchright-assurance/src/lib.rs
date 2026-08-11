@@ -77,12 +77,12 @@ pub fn verify_transition(transition: &LifecycleTransition) -> Result<(), Assuran
 
 /// Enumerate the explicitly permitted lifecycle edges.
 #[must_use]
-pub fn allowed_transition(from: LifecycleStage, to: LifecycleStage) -> bool {
+pub const fn allowed_transition(from: LifecycleStage, to: LifecycleStage) -> bool {
     matches!(
         (from, to),
         (LifecycleStage::Draft, LifecycleStage::PlanApproved)
             | (
-                LifecycleStage::PlanApproved,
+                LifecycleStage::PlanApproved | LifecycleStage::UpdatePlanned,
                 LifecycleStage::StrategyValidated
             )
             | (
@@ -104,21 +104,17 @@ pub fn allowed_transition(from: LifecycleStage, to: LifecycleStage) -> bool {
             )
             | (LifecycleStage::FullTextComplete, LifecycleStage::Reported)
             | (LifecycleStage::Reported, LifecycleStage::UpdatePlanned)
-            | (
-                LifecycleStage::UpdatePlanned,
-                LifecycleStage::StrategyValidated
-            )
     )
 }
 
 /// Whether an edge represents a governance decision that an agent/tool cannot approve.
 #[must_use]
-pub fn requires_human_approval(from: LifecycleStage, to: LifecycleStage) -> bool {
+pub const fn requires_human_approval(from: LifecycleStage, to: LifecycleStage) -> bool {
     matches!(
         (from, to),
         (LifecycleStage::Draft, LifecycleStage::PlanApproved)
             | (
-                LifecycleStage::PlanApproved,
+                LifecycleStage::PlanApproved | LifecycleStage::UpdatePlanned,
                 LifecycleStage::StrategyValidated
             )
             | (
@@ -131,10 +127,6 @@ pub fn requires_human_approval(from: LifecycleStage, to: LifecycleStage) -> bool
             )
             | (LifecycleStage::FullTextComplete, LifecycleStage::Reported)
             | (LifecycleStage::Reported, LifecycleStage::UpdatePlanned)
-            | (
-                LifecycleStage::UpdatePlanned,
-                LifecycleStage::StrategyValidated
-            )
     )
 }
 

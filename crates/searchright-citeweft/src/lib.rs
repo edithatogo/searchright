@@ -1,6 +1,6 @@
-//! Optional one-way adapter from CiteWeft's neutral extraction contracts.
+//! Optional one-way adapter from `CiteWeft`'s neutral extraction contracts.
 //!
-//! Dependency direction is deliberately `Searchright -> CiteWeft`. CiteWeft
+//! Dependency direction is deliberately `Searchright -> CiteWeft`. `CiteWeft`
 //! does not depend on Searchright, Sourceright, CSL, screening or MCP types.
 
 #![forbid(unsafe_code)]
@@ -16,7 +16,7 @@ use searchright_contracts::{
 };
 use sha2::{Digest, Sha256};
 
-/// Convert CiteWeft's full scholarly-document output into neutral Searchright evidence.
+/// Convert `CiteWeft`'s full scholarly-document output into neutral Searchright evidence.
 #[must_use]
 pub fn from_scholarly_document(
     document_id: &str,
@@ -106,7 +106,7 @@ pub fn from_scholarly_document(
     }
 }
 
-/// Convert CiteWeft's deterministic reference/callout report into Searchright evidence.
+/// Convert `CiteWeft`'s deterministic reference/callout report into Searchright evidence.
 #[must_use]
 pub fn from_reference_model_report(
     document_id: &str,

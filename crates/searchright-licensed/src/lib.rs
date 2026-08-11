@@ -52,7 +52,7 @@ pub fn plan_request(
         std::env::var(&profile.live_opt_in_environment_variable)
             .ok()
             .as_deref(),
-        Some("1") | Some("true") | Some("TRUE") | Some("YES") | Some("yes")
+        Some("1" | "true" | "TRUE" | "YES" | "yes")
     );
     let mut blockers = Vec::new();
     if !credential_present {

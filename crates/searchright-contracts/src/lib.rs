@@ -149,9 +149,9 @@ pub const SOURCERIGHT_PARITY_REPORT_SCHEMA_VERSION: &str =
 pub const DOCUMENT_EVIDENCE_SCHEMA_VERSION: &str = "org.searchright.document-evidence.v1";
 /// Canonical cross-repository integration-passport contract version.
 pub const INTEGRATION_PASSPORT_SCHEMA_VERSION: &str = "org.searchright.integration-passport.v1";
-/// Canonical generated GitHub issue-hierarchy contract version.
+/// Canonical generated `GitHub` issue-hierarchy contract version.
 pub const GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION: &str = "org.searchright.github-issue-hierarchy.v2";
-/// Canonical GitHub Project v2 projection manifest contract version.
+/// Canonical `GitHub` Project v2 projection manifest contract version.
 pub const GITHUB_PROJECT_SCHEMA_VERSION: &str = "org.searchright.github-project.v1";
 /// Canonical consumer-driven integration contract-suite version.
 pub const CONSUMER_CONTRACT_SUITE_SCHEMA_VERSION: &str =
@@ -180,7 +180,7 @@ pub const TENANT_POLICY_SCHEMA_VERSION: &str = "org.searchright.tenant-policy.v1
 pub const ACCESS_REQUEST_SCHEMA_VERSION: &str = "org.searchright.access-request.v1";
 /// Canonical access-decision contract version.
 pub const ACCESS_DECISION_SCHEMA_VERSION: &str = "org.searchright.access-decision.v1";
-/// Canonical GitHub repository-settings manifest version.
+/// Canonical `GitHub` repository-settings manifest version.
 pub const GITHUB_REPOSITORY_SETTINGS_SCHEMA_VERSION: &str =
     "org.searchright.github-repository-settings.v1";
 /// Canonical cross-repository release-train version.

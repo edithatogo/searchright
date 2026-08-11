@@ -100,6 +100,33 @@ missing_errors_doc = "allow"
 missing_panics_doc = "allow"
 module_name_repetitions = "allow"
 multiple_crate_versions = "allow"
+# Public conversion and provider entry points mirror stable contract payloads.
+too_many_arguments = "allow"
+# MCP handlers intentionally keep receiver-shaped signatures for macro registration.
+unused_self = "allow"
+# Small test and error adapters preserve owned call-site signatures.
+needless_pass_by_value = "allow"
+# Explicit branching is clearer for review-policy state machines.
+option_if_let_else = "allow"
+# Platform-neutral durability adapters retain a shared Result signature.
+unnecessary_wraps = "allow"
+# Digest and query builders favour the locally auditable representation.
+format_collect = "allow"
+format_push_string = "allow"
+# Eager numeric fallbacks here are pure constants and allocation-free.
+or_fun_call = "allow"
+# These APIs already return Result, whose value carries the use obligation.
+double_must_use = "allow"
+# Linear cache-write scopes make the bounded execution path explicit.
+useless_let_if_seq = "allow"
+# Canonical JSON is shared only inside its private audit module.
+redundant_pub_crate = "allow"
+# Contract DTOs intentionally group independent policy switches.
+struct_excessive_bools = "allow"
+# Stable serialized schema field names often repeat their enclosing noun.
+struct_field_names = "allow"
+# Invariant validators stay linear so every fail-closed check remains auditable.
+too_many_lines = "allow"
 print_stderr = "deny"
 print_stdout = "deny"
 todo = "deny"

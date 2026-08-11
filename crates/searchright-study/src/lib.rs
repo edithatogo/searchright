@@ -103,7 +103,7 @@ pub fn reports_per_study(graph: &StudyGraph) -> BTreeMap<String, usize> {
         .collect()
 }
 
-fn is_record_identifier(relationship: &EvidenceRelationship) -> bool {
+const fn is_record_identifier(relationship: &EvidenceRelationship) -> bool {
     matches!(relationship, EvidenceRelationship::RecordDescribesReport)
 }
 

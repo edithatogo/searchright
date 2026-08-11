@@ -39,7 +39,7 @@ pub struct ProviderComponentManifest {
     pub abi_version: String,
     /// Requested capabilities.
     pub capabilities: Vec<ComponentCapability>,
-    /// HTTPS hosts permitted when network_read is requested.
+    /// HTTPS hosts permitted when `network_read` is requested.
     #[serde(default)]
     pub allowed_hosts: Vec<String>,
     /// Maximum linear memory in mebibytes.

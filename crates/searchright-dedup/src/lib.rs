@@ -403,7 +403,7 @@ fn metadata_score(record: &BibliographicRecord) -> u16 {
 /// Deduplication configuration or input error.
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum DedupError {
-    /// Title threshold was NaN, infinite or outside zero to one.
+    /// Title threshold was `NaN`, infinite or outside zero to one.
     #[error("title similarity threshold must be finite and between zero and one")]
     InvalidTitleThreshold,
     /// Publication-year tolerance was negative.

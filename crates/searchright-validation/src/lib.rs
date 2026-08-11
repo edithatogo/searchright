@@ -52,7 +52,7 @@ fn ratio(numerator: u64, denominator: u64) -> f64 {
 
 /// Whether a translation assessment stays within its declared loss budget.
 #[must_use]
-pub fn translation_acceptable(assessment: &TranslationLossAssessment) -> bool {
+pub const fn translation_acceptable(assessment: &TranslationLossAssessment) -> bool {
     assessment.observed_material_warnings <= assessment.maximum_material_warnings
         && assessment.human_approved
 }

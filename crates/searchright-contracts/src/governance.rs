@@ -201,16 +201,15 @@ impl Validate for DataHandlingRequest {
                 "requested retention must be at least one day".to_owned(),
             ));
         }
-        if let Some(region) = self.region.as_deref() {
-            if region.len() != 2
+        if let Some(region) = self.region.as_deref()
+            && (region.len() != 2
                 || !region
                     .chars()
-                    .all(|character| character.is_ascii_uppercase())
-            {
-                return Err(ContractError::Invariant(
-                    "data-handling region must use an upper-case ISO alpha-2 code".to_owned(),
-                ));
-            }
+                    .all(|character| character.is_ascii_uppercase()))
+        {
+            return Err(ContractError::Invariant(
+                "data-handling region must use an upper-case ISO alpha-2 code".to_owned(),
+            ));
         }
         Ok(())
     }

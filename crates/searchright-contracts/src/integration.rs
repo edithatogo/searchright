@@ -1,4 +1,4 @@
-//! Cross-repository integration and GitHub issue-hierarchy contracts.
+//! Cross-repository integration and `GitHub` issue-hierarchy contracts.
 
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -21,7 +21,7 @@ pub enum IntegrationMode {
     CliJson,
     /// Model Context Protocol tool/resource exchange.
     Mcp,
-    /// Capability-bounded WebAssembly component exchange.
+    /// Capability-bounded `WebAssembly` component exchange.
     WasiComponent,
     /// Read-only benchmark or fixture dataset.
     DatasetFixture,
@@ -95,7 +95,7 @@ pub struct IntegrationContractReference {
     pub name: String,
     /// Contract or schema version.
     pub version: String,
-    /// Repository-relative schema, WIT, OpenAPI or fixture path.
+    /// Repository-relative schema, WIT, `OpenAPI` or fixture path.
     pub path: String,
     /// Whether compatibility with this contract blocks integration promotion.
     pub required: bool,
@@ -121,7 +121,7 @@ pub struct IntegrationPassport {
     pub schema_version: String,
     /// Stable integration identifier.
     pub integration_id: String,
-    /// GitHub repository in `owner/name` form.
+    /// `GitHub` repository in `owner/name` form.
     pub repository: String,
     /// Exact 40-character Git revision observed during preparation.
     pub revision: String,
@@ -232,7 +232,7 @@ pub struct ConsumerContractSuite {
     pub claim_boundary: String,
 }
 
-/// Kind of issue represented in the generated GitHub hierarchy.
+/// Kind of issue represented in the generated `GitHub` hierarchy.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum GitHubIssueKind {
@@ -246,7 +246,7 @@ pub enum GitHubIssueKind {
     Task,
 }
 
-/// Scalar value projected into one GitHub Project custom field.
+/// Scalar value projected into one `GitHub` Project custom field.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(untagged)]
 pub enum GitHubProjectFieldValue {
@@ -256,7 +256,7 @@ pub enum GitHubProjectFieldValue {
     Number(u32),
 }
 
-/// One generated GitHub issue or subissue.
+/// One generated `GitHub` issue or subissue.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct GitHubIssueNode {
     /// Stable idempotency key embedded in the issue body.
@@ -271,7 +271,7 @@ pub struct GitHubIssueNode {
     pub body_path: String,
     /// Labels requested by the sync plan.
     pub labels: Vec<String>,
-    /// Local planning state; not a claim about remote GitHub state.
+    /// Local planning state; not a claim about remote `GitHub` state.
     pub status: String,
     /// Canonical desired issue state; only task state may be remotely mirrored.
     pub desired_state: String,
@@ -281,7 +281,7 @@ pub struct GitHubIssueNode {
     pub phase_number: Option<u8>,
     /// Top-level task number when applicable.
     pub task_number: Option<u32>,
-    /// Manifest-owned GitHub Project field projection.
+    /// Manifest-owned `GitHub` Project field projection.
     pub project_fields: BTreeMap<String, GitHubProjectFieldValue>,
 }
 
@@ -302,11 +302,11 @@ pub struct GitHubIssueHierarchy {
     pub apply_permitted: bool,
     /// Remote issue-state policy.
     pub state_sync_policy: String,
-    /// Canonical GitHub Project manifest path.
+    /// Canonical `GitHub` Project manifest path.
     pub project_manifest: String,
 }
 
-/// Owner kind for a GitHub Project v2.
+/// Owner kind for a `GitHub` Project v2.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum GitHubProjectOwnerType {
@@ -333,19 +333,19 @@ pub enum GitHubProjectFieldDataType {
     Date,
 }
 
-/// One manifest-owned GitHub Project custom field.
+/// One manifest-owned `GitHub` Project custom field.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct GitHubProjectField {
     /// Exact custom-field name.
     pub name: String,
-    /// GitHub Project data type.
+    /// `GitHub` Project data type.
     pub data_type: GitHubProjectFieldDataType,
     /// Allowed option names for single-select fields.
     #[serde(default)]
     pub options: Vec<String>,
 }
 
-/// Supported GitHub Project view layouts.
+/// Supported `GitHub` Project view layouts.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub enum GitHubProjectViewLayout {
     /// Board view.
@@ -359,14 +359,14 @@ pub enum GitHubProjectViewLayout {
     Table,
 }
 
-/// One requested GitHub Project view.
+/// One requested `GitHub` Project view.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct GitHubProjectView {
     /// View name.
     pub name: String,
     /// View layout.
     pub layout: GitHubProjectViewLayout,
-    /// GitHub Project filter string.
+    /// `GitHub` Project filter string.
     pub filter: String,
 }
 
@@ -391,7 +391,7 @@ pub struct GitHubProjectSyncPolicy {
     pub promotion_policy: String,
 }
 
-/// Declarative GitHub Project v2 projection manifest.
+/// Declarative `GitHub` Project v2 projection manifest.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct GitHubProjectManifest {
     /// Contract identifier.
