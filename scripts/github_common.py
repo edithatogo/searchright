@@ -150,7 +150,16 @@ def write_json_atomic(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    temporary.replace(path)
+    for attempt in range(6):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError:
+            # Windows filesystem filters (including antivirus and sync clients)
+            # can briefly retain a handle after write_text closes the file.
+            if os.name != "nt" or attempt == 5:
+                raise
+            time.sleep(0.05 * (2**attempt))
 
 
 def select_after(
