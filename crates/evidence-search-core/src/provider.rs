@@ -1,4 +1,9 @@
-use std::{collections::BTreeMap, sync::Arc, time::Duration};
+use std::{
+    collections::BTreeMap,
+    net::{IpAddr, Ipv4Addr, Ipv6Addr},
+    sync::Arc,
+    time::Duration,
+};
 
 use async_trait::async_trait;
 use evidence_search_contracts::{
@@ -233,6 +238,70 @@ pub enum ProviderError {
     /// Timestamp formatting failed.
     #[error(transparent)]
     Timestamp(#[from] time::error::Format),
+}
+
+/// Validate every address produced by endpoint resolution before a live transport uses it.
+///
+/// Adapters must apply this check to the complete DNS answer and pin the accepted addresses into
+/// their HTTP transport. Validating only the URL text does not prevent DNS rebinding.
+pub fn validate_resolved_endpoint_addresses(
+    provider: &str,
+    host: &str,
+    addresses: &[IpAddr],
+) -> Result<(), ProviderError> {
+    if addresses.is_empty() {
+        return Err(ProviderError::PolicyViolation {
+            provider: provider.to_owned(),
+            message: format!("endpoint host `{host}` resolved to no addresses"),
+        });
+    }
+    if let Some(address) = addresses
+        .iter()
+        .copied()
+        .find(|address| is_prohibited_endpoint_address(*address))
+    {
+        return Err(ProviderError::PolicyViolation {
+            provider: provider.to_owned(),
+            message: format!("endpoint host `{host}` resolved to prohibited address `{address}`"),
+        });
+    }
+    Ok(())
+}
+
+fn is_prohibited_endpoint_address(address: IpAddr) -> bool {
+    match address {
+        IpAddr::V4(address) => {
+            address.is_private()
+                || address.is_loopback()
+                || address.is_link_local()
+                || address.is_broadcast()
+                || address.is_documentation()
+                || address.is_unspecified()
+                || address.is_multicast()
+                || ipv4_in_prefix(address, Ipv4Addr::new(100, 64, 0, 0), 10)
+                || ipv4_in_prefix(address, Ipv4Addr::new(192, 0, 0, 0), 24)
+                || ipv4_in_prefix(address, Ipv4Addr::new(198, 18, 0, 0), 15)
+                || address.octets()[0] >= 240
+        }
+        IpAddr::V6(address) => {
+            address.is_loopback()
+                || address.is_unspecified()
+                || address.is_multicast()
+                || ipv6_in_prefix(address, Ipv6Addr::new(0xfc00, 0, 0, 0, 0, 0, 0, 0), 7)
+                || ipv6_in_prefix(address, Ipv6Addr::new(0xfe80, 0, 0, 0, 0, 0, 0, 0), 10)
+                || ipv6_in_prefix(address, Ipv6Addr::new(0x2001, 0x0db8, 0, 0, 0, 0, 0, 0), 32)
+        }
+    }
+}
+
+fn ipv4_in_prefix(address: Ipv4Addr, network: Ipv4Addr, prefix: u32) -> bool {
+    let mask = u32::MAX.checked_shl(32 - prefix).unwrap_or(0);
+    u32::from(address) & mask == u32::from(network) & mask
+}
+
+fn ipv6_in_prefix(address: Ipv6Addr, network: Ipv6Addr, prefix: u32) -> bool {
+    let mask = u128::MAX.checked_shl(128 - prefix).unwrap_or(0);
+    u128::from(address) & mask == u128::from(network) & mask
 }
 
 struct ProviderSlot {
@@ -734,6 +803,28 @@ fn validate_manifest(
         return Err(ProviderError::InvalidManifest(
             "allowed hosts must be bare, non-empty host names".to_owned(),
         ));
+    }
+    for host in &manifest.allowed_hosts {
+        let canonical_host = host.trim_end_matches('.');
+        if canonical_host.eq_ignore_ascii_case("localhost")
+            || canonical_host.to_ascii_lowercase().ends_with(".localhost")
+        {
+            return Err(ProviderError::InvalidManifest(
+                "allowed hosts must not name localhost".to_owned(),
+            ));
+        }
+        if let Ok(address) = canonical_host.parse::<IpAddr>()
+            && validate_resolved_endpoint_addresses(
+                &manifest.provider_id,
+                canonical_host,
+                &[address],
+            )
+            .is_err()
+        {
+            return Err(ProviderError::InvalidManifest(format!(
+                "allowed host `{canonical_host}` is a prohibited network address"
+            )));
+        }
     }
     if mode == ProviderMode::Live {
         let endpoint_label = endpoint_label.ok_or_else(|| {
@@ -1613,6 +1704,70 @@ mod tests {
                 endpoint: endpoint.to_owned(),
             }));
             assert!(matches!(result, Err(ProviderError::InvalidManifest(_))));
+        }
+    }
+
+    #[test]
+    fn live_manifests_reject_literal_and_localhost_destinations() {
+        for host in [
+            "localhost",
+            "api.localhost",
+            "127.0.0.1",
+            "10.0.0.1",
+            "169.254.169.254",
+            "::1",
+            "fe80::1",
+        ] {
+            let manifest = ProviderManifest {
+                provider_id: "test".to_owned(),
+                display_name: "Test".to_owned(),
+                version: "1".to_owned(),
+                support_level: ProviderSupportLevel::OptInLive,
+                capabilities: vec![ProviderCapability::Search],
+                allowed_hosts: vec![host.to_owned()],
+                authentication_required: false,
+                licensed: false,
+                default_min_interval_ms: 0,
+                policy_notes: Vec::new(),
+            };
+            let endpoint = if host.contains(':') {
+                format!("https://[{host}]/search")
+            } else {
+                format!("https://{host}/search")
+            };
+            let result = validate_manifest(&manifest, ProviderMode::Live, Some(&endpoint));
+            assert!(
+                matches!(result, Err(ProviderError::InvalidManifest(_))),
+                "host `{host}` must be denied"
+            );
+        }
+    }
+
+    #[test]
+    fn resolved_endpoint_addresses_fail_closed_for_every_answer() {
+        let public = "93.184.216.34".parse::<IpAddr>();
+        let private = "10.0.0.8".parse::<IpAddr>();
+        let metadata = "169.254.169.254".parse::<IpAddr>();
+        let ipv6_loopback = "::1".parse::<IpAddr>();
+        assert!(public.is_ok() && private.is_ok() && metadata.is_ok() && ipv6_loopback.is_ok());
+        if let (Ok(public), Ok(private), Ok(metadata), Ok(ipv6_loopback)) =
+            (public, private, metadata, ipv6_loopback)
+        {
+            assert!(validate_resolved_endpoint_addresses("test", "example.test", &[]).is_err());
+            assert!(
+                validate_resolved_endpoint_addresses("test", "example.test", &[public]).is_ok()
+            );
+            assert!(
+                validate_resolved_endpoint_addresses("test", "example.test", &[public, private])
+                    .is_err()
+            );
+            assert!(
+                validate_resolved_endpoint_addresses("test", "example.test", &[metadata]).is_err()
+            );
+            assert!(
+                validate_resolved_endpoint_addresses("test", "example.test", &[ipv6_loopback])
+                    .is_err()
+            );
         }
     }
 
