@@ -31,7 +31,9 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-02-phase-3 -->
 
-- [ ] Compile and execute dialect snapshot/property tests.
+- [x] Compile and execute the implemented dialect snapshot/property tests.
+  - [x] GNU compiler tests and all-target/all-feature Clippy recorded in `verification/receipts/track-02-compiler-review.json`.
+- [ ] Complete dialect-specific semantic parser and translation coverage.
 - [ ] Expand the conformance corpus with independently reviewed source strategies.
 
 ## Phase 4: Review and closeout
@@ -40,5 +42,5 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

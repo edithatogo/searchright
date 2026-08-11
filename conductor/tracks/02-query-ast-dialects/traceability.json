@@ -25,10 +25,10 @@
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-compiler-review.json"
       ],
       "open_gates": [
-        "Compile and execute compiler tests.",
         "Expand proximity, wildcard, controlled-vocabulary, subheading and line-set conformance against independently reviewed strategies."
       ],
       "permitted_claim": "A portable query model and source-aware compiler are implemented for declared subsets; complete database semantics are not claimed."
@@ -36,7 +36,7 @@
     {
       "assertion_id": "T02-A002",
       "statement": "Add line-numbered native strategy representation",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-contracts/src/query.rs",
@@ -53,11 +53,10 @@
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-compiler-review.json"
       ],
-      "open_gates": [
-        "Compile and execute native strategy unit tests."
-      ],
+      "open_gates": [],
       "permitted_claim": "Line-numbered native strategy source, spans, diagnostics and raw-source preservation are source implemented; semantic parsing remains deliberately partial."
     },
     {
@@ -83,7 +82,8 @@
         "python scripts/check_native_query_corpus.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-compiler-review.json"
       ],
       "open_gates": [
         "Replace or supplement synthetic examples with rights-cleared, independently PRESS-reviewed strategies."
@@ -133,31 +133,36 @@
       ],
       "open_gates": [
         "Implement dialect-specific lexical and syntactic parsers with structured unsupported-node diagnostics.",
-        "Compile and execute parser tests."
+        "Expand dialect-specific semantic parser fixtures beyond the lossless lexical parser."
       ],
       "permitted_claim": "A lossless line-oriented native parser exists; database-specific syntax parsers are not claimed."
     },
     {
       "assertion_id": "T02-A006",
       "statement": "Create metamorphic and round-trip translation tests",
-      "state": "scaffolded",
+      "state": "partially_implemented",
       "mapping_confidence": "test_plan_mapped",
       "implementation_paths": [
         "crates/evidence-search-core/src/compiler.rs",
         "crates/evidence-search-core/src/native.rs",
         "contracts/query-corpus/index.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "evidence_search_core::compiler::tests::canonical_json_round_trip_preserves_compilation",
+        "evidence_search_core::compiler::tests::redundant_grouping_is_compilation_invariant"
+      ],
       "deterministic_tests": [
-        "python scripts/check_native_query_corpus.py"
+        "python scripts/check_native_query_corpus.py",
+        "cargo test -p evidence-search-core"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-compiler-review.json"
       ],
       "open_gates": [
-        "Implement and compile metamorphic and round-trip tests for the supported syntax subsets."
+        "Expand metamorphic and round-trip tests across every supported native syntax subset and independently reviewed golden strategies."
       ],
-      "permitted_claim": "The corpus and compiler provide inputs for round-trip testing; metamorphic equivalence is not yet proven."
+      "permitted_claim": "Compiler JSON round-trip stability and one Boolean commutativity relation are compiler-tested; complete native-dialect round-trip or cross-database semantic equivalence is not proven."
     }
   ]
 }

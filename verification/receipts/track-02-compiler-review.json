@@ -1,0 +1,38 @@
+{
+  "schema_version": "org.searchright.compiler-verification-receipt.v1",
+  "track_id": "02",
+  "source_revision": "8fda251c09ae94caf463dd154094ec7cf5bcdd8d",
+  "status": "passed_with_external_gates_open",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "checks": [
+    {
+      "command": "cargo +1.97.1-x86_64-pc-windows-gnu test -p evidence-search-contracts -p evidence-search-core",
+      "status": "passed",
+      "tests_passed": 38
+    },
+    {
+      "command": "cargo +1.97.1-x86_64-pc-windows-gnu clippy -p evidence-search-contracts -p evidence-search-core --all-targets --all-features -- -D warnings",
+      "status": "passed",
+      "notes": [
+        "The workspace reports its pre-existing clippy.toml/Cargo.toml MSRV mismatch warning."
+      ]
+    },
+    {
+      "command": "uv run --no-project python scripts/check_native_query_corpus.py",
+      "status": "passed",
+      "fixtures_checked": 7
+    }
+  ],
+  "review_fixes": [
+    "Native line text is validated against its exact raw-text byte span.",
+    "Duplicate native set identifiers are rejected.",
+    "Unsupported target fields emit review-required semantic-loss evidence.",
+    "Compiler determinism, JSON round trip and Boolean commutativity have executable tests."
+  ],
+  "limitations": [
+    "The corpus is synthetic and source-preserving; it is not independently PRESS-reviewed conformance evidence.",
+    "Dialect-specific native semantic parsers are not complete.",
+    "Named versioned filter packs are not implemented.",
+    "Portable Boolean commutativity is tested for the current compiler fixture; cross-database semantic equivalence is not claimed."
+  ]
+}
