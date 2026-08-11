@@ -19,6 +19,7 @@ from github_common import GitHubCommandError, ROOT, require_gh, run_json, write_
 from sync_github_issues import child_ids, existing_issues, remote_label_names
 from sync_github_project import (
     collection,
+    field_data_type,
     find_project,
     list_fields,
     observed_field_value,
@@ -182,7 +183,7 @@ def compare_project(
     if not number or not project_id:
         errors.append("observed Project lacks number or node ID")
         return {"observed": True, "number": number}
-    fields = list_fields(manifest["owner"], number)
+    fields = list_fields(project_id)
     missing_fields = sorted({field["name"] for field in manifest["fields"]} - set(fields))
     if missing_fields:
         errors.append(f"Project is missing fields {missing_fields}")
@@ -190,7 +191,7 @@ def compare_project(
         current = fields.get(requested["name"])
         if current is None:
             continue
-        actual_type = str(current.get("dataType") or current.get("type") or "").upper()
+        actual_type = field_data_type(current)
         if actual_type and actual_type != requested["data_type"]:
             errors.append(
                 f"Project field {requested['name']!r} type {actual_type}, expected {requested['data_type']}"
