@@ -102,6 +102,64 @@ pub fn attach_report(
     Ok(())
 }
 
+/// Link an existing report to an existing study using explicit evidence.
+///
+/// The graph is replaced only after the complete candidate graph validates.
+/// This operation records an asserted relationship; it does not infer that two
+/// reports describe the same study or establish the asserter's authority.
+pub fn link_report_to_study(
+    graph: &mut StudyGraph,
+    report_id: &str,
+    study_id: &str,
+    link: EvidenceLink,
+) -> Result<(), StudyGraphError> {
+    validate_graph(graph)?;
+    if !graph
+        .reports
+        .iter()
+        .any(|report| report.report_id == report_id)
+        || !graph.studies.iter().any(|study| study.study_id == study_id)
+    {
+        let unknown = if graph
+            .reports
+            .iter()
+            .any(|report| report.report_id == report_id)
+        {
+            study_id
+        } else {
+            report_id
+        };
+        return Err(StudyGraphError::UnknownObject(unknown.to_owned()));
+    }
+    if link.relationship != EvidenceRelationship::ReportOfStudy
+        || link.from_id != report_id
+        || link.to_id != study_id
+    {
+        return Err(StudyGraphError::InvalidAttachmentLink);
+    }
+
+    let mut candidate = graph.clone();
+    let study = candidate
+        .studies
+        .iter_mut()
+        .find(|study| study.study_id == study_id)
+        .ok_or_else(|| StudyGraphError::UnknownObject(study_id.to_owned()))?;
+    if study
+        .report_ids
+        .iter()
+        .any(|existing| existing == report_id)
+    {
+        return Err(StudyGraphError::DuplicateObject(format!(
+            "{report_id} in {study_id}"
+        )));
+    }
+    study.report_ids.push(report_id.to_owned());
+    candidate.links.push(link);
+    validate_graph(&candidate)?;
+    *graph = candidate;
+    Ok(())
+}
+
 /// Count reports per study.
 #[must_use]
 pub fn reports_per_study(graph: &StudyGraph) -> BTreeMap<String, usize> {
@@ -211,6 +269,66 @@ mod tests {
         assert!(matches!(
             attach_report(&mut graph, report, "study-1", invalid_link),
             Err(StudyGraphError::Contract(_))
+        ));
+        assert_eq!(graph, original);
+    }
+
+    #[test]
+    fn explicit_link_preserves_report_study_cardinality() {
+        let mut graph = graph();
+        graph.studies.push(Study {
+            study_id: "study-2".to_owned(),
+            report_ids: vec!["report-placeholder".to_owned()],
+            label: "Study two".to_owned(),
+            study_design: None,
+            registration_ids: Vec::new(),
+            notes: Vec::new(),
+        });
+        graph.reports.push(Report {
+            report_id: "report-placeholder".to_owned(),
+            record_ids: vec!["record-placeholder".to_owned()],
+            title: "Placeholder report".to_owned(),
+            publication_year: None,
+            doi: None,
+            pmid: None,
+            registry_ids: Vec::new(),
+            retrieval_attempts: Vec::new(),
+        });
+        let link = EvidenceLink {
+            link_id: "link-2".to_owned(),
+            from_id: "report-1".to_owned(),
+            to_id: "study-2".to_owned(),
+            relationship: EvidenceRelationship::ReportOfStudy,
+            confidence: 0.8,
+            evidence: vec!["human-reviewed shared registration".to_owned()],
+            asserted_by: "human-1".to_owned(),
+            asserted_at: "2026-08-12T00:00:00Z".to_owned(),
+        };
+
+        assert!(link_report_to_study(&mut graph, "report-1", "study-2", link).is_ok());
+        assert_eq!(reports_per_study(&graph).get("study-1"), Some(&1));
+        assert_eq!(reports_per_study(&graph).get("study-2"), Some(&2));
+        assert_eq!(graph.reports.len(), 2);
+    }
+
+    #[test]
+    fn failed_existing_report_link_is_transactional() {
+        let mut graph = graph();
+        let original = graph.clone();
+        let duplicate_link = EvidenceLink {
+            link_id: "link-1".to_owned(),
+            from_id: "report-1".to_owned(),
+            to_id: "study-1".to_owned(),
+            relationship: EvidenceRelationship::ReportOfStudy,
+            confidence: 1.0,
+            evidence: vec!["duplicate assertion".to_owned()],
+            asserted_by: "human-1".to_owned(),
+            asserted_at: "2026-08-12T00:00:00Z".to_owned(),
+        };
+
+        assert!(matches!(
+            link_report_to_study(&mut graph, "report-1", "study-1", duplicate_link),
+            Err(StudyGraphError::DuplicateObject(_))
         ));
         assert_eq!(graph, original);
     }
