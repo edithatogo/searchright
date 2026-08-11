@@ -186,10 +186,11 @@ impl Deduplicator {
         left: &BibliographicRecord,
         right: &BibliographicRecord,
     ) -> Option<MatchEvidence> {
+        let (left_record_id, right_record_id) = ordered_record_ids(left, right);
         if let Some(reason) = exact_identifier_reason(left, right) {
             return Some(MatchEvidence {
-                left_record_id: left.record_id.clone(),
-                right_record_id: right.record_id.clone(),
+                left_record_id,
+                right_record_id,
                 reason: reason.to_owned(),
                 score: 1.0,
                 details: BTreeMap::new(),
@@ -227,13 +228,21 @@ impl Deduplicator {
             format!("{:?}/{:?}", left.publication_year, right.publication_year),
         );
         Some(MatchEvidence {
-            left_record_id: left.record_id.clone(),
-            right_record_id: right.record_id.clone(),
+            left_record_id,
+            right_record_id,
             reason: "fuzzy_title_author_year".to_owned(),
             score: title_score,
             details,
             review_required: true,
         })
+    }
+}
+
+fn ordered_record_ids(left: &BibliographicRecord, right: &BibliographicRecord) -> (String, String) {
+    if left.record_id <= right.record_id {
+        (left.record_id.clone(), right.record_id.clone())
+    } else {
+        (right.record_id.clone(), left.record_id.clone())
     }
 }
 
@@ -531,8 +540,66 @@ mod tests {
                 assert_eq!(result.clusters.len(), 1);
                 assert_eq!(result.proposed_duplicate_count, 1);
                 assert_eq!(result.retained_record_ids.len(), 2);
+                let evidence = result
+                    .clusters
+                    .first()
+                    .and_then(|cluster| cluster.evidence.first());
+                assert_eq!(evidence.map(|item| item.reason.as_str()), Some("exact_doi"));
+                assert_eq!(evidence.map(|item| item.review_required), Some(false));
             }
         }
+    }
+
+    #[test]
+    fn permutation_preserves_clusters_and_explanations() -> Result<(), DedupError> {
+        let records = vec![
+            record("b", Some("10.1/same"), "Second title"),
+            record("a", Some("https://doi.org/10.1/SAME"), "First title"),
+            record("c", None, "Unrelated"),
+        ];
+        let mut reversed = records.clone();
+        reversed.reverse();
+        let deduplicator = Deduplicator::new(DedupConfig::default())?;
+
+        let forward = deduplicator.cluster(&records)?;
+        let backward = deduplicator.cluster(&reversed)?;
+
+        assert_eq!(forward, backward);
+        let evidence = forward
+            .clusters
+            .first()
+            .and_then(|cluster| cluster.evidence.first());
+        assert_eq!(evidence.map(|item| item.left_record_id.as_str()), Some("a"));
+        assert_eq!(
+            evidence.map(|item| item.right_record_id.as_str()),
+            Some("b")
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn fuzzy_match_is_only_a_review_required_proposal() -> Result<(), DedupError> {
+        let records = vec![
+            record("a", None, "Unicode evidence linkage trial"),
+            record("b", None, "Unicode evidence linkage trial"),
+        ];
+        let deduplicator = Deduplicator::new(DedupConfig::default())?;
+        let result = deduplicator.cluster(&records)?;
+
+        assert_eq!(result.clusters.len(), 1);
+        let cluster = result.clusters.first();
+        let evidence = cluster.and_then(|cluster| cluster.evidence.first());
+        assert_eq!(
+            evidence.map(|item| item.reason.as_str()),
+            Some("fuzzy_title_author_year")
+        );
+        assert_eq!(evidence.map(|item| item.review_required), Some(true));
+        assert_eq!(
+            cluster.map(|item| item.record_ids.as_slice()),
+            Some(["a".to_owned(), "b".to_owned()].as_slice())
+        );
+        assert_eq!(result.proposed_duplicate_count, 1);
+        Ok(())
     }
 
     proptest::proptest! {
