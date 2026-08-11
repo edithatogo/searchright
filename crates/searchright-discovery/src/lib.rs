@@ -117,6 +117,31 @@ mod tests {
 
     use super::*;
 
+    fn run(edges: Vec<DiscoveryEdge>) -> DiscoveryRun {
+        DiscoveryRun {
+            schema_version: "org.searchright.discovery-run.v1".to_owned(),
+            review_id: "review-1".to_owned(),
+            run_id: "citation-run-1".to_owned(),
+            method: DiscoveryMethod::ForwardCitation,
+            seed_ids: vec!["seed".to_owned()],
+            edges,
+            maximum_depth: 2,
+            maximum_records: 10,
+            requires_human_release: true,
+        }
+    }
+
+    fn edge(edge_id: &str, seed_id: &str, discovered_id: &str) -> DiscoveryEdge {
+        DiscoveryEdge {
+            edge_id: edge_id.to_owned(),
+            seed_id: seed_id.to_owned(),
+            discovered_id: discovered_id.to_owned(),
+            method: DiscoveryMethod::ForwardCitation,
+            provider_id: "fixture".to_owned(),
+            receipt_id: format!("receipt-{edge_id}"),
+        }
+    }
+
     #[test]
     fn graph_traversal_respects_depth_and_human_release() {
         let run = DiscoveryRun {
@@ -157,5 +182,72 @@ mod tests {
             );
             assert!(candidates.iter().all(|item| item.requires_human_release));
         }
+    }
+
+    #[test]
+    fn output_is_deterministic_and_record_bounded() {
+        let edges = vec![
+            edge("edge-z", "seed", "candidate-z"),
+            edge("edge-a", "seed", "candidate-a"),
+            edge("edge-b", "seed", "candidate-b"),
+        ];
+        let mut forward = run(edges.clone());
+        forward.maximum_records = 2;
+        let mut reverse = run(edges.into_iter().rev().collect());
+        reverse.maximum_records = 2;
+
+        let forward_candidates = bounded_candidates(&forward);
+        let reverse_candidates = bounded_candidates(&reverse);
+
+        let (Ok(forward_candidates), Ok(reverse_candidates)) =
+            (forward_candidates, reverse_candidates)
+        else {
+            panic!("fixture discovery runs should be valid");
+        };
+        assert_eq!(forward_candidates, reverse_candidates);
+        assert_eq!(
+            forward_candidates
+                .into_iter()
+                .map(|item| item.discovered_id)
+                .collect::<Vec<_>>(),
+            vec!["candidate-a".to_owned(), "candidate-b".to_owned()]
+        );
+    }
+
+    #[test]
+    fn rejects_duplicate_edges_and_method_mismatch() {
+        let duplicate = run(vec![
+            edge("edge-1", "seed", "candidate-a"),
+            edge("edge-1", "seed", "candidate-b"),
+        ]);
+        assert!(matches!(
+            bounded_candidates(&duplicate),
+            Err(DiscoveryError::DuplicateEdge(edge_id)) if edge_id == "edge-1"
+        ));
+
+        let mut wrong_method = edge("edge-2", "seed", "candidate-a");
+        wrong_method.method = DiscoveryMethod::BackwardCitation;
+        assert!(matches!(
+            bounded_candidates(&run(vec![wrong_method])),
+            Err(DiscoveryError::MethodMismatch(edge_id)) if edge_id == "edge-2"
+        ));
+    }
+
+    #[test]
+    fn aggregates_distinct_receipted_paths() {
+        let candidates = bounded_candidates(&run(vec![
+            edge("edge-1", "seed", "candidate-a"),
+            edge("edge-2", "seed", "candidate-a"),
+        ]));
+
+        let Ok(candidates) = candidates else {
+            panic!("fixture discovery run should be valid");
+        };
+        assert_eq!(
+            candidates
+                .first()
+                .map(|candidate| candidate.edge_ids.clone()),
+            Some(vec!["edge-1".to_owned(), "edge-2".to_owned()])
+        );
     }
 }

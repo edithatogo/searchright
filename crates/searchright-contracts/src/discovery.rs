@@ -1,5 +1,6 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeSet;
 
 use crate::{
     ContractError, DISCOVERY_RUN_SCHEMA_VERSION, Validate, require_schema_version, require_text,
@@ -98,14 +99,71 @@ impl Validate for DiscoveryRun {
         if self.seed_ids.is_empty() {
             return Err(ContractError::EmptyCollection("discovery.seed_ids"));
         }
+        let mut seed_ids = BTreeSet::new();
+        for seed_id in &self.seed_ids {
+            require_text(seed_id, "discovery.seed_ids[]")?;
+            if !seed_ids.insert(seed_id) {
+                return Err(ContractError::Invariant(
+                    "discovery seed identifiers must be unique".to_owned(),
+                ));
+            }
+        }
         if self.maximum_depth == 0 || self.maximum_records == 0 {
             return Err(ContractError::Invariant(
                 "discovery budgets must be greater than zero".to_owned(),
+            ));
+        }
+        if !self.requires_human_release {
+            return Err(ContractError::Invariant(
+                "supplementary discovery requires human release before screening ingestion"
+                    .to_owned(),
             ));
         }
         for edge in &self.edges {
             edge.validate()?;
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn run() -> DiscoveryRun {
+        DiscoveryRun {
+            schema_version: DISCOVERY_RUN_SCHEMA_VERSION.to_owned(),
+            review_id: "review-1".to_owned(),
+            run_id: "discovery-1".to_owned(),
+            method: DiscoveryMethod::GreyLiterature,
+            seed_ids: vec!["seed-1".to_owned()],
+            edges: Vec::new(),
+            maximum_depth: 1,
+            maximum_records: 10,
+            requires_human_release: true,
+        }
+    }
+
+    #[test]
+    fn discovery_requires_human_release() {
+        let mut run = run();
+        run.requires_human_release = false;
+
+        assert!(
+            matches!(run.validate(), Err(ContractError::Invariant(message)) if message.contains("human release"))
+        );
+    }
+
+    #[test]
+    fn discovery_rejects_duplicate_and_blank_seeds() {
+        let mut duplicate = run();
+        duplicate.seed_ids.push("seed-1".to_owned());
+        assert!(
+            matches!(duplicate.validate(), Err(ContractError::Invariant(message)) if message.contains("unique"))
+        );
+
+        let mut blank = run();
+        blank.seed_ids = vec![" ".to_owned()];
+        assert!(blank.validate().is_err());
     }
 }
