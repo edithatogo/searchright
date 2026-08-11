@@ -6,15 +6,15 @@ mod access;
 mod amendment;
 mod assurance;
 mod benchmark;
-mod diagnostic;
 mod delivery;
+mod diagnostic;
 mod discovery;
 mod document;
 mod governance;
 mod integration;
 mod interchange;
-mod living;
 mod licensed;
+mod living;
 mod migration;
 mod ops;
 mod plan;
@@ -28,16 +28,16 @@ mod study;
 mod validation;
 
 pub use evidence_search_contracts::{
-    Actor, AuditEvent, AuditEventDraft, BibliographicRecord, CompiledStrategy, ContractError,
-    DateLimit, ExecutionPolicy, NativeNormalisationState, NativeParseDiagnostic,
+    AUDIT_EVENT_SCHEMA_VERSION, Actor, AuditEvent, AuditEventDraft,
+    BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION, BibliographicRecord, COMPILED_STRATEGY_SCHEMA_VERSION,
+    CONTRACT_FAMILY, CompiledStrategy, ContractError, DateLimit, ExecutionPolicy,
+    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION, NativeNormalisationState, NativeParseDiagnostic,
     NativeParseSeverity, NativeQueryLine, NativeQueryLineKind, NativeSearchStrategy,
-    NativeSourceSpan, ProviderCapability, ProviderManifest, ProviderPage,
-    ProviderSupportLevel, QueryExpr, RecordIdentifiers, RecordKind, SearchDialect, SearchField,
-    SearchLimit, SearchRequest, SearchRun, SearchStrategy, SearchTerm, SourceReceipt,
-    StrategyWarning, TranslationFidelity, Validate, AUDIT_EVENT_SCHEMA_VERSION,
-    BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION, COMPILED_STRATEGY_SCHEMA_VERSION, CONTRACT_FAMILY,
-    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION, PROVIDER_PAGE_SCHEMA_VERSION, SEARCH_RUN_SCHEMA_VERSION, SEARCH_STRATEGY_SCHEMA_VERSION,
-    SOURCE_RECEIPT_SCHEMA_VERSION,
+    NativeSourceSpan, PROVIDER_PAGE_SCHEMA_VERSION, ProviderCapability, ProviderManifest,
+    ProviderPage, ProviderSupportLevel, QueryExpr, RecordIdentifiers, RecordKind,
+    SEARCH_RUN_SCHEMA_VERSION, SEARCH_STRATEGY_SCHEMA_VERSION, SOURCE_RECEIPT_SCHEMA_VERSION,
+    SearchDialect, SearchField, SearchLimit, SearchRequest, SearchRun, SearchStrategy, SearchTerm,
+    SourceReceipt, StrategyWarning, TranslationFidelity, Validate,
 };
 pub(crate) use evidence_search_contracts::{require_schema_version, require_text};
 
@@ -45,13 +45,12 @@ pub use access::{AccessDecision, AccessRequest, AccessScope, PrincipalKind, Tena
 pub use amendment::{AmendmentChange, AmendmentDecision, AmendmentKind, ProtocolAmendment};
 pub use assurance::{LifecycleStage, LifecycleTransition, TransitionActorKind, WorkflowTrace};
 pub use benchmark::{BenchmarkMetric, BenchmarkReport};
-pub use diagnostic::{Diagnostic, DiagnosticLocale, DiagnosticSeverity};
 pub use delivery::{
-    GitHubRepositorySettings, IntegrationReleaseTrain, ReleaseRehearsal,
-    ReleaseRehearsalStatus, ReleaseTrainComponent, ReleaseTrainStage,
-    RepositoryFeatures, RepositoryMergePolicy, RepositoryRuleset,
-    RepositorySecurityControls, RepositoryVisibility, RulesetEnforcement,
+    GitHubRepositorySettings, IntegrationReleaseTrain, ReleaseRehearsal, ReleaseRehearsalStatus,
+    ReleaseTrainComponent, ReleaseTrainStage, RepositoryFeatures, RepositoryMergePolicy,
+    RepositoryRuleset, RepositorySecurityControls, RepositoryVisibility, RulesetEnforcement,
 };
+pub use diagnostic::{Diagnostic, DiagnosticLocale, DiagnosticSeverity};
 pub use discovery::{DiscoveryEdge, DiscoveryMethod, DiscoveryRun};
 pub use document::{
     CitationCalloutEvidence, DocumentEvidence, DocumentExtractionProvenance, DocumentSpan,
@@ -64,22 +63,25 @@ pub use governance::{
 pub use integration::{
     ConsumerContractInteraction, ConsumerContractStatus, ConsumerContractSuite,
     DependencyDirection, GitHubIssueHierarchy, GitHubIssueKind, GitHubIssueNode,
-    GitHubProjectField, GitHubProjectFieldDataType, GitHubProjectFieldValue,
-    GitHubProjectManifest, GitHubProjectOwnerType, GitHubProjectSyncPolicy,
-    GitHubProjectView, GitHubProjectViewLayout, IntegrationContractReference,
-    IntegrationMode, IntegrationPassport, IntegrationVerificationGate,
+    GitHubProjectField, GitHubProjectFieldDataType, GitHubProjectFieldValue, GitHubProjectManifest,
+    GitHubProjectOwnerType, GitHubProjectSyncPolicy, GitHubProjectView, GitHubProjectViewLayout,
+    IntegrationContractReference, IntegrationMode, IntegrationPassport,
+    IntegrationVerificationGate,
 };
 pub use interchange::{InterchangeFormat, InterchangeReceipt};
-pub use living::{LivingUpdateRun, RecordChange, RecordChangeKind, UpdateCursor, UpdateRunStatus};
 pub use licensed::LicensedAdapterProfile;
+pub use living::{LivingUpdateRun, RecordChange, RecordChangeKind, UpdateCursor, UpdateRunStatus};
 pub use migration::{ParityDimensionResult, SourcerightParityReport};
-pub use plugin::{ComponentCapability, ProviderComponentManifest};
-pub use ops::{BackupKind, BackupManifest, ComponentHealth, HealthState, IncidentRecord, IncidentSeverity, TelemetryPolicy};
+pub use ops::{
+    BackupKind, BackupManifest, ComponentHealth, HealthState, IncidentRecord, IncidentSeverity,
+    TelemetryPolicy,
+};
 pub use plan::{
     EligibilityCriterion, EligibilitySet, FrameworkKind, InformationSource, InformationSourceKind,
     ProtocolRegistration, QuestionFramework, ResearchQuestion, ReviewGovernance, ReviewKind,
     ReviewPlan, ScreeningStage,
 };
+pub use plugin::{ComponentCapability, ProviderComponentManifest};
 pub use policy::{
     ContentSafetyFinding, ExecutionEnvelope, FullTextHandling, NetworkCapability, SecretHandling,
     UntrustedContentPolicy,
@@ -95,7 +97,8 @@ pub use standards::{
     StandardPack,
 };
 pub use study::{
-    EvidenceLink, EvidenceRelationship, Report, RetrievalAttempt, RetrievalStatus, Study, StudyGraph,
+    EvidenceLink, EvidenceRelationship, Report, RetrievalAttempt, RetrievalStatus, Study,
+    StudyGraph,
 };
 pub use validation::{
     FindingSeverity, PressElement, PressFinding, PressReview, SearchValidationReport, SeedRecord,
@@ -147,8 +150,7 @@ pub const DOCUMENT_EVIDENCE_SCHEMA_VERSION: &str = "org.searchright.document-evi
 /// Canonical cross-repository integration-passport contract version.
 pub const INTEGRATION_PASSPORT_SCHEMA_VERSION: &str = "org.searchright.integration-passport.v1";
 /// Canonical generated GitHub issue-hierarchy contract version.
-pub const GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION: &str =
-    "org.searchright.github-issue-hierarchy.v2";
+pub const GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION: &str = "org.searchright.github-issue-hierarchy.v2";
 /// Canonical GitHub Project v2 projection manifest contract version.
 pub const GITHUB_PROJECT_SCHEMA_VERSION: &str = "org.searchright.github-project.v1";
 /// Canonical consumer-driven integration contract-suite version.
@@ -158,14 +160,11 @@ pub const CONSUMER_CONTRACT_SUITE_SCHEMA_VERSION: &str =
 /// Canonical accessible diagnostic contract version.
 pub const DIAGNOSTIC_SCHEMA_VERSION: &str = "org.searchright.diagnostic.v1";
 /// Canonical institutional data-governance policy contract version.
-pub const INSTITUTIONAL_POLICY_SCHEMA_VERSION: &str =
-    "org.searchright.institutional-policy.v1";
+pub const INSTITUTIONAL_POLICY_SCHEMA_VERSION: &str = "org.searchright.institutional-policy.v1";
 /// Canonical institutional data-handling request contract version.
-pub const DATA_HANDLING_REQUEST_SCHEMA_VERSION: &str =
-    "org.searchright.data-handling-request.v1";
+pub const DATA_HANDLING_REQUEST_SCHEMA_VERSION: &str = "org.searchright.data-handling-request.v1";
 /// Canonical institutional data-handling decision contract version.
-pub const DATA_HANDLING_DECISION_SCHEMA_VERSION: &str =
-    "org.searchright.data-handling-decision.v1";
+pub const DATA_HANDLING_DECISION_SCHEMA_VERSION: &str = "org.searchright.data-handling-decision.v1";
 
 /// Canonical component-health contract version.
 pub const COMPONENT_HEALTH_SCHEMA_VERSION: &str = "org.searchright.component-health.v1";

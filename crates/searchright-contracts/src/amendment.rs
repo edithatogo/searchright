@@ -2,7 +2,8 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    ContractError, PROTOCOL_AMENDMENT_SCHEMA_VERSION, Validate, require_schema_version, require_text,
+    ContractError, PROTOCOL_AMENDMENT_SCHEMA_VERSION, Validate, require_schema_version,
+    require_text,
 };
 
 /// Kind of protocol amendment.

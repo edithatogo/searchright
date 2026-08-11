@@ -1,11 +1,12 @@
 use evidence_search_contracts::{
-    NativeNormalisationState, NativeParseDiagnostic, NativeParseSeverity, NativeQueryLine,
-    NativeQueryLineKind, NativeSearchStrategy, NativeSourceSpan, SearchDialect,
-    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION,
+    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION, NativeNormalisationState, NativeParseDiagnostic,
+    NativeParseSeverity, NativeQueryLine, NativeQueryLineKind, NativeSearchStrategy,
+    NativeSourceSpan, SearchDialect,
 };
 
 /// Native parser version recorded in every source-preserving parse.
-pub const NATIVE_PARSER_VERSION: &str = concat!("evidence-search-native/", env!("CARGO_PKG_VERSION"));
+pub const NATIVE_PARSER_VERSION: &str =
+    concat!("evidence-search-native/", env!("CARGO_PKG_VERSION"));
 
 /// Parse native text without pretending that a portable semantic model is complete.
 ///
@@ -152,13 +153,34 @@ mod tests {
     #[test]
     fn checked_in_native_corpus_is_source_preserving() {
         let fixtures = [
-            (SearchDialect::PubMed, include_str!("../../../contracts/query-corpus/pubmed.txt")),
-            (SearchDialect::OvidMedline, include_str!("../../../contracts/query-corpus/ovid-medline.txt")),
-            (SearchDialect::Embase, include_str!("../../../contracts/query-corpus/embase.txt")),
-            (SearchDialect::CinahlEbsco, include_str!("../../../contracts/query-corpus/cinahl-ebsco.txt")),
-            (SearchDialect::PsycInfoOvid, include_str!("../../../contracts/query-corpus/psycinfo-ovid.txt")),
-            (SearchDialect::Scopus, include_str!("../../../contracts/query-corpus/scopus.txt")),
-            (SearchDialect::WebOfScience, include_str!("../../../contracts/query-corpus/web-of-science.txt")),
+            (
+                SearchDialect::PubMed,
+                include_str!("../../../contracts/query-corpus/pubmed.txt"),
+            ),
+            (
+                SearchDialect::OvidMedline,
+                include_str!("../../../contracts/query-corpus/ovid-medline.txt"),
+            ),
+            (
+                SearchDialect::Embase,
+                include_str!("../../../contracts/query-corpus/embase.txt"),
+            ),
+            (
+                SearchDialect::CinahlEbsco,
+                include_str!("../../../contracts/query-corpus/cinahl-ebsco.txt"),
+            ),
+            (
+                SearchDialect::PsycInfoOvid,
+                include_str!("../../../contracts/query-corpus/psycinfo-ovid.txt"),
+            ),
+            (
+                SearchDialect::Scopus,
+                include_str!("../../../contracts/query-corpus/scopus.txt"),
+            ),
+            (
+                SearchDialect::WebOfScience,
+                include_str!("../../../contracts/query-corpus/web-of-science.txt"),
+            ),
         ];
         for (index, (dialect, text)) in fixtures.into_iter().enumerate() {
             let parsed = parse_native_strategy(format!("fixture-{index}"), dialect, text);

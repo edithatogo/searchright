@@ -59,7 +59,6 @@ pub struct AuditEvent {
     pub event_hash: String,
 }
 
-
 impl Validate for Actor {
     fn validate(&self) -> Result<(), ContractError> {
         require_text(&self.actor_id, "audit.actor.actor_id")?;

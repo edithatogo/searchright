@@ -54,10 +54,7 @@ impl LexicalRanker {
             let subject_value = overlap(&query, &token_set(&record.subjects.join(" ")));
             let weighted = title.mul_add(
                 self.title_weight,
-                abstract_value.mul_add(
-                    self.abstract_weight,
-                    subject_value * self.subject_weight,
-                ),
+                abstract_value.mul_add(self.abstract_weight, subject_value * self.subject_weight),
             );
             let total_weight = self.title_weight + self.abstract_weight + self.subject_weight;
             if total_weight <= 0.0 || !total_weight.is_finite() {

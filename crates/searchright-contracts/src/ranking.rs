@@ -126,16 +126,12 @@ impl Validate for RankingCalibration {
             "ranking_calibration.schema_version",
         )?;
         require_text(&self.review_id, "ranking_calibration.review_id")?;
-        require_text(
-            &self.ranker_version,
-            "ranking_calibration.ranker_version",
-        )?;
+        require_text(&self.ranker_version, "ranking_calibration.ranker_version")?;
         if !(0.0..=1.0).contains(&self.threshold)
             || !(0.0..=1.0).contains(&self.minimum_sensitivity)
         {
             return Err(ContractError::Invariant(
-                "ranking threshold and minimum sensitivity must be between zero and one"
-                    .to_owned(),
+                "ranking threshold and minimum sensitivity must be between zero and one".to_owned(),
             ));
         }
         if !self.auto_exclusion_prohibited {

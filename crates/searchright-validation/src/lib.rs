@@ -78,9 +78,9 @@ pub fn assess(report: &SearchValidationReport) -> Result<SearchValidationSummary
         .iter()
         .filter(|assessment| !translation_acceptable(assessment))
         .count();
-    let seed_recall_passes = report.minimum_seed_recall.is_none_or(|minimum| {
-        seeds.recall.is_some_and(|observed| observed >= minimum)
-    });
+    let seed_recall_passes = report
+        .minimum_seed_recall
+        .is_none_or(|minimum| seeds.recall.is_some_and(|observed| observed >= minimum));
     let ready = unresolved_major == 0
         && unacceptable_translations == 0
         && seed_recall_passes

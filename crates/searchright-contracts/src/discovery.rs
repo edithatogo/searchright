@@ -1,7 +1,9 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use crate::{ContractError, DISCOVERY_RUN_SCHEMA_VERSION, Validate, require_schema_version, require_text};
+use crate::{
+    ContractError, DISCOVERY_RUN_SCHEMA_VERSION, Validate, require_schema_version, require_text,
+};
 
 /// Discovery method used beyond the primary database search.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]

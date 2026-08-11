@@ -40,10 +40,18 @@ pub fn authorise_telemetry_attribute(
     if !policy.enabled {
         return Err(OpsError::TelemetryDisabled);
     }
-    if policy.prohibited_attributes.iter().any(|item| item == attribute) {
+    if policy
+        .prohibited_attributes
+        .iter()
+        .any(|item| item == attribute)
+    {
         return Err(OpsError::TelemetryAttributeProhibited(attribute.to_owned()));
     }
-    if !policy.attribute_allowlist.iter().any(|item| item == attribute) {
+    if !policy
+        .attribute_allowlist
+        .iter()
+        .any(|item| item == attribute)
+    {
         return Err(OpsError::TelemetryAttributeNotAllowed(attribute.to_owned()));
     }
     Ok(())

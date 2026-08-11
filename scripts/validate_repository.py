@@ -54,7 +54,14 @@ TEXT_SUFFIXES = {
     ".yaml",
     ".yml",
 }
-SKIP_PARTS = {".git", "target", "__pycache__", ".pytest_cache", ".mypy_cache"}
+SKIP_PARTS = {
+    ".git",
+    "target",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+}
 SCHEMA_CATALOG = ROOT / "contracts" / "schema-catalog.json"
 EXPECTED_SCHEMA_VERSIONS = {
     "review-plan.yaml": "org.searchright.review-plan.v1",

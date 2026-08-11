@@ -128,13 +128,7 @@ pub fn mermaid_flow(flow: &PrismaFlow) -> Result<String, PrismaError> {
     } else {
         flow.full_text_exclusions
             .iter()
-            .map(|reason| {
-                format!(
-                    "{} (n = {})",
-                    escape_mermaid(&reason.label),
-                    reason.count
-                )
-            })
+            .map(|reason| format!("{} (n = {})", escape_mermaid(&reason.label), reason.count))
             .collect::<Vec<_>>()
             .join("<br/>")
     };
@@ -432,11 +426,7 @@ fn ledger(
     }
 }
 
-fn optional_collection_ledger(
-    item: PrismaSItem,
-    values: &[String],
-    note: &str,
-) -> PrismaSLedger {
+fn optional_collection_ledger(item: PrismaSItem, values: &[String], note: &str) -> PrismaSLedger {
     if values.is_empty() {
         PrismaSLedger {
             item,

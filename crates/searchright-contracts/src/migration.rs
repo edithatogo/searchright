@@ -55,7 +55,9 @@ impl Validate for SourcerightParityReport {
         require_text(&self.shared_revision, "sourceright_parity.shared_revision")?;
         require_text(&self.generated_at, "sourceright_parity.generated_at")?;
         if self.case_ids.is_empty() {
-            return Err(ContractError::EmptyCollection("sourceright_parity.case_ids"));
+            return Err(ContractError::EmptyCollection(
+                "sourceright_parity.case_ids",
+            ));
         }
         if self.dimensions.is_empty() {
             return Err(ContractError::EmptyCollection(

@@ -8,16 +8,16 @@ use rmcp::{
     schemars, tool, tool_router,
     transport::stdio,
 };
-use searchright::{PrismaArtifact, PrismaOutput, SearchrightEngine};
 use searchright::contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, CompiledStrategy, DataHandlingRequest,
-    Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy, InterchangeFormat,
-    LicensedAdapterProfile, LivingUpdateRun, PrismaFlow, ProtocolAmendment,
+    Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
+    InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PrismaFlow, ProtocolAmendment,
     ProviderComponentManifest, RankingCalibration, ReviewPlan, SearchDialect, SearchStrategy,
     SearchValidationReport, SourceReceipt, StandardAssessment, StandardPack, StudyGraph,
     UntrustedContentPolicy, WorkflowTrace,
 };
 use searchright::dedup::DedupConfig;
+use searchright::{PrismaArtifact, PrismaOutput, SearchrightEngine};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
@@ -118,7 +118,6 @@ struct ContentInput {
     policy: Option<String>,
 }
 
-
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct DiagnosticsInput {
     /// JSON or YAML array of Diagnostic contracts.
@@ -168,13 +167,15 @@ struct SearchrightServer;
 
 #[tool_router(server_handler)]
 impl SearchrightServer {
-    #[tool(description = "Read-only: validate a review plan and return conservative readiness findings")]
+    #[tool(
+        description = "Read-only: validate a review plan and return conservative readiness findings"
+    )]
     fn validate_plan(
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let plan: ReviewPlan = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let plan: ReviewPlan =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         operation_result(SearchrightEngine::validate_plan(&plan))
     }
 
@@ -183,39 +184,45 @@ impl SearchrightServer {
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let strategy: SearchStrategy = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let strategy: SearchStrategy =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
             "search_strategy",
             SearchrightEngine::validate_strategy(&strategy),
         )
     }
 
-    #[tool(description = "Read-only: validate neutral CiteWeft-compatible document evidence; canonical writes are forbidden")]
+    #[tool(
+        description = "Read-only: validate neutral CiteWeft-compatible document evidence; canonical writes are forbidden"
+    )]
     fn validate_document_evidence(
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let evidence: DocumentEvidence = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let evidence: DocumentEvidence =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
             "document_evidence",
             SearchrightEngine::validate_document_evidence(&evidence),
         )
     }
 
-    #[tool(description = "Read-only: compile a portable query AST and expose fidelity, loss codes and the human-review gate")]
+    #[tool(
+        description = "Read-only: compile a portable query AST and expose fidelity, loss codes and the human-review gate"
+    )]
     fn compile_strategy(
         &self,
         Parameters(input): Parameters<CompileInput>,
     ) -> Result<CallToolResult, McpError> {
-        let strategy: SearchStrategy = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let strategy: SearchStrategy =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         let dialect = parse_dialect(&input.dialect).map_err(invalid_params)?;
         operation_result(SearchrightEngine::compile_strategy(&strategy, dialect))
     }
 
-    #[tool(description = "Read-only preview: generate reviewable duplicate clusters without deleting records")]
+    #[tool(
+        description = "Read-only preview: generate reviewable duplicate clusters without deleting records"
+    )]
     fn deduplicate_records(
         &self,
         Parameters(input): Parameters<DedupInput>,
@@ -237,12 +244,15 @@ impl SearchrightServer {
         ))
     }
 
-    #[tool(description = "Read-only: validate PRISMA arithmetic and render JSON, Mermaid or the PRISMA-S ledger")]
+    #[tool(
+        description = "Read-only: validate PRISMA arithmetic and render JSON, Mermaid or the PRISMA-S ledger"
+    )]
     fn generate_prisma(
         &self,
         Parameters(input): Parameters<PrismaInput>,
     ) -> Result<CallToolResult, McpError> {
-        let flow: PrismaFlow = serde_json::from_str(&input.flow_json).map_err(json_invalid_params)?;
+        let flow: PrismaFlow =
+            serde_json::from_str(&input.flow_json).map_err(json_invalid_params)?;
         let output = match input.output.as_str() {
             "json" => PrismaOutput::Json,
             "mermaid" => PrismaOutput::Mermaid,
@@ -271,7 +281,9 @@ impl SearchrightServer {
         operation_result(SearchrightEngine::verify_audit(events))
     }
 
-    #[tool(description = "Read-only import: normalise a bibliographic interchange document while retaining provenance")]
+    #[tool(
+        description = "Read-only import: normalise a bibliographic interchange document while retaining provenance"
+    )]
     fn import_records(
         &self,
         Parameters(input): Parameters<ImportInput>,
@@ -284,7 +296,9 @@ impl SearchrightServer {
         ))
     }
 
-    #[tool(description = "Read-only conversion: export canonical records and return a deterministic conversion receipt")]
+    #[tool(
+        description = "Read-only conversion: export canonical records and return a deterministic conversion receipt"
+    )]
     fn export_records(
         &self,
         Parameters(input): Parameters<ExportInput>,
@@ -306,12 +320,14 @@ impl SearchrightServer {
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let graph: StudyGraph = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let graph: StudyGraph =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         operation_result(SearchrightEngine::assess_study_graph(&graph))
     }
 
-    #[tool(description = "Read-only gate: assess PRESS findings, seed recall and translation-loss approval")]
+    #[tool(
+        description = "Read-only gate: assess PRESS findings, seed recall and translation-loss approval"
+    )]
     fn assess_search_validation(
         &self,
         Parameters(input): Parameters<DocumentInput>,
@@ -321,7 +337,9 @@ impl SearchrightServer {
         operation_result(SearchrightEngine::assess_search_validation(&report))
     }
 
-    #[tool(description = "Read-only: compare parent and current records for a living-review update")]
+    #[tool(
+        description = "Read-only: compare parent and current records for a living-review update"
+    )]
     fn living_diff(
         &self,
         Parameters(input): Parameters<LivingDiffInput>,
@@ -338,8 +356,8 @@ impl SearchrightServer {
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let runs: Vec<LivingUpdateRun> = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let runs: Vec<LivingUpdateRun> =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
             "living_lineage",
             SearchrightEngine::validate_living_lineage(&runs),
@@ -351,7 +369,8 @@ impl SearchrightServer {
         &self,
         Parameters(input): Parameters<ProvenanceInput>,
     ) -> Result<CallToolResult, McpError> {
-        let plan: ReviewPlan = serde_json::from_str(&input.plan_json).map_err(json_invalid_params)?;
+        let plan: ReviewPlan =
+            serde_json::from_str(&input.plan_json).map_err(json_invalid_params)?;
         let receipts: Vec<SourceReceipt> =
             serde_json::from_str(&input.receipts_json).map_err(json_invalid_params)?;
         let events: Vec<AuditEvent> =
@@ -359,17 +378,24 @@ impl SearchrightServer {
         operation_result(SearchrightEngine::provenance(&plan, &receipts, &events))
     }
 
-    #[tool(description = "Read-only advisory ranking: prioritise records transparently; never make final exclusions")]
+    #[tool(
+        description = "Read-only advisory ranking: prioritise records transparently; never make final exclusions"
+    )]
     fn rank_records(
         &self,
         Parameters(input): Parameters<RankInput>,
     ) -> Result<CallToolResult, McpError> {
         let records: Vec<BibliographicRecord> =
             serde_json::from_str(&input.records_json).map_err(json_invalid_params)?;
-        operation_result(SearchrightEngine::rank_records(&records, &input.query_terms))
+        operation_result(SearchrightEngine::rank_records(
+            &records,
+            &input.query_terms,
+        ))
     }
 
-    #[tool(description = "Read-only safety check: treat provider/full-text content as inert data and flag instruction-like markers")]
+    #[tool(
+        description = "Read-only safety check: treat provider/full-text content as inert data and flag instruction-like markers"
+    )]
     fn inspect_untrusted_content(
         &self,
         Parameters(input): Parameters<ContentInput>,
@@ -383,14 +409,15 @@ impl SearchrightServer {
         ))
     }
 
-
-    #[tool(description = "Read-only accessibility surface: validate and render stable diagnostics without ANSI-dependent output")]
+    #[tool(
+        description = "Read-only accessibility surface: validate and render stable diagnostics without ANSI-dependent output"
+    )]
     fn render_diagnostics(
         &self,
         Parameters(input): Parameters<DiagnosticsInput>,
     ) -> Result<CallToolResult, McpError> {
-        let diagnostics: Vec<Diagnostic> = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let diagnostics: Vec<Diagnostic> =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         let output = match input.output.as_str() {
             "plain_text" => searchright::diagnostics::DiagnosticOutput::PlainText,
             "json" => searchright::diagnostics::DiagnosticOutput::Json,
@@ -407,7 +434,9 @@ impl SearchrightServer {
         }
     }
 
-    #[tool(description = "Read-only governance gate: evaluate a data-handling request against an institutional policy")]
+    #[tool(
+        description = "Read-only governance gate: evaluate a data-handling request against an institutional policy"
+    )]
     fn evaluate_governance(
         &self,
         Parameters(input): Parameters<GovernanceInput>,
@@ -419,7 +448,9 @@ impl SearchrightServer {
         operation_result(SearchrightEngine::evaluate_governance(&policy, &request))
     }
 
-    #[tool(description = "Read-only policy gate: verify that an HTTPS endpoint is permitted by an execution envelope")]
+    #[tool(
+        description = "Read-only policy gate: verify that an HTTPS endpoint is permitted by an execution envelope"
+    )]
     fn authorise_endpoint(
         &self,
         Parameters(input): Parameters<EndpointInput>,
@@ -440,9 +471,12 @@ impl SearchrightServer {
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let value: ProtocolAmendment = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
-        validation_result("protocol_amendment", SearchrightEngine::validate_amendment(&value))
+        let value: ProtocolAmendment =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
+        validation_result(
+            "protocol_amendment",
+            SearchrightEngine::validate_amendment(&value),
+        )
     }
 
     #[tool(description = "Read-only: validate a methodological standards pack")]
@@ -450,9 +484,12 @@ impl SearchrightServer {
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let value: StandardPack = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
-        validation_result("standard_pack", SearchrightEngine::validate_standard_pack(&value))
+        let value: StandardPack =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
+        validation_result(
+            "standard_pack",
+            SearchrightEngine::validate_standard_pack(&value),
+        )
     }
 
     #[tool(description = "Read-only: validate an evidence-linked standards assessment")]
@@ -468,7 +505,9 @@ impl SearchrightServer {
         )
     }
 
-    #[tool(description = "Read-only: validate ranking calibration and the no-auto-exclusion invariant")]
+    #[tool(
+        description = "Read-only: validate ranking calibration and the no-auto-exclusion invariant"
+    )]
     fn validate_ranking_calibration(
         &self,
         Parameters(input): Parameters<DocumentInput>,
@@ -486,32 +525,41 @@ impl SearchrightServer {
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let value: DiscoveryRun = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
-        validation_result("discovery_run", SearchrightEngine::validate_discovery_run(&value))
+        let value: DiscoveryRun =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
+        validation_result(
+            "discovery_run",
+            SearchrightEngine::validate_discovery_run(&value),
+        )
     }
 
-    #[tool(description = "Read-only assurance: verify lifecycle continuity, declared transitions and human approval gates")]
+    #[tool(
+        description = "Read-only assurance: verify lifecycle continuity, declared transitions and human approval gates"
+    )]
     fn verify_workflow_trace(
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let trace: WorkflowTrace = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let trace: WorkflowTrace =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         operation_result(SearchrightEngine::verify_workflow_trace(&trace))
     }
 
-    #[tool(description = "Read-only discovery: resolve bounded citation/grey-literature candidates pending human release")]
+    #[tool(
+        description = "Read-only discovery: resolve bounded citation/grey-literature candidates pending human release"
+    )]
     fn discovery_candidates(
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let run: DiscoveryRun = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let run: DiscoveryRun =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         operation_result(SearchrightEngine::discovery_candidates(&run))
     }
 
-    #[tool(description = "Read-only supply-chain gate: verify a provider manifest against exact base64 component bytes")]
+    #[tool(
+        description = "Read-only supply-chain gate: verify a provider manifest against exact base64 component bytes"
+    )]
     fn verify_provider_component(
         &self,
         Parameters(input): Parameters<ComponentInput>,
@@ -531,7 +579,9 @@ impl SearchrightServer {
         }
     }
 
-    #[tool(description = "Read-only licensed-source gate: build a redacted BYO-access request plan without exposing credentials")]
+    #[tool(
+        description = "Read-only licensed-source gate: build a redacted BYO-access request plan without exposing credentials"
+    )]
     fn plan_licensed_request(
         &self,
         Parameters(input): Parameters<LicensedPlanInput>,
@@ -547,13 +597,15 @@ impl SearchrightServer {
         ))
     }
 
-    #[tool(description = "Read-only evidence gate: validate a benchmark report and its explicit claim boundary")]
+    #[tool(
+        description = "Read-only evidence gate: validate a benchmark report and its explicit claim boundary"
+    )]
     fn validate_benchmark_report(
         &self,
         Parameters(input): Parameters<DocumentInput>,
     ) -> Result<CallToolResult, McpError> {
-        let report: BenchmarkReport = parse_document(&input.document, input.format.as_deref())
-            .map_err(invalid_params)?;
+        let report: BenchmarkReport =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         match SearchrightEngine::validate_benchmark_report(&report) {
             Ok(()) => json_success(&serde_json::json!({
                 "valid": true,
@@ -563,12 +615,16 @@ impl SearchrightServer {
         }
     }
 
-    #[tool(description = "Read-only: list deterministic no-network provider manifests available by default")]
+    #[tool(
+        description = "Read-only: list deterministic no-network provider manifests available by default"
+    )]
     fn list_providers(&self) -> Result<CallToolResult, McpError> {
         operation_result(SearchrightEngine::default_provider_manifests())
     }
 
-    #[tool(description = "Read-only: return the conservative planning, execution, screening, reporting and update workflow")]
+    #[tool(
+        description = "Read-only: return the conservative planning, execution, screening, reporting and update workflow"
+    )]
     fn workflow(&self) -> Result<CallToolResult, McpError> {
         json_success(&SearchrightEngine::workflow())
     }

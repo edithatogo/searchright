@@ -20,13 +20,20 @@ def digest(path: Path) -> str:
 
 
 def run_package(destination: Path) -> None:
-    subprocess.run(
+    completed = subprocess.run(
         [sys.executable, "scripts/package_source.py", "--output-dir", str(destination)],
         cwd=ROOT,
-        check=True,
+        check=False,
         capture_output=True,
         text=True,
     )
+    if completed.returncode:
+        details = [f"source packaging failed with exit code {completed.returncode}"]
+        if completed.stdout.strip():
+            details.append(f"child stdout:\n{completed.stdout.rstrip()}")
+        if completed.stderr.strip():
+            details.append(f"child stderr:\n{completed.stderr.rstrip()}")
+        raise RuntimeError("\n".join(details))
 
 
 def verify_members(archive_members: set[str], manifest_paths: set[str]) -> list[str]:

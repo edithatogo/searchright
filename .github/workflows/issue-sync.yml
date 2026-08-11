@@ -37,9 +37,11 @@ jobs:
           python scripts/render_github_issues.py --check
           python scripts/check_github_issue_hierarchy.py
       - name: Print mutation-free sync plan
+        env:
+          SEARCHRIGHT_REPOSITORY: ${{ inputs.repository }}
         run: >-
           python scripts/sync_github_issues.py
-          --repo '${{ inputs.repository }}'
+          --repo "$SEARCHRIGHT_REPOSITORY"
 
   apply:
     name: Explicit issue/subissue apply
@@ -62,11 +64,13 @@ jobs:
           SEARCHRIGHT_GITHUB_APPLY: '1'
           SEARCHRIGHT_GITHUB_TASK_STATE_APPLY: '1'
           SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
+          SEARCHRIGHT_REPOSITORY: ${{ inputs.repository }}
+          SEARCHRIGHT_SYNC_TASK_STATE: ${{ inputs.sync_task_state }}
         run: |
-          args=(--repo '${{ inputs.repository }}' --apply
+          args=(--repo "$SEARCHRIGHT_REPOSITORY" --apply
             --checkpoint-path .searchright/receipts/github-issue-sync-checkpoint.json
             --receipt-path .searchright/receipts/github-issue-sync.json)
-          if [[ '${{ inputs.sync_task_state }}' == 'true' ]]; then args+=(--sync-task-state); fi
+          if [[ "$SEARCHRIGHT_SYNC_TASK_STATE" == 'true' ]]; then args+=(--sync-task-state); fi
           python scripts/sync_github_issues.py "${args[@]}"
       - name: Preserve apply receipt and checkpoint
         if: ${{ always() }}

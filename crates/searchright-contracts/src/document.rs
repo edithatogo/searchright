@@ -178,7 +178,10 @@ impl Validate for DocumentEvidence {
             &self.upstream_schema_version,
             "document_evidence.upstream_schema_version",
         )?;
-        require_text(&self.provenance.backend, "document_evidence.provenance.backend")?;
+        require_text(
+            &self.provenance.backend,
+            "document_evidence.provenance.backend",
+        )?;
         require_text(
             &self.provenance.configuration,
             "document_evidence.provenance.configuration",
@@ -190,8 +193,14 @@ impl Validate for DocumentEvidence {
         }
         let mut reference_ids = BTreeSet::new();
         for reference in &self.references {
-            require_text(&reference.reference_id, "document_evidence.reference.reference_id")?;
-            require_text(&reference.raw_citation, "document_evidence.reference.raw_citation")?;
+            require_text(
+                &reference.reference_id,
+                "document_evidence.reference.reference_id",
+            )?;
+            require_text(
+                &reference.raw_citation,
+                "document_evidence.reference.raw_citation",
+            )?;
             if !reference_ids.insert(reference.reference_id.as_str()) {
                 return Err(ContractError::Invariant(format!(
                     "duplicate document reference identifier `{}`",
@@ -235,7 +244,10 @@ impl Validate for DocumentEvidence {
         }
         for diagnostic in &self.diagnostics {
             require_text(&diagnostic.code, "document_evidence.diagnostic.code")?;
-            require_text(&diagnostic.severity, "document_evidence.diagnostic.severity")?;
+            require_text(
+                &diagnostic.severity,
+                "document_evidence.diagnostic.severity",
+            )?;
             require_text(&diagnostic.message, "document_evidence.diagnostic.message")?;
         }
         Ok(())

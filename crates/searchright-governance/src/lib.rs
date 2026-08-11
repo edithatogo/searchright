@@ -37,8 +37,10 @@ pub fn evaluate(
     {
         blockers.push("governance.full_text_persistence.denied".to_owned());
     }
-    if matches!(request.operation, DataOperationKind::ExternalModelProcessing)
-        && !policy.external_model_processing_allowed
+    if matches!(
+        request.operation,
+        DataOperationKind::ExternalModelProcessing
+    ) && !policy.external_model_processing_allowed
     {
         blockers.push("governance.external_model.denied".to_owned());
     }
@@ -47,7 +49,10 @@ pub fn evaluate(
     }
     if let Some(region) = request.region.as_deref() {
         if !policy.permitted_regions.is_empty()
-            && !policy.permitted_regions.iter().any(|allowed| allowed == region)
+            && !policy
+                .permitted_regions
+                .iter()
+                .any(|allowed| allowed == region)
         {
             blockers.push("governance.region.denied".to_owned());
         }
@@ -130,10 +135,12 @@ mod tests {
         assert!(decision.is_ok());
         if let Ok(decision) = decision {
             assert!(!decision.permitted);
-            assert!(decision
-                .blockers
-                .iter()
-                .any(|code| code == "governance.full_text_persistence.denied"));
+            assert!(
+                decision
+                    .blockers
+                    .iter()
+                    .any(|code| code == "governance.full_text_persistence.denied")
+            );
         }
     }
 }

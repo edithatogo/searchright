@@ -18,8 +18,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "5d3de8b7769b0dee191ea818b68fff79c9efb4fe965db35763cebc1c27928865",
-      "size": 607544
+      "sha256": "5ce146581071cd3e9d06707532863941e16dbb1b8d778e62e310b45003f15d47",
+      "size": 589175
     },
     {
       "path": "conductor/github/project.json",
@@ -178,13 +178,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "c3243509e309799897c1f4b6f0d9fabd390c20a614c9307109a9f341d31c250c",
-      "size": 3376
+      "sha256": "a2f459965f265d26cbe29c291a8d21e36ae6a268d2c310a3134c858871d27119",
+      "size": 3257
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "807c601c851e81e327ad4a91d748a3de0e6d26c74543084fbb3aebb9b89fb243",
-      "size": 41997
+      "sha256": "f312ab6ec1edbb59e660f072ebfe0114bb753dd7544c848741d7b68934cc766d",
+      "size": 40922
     },
     {
       "path": "verification/harness-matrix.json",

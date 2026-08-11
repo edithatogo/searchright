@@ -39,8 +39,7 @@ pub const SEARCH_RUN_SCHEMA_VERSION: &str = "org.searchright.search-run.v1";
 /// Canonical search-strategy contract version.
 pub const SEARCH_STRATEGY_SCHEMA_VERSION: &str = "org.searchright.search-strategy.v1";
 /// Canonical native-search-strategy contract version.
-pub const NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION: &str =
-    "org.searchright.native-search-strategy.v1";
+pub const NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION: &str = "org.searchright.native-search-strategy.v1";
 /// Canonical audit-event contract version.
 pub const AUDIT_EVENT_SCHEMA_VERSION: &str = "org.searchright.audit-event.v1";
 

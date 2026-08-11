@@ -2,9 +2,7 @@
 
 #![forbid(unsafe_code)]
 
-use searchright_contracts::{
-    ComponentCapability, ProviderComponentManifest, Validate,
-};
+use searchright_contracts::{ComponentCapability, ProviderComponentManifest, Validate};
 
 /// Current stable WIT world expected by the host.
 pub const PROVIDER_ABI_VERSION: &str = "searchright:provider/search-provider@0.1.0";

@@ -7,7 +7,9 @@ use crate::{
 };
 
 /// Screening round.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize, JsonSchema,
+)]
 #[serde(rename_all = "snake_case")]
 pub enum ScreeningRound {
     /// Title and abstract.
@@ -143,7 +145,6 @@ pub struct ConflictResolution {
     pub resolved_at: String,
 }
 
-
 impl Validate for ScreeningPolicy {
     fn validate(&self) -> Result<(), ContractError> {
         require_schema_version(
@@ -167,10 +168,12 @@ impl Validate for ScreeningPolicy {
             && self.minimum_agent_sensitivity.is_none()
         {
             return Err(ContractError::Invariant(
-                "non-advisory agent authority requires a calibrated minimum sensitivity"
-                    .to_owned(),
+                "non-advisory agent authority requires a calibrated minimum sensitivity".to_owned(),
             ));
         }
-        require_text(&self.adjudication_rule, "screening_policy.adjudication_rule")
+        require_text(
+            &self.adjudication_rule,
+            "screening_policy.adjudication_rule",
+        )
     }
 }

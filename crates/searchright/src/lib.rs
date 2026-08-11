@@ -8,8 +8,8 @@
 mod engine;
 
 pub use engine::{
-    EngineError, InterchangeExport, PlanAssessment, PrismaArtifact, PrismaOutput, SearchrightEngine,
-    StudyGraphAssessment,
+    EngineError, InterchangeExport, PlanAssessment, PrismaArtifact, PrismaOutput,
+    SearchrightEngine, StudyGraphAssessment,
 };
 
 pub use evidence_search_core as core;
@@ -23,10 +23,10 @@ pub use searchright_diagnostics as diagnostics;
 pub use searchright_discovery as discovery;
 pub use searchright_governance as governance;
 pub use searchright_interchange as interchange;
-pub use searchright_living as living;
 pub use searchright_licensed as licensed;
-pub use searchright_policy as policy;
+pub use searchright_living as living;
 pub use searchright_plugin_sdk as plugin_sdk;
+pub use searchright_policy as policy;
 pub use searchright_prisma as prisma;
 pub use searchright_provenance as provenance;
 pub use searchright_ranking as ranking;
