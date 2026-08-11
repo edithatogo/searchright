@@ -69,9 +69,9 @@ def compare_repository(settings: dict[str, Any], errors: list[str], warnings: li
         "gh", "api", "--paginate", "--slurp",
         f"repos/{repository}/environments?per_page=100",
     ])
-    pages = environments if isinstance(environments, list) else []
-    if pages and isinstance(pages[0], dict):
-        pages = [pages]
+    pages = environments if isinstance(environments, list) else [environments]
+    if len(pages) == 1 and isinstance(pages[0], list):
+        pages = pages[0]
     observed_environments = {
         str(item.get("name"))
         for page in pages
