@@ -66,12 +66,17 @@ def main() -> int:
     # CI) cannot affect the archive. Still reject staged or unstaged changes to
     # tracked source, which would make the package differ from the committed
     # revision it claims to represent.
-    status = subprocess.check_output(
-        ["git", "status", "--porcelain", "--untracked-files=no"],
+    unstaged = subprocess.run(
+        ["git", "diff", "--quiet", "--exit-code"],
         cwd=ROOT,
-        text=True,
-    )
-    if status.strip():
+        check=False,
+    ).returncode
+    staged = subprocess.run(
+        ["git", "diff", "--cached", "--quiet", "--exit-code"],
+        cwd=ROOT,
+        check=False,
+    ).returncode
+    if unstaged or staged:
         raise SystemExit(
             "source packaging requires no staged or unstaged changes to tracked files"
         )
