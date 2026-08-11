@@ -10,6 +10,7 @@ mod audit;
 mod provider;
 mod query;
 mod record;
+mod schema;
 
 pub use audit::{Actor, AuditEvent, AuditEventDraft};
 pub use provider::{
@@ -23,6 +24,9 @@ pub use query::{
     SearchTerm, StrategyWarning, TranslationFidelity,
 };
 pub use record::{BibliographicRecord, RecordIdentifiers, RecordKind};
+pub use schema::{
+    RustOwnedSchema, RustSchemaParityReport, rust_owned_schemas, rust_schema_parity_report,
+};
 
 /// Compatibility contract family retained for the 0.1 wire generation.
 pub const CONTRACT_FAMILY: &str = "org.searchright";

@@ -64,21 +64,26 @@
     },
     {
       "blockers": [
-        "Compile Rust contract types and run schema/Rust round-trip tests.",
-        "Generate compatibility fixtures from compiled public types."
+        "Resolve the recorded Schemars/canonical constraint losses before claiming exact semantic schema parity.",
+        "Run downstream consumer and generated-binding conformance under Track 35 / SR-086."
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/sync_schema_surface.py --check",
+        "python scripts/sync_contract_conformance_matrix.py --check",
         "python scripts/check_public_package_policy.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Source implementation is compiler-backed for contract invariants and nine explicitly Rust-owned schema roots. All 60 canonical schemas/examples and exact digests are statically checked, but generated/canonical constraint losses, downstream consumers and Track 35 bindings remain separate evidence gates.",
       "deliverables": [
         "crates/evidence-search-contracts/src/lib.rs",
         "crates/searchright-contracts/src/lib.rs",
         "contracts/schema-catalog.json",
         "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
+        "contracts/compatibility/contract-conformance-matrix.json",
+        "crates/evidence-search-contracts/src/schema.rs",
+        "crates/evidence-search-contracts/tests/schema_parity.rs",
         "scripts/sync_schema_surface.py",
+        "scripts/sync_contract_conformance_matrix.py",
         "release/public-packages.json",
         "scripts/check_public_package_policy.py",
         "docs/msrv-and-package-policy.md"
@@ -89,7 +94,7 @@
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "foundation",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Maintain versioned schemas, examples, standards packs and Rust wire types from one catalogue.",
       "requirements": [
         "SR-001",
@@ -100,7 +105,7 @@
         "SR-049"
       ],
       "slug": "contract-catalog",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Contract catalogue and code generation",
       "track_id": "01"
     },

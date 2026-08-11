@@ -10,7 +10,7 @@ Stabilise versioned review, source, query, record, screening, audit and reportin
 - Generate schemas from Rust types and diff against checked-in canonical forms
 - Add compatibility fixtures and migration/version rules
 - Add report/study linkage and protocol-amendment contracts
-- Generate TypeScript/Python bindings only as thin contract packages
+- Define the thin-binding generation contract and delegate executable TypeScript/Python generation to Track 35 / SR-086
 - Publish contract conformance matrix
 
 ## Requirements owned

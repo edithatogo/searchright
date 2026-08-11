@@ -1,6 +1,6 @@
 # Plan: 01 Contract catalogue and code generation
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,12 +8,16 @@ GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-01-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/evidence-search-contracts/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/lib.rs`
   - [x] Present source path: `contracts/schema-catalog.json`
   - [x] Present source path: `contracts/compatibility/schema-surface-0.1.0-alpha.1.json`
+  - [x] Present source path: `contracts/compatibility/contract-conformance-matrix.json`
+  - [x] Present source path: `crates/evidence-search-contracts/src/schema.rs`
+  - [x] Present source path: `crates/evidence-search-contracts/tests/schema_parity.rs`
   - [x] Present source path: `scripts/sync_schema_surface.py`
+  - [x] Present source path: `scripts/sync_contract_conformance_matrix.py`
   - [x] Present source path: `release/public-packages.json`
   - [x] Present source path: `scripts/check_public_package_policy.py`
   - [x] Present source path: `docs/msrv-and-package-policy.md`
@@ -26,6 +30,7 @@ GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered nati
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/sync_schema_surface.py --check`
+  - [x] `python scripts/sync_contract_conformance_matrix.py --check`
   - [x] `python scripts/check_public_package_policy.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
@@ -33,8 +38,8 @@ GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-01-phase-3 -->
 
-- [ ] Compile Rust contract types and run schema/Rust round-trip tests.
-- [ ] Generate compatibility fixtures from compiled public types.
+- [ ] Resolve the recorded Schemars/canonical constraint losses before claiming exact semantic schema parity.
+- [ ] Run downstream consumer and generated-binding conformance under Track 35 / SR-086.
 
 ## Phase 4: Review and closeout
 

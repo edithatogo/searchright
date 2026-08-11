@@ -251,10 +251,17 @@ impl Validate for StudyGraph {
                     study.study_id
                 )));
             }
+            let mut study_report_ids = BTreeSet::new();
             for report_id in &study.report_ids {
                 if !report_ids.contains(report_id.as_str()) {
                     return Err(ContractError::Invariant(format!(
                         "study `{}` references unknown report `{report_id}`",
+                        study.study_id
+                    )));
+                }
+                if !study_report_ids.insert(report_id.as_str()) {
+                    return Err(ContractError::Invariant(format!(
+                        "study `{}` contains duplicate report `{report_id}`",
                         study.study_id
                     )));
                 }
@@ -270,5 +277,52 @@ impl Validate for StudyGraph {
             }
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn report(id: &str) -> Report {
+        Report {
+            report_id: id.to_owned(),
+            record_ids: vec![format!("record-{id}")],
+            title: format!("Report {id}"),
+            publication_year: None,
+            doi: None,
+            pmid: None,
+            registry_ids: Vec::new(),
+            retrieval_attempts: Vec::new(),
+        }
+    }
+
+    fn study(id: &str, report_ids: &[&str]) -> Study {
+        Study {
+            study_id: id.to_owned(),
+            report_ids: report_ids.iter().map(|value| (*value).to_owned()).collect(),
+            label: format!("Study {id}"),
+            study_design: None,
+            registration_ids: Vec::new(),
+            notes: Vec::new(),
+        }
+    }
+
+    fn graph(studies: Vec<Study>) -> StudyGraph {
+        StudyGraph {
+            schema_version: STUDY_GRAPH_SCHEMA_VERSION.to_owned(),
+            review_id: "review-1".to_owned(),
+            reports: vec![report("report-1")],
+            studies,
+            links: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn rejects_duplicate_report_assignment_within_a_study() {
+        let graph = graph(vec![study("study-1", &["report-1", "report-1"])]);
+        assert!(
+            matches!(graph.validate(), Err(ContractError::Invariant(message)) if message.contains("duplicate report"))
+        );
     }
 }

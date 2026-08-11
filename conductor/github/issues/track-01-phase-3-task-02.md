@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Generate compatibility fixtures from compiled public types.
+- [ ] Run downstream consumer and generated-binding conformance under Track 35 / SR-086.
 
 ## Completion and evidence contract
 

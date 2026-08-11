@@ -12,8 +12,8 @@ Maintain versioned schemas, examples, standards packs and Rust wire types from o
 ## Contract
 
 - Horizon: `foundation`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `00`
 - Requirements: `SR-001, SR-002, SR-003, SR-004, SR-017, SR-049`
@@ -28,6 +28,6 @@ Maintain versioned schemas, examples, standards packs and Rust wire types from o
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Source implementation is compiler-backed for contract invariants and nine explicitly Rust-owned schema roots. All 60 canonical schemas/examples and exact digests are statically checked, but generated/canonical constraint losses, downstream consumers and Track 35 bindings remain separate evidence gates.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
