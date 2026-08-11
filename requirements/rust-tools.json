@@ -98,5 +98,5 @@
   ],
   "update_policy": "Renovate or a dedicated dependency track proposes exact upgrades; CI and this manifest must change together.",
   "claim_boundary": "Pinned tool declarations and workflow configuration are not evidence that the tools were installed or executed.",
-  "public_api_nightly": "nightly-2025-08-02"
+  "public_api_nightly": "nightly-2026-08-11"
 }
