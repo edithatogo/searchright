@@ -19,6 +19,7 @@
       },
       "rust": {
         "declared_type": "AccessDecision",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -41,6 +42,7 @@
       },
       "rust": {
         "declared_type": "AccessRequest",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -63,6 +65,7 @@
       },
       "rust": {
         "declared_type": "AgentWorkflow",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -85,6 +88,7 @@
       },
       "rust": {
         "declared_type": "ArchitecturePolicy",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -107,7 +111,8 @@
       },
       "rust": {
         "declared_type": "AuditEvent",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -129,6 +134,7 @@
       },
       "rust": {
         "declared_type": "BackupManifest",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -151,6 +157,7 @@
       },
       "rust": {
         "declared_type": "BenchmarkReport",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -173,7 +180,8 @@
       },
       "rust": {
         "declared_type": "BibliographicRecord",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -195,7 +203,8 @@
       },
       "rust": {
         "declared_type": "CompiledStrategy",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -217,6 +226,7 @@
       },
       "rust": {
         "declared_type": "ComponentHealth",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -239,6 +249,7 @@
       },
       "rust": {
         "declared_type": "ConsumerContractSuite",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -261,6 +272,7 @@
       },
       "rust": {
         "declared_type": "DataHandlingDecision",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -283,6 +295,7 @@
       },
       "rust": {
         "declared_type": "DataHandlingRequest",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -305,6 +318,7 @@
       },
       "rust": {
         "declared_type": "Diagnostic",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -327,6 +341,7 @@
       },
       "rust": {
         "declared_type": "DiscoveryRun",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -349,6 +364,7 @@
       },
       "rust": {
         "declared_type": "DocumentEvidence",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -371,6 +387,7 @@
       },
       "rust": {
         "declared_type": "EvidenceDebtRegister",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -393,6 +410,7 @@
       },
       "rust": {
         "declared_type": "ExecutionEnvelope",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -415,6 +433,7 @@
       },
       "rust": {
         "declared_type": "GateCatalog",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -437,6 +456,7 @@
       },
       "rust": {
         "declared_type": "GitHubIssueHierarchy",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -459,6 +479,7 @@
       },
       "rust": {
         "declared_type": "GitHubIssueHierarchy",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -481,6 +502,7 @@
       },
       "rust": {
         "declared_type": "GitHubProjectManifest",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -503,6 +525,7 @@
       },
       "rust": {
         "declared_type": "GitHubRepositorySettings",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -525,6 +548,7 @@
       },
       "rust": {
         "declared_type": "IncidentRecord",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -547,6 +571,7 @@
       },
       "rust": {
         "declared_type": "InstitutionalPolicy",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -569,6 +594,7 @@
       },
       "rust": {
         "declared_type": "IntegrationPassport",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -591,6 +617,7 @@
       },
       "rust": {
         "declared_type": "IntegrationReleaseTrain",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -613,6 +640,7 @@
       },
       "rust": {
         "declared_type": "InterchangeReceipt",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -635,6 +663,7 @@
       },
       "rust": {
         "declared_type": "LicensedAdapterProfile",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -657,6 +686,7 @@
       },
       "rust": {
         "declared_type": "LivingUpdateRun",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -679,7 +709,8 @@
       },
       "rust": {
         "declared_type": "NativeSearchStrategy",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -701,6 +732,7 @@
       },
       "rust": {
         "declared_type": "PrismaFlow",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -723,6 +755,7 @@
       },
       "rust": {
         "declared_type": "ProtocolAmendment",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -745,6 +778,7 @@
       },
       "rust": {
         "declared_type": "ProviderComponentManifest",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -767,7 +801,8 @@
       },
       "rust": {
         "declared_type": "ProviderManifest",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -789,7 +824,8 @@
       },
       "rust": {
         "declared_type": "ProviderPage",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -811,6 +847,7 @@
       },
       "rust": {
         "declared_type": "ProviderPolicySet",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -833,6 +870,7 @@
       },
       "rust": {
         "declared_type": "QueryExpr",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -855,6 +893,7 @@
       },
       "rust": {
         "declared_type": "RankingCalibration",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -877,6 +916,7 @@
       },
       "rust": {
         "declared_type": "RecoveryRehearsal",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -899,6 +939,7 @@
       },
       "rust": {
         "declared_type": "RedactionProfile",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -921,6 +962,7 @@
       },
       "rust": {
         "declared_type": "ReleaseRehearsal",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -943,6 +985,7 @@
       },
       "rust": {
         "declared_type": null,
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -965,6 +1008,7 @@
       },
       "rust": {
         "declared_type": "ReviewPlan",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -987,6 +1031,7 @@
       },
       "rust": {
         "declared_type": "DerivedReviewStateSnapshot",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1009,6 +1054,7 @@
       },
       "rust": {
         "declared_type": "SchemaMigrationPlan",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1031,6 +1077,7 @@
       },
       "rust": {
         "declared_type": "SchemaMigrationRegistry",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1053,6 +1100,7 @@
       },
       "rust": {
         "declared_type": "ScreeningDecision",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1075,6 +1123,7 @@
       },
       "rust": {
         "declared_type": "ScreeningPolicy",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1097,7 +1146,8 @@
       },
       "rust": {
         "declared_type": "SearchRun",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -1119,7 +1169,8 @@
       },
       "rust": {
         "declared_type": "SearchStrategy",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -1141,6 +1192,7 @@
       },
       "rust": {
         "declared_type": "SearchValidationReport",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1163,7 +1215,8 @@
       },
       "rust": {
         "declared_type": "SourceReceipt",
-        "compiler_conformance": "root_field_parity",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
       "downstream_consumer_conformance": "not_evidenced"
@@ -1185,6 +1238,7 @@
       },
       "rust": {
         "declared_type": "SourcerightParityReport",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1207,6 +1261,7 @@
       },
       "rust": {
         "declared_type": "StandardAssessment",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1229,6 +1284,7 @@
       },
       "rust": {
         "declared_type": "StandardPack",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1251,6 +1307,7 @@
       },
       "rust": {
         "declared_type": "StudyGraph",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1273,6 +1330,7 @@
       },
       "rust": {
         "declared_type": "TelemetryPolicy",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1295,6 +1353,7 @@
       },
       "rust": {
         "declared_type": "TenantPolicy",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1317,6 +1376,7 @@
       },
       "rust": {
         "declared_type": "WorkflowTrace",
+        "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
       },
@@ -1345,7 +1405,7 @@
   "rust_schema_parity": {
     "registered_roots": 9,
     "exact_parity": false,
-    "loss_report": "evidence_search_contracts::rust_schema_parity_report"
+    "scope_declaration": "evidence_search_contracts::rust_schema_parity_scope"
   },
   "claim_boundary": "This matrix proves catalogue presence, declared static validation, and exact canonical digest equality only. It does not prove Rust compiler, round-trip, generated binding, install, or downstream conformance."
 }

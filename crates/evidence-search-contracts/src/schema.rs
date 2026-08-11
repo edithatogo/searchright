@@ -20,19 +20,15 @@ pub struct RustOwnedSchema {
     pub generated: Schema,
 }
 
-/// Fail-closed summary of the currently demonstrated Rust/canonical schema parity.
+/// Fail-closed declaration of the Rust/canonical schema comparison scope.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
-pub struct RustSchemaParityReport {
+pub struct RustSchemaParityScope {
     /// Stable report format identifier.
     pub schema_version: &'static str,
     /// Exact byte-or-semantic schema equality is not yet demonstrated.
     pub exact_parity: bool,
     /// Number of explicitly registered Rust-owned roots.
     pub rust_owned_roots: usize,
-    /// Number whose generated and canonical root field names match.
-    pub root_field_parity: usize,
-    /// Number admitted as exact semantic matches.
-    pub exact_parity_roots: usize,
     /// Semantic dimensions not represented completely by the generated schemas.
     pub known_losses: &'static [&'static str],
     /// Evidence boundary applied to this report.
@@ -41,22 +37,24 @@ pub struct RustSchemaParityReport {
 
 /// Report the admitted parity scope without promoting structural equality to semantic equality.
 #[must_use]
-pub fn rust_schema_parity_report() -> RustSchemaParityReport {
+pub fn rust_schema_parity_scope() -> RustSchemaParityScope {
     let rust_owned_roots = rust_owned_schemas().len();
-    RustSchemaParityReport {
+    RustSchemaParityScope {
         schema_version: "org.searchright.rust-schema-parity.v1",
         exact_parity: false,
         rust_owned_roots,
-        root_field_parity: rust_owned_roots,
-        exact_parity_roots: 0,
         known_losses: &[
             "additional-properties closure",
             "collection uniqueness",
             "constant schema-version values",
+            "field requiredness",
+            "field and root types",
+            "nested and reference shapes",
+            "enum, format and default constraints",
             "numeric ranges",
             "string length constraints",
         ],
-        claim_boundary: "Generated Rust schemas match canonical root field names for the registered roots only; exact constraint and semantic parity remains fail-closed.",
+        claim_boundary: "This value declares the registered comparison scope only. Root-property-name results require the compiler test receipt; exact constraint and semantic parity remains fail-closed.",
     }
 }
 
