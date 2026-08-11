@@ -1,0 +1,30 @@
+{
+  "schema_version": "org.searchright.track-compiler-verification.v1",
+  "track_id": "01",
+  "observed_at": "2026-08-12T05:56:10+10:00",
+  "source_revision": "487bc0f0cd952735f2dbc4aafebe1d043b7020ae",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "status": "passed_with_explicit_limits",
+  "checks": [
+    {
+      "command": "cargo test -p evidence-search-contracts -p searchright-contracts -p searchright-study --locked --quiet",
+      "status": "passed",
+      "tests_passed": 10
+    },
+    {
+      "command": "cargo clippy -p evidence-search-contracts -p searchright-contracts -p searchright-study --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/sync_contract_conformance_matrix.py --check",
+      "status": "passed",
+      "contracts": 60,
+      "rust_owned_roots": 9
+    }
+  ],
+  "limits": [
+    "Generated Rust schemas demonstrate root-field parity for nine explicitly registered neutral-core roots, not exact semantic constraint parity.",
+    "The matrix does not establish generated Python or TypeScript packages, installation, publication or downstream consumer conformance.",
+    "Declarative migration checks do not establish representative persisted-data migration execution."
+  ]
+}

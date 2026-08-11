@@ -16,6 +16,7 @@
     "crates/evidence-search-contracts/tests/schema_parity.rs",
     "scripts/sync_schema_surface.py",
     "scripts/sync_contract_conformance_matrix.py",
+    "verification/receipts/track-01-compiler-verification.json",
     "release/public-packages.json",
     "scripts/check_public_package_policy.py",
     "docs/msrv-and-package-policy.md"
@@ -62,6 +63,8 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "runtime_evidence": [
+    "verification/receipts/track-01-compiler-verification.json"
+  ],
   "external_evidence": []
 }
