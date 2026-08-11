@@ -34,12 +34,16 @@ def source_files() -> list[Path]:
     return files
 
 
+def canonical_bytes(path: Path) -> bytes:
+    """Return Git-compatible LF bytes for text while preserving binary payloads."""
+    value = path.read_bytes()
+    if b"\0" in value[:8000]:
+        return value
+    return value.replace(b"\r\n", b"\n")
+
+
 def digest(path: Path) -> str:
-    value = hashlib.sha256()
-    with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b""):
-            value.update(block)
-    return value.hexdigest()
+    return hashlib.sha256(canonical_bytes(path)).hexdigest()
 
 
 def render() -> str:
@@ -60,7 +64,7 @@ def main() -> int:
         print(f"verified {len(source_files())} source files")
         return 0
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(expected, encoding="utf-8")
+    OUTPUT.write_text(expected, encoding="utf-8", newline="\n")
     print(OUTPUT)
     return 0
 
