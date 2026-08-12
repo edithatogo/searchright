@@ -36,6 +36,11 @@ def test_single_track_passes() -> None:
     assert receipt["status"] == "passed"
 
 
+def test_literal_escaped_newlines_are_normalized() -> None:
+    receipt = check(event(body("31").replace("\n", "\\n")), [])
+    assert receipt["status"] == "passed"
+
+
 def test_single_track_rejects_another_track_path() -> None:
     receipt = check(
         event(body("10")),
