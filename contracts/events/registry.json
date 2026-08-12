@@ -10,7 +10,8 @@
       "event_type": "execution_committed",
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,
-      "allowed_payload_keys": ["_schema_version", "commit_id", "receipt_id", "record_count"],
+      "allowed_payload_keys": ["_schema_version", "commit_id", "receipt_id", "record_count", "run_id"],
+      "payload_field_types": {"_schema_version": "integer", "commit_id": "string", "receipt_id": "string", "record_count": "integer", "run_id": "string"},
       "versions": [{"version": 1, "status": "current"}],
       "migrations": []
     },
@@ -19,6 +20,7 @@
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,
       "allowed_payload_keys": ["_schema_version", "amendment_id"],
+      "payload_field_types": {"_schema_version": "integer", "amendment_id": "string"},
       "versions": [{"version": 1, "status": "current"}],
       "migrations": []
     },
@@ -27,6 +29,7 @@
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,
       "allowed_payload_keys": ["_schema_version", "contract_version", "plan_id"],
+      "payload_field_types": {"_schema_version": "integer", "contract_version": "string", "plan_id": "string"},
       "versions": [{"version": 1, "status": "current"}],
       "migrations": []
     },
@@ -35,6 +38,7 @@
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,
       "allowed_payload_keys": ["_schema_version", "status"],
+      "payload_field_types": {"_schema_version": "integer", "status": "string"},
       "versions": [{"version": 1, "status": "current"}],
       "migrations": []
     },
@@ -43,6 +47,7 @@
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,
       "allowed_payload_keys": ["_schema_version", "decision", "final_authority", "record_id", "reviewer_id", "stage"],
+      "payload_field_types": {"_schema_version": "integer", "decision": "string", "final_authority": "boolean", "record_id": "string", "reviewer_id": "string", "stage": "string"},
       "versions": [{"version": 1, "status": "current"}],
       "migrations": []
     },
@@ -51,6 +56,7 @@
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,
       "allowed_payload_keys": ["_schema_version", "provider", "record_count", "run_id", "source_id"],
+      "payload_field_types": {"_schema_version": "integer", "provider": "string", "record_count": "integer", "run_id": "string", "source_id": "string"},
       "versions": [
         {"version": 0, "status": "migration_only"},
         {"version": 1, "status": "current"}

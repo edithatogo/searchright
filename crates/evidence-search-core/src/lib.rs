@@ -7,7 +7,7 @@ mod compiler;
 mod native;
 mod provider;
 
-pub use audit::{AuditError, AuditLedger, AuditVerification};
+pub use audit::{AuditError, AuditLedger, AuditVerification, verify_event_integrity};
 pub use compiler::{COMPILER_VERSION, CompileError, QueryCompiler};
 pub use native::{NATIVE_PARSER_VERSION, parse_native_strategy};
 pub use provider::{

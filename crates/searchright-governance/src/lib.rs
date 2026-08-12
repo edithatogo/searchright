@@ -2,12 +2,19 @@
 
 #![forbid(unsafe_code)]
 
+mod approval;
+
+pub use approval::{
+    ApprovalClock, BoundedLifecycleApprovalRegistry, VerifiedLifecycleApprovalRecord,
+};
+
 use searchright_contracts::{
     DATA_HANDLING_DECISION_SCHEMA_VERSION, DATA_LIFECYCLE_DECISION_SCHEMA_VERSION,
     DataClassification, DataHandlingDecision, DataHandlingRequest, DataLifecycleAction,
     DataLifecycleDecision, DataLifecycleRequest, DataOperationKind, InstitutionalPolicy,
     LifecycleExecutionMode, Validate,
 };
+use sha2::{Digest, Sha256};
 
 /// Durable result returned by a lifecycle-effect sink after an exact apply.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -20,6 +27,10 @@ pub struct LifecycleEffectReceipt {
     pub resulting_head: String,
     /// Lowercase SHA-256 of the durable receipt bytes.
     pub receipt_digest: String,
+    /// SHA-256 binding the exact requested effects.
+    pub request_digest: String,
+    /// SHA-256 binding the exact authorized decision.
+    pub decision_digest: String,
 }
 
 /// Storage boundary capable of atomically applying exact lifecycle effects.
@@ -191,7 +202,54 @@ pub fn execute_lifecycle(
     {
         return Err(LifecycleExecutionError::InvalidReceipt);
     }
+    let request_digest = request.effects_digest();
+    let decision_digest =
+        lifecycle_decision_digest(&decision).map_err(LifecycleExecutionError::Sink)?;
+    if receipt.request_digest != request_digest
+        || receipt.decision_digest != decision_digest
+        || receipt.resulting_head
+            != lifecycle_resulting_head(expected_head, &request_digest, &decision_digest)
+    {
+        return Err(LifecycleExecutionError::InvalidReceipt);
+    }
     Ok(receipt)
+}
+
+/// Digest the exact serialized lifecycle decision for durable-effect binding.
+pub fn lifecycle_decision_digest(decision: &DataLifecycleDecision) -> Result<String, String> {
+    serde_json::to_vec(decision)
+        .map(|bytes| hex_digest(&Sha256::digest(bytes)))
+        .map_err(|error| error.to_string())
+}
+
+/// Derive the lifecycle head from the prior head and exact request/decision digests.
+#[must_use]
+pub fn lifecycle_resulting_head(
+    previous_head: &str,
+    request_digest: &str,
+    decision_digest: &str,
+) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(previous_head.as_bytes());
+    hasher.update([0]);
+    hasher.update(request_digest.as_bytes());
+    hasher.update([0]);
+    hasher.update(decision_digest.as_bytes());
+    hex_digest(&hasher.finalize())
+}
+
+fn hex_digest(bytes: &[u8]) -> String {
+    const HEX: &[u8; 16] = b"0123456789abcdef";
+    let mut output = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        output.push(char::from(
+            *HEX.get(usize::from(byte >> 4)).unwrap_or(&b'?'),
+        ));
+        output.push(char::from(
+            *HEX.get(usize::from(byte & 0x0f)).unwrap_or(&b'?'),
+        ));
+    }
+    output
 }
 
 fn evaluate_lifecycle_inner(
@@ -927,12 +985,16 @@ mod tests {
                 return Err("unauthorised decision".to_owned());
             }
             self.apply_count += 1;
-            self.head = format!("head-{}", self.apply_count);
+            let request_digest = request.effects_digest();
+            let decision_digest = lifecycle_decision_digest(decision)?;
+            self.head = lifecycle_resulting_head(expected_head, &request_digest, &decision_digest);
             Ok(LifecycleEffectReceipt {
                 request_id: request.request_id.clone(),
                 previous_head: expected_head.to_owned(),
                 resulting_head: self.head.clone(),
                 receipt_digest: "a".repeat(64),
+                request_digest,
+                decision_digest,
             })
         }
     }

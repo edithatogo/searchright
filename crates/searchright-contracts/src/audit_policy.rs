@@ -50,7 +50,13 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
             &[0, 1],
         ),
         "execution_committed" => (
-            &["_schema_version", "commit_id", "receipt_id", "record_count"],
+            &[
+                "_schema_version",
+                "commit_id",
+                "receipt_id",
+                "record_count",
+                "run_id",
+            ],
             &[1],
         ),
         other => {
@@ -79,7 +85,7 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
         )));
     }
     if event.event_type == "execution_committed" {
-        for key in ["commit_id", "receipt_id", "record_count"] {
+        for key in ["commit_id", "receipt_id", "record_count", "run_id"] {
             if !payload.contains_key(key) {
                 return Err(ContractError::Invariant(format!(
                     "audit payload key `{key}` is required"
@@ -91,12 +97,13 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
         if key == "_schema_version" {
             continue;
         }
-        let valid = if key == "record_count" {
-            value.as_u64().is_some()
-        } else {
-            value.as_str().is_some_and(|text| {
+        let valid = match payload_field_type(&event.event_type, key) {
+            Some("integer") => value.as_u64().is_some(),
+            Some("boolean") => value.is_boolean(),
+            Some("string") => value.as_str().is_some_and(|text| {
                 !text.trim().is_empty() && text.len() <= 512 && !text.chars().any(char::is_control)
-            })
+            }),
+            _ => false,
         };
         if !valid {
             return Err(ContractError::Invariant(format!(
@@ -105,6 +112,16 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
         }
     }
     Ok(())
+}
+
+fn payload_field_type(event_type: &str, key: &str) -> Option<&'static str> {
+    if key == "_schema_version" || key == "record_count" {
+        return Some("integer");
+    }
+    if event_type == "screening_decision_recorded" && key == "final_authority" {
+        return Some("boolean");
+    }
+    Some("string")
 }
 
 fn reject_prohibited_keys(value: &Value) -> Result<(), ContractError> {
@@ -201,7 +218,7 @@ mod tests {
             ),
             (
                 "screening_decision_recorded",
-                json!({"_schema_version": 1, "decision": "include", "final_authority": "human", "record_id": "r", "reviewer_id": "u", "stage": "title"}),
+                json!({"_schema_version": 1, "decision": "include", "final_authority": true, "record_id": "r", "reviewer_id": "u", "stage": "title"}),
             ),
             (
                 "search_run_completed",
@@ -209,12 +226,26 @@ mod tests {
             ),
             (
                 "execution_committed",
-                json!({"_schema_version": 1, "commit_id": "c", "receipt_id": "receipt", "record_count": 0}),
+                json!({"_schema_version": 1, "commit_id": "c", "receipt_id": "receipt", "record_count": 0, "run_id": "run"}),
             ),
         ];
         for (kind, payload) in cases {
             assert!(validate_registered_audit_event(&event(kind, payload)).is_ok());
         }
+    }
+
+    #[test]
+    fn screening_final_authority_is_boolean() {
+        assert!(validate_registered_audit_event(&event(
+            "screening_decision_recorded",
+            json!({"decision": "include", "final_authority": true, "record_id": "r", "reviewer_id": "u", "stage": "title"}),
+        ))
+        .is_ok());
+        assert!(validate_registered_audit_event(&event(
+            "screening_decision_recorded",
+            json!({"decision": "include", "final_authority": "human", "record_id": "r", "reviewer_id": "u", "stage": "title"}),
+        ))
+        .is_err());
     }
 
     #[test]
@@ -293,6 +324,14 @@ mod tests {
                                 .iter()
                                 .filter_map(|version| version.get("version")?.as_u64())
                                 .collect::<BTreeSet<_>>(),
+                            entry
+                                .get("payload_field_types")?
+                                .as_object()?
+                                .iter()
+                                .filter_map(|(key, value)| {
+                                    Some((key.to_owned(), value.as_str()?.to_owned()))
+                                })
+                                .collect::<BTreeSet<_>>(),
                         ))
                     })
                     .collect::<BTreeSet<_>>()
@@ -301,23 +340,43 @@ mod tests {
         let expected = [
             (
                 "execution_committed",
-                &["_schema_version", "commit_id", "receipt_id", "record_count"][..],
+                &[
+                    "_schema_version",
+                    "commit_id",
+                    "receipt_id",
+                    "record_count",
+                    "run_id",
+                ][..],
                 &[1][..],
+                &[
+                    ("_schema_version", "integer"),
+                    ("commit_id", "string"),
+                    ("receipt_id", "string"),
+                    ("record_count", "integer"),
+                    ("run_id", "string"),
+                ][..],
             ),
             (
                 "protocol_amended",
                 &["_schema_version", "amendment_id"][..],
                 &[1][..],
+                &[("_schema_version", "integer"), ("amendment_id", "string")][..],
             ),
             (
                 "review_plan_validated",
                 &["_schema_version", "contract_version", "plan_id"][..],
                 &[1][..],
+                &[
+                    ("_schema_version", "integer"),
+                    ("contract_version", "string"),
+                    ("plan_id", "string"),
+                ][..],
             ),
             (
                 "review_status_changed",
                 &["_schema_version", "status"][..],
                 &[1][..],
+                &[("_schema_version", "integer"), ("status", "string")][..],
             ),
             (
                 "screening_decision_recorded",
@@ -330,6 +389,14 @@ mod tests {
                     "stage",
                 ][..],
                 &[1][..],
+                &[
+                    ("_schema_version", "integer"),
+                    ("decision", "string"),
+                    ("final_authority", "boolean"),
+                    ("record_id", "string"),
+                    ("reviewer_id", "string"),
+                    ("stage", "string"),
+                ][..],
             ),
             (
                 "search_run_completed",
@@ -341,14 +408,25 @@ mod tests {
                     "source_id",
                 ][..],
                 &[0, 1][..],
+                &[
+                    ("_schema_version", "integer"),
+                    ("provider", "string"),
+                    ("record_count", "integer"),
+                    ("run_id", "string"),
+                    ("source_id", "string"),
+                ][..],
             ),
         ]
         .into_iter()
-        .map(|(kind, keys, versions)| {
+        .map(|(kind, keys, versions, field_types)| {
             (
                 kind.to_owned(),
                 keys.iter().map(|value| (*value).to_owned()).collect(),
                 versions.iter().copied().collect(),
+                field_types
+                    .iter()
+                    .map(|(key, value)| ((*key).to_owned(), (*value).to_owned()))
+                    .collect(),
             )
         })
         .collect::<BTreeSet<_>>();

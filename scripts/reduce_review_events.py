@@ -12,6 +12,7 @@ import argparse
 import copy
 import hashlib
 import json
+import unicodedata
 from collections import Counter
 from collections.abc import Iterable
 from pathlib import Path
@@ -65,6 +66,16 @@ def load_event_registry() -> tuple[dict[str, dict[str, Any]], int, set[str]]:
         event_type = row.get("event_type")
         if not isinstance(event_type, str) or not event_type or event_type in rows:
             raise ReductionError("event registry contains an invalid or duplicate event type")
+        allowed_keys = row.get("allowed_payload_keys")
+        field_types = row.get("payload_field_types")
+        if (
+            not isinstance(allowed_keys, list)
+            or not all(isinstance(key, str) and key for key in allowed_keys)
+            or not isinstance(field_types, dict)
+            or set(field_types) != set(allowed_keys)
+            or not all(value in {"boolean", "integer", "string"} for value in field_types.values())
+        ):
+            raise ReductionError(f"event registry field types are invalid for {event_type}")
         rows[event_type] = row
     maximum_payload_bytes = raw.get("maximum_payload_bytes")
     prohibited_payload_keys = raw.get("prohibited_payload_keys")
@@ -159,6 +170,24 @@ def normalize_payload(
         if not isinstance(next_version, int) or next_version <= version:
             raise ReductionError(f"event_type {event_type} migration does not advance")
         version = next_version
+    field_types = row["payload_field_types"]
+    for key, value in normalized.items():
+        expected = field_types[key]
+        valid = (
+            (expected == "boolean" and isinstance(value, bool))
+            or (expected == "integer" and isinstance(value, int) and not isinstance(value, bool) and value >= 0)
+            or (
+                expected == "string"
+                and isinstance(value, str)
+                and bool(value.strip())
+                and len(value) <= 512
+                and not any(unicodedata.category(character) == "Cc" for character in value)
+            )
+        )
+        if not valid:
+            raise ReductionError(
+                f"event_type {event_type} payload key {key} is not a valid {expected}"
+            )
     return normalized
 
 
@@ -412,6 +441,14 @@ def self_test() -> dict[str, Any]:
         errors.append("prohibited payload key was accepted")
     except ReductionError:
         pass
+    wrong_authority_type = copy.deepcopy(events[2])
+    wrong_authority_type["payload"]["final_authority"] = "human"
+    wrong_authority_type["previous_hash"] = GENESIS
+    try:
+        reduce_events([wrong_authority_type], h3)
+        errors.append("string final_authority was accepted")
+    except ReductionError:
+        pass
     return {
         "schema_version": "org.searchright.review-state-reducer-self-test.v1",
         "status": "failed" if errors else "passed",
@@ -423,6 +460,7 @@ def self_test() -> dict[str, Any]:
             "unknown_event_type_rejection",
             "event_registry_catalogue_parity",
             "prohibited_payload_key_rejection",
+            "typed_final_authority_rejection",
         ],
         "errors": errors,
         "example": first,
