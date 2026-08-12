@@ -183,22 +183,23 @@ MoSCoW requirements and **38 ordered tracks** spanning foundation through a
 version 1.0 maturity dossier. Every track has `spec.md`, a four-phase `plan.md`,
 `metadata.json`, `evidence.json`, source work and higher-evidence blockers.
 
-The canonical roadmap deterministically renders **568 GitHub work items** in a four-level hierarchy:
+The canonical roadmap deterministically renders **583 GitHub work items** in a four-level hierarchy:
 
 - one roadmap epic;
 - 38 track issues;
 - 152 phase subissues, four under each track;
-- 377 task subissues corresponding to every top-level Conductor task.
+- 392 task subissues corresponding to every top-level Conductor task.
 
 Remote mutation is dry-run first and requires an explicit workflow input, a
 protected write environment, issue/project scopes, a clean Git tree and a
 second environment opt-in. A declarative GitHub Project v2 manifest owns 12
 custom fields and six views, including a separate implementation-gap view; an additive synchroniser creates or updates the
-Project and places all 568 issue nodes into it without deleting or archiving
+Project and places all 583 issue nodes into it without deleting or archiving
 remote work. A one-command bootstrap controller can create the remote repository,
 apply settings and the main-branch ruleset, synchronise the issue hierarchy, and
-create/populate the Project. No remote Searchright repository, issue or Project
-is claimed by the local source artefacts until an observed apply receipt exists.
+create/populate the Project. The public Searchright repository, issue hierarchy
+and Project exist; exact-current projection parity still requires the observed
+post-apply audit receipt named by the launch roadmap.
 
 The repository prepares host-aware Conductor installation scripts and records the
 observed upstream version. A compatible Gemini, Antigravity or Claude host was

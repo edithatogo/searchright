@@ -27,6 +27,7 @@
       "conductor/roadmap-coverage.json",
       "conductor/tracks.md",
       "conductor/maturity-dossier.json",
+      "conductor/launch-preparation-roadmap.json",
       "release/public-packages.json",
       "CODEX_HANDOFF.md"
     ],
@@ -88,6 +89,7 @@
     "benchmarks/methodology/manifest.json",
     "release/rehearsal.json",
     "conductor/maturity-dossier.json",
+    "conductor/launch-preparation-roadmap.json",
     "verification/vertical-slice/README.md",
     "verification/harness-matrix.json",
     "requirements/rust-tools.json"
@@ -214,6 +216,10 @@
       "role": "version 1.0 evidence domains and decision ceiling"
     },
     {
+      "path": "conductor/launch-preparation-roadmap.json",
+      "role": "dependency-ordered executable hardened and polished launch-preparation work packages"
+    },
+    {
       "path": "verification/harness-matrix.json",
       "role": "configured assurance dimensions and claim boundaries"
     },
@@ -255,5 +261,5 @@
     }
   ],
   "schema_version": "org.searchright.context-manifest.v1",
-  "updated_at": "2026-08-09"
+  "updated_at": "2026-08-12"
 }

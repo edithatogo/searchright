@@ -1,18 +1,13 @@
-<!-- searchright-issue-key: track-30-phase-2-task-01 -->
-# Track 30 / Phase 2 / Task 01
+<!-- searchright-issue-key: track-30-phase-3-task-16 -->
+# Track 30 / Phase 3 / Task 16
 
-Parent phase key: `track-30-phase-2`
+Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/check_maturity_dossier.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/generate_evidence_debt.py --check`
-  - [x] `python scripts/check_gate_catalog.py --check`
-  - [x] `python scripts/check_launch_preparation_roadmap.py`
+- [ ] LP-013 / Track 33: execute encrypted restore, audit-chain, incident, cancellation and deployment-SLO rehearsals against the target profile.
 
 ## Completion and evidence contract
 

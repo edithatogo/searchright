@@ -1,18 +1,13 @@
-<!-- searchright-issue-key: track-30-phase-2-task-01 -->
-# Track 30 / Phase 2 / Task 01
+<!-- searchright-issue-key: track-30-phase-3-task-11 -->
+# Track 30 / Phase 3 / Task 11
 
-Parent phase key: `track-30-phase-2`
+Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/check_maturity_dossier.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/generate_evidence_debt.py --check`
-  - [x] `python scripts/check_gate_catalog.py --check`
-  - [x] `python scripts/check_launch_preparation_roadmap.py`
+- [ ] LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence.
 
 ## Completion and evidence contract
 

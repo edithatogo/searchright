@@ -8,8 +8,8 @@ Conductor programme. Conductor and its evidence records remain canonical.
 - one roadmap epic;
 - 38 Conductor track issues;
 - 152 nested phase subissues;
-- 377 nested task subissues corresponding to every top-level Conductor task;
-- 568 Project items and 567 native parent-child relationships in total.
+- 392 nested task subissues corresponding to every top-level Conductor task;
+- 583 Project items and 582 native parent-child relationships in total.
 
 ## Evidence rules
 
@@ -29,3 +29,8 @@ explicit tokens and a clean Git tree.
 Observed remote parity is checked with the read-only
 `scripts/audit_github_control_plane.py`. Remote IDs and receipts remain outside
 canonical source under ignored `.searchright/receipts/`.
+
+Track 30 Phase 3 contains the executable hardened/polished launch-preparation
+queue. Each task identifies one owning track and remains evidence-blocked until
+the commands, receipts and exit criterion in
+`conductor/launch-preparation-roadmap.json` are satisfied.

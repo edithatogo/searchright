@@ -101,11 +101,11 @@ individual symbol/test/gate mappings; other assertions remain conservatively
 track-level. No track is complete merely because its source paths, GitHub issues
 or Project items exist.
 
-The planning projection contains 568 nodes: one epic, 38 track issues, 152
-phase subissues and 377 task subissues. The delivery Project separates
+The planning projection contains 583 nodes: one epic, 38 track issues, 152
+phase subissues and 392 task subissues. The delivery Project separates
 implementation state from evidence level and has 13 fields and six views. A
 second, non-mutating portfolio projection tracks cross-repository contracts,
-licence decisions, migrations and the release train without importing all 568
+licence decisions, migrations and the release train without importing all 583
 work items.
 
 The local source has added neutral contracts, four provider baselines, a
@@ -115,20 +115,32 @@ passports, companion change packets, a frozen contract surface and public-packag
 policy. These improvements advance multiple tracks but do not erase their open
 compiler, fixture, live, downstream and external gates.
 
-## Near-term execution order
+## Executable launch-preparation order
 
-1. Generate `Cargo.lock`, compile and repair the complete workspace.
-2. Run provider fixture golden tests and finish one complete PubMed vertical
-   slice before broadening provider scope.
-3. Add database-specific native parsers and independently reviewed query gold
-   sets.
-4. Prove the neutral contract/core API in Sourceright and CiteWeft consumer
-   canaries.
-5. Execute the prepared UOGTO, VOIAGE and agent-repository migrations without
-   deleting rollback paths.
-6. Run sealed methodological benchmarks and human information-specialist review.
-7. Apply the GitHub control plane, release train and registry submissions only
-   after the required receipts exist.
+The canonical machine-readable launch path is
+`conductor/launch-preparation-roadmap.json`. It contains 16 dependency-ordered
+work packages. Each package has exactly one owning track, named commands,
+required receipts and a fail-closed exit criterion:
+
+1. MCP schemas and current/previous-client transcripts (Track 10).
+2. MCP resources, prompts, tasks, MRTR, pagination and cancellation (Track 24).
+3. Authenticated Streamable HTTP and tenancy controls (Track 34).
+4. Provider transport security, policy review and authorised live canaries (Track 04).
+5. Query fidelity, named filters and reviewed strategies (Track 02).
+6. Audit/store recovery, retention, export and deletion (Track 05).
+7. Import, deduplication, linkage and screening fixtures (Track 06).
+8. PRISMA/PRESS and accessible reporting polish (Track 08).
+9. CiteWeft/Sourceright canaries, dual-run parity and rollback (Track 32).
+10. Coverage, mutation, fuzz, formal and dependency-trust maturity gates (Track 16).
+11. Privacy, accessibility and usability evaluation (Track 28).
+12. Preregistered sealed methodological evaluation (Track 29).
+13. Encrypted restore, incident and SLO rehearsals (Track 33).
+14. Generated SDKs and fixture-backed launch documentation (Track 35).
+15. Reproducible release candidate, pilots and rollback (Track 36).
+16. Accountable maturity decision and separately approved submissions (Track 37).
+
+Execution still uses one track per PR. Cross-track dependencies coordinate the
+order; they are not permission for omnibus pull requests.
 
 `PROJECT_STATUS.md`, assertion-level traceability and machine-readable receipts
 are the claim authority.

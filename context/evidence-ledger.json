@@ -117,7 +117,7 @@
     {
       "blockers": [
         "Durable bootstrap/audit receipt covers the former 568-node projection",
-        "Current 567-node projection requires a fresh exact-main audit"
+        "Current 583-node projection requires a fresh exact-main audit"
       ],
       "domain": "github_control_plane",
       "level": "source_verified",
@@ -125,7 +125,7 @@
     },
     {
       "blockers": [
-        "Remote repository and apply receipt exist; current 567-node projection requires a fresh exact-main audit"
+        "Remote repository and apply receipt exist; current 583-node projection requires a fresh exact-main audit"
       ],
       "domain": "github_issue_hierarchy",
       "level": "source_verified",
