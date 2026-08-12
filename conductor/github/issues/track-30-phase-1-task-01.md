@@ -17,6 +17,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `verification/gate-catalog.json`
   - [x] Present source path: `scripts/check_gate_catalog.py`
   - [x] Present source path: `docs/quality/evidence-debt.md`
+  - [x] Present source path: `conductor/launch-preparation-roadmap.json`
+  - [x] Present source path: `scripts/check_launch_preparation_roadmap.py`
+  - [x] Present source path: `tests/test_launch_preparation_roadmap.py`
   - [x] Assertion ledger: `conductor/tracks/30-maturity-gap-closure/traceability.json`
 
 ## Completion and evidence contract

@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: track-30 -->
 # Track 30: Maturity gate and gap closure
 
-Maintain one evidence-scaled gap register and block premature release claims while remaining domains are implemented.
+Maintain one evidence-scaled gap register and an executable hardened/polished launch-preparation dependency graph while blocking premature release claims.
 
 ## Source of truth
 
@@ -16,7 +16,7 @@ Maintain one evidence-scaled gap register and block premature release claims whi
 - Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `25, 26, 27, 28, 29`
-- Requirements: `SR-050`
+- Requirements: `SR-050, SR-093`
 - External approval required: `true`
 
 ## Phase subissues

@@ -13,8 +13,8 @@ a coordination projection and observed remote evidence surface.
 - `conductor/github/repository-settings.json`: repository, security and ruleset intent.
 - `CODEX_HANDOFF.md`: compiler, remote creation and Project setup contract.
 
-The current projection is one roadmap epic, 38 tracks, 152 phases and 376
-canonical top-level tasks: 567 issues/Project items and 566 native parent-child
+The current projection is one roadmap epic, 38 tracks, 152 phases and 392
+canonical top-level tasks: 583 issues/Project items and 582 native parent-child
 relationships.
 
 ## Mutation controls

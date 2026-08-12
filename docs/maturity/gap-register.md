@@ -22,3 +22,9 @@ Conductor track records the promoted evidence level.
 No unchecked row can be waived by changing documentation alone. Exceptions must
 be recorded as explicit release risks, approved by a human and remain visible in
 the final release decision.
+
+The executable dependency order, owning tracks, commands, required receipts and
+exit criteria are canonical in `conductor/launch-preparation-roadmap.json` and
+validated by `scripts/check_launch_preparation_roadmap.py`. Track 30 Phase 3
+projects each work package as a native task subissue. Those coordination tasks
+do not supersede the owning track or promote its evidence.

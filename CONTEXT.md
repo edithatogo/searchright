@@ -23,7 +23,8 @@ layers.
    `integration/release-train.json`, the companion change packet and the
    strategic portfolio projection.
 9. For release or maturity work, load `release/rehearsal.json` and
-   `conductor/maturity-dossier.json`.
+   `conductor/maturity-dossier.json`; use
+   `conductor/launch-preparation-roadmap.json` for executable launch sequencing.
 
 ## Architectural boundaries
 

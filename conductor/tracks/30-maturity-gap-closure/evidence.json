@@ -5,7 +5,7 @@
   "status": "partially_implemented",
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-08-12",
   "source_evidence": [
     "docs/maturity/gap-register.md",
     "conductor/maturity-dossier.json",
@@ -15,22 +15,43 @@
     "scripts/generate_evidence_debt.py",
     "verification/gate-catalog.json",
     "scripts/check_gate_catalog.py",
-    "docs/quality/evidence-debt.md"
+    "docs/quality/evidence-debt.md",
+    "conductor/launch-preparation-roadmap.json",
+    "scripts/check_launch_preparation_roadmap.py",
+    "tests/test_launch_preparation_roadmap.py"
   ],
   "traceability": "conductor/tracks/30-maturity-gap-closure/traceability.json",
   "static_checks": [
     "python scripts/check_maturity_dossier.py",
     "python scripts/check_roadmap_coverage.py",
     "python scripts/generate_evidence_debt.py --check",
-    "python scripts/check_gate_catalog.py --check"
+    "python scripts/check_gate_catalog.py --check",
+    "python scripts/check_launch_preparation_roadmap.py"
   ],
   "requirements": [
-    "SR-050"
+    "SR-050",
+    "SR-093"
   ],
   "blockers": [
     "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
     "Review and approve any explicit release-risk exception without hiding the open gap.",
-    "Keep autonomous end-to-end review and final agent exclusions outside the release claim."
+    "Keep autonomous end-to-end review and final agent exclusions outside the release claim.",
+    "LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.",
+    "LP-002 / Track 24: implement resources, prompts, tasks, MRTR, subscriptions, pagination and cancellation; pass all-feature MCP tests and preserve the advanced-capabilities receipt.",
+    "LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.",
+    "LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval.",
+    "LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.",
+    "LP-006 / Track 05: harden audit/store crash recovery, retention, export and deletion semantics and preserve fault/policy receipts.",
+    "LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites.",
+    "LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence.",
+    "LP-009 / Track 32: execute exact-revision CiteWeft and Sourceright compiled canaries, dual-run parity and rollback without deleting recovery paths.",
+    "LP-010 / Track 16: exceed the governed maturity coverage target, triage mutation/fuzz/formal results, resolve or re-approve dependency exemptions and obtain an exact-candidate green matrix.",
+    "LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts.",
+    "LP-012 / Track 29: execute the preregistered sealed methodological evaluation and publish limitations, subgroup results and the accountable response matrix.",
+    "LP-013 / Track 33: execute encrypted restore, audit-chain, incident, cancellation and deployment-SLO rehearsals against the target profile.",
+    "LP-014 / Track 35: generate and install-smoke locked Python/TypeScript SDKs and complete fixture-backed tutorial walkthroughs.",
+    "LP-015 / Track 36: run the reproducible signed/attested release-candidate, bounded pilots and rollback rehearsal without automatic publication.",
+    "LP-016 / Track 37: aggregate current evidence, adjudicate every residual risk and perform separately approved release/registry actions only after a not-ready/ready decision."
   ],
   "claim_boundary": "The gap register is source-verified planning evidence; it cannot close the gaps it records. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
@@ -49,6 +70,22 @@
       "track-30-phase-3-task-01",
       "track-30-phase-3-task-02",
       "track-30-phase-3-task-03",
+      "track-30-phase-3-task-04",
+      "track-30-phase-3-task-05",
+      "track-30-phase-3-task-06",
+      "track-30-phase-3-task-07",
+      "track-30-phase-3-task-08",
+      "track-30-phase-3-task-09",
+      "track-30-phase-3-task-10",
+      "track-30-phase-3-task-11",
+      "track-30-phase-3-task-12",
+      "track-30-phase-3-task-13",
+      "track-30-phase-3-task-14",
+      "track-30-phase-3-task-15",
+      "track-30-phase-3-task-16",
+      "track-30-phase-3-task-17",
+      "track-30-phase-3-task-18",
+      "track-30-phase-3-task-19",
       "track-30-phase-4-task-01",
       "track-30-phase-4-task-02",
       "track-30-phase-4-task-03",

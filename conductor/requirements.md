@@ -113,6 +113,7 @@
 | SR-090 | Must | Staged pilot deployments | 36 | Fixture-only local, institutional self-hosted and remote single-tenant pilots use explicit data, success, incident, rollback and exit contracts. | Approved pilot protocols, results and exit decisions. | A pilot is not production readiness. |
 | SR-091 | Should | Ecosystem and registry rehearsal | 36 | Crates, MCP, Glama, Smithery, GitHub Release and software-paper packets are validated against the exact candidate before submission. | Rehearsal matrix and approval-gated submission receipts. | Registry metadata is not submission or acceptance. |
 | SR-092 | Must | Final mature 1.0 release decision | 37 | Version 1.0 requires every maturity domain to have current evidence, no critical blocker, accountable review and rollback/support plans. | Signed release-decision receipt tied to commit, candidate and external evidence. | Closed issues, a Project status or a signed tag alone cannot establish maturity. |
+| SR-093 | Must | Executable hardened launch-preparation roadmap | 30 | Launch preparation is decomposed into dependency-ordered work packages with exactly one owning track, executable checks, required receipts and fail-closed exit criteria. | Static roadmap validation, native task-subissue projection and post-apply control-plane audit. | A planned or closed task cannot substitute for its named compiler, live, downstream, human, operational or external evidence. |
 
 
 ## Evidence levels

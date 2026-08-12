@@ -269,7 +269,7 @@ material and evidence-level claim gates.
 ## GitHub delivery and portfolio control planes
 
 Conductor remains canonical planning state. The deterministic renderer projects
-one roadmap epic, 38 track issues, 152 phase subissues and 376 task subissues.
+one roadmap epic, 38 track issues, 152 phase subissues and 392 task subissues.
 The delivery Project owns 13 custom fields and six views and explicitly separates
 implementation state from evidence level.
 

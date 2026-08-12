@@ -172,7 +172,7 @@
       "covered_assertions": [
         "T16-A004",
         "T16-A006",
-        "T30-A002"
+        "T30-A003"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -189,7 +189,7 @@
       "covered_assertions": [
         "T16-A006",
         "T30-A001",
-        "T30-A002"
+        "T30-A003"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -824,8 +824,8 @@
       "compiler_required": false,
       "covered_assertions": [
         "T30-A001",
-        "T30-A002",
         "T30-A003",
+        "T30-A004",
         "T37-A001",
         "T37-A002",
         "T37-A003"
@@ -896,8 +896,8 @@
       "compiler_required": false,
       "covered_assertions": [
         "T30-A001",
-        "T30-A002",
         "T30-A003",
+        "T30-A004",
         "T36-A001",
         "T36-A002",
         "T36-A003",
@@ -911,6 +911,22 @@
       "harness_gate": true,
       "network": false,
       "script": "scripts/check_maturity_dossier.py"
+    },
+    {
+      "category": "claim_evidence",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_launch_preparation_roadmap.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T30-A001",
+        "T30-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-LAUNCH-PREPARATION-ROADMAP",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_launch_preparation_roadmap.py"
     },
     {
       "category": "claim_evidence",

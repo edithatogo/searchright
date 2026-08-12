@@ -1,18 +1,13 @@
-<!-- searchright-issue-key: track-30-phase-2-task-01 -->
-# Track 30 / Phase 2 / Task 01
+<!-- searchright-issue-key: track-30-phase-3-task-06 -->
+# Track 30 / Phase 3 / Task 06
 
-Parent phase key: `track-30-phase-2`
+Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/check_maturity_dossier.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/generate_evidence_debt.py --check`
-  - [x] `python scripts/check_gate_catalog.py --check`
-  - [x] `python scripts/check_launch_preparation_roadmap.py`
+- [ ] LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.
 
 ## Completion and evidence contract
 

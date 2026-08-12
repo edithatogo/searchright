@@ -1,0 +1,258 @@
+{
+  "schema_version": "org.searchright.launch-preparation-roadmap.v1",
+  "target": "hardened_polished_launch_preparation",
+  "status": "not_ready",
+  "claim_boundary": "This is an executable coordination plan. A checked task, passing command or closed GitHub issue cannot substitute for the named compiler, live, downstream, human, operational or external receipt.",
+  "work_packages": [
+    {
+      "id": "LP-001",
+      "title": "Complete field-level MCP schemas and compatibility transcripts",
+      "owner_track": "10",
+      "depends_on": [],
+      "commands": [
+        "cargo test -p searchright-mcp --all-targets --locked",
+        "cargo clippy -p searchright-mcp --all-targets --all-features --locked -- -D warnings",
+        "python scripts/mcp_smoke.py --receipt verification/receipts/mcp-2026-07-28-stdio.json target/debug/searchright-mcp"
+      ],
+      "required_receipts": [
+        "verification/receipts/mcp-2026-07-28-stdio.json",
+        "verification/receipts/mcp-2025-11-25-stdio.json"
+      ],
+      "exit_criterion": "All 31 tools expose field-complete success schemas and official current/previous-era clients preserve structured results and governed errors.",
+      "external_gate": false
+    },
+    {
+      "id": "LP-002",
+      "title": "Implement MCP resources, prompts, tasks, MRTR and cancellation",
+      "owner_track": "24",
+      "depends_on": ["LP-001"],
+      "commands": [
+        "cargo test -p searchright-mcp --all-targets --all-features --locked",
+        "python scripts/check_cli_mcp_parity.py"
+      ],
+      "required_receipts": ["verification/receipts/mcp-advanced-capabilities.json"],
+      "exit_criterion": "Capability discovery, pagination, subscriptions, tasks, MRTR and cancellation pass bounded compatibility and interruption tests without implicit authority.",
+      "external_gate": false
+    },
+    {
+      "id": "LP-003",
+      "title": "Implement authenticated Streamable HTTP and tenancy controls",
+      "owner_track": "34",
+      "depends_on": ["LP-002", "LP-011"],
+      "commands": [
+        "cargo test --workspace --all-features --locked",
+        "python scripts/check_default_deny.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/remote-mcp-auth-conformance.json",
+        "verification/receipts/remote-mcp-tenancy-adversarial.json"
+      ],
+      "exit_criterion": "Issuer, principal, tenant, region, scope, rate, replay, concurrency and approval controls pass adversarial deployment tests and rollback rehearsal.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-004",
+      "title": "Close provider transport security and authorised live canaries",
+      "owner_track": "04",
+      "depends_on": ["LP-007"],
+      "commands": [
+        "cargo test -p evidence-search-core -p searchright-connectors --all-targets --all-features --locked",
+        "python scripts/check_provider_contract_baselines.py",
+        "python scripts/check_provider_policies.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/provider-dns-pinning-adversarial.json",
+        "verification/receipts/provider-live-canaries-redacted.json"
+      ],
+      "exit_criterion": "Every claimed provider has deterministic fixtures, DNS resolution/connection pinning, approved policy and an authorised redacted live receipt.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-005",
+      "title": "Finish portable query fidelity and independently reviewed strategies",
+      "owner_track": "02",
+      "depends_on": [],
+      "commands": [
+        "cargo test -p evidence-search-core --all-targets --all-features --locked",
+        "python scripts/check_native_query_corpus.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/query-dialect-conformance.json",
+        "verification/receipts/press-strategy-review.json"
+      ],
+      "exit_criterion": "Versioned named filters and supported dialect semantics have complete loss reports, property tests and accountable information-specialist review.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-006",
+      "title": "Harden audit, storage, retention and recovery semantics",
+      "owner_track": "05",
+      "depends_on": [],
+      "commands": [
+        "cargo test -p evidence-search-core -p searchright-store --all-targets --locked",
+        "python scripts/recovery_rehearsal.py --self-test"
+      ],
+      "required_receipts": [
+        "verification/receipts/store-fault-recovery.json",
+        "verification/receipts/retention-export-delete-policy.json"
+      ],
+      "exit_criterion": "Crash, restart, concurrency, retention, export and deletion scenarios are transactional, replayable and bound to reviewed policy.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-007",
+      "title": "Complete import, deduplication, linkage and screening fixtures",
+      "owner_track": "06",
+      "depends_on": ["LP-006"],
+      "commands": [
+        "cargo test -p searchright-contracts -p searchright-dedup -p searchright-study -p searchright-screening --all-targets --locked"
+      ],
+      "required_receipts": ["verification/receipts/review-workflow-fixture-suite.json"],
+      "exit_criterion": "Representative imports round-trip with provenance, deduplication is permutation-safe, linkage remains explicit and governed screening scenarios complete without autonomous exclusions.",
+      "external_gate": false
+    },
+    {
+      "id": "LP-008",
+      "title": "Polish PRISMA, PRESS and accessible reporting outputs",
+      "owner_track": "08",
+      "depends_on": ["LP-005", "LP-007"],
+      "commands": [
+        "cargo test -p searchright-prisma -p searchright-diagnostics --all-targets --locked"
+      ],
+      "required_receipts": ["verification/receipts/report-rendering-compatibility.json"],
+      "exit_criterion": "PRISMA arithmetic, PRISMA-S evidence mapping, PRESS responses and accessible deterministic renderings pass complete fixture and snapshot suites.",
+      "external_gate": false
+    },
+    {
+      "id": "LP-009",
+      "title": "Execute CiteWeft and Sourceright downstream canaries",
+      "owner_track": "32",
+      "depends_on": ["LP-001", "LP-004", "LP-007"],
+      "commands": [
+        "python scripts/check_consumer_contracts.py",
+        "python scripts/check_release_train.py",
+        "python scripts/check_sourceright_migration.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/citeweft-consumer-canary.json",
+        "verification/receipts/sourceright-dual-run-rollback.json"
+      ],
+      "exit_criterion": "Exact producer/consumer revisions pass compiled canaries, dual-run parity and rollback without deleting downstream recovery paths.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-010",
+      "title": "Raise quality evidence to launch-candidate thresholds",
+      "owner_track": "16",
+      "depends_on": ["LP-001", "LP-004", "LP-007", "LP-008"],
+      "commands": [
+        "cargo test --workspace --all-features --locked",
+        "cargo clippy --workspace --all-targets --all-features --locked -- -D warnings",
+        "python scripts/check_coverage_policy.py",
+        "python scripts/check_cargo_vet_governance.py",
+        "python scripts/run_static_harness.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/launch-candidate-quality-matrix.json",
+        "verification/receipts/mutation-and-fuzz.json"
+      ],
+      "exit_criterion": "Coverage exceeds the governed maturity threshold, mutation/fuzz/formal suites are triaged, temporary dependency exemptions are resolved or re-approved and the exact candidate is green.",
+      "external_gate": false
+    },
+    {
+      "id": "LP-011",
+      "title": "Complete privacy, accessibility and usability review",
+      "owner_track": "28",
+      "depends_on": ["LP-008"],
+      "commands": [
+        "cargo test -p searchright-governance -p searchright-diagnostics --all-targets --locked"
+      ],
+      "required_receipts": [
+        "verification/receipts/privacy-security-review.json",
+        "verification/receipts/accessibility-usability-evaluation.json"
+      ],
+      "exit_criterion": "Sensitive-data policy, least privilege, keyboard/screen-reader behavior and information-specialist workflows have reviewed findings and disposition receipts.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-012",
+      "title": "Complete sealed methodological evaluation",
+      "owner_track": "29",
+      "depends_on": ["LP-005", "LP-007", "LP-008", "LP-010", "LP-011"],
+      "commands": [
+        "python scripts/check_methodology_benchmarks.py",
+        "python scripts/check_external_evaluation.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/preregistered-evaluation.json",
+        "verification/receipts/external-evaluation-results.json"
+      ],
+      "exit_criterion": "Preregistered sealed evaluation is executed, limitations and subgroup results are published, and every finding has an accountable response without claiming autonomous review.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-013",
+      "title": "Execute operational restore and incident rehearsals",
+      "owner_track": "33",
+      "depends_on": ["LP-003", "LP-006", "LP-011"],
+      "commands": [
+        "cargo test -p searchright-ops --all-targets --locked",
+        "python scripts/recovery_rehearsal.py --self-test"
+      ],
+      "required_receipts": [
+        "verification/receipts/encrypted-restore-drill.json",
+        "verification/receipts/incident-and-slo-exercise.json"
+      ],
+      "exit_criterion": "Encrypted backup restoration, audit-chain verification, incident response, cancellation and approved SLO scenarios succeed in the target deployment profile.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-014",
+      "title": "Generate SDKs and fixture-backed launch documentation",
+      "owner_track": "35",
+      "depends_on": ["LP-001", "LP-003", "LP-008", "LP-010"],
+      "commands": [
+        "python scripts/check_sdk_examples.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/python-sdk-install-smoke.json",
+        "verification/receipts/typescript-sdk-install-smoke.json",
+        "verification/receipts/tutorial-walkthrough.json"
+      ],
+      "exit_criterion": "Generated Python and TypeScript clients compile/install from locked contracts and evidence-scaled tutorials pass fixture-backed user walkthroughs.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-015",
+      "title": "Run release-candidate, pilot and rollback rehearsal",
+      "owner_track": "36",
+      "depends_on": ["LP-009", "LP-010", "LP-012", "LP-013", "LP-014"],
+      "commands": [
+        "python scripts/check_release_rehearsal.py",
+        "python scripts/check_packaging_reproducibility.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/release-candidate-clean-room.json",
+        "verification/receipts/pilot-exit-and-rollback.json"
+      ],
+      "exit_criterion": "The exact candidate is reproducible, signed, attested and install-smoked; bounded pilots meet exit criteria and complete rollback rehearsal without automatic publication.",
+      "external_gate": true
+    },
+    {
+      "id": "LP-016",
+      "title": "Prepare accountable launch decision and approved submissions",
+      "owner_track": "37",
+      "depends_on": ["LP-015"],
+      "commands": [
+        "python scripts/check_maturity_dossier.py",
+        "python scripts/check_release_rehearsal.py"
+      ],
+      "required_receipts": [
+        "verification/receipts/final-maturity-decision.json",
+        "verification/receipts/publication-and-registry-results.json"
+      ],
+      "exit_criterion": "Every maturity domain has current evidence, no critical blocker is hidden, residual risks are explicitly adjudicated, and release/registry actions occur only after accountable approval.",
+      "external_gate": true
+    }
+  ]
+}

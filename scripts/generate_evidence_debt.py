@@ -15,6 +15,7 @@ TRACKS = ROOT / "conductor" / "tracks"
 MATURITY = ROOT / "conductor" / "maturity-dossier.json"
 PACKAGES = ROOT / "release" / "public-packages.json"
 PROVIDERS = ROOT / "integration" / "provider-policies" / "index.json"
+LAUNCH = ROOT / "conductor" / "launch-preparation-roadmap.json"
 
 
 def load_gate_catalog() -> dict[str, Any]:
@@ -48,6 +49,7 @@ def render() -> dict[str, Any]:
     maturity = json.loads(MATURITY.read_text(encoding="utf-8"))
     packages = json.loads(PACKAGES.read_text(encoding="utf-8"))
     providers = json.loads(PROVIDERS.read_text(encoding="utf-8"))
+    launch = json.loads(LAUNCH.read_text(encoding="utf-8"))
     states = Counter(row.get("state", "unknown") for row in assertions)
     confidence = Counter(row.get("mapping_confidence", "unknown") for row in assertions)
     open_gates = sum(len(row.get("open_gates", [])) for row in assertions)
@@ -125,6 +127,14 @@ def render() -> dict[str, Any]:
                 1
                 for row in providers.get("providers", [])
                 if row.get("policy_review_status") == "reviewed_with_evidence"
+            ),
+        },
+        "launch_preparation": {
+            "status": launch.get("status"),
+            "work_packages": len(launch.get("work_packages", [])),
+            "external_gates": sum(
+                1 for row in launch.get("work_packages", [])
+                if isinstance(row, dict) and row.get("external_gate") is True
             ),
         },
         "priority_queue": priority_queue,

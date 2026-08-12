@@ -31,7 +31,7 @@ recovery and external acceptance remain separate evidence gates.
 - The public repository, native issue/subissue hierarchy and delivery Project
   exist. The durable control-plane audit observed the former 568-node
   projection, all 567 relationships and zero issue content, label, task-state
-  or recognised Project-field drift. Current canonical source contains 567
+  or recognised Project-field drift. Current canonical source contains 583
   nodes; a post-merge audit of that exact projection remains open because the
   later GitHub API run did not complete.
 
@@ -43,7 +43,7 @@ recovery and external acceptance remain separate evidence gates.
 - **Live provider calls:** none is claimed. Provider support remains limited to
   deterministic fixtures until authorised redacted canaries exist.
 - **GitHub repository creation/push:** completed and durably audited for the
-  former 568-node projection; the current 567-node projection still needs an
+  former 568-node projection; the current 583-node projection still needs an
   exact-main re-audit.
 - **Conductor plugin installation:** the host previously reported Conductor
   0.4.1 installed, while repository contracts retain their pinned baseline;
