@@ -1,0 +1,128 @@
+{
+  "adversarial_cases": {
+    "boundary_cases": [
+      "rate budget is denied at the configured per-minute boundary",
+      "concurrency budget is denied at the configured active-task boundary"
+    ],
+    "compliant_baseline": {
+      "name": "fully_compliant_request_is_permitted",
+      "observed": true,
+      "status": "ok"
+    },
+    "multiple_violations_accumulate": {
+      "name": "multiple_control_violations_accumulate_blockers",
+      "observed": true,
+      "status": "ok"
+    }
+  },
+  "command": {
+    "command": [
+      "rustup",
+      "run",
+      "1.97.1-x86_64-pc-windows-gnu",
+      "cargo",
+      "test",
+      "-p",
+      "searchright-access",
+      "-p",
+      "searchright-mcp",
+      "--all-targets",
+      "--all-features",
+      "--locked"
+    ],
+    "parser": "libtest-text",
+    "returncode": 0,
+    "summary": {
+      "failed": 0,
+      "ignored": 0,
+      "passed": 10,
+      "result": "ok"
+    },
+    "tests_observed": 18
+  },
+  "controls": [
+    {
+      "cases": [
+        "cross-tenant request is blocked"
+      ],
+      "control": "tenant",
+      "label": "tenant isolation",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "cross_tenant_request_is_denied"
+      ]
+    },
+    {
+      "cases": [
+        "disallowed region is blocked"
+      ],
+      "control": "region",
+      "label": "region residency",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "disallowed_region_is_denied",
+        "issuer_region_and_token_age_are_bound_to_remote_policy"
+      ]
+    },
+    {
+      "cases": [
+        "unrequested tenant administration scope is blocked"
+      ],
+      "control": "scope",
+      "label": "scope restriction",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "unrequested_scope_is_denied"
+      ]
+    },
+    {
+      "cases": [
+        "request at the configured per-minute boundary is blocked"
+      ],
+      "control": "rate",
+      "label": "rate budget",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "request_replay_rate_and_concurrency_fail_closed"
+      ]
+    },
+    {
+      "cases": [
+        "active task count at the configured concurrency boundary is blocked"
+      ],
+      "control": "concurrency",
+      "label": "concurrency budget",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "request_replay_rate_and_concurrency_fail_closed"
+      ]
+    }
+  ],
+  "controls_checked": 5,
+  "controls_failed": 0,
+  "controls_not_proven": 0,
+  "controls_passed": 5,
+  "errors": [],
+  "evidence_level": "fixture_proven",
+  "evidence_scope": "Rust access-policy and loopback authenticated Streamable HTTP fixture tests",
+  "limitations": [
+    "Fixture-level Rust tests exercise loopback transport and in-process tenant controls only; they do not prove a hosted production deployment.",
+    "No hosted or multi-tenant production deployment was exercised.",
+    "No real OAuth/OIDC integration against a live identity provider was exercised.",
+    "No rollback rehearsal against a real deployment was performed.",
+    "No independent security or privacy review was performed."
+  ],
+  "lp_track": "34",
+  "roadmap_item": "LP-003",
+  "schema_version": "org.searchright.remote-mcp-tenancy-adversarial-receipt.v1",
+  "source": {
+    "revision": "559689d7616ff1282318b057dbbc7f7b793cd2c8",
+    "tracked_tree_clean": true
+  },
+  "status": "passed"
+}

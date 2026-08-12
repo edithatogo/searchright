@@ -1,0 +1,149 @@
+{
+  "command": {
+    "command": [
+      "rustup",
+      "run",
+      "1.97.1-x86_64-pc-windows-gnu",
+      "cargo",
+      "test",
+      "-p",
+      "searchright-access",
+      "-p",
+      "searchright-mcp",
+      "--all-targets",
+      "--all-features",
+      "--locked"
+    ],
+    "parser": "libtest-text",
+    "returncode": 0,
+    "summary": {
+      "failed": 0,
+      "ignored": 0,
+      "passed": 10,
+      "result": "ok"
+    },
+    "tests_observed": 18
+  },
+  "controls": [
+    {
+      "cases": [
+        "untrusted issuer is blocked",
+        "removed signing key is blocked"
+      ],
+      "control": "issuer",
+      "label": "issuer trust",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "issuer_region_and_token_age_are_bound_to_remote_policy",
+        "rotating_jwks_verifies_current_key_and_rejects_removed_key"
+      ]
+    },
+    {
+      "cases": [
+        "non-human final eligibility decision is blocked"
+      ],
+      "control": "principal",
+      "label": "principal kind",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "final_eligibility_decision_by_non_human_is_denied"
+      ]
+    },
+    {
+      "cases": [
+        "stale token is blocked",
+        "replayed bound request is blocked"
+      ],
+      "control": "replay",
+      "label": "token freshness and replay",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "issuer_region_and_token_age_are_bound_to_remote_policy",
+        "replayed_request_id_is_denied_on_second_use",
+        "authenticated_streamable_http_initializes_and_replay_is_denied"
+      ]
+    },
+    {
+      "cases": [
+        "external write without human approval is blocked",
+        "final decision path requires a human principal and approval"
+      ],
+      "control": "approval",
+      "label": "approval requirements",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "external_write_without_human_approval_is_denied",
+        "final_eligibility_decision_by_non_human_is_denied"
+      ]
+    },
+    {
+      "cases": [
+        "signed request initializes over the loopback transport"
+      ],
+      "control": "transport",
+      "label": "authenticated Streamable HTTP",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "authenticated_streamable_http_initializes_and_replay_is_denied"
+      ]
+    },
+    {
+      "cases": [
+        "audit event correlates the request without raw tenant, principal or token"
+      ],
+      "control": "audit",
+      "label": "redacted audit correlation",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "audit_events_are_redacted_and_correlated"
+      ]
+    },
+    {
+      "cases": [
+        "pending authenticated request is cancelled at its wall-clock budget"
+      ],
+      "control": "request_budget",
+      "label": "request timeout",
+      "missing_tests": [],
+      "status": "passed",
+      "tests": [
+        "authenticated_request_budget_times_out_fail_closed"
+      ]
+    }
+  ],
+  "controls_checked": 7,
+  "controls_failed": 0,
+  "controls_not_proven": 0,
+  "controls_passed": 7,
+  "errors": [],
+  "evidence_level": "fixture_proven",
+  "evidence_scope": "Rust access-policy and loopback authenticated Streamable HTTP fixture tests",
+  "limitations": [
+    "Fixture-level Rust tests exercise a loopback authenticated Streamable HTTP transport; they do not prove a hosted production deployment.",
+    "No hosted or multi-tenant production deployment was exercised.",
+    "No real OAuth/OIDC integration against a live identity provider was exercised.",
+    "No rollback rehearsal against a real deployment was performed.",
+    "No independent security or privacy review was performed."
+  ],
+  "lp_track": "34",
+  "roadmap_item": "LP-003",
+  "schema_version": "org.searchright.remote-mcp-auth-conformance-receipt.v1",
+  "source": {
+    "revision": "559689d7616ff1282318b057dbbc7f7b793cd2c8",
+    "tracked_tree_clean": true
+  },
+  "status": "passed",
+  "supporting_tests": [
+    {
+      "name": "fully_compliant_request_is_permitted",
+      "observed": true,
+      "status": "ok"
+    }
+  ]
+}
