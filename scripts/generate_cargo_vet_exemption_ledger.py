@@ -48,7 +48,7 @@ def main() -> int:
 
     block = re.compile(
         r'(\[\[exemptions\.[^\]]+\]\]\nversion = "[^"]+"\ncriteria = (?:"[^"]+"|\[[^\]]+\]))'
-        r'(?:\nnotes = """.*?""")?',
+        r'(?:\nnotes = (?:""".*?"""|"[^"\n]*"))?',
         re.DOTALL,
     )
     rendered, replacements = block.subn(lambda match: f'{match.group(1)}\nnotes = """{note}"""', config_text)
