@@ -1,0 +1,36 @@
+{
+  "schema_version": "org.searchright.sealed-panel-closeout.v1",
+  "track_id": "05",
+  "reviewed_revision": "d27b1e417175173156a26f1f440e0677fadbc083",
+  "reviewed_tree": "7c254bc0489e844159ba1f67de5277b740dfc9db",
+  "delivered_main_revision": "71c2b45fa0ce827d4eb4e86daa012139c188a61b",
+  "sealed_request": {
+    "path": "verification/reviews/track-05-sealed-request.json",
+    "sha256": "85286a6e9652295f4045bbe07b8dd5ea354acfbabb51feff652bdc525870704e"
+  },
+  "role_responses": [
+    {
+      "role": "adversarial_integrity",
+      "path": "verification/reviews/track-05-adversarial-integrity.json",
+      "sha256": "0b58540ae8094d6281b086b4e8480ea6ce85b22dbfc93b1a472e428296a00ec9"
+    },
+    {
+      "role": "privacy_policy",
+      "path": "verification/reviews/track-05-privacy-policy.json",
+      "sha256": "3ab99c77725dc4d1570742dc6b2e1ab86f599b1df78e54682f3390f1277b4b10"
+    },
+    {
+      "role": "storage_testing",
+      "path": "verification/reviews/track-05-storage-testing.json",
+      "sha256": "67a2e635b57f2d195a8550e83e662cb31fa77fd849a3722d0ea96e870951ec67"
+    }
+  ],
+  "dissent_preserved": true,
+  "dissent": [],
+  "critical_findings_open": 0,
+  "high_findings_open": 0,
+  "accountable_owner": "edithatogo",
+  "owner_adjudication": "approved_for_semantic_archive_after_exact-head hosted evidence and final admission",
+  "authorization_basis": "The accountable owner explicitly requested implementation, review fixes and archival once all gates were complete.",
+  "claim_boundary": "The panel is advisory and does not promote live-provider, methodological, secure-erasure, backup-recovery, external repository or release claims."
+}

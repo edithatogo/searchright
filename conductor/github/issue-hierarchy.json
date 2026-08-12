@@ -2599,7 +2599,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2623,15 +2623,15 @@
         "conductor",
         "track:05",
         "phase:3",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2656,15 +2656,15 @@
         "conductor",
         "track:05",
         "phase:3",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2696,7 +2696,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2819,15 +2819,15 @@
         "conductor",
         "track:05",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",

@@ -1,0 +1,22 @@
+{
+  "schema_version": "org.searchright.sealed-review-response.v1",
+  "track_id": "05",
+  "role": "storage_testing",
+  "reviewed_revision": "d27b1e417175173156a26f1f440e0677fadbc083",
+  "disposition": "approved_for_hosted_confirmation",
+  "critical_findings": [],
+  "high_findings": [],
+  "local_evidence": [
+    "29 searchright-governance tests passed on Rust 1.97.1 GNU",
+    "22 searchright-store tests passed on Rust 1.97.1 GNU including child-process locking",
+    "strict all-target all-feature Clippy passed with warnings denied",
+    "repository validation passed for 66 schemas and examples",
+    "review-state reducer self-test passed"
+  ],
+  "required_hosted_evidence": [
+    "Linux Rust job success on exact reviewed revision",
+    "Windows Rust job success on exact reviewed revision",
+    "macOS Rust job success on exact reviewed revision"
+  ],
+  "dissent": []
+}

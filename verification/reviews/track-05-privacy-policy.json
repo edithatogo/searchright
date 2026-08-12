@@ -1,0 +1,22 @@
+{
+  "schema_version": "org.searchright.sealed-review-response.v1",
+  "track_id": "05",
+  "role": "privacy_policy",
+  "reviewed_revision": "d27b1e417175173156a26f1f440e0677fadbc083",
+  "disposition": "approved_with_claim_limits",
+  "critical_findings": [],
+  "high_findings": [],
+  "confirmed_controls": [
+    "preview never authorizes effects",
+    "apply requires exact request policy principal nonce and expiry binding",
+    "legal holds and audit deletion fail closed",
+    "unsupported retain and export effects fail closed in the filesystem sink",
+    "tombstoned identifiers cannot be recreated"
+  ],
+  "residual_limitations": [
+    "secure erasure from backups is not claimed",
+    "external repository deletion is not claimed",
+    "approval signature and identity verification remain adapter responsibilities"
+  ],
+  "dissent": []
+}

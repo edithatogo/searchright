@@ -1,0 +1,36 @@
+{
+  "schema_version": "org.searchright.track-hosted-closeout.v1",
+  "track_id": "05",
+  "implementation_revision": "d27b1e417175173156a26f1f440e0677fadbc083",
+  "reviewed_tree": "7c254bc0489e844159ba1f67de5277b740dfc9db",
+  "merged_main_revision": "71c2b45fa0ce827d4eb4e86daa012139c188a61b",
+  "merged_main_tree": "7c254bc0489e844159ba1f67de5277b740dfc9db",
+  "tree_equivalence": "The reviewed PR head and rebase-merged main revision have the same Git tree.",
+  "pull_request": "https://github.com/edithatogo/searchright/pull/602",
+  "workflow_run": "https://github.com/edithatogo/searchright/actions/runs/31639488896",
+  "observed_at": "2026-08-13T06:58:00+10:00",
+  "jobs": [
+    {
+      "name": "Rust (ubuntu-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/31639488896/job/94258141576"
+    },
+    {
+      "name": "Rust (windows-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/31639488896/job/94258141344"
+    },
+    {
+      "name": "Rust (macos-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/31639488896/job/94258141340"
+    },
+    {
+      "name": "Static contracts and roadmap evidence",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/31639488896/job/94258141458",
+      "observed_detail": "Linux static harness executed scripts/review_bundle.py self-test."
+    }
+  ],
+  "claim_boundary": "This proves the exact implementation revision passed the listed hosted jobs. It does not prove power-loss directory durability on Windows, secure erasure from backups, external repository deletion or RO-Crate acceptance."
+}

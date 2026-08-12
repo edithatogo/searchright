@@ -28,6 +28,6 @@ Create replayable runs, content-addressed receipts, tamper-evident events and cr
 
 ## Claim boundary
 
-Compiler-verified local persistence and policy behavior. Hosted cross-platform execution remains the archival gate; power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.
+Compiler-verified local persistence and policy behavior with exact-revision hosted Linux, Windows and macOS evidence and a sealed advisory panel disposition. Power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
