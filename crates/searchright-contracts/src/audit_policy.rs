@@ -64,7 +64,7 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
     }
     let version = payload
         .get("_schema_version")
-        .map_or(1, Value::as_u64)
+        .map_or(Some(1), Value::as_u64)
         .ok_or_else(|| {
             ContractError::Invariant("audit payload version must be an integer".to_owned())
         })?;
