@@ -74,12 +74,7 @@ impl FileReviewStore {
                 ));
             }
         } else {
-            fs::write(&path, bytes).map_err(|error| error.to_string())?;
-            OpenOptions::new()
-                .write(true)
-                .open(&path)
-                .and_then(|file| file.sync_all())
-                .map_err(|error| error.to_string())?;
+            commit_absent(&path, bytes)?;
         }
         Ok(ManagedObjectReceipt {
             object_id: object_id.to_owned(),
@@ -90,12 +85,29 @@ impl FileReviewStore {
     fn lifecycle_head(&self) -> Result<String, String> {
         let mut pending = self.lifecycle_receipts()?;
         let mut head = "GENESIS".to_owned();
-        while let Some(index) = pending
-            .iter()
-            .position(|receipt| receipt.previous_head == head)
-        {
+        let mut ordered = Vec::with_capacity(pending.len());
+        while !pending.is_empty() {
+            let matching = pending
+                .iter()
+                .enumerate()
+                .filter(|(_, receipt)| receipt.previous_head == head)
+                .map(|(index, _)| index)
+                .collect::<Vec<_>>();
+            if matching.len() != 1 {
+                return Err("lifecycle receipt chain is disconnected or forks".to_owned());
+            }
+            let index = matching
+                .first()
+                .copied()
+                .ok_or_else(|| "lifecycle receipt chain is disconnected or forks".to_owned())?;
             let receipt = pending.swap_remove(index);
             validate_durable_receipt(&receipt)?;
+            head.clone_from(&receipt.resulting_head);
+            ordered.push(receipt);
+        }
+        // Recovery effects occur only after every receipt and the complete chain have passed
+        // validation, so a fork or corrupt later entry cannot cause a partial deletion.
+        for receipt in &ordered {
             for target in &receipt.tombstones {
                 let path = self.root().join("managed").join(target);
                 if path.exists() {
@@ -103,13 +115,8 @@ impl FileReviewStore {
                     sync_directory(path.parent()).map_err(|error| error.to_string())?;
                 }
             }
-            head = receipt.resulting_head;
         }
-        if pending.is_empty() {
-            Ok(head)
-        } else {
-            Err("lifecycle receipt chain is disconnected or forks".to_owned())
-        }
+        Ok(head)
     }
 
     fn lifecycle_receipts(&self) -> Result<Vec<LifecycleStoreReceipt>, String> {
@@ -119,14 +126,21 @@ impl FileReviewStore {
         }
         fs::read_dir(receipts)
             .map_err(|error| error.to_string())?
-            .filter_map(Result::ok)
-            .filter(|entry| {
-                entry
-                    .path()
-                    .extension()
-                    .is_some_and(|value| value == "json")
+            .map(|entry| entry.map_err(|error| error.to_string()))
+            .filter_map(|entry| match entry {
+                Ok(entry)
+                    if entry
+                        .path()
+                        .extension()
+                        .is_some_and(|value| value == "json") =>
+                {
+                    Some(Ok(entry))
+                }
+                Ok(_) => None,
+                Err(error) => Some(Err(error)),
             })
             .map(|entry| {
+                let entry = entry?;
                 fs::read(entry.path())
                     .map_err(|error| error.to_string())
                     .and_then(|bytes| {
@@ -284,6 +298,7 @@ fn validate_durable_receipt(receipt: &LifecycleStoreReceipt) -> Result<(), Strin
     if !matches!(receipt.request.action, DataLifecycleAction::Delete)
         || !receipt.decision.effects_authorized
         || receipt.decision.request_id != receipt.request.request_id
+        || receipt.tombstones != receipt.request.target_ids
         || receipt.tombstones != receipt.decision.tombstone_target_ids
     {
         return Err("lifecycle receipt authority binding is invalid".to_owned());
@@ -417,6 +432,27 @@ mod tests {
         authorize_lifecycle(&policy(), &request, &AcceptVerifier).map_err(|error| error.to_string())
     }
 
+    fn durable_receipt(
+        authorization: &LifecycleAuthorization,
+        previous_head: &str,
+    ) -> Result<LifecycleStoreReceipt, String> {
+        let request = authorization.request();
+        let decision = authorization.decision();
+        let request_digest = request.effects_digest();
+        let decision_digest = lifecycle_decision_digest(decision)?;
+        Ok(LifecycleStoreReceipt {
+            request: request.clone(),
+            decision: decision.clone(),
+            previous_head: previous_head.to_owned(),
+            tombstones: request.target_ids.clone(),
+            resulting_head: lifecycle_resulting_head(
+                previous_head,
+                &request_digest,
+                &decision_digest,
+            ),
+        })
+    }
+
     #[test]
     fn lifecycle_delete_is_durable_idempotent_and_restartable() -> Result<(), String> {
         let directory =
@@ -485,6 +521,53 @@ mod tests {
         )
         .map_err(|error| error.to_string())?;
         assert!(store.current_head().is_err());
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
+    }
+
+    #[test]
+    fn forked_receipt_chain_has_no_recovery_side_effects() -> Result<(), String> {
+        let directory = std::env::temp_dir().join(format!(
+            "searchright-lifecycle-fork-{}",
+            uuid::Uuid::now_v7()
+        ));
+        let store = FileReviewStore::open(&directory).map_err(|error| error.to_string())?;
+        store.put_managed_object("record-1", b"one")?;
+        store.put_managed_object("record-2", b"two")?;
+
+        let first_authorization = authorization()?;
+        let first = durable_receipt(&first_authorization, "GENESIS")?;
+        let mut second_request = request();
+        second_request.request_id = "delete-2".to_owned();
+        second_request.target_ids = vec!["record-2".to_owned()];
+        if let Some(approval) = second_request.approval.as_mut() {
+            approval.approval_id = "approval-2".to_owned();
+            approval.nonce = "nonce-2".to_owned();
+        }
+        let digest = second_request.effects_digest();
+        if let Some(approval) = second_request.approval.as_mut() {
+            approval.request_digest = digest;
+        }
+        let second_authorization = authorize_lifecycle(&policy(), &second_request, &AcceptVerifier)
+            .map_err(|error| error.to_string())?;
+        // A second receipt from GENESIS is a fork. Both receipts are individually valid.
+        let second = durable_receipt(&second_authorization, "GENESIS")?;
+        let receipts = directory.join("lifecycle").join("receipts");
+        fs::create_dir_all(&receipts).map_err(|error| error.to_string())?;
+        fs::write(
+            receipts.join("delete-1.json"),
+            serde_json::to_vec(&first).map_err(|error| error.to_string())?,
+        )
+        .map_err(|error| error.to_string())?;
+        fs::write(
+            receipts.join("delete-2.json"),
+            serde_json::to_vec(&second).map_err(|error| error.to_string())?,
+        )
+        .map_err(|error| error.to_string())?;
+
+        assert!(store.current_head().is_err());
+        assert!(directory.join("managed").join("record-1").is_file());
+        assert!(directory.join("managed").join("record-2").is_file());
         let _cleanup = fs::remove_dir_all(directory);
         Ok(())
     }
