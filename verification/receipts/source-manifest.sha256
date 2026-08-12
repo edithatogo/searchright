@@ -1077,7 +1077,7 @@ e191fdf57e152bd3588d95cd547527d4b9e2560d24d3034845f8fc1c6bc778cc  ./crates/searc
 1d1629cb5c2467807539ead9ad08b05be6190a755b33f3f3f99759aab0ff0730  ./crates/searchright-living/Cargo.toml
 9ea5348c2bc270d835f9e54d6fc231355a146242ab861cdd9368c74fc2726e9d  ./crates/searchright-living/src/lib.rs
 779fd06758ea286803ff72cc3143283771be69e2450899561284d6f966ebc30b  ./crates/searchright-mcp/Cargo.toml
-245b6468917814d985a0e6e468e73286e7129b9d7ac941c4c5a0693213dc8b15  ./crates/searchright-mcp/src/main.rs
+2cc1e07d55d36cade6838f9e616b90d9c0eef483d0fdf3ba0607d3cbac24b952  ./crates/searchright-mcp/src/main.rs
 279a68319858f647f450e3b8a9f75656438c6a78586898fb700722fdf2dfd23b  ./crates/searchright-ops/Cargo.toml
 227c977c2d7446ce8ac81a91383f3f0788813fde02a03e8511bf58ee0c340e8c  ./crates/searchright-ops/src/lib.rs
 1623df1a6980c21619819b57ca61de1f969131f5de7ba04735ba4476b2bbbeb7  ./crates/searchright-plugin-sdk/Cargo.toml
@@ -1135,7 +1135,7 @@ bbb5312c81ad63d97380f4e68736d6e77638bd0d39b12ea25c1998610f71fe72  ./docs/estate-
 4265b654e2a2715ead731d0036eb22813f64148b80437d89aabfb2e44f05bc02  ./docs/maturity/1.0-gate.md
 4f0a8cee9157e9e4cdfcf5993312b31d4895f6f080ba825d9353f03e65cac35f  ./docs/maturity/gap-register.md
 a19d5be5b94b5de15b6aca3054209eab0b45bca636099599c4ab311dd05b275a  ./docs/maturity/release-decision.md
-dc3941f423fe4684b0c9479359cede61d7ae02c553b3fbeb9f18c65dc0302f0b  ./docs/mcp-compatibility.md
+30ec97ca6f1bb4e6298bdfee56242ed662d99ce498c12034c84e1a55bdba9f0b  ./docs/mcp-compatibility.md
 8972e57adf3c63f02040e76adf7c1d20babcb91660a78fdbb9d2995e15e8cb93  ./docs/msrv-and-package-policy.md
 0cd3019f83baf014a9399aef66e855d6dec9d8f652fc8210e82cc5fcece3caf5  ./docs/operations/backup-restore.md
 d23d1d611575fe01c1e3fc0ed823fca034d2b5ec8fb68426100b554fe4f6149f  ./docs/operations/incident-response.md
@@ -1291,7 +1291,7 @@ cad89651f7d562a11a45658bd94604331f32568366b5605cd3c27aa23e438e00  ./scripts/gith
 e0e758587825df1dcb098dd51ea9661495365c903ed5dfad89bf030420340dca  ./scripts/install-conductor.ps1
 d55d734b171de9170029dd90cec9ae62a97c36ef6fc46a3f090ee9acf0086c2b  ./scripts/install-conductor.sh
 41f364a4c972ec0a1176217572eb822a38dfb36a9b671c322fe55c9872177b6e  ./scripts/install_dev_tools.py
-5beaafaf4df37b4bb0d1f49bbbbc8ede8f235e3936d9e1302587326057cda7d6  ./scripts/mcp_smoke.py
+3b0baa1d5d013963a6cdc818ea3e8f6fc0bd30c72dab5d9e0bd98e79e016d422  ./scripts/mcp_smoke.py
 509fe4cc68beaf44caeb404b242fe14d78260ab0e3885aad41c6a2239cae7940  ./scripts/package_complete_delivery.py
 46c35680c0850bc323de0ad9bfe25225ac4b29ae08a9a7201e0c8017383283ec  ./scripts/package_source.py
 6128e28fe23f2244776b0d4e5057bfa1c0674cb9f9e30a14efc47747144279aa  ./scripts/plan_github_portfolio.py
