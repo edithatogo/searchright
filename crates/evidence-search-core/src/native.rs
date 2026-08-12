@@ -163,7 +163,7 @@ fn split_prefixed_set_id(value: &str, prefix: char) -> Option<(String, &str)> {
     ))
 }
 
-fn dialect_code(dialect: &SearchDialect) -> &'static str {
+const fn dialect_code(dialect: &SearchDialect) -> &'static str {
     match dialect {
         SearchDialect::PubMed => "pubmed",
         SearchDialect::OvidMedline => "ovid_medline",
@@ -313,7 +313,7 @@ mod tests {
             ),
         ];
         for (index, (dialect, text)) in fixtures.into_iter().enumerate() {
-            let parsed = parse_native_strategy(format!("fixture-{index}"), dialect, text);
+            let parsed = parse_native_strategy(format!("fixture-{index}"), dialect.clone(), text);
             assert_eq!(parsed.raw_text, text);
             assert!(!parsed.lines.is_empty());
             assert!(parsed.validate().is_ok());
