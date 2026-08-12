@@ -30,6 +30,20 @@
       "version": "0.1.89"
     },
     {
+      "bom-ref": "cargo-requirement:axum@0.8",
+      "name": "axum",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/axum@0.8",
+      "scope": "required",
+      "type": "library",
+      "version": "0.8"
+    },
+    {
       "bom-ref": "cargo-requirement:base64@0.23",
       "name": "base64",
       "properties": [
@@ -112,6 +126,20 @@
       "scope": "required",
       "type": "library",
       "version": "2.12"
+    },
+    {
+      "bom-ref": "cargo-requirement:jsonwebtoken@11",
+      "name": "jsonwebtoken",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/jsonwebtoken@11",
+      "scope": "required",
+      "type": "library",
+      "version": "11"
     },
     {
       "bom-ref": "cargo-requirement:loom@0.7.2",
@@ -266,6 +294,20 @@
       "scope": "required",
       "type": "library",
       "version": "0.3"
+    },
+    {
+      "bom-ref": "cargo-requirement:tokio-util@0.7",
+      "name": "tokio-util",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/tokio-util@0.7",
+      "scope": "required",
+      "type": "library",
+      "version": "0.7"
     },
     {
       "bom-ref": "cargo-requirement:tokio@1",
@@ -766,7 +808,7 @@
         }
       ],
       "purl": "pkg:cargo/searchright-mcp@0.1.0-alpha.1",
-      "type": "application",
+      "type": "library",
       "version": "0.1.0-alpha.1"
     },
     {
@@ -1409,13 +1451,21 @@
     {
       "dependsOn": [
         "cargo-requirement:anyhow@1.0",
+        "cargo-requirement:axum@0.8",
         "cargo-requirement:base64@0.23",
+        "cargo-requirement:blake3@1.8",
+        "cargo-requirement:jsonwebtoken@11",
+        "cargo-requirement:reqwest@0.13.2",
         "cargo-requirement:rmcp@=3.1.2",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:tokio-util@0.7",
         "cargo-requirement:tokio@1",
         "cargo-requirement:tracing-subscriber@0.3",
+        "cargo:searchright-access@0.1.0-alpha.1",
+        "cargo:searchright-contracts@0.1.0-alpha.1",
         "cargo:searchright@0.1.0-alpha.1"
       ],
       "ref": "cargo:searchright-mcp@0.1.0-alpha.1"
@@ -1581,7 +1631,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:6020016f-de4f-54ac-80b0-9bf13f0d4d63",
+  "serialNumber": "urn:uuid:b549d7b3-0b78-5f52-962f-52917cd60f09",
   "specVersion": "1.6",
   "version": 1
 }

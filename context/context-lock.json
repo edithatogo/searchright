@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "1ef651f77e88294093e85c8a8fe6ade2b32faac4d55776c481f976cd920227de",
-      "size": 607334
+      "sha256": "63eedf63afcfa08ffe0f57ecf87c4ef6560bcb9c0398c7ac0726bbccd4154b0d",
+      "size": 607479
     },
     {
       "path": "conductor/github/project.json",
@@ -53,8 +53,8 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "34fa92249bb485cf439dded847751d8a2be02a0d753a53a3e82835ace49ea049",
-      "size": 78708
+      "sha256": "2e3a615616af444d3e32f9cf306b986775ff1bade69e35434307eedef3102bf8",
+      "size": 79208
     },
     {
       "path": "conductor/traceability-overrides.json",
@@ -108,8 +108,8 @@
     },
     {
       "path": "docs/security/threat-model.md",
-      "sha256": "1a8f005e0daf109fd208071c38880dc02613aaf5e59a9ac1c7565e11d86db0c9",
-      "size": 1982
+      "sha256": "97c5704fb0383413b32afa3ec958cd99125406ef5923686ee0a12e0e1e6e55c0",
+      "size": 3951
     },
     {
       "path": "docs/vertical-slice-definition-of-done.md",
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "450c7a1bcdab485255273e0f73121ea4474f903e0e8bd7308b3c92717658e4c0",
+      "sha256": "a306cb640bb2e1f4ce36253f4be63a170cd4f442c12928bff1f21eb06586e192",
       "size": 3419
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "d49643cebdb98dc8120f68fb356c5a82ece1512cfe285e14e3dfe15eae460dba",
-      "size": 43712
+      "sha256": "531078fbd05eb34108495ad691c69b70dfe3690547c538fd7fa273c47467b80e",
+      "size": 44230
     },
     {
       "path": "verification/harness-matrix.json",
