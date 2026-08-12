@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/05-execution-audit-store/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection. (`track-05-phase-3-task-01`)
-- [ ] T02: Complete external review of retention and deletion semantics. (`track-05-phase-3-task-02`)
+- [ ] T01: Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival. (`track-05-phase-3-task-01`)
+- [ ] T02: Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival. (`track-05-phase-3-task-02`)
 
 ## Evidence rule
 

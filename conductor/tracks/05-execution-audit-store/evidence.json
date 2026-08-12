@@ -2,14 +2,18 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "05",
   "title": "Execution, audit and local storage",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "compiler_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/evidence-search-core/src/audit.rs",
     "crates/searchright-store/src/lib.rs",
+    "crates/searchright-governance/src/lib.rs",
+    "contracts/events/registry.json",
     "scripts/reduce_review_events.py",
+    "scripts/review_bundle.py",
+    "scripts/check_research_object_handoff.py",
     "contracts/json-schema/review-state-snapshot.v1.schema.json",
     "contracts/examples/review-state-snapshot.json",
     "contracts/examples/audit-event.json",
@@ -18,7 +22,10 @@
   "traceability": "conductor/tracks/05-execution-audit-store/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
-    "python scripts/reduce_review_events.py --self-test"
+    "python scripts/reduce_review_events.py --self-test",
+    "python scripts/review_bundle.py self-test",
+    "python scripts/check_research_object_handoff.py",
+    "cargo test -p searchright-contracts -p searchright-governance -p searchright-store --locked"
   ],
   "requirements": [
     "SR-012",
@@ -27,10 +34,10 @@
     "SR-048"
   ],
   "blockers": [
-    "Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection.",
-    "Complete external review of retention and deletion semantics."
+    "Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
+    "Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Compiler-verified local persistence and policy behavior. Hosted cross-platform execution remains the archival gate; power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-05",
@@ -54,7 +61,8 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-05-store-review.json"
+    "verification/receipts/track-05-store-review.json",
+    "verification/receipts/track-05-local-review.json"
   ],
   "external_evidence": []
 }

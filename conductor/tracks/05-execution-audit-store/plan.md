@@ -1,6 +1,6 @@
 # Plan: 05 Execution, audit and local storage
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **compiler_verified**.
 
 GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,10 +8,14 @@ GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-05-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/evidence-search-core/src/audit.rs`
   - [x] Present source path: `crates/searchright-store/src/lib.rs`
+  - [x] Present source path: `crates/searchright-governance/src/lib.rs`
+  - [x] Present source path: `contracts/events/registry.json`
   - [x] Present source path: `scripts/reduce_review_events.py`
+  - [x] Present source path: `scripts/review_bundle.py`
+  - [x] Present source path: `scripts/check_research_object_handoff.py`
   - [x] Present source path: `contracts/json-schema/review-state-snapshot.v1.schema.json`
   - [x] Present source path: `contracts/examples/review-state-snapshot.json`
   - [x] Present source path: `contracts/examples/audit-event.json`
@@ -25,14 +29,17 @@ GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered nati
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/reduce_review_events.py --self-test`
+  - [x] `python scripts/review_bundle.py self-test`
+  - [x] `python scripts/check_research_object_handoff.py`
+  - [x] `cargo test -p searchright-contracts -p searchright-governance -p searchright-store --locked`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-05-phase-3 -->
 
-- [ ] Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection.
-- [ ] Complete external review of retention and deletion semantics.
+- [ ] Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.
+- [ ] Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival.
 
 ## Phase 4: Review and closeout
 

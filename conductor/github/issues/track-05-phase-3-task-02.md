@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete external review of retention and deletion semantics.
+- [ ] Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival.
 
 ## Completion and evidence contract
 

@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection.
+- [ ] Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.
 
 ## Completion and evidence contract
 

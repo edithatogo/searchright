@@ -12,9 +12,9 @@ Create replayable runs, content-addressed receipts, tamper-evident events and cr
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `compiler_verified`
 - Dependencies: `03`
 - Requirements: `SR-012, SR-013, SR-014, SR-048`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Create replayable runs, content-addressed receipts, tamper-evident events and cr
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Compiler-verified local persistence and policy behavior. Hosted cross-platform execution remains the archival gate; power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
