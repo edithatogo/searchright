@@ -1,0 +1,46 @@
+name: PR delivery policy
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  scope:
+    name: PR scope and merge policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout proposed policy
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Read changed-file metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SEARCHRIGHT_FILES_URL: ${{ github.event.pull_request.url }}/files?per_page=100
+        run: gh api --paginate --slurp "$SEARCHRIGHT_FILES_URL" > "$RUNNER_TEMP/pr-files.json"
+      - name: Enforce one-track PR scope
+        run: python scripts/check_pr_track_scope.py --event "$GITHUB_EVENT_PATH" --files-json "$RUNNER_TEMP/pr-files.json"
+
+  auto-merge:
+    name: Enable merge-bound delivery
+    needs: scope
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: github-issue-write
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Enable rebase auto-merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SEARCHRIGHT_PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --rebase "$SEARCHRIGHT_PR_URL"

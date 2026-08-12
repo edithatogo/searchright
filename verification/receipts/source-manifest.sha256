@@ -6,7 +6,7 @@
 ed52073385e93f7d864e262070366de5c2d7b0496fda20541ba4819fa92d074b  ./.github/ISSUE_TEMPLATE/feature.yml
 4d7959b2ccfbfd01e913e1d10db9dd52b243c3d257ffd2e301eb4c023ea5ce82  ./.github/copilot-instructions.md
 5f2586e3fc3c921c49a1870f8e2d3d73879ff9de9215231c3bd65f2358f60b67  ./.github/dependabot.yml
-55631f5bcf0fbf5fc4ce3badc0924aef67be10dd8fee72290b1a000f7efa28d7  ./.github/pull_request_template.md
+33a2b04330e597049e5959d1fde64d64d5d03b664f3bee5cf4cbc011cae4a080  ./.github/pull_request_template.md
 181df57e3b17834aa3647bcb1d38923d39d3bf1cb844196fe574d4a52623a017  ./.github/workflows/ci.yml
 d27922145fe073110a69c80f400499445449c32e65957f9d59cecef6113ea0a0  ./.github/workflows/clean-room.yml
 03c8e9e49e69b588ec7fc762ecc0bd34827aa97f479dc5206817d2f30cadba3a  ./.github/workflows/coverage.yml
@@ -29,12 +29,12 @@ ed5f8c3a259fbdfb99d06d519b5dd72f7838bcc0fb0e810545683725d6b6b0b7  ./.gitleaks.to
 8a5376570af4908c830d7aadfd5a4466d3630712377cd1a9a28249af754a254c  ./.vale/config/vocabularies/Searchright/accept.txt
 0570eb005db4741c0e6718e037367b31c28f750aad05d0998c3c2f7f8d0f54da  ./.vale/styles/Searchright/NoOverclaim.yml
 0352279419f4785c1defa89a7b1ca391d49ebc056eb31c45b527703882f0df21  ./.vale/styles/Searchright/Terminology.yml
-2db64dab2ff371661fe64121233700e93ed72e9fe58974cdf4cb672cbd16a8cf  ./AGENTS.md
+c37df303303b9a1acb72d8830c8535422f5d8503cb686707610309406a208692  ./AGENTS.md
 2c61930db05cf482437faabf14bd63be11a2b0756efb03419010fd56081d847d  ./CHANGELOG.md
 be878b406a807360b0af23759b0173c54bca310e44837fa1d6b02876024b63d2  ./CITATION.cff
 cfc13e6fbe6a5d7efccaac17fe8607dfd75b8a8058fcb223d6a451ab39319045  ./CLAUDE.md
 4e5ea758787c5e124b783b7411655036681768b8f0635d57191e6e8d87099cbe  ./CODEX_COVERING_POST.md
-d34e54a8ecfeede955f98d364fdeac1023b4673ad3b666ef0f19d4e8f23ac8e4  ./CODEX_HANDOFF.md
+25b55ce8c1d1d9a30f39176ee929383c674995072c3668536d5f862b42d7c7cf  ./CODEX_HANDOFF.md
 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
 d91a14ff32401fc332ddbc61467bf2899e558ee1c52a4f5b6e73afe3bee146cf  ./CONTEXT.md
 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
@@ -638,7 +638,7 @@ f61a08ed43b00764b76028919e0d23d095c556eaa325225635148358a07998a9  ./conductor/gi
 06558d7e3572e2c6b9e4e95578f5a32bdc6e8bc7aa61eb273e7adc1951db1db8  ./conductor/github/issues/track-37-phase-4-task-04.md
 735afcd2f162a8e126ccc4492380df180ade34d71d4ff88167d387dda25f9262  ./conductor/github/issues/track-37-phase-4.md
 f9e31b25550760942cc76830b56016640660adf1f81319413122d2478dbffa62  ./conductor/github/issues/track-37.md
-dca6ff2d0b4dae601af1fb296e82735e732d0c9a107a7314ce45422cfff8ae5d  ./conductor/github/labels.json
+a05703c2d20f275924bd4bb6810be1e172bae869fe7fa1f5ade86c39015b5420  ./conductor/github/labels.json
 7993fe88bacdbdc839e036e9d0db205e36064a3ab7f500e55cbb09b21ea472c4  ./conductor/github/project-fields.json
 3d1606c1443fa188d07c5c8d7ef1c0f6efdabdce99fe0e748c1d0d567b7614ce  ./conductor/github/project-readme.md
 cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d  ./conductor/github/project.json
@@ -847,7 +847,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 2480395a1b729a91443c67c12f65fe2fa6c75e8981a4553b90d636917a50f4fe  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 1d66cc63a5f9f91ce165a2583bbb4890c2c909504407c3fda1f2634e18e29fbb  ./context/claim-boundaries.json
-1fb99783f5f601717c98400c0d2f09ddbaa3de6d39e953c867043ae396affc7a  ./context/context-lock.json
+3312a8fa7d66feef4926df09d843d836473d3abcfa5e83b85981c0e9fe989b69  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 e3d57d1948aebe24f198bef43acdb85e3839d20bf0c2ee4578d7a94ac897325a  ./context/evidence-ledger.json
 2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244  ./context/hazard-log.json

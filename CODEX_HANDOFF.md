@@ -8,6 +8,14 @@ For every companion repository, search configured local roots for the exact clon
 
 Run all GitHub and companion writes in dry-run mode first. Then create/wire `edithatogo/searchright`, push logical commits, synchronise the roadmap epic, tracks, phase subissues, task subissues and GitHub Project, and run the read-only convergence audit. Do not delete issues, tracks, receipts, target history, or planned behaviour to make checks pass.
 
+Every pull request is limited to one declared Conductor track and is expected
+to merge after its required checks pass. A multi-track exception is allowed
+only for a technically inseparable change and requires the repository's
+exception label plus a written split-failure rationale. Do not open omnibus or
+parking PRs; enable rebase auto-merge and continue remediation on the same PR
+until it merges, unless the change is explicitly superseded, unsafe or
+unauthorized.
+
 Initial native state: `pending_native_confirmation`. Report exact commits, target branches, agent-panel artefacts, test receipts, paused/failed gates and unresolved promotion blockers.
 
 ## Required sequence
