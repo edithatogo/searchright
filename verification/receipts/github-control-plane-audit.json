@@ -2,23 +2,25 @@
   "claim_boundary": "This read-only audit establishes observed GitHub parity only; it does not establish product maturity.",
   "errors": [],
   "issue_hierarchy": {
-    "canonical": 568,
+    "canonical": 583,
     "content_drift": 0,
     "label_drift": 0,
-    "observed": 568,
-    "relationships_expected": 567,
-    "relationships_observed": 567,
+    "observed": 583,
+    "relationships_expected": 582,
+    "relationships_observed": 582,
     "task_state_drift": 0
   },
   "mutation_operations": 0,
   "project": {
-    "canonical_items_observed": 568,
+    "canonical_items_observed": 583,
     "fields_observed": 26,
     "id": "PVT_kwHOAOYc4M4BgD2j",
+    "noncanonical_items_observed": 3,
     "number": 40,
     "observed": true,
     "recognised_value_mismatches": 0,
-    "unrecognised_value_shapes": 1135,
+    "total_items_observed": 586,
+    "unrecognised_value_shapes": 0,
     "url": "https://github.com/users/edithatogo/projects/40",
     "views_observed": 7
   },
@@ -44,8 +46,7 @@
     "visibility": "public"
   },
   "schema_version": "org.searchright.github-control-plane-audit.v1",
+  "source_revision": "7ce2ee151d80b589421292395ae821441d8451f2",
   "status": "passed",
-  "warnings": [
-    "GitHub CLI JSON shape did not expose 1135 custom-field values; item membership was still verified"
-  ]
+  "warnings": []
 }
