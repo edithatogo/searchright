@@ -361,10 +361,11 @@ def command_record(run: CargoRun) -> dict[str, Any]:
 def source_binding() -> dict[str, Any]:
     """Bind the observation to the exact Git revision and tree state."""
     revision = run_command(["git", "rev-parse", "HEAD"])
-    status = run_command(["git", "status", "--porcelain"])
+    worktree = run_command(["git", "diff", "--quiet", "HEAD", "--"])
+    index = run_command(["git", "diff", "--cached", "--quiet", "HEAD", "--"])
     return {
         "revision": revision.stdout.strip() if revision.returncode == 0 else None,
-        "working_tree_clean": status.returncode == 0 and not status.stdout.strip(),
+        "tracked_tree_clean": worktree.returncode == 0 and index.returncode == 0,
     }
 
 
