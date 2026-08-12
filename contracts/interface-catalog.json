@@ -7,7 +7,46 @@
       "mcp_tool": "validate_plan",
       "facade_method": "validate_plan",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "review_id": {
+            "type": "string"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "blocking": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "code",
+                "blocking",
+                "message"
+              ]
+            }
+          },
+          "ready_for_strategy_design": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "review_id",
+          "findings",
+          "ready_for_strategy_design"
+        ]
+      }
     },
     {
       "operation": "validate-strategy",
@@ -15,7 +54,23 @@
       "mcp_tool": "validate_strategy",
       "facade_method": "validate_strategy",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "validate-document-evidence",
@@ -23,7 +78,23 @@
       "mcp_tool": "validate_document_evidence",
       "facade_method": "validate_document_evidence",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "compile",
@@ -31,7 +102,11 @@
       "mcp_tool": "compile_strategy",
       "facade_method": "compile_strategy",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": "contracts/json-schema/compiled-strategy.v1.schema.json"
+      }
     },
     {
       "operation": "deduplicate",
@@ -39,7 +114,96 @@
       "mcp_tool": "deduplicate_records",
       "facade_method": "deduplicate",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "clusters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cluster_id": {
+                  "type": "string"
+                },
+                "representative_record_id": {
+                  "type": "string"
+                },
+                "record_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "left_record_id": {
+                        "type": "string"
+                      },
+                      "right_record_id": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "score": {
+                        "type": "number"
+                      },
+                      "details": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "review_required": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "left_record_id",
+                      "right_record_id",
+                      "reason",
+                      "score",
+                      "details",
+                      "review_required"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "cluster_id",
+                "representative_record_id",
+                "record_ids",
+                "evidence"
+              ]
+            }
+          },
+          "retained_record_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comparisons": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "proposed_duplicate_count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "clusters",
+          "retained_record_ids",
+          "comparisons",
+          "proposed_duplicate_count"
+        ]
+      }
     },
     {
       "operation": "prisma",
@@ -47,7 +211,50 @@
       "mcp_tool": "generate_prisma",
       "facade_method": "prisma",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "artifact_type": {
+            "type": "string"
+          },
+          "artifact": {
+            "oneOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            ]
+          },
+          "document": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "oneOf": [
+          {
+            "required": [
+              "artifact_type",
+              "artifact"
+            ]
+          },
+          {
+            "required": [
+              "document",
+              "format"
+            ]
+          }
+        ]
+      }
     },
     {
       "operation": "verify-audit",
@@ -55,7 +262,27 @@
       "mcp_tool": "verify_audit",
       "facade_method": "verify_audit",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "event_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "head_hash": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "event_count",
+          "head_hash"
+        ]
+      }
     },
     {
       "operation": "import-records",
@@ -63,7 +290,29 @@
       "mcp_tool": "import_records",
       "facade_method": "import_records",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "records",
+          "warnings"
+        ]
+      }
     },
     {
       "operation": "export-records",
@@ -71,7 +320,23 @@
       "mcp_tool": "export_records",
       "facade_method": "export_records",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "document": {
+            "type": "string"
+          },
+          "receipt": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "document",
+          "receipt"
+        ]
+      }
     },
     {
       "operation": "study-graph",
@@ -79,7 +344,47 @@
       "mcp_tool": "assess_study_graph",
       "facade_method": "assess_study_graph",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "reports": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "studies": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "unlinked_report_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "retrieval_statuses": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "reports_per_study": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "required": [
+          "reports",
+          "studies",
+          "unlinked_report_ids",
+          "retrieval_statuses",
+          "reports_per_study"
+        ]
+      }
     },
     {
       "operation": "validate-search",
@@ -87,7 +392,54 @@
       "mcp_tool": "assess_search_validation",
       "facade_method": "assess_search_validation",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "ready": {
+            "type": "boolean"
+          },
+          "seed_recall": {
+            "type": "object",
+            "properties": {
+              "retrieved": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "recall": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "retrieved",
+              "total",
+              "recall"
+            ]
+          },
+          "unresolved_major_findings": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "unacceptable_translations": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "ready",
+          "seed_recall",
+          "unresolved_major_findings",
+          "unacceptable_translations"
+        ]
+      }
     },
     {
       "operation": "living-diff",
@@ -95,7 +447,41 @@
       "mcp_tool": "living_diff",
       "facade_method": "diff_living_records",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "array",
+        "items_schema": null,
+        "items_fields": {
+          "record_id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "before_digest": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "after_digest": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "items_required": [
+          "record_id",
+          "kind",
+          "before_digest",
+          "after_digest",
+          "note"
+        ]
+      }
     },
     {
       "operation": "validate-living-lineage",
@@ -103,7 +489,23 @@
       "mcp_tool": "validate_living_lineage",
       "facade_method": "validate_living_lineage",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "provenance",
@@ -111,7 +513,23 @@
       "mcp_tool": "build_provenance",
       "facade_method": "provenance",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "ro_crate": {
+            "type": "object"
+          },
+          "prov": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "ro_crate",
+          "prov"
+        ]
+      }
     },
     {
       "operation": "rank",
@@ -119,7 +537,58 @@
       "mcp_tool": "rank_records",
       "facade_method": "rank_records",
       "authority": "advisory_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "array",
+        "items_schema": null,
+        "items_fields": {
+          "record_id": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "weight": {
+                  "type": "number"
+                },
+                "rationale": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "value",
+                "weight",
+                "rationale"
+              ]
+            }
+          },
+          "ranker_version": {
+            "type": "string"
+          },
+          "human_reviewed": {
+            "type": "boolean"
+          }
+        },
+        "items_required": [
+          "record_id",
+          "score",
+          "features",
+          "ranker_version",
+          "human_reviewed"
+        ]
+      }
     },
     {
       "operation": "inspect-content",
@@ -127,7 +596,35 @@
       "mcp_tool": "inspect_untrusted_content",
       "facade_method": "inspect_content",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "array",
+        "items_schema": null,
+        "items_fields": {
+          "finding_id": {
+            "type": "string"
+          },
+          "subject_id": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string"
+          }
+        },
+        "items_required": [
+          "finding_id",
+          "subject_id",
+          "category",
+          "description",
+          "disposition"
+        ]
+      }
     },
     {
       "operation": "render-diagnostics",
@@ -135,7 +632,23 @@
       "mcp_tool": "render_diagnostics",
       "facade_method": "render_diagnostics",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "document": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "document",
+          "format"
+        ]
+      }
     },
     {
       "operation": "evaluate-governance",
@@ -143,7 +656,11 @@
       "mcp_tool": "evaluate_governance",
       "facade_method": "evaluate_governance",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": "contracts/json-schema/data-handling-decision.v1.schema.json"
+      }
     },
     {
       "operation": "authorise-endpoint",
@@ -151,7 +668,23 @@
       "mcp_tool": "authorise_endpoint",
       "facade_method": "authorise_endpoint",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "authorised": {
+            "type": "boolean"
+          },
+          "endpoint": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "authorised",
+          "endpoint"
+        ]
+      }
     },
     {
       "operation": "validate-amendment",
@@ -159,7 +692,23 @@
       "mcp_tool": "validate_amendment",
       "facade_method": "validate_amendment",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "validate-standard-pack",
@@ -167,7 +716,23 @@
       "mcp_tool": "validate_standard_pack",
       "facade_method": "validate_standard_pack",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "validate-standard-assessment",
@@ -175,7 +740,23 @@
       "mcp_tool": "validate_standard_assessment",
       "facade_method": "validate_standard_assessment",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "validate-ranking-calibration",
@@ -183,7 +764,23 @@
       "mcp_tool": "validate_ranking_calibration",
       "facade_method": "validate_ranking_calibration",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "validate-discovery-run",
@@ -191,7 +788,23 @@
       "mcp_tool": "validate_discovery_run",
       "facade_method": "validate_discovery_run",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "contract": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "contract"
+        ]
+      }
     },
     {
       "operation": "verify-workflow-trace",
@@ -199,7 +812,31 @@
       "mcp_tool": "verify_workflow_trace",
       "facade_method": "verify_workflow_trace",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "final_stage": {
+            "type": "string"
+          },
+          "transition_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "verified_invariants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "final_stage",
+          "transition_count",
+          "verified_invariants"
+        ]
+      }
     },
     {
       "operation": "discovery-candidates",
@@ -207,7 +844,35 @@
       "mcp_tool": "discovery_candidates",
       "facade_method": "discovery_candidates",
       "authority": "human_release_required",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "array",
+        "items_schema": null,
+        "items_fields": {
+          "discovered_id": {
+            "type": "string"
+          },
+          "depth": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "edge_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requires_human_release": {
+            "type": "boolean"
+          }
+        },
+        "items_required": [
+          "discovered_id",
+          "depth",
+          "edge_ids",
+          "requires_human_release"
+        ]
+      }
     },
     {
       "operation": "verify-provider-component",
@@ -215,7 +880,28 @@
       "mcp_tool": "verify_provider_component",
       "facade_method": "verify_provider_component",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "component_id": {
+            "type": "string"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "valid",
+          "component_id",
+          "bytes"
+        ]
+      }
     },
     {
       "operation": "plan-licensed-request",
@@ -223,7 +909,50 @@
       "mcp_tool": "plan_licensed_request",
       "facade_method": "plan_licensed_request",
       "authority": "no_network",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "provider_id": {
+            "type": "string"
+          },
+          "database": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "endpoint": {
+            "type": "string"
+          },
+          "compilation_hash": {
+            "type": "string"
+          },
+          "credential_present": {
+            "type": "boolean"
+          },
+          "live_opt_in": {
+            "type": "boolean"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "provider_id",
+          "database",
+          "platform",
+          "endpoint",
+          "compilation_hash",
+          "credential_present",
+          "live_opt_in",
+          "blockers"
+        ]
+      }
     },
     {
       "operation": "validate-benchmark-report",
@@ -231,7 +960,23 @@
       "mcp_tool": "validate_benchmark_report",
       "facade_method": "validate_benchmark_report",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "valid": {
+            "type": "boolean"
+          },
+          "benchmark_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "valid",
+          "benchmark_id"
+        ]
+      }
     },
     {
       "operation": "providers",
@@ -239,7 +984,11 @@
       "mcp_tool": "list_providers",
       "facade_method": "default_provider_manifests",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "array",
+        "items_schema": "contracts/json-schema/provider-manifest.v1.schema.json"
+      }
     },
     {
       "operation": "workflow",
@@ -247,7 +996,11 @@
       "mcp_tool": "workflow",
       "facade_method": "workflow",
       "authority": "read_only",
-      "stability": "alpha"
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": "contracts/json-schema/agent-workflow.v1.schema.json"
+      }
     }
   ]
 }

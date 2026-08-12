@@ -1,16 +1,14 @@
 {
-  "client_era": "current",
+  "client_era": "previous",
   "era_assertions": [
-    "server_discover_handshake",
+    "initialize_handshake",
     "catalogue_parity",
     "deterministic_tool_order",
     "tool_schema_advertisements",
     "governed_tool_annotations",
     "structured_content_schema_validation",
     "governed_error_redaction",
-    "protocol_error_shape",
-    "result_type_metadata",
-    "cache_metadata"
+    "protocol_error_shape"
   ],
   "errors": [],
   "expected_tools": 31,
@@ -23,7 +21,7 @@
     "Tools with required input arguments were not invoked by this smoke harness."
   ],
   "observed_tools": 31,
-  "protocol_version": "2026-07-28",
+  "protocol_version": "2025-11-25",
   "rust_sdk": "rmcp 3.1.2",
   "schema_version": "org.searchright.mcp-smoke-receipt.v1",
   "schemas_validated": 2,
