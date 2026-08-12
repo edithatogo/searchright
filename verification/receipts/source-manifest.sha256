@@ -1042,7 +1042,7 @@ c2f2604ba5b29b39b8c367d3e35fdbe8cdf0ce78dff022cd7d3150f867791662  ./crates/evide
 94944249263bc018d9b50b4c3d97ecbe18caad47305c16c8941423483330793b  ./crates/evidence-search-contracts/tests/schema_parity.rs
 74423bc811fc68fa7a505eb0725ba1fba432bcd7e38b318912f43b8fddfc7e09  ./crates/evidence-search-core/Cargo.toml
 70919c68bf69fd75ecffd3e570dd6064491490d118982a45e640b1a73b05d2ad  ./crates/evidence-search-core/src/audit.rs
-369e058b9e8d49a412075e31da8fab350ca2375b966c2a537d3e4aded5d89dfb  ./crates/evidence-search-core/src/compiler.rs
+b6db7a54a5450c7c66dfe6583a1166ce6dd24a8931d195da3e16490cebd5d469  ./crates/evidence-search-core/src/compiler.rs
 6dcf64046852b17ebc71af6a96e7b68e0f788cdaf386a5d1d6fde1ca13c396ac  ./crates/evidence-search-core/src/lib.rs
 2f9054ee071a1a8e70d364fa9fdc554726ca3c2df90022320bbc00048f0acc34  ./crates/evidence-search-core/src/native.rs
 afa47f2089ae8e54e485791ce6c61f998768000f7fa1c489b541acc093d645b1  ./crates/evidence-search-core/src/provider.rs
