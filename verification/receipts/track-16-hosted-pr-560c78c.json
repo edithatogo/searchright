@@ -1,0 +1,91 @@
+{
+  "schema_version": "org.searchright.verification-receipt.v1",
+  "track_id": "16",
+  "recorded_on": "2026-08-12",
+  "repository": "edithatogo/searchright",
+  "pull_request": 569,
+  "head_revision": "560c78c19d1b6442273303628e26addb46ff7385",
+  "observed_state": "open_blocked",
+  "passed": [
+    {
+      "gate": "static_contracts_and_roadmap_evidence",
+      "run": 31556814433,
+      "job": 93990823835
+    },
+    {
+      "gate": "rust_cross_platform",
+      "run": 31556814433,
+      "jobs": {
+        "ubuntu": 93990823813,
+        "windows": 93990823807,
+        "macos": 93990823868,
+        "declared_version": 93990823802
+      }
+    },
+    {
+      "gate": "clean_room_reproducibility",
+      "run": 31556814395,
+      "job": 93990823619
+    },
+    {
+      "gate": "formal_and_adversarial_assurance",
+      "run": 31556814404,
+      "jobs": {
+        "loom": 93990824049,
+        "miri": 93990824105,
+        "cargo_careful": 93990824087,
+        "kani": 93990824082
+      }
+    },
+    {
+      "gate": "bounded_fuzz_targets",
+      "run": 31556814385,
+      "jobs": {
+        "query_contract": 93990823795,
+        "document_evidence": 93990823785,
+        "audit_event": 93990823854
+      }
+    },
+    {
+      "gate": "security_partial",
+      "run": 31556814387,
+      "jobs": {
+        "full_history_secret_scan": 93990823892,
+        "dependency_review": 93990823891,
+        "codeql": 93990823870,
+        "workflow_policy": 93990823851
+      }
+    }
+  ],
+  "measured_not_admitted": [
+    {
+      "gate": "llvm_line_coverage",
+      "run": 31556814439,
+      "job": 93990823643,
+      "observed_percent": 61.02,
+      "required_percent_at_revision": 91.0,
+      "result": "failed"
+    },
+    {
+      "gate": "codecov_patch",
+      "check_run": 93991336075,
+      "observed_percent": 83.7,
+      "required_percent_at_revision": 90.0,
+      "result": "failed"
+    }
+  ],
+  "failed": [
+    {
+      "gate": "rust_supply_chain_policy",
+      "run": 31556814387,
+      "job": 93990823821,
+      "reason": "cargo-vet lacked qualifying audit coverage for the locked dependency graph"
+    }
+  ],
+  "not_run_or_not_admitted": [
+    "The OpenSSF Scorecard job was skipped because the evidence was observed on a pull request.",
+    "The scheduled mutation workflow did not run on this pull-request head.",
+    "The governed coverage ratchet introduced at e91352c and cargo-vet admission policy introduced at dc02719/324baf4 were not present at this hosted head and have no hosted result in this receipt."
+  ],
+  "claim_boundary": "This receipt records hosted PR #569 results only for exact head 560c78c19d1b6442273303628e26addb46ff7385. It proves cross-platform compiler/test/Clippy, selected formal/fuzz/security, clean-room and static jobs at that revision. The aggregate PR was blocked by coverage and cargo-vet. Later local policy commits are source-reviewed only until GitHub executes them at a new exact head. It does not satisfy the greater-than-90-percent maturity target, mutation evidence, Scorecard evidence, complete dependency audits or release readiness."
+}

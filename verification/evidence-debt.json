@@ -9,11 +9,11 @@
     },
     "by_state": {
       "external_evidence_required": 10,
-      "partially_implemented": 117,
-      "scaffolded": 59,
+      "partially_implemented": 118,
+      "scaffolded": 58,
       "source_implemented": 13
     },
-    "open_gate_entries": 450,
+    "open_gate_entries": 447,
     "total": 199,
     "track_level_only": 121,
     "without_symbol_mapping": 147
@@ -103,7 +103,7 @@
   },
   "schema_version": "org.searchright.evidence-debt.v1",
   "static_gates": {
-    "catalogued": 54,
+    "catalogued": 56,
     "harness": 52,
     "unregistered_assertion_commands": []
   },

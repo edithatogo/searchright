@@ -1,10 +1,11 @@
 # Cargo Vet policy
 
-This directory is the canonical `cargo-vet` store. It contains no local
-exemptions. CI runs `cargo vet --locked`; imported audits can reduce duplicated
-review, but do not silently become Searchright-authored evidence. Peer imports
-are limited to the authoritative registries named in `config.toml` and locked in
-`imports.lock`.
+This directory is the canonical `cargo-vet` store. CI runs `cargo vet --locked`;
+imported audits can reduce duplicated review, but do not silently become
+Searchright-authored evidence. Peer imports are limited to the authoritative
+registries named in `config.toml` and locked in `imports.lock`. Exact temporary
+exemptions are present for the residual backlog and remain risk acceptances—not
+audits or safety certification.
 
 A new exemption requires an owner, exact crate version, criteria, rationale,
 expiry/review date and a linked issue. Wildcard trust is prohibited unless a

@@ -5,7 +5,7 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/16-quality-security-harness/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Hosted PR #569 evidence is bound to exact head 560c78c: cross-platform compiler/test/Clippy, selected formal/fuzz/security, clean-room and static jobs passed, while coverage and cargo-vet failed. Coverage-ratchet commit e91352c and cargo-vet governance commits dc02719/324baf4 are locally source-verified only until a new hosted head runs. The greater-than-90-percent coverage target, mutation, Scorecard, complete dependency audits and aggregate release gates remain open.",
   "assertions": [
     {
       "assertion_id": "T16-A001",
@@ -21,12 +21,13 @@
         "python scripts/check_toolchain_manifest.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/16-quality-security-harness/evidence.json"
+        "conductor/tracks/16-quality-security-harness/evidence.json",
+        "verification/receipts/track-16-hosted-pr-560c78c.json"
       ],
       "open_gates": [
-        "Run deterministic CI on every supported host and obtain a green hosted receipt."
+        "Push the local admission-policy commits and obtain a green aggregate hosted receipt on the exact new PR head."
       ],
-      "permitted_claim": "The committed lockfile passed locked workspace tests on the local Rust 1.97.1 GNU host; hosted and cross-platform CI remain open."
+      "permitted_claim": "At exact PR head 560c78c, locked Rust compiler, test and Clippy jobs passed on Linux, macOS and Windows; that aggregate PR head remained blocked and later local policy commits are not hosted evidence."
     },
     {
       "assertion_id": "T16-A002",
@@ -49,33 +50,41 @@
         "python scripts/check_vertical_slice.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/16-quality-security-harness/evidence.json"
+        "conductor/tracks/16-quality-security-harness/evidence.json",
+        "verification/receipts/track-16-hosted-pr-560c78c.json"
       ],
       "open_gates": [
-        "Compile and execute Rust unit, integration, property, metamorphic, CDC, fuzz and mutation suites."
+        "Run the scheduled mutation suite on the exact candidate and retain its hosted artifact.",
+        "Raise measured line coverage above 90 percent with meaningful tests; the 61 percent admission ratchet is not the maturity target."
       ],
-      "permitted_claim": "Network-free static gates and Rust test source exist; Rust test execution remains open."
+      "permitted_claim": "At exact PR head 560c78c, workspace tests and three bounded fuzz targets passed with Kani, Loom, Miri and cargo-careful; mutation and the greater-than-90-percent coverage maturity target remain open."
     },
     {
       "assertion_id": "T16-A003",
       "statement": "Configure llvm-cov >90% and Codecov",
-      "state": "scaffolded",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "codecov.yml",
-        ".github/workflows/coverage.yml"
+        ".github/workflows/coverage.yml",
+        "verification/coverage-policy.json",
+        "scripts/check_coverage_policy.py",
+        "tests/test_coverage_policy.py"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python scripts/check_coverage_policy.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/16-quality-security-harness/evidence.json"
+        "conductor/tracks/16-quality-security-harness/evidence.json",
+        "verification/receipts/track-16-hosted-pr-560c78c.json"
       ],
       "open_gates": [
-        "Run llvm-cov and enforce measured coverage above the declared threshold."
+        "Run the governed admission ratchet on a hosted head containing e91352c.",
+        "Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent."
       ],
-      "permitted_claim": "Coverage automation is configured but no coverage result is claimed."
+      "permitted_claim": "Hosted head 560c78c measured 61.02 percent line and 83.70 percent patch coverage and failed the then-current thresholds. Commit e91352c adds a non-regression admission ratchet but has no hosted result; greater than 90 percent remains the open maturity target."
     },
     {
       "assertion_id": "T16-A004",
@@ -92,7 +101,10 @@
         "verification/gate-catalog.json",
         "verification/architecture-policy.json",
         "scripts/check_gate_catalog.py",
-        "scripts/check_architecture_fitness.py"
+        "scripts/check_architecture_fitness.py",
+        "scripts/check_cargo_vet_governance.py",
+        "docs/security/cargo-vet-governance.md",
+        "supply-chain/exemption-proposals.json"
       ],
       "implementation_symbols": [
         "scripts/check_gate_catalog.py::main",
@@ -102,15 +114,19 @@
         "python scripts/check_toolchain_manifest.py",
         "python scripts/check_workflow_hardening.py",
         "python scripts/check_gate_catalog.py --check",
-        "python scripts/check_architecture_fitness.py"
+        "python scripts/check_architecture_fitness.py",
+        "python scripts/check_cargo_vet_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/16-quality-security-harness/evidence.json"
+        "conductor/tracks/16-quality-security-harness/evidence.json",
+        "verification/receipts/track-16-hosted-pr-560c78c.json"
       ],
       "open_gates": [
-        "Install and execute cargo-deny, audit, vet, semver, public-api and other configured tools."
+        "Run cargo-vet governance and cargo-vet successfully on a hosted head containing dc02719 and 324baf4.",
+        "Replace temporary exact-version exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.",
+        "Run OpenSSF Scorecard in a push context for the exact candidate."
       ],
-      "permitted_claim": "Security, supply-chain, API and architecture gates are explicitly catalogued with source-level evidence ceilings; compiler-backed tool execution remains open."
+      "permitted_claim": "At exact PR head 560c78c, CodeQL, workflow policy, dependency review and public API/SemVer passed, while cargo-vet failed and Scorecard was skipped. Commits dc02719/324baf4 add governed temporary exemptions but are not hosted proof or dependency audits."
     },
     {
       "assertion_id": "T16-A005",
@@ -136,7 +152,8 @@
         "python scripts/check_redaction_policy.py --self-test"
       ],
       "evidence_receipts": [
-        "conductor/tracks/16-quality-security-harness/evidence.json"
+        "conductor/tracks/16-quality-security-harness/evidence.json",
+        "verification/receipts/track-16-hosted-pr-560c78c.json"
       ],
       "open_gates": [
         "Compile and run SSRF, parser bomb and resource-exhaustion adversarial tests."
@@ -178,7 +195,7 @@
       "open_gates": [
         "Generate compiler, coverage, live, external and release receipts at the corresponding evidence levels."
       ],
-      "permitted_claim": "Machine-readable static receipts, gate evidence ceilings and evidence-debt registers are produced; higher evidence receipts are not fabricated."
+      "permitted_claim": "Machine-readable static and exact-head hosted receipts are produced with failed, skipped and unhosted gates preserved; later policy commits are not promoted before their hosted run."
     }
   ]
 }

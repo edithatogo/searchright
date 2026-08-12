@@ -1066,6 +1066,36 @@
     {
       "category": "repository_policy",
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_cargo_vet_governance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CARGO-VET-GOVERNANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_cargo_vet_governance.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_coverage_policy.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-COVERAGE-POLICY",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_coverage_policy.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/run_static_harness.py",
       "compiler_required": false,
       "covered_assertions": [
