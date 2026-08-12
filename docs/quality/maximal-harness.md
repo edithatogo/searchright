@@ -29,8 +29,16 @@ The pinned Rust workflow adds formatting, strict Clippy, unit, integration,
 documentation, property and metamorphic tests on Linux, macOS and Windows. It
 requires a committed `Cargo.lock` and runs at the declared Rust version.
 
-Coverage is gated at 91% line coverage. Mutation testing is scheduled, while
-new and changed contract surfaces are fuzzed with persisted corpora.
+Coverage uses the governed ratchet in `verification/coverage-policy.json`. The
+current PR admission floor is 61% line coverage, derived from the first hosted
+workspace measurement at commit `560c78c19d1b6442273303628e26addb46ff7385`.
+Regression below that floor is denied; changed-line coverage is separately
+ratcheted at 83%, beneath the observed 83.70% patch baseline. These admission
+floors are not the Track 16 maturity target: line coverage greater than 90%
+remains open, and each completed test tranche or release candidate must review
+an increase to the floor. A decrease requires a new dated governance decision,
+rationale and replacement baseline evidence. Mutation testing is scheduled,
+while new and changed contract surfaces are fuzzed with persisted corpora.
 
 ## Adversarial and formal gates
 

@@ -42,5 +42,5 @@ jobs:
           path: lcov.info
           if-no-files-found: error
           retention-days: 30
-      - name: Enforce line-coverage threshold
-        run: cargo llvm-cov report --fail-under-lines 91
+      - name: Enforce governed coverage ratchet
+        run: python scripts/check_coverage_policy.py --lcov lcov.info

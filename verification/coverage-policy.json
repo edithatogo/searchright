@@ -1,0 +1,36 @@
+{
+  "schema_version": "org.searchright.coverage-policy.v1",
+  "decision": {
+    "id": "coverage-ratchet-2026-08-12",
+    "rationale": "The first compiler-backed workspace measurement exposed broad untested scaffolding. A 91 percent PR admission gate is not yet achieved and must not be represented as current evidence. Admit no regression from the measured baseline while Track 16 adds meaningful tests and ratchets the floor upward.",
+    "recorded_on": "2026-08-12"
+  },
+  "baseline": {
+    "commit": "560c78c19d1b6442273303628e26addb46ff7385",
+    "github_actions_run": 31556814439,
+    "github_actions_job": 93990823643,
+    "lcov_artifact_sha256": "8ceb89c947e1b649a1b8defd1e8f1eac301fe7688603f91cec2c8bebaeeef1db",
+    "codecov_patch_check_run": 93991336075,
+    "covered_lines": 7240,
+    "instrumented_lines": 11865,
+    "observed_line_percent": 61.02,
+    "observed_patch_percent": 83.70
+  },
+  "admission": {
+    "minimum_line_percent": 61,
+    "minimum_patch_percent": 83,
+    "allowed_regression_percent": 0
+  },
+  "maturity": {
+    "track": "16-quality-security-harness",
+    "target_line_percent": 91,
+    "status": "open"
+  },
+  "ratchet": {
+    "direction": "increase_only",
+    "minimum_increment_percent": 1,
+    "review_trigger": "each completed Track 16 test tranche and every release candidate",
+    "decrease_requires": "a new dated governance decision with rationale and replacement baseline evidence"
+  },
+  "claim_boundary": "Passing the admission floor proves only that measured workspace line coverage has not regressed below the governed baseline. It does not satisfy the open greater-than-90-percent Track 16 maturity target."
+}
