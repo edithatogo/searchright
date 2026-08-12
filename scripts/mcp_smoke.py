@@ -160,6 +160,26 @@ def main() -> int:
                 schema = tool.get("inputSchema")
                 if not isinstance(schema, dict) or schema.get("type") != "object":
                     errors.append(f"tool {tool.get('name')} lacks an object inputSchema")
+                output_schema = tool.get("outputSchema")
+                if not isinstance(output_schema, dict) or output_schema.get("type") not in {
+                    "array",
+                    "object",
+                }:
+                    errors.append(f"tool {tool.get('name')} lacks a typed outputSchema")
+                annotations = tool.get("annotations")
+                expected_annotations = {
+                    "readOnlyHint": True,
+                    "destructiveHint": False,
+                    "idempotentHint": True,
+                    "openWorldHint": False,
+                }
+                if not isinstance(annotations, dict) or any(
+                    annotations.get(key) != value
+                    for key, value in expected_annotations.items()
+                ):
+                    errors.append(
+                        f"tool {tool.get('name')} lacks governed read-only annotations"
+                    )
             observed = {
                 str(tool.get("name"))
                 for tool in tools
