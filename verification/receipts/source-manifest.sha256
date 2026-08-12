@@ -1065,7 +1065,7 @@ e1392f070fbb31492f6714c60b0eda17a0a54e8ebca7c24a0495827b95666515  ./crates/searc
 ac1e1418d31d32492fc635fb6a6768ff608904ef2896470a249a539958f2dd36  ./crates/searchright-dedup/Cargo.toml
 39bbbbb76b7a3d144b34a63d5651b386ba660a3eb1374cbb1c209680838fe9d3  ./crates/searchright-dedup/src/lib.rs
 51d3778d191f51bae179c282d769f8a7c2cfec0ac2e284f8796f1aaaaa0d63d5  ./crates/searchright-diagnostics/Cargo.toml
-03aff8211c4b6b2aed5f0b40f1dd3a4205204654b18fc8de2418ceddd08ec970  ./crates/searchright-diagnostics/src/lib.rs
+d0c1fd11cf0db9643ece50dcd8e90e0dc0bb124955fbfd155089d504e4c864c9  ./crates/searchright-diagnostics/src/lib.rs
 f6a7332664bd50e22c13489a539e027f3446d02132944d0f685b5175d72612a1  ./crates/searchright-discovery/Cargo.toml
 c925756be8ce643fe6085e0399335a6b6a0fd6ea71f5610d495621d7f36535a8  ./crates/searchright-discovery/src/lib.rs
 6111493e6b66bff8bd2b7e7bff2da19cfb0d7884474d28fcd116c704d122b4f0  ./crates/searchright-governance/Cargo.toml
@@ -1135,6 +1135,7 @@ bbb5312c81ad63d97380f4e68736d6e77638bd0d39b12ea25c1998610f71fe72  ./docs/estate-
 4265b654e2a2715ead731d0036eb22813f64148b80437d89aabfb2e44f05bc02  ./docs/maturity/1.0-gate.md
 4f0a8cee9157e9e4cdfcf5993312b31d4895f6f080ba825d9353f03e65cac35f  ./docs/maturity/gap-register.md
 a19d5be5b94b5de15b6aca3054209eab0b45bca636099599c4ab311dd05b275a  ./docs/maturity/release-decision.md
+dc3941f423fe4684b0c9479359cede61d7ae02c553b3fbeb9f18c65dc0302f0b  ./docs/mcp-compatibility.md
 8972e57adf3c63f02040e76adf7c1d20babcb91660a78fdbb9d2995e15e8cb93  ./docs/msrv-and-package-policy.md
 0cd3019f83baf014a9399aef66e855d6dec9d8f652fc8210e82cc5fcece3caf5  ./docs/operations/backup-restore.md
 d23d1d611575fe01c1e3fc0ed823fca034d2b5ec8fb68426100b554fe4f6149f  ./docs/operations/incident-response.md
@@ -1178,7 +1179,7 @@ b94072bbef10f275807d605ca8e3cfbcddf5a88f57fb578c1499e0ab748418d9  ./fuzz/fuzz_ta
 0d94df3f1d68e191367f594be2e5634412766df470584ceaa5b73cbdabe36958  ./glama.json
 9d84ebd000d5698c3fbbe9149019981d7005a19a3de44422fbfa3e550b1322ad  ./integration/citeweft-compatibility.json
 c98ad6e69629b77749ba293f6d4a1f90b63491a4a212984936f0fe491e8a7608  ./integration/consumer-contract-suite.json
-46abe6884ddeb880160eab941a9ecafcbc96a91a1893b294ed8a17dadecca486  ./integration/ecosystem-lock.json
+4c976aff446928224061556034bbe6fc68a9e863a06d1fd7c3aac8fda1ff0a69  ./integration/ecosystem-lock.json
 e98f74fca744bb3cf7874f78b2aadb6c9329f6b2b8bcba32706169ef444f2b9c  ./integration/github/portfolio-project.json
 ef58dcb60d0d96d86b26a2af9c756d5583afc5282d87f6665929f058f4bcc00c  ./integration/github/portfolio-readme.md
 0798d1a3862e0b621ce72b7de16f078e7519017871a1661b65c1664db17e4c34  ./integration/locks.json
@@ -1336,7 +1337,7 @@ c15a358f77b924e2b1eba4bc27539e6b7ae5fd452c29ee5a6b04ff9bb0e39d8c  ./typos.toml
 e47fc3d96ac7555210c7202d73b1496a10e69d362038ede6473a4da984bbf56a  ./verification/gate-catalog.json
 3061e4e8e617eed3a4f1be8465be811bce0522006e93b6f968b10527298f6837  ./verification/harness-matrix.json
 78160001694a8e0a0bee9617d83011cb898cacadcccf4c8481f073c864bbed61  ./verification/recovery/rehearsal.json
-01d49b37240cda21a4d4bec7362e09cdc6703e5deb48d10061e11c31f65639ee  ./verification/sbom/source-components.cdx.json
+d4e119689c5d702b036d9b4b086350fe9bc361ca9f76edddb8f8bcd964e98326  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json
