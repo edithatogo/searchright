@@ -47,6 +47,15 @@ Load `CONTEXT.md` and `context/manifest.json` first.
 - Keep `unsafe` forbidden except in a separately reviewed sandbox/runtime adapter.
 - Do not promote a release train, pilot, registry packet or version 1.0 decision
   from source completeness alone.
+- Keep every pull request scoped to exactly one Conductor track. A multi-track
+  PR is permitted only when the tracks are technically inseparable and the PR
+  records the affected tracks, the concrete reason it cannot be split, and the
+  `scope:multi-track-exception` label.
+- Treat pull requests as merge-bound delivery units, not parking branches.
+  Enable rebase auto-merge after scope admission, repair failed required checks
+  on the same PR, and finish by verifying the exact merged `main` revision.
+  Closing without merge is reserved for an explicitly documented superseded,
+  unsafe, or unauthorized change.
 
 ## Verification
 
