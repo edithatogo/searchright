@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Resolve every critical/high finding and document justified exclusions.
+- [ ] Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion.
 
 ## Completion and evidence contract
 

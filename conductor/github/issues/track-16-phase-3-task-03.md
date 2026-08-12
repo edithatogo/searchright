@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run clean-room offline builds, binary comparison, install smoke and MCP transcript.
+- [ ] Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.
 
 ## Completion and evidence contract
 

@@ -53,6 +53,13 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `docs/quality/evidence-debt.md`
   - [x] Present source path: `docs/quality/architecture-fitness.md`
   - [x] Present source path: `docs/security/redaction-and-data-minimisation.md`
+  - [x] Present source path: `verification/coverage-policy.json`
+  - [x] Present source path: `scripts/check_coverage_policy.py`
+  - [x] Present source path: `tests/test_coverage_policy.py`
+  - [x] Present source path: `docs/security/cargo-vet-governance.md`
+  - [x] Present source path: `scripts/check_cargo_vet_governance.py`
+  - [x] Present source path: `supply-chain/exemption-proposals.json`
+  - [x] Present source path: `verification/receipts/track-16-hosted-pr-560c78c.json`
   - [x] Assertion ledger: `conductor/tracks/16-quality-security-harness/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -74,16 +81,18 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/generate_evidence_debt.py --check`
   - [x] `python scripts/check_architecture_fitness.py`
   - [x] `python scripts/check_redaction_policy.py --self-test`
+  - [x] `python scripts/check_coverage_policy.py`
+  - [x] `python scripts/check_cargo_vet_governance.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-16-phase-3 -->
 
-- [ ] Verify the committed Cargo.lock against the exact supported toolchains and clean-room dependency policy.
-- [ ] Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans.
-- [ ] Run clean-room offline builds, binary comparison, install smoke and MCP transcript.
-- [ ] Resolve every critical/high finding and document justified exclusions.
+- [ ] Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits.
+- [ ] Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.
+- [ ] Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.
+- [ ] Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion.
 
 ## Phase 4: Review and closeout
 

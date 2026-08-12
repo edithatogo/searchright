@@ -6197,7 +6197,7 @@
     },
     {
       "key": "track-13-phase-3-task-01",
-      "title": "Track 13 / P3 / T01: Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval",
+      "title": "Track 13 / P3 / T01: Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision",
       "kind": "task",
       "parent_key": "track-13-phase-3",
       "body_path": "conductor/github/issues/track-13-phase-3-task-01.md",
@@ -6402,15 +6402,15 @@
         "conductor",
         "track:13",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "13",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Source Verified",
@@ -7685,7 +7685,7 @@
     },
     {
       "key": "track-16-phase-3-task-01",
-      "title": "Track 16 / P3 / T01: Verify the committed Cargo.lock against the exact supported toolchains and clean-room dependency policy",
+      "title": "Track 16 / P3 / T01: Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits",
       "kind": "task",
       "parent_key": "track-16-phase-3",
       "body_path": "conductor/github/issues/track-16-phase-3-task-01.md",
@@ -7718,7 +7718,7 @@
     },
     {
       "key": "track-16-phase-3-task-02",
-      "title": "Track 16 / P3 / T02: Run compiler, Clippy, tests, coverage, mutation, fuzz, Kani, Loom, Miri, cargo-careful, CodeQL, Scorecard and full-history secret scans",
+      "title": "Track 16 / P3 / T02: Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity",
       "kind": "task",
       "parent_key": "track-16-phase-3",
       "body_path": "conductor/github/issues/track-16-phase-3-task-02.md",
@@ -7751,7 +7751,7 @@
     },
     {
       "key": "track-16-phase-3-task-03",
-      "title": "Track 16 / P3 / T03: Run clean-room offline builds, binary comparison, install smoke and MCP transcript",
+      "title": "Track 16 / P3 / T03: Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline",
       "kind": "task",
       "parent_key": "track-16-phase-3",
       "body_path": "conductor/github/issues/track-16-phase-3-task-03.md",
@@ -7784,7 +7784,7 @@
     },
     {
       "key": "track-16-phase-3-task-04",
-      "title": "Track 16 / P3 / T04: Resolve every critical/high finding and document justified exclusions",
+      "title": "Track 16 / P3 / T04: Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion",
       "kind": "task",
       "parent_key": "track-16-phase-3",
       "body_path": "conductor/github/issues/track-16-phase-3-task-04.md",

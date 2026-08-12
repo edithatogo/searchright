@@ -3,11 +3,11 @@
 
 Parent phase key: `track-13-phase-4`
 Conductor plan: `conductor/tracks/13-integration-passports-github-context/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 
 ## Completion and evidence contract
 

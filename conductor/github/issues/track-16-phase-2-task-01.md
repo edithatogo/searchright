@@ -22,6 +22,8 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/generate_evidence_debt.py --check`
   - [x] `python scripts/check_architecture_fitness.py`
   - [x] `python scripts/check_redaction_policy.py --self-test`
+  - [x] `python scripts/check_coverage_policy.py`
+  - [x] `python scripts/check_cargo_vet_governance.py`
 
 ## Completion and evidence contract
 

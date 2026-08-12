@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Verify the committed Cargo.lock against the exact supported toolchains and clean-room dependency policy.
+- [ ] Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits.
 
 ## Completion and evidence contract
 
