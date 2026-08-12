@@ -154,7 +154,9 @@
         "SR-007"
       ],
       "runtime_evidence": [
-        "verification/receipts/track-02-compiler-review.json"
+        "verification/receipts/track-02-compiler-review.json",
+        "verification/receipts/query-dialect-conformance.json",
+        "verification/receipts/track-02-conductor-review.json"
       ],
       "phase_3_task_count": 3,
       "review_completed": true,

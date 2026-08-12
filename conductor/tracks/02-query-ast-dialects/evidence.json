@@ -55,7 +55,9 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-02-compiler-review.json"
+    "verification/receipts/track-02-compiler-review.json",
+    "verification/receipts/query-dialect-conformance.json",
+    "verification/receipts/track-02-conductor-review.json"
   ],
   "external_evidence": []
 }
