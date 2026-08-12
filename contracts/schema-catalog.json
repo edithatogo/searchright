@@ -192,6 +192,16 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "github-control-plane-apply-summary",
+      "schema": "contracts/json-schema/github-control-plane-apply-summary.v1.schema.json",
+      "example": "contracts/examples/github-control-plane-apply-summary.json",
+      "schema_id": "https://schemas.searchright.dev/github-control-plane-apply-summary.v1.schema.json",
+      "rust_type": null,
+      "owner_track": "31",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "github-issue-hierarchy",
       "schema": "contracts/json-schema/github-issue-hierarchy.v1.schema.json",
       "example": "contracts/examples/github-issue-hierarchy.json",

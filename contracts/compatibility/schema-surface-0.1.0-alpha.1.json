@@ -157,6 +157,14 @@
       "owner_track": "16"
     },
     {
+      "id": "github-control-plane-apply-summary",
+      "schema_id": "https://schemas.searchright.dev/github-control-plane-apply-summary.v1.schema.json",
+      "path": "contracts/json-schema/github-control-plane-apply-summary.v1.schema.json",
+      "sha256": "c763b9875f4d5f811768c9deecffd8052cab2c39a63dc0e8aebb3047342683bc",
+      "stability": "alpha",
+      "owner_track": "31"
+    },
+    {
       "id": "github-issue-hierarchy",
       "schema_id": "https://schemas.searchright.dev/github-issue-hierarchy.v1.schema.json",
       "path": "contracts/json-schema/github-issue-hierarchy.v1.schema.json",
