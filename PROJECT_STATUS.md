@@ -2,179 +2,172 @@
 
 **Status date:** 12 August 2026
 
-**Evidence ceiling:** source-verified alpha
+**Verified revision:** `c0c5e3abaa345538df7f867fe884b7d67ac82f0a` (`main`)
 
-**Implementation model:** assertion-level, evidence-separated
+**Evidence ceiling:** source-verified alpha with hosted compiler and admission evidence
+**Maturity decision:** not ready
 
-## Headline status
+## Headline
 
-Searchright is a clean Git-managed Rust workspace with the complete maturity
-roadmap represented in 38 Conductor tracks and a deterministic GitHub
-issue/subissue projection. The repository has been deliberately rebaselined:
-roadmap scope is no longer considered implemented because a source path exists.
-Each scope statement is now an acceptance assertion with an implementation
-state, symbol/path mapping, deterministic gate, open evidence requirements and
-permitted claim.
+Searchright is a clean, protected and cross-platform-compiled Rust alpha. Its
+neutral contracts, shared execution core, application facade, CLI and local
+MCP server have substantial working implementations. The repository has strong
+static, compiler, security, supply-chain, packaging and formal-assurance gates.
 
-The network-free local harness covers 51 gates, backed by a 53-command gate
-catalogue with explicit evidence ceilings. Local GNU and hosted cross-platform
-Rust compilation pass, while dependency-trust admission, live provider
-execution, downstream cutover and external methodological evaluation remain
-open as separately named evidence levels.
+It is not yet a validated systematic-review product, authenticated hosted
+service, release candidate or publishable package. Live provider behavior,
+methodological performance, downstream adoption, usability, operational
+recovery and external acceptance remain separate evidence gates.
 
-## Implemented local source and policy surfaces
+## Repository and delivery state
 
-- 30-crate Rust 2024 workspace, with all crates `publish = false` by default.
-- Neutral `evidence-search-contracts` below the shared
-  `evidence-search-core`, avoiding a Searchright-specific dependency inversion.
-- Only three future public package candidates, all explicitly `publish_ready:
-  false` pending compiler, SemVer, consumer and supply-chain evidence.
-- 60 Draft 2020-12 schemas and 60 canonical examples.
-- Exact contract-surface baseline for JSON Schema, WIT, OpenAPI and MCP server
-  metadata; any byte drift requires an explicit compatibility update.
-- 31 mapped operations across the shared Rust facade, CLI and MCP adapters.
-- Loss-preserving native strategy representation and a seven-dialect lexical
-  corpus for PubMed, Ovid MEDLINE, Embase, CINAHL, PsycINFO, Scopus and Web of
-  Science. Semantic equivalence is not claimed.
-- Bounded provider runtime source with typed retryability, total/per-request
-  budgets, cache fingerprints and rate controls.
-- Source adapters and rights-clear response baselines for PubMed ESearch and
-  ESummary, Europe PMC, Crossref and OpenAlex.
-- Provider-policy manifests that separately track technical endpoint identity,
-  credential handling, raw-response retention, data classification and the
-  absence of legal/terms approval evidence.
-- Executable architecture-fitness checks that keep neutral contracts/core below
-  product services, confine network dependencies and provider endpoints to the
-  connector boundary, and default external writes to explicit dual opt-in.
-- Deterministic receipt-redaction tests, declared schema migration/rollback
-  plans, and a local recovery reference rehearsal with tamper and idempotency
-  checks. None is represented as legal approval or production recoverability.
-- Append-only audit ledger, single-writer filesystem store and deterministic
-  derived review-state reducer. The reducer requires an externally verified
-  BLAKE3 head and rejects non-human final screening authority.
-- Deterministic `.srpack` review bundles with path, symlink, size, likely-secret,
-  hash, Merkle-root and tamper checks.
-- Review planning, eligibility, amendments, deduplication, report/study linkage,
-  screening, PRISMA/PRISMA-S, living updates, provenance and governance source
-  surfaces.
-- Rights-clear methodological validation fixtures with sealed-label policy and
-  no checked-in final test labels or performance result.
-- Eight exact-revision integration passports with canonical-upstream, local-fork
-  role, code/content/model licence, redistribution and drift fields.
-- Eleven non-mutating companion-repository change packets and an estate scanner
-  covering known direct-provider, insecure endpoint, direct-writeback and
-  title-only deduplication patterns.
-- The Sourceright packet now includes a provenance-bearing scholarly-integrity
-  signal boundary: retractions, corrections, expressions of concern and version
-  relationships remain advisory and cannot cause automatic study exclusion.
-- Separate Searchright delivery Project and strategic evidence-infrastructure
-  portfolio projection.
-- `cargo-vet`, cargo-semver-checks and cargo-public-api policy/workflows added;
-  these tools are pinned but not represented as locally executed.
-- Ecosystem lock and default-deny CiteWeft → Searchright → Sourceright release
-  train linked to the contract surface and package policy.
+- Local `main` and `origin/main` are identical at the verified revision.
+- The working tree is clean; there are no open pull requests or delivery
+  branches.
+- PRs #569, #572, #573 and #574 are merged.
+- The active main ruleset requires strict, linear admission and the PR scope
+  policy. Future PRs declare one Conductor track; a technically inseparable
+  multi-track exception requires its explicit label and rationale.
+- The public repository, native issue/subissue hierarchy and delivery Project
+  exist. The durable control-plane audit observed the former 568-node
+  projection, all 567 relationships and zero issue content, label, task-state
+  or recognised Project-field drift. Current canonical source contains 567
+  nodes; a post-merge audit of that exact projection remains open because the
+  later GitHub API run did not complete.
 
-## Current measured source evidence
+## Historical bootstrap disclosures
 
-| Surface | Current value |
-| --- | ---: |
-| Conductor tracks | 38 |
-| Acceptance assertions | 199 |
-| Individually mapped assertions | 72 |
-| MoSCoW requirements | 92 |
-| Checked source tasks | 154 |
-| Open higher-evidence tasks | 223 |
-| Rust crates | 30 |
-| Rust source files | 64 |
-| Rust test functions in source | 55 |
-| JSON Schemas / examples | 60 / 60 |
-| CLI/MCP/facade operations | 31 |
-| GitHub hierarchy nodes | 568 |
-| Project fields / views | 13 / 6 |
-| Integration passports / consumer interactions | 8 / 8 |
-| Companion change packets / planned changes | 11 / 55 |
-| Network-free aggregate gates | 51 |
-| Registered gate commands | 53 |
-| Assurance dimensions | 42 |
-| Provider policies with approval evidence | 0 / 5 |
-| Public packages marked ready | 0 |
+- **Rust compilation:** it is now evidenced on merged main across Ubuntu,
+  Windows and macOS; the original generation-environment receipt remains a
+  historical record and is not rewritten.
+- **Live provider calls:** none is claimed. Provider support remains limited to
+  deterministic fixtures until authorised redacted canaries exist.
+- **GitHub repository creation/push:** completed and durably audited for the
+  former 568-node projection; the current 567-node projection still needs an
+  exact-main re-audit.
+- **Conductor plugin installation:** the host previously reported Conductor
+  0.4.1 installed, while repository contracts retain their pinned baseline;
+  this status does not assert general host-version compatibility.
 
-These are source, contract and static-policy measurements. They are not a
-compiler or methodological-performance result.
+## Hosted evidence on merged main
 
+The exact verified revision completed 17 hosted checks successfully, with no
+failure or pending result:
 
-## Explicit non-executed disclosures
+- Rust 1.97.1 on Ubuntu, Windows and macOS;
+- declared Rust-version admission;
+- repository-wide formatting, Clippy, tests and documentation through CI;
+- static contracts and roadmap evidence;
+- LLVM coverage admission;
+- CodeQL and full-history Gitleaks scanning;
+- Rust dependency, advisory, unused-dependency and cargo-vet policy;
+- clean-room vendored build and install smoke;
+- public API and SemVer checks;
+- Kani, Miri, Loom and standard-library precondition suites;
+- OpenSSF Scorecard and workflow policy.
 
-- **Live provider calls:** not executed; all provider baselines are rights-clear local fixtures.
-- **GitHub repository creation/push:** the public [Searchright repository](https://github.com/edithatogo/searchright), 568-issue native subissue hierarchy and [delivery Project](https://github.com/users/edithatogo/projects/40) were created and audited on 2026-08-12. The audit observed 568/568 items, 567/567 parent-child relationships and zero content, label, task-state or recognised Project-field drift. The current remediation remains on PR #569 rather than protected `main`.
-- **Conductor plugin installation:** Gemini CLI reported Conductor 0.4.1 enabled for user and workspace scopes on 2026-08-12. The repository baseline remains Conductor 0.3.0, and the host receipt does not establish broader 0.4.1 compatibility.
-- **Git submodule pinning for Conductor:** not adopted; the repository currently uses host-installed upstream/pinned passport patterns instead of an embedded submodule.
+These checks establish compiler and repository-admission evidence for the exact
+revision. They do not establish live-provider correctness, methodological
+validity, production security, usability or operational recovery.
 
-## Open evidence gates
+## Implemented surfaces
 
-### Compiler and executable evidence
+- 30-crate Rust 2024 workspace; every crate remains non-publishable by default.
+- 60 JSON Schema 2020-12 contracts and canonical examples.
+- Neutral `evidence-search-contracts` and shared `evidence-search-core` layers.
+- Review planning, eligibility, query compilation, provider execution,
+  receipts, audit, storage, import, deduplication, record/report/study linkage,
+  screening, PRISMA/PRESS reporting, living updates and provenance foundations.
+- Deterministic provider fixtures for open connectors, with live support still
+  unclaimed.
+- Shared Rust facade and CLI operation hierarchy.
+- Local stdio MCP server targeting MCP 2026-07-28 with 31 tools, structured
+  content, root-shape output schemas and explicit read-only/non-destructive
+  effect annotations.
+- Default-deny external writes, human-only final screening authority, receipt
+  redaction, package publication gates and release/maturity blockers.
+- Prepared CiteWeft and Sourceright integration passports, consumer contracts,
+  migration packets and rollback boundaries.
 
-- Rust 1.97.1 is installed for the GNU and MSVC Windows targets. The exact GNU
-  workspace check and 55-test workspace suite pass; MSVC evidence remains
-  invalid because Git's POSIX `link.exe` shadows the intended linker.
-- `Cargo.lock` has been generated; commit-bound verification is recorded in the
-  Track 00 receipt after the coherent source slice is committed.
-- Repository-wide rustfmt, Clippy `-D warnings`, Cargo doc and the 55-test GNU
-  workspace suite pass locally on Rust 1.97.1. Hosted cross-platform and MSRV
-  jobs remain admission evidence and are not promoted while PR #569 is open.
-- Coverage executed on PR #569 head `9fc3fb6`: the hosted report measured
-  45.24% lines (9,567 total; 5,239 missed), 44.97% regions and 42.79%
-  functions. LCOV was preserved, but the >90% requirement correctly remains
-  failed; this is a coverage deficit, not an infrastructure failure.
-- Kani, Miri, Loom, `cargo-careful` and all three fuzz jobs passed their hosted
-  bounded suites on that head. Mutation evidence remains absent; none of these
-  results establishes product or methodological correctness.
-- The hosted public-API and SemVer job passes with its pinned rustdoc nightly.
-  The valid cargo-vet store contains no local audits or exemptions and fails
-  closed on 273 unvetted dependencies: 252 require `safe-to-deploy` evidence
-  and 21 dev-only dependencies require `safe-to-run` evidence.
+## Current Conductor position
 
-### Provider and methodological evidence
+The roadmap contains 38 tracks and 199 acceptance assertions. Canonical state:
 
-- Rust parser output has not been compared with the new provider fixtures.
-- No upstream API was contacted; the response baselines detect local and
-  expected-shape drift only.
-- No live pagination, rate-limit, retry, cancellation or source-policy receipt
-  exists.
-- No independently PRESS-reviewed query corpus or gold parse has been supplied.
-- No sealed-label benchmark, information-specialist calibration or external
-  methods evaluation has run.
+- 2 tracks are source implemented;
+- 24 tracks are partially implemented;
+- 9 tracks are scaffolded;
+- 3 tracks require external evidence;
+- no track is archived as fully complete.
 
-### Cross-repository and remote evidence
+At assertion level, 13 are source implemented, 118 partially implemented, 58
+scaffolded and 10 external-evidence-required. 121 assertions still have only
+track-level mappings and 447 open gate entries remain. These counts describe
+evidence debt, not a quality score.
 
-- The local CiteWeft and Sourceright compatibility crates compile in the GNU
-  workspace. Companion-repository consumer canaries have not run.
-- The prepared dual-run and consumer-contract suites have not executed in the
-  companion repositories.
-- No custom code has been deleted from UOGTO, VOIAGE or other downstream repos.
-- The Searchright remote, native issue hierarchy and repository delivery
-  Project exist and passed the additive control-plane audit. No portfolio
-  Project, release, public package or registry entry was created.
-- Licence review remains required for `standards_check`; `api-standards` and
-  `academic-research-skills` are reference-only until reuse rights are clear.
+## Coverage and dependency trust
 
-## Claim boundary
+- Coverage admission uses a zero-regression ratchet with 61.02% line and
+  83.70% patch baselines. Merged main currently measures 62.02% line coverage,
+  so hosted admission is green. The greater-than-90% maturity target remains
+  open.
+- Cargo-vet admission is green with 41 dependencies fully audited through
+  approved peer imports and 242 exact temporary exemptions. Searchright has no
+  local audit entries. The exemptions are owned, issue-linked and scheduled for
+  review by 10 November 2026. They are risk acceptances, not audits or safety
+  certification.
 
-The repository may be described as **source-verified, assertion-rebaselined,
-statically validated and locally compiler-tested on the pinned GNU toolchain**.
-It must not be described as fully implemented across its roadmap, CI-verified,
-fixture-proven end to end, live-provider compatible,
-downstream-integrated, production-ready, independently validated, published or
-registry-accepted.
+## Open critical evidence domains
 
-The next safe sequence is:
+### MCP and hosted access
 
-1. finish the repository-wide formatting, lint, documentation and supply-chain gates;
-2. validate the MSVC and declared MSRV toolchains in non-shadowed environments;
-3. capture SemVer/public-API/supply-chain receipts;
-4. execute CiteWeft and Sourceright consumer canaries;
-5. only then migrate downstream custom code or make public readiness claims.
+- Field-complete MCP output schemas and independent live-client validation.
+- Pinned current and MCP 2025-11-25 compatibility transcripts.
+- Resources, prompts, tasks, MRTR, pagination, subscriptions and comprehensive
+  cancellation behavior.
+- Authenticated Streamable HTTP with verified issuer, principal, tenant,
+  region, scope, rate, replay, isolation and rollback evidence.
 
-`CODEX_HANDOFF.md` remains the remote/bootstrap contract. The portable review
-bundle and complete Git delivery are separate artefacts: `.srpack` packages a
-review; the delivery ZIP packages this repository and its history.
+### Providers and methodology
+
+- Authorized redacted live canaries for each claimed provider.
+- Completed provider terms/licence/data-handling review.
+- DNS resolution and connection-pinning evidence for live endpoint security.
+- Independently reviewed PRESS strategies and rights-cleared gold corpora.
+- Sealed retrieval, translation, deduplication and prioritisation evaluation.
+- Information-specialist and usability calibration.
+
+### Ecosystem and operations
+
+- CiteWeft and Sourceright producer/consumer canaries, dual-run parity and
+  rollback rehearsal.
+- Representative persisted-data migration and backward-reader evidence.
+- Authenticated multi-tenant deployment and incident exercises.
+- Successful encrypted backup restore drill.
+- Bounded institutional pilots and operational SLO evidence.
+- Generated SDK compilation, downstream adoption and install-smoke evidence.
+- Release signing, attestations, package publication and registry acceptance.
+
+## Permitted description
+
+Searchright may be described as a **source-verified, cross-platform-compiled
+alpha with strong fail-closed governance, hosted admission evidence and a
+functional local CLI/MCP surface**.
+
+It must not be described as fully roadmap-complete, live-provider-proven,
+methodologically validated, authenticated-hosted, production-ready,
+restore-proven, independently evaluated, published or registry-accepted.
+
+## Next sequence
+
+1. Complete Track 10 field-complete MCP schemas and current/previous-client
+   compatibility evidence.
+2. Implement Track 24 resources, prompts, tasks, MRTR, pagination and
+   cancellation in bounded single-track slices.
+3. Implement and adversarially test Track 34 authenticated Streamable HTTP.
+4. Run authorized provider canaries and provider-policy review.
+5. Execute CiteWeft/Sourceright consumer canaries and rollback rehearsals.
+6. Replace track-level mappings with assertion-specific symbols, tests and
+   current receipts.
+7. Run sealed methodological, usability and information-specialist evaluation.
+8. Complete restore, pilot, release, publication and registry evidence before
+   reconsidering maturity.

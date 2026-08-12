@@ -1,0 +1,52 @@
+{
+  "schema_version": "org.searchright.track-review-receipt.v1",
+  "track_id": "30",
+  "observed_on": "2026-08-12",
+  "source_revision": "c0c5e3abaa345538df7f867fe884b7d67ac82f0a",
+  "source_ref": "main",
+  "source_tree_clean": true,
+  "remote_main_revision": "c0c5e3abaa345538df7f867fe884b7d67ac82f0a",
+  "open_pull_requests": 0,
+  "merged_pull_requests_observed": [
+    569,
+    572,
+    573,
+    574
+  ],
+  "hosted_checks": {
+    "successful": 17,
+    "failed": 0,
+    "pending": 0,
+    "skipped": 1,
+    "successful_contexts": [
+      "Candidate public API and SemVer",
+      "CodeQL",
+      "Declared Rust version",
+      "Full-history secret scan",
+      "Kani authority proofs",
+      "LLVM coverage",
+      "Loom concurrency permutations",
+      "Miri undefined-behaviour probe",
+      "OpenSSF Scorecard",
+      "Rust (macos-latest)",
+      "Rust (ubuntu-latest)",
+      "Rust (windows-latest)",
+      "Rust supply-chain policy",
+      "Standard-library precondition checks",
+      "Static contracts and roadmap evidence",
+      "Vendored offline build and install smoke",
+      "Workflow policy"
+    ],
+    "skipped_contexts": [
+      "Dependency review"
+    ]
+  },
+  "control_plane_evidence": {
+    "durable_receipt": "verification/receipts/github-control-plane-audit.json",
+    "durable_receipt_projection_nodes": 568,
+    "current_canonical_projection_nodes": 567,
+    "post_merge_exact_projection_audit": "open"
+  },
+  "maturity_decision": "not_ready",
+  "claim_boundary": "This receipt establishes merged-main repository admission and the observed Git state only. It does not establish live-provider, methodological, hosted-service, usability, restore, pilot, publication or registry evidence."
+}

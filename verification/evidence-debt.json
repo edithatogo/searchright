@@ -24,7 +24,6 @@
     "critical_blockers": [
       "access_and_tenancy",
       "backup_restore_incidents",
-      "compiler",
       "determinism",
       "downstream_compatibility",
       "github_control_plane",
@@ -44,22 +43,12 @@
   "priority_queue": [
     {
       "closure_evidence": [
-        "committed Cargo.lock",
-        "compiler receipt",
-        "locked test receipt"
-      ],
-      "debt": "compiler_baseline",
-      "priority": 1,
-      "reason": "Cargo.lock, compilation, Clippy and Rust test execution are not evidenced."
-    },
-    {
-      "closure_evidence": [
         "implementation symbol",
         "assertion-specific deterministic test",
         "current receipt"
       ],
       "debt": "assertion_specific_proof",
-      "priority": 2,
+      "priority": 1,
       "reason": "121 assertions retain track-level-only mappings."
     },
     {
@@ -69,7 +58,7 @@
         "policy review evidence"
       ],
       "debt": "provider_runtime_and_policy",
-      "priority": 3,
+      "priority": 2,
       "reason": "Provider fixtures and conservative policies exist, but live canaries and policy review are not evidenced."
     },
     {
@@ -79,7 +68,7 @@
         "calibration report"
       ],
       "debt": "methodological_validation",
-      "priority": 4,
+      "priority": 3,
       "reason": "Search translation, recall, deduplication, linkage and screening require independent gold-standard evaluation."
     },
     {
@@ -89,8 +78,20 @@
         "rollback rehearsal"
       ],
       "debt": "downstream_migration",
-      "priority": 5,
+      "priority": 4,
       "reason": "Sourceright, CiteWeft and estate migrations are prepared but not dual-run or cut over."
+    },
+    {
+      "closure_evidence": [
+        "tenant-isolation receipt",
+        "restore receipt",
+        "pilot exit",
+        "downstream SDK receipt",
+        "release acceptance"
+      ],
+      "debt": "operations_and_adoption",
+      "priority": 5,
+      "reason": "Authenticated hosting, restore drills, pilots, generated SDK adoption and release acceptance remain unevidenced."
     }
   ],
   "provider_policy": {
