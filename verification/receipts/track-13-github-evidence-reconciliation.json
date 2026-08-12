@@ -1,0 +1,49 @@
+{
+  "schema_version": "org.searchright.track-evidence-reconciliation.v1",
+  "track_id": "13",
+  "observed_on": "2026-08-12",
+  "reconciliation_base_revision": "324baf40ea7166a05f77f8ad15a0e68483e605e6",
+  "status": "passed_with_external_blockers",
+  "durable_remote_evidence": {
+    "path": "verification/receipts/github-control-plane-audit.json",
+    "sha256": "1b20a65c2f2a154c38bc24f3a89870cb8aaa87a91f6f72be1f406d4cdb0b9673",
+    "committed_at": "a0660f86774f2a3953b039a81d13de262a89d36e",
+    "repository": "https://github.com/edithatogo/searchright",
+    "audit_status": "passed",
+    "mutation_operations": 0,
+    "canonical_issues_observed": 568,
+    "expected_relationships_observed": 567,
+    "content_drift": 0,
+    "label_drift": 0,
+    "task_state_drift": 0
+  },
+  "local_reconciliation": {
+    "current_issue_hierarchy_sha256": "783851fe63a3dd29b638a062b4dbd596aeaafd898a229a4ff5222412093dde23",
+    "track_13_nodes_at_audit": 15,
+    "track_13_nodes_in_current_source": 15,
+    "track_13_parent_child_topology_delta": 0,
+    "global_nodes_at_audit": 568,
+    "global_nodes_in_current_source": 567,
+    "network_requests": 0,
+    "github_mutations": 0
+  },
+  "compiler_review": {
+    "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+    "tests": {
+      "command": "cargo test -p searchright-contracts --locked",
+      "status": "passed",
+      "tests_passed": 15
+    },
+    "clippy": {
+      "command": "cargo clippy -p searchright-contracts --all-targets --locked -- -D warnings",
+      "status": "passed"
+    }
+  },
+  "satisfied_gate": "The remote Searchright repository was created and the nested issue hierarchy was synchronised under explicit approval; the durable audit subsequently observed convergence.",
+  "open_gates": [
+    "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.",
+    "Execute consumer-driven contract tests in each pinned downstream repository.",
+    "Record scheduled integration-drift receipts against the live repository estate."
+  ],
+  "claim_boundary": "This receipt reconciles an existing historical remote audit with current Track 13 topology. It does not claim global parity for the current source revision, downstream compatibility or scheduled live-estate drift evidence."
+}

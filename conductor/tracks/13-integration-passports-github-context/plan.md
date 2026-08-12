@@ -69,7 +69,7 @@ GitHub issue key: `track-13`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-13-phase-3 -->
 
-- [ ] Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.
+- [ ] Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.
 - [ ] Execute consumer-driven contract tests in each pinned downstream repository.
 - [ ] Record scheduled integration-drift receipts against the live repository estate.
 
@@ -79,5 +79,5 @@ GitHub issue key: `track-13`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

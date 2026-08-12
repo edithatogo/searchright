@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.
+- [ ] Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.
 
 ## Completion and evidence contract
 

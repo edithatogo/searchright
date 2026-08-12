@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/13-integration-passports-github-context/plan.m
 
 ## Task subissues
 
-- [ ] T01: Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval. (`track-13-phase-3-task-01`)
+- [ ] T01: Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision. (`track-13-phase-3-task-01`)
 - [ ] T02: Execute consumer-driven contract tests in each pinned downstream repository. (`track-13-phase-3-task-02`)
 - [ ] T03: Record scheduled integration-drift receipts against the live repository estate. (`track-13-phase-3-task-03`)
 

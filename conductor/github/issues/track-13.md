@@ -28,6 +28,6 @@ Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy 
 
 ## Claim boundary
 
-Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+A durable read-only audit at commit a0660f8 observed the public repository, all 568 then-canonical issues and all 567 expected native subissue relationships with zero drift and zero mutations. Track 13 topology is unchanged in the current source, but the audit does not cover later source revisions, downstream contract execution, scheduled live-estate drift or merged compatibility.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
