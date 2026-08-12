@@ -1986,6 +1986,7 @@ dependencies = [
  "evidence-search-contracts",
  "schemars",
  "serde",
+ "serde_json",
 ]
 
 [[package]]
