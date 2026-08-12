@@ -1,0 +1,17 @@
+{
+  "schema_version": "org.searchright.audit-event-payload-migration.v1",
+  "migration_id": "search-run-completed-v0-to-v1",
+  "event_type": "search_run_completed",
+  "from_payload_version": 0,
+  "to_payload_version": 1,
+  "automatic_apply": false,
+  "destructive": false,
+  "original_event_immutable": true,
+  "transformations": [
+    {"operation": "rename", "from": "/provider", "to": "/source_id"},
+    {"operation": "replace", "path": "/_schema_version", "value": 1}
+  ],
+  "input_fixture": "contracts/events/fixtures/search-run-completed-v0.json",
+  "output_fixture": "contracts/events/fixtures/search-run-completed-v1.json",
+  "claim_boundary": "The migration normalises a payload copy for reduction and never rewrites the hashed audit event."
+}

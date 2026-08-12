@@ -118,6 +118,29 @@
       "downstream_consumer_conformance": "not_evidenced"
     },
     {
+      "id": "audit-event-registry",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/audit-event-registry.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/audit-event-registry.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/audit-event-registry.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": null,
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
       "id": "backup-manifest",
       "owner_track": "33",
       "stability": "alpha",
@@ -295,6 +318,52 @@
       },
       "rust": {
         "declared_type": "DataHandlingRequest",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "data-lifecycle-decision",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/data-lifecycle-decision.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/data-lifecycle-decision.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/data-lifecycle-decision.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "DataLifecycleDecision",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "data-lifecycle-request",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/data-lifecycle-request.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/data-lifecycle-request.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/data-lifecycle-request.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "DataLifecycleRequest",
         "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"
@@ -1008,6 +1077,29 @@
       },
       "rust": {
         "declared_type": "ReleaseRehearsal",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "research-object-handoff-plan",
+      "owner_track": "05",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/research-object-handoff-plan.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/research-object-handoff-plan.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/research-object-handoff-plan.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": null,
         "registry_status": "not_registered",
         "compiler_conformance": "not_evidenced",
         "round_trip_conformance": "not_evidenced"

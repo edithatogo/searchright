@@ -12,5 +12,6 @@ pub use compiler::{COMPILER_VERSION, CompileError, QueryCompiler};
 pub use native::{NATIVE_PARSER_VERSION, parse_native_strategy};
 pub use provider::{
     CachedProviderPage, ExecutionResult, MemoryPageCache, PageCache, ProviderError, ProviderMode,
-    ProviderRegistry, SearchProvider, validate_resolved_endpoint_addresses,
+    ProviderRegistry, SearchProvider, canonical_record_digest,
+    validate_resolved_endpoint_addresses,
 };

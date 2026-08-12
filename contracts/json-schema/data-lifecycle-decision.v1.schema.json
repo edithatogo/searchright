@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/data-lifecycle-decision.v1.schema.json",
+  "title": "Data Lifecycle Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "request_id", "policy_id", "permitted", "effects_authorized",
+    "blockers", "warnings", "immutable_audit_preserved", "tombstone_target_ids",
+    "receipt_required"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.data-lifecycle-decision.v1"},
+    "request_id": {"type": "string", "minLength": 1},
+    "policy_id": {"type": "string", "minLength": 1},
+    "permitted": {"type": "boolean"},
+    "effects_authorized": {"type": "boolean"},
+    "blockers": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "warnings": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "immutable_audit_preserved": {"const": true},
+    "tombstone_target_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "receipt_required": {"type": "boolean"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"effects_authorized": {"const": true}}},
+      "then": {"properties": {"permitted": {"const": true}, "blockers": {"maxItems": 0}, "receipt_required": {"const": true}}}
+    },
+    {
+      "if": {"properties": {"permitted": {"const": false}}},
+      "then": {"properties": {"blockers": {"minItems": 1}, "effects_authorized": {"const": false}}}
+    }
+  ]
+}

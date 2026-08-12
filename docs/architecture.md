@@ -214,6 +214,13 @@ without evidence-bearing linkage.
   verified audit head. It checks linkage, review identity and event identity,
   treats snapshots as disposable derived state, and rejects non-human attempts
   to exercise final screening authority.
+- `contracts/events/registry.json` fail-closes unknown event types and payload
+  versions. Payload migrations operate on derived copies only; the original
+  hash-linked event bytes are never rewritten.
+- Retention, export and delete requests have separate preview/apply decisions.
+  Preview cannot authorise effects; apply requires an approval scoped to the
+  exact review and action. Audit deletion is denied, and content deletion
+  requires durable tombstones and an effect receipt.
 - Living-review runs point to immutable parents and amendments are first-class
   evidence.
 - Persisted contract evolution is declared in a migration registry. Unknown,

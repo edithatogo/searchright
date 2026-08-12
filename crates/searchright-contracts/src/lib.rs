@@ -5,6 +5,7 @@
 mod access;
 mod amendment;
 mod assurance;
+mod audit_policy;
 mod benchmark;
 mod delivery;
 mod diagnostic;
@@ -44,6 +45,7 @@ pub(crate) use evidence_search_contracts::{require_schema_version, require_text}
 pub use access::{AccessDecision, AccessRequest, AccessScope, PrincipalKind, TenantPolicy};
 pub use amendment::{AmendmentChange, AmendmentDecision, AmendmentKind, ProtocolAmendment};
 pub use assurance::{LifecycleStage, LifecycleTransition, TransitionActorKind, WorkflowTrace};
+pub use audit_policy::validate_registered_audit_event;
 pub use benchmark::{BenchmarkMetric, BenchmarkReport};
 pub use delivery::{
     GitHubRepositorySettings, IntegrationReleaseTrain, ReleaseRehearsal, ReleaseRehearsalStatus,
@@ -57,8 +59,9 @@ pub use document::{
     ExtractedFieldEvidence, ExtractedReferenceEvidence, ExtractionDiagnostic,
 };
 pub use governance::{
-    DataClassification, DataHandlingDecision, DataHandlingRequest, DataOperationKind,
-    DeploymentMode, InstitutionalPolicy,
+    DataClassification, DataHandlingDecision, DataHandlingRequest, DataLifecycleAction,
+    DataLifecycleDecision, DataLifecycleRequest, DataOperationKind, DeploymentMode,
+    InstitutionalPolicy, LifecycleApproval, LifecycleExecutionMode,
 };
 pub use integration::{
     ConsumerContractInteraction, ConsumerContractStatus, ConsumerContractSuite,
@@ -165,6 +168,11 @@ pub const INSTITUTIONAL_POLICY_SCHEMA_VERSION: &str = "org.searchright.instituti
 pub const DATA_HANDLING_REQUEST_SCHEMA_VERSION: &str = "org.searchright.data-handling-request.v1";
 /// Canonical institutional data-handling decision contract version.
 pub const DATA_HANDLING_DECISION_SCHEMA_VERSION: &str = "org.searchright.data-handling-decision.v1";
+/// Canonical retention/export/delete lifecycle request contract version.
+pub const DATA_LIFECYCLE_REQUEST_SCHEMA_VERSION: &str = "org.searchright.data-lifecycle-request.v1";
+/// Canonical retention/export/delete lifecycle decision contract version.
+pub const DATA_LIFECYCLE_DECISION_SCHEMA_VERSION: &str =
+    "org.searchright.data-lifecycle-decision.v1";
 
 /// Canonical component-health contract version.
 pub const COMPONENT_HEALTH_SCHEMA_VERSION: &str = "org.searchright.component-health.v1";

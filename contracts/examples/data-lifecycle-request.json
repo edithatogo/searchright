@@ -1,0 +1,14 @@
+{
+  "schema_version": "org.searchright.data-lifecycle-request.v1",
+  "request_id": "lifecycle-preview-demo-1",
+  "review_id": "review-demo-1",
+  "classification": "internal_review_data",
+  "action": "delete",
+  "execution_mode": "preview",
+  "target_ids": ["record-demo-1", "record-demo-2"],
+  "retention_days": null,
+  "export_destination": null,
+  "includes_audit_log": false,
+  "legal_hold": false,
+  "approval": null
+}

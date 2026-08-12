@@ -1,0 +1,51 @@
+{
+  "schema_version": "org.searchright.audit-event-registry.v1",
+  "envelope_schema_version": "org.searchright.audit-event.v1",
+  "unknown_event_type_policy": "reject",
+  "unknown_payload_version_policy": "reject",
+  "maximum_payload_bytes": 16384,
+  "prohibited_payload_keys": ["credential", "password", "secret", "token", "full_text"],
+  "event_types": [
+    {
+      "event_type": "protocol_amended",
+      "current_payload_version": 1,
+      "legacy_unversioned_payload_version": 1,
+      "allowed_payload_keys": ["_schema_version", "amendment_id"],
+      "versions": [{"version": 1, "status": "current"}],
+      "migrations": []
+    },
+    {
+      "event_type": "review_plan_validated",
+      "current_payload_version": 1,
+      "legacy_unversioned_payload_version": 1,
+      "allowed_payload_keys": ["_schema_version", "contract_version", "plan_id"],
+      "versions": [{"version": 1, "status": "current"}],
+      "migrations": []
+    },
+    {
+      "event_type": "review_status_changed",
+      "current_payload_version": 1,
+      "legacy_unversioned_payload_version": 1,
+      "allowed_payload_keys": ["_schema_version", "status"],
+      "versions": [{"version": 1, "status": "current"}],
+      "migrations": []
+    },
+    {
+      "event_type": "screening_decision_recorded",
+      "current_payload_version": 1,
+      "legacy_unversioned_payload_version": 1,
+      "allowed_payload_keys": ["_schema_version", "decision", "final_authority", "record_id", "reviewer_id", "stage"],
+      "versions": [{"version": 1, "status": "current"}],
+      "migrations": []
+    },
+    {
+      "event_type": "search_run_completed",
+      "current_payload_version": 1,
+      "legacy_unversioned_payload_version": 1,
+      "allowed_payload_keys": ["_schema_version", "provider", "record_count", "run_id", "source_id"],
+      "versions": [{"version": 0, "status": "migration_only"}, {"version": 1, "status": "current"}],
+      "migrations": ["contracts/events/migrations/search-run-completed-v0-to-v1.json"]
+    }
+  ],
+  "claim_boundary": "The registry governs deterministic derived-state reduction. Original audit bytes and hashes remain immutable; registry presence does not prove storage migration or operational recovery."
+}

@@ -45,6 +45,14 @@
       "owner_track": "05"
     },
     {
+      "id": "audit-event-registry",
+      "schema_id": "https://schemas.searchright.dev/audit-event-registry.v1.schema.json",
+      "path": "contracts/json-schema/audit-event-registry.v1.schema.json",
+      "sha256": "0d461961115561e8d6627da8fbb7188f821cb2daa3392e8c7b0c456f540203a9",
+      "stability": "alpha",
+      "owner_track": "05"
+    },
+    {
       "id": "backup-manifest",
       "schema_id": "https://schemas.searchright.dev/backup-manifest.v1.schema.json",
       "path": "contracts/json-schema/backup-manifest.v1.schema.json",
@@ -107,6 +115,22 @@
       "sha256": "4ba322b4432eaa95151d0b5d9e5eb59af3a781753f8a36e5efb506641d954ca6",
       "stability": "alpha",
       "owner_track": "28"
+    },
+    {
+      "id": "data-lifecycle-decision",
+      "schema_id": "https://schemas.searchright.dev/data-lifecycle-decision.v1.schema.json",
+      "path": "contracts/json-schema/data-lifecycle-decision.v1.schema.json",
+      "sha256": "04f8c5f7f29f06d4d702b4d6876ce9187ba5a3356238d23907eeff975c023390",
+      "stability": "alpha",
+      "owner_track": "05"
+    },
+    {
+      "id": "data-lifecycle-request",
+      "schema_id": "https://schemas.searchright.dev/data-lifecycle-request.v1.schema.json",
+      "path": "contracts/json-schema/data-lifecycle-request.v1.schema.json",
+      "sha256": "ffb25987d583787f4f8434326db599116639bb3885c44738c258fd97f0b4004f",
+      "stability": "alpha",
+      "owner_track": "05"
     },
     {
       "id": "diagnostic",
@@ -355,6 +379,14 @@
       "sha256": "b325ab4d5f74e8acaa1a920fcd1ae486831cb8dd9d63d878c98d849cf75dede7",
       "stability": "alpha",
       "owner_track": "36"
+    },
+    {
+      "id": "research-object-handoff-plan",
+      "schema_id": "https://schemas.searchright.dev/research-object-handoff-plan.v1.schema.json",
+      "path": "contracts/json-schema/research-object-handoff-plan.v1.schema.json",
+      "sha256": "dda907e9207518fe3b50b483dd0ff07f5dfb8a051c98a50abe0e1932481b1b47",
+      "stability": "alpha",
+      "owner_track": "05"
     },
     {
       "id": "review-bundle-manifest",

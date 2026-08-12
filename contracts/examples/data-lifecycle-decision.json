@@ -1,0 +1,12 @@
+{
+  "schema_version": "org.searchright.data-lifecycle-decision.v1",
+  "request_id": "lifecycle-preview-demo-1",
+  "policy_id": "institution-policy-demo-1",
+  "permitted": true,
+  "effects_authorized": false,
+  "blockers": [],
+  "warnings": ["lifecycle.preview.no_effects", "lifecycle.delete.tombstones_required"],
+  "immutable_audit_preserved": true,
+  "tombstone_target_ids": ["record-demo-1", "record-demo-2"],
+  "receipt_required": false
+}

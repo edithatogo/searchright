@@ -3,8 +3,10 @@
 #![forbid(unsafe_code)]
 
 use searchright_contracts::{
-    DATA_HANDLING_DECISION_SCHEMA_VERSION, DataClassification, DataHandlingDecision,
-    DataHandlingRequest, DataOperationKind, InstitutionalPolicy, Validate,
+    DATA_HANDLING_DECISION_SCHEMA_VERSION, DATA_LIFECYCLE_DECISION_SCHEMA_VERSION,
+    DataClassification, DataHandlingDecision, DataHandlingRequest, DataLifecycleAction,
+    DataLifecycleDecision, DataLifecycleRequest, DataOperationKind, InstitutionalPolicy,
+    LifecycleExecutionMode, Validate,
 };
 
 /// Evaluate a data-handling request against an approved institutional policy.
@@ -98,6 +100,82 @@ pub fn evaluate(
     })
 }
 
+/// Evaluate a retention, export or deletion request without performing effects.
+///
+/// Preview is always non-authorising. Apply requires an approval scoped to the
+/// exact review and action. Audit-ledger deletion is denied and successful
+/// content deletion requires tombstones plus a durable receipt.
+pub fn evaluate_lifecycle(
+    policy: &InstitutionalPolicy,
+    request: &DataLifecycleRequest,
+) -> Result<DataLifecycleDecision, GovernanceError> {
+    policy.validate()?;
+    request.validate()?;
+
+    let mut blockers = Vec::new();
+    let mut warnings = Vec::new();
+
+    if !policy
+        .allowed_classifications
+        .contains(&request.classification)
+    {
+        blockers.push("lifecycle.classification.denied".to_owned());
+    }
+    if matches!(request.action, DataLifecycleAction::Retain)
+        && request.retention_days.unwrap_or_default() > policy.maximum_retention_days
+    {
+        blockers.push("lifecycle.retention.exceeds_policy".to_owned());
+    }
+    if matches!(request.action, DataLifecycleAction::Delete) && request.includes_audit_log {
+        blockers.push("lifecycle.delete.immutable_audit_denied".to_owned());
+    }
+    if matches!(request.action, DataLifecycleAction::Delete) && request.legal_hold {
+        blockers.push("lifecycle.delete.legal_hold".to_owned());
+    }
+
+    let apply = matches!(request.execution_mode, LifecycleExecutionMode::Apply);
+    if apply {
+        match request.approval.as_ref() {
+            None => blockers.push("lifecycle.apply.approval_required".to_owned()),
+            Some(approval) => {
+                if approval.review_id != request.review_id {
+                    blockers.push("lifecycle.apply.approval_review_mismatch".to_owned());
+                }
+                if approval.action != request.action {
+                    blockers.push("lifecycle.apply.approval_action_mismatch".to_owned());
+                }
+            }
+        }
+    } else {
+        warnings.push("lifecycle.preview.no_effects".to_owned());
+    }
+
+    if matches!(request.action, DataLifecycleAction::Export) {
+        warnings.push("lifecycle.export.destination_review_required".to_owned());
+    }
+    if matches!(request.action, DataLifecycleAction::Delete) {
+        warnings.push("lifecycle.delete.tombstones_required".to_owned());
+    }
+
+    let permitted = blockers.is_empty();
+    Ok(DataLifecycleDecision {
+        schema_version: DATA_LIFECYCLE_DECISION_SCHEMA_VERSION.to_owned(),
+        request_id: request.request_id.clone(),
+        policy_id: policy.policy_id.clone(),
+        permitted,
+        effects_authorized: permitted && apply,
+        blockers,
+        warnings,
+        immutable_audit_preserved: true,
+        tombstone_target_ids: if matches!(request.action, DataLifecycleAction::Delete) {
+            request.target_ids.clone()
+        } else {
+            Vec::new()
+        },
+        receipt_required: apply,
+    })
+}
+
 /// Institutional policy-evaluation failure.
 #[derive(Debug, thiserror::Error)]
 pub enum GovernanceError {
@@ -109,8 +187,10 @@ pub enum GovernanceError {
 #[cfg(test)]
 mod tests {
     use searchright_contracts::{
-        DataClassification, DataHandlingRequest, DataOperationKind, DeploymentMode,
-        INSTITUTIONAL_POLICY_SCHEMA_VERSION, InstitutionalPolicy,
+        DATA_LIFECYCLE_REQUEST_SCHEMA_VERSION, DataClassification, DataHandlingRequest,
+        DataLifecycleAction, DataLifecycleRequest, DataOperationKind, DeploymentMode,
+        INSTITUTIONAL_POLICY_SCHEMA_VERSION, InstitutionalPolicy, LifecycleApproval,
+        LifecycleExecutionMode,
     };
 
     use super::*;
@@ -150,6 +230,34 @@ mod tests {
             retention_days: 7,
             cross_border_transfer: false,
             dry_run: true,
+        }
+    }
+
+    fn lifecycle_request(action: DataLifecycleAction) -> DataLifecycleRequest {
+        DataLifecycleRequest {
+            schema_version: DATA_LIFECYCLE_REQUEST_SCHEMA_VERSION.to_owned(),
+            request_id: "lifecycle-1".to_owned(),
+            review_id: "review-1".to_owned(),
+            classification: DataClassification::PublicMetadata,
+            action,
+            execution_mode: LifecycleExecutionMode::Preview,
+            target_ids: vec!["record-1".to_owned(), "record-2".to_owned()],
+            retention_days: matches!(action, DataLifecycleAction::Retain).then_some(7),
+            export_destination: matches!(action, DataLifecycleAction::Export)
+                .then(|| "file:///approved/export.srpack".to_owned()),
+            includes_audit_log: false,
+            legal_hold: false,
+            approval: None,
+        }
+    }
+
+    fn approval(action: DataLifecycleAction) -> LifecycleApproval {
+        LifecycleApproval {
+            approval_id: "approval-1".to_owned(),
+            approved_by: "accountable-owner".to_owned(),
+            review_id: "review-1".to_owned(),
+            action,
+            approved_at: "2026-08-13T00:00:00Z".to_owned(),
         }
     }
 
@@ -278,5 +386,111 @@ mod tests {
             ]
         );
         Ok(())
+    }
+
+    #[test]
+    fn lifecycle_preview_never_authorises_effects() -> Result<(), GovernanceError> {
+        for action in [
+            DataLifecycleAction::Retain,
+            DataLifecycleAction::Export,
+            DataLifecycleAction::Delete,
+        ] {
+            let decision = evaluate_lifecycle(&policy(), &lifecycle_request(action))?;
+            assert!(decision.permitted);
+            assert!(!decision.effects_authorized);
+            assert!(!decision.receipt_required);
+            assert!(decision.immutable_audit_preserved);
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn lifecycle_apply_fails_closed_without_scoped_approval() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            ..lifecycle_request(DataLifecycleAction::Export)
+        };
+        let decision = evaluate_lifecycle(&policy(), &request)?;
+        assert!(!decision.permitted);
+        assert!(!decision.effects_authorized);
+        assert_eq!(decision.blockers, ["lifecycle.apply.approval_required"]);
+        Ok(())
+    }
+
+    #[test]
+    fn lifecycle_apply_requires_exact_approval_scope() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: Some(approval(DataLifecycleAction::Retain)),
+            ..lifecycle_request(DataLifecycleAction::Export)
+        };
+        let decision = evaluate_lifecycle(&policy(), &request)?;
+        assert_eq!(
+            decision.blockers,
+            ["lifecycle.apply.approval_action_mismatch"]
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn approved_delete_requires_receipt_and_tombstones() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: Some(approval(DataLifecycleAction::Delete)),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        let decision = evaluate_lifecycle(&policy(), &request)?;
+        assert!(decision.permitted);
+        assert!(decision.effects_authorized);
+        assert!(decision.receipt_required);
+        assert_eq!(decision.tombstone_target_ids, ["record-1", "record-2"]);
+        Ok(())
+    }
+
+    #[test]
+    fn audit_ledger_deletion_is_never_permitted() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            includes_audit_log: true,
+            approval: Some(approval(DataLifecycleAction::Delete)),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        let decision = evaluate_lifecycle(&policy(), &request)?;
+        assert!(!decision.permitted);
+        assert!(!decision.effects_authorized);
+        assert!(
+            decision
+                .blockers
+                .contains(&"lifecycle.delete.immutable_audit_denied".to_owned())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn legal_hold_denies_deletion_even_with_approval() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            legal_hold: true,
+            approval: Some(approval(DataLifecycleAction::Delete)),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        let decision = evaluate_lifecycle(&policy(), &request)?;
+        assert!(!decision.permitted);
+        assert!(!decision.effects_authorized);
+        assert!(
+            decision
+                .blockers
+                .contains(&"lifecycle.delete.legal_hold".to_owned())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn duplicate_lifecycle_targets_are_rejected() {
+        let request = DataLifecycleRequest {
+            target_ids: vec!["record-1".to_owned(), "record-1".to_owned()],
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        assert!(request.validate().is_err());
     }
 }
