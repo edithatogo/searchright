@@ -35,7 +35,12 @@ jobs:
       - name: Install validation dependencies
         run: python -m pip install --disable-pip-version-check -r requirements/validation.txt
       - name: Install pinned Rust
-        run: rustup toolchain install 1.97.1 --profile minimal
+        run: |
+          # Hosted runners can retain a partially installed exact toolchain.
+          # Removing only this pinned runner-local toolchain avoids component
+          # collisions during rustup's recovery path.
+          rustup toolchain uninstall 1.97.1 || true
+          rustup toolchain install 1.97.1 --profile minimal
       - name: Require lockfile and fetch exact dependencies
         run: |
           test -f Cargo.lock
