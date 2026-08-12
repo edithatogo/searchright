@@ -499,7 +499,7 @@ pub enum StoreError {
 }
 
 #[cfg(unix)]
-fn sync_directory(path: Option<&Path>) -> Result<(), StoreError> {
+pub(crate) fn sync_directory(path: Option<&Path>) -> Result<(), StoreError> {
     if let Some(path) = path {
         File::open(path)?.sync_all()?;
     }
@@ -507,7 +507,7 @@ fn sync_directory(path: Option<&Path>) -> Result<(), StoreError> {
 }
 
 #[cfg(not(unix))]
-const fn sync_directory(_path: Option<&Path>) -> Result<(), StoreError> {
+pub(crate) const fn sync_directory(_path: Option<&Path>) -> Result<(), StoreError> {
     // Rust's standard library does not expose a portable directory fsync primitive.
     // File contents are still synced before rename; platform-specific durability is
     // reported as a capability limitation rather than silently overclaimed.

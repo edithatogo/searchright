@@ -220,13 +220,8 @@ pub fn execute_lifecycle(
     sink: &mut dyn LifecycleEffectSink,
     expected_head: &str,
 ) -> Result<LifecycleEffectReceipt, LifecycleExecutionError> {
-    let observed = sink.current_head().map_err(LifecycleExecutionError::Sink)?;
-    if observed != expected_head {
-        return Err(LifecycleExecutionError::HeadMismatch {
-            expected: expected_head.to_owned(),
-            actual: observed,
-        });
-    }
+    // The sink owns exact-head and crash-replay semantics. A durable receipt may already have
+    // advanced its observable head while an idempotent effect still needs forward completion.
     let authorization = authorize_lifecycle(policy, request, verifier)?;
     let decision = authorization.decision().clone();
     let receipt = sink
@@ -1058,12 +1053,9 @@ mod tests {
         assert_eq!(receipt.request_id, request.request_id);
         assert_eq!(sink.apply_count, 1);
 
-        let replay = execute_lifecycle(&policy(), &request, &AcceptVerifier, &mut sink, "head-0");
-        assert!(matches!(
-            replay,
-            Err(LifecycleExecutionError::HeadMismatch { .. })
-        ));
-        assert_eq!(sink.apply_count, 1);
+        let replay = execute_lifecycle(&policy(), &request, &AcceptVerifier, &mut sink, "head-0")?;
+        assert_eq!(replay, receipt);
+        assert_eq!(sink.apply_count, 2);
         Ok(())
     }
 

@@ -2,7 +2,9 @@
 
 use std::{fs, fs::OpenOptions, path::PathBuf};
 
-use searchright_contracts::{DataLifecycleAction, DataLifecycleDecision, DataLifecycleRequest};
+use searchright_contracts::{
+    DataLifecycleAction, DataLifecycleDecision, DataLifecycleRequest, Validate,
+};
 use searchright_governance::{
     LifecycleAuthorization, LifecycleEffectReceipt, LifecycleEffectSink, lifecycle_decision_digest,
     lifecycle_resulting_head,
@@ -10,7 +12,7 @@ use searchright_governance::{
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-use crate::FileReviewStore;
+use crate::{FileReviewStore, sync_directory};
 
 /// Receipt for inserting a mutable managed payload.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -30,7 +32,7 @@ pub struct LifecycleStoreReceipt {
     pub decision: DataLifecycleDecision,
     /// Head before the effect.
     pub previous_head: String,
-    /// Stable target identifiers whose managed payloads were removed.
+    /// Stable target identifiers whose removal is authorized and forward-recovered before use.
     pub tombstones: Vec<String>,
     /// Head after this receipt.
     pub resulting_head: String,
@@ -44,6 +46,24 @@ impl FileReviewStore {
         bytes: &[u8],
     ) -> Result<ManagedObjectReceipt, String> {
         validate_id(object_id)?;
+        if bytes.len() > 16 * 1024 * 1024 {
+            return Err("managed object exceeds the 16 MiB local-store limit".to_owned());
+        }
+        let _lock = self
+            .acquire_write_lock("put-managed-object")
+            .map_err(|error| error.to_string())?;
+        let receipts = self.lifecycle_receipts()?;
+        for receipt in &receipts {
+            validate_durable_receipt(receipt)?;
+        }
+        let tombstoned = receipts
+            .iter()
+            .any(|receipt| receipt.tombstones.iter().any(|target| target == object_id));
+        if tombstoned {
+            return Err(format!(
+                "managed object `{object_id}` is durably tombstoned"
+            ));
+        }
         let directory = self.root().join("managed");
         fs::create_dir_all(&directory).map_err(|error| error.to_string())?;
         let path = directory.join(object_id);
@@ -68,11 +88,36 @@ impl FileReviewStore {
     }
 
     fn lifecycle_head(&self) -> Result<String, String> {
+        let mut pending = self.lifecycle_receipts()?;
+        let mut head = "GENESIS".to_owned();
+        while let Some(index) = pending
+            .iter()
+            .position(|receipt| receipt.previous_head == head)
+        {
+            let receipt = pending.swap_remove(index);
+            validate_durable_receipt(&receipt)?;
+            for target in &receipt.tombstones {
+                let path = self.root().join("managed").join(target);
+                if path.exists() {
+                    fs::remove_file(&path).map_err(|error| error.to_string())?;
+                    sync_directory(path.parent()).map_err(|error| error.to_string())?;
+                }
+            }
+            head = receipt.resulting_head;
+        }
+        if pending.is_empty() {
+            Ok(head)
+        } else {
+            Err("lifecycle receipt chain is disconnected or forks".to_owned())
+        }
+    }
+
+    fn lifecycle_receipts(&self) -> Result<Vec<LifecycleStoreReceipt>, String> {
         let receipts = self.root().join("lifecycle").join("receipts");
         if !receipts.exists() {
-            return Ok("GENESIS".to_owned());
+            return Ok(Vec::new());
         }
-        let mut pending = fs::read_dir(receipts)
+        fs::read_dir(receipts)
             .map_err(|error| error.to_string())?
             .filter_map(Result::ok)
             .filter(|entry| {
@@ -88,25 +133,25 @@ impl FileReviewStore {
                         serde_json::from_slice::<LifecycleStoreReceipt>(&bytes)
                             .map_err(|error| error.to_string())
                     })
+                    .and_then(|receipt| {
+                        if entry.path().file_stem().and_then(|v| v.to_str())
+                            == Some(receipt.request.request_id.as_str())
+                        {
+                            Ok(receipt)
+                        } else {
+                            Err("lifecycle receipt filename does not bind request id".to_owned())
+                        }
+                    })
             })
-            .collect::<Result<Vec<_>, _>>()?;
-        let mut head = "GENESIS".to_owned();
-        while let Some(index) = pending
-            .iter()
-            .position(|receipt| receipt.previous_head == head)
-        {
-            head = pending.swap_remove(index).resulting_head;
-        }
-        if pending.is_empty() {
-            Ok(head)
-        } else {
-            Err("lifecycle receipt chain is disconnected or forks".to_owned())
-        }
+            .collect::<Result<Vec<_>, _>>()
     }
 }
 
 impl LifecycleEffectSink for FileReviewStore {
     fn current_head(&self) -> Result<String, String> {
+        let _lock = self
+            .acquire_write_lock("recover-lifecycle-head")
+            .map_err(|error| error.to_string())?;
         self.lifecycle_head()
     }
 
@@ -117,6 +162,11 @@ impl LifecycleEffectSink for FileReviewStore {
     ) -> Result<LifecycleEffectReceipt, String> {
         let request = authorization.request();
         let decision = authorization.decision();
+        if !matches!(request.action, DataLifecycleAction::Delete) {
+            return Err(
+                "durable retain/export effects are not implemented by this store".to_owned(),
+            );
+        }
         if !decision.effects_authorized || decision.request_id != request.request_id {
             return Err("lifecycle decision does not authorize this request".to_owned());
         }
@@ -189,6 +239,7 @@ impl LifecycleEffectSink for FileReviewStore {
                 if source.exists() {
                     fs::remove_file(&source)
                         .map_err(|error| format!("remove managed target: {error}"))?;
+                    sync_directory(source.parent()).map_err(|error| error.to_string())?;
                 }
             }
         }
@@ -221,6 +272,32 @@ fn effect_receipt(
     }
 }
 
+fn validate_durable_receipt(receipt: &LifecycleStoreReceipt) -> Result<(), String> {
+    receipt
+        .request
+        .validate()
+        .map_err(|error| error.to_string())?;
+    receipt
+        .decision
+        .validate()
+        .map_err(|error| error.to_string())?;
+    if !matches!(receipt.request.action, DataLifecycleAction::Delete)
+        || !receipt.decision.effects_authorized
+        || receipt.decision.request_id != receipt.request.request_id
+        || receipt.tombstones != receipt.decision.tombstone_target_ids
+    {
+        return Err("lifecycle receipt authority binding is invalid".to_owned());
+    }
+    let request_digest = receipt.request.effects_digest();
+    let decision_digest = lifecycle_decision_digest(&receipt.decision)?;
+    let expected =
+        lifecycle_resulting_head(&receipt.previous_head, &request_digest, &decision_digest);
+    if expected != receipt.resulting_head {
+        return Err("lifecycle receipt head digest is invalid".to_owned());
+    }
+    Ok(())
+}
+
 fn commit_absent(path: &PathBuf, bytes: &[u8]) -> Result<(), String> {
     let pending = path.with_extension("pending");
     fs::write(&pending, bytes).map_err(|error| error.to_string())?;
@@ -230,6 +307,7 @@ fn commit_absent(path: &PathBuf, bytes: &[u8]) -> Result<(), String> {
         .and_then(|file| file.sync_all())
         .map_err(|error| error.to_string())?;
     fs::hard_link(&pending, path).map_err(|error| format!("publish receipt: {error}"))?;
+    sync_directory(path.parent()).map_err(|error| error.to_string())?;
     fs::remove_file(pending).map_err(|error| format!("remove receipt pending file: {error}"))
 }
 
@@ -355,6 +433,7 @@ mod tests {
             .map_err(|error| format!("first lifecycle apply: {error}"))?;
         assert_eq!(first.resulting_head, store.current_head()?);
         assert!(!directory.join("managed").join("record-1").exists());
+        assert!(store.put_managed_object("record-1", b"recreated").is_err());
         assert!(
             directory
                 .join("lifecycle")
@@ -365,12 +444,47 @@ mod tests {
         drop(store);
         let mut reopened =
             FileReviewStore::open(&directory).map_err(|error| format!("reopen store: {error}"))?;
+        // Simulate a crash after durable receipt publication but before the mutable deletion.
+        fs::write(
+            directory.join("managed").join("record-1"),
+            b"interrupted effect",
+        )
+        .map_err(|error| error.to_string())?;
+        assert_eq!(first.resulting_head, reopened.current_head()?);
+        assert!(!directory.join("managed").join("record-1").exists());
         assert_eq!(
             first,
             reopened
                 .apply(&authorization, "GENESIS")
                 .map_err(|error| format!("replay lifecycle apply: {error}"))?
         );
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
+    }
+
+    #[test]
+    fn lifecycle_receipt_tampering_fails_closed() -> Result<(), String> {
+        let directory = std::env::temp_dir().join(format!(
+            "searchright-lifecycle-tamper-{}",
+            uuid::Uuid::now_v7()
+        ));
+        let mut store = FileReviewStore::open(&directory).map_err(|error| error.to_string())?;
+        store.put_managed_object("record-1", b"one")?;
+        store.apply(&authorization()?, "GENESIS")?;
+        let path = directory
+            .join("lifecycle")
+            .join("receipts")
+            .join("delete-1.json");
+        let mut receipt: LifecycleStoreReceipt =
+            serde_json::from_slice(&fs::read(&path).map_err(|error| error.to_string())?)
+                .map_err(|error| error.to_string())?;
+        receipt.resulting_head = "f".repeat(64);
+        fs::write(
+            &path,
+            serde_json::to_vec(&receipt).map_err(|error| error.to_string())?,
+        )
+        .map_err(|error| error.to_string())?;
+        assert!(store.current_head().is_err());
         let _cleanup = fs::remove_dir_all(directory);
         Ok(())
     }
