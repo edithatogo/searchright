@@ -1,6 +1,8 @@
 # Plan: 31 GitHub remote, nested issues and Project v2 control plane
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **live_proven**.
+Lifecycle: **archived** on **2026-08-12**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -38,9 +40,9 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-31-phase-3 -->
 
-- [ ] Run the full bootstrap against the exact merged main revision and preserve its observed receipt.
-- [ ] Re-run the credential-backed issue, Project and read-only control-plane audit against that exact merged revision.
-- [ ] Complete the independent Conductor review and semantic in-place archival after exact-main evidence passes.
+- [x] Create or verify the public remote and push the committed main branch.
+- [x] Supply an authenticated GitHub token with repository, Issues and Projects permission through an environment-scoped secret.
+- [x] Execute the complete bootstrap and preserve exact-main repository, ruleset, issue, subissue and Project receipts.
 
 ## Phase 4: Review and closeout
 
@@ -48,5 +50,5 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

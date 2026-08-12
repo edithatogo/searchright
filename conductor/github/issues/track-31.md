@@ -14,7 +14,7 @@ Create and synchronise the remote repository, epic, tracks, phases, tasks, Proje
 - Horizon: `mature`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `live_proven`
 - Dependencies: `00, 13, 16, 30`
 - Requirements: `SR-066, SR-071, SR-072, SR-073, SR-074, SR-075`
 - External approval required: `true`
@@ -28,6 +28,6 @@ Create and synchronise the remote repository, epic, tracks, phases, tasks, Proje
 
 ## Claim boundary
 
-The remote and credential-backed synchronisation have been observed, but the full bootstrap and revised control-plane code require a new exact-merged-main receipt. GitHub remains a coordination projection and cannot promote product implementation, methodology or release maturity.
+The full bootstrap and audit passed on clean exact merged main, proving the declared GitHub control plane converged without deletion. Semantic archival retains canonical paths and stable remote identities; GitHub cannot promote product, methodology or release maturity.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

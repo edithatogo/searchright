@@ -42,13 +42,21 @@ an explicit, approval-gated apply receipt exists.
 | 28 | [Institutional governance, privacy and collaboration](tracks/28-institutional-governance-privacy-collaboration/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations. |
 | 29 | [External methodological evaluation and sustainability](tracks/29-external-evaluation-sustainability/spec.md) | mature | external_evidence_required | external_evidence_required | source_verified | Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence. |
 | 30 | [Maturity gate and gap closure](tracks/30-maturity-gap-closure/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Maintain one evidence-scaled gap register and an executable hardened/polished launch-preparation dependency graph while blocking premature release claims. |
-| 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | mature | source_implemented | source_implemented | source_verified | Create and synchronise the remote repository, epic, tracks, phases, tasks, Project fields/views and repository protections from declarative source. |
 | 32 | [Cross-repository contract release train and downstream canaries](tracks/32-cross-repository-release-train/spec.md) | mature | integration_prepared | partially_implemented | source_verified | Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions. |
 | 33 | [Operational observability, backup, restore and incident response](tracks/33-operational-reliability/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments. |
 | 34 | [Authenticated remote MCP, tenancy and data residency](tracks/34-authenticated-remote-mcp/spec.md) | mature | scaffolded | scaffolded | source_verified | Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment. |
 | 35 | [Generated SDKs, fixture-backed documentation and adoption operations](tracks/35-sdk-docs-adoption/spec.md) | mature | scaffolded | scaffolded | source_verified | Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core. |
 | 36 | [Release-candidate rehearsal, staged pilots and ecosystem rehearsal](tracks/36-release-candidate-pilots/spec.md) | mature | release_prepared | scaffolded | source_verified | Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals. |
 | 37 | [Final mature 1.0 release and long-term operations](tracks/37-maturity-1-0/spec.md) | mature | external_evidence_required | external_evidence_required | source_verified | Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness. |
+
+## Archived tracks
+
+Archived tracks retain their canonical paths, requirement ownership and stable
+GitHub projection keys. Archival never deletes or automatically archives remote items.
+
+| ID | Track | Archived | Evidence |
+| --- | --- | --- | --- |
+| 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
 
 ## Evidence ladder
 

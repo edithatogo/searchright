@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/31-github-control-plane/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Run the full bootstrap against the exact merged main revision and preserve its observed receipt. (`track-31-phase-3-task-01`)
-- [ ] T02: Re-run the credential-backed issue, Project and read-only control-plane audit against that exact merged revision. (`track-31-phase-3-task-02`)
-- [ ] T03: Complete the independent Conductor review and semantic in-place archival after exact-main evidence passes. (`track-31-phase-3-task-03`)
+- [x] T01: Create or verify the public remote and push the committed main branch. (`track-31-phase-3-task-01`)
+- [x] T02: Supply an authenticated GitHub token with repository, Issues and Projects permission through an environment-scoped secret. (`track-31-phase-3-task-02`)
+- [x] T03: Execute the complete bootstrap and preserve exact-main repository, ruleset, issue, subissue and Project receipts. (`track-31-phase-3-task-03`)
 
 ## Evidence rule
 

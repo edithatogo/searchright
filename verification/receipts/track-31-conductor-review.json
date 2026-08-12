@@ -1,0 +1,28 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "status": "passed_with_fixes_applied",
+  "track_id": "31",
+  "reviewed_source_revision": "9950d73b6137bc93d002581cde4e9a87bbfc3d4a",
+  "review_panel": [
+    "code_and_credential_boundary",
+    "remote_evidence_and_claim_integrity",
+    "archive_and_projection_safety"
+  ],
+  "fixes_applied": [
+    "missing Project credential now prevents mutation",
+    "supplied credential is removed from the process environment",
+    "all environments are restricted to protected branches",
+    "audit compares the complete seven-check ruleset payload",
+    "durable audits require clean source and bind exact inputs",
+    "apply-summary receipts have a fail-closed schema",
+    "semantic archival retains canonical paths and stable GitHub keys",
+    "immutable phase task counts prevent remote identity loss"
+  ],
+  "hosted_evidence": {
+    "pull_request": 595,
+    "merged_revision": "9950d73b6137bc93d002581cde4e9a87bbfc3d4a",
+    "required_checks": "passed"
+  },
+  "remaining_track_blockers": [],
+  "claim_boundary": "This review closes Track 31 only. Other tracks and product maturity remain governed by their own evidence gates."
+}

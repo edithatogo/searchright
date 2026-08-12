@@ -1,0 +1,26 @@
+{
+  "schema_version": "org.searchright.github-control-plane-audit-summary.v1",
+  "status": "passed",
+  "source_revision": "9950d73b6137bc93d002581cde4e9a87bbfc3d4a",
+  "source_tree": "014b849b9764322832b254ed75d5f75c99e2e862",
+  "tracked_worktree_clean": true,
+  "repository": "edithatogo/searchright",
+  "canonical_issues_observed": 583,
+  "relationships_observed": 582,
+  "content_drift": 0,
+  "label_drift": 0,
+  "task_state_drift": 0,
+  "canonical_project_items_observed": 583,
+  "noncanonical_project_items_observed": 3,
+  "recognised_value_mismatches": 0,
+  "unrecognised_value_shapes": 0,
+  "environments_observed": 3,
+  "ruleset_full_payload_matches": 1,
+  "mutation_operations": 0,
+  "input_sha256": {
+    "conductor/github/issue-hierarchy.json": "7c172c50a2c0ad1abe08438d639049319ff565e7efd260cf21d775d6252f735c",
+    "conductor/github/project.json": "cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d",
+    "conductor/github/repository-settings.json": "37e91b873a14cfa9721508a1f3f000cb6f213fe14369a347c62e24db3d9b1fb7"
+  },
+  "claim_boundary": "This compact receipt records read-only GitHub parity for clean exact merged main. It does not establish product maturity."
+}

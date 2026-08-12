@@ -4,7 +4,7 @@
   "title": "GitHub remote, nested issues and Project v2 control plane",
   "status": "source_implemented",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "live_proven",
   "source_verified_on": "2026-08-12",
   "source_evidence": [
     "conductor/github/project.json",
@@ -35,12 +35,8 @@
     "SR-074",
     "SR-075"
   ],
-  "blockers": [
-    "Run the full bootstrap against the exact merged main revision and preserve its observed receipt.",
-    "Re-run the credential-backed issue, Project and read-only control-plane audit against that exact merged revision.",
-    "Complete the independent Conductor review and semantic in-place archival after exact-main evidence passes."
-  ],
-  "claim_boundary": "The remote and credential-backed synchronisation have been observed, but the full bootstrap and revised control-plane code require a new exact-merged-main receipt. GitHub remains a coordination projection and cannot promote product implementation, methodology or release maturity.",
+  "blockers": [],
+  "claim_boundary": "The full bootstrap and audit passed on clean exact merged main, proving the declared GitHub control plane converged without deletion. Semantic archival retains canonical paths and stable remote identities; GitHub cannot promote product, methodology or release maturity.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-31",
@@ -65,12 +61,18 @@
   },
   "remote_github_evidence": [
     "verification/receipts/github-control-plane-audit.json",
-    "verification/receipts/track-31-control-plane-apply.json"
+    "verification/receipts/track-31-control-plane-apply.json",
+    "verification/receipts/track-31-bootstrap-exact-main.json",
+    "verification/receipts/track-31-audit-exact-main.json"
   ],
   "runtime_evidence": [
-    "verification/receipts/track-31-control-plane-apply.json"
+    "verification/receipts/track-31-control-plane-apply.json",
+    "verification/receipts/track-31-bootstrap-exact-main.json",
+    "verification/receipts/track-31-conductor-review.json"
   ],
   "external_evidence": [
     "verification/receipts/track-31-control-plane-apply.json"
-  ]
+  ],
+  "lifecycle": "archived",
+  "archived_on": "2026-08-12"
 }

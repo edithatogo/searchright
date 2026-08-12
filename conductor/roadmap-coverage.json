@@ -1429,21 +1429,18 @@
       "updated": "2026-08-12"
     },
     {
-      "blockers": [
-        "Run the full bootstrap against the exact merged main revision and preserve its observed receipt.",
-        "Re-run the credential-backed issue, Project and read-only control-plane audit against that exact merged revision.",
-        "Complete the independent Conductor review and semantic in-place archival after exact-main evidence passes."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/render_github_issues.py --check",
         "python scripts/check_github_issue_hierarchy.py",
         "python scripts/check_github_project.py",
         "python scripts/check_workflow_hardening.py"
       ],
-      "claim_boundary": "The remote and credential-backed synchronisation have been observed, but the full bootstrap and revised control-plane code require a new exact-merged-main receipt. GitHub remains a coordination projection and cannot promote product implementation, methodology or release maturity.",
+      "claim_boundary": "The full bootstrap and audit passed on clean exact merged main, proving the declared GitHub control plane converged without deletion. Semantic archival retains canonical paths and stable remote identities; GitHub cannot promote product, methodology or release maturity.",
       "completed_higher_evidence_gates": [
         "Create or verify the public remote and push the committed main branch.",
-        "Supply an authenticated GitHub token with repository, Issues and Projects permission through an environment-scoped secret."
+        "Supply an authenticated GitHub token with repository, Issues and Projects permission through an environment-scoped secret.",
+        "Execute the complete bootstrap and preserve exact-main repository, ruleset, issue, subissue and Project receipts."
       ],
       "deliverables": [
         "conductor/github/project.json",
@@ -1465,13 +1462,13 @@
         "16",
         "30"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "live_proven",
       "external_approval_required": true,
       "external_evidence": [
         "verification/receipts/track-31-control-plane-apply.json"
       ],
       "horizon": "mature",
-      "higher_evidence_completed": false,
+      "higher_evidence_completed": true,
       "implementation_state": "source_implemented",
       "phase_3_task_count": 3,
       "outcome": "Create and synchronise the remote repository, epic, tracks, phases, tasks, Project fields/views and repository protections from declarative source.",
@@ -1483,14 +1480,20 @@
         "SR-074",
         "SR-075"
       ],
-      "review_completed": false,
-      "closeout_completed": false,
+      "review_completed": true,
+      "closeout_completed": true,
+      "lifecycle": "archived",
+      "archived_on": "2026-08-12",
       "remote_github_evidence": [
         "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-31-control-plane-apply.json"
+        "verification/receipts/track-31-control-plane-apply.json",
+        "verification/receipts/track-31-bootstrap-exact-main.json",
+        "verification/receipts/track-31-audit-exact-main.json"
       ],
       "runtime_evidence": [
-        "verification/receipts/track-31-control-plane-apply.json"
+        "verification/receipts/track-31-control-plane-apply.json",
+        "verification/receipts/track-31-bootstrap-exact-main.json",
+        "verification/receipts/track-31-conductor-review.json"
       ],
       "source_verified_on": "2026-08-12",
       "slug": "github-control-plane",

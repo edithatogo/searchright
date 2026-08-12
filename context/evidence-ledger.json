@@ -115,20 +115,16 @@
       "receipt": "verification/gate-catalog.json"
     },
     {
-      "blockers": [
-        "Exact-main bootstrap receipt and post-merge control-plane audit remain open"
-      ],
+      "blockers": [],
       "domain": "github_control_plane",
-      "level": "source_verified",
-      "receipt": "verification/receipts/track-31-control-plane-apply.json"
+      "level": "live_proven",
+      "receipt": "verification/receipts/track-31-bootstrap-exact-main.json"
     },
     {
-      "blockers": [
-        "Current projection requires a post-merge apply and exact-main audit"
-      ],
+      "blockers": [],
       "domain": "github_issue_hierarchy",
-      "level": "source_verified",
-      "receipt": "verification/receipts/track-31-control-plane-apply.json"
+      "level": "live_proven",
+      "receipt": "verification/receipts/track-31-audit-exact-main.json"
     },
     {
       "blockers": [
