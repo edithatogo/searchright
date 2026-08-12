@@ -6,11 +6,13 @@
 #![forbid(unsafe_code)]
 
 use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
+use std::sync::Arc;
+
 use rmcp::{
-    ErrorData as McpError, ServiceExt,
-    handler::server::wrapper::Parameters,
-    model::{CallToolResult, ContentBlock},
-    schemars, tool, tool_router,
+    ErrorData as McpError, ServerHandler, ServiceExt,
+    handler::server::{router::tool::ToolRouter, wrapper::Parameters},
+    model::{CallToolResult, ContentBlock, JsonObject, ToolAnnotations},
+    schemars, tool, tool_handler, tool_router,
     transport::stdio,
 };
 use searchright::contracts::{
@@ -167,11 +169,36 @@ struct LicensedPlanInput {
     endpoint: String,
 }
 
-#[derive(Clone, Default)]
-struct SearchrightServer;
+#[derive(Clone)]
+struct SearchrightServer {
+    tool_router: ToolRouter<Self>,
+}
 
-#[tool_router(server_handler)]
+impl Default for SearchrightServer {
+    fn default() -> Self {
+        Self {
+            tool_router: Self::governed_tool_router(),
+        }
+    }
+}
+
+#[tool_router]
 impl SearchrightServer {
+    fn governed_tool_router() -> ToolRouter<Self> {
+        let mut router = Self::tool_router();
+        for route in router.map.values_mut() {
+            route.attr.output_schema = Some(output_schema_for(&route.attr.name));
+            route.attr.annotations = Some(
+                ToolAnnotations::new()
+                    .read_only(true)
+                    .destructive(false)
+                    .idempotent(true)
+                    .open_world(false),
+            );
+        }
+        router
+    }
+
     #[tool(
         description = "Read-only: validate a review plan and return conservative readiness findings"
     )]
@@ -269,9 +296,7 @@ impl SearchrightServer {
             }
         };
         match SearchrightEngine::prisma(&flow, output) {
-            Ok(PrismaArtifact::Mermaid(document)) => {
-                Ok(CallToolResult::success(vec![ContentBlock::text(document)]))
-            }
+            Ok(PrismaArtifact::Mermaid(document)) => Ok(text_success("mermaid", document)),
             Ok(artifact) => json_success(&artifact),
             Err(error) => Ok(tool_error(error.to_string())),
         }
@@ -434,7 +459,7 @@ impl SearchrightServer {
             }
         };
         match SearchrightEngine::render_diagnostics(&diagnostics, output) {
-            Ok(document) => Ok(CallToolResult::success(vec![ContentBlock::text(document)])),
+            Ok(document) => Ok(text_success(&input.output, document)),
             Err(error) => Ok(tool_error(error.to_string())),
         }
     }
@@ -635,6 +660,9 @@ impl SearchrightServer {
     }
 }
 
+#[tool_handler(router = self.tool_router)]
+impl ServerHandler for SearchrightServer {}
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     tracing_subscriber::fmt()
@@ -644,7 +672,7 @@ async fn main() -> anyhow::Result<()> {
         )
         .with_writer(std::io::stderr)
         .init();
-    let service = SearchrightServer.serve(stdio()).await?;
+    let service = SearchrightServer::default().serve(stdio()).await?;
     service.waiting().await?;
     Ok(())
 }
@@ -744,16 +772,40 @@ fn json_success(value: &impl serde::Serialize) -> Result<CallToolResult, McpErro
         .map_err(|error| McpError::internal_error(error.to_string(), None))
 }
 
+fn text_success(format: &str, document: String) -> CallToolResult {
+    let mut result = CallToolResult::structured(serde_json::json!({
+        "document": document,
+        "format": format,
+    }));
+    result.content = vec![ContentBlock::text(document)];
+    result
+}
+
+fn output_schema_for(tool_name: &str) -> Arc<JsonObject> {
+    let root_type = match tool_name {
+        "discovery_candidates"
+        | "inspect_untrusted_content"
+        | "list_providers"
+        | "living_diff"
+        | "rank_records" => "array",
+        _ => "object",
+    };
+    let serde_json::Value::Object(schema) = serde_json::json!({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": root_type,
+    }) else {
+        unreachable!("the MCP output schema literal is always an object")
+    };
+    Arc::new(schema)
+}
+
 fn tool_error(_message: String) -> CallToolResult {
     // Facade errors can contain user-controlled identifiers, endpoints or
     // provider diagnostics. Keep the MCP transcript deterministic and do not
     // reflect those values across the protocol boundary.
-    CallToolResult::structured_error(serde_json::json!({
-        "error": {
-            "code": "operation_rejected",
-            "message": "operation rejected by the shared Searchright facade"
-        }
-    }))
+    CallToolResult::error(vec![ContentBlock::text(
+        "operation_rejected: operation rejected by the shared Searchright facade",
+    )])
 }
 
 fn json_invalid_params(error: serde_json::Error) -> McpError {
@@ -790,13 +842,51 @@ mod tests {
 
         assert_eq!(first, second);
         assert_eq!(first.is_error, Some(true));
-        assert_eq!(
-            first_json.pointer("/structuredContent/error/code"),
-            Some(&serde_json::json!("operation_rejected"))
-        );
+        assert!(first.structured_content.is_none());
+        assert!(first_json.to_string().contains("operation_rejected"));
         assert!(!first_json.to_string().contains("password"));
         assert!(!first_json.to_string().contains("api_key"));
         assert!(!first_json.to_string().contains("secret"));
         Ok(())
+    }
+
+    #[test]
+    fn every_tool_advertises_governed_output_and_effect_metadata() {
+        let server = SearchrightServer::default();
+        let tools = server.tool_router.list_all();
+
+        assert_eq!(tools.len(), 31);
+        for tool in tools {
+            let Some(schema) = tool.output_schema else {
+                panic!("every tool has an outputSchema")
+            };
+            assert!(matches!(
+                schema.get("type"),
+                Some(serde_json::Value::String(_))
+            ));
+
+            let Some(annotations) = tool.annotations else {
+                panic!("every tool has effect annotations")
+            };
+            assert_eq!(annotations.read_only_hint, Some(true));
+            assert_eq!(annotations.destructive_hint, Some(false));
+            assert_eq!(annotations.idempotent_hint, Some(true));
+            assert_eq!(annotations.open_world_hint, Some(false));
+        }
+    }
+
+    #[test]
+    fn text_results_retain_machine_readable_content() {
+        let result = text_success("plain_text", "stable output".to_owned());
+
+        assert_eq!(result.is_error, Some(false));
+        assert_eq!(
+            result
+                .structured_content
+                .as_ref()
+                .and_then(|value| value.get("format")),
+            Some(&serde_json::json!("plain_text"))
+        );
+        assert_eq!(result.content, vec![ContentBlock::text("stable output")]);
     }
 }
