@@ -33,6 +33,34 @@ pub struct LifecycleEffectReceipt {
     pub decision_digest: String,
 }
 
+/// Opaque, verifier-produced authority for one exact lifecycle effect set.
+pub struct LifecycleAuthorization {
+    request: DataLifecycleRequest,
+    decision: DataLifecycleDecision,
+}
+
+impl LifecycleAuthorization {
+    /// Exact authorised request.
+    #[must_use]
+    #[allow(
+        clippy::missing_const_for_fn,
+        reason = "avoid creating a public const-evaluation compatibility commitment"
+    )]
+    pub fn request(&self) -> &DataLifecycleRequest {
+        &self.request
+    }
+
+    /// Exact policy decision produced after approval verification.
+    #[must_use]
+    #[allow(
+        clippy::missing_const_for_fn,
+        reason = "avoid creating a public const-evaluation compatibility commitment"
+    )]
+    pub fn decision(&self) -> &DataLifecycleDecision {
+        &self.decision
+    }
+}
+
 /// Storage boundary capable of atomically applying exact lifecycle effects.
 pub trait LifecycleEffectSink {
     /// Current immutable store head used for optimistic concurrency.
@@ -40,8 +68,7 @@ pub trait LifecycleEffectSink {
     /// Apply exactly the authorised request and durably persist tombstones and receipt.
     fn apply(
         &mut self,
-        request: &DataLifecycleRequest,
-        decision: &DataLifecycleDecision,
+        authorization: &LifecycleAuthorization,
         expected_head: &str,
     ) -> Result<LifecycleEffectReceipt, String>;
 }
@@ -151,7 +178,7 @@ pub fn evaluate_lifecycle(
 
 /// Separately verify approval evidence before an apply request can authorise effects.
 pub trait LifecycleApprovalVerifier {
-    /// Verify signature/evidence, expiry and single-use nonce state.
+    /// Verify identity evidence, expiry and exact request/policy scope.
     fn verify(
         &self,
         approval: &searchright_contracts::LifecycleApproval,
@@ -169,6 +196,22 @@ pub fn evaluate_lifecycle_with_verifier(
     evaluate_lifecycle_inner(policy, request, Some(verifier))
 }
 
+/// Produce opaque authority for an exact lifecycle request after approval verification.
+pub fn authorize_lifecycle(
+    policy: &InstitutionalPolicy,
+    request: &DataLifecycleRequest,
+    verifier: &dyn LifecycleApprovalVerifier,
+) -> Result<LifecycleAuthorization, LifecycleExecutionError> {
+    let decision = evaluate_lifecycle_with_verifier(policy, request, verifier)?;
+    if !decision.effects_authorized {
+        return Err(LifecycleExecutionError::NotAuthorized(decision.blockers));
+    }
+    Ok(LifecycleAuthorization {
+        request: request.clone(),
+        decision,
+    })
+}
+
 /// Verify authority, bind the expected store head, and apply lifecycle effects atomically.
 pub fn execute_lifecycle(
     policy: &InstitutionalPolicy,
@@ -184,12 +227,10 @@ pub fn execute_lifecycle(
             actual: observed,
         });
     }
-    let decision = evaluate_lifecycle_with_verifier(policy, request, verifier)?;
-    if !decision.effects_authorized {
-        return Err(LifecycleExecutionError::NotAuthorized(decision.blockers));
-    }
+    let authorization = authorize_lifecycle(policy, request, verifier)?;
+    let decision = authorization.decision().clone();
     let receipt = sink
-        .apply(request, &decision, expected_head)
+        .apply(&authorization, expected_head)
         .map_err(LifecycleExecutionError::Sink)?;
     if receipt.request_id != request.request_id
         || receipt.previous_head != expected_head
@@ -977,10 +1018,11 @@ mod tests {
 
         fn apply(
             &mut self,
-            request: &DataLifecycleRequest,
-            decision: &DataLifecycleDecision,
+            authorization: &LifecycleAuthorization,
             expected_head: &str,
         ) -> Result<LifecycleEffectReceipt, String> {
+            let request = authorization.request();
+            let decision = authorization.decision();
             if !decision.effects_authorized {
                 return Err("unauthorised decision".to_owned());
             }

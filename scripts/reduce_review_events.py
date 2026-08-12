@@ -19,6 +19,14 @@ from pathlib import Path
 from typing import Any
 
 SCHEMA_VERSION = "org.searchright.review-state-snapshot.v1"
+HANDLED_EVENT_TYPES = {
+    "execution_committed",
+    "protocol_amended",
+    "review_plan_validated",
+    "review_status_changed",
+    "screening_decision_recorded",
+    "search_run_completed",
+}
 GENESIS = "GENESIS"
 HEX64 = set("0123456789abcdef")
 ROOT = Path(__file__).resolve().parents[1]
@@ -269,6 +277,9 @@ def reduce_events(events: list[dict[str, Any]], verified_head: str) -> dict[str,
                     "event_id": event_id,
                 }
                 status = "searching"
+        elif event_type == "execution_committed":
+            # Persistence evidence is audit-only and does not alter derived review authority.
+            pass
         elif event_type == "protocol_amended":
             amendment_id = payload.get("amendment_id")
             if isinstance(amendment_id, str) and amendment_id and amendment_id not in amendments:
@@ -406,6 +417,8 @@ def self_test() -> dict[str, Any]:
     registry_source = json.loads(EVENT_REGISTRY.read_text(encoding="utf-8"))
     if registry_source != registry_example:
         errors.append("catalogued event registry example drifted from runtime registry")
+    if set(registry) != HANDLED_EVENT_TYPES:
+        errors.append("event registry and reducer handlers do not cover the same event types")
     migration_input = json.loads(
         (ROOT / "contracts/events/fixtures/search-run-completed-v0.json").read_text(
             encoding="utf-8"

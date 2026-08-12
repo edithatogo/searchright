@@ -4,22 +4,13 @@ use std::{fs, fs::OpenOptions, path::PathBuf};
 
 use searchright_contracts::{DataLifecycleAction, DataLifecycleDecision, DataLifecycleRequest};
 use searchright_governance::{
-    LifecycleEffectReceipt, LifecycleEffectSink, lifecycle_decision_digest,
+    LifecycleAuthorization, LifecycleEffectReceipt, LifecycleEffectSink, lifecycle_decision_digest,
     lifecycle_resulting_head,
 };
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 use crate::FileReviewStore;
-
-struct LifecycleLock(PathBuf);
-
-impl Drop for LifecycleLock {
-    fn drop(&mut self) {
-        let _owner_result = fs::remove_file(self.0.join("owner"));
-        let _result = fs::remove_dir(&self.0);
-    }
-}
 
 /// Receipt for inserting a mutable managed payload.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -28,13 +19,6 @@ pub struct ManagedObjectReceipt {
     pub object_id: String,
     /// SHA-256 of exact payload bytes.
     pub digest: String,
-}
-
-/// Evidence from exact-token stale lifecycle lock recovery.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct LifecycleLockRecoveryReceipt {
-    /// SHA-256 of the exact removed owner token.
-    pub owner_token_digest: String,
 }
 
 /// Exact durable lifecycle record persisted as one immutable object.
@@ -53,38 +37,6 @@ pub struct LifecycleStoreReceipt {
 }
 
 impl FileReviewStore {
-    /// Observe the opaque lifecycle writer token for external liveness assessment.
-    pub fn lifecycle_lock_token(&self) -> Result<Option<String>, String> {
-        let owner = self
-            .root()
-            .join("lifecycle")
-            .join(".write-lock")
-            .join("owner");
-        match fs::read_to_string(owner) {
-            Ok(token) => Ok(Some(token)),
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(None),
-            Err(error) => Err(error.to_string()),
-        }
-    }
-
-    /// Remove a proven-stale lock only when its exact owner token is unchanged.
-    pub fn recover_stale_lifecycle_lock(
-        &self,
-        expected_token: &str,
-    ) -> Result<LifecycleLockRecoveryReceipt, String> {
-        let lock = self.root().join("lifecycle").join(".write-lock");
-        let owner = lock.join("owner");
-        let observed = fs::read_to_string(&owner).map_err(|error| error.to_string())?;
-        if observed != expected_token {
-            return Err("lifecycle lock owner token changed".to_owned());
-        }
-        fs::remove_file(owner).map_err(|error| error.to_string())?;
-        fs::remove_dir(lock).map_err(|error| error.to_string())?;
-        Ok(LifecycleLockRecoveryReceipt {
-            owner_token_digest: sha256(observed.as_bytes()),
-        })
-    }
-
     /// Insert or idempotently confirm a bounded managed payload.
     pub fn put_managed_object(
         &self,
@@ -116,11 +68,39 @@ impl FileReviewStore {
     }
 
     fn lifecycle_head(&self) -> Result<String, String> {
-        let path = self.root().join("lifecycle").join("HEAD");
-        match fs::read_to_string(path) {
-            Ok(head) => Ok(head),
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok("GENESIS".to_owned()),
-            Err(error) => Err(error.to_string()),
+        let receipts = self.root().join("lifecycle").join("receipts");
+        if !receipts.exists() {
+            return Ok("GENESIS".to_owned());
+        }
+        let mut pending = fs::read_dir(receipts)
+            .map_err(|error| error.to_string())?
+            .filter_map(Result::ok)
+            .filter(|entry| {
+                entry
+                    .path()
+                    .extension()
+                    .is_some_and(|value| value == "json")
+            })
+            .map(|entry| {
+                fs::read(entry.path())
+                    .map_err(|error| error.to_string())
+                    .and_then(|bytes| {
+                        serde_json::from_slice::<LifecycleStoreReceipt>(&bytes)
+                            .map_err(|error| error.to_string())
+                    })
+            })
+            .collect::<Result<Vec<_>, _>>()?;
+        let mut head = "GENESIS".to_owned();
+        while let Some(index) = pending
+            .iter()
+            .position(|receipt| receipt.previous_head == head)
+        {
+            head = pending.swap_remove(index).resulting_head;
+        }
+        if pending.is_empty() {
+            Ok(head)
+        } else {
+            Err("lifecycle receipt chain is disconnected or forks".to_owned())
         }
     }
 }
@@ -132,23 +112,19 @@ impl LifecycleEffectSink for FileReviewStore {
 
     fn apply(
         &mut self,
-        request: &DataLifecycleRequest,
-        decision: &DataLifecycleDecision,
+        authorization: &LifecycleAuthorization,
         expected_head: &str,
     ) -> Result<LifecycleEffectReceipt, String> {
+        let request = authorization.request();
+        let decision = authorization.decision();
         if !decision.effects_authorized || decision.request_id != request.request_id {
             return Err("lifecycle decision does not authorize this request".to_owned());
         }
         let lifecycle_directory = self.root().join("lifecycle");
         fs::create_dir_all(&lifecycle_directory).map_err(|error| error.to_string())?;
-        let lock_path = lifecycle_directory.join(".write-lock");
-        fs::create_dir(&lock_path).map_err(|error| format!("lifecycle writer locked: {error}"))?;
-        fs::write(
-            lock_path.join("owner"),
-            format!("{}:{}", std::process::id(), uuid::Uuid::now_v7()),
-        )
-        .map_err(|error| error.to_string())?;
-        let _lock = LifecycleLock(lock_path);
+        let _lock = self
+            .acquire_write_lock("apply-lifecycle")
+            .map_err(|error| error.to_string())?;
         let observed = self.lifecycle_head()?;
         let directory = self.root().join("lifecycle");
         let receipts = directory.join("receipts");
@@ -181,81 +157,40 @@ impl LifecycleEffectSink for FileReviewStore {
         let bytes = serde_json::to_vec(&durable).map_err(|error| error.to_string())?;
         let receipt_digest = sha256(&bytes);
         let target = receipts.join(format!("{}.json", request.request_id));
-        if target.exists() {
+        let receipt_exists = target.exists();
+        if receipt_exists {
             let existing = fs::read(&target).map_err(|error| error.to_string())?;
             if existing != bytes {
                 return Err("lifecycle request id was replayed with different effects".to_owned());
             }
-            if observed == resulting_head {
-                return Ok(effect_receipt(
-                    request,
-                    expected_head,
-                    resulting_head,
-                    receipt_digest,
-                    request_digest,
-                    decision_digest,
-                ));
-            }
         }
-        if observed != expected_head {
+        if observed != expected_head && !(receipt_exists && observed == resulting_head) {
             return Err(format!(
                 "lifecycle head mismatch: expected {expected_head}, found {observed}"
             ));
         }
-        let staged = directory.join("pending-effects").join(&request.request_id);
-        if matches!(request.action, DataLifecycleAction::Delete) {
-            fs::create_dir_all(&staged).map_err(|error| error.to_string())?;
+        if !receipt_exists {
             for target_id in &request.target_ids {
-                let source = self.root().join("managed").join(target_id);
-                let staged_target = staged.join(target_id);
-                if source.exists() {
-                    fs::hard_link(&source, &staged_target)
-                        .map_err(|error| format!("stage managed target: {error}"))?;
-                    fs::remove_file(&source)
-                        .map_err(|error| format!("remove managed target: {error}"))?;
-                } else if !staged_target.exists() && !target.exists() {
+                if matches!(request.action, DataLifecycleAction::Delete)
+                    && !self.root().join("managed").join(target_id).exists()
+                {
                     return Err(format!(
                         "managed lifecycle target `{target_id}` does not exist"
                     ));
                 }
             }
-        }
-        if !target.exists() {
             commit_absent(&target, &bytes)?;
         }
-        let head = directory.join("HEAD");
-        if head.exists() {
-            let old = fs::read_to_string(&head).map_err(|error| error.to_string())?;
-            if old == resulting_head {
-                return Ok(effect_receipt(
-                    request,
-                    expected_head,
-                    resulting_head,
-                    receipt_digest,
-                    request_digest,
-                    decision_digest,
-                ));
+        // The immutable authorization receipt is durable before any mutable effect. Exact replay
+        // completes an interrupted deletion and treats already-removed targets as idempotent.
+        if matches!(request.action, DataLifecycleAction::Delete) {
+            for target_id in &request.target_ids {
+                let source = self.root().join("managed").join(target_id);
+                if source.exists() {
+                    fs::remove_file(&source)
+                        .map_err(|error| format!("remove managed target: {error}"))?;
+                }
             }
-            if old != expected_head {
-                return Err("lifecycle head changed before publication".to_owned());
-            }
-        }
-        let pending = directory.join(format!(".head-{}.pending", request.request_id));
-        fs::write(&pending, &resulting_head).map_err(|error| error.to_string())?;
-        OpenOptions::new()
-            .write(true)
-            .open(&pending)
-            .and_then(|file| file.sync_all())
-            .map_err(|error| error.to_string())?;
-        if head.exists() {
-            // Windows does not replace an existing destination with `rename`. The immutable
-            // receipt is already durable, so a crash after removal is repaired by exact replay.
-            fs::remove_file(&head).map_err(|error| format!("remove prior head: {error}"))?;
-        }
-        fs::rename(&pending, &head).map_err(|error| format!("publish head: {error}"))?;
-        if staged.exists() {
-            fs::remove_dir_all(staged)
-                .map_err(|error| format!("remove staged targets: {error}"))?;
         }
         Ok(effect_receipt(
             request,
@@ -330,9 +265,43 @@ fn sha256(bytes: &[u8]) -> String {
 mod tests {
     use super::*;
     use searchright_contracts::{
-        DATA_LIFECYCLE_DECISION_SCHEMA_VERSION, DATA_LIFECYCLE_REQUEST_SCHEMA_VERSION,
-        DataClassification, LifecycleExecutionMode,
+        DATA_LIFECYCLE_REQUEST_SCHEMA_VERSION, DataClassification, DeploymentMode,
+        INSTITUTIONAL_POLICY_SCHEMA_VERSION, InstitutionalPolicy, LifecycleApproval,
+        LifecycleExecutionMode,
     };
+    use searchright_governance::{LifecycleApprovalVerifier, authorize_lifecycle};
+
+    struct AcceptVerifier;
+
+    impl LifecycleApprovalVerifier for AcceptVerifier {
+        fn verify(
+            &self,
+            _approval: &LifecycleApproval,
+            _request_digest: &str,
+            _policy_id: &str,
+        ) -> Result<(), String> {
+            Ok(())
+        }
+    }
+
+    fn policy() -> InstitutionalPolicy {
+        InstitutionalPolicy {
+            schema_version: INSTITUTIONAL_POLICY_SCHEMA_VERSION.to_owned(),
+            policy_id: "policy-1".to_owned(),
+            institution: "Test institution".to_owned(),
+            deployment_modes: vec![DeploymentMode::LocalOnly],
+            allowed_classifications: vec![DataClassification::PublicMetadata],
+            permitted_regions: vec!["AU".to_owned()],
+            maximum_retention_days: 30,
+            telemetry_allowed: false,
+            full_text_persistence_allowed: false,
+            external_model_processing_allowed: false,
+            cross_border_transfer_allowed: false,
+            approved_by: "governance-owner".to_owned(),
+            effective_from: "2026-08-13".to_owned(),
+            review_by: Some("2027-08-13".to_owned()),
+        }
+    }
 
     fn request() -> DataLifecycleRequest {
         DataLifecycleRequest {
@@ -347,37 +316,42 @@ mod tests {
             export_destination: None,
             includes_audit_log: false,
             legal_hold: false,
-            approval: None,
+            approval: Some(LifecycleApproval {
+                approval_id: "approval-1".to_owned(),
+                approved_by: "accountable-owner".to_owned(),
+                review_id: "review-1".to_owned(),
+                action: DataLifecycleAction::Delete,
+                request_digest: String::new(),
+                policy_id: "policy-1".to_owned(),
+                nonce: "nonce-1".to_owned(),
+                approved_at: "2026-08-13T00:00:00Z".to_owned(),
+                expires_at: "2026-08-14T00:00:00Z".to_owned(),
+            }),
         }
     }
 
-    fn decision() -> DataLifecycleDecision {
-        DataLifecycleDecision {
-            schema_version: DATA_LIFECYCLE_DECISION_SCHEMA_VERSION.to_owned(),
-            request_id: "delete-1".to_owned(),
-            policy_id: "policy-1".to_owned(),
-            permitted: true,
-            effects_authorized: true,
-            blockers: Vec::new(),
-            warnings: Vec::new(),
-            immutable_audit_preserved: true,
-            tombstone_target_ids: vec!["record-1".to_owned()],
-            receipt_required: true,
+    fn authorization() -> Result<LifecycleAuthorization, String> {
+        let mut request = request();
+        let digest = request.effects_digest();
+        if let Some(approval) = request.approval.as_mut() {
+            approval.request_digest = digest;
         }
+        authorize_lifecycle(&policy(), &request, &AcceptVerifier).map_err(|error| error.to_string())
     }
 
     #[test]
     fn lifecycle_delete_is_durable_idempotent_and_restartable() -> Result<(), String> {
         let directory =
             std::env::temp_dir().join(format!("searchright-lifecycle-{}", uuid::Uuid::now_v7()));
-        let mut store = FileReviewStore::open(&directory)
-            .map_err(|error| format!("open store: {error}"))?;
+        let mut store =
+            FileReviewStore::open(&directory).map_err(|error| format!("open store: {error}"))?;
         let inserted = store
             .put_managed_object("record-1", b"mutable")
             .map_err(|error| format!("put managed object: {error}"))?;
         assert_eq!(inserted.digest.len(), 64);
+        let authorization = authorization()?;
         let first = store
-            .apply(&request(), &decision(), "GENESIS")
+            .apply(&authorization, "GENESIS")
             .map_err(|error| format!("first lifecycle apply: {error}"))?;
         assert_eq!(first.resulting_head, store.current_head()?);
         assert!(!directory.join("managed").join("record-1").exists());
@@ -389,12 +363,12 @@ mod tests {
                 .is_file()
         );
         drop(store);
-        let mut reopened = FileReviewStore::open(&directory)
-            .map_err(|error| format!("reopen store: {error}"))?;
+        let mut reopened =
+            FileReviewStore::open(&directory).map_err(|error| format!("reopen store: {error}"))?;
         assert_eq!(
             first,
             reopened
-                .apply(&request(), &decision(), "GENESIS")
+                .apply(&authorization, "GENESIS")
                 .map_err(|error| format!("replay lifecycle apply: {error}"))?
         );
         let _cleanup = fs::remove_dir_all(directory);
@@ -408,8 +382,9 @@ mod tests {
             uuid::Uuid::now_v7()
         ));
         let mut store = FileReviewStore::open(&directory).map_err(|error| error.to_string())?;
-        assert!(store.apply(&request(), &decision(), "wrong").is_err());
-        assert!(store.apply(&request(), &decision(), "GENESIS").is_err());
+        let authorization = authorization()?;
+        assert!(store.apply(&authorization, "wrong").is_err());
+        assert!(store.apply(&authorization, "GENESIS").is_err());
         assert!(store.put_managed_object("../escape", b"x").is_err());
         store.put_managed_object("record-1", b"one")?;
         assert!(store.put_managed_object("record-1", b"two").is_err());

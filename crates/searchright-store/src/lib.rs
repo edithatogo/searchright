@@ -17,7 +17,7 @@ use searchright_contracts::{
 use serde::{Deserialize, Serialize};
 
 mod lifecycle;
-pub use lifecycle::{LifecycleLockRecoveryReceipt, LifecycleStoreReceipt, ManagedObjectReceipt};
+pub use lifecycle::{LifecycleStoreReceipt, ManagedObjectReceipt};
 
 /// Filesystem-backed review store.
 #[derive(Debug, Clone)]
@@ -100,7 +100,7 @@ pub struct LockRecoveryReceipt {
     pub evidence_reference: String,
 }
 
-struct ReviewLock {
+pub(crate) struct ReviewLock {
     path: PathBuf,
 }
 
@@ -398,7 +398,7 @@ impl FileReviewStore {
         })
     }
 
-    fn acquire_write_lock(&self, operation: &str) -> Result<ReviewLock, StoreError> {
+    pub(crate) fn acquire_write_lock(&self, operation: &str) -> Result<ReviewLock, StoreError> {
         let path = self.root.join(".write.lock");
         fs::create_dir(&path).map_err(|source| {
             if source.kind() == std::io::ErrorKind::AlreadyExists {
