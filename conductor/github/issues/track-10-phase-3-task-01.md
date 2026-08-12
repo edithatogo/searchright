@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run compatibility clients for the previous supported MCP era and retain exact transcripts.
+- [ ] Run an independent or official compatibility client for the previous supported MCP era; the checked-in Python JSON-RPC transcript is bounded smoke evidence only.
 
 ## Completion and evidence contract
 

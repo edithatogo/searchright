@@ -461,7 +461,7 @@
     },
     {
       "blockers": [
-        "Run compatibility clients for the previous supported MCP era and retain exact transcripts.",
+        "Run an independent or official compatibility client for the previous supported MCP era; the checked-in Python JSON-RPC transcript is bounded smoke evidence only.",
         "Validate structured output schemas against live client implementations."
       ],
       "checks": [
@@ -488,6 +488,10 @@
       "outcome": "Expose typed, authority-annotated MCP tools over the same facade with stable structured outputs.",
       "requirements": [
         "SR-029"
+      ],
+      "runtime_evidence": [
+        "verification/receipts/mcp-2025-11-25-stdio.json",
+        "verification/receipts/mcp-2026-07-28-stdio.json"
       ],
       "slug": "mcp-mvp",
       "status": "partially_implemented",

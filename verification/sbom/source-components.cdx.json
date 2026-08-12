@@ -1252,6 +1252,7 @@
       "dependsOn": [
         "cargo-requirement:async-trait@0.1.89",
         "cargo-requirement:blake3@1.8",
+        "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",
@@ -1360,6 +1361,7 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
@@ -1376,6 +1378,7 @@
     {
       "dependsOn": [
         "cargo-requirement:blake3@1.8",
+        "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",
@@ -1452,6 +1455,7 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:serde_yaml@0.9",
@@ -1507,6 +1511,7 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
@@ -1515,6 +1520,7 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",

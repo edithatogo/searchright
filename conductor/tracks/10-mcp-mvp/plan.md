@@ -31,7 +31,7 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-10-phase-3 -->
 
-- [ ] Run compatibility clients for the previous supported MCP era and retain exact transcripts.
+- [ ] Run an independent or official compatibility client for the previous supported MCP era; the checked-in Python JSON-RPC transcript is bounded smoke evidence only.
 - [ ] Validate structured output schemas against live client implementations.
 
 ## Phase 4: Review and closeout
