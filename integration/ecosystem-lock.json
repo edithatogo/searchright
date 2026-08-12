@@ -34,7 +34,7 @@
       "id": "mcp-rust-sdk",
       "kind": "protocol_sdk",
       "package": "rmcp",
-      "version": "3.1.0",
+      "version": "=3.1.2",
       "protocol_policy": "MCP protocol negotiation and transcript evidence required"
     },
     {
