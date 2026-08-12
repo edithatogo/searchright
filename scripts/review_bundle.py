@@ -15,12 +15,12 @@ import mimetypes
 import os
 import re
 import stat
-import sys
 import tempfile
 import zipfile
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
-from typing import Any, Iterable
+from typing import Any
 
 SCHEMA_VERSION = "org.searchright.review-bundle-manifest.v1"
 FORMAT_VERSION = "1"
@@ -28,6 +28,10 @@ FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
 DEFAULT_MAX_FILES = 10_000
 DEFAULT_MAX_TOTAL_BYTES = 2 * 1024 * 1024 * 1024
 DEFAULT_MAX_FILE_BYTES = 512 * 1024 * 1024
+VERIFY_MAX_FILES = 10_000
+VERIFY_MAX_TOTAL_BYTES = 2 * 1024 * 1024 * 1024
+VERIFY_MAX_FILE_BYTES = 512 * 1024 * 1024
+VERIFY_MAX_MANIFEST_BYTES = 4 * 1024 * 1024
 HIGH_RISK_BASENAMES = {
     ".env",
     ".env.local",
@@ -86,6 +90,30 @@ def ensure_regular_file(path: Path) -> None:
         raise BundleError(f"source must be a regular file: {path}")
 
 
+def resolve_plan_source(base: Path, value: str) -> Path:
+    """Resolve one plan source without following symlinks outside the plan root."""
+    relative = PurePosixPath(value.replace("\\", "/"))
+    if relative.is_absolute() or not relative.parts or any(part in {"", ".", ".."} for part in relative.parts):
+        raise BundleError(f"unsafe plan source: {value!r}")
+    candidate = base.joinpath(*relative.parts)
+    current = base
+    for part in relative.parts:
+        current = current / part
+        try:
+            mode = current.lstat().st_mode
+        except FileNotFoundError as exc:
+            raise BundleError(f"source file does not exist: {current}") from exc
+        if stat.S_ISLNK(mode):
+            raise BundleError(f"symlinks are prohibited: {current}")
+    ensure_regular_file(candidate)
+    resolved = candidate.resolve(strict=True)
+    try:
+        resolved.relative_to(base)
+    except ValueError as exc:
+        raise BundleError(f"source escapes the plan directory: {value!r}") from exc
+    return resolved
+
+
 def scan_for_secrets(path: Path, data: bytes) -> None:
     if path.name.lower() in HIGH_RISK_BASENAMES:
         raise BundleError(f"high-risk secret filename is prohibited: {path.name}")
@@ -125,8 +153,7 @@ def parse_plan(plan_path: Path) -> tuple[dict[str, Any], list[PlannedEntry]]:
             raise BundleError(f"plan entry {index} has no source")
         if not isinstance(role, str) or not role.strip():
             raise BundleError(f"plan entry {index} has no role")
-        source = (base / source_value).resolve()
-        ensure_regular_file(source)
+        source = resolve_plan_source(base, source_value)
         destination = safe_destination(raw.get("path") or source.name)
         if destination in destinations:
             raise BundleError(f"duplicate destination: {destination}")
@@ -263,15 +290,31 @@ def verify(bundle_path: Path) -> dict[str, Any]:
     checked = 0
     try:
         with zipfile.ZipFile(bundle_path, "r") as archive:
-            names = archive.namelist()
+            infos = archive.infolist()
+            if len(infos) > VERIFY_MAX_FILES + 1:
+                raise BundleError("archive member count exceeds the local verification limit")
+            names = [info.filename for info in infos]
             if len(names) != len(set(names)):
                 raise BundleError("duplicate archive member names")
-            for name in names:
+            declared_total = 0
+            for info in infos:
+                name = info.filename
                 validate_archive_member(name)
-                info = archive.getinfo(name)
                 mode = info.external_attr >> 16
                 if stat.S_ISLNK(mode):
                     raise BundleError(f"symlink archive member is prohibited: {name}")
+                if info.is_dir() or not stat.S_ISREG(mode):
+                    raise BundleError(f"non-regular archive member is prohibited: {name}")
+                if info.flag_bits & 0x1:
+                    raise BundleError(f"encrypted archive member is prohibited: {name}")
+                if info.compress_type not in {zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED}:
+                    raise BundleError(f"unsupported compression method for {name}")
+                member_limit = VERIFY_MAX_MANIFEST_BYTES if name == "manifest.json" else VERIFY_MAX_FILE_BYTES
+                if info.file_size > member_limit:
+                    raise BundleError(f"archive member exceeds the local verification limit: {name}")
+                declared_total += info.file_size
+                if declared_total > VERIFY_MAX_TOTAL_BYTES + VERIFY_MAX_MANIFEST_BYTES:
+                    raise BundleError("archive payload exceeds the local verification limit")
             manifest = load_manifest(archive)
             expected = {"manifest.json"}
             descriptor_digests: list[str] = []
@@ -280,6 +323,18 @@ def verify(bundle_path: Path) -> dict[str, Any]:
             if not isinstance(entries, list) or not entries:
                 raise BundleError("manifest entries must be a non-empty array")
             destinations: set[str] = set()
+            policy = manifest.get("policy", {})
+            policy_limits = {
+                "max_files": VERIFY_MAX_FILES,
+                "max_total_bytes": VERIFY_MAX_TOTAL_BYTES,
+                "max_file_bytes": VERIFY_MAX_FILE_BYTES,
+            }
+            for key, local_limit in policy_limits.items():
+                value = policy.get(key)
+                if not isinstance(value, int) or isinstance(value, bool) or value < 1 or value > local_limit:
+                    raise BundleError(f"manifest policy {key} exceeds or omits the local verification limit")
+            if len(entries) > policy["max_files"]:
+                raise BundleError("manifest entry count exceeds its declared policy")
             for raw in entries:
                 if not isinstance(raw, dict):
                     raise BundleError("manifest entry must be an object")
@@ -291,12 +346,27 @@ def verify(bundle_path: Path) -> dict[str, Any]:
                     raise BundleError(f"duplicate manifest destination: {destination}")
                 destinations.add(destination)
                 expected.add(archive_path)
-                data = archive.read(archive_path)
-                if len(data) != raw.get("size"):
+                info = archive.getinfo(archive_path)
+                declared_size = raw.get("size")
+                if not isinstance(declared_size, int) or isinstance(declared_size, bool) or declared_size < 0:
+                    raise BundleError(f"invalid declared size: {destination}")
+                if declared_size > policy["max_file_bytes"] or info.file_size > policy["max_file_bytes"]:
+                    raise BundleError(f"entry exceeds its declared policy: {destination}")
+                digest = hashlib.sha256()
+                observed_size = 0
+                with archive.open(info, "r") as source:
+                    while chunk := source.read(1024 * 1024):
+                        observed_size += len(chunk)
+                        if observed_size > min(policy["max_file_bytes"], VERIFY_MAX_FILE_BYTES):
+                            raise BundleError(f"expanded entry exceeds its verification limit: {destination}")
+                        digest.update(chunk)
+                if observed_size != declared_size:
                     errors.append(f"size mismatch: {destination}")
-                if sha256_bytes(data) != raw.get("sha256"):
+                if digest.hexdigest() != raw.get("sha256"):
                     errors.append(f"sha256 mismatch: {destination}")
-                total += len(data)
+                total += observed_size
+                if total > min(policy["max_total_bytes"], VERIFY_MAX_TOTAL_BYTES):
+                    raise BundleError("expanded payload exceeds its verification limit")
                 descriptor_digests.append(sha256_bytes(canonical_json_bytes(raw)))
                 checked += 1
             undeclared = sorted(set(names) - expected)
@@ -311,7 +381,6 @@ def verify(bundle_path: Path) -> dict[str, Any]:
                 errors.append("entry count mismatch")
             if merkle_root(descriptor_digests) != manifest.get("descriptor_merkle_root"):
                 errors.append("descriptor Merkle root mismatch")
-            policy = manifest.get("policy", {})
             for key, expected_value in {
                 "deterministic": True,
                 "network_required": False,

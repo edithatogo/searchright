@@ -763,6 +763,11 @@ fn canonical_digest<T: serde::Serialize>(value: &T) -> Result<String, ProviderEr
     Ok(blake3::hash(&bytes).to_hex().to_string())
 }
 
+/// Compute the canonical BLAKE3 digest used to bind a source receipt to its records.
+pub fn canonical_record_digest(records: &[BibliographicRecord]) -> Result<String, ProviderError> {
+    canonical_digest(&records)
+}
+
 fn validate_cache_namespace(namespace: String) -> Result<String, ProviderError> {
     if namespace.trim().is_empty() {
         return Err(ProviderError::Cache(

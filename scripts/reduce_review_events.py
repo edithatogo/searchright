@@ -9,16 +9,19 @@ and human-authority invariants before deriving a disposable snapshot.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
-import tempfile
 from collections import Counter
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 SCHEMA_VERSION = "org.searchright.review-state-snapshot.v1"
 GENESIS = "GENESIS"
 HEX64 = set("0123456789abcdef")
+ROOT = Path(__file__).resolve().parents[1]
+EVENT_REGISTRY = ROOT / "contracts" / "events" / "registry.json"
 
 
 class ReductionError(ValueError):
@@ -46,6 +49,117 @@ def load_events(path: Path) -> list[dict[str, Any]]:
             raise ReductionError(f"line {number} must be a JSON object")
         events.append(value)
     return events
+
+
+def load_event_registry() -> tuple[dict[str, dict[str, Any]], int, set[str]]:
+    """Load and structurally validate the fail-closed event registry."""
+    raw = json.loads(EVENT_REGISTRY.read_text(encoding="utf-8"))
+    if raw.get("schema_version") != "org.searchright.audit-event-registry.v1":
+        raise ReductionError("event registry has an unsupported schema_version")
+    if raw.get("unknown_event_type_policy") != "reject":
+        raise ReductionError("event registry must reject unknown event types")
+    if raw.get("unknown_payload_version_policy") != "reject":
+        raise ReductionError("event registry must reject unknown payload versions")
+    rows: dict[str, dict[str, Any]] = {}
+    for row in raw.get("event_types", []):
+        event_type = row.get("event_type")
+        if not isinstance(event_type, str) or not event_type or event_type in rows:
+            raise ReductionError("event registry contains an invalid or duplicate event type")
+        rows[event_type] = row
+    maximum_payload_bytes = raw.get("maximum_payload_bytes")
+    prohibited_payload_keys = raw.get("prohibited_payload_keys")
+    if not isinstance(maximum_payload_bytes, int) or maximum_payload_bytes < 1:
+        raise ReductionError("event registry maximum_payload_bytes is invalid")
+    if not isinstance(prohibited_payload_keys, list) or not all(
+        isinstance(key, str) and key for key in prohibited_payload_keys
+    ):
+        raise ReductionError("event registry prohibited_payload_keys is invalid")
+    return rows, maximum_payload_bytes, set(prohibited_payload_keys)
+
+
+def nested_keys(value: Any) -> set[str]:
+    """Return object keys at every depth for sensitive-field denial."""
+    if isinstance(value, dict):
+        return set(value) | set().union(*(nested_keys(item) for item in value.values()))
+    if isinstance(value, list):
+        return set().union(*(nested_keys(item) for item in value))
+    return set()
+
+
+def normalize_payload(
+    event_type: str,
+    payload: dict[str, Any],
+    registry: dict[str, dict[str, Any]],
+    maximum_payload_bytes: int,
+    prohibited_payload_keys: set[str],
+) -> dict[str, Any]:
+    """Project a payload copy to its current version without rewriting the event."""
+    row = registry.get(event_type)
+    if row is None:
+        raise ReductionError(f"unregistered event_type {event_type or '[empty]'}")
+    if len(canonical_bytes(payload)) > maximum_payload_bytes:
+        raise ReductionError(f"event_type {event_type} payload exceeds the configured size limit")
+    denied = nested_keys(payload) & prohibited_payload_keys
+    if denied:
+        raise ReductionError(
+            f"event_type {event_type} payload contains prohibited keys {sorted(denied)}"
+        )
+    allowed_keys = set(row.get("allowed_payload_keys", []))
+    unexpected_keys = set(payload) - allowed_keys
+    if unexpected_keys:
+        raise ReductionError(
+            f"event_type {event_type} payload contains unregistered keys {sorted(unexpected_keys)}"
+        )
+    current = row.get("current_payload_version")
+    version = payload.get("_schema_version", row.get("legacy_unversioned_payload_version"))
+    if not isinstance(version, int) or not isinstance(current, int):
+        raise ReductionError(f"event_type {event_type} has a non-integer payload version")
+    known_versions = {
+        item.get("version") for item in row.get("versions", []) if isinstance(item, dict)
+    }
+    if version not in known_versions:
+        raise ReductionError(f"event_type {event_type} has unsupported payload version {version}")
+
+    normalized = copy.deepcopy(payload)
+    while version != current:
+        matching_plan: dict[str, Any] | None = None
+        for relative in row.get("migrations", []):
+            plan = json.loads((ROOT / relative).read_text(encoding="utf-8"))
+            if (
+                plan.get("event_type") == event_type
+                and plan.get("from_payload_version") == version
+            ):
+                matching_plan = plan
+                break
+        if matching_plan is None:
+            raise ReductionError(
+                f"event_type {event_type} has no migration from payload version {version}"
+            )
+        if (
+            matching_plan.get("destructive") is not False
+            or matching_plan.get("original_event_immutable") is not True
+        ):
+            raise ReductionError(f"event_type {event_type} migration is not preservation-safe")
+        for transformation in matching_plan.get("transformations", []):
+            operation = transformation.get("operation")
+            if operation == "rename":
+                source = str(transformation.get("from", "")).removeprefix("/")
+                target = str(transformation.get("to", "")).removeprefix("/")
+                if source not in normalized or not source or not target or target in normalized:
+                    raise ReductionError(f"event_type {event_type} rename precondition failed")
+                normalized[target] = normalized.pop(source)
+            elif operation == "replace":
+                path = str(transformation.get("path", "")).removeprefix("/")
+                if not path:
+                    raise ReductionError(f"event_type {event_type} replace path is invalid")
+                normalized[path] = transformation.get("value")
+            else:
+                raise ReductionError(f"event_type {event_type} migration operation is unsupported")
+        next_version = matching_plan.get("to_payload_version")
+        if not isinstance(next_version, int) or next_version <= version:
+            raise ReductionError(f"event_type {event_type} migration does not advance")
+        version = next_version
+    return normalized
 
 
 def validate_linkage(events: Iterable[dict[str, Any]], verified_head: str) -> tuple[str, str]:
@@ -87,6 +201,7 @@ def validate_linkage(events: Iterable[dict[str, Any]], verified_head: str) -> tu
 
 def reduce_events(events: list[dict[str, Any]], verified_head: str) -> dict[str, Any]:
     review_id, last_event_id = validate_linkage(events, verified_head)
+    event_registry, maximum_payload_bytes, prohibited_payload_keys = load_event_registry()
     source_counts: Counter[str] = Counter()
     search_runs: dict[str, dict[str, Any]] = {}
     final_decisions: dict[str, dict[str, Any]] = {}
@@ -100,7 +215,14 @@ def reduce_events(events: list[dict[str, Any]], verified_head: str) -> dict[str,
     for event in events:
         event_type = str(event.get("event_type", ""))
         source_counts[event_type] += 1
-        payload = event.get("payload") if isinstance(event.get("payload"), dict) else {}
+        raw_payload = event.get("payload") if isinstance(event.get("payload"), dict) else {}
+        payload = normalize_payload(
+            event_type,
+            raw_payload,
+            event_registry,
+            maximum_payload_bytes,
+            prohibited_payload_keys,
+        )
         actor = event.get("actor") if isinstance(event.get("actor"), dict) else {}
         actor_type = str(actor.get("actor_type", ""))
         event_id = str(event["event_id"])
@@ -148,7 +270,7 @@ def reduce_events(events: list[dict[str, Any]], verified_head: str) -> dict[str,
                     status = "screening"
             else:
                 recommendations.setdefault(record_id, []).append(decision_entry)
-        else:
+        else:  # pragma: no cover - the registry and reducer handlers must stay aligned
             unknown_event_types.add(event_type or "[empty]")
 
     decision_counts = Counter(
@@ -248,10 +370,60 @@ def self_test() -> dict[str, Any]:
         errors.append("mismatched verified head was accepted")
     except ReductionError:
         pass
+    registry, maximum_payload_bytes, prohibited_payload_keys = load_event_registry()
+    registry_example = json.loads(
+        (ROOT / "contracts/examples/audit-event-registry.json").read_text(encoding="utf-8")
+    )
+    registry_source = json.loads(EVENT_REGISTRY.read_text(encoding="utf-8"))
+    if registry_source != registry_example:
+        errors.append("catalogued event registry example drifted from runtime registry")
+    migration_input = json.loads(
+        (ROOT / "contracts/events/fixtures/search-run-completed-v0.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    migration_expected = json.loads(
+        (ROOT / "contracts/events/fixtures/search-run-completed-v1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    migration_actual = normalize_payload(
+        "search_run_completed",
+        migration_input,
+        registry,
+        maximum_payload_bytes,
+        prohibited_payload_keys,
+    )
+    if migration_actual != migration_expected:
+        errors.append("event payload migration fixture did not match")
+    if migration_input.get("provider") != "pubmed":
+        errors.append("event payload migration mutated the original payload")
+    unknown = copy.deepcopy(events[0])
+    unknown["event_type"] = "unregistered_event"
+    try:
+        reduce_events([unknown], h1)
+        errors.append("unregistered event type was accepted")
+    except ReductionError:
+        pass
+    prohibited = copy.deepcopy(events[0])
+    prohibited["payload"]["token"] = "must-not-persist"
+    try:
+        reduce_events([prohibited], h1)
+        errors.append("prohibited payload key was accepted")
+    except ReductionError:
+        pass
     return {
         "schema_version": "org.searchright.review-state-reducer-self-test.v1",
         "status": "failed" if errors else "passed",
-        "tests": ["deterministic_reduction", "human_final_authority", "verified_head_binding"],
+        "tests": [
+            "deterministic_reduction",
+            "human_final_authority",
+            "verified_head_binding",
+            "event_payload_migration_fixture",
+            "unknown_event_type_rejection",
+            "event_registry_catalogue_parity",
+            "prohibited_payload_key_rejection",
+        ],
         "errors": errors,
         "example": first,
     }

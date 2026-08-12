@@ -1,0 +1,28 @@
+{
+  "schema_version": "org.searchright.research-object-handoff-plan.v1",
+  "plan_id": "handoff-demo-1",
+  "review_id": "review-demo-1",
+  "execution_mode": "dry_run",
+  "input_artifacts": [
+    {
+      "artifact_id": "review-bundle-demo-1",
+      "kind": "srpack",
+      "sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    }
+  ],
+  "proposed_destinations": [
+    {"kind": "ro_crate", "target_reference": "planned:track-25-ro-crate", "external_write": true},
+    {"kind": "osf", "target_reference": "planned:osf-project-not-authorized", "external_write": true}
+  ],
+  "deposit_authorized": false,
+  "ro_crate_conformance_claimed": false,
+  "osf_acceptance_claimed": false,
+  "delegated_export_track": "25",
+  "prerequisites": [
+    "Track 25 deterministic RO-Crate export and conformance evidence",
+    "explicit current-session authority for external deposit",
+    "destination rights, privacy and retention review",
+    "verified destination receipt after any separately authorised write"
+  ],
+  "claim_boundary": "This deterministic dry-run plan neither creates a RO-Crate nor deposits to OSF. It makes no RO-Crate conformance or repository-acceptance claim."
+}
