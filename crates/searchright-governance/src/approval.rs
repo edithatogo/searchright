@@ -85,8 +85,10 @@ impl<C: ApprovalClock> LifecycleApprovalVerifier for BoundedLifecycleApprovalReg
                 "approval record does not exactly bind principal, policy and request".to_owned(),
             );
         }
-        let now = self.clock.now_utc();
-        if !canonical_utc(&now) || now < approval.approved_at || now >= approval.expires_at {
+        let now = parse_utc(&self.clock.now_utc())?;
+        let approved_at = parse_utc(&approval.approved_at)?;
+        let expires_at = parse_utc(&approval.expires_at)?;
+        if now < approved_at || now >= expires_at {
             return Err("approval is not currently valid".to_owned());
         }
         // Exact approval replay is safe: the request digest, request identifier and immutable
@@ -97,7 +99,15 @@ impl<C: ApprovalClock> LifecycleApprovalVerifier for BoundedLifecycleApprovalReg
 }
 
 fn canonical_utc(value: &str) -> bool {
-    value.ends_with('Z') && OffsetDateTime::parse(value, &Rfc3339).is_ok()
+    parse_utc(value).is_ok()
+}
+
+fn parse_utc(value: &str) -> Result<OffsetDateTime, String> {
+    if !value.ends_with('Z') {
+        return Err("approval timestamp must use canonical UTC".to_owned());
+    }
+    OffsetDateTime::parse(value, &Rfc3339)
+        .map_err(|_| "approval timestamp is not valid RFC 3339".to_owned())
 }
 
 #[cfg(test)]
