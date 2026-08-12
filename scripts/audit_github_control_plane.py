@@ -9,12 +9,14 @@ own.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from bootstrap_github import ruleset_payload
 from github_common import (
     ROOT,
     GitHubCommandError,
@@ -37,6 +39,31 @@ from sync_github_project import (
 HIERARCHY_PATH = ROOT / "conductor/github/issue-hierarchy.json"
 PROJECT_PATH = ROOT / "conductor/github/project.json"
 SETTINGS_PATH = ROOT / "conductor/github/repository-settings.json"
+
+
+def source_state() -> dict[str, Any]:
+    """Bind an audit result to the exact tracked source and control-plane inputs."""
+    tracked_status = run(
+        ["git", "status", "--porcelain=v1", "--untracked-files=no"]
+    ).stdout.replace("\r\n", "\n")
+    inputs = (HIERARCHY_PATH, PROJECT_PATH, SETTINGS_PATH)
+    return {
+        "revision": run(["git", "rev-parse", "HEAD"]).stdout.strip(),
+        "tree": run(["git", "rev-parse", "HEAD^{tree}"]).stdout.strip(),
+        "tracked_worktree_clean": not tracked_status.strip(),
+        "tracked_status_sha256": hashlib.sha256(tracked_status.encode("utf-8")).hexdigest(),
+        "input_sha256": {
+            path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in inputs
+        },
+    }
+
+
+def receipt_status(errors: list[str], *, tracked_worktree_clean: bool) -> str:
+    """Keep dirty-tree console output diagnostic rather than durable evidence."""
+    if errors:
+        return "failed"
+    return "passed" if tracked_worktree_clean else "diagnostic_dirty_source"
 
 
 def compare_repository(settings: dict[str, Any], errors: list[str], warnings: list[str]) -> dict[str, Any]:
@@ -87,6 +114,11 @@ def compare_repository(settings: dict[str, Any], errors: list[str], warnings: li
     missing_env = set(settings["environments"]) - observed_environments
     if missing_env:
         errors.append(f"missing protected environments {sorted(missing_env)}")
+    for name in sorted(set(settings["environments"]) & observed_environments):
+        environment = run_json(["gh", "api", f"repos/{repository}/environments/{name}"])
+        policy = environment.get("deployment_branch_policy") if isinstance(environment, dict) else None
+        if not isinstance(policy, dict) or policy.get("protected_branches") is not True:
+            errors.append(f"environment {name!r} is not restricted to protected branches")
     rulesets = run_json(["gh", "api", f"repos/{repository}/rulesets?includes_parents=false"])
     matches = [
         item for item in rulesets
@@ -94,6 +126,19 @@ def compare_repository(settings: dict[str, Any], errors: list[str], warnings: li
     ] if isinstance(rulesets, list) else []
     if len(matches) != 1:
         errors.append(f"expected one ruleset named {settings['ruleset']['name']!r}, observed {len(matches)}")
+    elif matches[0].get("id") is None:
+        errors.append(f"ruleset {settings['ruleset']['name']!r} omitted its identifier")
+    else:
+        observed_ruleset = run_json(
+            ["gh", "api", f"repos/{repository}/rulesets/{matches[0]['id']}"]
+        )
+        expected_ruleset = ruleset_payload(settings)
+        comparable = {
+            key: observed_ruleset.get(key)
+            for key in ("name", "target", "enforcement", "bypass_actors", "conditions", "rules")
+        } if isinstance(observed_ruleset, dict) else None
+        if comparable != expected_ruleset:
+            errors.append("main-protection ruleset differs from the declared full payload")
     security = observed.get("security_and_analysis")
     if not isinstance(security, dict):
         warnings.append("repository endpoint did not expose security_and_analysis")
@@ -262,6 +307,11 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--receipt-path", type=Path)
     args = parser.parse_args()
+    source = source_state()
+    if args.receipt_path and not source["tracked_worktree_clean"]:
+        raise GitHubCommandError(
+            "durable audit receipt requires a clean tracked Git working tree"
+        )
     require_gh()
     hierarchy = json.loads(HIERARCHY_PATH.read_text(encoding="utf-8"))
     project = json.loads(PROJECT_PATH.read_text(encoding="utf-8"))
@@ -273,9 +323,12 @@ def main() -> int:
     project_summary = compare_project(project, hierarchy, issues, errors, warnings)
     receipt = {
         "schema_version": "org.searchright.github-control-plane-audit.v1",
-        "status": "failed" if errors else "passed",
+        "status": receipt_status(
+            errors, tracked_worktree_clean=source["tracked_worktree_clean"]
+        ),
         "repository": settings["repository"],
-        "source_revision": run(["git", "rev-parse", "HEAD"]).stdout.strip(),
+        "source_revision": source["revision"],
+        "source": source,
         "repository_observed": repository,
         "issue_hierarchy": issue_summary,
         "project": project_summary,
