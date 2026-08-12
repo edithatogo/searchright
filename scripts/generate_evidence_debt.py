@@ -58,33 +58,33 @@ def render() -> dict[str, Any]:
     priority_queue = [
         {
             "priority": 1,
-            "debt": "compiler_baseline",
-            "reason": "Cargo.lock, compilation, Clippy and Rust test execution are not evidenced.",
-            "closure_evidence": ["committed Cargo.lock", "compiler receipt", "locked test receipt"],
-        },
-        {
-            "priority": 2,
             "debt": "assertion_specific_proof",
             "reason": f"{len(track_level_only)} assertions retain track-level-only mappings.",
             "closure_evidence": ["implementation symbol", "assertion-specific deterministic test", "current receipt"],
         },
         {
-            "priority": 3,
+            "priority": 2,
             "debt": "provider_runtime_and_policy",
             "reason": "Provider fixtures and conservative policies exist, but live canaries and policy review are not evidenced.",
             "closure_evidence": ["authorised live canary", "redacted receipt", "policy review evidence"],
         },
         {
-            "priority": 4,
+            "priority": 3,
             "debt": "methodological_validation",
             "reason": "Search translation, recall, deduplication, linkage and screening require independent gold-standard evaluation.",
             "closure_evidence": ["sealed benchmark receipt", "information-specialist review", "calibration report"],
         },
         {
-            "priority": 5,
+            "priority": 4,
             "debt": "downstream_migration",
             "reason": "Sourceright, CiteWeft and estate migrations are prepared but not dual-run or cut over.",
             "closure_evidence": ["producer/consumer receipts", "dual-run parity", "rollback rehearsal"],
+        },
+        {
+            "priority": 5,
+            "debt": "operations_and_adoption",
+            "reason": "Authenticated hosting, restore drills, pilots, generated SDK adoption and release acceptance remain unevidenced.",
+            "closure_evidence": ["tenant-isolation receipt", "restore receipt", "pilot exit", "downstream SDK receipt", "release acceptance"],
         },
     ]
     return {

@@ -31,7 +31,8 @@
         "python scripts/generate_evidence_debt.py --check"
       ],
       "evidence_receipts": [
-        "conductor/tracks/30-maturity-gap-closure/evidence.json"
+        "conductor/tracks/30-maturity-gap-closure/evidence.json",
+        "verification/receipts/track-30-merged-main-review.json"
       ],
       "open_gates": [
         "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
@@ -66,7 +67,8 @@
         "python scripts/generate_evidence_debt.py --check"
       ],
       "evidence_receipts": [
-        "conductor/tracks/30-maturity-gap-closure/evidence.json"
+        "conductor/tracks/30-maturity-gap-closure/evidence.json",
+        "verification/receipts/track-30-merged-main-review.json"
       ],
       "open_gates": [
         "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
@@ -92,7 +94,8 @@
         "python scripts/check_roadmap_coverage.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/30-maturity-gap-closure/evidence.json"
+        "conductor/tracks/30-maturity-gap-closure/evidence.json",
+        "verification/receipts/track-30-merged-main-review.json"
       ],
       "open_gates": [
         "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",

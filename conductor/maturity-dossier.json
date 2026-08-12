@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.maturity-dossier.v1",
   "target_version": "1.0.0",
   "decision": "not_ready",
-  "last_reviewed": "2026-08-09",
+  "last_reviewed": "2026-08-12",
   "domains": [
     {
       "domain": "contracts",
@@ -11,8 +11,8 @@
     },
     {
       "domain": "compiler",
-      "state": "not_evidenced",
-      "critical_blocker": true
+      "state": "hosted_cross_platform_verified",
+      "critical_blocker": false
     },
     {
       "domain": "determinism",
@@ -31,12 +31,12 @@
     },
     {
       "domain": "security",
-      "state": "automation_prepared",
+      "state": "hosted_admission_verified_remote_security_open",
       "critical_blocker": true
     },
     {
       "domain": "interfaces",
-      "state": "source_parity_verified",
+      "state": "local_cli_mcp_compiler_verified_advanced_profiles_open",
       "critical_blocker": true
     },
     {
@@ -56,7 +56,7 @@
     },
     {
       "domain": "github_control_plane",
-      "state": "source_implemented_unverified",
+      "state": "remote_issues_converged_project_fields_open",
       "critical_blocker": true
     },
     {

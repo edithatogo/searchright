@@ -2,7 +2,7 @@
   "domains": [
     {
       "blockers": [
-        "Compiler dependency resolution and runtime sandbox evidence remain open"
+        "Hosted dependency resolution passes; runtime sandbox evidence remains open"
       ],
       "domain": "architecture_fitness",
       "level": "source_verified",
@@ -35,7 +35,7 @@
     },
     {
       "blockers": [
-        "Rust engine path not compiler-executed",
+        "Rust engine path is compiler-executed; end-to-end live behavior remains unevidenced",
         "No live provider, recall or external methodological evidence"
       ],
       "domain": "contract_reference_vertical_slice",
@@ -67,7 +67,7 @@
     },
     {
       "blockers": [
-        "Rust audit-chain verification not compiler-tested",
+        "Rust audit-chain verification is compiler-tested; production durability remains unevidenced",
         "Crash/fault and multi-writer tests remain open"
       ],
       "domain": "derived_review_state",
@@ -84,7 +84,7 @@
     },
     {
       "blockers": [
-        "Register exposes but does not close compiler, live, methodological, migration or external evidence debt"
+        "Register exposes but does not close live, methodological, migration, operational or external evidence debt"
       ],
       "domain": "evidence_debt_visibility",
       "level": "source_verified",
@@ -100,7 +100,7 @@
     },
     {
       "blockers": [
-        "Cargo tests not executed"
+        "Hosted Cargo tests pass; authorized live fixtures and methodological performance remain unevidenced"
       ],
       "domain": "fixture_behavior",
       "level": "contracted",
@@ -116,8 +116,8 @@
     },
     {
       "blockers": [
-        "No remote repository/bootstrap apply receipt",
-        "No observed Project ID, fields, views or 568-item sync receipt"
+        "Durable bootstrap/audit receipt covers the former 568-node projection",
+        "Current 567-node projection requires a fresh exact-main audit"
       ],
       "domain": "github_control_plane",
       "level": "source_verified",
@@ -125,7 +125,7 @@
     },
     {
       "blockers": [
-        "No remote Searchright repository or apply receipt"
+        "Remote repository and apply receipt exist; current 567-node projection requires a fresh exact-main audit"
       ],
       "domain": "github_issue_hierarchy",
       "level": "source_verified",
@@ -188,7 +188,7 @@
     },
     {
       "blockers": [
-        "Rust parsers not compiler-tested",
+        "Rust parsers are compiler-tested",
         "No authorised redacted live canary"
       ],
       "domain": "provider_contract_baselines",
@@ -207,7 +207,7 @@
     {
       "blockers": [
         "All packages remain publish=false",
-        "No compiler/API/SemVer/release evidence"
+        "Compiler, API and SemVer admission pass; package release evidence remains absent"
       ],
       "domain": "public_package_release",
       "level": "contracted",
@@ -249,8 +249,8 @@
     },
     {
       "blockers": [
-        "Rust toolchain unavailable",
-        "Cargo.lock not generated"
+        "Hosted Rust 1.97.1 cross-platform admission passes",
+        "Cargo.lock is committed; broader maturity evidence remains open"
       ],
       "domain": "rust_compilation",
       "level": "contracted",
@@ -276,7 +276,7 @@
     {
       "blockers": [
         "Decision remains not_ready",
-        "Compiler, runtime, downstream, human and external gates remain open"
+        "Runtime, downstream, human, operational and external gates remain open"
       ],
       "domain": "version_1_maturity",
       "level": "contracted",
@@ -285,5 +285,5 @@
   ],
   "repository_level": "source_verified",
   "schema_version": "org.searchright.evidence-ledger.v1",
-  "updated_at": "2026-08-09"
+  "updated_at": "2026-08-12"
 }
