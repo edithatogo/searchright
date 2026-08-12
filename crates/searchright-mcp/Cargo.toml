@@ -47,8 +47,5 @@ tokio-util = { workspace = true, optional = true }
 tracing-subscriber.workspace = true
 thiserror.workspace = true
 
-[dev-dependencies]
-reqwest.workspace = true
-
 [lints]
 workspace = true

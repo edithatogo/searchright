@@ -13,8 +13,8 @@
 use std::collections::{HashSet, VecDeque};
 
 use searchright_contracts::{
-    ACCESS_DECISION_SCHEMA_VERSION, AccessDecision, AccessRequest, AccessScope, PrincipalKind,
-    TenantPolicy, Validate,
+    ACCESS_DECISION_SCHEMA_VERSION, ACCESS_REQUEST_SCHEMA_VERSION, AccessDecision, AccessRequest,
+    AccessScope, PrincipalKind, TenantPolicy, Validate,
 };
 
 const DEFAULT_REPLAY_LEDGER_ENTRIES: usize = 4096;
@@ -63,6 +63,34 @@ impl ReplayLedger {
 impl Default for ReplayLedger {
     fn default() -> Self {
         Self::with_capacity(DEFAULT_REPLAY_LEDGER_ENTRIES)
+    }
+}
+
+/// Construct the only request shape admitted by the authenticated read-only MCP adapter.
+///
+/// Keeping these authority flags inside the access-policy boundary prevents a transport
+/// adapter from silently acquiring write or final-decision authority.
+#[must_use]
+pub fn authenticated_read_request(
+    request_id: String,
+    principal_id: String,
+    principal_kind: PrincipalKind,
+    tenant_id: String,
+    scopes: Vec<AccessScope>,
+    region: String,
+) -> AccessRequest {
+    AccessRequest {
+        schema_version: ACCESS_REQUEST_SCHEMA_VERSION.to_owned(),
+        request_id,
+        principal_id,
+        principal_kind,
+        tenant_id,
+        scopes,
+        region,
+        authenticated: true,
+        external_write: false,
+        final_eligibility_decision: false,
+        human_approval: false,
     }
 }
 
