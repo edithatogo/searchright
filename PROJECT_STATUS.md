@@ -82,8 +82,8 @@ validity, production security, usability or operational recovery.
   unclaimed.
 - Shared Rust facade and CLI operation hierarchy.
 - Local stdio MCP server targeting MCP 2026-07-28 with 31 tools, structured
-  content, root-shape output schemas and explicit read-only/non-destructive
-  effect annotations.
+  content, root-shape output schemas, explicit read-only/non-destructive effect
+  annotations and pinned 2026-07-28 plus 2025-11-25 stdio transcripts.
 - Default-deny external writes, human-only final screening authority, receipt
   redaction, package publication gates and release/maturity blockers.
 - Prepared CiteWeft and Sourceright integration passports, consumer contracts,
@@ -121,7 +121,6 @@ evidence debt, not a quality score.
 ### MCP and hosted access
 
 - Field-complete MCP output schemas and independent live-client validation.
-- Pinned current and MCP 2025-11-25 compatibility transcripts.
 - Resources, prompts, tasks, MRTR, pagination, subscriptions and comprehensive
   cancellation behavior.
 - Authenticated Streamable HTTP with verified issuer, principal, tenant,
@@ -159,8 +158,8 @@ restore-proven, independently evaluated, published or registry-accepted.
 
 ## Next sequence
 
-1. Complete Track 10 field-complete MCP schemas and current/previous-client
-   compatibility evidence.
+1. Complete Track 10 field-complete MCP schemas and independent
+   current/previous live-client validation.
 2. Implement Track 24 resources, prompts, tasks, MRTR, pagination and
    cancellation in bounded single-track slices.
 3. Implement and adversarially test Track 34 authenticated Streamable HTTP.

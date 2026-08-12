@@ -1,51 +1,99 @@
 # MCP compatibility
 
 Searchright's local standard-I/O server targets Model Context Protocol revision
-`2026-07-28` through the official Rust SDK `rmcp` 3.1.2.
+`2026-07-28` through the official Rust SDK `rmcp` 3.1.2, with an explicit
+compatibility transcript for the previous `2025-11-25` protocol era.
 
 ## Protocol profile
 
-- Every modern request carries `io.modelcontextprotocol/protocolVersion`,
+- Current-era clients use the `server/discover` handshake. Every modern request
+  carries `io.modelcontextprotocol/protocolVersion`,
   `io.modelcontextprotocol/clientInfo` and
   `io.modelcontextprotocol/clientCapabilities` in `params._meta`.
-- `server/discover` replaces the retired `initialize` / `initialized`
-  handshake for the 2026 protocol era.
+- Previous-era clients use the retired `initialize` handshake followed by
+  `notifications/initialized`. That transcript requests `2025-11-25` and checks
+  the negotiated protocol version before listing or invoking tools.
 - Tool discovery is deterministic and each tool has an object input schema.
 - Every tool advertises a JSON Schema 2020-12 `outputSchema` with the correct
-  root shape (`object` or `array`). Tool calls return `resultType: complete`,
-  matching structured content, and backwards-compatible text content. Rendered
-  Mermaid and diagnostic documents retain their human-readable text block while
-  also returning a structured `{format, document}` object.
-- Every current stdio tool advertises `readOnlyHint: true`,
-  `destructiveHint: false`, `idempotentHint: true` and `openWorldHint: false`.
-  These are client hints, not an authorisation decision; the shared Searchright
-  facade remains the enforcement boundary.
-- Tool-originated failures use `isError: true`; protocol errors are reserved
-  for malformed or unsupported MCP requests.
+  root shape (`object` or `array`). Tool calls return matching structured
+  content and backwards-compatible text content. Current-era tool calls also
+  return `resultType: complete`. Rendered Mermaid and diagnostic documents
+  retain their human-readable text block while also returning a structured
+  `{format, document}` object.
+- Every stdio tool advertises `readOnlyHint: true`, `destructiveHint: false`,
+  `idempotentHint: true` and `openWorldHint: false`. These are client hints,
+  not an authorisation decision; the shared Searchright facade remains the
+  enforcement boundary.
+- Tool-originated failures use `isError: true`; protocol errors are reserved for
+  malformed or unsupported MCP requests.
+- Facade rejections are deliberately redacted to the fixed text
+  `operation_rejected: operation rejected by the shared Searchright facade`.
+  User-controlled identifiers, endpoints, paths and provider diagnostics are not
+  reflected across the protocol boundary.
 - The local server exposes no session identifier and keeps application state in
   explicit Searchright contracts rather than hidden transport sessions.
 
 The server does not adopt deprecated Roots, Sampling or Logging features.
-Resources, prompts, multi-round-trip input requests, subscriptions, Tasks, and
-authenticated Streamable HTTP are separate roadmap capabilities and are not
-claimed by the local stdio profile.
+Resources, prompts, multi-round-trip input requests, subscriptions, Tasks,
+pagination, cancellation and authenticated Streamable HTTP are separate roadmap
+capabilities and are not claimed by the local stdio profile.
 
-The advertised output schemas currently enforce the JSON root shape rather
-than every domain field. Searchright's versioned JSON contracts remain the
-semantic validation layer. Per-tool field-complete MCP output schemas and live
-validation in current and compatibility clients remain explicit Track 10 gates.
+The advertised output schemas currently enforce only the JSON root shape. They
+still declare no per-field `properties`; field-complete MCP output schemas are
+in progress and are not yet landed. The smoke harness validates invoked tools'
+`structuredContent` against the advertised `outputSchema`, but that currently
+proves only the root shape for those responses. The harness has a
+`--strict-schemas` flag that currently fails for all 31 tools because their
+advertised output schemas remain trivial; that flag is the future gate for
+proving field-complete schema advertisement.
 
 ## Verification
 
-Run:
+Build the server first, then reproduce the pinned current-era transcript with:
 
 ```text
-cargo build -p searchright-mcp --locked
-python scripts/mcp_smoke.py target/debug/searchright-mcp
+python scripts/mcp_smoke.py --receipt verification/receipts/mcp-2026-07-28-stdio.json target/debug/searchright-mcp
 ```
 
-The transcript performs stateless discovery, lists all contracted tools with
-per-request metadata, and invokes a read-only tool to verify a complete
-structured result. This is a Searchright compatibility smoke test, not a claim
-that every optional MCP feature or remote transport conformance scenario is
-implemented.
+Reproduce the pinned previous-era transcript with:
+
+```text
+python scripts/mcp_smoke.py --protocol-version 2025-11-25 --receipt verification/receipts/mcp-2025-11-25-stdio.json target/debug/searchright-mcp
+```
+
+The current `2026-07-28` transcript asserts:
+
+- `server/discover` handshake support;
+- interface-catalogue parity for all 31 tools;
+- deterministic tool ordering;
+- input and output schema advertisement;
+- governed read-only/non-destructive annotations;
+- `structuredContent` validation against the advertised `outputSchema` for each
+  invoked tool;
+- governed error redaction and JSON-RPC protocol error shape;
+- `resultType: complete`; and
+- `ttlMs` plus `cacheScope` cache metadata.
+
+The previous `2025-11-25` transcript asserts:
+
+- `initialize` plus `notifications/initialized` handshake support;
+- interface-catalogue parity for all 31 tools;
+- deterministic tool ordering;
+- input and output schema advertisement;
+- governed read-only/non-destructive annotations;
+- `structuredContent` validation against the advertised `outputSchema` for each
+  invoked tool;
+- governed error redaction; and
+- JSON-RPC protocol error shape.
+
+`resultType`, `ttlMs` and `cacheScope` are intentionally current-era-only
+assertions. They are `2026-07-28` protocol fields and were not part of the
+`2025-11-25` response model, so the compatibility transcript must not require
+or infer them for previous-era responses.
+
+These transcripts invoke only tools with no required arguments: `list_providers`
+and `workflow`. Tools with required arguments are listed, ordered and
+schema-advertisement-checked, but they are not called by this harness. The smoke
+receipts are therefore Searchright compatibility smoke evidence, not a claim
+that every tool path, optional MCP feature or remote transport conformance
+scenario is implemented.

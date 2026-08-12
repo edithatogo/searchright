@@ -17,6 +17,7 @@ use searchright_dedup::{DedupConfig, DedupResult, Deduplicator};
 use searchright_interchange::ImportResult;
 use searchright_provenance::ProvenanceBundle;
 use searchright_validation::SearchValidationSummary;
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 /// Stateless product facade. All durable or network effects remain explicit in component APIs.
@@ -24,7 +25,7 @@ use serde::{Deserialize, Serialize};
 pub struct SearchrightEngine;
 
 /// Result of validating and methodologically assessing a review plan.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct PlanAssessment {
     /// Stable review identifier.
     pub review_id: String,
@@ -35,7 +36,7 @@ pub struct PlanAssessment {
 }
 
 /// Serialisable PRISMA rendering selected by a caller.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 #[serde(tag = "artifact_type", content = "artifact", rename_all = "snake_case")]
 pub enum PrismaArtifact {
     /// Validated canonical flow.
@@ -58,7 +59,7 @@ pub enum PrismaOutput {
 }
 
 /// Compact study-graph assessment.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct StudyGraphAssessment {
     /// Number of reports.
     pub reports: usize,
@@ -73,7 +74,7 @@ pub struct StudyGraphAssessment {
 }
 
 /// Complete record-interchange operation result.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct InterchangeExport {
     /// Serialised output.
     pub document: String,

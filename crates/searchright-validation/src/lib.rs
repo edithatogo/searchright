@@ -2,13 +2,14 @@
 
 #![forbid(unsafe_code)]
 
+use schemars::JsonSchema;
 use searchright_contracts::{
     FindingSeverity, SearchValidationReport, TranslationLossAssessment, Validate,
 };
 use serde::{Deserialize, Serialize};
 
 /// Calculated seed-set recall and counts.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, JsonSchema)]
 pub struct SeedRecall {
     /// Retrieved relevant seeds.
     pub retrieved: u64,
@@ -94,7 +95,7 @@ pub fn assess(report: &SearchValidationReport) -> Result<SearchValidationSummary
 }
 
 /// Summary of executable search-validation gates.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize, JsonSchema)]
 pub struct SearchValidationSummary {
     /// Whether all configured gates pass.
     pub ready: bool,

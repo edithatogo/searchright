@@ -1,6 +1,7 @@
 use std::collections::BTreeSet;
 
 use evidence_search_contracts::{AuditEvent, AuditEventDraft, ContractError, Validate};
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 
@@ -11,7 +12,7 @@ pub struct AuditLedger {
 }
 
 /// Result of verifying an audit chain.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct AuditVerification {
     /// Number of verified events.
     pub event_count: usize,
