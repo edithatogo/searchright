@@ -19,6 +19,7 @@
         "T05-A001",
         "T05-A002",
         "T05-A003",
+        "T05-A004",
         "T05-A005",
         "T06-A001",
         "T06-A002",
@@ -375,8 +376,7 @@
       "command": "python scripts/reduce_review_events.py --self-test",
       "compiler_required": false,
       "covered_assertions": [
-        "T05-A003",
-        "T05-A004"
+        "T05-A003"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -1099,6 +1099,21 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/check_coverage_policy.py"
+    },
+    {
+      "category": "search_method",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_research_object_handoff.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T05-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-RESEARCH-OBJECT-HANDOFF",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_research_object_handoff.py"
     },
     {
       "category": "repository_policy",

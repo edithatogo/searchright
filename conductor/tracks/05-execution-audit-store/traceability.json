@@ -2,152 +2,82 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "05",
   "title": "Execution, audit and local storage",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/05-execution-audit-store/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Compiler-verified local persistence and policy behavior. Power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
   "assertions": [
     {
       "assertion_id": "T05-A001",
       "statement": "Add canonical query+parameter hashing",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": [
-        "crates/evidence-search-core/src/provider.rs",
-        "crates/evidence-search-core/src/audit.rs"
-      ],
-      "implementation_symbols": [
-        "evidence_search_core::provider::cache_key",
-        "evidence_search_core::audit::canonical_json"
-      ],
-      "deterministic_tests": [
-        "python scripts/validate_repository.py"
-      ],
-      "evidence_receipts": [
-        "conductor/tracks/05-execution-audit-store/evidence.json"
-      ],
-      "open_gates": [
-        "Compile deterministic hashing tests."
-      ],
-      "permitted_claim": "Canonicalisation and request/runtime fingerprint source logic exists; compiler evidence is open."
+      "implementation_paths": ["crates/evidence-search-core/src/provider.rs", "crates/evidence-search-core/src/audit.rs"],
+      "implementation_symbols": ["evidence_search_core::canonical_record_digest", "evidence_search_core::audit::canonical_json"],
+      "deterministic_tests": ["python scripts/validate_repository.py"],
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
+      "open_gates": [],
+      "permitted_claim": "Canonical BLAKE3 request, record-sequence and audit hashing is compiler tested."
     },
     {
       "assertion_id": "T05-A002",
       "statement": "Persist records and receipts transactionally",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": [
-        "crates/searchright-store/src/lib.rs"
-      ],
-      "implementation_symbols": [
-        "searchright_store::FileReviewStore::append_event",
-        "searchright_store::FileReviewStore::write_snapshot_with_receipt"
-      ],
-      "deterministic_tests": [
-        "python scripts/validate_repository.py"
-      ],
-      "evidence_receipts": [
-        "conductor/tracks/05-execution-audit-store/evidence.json"
-      ],
-      "open_gates": [
-        "Compile store tests.",
-        "Run crash/restart and multi-process failure tests."
-      ],
-      "permitted_claim": "Single-writer append and replace-style snapshot source exists; transactional durability is not overclaimed."
+      "implementation_paths": ["crates/searchright-store/src/lib.rs"],
+      "implementation_symbols": ["searchright_store::ExecutionCommit", "searchright_store::FileReviewStore::append_execution_commit", "searchright_store::FileReviewStore::append_event", "searchright_store::FileReviewStore::write_snapshot_with_receipt"],
+      "deterministic_tests": ["python scripts/validate_repository.py"],
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
+      "open_gates": [],
+      "permitted_claim": "Records, a redacted source receipt and an audit event can be committed as one immutable file; events and snapshots use immutable absent-path commits. Independent projection of the execution event into the event ledger is not claimed atomic."
     },
     {
       "assertion_id": "T05-A003",
       "statement": "Add event schema registry and migration",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": [
-        "contracts/json-schema/audit-event.v1.schema.json",
-        "contracts/json-schema/review-state-snapshot.v1.schema.json",
-        "scripts/reduce_review_events.py"
-      ],
-      "implementation_symbols": [
-        "scripts/reduce_review_events.py::reduce_events"
-      ],
-      "deterministic_tests": [
-        "python scripts/reduce_review_events.py --self-test",
-        "python scripts/validate_repository.py"
-      ],
-      "evidence_receipts": [
-        "conductor/tracks/05-execution-audit-store/evidence.json"
-      ],
-      "open_gates": [
-        "Add versioned event-type registry and migration fixtures.",
-        "Verify BLAKE3 ledger before every reduction using the Rust verifier."
-      ],
-      "permitted_claim": "A deterministic derived-state reducer enforces human final authority and verified-head binding; a complete event migration registry is not yet implemented."
+      "implementation_paths": ["contracts/events/registry.json", "contracts/events/migrations/search-run-completed-v0-to-v1.json", "crates/searchright-contracts/src/audit_policy.rs", "scripts/reduce_review_events.py"],
+      "implementation_symbols": ["searchright_contracts::validate_registered_audit_event", "scripts/reduce_review_events.py::normalize_payload"],
+      "deterministic_tests": ["python scripts/reduce_review_events.py --self-test", "python scripts/validate_repository.py"],
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
+      "open_gates": [],
+      "permitted_claim": "Unknown event types, payload versions, unregistered keys, oversized payloads and sensitive keys fail closed; migration transforms a derived copy and never rewrites hash-linked bytes."
     },
     {
       "assertion_id": "T05-A004",
       "statement": "Add crash/restart/idempotency tests",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": [
-        "crates/searchright-store/src/lib.rs",
-        "scripts/reduce_review_events.py"
-      ],
-      "implementation_symbols": [],
-      "deterministic_tests": [
-        "python scripts/reduce_review_events.py --self-test"
-      ],
-      "evidence_receipts": [
-        "conductor/tracks/05-execution-audit-store/evidence.json"
-      ],
-      "open_gates": [
-        "Execute compiled crash, restart, duplicate and idempotency tests on supported filesystems."
-      ],
-      "permitted_claim": "Deterministic reducer failure cases exist; storage crash consistency is not proven."
+      "implementation_paths": ["crates/searchright-store/src/lib.rs"],
+      "implementation_symbols": ["searchright_store::FileReviewStore"],
+      "deterministic_tests": ["python scripts/validate_repository.py"],
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
+      "open_gates": ["Run the exact Track 05 head on hosted Linux, Windows and macOS before semantic archival."],
+      "permitted_claim": "Restart, orphan-pending, idempotency and real child-process locking are compiler tested locally; cross-platform hosted execution is pending."
     },
     {
       "assertion_id": "T05-A005",
       "statement": "Implement privacy/retention/export/delete policy",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": [
-        "crates/searchright-policy/src/lib.rs",
-        "contracts/json-schema/institutional-policy.v1.schema.json",
-        "contracts/json-schema/data-handling-decision.v1.schema.json"
-      ],
-      "implementation_symbols": [],
-      "deterministic_tests": [
-        "python scripts/validate_repository.py"
-      ],
-      "evidence_receipts": [
-        "conductor/tracks/05-execution-audit-store/evidence.json"
-      ],
-      "open_gates": [
-        "Compile policy tests and exercise retention/export/delete flows."
-      ],
-      "permitted_claim": "Privacy and retention contracts exist; production enforcement is not claimed."
+      "implementation_paths": ["crates/searchright-contracts/src/governance.rs", "crates/searchright-governance/src/lib.rs", "docs/data-lifecycle-policy.md"],
+      "implementation_symbols": ["searchright_governance::evaluate_lifecycle", "searchright_contracts::DataLifecycleRequest", "searchright_contracts::DataLifecycleDecision"],
+      "deterministic_tests": ["python scripts/validate_repository.py"],
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
+      "open_gates": [],
+      "permitted_claim": "Preview never authorizes effects; apply requires scoped approval; legal holds and audit deletion fail closed; tombstones and effect receipts are required. Secure erasure and backup propagation are not claimed."
     },
     {
       "assertion_id": "T05-A006",
       "statement": "Add RO-Crate and OSF artefact export plan",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": [
-        "scripts/review_bundle.py",
-        "contracts/json-schema/review-bundle-manifest.v1.schema.json",
-        "examples/review-bundle/example.srpack"
-      ],
-      "implementation_symbols": [
-        "scripts/review_bundle.py::pack_bundle",
-        "scripts/review_bundle.py::verify_bundle"
-      ],
-      "deterministic_tests": [
-        "python scripts/review_bundle.py self-test"
-      ],
-      "evidence_receipts": [
-        "conductor/tracks/05-execution-audit-store/evidence.json"
-      ],
-      "open_gates": [
-        "Add RO-Crate/OSF profile conformance and repository handoff fixtures."
-      ],
-      "permitted_claim": "A deterministic portable review bundle exists; automatic deposit and full RO-Crate conformance are not claimed."
+      "implementation_paths": ["contracts/json-schema/research-object-handoff-plan.v1.schema.json", "contracts/examples/research-object-handoff-plan.json", "scripts/check_research_object_handoff.py", "scripts/review_bundle.py"],
+      "implementation_symbols": ["scripts/check_research_object_handoff.py::validate", "scripts/review_bundle.py::pack", "scripts/review_bundle.py::verify"],
+      "deterministic_tests": ["python scripts/check_research_object_handoff.py", "python scripts/review_bundle.py self-test"],
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
+      "open_gates": [],
+      "permitted_claim": "A deterministic integrity bundle and dry-run handoff plan exist. Actual RO-Crate conformance, OSF acceptance and deposits remain Track 25 or external work."
     }
   ]
 }

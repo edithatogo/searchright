@@ -1,0 +1,63 @@
+{
+  "schema_version": "org.searchright.track-review-receipt.v1",
+  "track_id": "05",
+  "source_revision": "475c9db",
+  "observed_on": "2026-08-13",
+  "status": "passed_with_hosted_gate_pending",
+  "implementation_review": {
+    "panel": [
+      "store durability and multi-process reviewer",
+      "privacy lifecycle and event-registry reviewer",
+      "sealed adversarial review"
+    ],
+    "findings_addressed": [
+      "lock ownership race replaced by an atomic nonempty lock directory",
+      "torn JSONL append replaced by immutable ordered event segments",
+      "records, source receipt and audit event added as one immutable execution commit",
+      "mutable snapshot replacement replaced by immutable content-addressed versions",
+      "retention, export and delete preview/apply policy added with legal-hold and immutable-audit denial",
+      "audit payload registry, size cap, allowlists and sensitive-key denial enforced before persistence",
+      "bundle symlink traversal and decompression resource exhaustion fixed",
+      "RO-Crate and OSF scope narrowed to a dry-run handoff plan owned operationally by Track 25"
+    ],
+    "residual_limitations": [
+      "Windows std does not expose directory fsync; exact power-loss directory durability is not claimed",
+      "execution commits do not also project into the separate event-segment ledger atomically",
+      "RO-Crate conformance and OSF acceptance or deposit are not claimed"
+    ]
+  },
+  "checks": [
+    {
+      "command": "cargo test -p searchright-contracts -p searchright-governance -p searchright-store --locked --offline --quiet",
+      "status": "passed",
+      "observed": "17 contract tests, 13 governance tests and 12 store tests passed; the store suite includes a real child process"
+    },
+    {
+      "command": "cargo clippy -p searchright-contracts -p searchright-governance -p searchright-store --all-targets --all-features --locked --offline -- -D warnings",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/reduce_review_events.py --self-test",
+      "status": "passed",
+      "observed": "7 deterministic registry, migration, authority and minimisation tests"
+    },
+    {
+      "command": "python scripts/review_bundle.py self-test and python -m unittest tests.test_review_bundle_security",
+      "status": "passed_with_platform_skip",
+      "observed": "archive integrity and size-bound tests passed; local Windows lacked symlink-creation privilege, so hosted Unix remains the symlink-path execution gate"
+    },
+    {
+      "command": "python scripts/check_research_object_handoff.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/validate_repository.py",
+      "status": "passed",
+      "observed": "66 schemas and examples, zero errors"
+    }
+  ],
+  "open_gates": [
+    "Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve the successful PR check evidence before semantic archival."
+  ],
+  "claim_boundary": "Local compiler and sealed panel evidence supports source implementation. It does not establish power-loss durability on every filesystem, secure erasure from backups, external repository acceptance, or RO-Crate conformance."
+}

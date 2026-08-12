@@ -263,18 +263,24 @@
     },
     {
       "blockers": [
-        "Run multi-process durability tests on supported platforms and prove crash recovery beyond fail-closed partial-write detection.",
-        "Complete external review of retention and deletion semantics."
+        "Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
+        "Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival."
       ],
       "checks": [
         "python scripts/validate_repository.py",
-        "python scripts/reduce_review_events.py --self-test"
+        "python scripts/reduce_review_events.py --self-test",
+        "python scripts/review_bundle.py self-test",
+        "python scripts/check_research_object_handoff.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Compiler-verified local persistence and policy behavior. Hosted cross-platform execution remains the archival gate; power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
       "deliverables": [
         "crates/evidence-search-core/src/audit.rs",
         "crates/searchright-store/src/lib.rs",
+        "crates/searchright-governance/src/lib.rs",
+        "contracts/events/registry.json",
         "scripts/reduce_review_events.py",
+        "scripts/review_bundle.py",
+        "scripts/check_research_object_handoff.py",
         "contracts/json-schema/review-state-snapshot.v1.schema.json",
         "contracts/examples/review-state-snapshot.json",
         "contracts/examples/audit-event.json",
@@ -283,10 +289,10 @@
       "dependencies": [
         "03"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "compiler_verified",
       "external_approval_required": false,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Create replayable runs, content-addressed receipts, tamper-evident events and crash-conscious local state.",
       "requirements": [
         "SR-012",
@@ -295,11 +301,13 @@
         "SR-048"
       ],
       "runtime_evidence": [
-        "verification/receipts/track-05-store-review.json"
+        "verification/receipts/track-05-store-review.json",
+        "verification/receipts/track-05-local-review.json"
       ],
+      "phase_3_task_count": 2,
       "review_completed": true,
       "slug": "execution-audit-store",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Execution, audit and local storage",
       "track_id": "05"
     },

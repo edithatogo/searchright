@@ -3,14 +3,18 @@
 
 Parent phase key: `track-05-phase-1`
 Conductor plan: `conductor/tracks/05-execution-audit-store/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/evidence-search-core/src/audit.rs`
   - [x] Present source path: `crates/searchright-store/src/lib.rs`
+  - [x] Present source path: `crates/searchright-governance/src/lib.rs`
+  - [x] Present source path: `contracts/events/registry.json`
   - [x] Present source path: `scripts/reduce_review_events.py`
+  - [x] Present source path: `scripts/review_bundle.py`
+  - [x] Present source path: `scripts/check_research_object_handoff.py`
   - [x] Present source path: `contracts/json-schema/review-state-snapshot.v1.schema.json`
   - [x] Present source path: `contracts/examples/review-state-snapshot.json`
   - [x] Present source path: `contracts/examples/audit-event.json`
