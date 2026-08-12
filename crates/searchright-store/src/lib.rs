@@ -8,11 +8,16 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use evidence_search_core::{AuditLedger, AuditVerification, canonical_record_digest};
+use evidence_search_core::{
+    AuditLedger, AuditVerification, canonical_record_digest, verify_event_integrity,
+};
 use searchright_contracts::{
     AuditEvent, BibliographicRecord, SourceReceipt, Validate, validate_registered_audit_event,
 };
 use serde::{Deserialize, Serialize};
+
+mod lifecycle;
+pub use lifecycle::{LifecycleLockRecoveryReceipt, LifecycleStoreReceipt, ManagedObjectReceipt};
 
 /// Filesystem-backed review store.
 #[derive(Debug, Clone)]
@@ -59,6 +64,27 @@ pub struct AbandonedLockEvidence {
     pub evidence_reference: String,
 }
 
+/// Exact persisted owner identity presented to an abandoned-lock verifier.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct LockOwnerObservation {
+    /// Unpredictable writer instance token.
+    pub token: String,
+    /// Process identifier recorded by the writer.
+    pub pid: u32,
+    /// Per-acquisition process-instance identifier used to detect PID reuse.
+    pub process_instance_id: String,
+}
+
+/// Independent authority that can establish that an observed writer is no longer alive.
+pub trait AbandonedLockVerifier {
+    /// Verify liveness evidence for the exact persisted owner identity.
+    fn verify(
+        &self,
+        owner: &LockOwnerObservation,
+        evidence: &AbandonedLockEvidence,
+    ) -> Result<(), String>;
+}
+
 /// Receipt emitted after an exact-owner abandoned-lock recovery.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct LockRecoveryReceipt {
@@ -66,6 +92,8 @@ pub struct LockRecoveryReceipt {
     pub recovered_token: String,
     /// Process identifier that had owned the lock.
     pub recovered_pid: u32,
+    /// Per-acquisition process identity that was independently found abandoned.
+    pub recovered_process_instance_id: String,
     /// Accountable liveness verifier.
     pub liveness_verified_by: String,
     /// Durable evidence reference supplied by the verifier.
@@ -120,6 +148,7 @@ impl FileReviewStore {
     pub fn recover_abandoned_lock(
         &self,
         evidence: &AbandonedLockEvidence,
+        verifier: &dyn AbandonedLockVerifier,
     ) -> Result<LockRecoveryReceipt, StoreError> {
         if evidence.expected_token.trim().is_empty()
             || evidence.liveness_verified_by.trim().is_empty()
@@ -130,16 +159,24 @@ impl FileReviewStore {
         let lock = self.root.join(".write.lock");
         let owner_path = lock.join("owner");
         let owner = fs::read_to_string(&owner_path)?;
-        let (token, pid) = parse_lock_owner(&owner)?;
-        if token != evidence.expected_token || pid != evidence.expected_pid {
+        let observed = parse_lock_owner(&owner)?;
+        if observed.token != evidence.expected_token || observed.pid != evidence.expected_pid {
+            return Err(StoreError::LockOwnerMismatch);
+        }
+        verifier
+            .verify(&observed, evidence)
+            .map_err(StoreError::LockRecoveryNotVerified)?;
+        // Re-read immediately before removal so recovery cannot act on a replaced owner record.
+        if parse_lock_owner(&fs::read_to_string(&owner_path)?)? != observed {
             return Err(StoreError::LockOwnerMismatch);
         }
         fs::remove_file(&owner_path)?;
         fs::remove_dir(&lock)?;
         sync_directory(Some(&self.root))?;
         Ok(LockRecoveryReceipt {
-            recovered_token: token,
-            recovered_pid: pid,
+            recovered_token: observed.token,
+            recovered_pid: observed.pid,
+            recovered_process_instance_id: observed.process_instance_id,
             liveness_verified_by: evidence.liveness_verified_by.clone(),
             evidence_reference: evidence.evidence_reference.clone(),
         })
@@ -370,13 +407,13 @@ impl FileReviewStore {
                 StoreError::Io(source)
             }
         })?;
-        let token = format!(
-            "token={} pid={} operation={operation}\n",
-            uuid::Uuid::now_v7(),
+        let token = uuid::Uuid::now_v7();
+        let owner = format!(
+            "token={token} pid={} process_instance_id={token} operation={operation}\n",
             std::process::id()
         );
         let mut file = File::create(path.join("owner"))?;
-        file.write_all(token.as_bytes())?;
+        file.write_all(owner.as_bytes())?;
         file.sync_all()?;
         Ok(ReviewLock { path })
     }
@@ -411,6 +448,9 @@ pub enum StoreError {
     /// Abandoned-lock recovery evidence was incomplete.
     #[error("abandoned-lock recovery requires exact owner and liveness evidence")]
     InvalidLockRecoveryEvidence,
+    /// Independent liveness verification denied the recovery.
+    #[error("abandoned-lock recovery was not independently verified: {0}")]
+    LockRecoveryNotVerified(String),
     /// The observed lock owner changed or did not match the recovery request.
     #[error("abandoned-lock recovery owner did not match the current lock")]
     LockOwnerMismatch,
@@ -501,6 +541,8 @@ fn validate_execution_commit(commit: &ExecutionCommit) -> Result<(), StoreError>
         .audit_event
         .validate()
         .map_err(|error| StoreError::InvalidExecutionCommit(error.to_string()))?;
+    verify_event_integrity(&commit.audit_event)
+        .map_err(|error| StoreError::InvalidExecutionCommit(error.to_string()))?;
     validate_registered_audit_event(&commit.audit_event)
         .map_err(|error| StoreError::InvalidExecutionCommit(error.to_string()))?;
     if commit.audit_event.review_id != commit.receipt.review_id {
@@ -527,6 +569,14 @@ fn validate_execution_commit(commit: &ExecutionCommit) -> Result<(), StoreError>
             .get("record_count")
             .and_then(serde_json::Value::as_u64)
             != u64::try_from(commit.records.len()).ok()
+        || commit
+            .audit_event
+            .payload
+            .get("run_id")
+            .and_then(serde_json::Value::as_str)
+            != Some(commit.receipt.run_id.as_str())
+        || commit.receipt.records_retrieved
+            != u64::try_from(commit.records.len()).unwrap_or(u64::MAX)
     {
         return Err(StoreError::InvalidExecutionCommit(
             "execution_committed audit payload does not bind the commit, receipt and records"
@@ -567,18 +617,29 @@ fn validate_storage_identifier(value: &str) -> Result<(), StoreError> {
     }
 }
 
-fn parse_lock_owner(owner: &str) -> Result<(String, u32), StoreError> {
+fn parse_lock_owner(owner: &str) -> Result<LockOwnerObservation, StoreError> {
     let mut token = None;
     let mut pid = None;
+    let mut process_instance_id = None;
     for part in owner.split_whitespace() {
         if let Some(value) = part.strip_prefix("token=") {
             token = Some(value.to_owned());
         } else if let Some(value) = part.strip_prefix("pid=") {
             pid = value.parse::<u32>().ok();
+        } else if let Some(value) = part.strip_prefix("process_instance_id=") {
+            process_instance_id = Some(value.to_owned());
         }
     }
-    match (token, pid) {
-        (Some(token), Some(pid)) if !token.is_empty() => Ok((token, pid)),
+    match (token, pid, process_instance_id) {
+        (Some(token), Some(pid), Some(process_instance_id))
+            if !token.is_empty() && !process_instance_id.is_empty() =>
+        {
+            Ok(LockOwnerObservation {
+                token,
+                pid,
+                process_instance_id,
+            })
+        }
         _ => Err(StoreError::MalformedLockOwner),
     }
 }
@@ -630,6 +691,36 @@ mod tests {
     use serde_json::json;
 
     use super::*;
+
+    struct AcceptAbandonedLock;
+
+    impl AbandonedLockVerifier for AcceptAbandonedLock {
+        fn verify(
+            &self,
+            owner: &LockOwnerObservation,
+            evidence: &AbandonedLockEvidence,
+        ) -> Result<(), String> {
+            if owner.process_instance_id == "instance-stale"
+                && evidence.evidence_reference == "incident-1"
+            {
+                Ok(())
+            } else {
+                Err("liveness evidence does not cover this process instance".to_owned())
+            }
+        }
+    }
+
+    struct RejectActiveLock;
+
+    impl AbandonedLockVerifier for RejectActiveLock {
+        fn verify(
+            &self,
+            _owner: &LockOwnerObservation,
+            _evidence: &AbandonedLockEvidence,
+        ) -> Result<(), String> {
+            Err("writer is still active".to_owned())
+        }
+    }
 
     fn test_directory(label: &str) -> PathBuf {
         std::env::temp_dir().join(format!("searchright-{label}-{}", uuid::Uuid::now_v7()))
@@ -968,7 +1059,7 @@ mod tests {
         fs::create_dir(directory.join(".write.lock"))?;
         fs::write(
             directory.join(".write.lock").join("owner"),
-            "token=stale pid=424242 operation=interrupted\n",
+            "token=stale pid=424242 process_instance_id=instance-stale operation=interrupted\n",
         )?;
         drop(store);
 
@@ -978,22 +1069,32 @@ mod tests {
             Err(StoreError::WriterLocked)
         ));
         assert!(matches!(
-            reopened.recover_abandoned_lock(&AbandonedLockEvidence {
-                expected_token: "wrong".to_owned(),
-                expected_pid: 424_242,
-                liveness_verified_by: "operator-1".to_owned(),
-                evidence_reference: "incident-1".to_owned(),
-            }),
+            reopened.recover_abandoned_lock(
+                &AbandonedLockEvidence {
+                    expected_token: "wrong".to_owned(),
+                    expected_pid: 424_242,
+                    liveness_verified_by: "operator-1".to_owned(),
+                    evidence_reference: "incident-1".to_owned(),
+                },
+                &AcceptAbandonedLock,
+            ),
             Err(StoreError::LockOwnerMismatch)
         ));
-        let receipt = reopened.recover_abandoned_lock(&AbandonedLockEvidence {
+        let evidence = AbandonedLockEvidence {
             expected_token: "stale".to_owned(),
             expected_pid: 424_242,
             liveness_verified_by: "operator-1".to_owned(),
             evidence_reference: "incident-1".to_owned(),
-        })?;
+        };
+        assert!(matches!(
+            reopened.recover_abandoned_lock(&evidence, &RejectActiveLock),
+            Err(StoreError::LockRecoveryNotVerified(_))
+        ));
+        assert!(directory.join(".write.lock").exists());
+        let receipt = reopened.recover_abandoned_lock(&evidence, &AcceptAbandonedLock)?;
         assert_eq!(receipt.recovered_token, "stale");
         assert_eq!(receipt.recovered_pid, 424_242);
+        assert_eq!(receipt.recovered_process_instance_id, "instance-stale");
         assert!(reopened.write_snapshot("records", &json!({"a": 1})).is_ok());
         let _cleanup = fs::remove_dir_all(directory);
         Ok(())
@@ -1045,6 +1146,177 @@ mod tests {
         fs::write(directory.join("child.release"), b"release")?;
         assert!(child.wait()?.success());
         assert!(store.write_snapshot("records", &json!({"a": 1})).is_ok());
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
+    }
+
+    fn execution_commit(commit_id: &str, receipt_id: &str, run_id: &str) -> ExecutionCommit {
+        let records = vec![BibliographicRecord {
+            schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+            record_id: "record-1".to_owned(),
+            source_receipt_id: receipt_id.to_owned(),
+            native_id: "native-1".to_owned(),
+            kind: searchright_contracts::RecordKind::JournalArticle,
+            identifiers: searchright_contracts::RecordIdentifiers::default(),
+            title: "Example record".to_owned(),
+            abstract_text: None,
+            authors: Vec::new(),
+            container_title: None,
+            publication_year: Some(2026),
+            publication_date: None,
+            languages: Vec::new(),
+            subjects: Vec::new(),
+            urls: Vec::new(),
+            provider_metadata: serde_json::Value::Null,
+        }];
+        let result_digest = canonical_record_digest(&records).unwrap_or_else(|_| unreachable!());
+        let receipt = SourceReceipt {
+            schema_version: searchright_contracts::SOURCE_RECEIPT_SCHEMA_VERSION.to_owned(),
+            receipt_id: receipt_id.to_owned(),
+            review_id: "review-1".to_owned(),
+            run_id: run_id.to_owned(),
+            provider_id: "fixture".to_owned(),
+            source_label: "Fixture".to_owned(),
+            strategy_id: "strategy-1".to_owned(),
+            query_hash: "query-hash".to_owned(),
+            executed_at: "2026-08-13T00:00:00Z".to_owned(),
+            records_retrieved: 1,
+            pages_retrieved: 1,
+            execution_mode: "fixture".to_owned(),
+            endpoint: None,
+            policy: searchright_contracts::ExecutionPolicy {
+                live_enabled: false,
+                max_records: 10,
+                max_pages: 1,
+                timeout_seconds: 10,
+                total_timeout_seconds: Some(10),
+                max_retries: 0,
+                min_interval_ms: 0,
+                retry_base_delay_ms: None,
+                retry_max_delay_ms: None,
+                max_response_bytes: Some(1024),
+                replay_enabled: true,
+                cache_write_enabled: false,
+            },
+            provider_version: "1".to_owned(),
+            compiler_version: "1".to_owned(),
+            result_digest,
+            cache_hits: 0,
+            cache_writes: 0,
+            warnings: Vec::new(),
+        };
+        let mut ledger = AuditLedger::new();
+        let audit_event = ledger
+            .append(AuditEventDraft {
+                schema_version: searchright_contracts::AUDIT_EVENT_SCHEMA_VERSION.to_owned(),
+                event_id: format!("execution-{commit_id}"),
+                review_id: receipt.review_id.clone(),
+                event_type: "execution_committed".to_owned(),
+                occurred_at: "2026-08-13T00:00:01Z".to_owned(),
+                actor: Actor {
+                    actor_id: "runtime".to_owned(),
+                    actor_type: "service".to_owned(),
+                    provenance: None,
+                },
+                payload: json!({
+                    "_schema_version": 1,
+                    "commit_id": commit_id,
+                    "receipt_id": receipt_id,
+                    "record_count": records.len(),
+                    "run_id": run_id,
+                }),
+            })
+            .cloned()
+            .unwrap_or_else(|_| unreachable!());
+        ExecutionCommit {
+            commit_id: commit_id.to_owned(),
+            receipt,
+            records,
+            audit_event,
+        }
+    }
+
+    #[test]
+    fn execution_commit_is_idempotent_and_survives_restart()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let directory = test_directory("execution-commit-restart-test");
+        let commit = execution_commit("commit-1", "receipt-1", "run-1");
+        let store = FileReviewStore::open(&directory)?;
+        let first = store.append_execution_commit(&commit)?;
+        let retry = store.append_execution_commit(&commit)?;
+        assert_eq!(first, retry);
+        drop(store);
+
+        let reopened = FileReviewStore::open(&directory)?;
+        assert_eq!(reopened.append_execution_commit(&commit)?, first);
+        let persisted: ExecutionCommit = serde_json::from_slice(&fs::read(directory.join(first))?)?;
+        assert_eq!(persisted, commit);
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
+    }
+
+    #[test]
+    fn execution_commit_conflict_tamper_and_binding_fail_closed()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let directory = test_directory("execution-commit-validation-test");
+        let store = FileReviewStore::open(&directory)?;
+        let commit = execution_commit("commit-1", "receipt-1", "run-1");
+        store.append_execution_commit(&commit)?;
+
+        let conflict = execution_commit("commit-1", "receipt-2", "run-2");
+        assert!(matches!(
+            store.append_execution_commit(&conflict),
+            Err(StoreError::ConflictingCommitId(id)) if id == "commit-1"
+        ));
+
+        let mut tampered = execution_commit("commit-2", "receipt-2", "run-2");
+        if let Some(payload) = tampered.audit_event.payload.as_object_mut() {
+            payload.insert("record_count".to_owned(), json!(2));
+        }
+        assert!(matches!(
+            store.append_execution_commit(&tampered),
+            Err(StoreError::InvalidExecutionCommit(_))
+        ));
+
+        let mut wrong_run = execution_commit("commit-3", "receipt-3", "run-3");
+        wrong_run.receipt.run_id = "other-run".to_owned();
+        assert!(matches!(
+            store.append_execution_commit(&wrong_run),
+            Err(StoreError::InvalidExecutionCommit(_))
+        ));
+
+        let mut wrong_count = execution_commit("commit-4", "receipt-4", "run-4");
+        wrong_count.receipt.records_retrieved = 2;
+        assert!(matches!(
+            store.append_execution_commit(&wrong_count),
+            Err(StoreError::InvalidExecutionCommit(_))
+        ));
+
+        let mut wrong_commit = execution_commit("commit-5", "receipt-5", "run-5");
+        wrong_commit.commit_id = "other-commit".to_owned();
+        assert!(matches!(
+            store.append_execution_commit(&wrong_commit),
+            Err(StoreError::InvalidExecutionCommit(_))
+        ));
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
+    }
+
+    #[test]
+    fn orphaned_pending_execution_commit_is_ignored() -> Result<(), Box<dyn std::error::Error>> {
+        let directory = test_directory("execution-commit-orphan-test");
+        let store = FileReviewStore::open(&directory)?;
+        fs::write(
+            directory.join("commits").join(".interrupted.pending"),
+            b"partial",
+        )?;
+        let commit = execution_commit("commit-1", "receipt-1", "run-1");
+        let relative = store.append_execution_commit(&commit)?;
+        assert!(directory.join(relative).is_file());
+        assert_eq!(
+            fs::read(directory.join("commits").join(".interrupted.pending"))?,
+            b"partial"
+        );
         let _cleanup = fs::remove_dir_all(directory);
         Ok(())
     }

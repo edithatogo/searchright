@@ -82,8 +82,12 @@ impl AuditLedger {
         let mut event_ids = BTreeSet::new();
         let expected_review = self.events.first().map(|event| event.review_id.as_str());
         for (index, event) in self.events.iter().enumerate() {
-            event.validate()?;
-            validate_timestamp(&event.occurred_at)?;
+            if let Err(error) = verify_event_integrity(event) {
+                return Err(match error {
+                    AuditError::EventHashMismatch { .. } => AuditError::EventHashMismatch { index },
+                    other => other,
+                });
+            }
             if !event_ids.insert(event.event_id.as_str()) {
                 return Err(AuditError::DuplicateEventId(event.event_id.clone()));
             }
@@ -95,25 +99,11 @@ impl AuditLedger {
                     actual: event.review_id.clone(),
                 });
             }
-            validate_hash(&event.event_hash, "event_hash")?;
             if event.previous_hash != "GENESIS" {
                 validate_hash(&event.previous_hash, "previous_hash")?;
             }
             if event.previous_hash != expected_previous {
                 return Err(AuditError::PreviousHashMismatch { index });
-            }
-            let draft = AuditEventDraft {
-                schema_version: event.schema_version.clone(),
-                event_id: event.event_id.clone(),
-                review_id: event.review_id.clone(),
-                event_type: event.event_type.clone(),
-                occurred_at: event.occurred_at.clone(),
-                actor: event.actor.clone(),
-                payload: event.payload.clone(),
-            };
-            let calculated = hash_draft(&draft, &event.previous_hash)?;
-            if calculated != event.event_hash {
-                return Err(AuditError::EventHashMismatch { index });
             }
             expected_previous.clone_from(&event.event_hash);
         }
@@ -122,6 +112,33 @@ impl AuditLedger {
             head_hash: self.events.last().map(|event| event.event_hash.clone()),
         })
     }
+}
+
+/// Verify one audit event's contract, timestamp and canonical content hash.
+///
+/// This does not establish that the predecessor exists. Chain consumers must additionally
+/// verify ordering and predecessor linkage with [`AuditLedger::verify`].
+pub fn verify_event_integrity(event: &AuditEvent) -> Result<(), AuditError> {
+    event.validate()?;
+    validate_timestamp(&event.occurred_at)?;
+    validate_hash(&event.event_hash, "event_hash")?;
+    if event.previous_hash != "GENESIS" {
+        validate_hash(&event.previous_hash, "previous_hash")?;
+    }
+    let draft = AuditEventDraft {
+        schema_version: event.schema_version.clone(),
+        event_id: event.event_id.clone(),
+        review_id: event.review_id.clone(),
+        event_type: event.event_type.clone(),
+        occurred_at: event.occurred_at.clone(),
+        actor: event.actor.clone(),
+        payload: event.payload.clone(),
+    };
+    let calculated = hash_draft(&draft, &event.previous_hash)?;
+    if calculated != event.event_hash {
+        return Err(AuditError::EventHashMismatch { index: 0 });
+    }
+    Ok(())
 }
 
 /// Audit-chain error.
@@ -272,6 +289,32 @@ mod tests {
             tampered.verify(),
             Err(AuditError::EventHashMismatch { index: 0 })
         ));
+    }
+
+    #[test]
+    fn standalone_event_integrity_does_not_claim_predecessor_availability() {
+        let mut ledger = AuditLedger::new();
+        assert!(ledger.append(draft("event-1")).is_ok());
+        assert!(ledger.append(draft("event-2")).is_ok());
+        let second = ledger.events().get(1).cloned();
+        assert!(
+            second
+                .as_ref()
+                .is_some_and(|event| event.previous_hash != "GENESIS")
+        );
+        assert!(
+            second
+                .as_ref()
+                .is_some_and(|event| verify_event_integrity(event).is_ok())
+        );
+
+        if let Some(mut tampered) = second {
+            tampered.payload = json!({"tampered": true});
+            assert!(matches!(
+                verify_event_integrity(&tampered),
+                Err(AuditError::EventHashMismatch { index: 0 })
+            ));
+        }
     }
 
     #[test]
