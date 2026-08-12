@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.
+- [ ] Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.
 
 ## Completion and evidence contract
 

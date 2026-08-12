@@ -1610,16 +1610,17 @@
     },
     {
       "blockers": [
-        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
-        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
+        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
         "Complete independent security/privacy review before any hosted or multi-tenant claim."
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_default_deny.py",
-        "python scripts/check_rust_source_structure.py"
+        "python scripts/check_rust_source_structure.py",
+        "python scripts/remote_mcp_conformance.py"
       ],
-      "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "A feature-gated read-only loopback Streamable HTTP adapter is compiler- and fixture-tested. This is not evidence of a hosted, multi-replica, production-secure or independently approved service.",
       "deliverables": [
         "crates/searchright-access/src/lib.rs",
         "crates/searchright-contracts/src/access.rs",
@@ -1628,7 +1629,10 @@
         "contracts/examples/access-decision.json",
         "docs/security/authenticated-remote-mcp.md",
         "contracts/openapi/searchright-http.openapi.yaml",
-        "docs/security/threat-model.md"
+        "docs/security/threat-model.md",
+        "crates/searchright-mcp/src/remote.rs",
+        "crates/searchright-mcp/src/bin/searchright-mcp-http.rs",
+        "scripts/remote_mcp_conformance.py"
       ],
       "dependencies": [
         "10",
@@ -1639,7 +1643,15 @@
       "evidence_level": "source_verified",
       "external_approval_required": true,
       "horizon": "mature",
-      "implementation_state": "scaffolded",
+      "implementation_state": "partially_implemented",
+      "phase_3_task_count": 3,
+      "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/remote-mcp-auth-conformance.json",
+        "verification/receipts/remote-mcp-tenancy-adversarial.json"
+      ],
+      "source_verified_on": "2026-08-13",
+      "updated": "2026-08-13",
       "outcome": "Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment.",
       "requirements": [
         "SR-047",
@@ -1649,7 +1661,7 @@
         "SR-085"
       ],
       "slug": "authenticated-remote-mcp",
-      "status": "scaffolded",
+      "status": "integration_prepared",
       "title": "Authenticated remote MCP, tenancy and data residency",
       "track_id": "34"
     },

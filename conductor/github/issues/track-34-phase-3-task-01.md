@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.
+- [ ] Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.
 
 ## Completion and evidence contract
 

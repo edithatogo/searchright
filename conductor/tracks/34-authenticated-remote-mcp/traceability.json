@@ -2,103 +2,93 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "34",
   "title": "Authenticated remote MCP, tenancy and data residency",
-  "implementation_state": "scaffolded",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/34-authenticated-remote-mcp/spec.md#scope",
-  "claim_boundary": "Access-policy source code is not an authenticated, isolated or production-ready remote MCP service. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "A feature-gated read-only loopback Streamable HTTP adapter is compiler- and fixture-tested. This is not evidence of a hosted, multi-replica, production-secure or independently approved service.",
   "assertions": [
     {
       "assertion_id": "T34-A001",
       "statement": "Authenticated remote MCP deployment boundary",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-access/src/lib.rs",
-        "crates/searchright-contracts/src/access.rs",
-        "contracts/examples/tenant-policy.json",
-        "contracts/examples/access-request.json",
-        "contracts/examples/access-decision.json",
-        "docs/security/authenticated-remote-mcp.md",
-        "contracts/openapi/searchright-http.openapi.yaml",
-        "docs/security/threat-model.md"
+        "crates/searchright-mcp/src/remote.rs",
+        "crates/searchright-mcp/src/bin/searchright-mcp-http.rs",
+        "crates/searchright-mcp/Cargo.toml",
+        "docs/security/authenticated-remote-mcp.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_mcp::remote::RemoteRuntimeConfig",
+        "searchright_mcp::remote::run_from_environment",
+        "searchright_mcp::SearchrightServer::remote_http"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_default_deny.py",
-        "python scripts/check_rust_source_structure.py"
+        "python scripts/remote_mcp_conformance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
+        "verification/receipts/remote-mcp-auth-conformance.json"
       ],
       "open_gates": [
-        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
-        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
-        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+        "Exercise a real IdP and trusted TLS edge in an approved isolated deployment.",
+        "Rehearse deployment rollback and preserve exact configuration-bound evidence."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "A disabled-by-default, loopback-only authenticated read-only Streamable HTTP adapter is fixture-tested. Hosted availability or security is not claimed."
     },
     {
       "assertion_id": "T34-A002",
       "statement": "Default-deny scopes and human-only final decisions",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-access/src/lib.rs",
         "crates/searchright-contracts/src/access.rs",
-        "contracts/examples/tenant-policy.json",
-        "contracts/examples/access-request.json",
-        "contracts/examples/access-decision.json",
-        "docs/security/authenticated-remote-mcp.md",
-        "contracts/openapi/searchright-http.openapi.yaml",
-        "docs/security/threat-model.md"
+        "crates/searchright-mcp/src/remote.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_access::authorise",
+        "searchright_access::authorise_with_replay",
+        "searchright_mcp::remote::RemoteState::authorise"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_default_deny.py",
-        "python scripts/check_rust_source_structure.py"
+        "python scripts/remote_mcp_conformance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
+        "verification/receipts/remote-mcp-auth-conformance.json"
       ],
       "open_gates": [
-        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
-        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
-        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+        "Keep the remote tool surface read-only until a method-specific scope and cryptographically bound approval design is reviewed."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "The current remote tool surface is exhaustively classified read-only and requires review_read; state-changing remote authority is not available."
     },
     {
       "assertion_id": "T34-A003",
       "statement": "Tenant isolation, residency, rate and cancellation budgets",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
+        "crates/searchright-mcp/src/remote.rs",
         "crates/searchright-access/src/lib.rs",
-        "crates/searchright-contracts/src/access.rs",
-        "contracts/examples/tenant-policy.json",
-        "contracts/examples/access-request.json",
-        "contracts/examples/access-decision.json",
-        "docs/security/authenticated-remote-mcp.md",
-        "contracts/openapi/searchright-http.openapi.yaml",
         "docs/security/threat-model.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_mcp::remote::RemoteState::authorise",
+        "searchright_mcp::remote::RuntimePermit",
+        "searchright_mcp::remote::bounded_request",
+        "searchright_access::ReplayLedger"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_default_deny.py",
-        "python scripts/check_rust_source_structure.py"
+        "python scripts/remote_mcp_conformance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
+        "verification/receipts/remote-mcp-tenancy-adversarial.json"
       ],
       "open_gates": [
-        "Implement and compile the authenticated Streamable HTTP transport behind a separate feature/deployment boundary.",
-        "Run OAuth/OIDC, token rotation, tenant isolation, region, rate-limit, cancellation and abuse conformance tests.",
-        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+        "Prove shared atomic replay, rate and task budgets across multiple replicas.",
+        "Prove deployment, storage, replication and logging residency rather than token-claim region alone.",
+        "Complete independent security/privacy review and approved rollback rehearsal."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "In-process tenant, region, replay, rate, concurrency, timeout and redacted-audit controls are fixture-tested; multi-tenant deployment isolation is not claimed."
     }
   ]
 }

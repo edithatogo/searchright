@@ -16,6 +16,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `docs/security/authenticated-remote-mcp.md`
   - [x] Present source path: `contracts/openapi/searchright-http.openapi.yaml`
   - [x] Present source path: `docs/security/threat-model.md`
+  - [x] Present source path: `crates/searchright-mcp/src/remote.rs`
+  - [x] Present source path: `crates/searchright-mcp/src/bin/searchright-mcp-http.rs`
+  - [x] Present source path: `scripts/remote_mcp_conformance.py`
   - [x] Assertion ledger: `conductor/tracks/34-authenticated-remote-mcp/traceability.json`
 
 ## Completion and evidence contract
