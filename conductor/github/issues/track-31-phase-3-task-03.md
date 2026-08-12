@@ -3,11 +3,11 @@
 
 Parent phase key: `track-31-phase-3`
 Conductor plan: `conductor/tracks/31-github-control-plane/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete the independent Conductor review and semantic in-place archival after exact-main evidence passes.
+- [x] Execute the complete bootstrap and preserve exact-main repository, ruleset, issue, subissue and Project receipts.
 
 ## Completion and evidence contract
 

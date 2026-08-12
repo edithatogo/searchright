@@ -56,8 +56,8 @@
     },
     {
       "domain": "github_control_plane",
-      "state": "remote_issues_converged_project_fields_open",
-      "critical_blocker": true
+      "state": "credential_backed_exact_main_converged",
+      "critical_blocker": false
     },
     {
       "domain": "downstream_compatibility",

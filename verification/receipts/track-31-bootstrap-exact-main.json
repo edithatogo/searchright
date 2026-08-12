@@ -1,0 +1,33 @@
+{
+  "schema_version": "org.searchright.github-bootstrap-receipt-summary.v1",
+  "status": "passed",
+  "source_revision": "9950d73b6137bc93d002581cde4e9a87bbfc3d4a",
+  "source_tree": "014b849b9764322832b254ed75d5f75c99e2e862",
+  "mode": "apply",
+  "repository": "edithatogo/searchright",
+  "remote_action": "verified_and_pushed",
+  "environment_scoped_project_secret": "present",
+  "protected_branch_environments": [
+    "github-issue-write",
+    "github-project-write",
+    "release"
+  ],
+  "ruleset": {
+    "id": 20701733,
+    "name": "main-protection",
+    "action": "updated"
+  },
+  "issue_sync": {
+    "issues": 583,
+    "relationships": 582,
+    "task_state_apply": true
+  },
+  "project_sync": {
+    "project_number": 40,
+    "items": 583,
+    "fields": 26,
+    "views": 7
+  },
+  "delete_operations": 0,
+  "claim_boundary": "This compact receipt records the successful full bootstrap on clean exact merged main. It does not promote product, methodological or release maturity."
+}

@@ -14,7 +14,7 @@
     "30"
   ],
   "horizon": "mature",
-  "evidence_level": "source_verified",
+  "evidence_level": "live_proven",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/31-github-control-plane/evidence.json",
   "traceability_path": "conductor/tracks/31-github-control-plane/traceability.json",
@@ -42,5 +42,7 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-08-12"
 }
