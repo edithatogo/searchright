@@ -288,10 +288,15 @@ mod tests {
                 },
             )]),
         };
-        let localized =
-            localize(&[source.clone()], &catalog, MissingMessagePolicy::Reject).unwrap_or_default();
-        assert_eq!(localized.len(), 1);
-        let translated = &localized[0];
+        let localized = localize(
+            std::slice::from_ref(&source),
+            &catalog,
+            MissingMessagePolicy::Reject,
+        )
+        .unwrap_or_default();
+        let [translated] = localized.as_slice() else {
+            panic!("localizing one diagnostic must return exactly one diagnostic");
+        };
         assert_eq!(translated.code, source.code);
         assert_eq!(translated.severity, source.severity);
         assert_eq!(translated.blocking, source.blocking);
@@ -308,12 +313,16 @@ mod tests {
             messages: BTreeMap::new(),
         };
         assert!(matches!(
-            localize(&[source.clone()], &catalog, MissingMessagePolicy::Reject),
+            localize(
+                std::slice::from_ref(&source),
+                &catalog,
+                MissingMessagePolicy::Reject
+            ),
             Err(DiagnosticError::MissingMessage(code)) if code == source.code
         ));
         assert!(matches!(
             localize(
-                &[source.clone()],
+                std::slice::from_ref(&source),
                 &catalog,
                 MissingMessagePolicy::PreserveSource
             ),
