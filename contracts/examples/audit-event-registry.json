@@ -7,6 +7,14 @@
   "prohibited_payload_keys": ["credential", "password", "secret", "token", "full_text"],
   "event_types": [
     {
+      "event_type": "execution_committed",
+      "current_payload_version": 1,
+      "legacy_unversioned_payload_version": 1,
+      "allowed_payload_keys": ["_schema_version", "commit_id", "receipt_id", "record_count"],
+      "versions": [{"version": 1, "status": "current"}],
+      "migrations": []
+    },
+    {
       "event_type": "protocol_amended",
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,

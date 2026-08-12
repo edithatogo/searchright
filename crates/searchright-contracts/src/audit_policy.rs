@@ -49,6 +49,10 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
             ],
             &[0, 1],
         ),
+        "execution_committed" => (
+            &["_schema_version", "commit_id", "receipt_id", "record_count"],
+            &[1],
+        ),
         other => {
             return Err(ContractError::Invariant(format!(
                 "unregistered audit event type `{other}`"
@@ -73,6 +77,32 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
             "unsupported audit payload version {version} for {}",
             event.event_type
         )));
+    }
+    if event.event_type == "execution_committed" {
+        for key in ["commit_id", "receipt_id", "record_count"] {
+            if !payload.contains_key(key) {
+                return Err(ContractError::Invariant(format!(
+                    "audit payload key `{key}` is required"
+                )));
+            }
+        }
+    }
+    for (key, value) in payload {
+        if key == "_schema_version" {
+            continue;
+        }
+        let valid = if key == "record_count" {
+            value.as_u64().is_some()
+        } else {
+            value.as_str().is_some_and(|text| {
+                !text.trim().is_empty() && text.len() <= 512 && !text.chars().any(char::is_control)
+            })
+        };
+        if !valid {
+            return Err(ContractError::Invariant(format!(
+                "audit payload key `{key}` has an invalid type or value"
+            )));
+        }
     }
     Ok(())
 }
@@ -152,5 +182,176 @@ mod tests {
             ))
             .is_err()
         );
+    }
+
+    #[test]
+    fn every_registered_type_and_version_is_exercised() {
+        let cases = [
+            (
+                "protocol_amended",
+                json!({"_schema_version": 1, "amendment_id": "a"}),
+            ),
+            (
+                "review_plan_validated",
+                json!({"_schema_version": 1, "contract_version": "1", "plan_id": "p"}),
+            ),
+            (
+                "review_status_changed",
+                json!({"_schema_version": 1, "status": "active"}),
+            ),
+            (
+                "screening_decision_recorded",
+                json!({"_schema_version": 1, "decision": "include", "final_authority": "human", "record_id": "r", "reviewer_id": "u", "stage": "title"}),
+            ),
+            (
+                "search_run_completed",
+                json!({"_schema_version": 0, "provider": "fixture", "record_count": 0, "run_id": "run", "source_id": "source"}),
+            ),
+            (
+                "execution_committed",
+                json!({"_schema_version": 1, "commit_id": "c", "receipt_id": "receipt", "record_count": 0}),
+            ),
+        ];
+        for (kind, payload) in cases {
+            assert!(validate_registered_audit_event(&event(kind, payload)).is_ok());
+        }
+    }
+
+    #[test]
+    fn malformed_versions_sizes_and_prohibited_arrays_fail_closed() {
+        assert!(
+            validate_registered_audit_event(&event("review_plan_validated", json!([]))).is_err()
+        );
+        assert!(
+            validate_registered_audit_event(&event(
+                "review_plan_validated",
+                json!({"_schema_version": "one", "plan_id": "p"})
+            ))
+            .is_err()
+        );
+        assert!(
+            validate_registered_audit_event(&event(
+                "execution_committed",
+                json!({"commit_id": "c", "receipt_id": "r"})
+            ))
+            .is_err()
+        );
+        assert!(
+            validate_registered_audit_event(&event(
+                "execution_committed",
+                json!({"commit_id": "c", "receipt_id": "r", "record_count": "zero"})
+            ))
+            .is_err()
+        );
+        assert!(
+            validate_registered_audit_event(&event(
+                "review_plan_validated",
+                json!({"_schema_version": 2, "plan_id": "p"})
+            ))
+            .is_err()
+        );
+        assert!(
+            validate_registered_audit_event(&event(
+                "review_plan_validated",
+                json!({"plan_id": [ {"Password": "x"} ]})
+            ))
+            .is_err()
+        );
+        assert!(
+            validate_registered_audit_event(&event(
+                "review_plan_validated",
+                json!({"plan_id": "x".repeat(MAXIMUM_PAYLOAD_BYTES)})
+            ))
+            .is_err()
+        );
+    }
+
+    #[test]
+    fn compiled_registry_matches_canonical_json_registry() {
+        let registry: Value =
+            serde_json::from_str(include_str!("../../../contracts/events/registry.json"))
+                .unwrap_or(Value::Null);
+        let observed = registry
+            .get("event_types")
+            .and_then(Value::as_array)
+            .map(|events| {
+                events
+                    .iter()
+                    .filter_map(|entry| {
+                        Some((
+                            entry.get("event_type")?.as_str()?.to_owned(),
+                            entry
+                                .get("allowed_payload_keys")?
+                                .as_array()?
+                                .iter()
+                                .filter_map(Value::as_str)
+                                .map(ToOwned::to_owned)
+                                .collect::<BTreeSet<_>>(),
+                            entry
+                                .get("versions")?
+                                .as_array()?
+                                .iter()
+                                .filter_map(|version| version.get("version")?.as_u64())
+                                .collect::<BTreeSet<_>>(),
+                        ))
+                    })
+                    .collect::<BTreeSet<_>>()
+            })
+            .unwrap_or_default();
+        let expected = [
+            (
+                "execution_committed",
+                &["_schema_version", "commit_id", "receipt_id", "record_count"][..],
+                &[1][..],
+            ),
+            (
+                "protocol_amended",
+                &["_schema_version", "amendment_id"][..],
+                &[1][..],
+            ),
+            (
+                "review_plan_validated",
+                &["_schema_version", "contract_version", "plan_id"][..],
+                &[1][..],
+            ),
+            (
+                "review_status_changed",
+                &["_schema_version", "status"][..],
+                &[1][..],
+            ),
+            (
+                "screening_decision_recorded",
+                &[
+                    "_schema_version",
+                    "decision",
+                    "final_authority",
+                    "record_id",
+                    "reviewer_id",
+                    "stage",
+                ][..],
+                &[1][..],
+            ),
+            (
+                "search_run_completed",
+                &[
+                    "_schema_version",
+                    "provider",
+                    "record_count",
+                    "run_id",
+                    "source_id",
+                ][..],
+                &[0, 1][..],
+            ),
+        ]
+        .into_iter()
+        .map(|(kind, keys, versions)| {
+            (
+                kind.to_owned(),
+                keys.iter().map(|value| (*value).to_owned()).collect(),
+                versions.iter().copied().collect(),
+            )
+        })
+        .collect::<BTreeSet<_>>();
+        assert_eq!(observed, expected);
     }
 }
