@@ -945,7 +945,7 @@
         "conductor",
         "track:02",
         "horizon:foundation",
-        "evidence:source-verified"
+        "evidence:external-required"
       ],
       "status": "prepared_not_synced",
       "desired_state": "open",
@@ -959,7 +959,7 @@
         "Evidence level": "Source Verified",
         "Implementation state": "Partially Implemented",
         "MoSCoW": "Must",
-        "External gate": "No",
+        "External gate": "Yes",
         "Conductor key": "track-02",
         "Conductor path": "conductor/tracks/02-query-ast-dialects",
         "Track ID": "02"
@@ -989,7 +989,7 @@
         "Evidence level": "Source Verified",
         "Implementation state": "Partially Implemented",
         "MoSCoW": "Must",
-        "External gate": "No",
+        "External gate": "Yes",
         "Conductor key": "track-02-phase-1",
         "Conductor path": "conductor/tracks/02-query-ast-dialects/plan.md",
         "Track ID": "02",
@@ -1053,7 +1053,7 @@
         "Evidence level": "Source Verified",
         "Implementation state": "Partially Implemented",
         "MoSCoW": "Must",
-        "External gate": "No",
+        "External gate": "Yes",
         "Conductor key": "track-02-phase-2",
         "Conductor path": "conductor/tracks/02-query-ast-dialects/plan.md",
         "Track ID": "02",
@@ -1159,7 +1159,7 @@
     },
     {
       "key": "track-02-phase-3-task-01",
-      "title": "Track 02 / P3 / T01: Complete dialect-specific semantic parsers and full translation snapshot/property coverage",
+      "title": "Track 02 / P3 / T01: Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets",
       "kind": "task",
       "parent_key": "track-02-phase-3",
       "body_path": "conductor/github/issues/track-02-phase-3-task-01.md",
@@ -1192,7 +1192,7 @@
     },
     {
       "key": "track-02-phase-3-task-02",
-      "title": "Track 02 / P3 / T02: Define versioned named-filter records and validated filter packs",
+      "title": "Track 02 / P3 / T02: Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only",
       "kind": "task",
       "parent_key": "track-02-phase-3",
       "body_path": "conductor/github/issues/track-02-phase-3-task-02.md",
@@ -1225,7 +1225,7 @@
     },
     {
       "key": "track-02-phase-3-task-03",
-      "title": "Track 02 / P3 / T03: Expand the conformance corpus with independently reviewed source strategies",
+      "title": "Track 02 / P3 / T03: Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus",
       "kind": "task",
       "parent_key": "track-02-phase-3",
       "body_path": "conductor/github/issues/track-02-phase-3-task-03.md",
@@ -1280,7 +1280,7 @@
         "Evidence level": "Source Verified",
         "Implementation state": "Partially Implemented",
         "MoSCoW": "Must",
-        "External gate": "No",
+        "External gate": "Yes",
         "Conductor key": "track-02-phase-4",
         "Conductor path": "conductor/tracks/02-query-ast-dialects/plan.md",
         "Track ID": "02",

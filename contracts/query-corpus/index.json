@@ -1,13 +1,19 @@
 {
   "schema_version": "org.searchright.native-query-corpus.v1",
-  "claim_boundary": "Source-preserving lexical fixtures only; these examples do not prove full source-dialect semantic parsing or cross-database equivalence.",
+  "claim_boundary": "Project-authored, rights-clear fixtures for the explicitly declared syntax subsets only; these examples do not prove full source-dialect semantics, retrieval performance, or cross-database equivalence.",
+  "provenance": {
+    "origin": "Created from scratch by Searchright contributors for deterministic contract testing; no vendor help text or third-party strategy was copied.",
+    "rights_basis": "Original repository-authored test data distributed under the repository licence.",
+    "redistribution_decision": "approved_for_repository_distribution",
+    "external_methodological_review": "pending"
+  },
   "fixtures": [
-    {"id": "pubmed-basic", "dialect": "pub_med", "path": "contracts/query-corpus/pubmed.txt", "minimum_lines": 1},
-    {"id": "ovid-medline-lines", "dialect": "ovid_medline", "path": "contracts/query-corpus/ovid-medline.txt", "minimum_lines": 7},
-    {"id": "embase-sets", "dialect": "embase", "path": "contracts/query-corpus/embase.txt", "minimum_lines": 3},
-    {"id": "cinahl-sets", "dialect": "cinahl_ebsco", "path": "contracts/query-corpus/cinahl-ebsco.txt", "minimum_lines": 3},
-    {"id": "psycinfo-ovid-lines", "dialect": "psyc_info_ovid", "path": "contracts/query-corpus/psycinfo-ovid.txt", "minimum_lines": 5},
-    {"id": "scopus-basic", "dialect": "scopus", "path": "contracts/query-corpus/scopus.txt", "minimum_lines": 1},
-    {"id": "web-of-science-basic", "dialect": "web_of_science", "path": "contracts/query-corpus/web-of-science.txt", "minimum_lines": 1}
+    {"id": "pubmed-basic", "dialect": "pub_med", "path": "contracts/query-corpus/pubmed.txt", "minimum_lines": 1, "sha256": "1def560f05cad7f0d61fa35c696c9b002f2973fd535cda35e36883911c5c714b"},
+    {"id": "ovid-medline-lines", "dialect": "ovid_medline", "path": "contracts/query-corpus/ovid-medline.txt", "minimum_lines": 7, "sha256": "9b6df11c76238a82b02dc32fd1f514ec175a659f10abc109cde0b86abf023b24"},
+    {"id": "embase-sets", "dialect": "embase", "path": "contracts/query-corpus/embase.txt", "minimum_lines": 3, "sha256": "a6df7a9794c6bf1b54f86e11188333edb88052a94944f9191e878396776ee5ec"},
+    {"id": "cinahl-sets", "dialect": "cinahl_ebsco", "path": "contracts/query-corpus/cinahl-ebsco.txt", "minimum_lines": 3, "sha256": "08b1e5b9cc4c58e55a52b1f279f7d9792fdebe2c48884533cae8b720504db144"},
+    {"id": "psycinfo-ovid-lines", "dialect": "psyc_info_ovid", "path": "contracts/query-corpus/psycinfo-ovid.txt", "minimum_lines": 5, "sha256": "a93035e2b1b9f5bd982c03fdf181c03fb2a445eff73361441635c7e4b1fc0eed"},
+    {"id": "scopus-basic", "dialect": "scopus", "path": "contracts/query-corpus/scopus.txt", "minimum_lines": 1, "sha256": "3d1bfc1c5f000e7ff030f1acbd59a6e6fee819c240949dd5dd9aba8ca9aed03f"},
+    {"id": "web-of-science-basic", "dialect": "web_of_science", "path": "contracts/query-corpus/web-of-science.txt", "minimum_lines": 1, "sha256": "aee325e8ce41f467e30f8148e7333b9881ca1651d1c88848f1225ee9632db3e1"}
   ]
 }

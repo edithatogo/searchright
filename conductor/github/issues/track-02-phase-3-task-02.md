@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define versioned named-filter records and validated filter packs.
+- [ ] Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only.
 
 ## Completion and evidence contract
 

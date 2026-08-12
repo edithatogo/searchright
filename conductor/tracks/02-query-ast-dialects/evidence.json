@@ -26,9 +26,9 @@
     "SR-007"
   ],
   "blockers": [
-    "Complete dialect-specific semantic parsers and full translation snapshot/property coverage.",
-    "Define versioned named-filter records and validated filter packs.",
-    "Expand the conformance corpus with independently reviewed source strategies."
+    "Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.",
+    "Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only.",
+    "Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus."
   ],
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {

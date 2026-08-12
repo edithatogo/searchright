@@ -33,11 +33,12 @@ pub fn parse_native_strategy(
         let end = start.saturating_add(u64::try_from(text.len()).unwrap_or(u64::MAX));
         byte_offset = byte_offset.saturating_add(u64::try_from(raw_line.len()).unwrap_or(u64::MAX));
         let trimmed = text.trim();
-        let (native_set_id, body) = split_native_set_id(trimmed);
+        let (native_set_id, body) = split_native_set_id(&dialect, trimmed);
         let lower = body.to_ascii_lowercase();
         let kind = if trimmed.is_empty() {
             NativeQueryLineKind::Blank
-        } else if trimmed.starts_with('#') || trimmed.starts_with("//") {
+        } else if (trimmed.starts_with('#') && native_set_id.is_none()) || trimmed.starts_with("//")
+        {
             NativeQueryLineKind::Comment
         } else if lower.starts_with("limit ") || lower.starts_with("limits:") {
             NativeQueryLineKind::Limit
@@ -68,6 +69,21 @@ pub fn parse_native_strategy(
                 end_byte: end,
             },
         });
+        if kind == NativeQueryLineKind::Expression && !is_supported_expression(&dialect, body) {
+            diagnostics.push(NativeParseDiagnostic {
+                code: format!("native.{}.unsupported_syntax", dialect_code(&dialect)),
+                severity: NativeParseSeverity::Warning,
+                message: format!(
+                    "line is outside the declared {} native syntax subset; exact source was preserved",
+                    dialect_code(&dialect)
+                ),
+                span: Some(NativeSourceSpan {
+                    start_byte: start,
+                    end_byte: end,
+                }),
+                review_required: true,
+            });
+        }
     }
     if raw_text.is_empty() {
         diagnostics.push(NativeParseDiagnostic {
@@ -103,7 +119,17 @@ pub fn parse_native_strategy(
     }
 }
 
-fn split_native_set_id(value: &str) -> (Option<String>, &str) {
+fn split_native_set_id<'a>(dialect: &SearchDialect, value: &'a str) -> (Option<String>, &'a str) {
+    if matches!(dialect, SearchDialect::Embase)
+        && let Some((identifier, body)) = split_prefixed_set_id(value, '#')
+    {
+        return (Some(identifier), body);
+    }
+    if matches!(dialect, SearchDialect::CinahlEbsco)
+        && let Some((identifier, body)) = split_prefixed_set_id(value, 'S')
+    {
+        return (Some(identifier), body);
+    }
     let digits = value.bytes().take_while(u8::is_ascii_digit).count();
     if digits == 0 {
         return (None, value);
@@ -118,6 +144,98 @@ fn split_native_set_id(value: &str) -> (Option<String>, &str) {
         return (None, value);
     }
     (Some(value[..digits].to_owned()), separator.trim_start())
+}
+
+fn split_prefixed_set_id(value: &str, prefix: char) -> Option<(String, &str)> {
+    let remainder = value.strip_prefix(prefix)?;
+    let digits = remainder.bytes().take_while(u8::is_ascii_digit).count();
+    if digits == 0 {
+        return None;
+    }
+    let after_digits = &remainder[digits..];
+    if !after_digits.chars().next().is_some_and(char::is_whitespace) {
+        return None;
+    }
+    let identifier_len = prefix.len_utf8().saturating_add(digits);
+    Some((
+        value[..identifier_len].to_owned(),
+        after_digits.trim_start(),
+    ))
+}
+
+fn dialect_code(dialect: &SearchDialect) -> &'static str {
+    match dialect {
+        SearchDialect::PubMed => "pubmed",
+        SearchDialect::OvidMedline => "ovid_medline",
+        SearchDialect::Embase => "embase",
+        SearchDialect::CinahlEbsco => "cinahl_ebsco",
+        SearchDialect::PsycInfoOvid => "psycinfo_ovid",
+        SearchDialect::Scopus => "scopus",
+        SearchDialect::WebOfScience => "web_of_science",
+        SearchDialect::EuropePmc => "europe_pmc",
+        SearchDialect::Crossref => "crossref",
+        SearchDialect::OpenAlex => "openalex",
+        SearchDialect::ClinicalTrialsGov => "clinical_trials_gov",
+        SearchDialect::GenericBoolean => "generic_boolean",
+        SearchDialect::Custom(_) => "custom",
+    }
+}
+
+fn is_supported_expression(dialect: &SearchDialect, value: &str) -> bool {
+    let lower = value.to_ascii_lowercase();
+    match dialect {
+        SearchDialect::PubMed => {
+            value.contains('[')
+                && value.contains(']')
+                && (lower.contains("[mesh terms]") || lower.contains("[title/abstract]"))
+        }
+        SearchDialect::OvidMedline => {
+            (lower.starts_with("exp ") && value.ends_with('/'))
+                || has_ovid_field_suffix(&lower, &["ti", "ab", "kf"])
+        }
+        SearchDialect::PsycInfoOvid => {
+            value.ends_with('/') || has_ovid_field_suffix(&lower, &["ti", "ab", "id"])
+        }
+        SearchDialect::Embase => {
+            (value.starts_with('\'') && lower.contains("'/exp"))
+                || has_colon_field_suffix(&lower, &["ti", "ab", "kw"])
+        }
+        SearchDialect::CinahlEbsco => {
+            lower.starts_with("(mh \"")
+                || lower.starts_with("mh \"")
+                || lower.starts_with("ti ")
+                || lower.starts_with("ab ")
+        }
+        SearchDialect::Scopus => lower.starts_with("title-abs-key(") && value.ends_with(')'),
+        SearchDialect::WebOfScience => lower.starts_with("ts=(") && value.ends_with(')'),
+        SearchDialect::GenericBoolean => !value.trim().is_empty(),
+        SearchDialect::EuropePmc
+        | SearchDialect::Crossref
+        | SearchDialect::OpenAlex
+        | SearchDialect::ClinicalTrialsGov
+        | SearchDialect::Custom(_) => false,
+    }
+}
+
+fn has_ovid_field_suffix(value: &str, supported_fields: &[&str]) -> bool {
+    let Some(without_final_dot) = value.strip_suffix('.') else {
+        return false;
+    };
+    let Some(suffix_start) = without_final_dot.rfind('.') else {
+        return false;
+    };
+    without_final_dot[suffix_start + 1..]
+        .split(',')
+        .all(|field| supported_fields.contains(&field))
+}
+
+fn has_colon_field_suffix(value: &str, supported_fields: &[&str]) -> bool {
+    let Some((_, fields)) = value.rsplit_once(':') else {
+        return false;
+    };
+    fields
+        .split(',')
+        .all(|field| supported_fields.contains(&field))
 }
 
 fn looks_like_set_combination(value: &str) -> bool {
@@ -199,6 +317,92 @@ mod tests {
             assert_eq!(parsed.raw_text, text);
             assert!(!parsed.lines.is_empty());
             assert!(parsed.validate().is_ok());
+            assert!(
+                !parsed
+                    .diagnostics
+                    .iter()
+                    .any(|item| item.code.ends_with(".unsupported_syntax")),
+                "checked-in {dialect:?} fixture must stay inside its declared subset"
+            );
+        }
+    }
+
+    #[test]
+    fn parses_embase_and_cinahl_set_identifiers_as_queries_not_comments() {
+        let embase = parse_native_strategy(
+            "embase",
+            SearchDialect::Embase,
+            "#1 'genomics'/exp OR genome*:ti,ab,kw\n#2 #1 AND #1\n",
+        );
+        assert_eq!(
+            embase
+                .lines
+                .first()
+                .and_then(|line| line.native_set_id.as_deref()),
+            Some("#1")
+        );
+        assert_eq!(
+            embase.lines.first().map(|line| line.kind),
+            Some(NativeQueryLineKind::Expression)
+        );
+        assert_eq!(
+            embase.lines.get(1).map(|line| line.kind),
+            Some(NativeQueryLineKind::SetCombination)
+        );
+
+        let cinahl = parse_native_strategy(
+            "cinahl",
+            SearchDialect::CinahlEbsco,
+            "S1 (MH \"Genomics+\") OR TI genome*\nS2 S1 AND S1\n",
+        );
+        assert_eq!(
+            cinahl
+                .lines
+                .first()
+                .and_then(|line| line.native_set_id.as_deref()),
+            Some("S1")
+        );
+        assert_eq!(
+            cinahl.lines.get(1).map(|line| line.kind),
+            Some(NativeQueryLineKind::SetCombination)
+        );
+    }
+
+    #[test]
+    fn unsupported_dialect_syntax_emits_stable_review_diagnostic() {
+        let parsed = parse_native_strategy(
+            "unsupported",
+            SearchDialect::PubMed,
+            "TITLE-ABS-KEY(genome*)\n",
+        );
+        let diagnostic = parsed
+            .diagnostics
+            .iter()
+            .find(|item| item.code == "native.pubmed.unsupported_syntax");
+        assert!(diagnostic.is_some());
+        assert!(diagnostic.is_some_and(|item| item.review_required));
+        assert!(diagnostic.and_then(|item| item.span).is_some());
+        assert_eq!(parsed.raw_text, "TITLE-ABS-KEY(genome*)\n");
+    }
+
+    #[test]
+    fn every_declared_corpus_dialect_has_a_stable_unsupported_code() {
+        let dialects = [
+            (SearchDialect::PubMed, "pubmed"),
+            (SearchDialect::OvidMedline, "ovid_medline"),
+            (SearchDialect::Embase, "embase"),
+            (SearchDialect::CinahlEbsco, "cinahl_ebsco"),
+            (SearchDialect::PsycInfoOvid, "psycinfo_ovid"),
+            (SearchDialect::Scopus, "scopus"),
+            (SearchDialect::WebOfScience, "web_of_science"),
+        ];
+        for (dialect, code) in dialects {
+            let parsed = parse_native_strategy("unsupported", dialect, "unsupported-native-node\n");
+            assert!(parsed.diagnostics.iter().any(|item| {
+                item.code == format!("native.{code}.unsupported_syntax")
+                    && item.review_required
+                    && item.span.is_some()
+            }));
         }
     }
 

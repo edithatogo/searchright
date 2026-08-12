@@ -1,0 +1,48 @@
+{
+  "schema_version": "org.searchright.query-dialect-loss-matrix.v1",
+  "claim_boundary": "This matrix declares the bounded syntax exercised by project-authored fixtures. It is not a claim of complete database syntax, retrieval equivalence, or methodological validation.",
+  "dialects": [
+    {
+      "dialect": "pub_med",
+      "fixture_id": "pubmed-basic",
+      "supported_constructs": ["mesh_heading", "title_abstract_field", "boolean_and_or", "parentheses", "right_truncation"],
+      "known_losses": ["proximity_requires_manual_review", "subheadings_not_modelled", "major_topic_not_modelled", "source_specific_wildcards_not_modelled"]
+    },
+    {
+      "dialect": "ovid_medline",
+      "fixture_id": "ovid-medline-lines",
+      "supported_constructs": ["numbered_sets", "exploded_heading", "title_abstract_keyword_heading_fields", "boolean_set_combination", "right_truncation"],
+      "known_losses": ["ordered_proximity_degrades_to_unordered_adjacency", "subheadings_not_modelled", "floating_qualifiers_not_modelled", "source_specific_wildcards_not_modelled"]
+    },
+    {
+      "dialect": "embase",
+      "fixture_id": "embase-sets",
+      "supported_constructs": ["hash_sets", "exploded_heading", "title_abstract_keyword_fields", "boolean_set_combination", "right_truncation"],
+      "known_losses": ["ordered_proximity_degrades_to_near", "subheadings_not_modelled", "major_focus_not_modelled", "source_specific_wildcards_not_modelled"]
+    },
+    {
+      "dialect": "cinahl_ebsco",
+      "fixture_id": "cinahl-sets",
+      "supported_constructs": ["s_numbered_sets", "exploded_heading", "title_field", "abstract_field", "boolean_set_combination", "right_truncation"],
+      "known_losses": ["subheadings_not_modelled", "major_concept_not_modelled", "source_specific_wildcards_not_modelled"]
+    },
+    {
+      "dialect": "psyc_info_ovid",
+      "fixture_id": "psycinfo-ovid-lines",
+      "supported_constructs": ["numbered_sets", "heading", "title_abstract_identifier_fields", "boolean_set_combination", "right_truncation"],
+      "known_losses": ["ordered_proximity_degrades_to_unordered_adjacency", "thesaurus_mapping_requires_review", "source_specific_wildcards_not_modelled"]
+    },
+    {
+      "dialect": "scopus",
+      "fixture_id": "scopus-basic",
+      "supported_constructs": ["title_abstract_keyword_field", "boolean_and_or", "parentheses", "right_truncation", "ordered_and_unordered_proximity_rendering"],
+      "known_losses": ["controlled_vocabulary_degrades_to_phrase", "source_specific_wildcards_not_modelled"]
+    },
+    {
+      "dialect": "web_of_science",
+      "fixture_id": "web-of-science-basic",
+      "supported_constructs": ["topic_field", "boolean_and_or", "parentheses", "right_truncation", "unordered_proximity_rendering"],
+      "known_losses": ["ordered_proximity_degrades_to_near", "abstract_and_keyword_collapse_to_topic", "controlled_vocabulary_degrades_to_topic"]
+    }
+  ]
+}

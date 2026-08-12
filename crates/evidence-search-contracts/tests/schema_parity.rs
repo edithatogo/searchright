@@ -11,7 +11,7 @@ fn rust_owned_root_fields_match_canonical_schemas() -> Result<(), Box<dyn std::e
     let entries = rust_owned_schemas();
     assert_eq!(
         entries.len(),
-        9,
+        10,
         "registry changes require an intentional parity review"
     );
 
@@ -69,7 +69,7 @@ fn rust_owned_root_fields_match_canonical_schemas() -> Result<(), Box<dyn std::e
 fn semantic_parity_scope_remains_fail_closed() -> Result<(), Box<dyn std::error::Error>> {
     let scope = rust_schema_parity_scope();
     assert!(!scope.exact_parity);
-    assert_eq!(scope.rust_owned_roots, 9);
+    assert_eq!(scope.rust_owned_roots, 10);
     assert_eq!(scope.known_losses.len(), 9);
 
     let encoded = serde_json::to_value(scope)?;

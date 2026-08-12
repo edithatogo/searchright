@@ -331,7 +331,10 @@ fn apply_field(
             SearchField::Identifier => format!("{literal}[AID]"),
             SearchField::Keyword => format!("{literal}[Other Term]"),
             SearchField::SubjectHeading => format!("{literal}[MeSH Terms]"),
-            SearchField::Custom(field) => format!("{literal}[{field}]"),
+            SearchField::Custom(field) => {
+                warn_on_custom_field(field, warnings);
+                format!("{literal}[{field}]")
+            }
         },
         SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid => match field {
             SearchField::All => literal.to_owned(),
@@ -343,7 +346,10 @@ fn apply_field(
             SearchField::Identifier => format!("{literal}.ui."),
             SearchField::Keyword => format!("{literal}.kw."),
             SearchField::SubjectHeading => format!("{literal}/"),
-            SearchField::Custom(field) => format!("{literal}.{field}."),
+            SearchField::Custom(field) => {
+                warn_on_custom_field(field, warnings);
+                format!("{literal}.{field}.")
+            }
         },
         SearchDialect::Embase => match field {
             SearchField::All => format!("{literal}:all"),
@@ -355,7 +361,10 @@ fn apply_field(
             SearchField::Identifier => format!("{literal}:dn"),
             SearchField::Keyword => format!("{literal}:kw"),
             SearchField::SubjectHeading => format!("{literal}/de"),
-            SearchField::Custom(field) => format!("{literal}:{field}"),
+            SearchField::Custom(field) => {
+                warn_on_custom_field(field, warnings);
+                format!("{literal}:{field}")
+            }
         },
         SearchDialect::EuropePmc => match field {
             SearchField::Title => format!("TITLE:{literal}"),
@@ -436,6 +445,16 @@ fn degraded_field(literal: &str, warnings: &mut Vec<StrategyWarning>) -> String 
     degraded_rendering(literal.to_owned(), warnings)
 }
 
+fn warn_on_custom_field(field: &str, warnings: &mut Vec<StrategyWarning>) {
+    warnings.push(warning(
+        "translation.field.custom_review",
+        &format!(
+            "The custom field `{field}` is provider-specific and requires allowlist and syntax review."
+        ),
+        true,
+    ));
+}
+
 fn degraded_rendering(rendered: String, warnings: &mut Vec<StrategyWarning>) -> String {
     warnings.push(warning(
         "translation.field.degraded",
@@ -495,6 +514,7 @@ fn warning_represents_loss(code: &str) -> bool {
         ".manual",
         ".fallback",
         ".review",
+        "_review",
         "target_differs",
     ]
     .iter()
@@ -653,6 +673,171 @@ mod tests {
             .split(" AND ")
             .collect::<BTreeSet<_>>();
         assert_eq!(left_terms, right_terms);
+        Ok(())
+    }
+
+    fn text_strategy(dialect: SearchDialect) -> SearchStrategy {
+        SearchStrategy {
+            schema_version: "org.searchright.search-strategy.v1".to_owned(),
+            strategy_id: "snapshot".to_owned(),
+            review_id: "review".to_owned(),
+            source_id: "source".to_owned(),
+            dialect,
+            query: QueryExpr::Term {
+                term: SearchTerm {
+                    text: "genom".to_owned(),
+                    fields: vec![SearchField::TitleAbstract],
+                    vocabulary: None,
+                    explode: false,
+                    phrase: false,
+                    truncation: true,
+                },
+            },
+            limits: SearchLimit::default(),
+            translated_from: None,
+            notes: Vec::new(),
+        }
+    }
+
+    #[test]
+    fn seven_dialect_field_and_truncation_snapshots_are_stable()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let cases = [
+            (SearchDialect::PubMed, "genom*[Title/Abstract]"),
+            (SearchDialect::OvidMedline, "genom*.ti,ab."),
+            (SearchDialect::Embase, "genom*:ti,ab"),
+            (SearchDialect::CinahlEbsco, "(TI genom* OR AB genom*)"),
+            (SearchDialect::PsycInfoOvid, "genom*.ti,ab."),
+            (SearchDialect::Scopus, "TITLE-ABS-KEY(genom*)"),
+            (SearchDialect::WebOfScience, "TS=(genom*)"),
+        ];
+        for (dialect, expected) in cases {
+            let compiled = QueryCompiler::compile(&text_strategy(dialect.clone()), dialect)?;
+            assert_eq!(compiled.query, expected);
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn seven_dialect_proximity_snapshots_expose_order_loss()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let cases = [
+            (SearchDialect::PubMed, "(genom* AND screen*)", true),
+            (SearchDialect::OvidMedline, "(genom* adj3 screen*)", true),
+            (
+                SearchDialect::Embase,
+                "(genom*:all NEAR/3 screen*:all)",
+                true,
+            ),
+            (SearchDialect::CinahlEbsco, "(genom* W3 screen*)", false),
+            (SearchDialect::PsycInfoOvid, "(genom* adj3 screen*)", true),
+            (SearchDialect::Scopus, "(genom* PRE/3 screen*)", false),
+            (
+                SearchDialect::WebOfScience,
+                "(TS=(genom*) NEAR/3 TS=(screen*))",
+                true,
+            ),
+        ];
+        for (dialect, expected, loses_order) in cases {
+            let mut input = text_strategy(dialect.clone());
+            input.query = QueryExpr::Proximity {
+                left: Box::new(QueryExpr::Term {
+                    term: SearchTerm {
+                        text: "genom".to_owned(),
+                        fields: vec![SearchField::All],
+                        vocabulary: None,
+                        explode: false,
+                        phrase: false,
+                        truncation: true,
+                    },
+                }),
+                right: Box::new(QueryExpr::Term {
+                    term: SearchTerm {
+                        text: "screen".to_owned(),
+                        fields: vec![SearchField::All],
+                        vocabulary: None,
+                        explode: false,
+                        phrase: false,
+                        truncation: true,
+                    },
+                }),
+                distance: 3,
+                ordered: true,
+            };
+            let compiled = QueryCompiler::compile(&input, dialect)?;
+            assert_eq!(compiled.query, expected);
+            assert_eq!(compiled.review_required, loses_order);
+            assert_eq!(
+                compiled
+                    .loss_codes
+                    .iter()
+                    .any(|code| code == "translation.proximity.order_degraded"
+                        || code == "translation.pubmed.proximity_review"),
+                loses_order
+            );
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn compilation_hash_changes_with_every_semantic_input_dimension()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let baseline = text_strategy(SearchDialect::PubMed);
+        let baseline_hash =
+            QueryCompiler::compile(&baseline, SearchDialect::PubMed)?.compilation_hash;
+        let mut variants = Vec::new();
+
+        let mut changed_text = baseline.clone();
+        if let QueryExpr::Term { term } = &mut changed_text.query {
+            term.text = "genetic".to_owned();
+        }
+        variants.push(changed_text);
+
+        let mut changed_field = baseline.clone();
+        if let QueryExpr::Term { term } = &mut changed_field.query {
+            term.fields = vec![SearchField::Title];
+        }
+        variants.push(changed_field);
+
+        let mut changed_limit = baseline.clone();
+        changed_limit.limits.languages.push("English".to_owned());
+        changed_limit
+            .limits
+            .rationale
+            .push("Protocol eligibility restriction".to_owned());
+        variants.push(changed_limit);
+
+        for variant in variants {
+            assert_ne!(
+                QueryCompiler::compile(&variant, SearchDialect::PubMed)?.compilation_hash,
+                baseline_hash
+            );
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn custom_fields_always_require_explicit_provider_review()
+    -> Result<(), Box<dyn std::error::Error>> {
+        for dialect in [
+            SearchDialect::PubMed,
+            SearchDialect::OvidMedline,
+            SearchDialect::PsycInfoOvid,
+            SearchDialect::Embase,
+        ] {
+            let mut input = text_strategy(dialect.clone());
+            if let QueryExpr::Term { term } = &mut input.query {
+                term.fields = vec![SearchField::Custom("vendor_field".to_owned())];
+            }
+            let compiled = QueryCompiler::compile(&input, dialect)?;
+            assert!(compiled.review_required);
+            assert!(
+                compiled
+                    .loss_codes
+                    .iter()
+                    .any(|code| code == "translation.field.custom_review")
+            );
+        }
         Ok(())
     }
 }

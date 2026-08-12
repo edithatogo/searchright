@@ -2,8 +2,8 @@ use schemars::{Schema, schema_for};
 use serde::Serialize;
 
 use crate::{
-    AuditEvent, BibliographicRecord, CompiledStrategy, NativeSearchStrategy, ProviderManifest,
-    ProviderPage, SearchRun, SearchStrategy, SourceReceipt,
+    AuditEvent, BibliographicRecord, CompiledStrategy, NamedFilterPack, NativeSearchStrategy,
+    ProviderManifest, ProviderPage, SearchRun, SearchStrategy, SourceReceipt,
 };
 
 /// A canonical catalogue entry whose root wire shape is owned by this Rust crate.
@@ -73,6 +73,10 @@ pub fn rust_owned_schemas() -> Vec<RustOwnedSchema> {
         entry::<CompiledStrategy>(
             "compiled-strategy",
             "contracts/json-schema/compiled-strategy.v1.schema.json",
+        ),
+        entry::<NamedFilterPack>(
+            "named-filter-pack",
+            "contracts/json-schema/named-filter-pack.v1.schema.json",
         ),
         entry::<NativeSearchStrategy>(
             "native-search-strategy",

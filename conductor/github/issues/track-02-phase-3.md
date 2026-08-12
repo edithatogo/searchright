@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete dialect-specific semantic parsers and full translation snapshot/property coverage. (`track-02-phase-3-task-01`)
-- [ ] T02: Define versioned named-filter records and validated filter packs. (`track-02-phase-3-task-02`)
-- [ ] T03: Expand the conformance corpus with independently reviewed source strategies. (`track-02-phase-3-task-03`)
+- [ ] T01: Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets. (`track-02-phase-3-task-01`)
+- [ ] T02: Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only. (`track-02-phase-3-task-02`)
+- [ ] T03: Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus. (`track-02-phase-3-task-03`)
 
 ## Evidence rule
 

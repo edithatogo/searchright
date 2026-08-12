@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete dialect-specific semantic parsers and full translation snapshot/property coverage.
+- [ ] Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.
 
 ## Completion and evidence contract
 

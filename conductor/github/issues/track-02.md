@@ -17,7 +17,7 @@ Deliver deterministic, reviewable query translation with explicit fidelity and l
 - Evidence: `source_verified`
 - Dependencies: `01`
 - Requirements: `SR-005, SR-006, SR-007`
-- External approval required: `false`
+- External approval required: `true`
 
 ## Phase subissues
 

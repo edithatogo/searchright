@@ -253,6 +253,14 @@
       "owner_track": "22"
     },
     {
+      "id": "named-filter-pack",
+      "schema_id": "https://schemas.searchright.dev/named-filter-pack.v1.schema.json",
+      "path": "contracts/json-schema/named-filter-pack.v1.schema.json",
+      "sha256": "ec4139edcf381513298c26b78d121870467cf3afb3dd4e388755a0cf6f17a760",
+      "stability": "alpha",
+      "owner_track": "02"
+    },
+    {
       "id": "native-search-strategy",
       "schema_id": "https://schemas.searchright.dev/native-search-strategy.v1.schema.json",
       "path": "contracts/json-schema/native-search-strategy.v1.schema.json",

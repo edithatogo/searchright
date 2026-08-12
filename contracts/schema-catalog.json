@@ -312,6 +312,16 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "named-filter-pack",
+      "schema": "contracts/json-schema/named-filter-pack.v1.schema.json",
+      "example": "contracts/examples/named-filter-pack.json",
+      "schema_id": "https://schemas.searchright.dev/named-filter-pack.v1.schema.json",
+      "rust_type": "NamedFilterPack",
+      "owner_track": "02",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "native-search-strategy",
       "schema": "contracts/json-schema/native-search-strategy.v1.schema.json",
       "example": "contracts/examples/native-search-strategy.json",
