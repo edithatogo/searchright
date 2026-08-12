@@ -93,6 +93,8 @@ def run(
             args,
             cwd=ROOT,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             input=input_text,
             capture_output=True,
             check=False,
