@@ -15,10 +15,16 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from github_common import GitHubCommandError, ROOT, require_gh, run_json, write_json_atomic
+from github_common import (
+    ROOT,
+    GitHubCommandError,
+    require_gh,
+    run,
+    run_json,
+    write_json_atomic,
+)
 from sync_github_issues import child_ids, existing_issues, remote_label_names
 from sync_github_project import (
-    collection,
     field_data_type,
     find_project,
     list_fields,
@@ -243,6 +249,10 @@ def compare_project(
         "fields_observed": len(fields),
         "views_observed": len(views),
         "canonical_items_observed": len(hierarchy["nodes"]) - len(missing_items),
+        "total_items_observed": len(items),
+        "noncanonical_items_observed": (
+            len(items) - len(hierarchy["nodes"]) + len(missing_items)
+        ),
         "recognised_value_mismatches": mismatched_values,
         "unrecognised_value_shapes": unknown_values,
     }
@@ -265,6 +275,7 @@ def main() -> int:
         "schema_version": "org.searchright.github-control-plane-audit.v1",
         "status": "failed" if errors else "passed",
         "repository": settings["repository"],
+        "source_revision": run(["git", "rev-parse", "HEAD"]).stdout.strip(),
         "repository_observed": repository,
         "issue_hierarchy": issue_summary,
         "project": project_summary,

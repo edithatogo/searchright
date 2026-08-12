@@ -22,8 +22,8 @@ from pathlib import Path
 from typing import Any
 
 from github_common import (
-    GitHubCommandError,
     ROOT,
+    GitHubCommandError,
     repository_owner,
     require_clean_tree,
     require_gh,
@@ -324,14 +324,18 @@ def observed_field_value(item: dict[str, Any], field_name: str) -> tuple[bool, A
     documented/evolved shapes. Unknown shapes return ``(False, None)`` so the
     synchroniser writes rather than incorrectly assuming equality.
     """
+    item_keys = {str(key).casefold(): key for key in item}
     for key in key_variants(field_name):
-        if key in item:
-            return True, normalise_value(item[key])
+        observed_key = item_keys.get(key.casefold())
+        if observed_key is not None:
+            return True, normalise_value(item[observed_key])
     fields = item.get("fields")
     if isinstance(fields, dict):
+        field_keys = {str(key).casefold(): key for key in fields}
         for key in key_variants(field_name):
-            if key in fields:
-                return True, normalise_value(fields[key])
+            observed_key = field_keys.get(key.casefold())
+            if observed_key is not None:
+                return True, normalise_value(fields[observed_key])
     for list_key in ("fieldValues", "field_values", "field-values"):
         values = item.get(list_key)
         if not isinstance(values, list):
@@ -423,7 +427,7 @@ def main() -> int:
     views = ensure_views(project_id, manifest["views"])
 
     issues = existing_issues(manifest["repository"])
-    missing = sorted(set(node["key"] for node in nodes) - set(issues))
+    missing = sorted({node["key"] for node in nodes} - set(issues))
     if missing:
         raise GitHubCommandError(
             f"Project sync requires issue hierarchy first; missing {len(missing)} issues, including {missing[:5]}"
@@ -433,7 +437,7 @@ def main() -> int:
     checkpoint_path = None
     if args.checkpoint_path:
         checkpoint_path = args.checkpoint_path if args.checkpoint_path.is_absolute() else ROOT / args.checkpoint_path
-    sync_date = dt.date.today().isoformat()
+    sync_date = dt.datetime.now(tz=dt.UTC).date().isoformat()
     field_updates = 0
     field_skips = 0
     for node in selected:
