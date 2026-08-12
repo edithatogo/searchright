@@ -510,6 +510,7 @@ fn warning_represents_loss(code: &str) -> bool {
     [
         ".lossy",
         ".degraded",
+        "_degraded",
         ".generic",
         ".manual",
         ".fallback",
