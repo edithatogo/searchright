@@ -93,4 +93,3 @@ mod tests {
         assert_schema_has_payload_shape::<searchright_agent::AgentWorkflow>();
     }
 }
-

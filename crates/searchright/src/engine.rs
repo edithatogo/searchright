@@ -3,6 +3,7 @@
 use std::collections::BTreeMap;
 
 use evidence_search_core::{AuditLedger, AuditVerification, QueryCompiler};
+use schemars::JsonSchema;
 use searchright_agent::{AgentWorkflow, ReadinessFinding, assess_plan_readiness};
 use searchright_contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, ContentSafetyFinding, DataHandlingDecision,
@@ -17,7 +18,6 @@ use searchright_dedup::{DedupConfig, DedupResult, Deduplicator};
 use searchright_interchange::ImportResult;
 use searchright_provenance::ProvenanceBundle;
 use searchright_validation::SearchValidationSummary;
-use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 /// Stateless product facade. All durable or network effects remain explicit in component APIs.

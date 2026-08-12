@@ -4,11 +4,11 @@
 
 use std::collections::BTreeMap;
 
+use schemars::JsonSchema;
 use searchright_contracts::{
     BibliographicRecord, INTERCHANGE_RECEIPT_SCHEMA_VERSION, InterchangeFormat, InterchangeReceipt,
     RecordIdentifiers, RecordKind, Validate,
 };
-use schemars::JsonSchema;
 use serde::Serialize;
 use serde_json::{Value, json};
 

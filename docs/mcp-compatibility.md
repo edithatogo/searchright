@@ -97,3 +97,8 @@ schema-advertisement-checked, but they are not called by this harness. The smoke
 receipts are therefore Searchright compatibility smoke evidence, not a claim
 that every tool path, optional MCP feature or remote transport conformance
 scenario is implemented.
+
+Adding `output_contract` references to the interface catalogue is an additive
+metadata change. It does not change a persisted payload or remove an accepted
+field, so no data migration is required. Independent or official client
+conformance remains a separate open gate.
