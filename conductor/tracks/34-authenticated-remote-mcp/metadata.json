@@ -3,10 +3,10 @@
   "track_id": "34",
   "slug": "authenticated-remote-mcp",
   "title": "Authenticated remote MCP, tenancy and data residency",
-  "status": "scaffolded",
-  "implementation_state": "scaffolded",
+  "status": "integration_prepared",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-08-13",
   "dependencies": [
     "10",
     "24",

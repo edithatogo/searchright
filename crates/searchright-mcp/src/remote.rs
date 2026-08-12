@@ -717,10 +717,6 @@ fn application(
 }
 
 #[cfg(test)]
-#[allow(
-    clippy::expect_used,
-    reason = "fixture setup failures should stop the focused security test immediately"
-)]
 mod tests {
     use super::*;
     use base64::{Engine as _, engine::general_purpose::STANDARD};
@@ -753,7 +749,9 @@ mod tests {
     }
 
     fn claims() -> IdentityClaims {
-        let now = unix_seconds().expect("test clock must be available");
+        let Ok(now) = unix_seconds() else {
+            panic!("test clock must be available");
+        };
         IdentityClaims {
             iss: "https://issuer.example.test".to_owned(),
             sub: "reviewer-1".to_owned(),
@@ -771,31 +769,33 @@ mod tests {
     fn token(claims: &IdentityClaims) -> String {
         let mut header = Header::new(Algorithm::RS256);
         header.kid = Some("track34-fixture".to_owned());
-        let key = STANDARD
-            .decode(TEST_PRIVATE_KEY.trim())
-            .expect("fixture key must decode");
-        encode(&header, claims, &EncodingKey::from_rsa_der(&key))
-            .expect("fixture token must encode")
+        let Ok(key) = STANDARD.decode(TEST_PRIVATE_KEY.trim()) else {
+            panic!("fixture key must decode");
+        };
+        let Ok(encoded) = encode(&header, claims, &EncodingKey::from_rsa_der(&key)) else {
+            panic!("fixture token must encode");
+        };
+        encoded
     }
 
     fn temporary_jwks() -> PathBuf {
-        let suffix = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .expect("test clock must be available")
-            .as_nanos();
+        let Ok(duration) = SystemTime::now().duration_since(UNIX_EPOCH) else {
+            panic!("test clock must be available");
+        };
+        let suffix = duration.as_nanos();
         let path = std::env::temp_dir().join(format!(
             "searchright-track34-jwks-{}-{suffix}.json",
             std::process::id()
         ));
-        std::fs::write(&path, TEST_JWKS).expect("fixture JWKS must be written");
+        assert!(std::fs::write(&path, TEST_JWKS).is_ok());
         path
     }
 
     fn temporary_audit() -> PathBuf {
-        let suffix = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .expect("test clock must be available")
-            .as_nanos();
+        let Ok(duration) = SystemTime::now().duration_since(UNIX_EPOCH) else {
+            panic!("test clock must be available");
+        };
+        let suffix = duration.as_nanos();
         std::env::temp_dir().join(format!(
             "searchright-track34-audit-{}-{suffix}.jsonl",
             std::process::id()
@@ -804,6 +804,9 @@ mod tests {
 
     fn state(policy: RemoteMcpPolicy, jwks_path: PathBuf) -> RemoteState {
         let audit_path = temporary_audit();
+        let Ok(audit) = AuditSink::open(&audit_path) else {
+            panic!("test audit sink must open");
+        };
         RemoteState {
             verifier: JwksVerifier {
                 path: Arc::new(jwks_path),
@@ -812,7 +815,7 @@ mod tests {
             policy: Arc::new(policy),
             counters: Arc::new(Mutex::new(RuntimeCounters::default())),
             request_timeout: Duration::from_secs(30),
-            audit: AuditSink::open(&audit_path).expect("test audit sink must open"),
+            audit,
             authentication_slots: Arc::new(tokio::sync::Semaphore::new(4)),
         }
     }
@@ -833,38 +836,37 @@ mod tests {
         };
         let encoded = token(&claims());
         assert!(verifier.verify(&encoded).await.is_ok());
-        std::fs::write(&path, r#"{"keys":[]}"#).expect("rotated JWKS must be written");
-        let denial = verifier
-            .verify(&encoded)
-            .await
-            .expect_err("removed signing key must be denied");
+        assert!(std::fs::write(&path, r#"{"keys":[]}"#).is_ok());
+        let Err(denial) = verifier.verify(&encoded).await else {
+            panic!("removed signing key must be denied");
+        };
         assert_eq!(denial.code, "access.authentication.key_unknown");
-        std::fs::remove_file(path).expect("temporary JWKS must be removed");
+        assert!(std::fs::remove_file(path).is_ok());
     }
 
     #[test]
     fn request_replay_rate_and_concurrency_fail_closed() {
         let replay_state = state(policy(10, 2), PathBuf::new());
         let identity = claims();
-        let permit = replay_state
-            .authorise(&identity, "request-1")
-            .expect("first request must pass");
+        let Ok(permit) = replay_state.authorise(&identity, "request-1") else {
+            panic!("first request must pass");
+        };
         drop(permit);
         let replay = denied(replay_state.authorise(&identity, "request-1"));
         assert_eq!(replay.code, "access.replay.request_reused");
 
         let rate_state = state(policy(1, 2), PathBuf::new());
-        let permit = rate_state
-            .authorise(&identity, "rate-1")
-            .expect("first rate request must pass");
+        let Ok(permit) = rate_state.authorise(&identity, "rate-1") else {
+            panic!("first rate request must pass");
+        };
         drop(permit);
         let rate = denied(rate_state.authorise(&identity, "rate-2"));
         assert_eq!(rate.code, "access.rate.exceeded");
 
         let concurrency_state = state(policy(10, 1), PathBuf::new());
-        let _lease = concurrency_state
-            .authorise(&identity, "concurrency-1")
-            .expect("first concurrent request must pass");
+        let Ok(_lease) = concurrency_state.authorise(&identity, "concurrency-1") else {
+            panic!("first concurrent request must pass");
+        };
         let concurrency = denied(concurrency_state.authorise(&identity, "concurrency-2"));
         assert_eq!(concurrency.code, "access.concurrency.exceeded");
     }
@@ -897,29 +899,37 @@ mod tests {
     #[test]
     fn audit_events_are_redacted_and_correlated() {
         let path = temporary_audit();
-        let sink = AuditSink::open(&path).expect("test audit sink must open");
+        let Ok(sink) = AuditSink::open(&path) else {
+            panic!("test audit sink must open");
+        };
         let identity = claims();
-        sink.record(
-            &identity,
-            "fixture-1",
-            &replay_key(&identity, "audit-request"),
-            "admitted",
-        )
-        .expect("test audit event must be written");
-        let text = std::fs::read_to_string(&path).expect("test audit must be readable");
+        assert!(
+            sink.record(
+                &identity,
+                "fixture-1",
+                &replay_key(&identity, "audit-request"),
+                "admitted",
+            )
+            .is_ok()
+        );
+        let Ok(text) = std::fs::read_to_string(&path) else {
+            panic!("test audit must be readable");
+        };
         assert!(text.contains("remote-mcp-audit-event.v1"));
         assert!(text.contains("fixture-1"));
         assert!(!text.contains("reviewer-1"));
         assert!(!text.contains("tenant-demo"));
         assert!(!text.contains("token-1"));
-        std::fs::remove_file(path).expect("temporary audit must be removed");
+        assert!(std::fs::remove_file(path).is_ok());
     }
 
     #[tokio::test(start_paused = true)]
     async fn authenticated_request_budget_times_out_fail_closed() {
-        let denial = bounded_request(Duration::from_secs(2), std::future::pending::<Response>())
-            .await
-            .expect_err("pending authenticated request must be bounded");
+        let Err(denial) =
+            bounded_request(Duration::from_secs(2), std::future::pending::<Response>()).await
+        else {
+            panic!("pending authenticated request must be bounded");
+        };
         assert_eq!(denial.status, StatusCode::REQUEST_TIMEOUT);
         assert_eq!(denial.code, "access.request.timeout");
     }
@@ -927,10 +937,12 @@ mod tests {
     #[tokio::test]
     async fn authenticated_streamable_http_initializes_and_replay_is_denied() {
         let jwks_path = temporary_jwks();
-        let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
-            .await
-            .expect("test listener must bind");
-        let address = listener.local_addr().expect("listener address must exist");
+        let Ok(listener) = tokio::net::TcpListener::bind("127.0.0.1:0").await else {
+            panic!("test listener must bind");
+        };
+        let Ok(address) = listener.local_addr() else {
+            panic!("listener address must exist");
+        };
         let (app, cancellation) = application(
             state(policy(10, 2), jwks_path.clone()),
             address.to_string(),
@@ -950,7 +962,7 @@ mod tests {
         let client = reqwest::Client::new();
         let url = format!("http://{address}/mcp");
         let encoded = token(&claims());
-        let response = client
+        let Ok(response) = client
             .post(&url)
             .header("accept", "application/json, text/event-stream")
             .header("content-type", "application/json")
@@ -960,10 +972,12 @@ mod tests {
             .json(&body)
             .send()
             .await
-            .expect("authenticated initialize request must complete");
+        else {
+            panic!("authenticated initialize request must complete");
+        };
         assert_eq!(response.status(), StatusCode::OK);
 
-        let replay = client
+        let Ok(replay) = client
             .post(&url)
             .header("accept", "application/json, text/event-stream")
             .header("content-type", "application/json")
@@ -973,11 +987,13 @@ mod tests {
             .json(&body)
             .send()
             .await
-            .expect("replayed request must receive a denial");
+        else {
+            panic!("replayed request must receive a denial");
+        };
         assert_eq!(replay.status(), StatusCode::FORBIDDEN);
 
         cancellation.cancel();
         server.abort();
-        std::fs::remove_file(jwks_path).expect("temporary JWKS must be removed");
+        assert!(std::fs::remove_file(jwks_path).is_ok());
     }
 }

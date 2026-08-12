@@ -135,9 +135,6 @@
         "T33-A001",
         "T33-A002",
         "T33-A003",
-        "T34-A001",
-        "T34-A002",
-        "T34-A003",
         "T35-A001",
         "T35-A002",
         "T35-A003"
@@ -688,10 +685,7 @@
       "command": "python scripts/check_default_deny.py",
       "compiler_required": false,
       "covered_assertions": [
-        "T16-A005",
-        "T34-A001",
-        "T34-A002",
-        "T34-A003"
+        "T16-A005"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -973,10 +967,7 @@
         "T26-A005",
         "T33-A001",
         "T33-A002",
-        "T33-A003",
-        "T34-A001",
-        "T34-A002",
-        "T34-A003"
+        "T33-A003"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -1108,6 +1099,23 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/check_coverage_policy.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/remote_mcp_conformance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T34-A001",
+        "T34-A002",
+        "T34-A003"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-REMOTE-MCP-CONFORMANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/remote_mcp_conformance.py"
     },
     {
       "category": "repository_policy",
