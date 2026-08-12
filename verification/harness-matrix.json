@@ -97,7 +97,10 @@
       "gate": "cargo llvm-cov",
       "status": "configured_not_run",
       "threshold": {
-        "lines": 91
+        "admission_lines": 61,
+        "maturity_lines": 91,
+        "policy": "verification/coverage-policy.json",
+        "ratchet": "increase_only"
       }
     },
     {

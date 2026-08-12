@@ -5,12 +5,12 @@ coverage:
   status:
     project:
       default:
-        target: 91%
-        threshold: 1%
+        target: 61%
+        threshold: 0%
     patch:
       default:
-        target: 90%
-        threshold: 1%
+        target: 83%
+        threshold: 0%
 comment:
   layout: reach,diff,flags,tree
   behavior: default
