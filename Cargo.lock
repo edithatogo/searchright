@@ -1809,6 +1809,8 @@ version = "0.1.0-alpha.1"
 dependencies = [
  "searchright-contracts",
  "searchright-dedup",
+ "serde",
+ "serde_json",
  "thiserror",
 ]
 
