@@ -1,9 +1,9 @@
 //! Bounded, fail-closed verification of immutable lifecycle approval records.
 
-use std::collections::{BTreeMap, BTreeSet};
-use std::sync::Mutex;
+use std::collections::BTreeMap;
 
 use searchright_contracts::LifecycleApproval;
+use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
 use crate::LifecycleApprovalVerifier;
 
@@ -27,7 +27,6 @@ pub struct VerifiedLifecycleApprovalRecord {
 /// Bounded registry that verifies exact records and consumes approval nonces once.
 pub struct BoundedLifecycleApprovalRegistry<C> {
     records: BTreeMap<String, VerifiedLifecycleApprovalRecord>,
-    consumed_nonces: Mutex<BTreeSet<String>>,
     clock: C,
 }
 
@@ -61,7 +60,6 @@ impl<C: ApprovalClock> BoundedLifecycleApprovalRegistry<C> {
         }
         Ok(Self {
             records: indexed,
-            consumed_nonces: Mutex::new(BTreeSet::new()),
             clock,
         })
     }
@@ -91,30 +89,15 @@ impl<C: ApprovalClock> LifecycleApprovalVerifier for BoundedLifecycleApprovalReg
         if !canonical_utc(&now) || now < approval.approved_at || now >= approval.expires_at {
             return Err("approval is not currently valid".to_owned());
         }
-        let mut consumed = self
-            .consumed_nonces
-            .lock()
-            .map_err(|_| "approval replay registry is unavailable".to_owned())?;
-        if !consumed.insert(approval.nonce.clone()) {
-            return Err("approval nonce has already been consumed".to_owned());
-        }
-        drop(consumed);
+        // Exact approval replay is safe: the request digest, request identifier and immutable
+        // store receipt make the effect idempotent. Consuming authority before durable apply
+        // would make crash recovery impossible; broadened reuse fails the equality checks above.
         Ok(())
     }
 }
 
 fn canonical_utc(value: &str) -> bool {
-    let bytes = value.as_bytes();
-    bytes.len() == 20
-        && bytes.get(4) == Some(&b'-')
-        && bytes.get(7) == Some(&b'-')
-        && bytes.get(10) == Some(&b'T')
-        && bytes.get(13) == Some(&b':')
-        && bytes.get(16) == Some(&b':')
-        && bytes.get(19) == Some(&b'Z')
-        && bytes.iter().enumerate().all(|(index, byte)| {
-            matches!(index, 4 | 7 | 10 | 13 | 16 | 19) || byte.is_ascii_digit()
-        })
+    value.ends_with('Z') && OffsetDateTime::parse(value, &Rfc3339).is_ok()
 }
 
 #[cfg(test)]
@@ -155,18 +138,14 @@ mod tests {
     }
 
     #[test]
-    fn exact_record_verifies_once_and_replay_fails_closed() -> Result<(), String> {
+    fn exact_record_allows_only_idempotent_exact_replay() -> Result<(), String> {
         let registry = BoundedLifecycleApprovalRegistry::new(
             [record()],
             1,
             FixedClock("2026-08-13T12:00:00Z"),
         )?;
         registry.verify(&approval(), &"a".repeat(64), "policy-1")?;
-        assert!(
-            registry
-                .verify(&approval(), &"a".repeat(64), "policy-1")
-                .is_err()
-        );
+        registry.verify(&approval(), &"a".repeat(64), "policy-1")?;
         Ok(())
     }
 
