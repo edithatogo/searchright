@@ -1290,6 +1290,8 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1",
         "cargo:searchright-dedup@0.1.0-alpha.1"
