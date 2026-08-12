@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Create or verify the public remote and push the committed main branch.
+- [ ] Run the full bootstrap against the exact merged main revision and preserve its observed receipt.
 
 ## Completion and evidence contract
 

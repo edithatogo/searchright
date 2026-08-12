@@ -5,7 +5,7 @@
   "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/31-github-control-plane/spec.md#scope",
-  "claim_boundary": "A read-only receipt observes the public repository, nested issue hierarchy and Project control plane with zero mutations. It does not expose every custom-field value, cover later unpushed commits or promote product maturity.",
+  "claim_boundary": "Historical credential-backed synchronisation is evidenced, but revised bootstrap, environment and full-ruleset checks require a new exact-merged-main apply and audit. The remote projection cannot promote product implementation, methodology or release maturity.",
   "assertions": [
     {
       "assertion_id": "T31-A001",
@@ -24,7 +24,8 @@
         ".github/workflows/github-control-plane.yml",
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
-        "contracts/json-schema/github-project.v1.schema.json"
+        "contracts/json-schema/github-project.v1.schema.json",
+        "tests/test_github_bootstrap_secret.py"
       ],
       "implementation_symbols": [
         "scripts/bootstrap_github.py::main"
@@ -34,12 +35,13 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json"
+        "verification/receipts/github-control-plane-audit.json",
+        "verification/receipts/track-31-control-plane-apply.json"
       ],
       "open_gates": [
-        "Push the current local commit wave to remote main and re-run the read-only convergence audit against that exact revision."
+        "Run the full bootstrap and audit on the exact merged revision containing the revised controller."
       ],
-      "permitted_claim": "The public repository and origin wiring were observed by the read-only audit; later unpushed commits remain outside that receipt."
+      "permitted_claim": "The public repository and origin wiring were observed; revised bootstrap behavior remains outside the historical receipt."
     },
     {
       "assertion_id": "T31-A002",
@@ -68,12 +70,13 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json"
+        "verification/receipts/github-control-plane-audit.json",
+        "verification/receipts/track-31-control-plane-apply.json"
       ],
       "open_gates": [
-        "Re-run the read-only convergence audit after the current local commit wave is pushed."
+        "Re-run issue and relationship synchronisation after the final Track 31 projection merges."
       ],
-      "permitted_claim": "The audit observed 568 canonical issues and all 567 expected native subissue relationships without mutation."
+      "permitted_claim": "The historical credential-backed apply processed 583 canonical issues and all 582 expected native relationships without deletion."
     },
     {
       "assertion_id": "T31-A003",
@@ -92,7 +95,8 @@
         ".github/workflows/github-control-plane.yml",
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
-        "contracts/json-schema/github-project.v1.schema.json"
+        "contracts/json-schema/github-project.v1.schema.json",
+        "tests/test_github_project_values.py"
       ],
       "implementation_symbols": [
         "scripts/sync_github_project.py::main"
@@ -102,12 +106,13 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json"
+        "verification/receipts/github-control-plane-audit.json",
+        "verification/receipts/track-31-control-plane-apply.json"
       ],
       "open_gates": [
-        "Resolve or explicitly accept the unrecognised custom-field value-shape warning."
+        "Re-run Project synchronisation and value audit after the final Track 31 projection merges."
       ],
-      "permitted_claim": "Project 40, its 568 canonical items, 26 fields and seven views were observed; 1,135 custom-field values were not exposed by the CLI JSON shape."
+      "permitted_claim": "The historical apply observed 583 canonical Project items and zero recognised value drift; three additive items remain outside deletion authority."
     },
     {
       "assertion_id": "T31-A004",
@@ -126,7 +131,8 @@
         ".github/workflows/github-control-plane.yml",
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
-        "contracts/json-schema/github-project.v1.schema.json"
+        "contracts/json-schema/github-project.v1.schema.json",
+        "tests/test_github_common.py"
       ],
       "implementation_symbols": [
         "scripts/audit_github_control_plane.py::main"
@@ -136,12 +142,13 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json"
+        "verification/receipts/github-control-plane-audit.json",
+        "verification/receipts/track-31-control-plane-apply.json"
       ],
       "open_gates": [
-        "Re-run static and read-only control-plane checks after generated-ledger reconciliation and remote-main convergence."
+        "Apply protected-branch environment policy and the complete seven-check ruleset, then audit the full payload on exact merged main."
       ],
-      "permitted_claim": "The audit observed the expected public repository settings, three environments and one matching ruleset with zero mutation operations."
+      "permitted_claim": "Repository settings and named environments were historically observed; full ruleset and environment-policy parity are not yet admitted."
     }
   ]
 }

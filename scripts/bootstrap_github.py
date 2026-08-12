@@ -114,8 +114,19 @@ def apply_repository_settings(settings: dict[str, Any]) -> dict[str, Any]:
 
 def ensure_environments(repository: str, names: list[str]) -> list[str]:
     observed: list[str] = []
+    payload = json.dumps(
+        {
+            "deployment_branch_policy": {
+                "protected_branches": True,
+                "custom_branch_policies": False,
+            }
+        }
+    )
     for name in names:
-        run_json(["gh", "api", "-X", "PUT", f"repos/{repository}/environments/{name}", "--input", "-"], input_text="{}")
+        run_json(
+            ["gh", "api", "-X", "PUT", f"repos/{repository}/environments/{name}", "--input", "-"],
+            input_text=payload,
+        )
         observed.append(name)
     return observed
 
@@ -185,21 +196,24 @@ def set_repository_variables(repository: str, project_title: str) -> list[str]:
 
 def maybe_set_project_secret(repository: str) -> str:
     environment = "github-project-write"
-    value = os.environ.get("SEARCHRIGHT_PROJECT_TOKEN_VALUE")
+    value = os.environ.pop("SEARCHRIGHT_PROJECT_TOKEN_VALUE", None)
     if value:
-        run(
-            [
-                "gh",
-                "secret",
-                "set",
-                "SEARCHRIGHT_PROJECT_TOKEN",
-                "--repo",
-                repository,
-                "--env",
-                environment,
-            ],
-            input_text=value,
-        )
+        try:
+            run(
+                [
+                    "gh",
+                    "secret",
+                    "set",
+                    "SEARCHRIGHT_PROJECT_TOKEN",
+                    "--repo",
+                    repository,
+                    "--env",
+                    environment,
+                ],
+                input_text=value,
+            )
+        finally:
+            value = None
         return "configured_in_protected_environment"
     secrets = run_json(
         [
@@ -219,8 +233,11 @@ def maybe_set_project_secret(repository: str) -> str:
         and secret.get("name") == "SEARCHRIGHT_PROJECT_TOKEN"
         for secret in secrets
     ):
-        return "verified_in_protected_environment"
-    return "manual_secret_required"
+        return "present_in_protected_environment"
+    raise GitHubCommandError(
+        "SEARCHRIGHT_PROJECT_TOKEN is absent from the protected "
+        "github-project-write environment; bootstrap will not mutate the control plane"
+    )
 
 
 def main() -> int:

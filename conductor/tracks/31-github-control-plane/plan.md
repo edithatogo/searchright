@@ -38,9 +38,9 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-31-phase-3 -->
 
-- [ ] Create or verify the public remote and push the committed main branch.
-- [ ] Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.
-- [ ] Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts.
+- [ ] Run the full bootstrap against the exact merged main revision and preserve its observed receipt.
+- [ ] Re-run the credential-backed issue, Project and read-only control-plane audit against that exact merged revision.
+- [ ] Complete the independent Conductor review and semantic in-place archival after exact-main evidence passes.
 
 ## Phase 4: Review and closeout
 

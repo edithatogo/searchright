@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Supply an authenticated GitHub token with repository, Issues and Projects permission through protected environments.
+- [ ] Re-run the credential-backed issue, Project and read-only control-plane audit against that exact merged revision.
 
 ## Completion and evidence contract
 
