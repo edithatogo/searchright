@@ -37,11 +37,6 @@
       "description": "Canonical task remains open or requires higher evidence"
     },
     {
-      "name": "scope:multi-track-exception",
-      "color": "b60205",
-      "description": "Reviewed exception for a technically inseparable multi-track PR"
-    },
-    {
       "name": "evidence:source-verified",
       "color": "0e8a16",
       "description": "Source-level evidence only"
