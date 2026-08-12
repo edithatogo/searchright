@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 CATALOG=ROOT/'contracts/interface-catalog.json'
 CLI=(ROOT/'crates/searchright-cli/src/main.rs').read_text()
-MCP=(ROOT/'crates/searchright-mcp/src/main.rs').read_text()
+MCP=(ROOT/'crates/searchright-mcp/src/lib.rs').read_text()
 ENGINE=(ROOT/'crates/searchright/src/engine.rs').read_text()
 errors=[]
 data=json.loads(CATALOG.read_text())

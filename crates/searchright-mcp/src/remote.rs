@@ -27,11 +27,8 @@ use jsonwebtoken::{Algorithm, DecodingKey, Validation, decode, decode_header, jw
 use rmcp::transport::streamable_http_server::{
     StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
 };
-use searchright_access::{ReplayLedger, authorise_with_replay};
-use searchright_contracts::{
-    ACCESS_REQUEST_SCHEMA_VERSION, AccessRequest, AccessScope, PrincipalKind, TenantPolicy,
-    Validate,
-};
+use searchright_access::{ReplayLedger, authenticated_read_request, authorise_with_replay};
+use searchright_contracts::{AccessScope, PrincipalKind, TenantPolicy, Validate};
 use serde::{Deserialize, Serialize};
 
 use crate::SearchrightServer;
@@ -416,19 +413,14 @@ impl RemoteState {
         if active_concurrent_tasks >= self.policy.tenant_policy.maximum_concurrent_tasks {
             return Err(RemoteDenial::forbidden("access.concurrency.exceeded"));
         }
-        let access_request = AccessRequest {
-            schema_version: ACCESS_REQUEST_SCHEMA_VERSION.to_owned(),
-            request_id: replay_key(claims, request_id),
-            principal_id: claims.sub.clone(),
-            principal_kind: claims.principal_kind,
-            tenant_id: claims.tenant_id.clone(),
+        let access_request = authenticated_read_request(
+            replay_key(claims, request_id),
+            claims.sub.clone(),
+            claims.principal_kind,
+            claims.tenant_id.clone(),
             scopes,
-            region: self.policy.deployment_region.clone(),
-            authenticated: true,
-            external_write: false,
-            final_eligibility_decision: false,
-            human_approval: false,
-        };
+            self.policy.deployment_region.clone(),
+        );
         let decision = authorise_with_replay(
             &self.policy.tenant_policy,
             &access_request,
@@ -934,6 +926,40 @@ mod tests {
         assert_eq!(denial.code, "access.request.timeout");
     }
 
+    async fn post_json(
+        address: SocketAddr,
+        token: String,
+        request_id: &'static str,
+        body: String,
+    ) -> Result<StatusCode, String> {
+        tokio::task::spawn_blocking(move || {
+            use std::io::Read;
+
+            let mut stream = std::net::TcpStream::connect(address)
+                .map_err(|error| format!("connect failed: {error}"))?;
+            let request = format!(
+                "POST /mcp HTTP/1.1\r\nHost: {address}\r\nAccept: application/json, text/event-stream\r\nContent-Type: application/json\r\nX-Forwarded-Proto: https\r\nX-Request-Id: {request_id}\r\nAuthorization: Bearer {token}\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                body.len()
+            );
+            stream
+                .write_all(request.as_bytes())
+                .map_err(|error| format!("write failed: {error}"))?;
+            let mut response = String::new();
+            stream
+                .read_to_string(&mut response)
+                .map_err(|error| format!("read failed: {error}"))?;
+            let status = response
+                .lines()
+                .next()
+                .and_then(|line| line.split_whitespace().nth(1))
+                .and_then(|code| code.parse::<u16>().ok())
+                .ok_or_else(|| "response status was missing".to_owned())?;
+            StatusCode::from_u16(status).map_err(|error| format!("invalid status: {error}"))
+        })
+        .await
+        .map_err(|error| format!("HTTP task failed: {error}"))?
+    }
+
     #[tokio::test]
     async fn authenticated_streamable_http_initializes_and_replay_is_denied() {
         let jwks_path = temporary_jwks();
@@ -959,38 +985,21 @@ mod tests {
                 "clientInfo": {"name": "track34-test", "version": "1"}
             }
         });
-        let client = reqwest::Client::new();
-        let url = format!("http://{address}/mcp");
         let encoded = token(&claims());
-        let Ok(response) = client
-            .post(&url)
-            .header("accept", "application/json, text/event-stream")
-            .header("content-type", "application/json")
-            .header("x-forwarded-proto", "https")
-            .header("x-request-id", "http-request-1")
-            .bearer_auth(&encoded)
-            .json(&body)
-            .send()
-            .await
+        let Ok(body) = serde_json::to_string(&body) else {
+            panic!("initialize request must serialize");
+        };
+        let Ok(response) =
+            post_json(address, encoded.clone(), "http-request-1", body.clone()).await
         else {
             panic!("authenticated initialize request must complete");
         };
-        assert_eq!(response.status(), StatusCode::OK);
+        assert_eq!(response, StatusCode::OK);
 
-        let Ok(replay) = client
-            .post(&url)
-            .header("accept", "application/json, text/event-stream")
-            .header("content-type", "application/json")
-            .header("x-forwarded-proto", "https")
-            .header("x-request-id", "http-request-1")
-            .bearer_auth(&encoded)
-            .json(&body)
-            .send()
-            .await
-        else {
+        let Ok(replay) = post_json(address, encoded, "http-request-1", body).await else {
             panic!("replayed request must receive a denial");
         };
-        assert_eq!(replay.status(), StatusCode::FORBIDDEN);
+        assert_eq!(replay, StatusCode::FORBIDDEN);
 
         cancellation.cancel();
         server.abort();
