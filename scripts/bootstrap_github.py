@@ -12,12 +12,18 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import re
 import sys
 from pathlib import Path
 from typing import Any
 
-from github_common import GitHubCommandError, ROOT, require_clean_tree, require_gh, run, run_json
+from github_common import (
+    ROOT,
+    GitHubCommandError,
+    require_clean_tree,
+    require_gh,
+    run,
+    run_json,
+)
 
 SETTINGS_PATH = ROOT / "conductor/github/repository-settings.json"
 PROJECT_PATH = ROOT / "conductor/github/project.json"
@@ -178,13 +184,43 @@ def set_repository_variables(repository: str, project_title: str) -> list[str]:
 
 
 def maybe_set_project_secret(repository: str) -> str:
+    environment = "github-project-write"
     value = os.environ.get("SEARCHRIGHT_PROJECT_TOKEN_VALUE")
-    if not value:
-        return "manual_secret_required"
-    run([
-        "gh", "secret", "set", "SEARCHRIGHT_PROJECT_TOKEN", "--repo", repository,
-    ], input_text=value)
-    return "configured"
+    if value:
+        run(
+            [
+                "gh",
+                "secret",
+                "set",
+                "SEARCHRIGHT_PROJECT_TOKEN",
+                "--repo",
+                repository,
+                "--env",
+                environment,
+            ],
+            input_text=value,
+        )
+        return "configured_in_protected_environment"
+    secrets = run_json(
+        [
+            "gh",
+            "secret",
+            "list",
+            "--repo",
+            repository,
+            "--env",
+            environment,
+            "--json",
+            "name",
+        ]
+    )
+    if any(
+        isinstance(secret, dict)
+        and secret.get("name") == "SEARCHRIGHT_PROJECT_TOKEN"
+        for secret in secrets
+    ):
+        return "verified_in_protected_environment"
+    return "manual_secret_required"
 
 
 def main() -> int:
