@@ -1,0 +1,28 @@
+{
+  "schema_version": "org.searchright.local-verification-receipt.v1",
+  "track_id": "30",
+  "source_commit_reviewed": "716eea4ba29d92f25384aabaecf59fb2204c7f91",
+  "observed_on": "2026-08-12",
+  "status": "passed_with_explicit_unrun_gates",
+  "passed": [
+    "python scripts/run_static_harness.py (53/53 gates)",
+    "python -m pytest tests/test_launch_preparation_roadmap.py -q (6 passed)",
+    "cargo fmt --all -- --check",
+    "python scripts/generate_source_hash_manifest.py --check (1375 files)",
+    "python scripts/check_packaging_reproducibility.py"
+  ],
+  "wrapper_attempt": {
+    "command": "bash scripts/verify.sh",
+    "status": "unavailable",
+    "reason": "Git Bash resolved python3 to the disabled Microsoft Store application alias before the wrapper could enter its Cargo gates."
+  },
+  "not_run_locally": [
+    "cargo clippy --workspace --all-targets --all-features --locked -- -D warnings",
+    "cargo nextest run --workspace --all-features --locked or cargo test fallback",
+    "cargo test --workspace --all-features --doc --locked",
+    "cargo doc --workspace --all-features --no-deps --locked",
+    "cargo deny check",
+    "cargo machete"
+  ],
+  "claim_boundary": "This receipt records local admission only. Hosted required checks on the exact PR head remain authoritative for merge."
+}
