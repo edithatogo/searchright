@@ -65,11 +65,11 @@
     "SR-070"
   ],
   "blockers": [
-    "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
+    "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.",
     "Execute consumer-driven contract tests in each pinned downstream repository.",
     "Record scheduled integration-drift receipts against the live repository estate."
   ],
-  "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "A durable read-only audit at commit a0660f8 observed the public repository, all 568 then-canonical issues and all 567 expected native subissue relationships with zero drift and zero mutations. Track 13 topology is unchanged in the current source, but the audit does not cover later source revisions, downstream contract execution, scheduled live-estate drift or merged compatibility.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-13",
@@ -92,7 +92,10 @@
       "track-13-phase-4-task-04"
     ]
   },
-  "remote_github_evidence": [],
+  "remote_github_evidence": [
+    "verification/receipts/github-control-plane-audit.json",
+    "verification/receipts/track-13-github-evidence-reconciliation.json"
+  ],
   "runtime_evidence": [],
   "external_evidence": []
 }

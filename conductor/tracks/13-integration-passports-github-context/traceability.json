@@ -5,7 +5,7 @@
   "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/13-integration-passports-github-context/spec.md#scope",
-  "claim_boundary": "Issue bodies, subissue relationships, integration passports and consumer contracts are prepared and checked locally; no remote issue, downstream execution or merged compatibility is claimed. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "A durable read-only audit at commit a0660f8 observed the public repository, all 568 then-canonical issues and all 567 expected native subissue relationships with zero drift and zero mutations. Track 13 topology is unchanged in the current source, but the audit does not cover later source revisions, downstream contract execution, scheduled live-estate drift or merged compatibility.",
   "assertions": [
     {
       "assertion_id": "T13-A001",
@@ -30,14 +30,14 @@
         "python scripts/check_integration_drift.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+        "conductor/tracks/13-integration-passports-github-context/evidence.json",
+        "verification/receipts/track-13-github-evidence-reconciliation.json"
       ],
       "open_gates": [
-        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
         "Execute consumer-driven contract tests in each pinned downstream repository.",
         "Record scheduled integration-drift receipts against the live repository estate."
       ],
-      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+      "permitted_claim": "Integration passports and local drift checks are source-verified; downstream execution and scheduled live-estate drift remain separate evidence gates."
     },
     {
       "assertion_id": "T13-A002",
@@ -58,14 +58,14 @@
         "python scripts/check_github_issue_hierarchy.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+        "conductor/tracks/13-integration-passports-github-context/evidence.json",
+        "verification/receipts/github-control-plane-audit.json",
+        "verification/receipts/track-13-github-evidence-reconciliation.json"
       ],
       "open_gates": [
-        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
-        "Execute consumer-driven contract tests in each pinned downstream repository.",
-        "Record scheduled integration-drift receipts against the live repository estate."
+        "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision."
       ],
-      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+      "permitted_claim": "The historical read-only audit observed 568 canonical issues and all 567 expected native subissue relationships; Track 13's 15-node topology is unchanged in current source, but current-head parity is not claimed."
     },
     {
       "assertion_id": "T13-A003",
@@ -88,14 +88,14 @@
         "python scripts/bootstrap_github.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+        "conductor/tracks/13-integration-passports-github-context/evidence.json",
+        "verification/receipts/github-control-plane-audit.json",
+        "verification/receipts/track-13-github-evidence-reconciliation.json"
       ],
       "open_gates": [
-        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
-        "Execute consumer-driven contract tests in each pinned downstream repository.",
-        "Record scheduled integration-drift receipts against the live repository estate."
+        "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision."
       ],
-      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+      "permitted_claim": "An approval-gated apply occurred and a later read-only audit observed zero issue, relationship, label or task-state drift with zero audit mutations; parity with later source revisions is not claimed."
     },
     {
       "assertion_id": "T13-A004",
@@ -117,14 +117,13 @@
         "python scripts/sync_context_lock.py --check"
       ],
       "evidence_receipts": [
-        "conductor/tracks/13-integration-passports-github-context/evidence.json"
+        "conductor/tracks/13-integration-passports-github-context/evidence.json",
+        "verification/receipts/track-13-github-evidence-reconciliation.json"
       ],
       "open_gates": [
-        "Create or nominate the remote Searchright repository and run issue sync with explicit maintainer approval.",
-        "Execute consumer-driven contract tests in each pinned downstream repository.",
-        "Record scheduled integration-drift receipts against the live repository estate."
+        "Re-run context integrity and context-lock checks after the final merged revision is known."
       ],
-      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
+      "permitted_claim": "The context spine is source-verified locally; its final merged-revision lock remains a closeout gate."
     }
   ]
 }
