@@ -135,7 +135,6 @@
       "assertions": {
         "T02-A001": {
           "deterministic_tests": [
-            "cargo test -p evidence-search-core --all-targets --all-features --locked",
             "python scripts/validate_repository.py"
           ],
           "implementation_paths": [

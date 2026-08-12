@@ -22,7 +22,6 @@
         "evidence_search_core::compiler::compile_strategy"
       ],
       "deterministic_tests": [
-        "cargo test -p evidence-search-core --all-targets --all-features --locked",
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [

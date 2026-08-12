@@ -668,7 +668,7 @@ aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/pr
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
 d576c45b45b7dbc822b2cea66f40cc6ffdf9aa3065acc9e663bde38704408525  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
-8e52380a96a1fa0cc6003a3b47c34c4082d71fb332ffac03cd6ab1a718679b77  ./conductor/traceability-overrides.json
+d201abac87acdd5a4c01f2107e28852d741869d0ff9a0068f3e35a192670f841  ./conductor/traceability-overrides.json
 e6db13ea77ba31e630a3c7cb266971bb8aac2e4eaf52fe9d66e8e24a0e7b9071  ./conductor/tracks.md
 b15da44039ebd0f10705366067f515d4597ed80906d4b4941d68a45fc9672a5b  ./conductor/tracks/00-foundation-conductor-toolchain/evidence.json
 04878802a3e896f3b746c0c653add81b39d9133de14934d6d7a4408d06e03cd2  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
@@ -684,7 +684,7 @@ d1cf5a393c5b189d9ad2f0704b814e6a9340a0f8855cb2bdad8ba7a7e2b42c55  ./conductor/tr
 cf8fbbdb77c71b6eb1e539772e041e0ea6bc4ab0d405121ba0ebd5c9db99d00d  ./conductor/tracks/02-query-ast-dialects/metadata.json
 06cf823b53c8c60d3ff9ce38f1cbb40a8e0b80e9dbddf91a9e79709d9faa1fa9  ./conductor/tracks/02-query-ast-dialects/plan.md
 965fc934fd6327a4c88cb8cc1776f5933000a2f1ecfcf45015151b0b821624c2  ./conductor/tracks/02-query-ast-dialects/spec.md
-899d602c6a4bf4709de0f458f943a1348d61d829327173d15e82643049b47ed2  ./conductor/tracks/02-query-ast-dialects/traceability.json
+c1a221fff2f1055eb15143c416bca962f1ec13f2e8ff72d09a89de195f08743c  ./conductor/tracks/02-query-ast-dialects/traceability.json
 af24587ddab19bc5e6b7f3fed4eec6b8efff0a05799eafcdaa4c9c47f139d2a4  ./conductor/tracks/03-shared-provider-runtime/evidence.json
 2d9b20c34dab992efd04dc38849a81eb8d186b90952a64959a46dcb6adf633a9  ./conductor/tracks/03-shared-provider-runtime/metadata.json
 f05653e68e15d1db807341f76153379f55fd88557279b8849c5ae148d09d1f44  ./conductor/tracks/03-shared-provider-runtime/plan.md
@@ -865,7 +865,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 2480395a1b729a91443c67c12f65fe2fa6c75e8981a4553b90d636917a50f4fe  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 1d66cc63a5f9f91ce165a2583bbb4890c2c909504407c3fda1f2634e18e29fbb  ./context/claim-boundaries.json
-5714915725a0218fd25e103e59210cc91d3239ddf3fb09f97f9f67e137bafce7  ./context/context-lock.json
+68cc5a04fd7a6b39a26607fce58ae9934339f63825d00ef768a6047d776eaf97  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244  ./context/hazard-log.json
@@ -1384,7 +1384,7 @@ a2b380fd1eb9168e916a5a8209c97775f1becc18e6942a57b91ee72c420699a5  ./tests/test_p
 c15a358f77b924e2b1eba4bc27539e6b7ae5fd452c29ee5a6b04ff9bb0e39d8c  ./typos.toml
 85704ee898a02fc2ac0be5b6bc0e8891a207e35d529bb71fe19dc813f85d6d15  ./verification/architecture-policy.json
 b714d90dc7ab979fdaac0a8a1e6b71f980201cdf37bba53bd203f466bd09ebf8  ./verification/coverage-policy.json
-a306cb640bb2e1f4ce36253f4be63a170cd4f442c12928bff1f21eb06586e192  ./verification/evidence-debt.json
+ff9119a916627991906528ec9f8080958ad6a4127de09459a4d56532b1d1e338  ./verification/evidence-debt.json
 531078fbd05eb34108495ad691c69b70dfe3690547c538fd7fa273c47467b80e  ./verification/gate-catalog.json
 7b21436d10731345bc5447f7157a236bda45a224177f737c505f9c27baafe943  ./verification/harness-matrix.json
 78160001694a8e0a0bee9617d83011cb898cacadcccf4c8481f073c864bbed61  ./verification/recovery/rehearsal.json

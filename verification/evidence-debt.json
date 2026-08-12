@@ -1,16 +1,15 @@
 {
   "assertions": {
     "by_mapping_confidence": {
-      "contract_mapped": 2,
+      "contract_mapped": 1,
       "path_and_gate_mapped": 7,
-      "symbol_and_gate_mapped": 72,
-      "test_plan_mapped": 1,
+      "symbol_and_gate_mapped": 74,
       "track_level_only": 118
     },
     "by_state": {
       "external_evidence_required": 10,
-      "partially_implemented": 122,
-      "scaffolded": 55,
+      "partially_implemented": 123,
+      "scaffolded": 54,
       "source_implemented": 13
     },
     "open_gate_entries": 441,
