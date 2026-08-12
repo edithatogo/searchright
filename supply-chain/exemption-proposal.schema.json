@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/internal/cargo-vet-exemption-proposals.v1.schema.json",
+  "title": "Searchright cargo-vet exemption proposals",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "policy",
+    "proposals"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.cargo-vet-exemption-proposals.v1"
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "default_status",
+        "maximum_duration_days",
+        "wildcard_publisher_trust",
+        "claim_boundary"
+      ],
+      "properties": {
+        "default_status": {
+          "const": "not_authorized"
+        },
+        "maximum_duration_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 90
+        },
+        "wildcard_publisher_trust": {
+          "const": "prohibited"
+        },
+        "claim_boundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/proposal"
+      }
+    }
+  },
+  "$defs": {
+    "proposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "crate",
+        "version",
+        "criteria",
+        "status",
+        "owner",
+        "rationale",
+        "risk_summary",
+        "replacement_plan",
+        "linked_issue",
+        "proposed_at",
+        "expires_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CVX-[0-9]{4}$"
+        },
+        "crate": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+        },
+        "criteria": {
+          "enum": [
+            "safe-to-run",
+            "safe-to-deploy"
+          ]
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "approved",
+            "rejected",
+            "expired"
+          ]
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "risk_summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "replacement_plan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "linked_issue": {
+          "type": "string",
+          "pattern": "^https://github\\.com/edithatogo/searchright/issues/[0-9]+$"
+        },
+        "proposed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "decided_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "decision_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "approved"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "required": [
+              "decided_at",
+              "decision_evidence"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

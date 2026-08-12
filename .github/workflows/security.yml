@@ -55,8 +55,10 @@ jobs:
         run: cargo audit --deny warnings
       - name: Detect unused dependencies
         run: cargo machete
+      - name: Validate cargo-vet trust governance
+        run: python scripts/check_cargo_vet_governance.py
       - name: Enforce trusted dependency audit policy
-        run: cargo vet --locked
+        run: cargo vet --locked --no-minimize-exemptions
 
   dependency-review:
     name: Dependency review
