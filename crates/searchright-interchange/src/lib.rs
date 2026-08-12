@@ -8,11 +8,12 @@ use searchright_contracts::{
     BibliographicRecord, INTERCHANGE_RECEIPT_SCHEMA_VERSION, InterchangeFormat, InterchangeReceipt,
     RecordIdentifiers, RecordKind, Validate,
 };
+use schemars::JsonSchema;
 use serde::Serialize;
 use serde_json::{Value, json};
 
 /// Result of importing bibliographic records.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, JsonSchema)]
 pub struct ImportResult {
     /// Canonical records.
     pub records: Vec<BibliographicRecord>,

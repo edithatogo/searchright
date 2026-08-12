@@ -4,11 +4,12 @@
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
+use schemars::JsonSchema;
 use searchright_contracts::{DiscoveryEdge, DiscoveryRun, Validate};
 use serde::{Deserialize, Serialize};
 
 /// One candidate released from a bounded discovery graph for human review.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct DiscoveredCandidate {
     /// Candidate identifier.
     pub discovered_id: String,

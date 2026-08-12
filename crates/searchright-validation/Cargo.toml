@@ -10,6 +10,7 @@ publish = false
 
 [dependencies]
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
+schemars.workspace = true
 serde.workspace = true
 thiserror.workspace = true
 

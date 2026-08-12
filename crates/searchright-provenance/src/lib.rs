@@ -2,13 +2,14 @@
 
 #![forbid(unsafe_code)]
 
+use schemars::JsonSchema;
 use searchright_contracts::{AuditEvent, ReviewPlan, SourceReceipt};
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
 /// One serialisable provenance bundle.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct ProvenanceBundle {
     /// RO-Crate 1.3 JSON-LD metadata.
     pub ro_crate: Value,
