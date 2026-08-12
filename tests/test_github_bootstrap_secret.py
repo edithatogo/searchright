@@ -19,7 +19,7 @@ SPEC.loader.exec_module(MODULE)
 
 class ProjectSecretTests(unittest.TestCase):
     @patch.dict(os.environ, {}, clear=True)
-    def test_verifies_existing_protected_environment_secret(self) -> None:
+    def test_observes_existing_protected_environment_secret(self) -> None:
         with patch.object(
             MODULE,
             "run_json",
@@ -27,7 +27,7 @@ class ProjectSecretTests(unittest.TestCase):
         ) as run_json:
             status = MODULE.maybe_set_project_secret("edithatogo/searchright")
 
-        self.assertEqual(status, "verified_in_protected_environment")
+        self.assertEqual(status, "present_in_protected_environment")
         self.assertIn("github-project-write", run_json.call_args.args[0])
 
     @patch.dict(
@@ -42,13 +42,33 @@ class ProjectSecretTests(unittest.TestCase):
         self.assertEqual(status, "configured_in_protected_environment")
         self.assertIn("github-project-write", run.call_args.args[0])
         self.assertEqual(run.call_args.kwargs["input_text"], "test-token-not-a-real-secret")
+        self.assertNotIn("SEARCHRIGHT_PROJECT_TOKEN_VALUE", os.environ)
 
     @patch.dict(os.environ, {}, clear=True)
     def test_missing_secret_remains_fail_closed(self) -> None:
-        with patch.object(MODULE, "run_json", return_value=[]):
-            status = MODULE.maybe_set_project_secret("edithatogo/searchright")
+        with (
+            patch.object(MODULE, "run_json", return_value=[]),
+            self.assertRaisesRegex(
+                MODULE.GitHubCommandError,
+                "bootstrap will not mutate",
+            ),
+        ):
+            MODULE.maybe_set_project_secret("edithatogo/searchright")
 
-        self.assertEqual(status, "manual_secret_required")
+
+class ControlPlaneProtectionTests(unittest.TestCase):
+    def test_environments_are_restricted_to_protected_branches(self) -> None:
+        with patch.object(MODULE, "run_json", return_value={}) as run_json:
+            observed = MODULE.ensure_environments(
+                "edithatogo/searchright", ["github-project-write"]
+            )
+
+        self.assertEqual(observed, ["github-project-write"])
+        payload = run_json.call_args.kwargs["input_text"]
+        self.assertEqual(
+            __import__("json").loads(payload)["deployment_branch_policy"],
+            {"protected_branches": True, "custom_branch_policies": False},
+        )
 
 
 if __name__ == "__main__":

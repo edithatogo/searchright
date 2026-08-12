@@ -9,8 +9,8 @@ each top-level plan task maps to `track-NN-phase-M-task-TT`. The generated
 native issue hierarchy and Project projection remain prepared-not-synced until
 an explicit, approval-gated apply receipt exists.
 
-| ID | Track | Horizon | Status | Evidence | Outcome |
-| --- | --- | --- | --- | --- | --- |
+| ID | Track | Horizon | Status | Implementation | Evidence | Outcome |
+| --- | --- | --- | --- | --- | --- | --- |
 | 00 | [Foundation, Conductor and toolchain](tracks/00-foundation-conductor-toolchain/spec.md) | foundation | external_evidence_required | external_evidence_required | source_verified | Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap. |
 | 01 | [Contract catalogue and code generation](tracks/01-contract-catalog/spec.md) | foundation | partially_implemented | partially_implemented | source_verified | Maintain versioned schemas, examples, standards packs and Rust wire types from one catalogue. |
 | 02 | [Portable query AST and dialect compilers](tracks/02-query-ast-dialects/spec.md) | foundation | partially_implemented | partially_implemented | source_verified | Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings. |

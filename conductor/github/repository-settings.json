@@ -52,7 +52,8 @@
       "Declared Rust version",
       "Rust supply-chain policy",
       "CodeQL",
-      "Workflow policy"
+      "Workflow policy",
+      "PR scope and merge policy"
     ],
     "required_linear_history": true,
     "required_signed_commits": false,

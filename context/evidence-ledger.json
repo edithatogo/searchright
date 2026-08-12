@@ -116,20 +116,19 @@
     },
     {
       "blockers": [
-        "Durable bootstrap/audit receipt covers the former 568-node projection",
-        "Current 583-node projection requires a fresh exact-main audit"
+        "Exact-main bootstrap receipt and post-merge control-plane audit remain open"
       ],
       "domain": "github_control_plane",
       "level": "source_verified",
-      "receipt": "conductor/github/project.json"
+      "receipt": "verification/receipts/track-31-control-plane-apply.json"
     },
     {
       "blockers": [
-        "Remote repository and apply receipt exist; current 583-node projection requires a fresh exact-main audit"
+        "Current projection requires a post-merge apply and exact-main audit"
       ],
       "domain": "github_issue_hierarchy",
       "level": "source_verified",
-      "receipt": "conductor/github/issue-hierarchy.json"
+      "receipt": "verification/receipts/track-31-control-plane-apply.json"
     },
     {
       "blockers": [

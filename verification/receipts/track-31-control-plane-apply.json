@@ -1,0 +1,76 @@
+{
+  "schema_version": "org.searchright.github-control-plane-apply-summary.v1",
+  "status": "passed",
+  "repository": "edithatogo/searchright",
+  "source_revision": "37acbd0d808fbb1db3616a1a8431ab6b0627b410",
+  "workflow_run": {
+    "id": 31591940125,
+    "url": "https://github.com/edithatogo/searchright/actions/runs/31591940125",
+    "event": "workflow_dispatch",
+    "environment": "github-project-write",
+    "credential_check": "passed"
+  },
+  "issue_sync": {
+    "mode": "apply",
+    "canonical_issues": 583,
+    "issues_unchanged": 583,
+    "task_states_unchanged": 392,
+    "relationships_existing": 582,
+    "remaining_after_run": 0,
+    "delete_operations": 0
+  },
+  "project_sync": {
+    "mode": "apply",
+    "canonical_items": 583,
+    "existing_items": 583,
+    "known_equal_field_values": 7348,
+    "field_updates": 0,
+    "remaining_after_run": 0,
+    "delete_operations": 0,
+    "project_id": "PVT_kwHOAOYc4M4BgD2j",
+    "project_number": 40,
+    "project_url": "https://github.com/users/edithatogo/projects/40"
+  },
+  "audit": {
+    "status": "passed",
+    "canonical_issues_observed": 583,
+    "relationships_observed": 582,
+    "content_drift": 0,
+    "label_drift": 0,
+    "task_state_drift": 0,
+    "canonical_project_items_observed": 583,
+    "noncanonical_project_items_observed": 3,
+    "recognised_value_mismatches": 0,
+    "unrecognised_value_shapes": 0,
+    "mutation_operations": 0
+  },
+  "artifact": {
+    "id": 9139640738,
+    "name": "github-control-plane-receipts",
+    "digest": "sha256:9141ea76cccaf32b4e2aabf1167be1c77501200a3a8fbf57eeb3738cbd8889b5",
+    "expires_at": "2026-11-10T11:27:44Z",
+    "files": [
+      {
+        "name": "github-control-plane-audit.json",
+        "sha256": "b0cd8decee42e842787013c20197e37e19db1c6ed603e8f13ba7ab4b460fc3d1"
+      },
+      {
+        "name": "github-issue-sync-checkpoint.json",
+        "sha256": "57a4ef88d9afe5b05d3761c9df9a31ff4eae86a0faefa18aeaa9622bd9d3fb4c"
+      },
+      {
+        "name": "github-issue-sync.json",
+        "sha256": "87b63c0a36034ccd7313afa4b8afa3f1e3a4deec832def6054ffc902b621f3d8"
+      },
+      {
+        "name": "github-project-sync-checkpoint.json",
+        "sha256": "7566e5a73c0a2a5dfbecb48745e9362cf79906112f6cffa3f7c3a1ee31b555f5"
+      },
+      {
+        "name": "github-project-sync.json",
+        "sha256": "7960fc985b0eab8e8033a4984ddcb382e8fe7642a3ff97a25cfc86ad526dfc69"
+      }
+    ]
+  },
+  "claim_boundary": "This receipt proves an idempotent credential-backed GitHub control-plane apply and read-only parity audit for the exact source revision. It does not promote product implementation, methodology or release maturity. Three additive noncanonical Project items remain intentionally outside automatic deletion authority."
+}

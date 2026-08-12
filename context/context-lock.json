@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "fa7470c1fa51568a0c7599a4cf30d7a86d8e86aaa78f4b801140c4e8bdc2c43a",
-      "size": 607259
+      "sha256": "7c172c50a2c0ad1abe08438d639049319ff565e7efd260cf21d775d6252f735c",
+      "size": 607290
     },
     {
       "path": "conductor/github/project.json",
@@ -33,8 +33,8 @@
     },
     {
       "path": "conductor/github/repository-settings.json",
-      "sha256": "c280c2a4d1f22061636b698ef39f3e6c84f970fd1ce77c44c8535cc355daf209",
-      "size": 1715
+      "sha256": "37e91b873a14cfa9721508a1f3f000cb6f213fe14369a347c62e24db3d9b1fb7",
+      "size": 1750
     },
     {
       "path": "conductor/launch-preparation-roadmap.json",
@@ -53,8 +53,8 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "9f2b6adee03ecc2fc8654dd24cacfaa5701c46cfde68faeaefd1835e11a68f4c",
-      "size": 77479
+      "sha256": "8e1dd99bc6200916389f914a1c6f4d105217effb38b929ae461d7904b1c3226d",
+      "size": 78403
     },
     {
       "path": "conductor/traceability-overrides.json",
@@ -78,8 +78,8 @@
     },
     {
       "path": "context/evidence-ledger.json",
-      "sha256": "82234847956c3c72e50785ce76f5fa2ef0abfd8ed2d49ec249462d06bc3f25f7",
-      "size": 8951
+      "sha256": "21682b64c891b734ffec290e3c774e807016825c081aad2c926c263f651deeaf",
+      "size": 8891
     },
     {
       "path": "context/hazard-log.json",
@@ -88,8 +88,8 @@
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "207afb0014c76b237ff189142d1493394e0deae3ca6f32ee0028324ef79c7ac5",
-      "size": 21624
+      "sha256": "45b391fcfcc4605a2c9f089911c87d6c3b8eee9f667327b2e6f8bfe73292a80c",
+      "size": 22018
     },
     {
       "path": "contracts/migrations/registry.json",
@@ -98,8 +98,8 @@
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "fe341fc10eb937665e3d77982bf4e945e22efec7d02b3af7f19d91d445c1b02d",
-      "size": 24387
+      "sha256": "79914b45f6765c4c56f64c785a650eea3cd0c7bf5e4894b07beb14bb3c582255",
+      "size": 24846
     },
     {
       "path": "docs/safety/safety-case.md",

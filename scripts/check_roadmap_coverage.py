@@ -7,6 +7,7 @@ import json
 import re
 import sys
 from collections.abc import Mapping
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -45,6 +46,53 @@ def load_json(path: Path) -> Any:
 
 def error(errors: list[str], message: str) -> None:
     errors.append(message)
+
+
+def validate_archived_track(
+    track_id: str,
+    entry: Mapping[str, Any],
+    plan: str,
+    traceability: Mapping[str, Any],
+) -> list[str]:
+    """Return lifecycle violations without relocating canonical track state."""
+    if entry.get("lifecycle") != "archived":
+        return []
+    violations: list[str] = []
+    try:
+        date.fromisoformat(str(entry.get("archived_on", "")))
+    except ValueError:
+        violations.append(f"track {track_id} archived_on must be an ISO date")
+    if entry.get("blockers"):
+        violations.append(f"track {track_id} archived lifecycle retains blockers")
+    if not entry.get("closeout_completed"):
+        violations.append(f"track {track_id} archived lifecycle lacks completed closeout")
+    if not entry.get("review_completed"):
+        violations.append(f"track {track_id} archived lifecycle lacks completed review")
+    if not entry.get("higher_evidence_completed"):
+        violations.append(f"track {track_id} archived lifecycle lacks completed higher evidence")
+    if not entry.get("completed_higher_evidence_gates"):
+        violations.append(f"track {track_id} archived lifecycle lacks completed evidence gates")
+    if entry.get("evidence_level") not in FINAL_EVIDENCE:
+        violations.append(f"track {track_id} archived lifecycle lacks final evidence")
+    if re.search(r"^- \[ \]", plan, flags=re.MULTILINE):
+        violations.append(f"track {track_id} archived lifecycle retains unchecked plan tasks")
+    assertions = traceability.get("assertions")
+    if not isinstance(assertions, list) or not assertions:
+        violations.append(f"track {track_id} archived lifecycle lacks assertion traceability")
+    else:
+        for assertion in assertions:
+            if not isinstance(assertion, Mapping):
+                violations.append(f"track {track_id} archived lifecycle has invalid assertion")
+                continue
+            gates = assertion.get("open_gates")
+            if not isinstance(gates, list) or gates:
+                violations.append(f"track {track_id} archived lifecycle retains open assertion gates")
+            receipts = assertion.get("evidence_receipts")
+            if not isinstance(receipts, list) or not receipts:
+                violations.append(f"track {track_id} archived lifecycle lacks assertion receipts")
+            elif any(not isinstance(path, str) or not (ROOT / path).is_file() for path in receipts):
+                violations.append(f"track {track_id} archived lifecycle refers to missing assertion receipts")
+    return violations
 
 
 def main() -> int:
@@ -120,6 +168,9 @@ def main() -> int:
         status = entry.get("status")
         evidence_level = entry.get("evidence_level")
         implementation_state = entry.get("implementation_state")
+        lifecycle = entry.get("lifecycle", "active")
+        if lifecycle not in {"active", "archived"}:
+            error(errors, f"track {track_id} has invalid lifecycle {lifecycle!r}")
         if status not in ALLOWED_STATUSES:
             error(errors, f"track {track_id} has invalid status {status!r}")
         if evidence_level not in ALLOWED_EVIDENCE:
@@ -141,6 +192,8 @@ def main() -> int:
             error(errors, f"track {track_id} evidence differs across coverage/metadata/evidence")
         if metadata.get("slug") != directory.name[3:]:
             error(errors, f"track {track_id} slug mismatch")
+        if metadata.get("lifecycle", "active") != lifecycle or evidence.get("lifecycle", "active") != lifecycle:
+            error(errors, f"track {track_id} lifecycle differs across coverage/metadata/evidence")
 
         deliverables = entry.get("deliverables")
         if not isinstance(deliverables, list) or not deliverables:
@@ -158,12 +211,29 @@ def main() -> int:
         if not isinstance(blockers, list):
             error(errors, f"track {track_id} blockers must be a list")
             blockers = []
+        phase_three_count = entry.get("phase_3_task_count")
+        if phase_three_count is not None:
+            completed_gates = entry.get("completed_higher_evidence_gates", [])
+            if (
+                not isinstance(phase_three_count, int)
+                or phase_three_count < 1
+                or phase_three_count < len(blockers)
+                or not isinstance(completed_gates, list)
+                or phase_three_count < len(completed_gates)
+            ):
+                error(errors, f"track {track_id} has invalid immutable phase_3_task_count")
         if status == "external_evidence_required" and not blockers:
             error(errors, f"track {track_id} requires external evidence but has no blockers")
         if not blockers and evidence_level not in FINAL_EVIDENCE and status not in {"source_implemented", "source_implemented_unverified", "partially_implemented", "scaffolded", "contracted"}:
             error(errors, f"track {track_id} has no blocker but is not at a final evidence level")
 
         plan = plan_path.read_text(encoding="utf-8")
+        traceability_path = ROOT / expected_trace
+        traceability = load_json(traceability_path)
+        if isinstance(traceability, Mapping):
+            errors.extend(validate_archived_track(track_id, entry, plan, traceability))
+        elif entry.get("lifecycle") == "archived":
+            error(errors, f"track {track_id} archived lifecycle has invalid traceability")
         checked = len(re.findall(r"^- \[x\]", plan, flags=re.MULTILINE | re.IGNORECASE))
         unchecked = len(re.findall(r"^- \[ \]", plan, flags=re.MULTILINE))
         checked_tasks += checked

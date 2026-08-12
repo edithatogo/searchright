@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Execute bootstrap and preserve observed repository, ruleset, issue, subissue and Project receipts.
+- [ ] Complete the independent Conductor review and semantic in-place archival after exact-main evidence passes.
 
 ## Completion and evidence contract
 

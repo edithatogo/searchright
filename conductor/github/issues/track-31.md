@@ -28,6 +28,6 @@ Create and synchronise the remote repository, epic, tracks, phases, tasks, Proje
 
 ## Claim boundary
 
-The declarative control plane is source-verified; no remote repository, issue, subissue, Project or ruleset is claimed until an apply receipt exists. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+The remote and credential-backed synchronisation have been observed, but the full bootstrap and revised control-plane code require a new exact-merged-main receipt. GitHub remains a coordination projection and cannot promote product implementation, methodology or release maturity.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -25,7 +25,13 @@ PHASES = (
 
 
 def task_counts(entry: dict) -> dict[int, int]:
-    return {1: 1, 2: 2, 3: max(1, len(entry.get("blockers", []))), 4: 4}
+    higher_evidence_tasks = max(
+        len(entry.get("blockers", [])),
+        len(entry.get("completed_higher_evidence_gates", [])),
+    )
+    declared = entry.get("phase_3_task_count")
+    phase_three = int(declared) if isinstance(declared, int) and declared > 0 else max(1, higher_evidence_tasks)
+    return {1: 1, 2: 2, 3: phase_three, 4: 4}
 
 
 def issue_keys(track_id: str, entry: dict) -> dict[str, object]:
@@ -64,6 +70,9 @@ def render_metadata(entry: dict) -> str:
         "traceability_path": f"conductor/tracks/{track_id}-{entry['slug']}/traceability.json",
         "github": issue_keys(track_id, entry),
     }
+    if entry.get("lifecycle") == "archived":
+        value["lifecycle"] = "archived"
+        value["archived_on"] = entry["archived_on"]
     return json.dumps(value, indent=2) + "\n"
 
 
@@ -94,6 +103,9 @@ def render_evidence(entry: dict) -> str:
         "runtime_evidence": entry.get("runtime_evidence", []),
         "external_evidence": entry.get("external_evidence", []),
     }
+    if entry.get("lifecycle") == "archived":
+        value["lifecycle"] = "archived"
+        value["archived_on"] = entry["archived_on"]
     return json.dumps(value, indent=2) + "\n"
 
 
@@ -103,6 +115,11 @@ def render_plan(entry: dict) -> str:
         f"# Plan: {track_id} {entry['title']}",
         "",
         f"Current status: **{entry['status']}**. Implementation state: **{entry['implementation_state']}**. Evidence level: **{entry['evidence_level']}**.",
+        *(
+            [f"Lifecycle: **archived** on **{entry['archived_on']}**; canonical source and GitHub keys are retained.", ""]
+            if entry.get("lifecycle") == "archived"
+            else []
+        ),
         "",
         f"GitHub issue key: `track-{track_id}`. Each numbered phase maps to the same-numbered native subissue.",
         "",
@@ -143,7 +160,10 @@ def render_plan(entry: dict) -> str:
     )
     for blocker in entry["blockers"]:
         lines.append(f"- [ ] {blocker}")
-    if not entry["blockers"]:
+    if entry.get("higher_evidence_completed", False):
+        for gate in entry.get("completed_higher_evidence_gates", []):
+            lines.append(f"- [x] {gate}")
+    elif not entry["blockers"]:
         lines.append("- [ ] Promote evidence only when a newer reproducible receipt justifies it.")
     lines.extend(
         [
@@ -159,7 +179,11 @@ def render_plan(entry: dict) -> str:
                 if entry.get("review_completed", False)
                 else "- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute."
             ),
-            "- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.",
+            (
+                "- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced."
+                if entry.get("closeout_completed", False)
+                else "- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced."
+            ),
             "",
         ]
     )
@@ -179,15 +203,37 @@ def render_tracks(entries: list[dict]) -> str:
         "native issue hierarchy and Project projection remain prepared-not-synced until",
         "an explicit, approval-gated apply receipt exists.",
         "",
-        "| ID | Track | Horizon | Status | Evidence | Outcome |",
-        "| --- | --- | --- | --- | --- | --- |",
+        "| ID | Track | Horizon | Status | Implementation | Evidence | Outcome |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ]
     for entry in entries:
+        if entry.get("lifecycle") == "archived":
+            continue
         path = f"tracks/{entry['track_id']}-{entry['slug']}/spec.md"
         lines.append(
             f"| {entry['track_id']} | [{entry['title']}]({path}) | {entry['horizon']} | "
             f"{entry['status']} | {entry['implementation_state']} | {entry['evidence_level']} | {entry['outcome']} |"
         )
+    archived = [entry for entry in entries if entry.get("lifecycle") == "archived"]
+    if archived:
+        lines.extend(
+            [
+                "",
+                "## Archived tracks",
+                "",
+                "Archived tracks retain their canonical paths, requirement ownership and stable",
+                "GitHub projection keys. Archival never deletes or automatically archives remote items.",
+                "",
+                "| ID | Track | Archived | Evidence |",
+                "| --- | --- | --- | --- |",
+            ]
+        )
+        for entry in archived:
+            path = f"tracks/{entry['track_id']}-{entry['slug']}/spec.md"
+            lines.append(
+                f"| {entry['track_id']} | [{entry['title']}]({path}) | "
+                f"{entry['archived_on']} | {entry['evidence_level']} |"
+            )
     lines.extend(
         [
             "",
