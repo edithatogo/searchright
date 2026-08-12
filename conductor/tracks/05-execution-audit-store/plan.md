@@ -31,7 +31,6 @@ GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/reduce_review_events.py --self-test`
   - [x] `python scripts/review_bundle.py self-test`
   - [x] `python scripts/check_research_object_handoff.py`
-  - [x] `cargo test -p searchright-contracts -p searchright-governance -p searchright-store --locked`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
