@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/named-filter-pack.v1.schema.json",
+  "title": "Searchright Named Filter Pack v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pack_id", "version", "title", "validated_on", "expires_on", "filters"],
+  "properties": {
+    "schema_version": { "const": "org.searchright.named-filter-pack.v1" },
+    "pack_id": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "validated_on": { "$ref": "#/$defs/date" },
+    "expires_on": { "$ref": "#/$defs/date" },
+    "filters": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/named_filter" }
+    }
+  },
+  "$defs": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "dialect": {
+      "oneOf": [
+        {
+          "enum": [
+            "pub_med", "ovid_medline", "embase", "europe_pmc", "cinahl_ebsco",
+            "psyc_info_ovid", "scopus", "web_of_science", "crossref", "open_alex",
+            "clinical_trials_gov", "generic_boolean"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["custom"],
+          "properties": { "custom": { "type": "string", "minLength": 1 } }
+        }
+      ]
+    },
+    "checksum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "digest"],
+      "properties": {
+        "algorithm": { "const": "sha256" },
+        "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "citation", "source_version", "source_uri"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "citation": { "type": "string", "minLength": 1 },
+        "source_version": { "type": "string", "minLength": 1 },
+        "source_uri": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "minLength": 1 }
+          ]
+        }
+      }
+    },
+    "applicability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_ids", "platform_versions", "intended_use", "limitations"],
+      "properties": {
+        "source_ids": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "platform_versions": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "intended_use": { "type": "string", "minLength": 1 },
+        "limitations": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "reviewer_id", "reviewer_role", "method", "evidence_reference", "evidence_sha256"],
+      "properties": {
+        "state": {
+          "enum": [
+            "structural_only",
+            "methodologically_reviewed",
+            "methodologically_reviewed_and_provider_current"
+          ]
+        },
+        "reviewer_id": { "type": "string", "minLength": 1 },
+        "reviewer_role": { "type": "string", "minLength": 1 },
+        "method": { "type": "string", "minLength": 1 },
+        "evidence_reference": { "type": "string", "minLength": 1 },
+        "evidence_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["basis", "redistribution", "decided_by", "evidence_reference"],
+      "properties": {
+        "basis": { "type": "string", "minLength": 1 },
+        "redistribution": { "enum": ["permitted", "prohibited", "review_required"] },
+        "decided_by": { "type": "string", "minLength": 1 },
+        "evidence_reference": { "type": "string", "minLength": 1 }
+      }
+    },
+    "named_filter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "filter_id", "version", "name", "dialect", "expression", "checksum", "source",
+        "applicability", "validation", "rights", "effective_from", "expires_on"
+      ],
+      "properties": {
+        "filter_id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "dialect": { "$ref": "#/$defs/dialect" },
+        "expression": { "type": "string", "minLength": 1 },
+        "checksum": { "$ref": "#/$defs/checksum" },
+        "source": { "$ref": "#/$defs/source" },
+        "applicability": { "$ref": "#/$defs/applicability" },
+        "validation": { "$ref": "#/$defs/validation" },
+        "rights": { "$ref": "#/$defs/rights" },
+        "effective_from": { "$ref": "#/$defs/date" },
+        "expires_on": { "$ref": "#/$defs/date" }
+      }
+    }
+  }
+}

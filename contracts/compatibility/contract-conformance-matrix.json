@@ -716,6 +716,29 @@
       "downstream_consumer_conformance": "not_evidenced"
     },
     {
+      "id": "named-filter-pack",
+      "owner_track": "02",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/named-filter-pack.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/named-filter-pack.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/named-filter-pack.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "NamedFilterPack",
+        "registry_status": "registered_root",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
       "id": "native-search-strategy",
       "owner_track": "02",
       "stability": "alpha",
@@ -1426,7 +1449,7 @@
     "policy": "generated_clients_must_not_reimplement_domain_logic"
   },
   "rust_schema_parity": {
-    "registered_roots": 9,
+    "registered_roots": 10,
     "exact_parity": false,
     "scope_declaration": "evidence_search_contracts::rust_schema_parity_scope"
   },

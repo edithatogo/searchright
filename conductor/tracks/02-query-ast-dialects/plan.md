@@ -31,9 +31,9 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-02-phase-3 -->
 
-- [ ] Complete dialect-specific semantic parsers and full translation snapshot/property coverage.
-- [ ] Define versioned named-filter records and validated filter packs.
-- [ ] Expand the conformance corpus with independently reviewed source strategies.
+- [ ] Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.
+- [ ] Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only.
+- [ ] Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus.
 
 ## Phase 4: Review and closeout
 

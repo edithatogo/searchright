@@ -1,0 +1,21 @@
+{
+  "schema_version": "org.searchright.press-strategy-review.v1",
+  "track_id": "02",
+  "status": "pending_external_review",
+  "reviewer": null,
+  "reviewed_at": null,
+  "source_revision": null,
+  "corpus_manifest": "contracts/query-corpus/index.json",
+  "loss_matrix": "contracts/query-corpus/loss-matrix.json",
+  "decision": "not_reviewed",
+  "findings": [],
+  "required_review_domains": [
+    "question_translation",
+    "boolean_and_proximity_operators",
+    "subject_headings",
+    "text_words_and_spelling",
+    "syntax_and_line_numbers",
+    "limits_and_filters"
+  ],
+  "claim_boundary": "This is a fail-closed review slot, not evidence of PRESS approval. An accountable independent information specialist must complete and attest the review before Track 02 can be archived."
+}

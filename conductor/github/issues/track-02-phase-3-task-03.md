@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Expand the conformance corpus with independently reviewed source strategies.
+- [ ] Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus.
 
 ## Completion and evidence contract
 

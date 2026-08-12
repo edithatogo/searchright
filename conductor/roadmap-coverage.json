@@ -122,9 +122,9 @@
     },
     {
       "blockers": [
-        "Complete dialect-specific semantic parsers and full translation snapshot/property coverage.",
-        "Define versioned named-filter records and validated filter packs.",
-        "Expand the conformance corpus with independently reviewed source strategies."
+        "Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.",
+        "Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only.",
+        "Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus."
       ],
       "checks": [
         "python scripts/validate_repository.py"
@@ -144,7 +144,7 @@
         "01"
       ],
       "evidence_level": "source_verified",
-      "external_approval_required": false,
+      "external_approval_required": true,
       "horizon": "foundation",
       "implementation_state": "partially_implemented",
       "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
@@ -156,6 +156,7 @@
       "runtime_evidence": [
         "verification/receipts/track-02-compiler-review.json"
       ],
+      "phase_3_task_count": 3,
       "review_completed": true,
       "slug": "query-ast-dialects",
       "status": "partially_implemented",

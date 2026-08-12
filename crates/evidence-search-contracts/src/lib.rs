@@ -18,10 +18,12 @@ pub use provider::{
     SearchRequest, SearchRun, SourceReceipt,
 };
 pub use query::{
-    CompiledStrategy, DateLimit, NativeNormalisationState, NativeParseDiagnostic,
-    NativeParseSeverity, NativeQueryLine, NativeQueryLineKind, NativeSearchStrategy,
-    NativeSourceSpan, QueryExpr, SearchDialect, SearchField, SearchLimit, SearchStrategy,
-    SearchTerm, StrategyWarning, TranslationFidelity,
+    CompiledStrategy, DateLimit, FilterApplicability, FilterChecksum, FilterRights,
+    FilterSourceCitation, FilterValidation, FilterValidationState, NamedFilterPack,
+    NamedFilterRecord, NativeNormalisationState, NativeParseDiagnostic, NativeParseSeverity,
+    NativeQueryLine, NativeQueryLineKind, NativeSearchStrategy, NativeSourceSpan, QueryExpr,
+    RedistributionDecision, SearchDialect, SearchField, SearchLimit, SearchStrategy, SearchTerm,
+    StrategyWarning, TranslationFidelity,
 };
 pub use record::{BibliographicRecord, RecordIdentifiers, RecordKind};
 pub use schema::{
@@ -42,6 +44,8 @@ pub const SOURCE_RECEIPT_SCHEMA_VERSION: &str = "org.searchright.source-receipt.
 pub const SEARCH_RUN_SCHEMA_VERSION: &str = "org.searchright.search-run.v1";
 /// Canonical search-strategy contract version.
 pub const SEARCH_STRATEGY_SCHEMA_VERSION: &str = "org.searchright.search-strategy.v1";
+/// Canonical named-filter-pack contract version.
+pub const NAMED_FILTER_PACK_SCHEMA_VERSION: &str = "org.searchright.named-filter-pack.v1";
 /// Canonical native-search-strategy contract version.
 pub const NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION: &str = "org.searchright.native-search-strategy.v1";
 /// Canonical audit-event contract version.

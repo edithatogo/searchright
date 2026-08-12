@@ -12,7 +12,7 @@
   ],
   "horizon": "foundation",
   "evidence_level": "source_verified",
-  "external_approval_required": false,
+  "external_approval_required": true,
   "evidence_path": "conductor/tracks/02-query-ast-dialects/evidence.json",
   "traceability_path": "conductor/tracks/02-query-ast-dialects/traceability.json",
   "github": {

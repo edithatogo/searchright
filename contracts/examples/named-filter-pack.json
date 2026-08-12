@@ -1,0 +1,51 @@
+{
+  "schema_version": "org.searchright.named-filter-pack.v1",
+  "pack_id": "synthetic-contract-fixture",
+  "version": "1.0.0",
+  "title": "Synthetic named-filter contract fixture",
+  "validated_on": "2026-08-13",
+  "expires_on": "2027-08-13",
+  "filters": [
+    {
+      "filter_id": "synthetic-rct-pubmed",
+      "version": "1.0.0",
+      "name": "Synthetic RCT publication-type filter",
+      "dialect": "pub_med",
+      "expression": "randomized controlled trial[pt]",
+      "checksum": {
+        "algorithm": "sha256",
+        "digest": "18599c423f896ed99d33b15840c39b16ff63abb88e5194ffd66a33c336ec1f16"
+      },
+      "source": {
+        "title": "Searchright synthetic contract fixture",
+        "citation": "Searchright contributors. Synthetic contract fixture. 2026.",
+        "source_version": "1.0.0",
+        "source_uri": null
+      },
+      "applicability": {
+        "source_ids": ["synthetic-pubmed-fixture"],
+        "platform_versions": ["synthetic-2026"],
+        "intended_use": "Schema and semantic-validation testing only.",
+        "limitations": [
+          "Not a validated methodological filter and not suitable for live retrieval claims."
+        ]
+      },
+      "validation": {
+        "state": "structural_only",
+        "reviewer_id": "searchright-contract-test",
+        "reviewer_role": "automated structural validator",
+        "method": "JSON Schema validation, checksum verification, and Rust semantic invariant tests.",
+        "evidence_reference": "contracts/named-filters/synthetic-validation-evidence.txt",
+        "evidence_sha256": "b1ef5ede813af5602aa6b8e95b7825a01460bf27e9887c0ce859e3ea1860a057"
+      },
+      "rights": {
+        "basis": "Repository-authored synthetic expression under the repository licence.",
+        "redistribution": "permitted",
+        "decided_by": "searchright repository policy",
+        "evidence_reference": "contracts/named-filters/synthetic-validation-evidence.txt"
+      },
+      "effective_from": "2026-08-13",
+      "expires_on": "2027-08-13"
+    }
+  ]
+}

@@ -2,10 +2,12 @@ use std::collections::BTreeSet;
 
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 
 use crate::{
-    COMPILED_STRATEGY_SCHEMA_VERSION, ContractError, NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION,
-    SEARCH_STRATEGY_SCHEMA_VERSION, Validate, require_schema_version, require_text,
+    COMPILED_STRATEGY_SCHEMA_VERSION, ContractError, NAMED_FILTER_PACK_SCHEMA_VERSION,
+    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION, SEARCH_STRATEGY_SCHEMA_VERSION, Validate,
+    require_schema_version, require_text,
 };
 
 /// Portable search field.
@@ -286,6 +288,378 @@ impl Validate for SearchLimit {
         }
         Ok(())
     }
+}
+
+/// Source citation for one named filter.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct FilterSourceCitation {
+    /// Human-readable source title.
+    pub title: String,
+    /// Complete citation text suitable for reporting.
+    pub citation: String,
+    /// Source-defined version or edition of the filter.
+    pub source_version: String,
+    /// Optional source URI; access and redistribution rights are not implied.
+    pub source_uri: Option<String>,
+}
+
+impl Validate for FilterSourceCitation {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_text(&self.title, "named_filter.source.title")?;
+        require_text(&self.citation, "named_filter.source.citation")?;
+        require_text(&self.source_version, "named_filter.source.source_version")?;
+        if let Some(source_uri) = &self.source_uri {
+            require_text(source_uri, "named_filter.source.source_uri")?;
+        }
+        Ok(())
+    }
+}
+
+/// SHA-256 checksum over the exact UTF-8 bytes of a native filter expression.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct FilterChecksum {
+    /// Digest algorithm. Version 1 admits only `sha256`.
+    pub algorithm: String,
+    /// Lowercase hexadecimal digest.
+    pub digest: String,
+}
+
+impl Validate for FilterChecksum {
+    fn validate(&self) -> Result<(), ContractError> {
+        if self.algorithm != "sha256" {
+            return Err(ContractError::Invariant(
+                "named-filter checksums must use sha256".to_owned(),
+            ));
+        }
+        if self.digest.len() != 64
+            || !self
+                .digest
+                .bytes()
+                .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+        {
+            return Err(ContractError::Invariant(
+                "named-filter checksum digest must be 64 lowercase hexadecimal characters"
+                    .to_owned(),
+            ));
+        }
+        Ok(())
+    }
+}
+
+/// Explicit applicability boundary for one source-native named filter.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct FilterApplicability {
+    /// Information-source identifiers for which the source defines the filter.
+    pub source_ids: Vec<String>,
+    /// Provider/platform versions against which the filter was assessed.
+    pub platform_versions: Vec<String>,
+    /// Intended methodological use of the filter.
+    pub intended_use: String,
+    /// Known exclusions, limitations or non-applicable contexts.
+    pub limitations: Vec<String>,
+}
+
+impl Validate for FilterApplicability {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_unique_nonempty_text(&self.source_ids, "named_filter.applicability.source_ids")?;
+        require_unique_nonempty_text(
+            &self.platform_versions,
+            "named_filter.applicability.platform_versions",
+        )?;
+        require_text(
+            &self.intended_use,
+            "named_filter.applicability.intended_use",
+        )?;
+        require_unique_nonempty_text(&self.limitations, "named_filter.applicability.limitations")
+    }
+}
+
+/// Highest evidence level established for a named-filter record.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum FilterValidationState {
+    /// Schema and local semantic invariants only; no methodological claim.
+    StructuralOnly,
+    /// An accountable reviewer assessed methodological suitability.
+    MethodologicallyReviewed,
+    /// Methodological review and provider-version currency were both evidenced.
+    MethodologicallyReviewedAndProviderCurrent,
+}
+
+/// Accountable validation evidence for one named filter.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct FilterValidation {
+    /// Highest validation state supported by the evidence.
+    pub state: FilterValidationState,
+    /// Stable reviewer or validator identity.
+    pub reviewer_id: String,
+    /// Accountable role of the reviewer or validator.
+    pub reviewer_role: String,
+    /// Validation method actually performed.
+    pub method: String,
+    /// Durable reference to the validation evidence.
+    pub evidence_reference: String,
+    /// SHA-256 checksum of the referenced evidence bytes.
+    pub evidence_sha256: String,
+}
+
+impl Validate for FilterValidation {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_text(&self.reviewer_id, "named_filter.validation.reviewer_id")?;
+        require_text(&self.reviewer_role, "named_filter.validation.reviewer_role")?;
+        require_text(&self.method, "named_filter.validation.method")?;
+        require_text(
+            &self.evidence_reference,
+            "named_filter.validation.evidence_reference",
+        )?;
+        validate_sha256(
+            &self.evidence_sha256,
+            "named_filter.validation.evidence_sha256",
+        )
+    }
+}
+
+/// Redistribution decision for exact filter text.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum RedistributionDecision {
+    /// Exact filter text may be redistributed under the recorded basis.
+    Permitted,
+    /// Exact filter text must not be redistributed.
+    Prohibited,
+    /// Accountable rights review is still required.
+    ReviewRequired,
+}
+
+/// Rights basis and redistribution decision for one named filter.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct FilterRights {
+    /// Copyright, licence or authorship basis for holding the exact expression.
+    pub basis: String,
+    /// Explicit redistribution decision; silence never implies permission.
+    pub redistribution: RedistributionDecision,
+    /// Accountable decision-maker or policy identifier.
+    pub decided_by: String,
+    /// Durable reference supporting the decision.
+    pub evidence_reference: String,
+}
+
+impl Validate for FilterRights {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_text(&self.basis, "named_filter.rights.basis")?;
+        require_text(&self.decided_by, "named_filter.rights.decided_by")?;
+        require_text(
+            &self.evidence_reference,
+            "named_filter.rights.evidence_reference",
+        )
+    }
+}
+
+/// One versioned, source-native named filter.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct NamedFilterRecord {
+    /// Stable filter identifier across versions.
+    pub filter_id: String,
+    /// Immutable record version.
+    pub version: String,
+    /// Human-readable filter name.
+    pub name: String,
+    /// Native dialect of `expression`.
+    pub dialect: SearchDialect,
+    /// Exact source-native filter expression.
+    pub expression: String,
+    /// Checksum over the exact UTF-8 bytes of `expression`.
+    pub checksum: FilterChecksum,
+    /// Source citation and source-defined version.
+    pub source: FilterSourceCitation,
+    /// Explicit provider, version and use constraints.
+    pub applicability: FilterApplicability,
+    /// Evidence-scaled validation status and accountable evidence.
+    pub validation: FilterValidation,
+    /// Rights basis and explicit redistribution decision.
+    pub rights: FilterRights,
+    /// First ISO 8601 calendar date on which this record is applicable.
+    pub effective_from: String,
+    /// Last ISO 8601 calendar date on which this record is applicable.
+    pub expires_on: String,
+}
+
+impl Validate for NamedFilterRecord {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_text(&self.filter_id, "named_filter.filter_id")?;
+        require_text(&self.version, "named_filter.version")?;
+        require_text(&self.name, "named_filter.name")?;
+        require_text(&self.expression, "named_filter.expression")?;
+        if self.expression.chars().any(char::is_control) {
+            return Err(ContractError::Invariant(
+                "named-filter expressions must not contain control characters".to_owned(),
+            ));
+        }
+        if let SearchDialect::Custom(name) = &self.dialect {
+            require_text(name, "named_filter.dialect.custom")?;
+        }
+        self.checksum.validate()?;
+        let computed = Sha256::digest(self.expression.as_bytes())
+            .iter()
+            .map(|byte| format!("{byte:02x}"))
+            .collect::<String>();
+        if computed != self.checksum.digest {
+            return Err(ContractError::Invariant(
+                "named-filter checksum must match the exact UTF-8 expression bytes".to_owned(),
+            ));
+        }
+        self.source.validate()?;
+        self.applicability.validate()?;
+        self.validation.validate()?;
+        self.rights.validate()?;
+        require_date(&self.effective_from, "named_filter.effective_from")?;
+        require_date(&self.expires_on, "named_filter.expires_on")?;
+        if self.effective_from > self.expires_on {
+            return Err(ContractError::Invariant(
+                "named-filter effective date must not follow its expiry date".to_owned(),
+            ));
+        }
+        Ok(())
+    }
+}
+
+/// Versioned collection of named filters validated as of a declared date.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct NamedFilterPack {
+    /// Contract identifier.
+    pub schema_version: String,
+    /// Stable pack identifier across versions.
+    pub pack_id: String,
+    /// Immutable pack version.
+    pub version: String,
+    /// Human-readable pack title.
+    pub title: String,
+    /// Date on which every record was checked for structural validity and currency.
+    pub validated_on: String,
+    /// Last date on which this pack may be treated as current without revalidation.
+    pub expires_on: String,
+    /// Versioned named-filter records.
+    pub filters: Vec<NamedFilterRecord>,
+}
+
+impl Validate for NamedFilterPack {
+    fn validate(&self) -> Result<(), ContractError> {
+        require_schema_version(
+            &self.schema_version,
+            NAMED_FILTER_PACK_SCHEMA_VERSION,
+            "named_filter_pack.schema_version",
+        )?;
+        require_text(&self.pack_id, "named_filter_pack.pack_id")?;
+        require_text(&self.version, "named_filter_pack.version")?;
+        require_text(&self.title, "named_filter_pack.title")?;
+        require_date(&self.validated_on, "named_filter_pack.validated_on")?;
+        require_date(&self.expires_on, "named_filter_pack.expires_on")?;
+        if self.validated_on > self.expires_on {
+            return Err(ContractError::Invariant(
+                "named-filter pack validation date must not follow its expiry date".to_owned(),
+            ));
+        }
+        if self.filters.is_empty() {
+            return Err(ContractError::EmptyCollection("named_filter_pack.filters"));
+        }
+        let mut identities = BTreeSet::new();
+        for filter in &self.filters {
+            filter.validate()?;
+            if !identities.insert((&filter.filter_id, &filter.version)) {
+                return Err(ContractError::Invariant(
+                    "named-filter pack record identities must be unique".to_owned(),
+                ));
+            }
+            if filter.effective_from > self.validated_on || filter.expires_on < self.validated_on {
+                return Err(ContractError::Invariant(
+                    "every named filter must be current on the pack validation date".to_owned(),
+                ));
+            }
+            if filter.expires_on < self.expires_on {
+                return Err(ContractError::Invariant(
+                    "named-filter pack expiry must not follow a record expiry".to_owned(),
+                ));
+            }
+            if filter.rights.redistribution != RedistributionDecision::Permitted {
+                return Err(ContractError::Invariant(
+                    "validated named-filter packs may contain exact text only when redistribution is explicitly permitted"
+                        .to_owned(),
+                ));
+            }
+        }
+        Ok(())
+    }
+}
+
+fn require_unique_nonempty_text(
+    values: &[String],
+    field: &'static str,
+) -> Result<(), ContractError> {
+    if values.is_empty() {
+        return Err(ContractError::EmptyCollection(field));
+    }
+    let mut seen = BTreeSet::new();
+    for value in values {
+        require_text(value, field)?;
+        if !seen.insert(value) {
+            return Err(ContractError::Invariant(format!(
+                "`{field}` must not contain duplicate values"
+            )));
+        }
+    }
+    Ok(())
+}
+
+fn require_date(value: &str, field: &'static str) -> Result<(), ContractError> {
+    require_text(value, field)?;
+    let bytes = value.as_bytes();
+    if bytes.len() != 10
+        || bytes.get(4) != Some(&b'-')
+        || bytes.get(7) != Some(&b'-')
+        || bytes
+            .iter()
+            .enumerate()
+            .any(|(index, byte)| index != 4 && index != 7 && !byte.is_ascii_digit())
+    {
+        return Err(ContractError::Invariant(format!(
+            "`{field}` must be an ISO 8601 calendar date in YYYY-MM-DD form"
+        )));
+    }
+    let year = value.get(0..4).and_then(|part| part.parse::<u16>().ok());
+    let month = value.get(5..7).and_then(|part| part.parse::<u8>().ok());
+    let day = value.get(8..10).and_then(|part| part.parse::<u8>().ok());
+    let Some((year, month, day)) = year.zip(month).zip(day).map(|((y, m), d)| (y, m, d)) else {
+        return Err(ContractError::Invariant(format!(
+            "`{field}` must be a valid ISO 8601 calendar date"
+        )));
+    };
+    let leap = year.is_multiple_of(4) && (!year.is_multiple_of(100) || year.is_multiple_of(400));
+    let maximum_day = match month {
+        1 | 3 | 5 | 7 | 8 | 10 | 12 => 31,
+        4 | 6 | 9 | 11 => 30,
+        2 if leap => 29,
+        2 => 28,
+        _ => 0,
+    };
+    if day == 0 || day > maximum_day {
+        return Err(ContractError::Invariant(format!(
+            "`{field}` must be a valid ISO 8601 calendar date"
+        )));
+    }
+    Ok(())
+}
+
+fn validate_sha256(value: &str, field: &'static str) -> Result<(), ContractError> {
+    if value.len() != 64
+        || !value
+            .bytes()
+            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+    {
+        return Err(ContractError::Invariant(format!(
+            "`{field}` must be 64 lowercase hexadecimal characters"
+        )));
+    }
+    Ok(())
 }
 
 /// Canonical source-specific strategy.

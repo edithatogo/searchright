@@ -135,6 +135,7 @@
       "assertions": {
         "T02-A001": {
           "deterministic_tests": [
+            "cargo test -p evidence-search-core --all-targets --all-features --locked",
             "python scripts/validate_repository.py"
           ],
           "implementation_paths": [
@@ -148,8 +149,7 @@
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Compile and execute compiler tests.",
-            "Expand proximity, wildcard, controlled-vocabulary, subheading and line-set conformance against independently reviewed strategies."
+            "Expand source-specific wildcard, controlled-vocabulary, subheading and line-set conformance against independently reviewed strategies."
           ],
           "permitted_claim": "A portable query model and source-aware compiler are implemented for declared subsets; complete database semantics are not claimed.",
           "state": "partially_implemented"
@@ -171,7 +171,7 @@
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Compile and execute native strategy unit tests."
+            "Complete semantic AST construction beyond the declared source-preserving lexical subsets."
           ],
           "permitted_claim": "Line-numbered native strategy source, spans, diagnostics and raw-source preservation are source implemented; semantic parsing remains deliberately partial.",
           "state": "partially_implemented"
@@ -189,6 +189,7 @@
             "contracts/query-corpus/psycinfo-ovid.txt",
             "contracts/query-corpus/scopus.txt",
             "contracts/query-corpus/web-of-science.txt",
+            "contracts/query-corpus/loss-matrix.json",
             "scripts/check_native_query_corpus.py"
           ],
           "implementation_symbols": [
@@ -196,7 +197,7 @@
           ],
           "mapping_confidence": "path_and_gate_mapped",
           "open_gates": [
-            "Replace or supplement synthetic examples with rights-cleared, independently PRESS-reviewed strategies."
+            "Obtain accountable independent information-specialist PRESS review of the digest-bound project-authored fixtures."
           ],
           "permitted_claim": "A seven-dialect source-preservation corpus exists and is statically validated; it is not an external conformance benchmark.",
           "state": "partially_implemented"
@@ -207,17 +208,21 @@
           ],
           "implementation_paths": [
             "crates/evidence-search-contracts/src/query.rs",
-            "contracts/standards/index.json"
+            "contracts/json-schema/named-filter-pack.v1.schema.json",
+            "contracts/examples/named-filter-pack.json",
+            "contracts/named-filters/synthetic-validation-evidence.txt"
           ],
           "implementation_symbols": [
-            "evidence_search_contracts::query::SearchLimit"
+            "evidence_search_contracts::query::NamedFilterPack",
+            "evidence_search_contracts::query::NamedFilterRecord",
+            "evidence_search_contracts::query::FilterValidation"
           ],
-          "mapping_confidence": "contract_mapped",
+          "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Define versioned named-filter records with source citation, checksum, applicability and expiry."
+            "Obtain accountable methodological and provider-currency review of real filter packs; the checked-in fixture is structural only."
           ],
-          "permitted_claim": "Filter names and rationales can be recorded; validated named-filter packs are not yet implemented.",
-          "state": "scaffolded"
+          "permitted_claim": "Versioned named-filter contracts enforce citation, exact checksums, applicability, expiry, evidence-scaled validation and redistribution decisions; no real filter is methodologically or provider-current validated.",
+          "state": "partially_implemented"
         },
         "T02-A005": {
           "deterministic_tests": [
@@ -232,10 +237,9 @@
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Implement dialect-specific lexical and syntactic parsers with structured unsupported-node diagnostics.",
-            "Compile and execute parser tests."
+            "Implement semantic AST construction, precedence and source-specific node extraction beyond the declared lexical subsets."
           ],
-          "permitted_claim": "A lossless line-oriented native parser exists; database-specific syntax parsers are not claimed.",
+          "permitted_claim": "Seven bounded database-specific lexical subsets are recognised with stable source-spanned unsupported-syntax diagnostics; semantic AST parsing is not claimed.",
           "state": "partially_implemented"
         },
         "T02-A006": {
@@ -247,13 +251,18 @@
             "crates/evidence-search-core/src/native.rs",
             "contracts/query-corpus/index.json"
           ],
-          "implementation_symbols": [],
-          "mapping_confidence": "test_plan_mapped",
-          "open_gates": [
-            "Implement and compile metamorphic and round-trip tests for the supported syntax subsets."
+          "implementation_symbols": [
+            "evidence_search_core::compiler::tests::canonical_json_round_trip_preserves_compilation",
+            "evidence_search_core::compiler::tests::boolean_conjunction_reordering_preserves_term_set",
+            "evidence_search_core::compiler::tests::seven_dialect_field_and_truncation_snapshots_are_stable",
+            "evidence_search_core::compiler::tests::seven_dialect_proximity_snapshots_expose_order_loss"
           ],
-          "permitted_claim": "The corpus and compiler provide inputs for round-trip testing; metamorphic equivalence is not yet proven.",
-          "state": "scaffolded"
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Add parse/compile/parse properties for future semantic native parsers and independently reviewed golden strategies."
+          ],
+          "permitted_claim": "Compiler JSON round-trip, Boolean reordering, semantic-hash sensitivity and seven-dialect field/truncation/proximity snapshots are compiler-tested; cross-database semantic equivalence is not proven.",
+          "state": "partially_implemented"
         }
       }
     },
