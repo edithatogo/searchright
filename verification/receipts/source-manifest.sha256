@@ -1108,8 +1108,8 @@ d0c1fd11cf0db9643ece50dcd8e90e0dc0bb124955fbfd155089d504e4c864c9  ./crates/searc
 503fc0af903dee69356e5822622ef8a0d1916059bfce111ef9cf71f887ce1e45  ./crates/searchright-discovery/Cargo.toml
 9f397c17af53e7fd7cf862928b048319e245ebff3988cd324e25af0a27398b5e  ./crates/searchright-discovery/src/lib.rs
 288d974a6c0c5973e3d7cf2a0215617420c03f8580fef58aed0fd71b3a101e50  ./crates/searchright-governance/Cargo.toml
-844aaef0ee04d9cfab95f87f4b5c69fdf36f026ec188f2444b66a8901537b666  ./crates/searchright-governance/src/approval.rs
-a2d00d6c270cb321593d765e6cfd768103f9745cbcd037f5700cedf2526a6d9e  ./crates/searchright-governance/src/lib.rs
+0a5b9926feccdd8fec2add8246f35931eca10d61f3caee58ff45fdac43008fa1  ./crates/searchright-governance/src/approval.rs
+2532f52c362d1673f50bff16d0d1d69f6fd4514bb58b4cc9737fe1c193c64fe1  ./crates/searchright-governance/src/lib.rs
 e67f532d6032ca7bda2907715022c92be72d29d0959b1fdd787a38ff4d2fdd4b  ./crates/searchright-interchange/Cargo.toml
 af63320780ddac6466a399ce37389406dc0581346651b5515706825911b32354  ./crates/searchright-interchange/src/lib.rs
 d43709e351b5133ba207e6ebdc8bfeee06770474f0cae566683729f6e5abd855  ./crates/searchright-licensed/Cargo.toml
@@ -1141,8 +1141,8 @@ cd8739532afb962488f77f3ccad201cd22e87d751bcbadee1f884dd66a91576c  ./crates/searc
 30d5bb37f3d05a485355c625a47bb9b3b8b6bdc8b7c154ec0bc1c4649b51a3c1  ./crates/searchright-sourceright-compat/Cargo.toml
 5cabbf3e51b5f2cad0117ec5f5d6eadadaac44bad6192e84dece6c9e125acb05  ./crates/searchright-sourceright-compat/src/lib.rs
 5590523e20df228914664a6bac8969028da53d13a41fd1e296a1787a4cac896c  ./crates/searchright-store/Cargo.toml
-c7add843684a3a284ec958d3bdca082ed7d5470b92fa43001d6b53681cfdcaa8  ./crates/searchright-store/src/lib.rs
-8df2dec3d3ea938510a6873ae329c1016e901667321719518084e6cc799a54f2  ./crates/searchright-store/src/lifecycle.rs
+617e02d1c7370817d3dfb449c885312b5ad7bae840c5c99ff9e9916334b73c6b  ./crates/searchright-store/src/lib.rs
+679480b6053425fa1f0a4714d51c49919c2e7daad0774dfac1e7e94e59cbeb64  ./crates/searchright-store/src/lifecycle.rs
 f18c700ba980d9c7069fcbe1304b093f0dd9e18e0472f613735a4e2df327c9a7  ./crates/searchright-study/Cargo.toml
 a4acaa28c5004a76d96840fb1eba4a777c419714577ca0754f96982f51eaa612  ./crates/searchright-study/src/lib.rs
 cf1d9491204b6d5ba50337859066de45e96188f450f2b0717aa7946e7b7408d9  ./crates/searchright-validation/Cargo.toml
