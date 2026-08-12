@@ -9,6 +9,32 @@ use searchright_contracts::{
     LifecycleExecutionMode, Validate,
 };
 
+/// Durable result returned by a lifecycle-effect sink after an exact apply.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LifecycleEffectReceipt {
+    /// Request whose exact effects were applied.
+    pub request_id: String,
+    /// Store head required before applying the effects.
+    pub previous_head: String,
+    /// Store head after the atomic effect/tombstone commit.
+    pub resulting_head: String,
+    /// Lowercase SHA-256 of the durable receipt bytes.
+    pub receipt_digest: String,
+}
+
+/// Storage boundary capable of atomically applying exact lifecycle effects.
+pub trait LifecycleEffectSink {
+    /// Current immutable store head used for optimistic concurrency.
+    fn current_head(&self) -> Result<String, String>;
+    /// Apply exactly the authorised request and durably persist tombstones and receipt.
+    fn apply(
+        &mut self,
+        request: &DataLifecycleRequest,
+        decision: &DataLifecycleDecision,
+        expected_head: &str,
+    ) -> Result<LifecycleEffectReceipt, String>;
+}
+
 /// Evaluate a data-handling request against an approved institutional policy.
 pub fn evaluate(
     policy: &InstitutionalPolicy,
@@ -109,6 +135,70 @@ pub fn evaluate_lifecycle(
     policy: &InstitutionalPolicy,
     request: &DataLifecycleRequest,
 ) -> Result<DataLifecycleDecision, GovernanceError> {
+    evaluate_lifecycle_inner(policy, request, None)
+}
+
+/// Separately verify approval evidence before an apply request can authorise effects.
+pub trait LifecycleApprovalVerifier {
+    /// Verify signature/evidence, expiry and single-use nonce state.
+    fn verify(
+        &self,
+        approval: &searchright_contracts::LifecycleApproval,
+        request_digest: &str,
+        policy_id: &str,
+    ) -> Result<(), String>;
+}
+
+/// Evaluate lifecycle apply with separately supplied approval verification.
+pub fn evaluate_lifecycle_with_verifier(
+    policy: &InstitutionalPolicy,
+    request: &DataLifecycleRequest,
+    verifier: &dyn LifecycleApprovalVerifier,
+) -> Result<DataLifecycleDecision, GovernanceError> {
+    evaluate_lifecycle_inner(policy, request, Some(verifier))
+}
+
+/// Verify authority, bind the expected store head, and apply lifecycle effects atomically.
+pub fn execute_lifecycle(
+    policy: &InstitutionalPolicy,
+    request: &DataLifecycleRequest,
+    verifier: &dyn LifecycleApprovalVerifier,
+    sink: &mut dyn LifecycleEffectSink,
+    expected_head: &str,
+) -> Result<LifecycleEffectReceipt, LifecycleExecutionError> {
+    let observed = sink.current_head().map_err(LifecycleExecutionError::Sink)?;
+    if observed != expected_head {
+        return Err(LifecycleExecutionError::HeadMismatch {
+            expected: expected_head.to_owned(),
+            actual: observed,
+        });
+    }
+    let decision = evaluate_lifecycle_with_verifier(policy, request, verifier)?;
+    if !decision.effects_authorized {
+        return Err(LifecycleExecutionError::NotAuthorized(decision.blockers));
+    }
+    let receipt = sink
+        .apply(request, &decision, expected_head)
+        .map_err(LifecycleExecutionError::Sink)?;
+    if receipt.request_id != request.request_id
+        || receipt.previous_head != expected_head
+        || receipt.resulting_head.trim().is_empty()
+        || receipt.receipt_digest.len() != 64
+        || !receipt
+            .receipt_digest
+            .bytes()
+            .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase())
+    {
+        return Err(LifecycleExecutionError::InvalidReceipt);
+    }
+    Ok(receipt)
+}
+
+fn evaluate_lifecycle_inner(
+    policy: &InstitutionalPolicy,
+    request: &DataLifecycleRequest,
+    verifier: Option<&dyn LifecycleApprovalVerifier>,
+) -> Result<DataLifecycleDecision, GovernanceError> {
     policy.validate()?;
     request.validate()?;
 
@@ -143,6 +233,25 @@ pub fn evaluate_lifecycle(
                 }
                 if approval.action != request.action {
                     blockers.push("lifecycle.apply.approval_action_mismatch".to_owned());
+                }
+                let digest = request.effects_digest();
+                if approval.request_digest != digest {
+                    blockers.push("lifecycle.apply.approval_digest_mismatch".to_owned());
+                }
+                if approval.policy_id != policy.policy_id {
+                    blockers.push("lifecycle.apply.approval_policy_mismatch".to_owned());
+                }
+                match verifier {
+                    Some(verifier) => {
+                        if verifier
+                            .verify(approval, &digest, &policy.policy_id)
+                            .is_err()
+                        {
+                            blockers
+                                .push("lifecycle.apply.approval_verification_failed".to_owned());
+                        }
+                    }
+                    None => blockers.push("lifecycle.apply.approval_verifier_required".to_owned()),
                 }
             }
         }
@@ -182,6 +291,31 @@ pub enum GovernanceError {
     /// Contract validation failed.
     #[error(transparent)]
     Contract(#[from] searchright_contracts::ContractError),
+}
+
+/// Fail-closed lifecycle effect execution error.
+#[derive(Debug, thiserror::Error)]
+pub enum LifecycleExecutionError {
+    /// Policy or contract validation failed.
+    #[error(transparent)]
+    Governance(#[from] GovernanceError),
+    /// The store changed between preview/approval and apply.
+    #[error("lifecycle store head mismatch: expected {expected}, found {actual}")]
+    HeadMismatch {
+        /// Store head required by the authorised operation.
+        expected: String,
+        /// Store head observed immediately before apply.
+        actual: String,
+    },
+    /// The request did not carry verified, exact-scope authority.
+    #[error("lifecycle effects are not authorised: {0:?}")]
+    NotAuthorized(Vec<String>),
+    /// The storage boundary failed.
+    #[error("lifecycle effect sink failed: {0}")]
+    Sink(String),
+    /// The storage boundary returned an unbound or malformed receipt.
+    #[error("lifecycle effect receipt is not bound to the request and store heads")]
+    InvalidReceipt,
 }
 
 #[cfg(test)]
@@ -252,12 +386,41 @@ mod tests {
     }
 
     fn approval(action: DataLifecycleAction) -> LifecycleApproval {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            ..lifecycle_request(action)
+        };
         LifecycleApproval {
             approval_id: "approval-1".to_owned(),
             approved_by: "accountable-owner".to_owned(),
             review_id: "review-1".to_owned(),
             action,
+            request_digest: request.effects_digest(),
+            policy_id: "policy-1".to_owned(),
+            nonce: "nonce-1".to_owned(),
             approved_at: "2026-08-13T00:00:00Z".to_owned(),
+            expires_at: "2026-08-14T00:00:00Z".to_owned(),
+        }
+    }
+
+    struct AcceptVerifier;
+
+    impl LifecycleApprovalVerifier for AcceptVerifier {
+        fn verify(
+            &self,
+            approval: &LifecycleApproval,
+            request_digest: &str,
+            policy_id: &str,
+        ) -> Result<(), String> {
+            if approval.nonce == "nonce-1"
+                && approval.expires_at == "2026-08-14T00:00:00Z"
+                && approval.request_digest == request_digest
+                && approval.policy_id == policy_id
+            {
+                Ok(())
+            } else {
+                Err("approval rejected".to_owned())
+            }
         }
     }
 
@@ -410,7 +573,7 @@ mod tests {
             execution_mode: LifecycleExecutionMode::Apply,
             ..lifecycle_request(DataLifecycleAction::Export)
         };
-        let decision = evaluate_lifecycle(&policy(), &request)?;
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
         assert!(!decision.permitted);
         assert!(!decision.effects_authorized);
         assert_eq!(decision.blockers, ["lifecycle.apply.approval_required"]);
@@ -419,12 +582,14 @@ mod tests {
 
     #[test]
     fn lifecycle_apply_requires_exact_approval_scope() -> Result<(), GovernanceError> {
+        let mut mismatched = approval(DataLifecycleAction::Export);
+        mismatched.action = DataLifecycleAction::Retain;
         let request = DataLifecycleRequest {
             execution_mode: LifecycleExecutionMode::Apply,
-            approval: Some(approval(DataLifecycleAction::Retain)),
+            approval: Some(mismatched),
             ..lifecycle_request(DataLifecycleAction::Export)
         };
-        let decision = evaluate_lifecycle(&policy(), &request)?;
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
         assert_eq!(
             decision.blockers,
             ["lifecycle.apply.approval_action_mismatch"]
@@ -439,7 +604,7 @@ mod tests {
             approval: Some(approval(DataLifecycleAction::Delete)),
             ..lifecycle_request(DataLifecycleAction::Delete)
         };
-        let decision = evaluate_lifecycle(&policy(), &request)?;
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
         assert!(decision.permitted);
         assert!(decision.effects_authorized);
         assert!(decision.receipt_required);
@@ -455,7 +620,7 @@ mod tests {
             approval: Some(approval(DataLifecycleAction::Delete)),
             ..lifecycle_request(DataLifecycleAction::Delete)
         };
-        let decision = evaluate_lifecycle(&policy(), &request)?;
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
         assert!(!decision.permitted);
         assert!(!decision.effects_authorized);
         assert!(
@@ -474,7 +639,7 @@ mod tests {
             approval: Some(approval(DataLifecycleAction::Delete)),
             ..lifecycle_request(DataLifecycleAction::Delete)
         };
-        let decision = evaluate_lifecycle(&policy(), &request)?;
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
         assert!(!decision.permitted);
         assert!(!decision.effects_authorized);
         assert!(
@@ -492,5 +657,327 @@ mod tests {
             ..lifecycle_request(DataLifecycleAction::Delete)
         };
         assert!(request.validate().is_err());
+    }
+
+    #[test]
+    fn lifecycle_policy_denials_are_deterministic() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            classification: DataClassification::SensitivePersonalData,
+            retention_days: Some(31),
+            ..lifecycle_request(DataLifecycleAction::Retain)
+        };
+
+        let first = evaluate_lifecycle(&policy(), &request)?;
+        let second = evaluate_lifecycle(&policy(), &request)?;
+
+        assert_eq!(first, second);
+        assert_eq!(
+            first.blockers,
+            [
+                "lifecycle.classification.denied",
+                "lifecycle.retention.exceeds_policy",
+            ]
+        );
+        assert!(!first.effects_authorized);
+        Ok(())
+    }
+
+    #[test]
+    fn lifecycle_apply_rejects_approval_for_another_review() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: Some(LifecycleApproval {
+                review_id: "review-other".to_owned(),
+                ..approval(DataLifecycleAction::Export)
+            }),
+            ..lifecycle_request(DataLifecycleAction::Export)
+        };
+
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
+
+        assert_eq!(
+            decision.blockers,
+            ["lifecycle.apply.approval_review_mismatch"]
+        );
+        assert!(decision.receipt_required);
+        assert!(!decision.effects_authorized);
+        Ok(())
+    }
+
+    #[test]
+    fn approved_retain_and_export_authorise_effects_without_tombstones()
+    -> Result<(), GovernanceError> {
+        for action in [DataLifecycleAction::Retain, DataLifecycleAction::Export] {
+            let request = DataLifecycleRequest {
+                execution_mode: LifecycleExecutionMode::Apply,
+                approval: Some(approval(action)),
+                ..lifecycle_request(action)
+            };
+            let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
+            assert!(decision.permitted);
+            assert!(decision.effects_authorized);
+            assert!(decision.receipt_required);
+            assert!(decision.tombstone_target_ids.is_empty());
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn plain_lifecycle_evaluation_never_self_authorises_apply() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: Some(approval(DataLifecycleAction::Export)),
+            ..lifecycle_request(DataLifecycleAction::Export)
+        };
+        let decision = evaluate_lifecycle(&policy(), &request)?;
+        assert!(!decision.effects_authorized);
+        assert!(
+            decision
+                .blockers
+                .contains(&"lifecycle.apply.approval_verifier_required".to_owned())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn approval_digest_prevents_effect_broadening_and_policy_reuse() -> Result<(), GovernanceError>
+    {
+        let base = lifecycle_request(DataLifecycleAction::Retain);
+        let approved = approval(DataLifecycleAction::Retain);
+        for broadened in [
+            DataLifecycleRequest {
+                target_ids: vec!["record-1".to_owned(), "record-3".to_owned()],
+                ..base.clone()
+            },
+            DataLifecycleRequest {
+                retention_days: Some(8),
+                ..base
+            },
+        ] {
+            let request = DataLifecycleRequest {
+                execution_mode: LifecycleExecutionMode::Apply,
+                approval: Some(approved.clone()),
+                ..broadened
+            };
+            let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
+            assert!(
+                decision
+                    .blockers
+                    .contains(&"lifecycle.apply.approval_digest_mismatch".to_owned())
+            );
+        }
+
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: Some(LifecycleApproval {
+                policy_id: "policy-other".to_owned(),
+                ..approval(DataLifecycleAction::Export)
+            }),
+            ..lifecycle_request(DataLifecycleAction::Export)
+        };
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
+        assert!(
+            decision
+                .blockers
+                .contains(&"lifecycle.apply.approval_policy_mismatch".to_owned())
+        );
+        assert!(
+            decision
+                .blockers
+                .contains(&"lifecycle.apply.approval_verification_failed".to_owned())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn approval_digest_binds_export_destination() -> Result<(), GovernanceError> {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            export_destination: Some("file:///broadened/export.srpack".to_owned()),
+            approval: Some(approval(DataLifecycleAction::Export)),
+            ..lifecycle_request(DataLifecycleAction::Export)
+        };
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &AcceptVerifier)?;
+        assert!(
+            decision
+                .blockers
+                .contains(&"lifecycle.apply.approval_digest_mismatch".to_owned())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn verifier_denies_expired_or_replayed_approval() -> Result<(), GovernanceError> {
+        struct RejectVerifier;
+        impl LifecycleApprovalVerifier for RejectVerifier {
+            fn verify(
+                &self,
+                _approval: &LifecycleApproval,
+                _request_digest: &str,
+                _policy_id: &str,
+            ) -> Result<(), String> {
+                Err("expired or nonce already consumed".to_owned())
+            }
+        }
+
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: Some(approval(DataLifecycleAction::Delete)),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        let decision = evaluate_lifecycle_with_verifier(&policy(), &request, &RejectVerifier)?;
+        assert_eq!(
+            decision.blockers,
+            ["lifecycle.apply.approval_verification_failed"]
+        );
+        assert!(!decision.effects_authorized);
+        Ok(())
+    }
+
+    #[test]
+    fn lifecycle_evaluation_propagates_contract_validation_failure() {
+        let request = DataLifecycleRequest {
+            target_ids: Vec::new(),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+
+        assert!(matches!(
+            evaluate_lifecycle(&policy(), &request),
+            Err(GovernanceError::Contract(_))
+        ));
+    }
+
+    #[test]
+    fn data_handling_covers_default_deny_operation_and_region_branches()
+    -> Result<(), GovernanceError> {
+        let denied_policy = InstitutionalPolicy {
+            deployment_modes: vec![DeploymentMode::InstitutionSelfHosted],
+            allowed_classifications: vec![DataClassification::PublicMetadata],
+            permitted_regions: vec![],
+            ..policy()
+        };
+        let denied_request = DataHandlingRequest {
+            classification: DataClassification::SensitivePersonalData,
+            operation: DataOperationKind::Telemetry,
+            region: None,
+            ..request()
+        };
+        let decision = evaluate(&denied_policy, &denied_request)?;
+        assert_eq!(
+            decision.blockers,
+            [
+                "governance.deployment_mode.denied",
+                "governance.classification.denied",
+                "governance.telemetry.denied",
+            ]
+        );
+        assert_eq!(
+            decision.warnings,
+            [
+                "governance.sensitive_data.manual_review",
+                "governance.dry_run.no_effects",
+            ]
+        );
+
+        let external_model = DataHandlingRequest {
+            operation: DataOperationKind::ExternalModelProcessing,
+            region: None,
+            ..request()
+        };
+        let decision = evaluate(&policy(), &external_model)?;
+        assert_eq!(
+            decision.blockers,
+            [
+                "governance.external_model.denied",
+                "governance.region.required",
+            ]
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn data_handling_evaluation_propagates_invalid_request() {
+        let request = DataHandlingRequest {
+            retention_days: 0,
+            ..request()
+        };
+        assert!(matches!(
+            evaluate(&policy(), &request),
+            Err(GovernanceError::Contract(_))
+        ));
+    }
+
+    struct MemorySink {
+        head: String,
+        apply_count: usize,
+    }
+
+    impl LifecycleEffectSink for MemorySink {
+        fn current_head(&self) -> Result<String, String> {
+            Ok(self.head.clone())
+        }
+
+        fn apply(
+            &mut self,
+            request: &DataLifecycleRequest,
+            decision: &DataLifecycleDecision,
+            expected_head: &str,
+        ) -> Result<LifecycleEffectReceipt, String> {
+            if !decision.effects_authorized {
+                return Err("unauthorised decision".to_owned());
+            }
+            self.apply_count += 1;
+            self.head = format!("head-{}", self.apply_count);
+            Ok(LifecycleEffectReceipt {
+                request_id: request.request_id.clone(),
+                previous_head: expected_head.to_owned(),
+                resulting_head: self.head.clone(),
+                receipt_digest: "a".repeat(64),
+            })
+        }
+    }
+
+    #[test]
+    fn lifecycle_executor_binds_authority_and_expected_head() -> Result<(), LifecycleExecutionError>
+    {
+        let action = DataLifecycleAction::Delete;
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: Some(approval(action)),
+            ..lifecycle_request(action)
+        };
+        let mut sink = MemorySink {
+            head: "head-0".to_owned(),
+            apply_count: 0,
+        };
+        let receipt = execute_lifecycle(&policy(), &request, &AcceptVerifier, &mut sink, "head-0")?;
+        assert_eq!(receipt.request_id, request.request_id);
+        assert_eq!(sink.apply_count, 1);
+
+        let replay = execute_lifecycle(&policy(), &request, &AcceptVerifier, &mut sink, "head-0");
+        assert!(matches!(
+            replay,
+            Err(LifecycleExecutionError::HeadMismatch { .. })
+        ));
+        assert_eq!(sink.apply_count, 1);
+        Ok(())
+    }
+
+    #[test]
+    fn lifecycle_executor_never_calls_sink_without_verified_authority() {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            approval: None,
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        let mut sink = MemorySink {
+            head: "head-0".to_owned(),
+            apply_count: 0,
+        };
+        assert!(matches!(
+            execute_lifecycle(&policy(), &request, &AcceptVerifier, &mut sink, "head-0"),
+            Err(LifecycleExecutionError::NotAuthorized(_))
+        ));
+        assert_eq!(sink.apply_count, 0);
     }
 }

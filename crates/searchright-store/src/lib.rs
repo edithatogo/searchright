@@ -46,6 +46,32 @@ pub struct ExecutionCommit {
     pub audit_event: AuditEvent,
 }
 
+/// Externally verified evidence authorising recovery of one abandoned writer lock.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct AbandonedLockEvidence {
+    /// Exact unpredictable owner token read from the stranded lock.
+    pub expected_token: String,
+    /// Process identifier recorded with the lock.
+    pub expected_pid: u32,
+    /// Accountable principal or service that verified the process is no longer alive.
+    pub liveness_verified_by: String,
+    /// Durable evidence reference for the liveness check.
+    pub evidence_reference: String,
+}
+
+/// Receipt emitted after an exact-owner abandoned-lock recovery.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct LockRecoveryReceipt {
+    /// Recovered token, retained for audit correlation.
+    pub recovered_token: String,
+    /// Process identifier that had owned the lock.
+    pub recovered_pid: u32,
+    /// Accountable liveness verifier.
+    pub liveness_verified_by: String,
+    /// Durable evidence reference supplied by the verifier.
+    pub evidence_reference: String,
+}
+
 struct ReviewLock {
     path: PathBuf,
 }
@@ -85,6 +111,38 @@ impl FileReviewStore {
     #[must_use]
     pub fn root(&self) -> &Path {
         &self.root
+    }
+
+    /// Recover a lock only when exact owner and independently verified liveness evidence match.
+    ///
+    /// The store never guesses that a lock is stale from elapsed time. Callers must first
+    /// establish that the recorded process is no longer alive and preserve that evidence.
+    pub fn recover_abandoned_lock(
+        &self,
+        evidence: &AbandonedLockEvidence,
+    ) -> Result<LockRecoveryReceipt, StoreError> {
+        if evidence.expected_token.trim().is_empty()
+            || evidence.liveness_verified_by.trim().is_empty()
+            || evidence.evidence_reference.trim().is_empty()
+        {
+            return Err(StoreError::InvalidLockRecoveryEvidence);
+        }
+        let lock = self.root.join(".write.lock");
+        let owner_path = lock.join("owner");
+        let owner = fs::read_to_string(&owner_path)?;
+        let (token, pid) = parse_lock_owner(&owner)?;
+        if token != evidence.expected_token || pid != evidence.expected_pid {
+            return Err(StoreError::LockOwnerMismatch);
+        }
+        fs::remove_file(&owner_path)?;
+        fs::remove_dir(&lock)?;
+        sync_directory(Some(&self.root))?;
+        Ok(LockRecoveryReceipt {
+            recovered_token: token,
+            recovered_pid: pid,
+            liveness_verified_by: evidence.liveness_verified_by.clone(),
+            evidence_reference: evidence.evidence_reference.clone(),
+        })
     }
 
     /// Append one audit event after verifying the persisted head and candidate event.
@@ -350,6 +408,15 @@ pub enum StoreError {
     /// Another process or operation currently holds the single-writer lock.
     #[error("review store is locked by another writer; inspect or explicitly clear a stale lock")]
     WriterLocked,
+    /// Abandoned-lock recovery evidence was incomplete.
+    #[error("abandoned-lock recovery requires exact owner and liveness evidence")]
+    InvalidLockRecoveryEvidence,
+    /// The observed lock owner changed or did not match the recovery request.
+    #[error("abandoned-lock recovery owner did not match the current lock")]
+    LockOwnerMismatch,
+    /// The persisted lock owner record was malformed.
+    #[error("persisted writer-lock owner record is malformed")]
+    MalformedLockOwner,
     /// Event identifier was already present with different content.
     #[error("audit event identifier `{0}` is already present with different content")]
     ConflictingEventId(String),
@@ -441,6 +508,31 @@ fn validate_execution_commit(commit: &ExecutionCommit) -> Result<(), StoreError>
             "audit and receipt review_id differ".to_owned(),
         ));
     }
+    if commit.audit_event.event_type != "execution_committed"
+        || commit
+            .audit_event
+            .payload
+            .get("commit_id")
+            .and_then(serde_json::Value::as_str)
+            != Some(commit.commit_id.as_str())
+        || commit
+            .audit_event
+            .payload
+            .get("receipt_id")
+            .and_then(serde_json::Value::as_str)
+            != Some(commit.receipt.receipt_id.as_str())
+        || commit
+            .audit_event
+            .payload
+            .get("record_count")
+            .and_then(serde_json::Value::as_u64)
+            != u64::try_from(commit.records.len()).ok()
+    {
+        return Err(StoreError::InvalidExecutionCommit(
+            "execution_committed audit payload does not bind the commit, receipt and records"
+                .to_owned(),
+        ));
+    }
     for record in &commit.records {
         record
             .validate()
@@ -472,6 +564,22 @@ fn validate_storage_identifier(value: &str) -> Result<(), StoreError> {
         Err(StoreError::InvalidSnapshotName)
     } else {
         Ok(())
+    }
+}
+
+fn parse_lock_owner(owner: &str) -> Result<(String, u32), StoreError> {
+    let mut token = None;
+    let mut pid = None;
+    for part in owner.split_whitespace() {
+        if let Some(value) = part.strip_prefix("token=") {
+            token = Some(value.to_owned());
+        } else if let Some(value) = part.strip_prefix("pid=") {
+            pid = value.parse::<u32>().ok();
+        }
+    }
+    match (token, pid) {
+        (Some(token), Some(pid)) if !token.is_empty() => Ok((token, pid)),
+        _ => Err(StoreError::MalformedLockOwner),
     }
 }
 
@@ -763,13 +871,104 @@ mod tests {
     }
 
     #[test]
+    fn invalid_snapshot_names_fail_closed() {
+        let directory = test_directory("snapshot-name-test");
+        let store = FileReviewStore::open(&directory);
+        assert!(store.is_ok());
+        if let Ok(store) = store {
+            for name in ["", ".hidden", "../escape", "a/b", "a\\b"] {
+                assert!(matches!(
+                    store.write_snapshot(name, &json!({})),
+                    Err(StoreError::InvalidSnapshotName)
+                ));
+            }
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
+
+    #[test]
+    fn review_previous_hash_and_payload_mismatches_fail_closed() {
+        let directory = test_directory("event-validation-test");
+        let store = FileReviewStore::open(&directory);
+        assert!(store.is_ok());
+        if let Ok(store) = store {
+            let mut ledger = AuditLedger::new();
+            let first = event("event-1", &mut ledger);
+            assert!(store.append_event(&first).is_ok());
+
+            let mut wrong_review = event("event-2", &mut ledger);
+            wrong_review.review_id = "other-review".to_owned();
+            assert!(matches!(
+                store.append_event(&wrong_review),
+                Err(StoreError::ReviewMismatch { .. })
+            ));
+
+            let mut wrong_previous = event("event-3", &mut ledger);
+            wrong_previous.previous_hash = "wrong".to_owned();
+            assert!(matches!(
+                store.append_event(&wrong_previous),
+                Err(StoreError::PreviousHashMismatch { .. })
+            ));
+
+            let mut prohibited = event("event-4", &mut ledger);
+            prohibited.payload = json!({"plan_id": "p", "token": "secret"});
+            assert!(matches!(
+                store.append_event(&prohibited),
+                Err(StoreError::InvalidAuditPayload(_))
+            ));
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
+
+    #[test]
+    fn renamed_and_multi_event_segments_fail_closed() {
+        let directory = test_directory("segment-validation-test");
+        let store = FileReviewStore::open(&directory);
+        assert!(store.is_ok());
+        if let Ok(store) = store {
+            let mut ledger = AuditLedger::new();
+            let first = event("event-1", &mut ledger);
+            assert!(store.append_event(&first).is_ok());
+            let segment = fs::read_dir(directory.join("events"))
+                .ok()
+                .and_then(|mut entries| entries.next())
+                .and_then(Result::ok)
+                .map(|entry| entry.path());
+            assert!(segment.is_some());
+            if let Some(segment) = segment {
+                let renamed = directory
+                    .join("events")
+                    .join("00000000000000000099-wrong.json");
+                assert!(fs::rename(&segment, &renamed).is_ok());
+                assert!(matches!(
+                    store.read_events(),
+                    Err(StoreError::UnexpectedSegment { .. })
+                ));
+                assert!(fs::rename(&renamed, &segment).is_ok());
+                let bytes = fs::read(&segment);
+                assert!(bytes.is_ok());
+                if let Ok(bytes) = bytes {
+                    let mut doubled = bytes.clone();
+                    doubled.extend(bytes);
+                    assert!(fs::write(&segment, doubled).is_ok());
+                    assert!(matches!(
+                        store.read_events(),
+                        Err(StoreError::UnexpectedSegment { .. })
+                    ));
+                }
+            }
+        }
+        let _cleanup = fs::remove_dir_all(directory);
+    }
+
+    #[test]
     fn restart_keeps_an_abandoned_lock_fail_closed() -> Result<(), Box<dyn std::error::Error>> {
         let directory = test_directory("stale-lock-test");
         let store = FileReviewStore::open(&directory)?;
         fs::create_dir(directory.join(".write.lock"))?;
         fs::write(
             directory.join(".write.lock").join("owner"),
-            "token=stale pid=unavailable operation=interrupted\n",
+            "token=stale pid=424242 operation=interrupted\n",
         )?;
         drop(store);
 
@@ -778,8 +977,23 @@ mod tests {
             reopened.write_snapshot("records", &json!({"a": 1})),
             Err(StoreError::WriterLocked)
         ));
-        fs::remove_file(directory.join(".write.lock").join("owner"))?;
-        fs::remove_dir(directory.join(".write.lock"))?;
+        assert!(matches!(
+            reopened.recover_abandoned_lock(&AbandonedLockEvidence {
+                expected_token: "wrong".to_owned(),
+                expected_pid: 424_242,
+                liveness_verified_by: "operator-1".to_owned(),
+                evidence_reference: "incident-1".to_owned(),
+            }),
+            Err(StoreError::LockOwnerMismatch)
+        ));
+        let receipt = reopened.recover_abandoned_lock(&AbandonedLockEvidence {
+            expected_token: "stale".to_owned(),
+            expected_pid: 424_242,
+            liveness_verified_by: "operator-1".to_owned(),
+            evidence_reference: "incident-1".to_owned(),
+        })?;
+        assert_eq!(receipt.recovered_token, "stale");
+        assert_eq!(receipt.recovered_pid, 424_242);
         assert!(reopened.write_snapshot("records", &json!({"a": 1})).is_ok());
         let _cleanup = fs::remove_dir_all(directory);
         Ok(())

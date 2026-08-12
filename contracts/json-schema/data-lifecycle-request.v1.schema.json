@@ -36,13 +36,17 @@
         {
           "type": "object",
           "additionalProperties": false,
-          "required": ["approval_id", "approved_by", "review_id", "action", "approved_at"],
+          "required": ["approval_id", "approved_by", "review_id", "action", "request_digest", "policy_id", "nonce", "approved_at", "expires_at"],
           "properties": {
             "approval_id": {"type": "string", "minLength": 1},
             "approved_by": {"type": "string", "minLength": 1},
             "review_id": {"type": "string", "minLength": 1},
             "action": {"enum": ["retain", "export", "delete"]},
-            "approved_at": {"type": "string", "format": "date-time"}
+            "request_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "policy_id": {"type": "string", "minLength": 1},
+            "nonce": {"type": "string", "minLength": 1},
+            "approved_at": {"type": "string", "format": "date-time"},
+            "expires_at": {"type": "string", "format": "date-time"}
           }
         }
       ]

@@ -1,5 +1,6 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
 
 use crate::{
@@ -169,8 +170,16 @@ pub struct LifecycleApproval {
     pub review_id: String,
     /// Lifecycle action that was approved.
     pub action: DataLifecycleAction,
+    /// SHA-256 of the complete requested effect set.
+    pub request_digest: String,
+    /// Policy identifier against which the request was approved.
+    pub policy_id: String,
+    /// Single-use value checked by the external approval verifier.
+    pub nonce: String,
     /// RFC 3339 timestamp validated by the wire schema and treated opaquely by this evaluator.
     pub approved_at: String,
+    /// RFC 3339 expiry checked by the external approval verifier.
+    pub expires_at: String,
 }
 
 /// Preview/apply request for retention, export or deletion.
@@ -426,9 +435,79 @@ impl Validate for DataLifecycleRequest {
                 &approval.approved_at,
                 "data_lifecycle_request.approval.approved_at",
             )?;
+            require_sha256(
+                &approval.request_digest,
+                "data_lifecycle_request.approval.request_digest",
+            )?;
+            require_text(
+                &approval.policy_id,
+                "data_lifecycle_request.approval.policy_id",
+            )?;
+            require_text(&approval.nonce, "data_lifecycle_request.approval.nonce")?;
+            require_text(
+                &approval.expires_at,
+                "data_lifecycle_request.approval.expires_at",
+            )?;
         }
         Ok(())
     }
+}
+
+impl DataLifecycleRequest {
+    /// Canonical SHA-256 binding every effect-bearing request field except approval evidence.
+    #[must_use]
+    pub fn effects_digest(&self) -> String {
+        let mut bytes = Vec::new();
+        push_part(&mut bytes, &self.schema_version);
+        push_part(&mut bytes, &self.request_id);
+        push_part(&mut bytes, &self.review_id);
+        push_part(&mut bytes, &format!("{:?}", self.classification));
+        push_part(&mut bytes, &format!("{:?}", self.action));
+        push_part(&mut bytes, &format!("{:?}", self.execution_mode));
+        for target in &self.target_ids {
+            push_part(&mut bytes, target);
+        }
+        push_part(
+            &mut bytes,
+            &self
+                .retention_days
+                .map_or_else(|| "null".to_owned(), |value| value.to_string()),
+        );
+        push_part(
+            &mut bytes,
+            self.export_destination.as_deref().unwrap_or("null"),
+        );
+        push_part(&mut bytes, if self.includes_audit_log { "1" } else { "0" });
+        push_part(&mut bytes, if self.legal_hold { "1" } else { "0" });
+        sha256_hex(&bytes)
+    }
+}
+
+fn push_part(output: &mut Vec<u8>, value: &str) {
+    output.extend_from_slice(value.len().to_string().as_bytes());
+    output.push(b':');
+    output.extend_from_slice(value.as_bytes());
+}
+
+fn require_sha256(value: &str, field: &'static str) -> Result<(), ContractError> {
+    if value.len() == 64
+        && value
+            .bytes()
+            .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase())
+    {
+        Ok(())
+    } else {
+        Err(ContractError::Invariant(format!(
+            "{field} must be lowercase SHA-256"
+        )))
+    }
+}
+
+fn sha256_hex(input: &[u8]) -> String {
+    Sha256::digest(input)
+        .iter()
+        .map(|byte| format!("{byte:02x}"))
+        .collect()
 }
 
 impl Validate for DataLifecycleDecision {
@@ -456,5 +535,252 @@ impl Validate for DataLifecycleDecision {
             ));
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn lifecycle_request(action: DataLifecycleAction) -> DataLifecycleRequest {
+        DataLifecycleRequest {
+            schema_version: DATA_LIFECYCLE_REQUEST_SCHEMA_VERSION.to_owned(),
+            request_id: "request-1".to_owned(),
+            review_id: "review-1".to_owned(),
+            classification: DataClassification::PublicMetadata,
+            action,
+            execution_mode: LifecycleExecutionMode::Preview,
+            target_ids: vec!["record-1".to_owned()],
+            retention_days: matches!(action, DataLifecycleAction::Retain).then_some(7),
+            export_destination: matches!(action, DataLifecycleAction::Export)
+                .then(|| "file:///approved/export.srpack".to_owned()),
+            includes_audit_log: false,
+            legal_hold: false,
+            approval: None,
+        }
+    }
+
+    fn approval(action: DataLifecycleAction) -> LifecycleApproval {
+        let request = DataLifecycleRequest {
+            execution_mode: LifecycleExecutionMode::Apply,
+            ..lifecycle_request(action)
+        };
+        LifecycleApproval {
+            approval_id: "approval-1".to_owned(),
+            approved_by: "owner-1".to_owned(),
+            review_id: "review-1".to_owned(),
+            action,
+            request_digest: request.effects_digest(),
+            policy_id: "policy-1".to_owned(),
+            nonce: "nonce-1".to_owned(),
+            approved_at: "2026-08-13T00:00:00Z".to_owned(),
+            expires_at: "2026-08-14T00:00:00Z".to_owned(),
+        }
+    }
+
+    fn lifecycle_decision() -> DataLifecycleDecision {
+        DataLifecycleDecision {
+            schema_version: DATA_LIFECYCLE_DECISION_SCHEMA_VERSION.to_owned(),
+            request_id: "request-1".to_owned(),
+            policy_id: "policy-1".to_owned(),
+            permitted: true,
+            effects_authorized: false,
+            blockers: Vec::new(),
+            warnings: Vec::new(),
+            immutable_audit_preserved: true,
+            tombstone_target_ids: Vec::new(),
+            receipt_required: false,
+        }
+    }
+
+    #[test]
+    fn lifecycle_request_rejects_invalid_identity_and_targets() {
+        let invalid_schema = DataLifecycleRequest {
+            schema_version: "unsupported".to_owned(),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        assert!(invalid_schema.validate().is_err());
+
+        let empty_request_id = DataLifecycleRequest {
+            request_id: " ".to_owned(),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        assert!(empty_request_id.validate().is_err());
+
+        let empty_review_id = DataLifecycleRequest {
+            review_id: String::new(),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        assert!(empty_review_id.validate().is_err());
+
+        let no_targets = DataLifecycleRequest {
+            target_ids: Vec::new(),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        assert!(no_targets.validate().is_err());
+
+        let blank_target = DataLifecycleRequest {
+            target_ids: vec![" ".to_owned()],
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        assert!(blank_target.validate().is_err());
+    }
+
+    #[test]
+    fn lifecycle_request_rejects_action_field_mismatches() {
+        for request in [
+            DataLifecycleRequest {
+                retention_days: None,
+                ..lifecycle_request(DataLifecycleAction::Retain)
+            },
+            DataLifecycleRequest {
+                retention_days: Some(0),
+                ..lifecycle_request(DataLifecycleAction::Retain)
+            },
+            DataLifecycleRequest {
+                export_destination: Some("file:///unexpected".to_owned()),
+                ..lifecycle_request(DataLifecycleAction::Retain)
+            },
+            DataLifecycleRequest {
+                export_destination: None,
+                ..lifecycle_request(DataLifecycleAction::Export)
+            },
+            DataLifecycleRequest {
+                export_destination: Some(" ".to_owned()),
+                ..lifecycle_request(DataLifecycleAction::Export)
+            },
+            DataLifecycleRequest {
+                retention_days: Some(1),
+                ..lifecycle_request(DataLifecycleAction::Export)
+            },
+            DataLifecycleRequest {
+                retention_days: Some(1),
+                ..lifecycle_request(DataLifecycleAction::Delete)
+            },
+            DataLifecycleRequest {
+                export_destination: Some("file:///unexpected".to_owned()),
+                ..lifecycle_request(DataLifecycleAction::Delete)
+            },
+        ] {
+            assert!(request.validate().is_err());
+        }
+    }
+
+    #[test]
+    fn lifecycle_request_rejects_invalid_approval_use_and_fields() {
+        let preview_with_approval = DataLifecycleRequest {
+            approval: Some(approval(DataLifecycleAction::Delete)),
+            ..lifecycle_request(DataLifecycleAction::Delete)
+        };
+        assert!(preview_with_approval.validate().is_err());
+
+        for invalid in [
+            LifecycleApproval {
+                approval_id: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+            LifecycleApproval {
+                approved_by: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+            LifecycleApproval {
+                review_id: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+            LifecycleApproval {
+                approved_at: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+            LifecycleApproval {
+                request_digest: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+            LifecycleApproval {
+                policy_id: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+            LifecycleApproval {
+                nonce: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+            LifecycleApproval {
+                expires_at: String::new(),
+                ..approval(DataLifecycleAction::Delete)
+            },
+        ] {
+            let request = DataLifecycleRequest {
+                execution_mode: LifecycleExecutionMode::Apply,
+                approval: Some(invalid),
+                ..lifecycle_request(DataLifecycleAction::Delete)
+            };
+            assert!(request.validate().is_err());
+        }
+    }
+
+    #[test]
+    fn lifecycle_decision_rejects_fail_open_states() {
+        for decision in [
+            DataLifecycleDecision {
+                permitted: true,
+                blockers: vec!["blocked".to_owned()],
+                ..lifecycle_decision()
+            },
+            DataLifecycleDecision {
+                permitted: false,
+                ..lifecycle_decision()
+            },
+            DataLifecycleDecision {
+                effects_authorized: true,
+                receipt_required: false,
+                ..lifecycle_decision()
+            },
+            DataLifecycleDecision {
+                permitted: false,
+                effects_authorized: true,
+                blockers: vec!["blocked".to_owned()],
+                receipt_required: true,
+                ..lifecycle_decision()
+            },
+            DataLifecycleDecision {
+                immutable_audit_preserved: false,
+                ..lifecycle_decision()
+            },
+        ] {
+            assert!(decision.validate().is_err());
+        }
+    }
+
+    #[test]
+    fn lifecycle_decision_rejects_invalid_identity() {
+        for decision in [
+            DataLifecycleDecision {
+                schema_version: "unsupported".to_owned(),
+                ..lifecycle_decision()
+            },
+            DataLifecycleDecision {
+                request_id: String::new(),
+                ..lifecycle_decision()
+            },
+            DataLifecycleDecision {
+                policy_id: String::new(),
+                ..lifecycle_decision()
+            },
+        ] {
+            assert!(decision.validate().is_err());
+        }
+    }
+
+    #[test]
+    fn lifecycle_effects_digest_is_canonical_and_sensitive() {
+        let request = lifecycle_request(DataLifecycleAction::Delete);
+        assert_eq!(
+            request.effects_digest(),
+            "0b361cdaa5b4c39340b159a21fadf9ca32ee3eccb5ec9a7b7269a7969d5873d6"
+        );
+        let broadened = DataLifecycleRequest {
+            target_ids: vec!["record-1".to_owned(), "record-2".to_owned()],
+            ..request.clone()
+        };
+        assert_ne!(request.effects_digest(), broadened.effects_digest());
     }
 }
