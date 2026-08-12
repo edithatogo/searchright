@@ -243,6 +243,42 @@
     },
     {
       "id": "CVX-0014",
+      "crate": "axum",
+      "version": "0.8.9",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0015",
+      "crate": "axum-core",
+      "version": "0.5.6",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0016",
       "crate": "base64",
       "version": "0.22.1",
       "criteria": "safe-to-deploy",
@@ -260,7 +296,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0015",
+      "id": "CVX-0017",
       "crate": "base64",
       "version": "0.23.1",
       "criteria": "safe-to-deploy",
@@ -278,7 +314,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0016",
+      "id": "CVX-0018",
       "crate": "bitflags",
       "version": "2.13.1",
       "criteria": "safe-to-deploy",
@@ -296,7 +332,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0017",
+      "id": "CVX-0019",
       "crate": "blake3",
       "version": "1.8.6",
       "criteria": "safe-to-deploy",
@@ -314,7 +350,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0018",
+      "id": "CVX-0020",
       "crate": "block-buffer",
       "version": "0.10.4",
       "criteria": "safe-to-deploy",
@@ -332,7 +368,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0019",
+      "id": "CVX-0021",
       "crate": "block-buffer",
       "version": "0.12.1",
       "criteria": "safe-to-deploy",
@@ -350,7 +386,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0020",
+      "id": "CVX-0022",
       "crate": "bytes",
       "version": "1.12.1",
       "criteria": "safe-to-deploy",
@@ -368,7 +404,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0021",
+      "id": "CVX-0023",
       "crate": "cc",
       "version": "1.4.2",
       "criteria": "safe-to-deploy",
@@ -386,7 +422,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0022",
+      "id": "CVX-0024",
       "crate": "cfg-if",
       "version": "1.0.4",
       "criteria": "safe-to-deploy",
@@ -404,7 +440,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0023",
+      "id": "CVX-0025",
       "crate": "chacha20",
       "version": "0.10.1",
       "criteria": "safe-to-deploy",
@@ -422,7 +458,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0024",
+      "id": "CVX-0026",
       "crate": "chrono",
       "version": "0.4.45",
       "criteria": "safe-to-deploy",
@@ -440,7 +476,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0025",
+      "id": "CVX-0027",
       "crate": "clap",
       "version": "4.6.6",
       "criteria": "safe-to-deploy",
@@ -458,7 +494,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0026",
+      "id": "CVX-0028",
       "crate": "clap_builder",
       "version": "4.6.6",
       "criteria": "safe-to-deploy",
@@ -476,7 +512,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0027",
+      "id": "CVX-0029",
       "crate": "clap_derive",
       "version": "4.6.4",
       "criteria": "safe-to-deploy",
@@ -494,7 +530,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0028",
+      "id": "CVX-0030",
       "crate": "clap_lex",
       "version": "1.1.0",
       "criteria": "safe-to-deploy",
@@ -512,7 +548,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0029",
+      "id": "CVX-0031",
       "crate": "cmake",
       "version": "0.1.58",
       "criteria": "safe-to-deploy",
@@ -530,7 +566,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0030",
+      "id": "CVX-0032",
       "crate": "colorchoice",
       "version": "1.0.5",
       "criteria": "safe-to-deploy",
@@ -548,7 +584,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0031",
+      "id": "CVX-0033",
       "crate": "combine",
       "version": "4.6.7",
       "criteria": "safe-to-deploy",
@@ -566,7 +602,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0032",
+      "id": "CVX-0034",
       "crate": "const-oid",
       "version": "0.10.2",
       "criteria": "safe-to-deploy",
@@ -584,7 +620,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0033",
+      "id": "CVX-0035",
       "crate": "constant_time_eq",
       "version": "0.4.2",
       "criteria": "safe-to-deploy",
@@ -602,7 +638,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0034",
+      "id": "CVX-0036",
       "crate": "core-foundation",
       "version": "0.10.1",
       "criteria": "safe-to-deploy",
@@ -620,7 +656,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0035",
+      "id": "CVX-0037",
       "crate": "cpufeatures",
       "version": "0.2.17",
       "criteria": "safe-to-deploy",
@@ -638,7 +674,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0036",
+      "id": "CVX-0038",
       "crate": "cpufeatures",
       "version": "0.3.0",
       "criteria": "safe-to-deploy",
@@ -656,7 +692,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0037",
+      "id": "CVX-0039",
       "crate": "crypto-common",
       "version": "0.1.7",
       "criteria": "safe-to-deploy",
@@ -674,7 +710,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0038",
+      "id": "CVX-0040",
       "crate": "crypto-common",
       "version": "0.2.2",
       "criteria": "safe-to-deploy",
@@ -692,7 +728,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0039",
+      "id": "CVX-0041",
       "crate": "darling",
       "version": "0.24.0",
       "criteria": "safe-to-deploy",
@@ -710,7 +746,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0040",
+      "id": "CVX-0042",
       "crate": "darling_core",
       "version": "0.24.0",
       "criteria": "safe-to-deploy",
@@ -728,7 +764,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0041",
+      "id": "CVX-0043",
       "crate": "darling_macro",
       "version": "0.24.0",
       "criteria": "safe-to-deploy",
@@ -746,7 +782,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0042",
+      "id": "CVX-0044",
       "crate": "digest",
       "version": "0.10.7",
       "criteria": "safe-to-deploy",
@@ -764,7 +800,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0043",
+      "id": "CVX-0045",
       "crate": "digest",
       "version": "0.11.3",
       "criteria": "safe-to-deploy",
@@ -782,7 +818,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0044",
+      "id": "CVX-0046",
       "crate": "displaydoc",
       "version": "0.2.7",
       "criteria": "safe-to-deploy",
@@ -800,7 +836,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0045",
+      "id": "CVX-0047",
       "crate": "dyn-clone",
       "version": "1.0.20",
       "criteria": "safe-to-deploy",
@@ -818,7 +854,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0046",
+      "id": "CVX-0048",
       "crate": "equivalent",
       "version": "1.0.2",
       "criteria": "safe-to-deploy",
@@ -836,7 +872,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0047",
+      "id": "CVX-0049",
       "crate": "fastrand",
       "version": "2.5.0",
       "criteria": "safe-to-run",
@@ -854,7 +890,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0048",
+      "id": "CVX-0050",
       "crate": "find-msvc-tools",
       "version": "0.1.10",
       "criteria": "safe-to-deploy",
@@ -872,7 +908,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0049",
+      "id": "CVX-0051",
       "crate": "fs_extra",
       "version": "1.3.0",
       "criteria": "safe-to-deploy",
@@ -890,7 +926,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0050",
+      "id": "CVX-0052",
       "crate": "futures",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -908,7 +944,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0051",
+      "id": "CVX-0053",
       "crate": "futures-channel",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -926,7 +962,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0052",
+      "id": "CVX-0054",
       "crate": "futures-core",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -944,7 +980,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0053",
+      "id": "CVX-0055",
       "crate": "futures-executor",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -962,7 +998,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0054",
+      "id": "CVX-0056",
       "crate": "futures-io",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -980,7 +1016,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0055",
+      "id": "CVX-0057",
       "crate": "futures-macro",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -998,7 +1034,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0056",
+      "id": "CVX-0058",
       "crate": "futures-sink",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -1016,7 +1052,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0057",
+      "id": "CVX-0059",
       "crate": "futures-task",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -1034,7 +1070,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0058",
+      "id": "CVX-0060",
       "crate": "futures-util",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
@@ -1052,7 +1088,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0059",
+      "id": "CVX-0061",
       "crate": "generator",
       "version": "0.8.9",
       "criteria": "safe-to-run",
@@ -1070,7 +1106,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0060",
+      "id": "CVX-0062",
       "crate": "generic-array",
       "version": "0.14.7",
       "criteria": "safe-to-deploy",
@@ -1088,7 +1124,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0061",
+      "id": "CVX-0063",
       "crate": "getrandom",
       "version": "0.2.17",
       "criteria": "safe-to-deploy",
@@ -1106,7 +1142,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0062",
+      "id": "CVX-0064",
       "crate": "getrandom",
       "version": "0.3.4",
       "criteria": "safe-to-run",
@@ -1124,7 +1160,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0063",
+      "id": "CVX-0065",
       "crate": "getrandom",
       "version": "0.4.3",
       "criteria": "safe-to-deploy",
@@ -1142,7 +1178,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0064",
+      "id": "CVX-0066",
       "crate": "h2",
       "version": "0.4.15",
       "criteria": "safe-to-deploy",
@@ -1160,7 +1196,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0065",
+      "id": "CVX-0067",
       "crate": "hashbrown",
       "version": "0.17.1",
       "criteria": "safe-to-deploy",
@@ -1178,7 +1214,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0066",
+      "id": "CVX-0068",
       "crate": "http",
       "version": "1.5.0",
       "criteria": "safe-to-deploy",
@@ -1196,7 +1232,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0067",
+      "id": "CVX-0069",
       "crate": "http-body",
       "version": "1.1.0",
       "criteria": "safe-to-deploy",
@@ -1214,7 +1250,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0068",
+      "id": "CVX-0070",
       "crate": "http-body-util",
       "version": "0.1.4",
       "criteria": "safe-to-deploy",
@@ -1232,7 +1268,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0069",
+      "id": "CVX-0071",
       "crate": "httparse",
       "version": "1.10.1",
       "criteria": "safe-to-deploy",
@@ -1250,7 +1286,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0070",
+      "id": "CVX-0072",
+      "crate": "httpdate",
+      "version": "1.0.3",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0073",
       "crate": "hybrid-array",
       "version": "0.4.14",
       "criteria": "safe-to-deploy",
@@ -1268,7 +1322,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0071",
+      "id": "CVX-0074",
       "crate": "hyper",
       "version": "1.11.0",
       "criteria": "safe-to-deploy",
@@ -1286,7 +1340,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0072",
+      "id": "CVX-0075",
       "crate": "hyper-rustls",
       "version": "0.27.9",
       "criteria": "safe-to-deploy",
@@ -1304,7 +1358,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0073",
+      "id": "CVX-0076",
       "crate": "hyper-util",
       "version": "0.1.20",
       "criteria": "safe-to-deploy",
@@ -1322,7 +1376,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0074",
+      "id": "CVX-0077",
       "crate": "iana-time-zone",
       "version": "0.1.65",
       "criteria": "safe-to-deploy",
@@ -1340,7 +1394,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0075",
+      "id": "CVX-0078",
       "crate": "icu_collections",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
@@ -1358,7 +1412,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0076",
+      "id": "CVX-0079",
       "crate": "icu_locale_core",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
@@ -1376,7 +1430,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0077",
+      "id": "CVX-0080",
       "crate": "icu_normalizer",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
@@ -1394,7 +1448,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0078",
+      "id": "CVX-0081",
       "crate": "icu_normalizer_data",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
@@ -1412,7 +1466,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0079",
+      "id": "CVX-0082",
       "crate": "icu_properties",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
@@ -1430,7 +1484,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0080",
+      "id": "CVX-0083",
       "crate": "icu_properties_data",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
@@ -1448,7 +1502,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0081",
+      "id": "CVX-0084",
       "crate": "icu_provider",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
@@ -1466,7 +1520,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0082",
+      "id": "CVX-0085",
       "crate": "idna_adapter",
       "version": "1.2.2",
       "criteria": "safe-to-deploy",
@@ -1484,7 +1538,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0083",
+      "id": "CVX-0086",
       "crate": "indexmap",
       "version": "2.14.0",
       "criteria": "safe-to-deploy",
@@ -1502,7 +1556,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0084",
+      "id": "CVX-0087",
       "crate": "ipnet",
       "version": "2.12.1",
       "criteria": "safe-to-deploy",
@@ -1520,7 +1574,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0085",
+      "id": "CVX-0088",
       "crate": "is_terminal_polyfill",
       "version": "1.70.2",
       "criteria": "safe-to-deploy",
@@ -1538,7 +1592,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0086",
+      "id": "CVX-0089",
       "crate": "itoa",
       "version": "1.0.18",
       "criteria": "safe-to-deploy",
@@ -1556,7 +1610,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0087",
+      "id": "CVX-0090",
       "crate": "jni",
       "version": "0.22.4",
       "criteria": "safe-to-deploy",
@@ -1574,7 +1628,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0088",
+      "id": "CVX-0091",
       "crate": "jni-macros",
       "version": "0.22.4",
       "criteria": "safe-to-deploy",
@@ -1592,7 +1646,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0089",
+      "id": "CVX-0092",
       "crate": "jni-sys",
       "version": "0.4.1",
       "criteria": "safe-to-deploy",
@@ -1610,7 +1664,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0090",
+      "id": "CVX-0093",
       "crate": "jni-sys-macros",
       "version": "0.4.1",
       "criteria": "safe-to-deploy",
@@ -1628,7 +1682,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0091",
+      "id": "CVX-0094",
       "crate": "jobserver",
       "version": "0.1.35",
       "criteria": "safe-to-deploy",
@@ -1646,7 +1700,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0092",
+      "id": "CVX-0095",
       "crate": "js-sys",
       "version": "0.3.104",
       "criteria": "safe-to-deploy",
@@ -1664,7 +1718,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0093",
+      "id": "CVX-0096",
+      "crate": "jsonwebtoken",
+      "version": "11.0.0",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0097",
       "crate": "lazy_static",
       "version": "1.5.0",
       "criteria": "safe-to-deploy",
@@ -1682,7 +1754,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0094",
+      "id": "CVX-0098",
       "crate": "libc",
       "version": "0.2.189",
       "criteria": "safe-to-deploy",
@@ -1700,7 +1772,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0095",
+      "id": "CVX-0099",
       "crate": "linux-raw-sys",
       "version": "0.12.1",
       "criteria": "safe-to-deploy",
@@ -1718,7 +1790,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0096",
+      "id": "CVX-0100",
       "crate": "litemap",
       "version": "0.8.2",
       "criteria": "safe-to-deploy",
@@ -1736,7 +1808,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0097",
+      "id": "CVX-0101",
       "crate": "log",
       "version": "0.4.33",
       "criteria": "safe-to-deploy",
@@ -1754,7 +1826,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0098",
+      "id": "CVX-0102",
       "crate": "loom",
       "version": "0.7.2",
       "criteria": "safe-to-run",
@@ -1772,7 +1844,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0099",
+      "id": "CVX-0103",
       "crate": "lru-slab",
       "version": "0.1.2",
       "criteria": "safe-to-deploy",
@@ -1790,7 +1862,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0100",
+      "id": "CVX-0104",
+      "crate": "matchit",
+      "version": "0.8.4",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0105",
       "crate": "memchr",
       "version": "2.8.3",
       "criteria": "safe-to-deploy",
@@ -1808,7 +1898,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0101",
+      "id": "CVX-0106",
       "crate": "mime",
       "version": "0.3.17",
       "criteria": "safe-to-deploy",
@@ -1826,7 +1916,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0102",
+      "id": "CVX-0107",
       "crate": "mio",
       "version": "1.2.2",
       "criteria": "safe-to-deploy",
@@ -1844,7 +1934,43 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0103",
+      "id": "CVX-0108",
+      "crate": "num-bigint",
+      "version": "0.4.8",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0109",
+      "crate": "num-integer",
+      "version": "0.1.47",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0110",
       "crate": "once_cell",
       "version": "1.21.4",
       "criteria": "safe-to-deploy",
@@ -1862,7 +1988,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0104",
+      "id": "CVX-0111",
       "crate": "once_cell_polyfill",
       "version": "1.70.2",
       "criteria": "safe-to-deploy",
@@ -1880,7 +2006,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0105",
+      "id": "CVX-0112",
       "crate": "openssl-probe",
       "version": "0.2.1",
       "criteria": "safe-to-deploy",
@@ -1898,7 +2024,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0106",
+      "id": "CVX-0113",
       "crate": "pastey",
       "version": "0.2.3",
       "criteria": "safe-to-deploy",
@@ -1916,7 +2042,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0107",
+      "id": "CVX-0114",
+      "crate": "pem",
+      "version": "3.0.6",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0115",
       "crate": "pin-project-lite",
       "version": "0.2.17",
       "criteria": "safe-to-deploy",
@@ -1934,7 +2078,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0108",
+      "id": "CVX-0116",
       "crate": "pkg-config",
       "version": "0.3.33",
       "criteria": "safe-to-deploy",
@@ -1952,7 +2096,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0109",
+      "id": "CVX-0117",
       "crate": "potential_utf",
       "version": "0.1.5",
       "criteria": "safe-to-deploy",
@@ -1970,7 +2114,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0110",
+      "id": "CVX-0118",
       "crate": "ppv-lite86",
       "version": "0.2.21",
       "criteria": "safe-to-run",
@@ -1988,7 +2132,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0111",
+      "id": "CVX-0119",
       "crate": "proc-macro2",
       "version": "1.0.107",
       "criteria": "safe-to-deploy",
@@ -2006,7 +2150,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0112",
+      "id": "CVX-0120",
       "crate": "proptest",
       "version": "1.11.0",
       "criteria": "safe-to-run",
@@ -2024,7 +2168,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0113",
+      "id": "CVX-0121",
       "crate": "quick-error",
       "version": "1.2.3",
       "criteria": "safe-to-run",
@@ -2042,7 +2186,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0114",
+      "id": "CVX-0122",
       "crate": "quinn",
       "version": "0.11.11",
       "criteria": "safe-to-deploy",
@@ -2060,7 +2204,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0115",
+      "id": "CVX-0123",
       "crate": "quinn-proto",
       "version": "0.11.16",
       "criteria": "safe-to-deploy",
@@ -2078,7 +2222,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0116",
+      "id": "CVX-0124",
       "crate": "quinn-udp",
       "version": "0.5.15",
       "criteria": "safe-to-deploy",
@@ -2096,7 +2240,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0117",
+      "id": "CVX-0125",
       "crate": "quote",
       "version": "1.0.47",
       "criteria": "safe-to-deploy",
@@ -2114,7 +2258,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0118",
+      "id": "CVX-0126",
       "crate": "r-efi",
       "version": "5.3.0",
       "criteria": "safe-to-run",
@@ -2132,7 +2276,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0119",
+      "id": "CVX-0127",
       "crate": "r-efi",
       "version": "6.0.0",
       "criteria": "safe-to-deploy",
@@ -2150,7 +2294,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0120",
+      "id": "CVX-0128",
       "crate": "rand",
       "version": "0.10.2",
       "criteria": "safe-to-deploy",
@@ -2168,7 +2312,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0121",
+      "id": "CVX-0129",
       "crate": "rand",
       "version": "0.9.5",
       "criteria": "safe-to-run",
@@ -2186,7 +2330,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0122",
+      "id": "CVX-0130",
       "crate": "rand_chacha",
       "version": "0.9.0",
       "criteria": "safe-to-run",
@@ -2204,7 +2348,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0123",
+      "id": "CVX-0131",
       "crate": "rand_core",
       "version": "0.10.1",
       "criteria": "safe-to-deploy",
@@ -2222,7 +2366,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0124",
+      "id": "CVX-0132",
+      "crate": "rand_core",
+      "version": "0.6.4",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0133",
       "crate": "rand_core",
       "version": "0.9.5",
       "criteria": "safe-to-run",
@@ -2240,7 +2402,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0125",
+      "id": "CVX-0134",
       "crate": "rand_pcg",
       "version": "0.10.2",
       "criteria": "safe-to-deploy",
@@ -2258,7 +2420,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0126",
+      "id": "CVX-0135",
       "crate": "ref-cast",
       "version": "1.0.26",
       "criteria": "safe-to-deploy",
@@ -2276,7 +2438,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0127",
+      "id": "CVX-0136",
       "crate": "ref-cast-impl",
       "version": "1.0.26",
       "criteria": "safe-to-deploy",
@@ -2294,7 +2456,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0128",
+      "id": "CVX-0137",
       "crate": "regex-automata",
       "version": "0.4.18",
       "criteria": "safe-to-deploy",
@@ -2312,7 +2474,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0129",
+      "id": "CVX-0138",
       "crate": "regex-syntax",
       "version": "0.8.11",
       "criteria": "safe-to-deploy",
@@ -2330,7 +2492,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0130",
+      "id": "CVX-0139",
       "crate": "reqwest",
       "version": "0.13.4",
       "criteria": "safe-to-deploy",
@@ -2348,7 +2510,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0131",
+      "id": "CVX-0140",
       "crate": "ring",
       "version": "0.17.14",
       "criteria": "safe-to-deploy",
@@ -2366,7 +2528,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0132",
+      "id": "CVX-0141",
       "crate": "rmcp",
       "version": "3.1.2",
       "criteria": "safe-to-deploy",
@@ -2384,7 +2546,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0133",
+      "id": "CVX-0142",
       "crate": "rmcp-macros",
       "version": "3.1.2",
       "criteria": "safe-to-deploy",
@@ -2402,7 +2564,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0134",
+      "id": "CVX-0143",
       "crate": "rustc-hash",
       "version": "2.1.3",
       "criteria": "safe-to-deploy",
@@ -2420,7 +2582,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0135",
+      "id": "CVX-0144",
       "crate": "rustix",
       "version": "1.1.4",
       "criteria": "safe-to-deploy",
@@ -2438,7 +2600,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0136",
+      "id": "CVX-0145",
       "crate": "rustls",
       "version": "0.23.43",
       "criteria": "safe-to-deploy",
@@ -2456,7 +2618,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0137",
+      "id": "CVX-0146",
       "crate": "rustls-native-certs",
       "version": "0.8.4",
       "criteria": "safe-to-deploy",
@@ -2474,7 +2636,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0138",
+      "id": "CVX-0147",
       "crate": "rustls-pki-types",
       "version": "1.15.1",
       "criteria": "safe-to-deploy",
@@ -2492,7 +2654,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0139",
+      "id": "CVX-0148",
       "crate": "rustls-platform-verifier",
       "version": "0.7.0",
       "criteria": "safe-to-deploy",
@@ -2510,7 +2672,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0140",
+      "id": "CVX-0149",
       "crate": "rustls-platform-verifier-android",
       "version": "0.1.1",
       "criteria": "safe-to-deploy",
@@ -2528,7 +2690,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0141",
+      "id": "CVX-0150",
       "crate": "rustls-webpki",
       "version": "0.103.13",
       "criteria": "safe-to-deploy",
@@ -2546,7 +2708,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0142",
+      "id": "CVX-0151",
       "crate": "rustversion",
       "version": "1.0.23",
       "criteria": "safe-to-deploy",
@@ -2564,7 +2726,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0143",
+      "id": "CVX-0152",
       "crate": "rusty-fork",
       "version": "0.3.1",
       "criteria": "safe-to-run",
@@ -2582,7 +2744,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0144",
+      "id": "CVX-0153",
       "crate": "ryu",
       "version": "1.0.23",
       "criteria": "safe-to-deploy",
@@ -2600,7 +2762,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0145",
+      "id": "CVX-0154",
       "crate": "same-file",
       "version": "1.0.6",
       "criteria": "safe-to-deploy",
@@ -2618,7 +2780,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0146",
+      "id": "CVX-0155",
       "crate": "schannel",
       "version": "0.1.29",
       "criteria": "safe-to-deploy",
@@ -2636,7 +2798,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0147",
+      "id": "CVX-0156",
       "crate": "schemars",
       "version": "1.2.2",
       "criteria": "safe-to-deploy",
@@ -2654,7 +2816,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0148",
+      "id": "CVX-0157",
       "crate": "schemars_derive",
       "version": "1.2.2",
       "criteria": "safe-to-deploy",
@@ -2672,7 +2834,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0149",
+      "id": "CVX-0158",
       "crate": "scoped-tls",
       "version": "1.0.1",
       "criteria": "safe-to-run",
@@ -2690,7 +2852,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0150",
+      "id": "CVX-0159",
       "crate": "security-framework",
       "version": "3.7.0",
       "criteria": "safe-to-deploy",
@@ -2708,7 +2870,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0151",
+      "id": "CVX-0160",
       "crate": "security-framework-sys",
       "version": "2.17.0",
       "criteria": "safe-to-deploy",
@@ -2726,7 +2888,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0152",
+      "id": "CVX-0161",
       "crate": "serde",
       "version": "1.0.229",
       "criteria": "safe-to-deploy",
@@ -2744,7 +2906,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0153",
+      "id": "CVX-0162",
       "crate": "serde_core",
       "version": "1.0.229",
       "criteria": "safe-to-deploy",
@@ -2762,7 +2924,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0154",
+      "id": "CVX-0163",
       "crate": "serde_derive",
       "version": "1.0.229",
       "criteria": "safe-to-deploy",
@@ -2780,7 +2942,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0155",
+      "id": "CVX-0164",
       "crate": "serde_derive_internals",
       "version": "0.30.0",
       "criteria": "safe-to-deploy",
@@ -2798,7 +2960,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0156",
+      "id": "CVX-0165",
       "crate": "serde_json",
       "version": "1.0.151",
       "criteria": "safe-to-deploy",
@@ -2816,7 +2978,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0157",
+      "id": "CVX-0166",
+      "crate": "serde_path_to_error",
+      "version": "0.1.20",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0167",
       "crate": "serde_yaml",
       "version": "0.9.34+deprecated",
       "criteria": "safe-to-deploy",
@@ -2834,7 +3014,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0158",
+      "id": "CVX-0168",
       "crate": "sha2",
       "version": "0.10.9",
       "criteria": "safe-to-deploy",
@@ -2852,7 +3032,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0159",
+      "id": "CVX-0169",
       "crate": "sha2",
       "version": "0.11.0",
       "criteria": "safe-to-deploy",
@@ -2870,7 +3050,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0160",
+      "id": "CVX-0170",
       "crate": "shlex",
       "version": "2.0.1",
       "criteria": "safe-to-deploy",
@@ -2888,7 +3068,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0161",
+      "id": "CVX-0171",
       "crate": "signal-hook-registry",
       "version": "1.4.8",
       "criteria": "safe-to-deploy",
@@ -2906,7 +3086,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0162",
+      "id": "CVX-0172",
+      "crate": "signature",
+      "version": "2.2.0",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0173",
       "crate": "simd_cesu8",
       "version": "1.2.0",
       "criteria": "safe-to-deploy",
@@ -2924,7 +3122,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0163",
+      "id": "CVX-0174",
       "crate": "simdutf8",
       "version": "0.1.5",
       "criteria": "safe-to-deploy",
@@ -2942,7 +3140,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0164",
+      "id": "CVX-0175",
+      "crate": "simple_asn1",
+      "version": "0.6.4",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0176",
       "crate": "slab",
       "version": "0.4.12",
       "criteria": "safe-to-deploy",
@@ -2960,7 +3176,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0165",
+      "id": "CVX-0177",
       "crate": "smallvec",
       "version": "1.15.2",
       "criteria": "safe-to-deploy",
@@ -2978,7 +3194,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0166",
+      "id": "CVX-0178",
       "crate": "socket2",
       "version": "0.6.5",
       "criteria": "safe-to-deploy",
@@ -2996,7 +3212,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0167",
+      "id": "CVX-0179",
+      "crate": "sse-stream",
+      "version": "0.2.5",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0180",
       "crate": "stable_deref_trait",
       "version": "1.2.1",
       "criteria": "safe-to-deploy",
@@ -3014,7 +3248,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0168",
+      "id": "CVX-0181",
       "crate": "strsim",
       "version": "0.11.1",
       "criteria": "safe-to-deploy",
@@ -3032,7 +3266,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0169",
+      "id": "CVX-0182",
       "crate": "subtle",
       "version": "2.6.1",
       "criteria": "safe-to-deploy",
@@ -3050,7 +3284,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0170",
+      "id": "CVX-0183",
       "crate": "syn",
       "version": "2.0.119",
       "criteria": "safe-to-deploy",
@@ -3068,7 +3302,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0171",
+      "id": "CVX-0184",
       "crate": "syn",
       "version": "3.0.3",
       "criteria": "safe-to-deploy",
@@ -3086,7 +3320,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0172",
+      "id": "CVX-0185",
       "crate": "sync_wrapper",
       "version": "1.0.2",
       "criteria": "safe-to-deploy",
@@ -3104,7 +3338,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0173",
+      "id": "CVX-0186",
       "crate": "tempfile",
       "version": "3.27.0",
       "criteria": "safe-to-run",
@@ -3122,7 +3356,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0174",
+      "id": "CVX-0187",
       "crate": "terminal_size",
       "version": "0.4.4",
       "criteria": "safe-to-deploy",
@@ -3140,7 +3374,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0175",
+      "id": "CVX-0188",
       "crate": "thiserror",
       "version": "2.0.20",
       "criteria": "safe-to-deploy",
@@ -3158,7 +3392,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0176",
+      "id": "CVX-0189",
       "crate": "thiserror-impl",
       "version": "2.0.20",
       "criteria": "safe-to-deploy",
@@ -3176,7 +3410,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0177",
+      "id": "CVX-0190",
       "crate": "thread_local",
       "version": "1.1.10",
       "criteria": "safe-to-deploy",
@@ -3194,7 +3428,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0178",
+      "id": "CVX-0191",
       "crate": "time",
       "version": "0.3.55",
       "criteria": "safe-to-deploy",
@@ -3212,7 +3446,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0179",
+      "id": "CVX-0192",
       "crate": "time-macros",
       "version": "0.2.32",
       "criteria": "safe-to-deploy",
@@ -3230,7 +3464,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0180",
+      "id": "CVX-0193",
       "crate": "tinystr",
       "version": "0.8.3",
       "criteria": "safe-to-deploy",
@@ -3248,7 +3482,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0181",
+      "id": "CVX-0194",
       "crate": "tinyvec",
       "version": "1.12.0",
       "criteria": "safe-to-deploy",
@@ -3266,7 +3500,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0182",
+      "id": "CVX-0195",
       "crate": "tokio",
       "version": "1.53.1",
       "criteria": "safe-to-deploy",
@@ -3284,7 +3518,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0183",
+      "id": "CVX-0196",
       "crate": "tokio-macros",
       "version": "2.7.2",
       "criteria": "safe-to-deploy",
@@ -3302,7 +3536,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0184",
+      "id": "CVX-0197",
       "crate": "tokio-rustls",
       "version": "0.26.4",
       "criteria": "safe-to-deploy",
@@ -3320,7 +3554,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0185",
+      "id": "CVX-0198",
+      "crate": "tokio-stream",
+      "version": "0.1.19",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0199",
       "crate": "tokio-util",
       "version": "0.7.19",
       "criteria": "safe-to-deploy",
@@ -3338,7 +3590,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0186",
+      "id": "CVX-0200",
       "crate": "tower",
       "version": "0.5.3",
       "criteria": "safe-to-deploy",
@@ -3356,7 +3608,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0187",
+      "id": "CVX-0201",
       "crate": "tower-http",
       "version": "0.6.11",
       "criteria": "safe-to-deploy",
@@ -3374,7 +3626,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0188",
+      "id": "CVX-0202",
       "crate": "tower-layer",
       "version": "0.3.3",
       "criteria": "safe-to-deploy",
@@ -3392,7 +3644,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0189",
+      "id": "CVX-0203",
       "crate": "tower-service",
       "version": "0.3.3",
       "criteria": "safe-to-deploy",
@@ -3410,7 +3662,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0190",
+      "id": "CVX-0204",
       "crate": "tracing",
       "version": "0.1.44",
       "criteria": "safe-to-deploy",
@@ -3428,7 +3680,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0191",
+      "id": "CVX-0205",
       "crate": "tracing-attributes",
       "version": "0.1.31",
       "criteria": "safe-to-deploy",
@@ -3446,7 +3698,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0192",
+      "id": "CVX-0206",
       "crate": "tracing-core",
       "version": "0.1.36",
       "criteria": "safe-to-deploy",
@@ -3464,7 +3716,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0193",
+      "id": "CVX-0207",
       "crate": "tracing-serde",
       "version": "0.2.0",
       "criteria": "safe-to-deploy",
@@ -3482,7 +3734,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0194",
+      "id": "CVX-0208",
       "crate": "tracing-subscriber",
       "version": "0.3.23",
       "criteria": "safe-to-deploy",
@@ -3500,7 +3752,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0195",
+      "id": "CVX-0209",
       "crate": "typenum",
       "version": "1.20.1",
       "criteria": "safe-to-deploy",
@@ -3518,7 +3770,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0196",
+      "id": "CVX-0210",
       "crate": "unicase",
       "version": "2.9.0",
       "criteria": "safe-to-deploy",
@@ -3536,7 +3788,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0197",
+      "id": "CVX-0211",
       "crate": "unicode-ident",
       "version": "1.0.24",
       "criteria": "safe-to-deploy",
@@ -3554,7 +3806,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0198",
+      "id": "CVX-0212",
       "crate": "unsafe-libyaml",
       "version": "0.2.11",
       "criteria": "safe-to-deploy",
@@ -3572,7 +3824,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0199",
+      "id": "CVX-0213",
+      "crate": "untrusted",
+      "version": "0.7.1",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0214",
       "crate": "untrusted",
       "version": "0.9.0",
       "criteria": "safe-to-deploy",
@@ -3590,7 +3860,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0200",
+      "id": "CVX-0215",
       "crate": "url",
       "version": "2.5.8",
       "criteria": "safe-to-deploy",
@@ -3608,7 +3878,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0201",
+      "id": "CVX-0216",
       "crate": "uuid",
       "version": "1.24.0",
       "criteria": "safe-to-deploy",
@@ -3626,7 +3896,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0202",
+      "id": "CVX-0217",
       "crate": "version_check",
       "version": "0.9.5",
       "criteria": "safe-to-deploy",
@@ -3644,7 +3914,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0203",
+      "id": "CVX-0218",
       "crate": "wait-timeout",
       "version": "0.2.1",
       "criteria": "safe-to-run",
@@ -3662,7 +3932,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0204",
+      "id": "CVX-0219",
       "crate": "walkdir",
       "version": "2.5.0",
       "criteria": "safe-to-deploy",
@@ -3680,7 +3950,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0205",
+      "id": "CVX-0220",
       "crate": "wasi",
       "version": "0.11.1+wasi-snapshot-preview1",
       "criteria": "safe-to-deploy",
@@ -3698,7 +3968,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0206",
+      "id": "CVX-0221",
       "crate": "wasm-bindgen",
       "version": "0.2.127",
       "criteria": "safe-to-deploy",
@@ -3716,7 +3986,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0207",
+      "id": "CVX-0222",
       "crate": "wasm-bindgen-futures",
       "version": "0.4.77",
       "criteria": "safe-to-deploy",
@@ -3734,7 +4004,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0208",
+      "id": "CVX-0223",
       "crate": "wasm-bindgen-macro",
       "version": "0.2.127",
       "criteria": "safe-to-deploy",
@@ -3752,7 +4022,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0209",
+      "id": "CVX-0224",
       "crate": "wasm-bindgen-macro-support",
       "version": "0.2.127",
       "criteria": "safe-to-deploy",
@@ -3770,7 +4040,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0210",
+      "id": "CVX-0225",
       "crate": "wasm-bindgen-shared",
       "version": "0.2.127",
       "criteria": "safe-to-deploy",
@@ -3788,7 +4058,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0211",
+      "id": "CVX-0226",
       "crate": "web-sys",
       "version": "0.3.104",
       "criteria": "safe-to-deploy",
@@ -3806,7 +4076,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0212",
+      "id": "CVX-0227",
       "crate": "web-time",
       "version": "1.1.0",
       "criteria": "safe-to-deploy",
@@ -3824,7 +4094,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0213",
+      "id": "CVX-0228",
       "crate": "webpki-root-certs",
       "version": "1.0.9",
       "criteria": "safe-to-deploy",
@@ -3842,7 +4112,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0214",
+      "id": "CVX-0229",
       "crate": "winapi-util",
       "version": "0.1.11",
       "criteria": "safe-to-deploy",
@@ -3860,7 +4130,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0215",
+      "id": "CVX-0230",
       "crate": "windows-core",
       "version": "0.62.2",
       "criteria": "safe-to-deploy",
@@ -3878,7 +4148,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0216",
+      "id": "CVX-0231",
       "crate": "windows-implement",
       "version": "0.60.2",
       "criteria": "safe-to-deploy",
@@ -3896,7 +4166,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0217",
+      "id": "CVX-0232",
       "crate": "windows-interface",
       "version": "0.59.3",
       "criteria": "safe-to-deploy",
@@ -3914,7 +4184,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0218",
+      "id": "CVX-0233",
       "crate": "windows-result",
       "version": "0.4.1",
       "criteria": "safe-to-deploy",
@@ -3932,7 +4202,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0219",
+      "id": "CVX-0234",
       "crate": "windows-strings",
       "version": "0.5.1",
       "criteria": "safe-to-deploy",
@@ -3950,7 +4220,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0220",
+      "id": "CVX-0235",
       "crate": "windows-sys",
       "version": "0.52.0",
       "criteria": "safe-to-deploy",
@@ -3968,7 +4238,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0221",
+      "id": "CVX-0236",
       "crate": "windows-sys",
       "version": "0.61.2",
       "criteria": "safe-to-deploy",
@@ -3986,7 +4256,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0222",
+      "id": "CVX-0237",
       "crate": "windows-targets",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4004,7 +4274,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0223",
+      "id": "CVX-0238",
       "crate": "windows_aarch64_gnullvm",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4022,7 +4292,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0224",
+      "id": "CVX-0239",
       "crate": "windows_aarch64_msvc",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4040,7 +4310,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0225",
+      "id": "CVX-0240",
       "crate": "windows_i686_gnu",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4058,7 +4328,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0226",
+      "id": "CVX-0241",
       "crate": "windows_i686_gnullvm",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4076,7 +4346,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0227",
+      "id": "CVX-0242",
       "crate": "windows_i686_msvc",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4094,7 +4364,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0228",
+      "id": "CVX-0243",
       "crate": "windows_x86_64_gnu",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4112,7 +4382,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0229",
+      "id": "CVX-0244",
       "crate": "windows_x86_64_gnullvm",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4130,7 +4400,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0230",
+      "id": "CVX-0245",
       "crate": "windows_x86_64_msvc",
       "version": "0.52.6",
       "criteria": "safe-to-deploy",
@@ -4148,7 +4418,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0231",
+      "id": "CVX-0246",
       "crate": "writeable",
       "version": "0.6.3",
       "criteria": "safe-to-deploy",
@@ -4166,7 +4436,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0232",
+      "id": "CVX-0247",
       "crate": "yoke",
       "version": "0.8.3",
       "criteria": "safe-to-deploy",
@@ -4184,7 +4454,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0233",
+      "id": "CVX-0248",
       "crate": "yoke-derive",
       "version": "0.8.2",
       "criteria": "safe-to-deploy",
@@ -4202,7 +4472,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0234",
+      "id": "CVX-0249",
       "crate": "zerocopy",
       "version": "0.8.56",
       "criteria": "safe-to-run",
@@ -4220,7 +4490,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0235",
+      "id": "CVX-0250",
       "crate": "zerocopy-derive",
       "version": "0.8.56",
       "criteria": "safe-to-run",
@@ -4238,7 +4508,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0236",
+      "id": "CVX-0251",
       "crate": "zerofrom",
       "version": "0.1.8",
       "criteria": "safe-to-deploy",
@@ -4256,7 +4526,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0237",
+      "id": "CVX-0252",
       "crate": "zerofrom-derive",
       "version": "0.1.7",
       "criteria": "safe-to-deploy",
@@ -4274,7 +4544,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0238",
+      "id": "CVX-0253",
       "crate": "zeroize",
       "version": "1.9.0",
       "criteria": "safe-to-deploy",
@@ -4292,7 +4562,25 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0239",
+      "id": "CVX-0254",
+      "crate": "zeroize_derive",
+      "version": "1.5.0",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
+      "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
+      "replacement_plan": "Replace the exemption with an imported or Searchright-authored audit before review_by.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+      "proposed_at": "2026-08-12T00:00:00+10:00",
+      "decided_at": "2026-08-12T00:00:00+10:00",
+      "decision_evidence": [
+        "https://github.com/edithatogo/searchright/issues/241"
+      ],
+      "expires_at": "2026-11-10"
+    },
+    {
+      "id": "CVX-0255",
       "crate": "zerotrie",
       "version": "0.2.4",
       "criteria": "safe-to-deploy",
@@ -4310,7 +4598,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0240",
+      "id": "CVX-0256",
       "crate": "zerovec",
       "version": "0.11.6",
       "criteria": "safe-to-deploy",
@@ -4328,7 +4616,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0241",
+      "id": "CVX-0257",
       "crate": "zerovec-derive",
       "version": "0.11.3",
       "criteria": "safe-to-deploy",
@@ -4346,7 +4634,7 @@
       "expires_at": "2026-11-10"
     },
     {
-      "id": "CVX-0242",
+      "id": "CVX-0258",
       "crate": "zmij",
       "version": "1.0.23",
       "criteria": "safe-to-deploy",
