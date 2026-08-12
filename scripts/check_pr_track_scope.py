@@ -40,7 +40,7 @@ def changed_files(payload: Any) -> list[str]:
 
 def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
     pull_request = event.get("pull_request") or {}
-    body = str(pull_request.get("body") or "")
+    body = str(pull_request.get("body") or "").replace("\\n", "\n")
     labels = {
         str(item.get("name"))
         for item in pull_request.get("labels", [])
