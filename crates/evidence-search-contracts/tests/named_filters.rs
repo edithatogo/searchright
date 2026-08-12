@@ -1,3 +1,5 @@
+//! Contract tests for versioned, rights-aware named filter packs.
+
 use std::{fs, path::Path};
 
 use evidence_search_contracts::{
