@@ -262,17 +262,18 @@
       "track_id": "04"
     },
     {
-      "blockers": [
-        "Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
-        "Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/reduce_review_events.py --self-test",
         "python scripts/review_bundle.py self-test",
         "python scripts/check_research_object_handoff.py"
       ],
-      "claim_boundary": "Compiler-verified local persistence and policy behavior. Hosted cross-platform execution remains the archival gate; power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
+      "claim_boundary": "Compiler-verified local persistence and policy behavior with exact-revision hosted Linux, Windows and macOS evidence and a sealed advisory panel disposition. Power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
+      "completed_higher_evidence_gates": [
+        "Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
+        "Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival."
+      ],
       "deliverables": [
         "crates/evidence-search-core/src/audit.rs",
         "crates/searchright-store/src/lib.rs",
@@ -302,10 +303,21 @@
       ],
       "runtime_evidence": [
         "verification/receipts/track-05-store-review.json",
-        "verification/receipts/track-05-local-review.json"
+        "verification/receipts/track-05-local-review.json",
+        "verification/receipts/track-05-hosted-closeout.json",
+        "verification/receipts/track-05-sealed-panel-closeout.json"
       ],
       "phase_3_task_count": 2,
       "review_completed": true,
+      "higher_evidence_completed": true,
+      "closeout_completed": true,
+      "lifecycle": "archived",
+      "archived_on": "2026-08-13",
+      "remote_github_evidence": [
+        "verification/receipts/track-05-hosted-closeout.json"
+      ],
+      "source_verified_on": "2026-08-13",
+      "updated": "2026-08-13",
       "slug": "execution-audit-store",
       "status": "source_implemented",
       "title": "Execution, audit and local storage",

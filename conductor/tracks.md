@@ -16,7 +16,6 @@ an explicit, approval-gated apply receipt exists.
 | 02 | [Portable query AST and dialect compilers](tracks/02-query-ast-dialects/spec.md) | foundation | partially_implemented | partially_implemented | source_verified | Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings. |
 | 03 | [Shared provider runtime and Sourceright extraction](tracks/03-shared-provider-runtime/spec.md) | foundation | integration_prepared | partially_implemented | source_verified | Centralise bounded provider execution, caching, receipts and policy while preparing reversible Sourceright adoption. |
 | 04 | [Open provider connectors MVP](tracks/04-open-connectors-mvp/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Provide deterministic open-source adapters and opt-in live execution for major discovery sources. |
-| 05 | [Execution, audit and local storage](tracks/05-execution-audit-store/spec.md) | mvp | source_implemented | source_implemented | compiler_verified | Create replayable runs, content-addressed receipts, tamper-evident events and crash-conscious local state. |
 | 06 | [Imports, deduplication and study linkage](tracks/06-imports-dedup-linkage/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Import/export common bibliographic formats, propose conservative duplicate clusters and distinguish records, reports and studies. |
 | 07 | [Governed screening workflow](tracks/07-screening-workflow/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority. |
 | 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct. |
@@ -56,6 +55,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 
 | ID | Track | Archived | Evidence |
 | --- | --- | --- | --- |
+| 05 | [Execution, audit and local storage](tracks/05-execution-audit-store/spec.md) | 2026-08-13 | compiler_verified |
 | 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
 
 ## Evidence ladder

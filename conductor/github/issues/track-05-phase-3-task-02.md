@@ -3,11 +3,11 @@
 
 Parent phase key: `track-05-phase-3`
 Conductor plan: `conductor/tracks/05-execution-audit-store/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival.
+- [x] Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival.
 
 ## Completion and evidence contract
 

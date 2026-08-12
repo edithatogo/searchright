@@ -1,6 +1,8 @@
 # Plan: 05 Execution, audit and local storage
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **compiler_verified**.
+Lifecycle: **archived** on **2026-08-13**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -37,8 +39,8 @@ GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-05-phase-3 -->
 
-- [ ] Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.
-- [ ] Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival.
+- [x] Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.
+- [x] Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival.
 
 ## Phase 4: Review and closeout
 
@@ -47,4 +49,4 @@ GitHub issue key: `track-05`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

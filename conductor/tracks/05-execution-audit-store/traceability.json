@@ -51,9 +51,9 @@
       "implementation_paths": ["crates/searchright-store/src/lib.rs"],
       "implementation_symbols": ["searchright_store::FileReviewStore"],
       "deterministic_tests": ["python scripts/validate_repository.py"],
-      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
-      "open_gates": ["Run the exact Track 05 head on hosted Linux, Windows and macOS before semantic archival."],
-      "permitted_claim": "Restart, orphan-pending, idempotency and real child-process locking are compiler tested locally; cross-platform hosted execution is pending."
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json", "verification/receipts/track-05-hosted-closeout.json"],
+      "open_gates": [],
+      "permitted_claim": "Restart, orphan-pending, idempotency, receipt-first lifecycle recovery and real child-process locking are compiler tested with exact-revision hosted Linux, Windows and macOS evidence."
     },
     {
       "assertion_id": "T05-A005",
@@ -63,7 +63,7 @@
       "implementation_paths": ["crates/searchright-contracts/src/governance.rs", "crates/searchright-governance/src/lib.rs", "docs/data-lifecycle-policy.md"],
       "implementation_symbols": ["searchright_governance::evaluate_lifecycle", "searchright_contracts::DataLifecycleRequest", "searchright_contracts::DataLifecycleDecision"],
       "deterministic_tests": ["python scripts/validate_repository.py"],
-      "evidence_receipts": ["verification/receipts/track-05-local-review.json"],
+      "evidence_receipts": ["verification/receipts/track-05-local-review.json", "verification/receipts/track-05-sealed-panel-closeout.json"],
       "open_gates": [],
       "permitted_claim": "Preview never authorizes effects; apply requires scoped approval; legal holds and audit deletion fail closed; tombstones and effect receipts are required. Secure erasure and backup propagation are not claimed."
     },

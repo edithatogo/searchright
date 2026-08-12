@@ -5,7 +5,7 @@
   "status": "source_implemented",
   "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-08-13",
   "source_evidence": [
     "crates/evidence-search-core/src/audit.rs",
     "crates/searchright-store/src/lib.rs",
@@ -32,11 +32,8 @@
     "SR-014",
     "SR-048"
   ],
-  "blockers": [
-    "Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
-    "Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival."
-  ],
-  "claim_boundary": "Compiler-verified local persistence and policy behavior. Hosted cross-platform execution remains the archival gate; power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
+  "blockers": [],
+  "claim_boundary": "Compiler-verified local persistence and policy behavior with exact-revision hosted Linux, Windows and macOS evidence and a sealed advisory panel disposition. Power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-05",
@@ -58,10 +55,16 @@
       "track-05-phase-4-task-04"
     ]
   },
-  "remote_github_evidence": [],
+  "remote_github_evidence": [
+    "verification/receipts/track-05-hosted-closeout.json"
+  ],
   "runtime_evidence": [
     "verification/receipts/track-05-store-review.json",
-    "verification/receipts/track-05-local-review.json"
+    "verification/receipts/track-05-local-review.json",
+    "verification/receipts/track-05-hosted-closeout.json",
+    "verification/receipts/track-05-sealed-panel-closeout.json"
   ],
-  "external_evidence": []
+  "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-08-13"
 }
