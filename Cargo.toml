@@ -57,11 +57,13 @@ categories = ["command-line-utilities", "science", "text-processing"]
 citeweft = { version = "0.1.0", git = "https://github.com/edithatogo/citeweft.git", rev = "8c8932976250f9ca91c2bbda28ed68eeb191fa42" }
 anyhow = "1.0"
 async-trait = "0.1.89"
+axum = { version = "0.8", default-features = false, features = ["http1", "json", "tokio"] }
 base64 = "0.23"
 blake3 = "1.8"
 clap = { version = "4.5", features = ["derive", "env", "unicode", "wrap_help"] }
 futures = "0.3"
 indexmap = { version = "2.12", features = ["serde"] }
+jsonwebtoken = { version = "11", features = ["aws_lc_rs"] }
 loom = "0.7.2"
 proptest = "1.8"
 reqwest = { version = "0.13.2", default-features = false, features = ["json", "rustls", "http2", "charset"] }
@@ -73,7 +75,8 @@ serde_yaml = "0.9"
 sha2 = "0.11"
 thiserror = "2.0"
 time = { version = "0.3", features = ["formatting", "parsing", "serde", "macros"] }
-tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "sync", "time", "io-std", "fs", "test-util"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "sync", "time", "io-std", "fs", "net", "test-util"] }
+tokio-util = "0.7"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
 url = { version = "2.5", features = ["serde"] }
