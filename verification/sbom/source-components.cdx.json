@@ -1418,6 +1418,7 @@
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:time@0.3",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
       "ref": "cargo:searchright-governance@0.1.0-alpha.1"
