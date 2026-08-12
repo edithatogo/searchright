@@ -440,6 +440,29 @@
       "downstream_consumer_conformance": "not_evidenced"
     },
     {
+      "id": "github-control-plane-apply-summary",
+      "owner_track": "31",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/github-control-plane-apply-summary.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/github-control-plane-apply-summary.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/github-control-plane-apply-summary.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": null,
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
       "id": "github-issue-hierarchy",
       "owner_track": "13",
       "stability": "alpha",

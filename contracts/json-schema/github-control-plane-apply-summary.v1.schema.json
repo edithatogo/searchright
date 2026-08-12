@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/github-control-plane-apply-summary.v1.schema.json",
+  "title": "Searchright GitHub control-plane apply summary receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "repository",
+    "source_revision",
+    "workflow_run",
+    "issue_sync",
+    "project_sync",
+    "audit",
+    "artifact",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "org.searchright.github-control-plane-apply-summary.v1"
+    },
+    "status": {
+      "const": "passed"
+    },
+    "repository": {
+      "type": "string",
+      "pattern": "^[^/\\s]+/[^/\\s]+$"
+    },
+    "source_revision": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "workflow_run": {
+      "$ref": "#/$defs/workflow_run"
+    },
+    "issue_sync": {
+      "$ref": "#/$defs/issue_sync"
+    },
+    "project_sync": {
+      "$ref": "#/$defs/project_sync"
+    },
+    "audit": {
+      "$ref": "#/$defs/audit"
+    },
+    "artifact": {
+      "$ref": "#/$defs/artifact"
+    },
+    "claim_boundary": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "nonnegative_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "workflow_run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "url",
+        "event",
+        "environment",
+        "credential_check"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://github\\.com/"
+        },
+        "event": {
+          "const": "workflow_dispatch"
+        },
+        "environment": {
+          "const": "github-project-write"
+        },
+        "credential_check": {
+          "const": "passed"
+        }
+      }
+    },
+    "issue_sync": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "canonical_issues",
+        "issues_unchanged",
+        "task_states_unchanged",
+        "relationships_existing",
+        "remaining_after_run",
+        "delete_operations"
+      ],
+      "properties": {
+        "mode": {
+          "const": "apply"
+        },
+        "canonical_issues": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "issues_unchanged": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "task_states_unchanged": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "relationships_existing": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "remaining_after_run": {
+          "const": 0
+        },
+        "delete_operations": {
+          "const": 0
+        }
+      }
+    },
+    "project_sync": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "canonical_items",
+        "existing_items",
+        "known_equal_field_values",
+        "field_updates",
+        "remaining_after_run",
+        "delete_operations",
+        "project_id",
+        "project_number",
+        "project_url"
+      ],
+      "properties": {
+        "mode": {
+          "const": "apply"
+        },
+        "canonical_items": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "existing_items": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "known_equal_field_values": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "field_updates": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "remaining_after_run": {
+          "const": 0
+        },
+        "delete_operations": {
+          "const": 0
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "project_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "project_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://github\\.com/"
+        }
+      }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "canonical_issues_observed",
+        "relationships_observed",
+        "content_drift",
+        "label_drift",
+        "task_state_drift",
+        "canonical_project_items_observed",
+        "noncanonical_project_items_observed",
+        "recognised_value_mismatches",
+        "unrecognised_value_shapes",
+        "mutation_operations"
+      ],
+      "properties": {
+        "status": {
+          "const": "passed"
+        },
+        "canonical_issues_observed": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "relationships_observed": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "content_drift": {
+          "const": 0
+        },
+        "label_drift": {
+          "const": 0
+        },
+        "task_state_drift": {
+          "const": 0
+        },
+        "canonical_project_items_observed": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "noncanonical_project_items_observed": {
+          "$ref": "#/$defs/nonnegative_count"
+        },
+        "recognised_value_mismatches": {
+          "const": 0
+        },
+        "unrecognised_value_shapes": {
+          "const": 0
+        },
+        "mutation_operations": {
+          "const": 0
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "digest",
+        "expires_at",
+        "files"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "sha256"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
