@@ -799,7 +799,7 @@ mod tests {
         }
         variants.push(changed_field);
 
-        let mut changed_limit = baseline.clone();
+        let mut changed_limit = baseline;
         changed_limit.limits.languages.push("English".to_owned());
         changed_limit
             .limits
