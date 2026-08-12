@@ -1415,6 +1415,8 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1547,10 +1549,12 @@
         "cargo-requirement:blake3@1.8",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:uuid@1.18",
         "cargo:evidence-search-core@0.1.0-alpha.1",
-        "cargo:searchright-contracts@0.1.0-alpha.1"
+        "cargo:searchright-contracts@0.1.0-alpha.1",
+        "cargo:searchright-governance@0.1.0-alpha.1"
       ],
       "ref": "cargo:searchright-store@0.1.0-alpha.1"
     },
