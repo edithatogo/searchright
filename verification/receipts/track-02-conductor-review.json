@@ -1,0 +1,33 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "02",
+  "reviewed_revision": "01462058716cb949f04e38b84d0057539e963f33",
+  "status": "changes_requested_applied_external_gate_open",
+  "review_panel": [
+    {
+      "role": "dialect-parser-design",
+      "mode": "isolated_first_pass",
+      "finding": "Embase hash-set and CINAHL S-set lines were misclassified; dialect-specific unsupported syntax needed stable diagnostics.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "named-filter-contract-design",
+      "mode": "isolated_first_pass",
+      "finding": "Named filters required exact checksums, applicability, expiry, accountable validation evidence and explicit redistribution decisions.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "methodology-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Project-authored fixtures require provenance and digests, and cannot substitute for accountable independent information-specialist PRESS review.",
+      "disposition": "provenance_fixed_external_review_remains_open"
+    }
+  ],
+  "additional_fixes": [
+    "Custom provider fields now always require explicit review and are represented as a loss code.",
+    "The corpus has exact file digests, original-authorship rights metadata and an explicit loss matrix.",
+    "The PRESS receipt is fail closed with status pending_external_review."
+  ],
+  "archive_decision": "not_archived",
+  "archive_blocker": "LP-005 requires semantic completeness and accountable information-specialist review; neither may be inferred from source tests or an AI review panel."
+}

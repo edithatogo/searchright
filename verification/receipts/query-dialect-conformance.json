@@ -1,0 +1,39 @@
+{
+  "schema_version": "org.searchright.query-dialect-conformance.v1",
+  "track_id": "02",
+  "source_revision": "01462058716cb949f04e38b84d0057539e963f33",
+  "status": "source_verified_external_review_pending",
+  "dialects": [
+    "pub_med",
+    "ovid_medline",
+    "embase",
+    "cinahl_ebsco",
+    "psyc_info_ovid",
+    "scopus",
+    "web_of_science"
+  ],
+  "observed": {
+    "fixtures_checked": 7,
+    "schema_examples_checked": 62,
+    "corpus_check": "passed",
+    "repository_validation": "passed",
+    "roadmap_check": "passed",
+    "traceability_check_before_generated_global_drift": "passed",
+    "local_compiler_attempt": "timed_out_during_windows_gnu_dependency_compilation"
+  },
+  "implemented_claims": [
+    "exact native source text and spans",
+    "bounded seven-dialect lexical subset recognition",
+    "stable source-spanned unsupported-syntax diagnostics",
+    "seven-dialect field, truncation and proximity rendering snapshots",
+    "compiler JSON round-trip and Boolean reordering tests",
+    "versioned named-filter contract with exact checksum, applicability, validation evidence, rights and expiry"
+  ],
+  "open_gates": [
+    "Hosted compiler checks must pass on the exact pull-request head.",
+    "Semantic AST parsing and parse/compile/parse properties remain incomplete.",
+    "Real named filters require accountable methodological and provider-currency review.",
+    "The corpus requires an accountable independent information-specialist PRESS review."
+  ],
+  "claim_boundary": "This receipt supports deterministic source and static conformance for declared subsets only. It does not establish complete database semantics, retrieval equivalence, methodological validity, provider currency, or PRESS approval."
+}
