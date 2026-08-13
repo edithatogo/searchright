@@ -1121,7 +1121,7 @@ fbc8228717db086f4d7b07fb97fb2d2597ec331e956c5d284cdfc9752f620686  ./crates/searc
 b6ac5bbb239221ce5483b171e72e80ecd3c18aac87e4b4c7354f96dd91bf47fd  ./crates/searchright-mcp/src/lib.rs
 866b71a08e589b44b2265f0f95481d0a6f9c3cea456d0ed941b3377178ff4734  ./crates/searchright-mcp/src/main.rs
 093826f3cfd5702f4223040613a4875f818187aa42884c6b5bb7e8b32c0d3176  ./crates/searchright-mcp/src/remote.rs
-4b7cef3c5577125d62268f2c54ab39d95dee477c24bd67a71f672da2ed51eb56  ./crates/searchright-mcp/tests/advanced_mcp.rs
+bedd459b91592f7ce240a38b82da0cb2a841e54b98ac28a9cd59e499acb59770  ./crates/searchright-mcp/tests/advanced_mcp.rs
 f20a78107cb99c6de57d27c57aaf24ed79b6ceed07117041fc70b8ac82c1fcc0  ./crates/searchright-mcp/tests/fixtures/remote-mcp-jwks.json
 98235d7b68dfd3d30859b269e740dc28b3c49dceba4fceb588e13a8aeb1e8171  ./crates/searchright-mcp/tests/fixtures/remote-mcp-private.der.b64
 279a68319858f647f450e3b8a9f75656438c6a78586898fb700722fdf2dfd23b  ./crates/searchright-ops/Cargo.toml
