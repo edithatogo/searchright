@@ -50,6 +50,14 @@ def render() -> dict[str, Any]:
     packages = json.loads(PACKAGES.read_text(encoding="utf-8"))
     providers = json.loads(PROVIDERS.read_text(encoding="utf-8"))
     launch = json.loads(LAUNCH.read_text(encoding="utf-8"))
+    launch_rows = [
+        row for row in launch.get("work_packages", []) if isinstance(row, dict)
+    ]
+    launch_progress = Counter(
+        row.get("progress", {}).get("status", "missing")
+        for row in launch_rows
+        if isinstance(row.get("progress"), dict)
+    )
     states = Counter(row.get("state", "unknown") for row in assertions)
     confidence = Counter(row.get("mapping_confidence", "unknown") for row in assertions)
     open_gates = sum(len(row.get("open_gates", [])) for row in assertions)
@@ -131,10 +139,15 @@ def render() -> dict[str, Any]:
         },
         "launch_preparation": {
             "status": launch.get("status"),
-            "work_packages": len(launch.get("work_packages", [])),
+            "work_packages": len(launch_rows),
+            "by_progress": dict(sorted(launch_progress.items())),
+            "evidence_receipts": sum(
+                len(row.get("progress", {}).get("evidence_receipts", []))
+                for row in launch_rows
+                if isinstance(row.get("progress"), dict)
+            ),
             "external_gates": sum(
-                1 for row in launch.get("work_packages", [])
-                if isinstance(row, dict) and row.get("external_gate") is True
+                1 for row in launch_rows if row.get("external_gate") is True
             ),
         },
         "priority_queue": priority_queue,

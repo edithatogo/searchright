@@ -25,6 +25,13 @@ def valid_payload() -> dict:
                 "required_receipts": ["verification/receipts/example.json"],
                 "exit_criterion": "A concrete criterion with reproducible evidence is required.",
                 "external_gate": False,
+                "progress": {
+                    "status": "not_started",
+                    "evidence_receipts": [],
+                    "remaining_gates": [
+                        "Produce the required reproducible completion evidence."
+                    ],
+                },
             }
         ],
     }
@@ -64,3 +71,53 @@ def test_command_must_use_an_admitted_runner() -> None:
     payload = valid_payload()
     payload["work_packages"][0]["commands"] = ["curl https://example.test"]
     assert any("executable command" in error for error in MODULE.validate(payload, {"30"}))
+
+
+def test_partial_progress_requires_existing_evidence() -> None:
+    payload = valid_payload()
+    payload["work_packages"][0]["progress"] = {
+        "status": "partially_evidenced",
+        "evidence_receipts": ["verification/receipts/missing.json"],
+        "remaining_gates": ["Complete the residual higher-evidence launch gate."],
+    }
+    errors = MODULE.validate(payload, {"30"}, set())
+    assert any("progress evidence does not exist" in error for error in errors)
+
+
+def test_completed_package_requires_all_receipts_and_dependencies() -> None:
+    payload = valid_payload()
+    payload["work_packages"].append(
+        {
+            "id": "LP-002",
+            "owner_track": "30",
+            "depends_on": ["LP-001"],
+            "commands": ["python scripts/check_maturity_dossier.py"],
+            "required_receipts": ["verification/receipts/second.json"],
+            "exit_criterion": "A second concrete criterion with reproducible evidence is required.",
+            "external_gate": False,
+            "progress": {
+                "status": "completed",
+                "evidence_receipts": ["verification/receipts/second.json"],
+                "remaining_gates": [],
+            },
+        }
+    )
+    errors = MODULE.validate(
+        payload,
+        {"30"},
+        {"verification/receipts/second.json"},
+    )
+    assert any("cannot complete before dependency LP-001" in error for error in errors)
+
+
+def test_not_started_package_cannot_claim_evidence() -> None:
+    payload = valid_payload()
+    payload["work_packages"][0]["progress"]["evidence_receipts"] = [
+        "verification/receipts/example.json"
+    ]
+    errors = MODULE.validate(
+        payload,
+        {"30"},
+        {"verification/receipts/example.json"},
+    )
+    assert any("cannot attach evidence while not_started" in error for error in errors)
