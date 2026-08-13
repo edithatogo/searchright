@@ -6,20 +6,28 @@
 #![forbid(unsafe_code)]
 
 use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
-use std::{borrow::Cow, sync::Arc, time::Duration};
+use std::{
+    borrow::Cow,
+    sync::{
+        Arc,
+        atomic::{AtomicUsize, Ordering},
+    },
+    time::Duration,
+};
 
 use rmcp::{
     ErrorData as McpError, ServerHandler, ServiceExt,
     handler::server::{router::tool::ToolRouter, wrapper::Parameters},
     model::{
-        CacheScope, CallToolResponse, CallToolResult, CancelTaskParams, ContentBlock,
-        CreateTaskResult, GetPromptRequestParams, GetPromptResponse, GetPromptResult,
-        GetTaskParams, GetTaskResult, InitializeRequestParams, InitializeResult,
-        InputRequiredResult, JsonObject, ListPromptsResult, ListResourcesResult, ListToolsResult,
-        PaginatedRequestParams, Prompt, PromptArgument, PromptMessage, ProtocolVersion,
-        ReadResourceRequestParams, ReadResourceResponse, ReadResourceResult, Resource,
-        ResourceContents, Role, ServerCapabilities, ServerInfo, SubscriptionFilter,
-        ToolAnnotations, UpdateTaskParams,
+        CacheScope, CallToolResponse, CallToolResult, CancelTaskParams, CompleteRequestParams,
+        CompleteResult, CompletionInfo, ContentBlock, CreateTaskResult, ElicitRequest,
+        ElicitRequestParams, ElicitationAction, GetPromptRequestParams, GetPromptResponse,
+        GetPromptResult, GetTaskParams, GetTaskResult, InitializeRequestParams, InitializeResult,
+        InputRequest, InputRequests, InputRequiredResult, JsonObject, ListPromptsResult,
+        ListResourcesResult, ListToolsResult, PaginatedRequestParams, Prompt, PromptArgument,
+        PromptMessage, ProtocolVersion, ReadResourceRequestParams, ReadResourceResponse,
+        ReadResourceResult, Resource, ResourceContents, Role, ServerCapabilities, ServerInfo,
+        SubscriptionFilter, ToolAnnotations, UpdateTaskParams,
     },
     schemars,
     service::{RequestContext, RoleServer, SubscriptionContext},
@@ -38,6 +46,24 @@ use searchright::contracts::{
 use searchright::dedup::DedupConfig;
 use searchright::{PrismaArtifact, PrismaOutput, SearchrightEngine};
 use serde::Deserialize;
+use tokio::sync::{OwnedSemaphorePermit, Semaphore, watch};
+
+const LOCAL_TASK_LIMIT: usize = 4;
+const TASK_ACTIVITY_URI: &str = "searchright://runtime/task-activity";
+
+struct LocalTaskActivityLease {
+    permit: Option<OwnedSemaphorePermit>,
+    active_tasks: Arc<AtomicUsize>,
+    activity: watch::Sender<u64>,
+}
+
+impl Drop for LocalTaskActivityLease {
+    fn drop(&mut self) {
+        self.active_tasks.fetch_sub(1, Ordering::SeqCst);
+        self.activity.send_modify(|revision| *revision += 1);
+        drop(self.permit.take());
+    }
+}
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 struct DocumentInput {
@@ -186,14 +212,21 @@ struct LicensedPlanInput {
 pub struct SearchrightServer {
     tool_router: ToolRouter<Self>,
     tasks: TaskManager,
+    task_slots: Arc<Semaphore>,
+    active_tasks: Arc<AtomicUsize>,
+    task_activity: watch::Sender<u64>,
     remote_http: bool,
 }
 
 impl Default for SearchrightServer {
     fn default() -> Self {
+        let (task_activity, _) = watch::channel(0);
         Self {
             tool_router: Self::governed_tool_router(),
             tasks: TaskManager::new(),
+            task_slots: Arc::new(Semaphore::new(LOCAL_TASK_LIMIT)),
+            active_tasks: Arc::new(AtomicUsize::new(0)),
+            task_activity,
             remote_http: false,
         }
     }
@@ -203,9 +236,13 @@ impl SearchrightServer {
     /// Create the server variant used by authenticated Streamable HTTP.
     #[must_use]
     pub fn remote_http() -> Self {
+        let (task_activity, _) = watch::channel(0);
         Self {
             tool_router: Self::governed_tool_router(),
             tasks: TaskManager::new(),
+            task_slots: Arc::new(Semaphore::new(LOCAL_TASK_LIMIT)),
+            active_tasks: Arc::new(AtomicUsize::new(0)),
+            task_activity,
             remote_http: true,
         }
     }
@@ -726,6 +763,7 @@ impl ServerHandler for SearchrightServer {
         };
         if info.protocol_version != ProtocolVersion::V_2026_07_28 {
             info.capabilities = ServerCapabilities::builder()
+                .enable_completions()
                 .enable_tools()
                 .enable_prompts()
                 .enable_resources()
@@ -739,11 +777,11 @@ impl ServerHandler for SearchrightServer {
             ServerCapabilities::builder().enable_tools().build()
         } else {
             ServerCapabilities::builder()
+                .enable_completions()
                 .enable_tools()
                 .enable_prompts()
-                .enable_prompts_list_changed()
                 .enable_resources()
-                .enable_resources_list_changed()
+                .enable_resources_subscribe()
                 .enable_tasks()
                 .build()
         };
@@ -760,12 +798,59 @@ impl ServerHandler for SearchrightServer {
 
     async fn list_tools(
         &self,
-        _request: Option<PaginatedRequestParams>,
+        request: Option<PaginatedRequestParams>,
         _context: RequestContext<RoleServer>,
     ) -> Result<ListToolsResult, McpError> {
+        if request.and_then(|params| params.cursor).is_some() {
+            return Err(McpError::invalid_params(
+                "tools/list does not accept cursors",
+                None,
+            ));
+        }
         Ok(ListToolsResult::with_all_items(self.tool_router.list_all())
             .with_ttl_ms(60_000)
             .with_cache_scope(CacheScope::Public))
+    }
+
+    async fn complete(
+        &self,
+        request: CompleteRequestParams,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<CompleteResult, McpError> {
+        self.require_local()?;
+        if request
+            .context
+            .as_ref()
+            .is_some_and(rmcp::model::CompletionContext::has_arguments)
+        {
+            return Err(McpError::invalid_params(
+                "completion context is not supported",
+                None,
+            ));
+        }
+        if request.argument.value.len() > 64 || !request.argument.value.is_ascii() {
+            return Err(McpError::invalid_params(
+                "completion prefix is not bounded ASCII",
+                None,
+            ));
+        }
+        let prompt = request
+            .r#ref
+            .as_prompt_name()
+            .ok_or_else(|| McpError::invalid_params("only prompt completion is supported", None))?;
+        let candidates: &[&str] = match (prompt, request.argument.name.as_str()) {
+            ("plan-review", "mode") => &["evidence-gaps", "findings-only"],
+            ("press-check", "focus") => &["line-by-line", "translation-loss"],
+            _ => return Err(McpError::invalid_params("unknown completion target", None)),
+        };
+        let values = candidates
+            .iter()
+            .filter(|value| value.starts_with(&request.argument.value))
+            .map(|value| (*value).to_owned())
+            .collect();
+        let completion = CompletionInfo::with_all_values(values)
+            .map_err(|_| McpError::internal_error("completion bound failed", None))?;
+        Ok(CompleteResult::new(completion))
     }
 
     fn get_tool(&self, name: &str) -> Option<rmcp::model::Tool> {
@@ -784,18 +869,30 @@ impl ServerHandler for SearchrightServer {
                 .client_capabilities()
                 .is_some_and(|capabilities| capabilities.supports_tasks())
         {
+            let permit = self.task_slots.clone().try_acquire_owned().map_err(|_| {
+                McpError::invalid_request("local task concurrency limit reached", None)
+            })?;
+            self.active_tasks.fetch_add(1, Ordering::SeqCst);
+            self.task_activity.send_modify(|revision| *revision += 1);
+            let activity_lease = LocalTaskActivityLease {
+                permit: Some(permit),
+                active_tasks: self.active_tasks.clone(),
+                activity: self.task_activity.clone(),
+            };
             let task = self.tasks.spawn(
                 TaskOptions::new()
                     .with_poll_interval_ms(10)
                     .with_ttl_ms(60_000),
-                |task_context| {
+                move |task_context| {
                     Box::pin(async move {
-                        tokio::select! {
+                        let result = tokio::select! {
                             () = task_context.cancelled() => Err(TaskExit::Cancelled),
                             () = tokio::time::sleep(Duration::from_secs(1)) => {
                                 json_success(&SearchrightEngine::workflow()).map_err(TaskExit::Error)
                             }
-                        }
+                        };
+                        drop(activity_lease);
+                        result
                     })
                 },
             );
@@ -844,7 +941,13 @@ impl ServerHandler for SearchrightServer {
                 vec![advanced_resources()[0].clone()],
                 Some("resources:2".to_owned()),
             ),
-            Some("resources:2") => (vec![advanced_resources()[1].clone()], None),
+            Some("resources:2") => (
+                vec![
+                    advanced_resources()[1].clone(),
+                    advanced_resources()[2].clone(),
+                ],
+                None,
+            ),
             Some(_) => return Err(McpError::invalid_params("unknown resource cursor", None)),
         };
         let mut result = ListResourcesResult::with_all_items(resources)
@@ -857,10 +960,28 @@ impl ServerHandler for SearchrightServer {
     async fn read_resource(
         &self,
         request: ReadResourceRequestParams,
-        _context: RequestContext<RoleServer>,
+        context: RequestContext<RoleServer>,
     ) -> Result<ReadResourceResponse, McpError> {
         self.require_local()?;
-        read_advanced_resource(request)
+        if request.uri == TASK_ACTIVITY_URI {
+            let document = serde_json::json!({
+                "activity_sequence": *self.task_activity.borrow(),
+                "active_tasks": self.active_tasks.load(Ordering::SeqCst),
+                "task_limit": LOCAL_TASK_LIMIT,
+                "claim_boundary": "aggregate local-process activity only; no task identity, durability, tenant, remote, or production-scale claim"
+            });
+            return Ok(ReadResourceResult::new(vec![
+                ResourceContents::text(
+                    serde_json::to_string_pretty(&document).map_err(|_| {
+                        McpError::internal_error("task activity serialization failed", None)
+                    })?,
+                    request.uri,
+                )
+                .with_mime_type("application/json"),
+            ])
+            .into());
+        }
+        read_advanced_resource(request, &context)
     }
 
     async fn list_prompts(
@@ -911,12 +1032,22 @@ impl ServerHandler for SearchrightServer {
         let quoted_review_id = serde_json::to_string(review_id)
             .map_err(|_| McpError::internal_error("review_id serialization failed", None))?;
         let text = match request.name.as_str() {
-            "plan-review" => format!(
-                "Review Searchright plan identified by {quoted_review_id}. Return findings only; do not change eligibility criteria or grant execution authority."
-            ),
-            "press-check" => format!(
-                "Assess the search strategy identified by {quoted_review_id} using recorded PRESS evidence. Do not certify completeness or silently rewrite native syntax."
-            ),
+            "plan-review" => {
+                let mode =
+                    prompt_enum_argument(&request, "mode", &["findings-only", "evidence-gaps"])?
+                        .unwrap_or("findings-only");
+                format!(
+                    "Review Searchright plan identified by {quoted_review_id} in {mode} mode. Return findings only; do not change eligibility criteria or grant execution authority."
+                )
+            }
+            "press-check" => {
+                let focus =
+                    prompt_enum_argument(&request, "focus", &["line-by-line", "translation-loss"])?
+                        .unwrap_or("line-by-line");
+                format!(
+                    "Assess the search strategy identified by {quoted_review_id} with {focus} focus using recorded PRESS evidence. Do not certify completeness or silently rewrite native syntax."
+                )
+            }
             _ => return Err(McpError::invalid_params("unknown prompt", None)),
         };
         Ok(GetPromptResult::new(vec![PromptMessage::new_text(Role::User, text)]).into())
@@ -926,20 +1057,67 @@ impl ServerHandler for SearchrightServer {
         &self,
         requested: &SubscriptionFilter,
     ) -> Option<SubscriptionFilter> {
-        Some(requested.supported_by(&self.get_info().capabilities))
+        if self.remote_http {
+            return None;
+        }
+        let accepted = requested
+            .resource_subscriptions
+            .as_ref()
+            .map(|uris| {
+                uris.iter()
+                    .filter(|uri| uri.as_str() == TASK_ACTIVITY_URI)
+                    .cloned()
+                    .collect::<Vec<_>>()
+            })
+            .filter(|uris| !uris.is_empty());
+        accepted.map(|uris| {
+            SubscriptionFilter::builder()
+                .resource_subscriptions(uris)
+                .build()
+        })
     }
 
     async fn listen(&self, context: SubscriptionContext) -> Result<(), McpError> {
         self.require_local()?;
-        // The catalogue is immutable for this process. A synthetic
-        // list-changed event would be false evidence, so hold the accepted
-        // subscription until the client cancels it.
-        context.cancelled().await;
-        Ok(())
+        let mut activity = self.task_activity.subscribe();
+        loop {
+            tokio::select! {
+                () = context.cancelled() => return Ok(()),
+                changed = activity.changed() => {
+                    changed.map_err(|_| McpError::internal_error("task activity source closed", None))?;
+                    context
+                        .sink()
+                        .notify_resource_updated(TASK_ACTIVITY_URI)
+                        .await
+                        .map_err(|_| McpError::internal_error("task activity notification failed", None))?;
+                }
+            }
+        }
     }
 }
 
-fn advanced_resources() -> [Resource; 2] {
+fn prompt_enum_argument<'a>(
+    request: &'a GetPromptRequestParams,
+    name: &str,
+    allowed: &[&str],
+) -> Result<Option<&'a str>, McpError> {
+    let Some(value) = request
+        .arguments
+        .as_ref()
+        .and_then(|arguments| arguments.get(name))
+    else {
+        return Ok(None);
+    };
+    let value = value
+        .as_str()
+        .ok_or_else(|| McpError::invalid_params("prompt option must be a string", None))?;
+    if !allowed.contains(&value) {
+        return Err(McpError::invalid_params("unsupported prompt option", None));
+    }
+    Ok(Some(value))
+}
+
+fn advanced_resources() -> [Resource; 3] {
     [
         Resource::new("searchright://workflow", "workflow")
             .with_title("Governed workflow")
@@ -949,53 +1127,127 @@ fn advanced_resources() -> [Resource; 2] {
             .with_title("MCP claim boundary")
             .with_description("Explicit authority and evidence limitations")
             .with_mime_type("text/plain"),
+        Resource::new(TASK_ACTIVITY_URI, "task-activity")
+            .with_title("Aggregate local task activity")
+            .with_description("Bounded aggregate task activity without identifiers or payloads")
+            .with_mime_type("application/json"),
     ]
 }
 
 fn advanced_prompts() -> [Prompt; 2] {
-    let argument = PromptArgument::new("review_id")
+    let review_id = PromptArgument::new("review_id")
         .with_description("Review identifier; never a grant of authority")
         .with_required(false);
     [
         Prompt::new(
             "plan-review",
             Some("Review a plan without changing it"),
-            Some(vec![argument.clone()]),
+            Some(vec![
+                review_id.clone(),
+                PromptArgument::new("mode")
+                    .with_description("findings-only or evidence-gaps")
+                    .with_required(false),
+            ]),
         ),
         Prompt::new(
             "press-check",
             Some("Assess recorded PRESS evidence without certifying completeness"),
-            Some(vec![argument]),
+            Some(vec![
+                review_id,
+                PromptArgument::new("focus")
+                    .with_description("line-by-line or translation-loss")
+                    .with_required(false),
+            ]),
         ),
     ]
 }
 
 fn read_advanced_resource(
     request: ReadResourceRequestParams,
+    context: &RequestContext<RoleServer>,
 ) -> Result<ReadResourceResponse, McpError> {
     match request.uri.as_str() {
         "searchright://workflow" => Ok(ReadResourceResult::new(vec![
             ResourceContents::text(
-                serde_json::to_string_pretty(&SearchrightEngine::workflow()).map_err(|_| {
-                    McpError::internal_error("workflow serialization failed", None)
-                })?,
+                serde_json::to_string_pretty(&SearchrightEngine::workflow())
+                    .map_err(|_| McpError::internal_error("workflow serialization failed", None))?,
                 request.uri,
             )
             .with_mime_type("application/json"),
         ])
         .into()),
-        "searchright://claim-boundary" if request.request_state.as_deref() != Some("claim-boundary-v1") => {
-            Ok(InputRequiredResult::from_request_state("claim-boundary-v1").into())
+        "searchright://claim-boundary" if request.request_state.is_none() => {
+            let supports_form_elicitation =
+                context.client_capabilities().is_some_and(|capabilities| {
+                    capabilities
+                        .elicitation
+                        .is_some_and(|elicitation| elicitation.form.is_some())
+                });
+            if context.protocol_version() != Some(ProtocolVersion::V_2026_07_28)
+                || !supports_form_elicitation
+            {
+                return Err(McpError::invalid_params(
+                    "claim-boundary acknowledgement requires local current form elicitation",
+                    None,
+                ));
+            }
+            let requested_schema = serde_json::from_value(serde_json::json!({
+                "type": "object",
+                "properties": {"acknowledged": {"type": "boolean", "const": true}},
+                "required": ["acknowledged"],
+                "additionalProperties": false
+            }))
+            .map_err(|_| McpError::internal_error("elicitation schema failed", None))?;
+            let elicitation = InputRequest::Elicitation(ElicitRequest::new(
+                ElicitRequestParams::FormElicitationParams {
+                    meta: None,
+                    message: "Acknowledge that this resource is read-only and grants no execution, methodological, screening, or release authority.".to_owned(),
+                    requested_schema,
+                },
+            ));
+            let mut requests = InputRequests::new();
+            requests.insert("acknowledgement".to_owned(), elicitation);
+            Ok(
+                InputRequiredResult::new(Some(requests), Some("claim-boundary-form-v1".to_owned()))
+                    .into(),
+            )
         }
-        "searchright://claim-boundary" => Ok(ReadResourceResult::new(vec![
-            ResourceContents::text(
+        "searchright://claim-boundary" => {
+            if request.request_state.as_deref() != Some("claim-boundary-form-v1")
+                || !acknowledgement_is_accepted(request.input_responses.as_ref())
+            {
+                return Err(McpError::invalid_params(
+                    "claim-boundary acknowledgement is absent or invalid",
+                    None,
+                ));
+            }
+            Ok(ReadResourceResult::new(vec![ResourceContents::text(
                 "Read-only local evidence. No live-provider, remote-hosting, methodological-certification, external-write, or final-screening authority is implied.",
                 request.uri,
-            ),
-        ])
-        .into()),
+            )])
+            .into())
+        }
         _ => Err(McpError::invalid_params("unknown resource URI", None)),
     }
+}
+
+fn acknowledgement_is_accepted(responses: Option<&rmcp::model::InputResponses>) -> bool {
+    let Some(responses) = responses else {
+        return false;
+    };
+    if responses.len() != 1 {
+        return false;
+    }
+    let Some(response) = responses.get("acknowledgement") else {
+        return false;
+    };
+    serde_json::from_value::<rmcp::model::ElicitResult>(response.clone()).is_ok_and(|result| {
+        result.action == ElicitationAction::Accept
+            && result.content.as_ref().is_some_and(|content| {
+                content.get("acknowledged") == Some(&serde_json::Value::Bool(true))
+                    && content.as_object().is_some_and(|object| object.len() == 1)
+            })
+    })
 }
 
 /// Serve the governed MCP tools over standard input/output.

@@ -67,7 +67,7 @@ jsonwebtoken = { version = "11", features = ["aws_lc_rs"] }
 loom = "0.7.2"
 proptest = "1.8"
 reqwest = { version = "0.13.2", default-features = false, features = ["json", "rustls", "http2", "charset"] }
-rmcp = { version = "=3.1.2", features = ["server", "client", "macros", "transport-io", "schemars"] }
+rmcp = { version = "=3.1.2", features = ["server", "client", "elicitation", "macros", "transport-io", "schemars"] }
 schemars = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }

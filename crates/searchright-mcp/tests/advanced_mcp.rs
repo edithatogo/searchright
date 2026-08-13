@@ -3,20 +3,22 @@
 use std::time::Duration;
 
 use rmcp::{
-    ClientLifecycleMode, ClientServiceExt, ServiceExt,
+    ClientHandler, ClientLifecycleMode, ClientServiceExt, ServiceExt,
     model::{
         CacheScope, CallToolRequestParams, CallToolResponse, CancelTaskParams, ClientCapabilities,
-        ClientInfo, GetPromptRequestParams, GetTaskParams, Implementation, JsonObject,
-        PaginatedRequestParams, ProtocolVersion, ReadResourceRequestParams, ResourceContents,
-        SubscriptionFilter, TaskPayload,
+        ClientInfo, ElicitRequestParams, ElicitResult, ElicitationAction, GetPromptRequestParams,
+        GetTaskParams, Implementation, JsonObject, PaginatedRequestParams, ProtocolVersion,
+        ReadResourceRequestParams, ResourceContents, ServerNotification, SubscriptionFilter,
+        TaskPayload,
     },
+    service::{RequestContext, RoleClient},
 };
 use searchright_mcp::SearchrightServer;
 
 async fn current_client(
     tasks: bool,
 ) -> anyhow::Result<(
-    rmcp::service::RunningService<rmcp::service::RoleClient, ClientInfo>,
+    rmcp::service::RunningService<RoleClient, ClientInfo>,
     tokio::task::JoinHandle<anyhow::Result<()>>,
 )> {
     let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
@@ -43,7 +45,7 @@ async fn current_client(
 }
 
 async fn previous_client() -> anyhow::Result<(
-    rmcp::service::RunningService<rmcp::service::RoleClient, ClientInfo>,
+    rmcp::service::RunningService<RoleClient, ClientInfo>,
     tokio::task::JoinHandle<anyhow::Result<()>>,
 )> {
     let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
@@ -78,7 +80,7 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
             PaginatedRequestParams::default().with_cursor(first.next_cursor),
         ))
         .await?;
-    assert_eq!(second.resources.len(), 1);
+    assert_eq!(second.resources.len(), 2);
     assert!(second.next_cursor.is_none());
     assert!(
         client
@@ -111,19 +113,80 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
     );
 
     let resource = client
-        .read_resource(ReadResourceRequestParams::new(
-            "searchright://claim-boundary",
-        ))
+        .read_resource(ReadResourceRequestParams::new("searchright://workflow"))
         .await?;
     let content = resource
         .contents
         .first()
-        .ok_or_else(|| anyhow::anyhow!("claim boundary resource is empty"))?;
+        .ok_or_else(|| anyhow::anyhow!("workflow resource is empty"))?;
     let ResourceContents::TextResourceContents { text, .. } = content else {
-        anyhow::bail!("claim boundary is not text")
+        anyhow::bail!("workflow resource is not text")
     };
-    assert!(text.contains("No live-provider"));
+    assert!(!text.is_empty());
 
+    client.cancel().await?;
+    server.abort();
+    Ok(())
+}
+
+#[derive(Clone)]
+struct AcknowledgingClient;
+
+impl ClientHandler for AcknowledgingClient {
+    fn get_info(&self) -> ClientInfo {
+        ClientInfo::new(
+            ClientCapabilities::builder()
+                .enable_elicitation()
+                .enable_elicitation_schema_validation()
+                .build(),
+            Implementation::new("track24-elicitation-test", "1.0.0"),
+        )
+    }
+
+    async fn create_elicitation(
+        &self,
+        _request: ElicitRequestParams,
+        _context: RequestContext<RoleClient>,
+    ) -> Result<ElicitResult, rmcp::ErrorData> {
+        Ok(ElicitResult::new(ElicitationAction::Accept)
+            .with_content(serde_json::json!({"acknowledged": true})))
+    }
+}
+
+#[tokio::test]
+async fn completion_and_form_elicitation_are_bounded_and_non_authoritative() -> anyhow::Result<()> {
+    let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
+    let server = tokio::spawn(async move {
+        let service = SearchrightServer::default().serve(server_transport).await?;
+        service.waiting().await?;
+        anyhow::Ok(())
+    });
+    let client = AcknowledgingClient
+        .serve_with_lifecycle(
+            client_transport,
+            ClientLifecycleMode::Discover {
+                preferred_versions: vec![ProtocolVersion::V_2026_07_28],
+            },
+        )
+        .await?;
+    let completions = client
+        .complete_prompt_simple("plan-review", "mode", "evidence")
+        .await?;
+    assert_eq!(completions, vec!["evidence-gaps"]);
+    assert!(
+        client
+            .complete_prompt_simple("plan-review", "review_id", "secret")
+            .await
+            .is_err()
+    );
+    let resource = client
+        .read_resource(ReadResourceRequestParams::new(
+            "searchright://claim-boundary",
+        ))
+        .await?;
+    let serialized = serde_json::to_string(&resource)?;
+    assert!(serialized.contains("No live-provider"));
+    assert!(!serialized.contains("authority_granted"));
     client.cancel().await?;
     server.abort();
     Ok(())
@@ -194,6 +257,40 @@ async fn task_is_current_capability_gated_and_cooperatively_cancelled() -> anyho
 }
 
 #[tokio::test]
+async fn task_completes_with_the_bounded_workflow_payload() -> anyhow::Result<()> {
+    let (client, server) = current_client(true).await?;
+    let response = client
+        .peer()
+        .call_tool_once(CallToolRequestParams::new("workflow"))
+        .await?;
+    let CallToolResponse::Task(created) = response else {
+        anyhow::bail!("task-capable current client did not receive a task")
+    };
+    let task_id = created.task.task_id;
+    let terminal = tokio::time::timeout(Duration::from_secs(3), async {
+        loop {
+            let task = client
+                .peer()
+                .get_task(GetTaskParams::new(task_id.clone()))
+                .await?
+                .task;
+            if task.status().is_terminal() {
+                break anyhow::Ok(task);
+            }
+            tokio::time::sleep(Duration::from_millis(10)).await;
+        }
+    })
+    .await??;
+    let TaskPayload::Completed { result } = terminal.payload else {
+        anyhow::bail!("workflow task did not complete")
+    };
+    assert!(result.contains_key("structuredContent"));
+    client.cancel().await?;
+    server.abort();
+    Ok(())
+}
+
+#[tokio::test]
 async fn clients_without_task_extension_keep_synchronous_tool_semantics() -> anyhow::Result<()> {
     let (client, server) = current_client(false).await?;
     let response = client
@@ -207,18 +304,17 @@ async fn clients_without_task_extension_keep_synchronous_tool_semantics() -> any
 }
 
 #[tokio::test]
-async fn subscriptions_acknowledge_only_supported_filters_and_emit_no_false_changes()
--> anyhow::Result<()> {
-    let (client, server) = current_client(false).await?;
+async fn subscriptions_emit_only_real_aggregate_task_activity_changes() -> anyhow::Result<()> {
+    let (client, server) = current_client(true).await?;
     let requested = SubscriptionFilter::builder()
-        .resources_list_changed()
         .tools_list_changed()
+        .resource_subscriptions(["searchright://runtime/task-activity", "file:///denied"])
         .build();
     let mut subscription = client.listen(requested).await?;
     assert_eq!(
         subscription.acknowledged(),
         &SubscriptionFilter::builder()
-            .resources_list_changed()
+            .resource_subscriptions(["searchright://runtime/task-activity"])
             .build()
     );
     assert!(
@@ -226,7 +322,78 @@ async fn subscriptions_acknowledge_only_supported_filters_and_emit_no_false_chan
             .await
             .is_err()
     );
+    let response = client
+        .peer()
+        .call_tool_once(CallToolRequestParams::new("workflow"))
+        .await?;
+    let CallToolResponse::Task(created) = response else {
+        anyhow::bail!("task-capable client did not receive a task")
+    };
+    let notification = tokio::time::timeout(Duration::from_secs(1), subscription.next())
+        .await??
+        .ok_or_else(|| anyhow::anyhow!("task activity subscription ended early"))?;
+    let ServerNotification::ResourceUpdatedNotification(update) = notification else {
+        anyhow::bail!("task activity emitted the wrong notification type")
+    };
+    assert_eq!(update.params.uri, "searchright://runtime/task-activity");
+    client
+        .peer()
+        .cancel_task(CancelTaskParams::new(created.task.task_id))
+        .await?;
     subscription.cancel().await?;
+    client.cancel().await?;
+    server.abort();
+    Ok(())
+}
+
+#[tokio::test]
+async fn local_task_concurrency_is_bounded_and_recovers() -> anyhow::Result<()> {
+    let (client, server) = current_client(true).await?;
+    let mut task_ids = Vec::new();
+    for _ in 0..4 {
+        let response = client
+            .peer()
+            .call_tool_once(CallToolRequestParams::new("workflow"))
+            .await?;
+        let CallToolResponse::Task(created) = response else {
+            anyhow::bail!("bounded task admission did not create a task")
+        };
+        task_ids.push(created.task.task_id);
+    }
+    assert!(
+        client
+            .peer()
+            .call_tool_once(CallToolRequestParams::new("workflow"))
+            .await
+            .is_err()
+    );
+    client
+        .peer()
+        .cancel_task(CancelTaskParams::new(task_ids.remove(0)))
+        .await?;
+    let replacement = tokio::time::timeout(Duration::from_secs(2), async {
+        loop {
+            if let Ok(response) = client
+                .peer()
+                .call_tool_once(CallToolRequestParams::new("workflow"))
+                .await
+            {
+                break anyhow::Ok(response);
+            }
+            tokio::task::yield_now().await;
+        }
+    })
+    .await??;
+    let CallToolResponse::Task(replacement) = replacement else {
+        anyhow::bail!("released task capacity did not admit a replacement")
+    };
+    task_ids.push(replacement.task.task_id);
+    for task_id in task_ids {
+        client
+            .peer()
+            .cancel_task(CancelTaskParams::new(task_id))
+            .await?;
+    }
     client.cancel().await?;
     server.abort();
     Ok(())

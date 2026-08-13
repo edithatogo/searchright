@@ -36,9 +36,10 @@ compatibility transcript for the previous `2025-11-25` protocol era.
 
 The server does not adopt deprecated Roots, Sampling or Logging features. Its
 bounded local-stdio advanced profile additionally provides two immutable
-resources, two authored prompts, endpoint-specific cursor pagination, a
-state-only MRTR claim-boundary retry, negotiated subscriptions that emit no
-synthetic change events, and opt-in Tasks with cooperative cancellation.
+resources, one aggregate task-activity resource, two authored prompts, bounded
+prompt completion, endpoint-specific cursor pagination, a form-elicitation MRTR
+claim-boundary acknowledgement, genuine aggregate resource-update notifications,
+and opt-in Tasks with cooperative cancellation and a four-task admission cap.
 Official `rmcp` clients exercise both `2026-07-28` and `2025-11-25` profiles.
 The previous-era profile remains static and cannot create Tasks or use MRTR.
 
@@ -47,10 +48,13 @@ HTTP. The remote profile advertises and accepts tools only until Track 34 binds
 advanced state to an authenticated principal, tenant, region, scope, approval,
 quota and auditable decision. Task state is local-process only: it is not
 durable, resumable, multi-replica or a source of screening/execution authority.
-The MRTR retry carries no sensitive response and proves protocol control flow,
-not meaningful elicitation, approval or methodological review. The catalogues
-are immutable, so subscriptions acknowledge only supported filters and remain
-silent until cancellation rather than fabricating a list-change event.
+The MRTR retry carries only a fixed acknowledgement and proves protocol control
+flow, not approval, execution authority or methodological review. The catalogues
+are immutable, so no list-change capability is advertised. Current local clients
+may subscribe only to the aggregate task-activity resource; notifications occur
+after a real task start or terminal transition and expose no task identifier or
+payload. This is bounded local-process behavior, not lossless event delivery,
+production load, cache, durability or scale evidence.
 
 The advertised output schemas are generated at server construction from
 `contracts/interface-catalog.json`. Object outputs carry properties and
@@ -69,9 +73,10 @@ cargo test -p searchright-mcp --test advanced_mcp --all-features --locked
 ```
 
 They verify current and previous-era negotiation, bounded pagination and cursor
-rejection, prompt identifier isolation, MRTR version gating, synchronous
-fallback without the Tasks extension, cooperative task cancellation, and
-subscription acknowledgement/cancellation without false notifications.
+rejection, prompt identifier isolation and completion, current-only form MRTR,
+synchronous fallback without the Tasks extension, successful task completion,
+cooperative cancellation, four-slot capacity rejection and recovery, and a real
+aggregate task-activity resource-update notification.
 
 ## Verification
 
