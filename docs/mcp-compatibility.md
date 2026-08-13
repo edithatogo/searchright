@@ -14,8 +14,9 @@ compatibility transcript for the previous `2025-11-25` protocol era.
   `notifications/initialized`. That transcript requests `2025-11-25` and checks
   the negotiated protocol version before listing or invoking tools.
 - Tool discovery is deterministic and each tool has an object input schema.
-- Every tool advertises a JSON Schema 2020-12 `outputSchema` with the correct
-  root shape (`object` or `array`). Tool calls return matching structured
+- Every tool advertises a field-level JSON Schema 2020-12 `outputSchema`
+  derived from the canonical interface catalogue and referenced contract
+  schemas. Tool calls return matching structured
   content and backwards-compatible text content. Current-era tool calls also
   return `resultType: complete`. Rendered Mermaid and diagnostic documents
   retain their human-readable text block while also returning a structured
@@ -38,14 +39,15 @@ Resources, prompts, multi-round-trip input requests, subscriptions, Tasks,
 pagination, cancellation and authenticated Streamable HTTP are separate roadmap
 capabilities and are not claimed by the local stdio profile.
 
-The advertised output schemas currently enforce only the JSON root shape. They
-still declare no per-field `properties`; field-complete MCP output schemas are
-in progress and are not yet landed. The smoke harness validates invoked tools'
-`structuredContent` against the advertised `outputSchema`, but that currently
-proves only the root shape for those responses. The harness has a
-`--strict-schemas` flag that currently fails for all 31 tools because their
-advertised output schemas remain trivial; that flag is the future gate for
-proving field-complete schema advertisement.
+The advertised output schemas are generated at server construction from
+`contracts/interface-catalog.json`. Object outputs carry properties and
+required fields; array outputs carry item schemas; shared wire contracts embed
+their canonical JSON Schema files. A unit test fails if any of the 31 tools
+regresses to a root-only schema. The smoke harness validates invoked tools'
+`structuredContent` against the advertised `outputSchema`; its
+`--strict-schemas` flag is the transcript gate for rejecting trivial schemas.
+Independent or official live-client validation of every success path remains
+open and is not inferred from catalogue-derived advertisement.
 
 ## Verification
 
