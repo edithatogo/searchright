@@ -763,7 +763,9 @@ impl ServerHandler for SearchrightServer {
         _request: Option<PaginatedRequestParams>,
         _context: RequestContext<RoleServer>,
     ) -> Result<ListToolsResult, McpError> {
-        Ok(ListToolsResult::with_all_items(self.tool_router.list_all()))
+        Ok(ListToolsResult::with_all_items(self.tool_router.list_all())
+            .with_ttl_ms(60_000)
+            .with_cache_scope(CacheScope::Public))
     }
 
     fn get_tool(&self, name: &str) -> Option<rmcp::model::Tool> {
