@@ -34,10 +34,23 @@ compatibility transcript for the previous `2025-11-25` protocol era.
 - The local server exposes no session identifier and keeps application state in
   explicit Searchright contracts rather than hidden transport sessions.
 
-The server does not adopt deprecated Roots, Sampling or Logging features.
-Resources, prompts, multi-round-trip input requests, subscriptions, Tasks,
-pagination, cancellation and authenticated Streamable HTTP are separate roadmap
-capabilities and are not claimed by the local stdio profile.
+The server does not adopt deprecated Roots, Sampling or Logging features. Its
+bounded local-stdio advanced profile additionally provides two immutable
+resources, two authored prompts, endpoint-specific cursor pagination, a
+state-only MRTR claim-boundary retry, negotiated subscriptions that emit no
+synthetic change events, and opt-in Tasks with cooperative cancellation.
+Official `rmcp` clients exercise both `2026-07-28` and `2025-11-25` profiles.
+The previous-era profile remains static and cannot create Tasks or use MRTR.
+
+These capabilities deliberately do not extend to authenticated Streamable
+HTTP. The remote profile advertises and accepts tools only until Track 34 binds
+advanced state to an authenticated principal, tenant, region, scope, approval,
+quota and auditable decision. Task state is local-process only: it is not
+durable, resumable, multi-replica or a source of screening/execution authority.
+The MRTR retry carries no sensitive response and proves protocol control flow,
+not meaningful elicitation, approval or methodological review. The catalogues
+are immutable, so subscriptions acknowledge only supported filters and remain
+silent until cancellation rather than fabricating a list-change event.
 
 The advertised output schemas are generated at server construction from
 `contracts/interface-catalog.json`. Object outputs carry properties and
@@ -48,6 +61,17 @@ regresses to a root-only schema. The smoke harness validates invoked tools'
 `--strict-schemas` flag is the transcript gate for rejecting trivial schemas.
 Independent or official live-client validation of every success path remains
 open and is not inferred from catalogue-derived advertisement.
+
+Run the SDK-backed advanced profile tests with:
+
+```text
+cargo test -p searchright-mcp --test advanced_mcp --all-features --locked
+```
+
+They verify current and previous-era negotiation, bounded pagination and cursor
+rejection, prompt identifier isolation, MRTR version gating, synchronous
+fallback without the Tasks extension, cooperative task cancellation, and
+subscription acknowledgement/cancellation without false notifications.
 
 ## Verification
 

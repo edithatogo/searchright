@@ -6,13 +6,25 @@
 #![forbid(unsafe_code)]
 
 use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
-use std::{borrow::Cow, sync::Arc};
+use std::{borrow::Cow, sync::Arc, time::Duration};
 
 use rmcp::{
     ErrorData as McpError, ServerHandler, ServiceExt,
     handler::server::{router::tool::ToolRouter, wrapper::Parameters},
-    model::{CallToolResult, ContentBlock, JsonObject, ProtocolVersion, ToolAnnotations},
-    schemars, tool, tool_handler, tool_router,
+    model::{
+        CacheScope, CallToolResponse, CallToolResult, CancelTaskParams, ContentBlock,
+        CreateTaskResult, GetPromptRequestParams, GetPromptResponse, GetPromptResult,
+        GetTaskParams, GetTaskResult, InitializeRequestParams, InitializeResult,
+        InputRequiredResult, JsonObject, ListPromptsResult, ListResourcesResult, ListToolsResult,
+        PaginatedRequestParams, Prompt, PromptArgument, PromptMessage, ProtocolVersion,
+        ReadResourceRequestParams, ReadResourceResponse, ReadResourceResult, Resource,
+        ResourceContents, Role, ServerCapabilities, ServerInfo, SubscriptionFilter,
+        ToolAnnotations, UpdateTaskParams,
+    },
+    schemars,
+    service::{RequestContext, RoleServer, SubscriptionContext},
+    task_manager::{TaskExit, TaskManager, TaskOptions},
+    tool, tool_router,
     transport::stdio,
 };
 use searchright::contracts::{
@@ -173,6 +185,7 @@ struct LicensedPlanInput {
 /// Governed Searchright MCP tool server shared by local and remote adapters.
 pub struct SearchrightServer {
     tool_router: ToolRouter<Self>,
+    tasks: TaskManager,
     remote_http: bool,
 }
 
@@ -180,6 +193,7 @@ impl Default for SearchrightServer {
     fn default() -> Self {
         Self {
             tool_router: Self::governed_tool_router(),
+            tasks: TaskManager::new(),
             remote_http: false,
         }
     }
@@ -191,8 +205,30 @@ impl SearchrightServer {
     pub fn remote_http() -> Self {
         Self {
             tool_router: Self::governed_tool_router(),
+            tasks: TaskManager::new(),
             remote_http: true,
         }
+    }
+
+    fn require_local_current(&self, context: &RequestContext<RoleServer>) -> Result<(), McpError> {
+        self.require_local()?;
+        if context.protocol_version() != Some(ProtocolVersion::V_2026_07_28) {
+            return Err(McpError::invalid_params(
+                "tasks are available only to local 2026-07-28 clients",
+                None,
+            ));
+        }
+        Ok(())
+    }
+
+    fn require_local(&self) -> Result<(), McpError> {
+        if self.remote_http {
+            return Err(McpError::invalid_params(
+                "advanced capabilities are available only over local stdio",
+                None,
+            ));
+        }
+        Ok(())
     }
 }
 
@@ -674,14 +710,289 @@ impl SearchrightServer {
     }
 }
 
-#[tool_handler(router = self.tool_router)]
 impl ServerHandler for SearchrightServer {
+    async fn initialize(
+        &self,
+        request: InitializeRequestParams,
+        context: RequestContext<RoleServer>,
+    ) -> Result<InitializeResult, McpError> {
+        context.peer.set_peer_info(request.clone());
+        let mut info = self.get_info();
+        let supported = self.supported_protocol_versions();
+        info.protocol_version = if supported.contains(&request.protocol_version) {
+            request.protocol_version
+        } else {
+            info.protocol_version
+        };
+        if info.protocol_version != ProtocolVersion::V_2026_07_28 {
+            info.capabilities = ServerCapabilities::builder()
+                .enable_tools()
+                .enable_prompts()
+                .enable_resources()
+                .build();
+        }
+        Ok(info)
+    }
+
+    fn get_info(&self) -> ServerInfo {
+        let capabilities = if self.remote_http {
+            ServerCapabilities::builder().enable_tools().build()
+        } else {
+            ServerCapabilities::builder()
+                .enable_tools()
+                .enable_prompts()
+                .enable_prompts_list_changed()
+                .enable_resources()
+                .enable_resources_list_changed()
+                .enable_tasks()
+                .build()
+        };
+        ServerInfo::new(capabilities)
+    }
+
     fn supported_protocol_versions(&self) -> Cow<'static, [ProtocolVersion]> {
         if self.remote_http {
             Cow::Borrowed(&[ProtocolVersion::V_2026_07_28])
         } else {
             Cow::Borrowed(&[ProtocolVersion::V_2025_11_25, ProtocolVersion::V_2026_07_28])
         }
+    }
+
+    async fn list_tools(
+        &self,
+        _request: Option<PaginatedRequestParams>,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<ListToolsResult, McpError> {
+        Ok(ListToolsResult::with_all_items(self.tool_router.list_all()))
+    }
+
+    fn get_tool(&self, name: &str) -> Option<rmcp::model::Tool> {
+        self.tool_router.get(name).cloned()
+    }
+
+    async fn call_tool(
+        &self,
+        request: rmcp::model::CallToolRequestParams,
+        context: RequestContext<RoleServer>,
+    ) -> Result<CallToolResponse, McpError> {
+        if !self.remote_http
+            && context.protocol_version() == Some(ProtocolVersion::V_2026_07_28)
+            && request.name == "workflow"
+            && context
+                .client_capabilities()
+                .is_some_and(|capabilities| capabilities.supports_tasks())
+        {
+            let task = self.tasks.spawn(
+                TaskOptions::new()
+                    .with_poll_interval_ms(10)
+                    .with_ttl_ms(60_000),
+                |task_context| {
+                    Box::pin(async move {
+                        tokio::select! {
+                            () = task_context.cancelled() => Err(TaskExit::Cancelled),
+                            () = tokio::time::sleep(Duration::from_secs(1)) => {
+                                json_success(&SearchrightEngine::workflow()).map_err(TaskExit::Error)
+                            }
+                        }
+                    })
+                },
+            );
+            return Ok(CallToolResponse::Task(CreateTaskResult::new(task)));
+        }
+        let call = rmcp::handler::server::tool::ToolCallContext::new(self, request, context);
+        self.tool_router.call(call).await
+    }
+
+    async fn get_task(
+        &self,
+        request: GetTaskParams,
+        context: RequestContext<RoleServer>,
+    ) -> Result<GetTaskResult, McpError> {
+        self.require_local_current(&context)?;
+        Ok(GetTaskResult::new(self.tasks.get_task(&request.task_id)?))
+    }
+
+    async fn update_task(
+        &self,
+        request: UpdateTaskParams,
+        context: RequestContext<RoleServer>,
+    ) -> Result<(), McpError> {
+        self.require_local_current(&context)?;
+        self.tasks
+            .update_task(&request.task_id, request.input_responses)
+    }
+
+    async fn cancel_task(
+        &self,
+        request: CancelTaskParams,
+        context: RequestContext<RoleServer>,
+    ) -> Result<(), McpError> {
+        self.require_local_current(&context)?;
+        self.tasks.cancel_task(&request.task_id)
+    }
+
+    async fn list_resources(
+        &self,
+        request: Option<PaginatedRequestParams>,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<ListResourcesResult, McpError> {
+        self.require_local()?;
+        let (resources, next_cursor) = match request.and_then(|params| params.cursor).as_deref() {
+            None => (
+                vec![advanced_resources()[0].clone()],
+                Some("resources:2".to_owned()),
+            ),
+            Some("resources:2") => (vec![advanced_resources()[1].clone()], None),
+            Some(_) => return Err(McpError::invalid_params("unknown resource cursor", None)),
+        };
+        let mut result = ListResourcesResult::with_all_items(resources)
+            .with_ttl_ms(60_000)
+            .with_cache_scope(CacheScope::Public);
+        result.next_cursor = next_cursor;
+        Ok(result)
+    }
+
+    async fn read_resource(
+        &self,
+        request: ReadResourceRequestParams,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<ReadResourceResponse, McpError> {
+        self.require_local()?;
+        read_advanced_resource(request)
+    }
+
+    async fn list_prompts(
+        &self,
+        request: Option<PaginatedRequestParams>,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<ListPromptsResult, McpError> {
+        self.require_local()?;
+        let (prompts, next_cursor) = match request.and_then(|params| params.cursor).as_deref() {
+            None => (
+                vec![advanced_prompts()[0].clone()],
+                Some("prompts:2".to_owned()),
+            ),
+            Some("prompts:2") => (vec![advanced_prompts()[1].clone()], None),
+            Some(_) => return Err(McpError::invalid_params("unknown prompt cursor", None)),
+        };
+        let mut result = ListPromptsResult::with_all_items(prompts)
+            .with_ttl_ms(60_000)
+            .with_cache_scope(CacheScope::Public);
+        result.next_cursor = next_cursor;
+        Ok(result)
+    }
+
+    async fn get_prompt(
+        &self,
+        request: GetPromptRequestParams,
+        _context: RequestContext<RoleServer>,
+    ) -> Result<GetPromptResponse, McpError> {
+        self.require_local()?;
+        let review_id = request
+            .arguments
+            .as_ref()
+            .and_then(|arguments| arguments.get("review_id"))
+            .and_then(serde_json::Value::as_str)
+            .unwrap_or("<review-id>");
+        if review_id != "<review-id>"
+            && (review_id.is_empty()
+                || review_id.len() > 64
+                || !review_id.chars().all(|character| {
+                    character.is_ascii_alphanumeric() || "-_.".contains(character)
+                }))
+        {
+            return Err(McpError::invalid_params(
+                "review_id must be a bounded identifier",
+                None,
+            ));
+        }
+        let quoted_review_id = serde_json::to_string(review_id)
+            .map_err(|_| McpError::internal_error("review_id serialization failed", None))?;
+        let text = match request.name.as_str() {
+            "plan-review" => format!(
+                "Review Searchright plan identified by {quoted_review_id}. Return findings only; do not change eligibility criteria or grant execution authority."
+            ),
+            "press-check" => format!(
+                "Assess the search strategy identified by {quoted_review_id} using recorded PRESS evidence. Do not certify completeness or silently rewrite native syntax."
+            ),
+            _ => return Err(McpError::invalid_params("unknown prompt", None)),
+        };
+        Ok(GetPromptResult::new(vec![PromptMessage::new_text(Role::User, text)]).into())
+    }
+
+    fn accepted_subscription_filter(
+        &self,
+        requested: &SubscriptionFilter,
+    ) -> Option<SubscriptionFilter> {
+        Some(requested.supported_by(&self.get_info().capabilities))
+    }
+
+    async fn listen(&self, context: SubscriptionContext) -> Result<(), McpError> {
+        self.require_local()?;
+        // The catalogue is immutable for this process. A synthetic
+        // list-changed event would be false evidence, so hold the accepted
+        // subscription until the client cancels it.
+        context.cancelled().await;
+        Ok(())
+    }
+}
+
+fn advanced_resources() -> [Resource; 2] {
+    [
+        Resource::new("searchright://workflow", "workflow")
+            .with_title("Governed workflow")
+            .with_description("Static, network-free Searchright workflow contract")
+            .with_mime_type("application/json"),
+        Resource::new("searchright://claim-boundary", "claim-boundary")
+            .with_title("MCP claim boundary")
+            .with_description("Explicit authority and evidence limitations")
+            .with_mime_type("text/plain"),
+    ]
+}
+
+fn advanced_prompts() -> [Prompt; 2] {
+    let argument = PromptArgument::new("review_id")
+        .with_description("Review identifier; never a grant of authority")
+        .with_required(false);
+    [
+        Prompt::new(
+            "plan-review",
+            Some("Review a plan without changing it"),
+            Some(vec![argument.clone()]),
+        ),
+        Prompt::new(
+            "press-check",
+            Some("Assess recorded PRESS evidence without certifying completeness"),
+            Some(vec![argument]),
+        ),
+    ]
+}
+
+fn read_advanced_resource(
+    request: ReadResourceRequestParams,
+) -> Result<ReadResourceResponse, McpError> {
+    match request.uri.as_str() {
+        "searchright://workflow" => Ok(ReadResourceResult::new(vec![
+            ResourceContents::text(
+                serde_json::to_string_pretty(&SearchrightEngine::workflow()).map_err(|_| {
+                    McpError::internal_error("workflow serialization failed", None)
+                })?,
+                request.uri,
+            )
+            .with_mime_type("application/json"),
+        ])
+        .into()),
+        "searchright://claim-boundary" if request.request_state.as_deref() != Some("claim-boundary-v1") => {
+            Ok(InputRequiredResult::from_request_state("claim-boundary-v1").into())
+        }
+        "searchright://claim-boundary" => Ok(ReadResourceResult::new(vec![
+            ResourceContents::text(
+                "Read-only local evidence. No live-provider, remote-hosting, methodological-certification, external-write, or final-screening authority is implied.",
+                request.uri,
+            ),
+        ])
+        .into()),
+        _ => Err(McpError::invalid_params("unknown resource URI", None)),
     }
 }
 
