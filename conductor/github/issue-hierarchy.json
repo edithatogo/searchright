@@ -11631,7 +11631,7 @@
     },
     {
       "key": "track-24-phase-3-task-02",
-      "title": "Track 24 / P3 / T02: Implement and threat-model authenticated Streamable HTTP/OAuth transport",
+      "title": "Track 24 / P3 / T02: Implement and compile the WIT host/guest boundary with Wasmtime resource controls",
       "kind": "task",
       "parent_key": "track-24-phase-3",
       "body_path": "conductor/github/issues/track-24-phase-3-task-02.md",
@@ -11664,7 +11664,7 @@
     },
     {
       "key": "track-24-phase-3-task-03",
-      "title": "Track 24 / P3 / T03: Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence",
+      "title": "Track 24 / P3 / T03: Implement Arrow, Parquet and DuckDB large-corpus storage and query paths",
       "kind": "task",
       "parent_key": "track-24-phase-3",
       "body_path": "conductor/github/issues/track-24-phase-3-task-03.md",
@@ -11697,7 +11697,7 @@
     },
     {
       "key": "track-24-phase-3-task-04",
-      "title": "Track 24 / P3 / T04: Establish component signing, revocation and distribution evidence",
+      "title": "Track 24 / P3 / T04: Implement and threat-model authenticated Streamable HTTP/OAuth transport",
       "kind": "task",
       "parent_key": "track-24-phase-3",
       "body_path": "conductor/github/issues/track-24-phase-3-task-04.md",
@@ -11726,6 +11726,72 @@
         "Track ID": "24",
         "Phase": 3,
         "Task": 4
+      }
+    },
+    {
+      "key": "track-24-phase-3-task-05",
+      "title": "Track 24 / P3 / T05: Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicita\u2026",
+      "kind": "task",
+      "parent_key": "track-24-phase-3",
+      "body_path": "conductor/github/issues/track-24-phase-3-task-05.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:24",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "24",
+      "phase_number": 3,
+      "task_number": 5,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Beta",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Should",
+        "External gate": "Yes",
+        "Conductor key": "track-24-phase-3-task-05",
+        "Conductor path": "conductor/tracks/24-wasi-http-scale/plan.md",
+        "Track ID": "24",
+        "Phase": 3,
+        "Task": 5
+      }
+    },
+    {
+      "key": "track-24-phase-3-task-06",
+      "title": "Track 24 / P3 / T06: Establish component signing, revocation and distribution evidence",
+      "kind": "task",
+      "parent_key": "track-24-phase-3",
+      "body_path": "conductor/github/issues/track-24-phase-3-task-06.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:24",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "24",
+      "phase_number": 3,
+      "task_number": 6,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Beta",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Should",
+        "External gate": "Yes",
+        "Conductor key": "track-24-phase-3-task-06",
+        "Conductor path": "conductor/tracks/24-wasi-http-scale/plan.md",
+        "Track ID": "24",
+        "Phase": 3,
+        "Task": 6
       }
     },
     {
