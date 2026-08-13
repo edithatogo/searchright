@@ -153,10 +153,8 @@ fn validate_observed_schema(
                 .unwrap_or(false)
             {
                 for (index, item) in values.iter().enumerate() {
-                    let previous = values
-                        .get(..index)
-                        .ok_or_else(|| anyhow::anyhow!("invalid array boundary"))?;
-                    anyhow::ensure!(!previous.contains(item), "duplicate array item");
+                    let is_duplicate = values.iter().take(index).any(|previous| previous == item);
+                    anyhow::ensure!(!is_duplicate, "duplicate array item");
                 }
             }
             if let Some(item_schema) = object.get("items") {
