@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.maturity-dossier.v1",
   "target_version": "1.0.0",
   "decision": "not_ready",
-  "last_reviewed": "2026-08-12",
+  "last_reviewed": "2026-08-13",
   "domains": [
     {
       "domain": "contracts",
@@ -36,7 +36,7 @@
     },
     {
       "domain": "interfaces",
-      "state": "local_cli_mcp_compiler_verified_advanced_profiles_open",
+      "state": "local_cli_mcp_bounded_advanced_stdio_verified_remote_and_scale_open",
       "critical_blocker": true
     },
     {

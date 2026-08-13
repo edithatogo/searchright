@@ -35,13 +35,16 @@
         "cargo test -p searchright-mcp --all-targets --all-features --locked",
         "python scripts/check_cli_mcp_parity.py"
       ],
-      "required_receipts": ["verification/receipts/mcp-advanced-capabilities.json"],
+      "required_receipts": [
+        "verification/receipts/track-24-advanced-mcp.json",
+        "verification/receipts/mcp-advanced-capabilities.json"
+      ],
       "exit_criterion": "Capability discovery, pagination, subscriptions, tasks, MRTR and cancellation pass bounded compatibility and interruption tests without implicit authority.",
       "external_gate": false,
       "progress": {
-        "status": "not_started",
-        "evidence_receipts": [],
-        "remaining_gates": ["Implement and verify every optional advanced MCP capability without implicit authority."]
+        "status": "partially_evidenced",
+        "evidence_receipts": ["verification/receipts/track-24-advanced-mcp.json"],
+        "remaining_gates": ["Complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence before completing this package."]
       }
     },
     {

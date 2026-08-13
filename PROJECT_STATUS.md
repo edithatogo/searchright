@@ -2,7 +2,7 @@
 
 **Status date:** 13 August 2026
 
-**Verified revision:** `8833cf71dbe8a999cc96279667a0a33ab3ae8a7a` (`main`)
+**Verified revision:** `73c5b306074b4c2bc4db99d73d22186bf62b2fda` (`main`)
 
 **Evidence ceiling:** source-verified alpha with hosted compiler and admission evidence
 **Maturity decision:** not ready
@@ -96,15 +96,15 @@ validity, production security, usability or operational recovery.
 The roadmap contains 38 tracks and 200 acceptance assertions. Canonical state:
 
 - 3 tracks are source implemented;
-- 24 tracks are partially implemented;
-- 8 tracks are scaffolded;
+- 25 tracks are partially implemented;
+- 7 tracks are scaffolded;
 - 3 tracks require external evidence;
 - Tracks 05 and 31 are semantically archived in place; their canonical paths
   and stable GitHub identities are retained.
 
-At assertion level, 19 are source implemented, 118 partially implemented, 53
-scaffolded and 10 external-evidence-required. 118 assertions still have only
-track-level mappings and 433 open gate entries remain. These counts describe
+At assertion level, 19 are source implemented, 124 partially implemented, 47
+scaffolded and 10 external-evidence-required. 116 assertions still have only
+track-level mappings and 437 open gate entries remain. These counts describe
 evidence debt, not a quality score.
 
 ## Coverage and dependency trust
@@ -124,8 +124,11 @@ evidence debt, not a quality score.
 ### MCP and hosted access
 
 - Independent live-client validation of every MCP success output schema.
-- Resources, prompts, tasks, MRTR, pagination, subscriptions and comprehensive
-  cancellation behavior.
+- Bounded local-stdio resources, prompts, completion, MRTR, pagination,
+  subscriptions, task completion and cooperative cancellation are now
+  compiler-evidenced. Durable, resumable, multi-replica and tenant-bound task
+  state, lossless subscription delivery, production load/cache evidence and
+  remote advanced capabilities remain open.
 - Authenticated Streamable HTTP with verified issuer, principal, tenant,
   region, scope, rate, replay, isolation and rollback evidence.
 
@@ -163,8 +166,9 @@ restore-proven, independently evaluated, published or registry-accepted.
 
 1. Complete Track 10 independent current/previous live-client validation of
    every MCP success output schema.
-2. Implement Track 24 resources, prompts, tasks, MRTR, pagination and
-   cancellation in bounded single-track slices.
+2. Complete Track 24's remaining WASI, remote, durable/distributed,
+   lossless-delivery, production-load and production-cache evidence without
+   broadening local MCP authority.
 3. Implement and adversarially test Track 34 authenticated Streamable HTTP.
 4. Run authorized provider canaries and provider-policy review.
 5. Execute CiteWeft/Sourceright consumer canaries and rollback rehearsals.
@@ -174,8 +178,10 @@ restore-proven, independently evaluated, published or registry-accepted.
 8. Complete restore, pilot, release, publication and registry evidence before
    reconsidering maturity.
 
-The executable launch roadmap currently records 15 packages as `not_started`
-and LP-006 as `partially_evidenced`. Track 05 provides exact hosted and sealed
-review receipts for crash recovery, replay and durable deletion. LP-006 remains
-open because durable retention/export effects are unavailable unless an
-accountable launch-profile decision explicitly keeps them fail closed.
+The executable launch roadmap currently records 14 packages as `not_started`
+and LP-002 plus LP-006 as `partially_evidenced`. LP-002 is bounded to the local
+stdio receipt and remains incomplete while LP-001 and remote/distributed/load
+gates are open. Track 05 provides exact hosted and sealed review receipts for
+crash recovery, replay and durable deletion. LP-006 remains open because
+durable retention/export effects are unavailable unless an accountable
+launch-profile decision explicitly keeps them fail closed.
