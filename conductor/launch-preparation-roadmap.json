@@ -12,18 +12,26 @@
       "commands": [
         "cargo test -p searchright-mcp --all-targets --locked",
         "cargo clippy -p searchright-mcp --all-targets --all-features --locked -- -D warnings",
-        "python scripts/mcp_smoke.py --receipt verification/receipts/mcp-2026-07-28-stdio.json target/debug/searchright-mcp"
+        "python scripts/mcp_smoke.py --receipt verification/receipts/mcp-2026-07-28-stdio.json target/debug/searchright-mcp",
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "required_receipts": [
         "verification/receipts/mcp-2026-07-28-stdio.json",
-        "verification/receipts/mcp-2025-11-25-stdio.json"
+        "verification/receipts/mcp-2025-11-25-stdio.json",
+        "verification/receipts/mcp-official-client-2026-07-28.json",
+        "verification/receipts/mcp-official-client-2025-11-25.json"
       ],
       "exit_criterion": "All 31 tools expose field-complete success schemas and official current/previous-era clients preserve structured results and governed errors.",
       "external_gate": false,
       "progress": {
-        "status": "not_started",
-        "evidence_receipts": [],
-        "remaining_gates": ["Complete field-level schemas and independent current and previous-era client conformance evidence."]
+        "status": "completed",
+        "evidence_receipts": [
+          "verification/receipts/mcp-2026-07-28-stdio.json",
+          "verification/receipts/mcp-2025-11-25-stdio.json",
+          "verification/receipts/mcp-official-client-2026-07-28.json",
+          "verification/receipts/mcp-official-client-2025-11-25.json"
+        ],
+        "remaining_gates": []
       }
     },
     {

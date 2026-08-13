@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/10-mcp-mvp/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Run an independent or official compatibility client for the previous supported MCP era; the checked-in Python JSON-RPC transcript is bounded smoke evidence only. (`track-10-phase-3-task-01`)
-- [ ] T02: Validate structured output schemas against live client implementations. (`track-10-phase-3-task-02`)
+- [ ] T01: Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete. (`track-10-phase-3-task-01`)
+- [ ] T02: Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification. (`track-10-phase-3-task-02`)
 
 ## Evidence rule
 

@@ -3,7 +3,7 @@
   "track_id": "10",
   "title": "MCP stdio server MVP",
   "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/10-mcp-mvp/spec.md#scope",
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
@@ -14,23 +14,28 @@
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/live_client_conformance.rs",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
+        "docs/mcp-compatibility.md",
+        "scripts/mcp_smoke.py",
+        "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/10-mcp-mvp/evidence.json",
-        "verification/receipts/mcp-2025-11-25-stdio.json",
-        "verification/receipts/mcp-2026-07-28-stdio.json"
+        "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
-        "Validate structured output schemas against live client implementations."
+        "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
+        "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -38,28 +43,26 @@
       "assertion_id": "T10-A002",
       "statement": "Return structuredContent matching outputSchema",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-mcp/src/main.rs",
-        "contracts/mcp/tool-catalog.json",
-        "contracts/interface-catalog.json",
-        "server.json"
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/live_client_conformance.rs",
+        "contracts/interface-catalog.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_mcp::output_schema_registry",
+        "searchright_mcp::validate_tool_output",
+        "live_client_conformance::assert_every_success_path"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/10-mcp-mvp/evidence.json",
-        "verification/receipts/mcp-2025-11-25-stdio.json",
-        "verification/receipts/mcp-2026-07-28-stdio.json"
+        "verification/receipts/mcp-official-client-2025-11-25.json",
+        "verification/receipts/mcp-official-client-2026-07-28.json"
       ],
-      "open_gates": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
-        "Validate structured output schemas against live client implementations."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "All 31 local stdio tools advertise field-level success schemas and fail closed before emitting structured output that violates the registered contract; both generate_prisma success branches are covered."
     },
     {
       "assertion_id": "T10-A003",
@@ -68,23 +71,28 @@
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/live_client_conformance.rs",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
+        "docs/mcp-compatibility.md",
+        "scripts/mcp_smoke.py",
+        "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/10-mcp-mvp/evidence.json",
-        "verification/receipts/mcp-2025-11-25-stdio.json",
-        "verification/receipts/mcp-2026-07-28-stdio.json"
+        "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
-        "Validate structured output schemas against live client implementations."
+        "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
+        "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -95,23 +103,28 @@
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/live_client_conformance.rs",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
+        "docs/mcp-compatibility.md",
+        "scripts/mcp_smoke.py",
+        "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/10-mcp-mvp/evidence.json",
-        "verification/receipts/mcp-2025-11-25-stdio.json",
-        "verification/receipts/mcp-2026-07-28-stdio.json"
+        "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
-        "Validate structured output schemas against live client implementations."
+        "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
+        "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -119,28 +132,25 @@
       "assertion_id": "T10-A005",
       "statement": "Run official SDK/examples and protocol transcript conformance",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-mcp/src/main.rs",
-        "contracts/mcp/tool-catalog.json",
-        "contracts/interface-catalog.json",
-        "server.json"
+        "crates/searchright-mcp/tests/live_client_conformance.rs",
+        "scripts/record_mcp_live_client_conformance.py",
+        "docs/mcp-compatibility.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "live_client_conformance::official_rmcp_current_client_consumes_structured_results_and_governed_errors",
+        "live_client_conformance::official_rmcp_previous_era_client_consumes_structured_results_and_governed_errors"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/10-mcp-mvp/evidence.json",
-        "verification/receipts/mcp-2025-11-25-stdio.json",
-        "verification/receipts/mcp-2026-07-28-stdio.json"
+        "verification/receipts/mcp-official-client-2025-11-25.json",
+        "verification/receipts/mcp-official-client-2026-07-28.json"
       ],
-      "open_gates": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
-        "Validate structured output schemas against live client implementations."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "The pinned official rmcp 3.1.2 client negotiates both supported protocol eras against the real child-process stdio binary and preserves 32 successful structured result shapes plus governed errors; unrelated third-party clients and remote transport are not claimed."
     },
     {
       "assertion_id": "T10-A006",
@@ -149,23 +159,28 @@
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/live_client_conformance.rs",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
+        "docs/mcp-compatibility.md",
+        "scripts/mcp_smoke.py",
+        "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/10-mcp-mvp/evidence.json",
-        "verification/receipts/mcp-2025-11-25-stdio.json",
-        "verification/receipts/mcp-2026-07-28-stdio.json"
+        "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [
-        "Compile and run stdio MCP conformance transcripts with current and compatibility clients.",
-        "Validate structured output schemas against live client implementations."
+        "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
+        "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     }

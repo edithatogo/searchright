@@ -123,7 +123,9 @@ evidence debt, not a quality score.
 
 ### MCP and hosted access
 
-- Independent live-client validation of every MCP success output schema.
+- Third-party MCP client interoperability beyond the pinned official `rmcp`
+  client remains unclaimed; current and previous-era official-client stdio
+  conformance now covers all 31 tools and 32 successful output shapes.
 - Bounded local-stdio resources, prompts, completion, MRTR, pagination,
   subscriptions, task completion and cooperative cancellation are now
   compiler-evidenced. Durable, resumable, multi-replica and tenant-bound task
@@ -164,24 +166,22 @@ restore-proven, independently evaluated, published or registry-accepted.
 
 ## Next sequence
 
-1. Complete Track 10 independent current/previous live-client validation of
-   every MCP success output schema.
-2. Complete Track 24's remaining WASI, remote, durable/distributed,
+1. Complete Track 24's remaining WASI, remote, durable/distributed,
    lossless-delivery, production-load and production-cache evidence without
    broadening local MCP authority.
-3. Implement and adversarially test Track 34 authenticated Streamable HTTP.
-4. Run authorized provider canaries and provider-policy review.
-5. Execute CiteWeft/Sourceright consumer canaries and rollback rehearsals.
-6. Replace track-level mappings with assertion-specific symbols, tests and
+2. Implement and adversarially test Track 34 authenticated Streamable HTTP.
+3. Run authorized provider canaries and provider-policy review.
+4. Execute CiteWeft/Sourceright consumer canaries and rollback rehearsals.
+5. Replace track-level mappings with assertion-specific symbols, tests and
    current receipts.
-7. Run sealed methodological, usability and information-specialist evaluation.
-8. Complete restore, pilot, release, publication and registry evidence before
+6. Run sealed methodological, usability and information-specialist evaluation.
+7. Complete restore, pilot, release, publication and registry evidence before
    reconsidering maturity.
 
-The executable launch roadmap currently records 14 packages as `not_started`
-and LP-002 plus LP-006 as `partially_evidenced`. LP-002 is bounded to the local
-stdio receipt and remains incomplete while LP-001 and remote/distributed/load
-gates are open. Track 05 provides exact hosted and sealed review receipts for
+The executable launch roadmap currently records 13 packages as `not_started`,
+LP-002 and LP-006 as `partially_evidenced`, and LP-001 as completed. LP-002 is
+bounded to the local stdio receipt and remains incomplete while its
+remote/distributed/load gates are open. Track 05 provides exact hosted and sealed review receipts for
 crash recovery, replay and durable deletion. LP-006 remains open because
 durable retention/export effects are unavailable unless an accountable
 launch-profile decision explicitly keeps them fail closed.

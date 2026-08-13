@@ -1,0 +1,41 @@
+{
+  "schema_version": "org.searchright.mcp-official-client-receipt.v1",
+  "status": "passed",
+  "evidence_level": "compiler_verified",
+  "track": "10",
+  "roadmap_item": "LP-001",
+  "protocol_version": "2026-07-28",
+  "client_implementation": "official rmcp 3.1.2 typed client over child-process stdio",
+  "implementation_revision": "8acb9e81fe3a3007effbb142215a6f2c9ac451b0",
+  "observed_at": "2026-08-13T12:10:04Z",
+  "hosted_evidence": {
+    "workflow": "CI",
+    "run_id": 31698485057,
+    "job_name": "Rust (ubuntu-latest)",
+    "job_url": "https://github.com/edithatogo/searchright/actions/runs/31698485057/job/94441637721",
+    "conclusion": "success",
+    "runner_label": "ubuntu-latest",
+    "command": "cargo test --workspace --all-features --locked",
+    "test_name": "official_rmcp_current_client_consumes_structured_results_and_governed_errors"
+  },
+  "bindings": {
+    "Cargo.lock": "c2c917430e68fb7495fe47c7429f3f3d7c3368969af16d645cca1fe6d9420ddd",
+    "Cargo.toml": "638b3bc521ddec585f81f96fb48e81d4b8910268a40e1e755ca77dd365b072dd",
+    "crates/searchright-mcp/src/lib.rs": "073656b23a86bf719187fc15c8ab77df1e3f35adf6a8559c3425fc8317076a1c",
+    "crates/searchright-mcp/tests/live_client_conformance.rs": "8c97db72bc008d25ce77aae2b1add10a602b9a95d015469ca7eb134e2c3c29c7",
+    "contracts/interface-catalog.json": "765799e595e19d44893c05005b7ca2ad728e661b7fa28f2c1d39216d8feff41d"
+  },
+  "assertions": [
+    "protocol negotiation selected the requested supported era",
+    "the typed client observed all 31 advertised tools and their output schemas",
+    "all 31 successful tool paths exposed structuredContent matching the observed outputSchema",
+    "both generate_prisma union branches matched the advertised outputSchema",
+    "a semantically invalid plan remained a governed tool error without structuredContent"
+  ],
+  "advertised_tools_validated": 31,
+  "success_cases_validated": 32,
+  "limitations": [
+    "This is hosted child-process stdio evidence, not an authenticated remote MCP deployment receipt.",
+    "This does not establish interoperability with third-party clients beyond the official rmcp SDK pinned by the workspace."
+  ]
+}

@@ -11,6 +11,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_cli_mcp_parity.py`
   - [x] `python scripts/mcp_smoke.py target/debug/searchright-mcp`
+  - [x] `python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts`
 
 ## Completion and evidence contract
 

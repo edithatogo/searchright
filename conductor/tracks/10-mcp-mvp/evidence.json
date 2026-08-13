@@ -4,28 +4,32 @@
   "title": "MCP stdio server MVP",
   "status": "partially_implemented",
   "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "compiler_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-mcp/src/main.rs",
+    "crates/searchright-mcp/src/lib.rs",
+    "crates/searchright-mcp/tests/live_client_conformance.rs",
     "contracts/mcp/tool-catalog.json",
     "contracts/interface-catalog.json",
     "docs/mcp-compatibility.md",
     "scripts/mcp_smoke.py",
+    "scripts/record_mcp_live_client_conformance.py",
     "server.json"
   ],
   "traceability": "conductor/tracks/10-mcp-mvp/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_cli_mcp_parity.py",
-    "python scripts/mcp_smoke.py target/debug/searchright-mcp"
+    "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+    "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
   ],
   "requirements": [
     "SR-029"
   ],
   "blockers": [
-    "Run an independent or official compatibility client for the previous supported MCP era; the checked-in Python JSON-RPC transcript is bounded smoke evidence only.",
-    "Validate structured output schemas against live client implementations."
+    "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
+    "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
   ],
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
@@ -52,7 +56,9 @@
   "remote_github_evidence": [],
   "runtime_evidence": [
     "verification/receipts/mcp-2025-11-25-stdio.json",
-    "verification/receipts/mcp-2026-07-28-stdio.json"
+    "verification/receipts/mcp-2026-07-28-stdio.json",
+    "verification/receipts/mcp-official-client-2025-11-25.json",
+    "verification/receipts/mcp-official-client-2026-07-28.json"
   ],
   "external_evidence": []
 }
