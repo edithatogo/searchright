@@ -182,6 +182,9 @@ fn validate_observed_schema(
                         (byte.is_ascii_lowercase() || byte.is_ascii_digit())
                             || (index > 0 && matches!(byte, b'_' | b'.' | b'-'))
                     }),
+                    "^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\\.(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*$" => {
+                        text.split('.').all(observed_hostname_label_is_valid)
+                    }
                     _ => anyhow::bail!("unsupported observed pattern {pattern}"),
                 };
                 anyhow::ensure!(valid, "pattern mismatch");
@@ -198,6 +201,16 @@ fn validate_observed_schema(
         serde_json::Value::Null | serde_json::Value::Bool(_) => {}
     }
     Ok(())
+}
+
+fn observed_hostname_label_is_valid(label: &str) -> bool {
+    !label.is_empty()
+        && label.len() <= 63
+        && label
+            .bytes()
+            .all(|byte| byte.is_ascii_alphanumeric() || byte == b'-')
+        && !label.starts_with('-')
+        && !label.ends_with('-')
 }
 
 fn observed_type_matches(value: &serde_json::Value, expected: &str) -> bool {
