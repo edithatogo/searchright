@@ -2,7 +2,7 @@
 
 **Status date:** 13 August 2026
 
-**Verified revision:** `73c5b306074b4c2bc4db99d73d22186bf62b2fda` (`main`)
+**Verified revision:** `f9e71e11361a4a4327355cea8b9464a4a7adabed` (`main`)
 
 **Evidence ceiling:** source-verified alpha with hosted compiler and admission evidence
 **Maturity decision:** not ready
