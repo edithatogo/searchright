@@ -365,7 +365,7 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
         .ok_or_else(|| "rank fixture must be registered".to_owned())?;
     rank_case.arguments.insert(
         "query_terms".to_owned(),
-        serde_json::Value::Array(Vec::new()),
+        serde_json::Value::Array(vec![serde_json::Value::String("genomic".to_owned())]),
     );
     Ok(cases)
 }
