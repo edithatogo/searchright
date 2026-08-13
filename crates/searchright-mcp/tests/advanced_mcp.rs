@@ -1,13 +1,5 @@
 //! Official rmcp client coverage for the bounded local advanced profile.
 
-// The harness intentionally fails at the exact protocol step that diverges;
-// descriptive expectations keep those failures attributable in hosted logs.
-#![allow(
-    clippy::expect_used,
-    clippy::indexing_slicing,
-    reason = "protocol conformance tests need exact-step failure attribution"
-)]
-
 use std::time::Duration;
 
 use rmcp::{
@@ -23,10 +15,10 @@ use searchright_mcp::SearchrightServer;
 
 async fn current_client(
     tasks: bool,
-) -> (
+) -> anyhow::Result<(
     rmcp::service::RunningService<rmcp::service::RoleClient, ClientInfo>,
     tokio::task::JoinHandle<anyhow::Result<()>>,
-) {
+)> {
     let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
     let server = tokio::spawn(async move {
         let service = SearchrightServer::default().serve(server_transport).await?;
@@ -46,15 +38,14 @@ async fn current_client(
                 preferred_versions: vec![ProtocolVersion::V_2026_07_28],
             },
         )
-        .await
-        .expect("current client");
-    (client, server)
+        .await?;
+    Ok((client, server))
 }
 
-async fn previous_client() -> (
+async fn previous_client() -> anyhow::Result<(
     rmcp::service::RunningService<rmcp::service::RoleClient, ClientInfo>,
     tokio::task::JoinHandle<anyhow::Result<()>>,
-) {
+)> {
     let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
     let server = tokio::spawn(async move {
         let service = SearchrightServer::default().serve(server_transport).await?;
@@ -66,17 +57,14 @@ async fn previous_client() -> (
         Implementation::new("track24-previous-test", "1.0.0"),
     )
     .with_protocol_version(ProtocolVersion::V_2025_11_25);
-    let client = info.serve(client_transport).await.expect("previous client");
-    (client, server)
+    let client = info.serve(client_transport).await?;
+    Ok((client, server))
 }
 
 #[tokio::test]
-async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() {
-    let (client, server) = current_client(false).await;
-    let first = client
-        .list_resources(None)
-        .await
-        .expect("first resource page");
+async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Result<()> {
+    let (client, server) = current_client(false).await?;
+    let first = client.list_resources(None).await?;
     assert_eq!(first.resources.len(), 1);
     assert_eq!(first.ttl_ms, Some(60_000));
     assert_eq!(first.next_cursor.as_deref(), Some("resources:2"));
@@ -84,8 +72,7 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() {
         .list_resources(Some(
             PaginatedRequestParams::default().with_cursor(first.next_cursor),
         ))
-        .await
-        .expect("second resource page");
+        .await?;
     assert_eq!(second.resources.len(), 1);
     assert!(second.next_cursor.is_none());
     assert!(
@@ -97,13 +84,12 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() {
             .is_err()
     );
 
-    let prompts = client.list_prompts(None).await.expect("first prompt page");
+    let prompts = client.list_prompts(None).await?;
     assert_eq!(prompts.prompts.len(), 1);
     assert_eq!(prompts.next_cursor.as_deref(), Some("prompts:2"));
     let prompt = client
         .get_prompt(GetPromptRequestParams::new("plan-review"))
-        .await
-        .expect("governed prompt");
+        .await?;
     assert_eq!(prompt.messages.len(), 1);
     let mut unsafe_arguments = JsonObject::new();
     unsafe_arguments.insert(
@@ -123,32 +109,31 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() {
         .read_resource(ReadResourceRequestParams::new(
             "searchright://claim-boundary",
         ))
-        .await
-        .expect("bounded state-only MRTR retry");
-    let ResourceContents::TextResourceContents { text, .. } = &resource.contents[0] else {
-        panic!("claim boundary is text")
+        .await?;
+    let content = resource
+        .contents
+        .first()
+        .ok_or_else(|| anyhow::anyhow!("claim boundary resource is empty"))?;
+    let ResourceContents::TextResourceContents { text, .. } = content else {
+        anyhow::bail!("claim boundary is not text")
     };
     assert!(text.contains("No live-provider"));
 
-    client.cancel().await.expect("stop client");
+    client.cancel().await?;
     server.abort();
+    Ok(())
 }
 
 #[tokio::test]
-async fn previous_era_profile_is_static_and_cannot_create_tasks_or_use_mrtr() {
-    let (client, server) = previous_client().await;
-    let peer = client.peer_info().expect("previous server info");
+async fn previous_era_profile_is_static_and_cannot_create_tasks_or_use_mrtr() -> anyhow::Result<()>
+{
+    let (client, server) = previous_client().await?;
+    let peer = client
+        .peer_info()
+        .ok_or_else(|| anyhow::anyhow!("previous server info is absent"))?;
     assert_eq!(peer.protocol_version, ProtocolVersion::V_2025_11_25);
     assert!(!peer.capabilities.supports_tasks());
-    assert_eq!(
-        client
-            .list_resources(None)
-            .await
-            .expect("legacy static resources")
-            .resources
-            .len(),
-        1
-    );
+    assert_eq!(client.list_resources(None).await?.resources.len(), 1);
     assert!(
         client
             .read_resource(ReadResourceRequestParams::new(
@@ -160,73 +145,71 @@ async fn previous_era_profile_is_static_and_cannot_create_tasks_or_use_mrtr() {
     let response = client
         .peer()
         .call_tool_once(CallToolRequestParams::new("workflow"))
-        .await
-        .expect("legacy synchronous workflow");
+        .await?;
     assert!(matches!(response, CallToolResponse::Complete(_)));
-    client.cancel().await.expect("stop client");
+    client.cancel().await?;
     server.abort();
+    Ok(())
 }
 
 #[tokio::test]
-async fn task_is_current_capability_gated_and_cooperatively_cancelled() {
-    let (client, server) = current_client(true).await;
+async fn task_is_current_capability_gated_and_cooperatively_cancelled() -> anyhow::Result<()> {
+    let (client, server) = current_client(true).await?;
     let response = client
         .peer()
         .call_tool_once(CallToolRequestParams::new("workflow"))
-        .await
-        .expect("task call");
+        .await?;
     let CallToolResponse::Task(created) = response else {
-        panic!("task-capable current client receives task")
+        anyhow::bail!("task-capable current client did not receive a task")
     };
     let task_id = created.task.task_id.clone();
     client
         .peer()
         .cancel_task(CancelTaskParams::new(task_id.clone()))
-        .await
-        .expect("cancel task");
+        .await?;
     let terminal = tokio::time::timeout(Duration::from_secs(2), async {
         loop {
             let task = client
                 .peer()
                 .get_task(GetTaskParams::new(task_id.clone()))
-                .await
-                .expect("poll task")
+                .await?
                 .task;
             if task.status().is_terminal() {
-                break task;
+                break anyhow::Ok(task);
             }
             tokio::task::yield_now().await;
         }
     })
-    .await
-    .expect("task cancellation is bounded");
+    .await??;
     assert!(matches!(terminal.payload, TaskPayload::Cancelled));
 
-    client.cancel().await.expect("stop client");
+    client.cancel().await?;
     server.abort();
+    Ok(())
 }
 
 #[tokio::test]
-async fn clients_without_task_extension_keep_synchronous_tool_semantics() {
-    let (client, server) = current_client(false).await;
+async fn clients_without_task_extension_keep_synchronous_tool_semantics() -> anyhow::Result<()> {
+    let (client, server) = current_client(false).await?;
     let response = client
         .peer()
         .call_tool_once(CallToolRequestParams::new("workflow"))
-        .await
-        .expect("synchronous call");
+        .await?;
     assert!(matches!(response, CallToolResponse::Complete(_)));
-    client.cancel().await.expect("stop client");
+    client.cancel().await?;
     server.abort();
+    Ok(())
 }
 
 #[tokio::test]
-async fn subscriptions_acknowledge_only_supported_filters_and_emit_no_false_changes() {
-    let (client, server) = current_client(false).await;
+async fn subscriptions_acknowledge_only_supported_filters_and_emit_no_false_changes()
+-> anyhow::Result<()> {
+    let (client, server) = current_client(false).await?;
     let requested = SubscriptionFilter::builder()
         .resources_list_changed()
         .tools_list_changed()
         .build();
-    let mut subscription = client.listen(requested).await.expect("start subscription");
+    let mut subscription = client.listen(requested).await?;
     assert_eq!(
         subscription.acknowledged(),
         &SubscriptionFilter::builder()
@@ -238,7 +221,8 @@ async fn subscriptions_acknowledge_only_supported_filters_and_emit_no_false_chan
             .await
             .is_err()
     );
-    subscription.cancel().await.expect("cancel subscription");
-    client.cancel().await.expect("stop client");
+    subscription.cancel().await?;
+    client.cancel().await?;
     server.abort();
+    Ok(())
 }
