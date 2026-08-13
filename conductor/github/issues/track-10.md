@@ -14,7 +14,7 @@ Expose typed, authority-annotated MCP tools over the same facade with stable str
 - Horizon: `mvp`
 - Status: `partially_implemented`
 - Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Evidence: `compiler_verified`
 - Dependencies: `09`
 - Requirements: `SR-029`
 - External approval required: `false`

@@ -63,8 +63,20 @@ their canonical JSON Schema files. A unit test fails if any of the 31 tools
 regresses to a root-only schema. The smoke harness validates invoked tools'
 `structuredContent` against the advertised `outputSchema`; its
 `--strict-schemas` flag is the transcript gate for rejecting trivial schemas.
-Independent or official live-client validation of every success path remains
-open and is not inferred from catalogue-derived advertisement.
+The Track 10 official-client harness launches the actual `searchright-mcp`
+binary over child-process stdio for both supported eras. It invokes all 31
+tools with deterministic valid arguments, exercises both `generate_prisma`
+success variants, and independently validates every observed
+`structuredContent` value against the `outputSchema` received through
+`tools/list`. Governed failures remain `isError` responses without successful
+structured content. The receipt records official `rmcp` 3.1.2 evidence; it
+does not claim interoperability with unrelated third-party client libraries.
+
+Run and record the official-client evidence only from a clean tracked tree:
+
+```text
+python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts
+```
 
 Run the SDK-backed advanced profile tests with:
 
@@ -127,9 +139,9 @@ and `workflow`. Tools with required arguments are listed, ordered and
 schema-advertisement-checked, but they are not called by this harness. The smoke
 receipts are therefore Searchright compatibility smoke evidence, not a claim
 that every tool path, optional MCP feature or remote transport conformance
-scenario is implemented.
+scenario is implemented. The separate official-client harness above supplies
+all-success-path local stdio conformance.
 
 Adding `output_contract` references to the interface catalogue is an additive
 metadata change. It does not change a persisted payload or remove an accepted
-field, so no data migration is required. Independent or official client
-conformance remains a separate open gate.
+field, so no data migration is required.

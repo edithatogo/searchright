@@ -484,27 +484,31 @@
     },
     {
       "blockers": [
-        "Run an independent or official compatibility client for the previous supported MCP era; the checked-in Python JSON-RPC transcript is bounded smoke evidence only.",
-        "Validate structured output schemas against live client implementations."
+        "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
+        "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
-        "python scripts/mcp_smoke.py target/debug/searchright-mcp"
+        "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+        "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/live_client_conformance.rs",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
         "docs/mcp-compatibility.md",
         "scripts/mcp_smoke.py",
+        "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
       "dependencies": [
         "09"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "compiler_verified",
       "external_approval_required": false,
       "horizon": "mvp",
       "implementation_state": "partially_implemented",
@@ -514,7 +518,9 @@
       ],
       "runtime_evidence": [
         "verification/receipts/mcp-2025-11-25-stdio.json",
-        "verification/receipts/mcp-2026-07-28-stdio.json"
+        "verification/receipts/mcp-2026-07-28-stdio.json",
+        "verification/receipts/mcp-official-client-2025-11-25.json",
+        "verification/receipts/mcp-official-client-2026-07-28.json"
       ],
       "slug": "mcp-mvp",
       "status": "partially_implemented",

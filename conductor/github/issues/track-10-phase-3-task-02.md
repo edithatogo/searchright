@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Validate structured output schemas against live client implementations.
+- [ ] Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification.
 
 ## Completion and evidence contract
 

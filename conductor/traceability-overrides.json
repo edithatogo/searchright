@@ -634,6 +634,55 @@
         }
       }
     },
+    "10": {
+      "assertions": {
+        "T10-A002": {
+          "deterministic_tests": [
+            "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
+          ],
+          "implementation_paths": [
+            "crates/searchright-mcp/src/lib.rs",
+            "crates/searchright-mcp/tests/live_client_conformance.rs",
+            "contracts/interface-catalog.json"
+          ],
+          "implementation_symbols": [
+            "searchright_mcp::output_schema_registry",
+            "searchright_mcp::validate_tool_output",
+            "live_client_conformance::assert_every_success_path"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "evidence_receipts": [
+            "verification/receipts/mcp-official-client-2025-11-25.json",
+            "verification/receipts/mcp-official-client-2026-07-28.json"
+          ],
+          "open_gates": [],
+          "permitted_claim": "All 31 local stdio tools advertise field-level success schemas and fail closed before emitting structured output that violates the registered contract; both generate_prisma success branches are covered.",
+          "state": "partially_implemented"
+        },
+        "T10-A005": {
+          "deterministic_tests": [
+            "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
+          ],
+          "implementation_paths": [
+            "crates/searchright-mcp/tests/live_client_conformance.rs",
+            "scripts/record_mcp_live_client_conformance.py",
+            "docs/mcp-compatibility.md"
+          ],
+          "implementation_symbols": [
+            "live_client_conformance::official_rmcp_current_client_consumes_structured_results_and_governed_errors",
+            "live_client_conformance::official_rmcp_previous_era_client_consumes_structured_results_and_governed_errors"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "evidence_receipts": [
+            "verification/receipts/mcp-official-client-2025-11-25.json",
+            "verification/receipts/mcp-official-client-2026-07-28.json"
+          ],
+          "open_gates": [],
+          "permitted_claim": "The pinned official rmcp 3.1.2 client negotiates both supported protocol eras against the real child-process stdio binary and preserves 32 successful structured result shapes plus governed errors; unrelated third-party clients and remote transport are not claimed.",
+          "state": "partially_implemented"
+        }
+      }
+    },
     "13": {
       "assertions": {
         "T13-A001": {

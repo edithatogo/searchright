@@ -46,10 +46,8 @@
         "T09-A005",
         "T09-A006",
         "T10-A001",
-        "T10-A002",
         "T10-A003",
         "T10-A004",
-        "T10-A005",
         "T10-A006",
         "T11-A001",
         "T11-A002",
@@ -771,10 +769,8 @@
         "T09-A005",
         "T09-A006",
         "T10-A001",
-        "T10-A002",
         "T10-A003",
         "T10-A004",
-        "T10-A005",
         "T10-A006",
         "T24-A001",
         "T24-A002",
@@ -1119,6 +1115,44 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/check_research_object_handoff.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T10-A001",
+        "T10-A003",
+        "T10-A004",
+        "T10-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-MCP-SMOKE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/mcp_smoke.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T10-A001",
+        "T10-A002",
+        "T10-A003",
+        "T10-A004",
+        "T10-A005",
+        "T10-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-RECORD-MCP-LIVE-CLIENT-CONFORMANCE-RECEIPT-DIR",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/record_mcp_live_client_conformance.py"
     },
     {
       "category": "repository_policy",

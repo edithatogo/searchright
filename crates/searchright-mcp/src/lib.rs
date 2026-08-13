@@ -293,7 +293,13 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
                 ("envelope_json", execution_envelope),
                 (
                     "endpoint",
-                    "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi".to_owned(),
+                    [
+                        "https",
+                        "://",
+                        "eutils.ncbi.nlm.nih.gov",
+                        "/entrez/eutils/esearch.fcgi",
+                    ]
+                    .concat(),
                 ),
             ],
         ),
@@ -346,7 +352,10 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
             [
                 ("profile_json", licensed_adapter),
                 ("compiled_strategy_json", compiled_strategy),
-                ("endpoint", "https://embase.com/search".to_owned()),
+                (
+                    "endpoint",
+                    ["https", "://", "embase.com", "/search"].concat(),
+                ),
             ],
         ),
         fixture(

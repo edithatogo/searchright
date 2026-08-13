@@ -1,6 +1,6 @@
 # Plan: 10 MCP stdio server MVP
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **compiler_verified**.
 
 GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -10,10 +10,13 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
 
 - [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
   - [x] Present source path: `crates/searchright-mcp/src/main.rs`
+  - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
+  - [x] Present source path: `crates/searchright-mcp/tests/live_client_conformance.rs`
   - [x] Present source path: `contracts/mcp/tool-catalog.json`
   - [x] Present source path: `contracts/interface-catalog.json`
   - [x] Present source path: `docs/mcp-compatibility.md`
   - [x] Present source path: `scripts/mcp_smoke.py`
+  - [x] Present source path: `scripts/record_mcp_live_client_conformance.py`
   - [x] Present source path: `server.json`
   - [x] Assertion ledger: `conductor/tracks/10-mcp-mvp/traceability.json`
 
@@ -25,14 +28,15 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_cli_mcp_parity.py`
   - [x] `python scripts/mcp_smoke.py target/debug/searchright-mcp`
+  - [x] `python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-10-phase-3 -->
 
-- [ ] Run an independent or official compatibility client for the previous supported MCP era; the checked-in Python JSON-RPC transcript is bounded smoke evidence only.
-- [ ] Validate structured output schemas against live client implementations.
+- [ ] Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.
+- [ ] Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification.
 
 ## Phase 4: Review and closeout
 
