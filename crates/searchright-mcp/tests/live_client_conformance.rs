@@ -250,18 +250,25 @@ async fn assert_every_success_path(client: &ClientService) -> anyhow::Result<()>
         32,
         "31 tools plus the second PRISMA union branch"
     );
+    let mut failures = Vec::new();
     for case in cases {
         let response = client
             .peer()
             .call_tool_once(
                 CallToolRequestParams::new(case.tool_name).with_arguments(case.arguments),
             )
-            .await?;
-        let schema = advertised
-            .get(case.tool_name)
-            .ok_or_else(|| anyhow::anyhow!("{} is not advertised", case.tool_name))?;
-        assert_successful_structured_result(case.tool_name, schema, response)?;
+            .await;
+        let result = response.map_err(anyhow::Error::from).and_then(|response| {
+            let schema = advertised
+                .get(case.tool_name)
+                .ok_or_else(|| anyhow::anyhow!("{} is not advertised", case.tool_name))?;
+            assert_successful_structured_result(case.tool_name, schema, response)
+        });
+        if let Err(error) = result {
+            failures.push(format!("{}: {error}", case.tool_name));
+        }
     }
+    anyhow::ensure!(failures.is_empty(), "{}", failures.join("\n"));
     Ok(())
 }
 
