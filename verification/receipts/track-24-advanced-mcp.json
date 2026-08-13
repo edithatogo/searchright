@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.verification-receipt.v1",
   "track_id": "24",
   "recorded_on": "2026-08-13",
-  "source_revision": "fc0041d48166",
+  "source_revision": "8805f7741ab478d3b974423748518ec6cbe3dece",
   "environment": {
     "host": "x86_64-pc-windows-gnu",
     "rustc": "1.97.1",
@@ -21,6 +21,10 @@
     {
       "command": "cargo +1.97.1-x86_64-pc-windows-gnu fmt --all -- --check",
       "result": "passed with stable-channel warnings for configured nightly-only formatting options"
+    },
+    {
+      "command": "uv run --with-requirements requirements/validation.txt python scripts/mcp_smoke.py target/debug/searchright-mcp.exe",
+      "result": "passed; 31 tools observed and result-type plus cache metadata verified"
     }
   ],
   "observed": [
