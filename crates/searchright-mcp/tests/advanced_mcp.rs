@@ -5,10 +5,10 @@ use std::time::Duration;
 use rmcp::{
     ClientLifecycleMode, ClientServiceExt, ServiceExt,
     model::{
-        CallToolRequestParams, CallToolResponse, CancelTaskParams, ClientCapabilities, ClientInfo,
-        GetPromptRequestParams, GetTaskParams, Implementation, JsonObject, PaginatedRequestParams,
-        ProtocolVersion, ReadResourceRequestParams, ResourceContents, SubscriptionFilter,
-        TaskPayload,
+        CacheScope, CallToolRequestParams, CallToolResponse, CancelTaskParams, ClientCapabilities,
+        ClientInfo, GetPromptRequestParams, GetTaskParams, Implementation, JsonObject,
+        PaginatedRequestParams, ProtocolVersion, ReadResourceRequestParams, ResourceContents,
+        SubscriptionFilter, TaskPayload,
     },
 };
 use searchright_mcp::SearchrightServer;
@@ -64,6 +64,11 @@ async fn previous_client() -> anyhow::Result<(
 #[tokio::test]
 async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Result<()> {
     let (client, server) = current_client(false).await?;
+    let tools = client.list_tools(None).await?;
+    assert_eq!(tools.tools.len(), 31);
+    assert_eq!(tools.ttl_ms, Some(60_000));
+    assert_eq!(tools.cache_scope, Some(CacheScope::Public));
+
     let first = client.list_resources(None).await?;
     assert_eq!(first.resources.len(), 1);
     assert_eq!(first.ttl_ms, Some(60_000));
