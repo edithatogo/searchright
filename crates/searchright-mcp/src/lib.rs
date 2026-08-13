@@ -807,21 +807,80 @@ fn text_success(format: &str, document: String) -> CallToolResult {
 }
 
 fn output_schema_for(tool_name: &str) -> Arc<JsonObject> {
-    let root_type = match tool_name {
-        "discovery_candidates"
-        | "inspect_untrusted_content"
-        | "list_providers"
-        | "living_diff"
-        | "rank_records" => "array",
-        _ => "object",
+    let catalogue: serde_json::Value =
+        match serde_json::from_str(include_str!("../../../contracts/interface-catalog.json")) {
+            Ok(value) => value,
+            Err(error) => panic!("canonical interface catalogue must parse: {error}"),
+        };
+    let contract = catalogue
+        .get("entries")
+        .and_then(serde_json::Value::as_array)
+        .and_then(|entries| {
+            entries.iter().find(|entry| {
+                entry.get("mcp_tool").and_then(serde_json::Value::as_str) == Some(tool_name)
+            })
+        })
+        .and_then(|entry| entry.get("output_contract"))
+        .unwrap_or_else(|| panic!("every MCP tool must have an output contract: {tool_name}"));
+
+    let schema = if let Some(path) = contract.get("schema").and_then(serde_json::Value::as_str) {
+        referenced_output_schema(path)
+    } else if contract.get("root").and_then(serde_json::Value::as_str) == Some("array") {
+        let items = if let Some(path) = contract
+            .get("items_schema")
+            .and_then(serde_json::Value::as_str)
+        {
+            referenced_output_schema(path)
+        } else {
+            object_schema(contract.get("items_fields"), contract.get("items_required"))
+        };
+        serde_json::json!({
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "array",
+            "items": items,
+        })
+    } else {
+        object_schema(contract.get("fields"), contract.get("required"))
     };
-    let serde_json::Value::Object(schema) = serde_json::json!({
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": root_type,
-    }) else {
-        unreachable!("the MCP output schema literal is always an object")
+    let serde_json::Value::Object(schema) = schema else {
+        panic!("MCP output schema must be an object: {tool_name}")
     };
     Arc::new(schema)
+}
+
+fn object_schema(
+    fields: Option<&serde_json::Value>,
+    required: Option<&serde_json::Value>,
+) -> serde_json::Value {
+    serde_json::json!({
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": fields.cloned().unwrap_or_else(|| serde_json::json!({})),
+        "required": required.cloned().unwrap_or_else(|| serde_json::json!([])),
+    })
+}
+
+fn referenced_output_schema(path: &str) -> serde_json::Value {
+    let bytes = match path {
+        "contracts/json-schema/agent-workflow.v1.schema.json" => {
+            include_str!("../../../contracts/json-schema/agent-workflow.v1.schema.json")
+        }
+        "contracts/json-schema/compiled-strategy.v1.schema.json" => {
+            include_str!("../../../contracts/json-schema/compiled-strategy.v1.schema.json")
+        }
+        "contracts/json-schema/data-handling-decision.v1.schema.json" => {
+            include_str!("../../../contracts/json-schema/data-handling-decision.v1.schema.json")
+        }
+        "contracts/json-schema/provider-manifest.v1.schema.json" => {
+            include_str!("../../../contracts/json-schema/provider-manifest.v1.schema.json")
+        }
+        _ => panic!("unregistered MCP output schema reference: {path}"),
+    };
+    match serde_json::from_str(bytes) {
+        Ok(value) => value,
+        Err(error) => panic!("registered MCP output schema must parse: {error}"),
+    }
 }
 
 fn tool_error(_message: String) -> CallToolResult {
@@ -889,6 +948,22 @@ mod tests {
                 schema.get("type"),
                 Some(serde_json::Value::String(_))
             ));
+            match schema.get("type").and_then(serde_json::Value::as_str) {
+                Some("object") => assert!(
+                    schema.get("properties").is_some()
+                        || schema.get("allOf").is_some()
+                        || schema.get("oneOf").is_some()
+                        || schema.get("$ref").is_some(),
+                    "{} has a trivial object output schema",
+                    tool.name
+                ),
+                Some("array") => assert!(
+                    schema.get("items").is_some(),
+                    "{} has a trivial array output schema",
+                    tool.name
+                ),
+                _ => panic!("{} has an unsupported output root", tool.name),
+            }
 
             let Some(annotations) = tool.annotations else {
                 panic!("every tool has effect annotations")

@@ -48,7 +48,7 @@ e80ed3e27f0f4e6c140a76d8e77192856f0d9906a1af13e53f0fe01c63d3277b  ./GOVERNANCE.m
 a8f8c4375309bf176fa00b18fbf168087642093dd700aabd06cf24ac94446b78  ./LICENSE-MIT
 2ac3f0c109bffbfe454d077de022773f1d17cd43b5dbf70ae8a57c6321bca382  ./Makefile
 fa905580a112a6135d75323f5d8cf8b3d2d6b7f18a5c0e938cc2c5ec253a5809  ./NOTICE
-54cb99406163d2b60ff26284c524850527707b6de5426688474fff26dccf1a90  ./PROJECT_STATUS.md
+280fab8dd488d3b77200d71cdececf1f5263cd7d7e1886f030e471766e625d3b  ./PROJECT_STATUS.md
 e0228e4ec2f8354f40d91c55caa4a609a73cd7235e13dc88ecb0c9559fdc9b6e  ./README.md
 939baac619998813036d5c598aec5b0e55503da3cc3c150d5543b9797e1196cc  ./ROADMAP.md
 902f5530406c9958e7e8077e4edec1893af6673c56df73d8fd54107cdf6b445b  ./SECURITY.md
@@ -1118,7 +1118,7 @@ e191fdf57e152bd3588d95cd547527d4b9e2560d24d3034845f8fc1c6bc778cc  ./crates/searc
 9ea5348c2bc270d835f9e54d6fc231355a146242ab861cdd9368c74fc2726e9d  ./crates/searchright-living/src/lib.rs
 c2d5220c43227df8c39df480e9a70263f648d438a54f3c4d465cf1bded8300f1  ./crates/searchright-mcp/Cargo.toml
 fbc8228717db086f4d7b07fb97fb2d2597ec331e956c5d284cdfc9752f620686  ./crates/searchright-mcp/src/bin/searchright-mcp-http.rs
-151184e0011dc021d8559c174bc90ae4dfded47739c0e73875c12196fbb31c56  ./crates/searchright-mcp/src/lib.rs
+160c04491499e17a1132dd8776a93f765d72375d8599b7f544c8d9b744f1087d  ./crates/searchright-mcp/src/lib.rs
 866b71a08e589b44b2265f0f95481d0a6f9c3cea456d0ed941b3377178ff4734  ./crates/searchright-mcp/src/main.rs
 093826f3cfd5702f4223040613a4875f818187aa42884c6b5bb7e8b32c0d3176  ./crates/searchright-mcp/src/remote.rs
 f20a78107cb99c6de57d27c57aaf24ed79b6ceed07117041fc70b8ac82c1fcc0  ./crates/searchright-mcp/tests/fixtures/remote-mcp-jwks.json
@@ -1182,7 +1182,7 @@ dcde714b28f518b1f53edcdb10b9068335c14287ee2e982f5637a7fd912c4638  ./docs/github-
 4265b654e2a2715ead731d0036eb22813f64148b80437d89aabfb2e44f05bc02  ./docs/maturity/1.0-gate.md
 d35cb6520a78803db936e0162db69a445310b9353bda7f5f0d025a6df4af56e0  ./docs/maturity/gap-register.md
 a19d5be5b94b5de15b6aca3054209eab0b45bca636099599c4ab311dd05b275a  ./docs/maturity/release-decision.md
-be08fb0be71f9b99b0d73e69a33d48571ddedd08631ecfb8426fa8a2dd6a45c8  ./docs/mcp-compatibility.md
+0d9cf40e97a7f61a3e42f219ea85d6b79536a3752dc5ce1ebac6050be690dfe9  ./docs/mcp-compatibility.md
 8972e57adf3c63f02040e76adf7c1d20babcb91660a78fdbb9d2995e15e8cb93  ./docs/msrv-and-package-policy.md
 0cd3019f83baf014a9399aef66e855d6dec9d8f652fc8210e82cc5fcece3caf5  ./docs/operations/backup-restore.md
 d23d1d611575fe01c1e3fc0ed823fca034d2b5ec8fb68426100b554fe4f6149f  ./docs/operations/incident-response.md
