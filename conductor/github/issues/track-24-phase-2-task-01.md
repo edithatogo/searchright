@@ -9,6 +9,7 @@ Canonical task state: **source task complete**.
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_cli_mcp_parity.py`
 
 ## Completion and evidence contract
 

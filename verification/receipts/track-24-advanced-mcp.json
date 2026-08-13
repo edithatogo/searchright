@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.verification-receipt.v1",
   "track_id": "24",
   "recorded_on": "2026-08-13",
-  "source_revision": "a78778de9ea18e41cc388c4b84e9f289a1d78674",
+  "source_revision": "94d4cc30340b19e8f5018bca0e89f8ece2fff203",
   "environment": {
     "host": "x86_64-pc-windows-gnu",
     "rustc": "1.97.1",
@@ -12,7 +12,7 @@
   "passed": [
     {
       "command": "cargo +1.97.1-x86_64-pc-windows-gnu test -p searchright-mcp --all-targets --all-features --locked",
-      "result": "10 unit tests and 5 official-client integration tests passed"
+      "result": "10 unit tests and 8 official-client integration tests passed"
     },
     {
       "command": "cargo +1.97.1-x86_64-pc-windows-gnu clippy -p searchright-mcp --all-targets --all-features --locked -- -D warnings",
@@ -30,18 +30,19 @@
   "observed": [
     "2026-07-28 discovery and 2025-11-25 initialization profiles",
     "endpoint-specific resource and prompt pagination with invalid-cursor rejection",
-    "bounded prompt identifiers rendered as inert quoted data",
-    "state-only MRTR retry restricted to the current local profile",
-    "task-capability gating, synchronous fallback and cooperative cancellation",
-    "subscription filter intersection and cancellation without fabricated events",
+    "bounded prompt identifiers and fixed completion values rendered as inert data",
+    "current-only form-elicitation MRTR acknowledgement that grants no authority",
+    "task-capability gating, synchronous fallback, successful completion and cooperative cancellation",
+    "four-slot local task admission, fifth-request rejection and post-cancellation capacity recovery",
+    "exact aggregate task-activity resource notification after a real task transition",
     "remote HTTP advertises and accepts tools only"
   ],
   "not_admitted": [
     "WASI component compilation or signing",
     "authenticated Streamable HTTP advanced capabilities",
     "durable, resumable, multi-replica or tenant-bound task state",
-    "meaningful elicitation or approval through MRTR",
-    "real catalogue-change notifications, load testing or production cache evidence",
+    "approval, execution authority or methodological review through MRTR",
+    "lossless subscription delivery, catalogue mutation, stress/load testing or production cache evidence",
     "release, deployment, live-provider or external evidence"
   ],
   "claim_boundary": "This receipt proves bounded local-stdio MCP protocol behavior at the recorded implementation revision. It does not promote the whole Track 24 outcome or any remote-hosting claim."

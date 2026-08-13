@@ -27,6 +27,7 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_cli_mcp_parity.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
@@ -34,8 +35,10 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-24-phase-3 -->
 
 - [ ] Compile WASI components and run the component conformance suite.
+- [ ] Implement and compile the WIT host/guest boundary with Wasmtime resource controls.
+- [ ] Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.
 - [ ] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
-- [ ] Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence.
+- [ ] Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.
 - [ ] Establish component signing, revocation and distribution evidence.
 
 ## Phase 4: Review and closeout

@@ -1,5 +1,5 @@
-<!-- searchright-issue-key: track-24-phase-3-task-02 -->
-# Track 24 / Phase 3 / Task 02
+<!-- searchright-issue-key: track-24-phase-3-task-05 -->
+# Track 24 / Phase 3 / Task 05
 
 Parent phase key: `track-24-phase-3`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement and compile the WIT host/guest boundary with Wasmtime resource controls.
+- [ ] Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.
 
 ## Completion and evidence contract
 

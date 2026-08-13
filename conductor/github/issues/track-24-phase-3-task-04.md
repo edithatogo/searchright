@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Establish component signing, revocation and distribution evidence.
+- [ ] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
 
 ## Completion and evidence contract
 

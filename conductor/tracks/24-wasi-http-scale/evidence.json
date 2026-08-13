@@ -5,7 +5,7 @@
   "status": "partially_implemented",
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-08-13",
   "source_evidence": [
     "crates/searchright-plugin-sdk/src/lib.rs",
     "crates/searchright-policy/src/lib.rs",
@@ -20,7 +20,8 @@
   ],
   "traceability": "conductor/tracks/24-wasi-http-scale/traceability.json",
   "static_checks": [
-    "python scripts/validate_repository.py"
+    "python scripts/validate_repository.py",
+    "python scripts/check_cli_mcp_parity.py"
   ],
   "requirements": [
     "SR-030",
@@ -28,8 +29,10 @@
   ],
   "blockers": [
     "Compile WASI components and run the component conformance suite.",
+    "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
+    "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
     "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
-    "Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence.",
+    "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
     "Establish component signing, revocation and distribution evidence."
   ],
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
@@ -50,6 +53,8 @@
       "track-24-phase-3-task-02",
       "track-24-phase-3-task-03",
       "track-24-phase-3-task-04",
+      "track-24-phase-3-task-05",
+      "track-24-phase-3-task-06",
       "track-24-phase-4-task-01",
       "track-24-phase-4-task-02",
       "track-24-phase-4-task-03",
@@ -57,6 +62,8 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "runtime_evidence": [
+    "verification/receipts/track-24-advanced-mcp.json"
+  ],
   "external_evidence": []
 }

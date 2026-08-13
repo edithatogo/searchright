@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence.
+- [ ] Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.
 
 ## Completion and evidence contract
 
