@@ -1,9 +1,10 @@
 //! Track 10 official `rmcp` client conformance for supported local stdio eras.
 //!
-//! This deliberately uses the SDK's in-memory duplex transport rather than the
-//! repository's JSON-RPC smoke harness.  It proves that the typed client API can
-//! negotiate each declared protocol era and consume representative successful
-//! structured responses and governed errors without a wire-format shim.
+//! This launches the real `searchright-mcp` binary through the SDK's child-process
+//! stdio transport. It proves that the typed client API can negotiate each
+//! declared protocol era, invoke every successful tool shape, independently
+//! validate `structuredContent` against the schema observed through `tools/list`,
+//! and preserve governed errors without a wire-format shim.
 
 use rmcp::{
     ClientLifecycleMode, ClientServiceExt, ServiceExt,
@@ -13,53 +14,59 @@ use rmcp::{
     },
     service::RoleClient,
 };
-use searchright_mcp::{
-    SearchrightServer, live_client_output_matches_schema, live_client_success_cases,
-};
+use searchright_mcp::live_client_success_cases;
+use std::{collections::BTreeMap, process::Stdio};
+use tokio::process::{ChildStdin, ChildStdout, Command};
 
 type ClientService = rmcp::service::RunningService<RoleClient, ClientInfo>;
-type ServerTask = tokio::task::JoinHandle<anyhow::Result<()>>;
+type ChildTransport = (ChildStdout, ChildStdin);
 
-async fn serve_current_client() -> anyhow::Result<(ClientService, ServerTask)> {
-    let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
-    let server = tokio::spawn(async move {
-        let service = SearchrightServer::default().serve(server_transport).await?;
-        service.waiting().await?;
-        anyhow::Ok(())
-    });
+fn child_transport() -> anyhow::Result<ChildTransport> {
+    let mut child = Command::new(env!("CARGO_BIN_EXE_searchright-mcp"))
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()?;
+    let stdout = child
+        .stdout
+        .take()
+        .ok_or_else(|| anyhow::anyhow!("child stdout was not piped"))?;
+    let stdin = child
+        .stdin
+        .take()
+        .ok_or_else(|| anyhow::anyhow!("child stdin was not piped"))?;
+    Ok((stdout, stdin))
+}
+
+async fn serve_current_client() -> anyhow::Result<ClientService> {
     let client = ClientInfo::new(
         ClientCapabilities::default(),
         Implementation::new("searchright-track10-current", "1.0.0"),
     )
     .serve_with_lifecycle(
-        client_transport,
+        child_transport()?,
         ClientLifecycleMode::Discover {
             preferred_versions: vec![ProtocolVersion::V_2026_07_28],
         },
     )
     .await?;
-    Ok((client, server))
+    Ok(client)
 }
 
-async fn serve_previous_client() -> anyhow::Result<(ClientService, ServerTask)> {
-    let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
-    let server = tokio::spawn(async move {
-        let service = SearchrightServer::default().serve(server_transport).await?;
-        service.waiting().await?;
-        anyhow::Ok(())
-    });
+async fn serve_previous_client() -> anyhow::Result<ClientService> {
     let client = ClientInfo::new(
         ClientCapabilities::default(),
         Implementation::new("searchright-track10-previous", "1.0.0"),
     )
     .with_protocol_version(ProtocolVersion::V_2025_11_25)
-    .serve(client_transport)
+    .serve(child_transport()?)
     .await?;
-    Ok((client, server))
+    Ok(client)
 }
 
 fn assert_successful_structured_result(
     tool_name: &str,
+    output_schema: &serde_json::Value,
     response: CallToolResponse,
 ) -> anyhow::Result<()> {
     let CallToolResponse::Complete(result) = response else {
@@ -71,13 +78,159 @@ fn assert_successful_structured_result(
     let structured = result
         .structured_content
         .ok_or_else(|| anyhow::anyhow!("{tool_name} did not expose structuredContent"))?;
-    if !live_client_output_matches_schema(tool_name, &structured) {
-        anyhow::bail!("{tool_name} structuredContent failed its advertised outputSchema")
+    validate_observed_schema(output_schema, &structured).map_err(|error| {
+        anyhow::anyhow!("{tool_name} structuredContent failed outputSchema: {error}")
+    })?;
+    Ok(())
+}
+
+fn validate_observed_schema(
+    schema: &serde_json::Value,
+    value: &serde_json::Value,
+) -> anyhow::Result<()> {
+    let object = schema
+        .as_object()
+        .ok_or_else(|| anyhow::anyhow!("schema is not an object"))?;
+    if let Some(expected) = object.get("const") {
+        anyhow::ensure!(value == expected, "const mismatch");
+    }
+    if let Some(allowed) = object.get("enum").and_then(serde_json::Value::as_array) {
+        anyhow::ensure!(allowed.contains(value), "enum mismatch");
+    }
+    if let Some(branches) = object.get("oneOf").and_then(serde_json::Value::as_array) {
+        let matches = branches
+            .iter()
+            .filter(|branch| validate_observed_schema(branch, value).is_ok())
+            .count();
+        anyhow::ensure!(matches == 1, "oneOf matched {matches} branches");
+    }
+    if let Some(expected_type) = object.get("type") {
+        let matches = match expected_type {
+            serde_json::Value::String(name) => observed_type_matches(value, name),
+            serde_json::Value::Array(names) => names
+                .iter()
+                .filter_map(serde_json::Value::as_str)
+                .any(|name| observed_type_matches(value, name)),
+            _ => false,
+        };
+        anyhow::ensure!(matches, "type mismatch");
+    }
+    match value {
+        serde_json::Value::Object(values) => {
+            if let Some(required) = object.get("required").and_then(serde_json::Value::as_array) {
+                for field in required.iter().filter_map(serde_json::Value::as_str) {
+                    anyhow::ensure!(values.contains_key(field), "missing required field {field}");
+                }
+            }
+            let properties = object
+                .get("properties")
+                .and_then(serde_json::Value::as_object);
+            for (field, field_value) in values {
+                if let Some(field_schema) = properties.and_then(|items| items.get(field)) {
+                    validate_observed_schema(field_schema, field_value)?;
+                } else {
+                    match object.get("additionalProperties") {
+                        Some(serde_json::Value::Bool(false)) => {
+                            anyhow::bail!("unexpected field {field}")
+                        }
+                        Some(serde_json::Value::Object(additional)) => validate_observed_schema(
+                            &serde_json::Value::Object(additional.clone()),
+                            field_value,
+                        )?,
+                        _ => {}
+                    }
+                }
+            }
+        }
+        serde_json::Value::Array(values) => {
+            if let Some(minimum) = object.get("minItems").and_then(serde_json::Value::as_u64) {
+                let length = u64::try_from(values.len())?;
+                anyhow::ensure!(length >= minimum, "array is too short");
+            }
+            if object
+                .get("uniqueItems")
+                .and_then(serde_json::Value::as_bool)
+                .unwrap_or(false)
+            {
+                for (index, item) in values.iter().enumerate() {
+                    let previous = values
+                        .get(..index)
+                        .ok_or_else(|| anyhow::anyhow!("invalid array boundary"))?;
+                    anyhow::ensure!(!previous.contains(item), "duplicate array item");
+                }
+            }
+            if let Some(item_schema) = object.get("items") {
+                for item in values {
+                    validate_observed_schema(item_schema, item)?;
+                }
+            }
+        }
+        serde_json::Value::String(text) => {
+            if let Some(minimum) = object.get("minLength").and_then(serde_json::Value::as_u64) {
+                let length = u64::try_from(text.chars().count())?;
+                anyhow::ensure!(length >= minimum, "string is too short");
+            }
+            if let Some(pattern) = object.get("pattern").and_then(serde_json::Value::as_str) {
+                let valid = match pattern {
+                    "^[a-f0-9]{64}$" => {
+                        text.len() == 64
+                            && text
+                                .bytes()
+                                .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase())
+                    }
+                    "^[a-z0-9][a-z0-9_.-]*$" => text.bytes().enumerate().all(|(index, byte)| {
+                        (byte.is_ascii_lowercase() || byte.is_ascii_digit())
+                            || (index > 0 && matches!(byte, b'_' | b'.' | b'-'))
+                    }),
+                    _ => anyhow::bail!("unsupported observed pattern {pattern}"),
+                };
+                anyhow::ensure!(valid, "pattern mismatch");
+            }
+        }
+        serde_json::Value::Number(number) => {
+            if let Some(minimum) = object.get("minimum").and_then(serde_json::Value::as_f64) {
+                anyhow::ensure!(
+                    number.as_f64().is_some_and(|value| value >= minimum),
+                    "number below minimum"
+                );
+            }
+        }
+        serde_json::Value::Null | serde_json::Value::Bool(_) => {}
     }
     Ok(())
 }
 
+fn observed_type_matches(value: &serde_json::Value, expected: &str) -> bool {
+    match expected {
+        "object" => value.is_object(),
+        "array" => value.is_array(),
+        "string" => value.is_string(),
+        "boolean" => value.is_boolean(),
+        "null" => value.is_null(),
+        "number" => value.is_number(),
+        "integer" => value
+            .as_number()
+            .is_some_and(|number| number.is_i64() || number.is_u64()),
+        _ => false,
+    }
+}
+
 async fn assert_every_success_path(client: &ClientService) -> anyhow::Result<()> {
+    let advertised = client
+        .list_tools(None)
+        .await?
+        .tools
+        .into_iter()
+        .map(|tool| {
+            let schema = tool
+                .output_schema
+                .ok_or_else(|| anyhow::anyhow!("{} lacks outputSchema", tool.name))?;
+            Ok((
+                tool.name.to_string(),
+                serde_json::Value::Object((*schema).clone()),
+            ))
+        })
+        .collect::<anyhow::Result<BTreeMap<_, _>>>()?;
     let cases = live_client_success_cases().map_err(anyhow::Error::msg)?;
     assert_eq!(
         cases.len(),
@@ -91,7 +244,10 @@ async fn assert_every_success_path(client: &ClientService) -> anyhow::Result<()>
                 CallToolRequestParams::new(case.tool_name).with_arguments(case.arguments),
             )
             .await?;
-        assert_successful_structured_result(case.tool_name, response)?;
+        let schema = advertised
+            .get(case.tool_name)
+            .ok_or_else(|| anyhow::anyhow!("{} is not advertised", case.tool_name))?;
+        assert_successful_structured_result(case.tool_name, schema, response)?;
     }
     Ok(())
 }
@@ -102,7 +258,11 @@ fn assert_complete_advertised_catalogue(tools: &[rmcp::model::Tool]) {
         .iter()
         .map(|tool| tool.name.as_ref())
         .collect::<Vec<_>>();
-    assert!(names.windows(2).all(|pair| pair[0] < pair[1]));
+    assert!(
+        names
+            .windows(2)
+            .all(|pair| matches!(pair, [left, right] if left < right))
+    );
     assert!(tools.iter().all(|tool| tool.output_schema.is_some()));
 }
 
@@ -126,7 +286,7 @@ fn semantically_invalid_plan_arguments() -> JsonObject {
 #[tokio::test]
 async fn official_rmcp_current_client_consumes_structured_results_and_governed_errors()
 -> anyhow::Result<()> {
-    let (client, server) = serve_current_client().await?;
+    let client = serve_current_client().await?;
     let peer = client
         .peer_info()
         .ok_or_else(|| anyhow::anyhow!("current server peer information is absent"))?;
@@ -149,14 +309,13 @@ async fn official_rmcp_current_client_consumes_structured_results_and_governed_e
     assert!(error.structured_content.is_none());
 
     client.cancel().await?;
-    server.abort();
     Ok(())
 }
 
 #[tokio::test]
 async fn official_rmcp_previous_era_client_consumes_structured_results_and_governed_errors()
 -> anyhow::Result<()> {
-    let (client, server) = serve_previous_client().await?;
+    let client = serve_previous_client().await?;
     let peer = client
         .peer_info()
         .ok_or_else(|| anyhow::anyhow!("previous-era server peer information is absent"))?;
@@ -179,6 +338,5 @@ async fn official_rmcp_previous_era_client_consumes_structured_results_and_gover
     assert!(error.structured_content.is_none());
 
     client.cancel().await?;
-    server.abort();
     Ok(())
 }

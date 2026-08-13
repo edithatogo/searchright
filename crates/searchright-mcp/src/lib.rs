@@ -126,7 +126,13 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     .map_err(|error| format!("compiled strategy fixture must parse: {error}"))?;
     // The licensed adapter fixture is an Embase profile; keep the strategy
     // dialect aligned so this row exercises the successful no-network plan.
-    compiled_strategy["dialect"] = serde_json::Value::String("embase".to_owned());
+    let Some(compiled_strategy) = compiled_strategy.as_object_mut() else {
+        return Err("compiled strategy fixture must be an object".to_owned());
+    };
+    compiled_strategy.insert(
+        "dialect".to_owned(),
+        serde_json::Value::String("embase".to_owned()),
+    );
     let compiled_strategy = serde_json::to_string(&compiled_strategy)
         .map_err(|error| format!("compiled strategy fixture must serialize: {error}"))?;
     let benchmark_report = json_example(include_str!(
@@ -139,8 +145,14 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
         "../../../contracts/examples/provider-component.yaml"
     ))
     .map_err(|error| format!("provider component fixture must parse: {error}"))?;
-    component_manifest["component_digest"] = serde_json::Value::String(
-        "2171682ec6aa9f6e7ddc24c7a49be6b08648bc0b63d10c7dfc6b910f8e2aea64".to_owned(),
+    let Some(component_manifest) = component_manifest.as_object_mut() else {
+        return Err("provider component fixture must be an object".to_owned());
+    };
+    component_manifest.insert(
+        "component_digest".to_owned(),
+        serde_json::Value::String(
+            "2171682ec6aa9f6e7ddc24c7a49be6b08648bc0b63d10c7dfc6b910f8e2aea64".to_owned(),
+        ),
     );
     let component_manifest = serde_json::to_string(&component_manifest)
         .map_err(|error| format!("provider component fixture must serialize: {error}"))?;
@@ -190,7 +202,7 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
             "generate_prisma",
             [("flow_json", prisma_flow), ("output", "mermaid".to_owned())],
         ),
-        fixture("verify_audit", [("audit_jsonl", "".to_owned())]),
+        fixture("verify_audit", [("audit_jsonl", String::new())]),
         fixture(
             "import_records",
             [
@@ -355,15 +367,6 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
         serde_json::Value::Array(Vec::new()),
     );
     Ok(cases)
-}
-
-/// Validate client-observed structured content against the advertised schema.
-///
-/// This helper is intentionally public only for the typed SDK conformance
-/// harness. Production results are independently checked before emission.
-#[doc(hidden)]
-pub fn live_client_output_matches_schema(tool_name: &str, value: &serde_json::Value) -> bool {
-    validate_tool_output(tool_name, value).is_ok()
 }
 
 fn json_example(document: &str) -> Result<String, String> {
@@ -1323,17 +1326,14 @@ impl ServerHandler for SearchrightServer {
     ) -> Result<ListResourcesResult, McpError> {
         self.require_local()?;
         let (resources, next_cursor) = match request.and_then(|params| params.cursor).as_deref() {
-            None => (
-                vec![advanced_resources()[0].clone()],
-                Some("resources:2".to_owned()),
-            ),
-            Some("resources:2") => (
-                vec![
-                    advanced_resources()[1].clone(),
-                    advanced_resources()[2].clone(),
-                ],
-                None,
-            ),
+            None => {
+                let [workflow, _, _] = advanced_resources();
+                (vec![workflow], Some("resources:2".to_owned()))
+            }
+            Some("resources:2") => {
+                let [_, claim_boundary, task_activity] = advanced_resources();
+                (vec![claim_boundary, task_activity], None)
+            }
             Some(_) => return Err(McpError::invalid_params("unknown resource cursor", None)),
         };
         let mut result = ListResourcesResult::with_all_items(resources)
@@ -1377,11 +1377,14 @@ impl ServerHandler for SearchrightServer {
     ) -> Result<ListPromptsResult, McpError> {
         self.require_local()?;
         let (prompts, next_cursor) = match request.and_then(|params| params.cursor).as_deref() {
-            None => (
-                vec![advanced_prompts()[0].clone()],
-                Some("prompts:2".to_owned()),
-            ),
-            Some("prompts:2") => (vec![advanced_prompts()[1].clone()], None),
+            None => {
+                let [plan_review, _] = advanced_prompts();
+                (vec![plan_review], Some("prompts:2".to_owned()))
+            }
+            Some("prompts:2") => {
+                let [_, press_check] = advanced_prompts();
+                (vec![press_check], None)
+            }
             Some(_) => return Err(McpError::invalid_params("unknown prompt cursor", None)),
         };
         let mut result = ListPromptsResult::with_all_items(prompts)
@@ -1754,7 +1757,7 @@ fn json_success(
     serde_json::to_value(value)
         .map_err(|_| McpError::internal_error("MCP output serialization failed", None))
         .and_then(|value| {
-            validate_tool_output(tool_name, &value).map_err(|_| {
+            validate_tool_output(tool_name, &value).map_err(|()| {
                 McpError::internal_error("MCP output contract validation failed", None)
             })?;
             Ok(CallToolResult::structured(value))
@@ -1777,7 +1780,7 @@ fn text_success(
         ));
     };
     validate_tool_output(tool_name, structured_content)
-        .map_err(|_| McpError::internal_error("MCP output contract validation failed", None))?;
+        .map_err(|()| McpError::internal_error("MCP output contract validation failed", None))?;
     result.content = vec![ContentBlock::text(document)];
     Ok(result)
 }
@@ -1819,16 +1822,17 @@ fn output_schema_registry() -> &'static OutputSchemaRegistry {
             let serde_json::Value::Object(schema) = schema else {
                 panic!("MCP output schema must be an object: {tool_name}")
             };
-            if schemas
-                .insert(tool_name.to_owned(), Arc::new(schema))
-                .is_some()
-            {
-                panic!("MCP output contract must not be duplicated: {tool_name}");
-            }
+            assert!(
+                schemas
+                    .insert(tool_name.to_owned(), Arc::new(schema))
+                    .is_none(),
+                "MCP output contract must not be duplicated: {tool_name}"
+            );
         }
-        if schemas.is_empty() {
-            panic!("canonical interface catalogue must register MCP output schemas");
-        }
+        assert!(
+            !schemas.is_empty(),
+            "canonical interface catalogue must register MCP output schemas"
+        );
         OutputSchemaRegistry { schemas }
     })
 }
@@ -1884,8 +1888,10 @@ fn object_schema(
         "properties": fields.cloned().unwrap_or_else(|| serde_json::json!({})),
         "required": required.cloned().unwrap_or_else(|| serde_json::json!([])),
     });
-    if let Some(one_of) = one_of {
-        schema["oneOf"] = one_of.clone();
+    if let Some(one_of) = one_of
+        && let Some(object) = schema.as_object_mut()
+    {
+        object.insert("oneOf".to_owned(), one_of.clone());
     }
     schema
 }
@@ -1928,38 +1934,30 @@ fn validate_json_schema(schema: &serde_json::Value, value: &serde_json::Value) -
         return Err(());
     }
 
-    if let Some(expected) = object.get("const") {
-        if value != expected {
-            return Err(());
-        }
+    if let Some(expected) = object.get("const")
+        && value != expected
+    {
+        return Err(());
     }
-    if let Some(values) = object.get("enum").and_then(serde_json::Value::as_array) {
-        if !values.contains(value) {
-            return Err(());
-        }
+    if let Some(values) = object.get("enum").and_then(serde_json::Value::as_array)
+        && !values.contains(value)
+    {
+        return Err(());
     }
-    if let Some(one_of) = object.get("oneOf").and_then(serde_json::Value::as_array) {
-        if one_of
+    if let Some(one_of) = object.get("oneOf").and_then(serde_json::Value::as_array)
+        && one_of
             .iter()
             .filter(|candidate| validate_json_schema(candidate, value).is_ok())
             .count()
             != 1
-        {
-            return Err(());
-        }
+    {
+        return Err(());
     }
-    if let Some(value_type) = object.get("type") {
-        let valid = match value_type {
-            serde_json::Value::String(value_type) => json_value_has_type(value, value_type),
-            serde_json::Value::Array(value_types) => value_types
-                .iter()
-                .filter_map(serde_json::Value::as_str)
-                .any(|value_type| json_value_has_type(value, value_type)),
-            _ => false,
-        };
-        if !valid {
-            return Err(());
-        }
+    if object
+        .get("type")
+        .is_some_and(|value_type| !json_value_matches_declared_type(value, value_type))
+    {
+        return Err(());
     }
 
     match value {
@@ -1970,6 +1968,20 @@ fn validate_json_schema(schema: &serde_json::Value, value: &serde_json::Value) -
         serde_json::Value::Null | serde_json::Value::Bool(_) => {}
     }
     Ok(())
+}
+
+fn json_value_matches_declared_type(
+    value: &serde_json::Value,
+    value_type: &serde_json::Value,
+) -> bool {
+    match value_type {
+        serde_json::Value::String(value_type) => json_value_has_type(value, value_type),
+        serde_json::Value::Array(value_types) => value_types
+            .iter()
+            .filter_map(serde_json::Value::as_str)
+            .any(|value_type| json_value_has_type(value, value_type)),
+        _ => false,
+    }
 }
 
 fn json_value_has_type(value: &serde_json::Value, value_type: &str) -> bool {
@@ -1991,13 +2003,13 @@ fn validate_string_schema(
     schema: &serde_json::Map<String, serde_json::Value>,
     text: &str,
 ) -> Result<(), ()> {
-    if let Some(minimum) = schema.get("minLength").and_then(serde_json::Value::as_u64) {
-        if u64::try_from(text.chars().count()).map_err(|_| ())? < minimum {
-            return Err(());
-        }
+    if let Some(minimum) = schema.get("minLength").and_then(serde_json::Value::as_u64)
+        && u64::try_from(text.chars().count()).map_err(|_| ())? < minimum
+    {
+        return Err(());
     }
-    if let Some(pattern) = schema.get("pattern").and_then(serde_json::Value::as_str) {
-        let matches = match pattern {
+    if let Some(pattern) = schema.get("pattern").and_then(serde_json::Value::as_str)
+        && !match pattern {
             "^[a-f0-9]{64}$" => {
                 text.len() == 64
                     && text.bytes().all(|character| {
@@ -2018,10 +2030,9 @@ fn validate_string_schema(
                 text.split('.').all(is_valid_hostname_label)
             }
             _ => return Err(()),
-        };
-        if !matches {
-            return Err(());
         }
+    {
+        return Err(());
     }
     Ok(())
 }
@@ -2040,10 +2051,10 @@ fn validate_array_schema(
     schema: &serde_json::Map<String, serde_json::Value>,
     values: &[serde_json::Value],
 ) -> Result<(), ()> {
-    if let Some(minimum) = schema.get("minItems").and_then(serde_json::Value::as_u64) {
-        if u64::try_from(values.len()).map_err(|_| ())? < minimum {
-            return Err(());
-        }
+    if let Some(minimum) = schema.get("minItems").and_then(serde_json::Value::as_u64)
+        && u64::try_from(values.len()).map_err(|_| ())? < minimum
+    {
+        return Err(());
     }
     if schema
         .get("uniqueItems")
@@ -2052,7 +2063,7 @@ fn validate_array_schema(
         && values
             .iter()
             .enumerate()
-            .any(|(index, value)| values[..index].contains(value))
+            .any(|(index, value)| values.iter().take(index).any(|prior| prior == value))
     {
         return Err(());
     }
@@ -2068,14 +2079,13 @@ fn validate_object_schema(
     schema: &serde_json::Map<String, serde_json::Value>,
     values: &serde_json::Map<String, serde_json::Value>,
 ) -> Result<(), ()> {
-    if let Some(required) = schema.get("required").and_then(serde_json::Value::as_array) {
-        if required
+    if let Some(required) = schema.get("required").and_then(serde_json::Value::as_array)
+        && required
             .iter()
             .filter_map(serde_json::Value::as_str)
             .any(|field| !values.contains_key(field))
-        {
-            return Err(());
-        }
+    {
+        return Err(());
     }
     let properties = schema
         .get("properties")
@@ -2085,7 +2095,6 @@ fn validate_object_schema(
         match properties.and_then(|properties| properties.get(field)) {
             Some(field_schema) => validate_json_schema(field_schema, value)?,
             None => match additional_properties {
-                Some(serde_json::Value::Bool(false)) => return Err(()),
                 Some(serde_json::Value::Object(schema)) => {
                     validate_json_schema(&serde_json::Value::Object(schema.clone()), value)?;
                 }
@@ -2101,10 +2110,10 @@ fn validate_number_schema(
     schema: &serde_json::Map<String, serde_json::Value>,
     number: &serde_json::Number,
 ) -> Result<(), ()> {
-    if let Some(minimum) = schema.get("minimum").and_then(serde_json::Value::as_f64) {
-        if number.as_f64().is_none_or(|value| value < minimum) {
-            return Err(());
-        }
+    if let Some(minimum) = schema.get("minimum").and_then(serde_json::Value::as_f64)
+        && number.as_f64().is_none_or(|value| value < minimum)
+    {
+        return Err(());
     }
     Ok(())
 }
@@ -2225,13 +2234,12 @@ mod tests {
     }
 
     #[test]
-    fn text_results_retain_machine_readable_content() {
+    fn text_results_retain_machine_readable_content() -> Result<(), McpError> {
         let result = text_success(
             "render_diagnostics",
             "plain_text",
             "stable output".to_owned(),
-        )
-        .expect("declared text output must validate");
+        )?;
 
         assert_eq!(result.is_error, Some(false));
         assert_eq!(
@@ -2242,6 +2250,7 @@ mod tests {
             Some(&serde_json::json!("plain_text"))
         );
         assert_eq!(result.content, vec![ContentBlock::text("stable output")]);
+        Ok(())
     }
 
     #[test]

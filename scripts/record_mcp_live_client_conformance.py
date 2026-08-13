@@ -15,7 +15,6 @@ import json
 import subprocess
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 TEST_TARGET = "live_client_conformance"
 TESTS = {
@@ -43,6 +42,25 @@ def source_revision() -> str:
         capture_output=True,
         text=True,
     ).stdout.strip()
+
+
+def tracked_status() -> str:
+    return subprocess.run(
+        ["git", "status", "--porcelain", "--untracked-files=no"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+
+
+def require_clean_tracked_tree() -> str:
+    status = tracked_status()
+    if status:
+        raise SystemExit(
+            "refusing to record MCP conformance receipts from a dirty tracked tree"
+        )
+    return sha256_bytes(status.encode("utf-8"))
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -97,10 +115,20 @@ def run_test(test_name: str) -> tuple[list[str], subprocess.CompletedProcess[str
         test_name,
         "--exact",
     ]
-    return command, subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+    return command, subprocess.run(
+        command,
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
 
 
-def receipt(protocol_version: str, test_name: str) -> dict[str, object]:
+def receipt(
+    protocol_version: str,
+    test_name: str,
+    tracked_status_sha256: str,
+) -> dict[str, object]:
     command, completed = run_test(test_name)
     status = "passed" if completed.returncode == 0 else "failed"
     return {
@@ -110,12 +138,14 @@ def receipt(protocol_version: str, test_name: str) -> dict[str, object]:
         "track": "10",
         "roadmap_item": "LP-001",
         "protocol_version": protocol_version,
-        "client_implementation": "official rmcp 3.1.2 typed client over tokio::io::duplex",
+        "client_implementation": "official rmcp 3.1.2 typed client over child-process stdio",
         "test_target": TEST_TARGET,
         "test_name": test_name,
         "command": command,
         "exit_code": completed.returncode,
         "bindings": bindings(protocol_version),
+        "tracked_tree_clean": True,
+        "tracked_status_sha256": tracked_status_sha256,
         "assertions": [
             "protocol negotiation selects the requested supported era",
             "the typed client observes all 31 advertised tools and their output schemas",
@@ -124,13 +154,13 @@ def receipt(protocol_version: str, test_name: str) -> dict[str, object]:
             "a malformed request remains a governed tool error without structuredContent",
         ],
         "limitations": [
-            "This is local duplex transport evidence, not an authenticated remote MCP deployment receipt.",
+            "This is local child-process stdio evidence, not an authenticated remote MCP deployment receipt.",
             "This does not establish third-party client interoperability beyond the official rmcp SDK version pinned by the workspace.",
         ],
         "advertised_tools_validated": 31,
         "success_cases_validated": 32,
-        "stdout": completed.stdout[-8000:],
-        "stderr": completed.stderr[-8000:],
+        "stdout_sha256": sha256_bytes(completed.stdout.encode("utf-8")),
+        "stderr_sha256": sha256_bytes(completed.stderr.encode("utf-8")),
     }
 
 
@@ -142,7 +172,11 @@ def main() -> int:
         help="write per-era receipts here; omit for JSON-only dry run",
     )
     args = parser.parse_args()
-    receipts = {version: receipt(version, test) for version, test in TESTS.items()}
+    tracked_status_sha256 = require_clean_tracked_tree()
+    receipts = {
+        version: receipt(version, test, tracked_status_sha256)
+        for version, test in TESTS.items()
+    }
     document = json.dumps(receipts, indent=2, sort_keys=True) + "\n"
     print(document, end="")
     if args.receipt_dir:
