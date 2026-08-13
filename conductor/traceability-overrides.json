@@ -1131,17 +1131,22 @@
           ],
           "implementation_symbols": [
             "searchright_mcp::SearchrightServer::initialize",
+            "searchright_mcp::SearchrightServer::complete",
             "searchright_mcp::SearchrightServer::list_resources",
+            "searchright_mcp::SearchrightServer::read_resource",
             "searchright_mcp::SearchrightServer::list_prompts",
+            "searchright_mcp::SearchrightServer::get_prompt",
             "searchright_mcp::SearchrightServer::call_tool",
-            "searchright_mcp::SearchrightServer::listen"
+            "searchright_mcp::SearchrightServer::accepted_subscription_filter",
+            "searchright_mcp::SearchrightServer::listen",
+            "searchright_mcp::acknowledgement_is_accepted"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Implement authenticated Streamable HTTP advanced capabilities only after Track 34 binds principal, tenant, region, scope, approval, quotas and audit state.",
-            "Run bounded-load and production-cache tests before scalable execution claims."
+            "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests before scalable execution claims."
           ],
-          "permitted_claim": "Official rmcp clients verify bounded local resources, prompts, pagination, state-only MRTR, task cancellation and truthful subscription cancellation across current and previous protocol profiles; remote and scalable execution are denied.",
+          "permitted_claim": "Official rmcp clients verify bounded local-stdio prompt completion, current-only non-authoritative form elicitation, pagination, task completion and cancellation, four-slot admission recovery, and genuine aggregate task-activity notifications; approval authority, durable Tasks, production caching, stress/load performance, remote and scalable execution are denied.",
           "state": "partially_implemented"
         },
         "T24-A006": {
@@ -1157,14 +1162,16 @@
           ],
           "implementation_symbols": [
             "searchright_mcp::SearchrightServer::supported_protocol_versions",
-            "searchright_mcp::SearchrightServer::cancel_task"
+            "searchright_mcp::SearchrightServer::call_tool",
+            "searchright_mcp::SearchrightServer::cancel_task",
+            "searchright_mcp::SearchrightServer::listen"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Compile and exercise WASI cancellation and compatibility paths.",
             "Execute remote overload, disconnect and cancellation recovery after Track 34 authority controls."
           ],
-          "permitted_claim": "Local current and previous MCP profiles are compiler-tested, including cooperative task cancellation; WASI and remote cancellation or load recovery are not proven.",
+          "permitted_claim": "Local current and previous MCP profiles are compiler-tested; current local Tasks prove deterministic four-slot admission, fifth-request rejection, completion, cancellation and post-cancellation recovery. This is not load or scalability proof; WASI and remote cancellation, overload, chaos or failover recovery are not proven.",
           "state": "partially_implemented"
         }
       }
