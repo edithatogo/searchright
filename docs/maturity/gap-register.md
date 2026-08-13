@@ -28,3 +28,10 @@ exit criteria are canonical in `conductor/launch-preparation-roadmap.json` and
 validated by `scripts/check_launch_preparation_roadmap.py`. Track 30 Phase 3
 projects each work package as a native task subissue. Those coordination tasks
 do not supersede the owning track or promote its evidence.
+
+Each work package also carries a fail-closed progress state. `not_started`
+means no completion evidence is admitted; `partially_evidenced` names the exact
+receipts and residual gates; and `completed` is accepted only when every named
+receipt exists and every dependency is complete. Track 05 is semantically
+archived, but LP-006 remains partially evidenced because durable retention and
+export effects are not part of the current filesystem-store launch profile.

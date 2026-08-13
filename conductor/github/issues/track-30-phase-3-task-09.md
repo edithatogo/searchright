@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] LP-006 / Track 05: harden audit/store crash recovery, retention, export and deletion semantics and preserve fault/policy receipts.
+- [ ] LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accountable launch-profile decision that keeps those effects unavailable and fail closed.
 
 ## Completion and evidence contract
 

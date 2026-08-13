@@ -14,7 +14,7 @@ Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
 - [ ] T06: LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts. (`track-30-phase-3-task-06`)
 - [ ] T07: LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval. (`track-30-phase-3-task-07`)
 - [ ] T08: LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review. (`track-30-phase-3-task-08`)
-- [ ] T09: LP-006 / Track 05: harden audit/store crash recovery, retention, export and deletion semantics and preserve fault/policy receipts. (`track-30-phase-3-task-09`)
+- [ ] T09: LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accountable launch-profile decision that keeps those effects unavailable and fail closed. (`track-30-phase-3-task-09`)
 - [ ] T10: LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites. (`track-30-phase-3-task-10`)
 - [ ] T11: LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence. (`track-30-phase-3-task-11`)
 - [ ] T12: LP-009 / Track 32: execute exact-revision CiteWeft and Sourceright compiled canaries, dual-run parity and rollback without deleting recovery paths. (`track-30-phase-3-task-12`)

@@ -14904,7 +14904,7 @@
     },
     {
       "key": "track-30-phase-3-task-09",
-      "title": "Track 30 / P3 / T09: LP-006 / Track 05: harden audit/store crash recovery, retention, export and deletion semantics and preserve fault/policy receipts",
+      "title": "Track 30 / P3 / T09: LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accoun\u2026",
       "kind": "task",
       "parent_key": "track-30-phase-3",
       "body_path": "conductor/github/issues/track-30-phase-3-task-09.md",

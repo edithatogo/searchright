@@ -1,8 +1,8 @@
 # Project status
 
-**Status date:** 12 August 2026
+**Status date:** 13 August 2026
 
-**Verified revision:** `c0c5e3abaa345538df7f867fe884b7d67ac82f0a` (`main`)
+**Verified revision:** `8833cf71dbe8a999cc96279667a0a33ab3ae8a7a` (`main`)
 
 **Evidence ceiling:** source-verified alpha with hosted compiler and admission evidence
 **Maturity decision:** not ready
@@ -24,16 +24,17 @@ recovery and external acceptance remain separate evidence gates.
 - Local `main` and `origin/main` are identical at the verified revision.
 - The working tree is clean; there are no open pull requests or delivery
   branches.
-- PRs #569, #572, #573 and #574 are merged.
+- The Track 05 closeout PR is merged; no pull request is open at this
+  observation.
 - The active main ruleset requires strict, linear admission and the PR scope
   policy. Future PRs declare one Conductor track; a technically inseparable
   multi-track exception requires its explicit label and rationale.
 - The public repository, native issue/subissue hierarchy and delivery Project
-  exist. The durable control-plane audit observed the former 568-node
-  projection, all 567 relationships and zero issue content, label, task-state
-  or recognised Project-field drift. Current canonical source contains 583
-  nodes; a post-merge audit of that exact projection remains open because the
-  later GitHub API run did not complete.
+  exist. The latest committed source-bound audit observed all 583 canonical
+  issues, all 582 relationships and zero content, label, task-state or
+  recognised Project-field drift. Later Track 05 archival changes retain the
+  same additive identities; an exact-current-source audit remains a separate
+  closeout check whenever the projection changes.
 
 ## Historical bootstrap disclosures
 
@@ -42,9 +43,9 @@ recovery and external acceptance remain separate evidence gates.
   historical record and is not rewritten.
 - **Live provider calls:** none is claimed. Provider support remains limited to
   deterministic fixtures until authorised redacted canaries exist.
-- **GitHub repository creation/push:** completed and durably audited for the
-  former 568-node projection; the current 583-node projection still needs an
-  exact-main re-audit.
+- **GitHub repository creation/push:** completed. The 583-node projection has a
+  committed source-bound zero-drift audit; subsequent projection changes still
+  require their own exact-source audit.
 - **Conductor plugin installation:** the host previously reported Conductor
   0.4.1 installed, while repository contracts retain their pinned baseline;
   this status does not assert general host-version compatibility.
@@ -91,17 +92,18 @@ validity, production security, usability or operational recovery.
 
 ## Current Conductor position
 
-The roadmap contains 38 tracks and 199 acceptance assertions. Canonical state:
+The roadmap contains 38 tracks and 200 acceptance assertions. Canonical state:
 
-- 2 tracks are source implemented;
+- 3 tracks are source implemented;
 - 24 tracks are partially implemented;
-- 9 tracks are scaffolded;
+- 8 tracks are scaffolded;
 - 3 tracks require external evidence;
-- no track is archived as fully complete.
+- Tracks 05 and 31 are semantically archived in place; their canonical paths
+  and stable GitHub identities are retained.
 
-At assertion level, 13 are source implemented, 118 partially implemented, 58
-scaffolded and 10 external-evidence-required. 121 assertions still have only
-track-level mappings and 447 open gate entries remain. These counts describe
+At assertion level, 19 are source implemented, 118 partially implemented, 53
+scaffolded and 10 external-evidence-required. 118 assertions still have only
+track-level mappings and 433 open gate entries remain. These counts describe
 evidence debt, not a quality score.
 
 ## Coverage and dependency trust
@@ -170,3 +172,9 @@ restore-proven, independently evaluated, published or registry-accepted.
 7. Run sealed methodological, usability and information-specialist evaluation.
 8. Complete restore, pilot, release, publication and registry evidence before
    reconsidering maturity.
+
+The executable launch roadmap currently records 15 packages as `not_started`
+and LP-006 as `partially_evidenced`. Track 05 provides exact hosted and sealed
+review receipts for crash recovery, replay and durable deletion. LP-006 remains
+open because durable retention/export effects are unavailable unless an
+accountable launch-profile decision explicitly keeps them fail closed.

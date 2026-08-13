@@ -20,6 +20,11 @@
   "claim_boundary": "The register exposes unresolved proof and implementation work. Counts are not a quality score and cannot be used to promote claims without the named evidence.",
   "evidence_ceiling": "source_verified",
   "launch_preparation": {
+    "by_progress": {
+      "not_started": 15,
+      "partially_evidenced": 1
+    },
+    "evidence_receipts": 2,
     "external_gates": 11,
     "status": "not_ready",
     "work_packages": 16
