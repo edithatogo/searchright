@@ -1114,6 +1114,61 @@
         }
       }
     },
+    "24": {
+      "assertions": {
+        "T24-A004": {
+          "deterministic_tests": [
+            "python scripts/check_cli_mcp_parity.py",
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-24-advanced-mcp.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-mcp/src/lib.rs",
+            "crates/searchright-mcp/tests/advanced_mcp.rs",
+            "docs/mcp-compatibility.md"
+          ],
+          "implementation_symbols": [
+            "searchright_mcp::SearchrightServer::initialize",
+            "searchright_mcp::SearchrightServer::list_resources",
+            "searchright_mcp::SearchrightServer::list_prompts",
+            "searchright_mcp::SearchrightServer::call_tool",
+            "searchright_mcp::SearchrightServer::listen"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Implement authenticated Streamable HTTP advanced capabilities only after Track 34 binds principal, tenant, region, scope, approval, quotas and audit state.",
+            "Run bounded-load and production-cache tests before scalable execution claims."
+          ],
+          "permitted_claim": "Official rmcp clients verify bounded local resources, prompts, pagination, state-only MRTR, task cancellation and truthful subscription cancellation across current and previous protocol profiles; remote and scalable execution are denied.",
+          "state": "partially_implemented"
+        },
+        "T24-A006": {
+          "deterministic_tests": [
+            "python scripts/check_cli_mcp_parity.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-24-advanced-mcp.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-mcp/src/lib.rs",
+            "crates/searchright-mcp/tests/advanced_mcp.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_mcp::SearchrightServer::supported_protocol_versions",
+            "searchright_mcp::SearchrightServer::cancel_task"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Compile and exercise WASI cancellation and compatibility paths.",
+            "Execute remote overload, disconnect and cancellation recovery after Track 34 authority controls."
+          ],
+          "permitted_claim": "Local current and previous MCP profiles are compiler-tested, including cooperative task cancellation; WASI and remote cancellation or load recovery are not proven.",
+          "state": "partially_implemented"
+        }
+      }
+    },
     "25": {
       "assertions": {
         "T25-A001": {

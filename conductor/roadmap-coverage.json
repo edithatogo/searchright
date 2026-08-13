@@ -1139,7 +1139,7 @@
       "blockers": [
         "Compile WASI components and run the component conformance suite.",
         "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
-        "Run MCP version-compatibility, cancellation, task, cache and load tests.",
+        "Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence.",
         "Establish component signing, revocation and distribution evidence."
       ],
       "checks": [
@@ -1152,7 +1152,11 @@
         "contracts/wit/search-provider.wit",
         "contracts/openapi/searchright-http.openapi.yaml",
         "contracts/examples/provider-component.yaml",
-        "docs/adrs/0004-provider-plugin-sandbox.md"
+        "docs/adrs/0004-provider-plugin-sandbox.md",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/advanced_mcp.rs",
+        "docs/mcp-compatibility.md",
+        "verification/receipts/track-24-advanced-mcp.json"
       ],
       "dependencies": [
         "03",
@@ -1163,14 +1167,14 @@
       "evidence_level": "source_verified",
       "external_approval_required": true,
       "horizon": "beta",
-      "implementation_state": "scaffolded",
+      "implementation_state": "partially_implemented",
       "outcome": "Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries.",
       "requirements": [
         "SR-030",
         "SR-047"
       ],
       "slug": "wasi-http-scale",
-      "status": "scaffolded",
+      "status": "partially_implemented",
       "title": "WASI components, HTTP MCP and scalable execution",
       "track_id": "24"
     },

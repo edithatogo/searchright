@@ -14,6 +14,10 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `contracts/openapi/searchright-http.openapi.yaml`
   - [x] Present source path: `contracts/examples/provider-component.yaml`
   - [x] Present source path: `docs/adrs/0004-provider-plugin-sandbox.md`
+  - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
+  - [x] Present source path: `crates/searchright-mcp/tests/advanced_mcp.rs`
+  - [x] Present source path: `docs/mcp-compatibility.md`
+  - [x] Present source path: `verification/receipts/track-24-advanced-mcp.json`
   - [x] Assertion ledger: `conductor/tracks/24-wasi-http-scale/traceability.json`
 
 ## Completion and evidence contract
