@@ -43,7 +43,7 @@ GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered nati
 - [ ] Review and approve any explicit release-risk exception without hiding the open gap.
 - [ ] Keep autonomous end-to-end review and final agent exclusions outside the release claim.
 - [ ] LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.
-- [ ] LP-002 / Track 24: implement resources, prompts, tasks, MRTR, subscriptions, pagination and cancellation; pass all-feature MCP tests and preserve the advanced-capabilities receipt.
+- [ ] LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.
 - [ ] LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.
 - [ ] LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval.
 - [ ] LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.

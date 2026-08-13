@@ -35,3 +35,8 @@ receipts and residual gates; and `completed` is accepted only when every named
 receipt exists and every dependency is complete. Track 05 is semantically
 archived, but LP-006 remains partially evidenced because durable retention and
 export effects are not part of the current filesystem-store launch profile.
+LP-002 is also partially evidenced: the bounded local-stdio receipt covers
+resources, prompts, completion, current-only non-authoritative MRTR, pagination,
+task admission/completion/cancellation and aggregate task-activity updates.
+Completion still requires LP-001 plus the separately named remote, durable,
+distributed, lossless-delivery, production-load and production-cache evidence.

@@ -63,12 +63,13 @@
         "python scripts/check_launch_preparation_roadmap.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/30-maturity-gap-closure/evidence.json"
+        "conductor/tracks/30-maturity-gap-closure/evidence.json",
+        "verification/receipts/track-24-advanced-mcp.json"
       ],
       "open_gates": [
         "Execute all 16 launch-preparation work packages and preserve their named receipts."
       ],
-      "permitted_claim": "The launch-preparation dependency graph is deterministic, executable and fail-closed; none of its work packages is represented as completed by the plan itself."
+      "permitted_claim": "The launch-preparation dependency graph is deterministic, executable and fail-closed. LP-002 and LP-006 are partially evidenced; no work package is represented as completed by the plan itself."
     },
     {
       "assertion_id": "T30-A003",

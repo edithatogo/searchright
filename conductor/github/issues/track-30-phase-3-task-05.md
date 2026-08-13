@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] LP-002 / Track 24: implement resources, prompts, tasks, MRTR, subscriptions, pagination and cancellation; pass all-feature MCP tests and preserve the advanced-capabilities receipt.
+- [ ] LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.
 
 ## Completion and evidence contract
 
