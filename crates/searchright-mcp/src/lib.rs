@@ -87,9 +87,10 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     let search_validation = json_example(include_str!(
         "../../../contracts/examples/search-validation.yaml"
     ))?;
-    let source_receipt = json_example(include_str!(
-        "../../../contracts/examples/source-receipt.yaml"
-    ))?;
+    let source_receipt = json_example_with_review_id(
+        include_str!("../../../contracts/examples/source-receipt.yaml"),
+        "demo-paediatric-metabolic-search",
+    )?;
     let institutional_policy = json_example(include_str!(
         "../../../contracts/examples/institutional-policy.yaml"
     ))?;
@@ -372,6 +373,20 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
 fn json_example(document: &str) -> Result<String, String> {
     let value = serde_yaml::from_str::<serde_json::Value>(document)
         .map_err(|error| format!("MCP conformance fixture must parse: {error}"))?;
+    serde_json::to_string(&value)
+        .map_err(|error| format!("MCP conformance fixture must serialize: {error}"))
+}
+
+fn json_example_with_review_id(document: &str, review_id: &str) -> Result<String, String> {
+    let mut value = serde_yaml::from_str::<serde_json::Value>(document)
+        .map_err(|error| format!("MCP conformance fixture must parse: {error}"))?;
+    let object = value
+        .as_object_mut()
+        .ok_or_else(|| "MCP conformance fixture must be an object".to_owned())?;
+    object.insert(
+        "review_id".to_owned(),
+        serde_json::Value::String(review_id.to_owned()),
+    );
     serde_json::to_string(&value)
         .map_err(|error| format!("MCP conformance fixture must serialize: {error}"))
 }
