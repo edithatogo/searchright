@@ -73,7 +73,7 @@ fn assert_successful_structured_result(
         anyhow::bail!("non-task client unexpectedly received a task response")
     };
     if result.is_error.unwrap_or(false) {
-        anyhow::bail!("representative read-only tool returned a governed tool error")
+        anyhow::bail!("{tool_name} returned a governed tool error")
     }
     let structured = result
         .structured_content
