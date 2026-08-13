@@ -8,8 +8,9 @@
 use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
 use std::{
     borrow::Cow,
+    collections::BTreeMap,
     sync::{
-        Arc,
+        Arc, OnceLock,
         atomic::{AtomicUsize, Ordering},
     },
     time::Duration,
@@ -50,6 +51,341 @@ use tokio::sync::{OwnedSemaphorePermit, Semaphore, watch};
 
 const LOCAL_TASK_LIMIT: usize = 4;
 const TASK_ACTIVITY_URI: &str = "searchright://runtime/task-activity";
+
+/// One deterministic, local-only successful tool invocation for client conformance tests.
+///
+/// This fixture matrix is not a live-provider receipt and must never be used to
+/// claim remote support. It keeps typed MCP clients on the same rights-clear
+/// contract examples as the stdio conformance harness.
+#[doc(hidden)]
+#[derive(Debug, Clone)]
+pub struct McpToolSuccessCase {
+    /// Advertised MCP tool name.
+    pub tool_name: &'static str,
+    /// Valid, deterministic arguments for the named tool.
+    pub arguments: JsonObject,
+}
+
+/// Return a full local-only success matrix for every advertised MCP tool.
+///
+/// `generate_prisma` has two rows because its structured JSON and text-backed
+/// Mermaid result branches use the same declared union output contract.
+#[doc(hidden)]
+pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
+    let review_plan = json_example(include_str!("../../../contracts/examples/review-plan.yaml"))?;
+    let strategy = json_example(include_str!(
+        "../../../contracts/examples/search-strategy.yaml"
+    ))?;
+    let document_evidence = json_example(include_str!(
+        "../../../contracts/examples/document-evidence.json"
+    ))?;
+    let prisma_flow = include_str!("../../../contracts/examples/prisma-flow.json").to_owned();
+    let record = json_example(include_str!(
+        "../../../contracts/examples/bibliographic-record.yaml"
+    ))?;
+    let study_graph = json_example(include_str!("../../../contracts/examples/study-graph.yaml"))?;
+    let search_validation = json_example(include_str!(
+        "../../../contracts/examples/search-validation.yaml"
+    ))?;
+    let source_receipt = json_example(include_str!(
+        "../../../contracts/examples/source-receipt.yaml"
+    ))?;
+    let institutional_policy = json_example(include_str!(
+        "../../../contracts/examples/institutional-policy.yaml"
+    ))?;
+    let handling_request = json_example(include_str!(
+        "../../../contracts/examples/data-handling-request.yaml"
+    ))?;
+    let execution_envelope = json_example(include_str!(
+        "../../../contracts/examples/execution-envelope.yaml"
+    ))?;
+    let amendment = json_example(include_str!(
+        "../../../contracts/examples/protocol-amendment.yaml"
+    ))?;
+    let standard_pack = json_example(include_str!(
+        "../../../contracts/examples/standard-pack.yaml"
+    ))?;
+    let standard_assessment = json_example(include_str!(
+        "../../../contracts/examples/standard-assessment.yaml"
+    ))?;
+    let ranking_calibration = json_example(include_str!(
+        "../../../contracts/examples/ranking-calibration.yaml"
+    ))?;
+    let discovery_run = json_example(include_str!(
+        "../../../contracts/examples/discovery-run.yaml"
+    ))?;
+    let workflow_trace = json_example(include_str!(
+        "../../../contracts/examples/workflow-trace.yaml"
+    ))?;
+    let licensed_adapter = json_example(include_str!(
+        "../../../contracts/examples/licensed-adapter.yaml"
+    ))?;
+    let mut compiled_strategy = serde_yaml::from_str::<serde_json::Value>(include_str!(
+        "../../../contracts/examples/compiled-strategy.yaml"
+    ))
+    .map_err(|error| format!("compiled strategy fixture must parse: {error}"))?;
+    // The licensed adapter fixture is an Embase profile; keep the strategy
+    // dialect aligned so this row exercises the successful no-network plan.
+    compiled_strategy["dialect"] = serde_json::Value::String("embase".to_owned());
+    let compiled_strategy = serde_json::to_string(&compiled_strategy)
+        .map_err(|error| format!("compiled strategy fixture must serialize: {error}"))?;
+    let benchmark_report = json_example(include_str!(
+        "../../../contracts/examples/benchmark-report.yaml"
+    ))?;
+    let diagnostic = json_example(include_str!("../../../contracts/examples/diagnostic.yaml"))?;
+
+    let component_bytes = b"searchright-mcp-conformance-component";
+    let mut component_manifest = serde_yaml::from_str::<serde_json::Value>(include_str!(
+        "../../../contracts/examples/provider-component.yaml"
+    ))
+    .map_err(|error| format!("provider component fixture must parse: {error}"))?;
+    component_manifest["component_digest"] = serde_json::Value::String(
+        "2171682ec6aa9f6e7ddc24c7a49be6b08648bc0b63d10c7dfc6b910f8e2aea64".to_owned(),
+    );
+    let component_manifest = serde_json::to_string(&component_manifest)
+        .map_err(|error| format!("provider component fixture must serialize: {error}"))?;
+
+    let mut cases = vec![
+        fixture(
+            "validate_plan",
+            [
+                ("document", review_plan.clone()),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "validate_strategy",
+            [
+                ("document", strategy.clone()),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "validate_document_evidence",
+            [
+                ("document", document_evidence),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "compile_strategy",
+            [
+                ("document", strategy),
+                ("format", "json".to_owned()),
+                ("dialect", "pubmed".to_owned()),
+            ],
+        ),
+        fixture(
+            "deduplicate_records",
+            [("records_json", format!("[{record}]"))],
+        ),
+        fixture(
+            "generate_prisma",
+            [
+                ("flow_json", prisma_flow.clone()),
+                ("output", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "generate_prisma",
+            [("flow_json", prisma_flow), ("output", "mermaid".to_owned())],
+        ),
+        fixture("verify_audit", [("audit_jsonl", "".to_owned())]),
+        fixture(
+            "import_records",
+            [
+                ("document", "[]".to_owned()),
+                ("input_format", "searchright_json".to_owned()),
+                ("source_receipt_id", "fixture-receipt".to_owned()),
+            ],
+        ),
+        fixture(
+            "export_records",
+            [
+                ("records_json", "[]".to_owned()),
+                ("review_id", "fixture-review".to_owned()),
+                ("input_format", "searchright_json".to_owned()),
+                ("output_format", "searchright_json".to_owned()),
+            ],
+        ),
+        fixture(
+            "assess_study_graph",
+            [("document", study_graph), ("format", "json".to_owned())],
+        ),
+        fixture(
+            "assess_search_validation",
+            [
+                ("document", search_validation),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "living_diff",
+            [
+                ("previous_records_json", "[]".to_owned()),
+                ("current_records_json", "[]".to_owned()),
+            ],
+        ),
+        fixture(
+            "validate_living_lineage",
+            [
+                // An empty, explicit lineage is the valid bounded baseline;
+                // the single checked-in update references an earlier run that
+                // is intentionally not bundled with this fixture matrix.
+                ("document", "[]".to_owned()),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "build_provenance",
+            [
+                ("plan_json", review_plan),
+                ("receipts_json", format!("[{source_receipt}]")),
+                ("events_json", "[]".to_owned()),
+            ],
+        ),
+        fixture(
+            "rank_records",
+            [
+                ("records_json", "[]".to_owned()),
+                ("query_terms", "[]".to_owned()),
+            ],
+        ),
+        fixture(
+            "inspect_untrusted_content",
+            [
+                ("subject_id", "fixture-record".to_owned()),
+                ("text", "synthetic content".to_owned()),
+                ("policy", "data_only".to_owned()),
+            ],
+        ),
+        fixture(
+            "render_diagnostics",
+            [
+                ("document", format!("[{diagnostic}]")),
+                ("format", "json".to_owned()),
+                ("output", "plain_text".to_owned()),
+            ],
+        ),
+        fixture(
+            "evaluate_governance",
+            [
+                ("policy_json", institutional_policy),
+                ("request_json", handling_request),
+            ],
+        ),
+        fixture(
+            "authorise_endpoint",
+            [
+                ("envelope_json", execution_envelope),
+                (
+                    "endpoint",
+                    "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi".to_owned(),
+                ),
+            ],
+        ),
+        fixture(
+            "validate_amendment",
+            [("document", amendment), ("format", "json".to_owned())],
+        ),
+        fixture(
+            "validate_standard_pack",
+            [("document", standard_pack), ("format", "json".to_owned())],
+        ),
+        fixture(
+            "validate_standard_assessment",
+            [
+                ("document", standard_assessment),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "validate_ranking_calibration",
+            [
+                ("document", ranking_calibration),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "validate_discovery_run",
+            [
+                ("document", discovery_run.clone()),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "verify_workflow_trace",
+            [("document", workflow_trace), ("format", "json".to_owned())],
+        ),
+        fixture(
+            "discovery_candidates",
+            [("document", discovery_run), ("format", "json".to_owned())],
+        ),
+        fixture(
+            "verify_provider_component",
+            [
+                ("manifest_json", component_manifest),
+                ("component_base64", BASE64_STANDARD.encode(component_bytes)),
+            ],
+        ),
+        fixture(
+            "plan_licensed_request",
+            [
+                ("profile_json", licensed_adapter),
+                ("compiled_strategy_json", compiled_strategy),
+                ("endpoint", "https://embase.com/search".to_owned()),
+            ],
+        ),
+        fixture(
+            "validate_benchmark_report",
+            [
+                ("document", benchmark_report),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture("list_providers", []),
+        fixture("workflow", []),
+    ];
+    let rank_case = cases
+        .iter_mut()
+        .find(|case| case.tool_name == "rank_records")
+        .ok_or_else(|| "rank fixture must be registered".to_owned())?;
+    rank_case.arguments.insert(
+        "query_terms".to_owned(),
+        serde_json::Value::Array(Vec::new()),
+    );
+    Ok(cases)
+}
+
+/// Validate client-observed structured content against the advertised schema.
+///
+/// This helper is intentionally public only for the typed SDK conformance
+/// harness. Production results are independently checked before emission.
+#[doc(hidden)]
+pub fn live_client_output_matches_schema(tool_name: &str, value: &serde_json::Value) -> bool {
+    validate_tool_output(tool_name, value).is_ok()
+}
+
+fn json_example(document: &str) -> Result<String, String> {
+    let value = serde_yaml::from_str::<serde_json::Value>(document)
+        .map_err(|error| format!("MCP conformance fixture must parse: {error}"))?;
+    serde_json::to_string(&value)
+        .map_err(|error| format!("MCP conformance fixture must serialize: {error}"))
+}
+
+fn fixture<const N: usize>(
+    tool_name: &'static str,
+    arguments: [(&str, String); N],
+) -> McpToolSuccessCase {
+    let arguments = arguments
+        .into_iter()
+        .map(|(name, value)| (name.to_owned(), serde_json::Value::String(value)))
+        .collect();
+    McpToolSuccessCase {
+        tool_name,
+        arguments,
+    }
+}
 
 struct LocalTaskActivityLease {
     permit: Option<OwnedSemaphorePermit>,
@@ -295,7 +631,7 @@ impl SearchrightServer {
     ) -> Result<CallToolResult, McpError> {
         let plan: ReviewPlan =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::validate_plan(&plan))
+        operation_result("validate_plan", SearchrightEngine::validate_plan(&plan))
     }
 
     #[tool(description = "Read-only: validate a source-specific search strategy without execution")]
@@ -306,6 +642,7 @@ impl SearchrightServer {
         let strategy: SearchStrategy =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_strategy",
             "search_strategy",
             SearchrightEngine::validate_strategy(&strategy),
         )
@@ -321,6 +658,7 @@ impl SearchrightServer {
         let evidence: DocumentEvidence =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_document_evidence",
             "document_evidence",
             SearchrightEngine::validate_document_evidence(&evidence),
         )
@@ -336,7 +674,10 @@ impl SearchrightServer {
         let strategy: SearchStrategy =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         let dialect = parse_dialect(&input.dialect).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::compile_strategy(&strategy, dialect))
+        operation_result(
+            "compile_strategy",
+            SearchrightEngine::compile_strategy(&strategy, dialect),
+        )
     }
 
     #[tool(
@@ -354,13 +695,16 @@ impl SearchrightServer {
                 "title_threshold must be between zero and one".to_owned(),
             ));
         }
-        operation_result(SearchrightEngine::deduplicate(
-            &records,
-            DedupConfig {
-                title_similarity_threshold: threshold,
-                ..DedupConfig::default()
-            },
-        ))
+        operation_result(
+            "deduplicate_records",
+            SearchrightEngine::deduplicate(
+                &records,
+                DedupConfig {
+                    title_similarity_threshold: threshold,
+                    ..DedupConfig::default()
+                },
+            ),
+        )
     }
 
     #[tool(
@@ -383,8 +727,10 @@ impl SearchrightServer {
             }
         };
         match SearchrightEngine::prisma(&flow, output) {
-            Ok(PrismaArtifact::Mermaid(document)) => Ok(text_success("mermaid", document)),
-            Ok(artifact) => json_success(&artifact),
+            Ok(PrismaArtifact::Mermaid(document)) => {
+                text_success("generate_prisma", "mermaid", document)
+            }
+            Ok(artifact) => json_success("generate_prisma", &artifact),
             Err(error) => Ok(tool_error(error.to_string())),
         }
     }
@@ -395,7 +741,7 @@ impl SearchrightServer {
         Parameters(input): Parameters<AuditInput>,
     ) -> Result<CallToolResult, McpError> {
         let events = parse_jsonl::<AuditEvent>(&input.audit_jsonl).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::verify_audit(events))
+        operation_result("verify_audit", SearchrightEngine::verify_audit(events))
     }
 
     #[tool(
@@ -406,11 +752,10 @@ impl SearchrightServer {
         Parameters(input): Parameters<ImportInput>,
     ) -> Result<CallToolResult, McpError> {
         let format = parse_interchange(&input.input_format).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::import_records(
-            &input.document,
-            format,
-            &input.source_receipt_id,
-        ))
+        operation_result(
+            "import_records",
+            SearchrightEngine::import_records(&input.document, format, &input.source_receipt_id),
+        )
     }
 
     #[tool(
@@ -424,12 +769,15 @@ impl SearchrightServer {
             serde_json::from_str(&input.records_json).map_err(json_invalid_params)?;
         let input_format = parse_interchange(&input.input_format).map_err(invalid_params)?;
         let output_format = parse_interchange(&input.output_format).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::export_records(
-            &input.review_id,
-            &records,
-            input_format,
-            output_format,
-        ))
+        operation_result(
+            "export_records",
+            SearchrightEngine::export_records(
+                &input.review_id,
+                &records,
+                input_format,
+                output_format,
+            ),
+        )
     }
 
     #[tool(description = "Read-only: validate and summarise a record-report-study/full-text graph")]
@@ -439,7 +787,10 @@ impl SearchrightServer {
     ) -> Result<CallToolResult, McpError> {
         let graph: StudyGraph =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::assess_study_graph(&graph))
+        operation_result(
+            "assess_study_graph",
+            SearchrightEngine::assess_study_graph(&graph),
+        )
     }
 
     #[tool(
@@ -451,7 +802,10 @@ impl SearchrightServer {
     ) -> Result<CallToolResult, McpError> {
         let report: SearchValidationReport =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::assess_search_validation(&report))
+        operation_result(
+            "assess_search_validation",
+            SearchrightEngine::assess_search_validation(&report),
+        )
     }
 
     #[tool(
@@ -465,7 +819,10 @@ impl SearchrightServer {
             serde_json::from_str(&input.previous_records_json).map_err(json_invalid_params)?;
         let current: Vec<BibliographicRecord> =
             serde_json::from_str(&input.current_records_json).map_err(json_invalid_params)?;
-        operation_result(SearchrightEngine::diff_living_records(&previous, &current))
+        operation_result(
+            "living_diff",
+            SearchrightEngine::diff_living_records(&previous, &current),
+        )
     }
 
     #[tool(description = "Read-only: validate immutable living-review run lineage")]
@@ -476,6 +833,7 @@ impl SearchrightServer {
         let runs: Vec<LivingUpdateRun> =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_living_lineage",
             "living_lineage",
             SearchrightEngine::validate_living_lineage(&runs),
         )
@@ -492,7 +850,10 @@ impl SearchrightServer {
             serde_json::from_str(&input.receipts_json).map_err(json_invalid_params)?;
         let events: Vec<AuditEvent> =
             serde_json::from_str(&input.events_json).map_err(json_invalid_params)?;
-        operation_result(SearchrightEngine::provenance(&plan, &receipts, &events))
+        operation_result(
+            "build_provenance",
+            SearchrightEngine::provenance(&plan, &receipts, &events),
+        )
     }
 
     #[tool(
@@ -504,10 +865,10 @@ impl SearchrightServer {
     ) -> Result<CallToolResult, McpError> {
         let records: Vec<BibliographicRecord> =
             serde_json::from_str(&input.records_json).map_err(json_invalid_params)?;
-        operation_result(SearchrightEngine::rank_records(
-            &records,
-            &input.query_terms,
-        ))
+        operation_result(
+            "rank_records",
+            SearchrightEngine::rank_records(&records, &input.query_terms),
+        )
     }
 
     #[tool(
@@ -519,11 +880,10 @@ impl SearchrightServer {
     ) -> Result<CallToolResult, McpError> {
         let policy = parse_content_policy(input.policy.as_deref().unwrap_or("data_only"))
             .map_err(invalid_params)?;
-        json_success(&SearchrightEngine::inspect_content(
-            &input.subject_id,
-            &input.text,
-            policy,
-        ))
+        json_success(
+            "inspect_untrusted_content",
+            &SearchrightEngine::inspect_content(&input.subject_id, &input.text, policy),
+        )
     }
 
     #[tool(
@@ -546,7 +906,7 @@ impl SearchrightServer {
             }
         };
         match SearchrightEngine::render_diagnostics(&diagnostics, output) {
-            Ok(document) => Ok(text_success(&input.output, document)),
+            Ok(document) => text_success("render_diagnostics", &input.output, document),
             Err(error) => Ok(tool_error(error.to_string())),
         }
     }
@@ -562,7 +922,10 @@ impl SearchrightServer {
             serde_json::from_str(&input.policy_json).map_err(json_invalid_params)?;
         let request: DataHandlingRequest =
             serde_json::from_str(&input.request_json).map_err(json_invalid_params)?;
-        operation_result(SearchrightEngine::evaluate_governance(&policy, &request))
+        operation_result(
+            "evaluate_governance",
+            SearchrightEngine::evaluate_governance(&policy, &request),
+        )
     }
 
     #[tool(
@@ -575,10 +938,13 @@ impl SearchrightServer {
         let envelope: ExecutionEnvelope =
             serde_json::from_str(&input.envelope_json).map_err(json_invalid_params)?;
         match SearchrightEngine::authorise_endpoint(&envelope, &input.endpoint) {
-            Ok(()) => json_success(&serde_json::json!({
-                "authorised": true,
-                "endpoint": input.endpoint,
-            })),
+            Ok(()) => json_success(
+                "authorise_endpoint",
+                &serde_json::json!({
+                    "authorised": true,
+                    "endpoint": input.endpoint,
+                }),
+            ),
             Err(error) => Ok(tool_error(error.to_string())),
         }
     }
@@ -591,6 +957,7 @@ impl SearchrightServer {
         let value: ProtocolAmendment =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_amendment",
             "protocol_amendment",
             SearchrightEngine::validate_amendment(&value),
         )
@@ -604,6 +971,7 @@ impl SearchrightServer {
         let value: StandardPack =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_standard_pack",
             "standard_pack",
             SearchrightEngine::validate_standard_pack(&value),
         )
@@ -617,6 +985,7 @@ impl SearchrightServer {
         let value: StandardAssessment =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_standard_assessment",
             "standard_assessment",
             SearchrightEngine::validate_standard_assessment(&value),
         )
@@ -632,6 +1001,7 @@ impl SearchrightServer {
         let value: RankingCalibration =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_ranking_calibration",
             "ranking_calibration",
             SearchrightEngine::validate_ranking_calibration(&value),
         )
@@ -645,6 +1015,7 @@ impl SearchrightServer {
         let value: DiscoveryRun =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         validation_result(
+            "validate_discovery_run",
             "discovery_run",
             SearchrightEngine::validate_discovery_run(&value),
         )
@@ -659,7 +1030,10 @@ impl SearchrightServer {
     ) -> Result<CallToolResult, McpError> {
         let trace: WorkflowTrace =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::verify_workflow_trace(&trace))
+        operation_result(
+            "verify_workflow_trace",
+            SearchrightEngine::verify_workflow_trace(&trace),
+        )
     }
 
     #[tool(
@@ -671,7 +1045,10 @@ impl SearchrightServer {
     ) -> Result<CallToolResult, McpError> {
         let run: DiscoveryRun =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
-        operation_result(SearchrightEngine::discovery_candidates(&run))
+        operation_result(
+            "discovery_candidates",
+            SearchrightEngine::discovery_candidates(&run),
+        )
     }
 
     #[tool(
@@ -687,11 +1064,14 @@ impl SearchrightServer {
             .decode(input.component_base64.as_bytes())
             .map_err(|error| invalid_params(error.to_string()))?;
         match SearchrightEngine::verify_provider_component(&manifest, &bytes) {
-            Ok(()) => json_success(&serde_json::json!({
-                "valid": true,
-                "component_id": manifest.component_id,
-                "bytes": bytes.len(),
-            })),
+            Ok(()) => json_success(
+                "verify_provider_component",
+                &serde_json::json!({
+                    "valid": true,
+                    "component_id": manifest.component_id,
+                    "bytes": bytes.len(),
+                }),
+            ),
             Err(error) => Ok(tool_error(error.to_string())),
         }
     }
@@ -707,11 +1087,10 @@ impl SearchrightServer {
             serde_json::from_str(&input.profile_json).map_err(json_invalid_params)?;
         let strategy: CompiledStrategy =
             serde_json::from_str(&input.compiled_strategy_json).map_err(json_invalid_params)?;
-        operation_result(SearchrightEngine::plan_licensed_request(
-            &profile,
-            &strategy,
-            &input.endpoint,
-        ))
+        operation_result(
+            "plan_licensed_request",
+            SearchrightEngine::plan_licensed_request(&profile, &strategy, &input.endpoint),
+        )
     }
 
     #[tool(
@@ -724,10 +1103,13 @@ impl SearchrightServer {
         let report: BenchmarkReport =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         match SearchrightEngine::validate_benchmark_report(&report) {
-            Ok(()) => json_success(&serde_json::json!({
-                "valid": true,
-                "benchmark_id": report.benchmark_id,
-            })),
+            Ok(()) => json_success(
+                "validate_benchmark_report",
+                &serde_json::json!({
+                    "valid": true,
+                    "benchmark_id": report.benchmark_id,
+                }),
+            ),
             Err(error) => Ok(tool_error(error.to_string())),
         }
     }
@@ -736,14 +1118,17 @@ impl SearchrightServer {
         description = "Read-only: list deterministic no-network provider manifests available by default"
     )]
     fn list_providers(&self) -> Result<CallToolResult, McpError> {
-        operation_result(SearchrightEngine::default_provider_manifests())
+        operation_result(
+            "list_providers",
+            SearchrightEngine::default_provider_manifests(),
+        )
     }
 
     #[tool(
         description = "Read-only: return the conservative planning, execution, screening, reporting and update workflow"
     )]
     fn workflow(&self) -> Result<CallToolResult, McpError> {
-        json_success(&SearchrightEngine::workflow())
+        json_success("workflow", &SearchrightEngine::workflow())
     }
 }
 
@@ -888,7 +1273,8 @@ impl ServerHandler for SearchrightServer {
                         let result = tokio::select! {
                             () = task_context.cancelled() => Err(TaskExit::Cancelled),
                             () = tokio::time::sleep(Duration::from_secs(1)) => {
-                                json_success(&SearchrightEngine::workflow()).map_err(TaskExit::Error)
+                                json_success("workflow", &SearchrightEngine::workflow())
+                                    .map_err(TaskExit::Error)
                             }
                         };
                         drop(activity_lease);
@@ -1338,66 +1724,135 @@ fn parse_content_policy(value: &str) -> Result<UntrustedContentPolicy, String> {
 }
 
 fn validation_result<E: std::fmt::Display>(
+    tool_name: &str,
     kind: &str,
     result: Result<(), E>,
 ) -> Result<CallToolResult, McpError> {
     match result {
-        Ok(()) => json_success(&serde_json::json!({"valid": true, "contract": kind})),
+        Ok(()) => json_success(
+            tool_name,
+            &serde_json::json!({"valid": true, "contract": kind}),
+        ),
         Err(error) => Ok(tool_error(error.to_string())),
     }
 }
 
 fn operation_result<T: serde::Serialize>(
+    tool_name: &str,
     result: Result<T, searchright::EngineError>,
 ) -> Result<CallToolResult, McpError> {
     match result {
-        Ok(value) => json_success(&value),
+        Ok(value) => json_success(tool_name, &value),
         Err(error) => Ok(tool_error(error.to_string())),
     }
 }
 
-fn json_success(value: &impl serde::Serialize) -> Result<CallToolResult, McpError> {
+fn json_success(
+    tool_name: &str,
+    value: &impl serde::Serialize,
+) -> Result<CallToolResult, McpError> {
     serde_json::to_value(value)
-        .map(CallToolResult::structured)
-        .map_err(|error| McpError::internal_error(error.to_string(), None))
+        .map_err(|_| McpError::internal_error("MCP output serialization failed", None))
+        .and_then(|value| {
+            validate_tool_output(tool_name, &value).map_err(|_| {
+                McpError::internal_error("MCP output contract validation failed", None)
+            })?;
+            Ok(CallToolResult::structured(value))
+        })
 }
 
-fn text_success(format: &str, document: String) -> CallToolResult {
+fn text_success(
+    tool_name: &str,
+    format: &str,
+    document: String,
+) -> Result<CallToolResult, McpError> {
     let mut result = CallToolResult::structured(serde_json::json!({
         "document": document,
         "format": format,
     }));
+    let Some(structured_content) = result.structured_content.as_ref() else {
+        return Err(McpError::internal_error(
+            "MCP text output has no structured content",
+            None,
+        ));
+    };
+    validate_tool_output(tool_name, structured_content)
+        .map_err(|_| McpError::internal_error("MCP output contract validation failed", None))?;
     result.content = vec![ContentBlock::text(document)];
-    result
+    Ok(result)
 }
 
 fn output_schema_for(tool_name: &str) -> Arc<JsonObject> {
-    let catalogue: serde_json::Value =
-        match serde_json::from_str(include_str!("../../../contracts/interface-catalog.json")) {
-            Ok(value) => value,
-            Err(error) => panic!("canonical interface catalogue must parse: {error}"),
-        };
-    let contract = catalogue
-        .get("entries")
-        .and_then(serde_json::Value::as_array)
-        .and_then(|entries| {
-            entries.iter().find(|entry| {
-                entry.get("mcp_tool").and_then(serde_json::Value::as_str) == Some(tool_name)
-            })
-        })
-        .and_then(|entry| entry.get("output_contract"))
-        .unwrap_or_else(|| panic!("every MCP tool must have an output contract: {tool_name}"));
+    output_schema_registry()
+        .schemas
+        .get(tool_name)
+        .cloned()
+        .unwrap_or_else(|| panic!("every MCP tool must have an output contract: {tool_name}"))
+}
+
+struct OutputSchemaRegistry {
+    schemas: BTreeMap<String, Arc<JsonObject>>,
+}
+
+fn output_schema_registry() -> &'static OutputSchemaRegistry {
+    static REGISTRY: OnceLock<OutputSchemaRegistry> = OnceLock::new();
+    REGISTRY.get_or_init(|| {
+        let catalogue: serde_json::Value =
+            serde_json::from_str(include_str!("../../../contracts/interface-catalog.json"))
+                .unwrap_or_else(|error| {
+                    panic!("canonical interface catalogue must parse: {error}")
+                });
+        let entries = catalogue
+            .get("entries")
+            .and_then(serde_json::Value::as_array)
+            .unwrap_or_else(|| panic!("canonical interface catalogue must contain entries"));
+
+        let mut schemas = BTreeMap::new();
+        for entry in entries {
+            let Some(tool_name) = entry.get("mcp_tool").and_then(serde_json::Value::as_str) else {
+                continue;
+            };
+            let contract = entry.get("output_contract").unwrap_or_else(|| {
+                panic!("every MCP tool must have an output contract: {tool_name}")
+            });
+            let schema = output_schema_from_contract(contract, tool_name);
+            let serde_json::Value::Object(schema) = schema else {
+                panic!("MCP output schema must be an object: {tool_name}")
+            };
+            if schemas
+                .insert(tool_name.to_owned(), Arc::new(schema))
+                .is_some()
+            {
+                panic!("MCP output contract must not be duplicated: {tool_name}");
+            }
+        }
+        if schemas.is_empty() {
+            panic!("canonical interface catalogue must register MCP output schemas");
+        }
+        OutputSchemaRegistry { schemas }
+    })
+}
+
+fn output_schema_from_contract(contract: &serde_json::Value, tool_name: &str) -> serde_json::Value {
+    let root = contract
+        .get("root")
+        .and_then(serde_json::Value::as_str)
+        .unwrap_or_else(|| panic!("MCP output contract must name a root: {tool_name}"));
 
     let schema = if let Some(path) = contract.get("schema").and_then(serde_json::Value::as_str) {
         referenced_output_schema(path)
-    } else if contract.get("root").and_then(serde_json::Value::as_str) == Some("array") {
+    } else if root == "array" {
         let items = if let Some(path) = contract
             .get("items_schema")
             .and_then(serde_json::Value::as_str)
         {
             referenced_output_schema(path)
         } else {
-            object_schema(contract.get("items_fields"), contract.get("items_required"))
+            object_schema(
+                contract.get("items_fields"),
+                contract.get("items_required"),
+                None,
+            )
         };
         serde_json::json!({
             "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -1405,25 +1860,253 @@ fn output_schema_for(tool_name: &str) -> Arc<JsonObject> {
             "items": items,
         })
     } else {
-        object_schema(contract.get("fields"), contract.get("required"))
+        object_schema(
+            contract.get("fields"),
+            contract.get("required"),
+            contract.get("oneOf"),
+        )
     };
     let serde_json::Value::Object(schema) = schema else {
         panic!("MCP output schema must be an object: {tool_name}")
     };
-    Arc::new(schema)
+    serde_json::Value::Object(schema)
 }
 
 fn object_schema(
     fields: Option<&serde_json::Value>,
     required: Option<&serde_json::Value>,
+    one_of: Option<&serde_json::Value>,
 ) -> serde_json::Value {
-    serde_json::json!({
+    let mut schema = serde_json::json!({
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "additionalProperties": false,
         "properties": fields.cloned().unwrap_or_else(|| serde_json::json!({})),
         "required": required.cloned().unwrap_or_else(|| serde_json::json!([])),
-    })
+    });
+    if let Some(one_of) = one_of {
+        schema["oneOf"] = one_of.clone();
+    }
+    schema
+}
+
+fn validate_tool_output(tool_name: &str, value: &serde_json::Value) -> Result<(), ()> {
+    let schema = output_schema_registry().schemas.get(tool_name).ok_or(())?;
+    validate_json_schema(&serde_json::Value::Object((**schema).clone()), value)
+}
+
+/// Validate the closed JSON Schema vocabulary used by the MCP output registry.
+///
+/// The registry deliberately accepts only the keywords present in the checked-in
+/// output contracts. A future contract that needs wider JSON Schema semantics
+/// must add that support here before a successful tool result can be emitted.
+fn validate_json_schema(schema: &serde_json::Value, value: &serde_json::Value) -> Result<(), ()> {
+    const SUPPORTED_KEYWORDS: &[&str] = &[
+        "$schema",
+        "$id",
+        "title",
+        "type",
+        "additionalProperties",
+        "required",
+        "properties",
+        "oneOf",
+        "const",
+        "enum",
+        "items",
+        "minLength",
+        "pattern",
+        "uniqueItems",
+        "minimum",
+        "minItems",
+    ];
+
+    let object = schema.as_object().ok_or(())?;
+    if object
+        .keys()
+        .any(|keyword| !SUPPORTED_KEYWORDS.contains(&keyword.as_str()))
+    {
+        return Err(());
+    }
+
+    if let Some(expected) = object.get("const") {
+        if value != expected {
+            return Err(());
+        }
+    }
+    if let Some(values) = object.get("enum").and_then(serde_json::Value::as_array) {
+        if !values.contains(value) {
+            return Err(());
+        }
+    }
+    if let Some(one_of) = object.get("oneOf").and_then(serde_json::Value::as_array) {
+        if one_of
+            .iter()
+            .filter(|candidate| validate_json_schema(candidate, value).is_ok())
+            .count()
+            != 1
+        {
+            return Err(());
+        }
+    }
+    if let Some(value_type) = object.get("type") {
+        let valid = match value_type {
+            serde_json::Value::String(value_type) => json_value_has_type(value, value_type),
+            serde_json::Value::Array(value_types) => value_types
+                .iter()
+                .filter_map(serde_json::Value::as_str)
+                .any(|value_type| json_value_has_type(value, value_type)),
+            _ => false,
+        };
+        if !valid {
+            return Err(());
+        }
+    }
+
+    match value {
+        serde_json::Value::String(text) => validate_string_schema(object, text)?,
+        serde_json::Value::Array(values) => validate_array_schema(object, values)?,
+        serde_json::Value::Object(values) => validate_object_schema(object, values)?,
+        serde_json::Value::Number(number) => validate_number_schema(object, number)?,
+        serde_json::Value::Null | serde_json::Value::Bool(_) => {}
+    }
+    Ok(())
+}
+
+fn json_value_has_type(value: &serde_json::Value, value_type: &str) -> bool {
+    match value_type {
+        "object" => value.is_object(),
+        "array" => value.is_array(),
+        "string" => value.is_string(),
+        "boolean" => value.is_boolean(),
+        "null" => value.is_null(),
+        "number" => value.is_number(),
+        "integer" => value
+            .as_number()
+            .is_some_and(|number| number.is_i64() || number.is_u64()),
+        _ => false,
+    }
+}
+
+fn validate_string_schema(
+    schema: &serde_json::Map<String, serde_json::Value>,
+    text: &str,
+) -> Result<(), ()> {
+    if let Some(minimum) = schema.get("minLength").and_then(serde_json::Value::as_u64) {
+        if u64::try_from(text.chars().count()).map_err(|_| ())? < minimum {
+            return Err(());
+        }
+    }
+    if let Some(pattern) = schema.get("pattern").and_then(serde_json::Value::as_str) {
+        let matches = match pattern {
+            "^[a-f0-9]{64}$" => {
+                text.len() == 64
+                    && text.bytes().all(|character| {
+                        character.is_ascii_hexdigit() && !character.is_ascii_uppercase()
+                    })
+            }
+            "^[a-z0-9][a-z0-9_.-]*$" => {
+                let mut characters = text.bytes();
+                characters.next().is_some_and(|character| {
+                    character.is_ascii_lowercase() || character.is_ascii_digit()
+                }) && characters.all(|character| {
+                    character.is_ascii_lowercase()
+                        || character.is_ascii_digit()
+                        || matches!(character, b'_' | b'.' | b'-')
+                })
+            }
+            "^(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\\.(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*$" => {
+                text.split('.').all(is_valid_hostname_label)
+            }
+            _ => return Err(()),
+        };
+        if !matches {
+            return Err(());
+        }
+    }
+    Ok(())
+}
+
+fn is_valid_hostname_label(label: &str) -> bool {
+    !label.is_empty()
+        && label.len() <= 63
+        && label
+            .bytes()
+            .all(|character| character.is_ascii_alphanumeric() || character == b'-')
+        && !label.starts_with('-')
+        && !label.ends_with('-')
+}
+
+fn validate_array_schema(
+    schema: &serde_json::Map<String, serde_json::Value>,
+    values: &[serde_json::Value],
+) -> Result<(), ()> {
+    if let Some(minimum) = schema.get("minItems").and_then(serde_json::Value::as_u64) {
+        if u64::try_from(values.len()).map_err(|_| ())? < minimum {
+            return Err(());
+        }
+    }
+    if schema
+        .get("uniqueItems")
+        .and_then(serde_json::Value::as_bool)
+        .is_some_and(|unique| unique)
+        && values
+            .iter()
+            .enumerate()
+            .any(|(index, value)| values[..index].contains(value))
+    {
+        return Err(());
+    }
+    if let Some(items) = schema.get("items") {
+        for value in values {
+            validate_json_schema(items, value)?;
+        }
+    }
+    Ok(())
+}
+
+fn validate_object_schema(
+    schema: &serde_json::Map<String, serde_json::Value>,
+    values: &serde_json::Map<String, serde_json::Value>,
+) -> Result<(), ()> {
+    if let Some(required) = schema.get("required").and_then(serde_json::Value::as_array) {
+        if required
+            .iter()
+            .filter_map(serde_json::Value::as_str)
+            .any(|field| !values.contains_key(field))
+        {
+            return Err(());
+        }
+    }
+    let properties = schema
+        .get("properties")
+        .and_then(serde_json::Value::as_object);
+    let additional_properties = schema.get("additionalProperties");
+    for (field, value) in values {
+        match properties.and_then(|properties| properties.get(field)) {
+            Some(field_schema) => validate_json_schema(field_schema, value)?,
+            None => match additional_properties {
+                Some(serde_json::Value::Bool(false)) => return Err(()),
+                Some(serde_json::Value::Object(schema)) => {
+                    validate_json_schema(&serde_json::Value::Object(schema.clone()), value)?;
+                }
+                Some(serde_json::Value::Bool(true)) | None => {}
+                _ => return Err(()),
+            },
+        }
+    }
+    Ok(())
+}
+
+fn validate_number_schema(
+    schema: &serde_json::Map<String, serde_json::Value>,
+    number: &serde_json::Number,
+) -> Result<(), ()> {
+    if let Some(minimum) = schema.get("minimum").and_then(serde_json::Value::as_f64) {
+        if number.as_f64().is_none_or(|value| value < minimum) {
+            return Err(());
+        }
+    }
+    Ok(())
 }
 
 fn referenced_output_schema(path: &str) -> serde_json::Value {
@@ -1471,13 +2154,13 @@ mod tests {
 
     #[test]
     fn json_success_emits_matching_structured_content() -> Result<(), Box<dyn std::error::Error>> {
-        let value = serde_json::json!({"valid": true, "contract": "review_plan"});
-        let result = json_success(&value)?;
+        let value = serde_json::json!({"valid": true, "contract": "search_strategy"});
+        let result = json_success("validate_strategy", &value)?;
 
         assert_eq!(result.structured_content.as_ref(), Some(&value));
         assert_eq!(result.is_error, Some(false));
         assert_eq!(result.content.len(), 1);
-        assert!(serde_json::to_string(&result.content)?.contains("review_plan"));
+        assert!(serde_json::to_string(&result.content)?.contains("search_strategy"));
         Ok(())
     }
 
@@ -1505,6 +2188,7 @@ mod tests {
         let tools = server.tool_router.list_all();
 
         assert_eq!(tools.len(), 31);
+        assert_eq!(output_schema_registry().schemas.len(), tools.len());
         for tool in tools {
             let Some(schema) = tool.output_schema else {
                 panic!("every tool has an outputSchema")
@@ -1542,7 +2226,12 @@ mod tests {
 
     #[test]
     fn text_results_retain_machine_readable_content() {
-        let result = text_success("plain_text", "stable output".to_owned());
+        let result = text_success(
+            "render_diagnostics",
+            "plain_text",
+            "stable output".to_owned(),
+        )
+        .expect("declared text output must validate");
 
         assert_eq!(result.is_error, Some(false));
         assert_eq!(
@@ -1553,5 +2242,94 @@ mod tests {
             Some(&serde_json::json!("plain_text"))
         );
         assert_eq!(result.content, vec![ContentBlock::text("stable output")]);
+    }
+
+    #[test]
+    fn output_registry_rejects_unknown_fields_and_wrong_value_types() {
+        assert!(
+            validate_tool_output(
+                "validate_plan",
+                &serde_json::json!({
+                    "review_id": "review-1",
+                    "findings": [],
+                    "ready_for_strategy_design": true,
+                    "unexpected": true,
+                }),
+            )
+            .is_err()
+        );
+        assert!(
+            validate_tool_output(
+                "validate_plan",
+                &serde_json::json!({
+                    "review_id": "review-1",
+                    "findings": [],
+                    "ready_for_strategy_design": "yes",
+                }),
+            )
+            .is_err()
+        );
+        assert!(json_success("unknown_tool", &serde_json::json!({"valid": true}),).is_err());
+    }
+
+    #[test]
+    fn output_registry_preserves_catalogue_unions_and_referenced_schemas() {
+        assert!(
+            validate_tool_output(
+                "generate_prisma",
+                &serde_json::json!({"document": "graph TD", "format": "mermaid"}),
+            )
+            .is_ok()
+        );
+        assert!(
+            validate_tool_output(
+                "generate_prisma",
+                &serde_json::json!({"document": "graph TD"}),
+            )
+            .is_err()
+        );
+        assert!(validate_tool_output(
+            "compile_strategy",
+            &serde_json::json!({
+                "schema_version": "org.searchright.compiled-strategy.v1",
+                "strategy_id": "strategy-1",
+                "dialect": "pub_med",
+                "query": "cancer",
+                "warnings": [],
+                "fidelity": "exact",
+                "review_required": false,
+                "loss_codes": [],
+                "compilation_hash": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                "compiler_version": "0.1.0",
+            }),
+        )
+        .is_ok());
+    }
+
+    #[test]
+    fn live_client_success_matrix_covers_every_advertised_tool_and_prisma_branch()
+    -> Result<(), String> {
+        let cases = live_client_success_cases()?;
+        let advertised = SearchrightServer::default().tool_router.list_all();
+        let expected: std::collections::BTreeSet<_> =
+            advertised.iter().map(|tool| tool.name.as_ref()).collect();
+        let covered: std::collections::BTreeSet<_> =
+            cases.iter().map(|case| case.tool_name).collect();
+
+        assert_eq!(expected, covered);
+        assert_eq!(cases.len(), advertised.len() + 1);
+        assert_eq!(
+            cases
+                .iter()
+                .filter(|case| case.tool_name == "generate_prisma")
+                .count(),
+            2
+        );
+        assert!(
+            cases
+                .iter()
+                .all(|case| case.arguments.keys().all(|key| !key.trim().is_empty()))
+        );
+        Ok(())
     }
 }
