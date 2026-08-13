@@ -8,7 +8,7 @@ Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
 
 - [ ] T01: Compile WASI components and run the component conformance suite. (`track-24-phase-3-task-01`)
 - [ ] T02: Implement and threat-model authenticated Streamable HTTP/OAuth transport. (`track-24-phase-3-task-02`)
-- [ ] T03: Run MCP version-compatibility, cancellation, task, cache and load tests. (`track-24-phase-3-task-03`)
+- [ ] T03: Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence. (`track-24-phase-3-task-03`)
 - [ ] T04: Establish component signing, revocation and distribution evidence. (`track-24-phase-3-task-04`)
 
 ## Evidence rule

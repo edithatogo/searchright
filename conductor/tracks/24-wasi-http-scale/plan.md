@@ -1,6 +1,6 @@
 # Plan: 24 WASI components, HTTP MCP and scalable execution
 
-Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -15,6 +15,10 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `contracts/openapi/searchright-http.openapi.yaml`
   - [x] Present source path: `contracts/examples/provider-component.yaml`
   - [x] Present source path: `docs/adrs/0004-provider-plugin-sandbox.md`
+  - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
+  - [x] Present source path: `crates/searchright-mcp/tests/advanced_mcp.rs`
+  - [x] Present source path: `docs/mcp-compatibility.md`
+  - [x] Present source path: `verification/receipts/track-24-advanced-mcp.json`
   - [x] Assertion ledger: `conductor/tracks/24-wasi-http-scale/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -31,7 +35,7 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 
 - [ ] Compile WASI components and run the component conformance suite.
 - [ ] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
-- [ ] Run MCP version-compatibility, cancellation, task, cache and load tests.
+- [ ] Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence.
 - [ ] Establish component signing, revocation and distribution evidence.
 
 ## Phase 4: Review and closeout

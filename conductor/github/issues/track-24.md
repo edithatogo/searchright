@@ -12,8 +12,8 @@ Define sandboxed provider components, integrity/capability checks and future rem
 ## Contract
 
 - Horizon: `beta`
-- Status: `scaffolded`
-- Implementation: `scaffolded`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `03, 10, 13, 16`
 - Requirements: `SR-030, SR-047`

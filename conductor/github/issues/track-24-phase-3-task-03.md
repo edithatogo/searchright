@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run MCP version-compatibility, cancellation, task, cache and load tests.
+- [ ] Run bounded-load and production-cache tests beyond the local SDK-backed version, cancellation, task and pagination evidence.
 
 ## Completion and evidence contract
 
