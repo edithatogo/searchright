@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "2c41e0ea65f6abc2558ccdd1c08fdc6b9bac606d5c3bd065a05bb036a85b8883",
-      "size": 610278
+      "sha256": "14edc56e59f83961adc907274cee40b1a9689d2915c7b7a2c1689db115233508",
+      "size": 610388
     },
     {
       "path": "conductor/github/project.json",
@@ -53,13 +53,13 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "bd729f184aac96ca6dd26ec6c40dd641ab2d8e70cb4a4984beda8c1ad91ba589",
-      "size": 82116
+      "sha256": "d59f36a6d2781555b692b2a20d2e07b285d2d6b8354ef263ac0581897cada31c",
+      "size": 82737
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "efd2d0571395a0bfb33f954b20e67c74d9842150901dd4711be04ae8f4bf121a",
-      "size": 89692
+      "sha256": "513494ce22c06ddda387d0fe7542988b5e87e7f17ae425c7afaf386f645890eb",
+      "size": 91685
     },
     {
       "path": "context/capability-matrix.json",
@@ -88,8 +88,8 @@
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "291a19bbdc595e35039a4082fdabfaff71ba5fc5f76a7edab7c8e93d9e19a419",
-      "size": 23808
+      "sha256": "d8b8ba86ec6be42770e2217dbe46b375e3767eed498726a5f4b5b08c4e94efdf",
+      "size": 24593
     },
     {
       "path": "contracts/migrations/registry.json",
@@ -98,8 +98,8 @@
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "3d9726b42e113f2f2be4fe02063a14cee6199397c1866e71016d59ce4473ec93",
-      "size": 26951
+      "sha256": "491dad492a52bcf77436f83bc8477e18634042d0c4b69ed1dfc8d9c8df2a90a4",
+      "size": 27922
     },
     {
       "path": "docs/safety/safety-case.md",
@@ -123,7 +123,7 @@
     },
     {
       "path": "integration/ecosystem-lock.json",
-      "sha256": "0786aa8897c5ce7e96f74145c06361160438cbb4912832db5d095cc73873955b",
+      "sha256": "ee31adc0957e055e67767bc9eddd0a047db460ad5b0cd9ec43effd309ae72c77",
       "size": 2784
     },
     {
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "d3d0bdb50949be0c98af193b62d645c5d8fbccef25e78b695e53a79df6623408",
+      "sha256": "5fd3602cf38f3fbd0993adf3d62d63b325b1b62a96558892bf7f416be05d22ef",
       "size": 3524
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "5f3acbe786efa2a69d8b16c696148a4aeaa2354fb3100ab121d8463f83818c88",
-      "size": 46475
+      "sha256": "660304caf595de7134734c2be9fae0b4a80001419a4f091ae693f80a9b4b0fbf",
+      "size": 46615
     },
     {
       "path": "verification/harness-matrix.json",

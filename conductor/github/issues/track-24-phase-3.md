@@ -11,7 +11,7 @@ Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
 - [ ] T03: Implement Arrow, Parquet and DuckDB large-corpus storage and query paths. (`track-24-phase-3-task-03`)
 - [ ] T04: Implement and threat-model authenticated Streamable HTTP/OAuth transport. (`track-24-phase-3-task-04`)
 - [ ] T05: Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence. (`track-24-phase-3-task-05`)
-- [ ] T06: Establish component signing, revocation and distribution evidence. (`track-24-phase-3-task-06`)
+- [ ] T06: Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary. (`track-24-phase-3-task-06`)
 
 ## Evidence rule
 

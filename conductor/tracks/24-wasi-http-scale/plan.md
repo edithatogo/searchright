@@ -19,6 +19,10 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `crates/searchright-mcp/tests/advanced_mcp.rs`
   - [x] Present source path: `docs/mcp-compatibility.md`
   - [x] Present source path: `verification/receipts/track-24-advanced-mcp.json`
+  - [x] Present source path: `contracts/json-schema/provider-component-release-signature.v1.schema.json`
+  - [x] Present source path: `contracts/json-schema/provider-component-trust-policy.v1.schema.json`
+  - [x] Present source path: `contracts/compatibility/track-24-provider-component-trust.md`
+  - [x] Present source path: `verification/receipts/track-24-component-trust.json`
   - [x] Assertion ledger: `conductor/tracks/24-wasi-http-scale/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -28,6 +32,8 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_cli_mcp_parity.py`
+  - [x] `python scripts/sync_schema_surface.py --check`
+  - [x] `python scripts/sync_contract_conformance_matrix.py --check`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
@@ -39,7 +45,7 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 - [ ] Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.
 - [ ] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
 - [ ] Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.
-- [ ] Establish component signing, revocation and distribution evidence.
+- [ ] Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary.
 
 ## Phase 4: Review and closeout
 

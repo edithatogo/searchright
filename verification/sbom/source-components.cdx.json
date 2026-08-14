@@ -30,6 +30,20 @@
       "version": "0.1.89"
     },
     {
+      "bom-ref": "cargo-requirement:aws-lc-rs@1.18.0",
+      "name": "aws-lc-rs",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/aws-lc-rs@1.18.0",
+      "scope": "required",
+      "type": "library",
+      "version": "1.18.0"
+    },
+    {
       "bom-ref": "cargo-requirement:axum@0.8",
       "name": "axum",
       "properties": [
@@ -1484,9 +1498,12 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:aws-lc-rs@1.18.0",
+        "cargo-requirement:base64@0.23",
         "cargo-requirement:blake3@1.8",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",
+        "cargo-requirement:time@0.3",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
       "ref": "cargo:searchright-plugin-sdk@0.1.0-alpha.1"
@@ -1626,7 +1643,7 @@
       },
       {
         "name": "searchright:schema-count",
-        "value": "66"
+        "value": "68"
       },
       {
         "name": "searchright:standard-pack-count",
@@ -1638,7 +1655,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:b549d7b3-0b78-5f52-962f-52917cd60f09",
+  "serialNumber": "urn:uuid:50281864-cfc5-5a12-be2e-85bcde2cf5d4",
   "specVersion": "1.6",
   "version": 1
 }

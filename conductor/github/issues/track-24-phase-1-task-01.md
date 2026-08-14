@@ -18,6 +18,10 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `crates/searchright-mcp/tests/advanced_mcp.rs`
   - [x] Present source path: `docs/mcp-compatibility.md`
   - [x] Present source path: `verification/receipts/track-24-advanced-mcp.json`
+  - [x] Present source path: `contracts/json-schema/provider-component-release-signature.v1.schema.json`
+  - [x] Present source path: `contracts/json-schema/provider-component-trust-policy.v1.schema.json`
+  - [x] Present source path: `contracts/compatibility/track-24-provider-component-trust.md`
+  - [x] Present source path: `verification/receipts/track-24-component-trust.json`
   - [x] Assertion ledger: `conductor/tracks/24-wasi-http-scale/traceability.json`
 
 ## Completion and evidence contract

@@ -232,6 +232,10 @@
       "compiler_required": false,
       "covered_assertions": [
         "T01-A003",
+        "T24-A001",
+        "T24-A002",
+        "T24-A003",
+        "T24-A005",
         "T32-A003"
       ],
       "evidence_ceiling": "source_verified",
@@ -250,7 +254,11 @@
         "T01-A001",
         "T01-A002",
         "T01-A005",
-        "T01-A006"
+        "T01-A006",
+        "T24-A001",
+        "T24-A002",
+        "T24-A003",
+        "T24-A005"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -772,7 +780,6 @@
         "T10-A003",
         "T10-A004",
         "T10-A006",
-        "T24-A001",
         "T24-A002",
         "T24-A003",
         "T24-A004",

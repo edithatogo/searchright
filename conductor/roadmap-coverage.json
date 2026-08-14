@@ -1148,11 +1148,13 @@
         "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
         "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
         "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
-        "Establish component signing, revocation and distribution evidence."
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
       ],
       "checks": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/sync_contract_conformance_matrix.py --check"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
@@ -1165,7 +1167,11 @@
         "crates/searchright-mcp/src/lib.rs",
         "crates/searchright-mcp/tests/advanced_mcp.rs",
         "docs/mcp-compatibility.md",
-        "verification/receipts/track-24-advanced-mcp.json"
+        "verification/receipts/track-24-advanced-mcp.json",
+        "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+        "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+        "contracts/compatibility/track-24-provider-component-trust.md",
+        "verification/receipts/track-24-component-trust.json"
       ],
       "dependencies": [
         "03",
@@ -1175,10 +1181,11 @@
       ],
       "evidence_level": "source_verified",
       "runtime_evidence": [
-        "verification/receipts/track-24-advanced-mcp.json"
+        "verification/receipts/track-24-advanced-mcp.json",
+        "verification/receipts/track-24-component-trust.json"
       ],
-      "updated": "2026-08-13",
-      "source_verified_on": "2026-08-13",
+      "updated": "2026-08-14",
+      "source_verified_on": "2026-08-14",
       "external_approval_required": true,
       "horizon": "beta",
       "implementation_state": "partially_implemented",
