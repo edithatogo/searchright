@@ -317,6 +317,22 @@
       "owner_track": "24"
     },
     {
+      "id": "provider-component-release-signature",
+      "schema_id": "https://schemas.searchright.dev/provider-component-release-signature.v1.schema.json",
+      "path": "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+      "sha256": "3a529fca83aa6907ed8e0ec7350b14f552068772454de8f926df671e00e291e3",
+      "stability": "alpha",
+      "owner_track": "24"
+    },
+    {
+      "id": "provider-component-trust-policy",
+      "schema_id": "https://schemas.searchright.dev/provider-component-trust-policy.v1.schema.json",
+      "path": "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+      "sha256": "8b3a66d9979478b81e2247ba99fa05fb86b2923e00178780e1f382c2b7d64398",
+      "stability": "alpha",
+      "owner_track": "24"
+    },
+    {
       "id": "provider-manifest",
       "schema_id": "https://schemas.searchright.dev/provider-manifest.v1.schema.json",
       "path": "contracts/json-schema/provider-manifest.v1.schema.json",

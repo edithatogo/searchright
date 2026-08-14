@@ -1,0 +1,15 @@
+{
+  "schema_version": "org.searchright.provider-component-trust-policy.v1",
+  "policy_id": "fixture-provider-component-trust-policy",
+  "trusted_keys": [
+    {
+      "key_id": "fixture-signing-key-1",
+      "algorithm": "ed25519",
+      "public_key": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "component_ids": ["io.github.edithatogo.searchright.fixture"],
+      "valid_from": "2026-08-01T00:00:00Z",
+      "valid_until": "2027-08-01T00:00:00Z"
+    }
+  ],
+  "revocations": []
+}

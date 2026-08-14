@@ -84,7 +84,11 @@ pub use plan::{
     ProtocolRegistration, QuestionFramework, ResearchQuestion, ReviewGovernance, ReviewKind,
     ReviewPlan, ScreeningStage,
 };
-pub use plugin::{ComponentCapability, ProviderComponentManifest};
+pub use plugin::{
+    ComponentCapability, ComponentSignatureAlgorithm, ProviderComponentManifest,
+    ProviderComponentReleaseSignature, ProviderComponentRevocation, ProviderComponentTrustKey,
+    ProviderComponentTrustPolicy,
+};
 pub use policy::{
     ContentSafetyFinding, ExecutionEnvelope, FullTextHandling, NetworkCapability, SecretHandling,
     UntrustedContentPolicy,
@@ -140,6 +144,12 @@ pub const DISCOVERY_RUN_SCHEMA_VERSION: &str = "org.searchright.discovery-run.v1
 pub const WORKFLOW_TRACE_SCHEMA_VERSION: &str = "org.searchright.workflow-trace.v1";
 /// Canonical WASI provider-component manifest contract version.
 pub const PROVIDER_COMPONENT_SCHEMA_VERSION: &str = "org.searchright.provider-component.v1";
+/// Canonical provider-component trust-policy contract version.
+pub const PROVIDER_COMPONENT_TRUST_POLICY_SCHEMA_VERSION: &str =
+    "org.searchright.provider-component-trust-policy.v1";
+/// Canonical provider-component detached release-signature contract version.
+pub const PROVIDER_COMPONENT_RELEASE_SIGNATURE_SCHEMA_VERSION: &str =
+    "org.searchright.provider-component-release-signature.v1";
 /// Canonical reproducible benchmark report contract version.
 pub const BENCHMARK_REPORT_SCHEMA_VERSION: &str = "org.searchright.benchmark-report.v1";
 /// Canonical bring-your-own-access adapter profile contract version.

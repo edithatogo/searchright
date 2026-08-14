@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/provider-component-release-signature.v1.schema.json",
+  "title": "Searchright provider component release signature",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "component_id", "component_version", "manifest_digest",
+    "component_digest", "key_id", "trust_policy_id", "algorithm", "signed_at", "expires_at",
+    "signature"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.provider-component-release-signature.v1"},
+    "component_id": {"type": "string", "minLength": 1},
+    "component_version": {"type": "string", "minLength": 1},
+    "manifest_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "component_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "key_id": {"type": "string", "minLength": 1},
+    "trust_policy_id": {"type": "string", "minLength": 1},
+    "algorithm": {"const": "ed25519"},
+    "signed_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "signature": {"type": "string", "pattern": "^[A-Za-z0-9_-]{86}$"}
+  }
+}
