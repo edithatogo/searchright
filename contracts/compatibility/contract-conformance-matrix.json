@@ -900,6 +900,52 @@
       "downstream_consumer_conformance": "not_evidenced"
     },
     {
+      "id": "provider-component-release-signature",
+      "owner_track": "24",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/provider-component-release-signature.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/provider-component-release-signature.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ProviderComponentReleaseSignature",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "provider-component-trust-policy",
+      "owner_track": "24",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/provider-component-trust-policy.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/provider-component-trust-policy.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ProviderComponentTrustPolicy",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
       "id": "provider-manifest",
       "owner_track": "04",
       "stability": "alpha",

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/provider-component-trust-policy.v1.schema.json",
+  "title": "Searchright provider component trust policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "policy_id", "trusted_keys", "revocations"],
+  "properties": {
+    "schema_version": {"const": "org.searchright.provider-component-trust-policy.v1"},
+    "policy_id": {"type": "string", "minLength": 1},
+    "trusted_keys": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key_id", "algorithm", "public_key", "component_ids", "valid_from", "valid_until"
+        ],
+        "properties": {
+          "key_id": {"type": "string", "minLength": 1},
+          "algorithm": {"const": "ed25519"},
+          "public_key": {"type": "string", "pattern": "^[A-Za-z0-9_-]{43}$"},
+          "component_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "valid_from": {"type": "string", "format": "date-time"},
+          "valid_until": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "revocations": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key_id", "revoked_at", "evidence_reference"],
+        "properties": {
+          "key_id": {"type": "string", "minLength": 1},
+          "revoked_at": {"type": "string", "format": "date-time"},
+          "evidence_reference": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

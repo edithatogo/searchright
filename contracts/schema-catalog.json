@@ -392,6 +392,26 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "provider-component-release-signature",
+      "schema": "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+      "example": "contracts/examples/provider-component-release-signature.json",
+      "schema_id": "https://schemas.searchright.dev/provider-component-release-signature.v1.schema.json",
+      "rust_type": "ProviderComponentReleaseSignature",
+      "owner_track": "24",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "provider-component-trust-policy",
+      "schema": "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+      "example": "contracts/examples/provider-component-trust-policy.json",
+      "schema_id": "https://schemas.searchright.dev/provider-component-trust-policy.v1.schema.json",
+      "rust_type": "ProviderComponentTrustPolicy",
+      "owner_track": "24",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "provider-manifest",
       "schema": "contracts/json-schema/provider-manifest.v1.schema.json",
       "example": "contracts/examples/provider-manifest.yaml",
