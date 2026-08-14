@@ -1,0 +1,44 @@
+{
+  "schema_version": "org.searchright.local-compiler-review-receipt.v1",
+  "track_id": "24",
+  "status": "passed",
+  "observed_at": "2026-08-14",
+  "source_revision": "5e40d81ed0a03b554990cfead7fc67e7d4470da1",
+  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "commands": [
+    {
+      "command": "cargo test -p searchright-contracts -p searchright-plugin-sdk --locked",
+      "status": "passed",
+      "observed": "27 searchright-contracts tests and 4 searchright-plugin-sdk tests passed; doc tests passed"
+    },
+    {
+      "command": "cargo clippy -p searchright-contracts -p searchright-plugin-sdk --all-targets --locked -- -D warnings",
+      "status": "passed",
+      "observed": "focused strict Clippy completed without findings in the two reviewed packages"
+    },
+    {
+      "command": "python scripts/validate_repository.py",
+      "status": "passed",
+      "observed": "68 Draft 2020-12 schemas/catalogue entries/examples validated with zero errors"
+    },
+    {
+      "command": "python scripts/sync_schema_surface.py --check && python scripts/sync_contract_conformance_matrix.py --check",
+      "status": "passed",
+      "observed": "68 additive contract surfaces and their static conformance matrix were current"
+    }
+  ],
+  "verified_behaviour": [
+    "exact manifest and component-byte digest binding",
+    "domain-separated length-prefixed Ed25519 release-message verification",
+    "exact trust-policy and component-namespace key authority",
+    "key and release validity-window enforcement",
+    "effective key revocation denial",
+    "tampered signature, manifest, bytes and expiry fail closed"
+  ],
+  "claim_boundary": "Compiler-backed local cryptographic admission for exact provider-component bytes only. No publisher identity, key custody, transparency log, registry distribution, revocation propagation, Wasmtime execution, network isolation or live provider support is claimed.",
+  "limitations": [
+    "The repository fixture key is test-only and is not a distribution trust root.",
+    "Hosted cross-platform evidence is deferred to the merge-bound Track 24 pull request.",
+    "The normal MSVC host remained unavailable because Git's POSIX link.exe shadowed the compiler linker; the pinned GNU toolchain completed the authoritative local run."
+  ]
+}

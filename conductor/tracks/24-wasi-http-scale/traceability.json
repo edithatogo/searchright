@@ -11,36 +11,36 @@
       "assertion_id": "T24-A001",
       "statement": "Implement WIT host/guest SDK and signed manifest verification",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
+        "crates/searchright-contracts/src/plugin.rs",
         "crates/searchright-plugin-sdk/src/lib.rs",
-        "crates/searchright-policy/src/lib.rs",
         "contracts/wit/search-provider.wit",
-        "contracts/openapi/searchright-http.openapi.yaml",
-        "contracts/examples/provider-component.yaml",
-        "docs/adrs/0004-provider-plugin-sandbox.md",
-        "crates/searchright-mcp/src/lib.rs",
-        "crates/searchright-mcp/tests/advanced_mcp.rs",
-        "docs/mcp-compatibility.md",
-        "verification/receipts/track-24-advanced-mcp.json"
+        "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+        "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+        "docs/adrs/0004-provider-plugin-sandbox.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_plugin_sdk::verify_component",
+        "searchright_plugin_sdk::verify_signed_component_release",
+        "searchright_plugin_sdk::release_message",
+        "searchright_contracts::ProviderComponentManifest::validate",
+        "searchright_contracts::ProviderComponentTrustPolicy::validate",
+        "searchright_contracts::ProviderComponentReleaseSignature::validate"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/sync_contract_conformance_matrix.py --check"
       ],
       "evidence_receipts": [
-        "conductor/tracks/24-wasi-http-scale/evidence.json"
+        "verification/receipts/track-24-component-trust.json"
       ],
       "open_gates": [
-        "Compile WASI components and run the component conformance suite.",
-        "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
-        "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
-        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
-        "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
-        "Establish component signing, revocation and distribution evidence."
+        "Compile the WIT host/guest boundary and run a component conformance suite under the reviewed runtime sandbox.",
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation evidence."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Exact provider-component bytes, manifest identity, bounded Ed25519 key authority, validity windows and reviewed revocations are compiler-tested locally; publisher identity, distribution, runtime sandboxing and live provider support remain unproven."
     },
     {
       "assertion_id": "T24-A002",
@@ -57,12 +57,18 @@
         "crates/searchright-mcp/src/lib.rs",
         "crates/searchright-mcp/tests/advanced_mcp.rs",
         "docs/mcp-compatibility.md",
-        "verification/receipts/track-24-advanced-mcp.json"
+        "verification/receipts/track-24-advanced-mcp.json",
+        "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+        "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+        "contracts/compatibility/track-24-provider-component-trust.md",
+        "verification/receipts/track-24-component-trust.json"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/sync_contract_conformance_matrix.py --check"
       ],
       "evidence_receipts": [
         "conductor/tracks/24-wasi-http-scale/evidence.json"
@@ -73,7 +79,7 @@
         "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
         "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
         "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
-        "Establish component signing, revocation and distribution evidence."
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -92,12 +98,18 @@
         "crates/searchright-mcp/src/lib.rs",
         "crates/searchright-mcp/tests/advanced_mcp.rs",
         "docs/mcp-compatibility.md",
-        "verification/receipts/track-24-advanced-mcp.json"
+        "verification/receipts/track-24-advanced-mcp.json",
+        "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+        "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+        "contracts/compatibility/track-24-provider-component-trust.md",
+        "verification/receipts/track-24-component-trust.json"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/sync_contract_conformance_matrix.py --check"
       ],
       "evidence_receipts": [
         "conductor/tracks/24-wasi-http-scale/evidence.json"
@@ -108,7 +120,7 @@
         "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
         "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
         "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
-        "Establish component signing, revocation and distribution evidence."
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
@@ -162,12 +174,18 @@
         "crates/searchright-mcp/src/lib.rs",
         "crates/searchright-mcp/tests/advanced_mcp.rs",
         "docs/mcp-compatibility.md",
-        "verification/receipts/track-24-advanced-mcp.json"
+        "verification/receipts/track-24-advanced-mcp.json",
+        "contracts/json-schema/provider-component-release-signature.v1.schema.json",
+        "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
+        "contracts/compatibility/track-24-provider-component-trust.md",
+        "verification/receipts/track-24-component-trust.json"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_cli_mcp_parity.py"
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/sync_contract_conformance_matrix.py --check"
       ],
       "evidence_receipts": [
         "conductor/tracks/24-wasi-http-scale/evidence.json"
@@ -178,7 +196,7 @@
         "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
         "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
         "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
-        "Establish component signing, revocation and distribution evidence."
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
