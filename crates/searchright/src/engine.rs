@@ -264,9 +264,13 @@ impl SearchrightEngine {
     pub fn authorise_endpoint(
         envelope: &ExecutionEnvelope,
         endpoint: &str,
-    ) -> Result<(), EngineError> {
+    ) -> Result<String, EngineError> {
         let endpoint = url::Url::parse(endpoint)?;
-        Ok(searchright_policy::authorise_endpoint(envelope, &endpoint)?)
+        if !endpoint.username().is_empty() || endpoint.password().is_some() {
+            return Err(EngineError::CredentialBearingEndpoint);
+        }
+        searchright_policy::authorise_endpoint(envelope, &endpoint)?;
+        Ok(endpoint.origin().ascii_serialization())
     }
 
     /// Validate one protocol amendment.
@@ -407,6 +411,9 @@ pub enum EngineError {
     /// Endpoint URL was malformed.
     #[error(transparent)]
     Url(#[from] url::ParseError),
+    /// Endpoint embedded credentials in URL user information.
+    #[error("endpoint must not embed credentials")]
+    CredentialBearingEndpoint,
     /// JSON serialisation failed.
     #[error(transparent)]
     Json(#[from] serde_json::Error),

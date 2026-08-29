@@ -2,7 +2,11 @@
 
 #![forbid(unsafe_code)]
 
-use std::process::{Command, Output};
+use std::{
+    fs,
+    process::{Command, Output},
+    time::{SystemTime, UNIX_EPOCH},
+};
 
 fn run(arguments: &[&str]) -> Output {
     Command::new(env!("CARGO_BIN_EXE_searchright"))
@@ -32,6 +36,116 @@ fn dry_run_json_matches_the_stable_snapshot_without_writing() {
 }
 
 #[test]
+fn apply_creates_once_and_refusal_preserves_exact_bytes() {
+    let unique = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_else(|error| panic!("system clock must follow the epoch: {error}"))
+        .as_nanos();
+    let directory = std::env::temp_dir().join(format!(
+        "searchright-cli-e2e-{}-{unique}",
+        std::process::id()
+    ));
+    fs::create_dir(&directory)
+        .unwrap_or_else(|error| panic!("temporary directory must be created: {error}"));
+    let target = directory.join("config.json");
+    let target_argument = target.to_string_lossy().into_owned();
+
+    let apply = run(&["init", "--target", &target_argument, "--apply"]);
+    assert!(apply.status.success());
+    let applied: serde_json::Value = serde_json::from_slice(&apply.stdout)
+        .unwrap_or_else(|error| panic!("apply output must be JSON: {error}"));
+    assert_eq!(applied.get("mode"), Some(&serde_json::json!("apply")));
+    assert_eq!(applied.get("changed"), Some(&serde_json::json!(true)));
+    let original = fs::read(&target)
+        .unwrap_or_else(|error| panic!("configuration must have been written: {error}"));
+
+    let refusal = run(&["init", "--target", &target_argument, "--apply"]);
+    assert_eq!(refusal.status.code(), Some(3));
+    assert!(refusal.stdout.is_empty());
+    let error: serde_json::Value = serde_json::from_slice(&refusal.stderr)
+        .unwrap_or_else(|decode_error| panic!("refusal must be JSON: {decode_error}"));
+    assert_eq!(
+        error.get("code"),
+        Some(&serde_json::json!("cli.filesystem"))
+    );
+    assert_eq!(error.get("stage"), Some(&serde_json::json!("init")));
+    assert_eq!(
+        error.get("category"),
+        Some(&serde_json::json!("filesystem"))
+    );
+    assert_eq!(
+        fs::read(&target).unwrap_or_else(|read_error| panic!(
+            "configuration must remain readable: {read_error}"
+        )),
+        original
+    );
+    fs::remove_dir_all(directory)
+        .unwrap_or_else(|error| panic!("temporary directory must be removed: {error}"));
+}
+
+#[test]
+fn operation_errors_name_a_safe_stage_and_category_without_reflecting_paths() {
+    let secret = "TRACK09_PATH_SENTINEL_SECRET";
+    let output = run(&["validate-plan", secret]);
+    assert_eq!(output.status.code(), Some(3));
+    assert!(output.stdout.is_empty());
+    let stderr = text(&output.stderr);
+    assert!(!stderr.contains(secret));
+    let error: serde_json::Value = serde_json::from_str(&stderr)
+        .unwrap_or_else(|decode_error| panic!("operation error must be JSON: {decode_error}"));
+    assert_eq!(
+        error.get("stage"),
+        Some(&serde_json::json!("validate-plan"))
+    );
+    assert_eq!(
+        error.get("category"),
+        Some(&serde_json::json!("filesystem"))
+    );
+}
+
+#[test]
+fn operation_errors_distinguish_syntax_from_contract_failures() {
+    let unique = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_else(|error| panic!("system clock must follow the epoch: {error}"))
+        .as_nanos();
+    let directory = std::env::temp_dir().join(format!(
+        "searchright-cli-errors-{}-{unique}",
+        std::process::id()
+    ));
+    fs::create_dir(&directory)
+        .unwrap_or_else(|error| panic!("temporary directory must be created: {error}"));
+    let syntax_path = directory.join("syntax.json");
+    let contract_path = directory.join("contract.json");
+    fs::write(&syntax_path, "{")
+        .unwrap_or_else(|error| panic!("syntax fixture must be written: {error}"));
+    fs::write(&contract_path, "{}")
+        .unwrap_or_else(|error| panic!("contract fixture must be written: {error}"));
+
+    for (path, expected_category) in [
+        (&syntax_path, "document_syntax"),
+        (&contract_path, "document_contract"),
+    ] {
+        let argument = path.to_string_lossy();
+        let output = run(&["validate-plan", &argument]);
+        assert_eq!(output.status.code(), Some(3));
+        let error: serde_json::Value = serde_json::from_slice(&output.stderr)
+            .unwrap_or_else(|decode_error| panic!("operation error must be JSON: {decode_error}"));
+        assert_eq!(
+            error.get("stage"),
+            Some(&serde_json::json!("validate-plan"))
+        );
+        assert_eq!(
+            error.get("category"),
+            Some(&serde_json::json!(expected_category))
+        );
+    }
+
+    fs::remove_dir_all(directory)
+        .unwrap_or_else(|error| panic!("temporary directory must be removed: {error}"));
+}
+
+#[test]
 fn usage_errors_are_machine_readable_and_stable() {
     let output = run(&["invalid-command"]);
     assert_eq!(output.status.code(), Some(2));
@@ -46,9 +160,20 @@ fn usage_errors_are_machine_readable_and_stable() {
 
 #[test]
 fn distribution_documents_are_available_without_filesystem_writes() {
-    let completions = run(&["completions", "bash"]);
-    assert!(completions.status.success());
-    assert!(text(&completions.stdout).contains("_searchright"));
+    for (shell, marker) in [
+        ("bash", "_searchright()"),
+        ("elvish", "edit:completion:arg-completer[searchright]"),
+        ("fish", "__fish_searchright_global_optspecs"),
+        (
+            "powershell",
+            "Register-ArgumentCompleter -Native -CommandName 'searchright'",
+        ),
+        ("zsh", "#compdef searchright"),
+    ] {
+        let completions = run(&["completions", shell]);
+        assert!(completions.status.success());
+        assert!(text(&completions.stdout).contains(marker));
+    }
 
     let manpage = run(&["manpage"]);
     assert!(manpage.status.success());
