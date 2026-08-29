@@ -123,7 +123,10 @@ fn import_searchright_json(input: &str) -> Result<ImportResult, InterchangeError
                 end_line: index.saturating_add(1),
                 error: err.to_string(),
             });
-            warnings.push(format!("Record index {} failed contract validation", index.saturating_add(1)));
+            warnings.push(format!(
+                "Record index {} failed contract validation",
+                index.saturating_add(1)
+            ));
         } else {
             records.push(record);
         }
@@ -203,7 +206,8 @@ fn import_csl_json(input: &str, source_receipt_id: &str) -> Result<ImportResult,
                         .filter_map(|author| {
                             let family = author.get("family").and_then(Value::as_str).unwrap_or("");
                             let given = author.get("given").and_then(Value::as_str).unwrap_or("");
-                            let literal = author.get("literal").and_then(Value::as_str).unwrap_or("");
+                            let literal =
+                                author.get("literal").and_then(Value::as_str).unwrap_or("");
                             if !literal.is_empty() {
                                 return Some(literal.to_owned());
                             }
@@ -362,10 +366,8 @@ fn import_tagged(
 
     for (index, block) in blocks.into_iter().enumerate() {
         let idx = index.saturating_add(1);
-        let native_id = first(&block.fields, &["ID", "AN", "PMID"]).map_or_else(
-            || format!("tagged-{idx}"),
-            str::to_owned,
-        );
+        let native_id = first(&block.fields, &["ID", "AN", "PMID"])
+            .map_or_else(|| format!("tagged-{idx}"), str::to_owned);
         let title = first(&block.fields, &["TI", "T1", "BT"])
             .unwrap_or("Untitled imported record")
             .to_owned();
@@ -417,7 +419,10 @@ fn import_tagged(
                 end_line: block.end_line,
                 error: err.to_string(),
             });
-            warnings.push(format!("tagged block {idx} (lines {}-{}) failed validation: {err}", block.start_line, block.end_line));
+            warnings.push(format!(
+                "tagged block {idx} (lines {}-{}) failed validation: {err}",
+                block.start_line, block.end_line
+            ));
         } else {
             records.push(record);
         }
@@ -646,7 +651,10 @@ fn parse_csv_rows(input: &str) -> Vec<Vec<String>> {
 }
 
 /// Import bibliographic records from `BibTeX` text.
-pub fn import_bibtex(input: &str, source_receipt_id: &str) -> Result<ImportResult, InterchangeError> {
+pub fn import_bibtex(
+    input: &str,
+    source_receipt_id: &str,
+) -> Result<ImportResult, InterchangeError> {
     let mut records = Vec::new();
     let mut warnings = Vec::new();
     let mut quarantined = Vec::new();
@@ -701,7 +709,9 @@ pub fn import_bibtex(input: &str, source_receipt_id: &str) -> Result<ImportResul
                                     end_line: current_line,
                                     error: err.clone(),
                                 });
-                                warnings.push(format!("BibTeX parse error lines {start_line}-{current_line}: {err}"));
+                                warnings.push(format!(
+                                    "BibTeX parse error lines {start_line}-{current_line}: {err}"
+                                ));
                             }
                         }
                         break;
@@ -718,14 +728,26 @@ pub fn import_bibtex(input: &str, source_receipt_id: &str) -> Result<ImportResul
     })
 }
 
-fn parse_single_bibtex_entry(entry: &str, source_receipt_id: &str) -> Result<BibliographicRecord, String> {
+fn parse_single_bibtex_entry(
+    entry: &str,
+    source_receipt_id: &str,
+) -> Result<BibliographicRecord, String> {
     let trimmed = entry.trim();
     if !trimmed.starts_with('@') {
         return Err("Entry does not start with @".to_owned());
     }
-    let open_brace = trimmed.find('{').ok_or_else(|| "Missing opening brace".to_owned())?;
-    let entry_type = trimmed.get(1..open_brace).unwrap_or("").trim().to_ascii_lowercase();
-    let body = trimmed.get(open_brace.saturating_add(1)..trimmed.len().saturating_sub(1)).unwrap_or("").trim();
+    let open_brace = trimmed
+        .find('{')
+        .ok_or_else(|| "Missing opening brace".to_owned())?;
+    let entry_type = trimmed
+        .get(1..open_brace)
+        .unwrap_or("")
+        .trim()
+        .to_ascii_lowercase();
+    let body = trimmed
+        .get(open_brace.saturating_add(1)..trimmed.len().saturating_sub(1))
+        .unwrap_or("")
+        .trim();
 
     let (cite_key, fields_str) = match body.split_once(',') {
         Some((key, rest)) => (key.trim().to_owned(), rest.trim()),
@@ -733,9 +755,10 @@ fn parse_single_bibtex_entry(entry: &str, source_receipt_id: &str) -> Result<Bib
     };
 
     let fields = parse_bibtex_fields(fields_str);
-    let title = fields
-        .get("title")
-        .map_or_else(|| "Untitled imported record".to_owned(), |t| clean_bibtex_value(t));
+    let title = fields.get("title").map_or_else(
+        || "Untitled imported record".to_owned(),
+        |t| clean_bibtex_value(t),
+    );
     let authors = fields
         .get("author")
         .map(|a| {
@@ -746,14 +769,22 @@ fn parse_single_bibtex_entry(entry: &str, source_receipt_id: &str) -> Result<Bib
                 .collect()
         })
         .unwrap_or_default();
-    let year = fields
-        .get("year")
-        .and_then(|y| clean_bibtex_value(y).get(..4).and_then(|val| val.parse::<i32>().ok()));
+    let year = fields.get("year").and_then(|y| {
+        clean_bibtex_value(y)
+            .get(..4)
+            .and_then(|val| val.parse::<i32>().ok())
+    });
     let doi = fields
         .get("doi")
         .and_then(|d| extract_doi(&clean_bibtex_value(d)).map(str::to_owned));
-    let pmid = fields.get("pmid").map(|p| clean_bibtex_value(p)).filter(|p| !p.is_empty() && p.chars().all(|ch| ch.is_ascii_digit()));
-    let container_title = fields.get("journal").or_else(|| fields.get("booktitle")).map(|c| clean_bibtex_value(c));
+    let pmid = fields
+        .get("pmid")
+        .map(|p| clean_bibtex_value(p))
+        .filter(|p| !p.is_empty() && p.chars().all(|ch| ch.is_ascii_digit()));
+    let container_title = fields
+        .get("journal")
+        .or_else(|| fields.get("booktitle"))
+        .map(|c| clean_bibtex_value(c));
     let abstract_text = fields.get("abstract").map(|a| clean_bibtex_value(a));
 
     let kind = match entry_type.as_str() {
@@ -783,7 +814,10 @@ fn parse_single_bibtex_entry(entry: &str, source_receipt_id: &str) -> Result<Bib
         publication_date: None,
         languages: Vec::new(),
         subjects: Vec::new(),
-        urls: fields.get("url").map(|u| vec![clean_bibtex_value(u)]).unwrap_or_default(),
+        urls: fields
+            .get("url")
+            .map(|u| vec![clean_bibtex_value(u)])
+            .unwrap_or_default(),
         provider_metadata: json!({"bibtex_type": entry_type}),
     })
 }
@@ -846,7 +880,10 @@ fn clean_bibtex_value(val: &str) -> String {
 }
 
 /// Import bibliographic records from `EndNote` XML text.
-pub fn import_endnote_xml(input: &str, source_receipt_id: &str) -> Result<ImportResult, InterchangeError> {
+pub fn import_endnote_xml(
+    input: &str,
+    source_receipt_id: &str,
+) -> Result<ImportResult, InterchangeError> {
     let mut records = Vec::new();
     let mut warnings = Vec::new();
     let mut quarantined = Vec::new();
@@ -868,17 +905,23 @@ pub fn import_endnote_xml(input: &str, source_receipt_id: &str) -> Result<Import
             if line.contains("</record>") {
                 in_record = false;
                 let raw = std::mem::take(&mut current_record);
-                let title = extract_xml_tag(&raw, "title").unwrap_or_else(|| "Untitled imported record".to_owned());
+                let title = extract_xml_tag(&raw, "title")
+                    .unwrap_or_else(|| "Untitled imported record".to_owned());
                 let authors = extract_all_xml_tags(&raw, "author");
-                let year = extract_xml_tag(&raw, "year").and_then(|y| y.get(..4).and_then(|val| val.parse::<i32>().ok()));
-                let doi = extract_xml_tag(&raw, "electronic-resource-num").and_then(|d| extract_doi(&d).map(str::to_owned));
-                let pmid = extract_xml_tag(&raw, "accession-num").filter(|p| !p.is_empty() && p.chars().all(|ch| ch.is_ascii_digit()));
+                let year = extract_xml_tag(&raw, "year")
+                    .and_then(|y| y.get(..4).and_then(|val| val.parse::<i32>().ok()));
+                let doi = extract_xml_tag(&raw, "electronic-resource-num")
+                    .and_then(|d| extract_doi(&d).map(str::to_owned));
+                let pmid = extract_xml_tag(&raw, "accession-num")
+                    .filter(|p| !p.is_empty() && p.chars().all(|ch| ch.is_ascii_digit()));
                 let container = extract_xml_tag(&raw, "secondary-title");
                 let abstract_text = extract_xml_tag(&raw, "abstract");
-                let native_id = extract_xml_tag(&raw, "rec-number").unwrap_or_else(|| format!("endnote-{}", records.len().saturating_add(1)));
+                let native_id = extract_xml_tag(&raw, "rec-number")
+                    .unwrap_or_else(|| format!("endnote-{}", records.len().saturating_add(1)));
 
                 let record = BibliographicRecord {
-                    schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+                    schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
+                        .to_owned(),
                     record_id: stable_record_id("endnote", &native_id),
                     source_receipt_id: source_receipt_id.to_owned(),
                     native_id,
@@ -908,7 +951,9 @@ pub fn import_endnote_xml(input: &str, source_receipt_id: &str) -> Result<Import
                         end_line: line_num,
                         error: err.to_string(),
                     });
-                    warnings.push(format!("EndNote record lines {start_line}-{line_num} failed validation: {err}"));
+                    warnings.push(format!(
+                        "EndNote record lines {start_line}-{line_num} failed validation: {err}"
+                    ));
                 } else {
                     records.push(record);
                 }
@@ -929,7 +974,13 @@ fn extract_xml_tag(xml: &str, tag: &str) -> Option<String> {
     let start = xml.find(&open)?.saturating_add(open.len());
     let end = xml.find(&close)?;
     if start <= end {
-        Some(xml.get(start..end)?.trim().replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">"))
+        Some(
+            xml.get(start..end)?
+                .trim()
+                .replace("&amp;", "&")
+                .replace("&lt;", "<")
+                .replace("&gt;", ">"),
+        )
     } else {
         None
     }
@@ -945,7 +996,11 @@ fn extract_all_xml_tags(xml: &str, tag: &str) -> Vec<String> {
         if let Some(end_idx) = xml.get(abs_start..).and_then(|sub| sub.find(&close)) {
             let abs_end = abs_start.saturating_add(end_idx);
             if let Some(val) = xml.get(abs_start..abs_end) {
-                let cleaned = val.trim().replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">");
+                let cleaned = val
+                    .trim()
+                    .replace("&amp;", "&")
+                    .replace("&lt;", "<")
+                    .replace("&gt;", ">");
                 if !cleaned.is_empty() {
                     results.push(cleaned);
                 }
@@ -1086,7 +1141,10 @@ fn export_bibtex(records: &[BibliographicRecord]) -> String {
         output.push_str(&format!("@{entry_type}{{{cite_key},\n"));
         output.push_str(&format!("  title = {{{}}},\n", record.title));
         if !record.authors.is_empty() {
-            output.push_str(&format!("  author = {{{}}},\n", record.authors.join(" and ")));
+            output.push_str(&format!(
+                "  author = {{{}}},\n",
+                record.authors.join(" and ")
+            ));
         }
         if let Some(year) = record.publication_year {
             output.push_str(&format!("  year = {{{year}}},\n"));
@@ -1112,10 +1170,19 @@ fn export_endnote_xml(records: &[BibliographicRecord]) -> String {
     let mut output = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xml><records>\n".to_owned();
     for record in records {
         output.push_str("  <record>\n");
-        output.push_str(&format!("    <rec-number>{}</rec-number>\n", xml_escape(&record.native_id)));
-        output.push_str(&format!("    <titles><title>{}</title>", xml_escape(&record.title)));
+        output.push_str(&format!(
+            "    <rec-number>{}</rec-number>\n",
+            xml_escape(&record.native_id)
+        ));
+        output.push_str(&format!(
+            "    <titles><title>{}</title>",
+            xml_escape(&record.title)
+        ));
         if let Some(container) = &record.container_title {
-            output.push_str(&format!("<secondary-title>{}</secondary-title>", xml_escape(container)));
+            output.push_str(&format!(
+                "<secondary-title>{}</secondary-title>",
+                xml_escape(container)
+            ));
         }
         output.push_str("</titles>\n");
         if !record.authors.is_empty() {
@@ -1129,13 +1196,22 @@ fn export_endnote_xml(records: &[BibliographicRecord]) -> String {
             output.push_str(&format!("    <dates><year>{year}</year></dates>\n"));
         }
         if let Some(doi) = &record.identifiers.doi {
-            output.push_str(&format!("    <electronic-resource-num>{}</electronic-resource-num>\n", xml_escape(doi)));
+            output.push_str(&format!(
+                "    <electronic-resource-num>{}</electronic-resource-num>\n",
+                xml_escape(doi)
+            ));
         }
         if let Some(pmid) = &record.identifiers.pmid {
-            output.push_str(&format!("    <accession-num>{}</accession-num>\n", xml_escape(pmid)));
+            output.push_str(&format!(
+                "    <accession-num>{}</accession-num>\n",
+                xml_escape(pmid)
+            ));
         }
         if let Some(abstract_text) = &record.abstract_text {
-            output.push_str(&format!("    <abstract>{}</abstract>\n", xml_escape(abstract_text)));
+            output.push_str(&format!(
+                "    <abstract>{}</abstract>\n",
+                xml_escape(abstract_text)
+            ));
         }
         output.push_str("  </record>\n");
     }

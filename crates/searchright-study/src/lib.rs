@@ -172,7 +172,11 @@ pub fn merge_studies(
             "cannot merge a study into itself".to_owned(),
         ));
     }
-    if !graph.studies.iter().any(|study| study.study_id == target_study_id) {
+    if !graph
+        .studies
+        .iter()
+        .any(|study| study.study_id == target_study_id)
+    {
         return Err(StudyGraphError::UnknownObject(target_study_id.to_owned()));
     }
     for &src in source_study_ids {
@@ -185,7 +189,11 @@ pub fn merge_studies(
     let mut collected_report_ids = Vec::new();
 
     for &src in source_study_ids {
-        if let Some(pos) = candidate.studies.iter().position(|study| study.study_id == src) {
+        if let Some(pos) = candidate
+            .studies
+            .iter()
+            .position(|study| study.study_id == src)
+        {
             let removed = candidate.studies.remove(pos);
             collected_report_ids.extend(removed.report_ids);
         }
@@ -230,7 +238,11 @@ pub fn split_study(
             "split requires at least one report to move".to_owned(),
         ));
     }
-    if graph.studies.iter().any(|study| study.study_id == new_study.study_id) {
+    if graph
+        .studies
+        .iter()
+        .any(|study| study.study_id == new_study.study_id)
+    {
         return Err(StudyGraphError::DuplicateObject(new_study.study_id));
     }
     let orig = graph
@@ -255,7 +267,9 @@ pub fn split_study(
         .iter_mut()
         .find(|study| study.study_id == original_study_id)
         .ok_or_else(|| StudyGraphError::UnknownObject(original_study_id.to_owned()))?;
-    orig_mut.report_ids.retain(|id| !move_set.contains(id.as_str()));
+    orig_mut
+        .report_ids
+        .retain(|id| !move_set.contains(id.as_str()));
 
     new_study.report_ids = report_ids_to_move.iter().map(|s| (*s).to_owned()).collect();
     let new_study_id = new_study.study_id.clone();
@@ -492,7 +506,13 @@ mod tests {
             asserted_by: "reviewer-1".to_owned(),
             asserted_at: "2026-08-16T00:00:00Z".to_owned(),
         };
-        let split_res = split_study(&mut graph, "study-1", new_study, &["report-2"], split_evidence);
+        let split_res = split_study(
+            &mut graph,
+            "study-1",
+            new_study,
+            &["report-2"],
+            split_evidence,
+        );
         assert!(split_res.is_ok());
         assert_eq!(graph.studies.len(), 2);
         assert_eq!(reports_per_study(&graph).get("study-1"), Some(&1));
