@@ -10,6 +10,7 @@ Canonical task state: **source task complete**.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `232003620e3a087f4025ca7a8e957f92cb169b51`: Close authority-boundary, immutable idempotency, exact source-preservation, structured-output, resource and prompt review findings while restoring architecture, source-structure and generated-state gates.
   - Review fix `8912bf8440d5b073a9aa7e1f673acbed5ce674d8`: Fix exact official-client receipt invocation through libtest and make interrupted receipt generation safely retryable without weakening the clean source-tree gate.
+  - Review fix `945694cc1004d0dacf09f3bd60a42107f1d46f84`: Close the workspace-wide strict Clippy gate by keeping the screening decision enum import scoped to store tests.
 
 ## Completion and evidence contract
 

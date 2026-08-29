@@ -593,6 +593,10 @@
         {
           "commit": "8912bf8440d5b073a9aa7e1f673acbed5ce674d8",
           "summary": "Fix exact official-client receipt invocation through libtest and make interrupted receipt generation safely retryable without weakening the clean source-tree gate."
+        },
+        {
+          "commit": "945694cc1004d0dacf09f3bd60a42107f1d46f84",
+          "summary": "Close the workspace-wide strict Clippy gate by keeping the screening decision enum import scoped to store tests."
         }
       ],
       "runtime_evidence": [
