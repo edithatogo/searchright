@@ -61,6 +61,13 @@ jobs:
         run: cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
       - name: Run unit and integration tests
         run: cargo test --workspace --all-features --locked
+      - name: Exercise built and installed CLI distribution contract
+        shell: bash
+        run: |
+          cargo build --locked -p searchright-cli
+          python scripts/check_cli_distribution.py target/debug/searchright
+          cargo install --path crates/searchright-cli --locked --root "$RUNNER_TEMP/searchright-install"
+          python scripts/check_cli_distribution.py "$RUNNER_TEMP/searchright-install/bin/searchright"
       - name: Run documentation tests
         run: cargo test --workspace --all-features --doc --locked
       - name: Build documentation

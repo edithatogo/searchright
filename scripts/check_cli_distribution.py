@@ -33,6 +33,10 @@ def main() -> int:
     parser.add_argument("binary", type=Path)
     arguments = parser.parse_args()
     binary = arguments.binary.resolve()
+    if not binary.is_file() and binary.suffix.lower() != ".exe":
+        executable = Path(f"{binary}.exe")
+        if executable.is_file():
+            binary = executable
     errors: list[str] = []
 
     help_result = invoke(binary, "--help")
