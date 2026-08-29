@@ -1,12 +1,6 @@
 
 # cargo-vet audits file
 
-[[audits.clap_complete]]
-who = "OpenAI Codex <noreply@openai.com>"
-criteria = "safe-to-deploy"
-version = "4.6.9"
-notes = "Track 09 source review: completion generation is local string/file output; dynamic environment completion is not invoked by Searchright; reviewed unsafe environment mutation and bounded filesystem access; no network or process execution paths found."
-
 [[audits.clap_mangen]]
 who = "OpenAI Codex <noreply@openai.com>"
 criteria = "safe-to-deploy"

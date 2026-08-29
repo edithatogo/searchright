@@ -20,7 +20,6 @@ use std::{
 
 use anyhow::{Context, Result, bail};
 use clap::{CommandFactory, Parser, Subcommand, ValueEnum, error::ErrorKind};
-use clap_complete::{Shell, generate};
 use searchright::contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, CompiledStrategy, DataHandlingRequest,
     Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
@@ -42,6 +41,16 @@ use serde::Deserialize;
 struct Cli {
     #[command(subcommand)]
     command: Command,
+}
+
+#[derive(Clone, Copy, Debug, ValueEnum)]
+enum CompletionShell {
+    Bash,
+    Elvish,
+    Fish,
+    #[value(name = "powershell")]
+    PowerShell,
+    Zsh,
 }
 
 #[derive(Debug, Subcommand)]
@@ -92,7 +101,7 @@ enum Command {
     /// Generate a shell completion script on standard output.
     Completions {
         #[arg(value_enum)]
-        shell: Shell,
+        shell: CompletionShell,
     },
     /// Generate the searchright(1) manual page on standard output.
     Manpage,
@@ -1030,11 +1039,18 @@ fn print_json(value: &impl serde::Serialize) -> Result<()> {
     Ok(())
 }
 
-fn completion_document(shell: Shell) -> Vec<u8> {
-    let mut command = Cli::command();
-    let mut document = Vec::new();
-    generate(shell, &mut command, "searchright", &mut document);
-    document
+fn completion_document(shell: CompletionShell) -> Vec<u8> {
+    match shell {
+        CompletionShell::Bash => include_bytes!("../assets/completions/searchright.bash").to_vec(),
+        CompletionShell::Elvish => {
+            include_bytes!("../assets/completions/searchright.elvish").to_vec()
+        }
+        CompletionShell::Fish => include_bytes!("../assets/completions/searchright.fish").to_vec(),
+        CompletionShell::PowerShell => {
+            include_bytes!("../assets/completions/searchright.powershell").to_vec()
+        }
+        CompletionShell::Zsh => include_bytes!("../assets/completions/searchright.zsh").to_vec(),
+    }
 }
 
 fn manpage_document() -> Result<Vec<u8>> {
@@ -1353,7 +1369,7 @@ mod tests {
 
     #[test]
     fn completion_and_manpage_documents_are_generated_without_writes() -> Result<()> {
-        let completions = String::from_utf8(completion_document(Shell::Bash))?;
+        let completions = String::from_utf8(completion_document(CompletionShell::Bash))?;
         assert!(completions.contains("_searchright"));
         assert!(completions.contains("validate-plan"));
 
