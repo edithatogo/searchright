@@ -12,9 +12,9 @@ Support independent title/abstract and full-text decisions, conflicts, adjudicat
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `compiler_verified`
 - Dependencies: `01, 06`
 - Requirements: `SR-020, SR-021, SR-022, SR-058`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Support independent title/abstract and full-text decisions, conflicts, adjudicat
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Source-implemented and compiler-verified across screening state machines, role assignments, blinding projections, criteria enforcement, amendment flows and review tool adapters. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

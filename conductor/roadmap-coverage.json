@@ -370,7 +370,7 @@
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Source-implemented and compiler-verified across screening state machines, role assignments, blinding projections, criteria enforcement, amendment flows and review tool adapters. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-screening/src/lib.rs",
         "crates/searchright-agent/src/lib.rs",
@@ -382,10 +382,10 @@
         "01",
         "06"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "compiler_verified",
       "external_approval_required": false,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
       "requirements": [
         "SR-020",
@@ -398,7 +398,7 @@
       ],
       "review_completed": true,
       "slug": "screening-workflow",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Governed screening workflow",
       "track_id": "07"
     },
