@@ -133,10 +133,10 @@ def require_clean_tree() -> None:
         raise GitHubCommandError("remote apply requires a clean Git working tree")
 
 
-def require_gh() -> None:
-    """Require an authenticated GitHub CLI session."""
+def require_gh(hostname: str = "github.com") -> None:
+    """Require an authenticated GitHub CLI session for the intended host."""
     run(["gh", "--version"])
-    run(["gh", "auth", "status"])
+    run(["gh", "auth", "status", "--hostname", hostname])
 
 
 def repository_owner(repository: str) -> str:
