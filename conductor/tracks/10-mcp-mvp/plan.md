@@ -1,6 +1,8 @@
 # Plan: 10 MCP stdio server MVP
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **compiler_verified**.
+Lifecycle: **archived** on **2026-08-30**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -60,4 +62,5 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
   - Review fix `c72fc1e76d2100116e0ab2f4e260889c5c5c04ba`: Remove the unused searchright facade UUID declaration reported by the hosted cargo-machete gate and regenerate the source SBOM and hash manifest.
   - Review fix `c1414d5cb592c67a544f0c9390fa0e9e7fd41411`: Refresh the locked searchright package dependency list after removing the redundant UUID declaration so locked builds remain reproducible.
   - Review fix `e1cbf61522c065f0743c4f3186c9c96de2859499`: Scope the GitHub CLI authentication preflight to github.com so unrelated configured enterprise-host credentials cannot block the required read-only control-plane audit.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - Review fix `366da722d751e27ec4328757f382650537ab7cb8`: Bind trusted-host authority to exact bytes in every canonical local-store family, including same-length changes and nested state, while rejecting symbolic links.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

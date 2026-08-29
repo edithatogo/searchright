@@ -36,7 +36,7 @@
     "SR-029"
   ],
   "blockers": [],
-  "claim_boundary": "The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary for consequential effects. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.",
+  "claim_boundary": "The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary that binds consequential effects to exact canonical local-store bytes. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-10",
@@ -66,6 +66,8 @@
     "verification/receipts/mcp-official-client-2026-07-28.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-08-30",
   "review_fixes": [
     {
       "commit": "232003620e3a087f4025ca7a8e957f92cb169b51",
@@ -94,6 +96,10 @@
     {
       "commit": "e1cbf61522c065f0743c4f3186c9c96de2859499",
       "summary": "Scope the GitHub CLI authentication preflight to github.com so unrelated configured enterprise-host credentials cannot block the required read-only control-plane audit."
+    },
+    {
+      "commit": "366da722d751e27ec4328757f382650537ab7cb8",
+      "summary": "Bind trusted-host authority to exact bytes in every canonical local-store family, including same-length changes and nested state, while rejecting symbolic links."
     }
   ]
 }
