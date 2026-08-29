@@ -12,9 +12,9 @@ Import/export common bibliographic formats, propose conservative duplicate clust
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `compiler_verified`
 - Dependencies: `01, 05`
 - Requirements: `SR-017, SR-018, SR-019`
 - External approval required: `false`
