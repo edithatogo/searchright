@@ -13,6 +13,8 @@ Canonical task state: **source task complete**.
   - [x] Present source path: `crates/searchright-cli/tests/cli_e2e.rs`
   - [x] Present source path: `crates/searchright-cli/tests/snapshots/`
   - [x] Present source path: `crates/searchright-cli/src/main.rs`
+  - [x] Present source path: `crates/searchright-licensed/src/lib.rs`
+  - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
   - [x] Present source path: `crates/searchright/src/engine.rs`
   - [x] Present source path: `contracts/interface-catalog.json`
   - [x] Present source path: `docs/adrs/0007-shared-application-facade.md`

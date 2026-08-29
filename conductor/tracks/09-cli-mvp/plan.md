@@ -1,6 +1,6 @@
 # Plan: 09 CLI MVP
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **compiler_verified**.
 
 GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -14,6 +14,8 @@ GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `crates/searchright-cli/tests/cli_e2e.rs`
   - [x] Present source path: `crates/searchright-cli/tests/snapshots/`
   - [x] Present source path: `crates/searchright-cli/src/main.rs`
+  - [x] Present source path: `crates/searchright-licensed/src/lib.rs`
+  - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
   - [x] Present source path: `crates/searchright/src/engine.rs`
   - [x] Present source path: `contracts/interface-catalog.json`
   - [x] Present source path: `docs/adrs/0007-shared-application-facade.md`
@@ -48,4 +50,6 @@ GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered nati
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e`: Replace reflected parser failures with a stable non-sensitive JSON usage error while completing grouped CLI and distribution coverage.
   - Review fix `dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513`: Exercise built and installed CLI snapshots on the hosted Linux, macOS and Windows CI matrix, including Windows executable resolution.
+  - Review fix `de00f29127b303824b4e643e7fd5d573fcfc1451`: Close no-clobber, canonical dispatch, actionable diagnostic, endpoint credential-reflection and distribution-coverage review findings.
+  - Review fix `46945efd3726b451674cdff8555b29a671df147b`: Close architecture-fitness and generated SBOM/source-manifest review gates on the sealed candidate.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

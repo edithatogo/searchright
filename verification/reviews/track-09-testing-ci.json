@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.sealed-review-response.v1",
+  "track_id": "09",
+  "role": "testing_ci",
+  "reviewed_revision": "46945efd3726b451674cdff8555b29a671df147b",
+  "reviewed_tree": "ca69b5c34244469595275e3493157f231aa46bc2",
+  "disposition": "approved_for_hosted_confirmation",
+  "critical_findings": [],
+  "high_findings": [],
+  "local_evidence": [
+    "53 of 53 static harness gates passed",
+    "strict workspace Clippy passed",
+    "266 of 266 nextest tests passed with zero skipped",
+    "documentation, package and cargo-deny gates passed",
+    "CLI distribution checker passed all seven checks"
+  ],
+  "required_hosted_evidence": [
+    "Linux Rust job success on the exact delivered revision",
+    "Windows Rust job success on the exact delivered revision",
+    "macOS Rust job success on the exact delivered revision"
+  ],
+  "dissent": []
+}

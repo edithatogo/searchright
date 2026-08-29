@@ -1,0 +1,15 @@
+{
+  "schema_version": "org.searchright.sealed-review-request.v1",
+  "track_id": "09",
+  "reviewed_revision": "46945efd3726b451674cdff8555b29a671df147b",
+  "reviewed_tree": "ca69b5c34244469595275e3493157f231aa46bc2",
+  "requested_roles": [
+    "implementation_correctness",
+    "security_safety",
+    "testing_ci",
+    "methodology_authority",
+    "adversarial"
+  ],
+  "request": "Independently review Track 09 implementation and evidence for correctness, security, test coverage, methodology and authority boundaries, claim integrity and archive readiness. Preserve dissent; do not edit source or confer authority.",
+  "claim_boundary": "Panel findings are advisory. The accountable owner alone authorizes semantic archival after exact-revision hosted evidence closes the remaining gate."
+}
