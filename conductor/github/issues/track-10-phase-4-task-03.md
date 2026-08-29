@@ -9,6 +9,7 @@ Canonical task state: **source task complete**.
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `232003620e3a087f4025ca7a8e957f92cb169b51`: Close authority-boundary, immutable idempotency, exact source-preservation, structured-output, resource and prompt review findings while restoring architecture, source-structure and generated-state gates.
+  - Review fix `8912bf8440d5b073a9aa7e1f673acbed5ce674d8`: Fix exact official-client receipt invocation through libtest and make interrupted receipt generation safely retryable without weakening the clean source-tree gate.
 
 ## Completion and evidence contract
 
