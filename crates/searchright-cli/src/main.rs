@@ -12,7 +12,7 @@
 )]
 
 use std::{
-    fs,
+    fs::{self, OpenOptions},
     io::{self, Write},
     path::{Path, PathBuf},
     process::ExitCode,
@@ -470,10 +470,14 @@ struct ProvenanceInput {
 
 fn main() -> ExitCode {
     match Cli::try_parse() {
-        Ok(cli) => match execute(cli) {
-            Ok(()) => ExitCode::SUCCESS,
-            Err(error) => emit_error(&error, 3),
-        },
+        Ok(cli) => {
+            let command = canonical_command(cli.command);
+            let stage = command_stage(&command);
+            match execute(command) {
+                Ok(()) => ExitCode::SUCCESS,
+                Err(error) => emit_operation_error(stage, &error),
+            }
+        }
         Err(error)
             if matches!(
                 error.kind(),
@@ -483,15 +487,180 @@ fn main() -> ExitCode {
             print!("{error}");
             ExitCode::SUCCESS
         }
-        Err(_error) => emit_error(
-            &anyhow::anyhow!("command arguments did not match the CLI contract"),
-            2,
-        ),
+        Err(_error) => emit_error("command arguments did not match the CLI contract", 2),
     }
 }
 
-fn execute(cli: Cli) -> Result<()> {
-    match cli.command {
+const fn command_stage(command: &Command) -> &'static str {
+    match command {
+        Command::Init { .. } => "init",
+        Command::ValidatePlan { .. } => "validate-plan",
+        Command::ValidateStrategy { .. } => "validate-strategy",
+        Command::ValidateDocumentEvidence { .. } => "validate-document-evidence",
+        Command::Compile { .. } => "compile",
+        Command::Deduplicate { .. } => "deduplicate",
+        Command::Prisma { .. } => "prisma",
+        Command::VerifyAudit { .. } => "verify-audit",
+        Command::ImportRecords { .. } => "import-records",
+        Command::ExportRecords { .. } => "export-records",
+        Command::StudyGraph { .. } => "study-graph",
+        Command::ValidateSearch { .. } => "validate-search",
+        Command::LivingDiff { .. } => "living-diff",
+        Command::ValidateLivingLineage { .. } => "validate-living-lineage",
+        Command::Provenance { .. } => "provenance",
+        Command::Rank { .. } => "rank",
+        Command::InspectContent { .. } => "inspect-content",
+        Command::RenderDiagnostics { .. } => "render-diagnostics",
+        Command::EvaluateGovernance { .. } => "evaluate-governance",
+        Command::AuthoriseEndpoint { .. } => "authorise-endpoint",
+        Command::ValidateAmendment { .. } => "validate-amendment",
+        Command::ValidateStandardPack { .. } => "validate-standard-pack",
+        Command::ValidateStandardAssessment { .. } => "validate-standard-assessment",
+        Command::ValidateRankingCalibration { .. } => "validate-ranking-calibration",
+        Command::VerifyWorkflowTrace { .. } => "verify-workflow-trace",
+        Command::ValidateDiscoveryRun { .. } => "validate-discovery-run",
+        Command::DiscoveryCandidates { .. } => "discovery-candidates",
+        Command::VerifyProviderComponent { .. } => "verify-provider-component",
+        Command::PlanLicensedRequest { .. } => "plan-licensed-request",
+        Command::ValidateBenchmarkReport { .. } => "validate-benchmark-report",
+        Command::Providers => "providers",
+        Command::Workflow => "workflow",
+        Command::Completions { .. } => "completions",
+        Command::Manpage => "manpage",
+        Command::Plan { .. }
+        | Command::Source { .. }
+        | Command::Strategy { .. }
+        | Command::Run { .. }
+        | Command::Import { .. }
+        | Command::Screen { .. }
+        | Command::Report { .. } => "command-dispatch",
+    }
+}
+
+fn canonical_command(command: Command) -> Command {
+    match command {
+        Command::Plan { command } => match command {
+            PlanCommand::Validate { input } => Command::ValidatePlan { input },
+            PlanCommand::ValidateAmendment { input } => Command::ValidateAmendment { input },
+            PlanCommand::EvaluateGovernance { policy, request } => {
+                Command::EvaluateGovernance { policy, request }
+            }
+            PlanCommand::Workflow => Command::Workflow,
+        },
+        Command::Source { command } => match command {
+            SourceCommand::List => Command::Providers,
+            SourceCommand::AuthoriseEndpoint { input, endpoint } => {
+                Command::AuthoriseEndpoint { input, endpoint }
+            }
+            SourceCommand::ValidateDiscoveryRun { input } => {
+                Command::ValidateDiscoveryRun { input }
+            }
+            SourceCommand::DiscoveryCandidates { input } => Command::DiscoveryCandidates { input },
+            SourceCommand::VerifyProviderComponent {
+                manifest,
+                component,
+            } => Command::VerifyProviderComponent {
+                manifest,
+                component,
+            },
+            SourceCommand::PlanLicensedRequest {
+                profile,
+                strategy,
+                endpoint,
+            } => Command::PlanLicensedRequest {
+                profile,
+                strategy,
+                endpoint,
+            },
+        },
+        Command::Strategy { command } => match command {
+            StrategyCommand::Validate { input } => Command::ValidateStrategy { input },
+            StrategyCommand::Compile { input, dialect } => Command::Compile { input, dialect },
+            StrategyCommand::ValidateSearch { input } => Command::ValidateSearch { input },
+            StrategyCommand::ValidateStandardPack { input } => {
+                Command::ValidateStandardPack { input }
+            }
+            StrategyCommand::ValidateStandardAssessment { input } => {
+                Command::ValidateStandardAssessment { input }
+            }
+            StrategyCommand::ValidateBenchmarkReport { input } => {
+                Command::ValidateBenchmarkReport { input }
+            }
+        },
+        Command::Run { command } => match command {
+            RunCommand::AuthoriseEndpoint { input, endpoint } => {
+                Command::AuthoriseEndpoint { input, endpoint }
+            }
+            RunCommand::VerifyAudit { input } => Command::VerifyAudit { input },
+            RunCommand::VerifyWorkflowTrace { input } => Command::VerifyWorkflowTrace { input },
+            RunCommand::InspectContent {
+                input,
+                subject_id,
+                policy,
+            } => Command::InspectContent {
+                input,
+                subject_id,
+                policy,
+            },
+            RunCommand::ValidateDocumentEvidence { input } => {
+                Command::ValidateDocumentEvidence { input }
+            }
+        },
+        Command::Import { command } => match command {
+            ImportCommand::Records {
+                input,
+                format,
+                source_receipt_id,
+            } => Command::ImportRecords {
+                input,
+                format,
+                source_receipt_id,
+            },
+            ImportCommand::ExportRecords {
+                input,
+                review_id,
+                input_format,
+                output_format,
+            } => Command::ExportRecords {
+                input,
+                review_id,
+                input_format,
+                output_format,
+            },
+            ImportCommand::Deduplicate {
+                input,
+                title_threshold,
+            } => Command::Deduplicate {
+                input,
+                title_threshold,
+            },
+        },
+        Command::Screen { command } => match command {
+            ScreenCommand::Rank { input, query_term } => Command::Rank { input, query_term },
+            ScreenCommand::StudyGraph { input } => Command::StudyGraph { input },
+            ScreenCommand::ValidateRankingCalibration { input } => {
+                Command::ValidateRankingCalibration { input }
+            }
+            ScreenCommand::LivingDiff { previous, current } => {
+                Command::LivingDiff { previous, current }
+            }
+            ScreenCommand::ValidateLivingLineage { input } => {
+                Command::ValidateLivingLineage { input }
+            }
+        },
+        Command::Report { command } => match command {
+            ReportCommand::Prisma { input, format } => Command::Prisma { input, format },
+            ReportCommand::Provenance { input } => Command::Provenance { input },
+            ReportCommand::RenderDiagnostics { input, format } => {
+                Command::RenderDiagnostics { input, format }
+            }
+        },
+        command => command,
+    }
+}
+
+fn execute(command: Command) -> Result<()> {
+    match command {
         Command::Init { target, apply } => initialise(&target, apply)?,
         Command::Plan {
             command: PlanCommand::Validate { input },
@@ -523,7 +692,7 @@ fn execute(cli: Cli) -> Result<()> {
             command: SourceCommand::AuthoriseEndpoint { input, endpoint },
         } => {
             let envelope: ExecutionEnvelope = read_document(&input)?;
-            SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
+            let endpoint = SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
             print_json(&serde_json::json!({"authorised": true, "endpoint": endpoint}))?;
         }
         Command::Source {
@@ -621,7 +790,7 @@ fn execute(cli: Cli) -> Result<()> {
             command: RunCommand::AuthoriseEndpoint { input, endpoint },
         } => {
             let envelope: ExecutionEnvelope = read_document(&input)?;
-            SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
+            let endpoint = SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
             print_json(&serde_json::json!({"authorised": true, "endpoint": endpoint}))?;
         }
         Command::Run {
@@ -924,7 +1093,7 @@ fn execute(cli: Cli) -> Result<()> {
         }
         Command::AuthoriseEndpoint { input, endpoint } => {
             let envelope: ExecutionEnvelope = read_document(&input)?;
-            SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
+            let endpoint = SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
             print_json(&serde_json::json!({"authorised": true, "endpoint": endpoint}))?;
         }
         Command::ValidateAmendment { input } => {
@@ -1005,15 +1174,19 @@ fn initialise(target: &Path, apply: bool) -> Result<()> {
         "write_authority": "explicit_apply",
     });
     if apply {
-        if target.exists() {
-            bail!(
-                "refusing to overwrite existing configuration at {}",
-                target.display()
-            );
-        }
         let encoded = format!("{}\n", serde_json::to_string_pretty(&document)?);
-        fs::write(target, encoded)
-            .with_context(|| format!("could not write configuration to {}", target.display()))?;
+        let open_result = OpenOptions::new().write(true).create_new(true).open(target);
+        let context = if open_result
+            .as_ref()
+            .is_err_and(|error| error.kind() == io::ErrorKind::AlreadyExists)
+        {
+            "target already exists; choose a new path or remove it explicitly"
+        } else {
+            "configuration target could not be created; verify its parent and permissions"
+        };
+        let mut file = open_result.context(context)?;
+        file.write_all(encoded.as_bytes())
+            .context("could not write configuration")?;
     }
     print_json(&serde_json::json!({
         "schema_version": "org.searchright.cli-result.v1",
@@ -1025,11 +1198,11 @@ fn initialise(target: &Path, apply: bool) -> Result<()> {
     }))
 }
 
-fn emit_error(error: &anyhow::Error, exit_code: u8) -> ExitCode {
+fn emit_error(message: &str, exit_code: u8) -> ExitCode {
     let envelope = serde_json::json!({
         "schema_version": "org.searchright.cli-error.v1",
         "code": if exit_code == 2 { "cli.usage" } else { "cli.operation_failed" },
-        "message": error.to_string(),
+        "message": message,
         "corrective_action": if exit_code == 2 {
             "Run searchright --help and correct the command arguments."
         } else {
@@ -1039,6 +1212,59 @@ fn emit_error(error: &anyhow::Error, exit_code: u8) -> ExitCode {
     });
     eprintln!("{envelope}");
     ExitCode::from(exit_code)
+}
+
+fn emit_operation_error(stage: &str, error: &anyhow::Error) -> ExitCode {
+    let is_io = error
+        .chain()
+        .any(<dyn std::error::Error + 'static>::is::<io::Error>);
+    let json_category = error
+        .chain()
+        .find_map(|cause| cause.downcast_ref::<serde_json::Error>())
+        .map(serde_json::Error::classify);
+    let is_syntax = matches!(
+        json_category,
+        Some(serde_json::error::Category::Syntax | serde_json::error::Category::Eof)
+    ) || error
+        .chain()
+        .any(<dyn std::error::Error + 'static>::is::<serde_yaml::Error>);
+    let is_document_contract = matches!(json_category, Some(serde_json::error::Category::Data));
+    let (category, message, corrective_action) = if is_io {
+        (
+            "filesystem",
+            "the operation could not safely read or create its filesystem input",
+            "Verify the input path, parent directory, permissions, and no-overwrite state, then retry.",
+        )
+    } else if is_syntax {
+        (
+            "document_syntax",
+            "the input document does not match the required JSON or YAML syntax",
+            "Correct the input document syntax for the named stage, then retry.",
+        )
+    } else if is_document_contract {
+        (
+            "document_contract",
+            "the input document is missing or misstates required contract fields",
+            "Correct the document fields for the named contract stage, then retry.",
+        )
+    } else {
+        (
+            "contract_or_authority",
+            "the operation failed a contract validation or authority policy check",
+            "Review the input contract and authority policy for the named stage, then retry.",
+        )
+    };
+    let envelope = serde_json::json!({
+        "schema_version": "org.searchright.cli-error.v1",
+        "code": format!("cli.{category}"),
+        "stage": stage,
+        "category": category,
+        "message": message,
+        "corrective_action": corrective_action,
+        "partial_output_safe": false,
+    });
+    eprintln!("{envelope}");
+    ExitCode::from(3)
 }
 
 fn read_document<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
@@ -1195,6 +1421,211 @@ mod tests {
     }
 
     #[test]
+    fn every_grouped_command_canonicalises_to_its_legacy_dispatch() -> Result<()> {
+        let cases: &[(&[&str], &[&str])] = &[
+            (
+                &["plan", "validate", "input.json"],
+                &["validate-plan", "input.json"],
+            ),
+            (
+                &["plan", "validate-amendment", "input.json"],
+                &["validate-amendment", "input.json"],
+            ),
+            (
+                &["plan", "evaluate-governance", "policy.json", "request.json"],
+                &["evaluate-governance", "policy.json", "request.json"],
+            ),
+            (&["plan", "workflow"], &["workflow"]),
+            (&["source", "list"], &["providers"]),
+            (
+                &[
+                    "source",
+                    "authorise-endpoint",
+                    "input.json",
+                    "https://example.test",
+                ],
+                &["authorise-endpoint", "input.json", "https://example.test"],
+            ),
+            (
+                &["source", "validate-discovery-run", "input.json"],
+                &["validate-discovery-run", "input.json"],
+            ),
+            (
+                &["source", "discovery-candidates", "input.json"],
+                &["discovery-candidates", "input.json"],
+            ),
+            (
+                &[
+                    "source",
+                    "verify-provider-component",
+                    "manifest.json",
+                    "component.wasm",
+                ],
+                &[
+                    "verify-provider-component",
+                    "manifest.json",
+                    "component.wasm",
+                ],
+            ),
+            (
+                &[
+                    "source",
+                    "plan-licensed-request",
+                    "profile.json",
+                    "strategy.json",
+                    "https://example.test",
+                ],
+                &[
+                    "plan-licensed-request",
+                    "profile.json",
+                    "strategy.json",
+                    "https://example.test",
+                ],
+            ),
+            (
+                &["strategy", "validate", "input.json"],
+                &["validate-strategy", "input.json"],
+            ),
+            (
+                &["strategy", "compile", "input.json", "--dialect", "pubmed"],
+                &["compile", "input.json", "--dialect", "pubmed"],
+            ),
+            (
+                &["strategy", "validate-search", "input.json"],
+                &["validate-search", "input.json"],
+            ),
+            (
+                &["strategy", "validate-standard-pack", "input.json"],
+                &["validate-standard-pack", "input.json"],
+            ),
+            (
+                &["strategy", "validate-standard-assessment", "input.json"],
+                &["validate-standard-assessment", "input.json"],
+            ),
+            (
+                &["strategy", "validate-benchmark-report", "input.json"],
+                &["validate-benchmark-report", "input.json"],
+            ),
+            (
+                &[
+                    "run",
+                    "authorise-endpoint",
+                    "input.json",
+                    "https://example.test",
+                ],
+                &["authorise-endpoint", "input.json", "https://example.test"],
+            ),
+            (
+                &["run", "verify-audit", "input.jsonl"],
+                &["verify-audit", "input.jsonl"],
+            ),
+            (
+                &["run", "verify-workflow-trace", "input.json"],
+                &["verify-workflow-trace", "input.json"],
+            ),
+            (
+                &[
+                    "run",
+                    "inspect-content",
+                    "input.txt",
+                    "--subject-id",
+                    "subject",
+                ],
+                &["inspect-content", "input.txt", "--subject-id", "subject"],
+            ),
+            (
+                &["run", "validate-document-evidence", "input.json"],
+                &["validate-document-evidence", "input.json"],
+            ),
+            (
+                &[
+                    "import",
+                    "records",
+                    "input.ris",
+                    "--format",
+                    "ris",
+                    "--source-receipt-id",
+                    "receipt",
+                ],
+                &[
+                    "import-records",
+                    "input.ris",
+                    "--format",
+                    "ris",
+                    "--source-receipt-id",
+                    "receipt",
+                ],
+            ),
+            (
+                &[
+                    "import",
+                    "export-records",
+                    "input.json",
+                    "--review-id",
+                    "review",
+                    "--output-format",
+                    "ris",
+                ],
+                &[
+                    "export-records",
+                    "input.json",
+                    "--review-id",
+                    "review",
+                    "--output-format",
+                    "ris",
+                ],
+            ),
+            (
+                &["import", "deduplicate", "input.json"],
+                &["deduplicate", "input.json"],
+            ),
+            (
+                &["screen", "rank", "input.json", "--query-term", "term"],
+                &["rank", "input.json", "--query-term", "term"],
+            ),
+            (
+                &["screen", "study-graph", "input.json"],
+                &["study-graph", "input.json"],
+            ),
+            (
+                &["screen", "validate-ranking-calibration", "input.json"],
+                &["validate-ranking-calibration", "input.json"],
+            ),
+            (
+                &["screen", "living-diff", "previous.json", "current.json"],
+                &["living-diff", "previous.json", "current.json"],
+            ),
+            (
+                &["screen", "validate-living-lineage", "input.json"],
+                &["validate-living-lineage", "input.json"],
+            ),
+            (
+                &["report", "prisma", "input.json"],
+                &["prisma", "input.json"],
+            ),
+            (
+                &["report", "provenance", "input.json"],
+                &["provenance", "input.json"],
+            ),
+            (
+                &["report", "render-diagnostics", "input.json"],
+                &["render-diagnostics", "input.json"],
+            ),
+        ];
+        for (grouped, legacy) in cases {
+            let grouped =
+                Cli::try_parse_from(std::iter::once("searchright").chain(grouped.iter().copied()))?;
+            let legacy =
+                Cli::try_parse_from(std::iter::once("searchright").chain(legacy.iter().copied()))?;
+            assert_eq!(
+                format!("{:?}", canonical_command(grouped.command)),
+                format!("{:?}", legacy.command),
+            );
+        }
+        Ok(())
+    }
+
+    #[test]
     fn completion_and_manpage_documents_are_generated_without_writes() -> Result<()> {
         let completions = String::from_utf8(completion_document(Shell::Bash))?;
         assert!(completions.contains("_searchright"));
@@ -1219,7 +1650,7 @@ mod tests {
         let Err(error) = result else {
             panic!("existing files must not be overwritten");
         };
-        assert!(error.to_string().contains("refusing to overwrite"));
+        assert!(error.to_string().contains("target already exists"));
     }
 
     #[test]

@@ -53,6 +53,38 @@ def main() -> int:
         if (temporary / "snapshot.json").exists():
             errors.append("dry-run init wrote its target")
 
+        apply_result = invoke(binary, "init", "--target", "snapshot.json", "--apply", cwd=temporary)
+        try:
+            apply_document = json.loads(apply_result.stdout)
+        except json.JSONDecodeError:
+            apply_document = None
+        created = temporary / "snapshot.json"
+        if (
+            apply_result.returncode != 0
+            or not isinstance(apply_document, dict)
+            or apply_document.get("mode") != "apply"
+            or apply_document.get("changed") is not True
+            or not created.is_file()
+        ):
+            errors.append("explicit apply did not create the expected configuration")
+        original_bytes = created.read_bytes() if created.is_file() else b""
+        refusal = invoke(binary, "init", "--target", "snapshot.json", "--apply", cwd=temporary)
+        try:
+            refusal_document = json.loads(refusal.stderr)
+        except json.JSONDecodeError:
+            refusal_document = None
+        if (
+            refusal.returncode != 3
+            or refusal.stdout
+            or not isinstance(refusal_document, dict)
+            or refusal_document.get("code") != "cli.filesystem"
+            or refusal_document.get("stage") != "init"
+            or refusal_document.get("category") != "filesystem"
+            or not created.is_file()
+            or created.read_bytes() != original_bytes
+        ):
+            errors.append("second apply did not fail closed without changing the target")
+
     error_result = invoke(binary, "invalid-command")
     expected_error = json.loads((SNAPSHOTS / "usage-error.json").read_text(encoding="utf-8"))
     try:
@@ -62,9 +94,33 @@ def main() -> int:
     if error_result.returncode != 2 or observed_error != expected_error:
         errors.append("usage error did not match the checked-in JSON snapshot")
 
-    completions = invoke(binary, "completions", "bash")
-    if completions.returncode != 0 or "_searchright" not in completions.stdout:
-        errors.append("Bash completion generation failed")
+    completion_markers = {
+        "bash": "_searchright()",
+        "elvish": "edit:completion:arg-completer[searchright]",
+        "fish": "__fish_searchright_global_optspecs",
+        "powershell": "Register-ArgumentCompleter -Native -CommandName 'searchright'",
+        "zsh": "#compdef searchright",
+    }
+    for shell, marker in completion_markers.items():
+        completions = invoke(binary, "completions", shell)
+        if completions.returncode != 0 or marker not in completions.stdout:
+            errors.append(f"{shell} completion generation failed")
+
+    secret = "TRACK09_SENTINEL_SECRET"
+    envelope = ROOT / "contracts" / "examples" / "execution-envelope.yaml"
+    query_endpoint = f"https://eutils.ncbi.nlm.nih.gov/path?api_key={secret}"
+    for prefix in (("run", "authorise-endpoint"), ("authorise-endpoint",)):
+        authority = invoke(binary, *prefix, str(envelope), query_endpoint)
+        if authority.returncode != 0 or secret in authority.stdout or secret in authority.stderr:
+            errors.append(f"{' '.join(prefix)} leaked a query credential")
+        else:
+            authority_result = json.loads(authority.stdout)
+            if authority_result.get("endpoint") != "https://eutils.ncbi.nlm.nih.gov":
+                errors.append(f"{' '.join(prefix)} did not emit the sanitized endpoint origin")
+    credential_endpoint = f"https://user:{secret}@eutils.ncbi.nlm.nih.gov/path"
+    authority = invoke(binary, "run", "authorise-endpoint", str(envelope), credential_endpoint)
+    if authority.returncode != 3 or secret in authority.stdout or secret in authority.stderr:
+        errors.append("credential-bearing endpoint did not fail without reflection")
 
     manpage = invoke(binary, "manpage")
     if manpage.returncode != 0 or ".TH searchright 1" not in manpage.stdout:
@@ -73,7 +129,15 @@ def main() -> int:
     receipt = {
         "schema_version": "org.searchright.cli-distribution-check.v1",
         "status": "failed" if errors else "passed",
-        "checks": ["help_snapshot", "dry_run_json", "usage_error_json", "completions", "manpage"],
+        "checks": [
+            "help_snapshot",
+            "dry_run_json",
+            "no_clobber_apply_refusal",
+            "usage_error_json",
+            "all_completions",
+            "endpoint_secret_non_reflection",
+            "manpage",
+        ],
         "errors": errors,
         "limitations": [
             "The receipt applies only to the supplied binary and operating system.",

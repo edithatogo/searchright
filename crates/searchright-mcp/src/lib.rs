@@ -965,11 +965,11 @@ impl SearchrightServer {
         let envelope: ExecutionEnvelope =
             serde_json::from_str(&input.envelope_json).map_err(json_invalid_params)?;
         match SearchrightEngine::authorise_endpoint(&envelope, &input.endpoint) {
-            Ok(()) => json_success(
+            Ok(endpoint) => json_success(
                 "authorise_endpoint",
                 &serde_json::json!({
                     "authorised": true,
-                    "endpoint": input.endpoint,
+                    "endpoint": endpoint,
                 }),
             ),
             Err(error) => Ok(tool_error(error.to_string())),
@@ -2217,6 +2217,46 @@ mod tests {
         assert!(!first_json.to_string().contains("password"));
         assert!(!first_json.to_string().contains("api_key"));
         assert!(!first_json.to_string().contains("secret"));
+        Ok(())
+    }
+
+    #[test]
+    fn endpoint_authority_emits_only_the_sanitized_origin() -> Result<(), Box<dyn std::error::Error>>
+    {
+        let secret = "TRACK09_SENTINEL_SECRET";
+        let envelope_json = serde_json::json!({
+            "schema_version": "org.searchright.execution-envelope.v1",
+            "operation_id": "mcp-endpoint-test",
+            "review_id": "review-1",
+            "network": "allowlisted_https",
+            "allowed_hosts": ["eutils.ncbi.nlm.nih.gov"],
+            "secret_handling": "environment_redacted",
+            "full_text_handling": "metadata_only",
+            "untrusted_content": "data_only",
+            "maximum_records": 1,
+            "maximum_seconds": 1,
+            "dry_run": true,
+            "approved_by": "test-approver"
+        })
+        .to_string();
+        let result =
+            SearchrightServer::default().authorise_endpoint(Parameters(EndpointInput {
+                envelope_json,
+                endpoint: format!("https://eutils.ncbi.nlm.nih.gov/path?api_key={secret}#fragment"),
+            }))?;
+        let encoded = serde_json::to_string(&result)?;
+
+        assert_eq!(result.is_error, Some(false));
+        assert_eq!(
+            result
+                .structured_content
+                .as_ref()
+                .and_then(|value| value.get("endpoint")),
+            Some(&serde_json::json!("https://eutils.ncbi.nlm.nih.gov"))
+        );
+        assert!(!encoded.contains(secret));
+        assert!(!encoded.contains("api_key"));
+        assert!(!encoded.contains("fragment"));
         Ok(())
     }
 
