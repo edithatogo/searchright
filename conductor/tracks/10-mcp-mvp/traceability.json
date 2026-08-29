@@ -5,7 +5,7 @@
   "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/10-mcp-mvp/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Compiler-verified local stdio implementation only. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Live providers, remote hosted MCP, methodological certification, final screening automation, publication and release require separate evidence.",
   "assertions": [
     {
       "assertion_id": "T10-A001",
@@ -44,7 +44,7 @@
         "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The planning, PRESS, network-disabled fixture execution and screening operations delegate to the shared facade and require an opaque trusted-host grant for writes; default MCP and CLI adapters fail closed. Live-provider execution and automated final screening are not claimed."
+      "permitted_claim": "The planning, PRESS, network-disabled fixture execution and screening operations delegate to the shared facade and require an opaque trusted-host grant bound to exact request, principal, policy and canonical local-store bytes for writes; default MCP and CLI adapters fail closed. Live-provider execution and automated final screening are not claimed."
     },
     {
       "assertion_id": "T10-A002",

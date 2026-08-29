@@ -3,11 +3,11 @@
 
 Parent phase key: `track-10-phase-4`
 Conductor plan: `conductor/tracks/10-mcp-mvp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 ## Completion and evidence contract
 

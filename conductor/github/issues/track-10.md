@@ -28,6 +28,6 @@ Expose typed, authority-annotated MCP tools over the same facade with stable str
 
 ## Claim boundary
 
-The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary for consequential effects. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.
+The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary that binds consequential effects to exact canonical local-store bytes. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
