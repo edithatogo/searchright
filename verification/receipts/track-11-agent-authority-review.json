@@ -1,16 +1,32 @@
 {
   "schema_version": "org.searchright.track-review-verification.v1",
   "track_id": "11",
-  "observed_at": "2026-08-12",
-  "source_revision": "d71fb8952acaac9a408018f3da65f7ec1e490390",
-  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
+  "observed_at": "2026-08-30",
+  "source_revision": "b7f42271ca25860acc83ef16414b514e96f39c2b",
+  "toolchain": "rustc 1.98.0-aarch64-apple-darwin",
   "status": "passed_with_external_blockers",
   "checks": [
-    {"command": "cargo test -p searchright-agent --locked", "status": "passed", "tests_passed": 6},
-    {"command": "cargo clippy -p searchright-agent --locked --all-targets -- -D warnings", "status": "passed"}
+    {
+      "command": "cargo test -p searchright-agent --locked",
+      "status": "passed",
+      "tests_passed": 14
+    },
+    {
+      "command": "cargo clippy -p searchright-agent --all-targets --locked -- -D warnings",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/run_static_harness.py",
+      "status": "passed_except_stale_manifest_discovered_and_regenerated",
+      "gates_passed": 53,
+      "gates_total": 54
+    }
   ],
   "limits": [
-    "Supported-host and model evaluations and human information-specialist calibration remain open.",
-    "Downstream thin-caller and registry-publication evidence remain open."
+    "Downstream academic-research-skills adoption and consumer validation remain pending after licence and upstream-drift review.",
+    "Supported-host and model scenario evaluation remains pending.",
+    "Human information-specialist calibration remains pending.",
+    "Registry submission remains unauthorized and no observed acceptance receipt exists.",
+    "The stale source manifest was caused by newly tracked contract files being absent from the pre-stage manifest and was regenerated for final verification."
   ]
 }

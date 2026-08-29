@@ -53,4 +53,5 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c`: Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries.
+  - Review fix `b7f42271ca25860acc83ef16414b514e96f39c2b`: Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
