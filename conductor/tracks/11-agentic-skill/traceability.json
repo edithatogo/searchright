@@ -10,7 +10,7 @@
     {
       "assertion_id": "T11-A001",
       "statement": "Publish SKILL.md with trigger and non-trigger boundaries",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/SKILL.md",
@@ -32,7 +32,7 @@
     {
       "assertion_id": "T11-A002",
       "statement": "Add planning, strategy, PRESS, execution, screening and reporting references",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/workflows/systematic-review.yaml",
@@ -61,7 +61,7 @@
     {
       "assertion_id": "T11-A003",
       "statement": "Create subagent role cards and handoff contracts",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/agents",
@@ -85,7 +85,7 @@
     {
       "assertion_id": "T11-A004",
       "statement": "Add scenario, prompt-injection and authority tests",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/evaluations/authority-scenarios.json",

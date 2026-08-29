@@ -700,7 +700,7 @@
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
           "permitted_claim": "The local skill entrypoint has deterministic trigger, non-trigger, authority and failure-routing checks; host discovery and model behaviour are not claimed.",
-          "state": "source_implemented"
+          "state": "partially_implemented"
         },
         "T11-A002": {
           "deterministic_tests": [
@@ -724,7 +724,7 @@
             "Calibrate authority and failure modes with human information specialists."
           ],
           "permitted_claim": "Planning through reporting stages and conservative authority gates are compiler-checked locally; host/model behaviour and human calibration are not established.",
-          "state": "source_implemented"
+          "state": "partially_implemented"
         },
         "T11-A003": {
           "deterministic_tests": [
@@ -743,7 +743,7 @@
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
           "permitted_claim": "Seven bounded role cards and a compiler-checked, digest-bound least-context handoff contract exist locally; handoffs do not confer operational authority.",
-          "state": "source_implemented"
+          "state": "partially_implemented"
         },
         "T11-A004": {
           "deterministic_tests": [
@@ -763,7 +763,7 @@
             "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
           ],
           "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority, including prompt-injection, forged, mis-scoped, expired, revoked, replayed and human-authority denials; model and host behaviour remain untested.",
-          "state": "source_implemented"
+          "state": "partially_implemented"
         },
         "T11-A005": {
           "deterministic_tests": [
