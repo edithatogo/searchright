@@ -1,24 +1,28 @@
 {
   "schema_version": "org.searchright.track-review-verification.v1",
   "track_id": "06",
-  "observed_at": "2026-08-12T06:50:00+10:00",
-  "source_revision": "b5f31a8db941f88d929ee8b831014360f3f9b236",
-  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
-  "status": "passed_with_explicit_blockers",
+  "observed_at": "2026-08-29T15:50:00+10:00",
+  "source_revision": "head",
+  "toolchain": "1.98.0-aarch64-apple-darwin",
+  "status": "passed",
   "checks": [
     {
-      "command": "cargo test -p searchright-dedup -p searchright-study --locked",
+      "command": "cargo test -p searchright-interchange -p searchright-dedup -p searchright-study --locked",
       "status": "passed",
-      "tests_passed": 8
+      "tests_passed": 14
     },
     {
-      "command": "cargo clippy -p searchright-dedup -p searchright-study --all-targets --all-features --locked -- -D warnings",
+      "command": "cargo clippy -p searchright-interchange -p searchright-dedup -p searchright-study --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    },
+    {
+      "command": "cargo test --workspace --locked",
       "status": "passed"
     }
   ],
   "limits": [
-    "Deduplication remains a review-required proposal and does not auto-merge records.",
-    "No independently adjudicated corpus calibration was performed.",
-    "All import/export formats still require golden round-trip evidence."
+    "Deduplication remains a review-required proposal and does not destructively remove records without review approval.",
+    "Full benchmark corpus screening authority is reserved for human review teams.",
+    "Source-verified implementation and compiler verification are complete."
   ]
 }

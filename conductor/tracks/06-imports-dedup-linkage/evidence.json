@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "06",
   "title": "Imports, deduplication and study linkage",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "compiler_verified",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-dedup/src/lib.rs",

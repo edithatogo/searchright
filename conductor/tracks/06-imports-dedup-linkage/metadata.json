@@ -3,8 +3,8 @@
   "track_id": "06",
   "slug": "imports-dedup-linkage",
   "title": "Imports, deduplication and study linkage",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-05",
   "updated": "2026-08-09",
   "dependencies": [
@@ -12,7 +12,7 @@
     "05"
   ],
   "horizon": "mvp",
-  "evidence_level": "source_verified",
+  "evidence_level": "compiler_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/06-imports-dedup-linkage/evidence.json",
   "traceability_path": "conductor/tracks/06-imports-dedup-linkage/traceability.json",

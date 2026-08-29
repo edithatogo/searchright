@@ -344,10 +344,10 @@
         "01",
         "05"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "compiler_verified",
       "external_approval_required": false,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Import/export common bibliographic formats, propose conservative duplicate clusters and distinguish records, reports and studies.",
       "requirements": [
         "SR-017",
@@ -359,7 +359,7 @@
       ],
       "review_completed": true,
       "slug": "imports-dedup-linkage",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Imports, deduplication and study linkage",
       "track_id": "06"
     },

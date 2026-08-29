@@ -2040,6 +2040,7 @@ name = "searchright-interchange"
 version = "0.1.0-alpha.1"
 dependencies = [
  "blake3",
+ "proptest",
  "schemars",
  "searchright-contracts",
  "serde",
@@ -2191,6 +2192,7 @@ dependencies = [
 name = "searchright-study"
 version = "0.1.0-alpha.1"
 dependencies = [
+ "proptest",
  "searchright-contracts",
  "thiserror",
 ]

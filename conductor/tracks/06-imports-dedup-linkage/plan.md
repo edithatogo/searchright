@@ -1,6 +1,6 @@
 # Plan: 06 Imports, deduplication and study linkage
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **compiler_verified**.
 
 GitHub issue key: `track-06`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,7 +8,7 @@ GitHub issue key: `track-06`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-06-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-dedup/src/lib.rs`
   - [x] Present source path: `crates/searchright-interchange/src/lib.rs`
   - [x] Present source path: `crates/searchright-study/src/lib.rs`
