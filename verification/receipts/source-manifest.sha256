@@ -39,7 +39,7 @@ cfc13e6fbe6a5d7efccaac17fe8607dfd75b8a8058fcb223d6a451ab39319045  ./CLAUDE.md
 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
 996c7915a0ad41fb122dda10aa60fda0c917b95f834b2d57b56ae88f1d7ca248  ./CONTEXT.md
 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
-ef2e3827deee85a12762eec96cdefe6c6dff15e47a8ac5ea45425b06ff62e7ab  ./Cargo.lock
+32a73f2d3bff2e570aa6a5d1d4771ccf946448301e60336ce345a86612cb721c  ./Cargo.lock
 f0c5e52553b95feede330b77b737559169a0514b60cda44c9f44e2e1a38fed56  ./Cargo.toml
 c01619a340bc72f11fd220edfadc87227e481748dcb30dc01dce93dddc809780  ./Dockerfile
 578a4b18c4f2cb587a64af04b36d81ca8fdb30eb63de45233728adf4cd2c7bdf  ./GEMINI.md
@@ -1063,7 +1063,7 @@ dad8eaf177bebbc54250815fa93f03b7cffdabad3a78f421bf364d5835fa149e  ./crates/evide
 8d48eab0679116a27dd4e315ef3275ce02fea89d609ab88a32ab24374906533c  ./crates/evidence-search-core/src/audit.rs
 d97c8f62ea772998010a6832ef80f9053bdc98c877c174681571bb3696962931  ./crates/evidence-search-core/src/compiler.rs
 a4efc9e7942893374d1e9f39c1a9094b9743fa2a31eb7010203f9057caef2274  ./crates/evidence-search-core/src/lib.rs
-f444e581711a0ce52f6437e19321d77e3c7ff21ee5e541f80265a7995af6fe4e  ./crates/evidence-search-core/src/native.rs
+94252af867fadf922d1790a6537882677b861435fa9ae59568c21bc883f680ed  ./crates/evidence-search-core/src/native.rs
 190bda7f6c017895057db314feed54239c79ea0ab0168708cc7e32fd4a30f047  ./crates/evidence-search-core/src/provider.rs
 7541d24b79ace8fd0af5f602ca67136527845dbf6358eb215c4d3c973e319e4c  ./crates/evidence-search-core/tests/property_tests.rs
 598bd4b816129b0427210846d9a3f87975bf3559cadb4133ef966325e4a6e37b  ./crates/searchright-access/Cargo.toml
@@ -1373,7 +1373,7 @@ c98303e175880e35759902815680ae997b26da48612af925accc28609907666e  ./scripts/sync
 b71fbe8bfbb33f4d45bbfd9255689c07d0e517278623fc744ea7c077599328b8  ./scripts/sync_traceability.py
 684ad89d0faffc56f5517af9d29f0fbd3940e4a96ff20ff43b09c5ef0c5e9844  ./scripts/sync_track_evidence.py
 5c9c6389ec1eb1fef9b5039fc45d4d3db108b3fbabab84db43207d79ce0089c4  ./scripts/validate_repository.py
-3b0b98977ccb38645d3e333ab01b67a626e282b286c5b5b694a1f263a6a0834a  ./scripts/verify.sh
+9413172fe81e09d1e42aca74c6b8d4513360d9f6b3f2d2b3383e2de737a9f23a  ./scripts/verify.sh
 3935ada3c1bbfcb1316ff407971e095bb12b2ba08a5db1989a249e6722c552a7  ./sdk/manifest.json
 6fdcb99fbd7c14aefb175d3fbddb8b8c19b58292999586b9f80a282e4e296a8c  ./server.json
 7eb8133dbf2bc58335fa45711a49aecc3a3d0498a0a9a4856342d89a632159a9  ./skills/systematic-search/SKILL.md

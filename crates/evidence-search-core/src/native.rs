@@ -1,11 +1,10 @@
 use std::collections::BTreeMap;
 
 use evidence_search_contracts::{
-    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION, SEARCH_STRATEGY_SCHEMA_VERSION,
-    NativeNormalisationState, NativeParseDiagnostic, NativeParseSeverity,
-    NativeQueryLine, NativeQueryLineKind, NativeSearchStrategy, NativeSourceSpan,
-    QueryExpr, SearchDialect, SearchField, SearchLimit, SearchStrategy, SearchTerm,
-    Validate,
+    NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION, NativeNormalisationState, NativeParseDiagnostic,
+    NativeParseSeverity, NativeQueryLine, NativeQueryLineKind, NativeSearchStrategy,
+    NativeSourceSpan, QueryExpr, SEARCH_STRATEGY_SCHEMA_VERSION, SearchDialect, SearchField,
+    SearchLimit, SearchStrategy, SearchTerm, Validate,
 };
 
 /// Native parser version recorded in every source-preserving parse.
@@ -226,7 +225,9 @@ fn is_supported_expression(dialect: &SearchDialect, value: &str) -> bool {
                 || lower.starts_with("ab ")
         }
         SearchDialect::Scopus => {
-            (lower.starts_with("title-abs-key(") || lower.starts_with("title(") || lower.starts_with("abs("))
+            (lower.starts_with("title-abs-key(")
+                || lower.starts_with("title(")
+                || lower.starts_with("abs("))
                 && value.ends_with(')')
         }
         SearchDialect::WebOfScience => {
@@ -610,28 +611,44 @@ fn tokenize_expression(
         // Check CINAHL TI / AB / AU / JN prefixes
         if lower.starts_with("ti ") {
             i += 3;
-            let term = parse_single_term(dialect, &input[char_byte_offset(input, i)..], Some(vec![SearchField::Title]))?;
+            let term = parse_single_term(
+                dialect,
+                &input[char_byte_offset(input, i)..],
+                Some(vec![SearchField::Title]),
+            )?;
             i += term_length(&input[char_byte_offset(input, i)..]);
             tokens.push(Token::Term(term));
             continue;
         }
         if lower.starts_with("ab ") {
             i += 3;
-            let term = parse_single_term(dialect, &input[char_byte_offset(input, i)..], Some(vec![SearchField::Abstract]))?;
+            let term = parse_single_term(
+                dialect,
+                &input[char_byte_offset(input, i)..],
+                Some(vec![SearchField::Abstract]),
+            )?;
             i += term_length(&input[char_byte_offset(input, i)..]);
             tokens.push(Token::Term(term));
             continue;
         }
         if lower.starts_with("au ") {
             i += 3;
-            let term = parse_single_term(dialect, &input[char_byte_offset(input, i)..], Some(vec![SearchField::Author]))?;
+            let term = parse_single_term(
+                dialect,
+                &input[char_byte_offset(input, i)..],
+                Some(vec![SearchField::Author]),
+            )?;
             i += term_length(&input[char_byte_offset(input, i)..]);
             tokens.push(Token::Term(term));
             continue;
         }
         if lower.starts_with("jn ") {
             i += 3;
-            let term = parse_single_term(dialect, &input[char_byte_offset(input, i)..], Some(vec![SearchField::Journal]))?;
+            let term = parse_single_term(
+                dialect,
+                &input[char_byte_offset(input, i)..],
+                Some(vec![SearchField::Journal]),
+            )?;
             i += term_length(&input[char_byte_offset(input, i)..]);
             tokens.push(Token::Term(term));
             continue;
@@ -641,7 +658,9 @@ fn tokenize_expression(
         if chars.get(i) == Some(&'(') {
             // Check CINAHL (MH "heading+")
             if lower.starts_with("(mh \"") || lower.starts_with("(mh ") {
-                let end = slice.find(')').ok_or_else(|| "unclosed CINAHL heading parenthesis".to_owned())?;
+                let end = slice
+                    .find(')')
+                    .ok_or_else(|| "unclosed CINAHL heading parenthesis".to_owned())?;
                 let heading_slice = &slice[1..end];
                 let term = parse_cinahl_heading(heading_slice)?;
                 tokens.push(Token::Term(term));
@@ -688,9 +707,14 @@ fn tokenize_expression(
         }
 
         // Headings: exp Heading/ or Heading/ in Ovid
-        if matches!(dialect, SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid) {
+        if matches!(
+            dialect,
+            SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid
+        ) {
             if lower.starts_with("exp ") && slice.contains('/') {
-                let slash_idx = slice.find('/').ok_or_else(|| "missing closing slash on exploded heading".to_owned())?;
+                let slash_idx = slice
+                    .find('/')
+                    .ok_or_else(|| "missing closing slash on exploded heading".to_owned())?;
                 let heading_text = slice[4..slash_idx].trim();
                 let vocab = if matches!(dialect, SearchDialect::PsycInfoOvid) {
                     Some("apa thesaurus".to_owned())
@@ -709,7 +733,9 @@ fn tokenize_expression(
                 continue;
             }
             if !slice.starts_with('(') && slice.contains('/') {
-                let slash_idx = slice.find('/').ok_or_else(|| "missing closing slash on heading".to_owned())?;
+                let slash_idx = slice
+                    .find('/')
+                    .ok_or_else(|| "missing closing slash on heading".to_owned())?;
                 let potential_heading = slice[..slash_idx].trim();
                 if !potential_heading.is_empty()
                     && !potential_heading.contains(' ')
@@ -769,10 +795,14 @@ fn tokenize_expression(
         }
 
         // CINAHL MH "heading+" or MH "heading"
-        if matches!(dialect, SearchDialect::CinahlEbsco) && (lower.starts_with("mh \"") || lower.starts_with("mh ")) {
+        if matches!(dialect, SearchDialect::CinahlEbsco)
+            && (lower.starts_with("mh \"") || lower.starts_with("mh "))
+        {
             let term = parse_cinahl_heading(slice)?;
             let len = if let Some(end) = slice.find('"') {
-                slice[end + 1..].find('"').map_or(slice.len(), |e2| end + 1 + e2 + 1)
+                slice[end + 1..]
+                    .find('"')
+                    .map_or(slice.len(), |e2| end + 1 + e2 + 1)
             } else {
                 slice.find(' ').unwrap_or(slice.len())
             };
@@ -801,28 +831,40 @@ fn tokenize_expression(
 
 fn parse_proximity_operator(lower: &str) -> Option<(u16, bool, usize)> {
     if let Some(stripped) = lower.strip_prefix("adj") {
-        let digits = stripped.chars().take_while(char::is_ascii_digit).collect::<String>();
+        let digits = stripped
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>();
         if !digits.is_empty() {
             let d = digits.parse::<u16>().ok()?;
             return Some((d, false, 3 + digits.len()));
         }
     }
     if let Some(stripped) = lower.strip_prefix("near/") {
-        let digits = stripped.chars().take_while(char::is_ascii_digit).collect::<String>();
+        let digits = stripped
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>();
         if !digits.is_empty() {
             let d = digits.parse::<u16>().ok()?;
             return Some((d, false, 5 + digits.len()));
         }
     }
     if let Some(stripped) = lower.strip_prefix("pre/") {
-        let digits = stripped.chars().take_while(char::is_ascii_digit).collect::<String>();
+        let digits = stripped
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>();
         if !digits.is_empty() {
             let d = digits.parse::<u16>().ok()?;
             return Some((d, true, 4 + digits.len()));
         }
     }
     if let Some(stripped) = lower.strip_prefix("w/") {
-        let digits = stripped.chars().take_while(char::is_ascii_digit).collect::<String>();
+        let digits = stripped
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>();
         if !digits.is_empty() {
             let d = digits.parse::<u16>().ok()?;
             return Some((d, true, 2 + digits.len()));
@@ -831,7 +873,10 @@ fn parse_proximity_operator(lower: &str) -> Option<(u16, bool, usize)> {
     if let Some(stripped) = lower.strip_prefix('w')
         && stripped.chars().next().is_some_and(|c| c.is_ascii_digit())
     {
-        let digits = stripped.chars().take_while(char::is_ascii_digit).collect::<String>();
+        let digits = stripped
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>();
         if !digits.is_empty() {
             let d = digits.parse::<u16>().ok()?;
             return Some((d, true, 1 + digits.len()));
@@ -840,7 +885,10 @@ fn parse_proximity_operator(lower: &str) -> Option<(u16, bool, usize)> {
     if let Some(stripped) = lower.strip_prefix('n')
         && stripped.chars().next().is_some_and(|c| c.is_ascii_digit())
     {
-        let digits = stripped.chars().take_while(char::is_ascii_digit).collect::<String>();
+        let digits = stripped
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>();
         if !digits.is_empty() {
             let d = digits.parse::<u16>().ok()?;
             return Some((d, false, 1 + digits.len()));
@@ -849,8 +897,15 @@ fn parse_proximity_operator(lower: &str) -> Option<(u16, bool, usize)> {
     None
 }
 
-fn extract_field_suffix(dialect: &SearchDialect, after_paren: &str) -> Option<(Vec<SearchField>, usize)> {
-    if matches!(dialect, SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid) && after_paren.starts_with('.') {
+fn extract_field_suffix(
+    dialect: &SearchDialect,
+    after_paren: &str,
+) -> Option<(Vec<SearchField>, usize)> {
+    if matches!(
+        dialect,
+        SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid
+    ) && after_paren.starts_with('.')
+    {
         let end = after_paren[1..].find('.')?;
         let suffix = &after_paren[1..=end];
         let fields = parse_ovid_fields(suffix);
@@ -921,7 +976,10 @@ fn parse_embase_fields(suffix: &str) -> Vec<SearchField> {
 }
 
 fn parse_cinahl_heading(input: &str) -> Result<SearchTerm, String> {
-    let unquoted = input.trim_start_matches("mh").trim_start_matches('(').trim();
+    let unquoted = input
+        .trim_start_matches("mh")
+        .trim_start_matches('(')
+        .trim();
     let text_part = unquoted.trim_matches(['"', '(', ')', ' ']);
     let explode = text_part.ends_with('+');
     let heading = text_part.trim_end_matches('+').trim();
@@ -935,24 +993,36 @@ fn parse_cinahl_heading(input: &str) -> Result<SearchTerm, String> {
     })
 }
 
-fn extract_set_reference(slice: &str, set_env: &BTreeMap<String, QueryExpr>) -> (Option<String>, usize) {
+fn extract_set_reference(
+    slice: &str,
+    set_env: &BTreeMap<String, QueryExpr>,
+) -> (Option<String>, usize) {
     if slice.starts_with(['#', 'S', 's']) {
         let prefix = slice.chars().next().unwrap_or('#');
-        let digits = slice[1..].chars().take_while(char::is_ascii_digit).collect::<String>();
+        let digits = slice[1..]
+            .chars()
+            .take_while(char::is_ascii_digit)
+            .collect::<String>();
         if !digits.is_empty() {
             let id = format!("{prefix}{digits}");
             let after = &slice[1 + digits.len()..];
-            if (after.is_empty() || after.starts_with(|c: char| c.is_whitespace() || c == ')' || c == ',' || c == ';'))
+            if (after.is_empty()
+                || after
+                    .starts_with(|c: char| c.is_whitespace() || c == ')' || c == ',' || c == ';'))
                 && (set_env.contains_key(&id) || set_env.contains_key(&digits))
             {
                 return (Some(id), 1 + digits.len());
             }
         }
     }
-    let digits = slice.chars().take_while(char::is_ascii_digit).collect::<String>();
+    let digits = slice
+        .chars()
+        .take_while(char::is_ascii_digit)
+        .collect::<String>();
     if !digits.is_empty() {
         let after = &slice[digits.len()..];
-        if (after.is_empty() || after.starts_with(|c: char| c.is_whitespace() || c == ')' || c == ',' || c == ';'))
+        if (after.is_empty()
+            || after.starts_with(|c: char| c.is_whitespace() || c == ')' || c == ',' || c == ';'))
             && set_env.contains_key(&digits)
         {
             return (Some(digits.clone()), digits.len());
@@ -993,7 +1063,9 @@ fn parse_single_term(
 
     // Check PubMed bracket tag: "term"[tag] or term[tag]
     if matches!(dialect, SearchDialect::PubMed) && raw.contains('[') && raw.ends_with(']') {
-        let bracket_start = raw.find('[').ok_or_else(|| "missing opening bracket".to_owned())?;
+        let bracket_start = raw
+            .find('[')
+            .ok_or_else(|| "missing opening bracket".to_owned())?;
         let text_part = raw[..bracket_start].trim_matches('"');
         let tag = &raw[bracket_start + 1..raw.len() - 1];
         let tag_lower = tag.to_ascii_lowercase();
@@ -1039,8 +1111,10 @@ fn parse_single_term(
     }
 
     // Check Ovid dot tag: term.ti,ab,kf.
-    if matches!(dialect, SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid)
-        && raw.contains('.')
+    if matches!(
+        dialect,
+        SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid
+    ) && raw.contains('.')
         && let Some(dot_idx) = raw.find('.')
     {
         let text_part = &raw[..dot_idx];
@@ -1308,7 +1382,10 @@ mod tests {
         let text = "1. exp Genomics/\n2. (genome* or genomic*).ti,ab.\n3. 1 or 2\nlimit 3 to english language\n";
         let parsed = parse_native_strategy("s1", SearchDialect::OvidMedline, text);
         assert!(parsed.validate().is_ok());
-        assert_eq!(parsed.normalisation_state, NativeNormalisationState::Complete);
+        assert_eq!(
+            parsed.normalisation_state,
+            NativeNormalisationState::Complete
+        );
         let semantic = parsed.semantic_strategy.as_ref();
         assert!(semantic.is_some());
         if let Some(strategy) = semantic {
@@ -1333,7 +1410,10 @@ mod tests {
         assert!(ovid.validate().is_ok());
         assert_eq!(ovid.normalisation_state, NativeNormalisationState::Complete);
         if let Some(s) = &ovid.semantic_strategy {
-            if let QueryExpr::Proximity { distance, ordered, .. } = &s.query {
+            if let QueryExpr::Proximity {
+                distance, ordered, ..
+            } = &s.query
+            {
                 assert_eq!(*distance, 3);
                 assert!(!*ordered);
             } else {
@@ -1347,7 +1427,10 @@ mod tests {
             "#1 (genom*:ti NEAR/3 screen*:ti)\n",
         );
         assert!(embase.validate().is_ok());
-        assert_eq!(embase.normalisation_state, NativeNormalisationState::Complete);
+        assert_eq!(
+            embase.normalisation_state,
+            NativeNormalisationState::Complete
+        );
 
         let scopus = parse_native_strategy(
             "p3",
@@ -1355,9 +1438,15 @@ mod tests {
             "TITLE-ABS-KEY(genom* PRE/3 screen*)\n",
         );
         assert!(scopus.validate().is_ok());
-        assert_eq!(scopus.normalisation_state, NativeNormalisationState::Complete);
+        assert_eq!(
+            scopus.normalisation_state,
+            NativeNormalisationState::Complete
+        );
         if let Some(s) = &scopus.semantic_strategy {
-            if let QueryExpr::Proximity { distance, ordered, .. } = &s.query {
+            if let QueryExpr::Proximity {
+                distance, ordered, ..
+            } = &s.query
+            {
                 assert_eq!(*distance, 3);
                 assert!(*ordered);
             } else {
