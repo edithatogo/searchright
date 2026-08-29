@@ -2309,7 +2309,7 @@ impl SearchrightServer {
 
 fn effect_authority_request(
     request: &rmcp::model::CallToolRequestParams,
-    store_root: &std::path::Path,
+    store_root: &Path,
 ) -> Result<EffectAuthorityRequest, McpError> {
     let arguments = request
         .arguments
@@ -2412,7 +2412,7 @@ fn digest_bytes(bytes: &[u8]) -> Result<String, McpError> {
     Ok(BASE64_STANDARD.encode(Sha256::digest(bytes)))
 }
 
-fn local_store_state_digest(root: &std::path::Path) -> Result<String, McpError> {
+fn local_store_state_digest(root: &Path) -> Result<String, McpError> {
     let mut files = Vec::new();
     for child in [
         "managed",
@@ -2452,7 +2452,10 @@ fn local_store_state_digest(root: &std::path::Path) -> Result<String, McpError> 
             if read == 0 {
                 break;
             }
-            digest.update(&buffer[..read]);
+            let bytes = buffer
+                .get(..read)
+                .ok_or_else(|| McpError::internal_error("local store state unavailable", None))?;
+            digest.update(bytes);
         }
     }
     Ok(BASE64_STANDARD.encode(digest.finalize()))
@@ -3120,12 +3123,18 @@ fn invalid_params(message: String) -> McpError {
 mod tests {
     use super::*;
 
+    fn temporary_test_directory(label: &str) -> PathBuf {
+        static NEXT_DIRECTORY: AtomicUsize = AtomicUsize::new(0);
+        std::env::temp_dir().join(format!(
+            "{label}-{}-{}",
+            std::process::id(),
+            NEXT_DIRECTORY.fetch_add(1, Ordering::Relaxed)
+        ))
+    }
+
     #[test]
     fn store_state_digest_binds_canonical_paths_and_exact_bytes() -> anyhow::Result<()> {
-        let root = std::env::temp_dir().join(format!(
-            "searchright-track10-store-digest-{}",
-            uuid::Uuid::now_v7()
-        ));
+        let root = temporary_test_directory("searchright-track10-store-digest");
         let absent = local_store_state_digest(&root)
             .map_err(|error| anyhow::anyhow!("absent store digest failed: {error:?}"))?;
         let _store = searchright::store::FileReviewStore::open(&root)?;
@@ -3178,10 +3187,7 @@ mod tests {
     fn store_state_digest_rejects_symbolic_links() -> anyhow::Result<()> {
         use std::os::unix::fs::symlink;
 
-        let root = std::env::temp_dir().join(format!(
-            "searchright-track10-store-symlink-{}",
-            uuid::Uuid::now_v7()
-        ));
+        let root = temporary_test_directory("searchright-track10-store-symlink");
         let _store = searchright::store::FileReviewStore::open(&root)?;
         let outside = root.with_extension("outside");
         std::fs::write(&outside, b"outside")?;
