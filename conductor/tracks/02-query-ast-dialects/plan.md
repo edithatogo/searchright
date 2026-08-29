@@ -8,7 +8,7 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-02-phase-1 -->
 
-- [x] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
   - [x] Present source path: `crates/evidence-search-contracts/src/query.rs`
   - [x] Present source path: `crates/evidence-search-core/src/compiler.rs`
   - [x] Present source path: `crates/evidence-search-core/src/native.rs`
@@ -31,7 +31,7 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-02-phase-3 -->
 
-- [x] Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.
+- [ ] Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.
 - [ ] Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only.
 - [ ] Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus.
 
