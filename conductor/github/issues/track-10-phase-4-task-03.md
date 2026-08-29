@@ -13,6 +13,7 @@ Canonical task state: **source task complete**.
   - Review fix `945694cc1004d0dacf09f3bd60a42107f1d46f84`: Close the workspace-wide strict Clippy gate by keeping the screening decision enum import scoped to store tests.
   - Review fix `896e88ac39456be6d535eefc61b725c60c0a16b3`: Make advanced MCP pagination and authority-spoof assertions panic-safe under the workspace Clippy policy.
   - Review fix `c72fc1e76d2100116e0ab2f4e260889c5c5c04ba`: Remove the unused searchright facade UUID declaration reported by the hosted cargo-machete gate and regenerate the source SBOM and hash manifest.
+  - Review fix `c1414d5cb592c67a544f0c9390fa0e9e7fd41411`: Refresh the locked searchright package dependency list after removing the redundant UUID declaration so locked builds remain reproducible.
 
 ## Completion and evidence contract
 
