@@ -51,7 +51,7 @@ def main() -> int:
         r'(?:\nnotes = (?:""".*?"""|"[^"\n]*"))?',
         re.DOTALL,
     )
-    rendered, replacements = block.subn(lambda match: f'{match.group(1)}\nnotes = """{note}"""', config_text)
+    rendered, replacements = block.subn(lambda match: f'{match.group(1)}\nnotes = "{note}"', config_text)
     if replacements != len(rows):
         raise SystemExit(
             f"refusing partial config rewrite: replaced {replacements} blocks for "
