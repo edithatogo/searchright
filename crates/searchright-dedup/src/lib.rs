@@ -269,19 +269,28 @@ fn build_candidate_pairs(
         if let Some(pmid) = record.identifiers.pmid.as_deref() {
             let norm = normalise_trimmed(pmid);
             if valid_pmid(&norm) {
-                blocks.entry(format!("pmid:{norm}")).or_default().push(index);
+                blocks
+                    .entry(format!("pmid:{norm}"))
+                    .or_default()
+                    .push(index);
             }
         }
         if let Some(isbn) = record.identifiers.isbn.as_deref() {
             let norm = normalise_isbn(isbn);
             if !norm.is_empty() {
-                blocks.entry(format!("isbn:{norm}")).or_default().push(index);
+                blocks
+                    .entry(format!("isbn:{norm}"))
+                    .or_default()
+                    .push(index);
             }
         }
         if let Some(trial) = record.identifiers.trial_registration.as_deref() {
             let norm = normalise_trimmed(trial);
             if !norm.is_empty() {
-                blocks.entry(format!("trial:{norm}")).or_default().push(index);
+                blocks
+                    .entry(format!("trial:{norm}"))
+                    .or_default()
+                    .push(index);
             }
         }
 
@@ -291,11 +300,23 @@ fn build_candidate_pairs(
             if !akey.is_empty() {
                 if let Some(year) = record.publication_year {
                     let bucket = year / (year_tolerance.max(1).saturating_add(1));
-                    blocks.entry(format!("ay:{akey}:{bucket}")).or_default().push(index);
-                    blocks.entry(format!("ay:{akey}:{}", bucket.saturating_sub(1))).or_default().push(index);
-                    blocks.entry(format!("ay:{akey}:{}", bucket.saturating_add(1))).or_default().push(index);
+                    blocks
+                        .entry(format!("ay:{akey}:{bucket}"))
+                        .or_default()
+                        .push(index);
+                    blocks
+                        .entry(format!("ay:{akey}:{}", bucket.saturating_sub(1)))
+                        .or_default()
+                        .push(index);
+                    blocks
+                        .entry(format!("ay:{akey}:{}", bucket.saturating_add(1)))
+                        .or_default()
+                        .push(index);
                 } else {
-                    blocks.entry(format!("a_noyear:{akey}")).or_default().push(index);
+                    blocks
+                        .entry(format!("a_noyear:{akey}"))
+                        .or_default()
+                        .push(index);
                 }
             }
         }
@@ -304,7 +325,10 @@ fn build_candidate_pairs(
         let tokens = normalise_tokens(&record.title);
         for token in tokens.iter().take(3) {
             if token.len() >= 4 {
-                blocks.entry(format!("tok:{token}")).or_default().push(index);
+                blocks
+                    .entry(format!("tok:{token}"))
+                    .or_default()
+                    .push(index);
             }
         }
     }
@@ -416,7 +440,10 @@ pub fn normalise_isbn(value: &str) -> String {
         .or_else(|| trimmed.strip_prefix("ISBN:"))
         .or_else(|| trimmed.strip_prefix("ISBN"))
         .unwrap_or(&trimmed);
-    stripped.chars().filter(char::is_ascii_alphanumeric).collect()
+    stripped
+        .chars()
+        .filter(char::is_ascii_alphanumeric)
+        .collect()
 }
 
 fn equal_trimmed(left: Option<&str>, right: Option<&str>) -> bool {
@@ -432,9 +459,7 @@ fn equal_trimmed(left: Option<&str>, right: Option<&str>) -> bool {
 /// Normalise DOI resolver prefixes and case.
 #[must_use]
 pub fn normalise_doi(value: &str) -> String {
-    let trimmed = value
-        .trim()
-        .to_ascii_lowercase();
+    let trimmed = value.trim().to_ascii_lowercase();
     let stripped = trimmed
         .trim_start_matches("https://doi.org/")
         .trim_start_matches("http://doi.org/")
@@ -452,10 +477,14 @@ pub fn normalise_unicode_text(value: &str) -> String {
     let mut output = String::with_capacity(value.len());
     for ch in value.chars() {
         match ch {
-            'à' | 'á' | 'â' | 'ã' | 'ä' | 'å' | 'ā' | 'À' | 'Á' | 'Â' | 'Ã' | 'Ä' | 'Å' | 'Ā' => output.push('a'),
+            'à' | 'á' | 'â' | 'ã' | 'ä' | 'å' | 'ā' | 'À' | 'Á' | 'Â' | 'Ã' | 'Ä' | 'Å' | 'Ā' => {
+                output.push('a')
+            }
             'è' | 'é' | 'ê' | 'ë' | 'ē' | 'È' | 'É' | 'Ê' | 'Ë' | 'Ē' => output.push('e'),
             'ì' | 'í' | 'î' | 'ï' | 'ī' | 'Ì' | 'Í' | 'Î' | 'Ï' | 'Ī' => output.push('i'),
-            'ò' | 'ó' | 'ô' | 'õ' | 'ö' | 'ø' | 'ō' | 'Ò' | 'Ó' | 'Ô' | 'Õ' | 'Ö' | 'Ø' | 'Ō' => output.push('o'),
+            'ò' | 'ó' | 'ô' | 'õ' | 'ö' | 'ø' | 'ō' | 'Ò' | 'Ó' | 'Ô' | 'Õ' | 'Ö' | 'Ø' | 'Ō' => {
+                output.push('o')
+            }
             'ù' | 'ú' | 'û' | 'ü' | 'ū' | 'Ù' | 'Ú' | 'Û' | 'Ü' | 'Ū' => output.push('u'),
             'ý' | 'ÿ' | 'Ý' | 'Ÿ' => output.push('y'),
             'ñ' | 'ń' | 'Ñ' | 'Ń' => output.push('n'),
