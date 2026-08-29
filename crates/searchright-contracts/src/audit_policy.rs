@@ -52,6 +52,7 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
         "execution_committed" => (
             &[
                 "_schema_version",
+                "binding_digest",
                 "commit_id",
                 "receipt_id",
                 "record_count",
@@ -85,7 +86,13 @@ pub fn validate_registered_audit_event(event: &AuditEvent) -> Result<(), Contrac
         )));
     }
     if event.event_type == "execution_committed" {
-        for key in ["commit_id", "receipt_id", "record_count", "run_id"] {
+        for key in [
+            "binding_digest",
+            "commit_id",
+            "receipt_id",
+            "record_count",
+            "run_id",
+        ] {
             if !payload.contains_key(key) {
                 return Err(ContractError::Invariant(format!(
                     "audit payload key `{key}` is required"
@@ -226,7 +233,7 @@ mod tests {
             ),
             (
                 "execution_committed",
-                json!({"_schema_version": 1, "commit_id": "c", "receipt_id": "receipt", "record_count": 0, "run_id": "run"}),
+                json!({"_schema_version": 1, "binding_digest": "aaaa", "commit_id": "c", "receipt_id": "receipt", "record_count": 0, "run_id": "run"}),
             ),
         ];
         for (kind, payload) in cases {
@@ -342,6 +349,7 @@ mod tests {
                 "execution_committed",
                 &[
                     "_schema_version",
+                    "binding_digest",
                     "commit_id",
                     "receipt_id",
                     "record_count",
@@ -350,6 +358,7 @@ mod tests {
                 &[1][..],
                 &[
                     ("_schema_version", "integer"),
+                    ("binding_digest", "string"),
                     ("commit_id", "string"),
                     ("receipt_id", "string"),
                     ("record_count", "integer"),

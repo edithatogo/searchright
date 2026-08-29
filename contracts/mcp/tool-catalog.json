@@ -6,11 +6,18 @@
       "name": "plan_review",
       "effect": "write_local_draft",
       "authority": "human_confirmation",
-      "output": "review-plan.v1",
-      "implementation_status": "contracted"
+      "output": "plan-review-result.v1",
+      "implementation_status": "implemented"
     },
     {
       "name": "validate_plan",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_strategy",
       "effect": "read_only",
       "authority": "automatic",
       "output": "validation-result.v1",
@@ -34,15 +41,15 @@
       "name": "press_review_strategy",
       "effect": "write_local_review",
       "authority": "human_confirmation",
-      "output": "press-review.v1",
-      "implementation_status": "contracted"
+      "output": "press-review-result.v1",
+      "implementation_status": "implemented"
     },
     {
       "name": "execute_search",
       "effect": "network_and_local_write",
       "authority": "explicit_approval",
       "output": "search-run.v1",
-      "implementation_status": "contracted"
+      "implementation_status": "implemented_fixture_only"
     },
     {
       "name": "deduplicate_records",
@@ -56,7 +63,7 @@
       "effect": "local_write",
       "authority": "role_policy",
       "output": "screening-decision.v1",
-      "implementation_status": "contracted"
+      "implementation_status": "implemented"
     },
     {
       "name": "generate_prisma",
@@ -70,6 +77,167 @@
       "effect": "read_only",
       "authority": "automatic",
       "output": "audit-verification.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "import_records",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "interchange-import.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "export_records",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "interchange-export.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "assess_study_graph",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "study-graph-assessment.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "assess_search_validation",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "search-validation-summary.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "living_diff",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "living-diff.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_living_lineage",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "build_provenance",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "provenance-bundle.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "rank_records",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "ranking-score-list.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "inspect_untrusted_content",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "content-safety-finding.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "render_diagnostics",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "diagnostic-rendering.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "evaluate_governance",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "data-handling-decision.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "authorise_endpoint",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "endpoint-authorisation.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_amendment",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_standard_pack",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_standard_assessment",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_ranking_calibration",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_discovery_run",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "verify_workflow_trace",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "discovery_candidates",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "discovery-candidates.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "verify_provider_component",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "provider-component-verification.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "plan_licensed_request",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "licensed-request-plan.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "validate_benchmark_report",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "validation-result.v1",
+      "implementation_status": "implemented"
+    },
+    {
+      "name": "list_providers",
+      "effect": "read_only",
+      "authority": "automatic",
+      "output": "provider-manifest-list.v1",
       "implementation_status": "implemented"
     },
     {

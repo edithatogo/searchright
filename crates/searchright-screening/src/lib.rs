@@ -447,6 +447,12 @@ fn validate_decision(
     Ok(())
 }
 
+/// Return whether a decision represents exclusion at the final-eligibility boundary.
+#[must_use]
+pub const fn is_exclusion_decision(decision: DecisionValue) -> bool {
+    matches!(decision, DecisionValue::Exclude)
+}
+
 fn validate_resolution_fields(resolution: &ConflictResolution) -> Result<(), ScreeningError> {
     for (field, value) in [
         ("resolution.subject_id", resolution.subject_id.as_str()),

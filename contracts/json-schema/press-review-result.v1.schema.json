@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/press-review-result.v1.schema.json",
+  "title": "Searchright PRESS Review Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "review", "persistence"],
+  "properties": {
+    "schema_version": {"const": "org.searchright.press-review-result.v1"},
+    "review": {"$ref": "https://schemas.searchright.dev/press-review.v1.schema.json"},
+    "persistence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applied", "object_id", "digest", "confirmed_by"],
+      "properties": {
+        "applied": {"type": "boolean"},
+        "object_id": {"type": ["string", "null"]},
+        "digest": {"type": ["string", "null"]},
+        "confirmed_by": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

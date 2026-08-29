@@ -29,6 +29,45 @@ REDACTED_TOOL_ERROR = (
 )
 LEAK_MARKER = "smoke-leak-marker-52743"
 
+EFFECT_ANNOTATIONS = {
+    "read_only": {
+        "readOnlyHint": True,
+        "destructiveHint": False,
+        "idempotentHint": True,
+        "openWorldHint": False,
+    },
+    "write_local_draft": {
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": False,
+        "openWorldHint": False,
+    },
+    "write_local_review": {
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": False,
+        "openWorldHint": False,
+    },
+    "network_and_local_write": {
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": False,
+        "openWorldHint": True,
+    },
+    "local_write_preview": {
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": False,
+        "openWorldHint": False,
+    },
+    "local_write": {
+        "readOnlyHint": False,
+        "destructiveHint": False,
+        "idempotentHint": False,
+        "openWorldHint": False,
+    },
+}
+
 
 @dataclass(frozen=True)
 class EraCapabilities:
@@ -303,6 +342,11 @@ def main() -> int:
             "entries"
         ]
     }
+    effect_by_tool = {name: "read_only" for name in expected}
+    for entry in json.loads(
+        (ROOT / "contracts/mcp/tool-catalog.json").read_text(encoding="utf-8")
+    )["tools"]:
+        effect_by_tool[entry["name"]] = entry["effect"]
     errors: list[str] = []
     observed: set[str] = set()
     callable_tools: dict[str, dict[str, Any]] = {}
@@ -449,19 +493,18 @@ def main() -> int:
                 elif isinstance(tool.get("name"), str) and is_trivial_output_schema(output_schema):
                     trivial_output_schemas.add(tool["name"])
                 annotations = tool.get("annotations")
-                expected_annotations = {
-                    "readOnlyHint": True,
-                    "destructiveHint": False,
-                    "idempotentHint": True,
-                    "openWorldHint": False,
-                }
+                tool_name = tool.get("name")
+                effect = effect_by_tool.get(tool_name)
+                expected_annotations = EFFECT_ANNOTATIONS.get(effect)
                 if not isinstance(annotations, dict) or any(
                     annotations.get(key) != value
-                    for key, value in expected_annotations.items()
+                    for key, value in (expected_annotations or {}).items()
                 ):
                     errors.append(
-                        f"tool {tool.get('name')} lacks governed read-only annotations"
+                        f"tool {tool_name} annotations do not match effect {effect!r}"
                     )
+                if expected_annotations is None:
+                    errors.append(f"tool {tool_name} has no governed effect mapping")
                 if isinstance(tool.get("name"), str) and is_safely_callable(tool):
                     callable_tools[tool["name"]] = tool
             observed = {

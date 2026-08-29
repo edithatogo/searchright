@@ -1,5 +1,6 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
 use crate::{
     ContractError, SEARCH_VALIDATION_SCHEMA_VERSION, Validate, require_schema_version, require_text,
@@ -155,6 +156,11 @@ impl Validate for PressReview {
         require_text(&self.strategy_version, "search_validation.strategy_version")?;
         require_text(&self.reviewer_id, "search_validation.reviewer_id")?;
         require_text(&self.reviewed_at, "search_validation.reviewed_at")?;
+        OffsetDateTime::parse(&self.reviewed_at, &Rfc3339).map_err(|_| {
+            ContractError::Invariant(
+                "search_validation.reviewed_at must be an RFC 3339 timestamp".to_owned(),
+            )
+        })?;
         require_text(&self.decision, "search_validation.decision")?;
         for finding in &self.findings {
             finding.validate()?;
@@ -235,5 +241,32 @@ impl Validate for SearchValidationReport {
             require_text(approver, "search_validation.approved_by")?;
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod press_review_tests {
+    use super::*;
+
+    fn review(reviewed_at: &str) -> PressReview {
+        PressReview {
+            press_review_id: "press-1".to_owned(),
+            strategy_id: "strategy-1".to_owned(),
+            strategy_version: "1".to_owned(),
+            reviewer_id: "reviewer-1".to_owned(),
+            reviewed_at: reviewed_at.to_owned(),
+            findings: Vec::new(),
+            decision: "approved".to_owned(),
+        }
+    }
+
+    #[test]
+    fn press_review_requires_rfc3339_timestamp() {
+        assert!(review("2026-08-29T01:02:03Z").validate().is_ok());
+        assert!(review("2026-08-29T11:02:03+10:00").validate().is_ok());
+        assert!(matches!(
+            review("29 August 2026").validate(),
+            Err(ContractError::Invariant(message)) if message.contains("RFC 3339")
+        ));
     }
 }

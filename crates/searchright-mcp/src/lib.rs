@@ -8,9 +8,10 @@
 use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
 use std::{
     borrow::Cow,
-    collections::BTreeMap,
+    collections::{BTreeMap, BTreeSet},
+    path::PathBuf,
     sync::{
-        Arc, OnceLock,
+        Arc, Mutex, OnceLock,
         atomic::{AtomicUsize, Ordering},
     },
     time::Duration,
@@ -28,7 +29,7 @@ use rmcp::{
         ListResourcesResult, ListToolsResult, PaginatedRequestParams, Prompt, PromptArgument,
         PromptMessage, ProtocolVersion, ReadResourceRequestParams, ReadResourceResponse,
         ReadResourceResult, Resource, ResourceContents, Role, ServerCapabilities, ServerInfo,
-        SubscriptionFilter, ToolAnnotations, UpdateTaskParams,
+        SubscriptionFilter, UpdateTaskParams,
     },
     schemars,
     service::{RequestContext, RoleServer, SubscriptionContext},
@@ -39,18 +40,41 @@ use rmcp::{
 use searchright::contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, CompiledStrategy, DataHandlingRequest,
     Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
-    InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PrismaFlow, ProtocolAmendment,
-    ProviderComponentManifest, RankingCalibration, ReviewPlan, SearchDialect, SearchStrategy,
+    InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PressReview, PrismaFlow,
+    ProtocolAmendment, ProviderComponentManifest, RankingCalibration, ReviewPlan,
+    ScreeningDecision, ScreeningPolicy, SearchDialect, SearchRequest, SearchStrategy,
     SearchValidationReport, SourceReceipt, StandardAssessment, StandardPack, StudyGraph,
     UntrustedContentPolicy, WorkflowTrace,
 };
 use searchright::dedup::DedupConfig;
-use searchright::{PrismaArtifact, PrismaOutput, SearchrightEngine};
+use searchright::{
+    HumanConfirmation, LocalReviewOperation, PrismaArtifact, PrismaOutput,
+    SearchExecutionOperation, SearchrightEngine, verify_effect_authority,
+};
 use serde::Deserialize;
+use sha2::{Digest, Sha256};
 use tokio::sync::{OwnedSemaphorePermit, Semaphore, watch};
+
+mod effect_policy;
 
 const LOCAL_TASK_LIMIT: usize = 4;
 const TASK_ACTIVITY_URI: &str = "searchright://runtime/task-activity";
+pub use searchright::{
+    EffectAuthorityAttestation, EffectAuthorityError, EffectAuthorityRequest,
+    EffectAuthorityVerifier, VerifiedEffectAuthority,
+};
+
+#[derive(Debug)]
+struct DenyEffectAuthority;
+
+impl EffectAuthorityVerifier for DenyEffectAuthority {
+    fn verify(
+        &self,
+        _request: &EffectAuthorityRequest,
+    ) -> Result<EffectAuthorityAttestation, EffectAuthorityError> {
+        Err(EffectAuthorityError)
+    }
+}
 
 /// One deterministic, local-only successful tool invocation for client conformance tests.
 ///
@@ -86,6 +110,15 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     let study_graph = json_example(include_str!("../../../contracts/examples/study-graph.yaml"))?;
     let search_validation = json_example(include_str!(
         "../../../contracts/examples/search-validation.yaml"
+    ))?;
+    let press_review = json_example(include_str!(
+        "../../../contracts/examples/press-review.json"
+    ))?;
+    let screening_policy = json_example(include_str!(
+        "../../../contracts/examples/screening-policy.yaml"
+    ))?;
+    let screening_decision = json_example(include_str!(
+        "../../../contracts/examples/screening-decision.yaml"
     ))?;
     let source_receipt = json_example_with_review_id(
         include_str!("../../../contracts/examples/source-receipt.yaml"),
@@ -136,6 +169,45 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     );
     let compiled_strategy = serde_json::to_string(&compiled_strategy)
         .map_err(|error| format!("compiled strategy fixture must serialize: {error}"))?;
+    let compiled_value: serde_json::Value = serde_json::from_str(&compiled_strategy)
+        .map_err(|error| format!("compiled strategy fixture must reparse: {error}"))?;
+    let fixture_request = serde_json::to_string(&serde_json::json!({
+        "review_id": "fixture-review",
+        "run_id": "fixture-run",
+        "strategy": compiled_value,
+        "cursor": null,
+        "page_size": 10,
+        "policy": {
+            "live_enabled": false,
+            "max_records": 10,
+            "max_pages": 1,
+            "timeout_seconds": 10,
+            "total_timeout_seconds": 10,
+            "max_retries": 0,
+            "min_interval_ms": 0,
+            "retry_base_delay_ms": null,
+            "retry_max_delay_ms": null,
+            "max_response_bytes": 1_048_576,
+            "replay_enabled": true,
+            "cache_write_enabled": false
+        }
+    }))
+    .map_err(|error| format!("fixture request must serialize: {error}"))?;
+    let fixture_envelope = serde_json::to_string(&serde_json::json!({
+        "schema_version": "org.searchright.execution-envelope.v1",
+        "operation_id": "fixture-operation",
+        "review_id": "fixture-review",
+        "network": "disabled",
+        "allowed_hosts": [],
+        "secret_handling": "none",
+        "full_text_handling": "metadata_only",
+        "untrusted_content": "data_only",
+        "maximum_records": 10,
+        "maximum_seconds": 10,
+        "dry_run": true,
+        "approved_by": null
+    }))
+    .map_err(|error| format!("fixture envelope must serialize: {error}"))?;
     let benchmark_report = json_example(include_str!(
         "../../../contracts/examples/benchmark-report.yaml"
     ))?;
@@ -159,6 +231,33 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
         .map_err(|error| format!("provider component fixture must serialize: {error}"))?;
 
     let mut cases = vec![
+        fixture(
+            "plan_review",
+            [
+                ("document", review_plan.clone()),
+                ("format", "json".to_owned()),
+            ],
+        ),
+        fixture(
+            "press_review_strategy",
+            [("document", press_review), ("format", "json".to_owned())],
+        ),
+        fixture(
+            "execute_search",
+            [
+                ("provider_id", "pubmed-fixture".to_owned()),
+                ("source_label", "fixture".to_owned()),
+                ("request_json", fixture_request),
+                ("envelope_json", fixture_envelope),
+            ],
+        ),
+        fixture(
+            "record_screening_decision",
+            [
+                ("policy_json", screening_policy),
+                ("decision_json", screening_decision),
+            ],
+        ),
         fixture(
             "validate_plan",
             [
@@ -570,6 +669,42 @@ struct LicensedPlanInput {
     endpoint: String,
 }
 
+#[derive(Debug, Deserialize, schemars::JsonSchema)]
+struct ConfirmedDocumentInput {
+    document: String,
+    format: Option<String>,
+    #[serde(default)]
+    apply: bool,
+    confirmation: Option<HumanConfirmation>,
+    #[serde(default, rename = "_verified_authority_handle")]
+    #[schemars(skip)]
+    authority_handle: Option<String>,
+}
+
+#[derive(Debug, Deserialize, schemars::JsonSchema)]
+struct ExecuteSearchInput {
+    provider_id: String,
+    source_label: String,
+    request_json: String,
+    envelope_json: String,
+    #[serde(default)]
+    apply: bool,
+    commit_id: Option<String>,
+    confirmed_by: Option<String>,
+    #[serde(default, rename = "_verified_authority_handle")]
+    #[schemars(skip)]
+    authority_handle: Option<String>,
+}
+
+#[derive(Debug, Deserialize, schemars::JsonSchema)]
+struct ScreeningDecisionInput {
+    policy_json: String,
+    decision_json: String,
+    #[serde(default, rename = "_verified_authority_handle")]
+    #[schemars(skip)]
+    authority_handle: Option<String>,
+}
+
 #[derive(Clone)]
 /// Governed Searchright MCP tool server shared by local and remote adapters.
 pub struct SearchrightServer {
@@ -579,6 +714,10 @@ pub struct SearchrightServer {
     active_tasks: Arc<AtomicUsize>,
     task_activity: watch::Sender<u64>,
     remote_http: bool,
+    local_store_root: Arc<PathBuf>,
+    effect_authority: Arc<dyn EffectAuthorityVerifier>,
+    used_authority_nonces: Arc<Mutex<BTreeSet<String>>>,
+    pending_authority: Arc<Mutex<BTreeMap<String, VerifiedEffectAuthority>>>,
 }
 
 impl Default for SearchrightServer {
@@ -591,8 +730,17 @@ impl Default for SearchrightServer {
             active_tasks: Arc::new(AtomicUsize::new(0)),
             task_activity,
             remote_http: false,
+            local_store_root: Arc::new(default_local_store_root()),
+            effect_authority: Arc::new(DenyEffectAuthority),
+            used_authority_nonces: Arc::new(Mutex::new(BTreeSet::new())),
+            pending_authority: Arc::new(Mutex::new(BTreeMap::new())),
         }
     }
+}
+
+fn default_local_store_root() -> PathBuf {
+    std::env::var_os("SEARCHRIGHT_MCP_STORE_ROOT")
+        .map_or_else(|| PathBuf::from(".searchright/mcp-store"), PathBuf::from)
 }
 
 impl SearchrightServer {
@@ -607,7 +755,28 @@ impl SearchrightServer {
             active_tasks: Arc::new(AtomicUsize::new(0)),
             task_activity,
             remote_http: true,
+            local_store_root: Arc::new(PathBuf::from(".searchright/remote-disabled")),
+            effect_authority: Arc::new(DenyEffectAuthority),
+            used_authority_nonces: Arc::new(Mutex::new(BTreeSet::new())),
+            pending_authority: Arc::new(Mutex::new(BTreeMap::new())),
         }
+    }
+
+    /// Override the server-owned local store root for an embedded stdio host or test.
+    #[must_use]
+    pub fn with_local_store_root(mut self, root: impl Into<PathBuf>) -> Self {
+        self.local_store_root = Arc::new(root.into());
+        self
+    }
+
+    /// Install the trusted host verifier required for consequential local effects.
+    #[must_use]
+    pub fn with_effect_authority_verifier(
+        mut self,
+        verifier: Arc<dyn EffectAuthorityVerifier>,
+    ) -> Self {
+        self.effect_authority = verifier;
+        self
     }
 
     fn require_local_current(&self, context: &RequestContext<RoleServer>) -> Result<(), McpError> {
@@ -630,6 +799,19 @@ impl SearchrightServer {
         }
         Ok(())
     }
+
+    fn tool_allowed_for_transport(&self, name: &str) -> bool {
+        effect_policy::policy_for(name)
+            .is_some_and(|policy| !self.remote_http || policy.remote_allowed())
+    }
+
+    fn advertised_tools(&self) -> Vec<rmcp::model::Tool> {
+        self.tool_router
+            .list_all()
+            .into_iter()
+            .filter(|tool| self.tool_allowed_for_transport(&tool.name))
+            .collect()
+    }
 }
 
 #[tool_router]
@@ -638,13 +820,8 @@ impl SearchrightServer {
         let mut router = Self::tool_router();
         for route in router.map.values_mut() {
             route.attr.output_schema = Some(output_schema_for(&route.attr.name));
-            route.attr.annotations = Some(
-                ToolAnnotations::new()
-                    .read_only(true)
-                    .destructive(false)
-                    .idempotent(true)
-                    .open_world(false),
-            );
+            route.attr.annotations =
+                Some(effect_policy::registered_policy_for(&route.attr.name).annotations());
         }
         router
     }
@@ -659,6 +836,148 @@ impl SearchrightServer {
         let plan: ReviewPlan =
             parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
         operation_result("validate_plan", SearchrightEngine::validate_plan(&plan))
+    }
+
+    #[tool(
+        description = "Local preview/apply: validate a review plan and persist only exact human-confirmed draft bytes"
+    )]
+    fn plan_review(
+        &self,
+        Parameters(input): Parameters<ConfirmedDocumentInput>,
+    ) -> Result<CallToolResult, McpError> {
+        let plan: ReviewPlan =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
+        let store = input
+            .apply
+            .then(|| searchright::store::FileReviewStore::open(self.local_store_root.as_ref()))
+            .transpose()
+            .map_err(|_| McpError::internal_error("local review store unavailable", None))?;
+        let authority = input
+            .apply
+            .then(|| self.take_effect_authority(input.authority_handle.as_deref()))
+            .transpose()?;
+        let operation = local_review_operation(
+            store.as_ref(),
+            input.apply,
+            input.confirmation.as_ref(),
+            authority.as_ref(),
+            &input.document,
+            input.format.as_deref().unwrap_or("json"),
+        )?;
+        operation_result(
+            "plan_review",
+            SearchrightEngine::plan_review(&plan, operation),
+        )
+    }
+
+    #[tool(
+        description = "Local preview/apply: persist exact human-confirmed PRESS evidence without certifying completeness"
+    )]
+    fn press_review_strategy(
+        &self,
+        Parameters(input): Parameters<ConfirmedDocumentInput>,
+    ) -> Result<CallToolResult, McpError> {
+        let review: PressReview =
+            parse_document(&input.document, input.format.as_deref()).map_err(invalid_params)?;
+        let store = input
+            .apply
+            .then(|| searchright::store::FileReviewStore::open(self.local_store_root.as_ref()))
+            .transpose()
+            .map_err(|_| McpError::internal_error("local review store unavailable", None))?;
+        let authority = input
+            .apply
+            .then(|| self.take_effect_authority(input.authority_handle.as_deref()))
+            .transpose()?;
+        let operation = local_review_operation(
+            store.as_ref(),
+            input.apply,
+            input.confirmation.as_ref(),
+            authority.as_ref(),
+            &input.document,
+            input.format.as_deref().unwrap_or("json"),
+        )?;
+        operation_result(
+            "press_review_strategy",
+            SearchrightEngine::press_review_strategy(&review, operation),
+        )
+    }
+
+    #[tool(
+        description = "Local current-protocol preview/apply: approved fixture execution only; live network remains denied"
+    )]
+    async fn execute_search(
+        &self,
+        Parameters(input): Parameters<ExecuteSearchInput>,
+    ) -> Result<CallToolResult, McpError> {
+        let request: SearchRequest =
+            serde_json::from_str(&input.request_json).map_err(json_invalid_params)?;
+        let envelope: ExecutionEnvelope =
+            serde_json::from_str(&input.envelope_json).map_err(json_invalid_params)?;
+        let store = input
+            .apply
+            .then(|| searchright::store::FileReviewStore::open(self.local_store_root.as_ref()))
+            .transpose()
+            .map_err(|_| McpError::internal_error("local review store unavailable", None))?;
+        let authority = input
+            .apply
+            .then(|| self.take_effect_authority(input.authority_handle.as_deref()))
+            .transpose()?;
+        let operation =
+            if input.apply {
+                SearchExecutionOperation::Apply {
+                    store: store.as_ref().ok_or_else(|| {
+                        McpError::internal_error("local review store unavailable", None)
+                    })?,
+                    commit_id: input.commit_id.as_deref().ok_or_else(|| {
+                        McpError::invalid_params("apply requires commit_id", None)
+                    })?,
+                    confirmed_by: input.confirmed_by.as_deref().ok_or_else(|| {
+                        McpError::invalid_params("apply requires confirmed_by", None)
+                    })?,
+                    authority: authority.as_ref().ok_or_else(|| {
+                        McpError::invalid_request("verified effect authority is absent", None)
+                    })?,
+                }
+            } else {
+                if input.commit_id.is_some() || input.confirmed_by.is_some() {
+                    return Err(McpError::invalid_params(
+                        "preview must not carry apply authority",
+                        None,
+                    ));
+                }
+                SearchExecutionOperation::Preview
+            };
+        operation_result(
+            "execute_search",
+            SearchrightEngine::execute_search(
+                &input.provider_id,
+                &input.source_label,
+                request,
+                &envelope,
+                operation,
+            )
+            .await,
+        )
+    }
+
+    #[tool(
+        description = "Local role-policy write: persist one complete screening decision immutably; agent exclusions are denied"
+    )]
+    fn record_screening_decision(
+        &self,
+        Parameters(input): Parameters<ScreeningDecisionInput>,
+    ) -> Result<CallToolResult, McpError> {
+        let policy: ScreeningPolicy =
+            serde_json::from_str(&input.policy_json).map_err(json_invalid_params)?;
+        let decision: ScreeningDecision =
+            serde_json::from_str(&input.decision_json).map_err(json_invalid_params)?;
+        let store = searchright::store::FileReviewStore::open(self.local_store_root.as_ref())
+            .map_err(|_| McpError::internal_error("local review store unavailable", None))?;
+        let authority = self.take_effect_authority(input.authority_handle.as_deref())?;
+        operation_result(
+            "record_screening_decision",
+            SearchrightEngine::record_screening_decision(&store, &policy, &decision, &authority),
+        )
     }
 
     #[tool(description = "Read-only: validate a source-specific search strategy without execution")]
@@ -1216,7 +1535,7 @@ impl ServerHandler for SearchrightServer {
     async fn list_tools(
         &self,
         request: Option<PaginatedRequestParams>,
-        _context: RequestContext<RoleServer>,
+        context: RequestContext<RoleServer>,
     ) -> Result<ListToolsResult, McpError> {
         if request.and_then(|params| params.cursor).is_some() {
             return Err(McpError::invalid_params(
@@ -1224,7 +1543,11 @@ impl ServerHandler for SearchrightServer {
                 None,
             ));
         }
-        Ok(ListToolsResult::with_all_items(self.tool_router.list_all())
+        let mut tools = self.advertised_tools();
+        if context.protocol_version() == Some(ProtocolVersion::V_2025_11_25) {
+            tools.retain(|tool| !requires_current_effect_protocol(&tool.name));
+        }
+        Ok(ListToolsResult::with_all_items(tools)
             .with_ttl_ms(60_000)
             .with_cache_scope(CacheScope::Public))
     }
@@ -1256,7 +1579,7 @@ impl ServerHandler for SearchrightServer {
             .as_prompt_name()
             .ok_or_else(|| McpError::invalid_params("only prompt completion is supported", None))?;
         let candidates: &[&str] = match (prompt, request.argument.name.as_str()) {
-            ("plan-review", "mode") => &["evidence-gaps", "findings-only"],
+            ("plan-review" | "update-workflow", "mode") => &["evidence-gaps", "findings-only"],
             ("press-check", "focus") => &["line-by-line", "translation-loss"],
             _ => return Err(McpError::invalid_params("unknown completion target", None)),
         };
@@ -1271,14 +1594,88 @@ impl ServerHandler for SearchrightServer {
     }
 
     fn get_tool(&self, name: &str) -> Option<rmcp::model::Tool> {
+        if !self.tool_allowed_for_transport(name) {
+            return None;
+        }
         self.tool_router.get(name).cloned()
     }
 
     async fn call_tool(
         &self,
-        request: rmcp::model::CallToolRequestParams,
+        mut request: rmcp::model::CallToolRequestParams,
         context: RequestContext<RoleServer>,
     ) -> Result<CallToolResponse, McpError> {
+        if !self.tool_allowed_for_transport(&request.name) {
+            return Err(McpError::invalid_request(
+                "tool is unavailable over this transport",
+                None,
+            ));
+        }
+        if requires_current_effect_protocol(&request.name)
+            && context.protocol_version() != Some(ProtocolVersion::V_2026_07_28)
+        {
+            return Err(McpError::invalid_request(
+                "tool requires the local current effect protocol",
+                None,
+            ));
+        }
+        if effect_confirmation_required(&request) {
+            let state = effect_confirmation_state(&request)?;
+            if request.request_state.is_none() {
+                let supports_form = context.client_capabilities().is_some_and(|capabilities| {
+                    capabilities
+                        .elicitation
+                        .is_some_and(|elicitation| elicitation.form.is_some())
+                });
+                if !supports_form {
+                    return Err(McpError::invalid_request(
+                        "effect confirmation requires local current form elicitation",
+                        None,
+                    ));
+                }
+                let requested_schema = serde_json::from_value(serde_json::json!({
+                    "type": "object",
+                    "properties": {"acknowledged": {"type": "boolean", "const": true}},
+                    "required": ["acknowledged"],
+                    "additionalProperties": false
+                }))
+                .map_err(|_| McpError::internal_error("effect elicitation schema failed", None))?;
+                let elicitation = InputRequest::Elicitation(ElicitRequest::new(
+                    ElicitRequestParams::FormElicitationParams {
+                        meta: None,
+                        message: format!(
+                            "Confirm the exact bounded local effect for tool {}. This does not grant live-network, methodological, release, or broader screening authority.",
+                            request.name
+                        ),
+                        requested_schema,
+                    },
+                ));
+                let mut requests = InputRequests::new();
+                requests.insert("effect_confirmation".to_owned(), elicitation);
+                return Ok(InputRequiredResult::new(Some(requests), Some(state)).into());
+            }
+            if request.request_state.as_deref() != Some(state.as_str())
+                || !named_acknowledgement_is_accepted(
+                    request.input_responses.as_ref(),
+                    "effect_confirmation",
+                )
+            {
+                return Err(McpError::invalid_request(
+                    "effect confirmation is absent, stale, or invalid",
+                    None,
+                ));
+            }
+        }
+        if consequential_write_requested(&request) {
+            let handle = self.authorize_effect(&request)?;
+            request
+                .arguments
+                .get_or_insert_with(JsonObject::new)
+                .insert(
+                    "_verified_authority_handle".to_owned(),
+                    serde_json::Value::String(handle),
+                );
+        }
         if !self.remote_http
             && context.protocol_version() == Some(ProtocolVersion::V_2026_07_28)
             && request.name == "workflow"
@@ -1356,12 +1753,19 @@ impl ServerHandler for SearchrightServer {
         self.require_local()?;
         let (resources, next_cursor) = match request.and_then(|params| params.cursor).as_deref() {
             None => {
-                let [workflow, _, _] = advanced_resources();
+                let [workflow, _, _, _, _, _, _] = advanced_resources();
                 (vec![workflow], Some("resources:2".to_owned()))
             }
             Some("resources:2") => {
-                let [_, claim_boundary, task_activity] = advanced_resources();
-                (vec![claim_boundary, task_activity], None)
+                let [_, claim_boundary, task_activity, _, _, _, _] = advanced_resources();
+                (
+                    vec![claim_boundary, task_activity],
+                    Some("resources:3".to_owned()),
+                )
+            }
+            Some("resources:3") => {
+                let [_, _, _, plans, runs, queues, reports] = advanced_resources();
+                (vec![plans, runs, queues, reports], None)
             }
             Some(_) => return Err(McpError::invalid_params("unknown resource cursor", None)),
         };
@@ -1407,12 +1811,12 @@ impl ServerHandler for SearchrightServer {
         self.require_local()?;
         let (prompts, next_cursor) = match request.and_then(|params| params.cursor).as_deref() {
             None => {
-                let [plan_review, _] = advanced_prompts();
+                let [plan_review, _, _] = advanced_prompts();
                 (vec![plan_review], Some("prompts:2".to_owned()))
             }
             Some("prompts:2") => {
-                let [_, press_check] = advanced_prompts();
-                (vec![press_check], None)
+                let [_, press_check, update_workflow] = advanced_prompts();
+                (vec![press_check, update_workflow], None)
             }
             Some(_) => return Err(McpError::invalid_params("unknown prompt cursor", None)),
         };
@@ -1466,6 +1870,24 @@ impl ServerHandler for SearchrightServer {
                     "Assess the search strategy identified by {quoted_review_id} with {focus} focus using recorded PRESS evidence. Do not certify completeness or silently rewrite native syntax."
                 )
             }
+            "update-workflow" => {
+                let parent_run_id = request
+                    .arguments
+                    .as_ref()
+                    .and_then(|arguments| arguments.get("parent_run_id"))
+                    .and_then(serde_json::Value::as_str)
+                    .unwrap_or("<parent-run-id>");
+                validate_prompt_identifier(parent_run_id, "parent_run_id", "<parent-run-id>")?;
+                let quoted_parent_run_id = serde_json::to_string(parent_run_id).map_err(|_| {
+                    McpError::internal_error("parent_run_id serialization failed", None)
+                })?;
+                let mode =
+                    prompt_enum_argument(&request, "mode", &["findings-only", "evidence-gaps"])?
+                        .unwrap_or("findings-only");
+                format!(
+                    "Prepare a living-review update for {quoted_review_id} from parent run {quoted_parent_run_id} in {mode} mode. Preserve immutable parent-run lineage, report evidence gaps explicitly, and grant no execution or screening authority."
+                )
+            }
             _ => return Err(McpError::invalid_params("unknown prompt", None)),
         };
         Ok(GetPromptResult::new(vec![PromptMessage::new_text(Role::User, text)]).into())
@@ -1514,6 +1936,37 @@ impl ServerHandler for SearchrightServer {
     }
 }
 
+fn local_review_operation<'a>(
+    store: Option<&'a searchright::store::FileReviewStore>,
+    apply: bool,
+    confirmation: Option<&'a HumanConfirmation>,
+    authority: Option<&'a VerifiedEffectAuthority>,
+    submitted_document: &'a str,
+    document_format: &'a str,
+) -> Result<LocalReviewOperation<'a>, McpError> {
+    if apply {
+        Ok(LocalReviewOperation::Apply {
+            store: store
+                .ok_or_else(|| McpError::internal_error("local review store unavailable", None))?,
+            confirmation: confirmation.ok_or_else(|| {
+                McpError::invalid_params("apply requires human confirmation", None)
+            })?,
+            authority: authority.ok_or_else(|| {
+                McpError::invalid_request("verified effect authority is absent", None)
+            })?,
+            submitted_document,
+            document_format,
+        })
+    } else if confirmation.is_some() {
+        Err(McpError::invalid_params(
+            "preview must not carry human confirmation",
+            None,
+        ))
+    } else {
+        Ok(LocalReviewOperation::Preview)
+    }
+}
+
 fn prompt_enum_argument<'a>(
     request: &'a GetPromptRequestParams,
     name: &str,
@@ -1535,7 +1988,25 @@ fn prompt_enum_argument<'a>(
     Ok(Some(value))
 }
 
-fn advanced_resources() -> [Resource; 3] {
+fn validate_prompt_identifier(value: &str, name: &str, default: &str) -> Result<(), McpError> {
+    if value == default {
+        return Ok(());
+    }
+    if value.is_empty()
+        || value.len() > 64
+        || !value
+            .chars()
+            .all(|character| character.is_ascii_alphanumeric() || "-_.".contains(character))
+    {
+        return Err(McpError::invalid_params(
+            format!("{name} must be a bounded identifier"),
+            None,
+        ));
+    }
+    Ok(())
+}
+
+fn advanced_resources() -> [Resource; 7] {
     [
         Resource::new("searchright://workflow", "workflow")
             .with_title("Governed workflow")
@@ -1549,10 +2020,26 @@ fn advanced_resources() -> [Resource; 3] {
             .with_title("Aggregate local task activity")
             .with_description("Bounded aggregate task activity without identifiers or payloads")
             .with_mime_type("application/json"),
+        Resource::new("searchright://contracts/plans", "plan-contracts")
+            .with_title("Plan contracts")
+            .with_description("Read-only metadata for noncanonical review-plan artefacts")
+            .with_mime_type("application/json"),
+        Resource::new("searchright://contracts/runs", "run-contracts")
+            .with_title("Run contracts")
+            .with_description("Read-only metadata for noncanonical search-run artefacts")
+            .with_mime_type("application/json"),
+        Resource::new("searchright://contracts/queues", "queue-contracts")
+            .with_title("Queue contracts")
+            .with_description("Read-only metadata for noncanonical screening artefacts")
+            .with_mime_type("application/json"),
+        Resource::new("searchright://contracts/reports", "report-contracts")
+            .with_title("Report contracts")
+            .with_description("Read-only metadata for noncanonical reporting artefacts")
+            .with_mime_type("application/json"),
     ]
 }
 
-fn advanced_prompts() -> [Prompt; 2] {
+fn advanced_prompts() -> [Prompt; 3] {
     let review_id = PromptArgument::new("review_id")
         .with_description("Review identifier; never a grant of authority")
         .with_required(false);
@@ -1574,6 +2061,21 @@ fn advanced_prompts() -> [Prompt; 2] {
                 review_id,
                 PromptArgument::new("focus")
                     .with_description("line-by-line or translation-loss")
+                    .with_required(false),
+            ]),
+        ),
+        Prompt::new(
+            "update-workflow",
+            Some("Draft a living-review update without executing or screening"),
+            Some(vec![
+                PromptArgument::new("review_id")
+                    .with_description("Review identifier; never a grant of authority")
+                    .with_required(false),
+                PromptArgument::new("parent_run_id")
+                    .with_description("Immutable parent-run identifier")
+                    .with_required(false),
+                PromptArgument::new("mode")
+                    .with_description("findings-only or evidence-gaps")
                     .with_required(false),
             ]),
         ),
@@ -1645,18 +2147,71 @@ fn read_advanced_resource(
             )])
             .into())
         }
+        "searchright://contracts/plans" => {
+            contract_resource(request.uri, "plan", &["org.searchright.review-plan.v1"])
+        }
+        "searchright://contracts/runs" => {
+            contract_resource(request.uri, "run", &["org.searchright.search-run.v1"])
+        }
+        "searchright://contracts/queues" => contract_resource(
+            request.uri,
+            "queue",
+            &[
+                "org.searchright.screening-policy.v1",
+                "org.searchright.screening-decision.v1",
+            ],
+        ),
+        "searchright://contracts/reports" => contract_resource(
+            request.uri,
+            "report",
+            &[
+                "org.searchright.prisma-flow.v1",
+                "org.searchright.search-validation.v1",
+            ],
+        ),
         _ => Err(McpError::invalid_params("unknown resource URI", None)),
     }
 }
 
+fn contract_resource(
+    uri: String,
+    artifact_family: &str,
+    canonical_contracts: &[&str],
+) -> Result<ReadResourceResponse, McpError> {
+    let document = serde_json::json!({
+        "schema_version": "org.searchright.mcp-contract-resource.v1",
+        "resource_kind": "noncanonical_contract_resource",
+        "artifact_family": artifact_family,
+        "canonical_contracts": canonical_contracts,
+        "claim_boundary": "Read-only contract metadata only; no execution or screening authority is granted, and no artefact instance or workflow completion is implied."
+    });
+    Ok(ReadResourceResult::new(vec![
+        ResourceContents::text(
+            serde_json::to_string_pretty(&document).map_err(|_| {
+                McpError::internal_error("contract resource serialization failed", None)
+            })?,
+            uri,
+        )
+        .with_mime_type("application/json"),
+    ])
+    .into())
+}
+
 fn acknowledgement_is_accepted(responses: Option<&rmcp::model::InputResponses>) -> bool {
+    named_acknowledgement_is_accepted(responses, "acknowledgement")
+}
+
+fn named_acknowledgement_is_accepted(
+    responses: Option<&rmcp::model::InputResponses>,
+    name: &str,
+) -> bool {
     let Some(responses) = responses else {
         return false;
     };
     if responses.len() != 1 {
         return false;
     }
-    let Some(response) = responses.get("acknowledgement") else {
+    let Some(response) = responses.get(name) else {
         return false;
     };
     serde_json::from_value::<rmcp::model::ElicitResult>(response.clone()).is_ok_and(|result| {
@@ -1666,6 +2221,230 @@ fn acknowledgement_is_accepted(responses: Option<&rmcp::model::InputResponses>) 
                     && content.as_object().is_some_and(|object| object.len() == 1)
             })
     })
+}
+
+fn requires_current_effect_protocol(name: &str) -> bool {
+    matches!(
+        name,
+        "plan_review" | "press_review_strategy" | "execute_search" | "record_screening_decision"
+    )
+}
+
+fn effect_confirmation_required(request: &rmcp::model::CallToolRequestParams) -> bool {
+    consequential_write_requested(request)
+}
+
+fn consequential_write_requested(request: &rmcp::model::CallToolRequestParams) -> bool {
+    if request.name == "record_screening_decision" {
+        return true;
+    }
+    matches!(
+        request.name.as_ref(),
+        "plan_review" | "press_review_strategy" | "execute_search"
+    ) && request
+        .arguments
+        .as_ref()
+        .and_then(|arguments| arguments.get("apply"))
+        .and_then(serde_json::Value::as_bool)
+        .unwrap_or(false)
+}
+
+fn effect_confirmation_state(
+    request: &rmcp::model::CallToolRequestParams,
+) -> Result<String, McpError> {
+    let bytes = serde_json::to_vec(&serde_json::json!({
+        "tool": request.name,
+        "arguments": request.arguments,
+    }))
+    .map_err(|_| McpError::internal_error("effect confirmation binding failed", None))?;
+    let digest = Sha256::digest(bytes);
+    Ok(format!(
+        "effect-confirmation-v1:{}",
+        BASE64_STANDARD.encode(digest)
+    ))
+}
+
+impl SearchrightServer {
+    fn authorize_effect(
+        &self,
+        request: &rmcp::model::CallToolRequestParams,
+    ) -> Result<String, McpError> {
+        let binding = effect_authority_request(request, self.local_store_root.as_ref())?;
+        let verified = verify_effect_authority(self.effect_authority.as_ref(), &binding)
+            .map_err(|_| McpError::invalid_request("trusted host effect authority denied", None))?;
+        let handle = verified.nonce().to_owned();
+        let mut nonces = self
+            .used_authority_nonces
+            .lock()
+            .map_err(|_| McpError::internal_error("effect authority state unavailable", None))?;
+        if !nonces.insert(handle.clone()) {
+            return Err(McpError::invalid_request(
+                "trusted host effect authority was already used",
+                None,
+            ));
+        }
+        drop(nonces);
+        self.pending_authority
+            .lock()
+            .map_err(|_| McpError::internal_error("effect authority state unavailable", None))?
+            .insert(handle.clone(), verified);
+        Ok(handle)
+    }
+
+    fn take_effect_authority(
+        &self,
+        handle: Option<&str>,
+    ) -> Result<VerifiedEffectAuthority, McpError> {
+        let handle = handle.ok_or_else(|| {
+            McpError::invalid_request("verified effect authority is absent", None)
+        })?;
+        self.pending_authority
+            .lock()
+            .map_err(|_| McpError::internal_error("effect authority state unavailable", None))?
+            .remove(handle)
+            .ok_or_else(|| McpError::invalid_request("verified effect authority is invalid", None))
+    }
+}
+
+fn effect_authority_request(
+    request: &rmcp::model::CallToolRequestParams,
+    store_root: &std::path::Path,
+) -> Result<EffectAuthorityRequest, McpError> {
+    let arguments = request
+        .arguments
+        .as_ref()
+        .ok_or_else(|| McpError::invalid_params("effect arguments are required", None))?;
+    let (review_id, principal_hint, policy_value) =
+        match request.name.as_ref() {
+            "plan_review" => {
+                let plan: ReviewPlan = parse_bound_document(arguments)?;
+                let confirmation = arguments.get("confirmation").cloned().ok_or_else(|| {
+                    McpError::invalid_params("apply confirmation is required", None)
+                })?;
+                let confirmation: HumanConfirmation =
+                    serde_json::from_value(confirmation).map_err(json_invalid_params)?;
+                (plan.review_id, confirmation.confirmed_by, None)
+            }
+            "press_review_strategy" => {
+                let review: PressReview = parse_bound_document(arguments)?;
+                let confirmation = arguments.get("confirmation").cloned().ok_or_else(|| {
+                    McpError::invalid_params("apply confirmation is required", None)
+                })?;
+                let confirmation: HumanConfirmation =
+                    serde_json::from_value(confirmation).map_err(json_invalid_params)?;
+                if confirmation.confirmed_by != review.reviewer_id {
+                    return Err(McpError::invalid_request(
+                        "PRESS confirmation principal does not match the named reviewer",
+                        None,
+                    ));
+                }
+                (review.press_review_id, confirmation.confirmed_by, None)
+            }
+            "execute_search" => {
+                let request_value = required_json_string(arguments, "request_json")?;
+                let search_request: SearchRequest =
+                    serde_json::from_str(request_value).map_err(json_invalid_params)?;
+                let principal = required_string(arguments, "confirmed_by")?.to_owned();
+                (search_request.review_id, principal, Some(request_value))
+            }
+            "record_screening_decision" => {
+                let decision_value = required_json_string(arguments, "decision_json")?;
+                let decision: ScreeningDecision =
+                    serde_json::from_str(decision_value).map_err(json_invalid_params)?;
+                (
+                    decision.review_id,
+                    decision.reviewer_id,
+                    Some(required_json_string(arguments, "policy_json")?),
+                )
+            }
+            _ => {
+                return Err(McpError::invalid_request(
+                    "tool has no consequential authority contract",
+                    None,
+                ));
+            }
+        };
+    let request_digest = digest_json(&serde_json::json!({
+        "tool": request.name,
+        "arguments": request.arguments,
+    }))?;
+    let policy_digest = policy_value
+        .map(|value| digest_bytes(value.as_bytes()))
+        .transpose()?;
+    let store_state_digest = local_store_state_digest(store_root)?;
+    Ok(EffectAuthorityRequest {
+        tool_name: request.name.to_string(),
+        request_digest,
+        review_id,
+        principal_hint,
+        policy_digest,
+        store_state_digest,
+    })
+}
+
+fn parse_bound_document<T: serde::de::DeserializeOwned>(
+    arguments: &JsonObject,
+) -> Result<T, McpError> {
+    let document = required_string(arguments, "document")?;
+    let format = arguments.get("format").and_then(serde_json::Value::as_str);
+    parse_document(document, format).map_err(invalid_params)
+}
+
+fn required_string<'a>(arguments: &'a JsonObject, name: &str) -> Result<&'a str, McpError> {
+    arguments
+        .get(name)
+        .and_then(serde_json::Value::as_str)
+        .ok_or_else(|| McpError::invalid_params(format!("{name} is required"), None))
+}
+
+fn required_json_string<'a>(arguments: &'a JsonObject, name: &str) -> Result<&'a str, McpError> {
+    required_string(arguments, name)
+}
+
+fn digest_json(value: &serde_json::Value) -> Result<String, McpError> {
+    let bytes = serde_json::to_vec(value)
+        .map_err(|_| McpError::internal_error("authority request binding failed", None))?;
+    digest_bytes(&bytes)
+}
+
+fn digest_bytes(bytes: &[u8]) -> Result<String, McpError> {
+    Ok(BASE64_STANDARD.encode(Sha256::digest(bytes)))
+}
+
+fn local_store_state_digest(root: &std::path::Path) -> Result<String, McpError> {
+    let mut entries = vec![format!("root:{}", root.to_string_lossy())];
+    for child in ["managed", "executions", "screening"] {
+        let directory = root.join(child);
+        match std::fs::read_dir(&directory) {
+            Ok(read_dir) => {
+                for entry in read_dir {
+                    let entry = entry.map_err(|_| {
+                        McpError::internal_error("local store state unavailable", None)
+                    })?;
+                    let metadata = std::fs::symlink_metadata(entry.path()).map_err(|_| {
+                        McpError::internal_error("local store state unavailable", None)
+                    })?;
+                    entries.push(format!(
+                        "{child}/{}:{}:{}",
+                        entry.file_name().to_string_lossy(),
+                        metadata.len(),
+                        metadata.file_type().is_symlink()
+                    ));
+                }
+            }
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                entries.push(format!("{child}:absent"));
+            }
+            Err(_) => {
+                return Err(McpError::internal_error(
+                    "local store state unavailable",
+                    None,
+                ));
+            }
+        }
+    }
+    entries.sort();
+    digest_bytes(entries.join("\n").as_bytes())
 }
 
 /// Serve the governed MCP tools over standard input/output.
@@ -1939,6 +2718,8 @@ fn validate_json_schema(schema: &serde_json::Value, value: &serde_json::Value) -
     const SUPPORTED_KEYWORDS: &[&str] = &[
         "$schema",
         "$id",
+        "$defs",
+        "$ref",
         "title",
         "type",
         "additionalProperties",
@@ -1952,7 +2733,12 @@ fn validate_json_schema(schema: &serde_json::Value, value: &serde_json::Value) -
         "pattern",
         "uniqueItems",
         "minimum",
+        "maximum",
         "minItems",
+        "minProperties",
+        "propertyNames",
+        "format",
+        "default",
     ];
 
     let object = schema.as_object().ok_or(())?;
@@ -2063,6 +2849,12 @@ fn validate_string_schema(
     {
         return Err(());
     }
+    if schema.get("format").and_then(serde_json::Value::as_str) == Some("date-time")
+        && time::OffsetDateTime::parse(text, &time::format_description::well_known::Rfc3339)
+            .is_err()
+    {
+        return Err(());
+    }
     Ok(())
 }
 
@@ -2108,6 +2900,18 @@ fn validate_object_schema(
     schema: &serde_json::Map<String, serde_json::Value>,
     values: &serde_json::Map<String, serde_json::Value>,
 ) -> Result<(), ()> {
+    if let Some(minimum) = schema
+        .get("minProperties")
+        .and_then(serde_json::Value::as_u64)
+        && u64::try_from(values.len()).map_err(|_| ())? < minimum
+    {
+        return Err(());
+    }
+    if let Some(property_names) = schema.get("propertyNames") {
+        for field in values.keys() {
+            validate_json_schema(property_names, &serde_json::Value::String(field.clone()))?;
+        }
+    }
     if let Some(required) = schema.get("required").and_then(serde_json::Value::as_array)
         && required
             .iter()
@@ -2144,6 +2948,11 @@ fn validate_number_schema(
     {
         return Err(());
     }
+    if let Some(maximum) = schema.get("maximum").and_then(serde_json::Value::as_f64)
+        && number.as_f64().is_none_or(|value| value > maximum)
+    {
+        return Err(());
+    }
     Ok(())
 }
 
@@ -2161,11 +2970,58 @@ fn referenced_output_schema(path: &str) -> serde_json::Value {
         "contracts/json-schema/provider-manifest.v1.schema.json" => {
             include_str!("../../../contracts/json-schema/provider-manifest.v1.schema.json")
         }
+        "contracts/json-schema/plan-review-result.v1.schema.json" => {
+            include_str!("../../../contracts/json-schema/plan-review-result.v1.schema.json")
+        }
+        "contracts/json-schema/press-review-result.v1.schema.json" => {
+            include_str!("../../../contracts/json-schema/press-review-result.v1.schema.json")
+        }
         _ => panic!("unregistered MCP output schema reference: {path}"),
     };
     match serde_json::from_str(bytes) {
-        Ok(value) => value,
+        Ok(value) => inline_schema_references(&value, &value),
         Err(error) => panic!("registered MCP output schema must parse: {error}"),
+    }
+}
+
+fn inline_schema_references(
+    value: &serde_json::Value,
+    document_root: &serde_json::Value,
+) -> serde_json::Value {
+    if let Some(reference) = value.get("$ref").and_then(serde_json::Value::as_str) {
+        if let Some(pointer) = reference.strip_prefix('#') {
+            let target = document_root.pointer(pointer).unwrap_or_else(|| {
+                panic!("registered MCP output schema has invalid ref: {reference}")
+            });
+            return inline_schema_references(target, document_root);
+        }
+        let external = match reference {
+            "https://schemas.searchright.dev/review-plan.v1.schema.json" => serde_json::from_str(
+                include_str!("../../../contracts/json-schema/review-plan.v1.schema.json"),
+            ),
+            "https://schemas.searchright.dev/press-review.v1.schema.json" => serde_json::from_str(
+                include_str!("../../../contracts/json-schema/press-review.v1.schema.json"),
+            ),
+            _ => panic!("registered MCP output schema has unsupported ref: {reference}"),
+        }
+        .unwrap_or_else(|error| panic!("referenced MCP output schema must parse: {error}"));
+        return inline_schema_references(&external, &external);
+    }
+    match value {
+        serde_json::Value::Object(object) => serde_json::Value::Object(
+            object
+                .iter()
+                .filter(|(key, _)| key.as_str() != "$defs")
+                .map(|(key, child)| (key.clone(), inline_schema_references(child, document_root)))
+                .collect(),
+        ),
+        serde_json::Value::Array(values) => serde_json::Value::Array(
+            values
+                .iter()
+                .map(|child| inline_schema_references(child, document_root))
+                .collect(),
+        ),
+        _ => value.clone(),
     }
 }
 
@@ -2265,7 +3121,7 @@ mod tests {
         let server = SearchrightServer::default();
         let tools = server.tool_router.list_all();
 
-        assert_eq!(tools.len(), 31);
+        assert_eq!(tools.len(), 35);
         assert_eq!(output_schema_registry().schemas.len(), tools.len());
         for tool in tools {
             let Some(schema) = tool.output_schema else {
@@ -2295,11 +3151,38 @@ mod tests {
             let Some(annotations) = tool.annotations else {
                 panic!("every tool has effect annotations")
             };
-            assert_eq!(annotations.read_only_hint, Some(true));
-            assert_eq!(annotations.destructive_hint, Some(false));
-            assert_eq!(annotations.idempotent_hint, Some(true));
-            assert_eq!(annotations.open_world_hint, Some(false));
+            assert_eq!(
+                annotations,
+                effect_policy::registered_policy_for(&tool.name).annotations(),
+                "{} annotations must match the checked-in effect catalogue",
+                tool.name
+            );
         }
+    }
+
+    #[test]
+    fn remote_profile_hides_and_denies_consequential_tools() {
+        let local = SearchrightServer::default();
+        let remote = SearchrightServer::remote_http();
+
+        assert!(local.get_tool("deduplicate_records").is_some());
+        assert!(remote.get_tool("deduplicate_records").is_none());
+        assert!(
+            remote
+                .advertised_tools()
+                .iter()
+                .all(|tool| tool.name != "deduplicate_records")
+        );
+        for name in [
+            "plan_review",
+            "press_review_strategy",
+            "execute_search",
+            "deduplicate_records",
+            "record_screening_decision",
+        ] {
+            assert!(!remote.tool_allowed_for_transport(name), "{name}");
+        }
+        assert!(remote.tool_allowed_for_transport("validate_plan"));
     }
 
     #[test]
@@ -2389,10 +3272,8 @@ mod tests {
     -> Result<(), String> {
         let cases = live_client_success_cases()?;
         let advertised = SearchrightServer::default().tool_router.list_all();
-        let expected: std::collections::BTreeSet<_> =
-            advertised.iter().map(|tool| tool.name.as_ref()).collect();
-        let covered: std::collections::BTreeSet<_> =
-            cases.iter().map(|case| case.tool_name).collect();
+        let expected: BTreeSet<_> = advertised.iter().map(|tool| tool.name.as_ref()).collect();
+        let covered: BTreeSet<_> = cases.iter().map(|case| case.tool_name).collect();
 
         assert_eq!(expected, covered);
         assert_eq!(cases.len(), advertised.len() + 1);

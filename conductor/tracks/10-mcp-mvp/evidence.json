@@ -2,14 +2,22 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "10",
   "title": "MCP stdio server MVP",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-08-30",
   "source_evidence": [
     "crates/searchright-mcp/src/main.rs",
+    "crates/searchright-mcp/src/effect_policy.rs",
     "crates/searchright-mcp/src/lib.rs",
+    "crates/searchright-mcp/tests/advanced_mcp.rs",
     "crates/searchright-mcp/tests/live_client_conformance.rs",
+    "crates/searchright/src/authority.rs",
+    "crates/searchright/src/engine.rs",
+    "crates/searchright-store/src/lib.rs",
+    "contracts/json-schema/plan-review-result.v1.schema.json",
+    "contracts/json-schema/press-review-result.v1.schema.json",
+    "contracts/json-schema/press-review.v1.schema.json",
     "contracts/mcp/tool-catalog.json",
     "contracts/interface-catalog.json",
     "docs/mcp-compatibility.md",
@@ -27,11 +35,8 @@
   "requirements": [
     "SR-029"
   ],
-  "blockers": [
-    "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
-    "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary for consequential effects. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-10",

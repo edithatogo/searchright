@@ -18,10 +18,10 @@ for i,e in enumerate(entries):
     seen.add(op)
     cli=e.get('cli_variant',''); mcp=e.get('mcp_tool',''); facade=e.get('facade_method','')
     if not re.search(rf'^\s*{re.escape(cli)}\b',CLI,re.M): errors.append(f'{op}: missing CLI variant {cli}')
-    if not re.search(rf'^\s*fn\s+{re.escape(mcp)}\s*\(',MCP,re.M): errors.append(f'{op}: missing MCP tool {mcp}')
-    if not re.search(rf'^\s*pub\s+fn\s+{re.escape(facade)}\s*\(',ENGINE,re.M): errors.append(f'{op}: missing facade method {facade}')
+    if not re.search(rf'^\s*(?:async\s+)?fn\s+{re.escape(mcp)}\s*\(',MCP,re.M): errors.append(f'{op}: missing MCP tool {mcp}')
+    if not re.search(rf'^\s*pub\s+(?:async\s+)?fn\s+{re.escape(facade)}\s*\(',ENGINE,re.M): errors.append(f'{op}: missing facade method {facade}')
 # Ensure every public facade method is catalogued except constructors/helpers represented elsewhere.
-public=set(re.findall(r'^\s*pub\s+fn\s+([a-z_][a-z0-9_]*)\s*\(',ENGINE,re.M))
+public=set(re.findall(r'^\s*pub\s+(?:async\s+)?fn\s+([a-z_][a-z0-9_]*)\s*\(',ENGINE,re.M))
 declared={e['facade_method'] for e in entries}
 uncatalogued=sorted(public-declared)
 if uncatalogued: errors.append(f'uncatalogued facade methods: {uncatalogued}')

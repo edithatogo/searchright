@@ -5,11 +5,19 @@
 
 #![forbid(unsafe_code)]
 
+mod authority;
 mod engine;
 
+pub use authority::{
+    EffectAuthorityAttestation, EffectAuthorityError, EffectAuthorityRequest,
+    EffectAuthorityVerifier, VerifiedEffectAuthority, verify_effect_authority,
+};
+
 pub use engine::{
-    EngineError, InterchangeExport, PlanAssessment, PrismaArtifact, PrismaOutput,
-    SearchrightEngine, StudyGraphAssessment,
+    EngineError, HumanConfirmation, InterchangeExport, LocalPersistenceOutcome,
+    LocalReviewOperation, PLAN_REVIEW_RESULT_SCHEMA_VERSION, PRESS_REVIEW_RESULT_SCHEMA_VERSION,
+    PlanAssessment, PlanReviewOutcome, PressReviewOutcome, PrismaArtifact, PrismaOutput,
+    SearchExecutionOperation, SearchrightEngine, StudyGraphAssessment,
 };
 
 pub use evidence_search_core as core;

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-10-phase-3`
 Conductor plan: `conductor/tracks/10-mcp-mvp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification.
+- [x] Extend bounded local resources and prompts to plan, run, queue, report and update-workflow contract metadata with no canonical authority claim.
 
 ## Completion and evidence contract
 

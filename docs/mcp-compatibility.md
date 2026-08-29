@@ -36,7 +36,8 @@ compatibility transcript for the previous `2025-11-25` protocol era.
 
 The server does not adopt deprecated Roots, Sampling or Logging features. Its
 bounded local-stdio advanced profile additionally provides two immutable
-resources, one aggregate task-activity resource, two authored prompts, bounded
+governance resources, one aggregate task-activity resource, four noncanonical
+plan/run/queue/report contract-metadata resources, three authored prompts, bounded
 prompt completion, endpoint-specific cursor pagination, a form-elicitation MRTR
 claim-boundary acknowledgement, genuine aggregate resource-update notifications,
 and opt-in Tasks with cooperative cancellation and a four-task admission cap.
@@ -56,16 +57,21 @@ after a real task start or terminal transition and expose no task identifier or
 payload. This is bounded local-process behavior, not lossless event delivery,
 production load, cache, durability or scale evidence.
 
+The four contract-metadata resources describe accepted plan, run, queue and
+report contract families only. They are not stored review instances, canonical
+screening authority, execution receipts or methodological certification.
+
 The advertised output schemas are generated at server construction from
 `contracts/interface-catalog.json`. Object outputs carry properties and
 required fields; array outputs carry item schemas; shared wire contracts embed
-their canonical JSON Schema files. A unit test fails if any of the 31 tools
+their canonical JSON Schema files. A unit test fails if any of the 35 current-era tools
 regresses to a root-only schema. The smoke harness validates invoked tools'
 `structuredContent` against the advertised `outputSchema`; its
 `--strict-schemas` flag is the transcript gate for rejecting trivial schemas.
 The Track 10 official-client harness launches the actual `searchright-mcp`
-binary over child-process stdio for both supported eras. It invokes all 31
-tools with deterministic valid arguments, exercises both `generate_prisma`
+binary over child-process stdio for both supported eras. It invokes all 35
+current-era tools and the 31 backwards-compatible previous-era tools with
+deterministic valid arguments, exercises both `generate_prisma`
 success variants, and independently validates every observed
 `structuredContent` value against the `outputSchema` received through
 `tools/list`. Governed failures remain `isError` responses without successful
@@ -107,10 +113,10 @@ python scripts/mcp_smoke.py --protocol-version 2025-11-25 --receipt verification
 The current `2026-07-28` transcript asserts:
 
 - `server/discover` handshake support;
-- interface-catalogue parity for all 31 tools;
+- interface-catalogue parity for all 35 current-era tools;
 - deterministic tool ordering;
 - input and output schema advertisement;
-- governed read-only/non-destructive annotations;
+- catalogue-derived effect and authority annotations;
 - `structuredContent` validation against the advertised `outputSchema` for each
   invoked tool;
 - governed error redaction and JSON-RPC protocol error shape;
@@ -120,10 +126,10 @@ The current `2026-07-28` transcript asserts:
 The previous `2025-11-25` transcript asserts:
 
 - `initialize` plus `notifications/initialized` handshake support;
-- interface-catalogue parity for all 31 tools;
+- interface-catalogue parity for all 31 backwards-compatible tools;
 - deterministic tool ordering;
 - input and output schema advertisement;
-- governed read-only/non-destructive annotations;
+- governed annotations for the backwards-compatible surface;
 - `structuredContent` validation against the advertised `outputSchema` for each
   invoked tool;
 - governed error redaction; and

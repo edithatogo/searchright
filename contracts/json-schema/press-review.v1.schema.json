@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/press-review.v1.schema.json",
+  "title": "Searchright PRESS Review v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "press_review_id",
+    "strategy_id",
+    "strategy_version",
+    "reviewer_id",
+    "reviewed_at",
+    "findings",
+    "decision"
+  ],
+  "properties": {
+    "press_review_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "strategy_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "strategy_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewer_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "finding_id",
+          "element",
+          "severity",
+          "message",
+          "recommendation",
+          "resolved"
+        ],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "element": {
+            "enum": [
+              "translation_of_question",
+              "boolean_and_proximity",
+              "subject_headings",
+              "text_words",
+              "spelling_syntax_and_lines",
+              "limits_and_filters"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "note",
+              "advisory",
+              "major",
+              "critical"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recommendation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resolved": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "decision": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

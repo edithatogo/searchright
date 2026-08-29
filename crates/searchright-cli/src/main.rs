@@ -23,13 +23,15 @@ use clap::{CommandFactory, Parser, Subcommand, ValueEnum, error::ErrorKind};
 use searchright::contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, CompiledStrategy, DataHandlingRequest,
     Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
-    InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PrismaFlow, ProtocolAmendment,
-    ProviderComponentManifest, RankingCalibration, ReviewPlan, SearchDialect, SearchStrategy,
-    SearchValidationReport, SourceReceipt, StandardAssessment, StandardPack, StudyGraph,
-    UntrustedContentPolicy, WorkflowTrace,
+    InterchangeFormat, LicensedAdapterProfile, LivingUpdateRun, PressReview, PrismaFlow,
+    ProtocolAmendment, ProviderComponentManifest, RankingCalibration, ReviewPlan, SearchDialect,
+    SearchRequest, SearchStrategy, SearchValidationReport, SourceReceipt, StandardAssessment,
+    StandardPack, StudyGraph, UntrustedContentPolicy, WorkflowTrace,
 };
 use searchright::dedup::DedupConfig;
-use searchright::{PrismaArtifact, PrismaOutput, SearchrightEngine};
+use searchright::{
+    LocalReviewOperation, PrismaArtifact, PrismaOutput, SearchExecutionOperation, SearchrightEngine,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Parser)]
@@ -62,6 +64,50 @@ enum Command {
         /// Apply the write. Without this flag the command is a dry run.
         #[arg(long)]
         apply: bool,
+    },
+    /// Validate and optionally persist a human-confirmed review-plan draft.
+    PlanReview {
+        input: PathBuf,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
+        #[arg(long)]
+        apply: bool,
+        #[arg(long)]
+        confirmation: Option<PathBuf>,
+    },
+    /// Validate and optionally persist human-confirmed PRESS evidence.
+    PressReviewStrategy {
+        input: PathBuf,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
+        #[arg(long)]
+        apply: bool,
+        #[arg(long)]
+        confirmation: Option<PathBuf>,
+    },
+    /// Preview or apply deterministic fixture execution under an envelope.
+    ExecuteSearch {
+        request: PathBuf,
+        envelope: PathBuf,
+        #[arg(long)]
+        provider_id: String,
+        #[arg(long)]
+        source_label: String,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
+        #[arg(long)]
+        apply: bool,
+        #[arg(long)]
+        commit_id: Option<String>,
+        #[arg(long)]
+        confirmed_by: Option<String>,
+    },
+    /// Persist one complete screening decision under the supplied role policy.
+    RecordScreeningDecision {
+        policy: PathBuf,
+        decision: PathBuf,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
     },
     /// Review-plan operations.
     Plan {
@@ -218,6 +264,16 @@ enum Command {
 
 #[derive(Debug, Subcommand)]
 enum PlanCommand {
+    /// Validate and optionally persist a human-confirmed review-plan draft.
+    Review {
+        input: PathBuf,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
+        #[arg(long)]
+        apply: bool,
+        #[arg(long)]
+        confirmation: Option<PathBuf>,
+    },
     /// Validate a review plan and report readiness findings.
     Validate { input: PathBuf },
     /// Validate a protocol amendment.
@@ -253,6 +309,16 @@ enum SourceCommand {
 
 #[derive(Debug, Subcommand)]
 enum StrategyCommand {
+    /// Validate and optionally persist human-confirmed PRESS evidence.
+    PressReview {
+        input: PathBuf,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
+        #[arg(long)]
+        apply: bool,
+        #[arg(long)]
+        confirmation: Option<PathBuf>,
+    },
     /// Validate a source-specific search strategy.
     Validate { input: PathBuf },
     /// Compile a portable strategy into source syntax.
@@ -273,6 +339,23 @@ enum StrategyCommand {
 
 #[derive(Debug, Subcommand)]
 enum RunCommand {
+    /// Preview or apply deterministic fixture execution under an envelope.
+    Execute {
+        request: PathBuf,
+        envelope: PathBuf,
+        #[arg(long)]
+        provider_id: String,
+        #[arg(long)]
+        source_label: String,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
+        #[arg(long)]
+        apply: bool,
+        #[arg(long)]
+        commit_id: Option<String>,
+        #[arg(long)]
+        confirmed_by: Option<String>,
+    },
     /// Check endpoint authority without executing a request.
     AuthoriseEndpoint { input: PathBuf, endpoint: String },
     /// Verify a JSONL hash-chained audit ledger.
@@ -321,6 +404,13 @@ enum ImportCommand {
 
 #[derive(Debug, Subcommand)]
 enum ScreenCommand {
+    /// Persist one complete screening decision under the supplied role policy.
+    RecordDecision {
+        policy: PathBuf,
+        decision: PathBuf,
+        #[arg(long, default_value = ".searchright/review-store")]
+        store: PathBuf,
+    },
     /// Rank records for prioritisation without making exclusion decisions.
     Rank {
         input: PathBuf,
@@ -503,6 +593,10 @@ fn main() -> ExitCode {
 const fn command_stage(command: &Command) -> &'static str {
     match command {
         Command::Init { .. } => "init",
+        Command::PlanReview { .. } => "plan-review",
+        Command::PressReviewStrategy { .. } => "press-review-strategy",
+        Command::ExecuteSearch { .. } => "execute-search",
+        Command::RecordScreeningDecision { .. } => "record-screening-decision",
         Command::ValidatePlan { .. } => "validate-plan",
         Command::ValidateStrategy { .. } => "validate-strategy",
         Command::ValidateDocumentEvidence { .. } => "validate-document-evidence",
@@ -549,6 +643,17 @@ const fn command_stage(command: &Command) -> &'static str {
 fn canonical_command(command: Command) -> Command {
     match command {
         Command::Plan { command } => match command {
+            PlanCommand::Review {
+                input,
+                store,
+                apply,
+                confirmation,
+            } => Command::PlanReview {
+                input,
+                store,
+                apply,
+                confirmation,
+            },
             PlanCommand::Validate { input } => Command::ValidatePlan { input },
             PlanCommand::ValidateAmendment { input } => Command::ValidateAmendment { input },
             PlanCommand::EvaluateGovernance { policy, request } => {
@@ -583,6 +688,17 @@ fn canonical_command(command: Command) -> Command {
             },
         },
         Command::Strategy { command } => match command {
+            StrategyCommand::PressReview {
+                input,
+                store,
+                apply,
+                confirmation,
+            } => Command::PressReviewStrategy {
+                input,
+                store,
+                apply,
+                confirmation,
+            },
             StrategyCommand::Validate { input } => Command::ValidateStrategy { input },
             StrategyCommand::Compile { input, dialect } => Command::Compile { input, dialect },
             StrategyCommand::ValidateSearch { input } => Command::ValidateSearch { input },
@@ -597,6 +713,25 @@ fn canonical_command(command: Command) -> Command {
             }
         },
         Command::Run { command } => match command {
+            RunCommand::Execute {
+                request,
+                envelope,
+                provider_id,
+                source_label,
+                store,
+                apply,
+                commit_id,
+                confirmed_by,
+            } => Command::ExecuteSearch {
+                request,
+                envelope,
+                provider_id,
+                source_label,
+                store,
+                apply,
+                commit_id,
+                confirmed_by,
+            },
             RunCommand::AuthoriseEndpoint { input, endpoint } => {
                 Command::AuthoriseEndpoint { input, endpoint }
             }
@@ -645,6 +780,15 @@ fn canonical_command(command: Command) -> Command {
             },
         },
         Command::Screen { command } => match command {
+            ScreenCommand::RecordDecision {
+                policy,
+                decision,
+                store,
+            } => Command::RecordScreeningDecision {
+                policy,
+                decision,
+                store,
+            },
             ScreenCommand::Rank { input, query_term } => Command::Rank { input, query_term },
             ScreenCommand::StudyGraph { input } => Command::StudyGraph { input },
             ScreenCommand::ValidateRankingCalibration { input } => {
@@ -671,6 +815,86 @@ fn canonical_command(command: Command) -> Command {
 fn execute(command: Command) -> Result<()> {
     match command {
         Command::Init { target, apply } => initialise(&target, apply)?,
+        Command::PlanReview {
+            input,
+            store,
+            apply,
+            confirmation,
+        } => {
+            let plan: ReviewPlan = read_document(&input)?;
+            if apply || confirmation.is_some() {
+                bail!(
+                    "CLI apply is disabled: consequential writes require a trusted host-injected authority verifier"
+                );
+            }
+            let _ = store;
+            print_json(&SearchrightEngine::plan_review(
+                &plan,
+                LocalReviewOperation::Preview,
+            )?)?;
+        }
+        Command::PressReviewStrategy {
+            input,
+            store,
+            apply,
+            confirmation,
+        } => {
+            let review: PressReview = read_document(&input)?;
+            if apply || confirmation.is_some() {
+                bail!(
+                    "CLI apply is disabled: consequential writes require a trusted host-injected authority verifier"
+                );
+            }
+            let _ = store;
+            print_json(&SearchrightEngine::press_review_strategy(
+                &review,
+                LocalReviewOperation::Preview,
+            )?)?;
+        }
+        Command::ExecuteSearch {
+            request,
+            envelope,
+            provider_id,
+            source_label,
+            store,
+            apply,
+            commit_id,
+            confirmed_by,
+        } => {
+            let request: SearchRequest = read_document(&request)?;
+            let envelope: ExecutionEnvelope = read_document(&envelope)?;
+            let operation = if apply {
+                bail!(
+                    "CLI apply is disabled: consequential writes require a trusted host-injected authority verifier"
+                );
+            } else {
+                if commit_id.is_some() || confirmed_by.is_some() {
+                    bail!("preview must not carry --commit-id or --confirmed-by");
+                }
+                SearchExecutionOperation::Preview
+            };
+            let _ = store;
+            let runtime = tokio::runtime::Builder::new_current_thread()
+                .enable_time()
+                .build()?;
+            print_json(&runtime.block_on(SearchrightEngine::execute_search(
+                &provider_id,
+                &source_label,
+                request,
+                &envelope,
+                operation,
+            ))?)?;
+        }
+        Command::RecordScreeningDecision {
+            policy,
+            decision,
+            store,
+        } => {
+            let _ = (policy, decision, store);
+            bail!(
+                "CLI screening writes are disabled: consequential writes require a trusted host-injected authority verifier"
+            );
+        }
         Command::Plan { .. }
         | Command::Source { .. }
         | Command::Strategy { .. }

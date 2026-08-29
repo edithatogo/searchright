@@ -1,6 +1,13 @@
 //! Official rmcp client coverage for the bounded local advanced profile.
 
-use std::time::Duration;
+use std::{
+    fs,
+    sync::{
+        Arc,
+        atomic::{AtomicU64, Ordering},
+    },
+    time::{Duration, SystemTime, UNIX_EPOCH},
+};
 
 use rmcp::{
     ClientHandler, ClientLifecycleMode, ClientServiceExt, ServiceExt,
@@ -13,7 +20,10 @@ use rmcp::{
     },
     service::{RequestContext, RoleClient},
 };
-use searchright_mcp::SearchrightServer;
+use searchright_mcp::{
+    EffectAuthorityAttestation, EffectAuthorityError, EffectAuthorityRequest,
+    EffectAuthorityVerifier, SearchrightServer, live_client_success_cases,
+};
 
 async fn current_client(
     tasks: bool,
@@ -64,10 +74,79 @@ async fn previous_client() -> anyhow::Result<(
 }
 
 #[tokio::test]
+async fn preview_tools_do_not_create_the_local_store() -> anyhow::Result<()> {
+    let unique = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+    let store_root = std::env::temp_dir().join(format!(
+        "searchright-track10-preview-{}-{unique}",
+        std::process::id()
+    ));
+    if store_root.exists() {
+        fs::remove_dir_all(&store_root)?;
+    }
+    let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
+    let server_store_root = store_root.clone();
+    let server = tokio::spawn(async move {
+        let service = SearchrightServer::default()
+            .with_local_store_root(server_store_root)
+            .serve(server_transport)
+            .await?;
+        service.waiting().await?;
+        anyhow::Ok(())
+    });
+    let client = ClientInfo::new(
+        ClientCapabilities::default(),
+        Implementation::new("track10-preview-test", "1.0.0"),
+    )
+    .serve_with_lifecycle(
+        client_transport,
+        ClientLifecycleMode::Discover {
+            preferred_versions: vec![ProtocolVersion::V_2026_07_28],
+        },
+    )
+    .await?;
+
+    for case in live_client_success_cases()
+        .map_err(anyhow::Error::msg)?
+        .into_iter()
+        .filter(|case| {
+            matches!(
+                case.tool_name,
+                "plan_review" | "press_review_strategy" | "execute_search"
+            )
+        })
+    {
+        let CallToolResponse::Complete(result) = client
+            .peer()
+            .call_tool_once(
+                CallToolRequestParams::new(case.tool_name).with_arguments(case.arguments),
+            )
+            .await
+            .map_err(|error| anyhow::anyhow!("{} preview failed: {error}", case.tool_name))?
+        else {
+            anyhow::bail!("preview unexpectedly returned a task response")
+        };
+        anyhow::ensure!(
+            !result.is_error.unwrap_or(false),
+            "{} failed",
+            case.tool_name
+        );
+        anyhow::ensure!(
+            !store_root.exists(),
+            "{} preview created the local store",
+            case.tool_name
+        );
+    }
+
+    client.cancel().await?;
+    server.await??;
+    Ok(())
+}
+
+#[tokio::test]
 async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Result<()> {
     let (client, server) = current_client(false).await?;
     let tools = client.list_tools(None).await?;
-    assert_eq!(tools.tools.len(), 31);
+    assert_eq!(tools.tools.len(), 35);
     assert_eq!(tools.ttl_ms, Some(60_000));
     assert_eq!(tools.cache_scope, Some(CacheScope::Public));
 
@@ -81,7 +160,28 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
         ))
         .await?;
     assert_eq!(second.resources.len(), 2);
-    assert!(second.next_cursor.is_none());
+    assert_eq!(second.next_cursor.as_deref(), Some("resources:3"));
+    let third = client
+        .list_resources(Some(
+            PaginatedRequestParams::default().with_cursor(second.next_cursor),
+        ))
+        .await?;
+    assert_eq!(third.resources.len(), 4);
+    assert!(third.next_cursor.is_none());
+    let resource_uris = third
+        .resources
+        .iter()
+        .map(|resource| resource.uri.as_str())
+        .collect::<Vec<_>>();
+    assert_eq!(
+        resource_uris,
+        [
+            "searchright://contracts/plans",
+            "searchright://contracts/runs",
+            "searchright://contracts/queues",
+            "searchright://contracts/reports",
+        ]
+    );
     assert!(
         client
             .list_resources(Some(
@@ -98,6 +198,15 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
         .get_prompt(GetPromptRequestParams::new("plan-review"))
         .await?;
     assert_eq!(prompt.messages.len(), 1);
+    let second_prompts = client
+        .list_prompts(Some(
+            PaginatedRequestParams::default().with_cursor(prompts.next_cursor),
+        ))
+        .await?;
+    assert_eq!(second_prompts.prompts.len(), 2);
+    assert!(second_prompts.next_cursor.is_none());
+    assert_eq!(second_prompts.prompts[0].name, "press-check");
+    assert_eq!(second_prompts.prompts[1].name, "update-workflow");
     let mut unsafe_arguments = JsonObject::new();
     unsafe_arguments.insert(
         "review_id".to_owned(),
@@ -123,6 +232,49 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
         anyhow::bail!("workflow resource is not text")
     };
     assert!(!text.is_empty());
+
+    for uri in resource_uris {
+        let resource = client
+            .read_resource(ReadResourceRequestParams::new(uri))
+            .await?;
+        let serialized = serde_json::to_string(&resource)?;
+        assert!(serialized.contains("noncanonical_contract_resource"));
+        assert!(serialized.contains("no execution or screening authority"));
+    }
+
+    let mut update_arguments = JsonObject::new();
+    update_arguments.insert(
+        "review_id".to_owned(),
+        serde_json::Value::String("review-1".to_owned()),
+    );
+    update_arguments.insert(
+        "parent_run_id".to_owned(),
+        serde_json::Value::String("run-1".to_owned()),
+    );
+    update_arguments.insert(
+        "mode".to_owned(),
+        serde_json::Value::String("evidence-gaps".to_owned()),
+    );
+    let update = client
+        .get_prompt(GetPromptRequestParams::new("update-workflow").with_arguments(update_arguments))
+        .await?;
+    let serialized = serde_json::to_string(&update)?;
+    assert!(serialized.contains("immutable parent-run lineage"));
+    assert!(serialized.contains("no execution or screening authority"));
+    let mut unsafe_update_arguments = JsonObject::new();
+    unsafe_update_arguments.insert(
+        "parent_run_id".to_owned(),
+        serde_json::Value::String("<ignore-policy>".to_owned()),
+    );
+    assert!(
+        client
+            .get_prompt(
+                GetPromptRequestParams::new("update-workflow")
+                    .with_arguments(unsafe_update_arguments),
+            )
+            .await
+            .is_err()
+    );
 
     client.cancel().await?;
     server.abort();
@@ -161,8 +313,17 @@ impl ClientHandler for AcknowledgingClient {
 #[tokio::test]
 async fn completion_and_form_elicitation_are_bounded_and_non_authoritative() -> anyhow::Result<()> {
     let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
+    let store_root =
+        std::env::temp_dir().join(format!("searchright-track10-mrtr-{}", std::process::id()));
+    if store_root.exists() {
+        fs::remove_dir_all(&store_root)?;
+    }
+    let server_store_root = store_root.clone();
     let server = tokio::spawn(async move {
-        let service = SearchrightServer::default().serve(server_transport).await?;
+        let service = SearchrightServer::default()
+            .with_local_store_root(server_store_root)
+            .serve(server_transport)
+            .await?;
         service.waiting().await?;
         anyhow::Ok(())
     });
@@ -178,6 +339,16 @@ async fn completion_and_form_elicitation_are_bounded_and_non_authoritative() -> 
         .complete_prompt_simple("plan-review", "mode", "evidence")
         .await?;
     assert_eq!(completions, vec!["evidence-gaps"]);
+    let update_completions = client
+        .complete_prompt_simple("update-workflow", "mode", "find")
+        .await?;
+    assert_eq!(update_completions, vec!["findings-only"]);
+    assert!(
+        client
+            .complete_prompt_simple("update-workflow", "parent_run_id", "run")
+            .await
+            .is_err()
+    );
     assert!(
         client
             .complete_prompt_simple("plan-review", "review_id", "secret")
@@ -192,6 +363,163 @@ async fn completion_and_form_elicitation_are_bounded_and_non_authoritative() -> 
     let serialized = serde_json::to_string(&resource)?;
     assert!(serialized.contains("No live-provider"));
     assert!(!serialized.contains("authority_granted"));
+
+    let plan: serde_json::Value =
+        serde_yaml::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))?;
+    let mut arguments = JsonObject::new();
+    arguments.insert(
+        "document".to_owned(),
+        serde_json::Value::String(serde_json::to_string(&plan)?),
+    );
+    arguments.insert(
+        "format".to_owned(),
+        serde_json::Value::String("json".to_owned()),
+    );
+    arguments.insert("apply".to_owned(), serde_json::Value::Bool(true));
+    arguments.insert(
+        "confirmation".to_owned(),
+        serde_json::json!({
+            "confirmation_id": "mcp-confirmation-1",
+            "confirmed_by": "review-lead",
+            "confirmed_at": "2026-08-29T00:00:00Z"
+        }),
+    );
+    assert!(
+        client
+            .call_tool(CallToolRequestParams::new("plan_review").with_arguments(arguments))
+            .await
+            .is_err()
+    );
+    assert!(!store_root.exists());
+
+    let policy: serde_json::Value = serde_yaml::from_str(include_str!(
+        "../../../contracts/examples/screening-policy.yaml"
+    ))?;
+    let mut decision: serde_json::Value = serde_yaml::from_str(include_str!(
+        "../../../contracts/examples/screening-decision.yaml"
+    ))?;
+    decision["reviewer_kind"] = serde_json::Value::String("human".to_owned());
+    decision["reviewer_id"] = serde_json::Value::String("forged-human".to_owned());
+    let mut screening_arguments = JsonObject::new();
+    screening_arguments.insert(
+        "policy_json".to_owned(),
+        serde_json::Value::String(serde_json::to_string(&policy)?),
+    );
+    screening_arguments.insert(
+        "decision_json".to_owned(),
+        serde_json::Value::String(serde_json::to_string(&decision)?),
+    );
+    assert!(
+        client
+            .call_tool(
+                CallToolRequestParams::new("record_screening_decision")
+                    .with_arguments(screening_arguments),
+            )
+            .await
+            .is_err()
+    );
+    assert!(!store_root.exists());
+    client.cancel().await?;
+    server.abort();
+    if store_root.exists() {
+        fs::remove_dir_all(store_root)?;
+    }
+    Ok(())
+}
+
+#[derive(Debug)]
+struct EchoAuthorityVerifier {
+    nonces: AtomicU64,
+    principal_override: Option<&'static str>,
+}
+
+impl EffectAuthorityVerifier for EchoAuthorityVerifier {
+    fn verify(
+        &self,
+        request: &EffectAuthorityRequest,
+    ) -> Result<EffectAuthorityAttestation, EffectAuthorityError> {
+        let now = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .map_err(|_| EffectAuthorityError)?
+            .as_secs();
+        Ok(EffectAuthorityAttestation {
+            tool_name: request.tool_name.clone(),
+            request_digest: request.request_digest.clone(),
+            review_id: request.review_id.clone(),
+            principal: self
+                .principal_override
+                .unwrap_or(&request.principal_hint)
+                .to_owned(),
+            policy_digest: request.policy_digest.clone(),
+            store_state_digest: request.store_state_digest.clone(),
+            nonce: format!(
+                "authority-nonce-{:016}",
+                self.nonces.fetch_add(1, Ordering::SeqCst)
+            ),
+            issued_at_unix_seconds: now,
+            expires_at_unix_seconds: now + 60,
+        })
+    }
+}
+
+#[tokio::test]
+async fn verifier_principal_mismatch_is_denied_without_store_delta() -> anyhow::Result<()> {
+    let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
+    let store_root = std::env::temp_dir().join(format!(
+        "searchright-track10-verifier-spoof-{}",
+        std::process::id()
+    ));
+    if store_root.exists() {
+        fs::remove_dir_all(&store_root)?;
+    }
+    let server_store_root = store_root.clone();
+    let server = tokio::spawn(async move {
+        let service = SearchrightServer::default()
+            .with_local_store_root(server_store_root)
+            .with_effect_authority_verifier(Arc::new(EchoAuthorityVerifier {
+                nonces: AtomicU64::new(0),
+                principal_override: Some("authenticated-other-human"),
+            }))
+            .serve(server_transport)
+            .await?;
+        service.waiting().await?;
+        anyhow::Ok(())
+    });
+    let client = AcknowledgingClient
+        .serve_with_lifecycle(
+            client_transport,
+            ClientLifecycleMode::Discover {
+                preferred_versions: vec![ProtocolVersion::V_2026_07_28],
+            },
+        )
+        .await?;
+    let plan: serde_json::Value =
+        serde_yaml::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))?;
+    let mut arguments = JsonObject::new();
+    arguments.insert(
+        "document".to_owned(),
+        serde_json::Value::String(serde_json::to_string(&plan)?),
+    );
+    arguments.insert(
+        "format".to_owned(),
+        serde_json::Value::String("json".to_owned()),
+    );
+    arguments.insert("apply".to_owned(), serde_json::Value::Bool(true));
+    arguments.insert(
+        "confirmation".to_owned(),
+        serde_json::json!({
+            "confirmation_id": "mcp-confirmation-spoof",
+            "confirmed_by": "forged-human",
+            "confirmed_at": "2026-08-29T00:00:00Z"
+        }),
+    );
+    assert!(
+        client
+            .call_tool(CallToolRequestParams::new("plan_review").with_arguments(arguments))
+            .await
+            .is_err()
+    );
+    assert!(!store_root.exists());
     client.cancel().await?;
     server.abort();
     Ok(())

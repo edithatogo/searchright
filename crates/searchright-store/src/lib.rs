@@ -12,8 +12,10 @@ use evidence_search_core::{
     AuditLedger, AuditVerification, canonical_record_digest, verify_event_integrity,
 };
 use searchright_contracts::{
-    AuditEvent, BibliographicRecord, SourceReceipt, Validate, validate_registered_audit_event,
+    AuditEvent, BibliographicRecord, DecisionValue, ReviewerKind, ScreeningDecision,
+    ScreeningPolicy, SourceReceipt, Validate, validate_registered_audit_event,
 };
+use searchright_screening::{ScreeningBoard, is_exclusion_decision};
 use serde::{Deserialize, Serialize};
 
 mod lifecycle;
@@ -43,12 +45,28 @@ pub struct SnapshotReceipt {
 pub struct ExecutionCommit {
     /// Stable idempotency key for this commit.
     pub commit_id: String,
+    /// SHA-256 digest binding the exact approved execution inputs and authority.
+    pub binding_digest: String,
     /// Redacted source execution receipt.
     pub receipt: SourceReceipt,
     /// Normalised records introduced by the receipt.
     pub records: Vec<BibliographicRecord>,
     /// Audit event describing the commit.
     pub audit_event: AuditEvent,
+}
+
+/// One immutable, complete screening-decision persistence boundary.
+///
+/// The policy is retained with the full decision so a restart can re-evaluate the
+/// same authority boundary. Derived snapshots are deliberately not consulted.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ScreeningDecisionCommit {
+    /// Policy under which the decision was admitted.
+    pub policy: ScreeningPolicy,
+    /// Complete canonical screening decision.
+    pub decision: ScreeningDecision,
+    /// Whether the recorded reviewer holds final decision authority.
+    pub final_authority: bool,
 }
 
 /// Externally verified evidence authorising recovery of one abandoned writer lock.
@@ -131,6 +149,7 @@ impl FileReviewStore {
         fs::create_dir_all(&root)?;
         fs::create_dir_all(root.join("events"))?;
         fs::create_dir_all(root.join("commits"))?;
+        fs::create_dir_all(root.join("screening-decisions"))?;
         fs::create_dir_all(root.join("snapshots"))?;
         Ok(Self { root })
     }
@@ -329,6 +348,131 @@ impl FileReviewStore {
         Ok(relative)
     }
 
+    /// Read and fully validate one immutable execution commit by idempotency key.
+    pub fn read_execution_commit(
+        &self,
+        commit_id: &str,
+    ) -> Result<Option<ExecutionCommit>, StoreError> {
+        validate_storage_identifier(commit_id)
+            .map_err(|_| StoreError::InvalidExecutionCommit("commit_id is invalid".to_owned()))?;
+        let path = self.root.join("commits").join(format!("{commit_id}.json"));
+        if !path.exists() {
+            return Ok(None);
+        }
+        let commit: ExecutionCommit = serde_json::from_slice(&fs::read(path)?)?;
+        if commit.commit_id != commit_id {
+            return Err(StoreError::InvalidExecutionCommit(
+                "execution commit filename and commit_id differ".to_owned(),
+            ));
+        }
+        validate_execution_commit(&commit)?;
+        Ok(Some(commit))
+    }
+
+    /// Persist a complete screening decision as an immutable, idempotent commit.
+    ///
+    /// Existing commits are replayed through [`ScreeningBoard`] on every write,
+    /// including after restart. Agent exclusions are not admitted here because
+    /// this primitive has no atomic human-confirmation linkage.
+    pub fn append_screening_decision(
+        &self,
+        policy: &ScreeningPolicy,
+        decision: &ScreeningDecision,
+    ) -> Result<PathBuf, StoreError> {
+        let _lock = self.acquire_write_lock("append-screening-decision")?;
+        let existing = self.read_screening_decisions_unlocked()?;
+        let mut board = validate_screening_commits(&existing, Some(policy))?;
+        validate_screening_authority(decision)?;
+
+        let final_authority = decision.reviewer_kind == ReviewerKind::Human;
+        let commit = ScreeningDecisionCommit {
+            policy: policy.clone(),
+            decision: decision.clone(),
+            final_authority,
+        };
+        let bytes = serde_json::to_vec(&commit)?;
+        let relative =
+            PathBuf::from("screening-decisions").join(format!("{}.json", decision.decision_id));
+        let target = self.root.join(&relative);
+        if target.exists() {
+            return if fs::read(&target)? == bytes {
+                Ok(relative)
+            } else {
+                Err(StoreError::ConflictingScreeningDecisionId(
+                    decision.decision_id.clone(),
+                ))
+            };
+        }
+
+        board
+            .submit(decision.clone())
+            .map_err(|error| StoreError::InvalidScreeningDecision(error.to_string()))?;
+        let directory = self.root.join("screening-decisions");
+        let temporary_path = directory.join(format!(".{}.pending", uuid::Uuid::now_v7()));
+        let mut temporary = TemporaryFile {
+            path: temporary_path.clone(),
+            committed: false,
+        };
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(&temporary_path)?;
+        file.write_all(&bytes)?;
+        file.sync_all()?;
+        fs::hard_link(&temporary_path, &target)?;
+        sync_directory(Some(&directory))?;
+        fs::remove_file(&temporary_path)?;
+        temporary.committed = true;
+        Ok(relative)
+    }
+
+    /// Read and revalidate all canonical screening-decision commits.
+    ///
+    /// This reads immutable commits only; replaceable snapshots are noncanonical.
+    pub fn read_screening_decisions(&self) -> Result<Vec<ScreeningDecisionCommit>, StoreError> {
+        let commits = self.read_screening_decisions_unlocked()?;
+        if !commits.is_empty() {
+            validate_screening_commits(&commits, None)?;
+        }
+        Ok(commits)
+    }
+
+    fn read_screening_decisions_unlocked(
+        &self,
+    ) -> Result<Vec<ScreeningDecisionCommit>, StoreError> {
+        let mut paths = Vec::new();
+        for entry in fs::read_dir(self.root.join("screening-decisions"))? {
+            let entry = entry?;
+            if entry.file_type()?.is_file()
+                && !entry.file_name().to_string_lossy().starts_with('.')
+                && entry
+                    .path()
+                    .extension()
+                    .is_some_and(|extension| extension.eq_ignore_ascii_case("json"))
+            {
+                paths.push(entry.path());
+            }
+        }
+        paths.sort();
+        paths
+            .into_iter()
+            .map(|path| {
+                let commit: ScreeningDecisionCommit = serde_json::from_slice(&fs::read(&path)?)?;
+                let expected = format!("{}.json", commit.decision.decision_id);
+                if path.file_name().and_then(|name| name.to_str()) != Some(expected.as_str()) {
+                    return Err(StoreError::UnexpectedScreeningDecisionFile {
+                        expected,
+                        actual: path.file_name().map_or_else(
+                            || path.display().to_string(),
+                            |name| name.to_string_lossy().into_owned(),
+                        ),
+                    });
+                }
+                Ok(commit)
+            })
+            .collect()
+    }
+
     /// Replace a derived JSON snapshot using a same-directory temporary file and rename.
     ///
     /// This is not a cross-filesystem transaction. Directory durability and replacement
@@ -469,6 +613,20 @@ pub enum StoreError {
     /// A commit identifier was reused for different bytes.
     #[error("execution commit identifier `{0}` is already present with different content")]
     ConflictingCommitId(String),
+    /// A screening decision identifier was reused for different complete content.
+    #[error("screening decision identifier `{0}` is already present with different content")]
+    ConflictingScreeningDecisionId(String),
+    /// A screening decision or its authority context was invalid.
+    #[error("invalid screening decision commit: {0}")]
+    InvalidScreeningDecision(String),
+    /// An immutable screening-decision file was renamed or injected.
+    #[error("unexpected screening decision file `{actual}`; expected `{expected}`")]
+    UnexpectedScreeningDecisionFile {
+        /// Name implied by the complete decision identifier.
+        expected: String,
+        /// Name found on disk.
+        actual: String,
+    },
     /// Execution commit linkage or contract validation failed.
     #[error("invalid execution commit: {0}")]
     InvalidExecutionCommit(String),
@@ -533,6 +691,16 @@ fn validate_execution_commit(commit: &ExecutionCommit) -> Result<(), StoreError>
             "commit_id is empty".to_owned(),
         ));
     }
+    if commit.binding_digest.len() != 64
+        || !commit
+            .binding_digest
+            .bytes()
+            .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase())
+    {
+        return Err(StoreError::InvalidExecutionCommit(
+            "binding_digest must be a lowercase SHA-256 digest".to_owned(),
+        ));
+    }
     commit
         .receipt
         .validate()
@@ -557,6 +725,12 @@ fn validate_execution_commit(commit: &ExecutionCommit) -> Result<(), StoreError>
             .get("commit_id")
             .and_then(serde_json::Value::as_str)
             != Some(commit.commit_id.as_str())
+        || commit
+            .audit_event
+            .payload
+            .get("binding_digest")
+            .and_then(serde_json::Value::as_str)
+            != Some(commit.binding_digest.as_str())
         || commit
             .audit_event
             .payload
@@ -602,6 +776,69 @@ fn validate_execution_commit(commit: &ExecutionCommit) -> Result<(), StoreError>
         ));
     }
     Ok(())
+}
+
+fn validate_screening_authority(decision: &ScreeningDecision) -> Result<(), StoreError> {
+    if decision.reviewer_kind == ReviewerKind::Agent && is_exclusion_decision(decision.decision) {
+        return Err(StoreError::InvalidScreeningDecision(
+            "agent exclusion requires an atomically linked human confirmation".to_owned(),
+        ));
+    }
+    Ok(())
+}
+
+fn validate_screening_commits(
+    commits: &[ScreeningDecisionCommit],
+    expected_policy: Option<&ScreeningPolicy>,
+) -> Result<ScreeningBoard, StoreError> {
+    let policy = match (commits.first(), expected_policy) {
+        (Some(first), Some(expected)) if &first.policy != expected => {
+            return Err(StoreError::InvalidScreeningDecision(
+                "screening policy differs from the immutable persisted policy".to_owned(),
+            ));
+        }
+        (Some(first), _) => first.policy.clone(),
+        (None, Some(expected)) => expected.clone(),
+        (None, None) => {
+            return Err(StoreError::InvalidScreeningDecision(
+                "cannot construct a screening board without a policy".to_owned(),
+            ));
+        }
+    };
+    let mut board = ScreeningBoard::new(policy.clone())
+        .map_err(|error| StoreError::InvalidScreeningDecision(error.to_string()))?;
+    let mut review_id: Option<&str> = None;
+    for commit in commits {
+        if commit.policy != policy {
+            return Err(StoreError::InvalidScreeningDecision(
+                "screening policy changed within immutable decision commits".to_owned(),
+            ));
+        }
+        validate_storage_identifier(&commit.decision.decision_id).map_err(|_| {
+            StoreError::InvalidScreeningDecision("decision_id is not storage-safe".to_owned())
+        })?;
+        validate_screening_authority(&commit.decision)?;
+        let expected_authority = commit.decision.reviewer_kind == ReviewerKind::Human;
+        if commit.final_authority != expected_authority {
+            return Err(StoreError::InvalidScreeningDecision(
+                "final authority does not match the reviewer role".to_owned(),
+            ));
+        }
+        if let Some(expected) = review_id {
+            if commit.decision.review_id != expected {
+                return Err(StoreError::ReviewMismatch {
+                    expected: expected.to_owned(),
+                    actual: commit.decision.review_id.clone(),
+                });
+            }
+        } else {
+            review_id = Some(&commit.decision.review_id);
+        }
+        board
+            .submit(commit.decision.clone())
+            .map_err(|error| StoreError::InvalidScreeningDecision(error.to_string()))?;
+    }
+    Ok(board)
 }
 
 fn validate_storage_identifier(value: &str) -> Result<(), StoreError> {
@@ -687,7 +924,10 @@ mod tests {
     };
 
     use evidence_search_core::AuditLedger;
-    use searchright_contracts::{Actor, AuditEventDraft};
+    use searchright_contracts::{
+        Actor, AgentAuthority, AuditEventDraft, DecisionValue as Dv, ExclusionReason,
+        SCREENING_POLICY_SCHEMA_VERSION, ScreeningRound,
+    };
     use serde_json::json;
 
     use super::*;
@@ -742,6 +982,166 @@ mod tests {
         });
         assert!(appended.is_ok());
         appended.cloned().unwrap_or_else(|_| unreachable!())
+    }
+
+    fn screening_policy() -> ScreeningPolicy {
+        ScreeningPolicy {
+            schema_version: SCREENING_POLICY_SCHEMA_VERSION.to_owned(),
+            title_abstract_reviewers: 2,
+            full_text_reviewers: 2,
+            agent_authority: AgentAuthority::AdvisoryOnly,
+            minimum_agent_sensitivity: Some(0.99),
+            independent_blinding: true,
+            adjudication_rule: "independent human adjudication".to_owned(),
+        }
+    }
+
+    fn screening_decision(
+        decision_id: &str,
+        reviewer_id: &str,
+        reviewer_kind: ReviewerKind,
+        decision: DecisionValue,
+    ) -> ScreeningDecision {
+        ScreeningDecision {
+            decision_id: decision_id.to_owned(),
+            review_id: "review-1".to_owned(),
+            subject_id: "record-1".to_owned(),
+            round: ScreeningRound::TitleAbstract,
+            reviewer_id: reviewer_id.to_owned(),
+            reviewer_kind: reviewer_kind.clone(),
+            decision,
+            exclusion_reason: is_exclusion_decision(decision).then(|| ExclusionReason {
+                reason_id: "wrong-population".to_owned(),
+                criterion_id: "population".to_owned(),
+                label: "Wrong population".to_owned(),
+                evidence: None,
+            }),
+            confidence: (reviewer_kind == ReviewerKind::Agent).then_some(0.995),
+            decided_at: "2026-08-29T00:00:00Z".to_owned(),
+            rationale: "Evidence-bearing screening rationale".to_owned(),
+            eligibility_version: "1".to_owned(),
+            agent_provenance: (reviewer_kind == ReviewerKind::Agent)
+                .then(|| "model=fixture;version=1;prompt=sha256:test".to_owned()),
+        }
+    }
+
+    #[test]
+    fn complete_screening_decision_is_idempotent_and_survives_restart()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let directory = test_directory("screening-decision-restart-test");
+        let policy = screening_policy();
+        let decision = screening_decision(
+            "decision-1",
+            "reviewer-1",
+            ReviewerKind::Human,
+            DecisionValue::Include,
+        );
+        let store = FileReviewStore::open(&directory)?;
+        let first = store.append_screening_decision(&policy, &decision)?;
+        assert_eq!(store.append_screening_decision(&policy, &decision)?, first);
+        drop(store);
+
+        let reopened = FileReviewStore::open(&directory)?;
+        assert_eq!(
+            reopened.append_screening_decision(&policy, &decision)?,
+            first
+        );
+        let commits = reopened.read_screening_decisions()?;
+        assert_eq!(commits.len(), 1);
+        let Some(commit) = commits.first() else {
+            return Err("screening commit disappeared after restart".into());
+        };
+        assert_eq!(commit.decision, decision);
+        assert!(commit.final_authority);
+        assert_eq!(commit.policy, policy);
+        assert!(!directory.join("snapshots").join("screening").exists());
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
+    }
+
+    #[test]
+    fn screening_role_policy_agent_exclusion_and_conflicting_id_fail_closed()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let directory = test_directory("screening-decision-authority-test");
+        let policy = screening_policy();
+        let store = FileReviewStore::open(&directory)?;
+
+        let agent_exclusion = screening_decision(
+            "agent-exclusion",
+            "agent-1",
+            ReviewerKind::Agent,
+            Dv::Exclude,
+        );
+        assert!(matches!(
+            store.append_screening_decision(&policy, &agent_exclusion),
+            Err(StoreError::InvalidScreeningDecision(_))
+        ));
+        assert!(store.read_screening_decisions()?.is_empty());
+
+        let first = screening_decision(
+            "decision-1",
+            "reviewer-1",
+            ReviewerKind::Human,
+            DecisionValue::Include,
+        );
+        store.append_screening_decision(&policy, &first)?;
+        let conflict =
+            screening_decision("decision-1", "reviewer-2", ReviewerKind::Human, Dv::Exclude);
+        assert!(matches!(
+            store.append_screening_decision(&policy, &conflict),
+            Err(StoreError::ConflictingScreeningDecisionId(id)) if id == "decision-1"
+        ));
+
+        let duplicate_reviewer =
+            screening_decision("decision-2", "reviewer-1", ReviewerKind::Human, Dv::Exclude);
+        assert!(matches!(
+            store.append_screening_decision(&policy, &duplicate_reviewer),
+            Err(StoreError::InvalidScreeningDecision(_))
+        ));
+        assert_eq!(store.read_screening_decisions()?.len(), 1);
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
+    }
+
+    #[test]
+    fn screening_policy_change_and_tampered_role_authority_fail_after_restart()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let directory = test_directory("screening-decision-policy-test");
+        let policy = screening_policy();
+        let store = FileReviewStore::open(&directory)?;
+        let decision = screening_decision(
+            "decision-1",
+            "reviewer-1",
+            ReviewerKind::Human,
+            DecisionValue::Include,
+        );
+        let relative = store.append_screening_decision(&policy, &decision)?;
+
+        let mut changed_policy = policy;
+        changed_policy.title_abstract_reviewers = 1;
+        let second = screening_decision(
+            "decision-2",
+            "reviewer-2",
+            ReviewerKind::Human,
+            DecisionValue::Include,
+        );
+        assert!(matches!(
+            store.append_screening_decision(&changed_policy, &second),
+            Err(StoreError::InvalidScreeningDecision(_))
+        ));
+
+        let bytes = fs::read(directory.join(&relative))?;
+        let mut persisted: ScreeningDecisionCommit = serde_json::from_slice(&bytes)?;
+        persisted.final_authority = false;
+        fs::write(directory.join(relative), serde_json::to_vec(&persisted)?)?;
+        drop(store);
+        let reopened = FileReviewStore::open(&directory)?;
+        assert!(matches!(
+            reopened.read_screening_decisions(),
+            Err(StoreError::InvalidScreeningDecision(_))
+        ));
+        let _cleanup = fs::remove_dir_all(directory);
+        Ok(())
     }
 
     #[test]
@@ -1221,6 +1621,7 @@ mod tests {
                 payload: json!({
                     "_schema_version": 1,
                     "commit_id": commit_id,
+                    "binding_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                     "receipt_id": receipt_id,
                     "record_count": records.len(),
                     "run_id": run_id,
@@ -1230,6 +1631,8 @@ mod tests {
             .unwrap_or_else(|_| unreachable!());
         ExecutionCommit {
             commit_id: commit_id.to_owned(),
+            binding_digest: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                .to_owned(),
             receipt,
             records,
             audit_event,

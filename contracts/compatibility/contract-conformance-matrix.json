@@ -831,6 +831,75 @@
       "downstream_consumer_conformance": "not_evidenced"
     },
     {
+      "id": "plan-review-result",
+      "owner_track": "10",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/plan-review-result.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/plan-review-result.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/plan-review-result.yaml",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "PlanReviewOutcome",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "press-review",
+      "owner_track": "08",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/press-review.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/press-review.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/press-review.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "PressReview",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "press-review-result",
+      "owner_track": "10",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/press-review-result.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/press-review-result.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/press-review-result.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "PressReviewOutcome",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
       "id": "prisma-flow",
       "owner_track": "08",
       "stability": "alpha",

@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/10-mcp-mvp/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete. (`track-10-phase-3-task-01`)
-- [ ] T02: Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification. (`track-10-phase-3-task-02`)
+- [x] T01: Complete the contracted planning, fixture-execution and screening authority paths through an opaque trusted-host verifier while default MCP and CLI adapters fail closed. (`track-10-phase-3-task-01`)
+- [x] T02: Extend bounded local resources and prompts to plan, run, queue, report and update-workflow contract metadata with no canonical authority claim. (`track-10-phase-3-task-02`)
 
 ## Evidence rule
 

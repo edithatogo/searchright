@@ -12,8 +12,8 @@ Expose typed, authority-annotated MCP tools over the same facade with stable str
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `compiler_verified`
 - Dependencies: `09`
 - Requirements: `SR-029`
@@ -28,6 +28,6 @@ Expose typed, authority-annotated MCP tools over the same facade with stable str
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary for consequential effects. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
