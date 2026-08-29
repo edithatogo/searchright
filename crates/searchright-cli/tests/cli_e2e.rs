@@ -19,11 +19,18 @@ fn text(bytes: &[u8]) -> String {
     String::from_utf8_lossy(bytes).replace("\r\n", "\n")
 }
 
+fn stable_help_text(bytes: &[u8]) -> String {
+    text(bytes).replace("Usage: searchright.exe ", "Usage: searchright ")
+}
+
 #[test]
 fn help_output_matches_the_cross_platform_snapshot() {
     let output = run(&["--help"]);
     assert!(output.status.success());
-    assert_eq!(text(&output.stdout), include_str!("snapshots/help.txt"));
+    assert_eq!(
+        stable_help_text(&output.stdout),
+        include_str!("snapshots/help.txt")
+    );
     assert!(output.stderr.is_empty());
 }
 
