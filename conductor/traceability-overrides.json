@@ -700,7 +700,7 @@
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
           "permitted_claim": "The local skill entrypoint has deterministic trigger, non-trigger, authority and failure-routing checks; host discovery and model behaviour are not claimed.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T11-A002": {
           "deterministic_tests": [
@@ -734,7 +734,9 @@
             "skills/systematic-search/agents",
             "skills/systematic-search/references/handoffs.md",
             "skills/systematic-search/workflows/systematic-review.yaml",
-            "crates/searchright-agent/src/lib.rs"
+            "crates/searchright-agent/src/lib.rs",
+            "contracts/json-schema/agent-handoff.v1.schema.json",
+            "contracts/examples/agent-handoff.json"
           ],
           "implementation_symbols": [
             "searchright_agent::AgentHandoff",
@@ -743,7 +745,7 @@
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
           "permitted_claim": "Seven bounded role cards and a compiler-checked, digest-bound least-context handoff contract exist locally; handoffs do not confer operational authority.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T11-A004": {
           "deterministic_tests": [

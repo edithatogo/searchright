@@ -73,6 +73,8 @@ def render_metadata(entry: dict) -> str:
     if entry.get("lifecycle") == "archived":
         value["lifecycle"] = "archived"
         value["archived_on"] = entry["archived_on"]
+    if entry.get("gates"):
+        value["gates"] = entry["gates"]
     return json.dumps(value, indent=2) + "\n"
 
 
@@ -103,6 +105,8 @@ def render_evidence(entry: dict) -> str:
         "runtime_evidence": entry.get("runtime_evidence", []),
         "external_evidence": entry.get("external_evidence", []),
     }
+    if entry.get("gates"):
+        value["gates"] = entry["gates"]
     if entry.get("lifecycle") == "archived":
         value["lifecycle"] = "archived"
         value["archived_on"] = entry["archived_on"]

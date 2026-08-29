@@ -22,6 +22,16 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "agent-handoff",
+      "schema": "contracts/json-schema/agent-handoff.v1.schema.json",
+      "example": "contracts/examples/agent-handoff.json",
+      "schema_id": "https://schemas.searchright.dev/agent-handoff.v1.schema.json",
+      "rust_type": "AgentHandoff",
+      "owner_track": "11",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "agent-workflow",
       "schema": "contracts/json-schema/agent-workflow.v1.schema.json",
       "example": "contracts/examples/agent-workflow.yaml",

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/agent-handoff.v1.schema.json",
+  "title": "Agent Handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "handoff_id",
+    "review_id",
+    "from_role",
+    "to_role",
+    "context_policy",
+    "execution_mode",
+    "artifacts",
+    "approval_references"
+  ],
+  "properties": {
+    "schema_version": {"const": "org.searchright.agent-handoff.v1"},
+    "handoff_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "review_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "from_role": {"$ref": "#/$defs/role"},
+    "to_role": {"$ref": "#/$defs/role"},
+    "context_policy": {"enum": ["minimum_necessary", "independent_review"]},
+    "execution_mode": {"type": ["string", "null"], "enum": ["fixture_replay", "live", null]},
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "media_type"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1, "maxLength": 512},
+          "sha256": {"$ref": "#/$defs/sha256"},
+          "media_type": {"type": "string", "minLength": 1, "maxLength": 128}
+        }
+      }
+    },
+    "approval_references": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["receipt_id", "review_id", "purpose", "scope_sha256"],
+        "properties": {
+          "receipt_id": {"type": "string", "minLength": 1, "maxLength": 128},
+          "review_id": {"type": "string", "minLength": 1, "maxLength": 128},
+          "purpose": {
+            "enum": ["review_plan", "strategy_and_press", "live_execution", "deduplication_apply"]
+          },
+          "scope_sha256": {"$ref": "#/$defs/sha256"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "role": {
+      "enum": [
+        "question-framer",
+        "information-specialist",
+        "press-reviewer",
+        "execution-operator",
+        "dedup-adjudicator",
+        "screening-assistant",
+        "reporting-auditor"
+      ]
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "from_role": {"const": "question-framer"},
+        "to_role": {"const": "information-specialist"},
+        "execution_mode": {"type": "null"},
+        "approval_references": {
+          "minItems": 1,
+          "maxItems": 1,
+          "contains": {"properties": {"purpose": {"const": "review_plan"}}}
+        }
+      }
+    },
+    {
+      "properties": {
+        "from_role": {"const": "information-specialist"},
+        "to_role": {"const": "press-reviewer"},
+        "context_policy": {"const": "independent_review"},
+        "execution_mode": {"type": "null"},
+        "approval_references": {"maxItems": 0}
+      }
+    },
+    {
+      "properties": {
+        "from_role": {"const": "press-reviewer"},
+        "to_role": {"const": "execution-operator"},
+        "execution_mode": {"const": "fixture_replay"},
+        "approval_references": {"maxItems": 0}
+      }
+    },
+    {
+      "properties": {
+        "from_role": {"const": "press-reviewer"},
+        "to_role": {"const": "execution-operator"},
+        "execution_mode": {"const": "live"},
+        "approval_references": {
+          "minItems": 2,
+          "maxItems": 2,
+          "allOf": [
+            {"contains": {"properties": {"purpose": {"const": "strategy_and_press"}}}},
+            {"contains": {"properties": {"purpose": {"const": "live_execution"}}}}
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "from_role": {"const": "execution-operator"},
+        "to_role": {"const": "dedup-adjudicator"},
+        "execution_mode": {"type": "null"},
+        "approval_references": {"maxItems": 0}
+      }
+    },
+    {
+      "properties": {
+        "from_role": {"const": "dedup-adjudicator"},
+        "to_role": {"const": "screening-assistant"},
+        "execution_mode": {"type": "null"},
+        "approval_references": {
+          "minItems": 1,
+          "maxItems": 1,
+          "contains": {"properties": {"purpose": {"const": "deduplication_apply"}}}
+        }
+      }
+    },
+    {
+      "properties": {
+        "from_role": {"const": "screening-assistant"},
+        "to_role": {"const": "reporting-auditor"},
+        "execution_mode": {"type": "null"},
+        "approval_references": {"maxItems": 0}
+      }
+    }
+  ]
+}

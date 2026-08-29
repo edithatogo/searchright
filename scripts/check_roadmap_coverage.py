@@ -74,6 +74,8 @@ def validate_archived_track(
         violations.append(f"track {track_id} archived lifecycle lacks completed evidence gates")
     if entry.get("evidence_level") not in FINAL_EVIDENCE:
         violations.append(f"track {track_id} archived lifecycle lacks final evidence")
+    if any(gate.get("status") != "passed" for gate in entry.get("gates", [])):
+        violations.append(f"track {track_id} archived lifecycle retains a non-passing gate")
     if re.search(r"^- \[ \]", plan, flags=re.MULTILINE):
         violations.append(f"track {track_id} archived lifecycle retains unchecked plan tasks")
     assertions = traceability.get("assertions")
@@ -224,6 +226,28 @@ def main() -> int:
                 error(errors, f"track {track_id} has invalid immutable phase_3_task_count")
         if status == "external_evidence_required" and not blockers:
             error(errors, f"track {track_id} requires external evidence but has no blockers")
+        gates = entry.get("gates", [])
+        if not isinstance(gates, list):
+            error(errors, f"track {track_id} gates must be a list")
+        else:
+            gate_ids: set[str] = set()
+            for gate in gates:
+                if not isinstance(gate, Mapping):
+                    error(errors, f"track {track_id} has an invalid gate")
+                    continue
+                gate_id = gate.get("id")
+                if not isinstance(gate_id, str) or not gate_id.strip() or gate_id in gate_ids:
+                    error(errors, f"track {track_id} has a missing or duplicate gate id")
+                else:
+                    gate_ids.add(gate_id)
+                if not isinstance(gate.get("kind"), str) or not str(gate.get("kind", "")).strip():
+                    error(errors, f"track {track_id} gate {gate_id!r} lacks a kind")
+                if gate.get("status") not in {"pending", "passed", "blocked"}:
+                    error(errors, f"track {track_id} gate {gate_id!r} has an invalid status")
+                if not isinstance(gate.get("evidence"), list):
+                    error(errors, f"track {track_id} gate {gate_id!r} evidence must be a list")
+                elif gate.get("status") == "passed" and not gate.get("evidence"):
+                    error(errors, f"track {track_id} gate {gate_id!r} passed without evidence")
         if not blockers and evidence_level not in FINAL_EVIDENCE and status not in {"source_implemented", "source_implemented_unverified", "partially_implemented", "scaffolded", "contracted"}:
             error(errors, f"track {track_id} has no blocker but is not at a final evidence level")
 

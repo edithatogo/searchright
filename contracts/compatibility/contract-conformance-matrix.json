@@ -49,6 +49,29 @@
       "downstream_consumer_conformance": "not_evidenced"
     },
     {
+      "id": "agent-handoff",
+      "owner_track": "11",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/agent-handoff.v1.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/agent-handoff.v1.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/agent-handoff.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "AgentHandoff",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
       "id": "agent-workflow",
       "owner_track": "11",
       "stability": "alpha",

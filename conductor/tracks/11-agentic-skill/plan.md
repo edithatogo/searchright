@@ -16,6 +16,9 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `skills/systematic-search/evaluations/authority-scenarios.json`
   - [x] Present source path: `skills/systematic-search/integrations/academic-research-skills/SKILL.md`
   - [x] Present source path: `registry/skills/systematic-search/manifest.json`
+  - [x] Present source path: `contracts/json-schema/agent-handoff.v1.schema.json`
+  - [x] Present source path: `contracts/examples/agent-handoff.json`
+  - [x] Present source path: `contracts/schema-catalog.json`
   - [x] Present source path: `crates/searchright-agent/src/lib.rs`
   - [x] Present source path: `crates/searchright-agent/tests/skill_scenarios.rs`
   - [x] Present source path: `scripts/check_agent_skill.py`
