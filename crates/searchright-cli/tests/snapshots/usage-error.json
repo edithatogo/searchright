@@ -1,0 +1,7 @@
+{
+  "schema_version": "org.searchright.cli-error.v1",
+  "code": "cli.usage",
+  "message": "command arguments did not match the CLI contract",
+  "corrective_action": "Run searchright --help and correct the command arguments.",
+  "partial_output_safe": false
+}

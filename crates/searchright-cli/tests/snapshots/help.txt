@@ -1,0 +1,54 @@
+Contract-first systematic-search infrastructure
+
+Usage: searchright <COMMAND>
+
+Commands:
+  init                          Preview or apply creation of a conservative local CLI configuration
+  plan                          Review-plan operations
+  source                        Source and provider operations
+  strategy                      Search-strategy operations
+  run                           Bounded execution-authority operations
+  import                        Record import operations
+  screen                        Human-governed screening support operations
+  report                        Reporting and provenance operations
+  completions                   Generate a shell completion script on standard output
+  manpage                       Generate the searchright(1) manual page on standard output
+  validate-plan                 Validate a review plan and report readiness findings
+  validate-strategy             Validate a source-specific search strategy
+  validate-document-evidence    Validate neutral, non-canonical document extraction evidence
+  compile                       Compile a portable strategy into source syntax
+  deduplicate                   Deduplicate a JSON/YAML array of bibliographic records
+  prisma                        Validate or render a PRISMA flow contract
+  verify-audit                  Verify a JSONL hash-chained audit ledger
+  import-records                Import bibliographic records and preserve source provenance
+  export-records                Export canonical records with a conversion receipt
+  study-graph                   Validate and summarise a record-report-study graph
+  validate-search               Evaluate PRESS, seed-set recall and translation-loss gates
+  living-diff                   Compare parent and current result sets for a living review
+  validate-living-lineage       Validate a set of living-update lineage contracts
+  provenance                    Build RO-Crate and W3C PROV-compatible exports
+  rank                          Rank records transparently for prioritisation only
+  inspect-content               Inspect untrusted text for instruction-like or active-content
+                                markers
+  render-diagnostics            Render stable accessible diagnostics without ANSI-dependent output
+  evaluate-governance           Evaluate a data-handling request against an institutional policy
+  authorise-endpoint            Authorise an HTTPS endpoint against an execution envelope
+  validate-amendment            Validate a protocol amendment
+  validate-standard-pack        Validate a methodological standards pack
+  validate-standard-assessment  Validate an assessment against a standards pack
+  validate-ranking-calibration  Validate ranking calibration and its no-auto-exclusion contract
+  validate-discovery-run        Validate a supplementary-discovery run
+  verify-workflow-trace         Verify an evidence-bearing lifecycle trace against the finite
+                                assurance model
+  discovery-candidates          Resolve bounded supplementary-discovery candidates for human release
+  verify-provider-component     Verify a WASI provider-component manifest against exact component
+                                bytes
+  plan-licensed-request         Build a redacted bring-your-own-access request plan
+  validate-benchmark-report     Validate a benchmark report and its explicit claim boundary
+  providers                     List provider manifests available in the default no-network build
+  workflow                      Print the conservative agent workflow policy
+  help                          Print this message or the help of the given subcommand(s)
+
+Options:
+  -h, --help     Print help
+  -V, --version  Print version
