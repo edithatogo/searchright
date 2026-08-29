@@ -106,6 +106,8 @@ def render_evidence(entry: dict) -> str:
     if entry.get("lifecycle") == "archived":
         value["lifecycle"] = "archived"
         value["archived_on"] = entry["archived_on"]
+    if entry.get("review_fixes"):
+        value["review_fixes"] = entry["review_fixes"]
     return json.dumps(value, indent=2) + "\n"
 
 
@@ -179,6 +181,12 @@ def render_plan(entry: dict) -> str:
                 if entry.get("review_completed", False)
                 else "- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute."
             ),
+        ]
+    )
+    for fix in entry.get("review_fixes", []):
+        lines.append(f"  - Review fix `{fix['commit']}`: {fix['summary']}")
+    lines.extend(
+        [
             (
                 "- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced."
                 if entry.get("closeout_completed", False)

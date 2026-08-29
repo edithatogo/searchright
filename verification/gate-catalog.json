@@ -39,11 +39,6 @@
         "T08-A004",
         "T08-A005",
         "T08-A006",
-        "T09-A001",
-        "T09-A002",
-        "T09-A003",
-        "T09-A004",
-        "T09-A005",
         "T09-A006",
         "T10-A001",
         "T10-A003",
@@ -723,6 +718,7 @@
       "command": "python scripts/check_workflow_hardening.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T09-A005",
         "T16-A003",
         "T16-A004",
         "T18-A001",
@@ -771,11 +767,6 @@
       "compiler_required": false,
       "covered_assertions": [
         "T09-A001",
-        "T09-A002",
-        "T09-A003",
-        "T09-A004",
-        "T09-A005",
-        "T09-A006",
         "T10-A001",
         "T10-A003",
         "T10-A004",
@@ -1092,6 +1083,26 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/check_cargo_vet_governance.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_cli_distribution.py target/debug/searchright",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T09-A001",
+        "T09-A002",
+        "T09-A003",
+        "T09-A004",
+        "T09-A005",
+        "T09-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CLI-DISTRIBUTION",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_cli_distribution.py"
     },
     {
       "category": "repository_policy",

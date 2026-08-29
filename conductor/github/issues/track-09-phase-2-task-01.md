@@ -8,8 +8,11 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run deterministic, network-free contract and policy checks.
+  - [x] `cargo test -p searchright-cli --locked`
+  - [x] `cargo clippy -p searchright-cli --all-targets --locked -- -D warnings`
   - [x] `python scripts/validate_repository.py`
   - [x] `python scripts/check_cli_mcp_parity.py`
+  - [x] `python scripts/check_cli_distribution.py target/debug/searchright`
 
 ## Completion and evidence contract
 

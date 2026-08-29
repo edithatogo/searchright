@@ -1,23 +1,31 @@
 {
-  "schema_version": "org.searchright.track-review-verification.v1",
+  "schema_version": "org.searchright.verification-receipt.v1",
   "track_id": "09",
-  "observed_at": "2026-08-12",
-  "source_revision": "e0019329c63536078328a2717b7aed6784035704",
-  "toolchain": "1.97.1-x86_64-pc-windows-gnu",
-  "status": "passed_with_open_gates",
+  "recorded_at": "2026-08-29T19:33:34+10:00",
+  "source_revision": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
+  "platform": "macOS",
+  "toolchain": "rustc 1.98.0 (88d9e12ae 2026-08-18) (Homebrew)",
+  "status": "passed_with_hosted_blocker",
   "checks": [
-    {
-      "command": "cargo test -p searchright-cli --locked",
-      "status": "passed",
-      "tests_passed": 4
-    },
-    {
-      "command": "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
-      "status": "passed"
-    }
+    {"command": "cargo fmt --all -- --check", "status": "passed"},
+    {"command": "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings", "status": "passed"},
+    {"command": "cargo test -p searchright-cli --locked", "status": "passed", "tests_passed": 10},
+    {"command": "python3 scripts/check_cli_distribution.py target/debug/searchright", "status": "passed"},
+    {"command": "cargo install --path crates/searchright-cli --locked --root <temporary-directory> && python3 scripts/check_cli_distribution.py <temporary-directory>/bin/searchright", "status": "passed"},
+    {"command": "python3 scripts/check_cli_mcp_parity.py", "status": "passed", "operations_checked": 31},
+    {"command": "python3 scripts/validate_repository.py", "status": "passed"}
   ],
+  "review": {
+    "status": "passed",
+    "fix_commit": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
+    "fix_summary": "Parser failures use a stable non-sensitive JSON diagnostic instead of reflecting arbitrary command-line input."
+  },
   "limits": [
-    "Binary stdout/stderr snapshots, installation tests, completions and manual pages remain open.",
-    "Hosted cross-platform execution and a published CLI compatibility policy remain open."
+    "This receipt records local macOS evidence only.",
+    "Hosted Linux, macOS and Windows execution is pending for the exact committed revision.",
+    "Source verification does not establish public package support, release promotion or registry publication."
+  ],
+  "open_gates": [
+    "Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision."
   ]
 }

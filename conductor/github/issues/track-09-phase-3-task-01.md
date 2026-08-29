@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Compile binaries and run cross-platform help, JSON, error and installation snapshots.
+- [ ] Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision.
 
 ## Completion and evidence contract
 
