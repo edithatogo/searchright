@@ -446,9 +446,7 @@
       "track_id": "08"
     },
     {
-      "blockers": [
-        "Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision."
-      ],
+      "blockers": [],
       "checks": [
         "cargo test -p searchright-cli --locked",
         "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
@@ -456,10 +454,15 @@
         "python scripts/check_cli_mcp_parity.py",
         "python scripts/check_cli_distribution.py target/debug/searchright"
       ],
-      "claim_boundary": "The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, completion and man-page generation, and full local macOS verification are compiler-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision; release and publication are not claimed.",
+      "claim_boundary": "The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, static completion assets and man-page generation are compiler-verified with exact-revision hosted Linux, macOS and Windows evidence and a sealed advisory panel disposition. This is not methodological certification, live-provider support, package publication or release promotion.",
+      "completed_higher_evidence_gates": [
+        "Run the exact Track 09 implementation head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
+        "Bind the sealed correctness, security, testing, methodology and adversarial panel disposition to the exact reviewed implementation head before semantic archival."
+      ],
       "deliverables": [
         ".github/workflows/clean-room.yml",
         ".github/workflows/ci.yml",
+        "crates/searchright-cli/assets/completions/",
         "crates/searchright-cli/tests/cli_e2e.rs",
         "crates/searchright-cli/tests/snapshots/",
         "crates/searchright-cli/src/main.rs",
@@ -469,7 +472,8 @@
         "contracts/interface-catalog.json",
         "docs/adrs/0007-shared-application-facade.md",
         "docs/cli-compatibility.md",
-        "scripts/check_cli_distribution.py"
+        "scripts/check_cli_distribution.py",
+        "supply-chain/audits.toml"
       ],
       "dependencies": [
         "01",
@@ -505,6 +509,10 @@
         {
           "commit": "46945efd3726b451674cdff8555b29a671df147b",
           "summary": "Close architecture-fitness and generated SBOM/source-manifest review gates on the sealed candidate."
+        },
+        {
+          "commit": "ac403d4bd37fd3365f1d1be6b42082aafad4fc42",
+          "summary": "Close hosted Windows snapshot, patch coverage and supply-chain findings with narrow executable-name normalization, static five-shell assets, exact dependency audits and removal of the rejected dynamic-completion dependency."
         }
       ],
       "runtime_evidence": [
@@ -514,7 +522,16 @@
         "verification/reviews/track-09-security-safety.json",
         "verification/reviews/track-09-testing-ci.json",
         "verification/reviews/track-09-methodology-authority.json",
-        "verification/reviews/track-09-adversarial.json"
+        "verification/reviews/track-09-adversarial.json",
+        "verification/receipts/track-09-hosted-closeout.json",
+        "verification/receipts/track-09-sealed-panel-closeout.json"
+      ],
+      "higher_evidence_completed": true,
+      "closeout_completed": true,
+      "lifecycle": "archived",
+      "archived_on": "2026-08-29",
+      "remote_github_evidence": [
+        "verification/receipts/track-09-hosted-closeout.json"
       ],
       "slug": "cli-mvp",
       "source_verified_on": "2026-08-29",

@@ -12,6 +12,7 @@ Canonical task state: **source task complete**.
   - Review fix `dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513`: Exercise built and installed CLI snapshots on the hosted Linux, macOS and Windows CI matrix, including Windows executable resolution.
   - Review fix `de00f29127b303824b4e643e7fd5d573fcfc1451`: Close no-clobber, canonical dispatch, actionable diagnostic, endpoint credential-reflection and distribution-coverage review findings.
   - Review fix `46945efd3726b451674cdff8555b29a671df147b`: Close architecture-fitness and generated SBOM/source-manifest review gates on the sealed candidate.
+  - Review fix `ac403d4bd37fd3365f1d1be6b42082aafad4fc42`: Close hosted Windows snapshot, patch coverage and supply-chain findings with narrow executable-name normalization, static five-shell assets, exact dependency audits and removal of the rejected dynamic-completion dependency.
 
 ## Completion and evidence contract
 

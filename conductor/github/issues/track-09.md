@@ -28,6 +28,6 @@ Expose stable scriptable operations through the shared application facade.
 
 ## Claim boundary
 
-The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, completion and man-page generation, and full local macOS verification are compiler-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision; release and publication are not claimed.
+The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, static completion assets and man-page generation are compiler-verified with exact-revision hosted Linux, macOS and Windows evidence and a sealed advisory panel disposition. This is not methodological certification, live-provider support, package publication or release promotion.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

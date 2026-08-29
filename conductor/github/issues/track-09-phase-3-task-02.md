@@ -1,13 +1,13 @@
-<!-- searchright-issue-key: track-09-phase-4-task-04 -->
-# Track 09 / Phase 4 / Task 04
+<!-- searchright-issue-key: track-09-phase-3-task-02 -->
+# Track 09 / Phase 3 / Task 02
 
-Parent phase key: `track-09-phase-4`
+Parent phase key: `track-09-phase-3`
 Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
 Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Bind the sealed correctness, security, testing, methodology and adversarial panel disposition to the exact reviewed implementation head before semantic archival.
 
 ## Completion and evidence contract
 

@@ -1,0 +1,40 @@
+{
+  "schema_version": "org.searchright.track-hosted-closeout.v1",
+  "track_id": "09",
+  "implementation_revision": "ac403d4bd37fd3365f1d1be6b42082aafad4fc42",
+  "reviewed_tree": "3937826f28d69531d281010c15fee76ab12d40eb",
+  "pull_request": "https://github.com/edithatogo/searchright/pull/630",
+  "workflow_run": "https://github.com/edithatogo/searchright/actions/runs/33249793860",
+  "observed_at": "2026-08-29T21:32:52+10:00",
+  "jobs": [
+    {
+      "name": "Rust (ubuntu-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/33249793860/job/99093420644"
+    },
+    {
+      "name": "Rust (windows-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/33249793860/job/99093420673"
+    },
+    {
+      "name": "Rust (macos-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/33249793860/job/99093420625"
+    },
+    {
+      "name": "Static contracts and roadmap evidence",
+      "conclusion": "success",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/33249793860/job/99093420667"
+    }
+  ],
+  "additional_successful_gates": [
+    "LLVM coverage and codecov/patch",
+    "CodeQL and dependency review",
+    "Rust supply-chain policy",
+    "clean-room vendored build and installed CLI smoke",
+    "public API and SemVer candidate check",
+    "Miri, Loom, Kani and standard-library precondition checks"
+  ],
+  "claim_boundary": "This proves the exact Track 09 implementation revision passed the listed hosted Linux, Windows and macOS jobs and associated PR gates. It does not publish packages, certify methodology, establish live-provider support or authorize release promotion. Delivery into main is verified separately after merge."
+}

@@ -4374,7 +4374,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4389,7 +4389,7 @@
     },
     {
       "key": "track-09-phase-3-task-01",
-      "title": "Track 09 / P3 / T01: Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision",
+      "title": "Track 09 / P3 / T01: Run the exact Track 09 implementation head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival",
       "kind": "task",
       "parent_key": "track-09-phase-3",
       "body_path": "conductor/github/issues/track-09-phase-3-task-01.md",
@@ -4398,15 +4398,15 @@
         "conductor",
         "track:09",
         "phase:3",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "09",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4418,6 +4418,39 @@
         "Track ID": "09",
         "Phase": 3,
         "Task": 1
+      }
+    },
+    {
+      "key": "track-09-phase-3-task-02",
+      "title": "Track 09 / P3 / T02: Bind the sealed correctness, security, testing, methodology and adversarial panel disposition to the exact reviewed implementation head before semantic archival",
+      "kind": "task",
+      "parent_key": "track-09-phase-3",
+      "body_path": "conductor/github/issues/track-09-phase-3-task-02.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:09",
+        "phase:3",
+        "state:source-complete"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "closed",
+      "track_id": "09",
+      "phase_number": 3,
+      "task_number": 2,
+      "project_fields": {
+        "Delivery status": "Source complete",
+        "Work kind": "Task",
+        "Horizon": "Mvp",
+        "Evidence level": "Compiler Verified",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-09-phase-3-task-02",
+        "Conductor path": "conductor/tracks/09-cli-mvp/plan.md",
+        "Track ID": "09",
+        "Phase": 3,
+        "Task": 2
       }
     },
     {
@@ -4438,7 +4471,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4561,15 +4594,15 @@
         "conductor",
         "track:09",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "09",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
