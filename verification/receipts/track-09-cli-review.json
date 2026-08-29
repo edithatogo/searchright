@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.verification-receipt.v1",
   "track_id": "09",
   "recorded_at": "2026-08-29T19:33:34+10:00",
-  "source_revision": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
+  "source_revision": "dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513",
   "platform": "macOS",
   "toolchain": "rustc 1.98.0 (88d9e12ae 2026-08-18) (Homebrew)",
   "status": "passed_with_hosted_blocker",
@@ -17,8 +17,16 @@
   ],
   "review": {
     "status": "passed",
-    "fix_commit": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
-    "fix_summary": "Parser failures use a stable non-sensitive JSON diagnostic instead of reflecting arbitrary command-line input."
+    "fixes": [
+      {
+        "commit": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
+        "summary": "Parser failures use a stable non-sensitive JSON diagnostic instead of reflecting arbitrary command-line input."
+      },
+      {
+        "commit": "dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513",
+        "summary": "The hosted Linux, macOS and Windows CI matrix exercises both built and installed CLI distributions."
+      }
+    ]
   },
   "limits": [
     "This receipt records local macOS evidence only.",

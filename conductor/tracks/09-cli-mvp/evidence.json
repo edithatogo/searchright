@@ -8,6 +8,7 @@
   "source_verified_on": "2026-08-29",
   "source_evidence": [
     ".github/workflows/clean-room.yml",
+    ".github/workflows/ci.yml",
     "crates/searchright-cli/tests/cli_e2e.rs",
     "crates/searchright-cli/tests/snapshots/",
     "crates/searchright-cli/src/main.rs",
@@ -61,6 +62,10 @@
     {
       "commit": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
       "summary": "Replace reflected parser failures with a stable non-sensitive JSON usage error while completing grouped CLI and distribution coverage."
+    },
+    {
+      "commit": "dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513",
+      "summary": "Exercise built and installed CLI snapshots on the hosted Linux, macOS and Windows CI matrix, including Windows executable resolution."
     }
   ]
 }

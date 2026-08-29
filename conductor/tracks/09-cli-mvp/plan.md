@@ -10,6 +10,7 @@ GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered nati
 
 - [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `.github/workflows/clean-room.yml`
+  - [x] Present source path: `.github/workflows/ci.yml`
   - [x] Present source path: `crates/searchright-cli/tests/cli_e2e.rs`
   - [x] Present source path: `crates/searchright-cli/tests/snapshots/`
   - [x] Present source path: `crates/searchright-cli/src/main.rs`
@@ -46,4 +47,5 @@ GitHub issue key: `track-09`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e`: Replace reflected parser failures with a stable non-sensitive JSON usage error while completing grouped CLI and distribution coverage.
+  - Review fix `dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513`: Exercise built and installed CLI snapshots on the hosted Linux, macOS and Windows CI matrix, including Windows executable resolution.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
