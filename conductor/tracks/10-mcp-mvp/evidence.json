@@ -98,8 +98,12 @@
       "summary": "Scope the GitHub CLI authentication preflight to github.com so unrelated configured enterprise-host credentials cannot block the required read-only control-plane audit."
     },
     {
-      "commit": "366da722d751e27ec4328757f382650537ab7cb8",
+      "commit": "ce2bb64acd447b77fc675b99b7043ff98cec017f",
       "summary": "Bind trusted-host authority to exact bytes in every canonical local-store family, including same-length changes and nested state, while rejecting symbolic links."
+    },
+    {
+      "commit": "690c1911b0190a7d01618338b6448dc06b2c820c",
+      "summary": "Make the authority digest regression tests dependency-neutral and satisfy the workspace strict Clippy policy without weakening fail-closed byte handling."
     }
   ]
 }
