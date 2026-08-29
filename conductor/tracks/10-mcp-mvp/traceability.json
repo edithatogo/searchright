@@ -161,7 +161,7 @@
         "verification/receipts/mcp-official-client-2026-07-28.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The pinned official rmcp 3.1.2 client negotiates both supported protocol eras against the real child-process stdio binary and validates 36 current-protocol and 32 previous-era successful structured result shapes plus governed errors; unrelated clients and remote hosted MCP are not claimed."
+      "permitted_claim": "The pinned official rmcp 3.1.2 client negotiates both supported protocol eras against the real child-process stdio binary and validates 35 current-protocol and 32 previous-era successful structured results plus governed errors; the default-deny screening write has schema coverage but no standalone-binary success claim. Unrelated clients and remote hosted MCP are not claimed."
     },
     {
       "assertion_id": "T10-A006",
