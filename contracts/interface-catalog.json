@@ -306,11 +306,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "quarantined": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
           }
         },
         "required": [
           "records",
-          "warnings"
+          "warnings",
+          "quarantined"
         ]
       }
     },

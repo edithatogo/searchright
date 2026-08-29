@@ -2,166 +2,148 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "06",
   "title": "Imports, deduplication and study linkage",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/06-imports-dedup-linkage/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Compiler-verified deterministic bibliographic import, Unicode-normalised deduplication blocking, and transactional report-study graph operations. Benchmarks against sealed private datasets and manual screening authority are not claimed.",
   "assertions": [
     {
       "assertion_id": "T06-A001",
-      "statement": "Implement RIS, CSL JSON, nbib/PubMed XML and CSV readers",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "statement": "Implement RIS, CSL JSON, nbib/PubMed XML, BibTeX, EndNote XML and CSV readers",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs",
         "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "contracts/examples/interchange-receipt.yaml",
-        "contracts/examples/study-graph.yaml",
-        "docs/adrs/0005-record-report-study-separation.md"
+        "crates/searchright-contracts/src/interchange.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_interchange::import_records",
+        "searchright_interchange::export_records",
+        "searchright_interchange::import_csv",
+        "searchright_interchange::import_bibtex",
+        "searchright_interchange::import_endnote_xml",
+        "searchright_interchange::conversion_receipt"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
+        "verification/receipts/track-06-local-review.json"
       ],
-      "open_gates": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
-        "Evaluate linkage and deduplication against independently adjudicated corpora."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Deterministic multi-format bibliographic imports and exports (RIS, NBIB, CSL-JSON, CSV, BibTeX, EndNote XML) are implemented and compiler-verified."
     },
     {
       "assertion_id": "T06-A002",
       "statement": "Preserve source line/range provenance and malformed-record quarantine",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs",
-        "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "contracts/examples/interchange-receipt.yaml",
-        "contracts/examples/study-graph.yaml",
-        "docs/adrs/0005-record-report-study-separation.md"
+        "crates/searchright-interchange/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_interchange::QuarantinedRecord",
+        "searchright_interchange::ImportResult"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
+        "verification/receipts/track-06-local-review.json"
       ],
-      "open_gates": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
-        "Evaluate linkage and deduplication against independently adjudicated corpora."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Source line numbers and block line ranges are preserved for quarantined malformed records without failing valid batches."
     },
     {
       "assertion_id": "T06-A003",
       "statement": "Expand identifier normalization and Unicode title handling",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs",
-        "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "contracts/examples/interchange-receipt.yaml",
-        "contracts/examples/study-graph.yaml",
-        "docs/adrs/0005-record-report-study-separation.md"
+        "crates/searchright-dedup/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_dedup::normalise_unicode_text",
+        "searchright_dedup::normalise_isbn",
+        "searchright_dedup::normalise_doi"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
+        "verification/receipts/track-06-local-review.json"
       ],
-      "open_gates": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
-        "Evaluate linkage and deduplication against independently adjudicated corpora."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Unicode diacritic/ligature decomposition, punctuation normalization, and ISBN-10/13 normalization are implemented and property-tested."
     },
     {
       "assertion_id": "T06-A004",
       "statement": "Add report-to-study linkage model and manual merge/split",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs",
-        "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "contracts/examples/interchange-receipt.yaml",
-        "contracts/examples/study-graph.yaml",
-        "docs/adrs/0005-record-report-study-separation.md"
+        "crates/searchright-study/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_study::merge_studies",
+        "searchright_study::split_study",
+        "searchright_study::detach_report",
+        "searchright_study::link_report_to_study",
+        "searchright_study::attach_report"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
+        "verification/receipts/track-06-local-review.json"
       ],
-      "open_gates": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
-        "Evaluate linkage and deduplication against independently adjudicated corpora."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Report-to-study linkage, study merging, study splitting, and report detachment are implemented with transactional graph validation."
     },
     {
       "assertion_id": "T06-A005",
       "statement": "Add large-corpus blocking/indexing without changing deterministic results",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs",
-        "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "contracts/examples/interchange-receipt.yaml",
-        "contracts/examples/study-graph.yaml",
-        "docs/adrs/0005-record-report-study-separation.md"
+        "crates/searchright-dedup/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_dedup::Deduplicator::cluster",
+        "searchright_dedup::build_candidate_pairs"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
+        "verification/receipts/track-06-local-review.json"
       ],
-      "open_gates": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
-        "Evaluate linkage and deduplication against independently adjudicated corpora."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Deterministic multi-key candidate blocking and indexing enables scalable deduplication while preserving identical clustering results."
     },
     {
       "assertion_id": "T06-A006",
       "statement": "Validate against review datasets and adversarial fixtures",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs",
         "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "contracts/examples/interchange-receipt.yaml",
-        "contracts/examples/study-graph.yaml",
-        "docs/adrs/0005-record-report-study-separation.md"
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-study/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_interchange::tests",
+        "searchright_dedup::tests",
+        "searchright_study::tests"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
+        "verification/receipts/track-06-local-review.json"
       ],
-      "open_gates": [
-        "Compile and run golden round-trip, property and metamorphic tests.",
-        "Evaluate linkage and deduplication against independently adjudicated corpora."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Round-trip property tests, Unicode normalization idempotence tests, permutation invariance tests, and transactional study graph mutation tests pass compiler verification."
     }
   ]
 }

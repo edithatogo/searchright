@@ -108,15 +108,26 @@ impl Deduplicator {
         let mut evidence = Vec::new();
         let mut comparisons = 0_u64;
 
-        for left in 0..records.len() {
-            for right in (left + 1)..records.len() {
-                comparisons = comparisons
-                    .checked_add(1)
-                    .ok_or(DedupError::CountOverflow("comparisons"))?;
-                if let Some(match_evidence) = self.compare(&records[left], &records[right]) {
-                    union_find.union(left, right);
-                    evidence.push(match_evidence);
+        // For large record sets (>64), use deterministic indexing / candidate blocking
+        let candidate_pairs = if records.len() > 64 {
+            build_candidate_pairs(records, self.config.year_tolerance)
+        } else {
+            let mut pairs = Vec::new();
+            for left in 0..records.len() {
+                for right in (left.saturating_add(1))..records.len() {
+                    pairs.push((left, right));
                 }
+            }
+            pairs
+        };
+
+        for (left, right) in candidate_pairs {
+            comparisons = comparisons
+                .checked_add(1)
+                .ok_or(DedupError::CountOverflow("comparisons"))?;
+            if let Some(match_evidence) = self.compare(&records[left], &records[right]) {
+                union_find.union(left, right);
+                evidence.push(match_evidence);
             }
         }
 
@@ -238,6 +249,85 @@ impl Deduplicator {
     }
 }
 
+#[allow(
+    clippy::indexing_slicing,
+    reason = "candidate pair indices are constructed from verified slice indices"
+)]
+fn build_candidate_pairs(
+    records: &[BibliographicRecord],
+    year_tolerance: i32,
+) -> Vec<(usize, usize)> {
+    let mut blocks: BTreeMap<String, Vec<usize>> = BTreeMap::new();
+
+    for (index, record) in records.iter().enumerate() {
+        if let Some(doi) = record.identifiers.doi.as_deref() {
+            let norm = normalise_doi(doi);
+            if valid_doi(&norm) {
+                blocks.entry(format!("doi:{norm}")).or_default().push(index);
+            }
+        }
+        if let Some(pmid) = record.identifiers.pmid.as_deref() {
+            let norm = normalise_trimmed(pmid);
+            if valid_pmid(&norm) {
+                blocks.entry(format!("pmid:{norm}")).or_default().push(index);
+            }
+        }
+        if let Some(isbn) = record.identifiers.isbn.as_deref() {
+            let norm = normalise_isbn(isbn);
+            if !norm.is_empty() {
+                blocks.entry(format!("isbn:{norm}")).or_default().push(index);
+            }
+        }
+        if let Some(trial) = record.identifiers.trial_registration.as_deref() {
+            let norm = normalise_trimmed(trial);
+            if !norm.is_empty() {
+                blocks.entry(format!("trial:{norm}")).or_default().push(index);
+            }
+        }
+
+        // Author + Year bucket
+        if let Some(author) = record.authors.first() {
+            let akey = author_key(author);
+            if !akey.is_empty() {
+                if let Some(year) = record.publication_year {
+                    let bucket = year / (year_tolerance.max(1).saturating_add(1));
+                    blocks.entry(format!("ay:{akey}:{bucket}")).or_default().push(index);
+                    blocks.entry(format!("ay:{akey}:{}", bucket.saturating_sub(1))).or_default().push(index);
+                    blocks.entry(format!("ay:{akey}:{}", bucket.saturating_add(1))).or_default().push(index);
+                } else {
+                    blocks.entry(format!("a_noyear:{akey}")).or_default().push(index);
+                }
+            }
+        }
+
+        // Title token indexing
+        let tokens = normalise_tokens(&record.title);
+        for token in tokens.iter().take(3) {
+            if token.len() >= 4 {
+                blocks.entry(format!("tok:{token}")).or_default().push(index);
+            }
+        }
+    }
+
+    let mut pair_set = BTreeSet::new();
+    for indices in blocks.values() {
+        if indices.len() >= 2 {
+            for i in 0..indices.len() {
+                for j in (i.saturating_add(1))..indices.len() {
+                    let (min_idx, max_idx) = if indices[i] < indices[j] {
+                        (indices[i], indices[j])
+                    } else {
+                        (indices[j], indices[i])
+                    };
+                    pair_set.insert((min_idx, max_idx));
+                }
+            }
+        }
+    }
+
+    pair_set.into_iter().collect()
+}
+
 fn ordered_record_ids(left: &BibliographicRecord, right: &BibliographicRecord) -> (String, String) {
     if left.record_id <= right.record_id {
         (left.record_id.clone(), right.record_id.clone())
@@ -265,6 +355,14 @@ fn exact_identifier_reason(
         valid_pmid,
     ) {
         return Some("exact_pmid");
+    }
+    if equal_normalised_valid(
+        left.identifiers.isbn.as_deref(),
+        right.identifiers.isbn.as_deref(),
+        normalise_isbn,
+        valid_isbn,
+    ) {
+        return Some("exact_isbn");
     }
     if equal_trimmed(
         left.identifiers.trial_registration.as_deref(),
@@ -302,6 +400,25 @@ fn valid_pmid(value: &str) -> bool {
     !value.is_empty() && value.chars().all(|character| character.is_ascii_digit())
 }
 
+fn valid_isbn(value: &str) -> bool {
+    (value.len() == 10 || value.len() == 13) && value.chars().all(|ch| ch.is_ascii_alphanumeric())
+}
+
+/// Normalise ISBN removing prefixes, spaces, and hyphens.
+#[must_use]
+pub fn normalise_isbn(value: &str) -> String {
+    let trimmed = value.trim().to_ascii_uppercase();
+    let stripped = trimmed
+        .strip_prefix("ISBN-13:")
+        .or_else(|| trimmed.strip_prefix("ISBN-10:"))
+        .or_else(|| trimmed.strip_prefix("ISBN-13"))
+        .or_else(|| trimmed.strip_prefix("ISBN-10"))
+        .or_else(|| trimmed.strip_prefix("ISBN:"))
+        .or_else(|| trimmed.strip_prefix("ISBN"))
+        .unwrap_or(&trimmed);
+    stripped.chars().filter(char::is_ascii_alphanumeric).collect()
+}
+
 fn equal_trimmed(left: Option<&str>, right: Option<&str>) -> bool {
     match (left, right) {
         (Some(left), Some(right)) => {
@@ -315,21 +432,49 @@ fn equal_trimmed(left: Option<&str>, right: Option<&str>) -> bool {
 /// Normalise DOI resolver prefixes and case.
 #[must_use]
 pub fn normalise_doi(value: &str) -> String {
-    value
+    let trimmed = value
         .trim()
-        .to_ascii_lowercase()
+        .to_ascii_lowercase();
+    let stripped = trimmed
         .trim_start_matches("https://doi.org/")
         .trim_start_matches("http://doi.org/")
         .trim_start_matches("https://dx.doi.org/")
         .trim_start_matches("http://dx.doi.org/")
         .trim_start_matches("doi.org/")
         .trim_start_matches("doi:")
-        .trim()
-        .to_owned()
+        .trim();
+    stripped.trim_end_matches(['.', ';', ',']).to_owned()
+}
+
+/// Normalise Unicode text converting diacritics and ligatures to ASCII equivalents.
+#[must_use]
+pub fn normalise_unicode_text(value: &str) -> String {
+    let mut output = String::with_capacity(value.len());
+    for ch in value.chars() {
+        match ch {
+            'à' | 'á' | 'â' | 'ã' | 'ä' | 'å' | 'ā' | 'À' | 'Á' | 'Â' | 'Ã' | 'Ä' | 'Å' | 'Ā' => output.push('a'),
+            'è' | 'é' | 'ê' | 'ë' | 'ē' | 'È' | 'É' | 'Ê' | 'Ë' | 'Ē' => output.push('e'),
+            'ì' | 'í' | 'î' | 'ï' | 'ī' | 'Ì' | 'Í' | 'Î' | 'Ï' | 'Ī' => output.push('i'),
+            'ò' | 'ó' | 'ô' | 'õ' | 'ö' | 'ø' | 'ō' | 'Ò' | 'Ó' | 'Ô' | 'Õ' | 'Ö' | 'Ø' | 'Ō' => output.push('o'),
+            'ù' | 'ú' | 'û' | 'ü' | 'ū' | 'Ù' | 'Ú' | 'Û' | 'Ü' | 'Ū' => output.push('u'),
+            'ý' | 'ÿ' | 'Ý' | 'Ÿ' => output.push('y'),
+            'ñ' | 'ń' | 'Ñ' | 'Ń' => output.push('n'),
+            'ç' | 'ć' | 'č' | 'Ç' | 'Ć' | 'Č' => output.push('c'),
+            'ß' => output.push_str("ss"),
+            'æ' | 'Æ' => output.push_str("ae"),
+            'œ' | 'Œ' => output.push_str("oe"),
+            '‘' | '’' | '`' | '´' => output.push('\''),
+            '“' | '”' | '«' | '»' => output.push('"'),
+            '–' | '—' | '−' => output.push('-'),
+            other => output.push(other),
+        }
+    }
+    output
 }
 
 fn normalise_tokens(value: &str) -> BTreeSet<String> {
-    value
+    let converted = normalise_unicode_text(value);
+    converted
         .split(|character: char| !character.is_alphanumeric())
         .filter(|token| !token.is_empty())
         .map(str::to_ascii_lowercase)
@@ -370,7 +515,8 @@ fn first_authors_compatible(left: &BibliographicRecord, right: &BibliographicRec
 }
 
 fn author_key(value: &str) -> String {
-    let trimmed = value.trim();
+    let normalised = normalise_unicode_text(value);
+    let trimmed = normalised.trim();
     if let Some((surname, _)) = trimmed.split_once(',') {
         return surname.trim().to_ascii_lowercase();
     }
@@ -494,6 +640,12 @@ impl UnionFind {
 }
 
 #[cfg(test)]
+#[allow(
+    clippy::indexing_slicing,
+    clippy::expect_used,
+    clippy::unwrap_used,
+    reason = "test assertions"
+)]
 mod tests {
     use searchright_contracts::{RecordIdentifiers, RecordKind};
     use serde_json::Value;
@@ -548,6 +700,19 @@ mod tests {
                 assert_eq!(evidence.map(|item| item.review_required), Some(false));
             }
         }
+    }
+
+    #[test]
+    fn unicode_accents_and_ligatures_match_normalized() -> Result<(), DedupError> {
+        let records = vec![
+            record("a", None, "Efficacité thérapeutique et rôle des agents"),
+            record("b", None, "Efficacite therapeutique et role des agents"),
+        ];
+        let deduplicator = Deduplicator::new(DedupConfig::default())?;
+        let result = deduplicator.cluster(&records)?;
+        assert_eq!(result.clusters.len(), 1);
+        assert_eq!(result.proposed_duplicate_count, 1);
+        Ok(())
     }
 
     #[test]
@@ -607,6 +772,13 @@ mod tests {
         fn doi_normalisation_is_idempotent(input in "[A-Za-z0-9./:_-]{1,80}") {
             let once = normalise_doi(&input);
             let twice = normalise_doi(&once);
+            proptest::prop_assert_eq!(once, twice);
+        }
+
+        #[test]
+        fn unicode_normalisation_is_idempotent(input in "[A-Za-z0-9 éèêëàâäôöûüçñß–—'\"-]{1,80}") {
+            let once = normalise_unicode_text(&input);
+            let twice = normalise_unicode_text(&once);
             proptest::prop_assert_eq!(once, twice);
         }
     }
