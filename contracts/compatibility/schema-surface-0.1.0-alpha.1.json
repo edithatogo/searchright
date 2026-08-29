@@ -21,6 +21,14 @@
       "owner_track": "34"
     },
     {
+      "id": "agent-handoff",
+      "schema_id": "https://schemas.searchright.dev/agent-handoff.v1.schema.json",
+      "path": "contracts/json-schema/agent-handoff.v1.schema.json",
+      "sha256": "f254df72b1a1c39c789fddd646584fbe8d3e3f6b0f6595e49499a7bda9a47664",
+      "stability": "alpha",
+      "owner_track": "11"
+    },
+    {
       "id": "agent-workflow",
       "schema_id": "https://schemas.searchright.dev/agent-workflow.v1.schema.json",
       "path": "contracts/json-schema/agent-workflow.v1.schema.json",

@@ -159,8 +159,16 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
     deduplicate = stage_by_id.get("deduplicate", {})
     if press.get("isolation") != "independent_context":
         errors.append("PRESS stage must use independent context")
-    if "live_execution_approval" not in execute.get("requires", []):
-        errors.append("execution stage must require live execution approval")
+    execution_modes = execute.get("modes", {})
+    fixture_mode = execution_modes.get("fixture_replay", {}) if isinstance(execution_modes, dict) else {}
+    live_mode = execution_modes.get("live", {}) if isinstance(execution_modes, dict) else {}
+    if fixture_mode.get("network") is not False or fixture_mode.get("requires") != []:
+        errors.append("fixture/replay execution must be network-free and require no live approval")
+    if live_mode.get("network") is not True or live_mode.get("requires") != [
+        "strategy_and_press_approval",
+        "live_execution_approval",
+    ]:
+        errors.append("live execution must require strategy/PRESS and live-execution approvals")
     if screen.get("authority") != "advisory_only":
         errors.append("screening assistant must remain advisory only")
     if "deduplication_apply" not in deduplicate.get("requires", []):

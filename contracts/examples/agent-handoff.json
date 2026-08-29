@@ -1,0 +1,24 @@
+{
+  "schema_version": "org.searchright.agent-handoff.v1",
+  "handoff_id": "handoff-1",
+  "review_id": "review-1",
+  "from_role": "question-framer",
+  "to_role": "information-specialist",
+  "context_policy": "minimum_necessary",
+  "execution_mode": null,
+  "artifacts": [
+    {
+      "path": "plans/review.yaml",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "media_type": "application/yaml"
+    }
+  ],
+  "approval_references": [
+    {
+      "receipt_id": "approval-review-plan-1",
+      "review_id": "review-1",
+      "purpose": "review_plan",
+      "scope_sha256": "0d101a5be8b781b39644a0cb20cc374d8a746fd773160d427a61a48947d9b541"
+    }
+  ]
+}

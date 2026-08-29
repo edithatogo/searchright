@@ -1,8 +1,8 @@
 //! Fixture-driven authority scenarios for the systematic-search skill.
 
 use searchright_agent::{
-    ApprovalAuthority, AuthorityDecision, OperationRequest, PrincipalKind, ProposedOperation,
-    evaluate_operation,
+    ApprovalAuthority, ApprovalCheck, AuthorityDecision, OperationRequest, PrincipalKind,
+    ProposedOperation, evaluate_operation,
 };
 use serde::Deserialize;
 
@@ -38,17 +38,18 @@ struct FixtureAuthority {
 }
 
 impl ApprovalAuthority for FixtureAuthority {
-    fn verify_and_consume(&mut self, request: &OperationRequest) -> bool {
+    fn verify_and_consume(&mut self, check: ApprovalCheck<'_>) -> bool {
         let Some(record) = self.record.as_mut() else {
             return false;
         };
+        let receipt_matches = check.approval_receipt_id == record.receipt_id;
         if record.preconsumed
             || record.status != "active"
-            || request.approval_receipt_id.as_deref() != Some(record.receipt_id.as_str())
-            || request.review_id != record.review_id
-            || request.operation != record.operation
-            || request.principal != record.principal
-            || request.scope_sha256 != record.scope_sha256
+            || !receipt_matches
+            || check.review_id != record.review_id
+            || check.operation != record.operation
+            || check.principal != record.principal
+            || check.scope_sha256 != record.scope_sha256
         {
             return false;
         }

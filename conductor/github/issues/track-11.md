@@ -17,7 +17,7 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 - Evidence: `compiler_verified`
 - Dependencies: `10`
 - Requirements: `SR-022, SR-026, SR-031`
-- External approval required: `false`
+- External approval required: `true`
 
 ## Phase subissues
 

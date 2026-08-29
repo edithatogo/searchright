@@ -10,7 +10,7 @@
     {
       "assertion_id": "T11-A001",
       "statement": "Publish SKILL.md with trigger and non-trigger boundaries",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/SKILL.md",
@@ -61,13 +61,15 @@
     {
       "assertion_id": "T11-A003",
       "statement": "Create subagent role cards and handoff contracts",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/agents",
         "skills/systematic-search/references/handoffs.md",
         "skills/systematic-search/workflows/systematic-review.yaml",
-        "crates/searchright-agent/src/lib.rs"
+        "crates/searchright-agent/src/lib.rs",
+        "contracts/json-schema/agent-handoff.v1.schema.json",
+        "contracts/examples/agent-handoff.json"
       ],
       "implementation_symbols": [
         "searchright_agent::AgentHandoff",

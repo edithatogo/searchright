@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "7c543d804622689b4d72be2878d71a570f78de86250e427393ebbb5cd0769d96",
-      "size": 613935
+      "sha256": "742d418f14b0371c421210970ab60de105afac15fe250dd1a7e963e62947506d",
+      "size": 613941
     },
     {
       "path": "conductor/github/project.json",
@@ -53,13 +53,13 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "6d5b4b61a64614d2da5831164acac38a96604f0cc44d5a46d7bf4c50171b72e0",
-      "size": 91051
+      "sha256": "ebf02d3fbb2d7bd2838d6a74d8dc93ae088744ca6c9366a17b89855856742be4",
+      "size": 91872
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "930496e627a4ea7eaf37d893f86b34cab44f086f0656f7b9bdc1464452b41299",
-      "size": 97674
+      "sha256": "6303a7c2c900d46a96543044e417a2f6fe2e74b7e5bb13c500908f0d1b8b3419",
+      "size": 97787
     },
     {
       "path": "context/capability-matrix.json",
@@ -88,8 +88,8 @@
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "110548edef42d11ac782009c9eba0fde0d7324c850d81c720193b5a8be282bac",
-      "size": 25616
+      "sha256": "8740fb6150c9ce81d468bc0eb34139441e85d349e8c2e0a527b3df022af44fc9",
+      "size": 25947
     },
     {
       "path": "contracts/migrations/registry.json",
@@ -98,8 +98,8 @@
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "c4a0fafb8246a6d9dd188e4d7d17c6cb5d511da0f8fb310d49efc26de05a9b1e",
-      "size": 29127
+      "sha256": "e7bbccb5cbb4dc8e86c64b79163e648400e869a32453d89e6e16447f023de1e8",
+      "size": 29512
     },
     {
       "path": "docs/safety/safety-case.md",
@@ -123,7 +123,7 @@
     },
     {
       "path": "integration/ecosystem-lock.json",
-      "sha256": "bdfd4642c3948374e8969ec04ed3e157bee0bc2740ec573879822701b1241a9a",
+      "sha256": "1fc4674bfc5a291bb8c3d0f610ec253ad99a43c67583dbb105f804163e6e53e8",
       "size": 2784
     },
     {
@@ -183,7 +183,7 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "c60265a9957054e9969a9c631fd772ac5a5de31018646a7fca0b4872d227083d",
+      "sha256": "68c4a3b16dc4d86c7c97c5cd5bf2b85c7e641b70b6bf4a644a3724f52796e936",
       "size": 3522
     },
     {

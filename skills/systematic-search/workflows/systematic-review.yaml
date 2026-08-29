@@ -27,7 +27,13 @@ stages:
   - id: execute
     agent: execution-operator
     handoff_to: dedup-adjudicator
-    requires: [strategy_and_press_approval, live_execution_approval]
+    modes:
+      fixture_replay:
+        network: false
+        requires: []
+      live:
+        network: true
+        requires: [strategy_and_press_approval, live_execution_approval]
     output: source-receipts.json
   - id: deduplicate
     agent: dedup-adjudicator

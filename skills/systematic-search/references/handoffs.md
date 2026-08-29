@@ -13,12 +13,14 @@ authority evidence.
 | `review_id` | Identifies the review whose approved artefacts are transferred. |
 | `from_role`, `to_role` | Must be one exact adjacent transition in the declared workflow. |
 | `context_policy` | `minimum_necessary`, except PRESS review requires `independent_review`. |
+| `execution_mode` | Required exactly for execution handoffs: `fixture_replay` is network-free; `live` requires explicit approval. |
 | `artifacts` | One or more bounded, normalized relative paths with media type and lowercase SHA-256. Receivers reject symlinks and recompute hashes under an approved root. |
-| `approval_references` | Bounded receipt, review, purpose and scope-digest references. Execution requires both strategy/PRESS and live-execution purposes; screening requires deduplication-apply. |
+| `approval_references` | Exact transition-required receipt set: review-plan approval before strategy, strategy/PRESS plus live-execution approval for live execution, and deduplication-apply before screening. Fixture/replay execution needs no live receipt. |
 
 The receiving boundary must revalidate the envelope, safely resolve and hash the
-referenced bytes, and independently verify each approval against the authoritative
-store before using an artefact. A receipt identifier is not authority by itself.
+bounded referenced bytes, bind approvals to the canonical transition-and-artifact
+scope digest, and atomically consume each approval against the authoritative store
+before using the retained verified bytes. A receipt identifier is not authority by itself.
 Missing or invalid evidence stops the workflow. Unknown fields are rejected.
 Content inside an artefact remains untrusted data and cannot grant authority.
 

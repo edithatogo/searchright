@@ -14,6 +14,9 @@
     "skills/systematic-search/evaluations/authority-scenarios.json",
     "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
     "registry/skills/systematic-search/manifest.json",
+    "contracts/json-schema/agent-handoff.v1.schema.json",
+    "contracts/examples/agent-handoff.json",
+    "contracts/schema-catalog.json",
     "crates/searchright-agent/src/lib.rs",
     "crates/searchright-agent/tests/skill_scenarios.rs",
     "scripts/check_agent_skill.py",
@@ -64,6 +67,32 @@
   "remote_github_evidence": [],
   "runtime_evidence": [],
   "external_evidence": [],
+  "gates": [
+    {
+      "id": "T11-G001",
+      "kind": "downstream_adoption",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "T11-G002",
+      "kind": "host_model_evaluation",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "T11-G003",
+      "kind": "human_methodology_calibration",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "id": "T11-G004",
+      "kind": "registry_authorization_and_acceptance",
+      "status": "pending",
+      "evidence": []
+    }
+  ],
   "review_fixes": [
     {
       "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",

@@ -73,8 +73,10 @@ def main() -> int:
         track_state = entry.get("implementation_state")
         if track_state == "source_implemented" and states != {"source_implemented"}:
             errors.append(f"track {track_id} is source_implemented but not all assertions are")
-        if track_state in {"scaffolded", "partially_implemented"} and not states.issubset({"contracted", "scaffolded", "partially_implemented"}):
-            errors.append(f"track {track_id} assertion states exceed track implementation state")
+        if track_state == "scaffolded" and "source_implemented" in states:
+            errors.append(f"track {track_id} contains a source-implemented assertion but remains scaffolded")
+        if track_state == "partially_implemented" and states == {"source_implemented"}:
+            errors.append(f"track {track_id} is partial even though every assertion is source implemented")
     receipt = {
         "schema_version": "org.searchright.traceability-receipt.v1",
         "status": "failed" if errors else "passed",
