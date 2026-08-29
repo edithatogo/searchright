@@ -3,19 +3,19 @@
     "by_mapping_confidence": {
       "contract_mapped": 1,
       "path_and_gate_mapped": 7,
-      "symbol_and_gate_mapped": 79,
-      "track_level_only": 113
+      "symbol_and_gate_mapped": 85,
+      "track_level_only": 107
     },
     "by_state": {
       "external_evidence_required": 10,
-      "partially_implemented": 124,
+      "partially_implemented": 118,
       "scaffolded": 47,
-      "source_implemented": 19
+      "source_implemented": 25
     },
-    "open_gate_entries": 429,
+    "open_gate_entries": 417,
     "total": 200,
-    "track_level_only": 113,
-    "without_symbol_mapping": 137
+    "track_level_only": 107,
+    "without_symbol_mapping": 131
   },
   "claim_boundary": "The register exposes unresolved proof and implementation work. Counts are not a quality score and cannot be used to promote claims without the named evidence.",
   "evidence_ceiling": "source_verified",
@@ -58,7 +58,7 @@
       ],
       "debt": "assertion_specific_proof",
       "priority": 1,
-      "reason": "113 assertions retain track-level-only mappings."
+      "reason": "107 assertions retain track-level-only mappings."
     },
     {
       "closure_evidence": [
@@ -120,9 +120,9 @@
   "tracks": {
     "by_state": {
       "external_evidence_required": 3,
-      "partially_implemented": 25,
+      "partially_implemented": 24,
       "scaffolded": 7,
-      "source_implemented": 3
+      "source_implemented": 4
     },
     "total": 38
   }
