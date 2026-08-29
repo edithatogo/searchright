@@ -442,7 +442,7 @@
     {
       "id": "CVX-0025",
       "crate": "chacha20",
-      "version": "0.10.1",
+      "version": "0.10.2",
       "criteria": "safe-to-deploy",
       "status": "approved",
       "owner": "edithatogo",
@@ -1180,7 +1180,7 @@
     {
       "id": "CVX-0066",
       "crate": "h2",
-      "version": "0.4.15",
+      "version": "0.4.19",
       "criteria": "safe-to-deploy",
       "status": "approved",
       "owner": "edithatogo",
