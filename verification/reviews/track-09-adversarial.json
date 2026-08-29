@@ -2,8 +2,8 @@
   "schema_version": "org.searchright.sealed-review-response.v1",
   "track_id": "09",
   "role": "adversarial",
-  "reviewed_revision": "e3bc4123a8db355e9f7cd016c1439ff2e5e20601",
-  "reviewed_tree": "237a4e261f3de1b5f1ca1b575fd969cd9fabdca2",
+  "reviewed_revision": "ac403d4bd37fd3365f1d1be6b42082aafad4fc42",
+  "reviewed_tree": "3937826f28d69531d281010c15fee76ab12d40eb",
   "disposition": "approved_for_hosted_confirmation",
   "critical_findings": [],
   "high_findings": [],
@@ -11,6 +11,8 @@
     "credential and query sentinels are absent from CLI, MCP and licensed outputs",
     "grouped and legacy command arguments share one canonical dispatch path",
     "no-clobber, error-category and all-shell distribution cases execute against the built binary",
+    "Windows built and installed help normalization is exact-prefix bounded and self-tests unrelated executable text",
+    "the unsafe dynamic-completion dependency and its overbroad audit were removed",
     "the full repository verification harness passes on the reviewed revision"
   ],
   "residual_limitations": [
