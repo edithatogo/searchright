@@ -9,6 +9,7 @@ Canonical task state: **source task complete**.
 
 - [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `.github/workflows/clean-room.yml`
+  - [x] Present source path: `.github/workflows/ci.yml`
   - [x] Present source path: `crates/searchright-cli/tests/cli_e2e.rs`
   - [x] Present source path: `crates/searchright-cli/tests/snapshots/`
   - [x] Present source path: `crates/searchright-cli/src/main.rs`

@@ -9,6 +9,7 @@ Canonical task state: **source task complete**.
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e`: Replace reflected parser failures with a stable non-sensitive JSON usage error while completing grouped CLI and distribution coverage.
+  - Review fix `dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513`: Exercise built and installed CLI snapshots on the hosted Linux, macOS and Windows CI matrix, including Windows executable resolution.
 
 ## Completion and evidence contract
 
