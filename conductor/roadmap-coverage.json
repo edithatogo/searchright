@@ -601,6 +601,10 @@
         {
           "commit": "896e88ac39456be6d535eefc61b725c60c0a16b3",
           "summary": "Make advanced MCP pagination and authority-spoof assertions panic-safe under the workspace Clippy policy."
+        },
+        {
+          "commit": "c72fc1e76d2100116e0ab2f4e260889c5c5c04ba",
+          "summary": "Remove the unused searchright facade UUID declaration reported by the hosted cargo-machete gate and regenerate the source SBOM and hash manifest."
         }
       ],
       "runtime_evidence": [
