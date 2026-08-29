@@ -63,5 +63,11 @@
   "runtime_evidence": [
     "verification/receipts/track-08-reporting-review.json"
   ],
-  "external_evidence": []
+  "external_evidence": [],
+  "review_fixes": [
+    {
+      "sha": "c234c41f940b37e153e9bf151458059e63c51b47",
+      "summary": "Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls."
+    }
+  ]
 }
