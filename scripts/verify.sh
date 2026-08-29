@@ -33,4 +33,6 @@ fi
 cargo test --workspace --all-features --doc --locked
 cargo doc --workspace --all-features --no-deps --locked
 cargo deny check
-cargo machete
+if cargo machete --version >/dev/null 2>&1; then
+  cargo machete
+fi
