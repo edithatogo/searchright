@@ -39,6 +39,8 @@ results. Do not represent inaccessible licensed databases as searched.
 7. Keep all source receipts, duplicate evidence, decisions, amendments and
    exclusions in the audit trail.
 8. Report limitations and unsearched sources plainly.
+9. Keep telemetry disabled. Never export or persist credentials, full text or
+   sensitive identifiers unless an explicit allowlist and approval permit it.
 
 ## Workflow
 
@@ -154,4 +156,6 @@ conflicts remain unresolved, full-text exclusions lack reasons, or PRISMA counts
 do not reconcile.
 
 Read `references/methodology.md`, `references/authority.md`,
-`references/tool-map.md` and the agent role cards before high-consequence work.
+`references/tool-map.md`, `references/handoffs.md` and the agent role cards before
+high-consequence work. Use `references/failure-modes.md` for adversarial and
+recovery scenarios.

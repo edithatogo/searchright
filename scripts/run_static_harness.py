@@ -49,6 +49,7 @@ COMMANDS = [
     [sys.executable, "scripts/check_workflow_hardening.py"],
     [sys.executable, "scripts/check_toolchain_manifest.py"],
     [sys.executable, "scripts/check_cli_mcp_parity.py"],
+    [sys.executable, "scripts/check_agent_skill.py"],
     [sys.executable, "scripts/check_sourceright_migration.py"],
     [sys.executable, "scripts/check_roadmap_coverage.py"],
     [sys.executable, "scripts/check_release_train.py"],

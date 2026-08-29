@@ -12,6 +12,10 @@ publish = false
 schemars.workspace = true
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
 serde.workspace = true
+sha2.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
 
 [lints]
 workspace = true

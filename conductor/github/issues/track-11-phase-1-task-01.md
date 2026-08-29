@@ -11,7 +11,14 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `skills/systematic-search/SKILL.md`
   - [x] Present source path: `skills/systematic-search/workflows/systematic-review.yaml`
   - [x] Present source path: `skills/systematic-search/references/authority.md`
+  - [x] Present source path: `skills/systematic-search/references/handoffs.md`
+  - [x] Present source path: `skills/systematic-search/evaluations/authority-scenarios.json`
+  - [x] Present source path: `skills/systematic-search/integrations/academic-research-skills/SKILL.md`
+  - [x] Present source path: `registry/skills/systematic-search/manifest.json`
   - [x] Present source path: `crates/searchright-agent/src/lib.rs`
+  - [x] Present source path: `crates/searchright-agent/tests/skill_scenarios.rs`
+  - [x] Present source path: `scripts/check_agent_skill.py`
+  - [x] Present source path: `verification/receipts/systematic-search-skill.json`
   - [x] Assertion ledger: `conductor/tracks/11-agentic-skill/traceability.json`
 
 ## Completion and evidence contract

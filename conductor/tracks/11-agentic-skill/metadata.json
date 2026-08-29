@@ -11,7 +11,7 @@
     "10"
   ],
   "horizon": "mvp",
-  "evidence_level": "source_verified",
+  "evidence_level": "compiler_verified",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/11-agentic-skill/evidence.json",
   "traceability_path": "conductor/tracks/11-agentic-skill/traceability.json",
@@ -30,6 +30,8 @@
       "track-11-phase-2-task-02",
       "track-11-phase-3-task-01",
       "track-11-phase-3-task-02",
+      "track-11-phase-3-task-03",
+      "track-11-phase-3-task-04",
       "track-11-phase-4-task-01",
       "track-11-phase-4-task-02",
       "track-11-phase-4-task-03",

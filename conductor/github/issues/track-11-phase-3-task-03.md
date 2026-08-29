@@ -1,17 +1,13 @@
-<!-- searchright-issue-key: track-11-phase-2-task-01 -->
-# Track 11 / Phase 2 / Task 01
+<!-- searchright-issue-key: track-11-phase-3-task-03 -->
+# Track 11 / Phase 3 / Task 03
 
-Parent phase key: `track-11-phase-2`
+Parent phase key: `track-11-phase-3`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_agent_skill.py`
-  - [x] `cargo test -p searchright-agent --locked`
-  - [x] `cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings`
+- [ ] Calibrate authority and failure modes with human information specialists.
 
 ## Completion and evidence contract
 

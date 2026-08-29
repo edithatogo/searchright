@@ -14,7 +14,7 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 - Horizon: `mvp`
 - Status: `partially_implemented`
 - Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Evidence: `compiler_verified`
 - Dependencies: `10`
 - Requirements: `SR-022, SR-026, SR-031`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Compiler-verified local workflow, handoff and deterministic authority behaviour only. The downstream caller and registry packet are prepared but unapplied and unsubmitted; no supported-host/model, human-calibration, companion adoption, live-provider or registry-acceptance claim is made.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

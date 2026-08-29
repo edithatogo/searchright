@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run scenario-based agent evaluations across supported hosts and models.
+- [ ] Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.
 
 ## Completion and evidence contract
 
