@@ -597,6 +597,10 @@
         {
           "commit": "945694cc1004d0dacf09f3bd60a42107f1d46f84",
           "summary": "Close the workspace-wide strict Clippy gate by keeping the screening decision enum import scoped to store tests."
+        },
+        {
+          "commit": "896e88ac39456be6d535eefc61b725c60c0a16b3",
+          "summary": "Make advanced MCP pagination and authority-spoof assertions panic-safe under the workspace Clippy policy."
         }
       ],
       "runtime_evidence": [
