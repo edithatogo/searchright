@@ -684,7 +684,7 @@ d1cf5a393c5b189d9ad2f0704b814e6a9340a0f8855cb2bdad8ba7a7e2b42c55  ./conductor/tr
 9f2b3082af5d79c2435b9a9e0fc6f9f8443058398c6e0a349ca308f937d958bb  ./conductor/tracks/01-contract-catalog/traceability.json
 47211050c45eb254825cd36d1636d0d472ac9de15d6f2b3b0a18ec7e7b324e15  ./conductor/tracks/02-query-ast-dialects/evidence.json
 cf8fbbdb77c71b6eb1e539772e041e0ea6bc4ab0d405121ba0ebd5c9db99d00d  ./conductor/tracks/02-query-ast-dialects/metadata.json
-556695782076c424236800e27b4c0ea7450ab38f59867796710c4dc0d0c06623  ./conductor/tracks/02-query-ast-dialects/plan.md
+06cf823b53c8c60d3ff9ce38f1cbb40a8e0b80e9dbddf91a9e79709d9faa1fa9  ./conductor/tracks/02-query-ast-dialects/plan.md
 965fc934fd6327a4c88cb8cc1776f5933000a2f1ecfcf45015151b0b821624c2  ./conductor/tracks/02-query-ast-dialects/spec.md
 c1a221fff2f1055eb15143c416bca962f1ec13f2e8ff72d09a89de195f08743c  ./conductor/tracks/02-query-ast-dialects/traceability.json
 af24587ddab19bc5e6b7f3fed4eec6b8efff0a05799eafcdaa4c9c47f139d2a4  ./conductor/tracks/03-shared-provider-runtime/evidence.json
@@ -1065,6 +1065,7 @@ d97c8f62ea772998010a6832ef80f9053bdc98c877c174681571bb3696962931  ./crates/evide
 a4efc9e7942893374d1e9f39c1a9094b9743fa2a31eb7010203f9057caef2274  ./crates/evidence-search-core/src/lib.rs
 f444e581711a0ce52f6437e19321d77e3c7ff21ee5e541f80265a7995af6fe4e  ./crates/evidence-search-core/src/native.rs
 190bda7f6c017895057db314feed54239c79ea0ab0168708cc7e32fd4a30f047  ./crates/evidence-search-core/src/provider.rs
+7541d24b79ace8fd0af5f602ca67136527845dbf6358eb215c4d3c973e319e4c  ./crates/evidence-search-core/tests/property_tests.rs
 598bd4b816129b0427210846d9a3f87975bf3559cadb4133ef966325e4a6e37b  ./crates/searchright-access/Cargo.toml
 eb4aaaa6bde8a46f065ae424024d56b70f004eba81cdd2facc34192a82e2cd7a  ./crates/searchright-access/src/lib.rs
 5379a8140804b1ddc184c5166881352494a755d1beee5ff7ee3e3e2c5e7ff6df  ./crates/searchright-agent/Cargo.toml
