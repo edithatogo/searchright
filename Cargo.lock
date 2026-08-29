@@ -580,6 +580,7 @@ dependencies = [
  "async-trait",
  "blake3",
  "evidence-search-contracts",
+ "proptest",
  "schemars",
  "serde",
  "serde_json",
