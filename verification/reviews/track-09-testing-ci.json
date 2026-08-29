@@ -2,8 +2,8 @@
   "schema_version": "org.searchright.sealed-review-response.v1",
   "track_id": "09",
   "role": "testing_ci",
-  "reviewed_revision": "e3bc4123a8db355e9f7cd016c1439ff2e5e20601",
-  "reviewed_tree": "237a4e261f3de1b5f1ca1b575fd969cd9fabdca2",
+  "reviewed_revision": "ac403d4bd37fd3365f1d1be6b42082aafad4fc42",
+  "reviewed_tree": "3937826f28d69531d281010c15fee76ab12d40eb",
   "disposition": "approved_for_hosted_confirmation",
   "critical_findings": [],
   "high_findings": [],
@@ -12,7 +12,10 @@
     "strict workspace Clippy passed",
     "266 of 266 nextest tests passed with zero skipped",
     "documentation, package and cargo-deny gates passed",
-    "CLI distribution checker passed all seven checks"
+    "CLI distribution checker passed all eight checks, including narrow Windows executable-name normalization",
+    "five static completion assets cover Bash, Elvish, Fish, PowerShell and Zsh",
+    "cargo vet passed with 43 fully audited dependencies and 258 governed exemptions",
+    "source manifest verified 1,446 files"
   ],
   "required_hosted_evidence": [
     "Linux Rust job success on the exact delivered revision",
