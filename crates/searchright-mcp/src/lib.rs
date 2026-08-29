@@ -9,7 +9,8 @@ use base64::{Engine as _, engine::general_purpose::STANDARD as BASE64_STANDARD};
 use std::{
     borrow::Cow,
     collections::{BTreeMap, BTreeSet},
-    path::PathBuf,
+    io::Read,
+    path::{Path, PathBuf},
     sync::{
         Arc, Mutex, OnceLock,
         atomic::{AtomicUsize, Ordering},
@@ -2412,39 +2413,112 @@ fn digest_bytes(bytes: &[u8]) -> Result<String, McpError> {
 }
 
 fn local_store_state_digest(root: &std::path::Path) -> Result<String, McpError> {
-    let mut entries = vec![format!("root:{}", root.to_string_lossy())];
-    for child in ["managed", "executions", "screening"] {
-        let directory = root.join(child);
-        match std::fs::read_dir(&directory) {
-            Ok(read_dir) => {
-                for entry in read_dir {
-                    let entry = entry.map_err(|_| {
-                        McpError::internal_error("local store state unavailable", None)
-                    })?;
-                    let metadata = std::fs::symlink_metadata(entry.path()).map_err(|_| {
-                        McpError::internal_error("local store state unavailable", None)
-                    })?;
-                    entries.push(format!(
-                        "{child}/{}:{}:{}",
-                        entry.file_name().to_string_lossy(),
-                        metadata.len(),
-                        metadata.file_type().is_symlink()
-                    ));
-                }
+    let mut files = Vec::new();
+    for child in [
+        "managed",
+        "events",
+        "commits",
+        "screening-decisions",
+        "snapshots",
+    ] {
+        collect_store_files(root, &root.join(child), &mut files)?;
+    }
+    files.sort();
+
+    let mut digest = Sha256::new();
+    digest.update(b"searchright-store-state-v2\0");
+    update_length_prefixed(&mut digest, root.to_string_lossy().as_bytes())?;
+    for path in files {
+        let relative = path
+            .strip_prefix(root)
+            .map_err(|_| McpError::internal_error("local store state unavailable", None))?;
+        let relative = relative
+            .to_str()
+            .ok_or_else(|| McpError::internal_error("local store path is not UTF-8", None))?;
+        update_length_prefixed(&mut digest, relative.as_bytes())?;
+
+        let mut file = std::fs::File::open(&path)
+            .map_err(|_| McpError::internal_error("local store state unavailable", None))?;
+        let length = file
+            .metadata()
+            .map_err(|_| McpError::internal_error("local store state unavailable", None))?
+            .len();
+        digest.update(length.to_be_bytes());
+        let mut buffer = [0_u8; 16 * 1024];
+        loop {
+            let read = file
+                .read(&mut buffer)
+                .map_err(|_| McpError::internal_error("local store state unavailable", None))?;
+            if read == 0 {
+                break;
             }
-            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
-                entries.push(format!("{child}:absent"));
-            }
-            Err(_) => {
-                return Err(McpError::internal_error(
-                    "local store state unavailable",
-                    None,
-                ));
-            }
+            digest.update(&buffer[..read]);
         }
     }
-    entries.sort();
-    digest_bytes(entries.join("\n").as_bytes())
+    Ok(BASE64_STANDARD.encode(digest.finalize()))
+}
+
+fn collect_store_files(
+    root: &Path,
+    directory: &Path,
+    files: &mut Vec<PathBuf>,
+) -> Result<(), McpError> {
+    let metadata = match std::fs::symlink_metadata(directory) {
+        Ok(metadata) => metadata,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+        Err(_) => {
+            return Err(McpError::internal_error(
+                "local store state unavailable",
+                None,
+            ));
+        }
+    };
+    if metadata.file_type().is_symlink() || !metadata.is_dir() {
+        return Err(McpError::invalid_request(
+            "local store contains an unsupported filesystem entry",
+            None,
+        ));
+    }
+    for entry in std::fs::read_dir(directory)
+        .map_err(|_| McpError::internal_error("local store state unavailable", None))?
+    {
+        let path = entry
+            .map_err(|_| McpError::internal_error("local store state unavailable", None))?
+            .path();
+        if !path.starts_with(root) {
+            return Err(McpError::invalid_request(
+                "local store path escaped its root",
+                None,
+            ));
+        }
+        let metadata = std::fs::symlink_metadata(&path)
+            .map_err(|_| McpError::internal_error("local store state unavailable", None))?;
+        if metadata.file_type().is_symlink() {
+            return Err(McpError::invalid_request(
+                "local store contains a symbolic link",
+                None,
+            ));
+        }
+        if metadata.is_dir() {
+            collect_store_files(root, &path, files)?;
+        } else if metadata.is_file() {
+            files.push(path);
+        } else {
+            return Err(McpError::invalid_request(
+                "local store contains an unsupported filesystem entry",
+                None,
+            ));
+        }
+    }
+    Ok(())
+}
+
+fn update_length_prefixed(digest: &mut Sha256, bytes: &[u8]) -> Result<(), McpError> {
+    let length = u64::try_from(bytes.len())
+        .map_err(|_| McpError::internal_error("local store state is too large", None))?;
+    digest.update(length.to_be_bytes());
+    digest.update(bytes);
+    Ok(())
 }
 
 /// Serve the governed MCP tools over standard input/output.
@@ -3045,6 +3119,79 @@ fn invalid_params(message: String) -> McpError {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn store_state_digest_binds_canonical_paths_and_exact_bytes() -> anyhow::Result<()> {
+        let root = std::env::temp_dir().join(format!(
+            "searchright-track10-store-digest-{}",
+            uuid::Uuid::now_v7()
+        ));
+        let absent = local_store_state_digest(&root)
+            .map_err(|error| anyhow::anyhow!("absent store digest failed: {error:?}"))?;
+        let _store = searchright::store::FileReviewStore::open(&root)?;
+        let empty = local_store_state_digest(&root)
+            .map_err(|error| anyhow::anyhow!("empty store digest failed: {error:?}"))?;
+        assert_eq!(absent, empty, "empty layout creation must not change state");
+
+        let execution = root.join("commits/execution-1.json");
+        std::fs::write(&execution, b"same-length-a")?;
+        let first = local_store_state_digest(&root)
+            .map_err(|error| anyhow::anyhow!("execution digest failed: {error:?}"))?;
+        std::fs::write(&execution, b"same-length-b")?;
+        let second = local_store_state_digest(&root)
+            .map_err(|error| anyhow::anyhow!("changed execution digest failed: {error:?}"))?;
+        assert_ne!(
+            empty, first,
+            "execution commits must affect authority state"
+        );
+        assert_ne!(
+            first, second,
+            "same-length byte changes must affect authority state"
+        );
+
+        std::fs::write(
+            root.join("screening-decisions/decision-1.json"),
+            b"screening-bytes",
+        )?;
+        let screening = local_store_state_digest(&root)
+            .map_err(|error| anyhow::anyhow!("screening digest failed: {error:?}"))?;
+        assert_ne!(
+            second, screening,
+            "screening decisions must affect authority state"
+        );
+
+        std::fs::create_dir_all(root.join("snapshots/derived"))?;
+        std::fs::write(root.join("snapshots/derived/state.json"), b"snapshot-bytes")?;
+        let nested = local_store_state_digest(&root)
+            .map_err(|error| anyhow::anyhow!("nested snapshot digest failed: {error:?}"))?;
+        assert_ne!(
+            screening, nested,
+            "nested canonical bytes must affect authority state"
+        );
+
+        std::fs::remove_dir_all(root)?;
+        Ok(())
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn store_state_digest_rejects_symbolic_links() -> anyhow::Result<()> {
+        use std::os::unix::fs::symlink;
+
+        let root = std::env::temp_dir().join(format!(
+            "searchright-track10-store-symlink-{}",
+            uuid::Uuid::now_v7()
+        ));
+        let _store = searchright::store::FileReviewStore::open(&root)?;
+        let outside = root.with_extension("outside");
+        std::fs::write(&outside, b"outside")?;
+        symlink(&outside, root.join("commits/injected.json"))?;
+        assert!(local_store_state_digest(&root).is_err());
+
+        std::fs::remove_dir_all(root)?;
+        std::fs::remove_file(outside)?;
+        Ok(())
+    }
 
     #[test]
     fn json_success_emits_matching_structured_content() -> Result<(), Box<dyn std::error::Error>> {
