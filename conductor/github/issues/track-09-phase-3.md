@@ -6,7 +6,8 @@ Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision. (`track-09-phase-3-task-01`)
+- [x] T01: Run the exact Track 09 implementation head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival. (`track-09-phase-3-task-01`)
+- [x] T02: Bind the sealed correctness, security, testing, methodology and adversarial panel disposition to the exact reviewed implementation head before semantic archival. (`track-09-phase-3-task-02`)
 
 ## Evidence rule
 

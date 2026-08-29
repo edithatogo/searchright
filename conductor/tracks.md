@@ -19,7 +19,6 @@ an explicit, approval-gated apply receipt exists.
 | 06 | [Imports, deduplication and study linkage](tracks/06-imports-dedup-linkage/spec.md) | mvp | source_implemented | source_implemented | compiler_verified | Import/export common bibliographic formats, propose conservative duplicate clusters and distinguish records, reports and studies. |
 | 07 | [Governed screening workflow](tracks/07-screening-workflow/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority. |
 | 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct. |
-| 09 | [CLI MVP](tracks/09-cli-mvp/spec.md) | mvp | source_implemented | source_implemented | compiler_verified | Expose stable scriptable operations through the shared application facade. |
 | 10 | [MCP stdio server MVP](tracks/10-mcp-mvp/spec.md) | mvp | partially_implemented | partially_implemented | compiler_verified | Expose typed, authority-annotated MCP tools over the same facade with stable structured outputs. |
 | 11 | [Systematic-search agent skill and workflows](tracks/11-agentic-skill/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints. |
 | 12 | [CiteWeft scholarly extraction and document evidence](tracks/12-citeweft-document-evidence/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary. |
@@ -56,6 +55,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | ID | Track | Archived | Evidence |
 | --- | --- | --- | --- |
 | 05 | [Execution, audit and local storage](tracks/05-execution-audit-store/spec.md) | 2026-08-13 | compiler_verified |
+| 09 | [CLI MVP](tracks/09-cli-mvp/spec.md) | 2026-08-29 | compiler_verified |
 | 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
 
 ## Evidence ladder
