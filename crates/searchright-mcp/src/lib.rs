@@ -1159,6 +1159,10 @@ impl SearchrightServer {
     }
 }
 
+#[expect(
+    clippy::unused_async_trait_impl,
+    reason = "rmcp ServerHandler trait specifies async functions"
+)]
 impl ServerHandler for SearchrightServer {
     async fn initialize(
         &self,

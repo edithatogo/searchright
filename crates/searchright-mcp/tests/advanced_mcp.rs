@@ -132,6 +132,10 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
 #[derive(Clone)]
 struct AcknowledgingClient;
 
+#[expect(
+    clippy::unused_async_trait_impl,
+    reason = "rmcp ClientHandler trait specifies async functions"
+)]
 impl ClientHandler for AcknowledgingClient {
     fn get_info(&self) -> ClientInfo {
         ClientInfo::new(
