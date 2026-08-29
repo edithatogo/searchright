@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -156,8 +158,14 @@ impl Validate for PressReview {
         require_text(&self.reviewer_id, "search_validation.reviewer_id")?;
         require_text(&self.reviewed_at, "search_validation.reviewed_at")?;
         require_text(&self.decision, "search_validation.decision")?;
+        let mut finding_ids = BTreeSet::new();
         for finding in &self.findings {
             finding.validate()?;
+            if !finding_ids.insert(finding.finding_id.as_str()) {
+                return Err(ContractError::Invariant(
+                    "PRESS finding identifiers must be unique within a review".to_owned(),
+                ));
+            }
         }
         Ok(())
     }
@@ -213,6 +221,11 @@ impl Validate for SearchValidationReport {
                     "PRESS review strategy identifier does not match validation report".to_owned(),
                 ));
             }
+            if review.strategy_version != self.strategy_version {
+                return Err(ContractError::Invariant(
+                    "PRESS review strategy version does not match validation report".to_owned(),
+                ));
+            }
         }
         for seed in &self.seed_records {
             seed.validate()?;
@@ -233,6 +246,16 @@ impl Validate for SearchValidationReport {
                 )
             })?;
             require_text(approver, "search_validation.approved_by")?;
+            if self
+                .press_reviews
+                .iter()
+                .any(|review| review.reviewer_id == approver)
+            {
+                return Err(ContractError::Invariant(
+                    "PRESS reviewer and execution approver must be independently identified"
+                        .to_owned(),
+                ));
+            }
         }
         Ok(())
     }

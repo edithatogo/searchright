@@ -1,0 +1,65 @@
+schema_version: org.searchright.search-validation.v1
+review_id: demo-paediatric-metabolic-search
+strategy_id: strategy-medline-v1
+strategy_version: '1.0'
+press_reviews:
+- press_review_id: press-fixture-six-domain
+  strategy_id: strategy-medline-v1
+  strategy_version: '1.0'
+  reviewer_id: fixture-information-specialist
+  reviewed_at: '2026-08-29T00:00:00Z'
+  findings:
+  - finding_id: press-question
+    element: translation_of_question
+    severity: note
+    message: The fixture records review of the question-to-concept translation.
+    recommendation: Retain the recorded concept mapping with the strategy version.
+    resolved: true
+  - finding_id: press-boolean
+    element: boolean_and_proximity
+    severity: note
+    message: The fixture records review of Boolean structure and nesting.
+    recommendation: Retain the compiled query with its exact source text.
+    resolved: true
+  - finding_id: press-headings
+    element: subject_headings
+    severity: note
+    message: The fixture records review of controlled vocabulary use.
+    recommendation: Retain vocabulary versions in the strategy evidence.
+    resolved: true
+  - finding_id: press-textwords
+    element: text_words
+    severity: advisory
+    message: The fixture records review of synonyms and spelling variants.
+    recommendation: Reassess terms against the topic-specific sentinel set.
+    resolved: true
+  - finding_id: press-syntax
+    element: spelling_syntax_and_lines
+    severity: note
+    message: The fixture records review of source-specific syntax.
+    recommendation: Preserve the compiled strategy and compiler version.
+    resolved: true
+  - finding_id: press-limits
+    element: limits_and_filters
+    severity: advisory
+    message: No language or date limits are applied in the fixture.
+    recommendation: Keep the absence of limits explicit in the appendix.
+    resolved: true
+  decision: fixture workflow complete; not an independent methodological approval
+seed_records:
+- seed_id: fixture-seed-1
+  identifier: 10.1000/example
+  relevance_basis: Repository-authored sentinel fixture
+  retrieved: true
+  source_id: medline-pubmed
+translation_assessments:
+- strategy_id: strategy-medline-v1
+  target_dialect: pubmed
+  maximum_material_warnings: 0
+  observed_material_warnings: 0
+  human_approved: true
+  notes:
+  - Fixture records no material translation warning.
+minimum_seed_recall: 1.0
+approved_for_execution: true
+approved_by: fixture-review-lead

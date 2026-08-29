@@ -65,7 +65,7 @@ regresses to a root-only schema. The smoke harness validates invoked tools'
 `--strict-schemas` flag is the transcript gate for rejecting trivial schemas.
 The Track 10 official-client harness launches the actual `searchright-mcp`
 binary over child-process stdio for both supported eras. It invokes all 31
-tools with deterministic valid arguments, exercises both `generate_prisma`
+tools with deterministic valid arguments, exercises all seven `generate_prisma`
 success variants, and independently validates every observed
 `structuredContent` value against the `outputSchema` received through
 `tools/list`. Governed failures remain `isError` responses without successful

@@ -1,0 +1,39 @@
+{
+  "schema_version": "org.searchright.prisma-jl-flow-parity.v1",
+  "source": {
+    "repository": "edithatogo/PRISMA.jl",
+    "revision": "95d5aa46c6cda6fb2d014391209d666349b577dc",
+    "canonical_upstream": "cecoeco/PRISMA.jl",
+    "source_file": "src/flow_diagram.jl",
+    "licence": "MIT"
+  },
+  "searchright_fixture": "contracts/examples/prisma-flow.json",
+  "mapped_counts": [
+    {"searchright_pointer": "/records_databases", "prisma_jl_box_num": 8, "prisma_jl_label": "Database or Register 1", "expected": 1200},
+    {"searchright_pointer": "/records_registers", "prisma_jl_box_num": 8, "prisma_jl_label": "Database or Register 2", "expected": 80},
+    {"searchright_pointer": "/records_other", "prisma_jl_box_num": 18, "prisma_jl_label": "Other", "expected": 20},
+    {"searchright_pointer": "/duplicates_removed", "prisma_jl_box_num": 9, "prisma_jl_label": "Duplicate records removed", "expected": 250},
+    {"searchright_pointer": "/automation_removed", "prisma_jl_box_num": 9, "prisma_jl_label": "Records marked as ineligible by automation tools", "expected": 0},
+    {"searchright_pointer": "/other_removed", "prisma_jl_box_num": 9, "prisma_jl_label": "Records removed for other reasons", "expected": 0},
+    {"searchright_pointer": "/records_screened", "prisma_jl_box_num": 10, "prisma_jl_label": "Records screened", "expected": 1050},
+    {"searchright_pointer": "/records_excluded", "prisma_jl_box_num": 11, "prisma_jl_label": "Records excluded", "expected": 850},
+    {"searchright_pointer": "/reports_sought", "prisma_jl_box_num": 12, "prisma_jl_label": "Reports sought for retrieval", "expected": 200},
+    {"searchright_pointer": "/reports_not_retrieved", "prisma_jl_box_num": 13, "prisma_jl_label": "Reports not retrieved", "expected": 5},
+    {"searchright_pointer": "/reports_assessed", "prisma_jl_box_num": 14, "prisma_jl_label": "Reports assessed for eligibility", "expected": 195},
+    {"searchright_pointer": "/studies_included", "prisma_jl_box_num": 17, "prisma_jl_label": "Total studies included in review", "expected": 55},
+    {"searchright_pointer": "/reports_included", "prisma_jl_box_num": 17, "prisma_jl_label": "Reports of total included studies", "expected": 70}
+  ],
+  "loss_report": [
+    {"code": "previous_studies_not_modelled", "direction": "prisma_jl_to_searchright", "effect": "Searchright prisma-flow.v1 does not carry previous-version study and report counts."},
+    {"code": "other_method_channels_aggregated", "direction": "prisma_jl_to_searchright", "effect": "Website, organisation, citation-searching and other-method counts are aggregated in Searchright v1."},
+    {"code": "database_register_slots_not_preserved", "direction": "bidirectional", "effect": "Searchright separates database and register totals but does not preserve PRISMA.jl's three presentation slots."},
+    {"code": "new_vs_total_inclusions_not_separate", "direction": "bidirectional", "effect": "Searchright v1 records included totals and update lineage but not separate new and previous inclusion counts."}
+  ],
+  "ownership": {
+    "arithmetic_authority": "searchright",
+    "reason": "Searchright validates versioned flow-contract arithmetic before rendering and keeps review authority outside presentation adapters.",
+    "prisma_jl_role": "optional_presentation_comparator",
+    "remote_change_required": false
+  },
+  "claim_boundary": "The common count projection is fixture-proven at the pinned fork revision. The explicit loss report forbids a claim of complete cross-model equivalence, and no companion repository was changed."
+}

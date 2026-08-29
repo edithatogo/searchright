@@ -245,8 +245,8 @@ async fn assert_every_success_path(client: &ClientService) -> anyhow::Result<()>
     let cases = live_client_success_cases().map_err(anyhow::Error::msg)?;
     assert_eq!(
         cases.len(),
-        32,
-        "31 tools plus the second PRISMA union branch"
+        37,
+        "31 tools plus six additional PRISMA rendering branches"
     );
     let mut failures = Vec::new();
     for case in cases {

@@ -2204,6 +2204,7 @@ dependencies = [
  "schemars",
  "searchright-contracts",
  "serde",
+ "serde_yaml",
  "thiserror",
 ]
 

@@ -2,9 +2,11 @@
 
 #![forbid(unsafe_code)]
 
+use std::collections::BTreeSet;
+
 use schemars::JsonSchema;
 use searchright_contracts::{
-    FindingSeverity, SearchValidationReport, TranslationLossAssessment, Validate,
+    FindingSeverity, PressElement, SearchValidationReport, TranslationLossAssessment, Validate,
 };
 use serde::{Deserialize, Serialize};
 
@@ -58,6 +60,18 @@ pub const fn translation_acceptable(assessment: &TranslationLossAssessment) -> b
         && assessment.human_approved
 }
 
+/// Count distinct PRESS domains represented by evidence-bearing findings.
+#[must_use]
+pub fn press_domains_covered(report: &SearchValidationReport) -> usize {
+    report
+        .press_reviews
+        .iter()
+        .flat_map(|review| &review.findings)
+        .map(|finding| finding.element)
+        .collect::<BTreeSet<PressElement>>()
+        .len()
+}
+
 /// Validate the complete search-validation report and all approval conditions.
 pub fn assess(report: &SearchValidationReport) -> Result<SearchValidationSummary, ValidationError> {
     report.validate()?;
@@ -79,10 +93,13 @@ pub fn assess(report: &SearchValidationReport) -> Result<SearchValidationSummary
         .iter()
         .filter(|assessment| !translation_acceptable(assessment))
         .count();
+    let press_domains_covered = press_domains_covered(report);
+    let press_review_complete = press_domains_covered == 6;
     let seed_recall_passes = report
         .minimum_seed_recall
         .is_none_or(|minimum| seeds.recall.is_some_and(|observed| observed >= minimum));
-    let ready = unresolved_major == 0
+    let ready = press_review_complete
+        && unresolved_major == 0
         && unacceptable_translations == 0
         && seed_recall_passes
         && report.approved_for_execution;
@@ -91,6 +108,8 @@ pub fn assess(report: &SearchValidationReport) -> Result<SearchValidationSummary
         seed_recall: seeds,
         unresolved_major_findings: unresolved_major,
         unacceptable_translations,
+        press_domains_covered,
+        press_review_complete,
     })
 }
 
@@ -105,6 +124,10 @@ pub struct SearchValidationSummary {
     pub unresolved_major_findings: usize,
     /// Dialect translations outside their approved loss budgets.
     pub unacceptable_translations: usize,
+    /// Number of distinct PRESS domains represented by findings.
+    pub press_domains_covered: usize,
+    /// Whether all six PRESS domains have evidence-bearing findings.
+    pub press_review_complete: bool,
 }
 
 /// Search-validation error.
@@ -113,4 +136,39 @@ pub enum ValidationError {
     /// Contract validation failed.
     #[error(transparent)]
     Contract(#[from] searchright_contracts::ContractError),
+}
+
+#[cfg(test)]
+mod tests {
+    use std::error::Error;
+
+    use super::*;
+
+    #[test]
+    fn approved_but_incomplete_press_record_fails_closed() -> Result<(), Box<dyn Error>> {
+        let report: SearchValidationReport = serde_yaml::from_str(include_str!(
+            "../../../contracts/examples/search-validation.yaml"
+        ))?;
+        let summary = assess(&report)?;
+        assert_eq!(summary.press_domains_covered, 1);
+        assert!(!summary.press_review_complete);
+        assert!(!summary.ready);
+        Ok(())
+    }
+
+    #[test]
+    fn six_domain_press_workflow_requires_separate_approval() -> Result<(), Box<dyn Error>> {
+        let report: SearchValidationReport = serde_yaml::from_str(include_str!(
+            "../../../verification/fixtures/track-08/press-workflow-complete.yaml"
+        ))?;
+        let summary = assess(&report)?;
+        assert_eq!(summary.press_domains_covered, 6);
+        assert!(summary.press_review_complete);
+        assert!(summary.ready);
+
+        let mut same_person = report;
+        same_person.approved_by = Some("fixture-information-specialist".to_owned());
+        assert!(assess(&same_person).is_err());
+        Ok(())
+    }
 }

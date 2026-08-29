@@ -43,6 +43,14 @@ pub enum PrismaArtifact {
     Flow(PrismaFlow),
     /// Mermaid source for a flow diagram.
     Mermaid(String),
+    /// Accessible Markdown table.
+    Markdown(String),
+    /// Self-contained accessible SVG document.
+    Svg(String),
+    /// Typst table source.
+    Typst(String),
+    /// HTML table suitable for import or paste into DOCX editors.
+    DocxTable(String),
     /// PRISMA-S reporting ledgers.
     PrismaSLedger(Vec<PrismaSLedger>),
 }
@@ -54,6 +62,14 @@ pub enum PrismaOutput {
     Json,
     /// Return Mermaid source.
     Mermaid,
+    /// Return an accessible Markdown table.
+    Markdown,
+    /// Return a self-contained accessible SVG document.
+    Svg,
+    /// Return Typst table source.
+    Typst,
+    /// Return a DOCX-friendly HTML table.
+    DocxTable,
     /// Return the PRISMA-S ledger.
     PrismaSLedger,
 }
@@ -128,6 +144,16 @@ impl SearchrightEngine {
             PrismaOutput::Json => Ok(PrismaArtifact::Flow(flow.clone())),
             PrismaOutput::Mermaid => Ok(PrismaArtifact::Mermaid(
                 searchright_prisma::render_mermaid(flow)?,
+            )),
+            PrismaOutput::Markdown => Ok(PrismaArtifact::Markdown(
+                searchright_prisma::render_markdown(flow)?,
+            )),
+            PrismaOutput::Svg => Ok(PrismaArtifact::Svg(searchright_prisma::render_svg(flow)?)),
+            PrismaOutput::Typst => Ok(PrismaArtifact::Typst(searchright_prisma::render_typst(
+                flow,
+            )?)),
+            PrismaOutput::DocxTable => Ok(PrismaArtifact::DocxTable(
+                searchright_prisma::render_docx_table(flow)?,
             )),
             PrismaOutput::PrismaSLedger => Ok(PrismaArtifact::PrismaSLedger(
                 searchright_prisma::build_prisma_s_ledger(flow)?,
