@@ -3,9 +3,9 @@
   "track_id": "09",
   "title": "CLI MVP",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/09-cli-mvp/spec.md#scope",
-  "claim_boundary": "The grouped CLI hierarchy, stable JSON/error snapshots, dry-run/apply guard, completion and man-page generation, and local macOS build/install smoke are source-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision.",
+  "claim_boundary": "The grouped CLI hierarchy, stable JSON/error snapshots, dry-run/apply guard, static completion assets and man-page generation are compiler-verified with exact-revision hosted Linux, macOS and Windows evidence. This is not methodological certification, live-provider support, package publication or release promotion.",
   "assertions": [
     {
       "assertion_id": "T09-A001",
@@ -36,7 +36,7 @@
       "statement": "Add dry-run/apply semantics for writes",
       "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": ["crates/searchright-cli/src/main.rs", "crates/searchright-cli/tests/cli_e2e.rs", "docs/cli-compatibility.md"],
+      "implementation_paths": ["crates/searchright-cli/src/main.rs", "crates/searchright-cli/assets/completions/", "crates/searchright-cli/tests/cli_e2e.rs", "docs/cli-compatibility.md"],
       "implementation_symbols": ["initialise", "tests::init_defaults_to_dry_run", "tests::init_refuses_to_overwrite", "cli_e2e::dry_run_json_matches_the_stable_snapshot_without_writing"],
       "deterministic_tests": ["python scripts/check_cli_distribution.py target/debug/searchright"],
       "evidence_receipts": ["verification/receipts/track-09-cli-review.json"],
@@ -63,9 +63,9 @@
       "implementation_paths": [".github/workflows/clean-room.yml", ".github/workflows/ci.yml", "crates/searchright-cli/tests/cli_e2e.rs", "crates/searchright-cli/tests/snapshots/", "scripts/check_cli_distribution.py"],
       "implementation_symbols": ["cli_e2e::help_output_matches_the_cross_platform_snapshot", "cli_e2e::dry_run_json_matches_the_stable_snapshot_without_writing", "cli_e2e::usage_errors_are_machine_readable_and_stable", "cli_e2e::distribution_documents_are_available_without_filesystem_writes", "check_cli_distribution.main"],
       "deterministic_tests": ["python scripts/check_cli_distribution.py target/debug/searchright", "python scripts/check_workflow_hardening.py"],
-      "evidence_receipts": ["verification/receipts/track-09-cli-review.json"],
-      "open_gates": ["Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision."],
-      "permitted_claim": "Snapshot and installed-binary checks pass locally on macOS and are configured in the clean-room workflow; hosted cross-platform support is not yet evidenced."
+      "evidence_receipts": ["verification/receipts/track-09-cli-review.json", "verification/receipts/track-09-hosted-closeout.json"],
+      "open_gates": [],
+      "permitted_claim": "Snapshot and installed-binary checks passed on the exact reviewed implementation revision in hosted Linux, macOS and Windows jobs."
     },
     {
       "assertion_id": "T09-A006",
