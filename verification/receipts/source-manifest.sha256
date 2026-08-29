@@ -1147,7 +1147,7 @@ fbc8228717db086f4d7b07fb97fb2d2597ec331e956c5d284cdfc9752f620686  ./crates/searc
 d7090c85aeee6b22d7e59c64c8489ec53bf9bed0d92c265ebc9a74461241ca3c  ./crates/searchright-mcp/src/lib.rs
 866b71a08e589b44b2265f0f95481d0a6f9c3cea456d0ed941b3377178ff4734  ./crates/searchright-mcp/src/main.rs
 093826f3cfd5702f4223040613a4875f818187aa42884c6b5bb7e8b32c0d3176  ./crates/searchright-mcp/src/remote.rs
-c83818df1c29f46a876776e665a07766dee333cebdd71306a350863b1bd9f534  ./crates/searchright-mcp/tests/advanced_mcp.rs
+23579b1e37fffc1d0ae6d3f9f0accf7b678ca52dd8d9d81fa16967a3834962d1  ./crates/searchright-mcp/tests/advanced_mcp.rs
 f20a78107cb99c6de57d27c57aaf24ed79b6ceed07117041fc70b8ac82c1fcc0  ./crates/searchright-mcp/tests/fixtures/remote-mcp-jwks.json
 98235d7b68dfd3d30859b269e740dc28b3c49dceba4fceb588e13a8aeb1e8171  ./crates/searchright-mcp/tests/fixtures/remote-mcp-private.der.b64
 8abe8b2dd78ffb784b4021c172298322448bd49aedb1db4de9a5c079c5882dd4  ./crates/searchright-mcp/tests/live_client_conformance.rs

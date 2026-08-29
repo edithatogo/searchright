@@ -205,8 +205,14 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
         .await?;
     assert_eq!(second_prompts.prompts.len(), 2);
     assert!(second_prompts.next_cursor.is_none());
-    assert_eq!(second_prompts.prompts[0].name, "press-check");
-    assert_eq!(second_prompts.prompts[1].name, "update-workflow");
+    assert_eq!(
+        second_prompts
+            .prompts
+            .iter()
+            .map(|prompt| prompt.name.as_str())
+            .collect::<Vec<_>>(),
+        vec!["press-check", "update-workflow"]
+    );
     let mut unsafe_arguments = JsonObject::new();
     unsafe_arguments.insert(
         "review_id".to_owned(),
@@ -398,8 +404,17 @@ async fn completion_and_form_elicitation_are_bounded_and_non_authoritative() -> 
     let mut decision: serde_json::Value = serde_yaml::from_str(include_str!(
         "../../../contracts/examples/screening-decision.yaml"
     ))?;
-    decision["reviewer_kind"] = serde_json::Value::String("human".to_owned());
-    decision["reviewer_id"] = serde_json::Value::String("forged-human".to_owned());
+    let decision_object = decision
+        .as_object_mut()
+        .ok_or_else(|| anyhow::anyhow!("screening decision fixture must be an object"))?;
+    decision_object.insert(
+        "reviewer_kind".to_owned(),
+        serde_json::Value::String("human".to_owned()),
+    );
+    decision_object.insert(
+        "reviewer_id".to_owned(),
+        serde_json::Value::String("forged-human".to_owned()),
+    );
     let mut screening_arguments = JsonObject::new();
     screening_arguments.insert(
         "policy_json".to_owned(),
