@@ -1175,7 +1175,7 @@ ff2c9432063b31071b15586d854086c6fa327441f241be12fb3323a7a5d5a817  ./crates/searc
 2ceb6759187692fa05a87206c65c48bdfa525941ddd16c838f463ace4d816b2f  ./crates/searchright-study/src/lib.rs
 cf1d9491204b6d5ba50337859066de45e96188f450f2b0717aa7946e7b7408d9  ./crates/searchright-validation/Cargo.toml
 3662091ca6688f8fb75d826befde946c38110cd15c3f68c64dd44bc36fa96dc4  ./crates/searchright-validation/src/lib.rs
-faf5bde1f5684d1695e4709a293d76fe63d488b3780529dc5c36fbac41096870  ./crates/searchright/Cargo.toml
+58fb701c2c00034c94a7cc63b98872f9d7f6b98e937ad4e4d5dca93466ee65db  ./crates/searchright/Cargo.toml
 246ba7d4e5b02cc545857ba8bfa2258b80f323d94a107302f7e5ccc10d7e69ae  ./crates/searchright/src/authority.rs
 9f618166b86949affa3c5b364c56b7b0c5849d1a44f88a573f2249782716a1e5  ./crates/searchright/src/engine.rs
 4579d9b46e1c7fe86acebc1aed1607121c39a07d33cd021f01e54f0f40665faa  ./crates/searchright/src/lib.rs
@@ -1448,7 +1448,7 @@ a0ce1fc27e4abb38f991ff6161d8139020eae55e307780f17ef4ec94c14938a8  ./verification
 ccda49067298ba91fd3c4b71fb8366b9bf0ff3fcdad78c4328d3fcbcf26f30ac  ./verification/reviews/track-09-sealed-request.json
 8c08e50b50752beb780e1ee5e8cb3754d19fe364833f119e795c8cfed3ab2cee  ./verification/reviews/track-09-security-safety.json
 ff07c0d76256e5611126e20ea506bb526482c5ac5f31652549678e5572f8eebc  ./verification/reviews/track-09-testing-ci.json
-e2d06abe7336c80456f70787415aea581a729d6ffa627f3bc50b01fb0fee3907  ./verification/sbom/source-components.cdx.json
+1ab2a608656de669d87a5bb7ad7fb7ca76e4bd47b75555f9be5f8b8bba0d3da0  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json
