@@ -39,8 +39,8 @@ cfc13e6fbe6a5d7efccaac17fe8607dfd75b8a8058fcb223d6a451ab39319045  ./CLAUDE.md
 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
 996c7915a0ad41fb122dda10aa60fda0c917b95f834b2d57b56ae88f1d7ca248  ./CONTEXT.md
 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
-9716a8fa91e1cec5e08faa2ecb584d7f73d9ee0905b4ba3cbdf016fab91f6fee  ./Cargo.lock
-b8ea45110cf84a4f73f145f759cd124177dd0e2dec61b01395450b2f301f290f  ./Cargo.toml
+802bac20f98492a517c9fd969b4ba64c63ed368f1cd3edcb955d113dbc8b0e6e  ./Cargo.lock
+4f35bf8e2faef5905ea7edcbde5e954022df29bcf5bf135a1e52c8dcbb9f8f55  ./Cargo.toml
 c01619a340bc72f11fd220edfadc87227e481748dcb30dc01dce93dddc809780  ./Dockerfile
 578a4b18c4f2cb587a64af04b36d81ca8fdb30eb63de45233728adf4cd2c7bdf  ./GEMINI.md
 e80ed3e27f0f4e6c140a76d8e77192856f0d9906a1af13e53f0fe01c63d3277b  ./GOVERNANCE.md
@@ -1078,8 +1078,13 @@ f61c165d76311c17edd9550d12b2792717c2dd64942e11500b53845bac79bc10  ./crates/searc
 a3783b7af1080cca75a8d442f86e12e7de5e2af1d3142086a170d3053052fc4c  ./crates/searchright-bench/src/lib.rs
 05e31b77575c98705d49cb06f567ece6a8cf07c50494268e0ad4475b8022f256  ./crates/searchright-citeweft/Cargo.toml
 7bfe852f8554f8b33c0c1c628878d8173192b752b647c9d527f3a390a70c16f2  ./crates/searchright-citeweft/src/lib.rs
-ac09bc74f65febff0a33fa11f3359737d4ba6f661471b4eaba7922429f3c8f06  ./crates/searchright-cli/Cargo.toml
-81f471dc3954f2a0818ed8e676d0bb68dc8ad5b0b84517710aed294f3cdd27f4  ./crates/searchright-cli/src/main.rs
+f36fb4f788519392eb9b716d4829f8dc568a60fc8b849d6cec4a239e9f1df357  ./crates/searchright-cli/Cargo.toml
+3b7b7023350551794a7433d5fd60cac9b31786e659f3b9f8be6869fc34806aac  ./crates/searchright-cli/assets/completions/searchright.bash
+d837d10c583d00700047552ff4eb13be58a0c8e287db085068c72a3182264500  ./crates/searchright-cli/assets/completions/searchright.elvish
+ba8d10541b25dbf09e2b6b1a6d49b9bcb811bfd7baebac6844fa594581309160  ./crates/searchright-cli/assets/completions/searchright.fish
+4b4033cafd56e0525417a33fed9a97c4955d5f9b68c429b1153d65394a49d99b  ./crates/searchright-cli/assets/completions/searchright.powershell
+5ee9f2b8180e5491362fe946057e5dbadc11105362458e769b9f9a92fc2a658d  ./crates/searchright-cli/assets/completions/searchright.zsh
+3bbda9de57a961cf439668fce13f0f369070c21d46a74fb0eef3a8e1a1b3d011  ./crates/searchright-cli/src/main.rs
 b33ad475f23c55dd86459400d95eb9e71da2ad055e40e4d18ece78ab3e12f00f  ./crates/searchright-cli/tests/cli_e2e.rs
 7bb952f1277ee7e6316200281682641b3871b27ed3e2d78a1a5d067affc45209  ./crates/searchright-cli/tests/snapshots/help.txt
 ce23fcb1de921c16a75e7c7dae232d41435e847a81a416cf317b3358f1ab86cb  ./crates/searchright-cli/tests/snapshots/init.json
@@ -1396,7 +1401,7 @@ e0855d9e967a4d0337daa2cdcf7a0b970a2b24c037acb6e975363a37ae654b89  ./skills/syste
 0df11112d48059bdcac01bde4aaa1458c2480229cafdeacaeff5d2c1f5bc4ae2  ./skills/systematic-search/references/tool-map.md
 3620b7935be4d9569ab2157503d4ac6f5e1e2e799d198813b1d2aa7d6a91e28e  ./skills/systematic-search/workflows/systematic-review.yaml
 70661fda710aa2f8cca929885720e1f3b66d21a32b2f99488f8eef3ef7622f5f  ./supply-chain/README.md
-6b6900191e2662e912f002d9d00bb4d3c2dbf89e523916a8fe7fc4acfee5eba5  ./supply-chain/audits.toml
+caf489f9bfe1365872a3b5d7e163be2d5998dd69afd0e46e3be1071619abe706  ./supply-chain/audits.toml
 74cf002c4659e836c3d30bfabef7099e180ebe64e02df01040058653408288db  ./supply-chain/config.toml
 98fbcc844c8d456c8d48fff348a6a4e60d2263888321ba1c49d171a076c9ccdb  ./supply-chain/exemption-proposal.schema.json
 667552db4248b2f5b27388b26506f493f5c7838ca01528b7d421100bebaa502d  ./supply-chain/exemption-proposals.json
@@ -1433,7 +1438,7 @@ a0ce1fc27e4abb38f991ff6161d8139020eae55e307780f17ef4ec94c14938a8  ./verification
 405fd370a8138d611e765ba39df5cb03cde489505e7b0a02d38d020e641f2cf5  ./verification/reviews/track-09-sealed-request.json
 933ae5cdfba20e8f878fa0934866b7dc408f969c1984e7552ef40b0555cb2b06  ./verification/reviews/track-09-security-safety.json
 b9c884b7e5f2ebee70e748da9ba141fc45f781b377fa9fc4caf9deb6fbf0cbf4  ./verification/reviews/track-09-testing-ci.json
-8d0d747410c5ce7e885f8e7e349864553c53d92f3315d5385300759f80e46635  ./verification/sbom/source-components.cdx.json
+cdc276e43901db6a5cff60d6e5b1bcf2f4f23beb3e9174684faa86d1428231d3  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json
