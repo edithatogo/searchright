@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import json
 import py_compile
+import re
 import subprocess
 import sys
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,6 +40,31 @@ def main() -> int:
             errors.append("Python binding contract count differs from the catalogue")
     except (OSError, py_compile.PyCompileError, ImportError) as exc:
         errors.append(f"Python binding compilation failed: {type(exc).__name__}")
+
+    python_source = python_path.read_text(encoding="utf-8")
+    python_names = [
+        left or right
+        for left, right in re.findall(
+            r"^(\w+) = TypedDict\(|^(\w+): TypeAlias =", python_source, re.MULTILINE
+        )
+    ]
+    duplicate_python = sorted(
+        name for name, count in Counter(python_names).items() if count > 1
+    )
+    if duplicate_python:
+        errors.append(f"duplicate Python declarations: {', '.join(duplicate_python)}")
+
+    typescript_path = ROOT / "sdk/typescript/src/index.ts"
+    typescript_names = re.findall(
+        r"^export type (\w+) =", typescript_path.read_text(encoding="utf-8"), re.MULTILINE
+    )
+    duplicate_typescript = sorted(
+        name for name, count in Counter(typescript_names).items() if count > 1
+    )
+    if duplicate_typescript:
+        errors.append(
+            f"duplicate TypeScript declarations: {', '.join(duplicate_typescript)}"
+        )
 
     results = []
     for command in commands:

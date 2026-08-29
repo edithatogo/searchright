@@ -561,27 +561,27 @@ DocumentEvidenceSpan = TypedDict(
     },
 )
 
-EvidenceDebtRegister = TypedDict(
-    'EvidenceDebtRegister',
+EvidenceDebt = TypedDict(
+    'EvidenceDebt',
     {
-    'assertions': Required['EvidenceDebtRegisterAssertions'],
+    'assertions': Required['EvidenceDebtAssertions'],
     'claim_boundary': Required['str'],
     'evidence_ceiling': Required["Literal['source_verified']"],
-    'maturity': Required['EvidenceDebtRegisterMaturity'],
-    'priority_queue': Required['list[EvidenceDebtRegisterPriorityQueueItem]'],
-    'provider_policy': Required['EvidenceDebtRegisterProviderPolicy'],
-    'publication': Required['EvidenceDebtRegisterPublication'],
+    'maturity': Required['EvidenceDebtMaturity'],
+    'priority_queue': Required['list[EvidenceDebtPriorityQueueItem]'],
+    'provider_policy': Required['EvidenceDebtProviderPolicy'],
+    'publication': Required['EvidenceDebtPublication'],
     'schema_version': Required["Literal['org.searchright.evidence-debt.v1']"],
-    'static_gates': Required['EvidenceDebtRegisterStaticGates'],
-    'tracks': Required['EvidenceDebtRegisterTracks'],
+    'static_gates': Required['EvidenceDebtStaticGates'],
+    'tracks': Required['EvidenceDebtTracks'],
     },
 )
 
-EvidenceDebtRegisterAssertions = TypedDict(
-    'EvidenceDebtRegisterAssertions',
+EvidenceDebtAssertions = TypedDict(
+    'EvidenceDebtAssertions',
     {
-    'by_mapping_confidence': Required['EvidenceDebtRegisterAssertionsByMappingConfidence'],
-    'by_state': Required['EvidenceDebtRegisterAssertionsByState'],
+    'by_mapping_confidence': Required['EvidenceDebtAssertionsByMappingConfidence'],
+    'by_state': Required['EvidenceDebtAssertionsByState'],
     'open_gate_entries': Required['int'],
     'total': Required['int'],
     'track_level_only': Required['int'],
@@ -589,30 +589,30 @@ EvidenceDebtRegisterAssertions = TypedDict(
     },
 )
 
-EvidenceDebtRegisterAssertionsByMappingConfidence = TypedDict(
-    'EvidenceDebtRegisterAssertionsByMappingConfidence',
+EvidenceDebtAssertionsByMappingConfidence = TypedDict(
+    'EvidenceDebtAssertionsByMappingConfidence',
     {
 
     },
 )
 
-EvidenceDebtRegisterAssertionsByState = TypedDict(
-    'EvidenceDebtRegisterAssertionsByState',
+EvidenceDebtAssertionsByState = TypedDict(
+    'EvidenceDebtAssertionsByState',
     {
 
     },
 )
 
-EvidenceDebtRegisterMaturity = TypedDict(
-    'EvidenceDebtRegisterMaturity',
+EvidenceDebtMaturity = TypedDict(
+    'EvidenceDebtMaturity',
     {
     'critical_blockers': Required['list[str]'],
     'decision': Required['str'],
     },
 )
 
-EvidenceDebtRegisterPriorityQueueItem = TypedDict(
-    'EvidenceDebtRegisterPriorityQueueItem',
+EvidenceDebtPriorityQueueItem = TypedDict(
+    'EvidenceDebtPriorityQueueItem',
     {
     'closure_evidence': Required['list[str]'],
     'debt': Required['str'],
@@ -621,24 +621,24 @@ EvidenceDebtRegisterPriorityQueueItem = TypedDict(
     },
 )
 
-EvidenceDebtRegisterProviderPolicy = TypedDict(
-    'EvidenceDebtRegisterProviderPolicy',
+EvidenceDebtProviderPolicy = TypedDict(
+    'EvidenceDebtProviderPolicy',
     {
     'providers': Required['int'],
     'reviewed_with_evidence': Required['int'],
     },
 )
 
-EvidenceDebtRegisterPublication = TypedDict(
-    'EvidenceDebtRegisterPublication',
+EvidenceDebtPublication = TypedDict(
+    'EvidenceDebtPublication',
     {
     'candidate_packages': Required['int'],
     'publish_ready': Required['int'],
     },
 )
 
-EvidenceDebtRegisterStaticGates = TypedDict(
-    'EvidenceDebtRegisterStaticGates',
+EvidenceDebtStaticGates = TypedDict(
+    'EvidenceDebtStaticGates',
     {
     'catalogued': Required['int'],
     'harness': Required['int'],
@@ -646,16 +646,16 @@ EvidenceDebtRegisterStaticGates = TypedDict(
     },
 )
 
-EvidenceDebtRegisterTracks = TypedDict(
-    'EvidenceDebtRegisterTracks',
+EvidenceDebtTracks = TypedDict(
+    'EvidenceDebtTracks',
     {
-    'by_state': Required['EvidenceDebtRegisterTracksByState'],
+    'by_state': Required['EvidenceDebtTracksByState'],
     'total': Required['int'],
     },
 )
 
-EvidenceDebtRegisterTracksByState = TypedDict(
-    'EvidenceDebtRegisterTracksByState',
+EvidenceDebtTracksByState = TypedDict(
+    'EvidenceDebtTracksByState',
     {
 
     },
@@ -809,20 +809,20 @@ GithubControlPlaneApplySummaryWorkflowRun = TypedDict(
 
 GithubControlPlaneApplySummaryNonnegativeCount: TypeAlias = int
 
-GitHubIssueHierarchy = TypedDict(
-    'GitHubIssueHierarchy',
+GithubIssueHierarchy = TypedDict(
+    'GithubIssueHierarchy',
     {
     'apply_permitted': Required['Literal[False]'],
     'epic_key': Required['str'],
     'generated_at': Required['str'],
-    'nodes': Required['list[GitHubIssueHierarchyNodesItem]'],
+    'nodes': Required['list[GithubIssueHierarchyNodesItem]'],
     'repository': Required['str'],
     'schema_version': Required["Literal['org.searchright.github-issue-hierarchy.v1']"],
     },
 )
 
-GitHubIssueHierarchyNodesItem = TypedDict(
-    'GitHubIssueHierarchyNodesItem',
+GithubIssueHierarchyNodesItem = TypedDict(
+    'GithubIssueHierarchyNodesItem',
     {
     'body_path': Required['str'],
     'key': Required['str'],
@@ -834,13 +834,13 @@ GitHubIssueHierarchyNodesItem = TypedDict(
     },
 )
 
-GitHubIssueHierarchy = TypedDict(
-    'GitHubIssueHierarchy',
+GithubIssueHierarchyV2 = TypedDict(
+    'GithubIssueHierarchyV2',
     {
     'apply_permitted': Required['Literal[False]'],
     'epic_key': Required['str'],
     'generated_at': Required['str'],
-    'nodes': Required['list[GitHubIssueHierarchyNodesItem]'],
+    'nodes': Required['list[GithubIssueHierarchyV2NodesItem]'],
     'project_manifest': Required["Literal['conductor/github/project.json']"],
     'repository': Required['str'],
     'schema_version': Required["Literal['org.searchright.github-issue-hierarchy.v2']"],
@@ -848,8 +848,8 @@ GitHubIssueHierarchy = TypedDict(
     },
 )
 
-GitHubIssueHierarchyNodesItem = TypedDict(
-    'GitHubIssueHierarchyNodesItem',
+GithubIssueHierarchyV2NodesItem = TypedDict(
+    'GithubIssueHierarchyV2NodesItem',
     {
     'body_path': Required['str'],
     'desired_state': Required["Literal['open', 'closed']"],
@@ -858,7 +858,7 @@ GitHubIssueHierarchyNodesItem = TypedDict(
     'labels': Required['list[str]'],
     'parent_key': Required['str | None'],
     'phase_number': Required['int | None'],
-    'project_fields': Required['GitHubIssueHierarchyNodesItemProjectFields'],
+    'project_fields': Required['GithubIssueHierarchyV2NodesItemProjectFields'],
     'status': Required["Literal['prepared_not_synced']"],
     'task_number': Required['int | None'],
     'title': Required['str'],
@@ -866,18 +866,18 @@ GitHubIssueHierarchyNodesItem = TypedDict(
     },
 )
 
-GitHubIssueHierarchyNodesItemProjectFields = TypedDict(
-    'GitHubIssueHierarchyNodesItemProjectFields',
+GithubIssueHierarchyV2NodesItemProjectFields = TypedDict(
+    'GithubIssueHierarchyV2NodesItemProjectFields',
     {
 
     },
 )
 
-GitHubProjectManifest = TypedDict(
-    'GitHubProjectManifest',
+GithubProject = TypedDict(
+    'GithubProject',
     {
     'apply_permitted': Required['Literal[False]'],
-    'fields': Required['list[GitHubProjectManifestFieldsItem]'],
+    'fields': Required['list[GithubProjectFieldsItem]'],
     'link_repository': Required['bool'],
     'owner': Required['str'],
     'owner_type': Required["Literal['user', 'organization']"],
@@ -886,15 +886,15 @@ GitHubProjectManifest = TypedDict(
     'repository': Required['str'],
     'schema_version': Required["Literal['org.searchright.github-project.v1']"],
     'short_description': Required['str'],
-    'sync': Required['GitHubProjectManifestSync'],
+    'sync': Required['GithubProjectSync'],
     'title': Required['str'],
-    'views': Required['list[GitHubProjectManifestViewsItem]'],
+    'views': Required['list[GithubProjectViewsItem]'],
     'visibility': Required["Literal['public', 'private']"],
     },
 )
 
-GitHubProjectManifestFieldsItem = TypedDict(
-    'GitHubProjectManifestFieldsItem',
+GithubProjectFieldsItem = TypedDict(
+    'GithubProjectFieldsItem',
     {
     'data_type': Required["Literal['SINGLE_SELECT', 'TEXT', 'NUMBER', 'DATE']"],
     'name': Required['str'],
@@ -902,8 +902,8 @@ GitHubProjectManifestFieldsItem = TypedDict(
     },
 )
 
-GitHubProjectManifestSync = TypedDict(
-    'GitHubProjectManifestSync',
+GithubProjectSync = TypedDict(
+    'GithubProjectSync',
     {
     'archive_policy': Required["Literal['never_automatic']"],
     'checkpoint_policy': Required["Literal['ignored_atomic_resumable']"],
@@ -921,8 +921,8 @@ GitHubProjectManifestSync = TypedDict(
     },
 )
 
-GitHubProjectManifestViewsItem = TypedDict(
-    'GitHubProjectManifestViewsItem',
+GithubProjectViewsItem = TypedDict(
+    'GithubProjectViewsItem',
     {
     'filter': Required['str'],
     'layout': Required["Literal['BOARD_LAYOUT', 'ROADMAP_LAYOUT', 'TABLE_LAYOUT']"],
@@ -930,27 +930,27 @@ GitHubProjectManifestViewsItem = TypedDict(
     },
 )
 
-GitHubRepositorySettings = TypedDict(
-    'GitHubRepositorySettings',
+GithubRepositorySettings = TypedDict(
+    'GithubRepositorySettings',
     {
     'apply_permitted': Required['Literal[False]'],
     'claim_boundary': Required['str'],
     'description': Required['str'],
     'environments': Required['list[str]'],
-    'features': Required['GitHubRepositorySettingsFeatures'],
+    'features': Required['GithubRepositorySettingsFeatures'],
     'homepage': Required['str'],
-    'merge_policy': Required['GitHubRepositorySettingsMergePolicy'],
+    'merge_policy': Required['GithubRepositorySettingsMergePolicy'],
     'repository': Required['str'],
-    'ruleset': Required['GitHubRepositorySettingsRuleset'],
+    'ruleset': Required['GithubRepositorySettingsRuleset'],
     'schema_version': Required["Literal['org.searchright.github-repository-settings.v1']"],
-    'security': Required['GitHubRepositorySettingsSecurity'],
+    'security': Required['GithubRepositorySettingsSecurity'],
     'topics': Required['list[str]'],
     'visibility': Required["Literal['public', 'private']"],
     },
 )
 
-GitHubRepositorySettingsFeatures = TypedDict(
-    'GitHubRepositorySettingsFeatures',
+GithubRepositorySettingsFeatures = TypedDict(
+    'GithubRepositorySettingsFeatures',
     {
     'discussions': Required['bool'],
     'issues': Required['bool'],
@@ -959,8 +959,8 @@ GitHubRepositorySettingsFeatures = TypedDict(
     },
 )
 
-GitHubRepositorySettingsMergePolicy = TypedDict(
-    'GitHubRepositorySettingsMergePolicy',
+GithubRepositorySettingsMergePolicy = TypedDict(
+    'GithubRepositorySettingsMergePolicy',
     {
     'allow_auto_merge': Required['bool'],
     'allow_update_branch': Required['bool'],
@@ -971,8 +971,8 @@ GitHubRepositorySettingsMergePolicy = TypedDict(
     },
 )
 
-GitHubRepositorySettingsRuleset = TypedDict(
-    'GitHubRepositorySettingsRuleset',
+GithubRepositorySettingsRuleset = TypedDict(
+    'GithubRepositorySettingsRuleset',
     {
     'deletion': Required['Literal[False]'],
     'enforcement': Required["Literal['active', 'evaluate', 'disabled']"],
@@ -986,8 +986,8 @@ GitHubRepositorySettingsRuleset = TypedDict(
     },
 )
 
-GitHubRepositorySettingsSecurity = TypedDict(
-    'GitHubRepositorySettingsSecurity',
+GithubRepositorySettingsSecurity = TypedDict(
+    'GithubRepositorySettingsSecurity',
     {
     'automated_security_fixes': Required['bool'],
     'private_vulnerability_reporting': Required['bool'],
@@ -1179,8 +1179,8 @@ InterchangeReceiptOutputFormatVariant2 = TypedDict(
     },
 )
 
-LicensedAdapterProfile = TypedDict(
-    'LicensedAdapterProfile',
+LicensedAdapter = TypedDict(
+    'LicensedAdapter',
     {
     'allowed_hosts': Required['list[str]'],
     'credential_environment_variable': Required['str'],
@@ -1196,13 +1196,13 @@ LicensedAdapterProfile = TypedDict(
     },
 )
 
-LivingUpdateRun = TypedDict(
-    'LivingUpdateRun',
+LivingUpdate = TypedDict(
+    'LivingUpdate',
     {
-    'changes': Required['list[LivingUpdateRunChangesItem]'],
+    'changes': Required['list[LivingUpdateChangesItem]'],
     'completed_at': Required['str | None'],
-    'cursors_after': Required['list[LivingUpdateRunCursorsAfterItem]'],
-    'cursors_before': Required['list[LivingUpdateRunCursorsBeforeItem]'],
+    'cursors_after': Required['list[LivingUpdateCursorsAfterItem]'],
+    'cursors_before': Required['list[LivingUpdateCursorsBeforeItem]'],
     'parent_run_id': Required['str | None'],
     'protocol_version': Required['str'],
     'requires_human_release': Required['bool'],
@@ -1215,8 +1215,8 @@ LivingUpdateRun = TypedDict(
     },
 )
 
-LivingUpdateRunChangesItem = TypedDict(
-    'LivingUpdateRunChangesItem',
+LivingUpdateChangesItem = TypedDict(
+    'LivingUpdateChangesItem',
     {
     'after_digest': Required['str | None'],
     'before_digest': Required['str | None'],
@@ -1226,8 +1226,8 @@ LivingUpdateRunChangesItem = TypedDict(
     },
 )
 
-LivingUpdateRunCursorsAfterItem = TypedDict(
-    'LivingUpdateRunCursorsAfterItem',
+LivingUpdateCursorsAfterItem = TypedDict(
+    'LivingUpdateCursorsAfterItem',
     {
     'cursor_kind': Required['str'],
     'provider_id': Required['str'],
@@ -1236,8 +1236,8 @@ LivingUpdateRunCursorsAfterItem = TypedDict(
     },
 )
 
-LivingUpdateRunCursorsBeforeItem = TypedDict(
-    'LivingUpdateRunCursorsBeforeItem',
+LivingUpdateCursorsBeforeItem = TypedDict(
+    'LivingUpdateCursorsBeforeItem',
     {
     'cursor_kind': Required['str'],
     'provider_id': Required['str'],
@@ -1348,7 +1348,7 @@ NativeSearchStrategy = TypedDict(
     'parser_version': Required['str'],
     'raw_text': Required['str'],
     'schema_version': Required["Literal['org.searchright.native-search-strategy.v1']"],
-    'semantic_strategy': Required['None | JsonValue'],
+    'semantic_strategy': Required['None | SearchStrategy'],
     'strategy_id': Required['str'],
     },
 )
@@ -1458,8 +1458,8 @@ ProtocolAmendmentKindVariant2 = TypedDict(
     },
 )
 
-ProviderComponentManifest = TypedDict(
-    'ProviderComponentManifest',
+ProviderComponent = TypedDict(
+    'ProviderComponent',
     {
     'abi_version': Required['str'],
     'allowed_hosts': Required['list[str]'],
@@ -1544,7 +1544,7 @@ ProviderPage = TypedDict(
     {
     'diagnostics': Required['ProviderPageDiagnostics'],
     'next_cursor': Required['str | None'],
-    'records': Required['list[JsonValue]'],
+    'records': Required['list[BibliographicRecord]'],
     'schema_version': Required["Literal['org.searchright.provider-page.v1']"],
     'total_available': Required['int | None'],
     },
@@ -1596,54 +1596,54 @@ ProviderPolicySetProvidersItem = TypedDict(
     },
 )
 
-QueryExprFieldVariant2 = TypedDict(
-    'QueryExprFieldVariant2',
+QueryAstFieldVariant2 = TypedDict(
+    'QueryAstFieldVariant2',
     {
     'custom': Required['str'],
     },
 )
 
-QueryExprQueryVariant1 = TypedDict(
-    'QueryExprQueryVariant1',
+QueryAstQueryVariant1 = TypedDict(
+    'QueryAstQueryVariant1',
     {
     'op': Required["Literal['term']"],
-    'term': Required['QueryExprTerm'],
+    'term': Required['QueryAstTerm'],
     },
 )
 
-QueryExprQueryVariant2 = TypedDict(
-    'QueryExprQueryVariant2',
+QueryAstQueryVariant2 = TypedDict(
+    'QueryAstQueryVariant2',
     {
-    'children': Required['list[QueryExprQuery]'],
+    'children': Required['list[QueryAstQuery]'],
     'op': Required["Literal['and', 'or']"],
     },
 )
 
-QueryExprQueryVariant3 = TypedDict(
-    'QueryExprQueryVariant3',
+QueryAstQueryVariant3 = TypedDict(
+    'QueryAstQueryVariant3',
     {
-    'exclude': Required['QueryExprQuery'],
-    'include': Required['QueryExprQuery'],
+    'exclude': Required['QueryAstQuery'],
+    'include': Required['QueryAstQuery'],
     'op': Required["Literal['not']"],
     },
 )
 
-QueryExprQueryVariant4 = TypedDict(
-    'QueryExprQueryVariant4',
+QueryAstQueryVariant4 = TypedDict(
+    'QueryAstQueryVariant4',
     {
     'distance': Required['int'],
-    'left': Required['QueryExprQuery'],
+    'left': Required['QueryAstQuery'],
     'op': Required["Literal['proximity']"],
     'ordered': Required['bool'],
-    'right': Required['QueryExprQuery'],
+    'right': Required['QueryAstQuery'],
     },
 )
 
-QueryExprTerm = TypedDict(
-    'QueryExprTerm',
+QueryAstTerm = TypedDict(
+    'QueryAstTerm',
     {
     'explode': Required['bool'],
-    'fields': Required['list[QueryExprField]'],
+    'fields': Required['list[QueryAstField]'],
     'phrase': Required['bool'],
     'text': Required['str'],
     'truncation': Required['bool'],
@@ -1651,11 +1651,11 @@ QueryExprTerm = TypedDict(
     },
 )
 
-QueryExprField: TypeAlias = Literal['all', 'title', 'abstract', 'title_abstract', 'author', 'journal', 'identifier', 'subject_heading', 'keyword'] | QueryExprFieldVariant2
+QueryAstField: TypeAlias = Literal['all', 'title', 'abstract', 'title_abstract', 'author', 'journal', 'identifier', 'subject_heading', 'keyword'] | QueryAstFieldVariant2
 
-QueryExprQuery: TypeAlias = QueryExprQueryVariant1 | QueryExprQueryVariant2 | QueryExprQueryVariant3 | QueryExprQueryVariant4
+QueryAstQuery: TypeAlias = QueryAstQueryVariant1 | QueryAstQueryVariant2 | QueryAstQueryVariant3 | QueryAstQueryVariant4
 
-QueryExpr: TypeAlias = QueryExprQuery
+QueryAst: TypeAlias = QueryAstQuery
 
 RankingCalibration = TypedDict(
     'RankingCalibration',
@@ -1950,18 +1950,18 @@ ReviewPlanReviewKind: TypeAlias = Literal['systematic', 'scoping', 'rapid', 'liv
 
 ReviewPlanSourceKind: TypeAlias = Literal['database', 'register', 'repository', 'website', 'citation_search', 'contact', 'handsearch', 'grey_literature', 'import'] | ReviewPlanSourceKindVariant2
 
-DerivedReviewStateSnapshot = TypedDict(
-    'DerivedReviewStateSnapshot',
+ReviewStateSnapshot = TypedDict(
+    'ReviewStateSnapshot',
     {
     'claim_boundary': Required['str'],
-    'event_type_counts': Required['DerivedReviewStateSnapshotEventTypeCounts'],
+    'event_type_counts': Required['ReviewStateSnapshotEventTypeCounts'],
     'last_event_id': Required['str'],
     'plan_validated': Required['bool'],
     'protocol_amendments': Required['list[str]'],
     'review_id': Required['str'],
     'schema_version': Required["Literal['org.searchright.review-state-snapshot.v1']"],
-    'screening': Required['DerivedReviewStateSnapshotScreening'],
-    'search_runs': Required['list[DerivedReviewStateSnapshotSearchRunsItem]'],
+    'screening': Required['ReviewStateSnapshotScreening'],
+    'search_runs': Required['list[ReviewStateSnapshotSearchRunsItem]'],
     'source_event_count': Required['int'],
     'source_head_hash': Required['str'],
     'state_sha256': Required['str'],
@@ -1971,32 +1971,32 @@ DerivedReviewStateSnapshot = TypedDict(
     },
 )
 
-DerivedReviewStateSnapshotEventTypeCounts = TypedDict(
-    'DerivedReviewStateSnapshotEventTypeCounts',
+ReviewStateSnapshotEventTypeCounts = TypedDict(
+    'ReviewStateSnapshotEventTypeCounts',
     {
 
     },
 )
 
-DerivedReviewStateSnapshotScreening = TypedDict(
-    'DerivedReviewStateSnapshotScreening',
+ReviewStateSnapshotScreening = TypedDict(
+    'ReviewStateSnapshotScreening',
     {
     'advisory_recommendation_count': Required['int'],
-    'final_decision_counts': Required['DerivedReviewStateSnapshotScreeningFinalDecisionCounts'],
-    'final_decisions': Required['list[DerivedReviewStateSnapshotScreeningFinalDecisionsItem]'],
+    'final_decision_counts': Required['ReviewStateSnapshotScreeningFinalDecisionCounts'],
+    'final_decisions': Required['list[ReviewStateSnapshotScreeningFinalDecisionsItem]'],
     'rejected_final_authority_event_ids': Required['list[str]'],
     },
 )
 
-DerivedReviewStateSnapshotScreeningFinalDecisionCounts = TypedDict(
-    'DerivedReviewStateSnapshotScreeningFinalDecisionCounts',
+ReviewStateSnapshotScreeningFinalDecisionCounts = TypedDict(
+    'ReviewStateSnapshotScreeningFinalDecisionCounts',
     {
 
     },
 )
 
-DerivedReviewStateSnapshotScreeningFinalDecisionsItem = TypedDict(
-    'DerivedReviewStateSnapshotScreeningFinalDecisionsItem',
+ReviewStateSnapshotScreeningFinalDecisionsItem = TypedDict(
+    'ReviewStateSnapshotScreeningFinalDecisionsItem',
     {
     'decision': Required['str | None'],
     'event_id': Required['str'],
@@ -2006,8 +2006,8 @@ DerivedReviewStateSnapshotScreeningFinalDecisionsItem = TypedDict(
     },
 )
 
-DerivedReviewStateSnapshotSearchRunsItem = TypedDict(
-    'DerivedReviewStateSnapshotSearchRunsItem',
+ReviewStateSnapshotSearchRunsItem = TypedDict(
+    'ReviewStateSnapshotSearchRunsItem',
     {
     'event_id': Required['str'],
     'record_count': Required['int | None'],
@@ -2143,7 +2143,7 @@ SearchRun = TypedDict(
     {
     'completed_at': Required['str | None'],
     'purpose': Required['str'],
-    'receipts': Required['list[JsonValue]'],
+    'receipts': Required['list[SourceReceipt]'],
     'review_id': Required['str'],
     'run_id': Required['str'],
     'schema_version': Required["Literal['org.searchright.search-run.v1']"],
@@ -2158,7 +2158,7 @@ SearchStrategy = TypedDict(
     'dialect': Required["Literal['pub_med', 'ovid_medline', 'embase', 'europe_pmc', 'cinahl_ebsco', 'psyc_info_ovid', 'scopus', 'web_of_science', 'crossref', 'open_alex', 'clinical_trials_gov', 'generic_boolean'] | SearchStrategyDialectVariant2"],
     'limits': Required['SearchStrategyLimits'],
     'notes': Required['list[str]'],
-    'query': Required['JsonValue'],
+    'query': Required['QueryAst'],
     'review_id': Required['str'],
     'schema_version': Required["Literal['org.searchright.search-strategy.v1']"],
     'source_id': Required['str'],
@@ -2193,27 +2193,27 @@ SearchStrategyLimitsPublicationDateVariant2 = TypedDict(
     },
 )
 
-SearchValidationReport = TypedDict(
-    'SearchValidationReport',
+SearchValidation = TypedDict(
+    'SearchValidation',
     {
     'approved_by': Required['str | None'],
     'approved_for_execution': Required['bool'],
     'minimum_seed_recall': Required['int | float | None'],
-    'press_reviews': Required['list[SearchValidationReportPressReviewsItem]'],
+    'press_reviews': Required['list[SearchValidationPressReviewsItem]'],
     'review_id': Required['str'],
     'schema_version': Required["Literal['org.searchright.search-validation.v1']"],
-    'seed_records': Required['list[SearchValidationReportSeedRecordsItem]'],
+    'seed_records': Required['list[SearchValidationSeedRecordsItem]'],
     'strategy_id': Required['str'],
     'strategy_version': Required['str'],
-    'translation_assessments': Required['list[SearchValidationReportTranslationAssessmentsItem]'],
+    'translation_assessments': Required['list[SearchValidationTranslationAssessmentsItem]'],
     },
 )
 
-SearchValidationReportPressReviewsItem = TypedDict(
-    'SearchValidationReportPressReviewsItem',
+SearchValidationPressReviewsItem = TypedDict(
+    'SearchValidationPressReviewsItem',
     {
     'decision': Required['str'],
-    'findings': Required['list[SearchValidationReportPressReviewsItemFindingsItem]'],
+    'findings': Required['list[SearchValidationPressReviewsItemFindingsItem]'],
     'press_review_id': Required['str'],
     'reviewed_at': Required['str'],
     'reviewer_id': Required['str'],
@@ -2222,8 +2222,8 @@ SearchValidationReportPressReviewsItem = TypedDict(
     },
 )
 
-SearchValidationReportPressReviewsItemFindingsItem = TypedDict(
-    'SearchValidationReportPressReviewsItemFindingsItem',
+SearchValidationPressReviewsItemFindingsItem = TypedDict(
+    'SearchValidationPressReviewsItemFindingsItem',
     {
     'element': Required["Literal['translation_of_question', 'boolean_and_proximity', 'subject_headings', 'text_words', 'spelling_syntax_and_lines', 'limits_and_filters']"],
     'finding_id': Required['str'],
@@ -2234,8 +2234,8 @@ SearchValidationReportPressReviewsItemFindingsItem = TypedDict(
     },
 )
 
-SearchValidationReportSeedRecordsItem = TypedDict(
-    'SearchValidationReportSeedRecordsItem',
+SearchValidationSeedRecordsItem = TypedDict(
+    'SearchValidationSeedRecordsItem',
     {
     'identifier': Required['str'],
     'relevance_basis': Required['str'],
@@ -2245,8 +2245,8 @@ SearchValidationReportSeedRecordsItem = TypedDict(
     },
 )
 
-SearchValidationReportTranslationAssessmentsItem = TypedDict(
-    'SearchValidationReportTranslationAssessmentsItem',
+SearchValidationTranslationAssessmentsItem = TypedDict(
+    'SearchValidationTranslationAssessmentsItem',
     {
     'human_approved': Required['bool'],
     'maximum_material_warnings': Required['int'],
@@ -2555,12 +2555,6 @@ __all__ = [
     'DataLifecycleDecision',
     'DataLifecycleRequest',
     'DataLifecycleRequestApprovalVariant2',
-    'DerivedReviewStateSnapshot',
-    'DerivedReviewStateSnapshotEventTypeCounts',
-    'DerivedReviewStateSnapshotScreening',
-    'DerivedReviewStateSnapshotScreeningFinalDecisionCounts',
-    'DerivedReviewStateSnapshotScreeningFinalDecisionsItem',
-    'DerivedReviewStateSnapshotSearchRunsItem',
     'Diagnostic',
     'DiagnosticLocaleVariant2',
     'DiscoveryRun',
@@ -2574,33 +2568,21 @@ __all__ = [
     'DocumentEvidenceProvenance',
     'DocumentEvidenceReference',
     'DocumentEvidenceSpan',
-    'EvidenceDebtRegister',
-    'EvidenceDebtRegisterAssertions',
-    'EvidenceDebtRegisterAssertionsByMappingConfidence',
-    'EvidenceDebtRegisterAssertionsByState',
-    'EvidenceDebtRegisterMaturity',
-    'EvidenceDebtRegisterPriorityQueueItem',
-    'EvidenceDebtRegisterProviderPolicy',
-    'EvidenceDebtRegisterPublication',
-    'EvidenceDebtRegisterStaticGates',
-    'EvidenceDebtRegisterTracks',
-    'EvidenceDebtRegisterTracksByState',
+    'EvidenceDebt',
+    'EvidenceDebtAssertions',
+    'EvidenceDebtAssertionsByMappingConfidence',
+    'EvidenceDebtAssertionsByState',
+    'EvidenceDebtMaturity',
+    'EvidenceDebtPriorityQueueItem',
+    'EvidenceDebtProviderPolicy',
+    'EvidenceDebtPublication',
+    'EvidenceDebtStaticGates',
+    'EvidenceDebtTracks',
+    'EvidenceDebtTracksByState',
     'ExecutionEnvelope',
     'GateCatalog',
     'GateCatalogDefaultCapabilities',
     'GateCatalogGatesItem',
-    'GitHubIssueHierarchy',
-    'GitHubIssueHierarchyNodesItem',
-    'GitHubIssueHierarchyNodesItemProjectFields',
-    'GitHubProjectManifest',
-    'GitHubProjectManifestFieldsItem',
-    'GitHubProjectManifestSync',
-    'GitHubProjectManifestViewsItem',
-    'GitHubRepositorySettings',
-    'GitHubRepositorySettingsFeatures',
-    'GitHubRepositorySettingsMergePolicy',
-    'GitHubRepositorySettingsRuleset',
-    'GitHubRepositorySettingsSecurity',
     'GithubControlPlaneApplySummary',
     'GithubControlPlaneApplySummaryArtifact',
     'GithubControlPlaneApplySummaryArtifactFilesItem',
@@ -2609,6 +2591,20 @@ __all__ = [
     'GithubControlPlaneApplySummaryNonnegativeCount',
     'GithubControlPlaneApplySummaryProjectSync',
     'GithubControlPlaneApplySummaryWorkflowRun',
+    'GithubIssueHierarchy',
+    'GithubIssueHierarchyNodesItem',
+    'GithubIssueHierarchyV2',
+    'GithubIssueHierarchyV2NodesItem',
+    'GithubIssueHierarchyV2NodesItemProjectFields',
+    'GithubProject',
+    'GithubProjectFieldsItem',
+    'GithubProjectSync',
+    'GithubProjectViewsItem',
+    'GithubRepositorySettings',
+    'GithubRepositorySettingsFeatures',
+    'GithubRepositorySettingsMergePolicy',
+    'GithubRepositorySettingsRuleset',
+    'GithubRepositorySettingsSecurity',
     'IncidentRecord',
     'InstitutionalPolicy',
     'IntegrationPassport',
@@ -2624,11 +2620,11 @@ __all__ = [
     'InterchangeReceipt',
     'InterchangeReceiptInputFormatVariant2',
     'InterchangeReceiptOutputFormatVariant2',
-    'LicensedAdapterProfile',
-    'LivingUpdateRun',
-    'LivingUpdateRunChangesItem',
-    'LivingUpdateRunCursorsAfterItem',
-    'LivingUpdateRunCursorsBeforeItem',
+    'LicensedAdapter',
+    'LivingUpdate',
+    'LivingUpdateChangesItem',
+    'LivingUpdateCursorsAfterItem',
+    'LivingUpdateCursorsBeforeItem',
     'NamedFilterPack',
     'NamedFilterPackApplicability',
     'NamedFilterPackChecksum',
@@ -2649,7 +2645,7 @@ __all__ = [
     'ProtocolAmendment',
     'ProtocolAmendmentChangesItem',
     'ProtocolAmendmentKindVariant2',
-    'ProviderComponentManifest',
+    'ProviderComponent',
     'ProviderComponentReleaseSignature',
     'ProviderComponentTrustPolicy',
     'ProviderComponentTrustPolicyRevocationsItem',
@@ -2659,15 +2655,15 @@ __all__ = [
     'ProviderPageDiagnostics',
     'ProviderPolicySet',
     'ProviderPolicySetProvidersItem',
-    'QueryExpr',
-    'QueryExprField',
-    'QueryExprFieldVariant2',
-    'QueryExprQuery',
-    'QueryExprQueryVariant1',
-    'QueryExprQueryVariant2',
-    'QueryExprQueryVariant3',
-    'QueryExprQueryVariant4',
-    'QueryExprTerm',
+    'QueryAst',
+    'QueryAstField',
+    'QueryAstFieldVariant2',
+    'QueryAstQuery',
+    'QueryAstQueryVariant1',
+    'QueryAstQueryVariant2',
+    'QueryAstQueryVariant3',
+    'QueryAstQueryVariant4',
+    'QueryAstTerm',
     'RankingCalibration',
     'RankingCalibrationCounts',
     'RecoveryRehearsal',
@@ -2696,6 +2692,12 @@ __all__ = [
     'ReviewPlanSource',
     'ReviewPlanSourceKind',
     'ReviewPlanSourceKindVariant2',
+    'ReviewStateSnapshot',
+    'ReviewStateSnapshotEventTypeCounts',
+    'ReviewStateSnapshotScreening',
+    'ReviewStateSnapshotScreeningFinalDecisionCounts',
+    'ReviewStateSnapshotScreeningFinalDecisionsItem',
+    'ReviewStateSnapshotSearchRunsItem',
     'SchemaMigrationPlan',
     'SchemaMigrationPlanRollback',
     'SchemaMigrationPlanTransformationsItem',
@@ -2711,11 +2713,11 @@ __all__ = [
     'SearchStrategyDialectVariant2',
     'SearchStrategyLimits',
     'SearchStrategyLimitsPublicationDateVariant2',
-    'SearchValidationReport',
-    'SearchValidationReportPressReviewsItem',
-    'SearchValidationReportPressReviewsItemFindingsItem',
-    'SearchValidationReportSeedRecordsItem',
-    'SearchValidationReportTranslationAssessmentsItem',
+    'SearchValidation',
+    'SearchValidationPressReviewsItem',
+    'SearchValidationPressReviewsItemFindingsItem',
+    'SearchValidationSeedRecordsItem',
+    'SearchValidationTranslationAssessmentsItem',
     'SourceReceipt',
     'SourceReceiptPolicy',
     'SourcerightParityReport',

@@ -211,14 +211,64 @@ def python_typed_dict(
     return f"{name} = TypedDict(\n    {name!r},\n    {{\n{body}\n    }},\n)"
 
 
-def render_python(entries: list[dict[str, Any]]) -> str:
+def root_type_names(entries: list[dict[str, Any]]) -> dict[str, str]:
+    """Return stable, catalogue-ID-owned root names without Rust-name collisions."""
+    return {entry["id"]: type_name(entry["id"]) for entry in entries}
+
+
+def external_references(
+    entries: list[dict[str, Any]], root_names: dict[str, str]
+) -> dict[str, str]:
+    references: dict[str, str] = {}
+    for entry in entries:
+        schema_path = Path(entry["schema"])
+        schema = json.loads((ROOT / schema_path).read_text(encoding="utf-8"))
+        root_name = root_names[entry["id"]]
+        references[schema_path.name] = root_name
+        references[schema_path.as_posix()] = root_name
+        if isinstance(schema.get("$id"), str):
+            references[schema["$id"]] = root_name
+    return references
+
+
+def unresolved_references(
+    entries: list[dict[str, Any]], external_refs: dict[str, str]
+) -> list[str]:
+    unresolved: list[str] = []
+
+    def visit(contract_id: str, schema: Any, definitions: set[str]) -> None:
+        if isinstance(schema, dict):
+            reference = schema.get("$ref")
+            if isinstance(reference, str):
+                if reference.startswith("#/$defs/"):
+                    if reference.removeprefix("#/$defs/") not in definitions:
+                        unresolved.append(f"{contract_id}: {reference}")
+                elif reference not in external_refs:
+                    unresolved.append(f"{contract_id}: {reference}")
+            for value in schema.values():
+                visit(contract_id, value, definitions)
+        elif isinstance(schema, list):
+            for value in schema:
+                visit(contract_id, value, definitions)
+
+    for entry in entries:
+        schema = json.loads((ROOT / entry["schema"]).read_text(encoding="utf-8"))
+        visit(entry["id"], schema, set(schema.get("$defs", {})))
+    return sorted(set(unresolved))
+
+
+def render_python(
+    entries: list[dict[str, Any]],
+    root_names: dict[str, str],
+    external_refs: dict[str, str],
+) -> str:
     declarations: list[str] = []
     exported: list[str] = []
     for entry in entries:
         schema = json.loads((ROOT / entry["schema"]).read_text(encoding="utf-8"))
-        root_name = type_name(entry.get("rust_type") or entry["id"])
+        root_name = root_names[entry["id"]]
         definitions = schema.get("$defs", {})
-        references = {
+        references = external_refs | {
             f"#/$defs/{definition}": f"{root_name}{type_name(definition)}"
             for definition in definitions
         }
@@ -262,16 +312,20 @@ def render_python(entries: list[dict[str, Any]]) -> str:
     )
 
 
-def render_typescript(entries: list[dict[str, Any]]) -> str:
+def render_typescript(
+    entries: list[dict[str, Any]],
+    root_names: dict[str, str],
+    external_refs: dict[str, str],
+) -> str:
     declarations = [
         "// Generated contract-only types. Do not edit by hand.",
         "export type JsonValue = null | boolean | number | string | ReadonlyArray<JsonValue> | { readonly [key: string]: JsonValue };",
     ]
     for entry in entries:
         schema = json.loads((ROOT / entry["schema"]).read_text(encoding="utf-8"))
-        root_name = type_name(entry.get("rust_type") or entry["id"])
+        root_name = root_names[entry["id"]]
         definitions = schema.get("$defs", {})
-        references = {
+        references = external_refs | {
             f"#/$defs/{definition}": f"{root_name}{type_name(definition)}"
             for definition in definitions
         }
@@ -287,8 +341,12 @@ def render_typescript(entries: list[dict[str, Any]]) -> str:
 
 
 def output_files(entries: list[dict[str, Any]]) -> dict[Path, str]:
+    root_names = root_type_names(entries)
+    external_refs = external_references(entries, root_names)
     return {
-        PYTHON_PACKAGE / "__init__.py": render_python(entries),
+        PYTHON_PACKAGE / "__init__.py": render_python(
+            entries, root_names, external_refs
+        ),
         PYTHON_PACKAGE / "py.typed": "",
         ROOT / "sdk" / "python" / "pyproject.toml": (
             "[project]\n"
@@ -302,7 +360,7 @@ def output_files(entries: list[dict[str, Any]]) -> dict[Path, str]:
             "domain_logic = false\n"
             "publish = false\n"
         ),
-        TYPESCRIPT_SOURCE: render_typescript(entries),
+        TYPESCRIPT_SOURCE: render_typescript(entries, root_names, external_refs),
         ROOT / "sdk" / "typescript" / "package.json": (
             json.dumps(
                 {
@@ -336,6 +394,8 @@ def main() -> int:
 
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     entries = sorted(catalog["entries"], key=lambda entry: entry["id"])
+    external_refs = external_references(entries, root_type_names(entries))
+    unresolved = unresolved_references(entries, external_refs)
     outputs = output_files(entries)
     generated_manifest = {
         "schema_version": "org.searchright.generated-contract-bindings.v1",
@@ -369,15 +429,16 @@ def main() -> int:
         stale = []
     receipt = {
         "schema_version": "org.searchright.contract-binding-generation-receipt.v1",
-        "status": "passed" if not stale else "failed",
+        "status": "passed" if not stale and not unresolved else "failed",
         "mode": "write" if args.write else "check",
         "contracts": len(entries),
         "generated_files": len(outputs),
         "stale": sorted(stale),
+        "unresolved_references": unresolved,
         "automatic_publication": False,
     }
     print(json.dumps(receipt, indent=2, sort_keys=True))
-    return 0 if not stale else 1
+    return 0 if not stale and not unresolved else 1
 
 
 if __name__ == "__main__":
