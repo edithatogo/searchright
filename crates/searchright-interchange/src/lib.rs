@@ -1449,10 +1449,10 @@ mod tests {
             }),
             1..5
         )) {
-            if let Ok(exported) = export_records(&records, InterchangeFormat::JsonLines) {
-                if let Ok(imported) = import_records(&exported, InterchangeFormat::JsonLines, "rcpt-1") {
-                    proptest::prop_assert_eq!(records, imported.records);
-                }
+            if let Ok(imported) = export_records(&records, InterchangeFormat::JsonLines)
+                .and_then(|exported| import_records(&exported, InterchangeFormat::JsonLines, "rcpt-1"))
+            {
+                proptest::prop_assert_eq!(records, imported.records);
             }
         }
     }
