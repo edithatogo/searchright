@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Calibrate authority and failure modes with human information specialists.
+- [ ] Run scenario-based agent evaluations across supported hosts and models.
 
 ## Completion and evidence contract
 

@@ -641,23 +641,35 @@
     },
     {
       "blockers": [
+        "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
         "Run scenario-based agent evaluations across supported hosts and models.",
-        "Calibrate authority and failure modes with human information specialists."
+        "Calibrate authority and failure modes with human information specialists.",
+        "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
       ],
       "checks": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_agent_skill.py",
+        "cargo test -p searchright-agent --locked",
+        "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour only. The downstream caller and registry packet are prepared but unapplied and unsubmitted; no supported-host/model, human-calibration, companion adoption, live-provider or registry-acceptance claim is made.",
       "deliverables": [
         "skills/systematic-search/SKILL.md",
         "skills/systematic-search/workflows/systematic-review.yaml",
         "skills/systematic-search/references/authority.md",
-        "crates/searchright-agent/src/lib.rs"
+        "skills/systematic-search/references/handoffs.md",
+        "skills/systematic-search/evaluations/authority-scenarios.json",
+        "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
+        "registry/skills/systematic-search/manifest.json",
+        "crates/searchright-agent/src/lib.rs",
+        "crates/searchright-agent/tests/skill_scenarios.rs",
+        "scripts/check_agent_skill.py",
+        "verification/receipts/systematic-search-skill.json"
       ],
       "dependencies": [
         "10"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "compiler_verified",
       "external_approval_required": false,
       "horizon": "mvp",
       "implementation_state": "partially_implemented",
@@ -668,6 +680,7 @@
         "SR-031"
       ],
       "slug": "agentic-skill",
+      "source_verified_on": "2026-08-30",
       "status": "partially_implemented",
       "title": "Systematic-search agent skill and workflows",
       "track_id": "11"

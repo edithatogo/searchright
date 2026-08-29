@@ -1,6 +1,6 @@
 # Plan: 11 Systematic-search agent skill and workflows
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **compiler_verified**.
 
 GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -12,7 +12,14 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `skills/systematic-search/SKILL.md`
   - [x] Present source path: `skills/systematic-search/workflows/systematic-review.yaml`
   - [x] Present source path: `skills/systematic-search/references/authority.md`
+  - [x] Present source path: `skills/systematic-search/references/handoffs.md`
+  - [x] Present source path: `skills/systematic-search/evaluations/authority-scenarios.json`
+  - [x] Present source path: `skills/systematic-search/integrations/academic-research-skills/SKILL.md`
+  - [x] Present source path: `registry/skills/systematic-search/manifest.json`
   - [x] Present source path: `crates/searchright-agent/src/lib.rs`
+  - [x] Present source path: `crates/searchright-agent/tests/skill_scenarios.rs`
+  - [x] Present source path: `scripts/check_agent_skill.py`
+  - [x] Present source path: `verification/receipts/systematic-search-skill.json`
   - [x] Assertion ledger: `conductor/tracks/11-agentic-skill/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -21,14 +28,19 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_agent_skill.py`
+  - [x] `cargo test -p searchright-agent --locked`
+  - [x] `cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-11-phase-3 -->
 
+- [ ] Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.
 - [ ] Run scenario-based agent evaluations across supported hosts and models.
 - [ ] Calibrate authority and failure modes with human information specialists.
+- [ ] Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication.
 
 ## Phase 4: Review and closeout
 

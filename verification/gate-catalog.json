@@ -44,12 +44,6 @@
         "T10-A003",
         "T10-A004",
         "T10-A006",
-        "T11-A001",
-        "T11-A002",
-        "T11-A003",
-        "T11-A004",
-        "T11-A005",
-        "T11-A006",
         "T12-A001",
         "T12-A002",
         "T12-A003",
@@ -786,6 +780,26 @@
       "harness_gate": true,
       "network": false,
       "script": "scripts/check_cli_mcp_parity.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_agent_skill.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T11-A001",
+        "T11-A002",
+        "T11-A003",
+        "T11-A004",
+        "T11-A005",
+        "T11-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-AGENT-SKILL",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_agent_skill.py"
     },
     {
       "category": "repository_policy",

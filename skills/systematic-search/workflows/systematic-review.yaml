@@ -1,5 +1,7 @@
 schema_version: org.searchright.skill-workflow.v1
 name: systematic-review
+handoff_contract: org.searchright.agent-handoff.v1
+handoff_policy: approved_artifact_references_only
 human_checkpoints:
   - review_plan_approval
   - strategy_and_press_approval
@@ -10,25 +12,32 @@ human_checkpoints:
 stages:
   - id: scope
     agent: question-framer
+    handoff_to: information-specialist
     output: review-plan-draft.yaml
   - id: strategy
     agent: information-specialist
+    handoff_to: press-reviewer
     requires: [review_plan_approval]
     output: search-strategies/
   - id: press
     agent: press-reviewer
     isolation: independent_context
+    handoff_to: execution-operator
     output: press-review.yaml
   - id: execute
     agent: execution-operator
+    handoff_to: dedup-adjudicator
     requires: [strategy_and_press_approval, live_execution_approval]
     output: source-receipts.json
   - id: deduplicate
     agent: dedup-adjudicator
+    handoff_to: screening-assistant
+    requires: [deduplication_apply]
     output: dedup-decisions.jsonl
   - id: screen
     agent: screening-assistant
     authority: advisory_only
+    handoff_to: reporting-auditor
     output: screening-recommendations.jsonl
   - id: report
     agent: reporting-auditor

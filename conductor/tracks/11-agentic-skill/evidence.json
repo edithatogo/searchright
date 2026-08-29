@@ -4,17 +4,27 @@
   "title": "Systematic-search agent skill and workflows",
   "status": "partially_implemented",
   "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "evidence_level": "compiler_verified",
+  "source_verified_on": "2026-08-30",
   "source_evidence": [
     "skills/systematic-search/SKILL.md",
     "skills/systematic-search/workflows/systematic-review.yaml",
     "skills/systematic-search/references/authority.md",
-    "crates/searchright-agent/src/lib.rs"
+    "skills/systematic-search/references/handoffs.md",
+    "skills/systematic-search/evaluations/authority-scenarios.json",
+    "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
+    "registry/skills/systematic-search/manifest.json",
+    "crates/searchright-agent/src/lib.rs",
+    "crates/searchright-agent/tests/skill_scenarios.rs",
+    "scripts/check_agent_skill.py",
+    "verification/receipts/systematic-search-skill.json"
   ],
   "traceability": "conductor/tracks/11-agentic-skill/traceability.json",
   "static_checks": [
-    "python scripts/validate_repository.py"
+    "python scripts/validate_repository.py",
+    "python scripts/check_agent_skill.py",
+    "cargo test -p searchright-agent --locked",
+    "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
   ],
   "requirements": [
     "SR-022",
@@ -22,10 +32,12 @@
     "SR-031"
   ],
   "blockers": [
+    "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
     "Run scenario-based agent evaluations across supported hosts and models.",
-    "Calibrate authority and failure modes with human information specialists."
+    "Calibrate authority and failure modes with human information specialists.",
+    "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour only. The downstream caller and registry packet are prepared but unapplied and unsubmitted; no supported-host/model, human-calibration, companion adoption, live-provider or registry-acceptance claim is made.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-11",
@@ -41,6 +53,8 @@
       "track-11-phase-2-task-02",
       "track-11-phase-3-task-01",
       "track-11-phase-3-task-02",
+      "track-11-phase-3-task-03",
+      "track-11-phase-3-task-04",
       "track-11-phase-4-task-01",
       "track-11-phase-4-task-02",
       "track-11-phase-4-task-03",

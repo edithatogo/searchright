@@ -683,6 +683,131 @@
         }
       }
     },
+    "11": {
+      "assertions": {
+        "T11-A001": {
+          "deterministic_tests": [
+            "python scripts/check_agent_skill.py"
+          ],
+          "implementation_paths": [
+            "skills/systematic-search/SKILL.md",
+            "scripts/check_agent_skill.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_agent_skill.py::frontmatter",
+            "scripts/check_agent_skill.py::validate"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "The local skill entrypoint has deterministic trigger, non-trigger, authority and failure-routing checks; host discovery and model behaviour are not claimed.",
+          "state": "source_implemented"
+        },
+        "T11-A002": {
+          "deterministic_tests": [
+            "python scripts/check_agent_skill.py"
+          ],
+          "implementation_paths": [
+            "skills/systematic-search/workflows/systematic-review.yaml",
+            "skills/systematic-search/references/authority.md",
+            "skills/systematic-search/references/failure-modes.md",
+            "skills/systematic-search/references/methodology.md",
+            "skills/systematic-search/references/tool-map.md",
+            "crates/searchright-agent/src/lib.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_agent::AgentWorkflow::systematic_search",
+            "searchright_agent::AgentWorkflow::validate"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Run scenario-based agent evaluations across supported hosts and models.",
+            "Calibrate authority and failure modes with human information specialists."
+          ],
+          "permitted_claim": "Planning through reporting stages and conservative authority gates are compiler-checked locally; host/model behaviour and human calibration are not established.",
+          "state": "source_implemented"
+        },
+        "T11-A003": {
+          "deterministic_tests": [
+            "python scripts/check_agent_skill.py"
+          ],
+          "implementation_paths": [
+            "skills/systematic-search/agents",
+            "skills/systematic-search/references/handoffs.md",
+            "skills/systematic-search/workflows/systematic-review.yaml",
+            "crates/searchright-agent/src/lib.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_agent::AgentHandoff",
+            "searchright_agent::AgentHandoff::validate"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Seven bounded role cards and a compiler-checked, digest-bound least-context handoff contract exist locally; handoffs do not confer operational authority.",
+          "state": "source_implemented"
+        },
+        "T11-A004": {
+          "deterministic_tests": [
+            "python scripts/check_agent_skill.py"
+          ],
+          "implementation_paths": [
+            "skills/systematic-search/evaluations/authority-scenarios.json",
+            "crates/searchright-agent/tests/skill_scenarios.rs",
+            "crates/searchright-agent/src/lib.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_agent::evaluate_operation",
+            "skill_scenarios::deterministic_authority_scenarios_match_the_real_evaluator"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
+          ],
+          "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority, including prompt-injection, forged, mis-scoped, expired, revoked, replayed and human-authority denials; model and host behaviour remain untested.",
+          "state": "source_implemented"
+        },
+        "T11-A005": {
+          "deterministic_tests": [
+            "python scripts/check_agent_skill.py"
+          ],
+          "implementation_paths": [
+            "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
+            "scripts/check_agent_skill.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_agent_skill.py::validate"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
+          ],
+          "permitted_claim": "A Searchright-authored thin-caller packet is prepared locally and statically checked; it has not been applied to or validated by the downstream companion repository.",
+          "state": "partially_implemented"
+        },
+        "T11-A006": {
+          "deterministic_tests": [
+            "python scripts/check_agent_skill.py"
+          ],
+          "implementation_paths": [
+            "registry/skills/systematic-search/manifest.json",
+            "verification/receipts/systematic-search-skill.json",
+            "scripts/check_agent_skill.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_agent_skill.py::package_digest",
+            "scripts/check_agent_skill.py::validate"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "evidence_receipts": [
+            "verification/receipts/systematic-search-skill.json"
+          ],
+          "open_gates": [
+            "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
+          ],
+          "permitted_claim": "A content-digest-bound registry packet is prepared and validated locally; it remains explicitly unauthorized and unsubmitted.",
+          "state": "partially_implemented"
+        }
+      }
+    },
     "13": {
       "assertions": {
         "T13-A001": {

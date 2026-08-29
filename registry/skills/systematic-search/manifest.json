@@ -1,0 +1,17 @@
+{
+  "claim_boundary": "This packet is validated source preparation only. It is not submitted, accepted, installed in a downstream host, or evidence of live provider or reviewer authority.",
+  "compatible_interfaces": {
+    "cli": "searchright",
+    "mcp_protocol": "2026-07-28",
+    "mcp_server": "io.github.edithatogo/searchright"
+  },
+  "entrypoint": "skills/systematic-search/SKILL.md",
+  "license": "MIT OR Apache-2.0",
+  "name": "systematic-search",
+  "package_sha256": "78016491f85b5c41b4b829ee95466a5ee62d4df8e7484f24c4999268c8f2338a",
+  "schema_version": "org.searchright.skill-registry-packet.v1",
+  "status": "prepared_not_submitted",
+  "submission_authorized": false,
+  "validation_receipt": "verification/receipts/systematic-search-skill.json",
+  "version": "0.1.0-alpha.1"
+}
