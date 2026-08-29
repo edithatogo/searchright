@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Resolve the recorded Schemars/canonical constraint losses before claiming exact semantic schema parity.
+- [ ] Run package-install, client-behaviour and downstream generated-binding conformance under Track 35 / SR-086.
 
 ## Completion and evidence contract
 

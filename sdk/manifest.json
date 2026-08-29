@@ -23,8 +23,21 @@
       "package": "@searchright/client"
     }
   ],
+  "contract_bindings": {
+    "source": "contracts/schema-catalog.json",
+    "generator": "scripts/generate_contract_bindings.py",
+    "check": "scripts/check_contract_bindings.py",
+    "manifest": "sdk/generated-contract-bindings.json",
+    "status": "generated_compiler_checked",
+    "targets": {
+      "python": "searchright-contracts",
+      "typescript": "@searchright/contracts"
+    },
+    "domain_logic": false,
+    "automatic_publication": false
+  },
   "generation_policy": "generated_clients_must_not_reimplement_domain_logic",
   "compatibility_policy": "consumer_contract_and_semver_gate",
   "automatic_publication": false,
-  "claim_boundary": "Planned generated clients are not published SDKs."
+  "claim_boundary": "Contract-only Python and TypeScript types are generated and compiler-checked. Planned clients remain ungenerated and no package is published or downstream-supported."
 }

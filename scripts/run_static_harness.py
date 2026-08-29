@@ -54,6 +54,7 @@ COMMANDS = [
     [sys.executable, "scripts/check_roadmap_coverage.py"],
     [sys.executable, "scripts/check_release_train.py"],
     [sys.executable, "scripts/check_sdk_examples.py"],
+    [sys.executable, "scripts/check_contract_bindings.py"],
     [sys.executable, "scripts/check_release_rehearsal.py"],
     [sys.executable, "scripts/check_maturity_dossier.py"],
     [sys.executable, "scripts/check_launch_preparation_roadmap.py"],

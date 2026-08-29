@@ -880,6 +880,21 @@
       "script": "scripts/check_sdk_examples.py"
     },
     {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_contract_bindings.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T01-A005"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CONTRACT-BINDINGS",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_contract_bindings.py"
+    },
+    {
       "category": "release_preparation",
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_release_rehearsal.py",

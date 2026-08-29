@@ -85,6 +85,7 @@ def render() -> dict:
         "surface_version": surface["surface_version"],
         "contracts": contracts,
         "bindings": targets,
+        "contract_bindings": sdk["contract_bindings"],
         "binding_ownership": {
             "track": "35",
             "requirement": "SR-086",
@@ -96,9 +97,10 @@ def render() -> dict:
             "scope_declaration": "evidence_search_contracts::rust_schema_parity_scope"
         },
         "claim_boundary": (
-            "This matrix proves catalogue presence, declared static validation, and "
-            "exact canonical digest equality only. It does not prove Rust compiler, "
-            "round-trip, generated binding, install, or downstream conformance."
+            "This matrix proves catalogue presence, declared static validation, exact "
+            "canonical digest equality and generated contract-binding source status only. "
+            "It does not prove generated clients, package installation, publication, "
+            "round-trip behavior or downstream conformance."
         ),
     }
 

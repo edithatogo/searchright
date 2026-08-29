@@ -3,11 +3,11 @@
 
 Parent phase key: `track-01-phase-3`
 Conductor plan: `conductor/tracks/01-contract-catalog/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Generate and compile the thin TypeScript/Python contract packages required by the original Track 01 scope.
+- [x] Resolve generated/canonical constraint losses by recording every validation-shape difference and retaining canonical JSON Schema authority rather than claiming exact semantic parity.
 
 ## Completion and evidence contract
 

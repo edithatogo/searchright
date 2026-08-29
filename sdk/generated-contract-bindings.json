@@ -1,0 +1,19 @@
+{
+  "automatic_publication": false,
+  "claim_boundary": "Generated contract-only types mirror the canonical JSON Schema surface. They are not clients, validators, published packages, or downstream compatibility evidence.",
+  "contracts": 68,
+  "domain_logic": false,
+  "files": {
+    "sdk/python/pyproject.toml": "8d88e52b73a64596da09ef017cc463380b6395967d6d0533dec1ab63223a6d8f",
+    "sdk/python/searchright_contracts/__init__.py": "21e27e6593db7057b8a56fceddf4c420fc7cfdc5c01c28848b202302f119dc47",
+    "sdk/python/searchright_contracts/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sdk/typescript/package.json": "3e58b0359431fd1109d9f43f8ec601de71198c747c3a551703b1118505f7d957",
+    "sdk/typescript/src/index.ts": "c9eb645d7da75b7b63fd0c913614937b0565c0f440555239351226647bf8285d"
+  },
+  "packages": {
+    "python": "searchright-contracts",
+    "typescript": "@searchright/contracts"
+  },
+  "schema_version": "org.searchright.generated-contract-bindings.v1",
+  "source_catalog": "contracts/schema-catalog.json"
+}
