@@ -17,8 +17,8 @@
     },
     {
       "command": "python3 scripts/run_static_harness.py",
-      "status": "passed_except_stale_manifest_discovered_and_regenerated",
-      "gates_passed": 53,
+      "status": "passed",
+      "gates_passed": 54,
       "gates_total": 54
     }
   ],
@@ -26,7 +26,6 @@
     "Downstream academic-research-skills adoption and consumer validation remain pending after licence and upstream-drift review.",
     "Supported-host and model scenario evaluation remains pending.",
     "Human information-specialist calibration remains pending.",
-    "Registry submission remains unauthorized and no observed acceptance receipt exists.",
-    "The stale source manifest was caused by newly tracked contract files being absent from the pre-stage manifest and was regenerated for final verification."
+    "Registry submission remains unauthorized and no observed acceptance receipt exists."
   ]
 }
