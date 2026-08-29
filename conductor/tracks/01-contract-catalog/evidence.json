@@ -25,6 +25,7 @@
     "sdk/python/searchright_contracts/__init__.py",
     "sdk/typescript/src/index.ts",
     "docs/adrs/0017-canonical-schema-and-binding-ownership.md",
+    "verification/receipts/track-01-contract-generation-2026-08-29.json",
     "verification/receipts/track-01-compiler-verification.json",
     "verification/receipts/track-01-review-verification.json",
     "release/public-packages.json",
@@ -76,6 +77,7 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
+    "verification/receipts/track-01-contract-generation-2026-08-29.json",
     "verification/receipts/track-01-compiler-verification.json",
     "verification/receipts/track-01-review-verification.json"
   ],

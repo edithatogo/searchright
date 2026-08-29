@@ -27,6 +27,7 @@ GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `sdk/python/searchright_contracts/__init__.py`
   - [x] Present source path: `sdk/typescript/src/index.ts`
   - [x] Present source path: `docs/adrs/0017-canonical-schema-and-binding-ownership.md`
+  - [x] Present source path: `verification/receipts/track-01-contract-generation-2026-08-29.json`
   - [x] Present source path: `verification/receipts/track-01-compiler-verification.json`
   - [x] Present source path: `verification/receipts/track-01-review-verification.json`
   - [x] Present source path: `release/public-packages.json`
