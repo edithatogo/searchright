@@ -1,0 +1,782 @@
+
+use builtin;
+use str;
+
+set edit:completion:arg-completer[searchright] = {|@words|
+    fn spaces {|n|
+        builtin:repeat $n ' ' | str:join ''
+    }
+    fn cand {|text desc|
+        edit:complex-candidate $text &display=$text' '(spaces (- 14 (wcswidth $text)))$desc
+    }
+    var command = 'searchright'
+    for word $words[1..-1] {
+        if (str:has-prefix $word '-') {
+            break
+        }
+        set command = $command';'$word
+    }
+    var completions = [
+        &'searchright'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand -V 'Print version'
+            cand --version 'Print version'
+            cand init 'Preview or apply creation of a conservative local CLI configuration'
+            cand plan 'Review-plan operations'
+            cand source 'Source and provider operations'
+            cand strategy 'Search-strategy operations'
+            cand run 'Bounded execution-authority operations'
+            cand import 'Record import operations'
+            cand screen 'Human-governed screening support operations'
+            cand report 'Reporting and provenance operations'
+            cand completions 'Generate a shell completion script on standard output'
+            cand manpage 'Generate the searchright(1) manual page on standard output'
+            cand validate-plan 'Validate a review plan and report readiness findings'
+            cand validate-strategy 'Validate a source-specific search strategy'
+            cand validate-document-evidence 'Validate neutral, non-canonical document extraction evidence'
+            cand compile 'Compile a portable strategy into source syntax'
+            cand deduplicate 'Deduplicate a JSON/YAML array of bibliographic records'
+            cand prisma 'Validate or render a PRISMA flow contract'
+            cand verify-audit 'Verify a JSONL hash-chained audit ledger'
+            cand import-records 'Import bibliographic records and preserve source provenance'
+            cand export-records 'Export canonical records with a conversion receipt'
+            cand study-graph 'Validate and summarise a record-report-study graph'
+            cand validate-search 'Evaluate PRESS, seed-set recall and translation-loss gates'
+            cand living-diff 'Compare parent and current result sets for a living review'
+            cand validate-living-lineage 'Validate a set of living-update lineage contracts'
+            cand provenance 'Build RO-Crate and W3C PROV-compatible exports'
+            cand rank 'Rank records transparently for prioritisation only'
+            cand inspect-content 'Inspect untrusted text for instruction-like or active-content markers'
+            cand render-diagnostics 'Render stable accessible diagnostics without ANSI-dependent output'
+            cand evaluate-governance 'Evaluate a data-handling request against an institutional policy'
+            cand authorise-endpoint 'Authorise an HTTPS endpoint against an execution envelope'
+            cand validate-amendment 'Validate a protocol amendment'
+            cand validate-standard-pack 'Validate a methodological standards pack'
+            cand validate-standard-assessment 'Validate an assessment against a standards pack'
+            cand validate-ranking-calibration 'Validate ranking calibration and its no-auto-exclusion contract'
+            cand validate-discovery-run 'Validate a supplementary-discovery run'
+            cand verify-workflow-trace 'Verify an evidence-bearing lifecycle trace against the finite assurance model'
+            cand discovery-candidates 'Resolve bounded supplementary-discovery candidates for human release'
+            cand verify-provider-component 'Verify a WASI provider-component manifest against exact component bytes'
+            cand plan-licensed-request 'Build a redacted bring-your-own-access request plan'
+            cand validate-benchmark-report 'Validate a benchmark report and its explicit claim boundary'
+            cand providers 'List provider manifests available in the default no-network build'
+            cand workflow 'Print the conservative agent workflow policy'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;init'= {
+            cand --target 'target'
+            cand --apply 'Apply the write. Without this flag the command is a dry run'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;plan'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand validate 'Validate a review plan and report readiness findings'
+            cand validate-amendment 'Validate a protocol amendment'
+            cand evaluate-governance 'Evaluate a data-handling request against institutional policy'
+            cand workflow 'Print the conservative agent workflow policy'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;plan;validate'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;plan;validate-amendment'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;plan;evaluate-governance'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;plan;workflow'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;plan;help'= {
+            cand validate 'Validate a review plan and report readiness findings'
+            cand validate-amendment 'Validate a protocol amendment'
+            cand evaluate-governance 'Evaluate a data-handling request against institutional policy'
+            cand workflow 'Print the conservative agent workflow policy'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;plan;help;validate'= {
+        }
+        &'searchright;plan;help;validate-amendment'= {
+        }
+        &'searchright;plan;help;evaluate-governance'= {
+        }
+        &'searchright;plan;help;workflow'= {
+        }
+        &'searchright;plan;help;help'= {
+        }
+        &'searchright;source'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand list 'List fixture-backed providers available without network access'
+            cand authorise-endpoint 'Check endpoint authority without executing a request'
+            cand validate-discovery-run 'Validate a supplementary-discovery run'
+            cand discovery-candidates 'Resolve discovery candidates for human release'
+            cand verify-provider-component 'Verify a WASI provider-component manifest against exact bytes'
+            cand plan-licensed-request 'Build a redacted bring-your-own-access request plan'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;source;list'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;source;authorise-endpoint'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;source;validate-discovery-run'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;source;discovery-candidates'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;source;verify-provider-component'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;source;plan-licensed-request'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;source;help'= {
+            cand list 'List fixture-backed providers available without network access'
+            cand authorise-endpoint 'Check endpoint authority without executing a request'
+            cand validate-discovery-run 'Validate a supplementary-discovery run'
+            cand discovery-candidates 'Resolve discovery candidates for human release'
+            cand verify-provider-component 'Verify a WASI provider-component manifest against exact bytes'
+            cand plan-licensed-request 'Build a redacted bring-your-own-access request plan'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;source;help;list'= {
+        }
+        &'searchright;source;help;authorise-endpoint'= {
+        }
+        &'searchright;source;help;validate-discovery-run'= {
+        }
+        &'searchright;source;help;discovery-candidates'= {
+        }
+        &'searchright;source;help;verify-provider-component'= {
+        }
+        &'searchright;source;help;plan-licensed-request'= {
+        }
+        &'searchright;source;help;help'= {
+        }
+        &'searchright;strategy'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand validate 'Validate a source-specific search strategy'
+            cand compile 'Compile a portable strategy into source syntax'
+            cand validate-search 'Evaluate PRESS, seed-set recall and translation-loss gates'
+            cand validate-standard-pack 'Validate a methodological standards pack'
+            cand validate-standard-assessment 'Validate an assessment against a standards pack'
+            cand validate-benchmark-report 'Validate a benchmark report and its explicit claim boundary'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;strategy;validate'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;strategy;compile'= {
+            cand --dialect 'dialect'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;strategy;validate-search'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;strategy;validate-standard-pack'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;strategy;validate-standard-assessment'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;strategy;validate-benchmark-report'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;strategy;help'= {
+            cand validate 'Validate a source-specific search strategy'
+            cand compile 'Compile a portable strategy into source syntax'
+            cand validate-search 'Evaluate PRESS, seed-set recall and translation-loss gates'
+            cand validate-standard-pack 'Validate a methodological standards pack'
+            cand validate-standard-assessment 'Validate an assessment against a standards pack'
+            cand validate-benchmark-report 'Validate a benchmark report and its explicit claim boundary'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;strategy;help;validate'= {
+        }
+        &'searchright;strategy;help;compile'= {
+        }
+        &'searchright;strategy;help;validate-search'= {
+        }
+        &'searchright;strategy;help;validate-standard-pack'= {
+        }
+        &'searchright;strategy;help;validate-standard-assessment'= {
+        }
+        &'searchright;strategy;help;validate-benchmark-report'= {
+        }
+        &'searchright;strategy;help;help'= {
+        }
+        &'searchright;run'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand authorise-endpoint 'Check endpoint authority without executing a request'
+            cand verify-audit 'Verify a JSONL hash-chained audit ledger'
+            cand verify-workflow-trace 'Verify an evidence-bearing lifecycle trace'
+            cand inspect-content 'Inspect untrusted text without executing embedded instructions'
+            cand validate-document-evidence 'Validate neutral, non-canonical document extraction evidence'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;run;authorise-endpoint'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;run;verify-audit'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;run;verify-workflow-trace'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;run;inspect-content'= {
+            cand --subject-id 'subject-id'
+            cand --policy 'policy'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;run;validate-document-evidence'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;run;help'= {
+            cand authorise-endpoint 'Check endpoint authority without executing a request'
+            cand verify-audit 'Verify a JSONL hash-chained audit ledger'
+            cand verify-workflow-trace 'Verify an evidence-bearing lifecycle trace'
+            cand inspect-content 'Inspect untrusted text without executing embedded instructions'
+            cand validate-document-evidence 'Validate neutral, non-canonical document extraction evidence'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;run;help;authorise-endpoint'= {
+        }
+        &'searchright;run;help;verify-audit'= {
+        }
+        &'searchright;run;help;verify-workflow-trace'= {
+        }
+        &'searchright;run;help;inspect-content'= {
+        }
+        &'searchright;run;help;validate-document-evidence'= {
+        }
+        &'searchright;run;help;help'= {
+        }
+        &'searchright;import'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand records 'Import bibliographic records and preserve source provenance'
+            cand export-records 'Export canonical records with a conversion receipt'
+            cand deduplicate 'Deduplicate records without deleting source records'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;import;records'= {
+            cand --format 'format'
+            cand --source-receipt-id 'source-receipt-id'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;import;export-records'= {
+            cand --review-id 'review-id'
+            cand --input-format 'input-format'
+            cand --output-format 'output-format'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;import;deduplicate'= {
+            cand --title-threshold 'title-threshold'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;import;help'= {
+            cand records 'Import bibliographic records and preserve source provenance'
+            cand export-records 'Export canonical records with a conversion receipt'
+            cand deduplicate 'Deduplicate records without deleting source records'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;import;help;records'= {
+        }
+        &'searchright;import;help;export-records'= {
+        }
+        &'searchright;import;help;deduplicate'= {
+        }
+        &'searchright;import;help;help'= {
+        }
+        &'searchright;screen'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand rank 'Rank records for prioritisation without making exclusion decisions'
+            cand study-graph 'Validate and summarise explicit record-report-study linkage'
+            cand validate-ranking-calibration 'Validate ranking calibration and its no-auto-exclusion contract'
+            cand living-diff 'Compare parent and current result sets for a living review'
+            cand validate-living-lineage 'Validate living-update lineage contracts'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;screen;rank'= {
+            cand --query-term 'query-term'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;screen;study-graph'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;screen;validate-ranking-calibration'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;screen;living-diff'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;screen;validate-living-lineage'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;screen;help'= {
+            cand rank 'Rank records for prioritisation without making exclusion decisions'
+            cand study-graph 'Validate and summarise explicit record-report-study linkage'
+            cand validate-ranking-calibration 'Validate ranking calibration and its no-auto-exclusion contract'
+            cand living-diff 'Compare parent and current result sets for a living review'
+            cand validate-living-lineage 'Validate living-update lineage contracts'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;screen;help;rank'= {
+        }
+        &'searchright;screen;help;study-graph'= {
+        }
+        &'searchright;screen;help;validate-ranking-calibration'= {
+        }
+        &'searchright;screen;help;living-diff'= {
+        }
+        &'searchright;screen;help;validate-living-lineage'= {
+        }
+        &'searchright;screen;help;help'= {
+        }
+        &'searchright;report'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+            cand prisma 'Validate or render a PRISMA flow contract'
+            cand provenance 'Build RO-Crate and W3C PROV-compatible exports'
+            cand render-diagnostics 'Render stable accessible diagnostics without ANSI-dependent output'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;report;prisma'= {
+            cand --format 'format'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;report;provenance'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;report;render-diagnostics'= {
+            cand --format 'format'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;report;help'= {
+            cand prisma 'Validate or render a PRISMA flow contract'
+            cand provenance 'Build RO-Crate and W3C PROV-compatible exports'
+            cand render-diagnostics 'Render stable accessible diagnostics without ANSI-dependent output'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;report;help;prisma'= {
+        }
+        &'searchright;report;help;provenance'= {
+        }
+        &'searchright;report;help;render-diagnostics'= {
+        }
+        &'searchright;report;help;help'= {
+        }
+        &'searchright;completions'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;manpage'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-plan'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-strategy'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-document-evidence'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;compile'= {
+            cand --dialect 'dialect'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;deduplicate'= {
+            cand --title-threshold 'title-threshold'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;prisma'= {
+            cand --format 'format'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;verify-audit'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;import-records'= {
+            cand --format 'format'
+            cand --source-receipt-id 'source-receipt-id'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;export-records'= {
+            cand --review-id 'review-id'
+            cand --input-format 'input-format'
+            cand --output-format 'output-format'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;study-graph'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-search'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;living-diff'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-living-lineage'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;provenance'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;rank'= {
+            cand --query-term 'query-term'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;inspect-content'= {
+            cand --subject-id 'subject-id'
+            cand --policy 'policy'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;render-diagnostics'= {
+            cand --format 'format'
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;evaluate-governance'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;authorise-endpoint'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-amendment'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-standard-pack'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-standard-assessment'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-ranking-calibration'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-discovery-run'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;verify-workflow-trace'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;discovery-candidates'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;verify-provider-component'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;plan-licensed-request'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;validate-benchmark-report'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;providers'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;workflow'= {
+            cand -h 'Print help'
+            cand --help 'Print help'
+        }
+        &'searchright;help'= {
+            cand init 'Preview or apply creation of a conservative local CLI configuration'
+            cand plan 'Review-plan operations'
+            cand source 'Source and provider operations'
+            cand strategy 'Search-strategy operations'
+            cand run 'Bounded execution-authority operations'
+            cand import 'Record import operations'
+            cand screen 'Human-governed screening support operations'
+            cand report 'Reporting and provenance operations'
+            cand completions 'Generate a shell completion script on standard output'
+            cand manpage 'Generate the searchright(1) manual page on standard output'
+            cand validate-plan 'Validate a review plan and report readiness findings'
+            cand validate-strategy 'Validate a source-specific search strategy'
+            cand validate-document-evidence 'Validate neutral, non-canonical document extraction evidence'
+            cand compile 'Compile a portable strategy into source syntax'
+            cand deduplicate 'Deduplicate a JSON/YAML array of bibliographic records'
+            cand prisma 'Validate or render a PRISMA flow contract'
+            cand verify-audit 'Verify a JSONL hash-chained audit ledger'
+            cand import-records 'Import bibliographic records and preserve source provenance'
+            cand export-records 'Export canonical records with a conversion receipt'
+            cand study-graph 'Validate and summarise a record-report-study graph'
+            cand validate-search 'Evaluate PRESS, seed-set recall and translation-loss gates'
+            cand living-diff 'Compare parent and current result sets for a living review'
+            cand validate-living-lineage 'Validate a set of living-update lineage contracts'
+            cand provenance 'Build RO-Crate and W3C PROV-compatible exports'
+            cand rank 'Rank records transparently for prioritisation only'
+            cand inspect-content 'Inspect untrusted text for instruction-like or active-content markers'
+            cand render-diagnostics 'Render stable accessible diagnostics without ANSI-dependent output'
+            cand evaluate-governance 'Evaluate a data-handling request against an institutional policy'
+            cand authorise-endpoint 'Authorise an HTTPS endpoint against an execution envelope'
+            cand validate-amendment 'Validate a protocol amendment'
+            cand validate-standard-pack 'Validate a methodological standards pack'
+            cand validate-standard-assessment 'Validate an assessment against a standards pack'
+            cand validate-ranking-calibration 'Validate ranking calibration and its no-auto-exclusion contract'
+            cand validate-discovery-run 'Validate a supplementary-discovery run'
+            cand verify-workflow-trace 'Verify an evidence-bearing lifecycle trace against the finite assurance model'
+            cand discovery-candidates 'Resolve bounded supplementary-discovery candidates for human release'
+            cand verify-provider-component 'Verify a WASI provider-component manifest against exact component bytes'
+            cand plan-licensed-request 'Build a redacted bring-your-own-access request plan'
+            cand validate-benchmark-report 'Validate a benchmark report and its explicit claim boundary'
+            cand providers 'List provider manifests available in the default no-network build'
+            cand workflow 'Print the conservative agent workflow policy'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'searchright;help;init'= {
+        }
+        &'searchright;help;plan'= {
+            cand validate 'Validate a review plan and report readiness findings'
+            cand validate-amendment 'Validate a protocol amendment'
+            cand evaluate-governance 'Evaluate a data-handling request against institutional policy'
+            cand workflow 'Print the conservative agent workflow policy'
+        }
+        &'searchright;help;plan;validate'= {
+        }
+        &'searchright;help;plan;validate-amendment'= {
+        }
+        &'searchright;help;plan;evaluate-governance'= {
+        }
+        &'searchright;help;plan;workflow'= {
+        }
+        &'searchright;help;source'= {
+            cand list 'List fixture-backed providers available without network access'
+            cand authorise-endpoint 'Check endpoint authority without executing a request'
+            cand validate-discovery-run 'Validate a supplementary-discovery run'
+            cand discovery-candidates 'Resolve discovery candidates for human release'
+            cand verify-provider-component 'Verify a WASI provider-component manifest against exact bytes'
+            cand plan-licensed-request 'Build a redacted bring-your-own-access request plan'
+        }
+        &'searchright;help;source;list'= {
+        }
+        &'searchright;help;source;authorise-endpoint'= {
+        }
+        &'searchright;help;source;validate-discovery-run'= {
+        }
+        &'searchright;help;source;discovery-candidates'= {
+        }
+        &'searchright;help;source;verify-provider-component'= {
+        }
+        &'searchright;help;source;plan-licensed-request'= {
+        }
+        &'searchright;help;strategy'= {
+            cand validate 'Validate a source-specific search strategy'
+            cand compile 'Compile a portable strategy into source syntax'
+            cand validate-search 'Evaluate PRESS, seed-set recall and translation-loss gates'
+            cand validate-standard-pack 'Validate a methodological standards pack'
+            cand validate-standard-assessment 'Validate an assessment against a standards pack'
+            cand validate-benchmark-report 'Validate a benchmark report and its explicit claim boundary'
+        }
+        &'searchright;help;strategy;validate'= {
+        }
+        &'searchright;help;strategy;compile'= {
+        }
+        &'searchright;help;strategy;validate-search'= {
+        }
+        &'searchright;help;strategy;validate-standard-pack'= {
+        }
+        &'searchright;help;strategy;validate-standard-assessment'= {
+        }
+        &'searchright;help;strategy;validate-benchmark-report'= {
+        }
+        &'searchright;help;run'= {
+            cand authorise-endpoint 'Check endpoint authority without executing a request'
+            cand verify-audit 'Verify a JSONL hash-chained audit ledger'
+            cand verify-workflow-trace 'Verify an evidence-bearing lifecycle trace'
+            cand inspect-content 'Inspect untrusted text without executing embedded instructions'
+            cand validate-document-evidence 'Validate neutral, non-canonical document extraction evidence'
+        }
+        &'searchright;help;run;authorise-endpoint'= {
+        }
+        &'searchright;help;run;verify-audit'= {
+        }
+        &'searchright;help;run;verify-workflow-trace'= {
+        }
+        &'searchright;help;run;inspect-content'= {
+        }
+        &'searchright;help;run;validate-document-evidence'= {
+        }
+        &'searchright;help;import'= {
+            cand records 'Import bibliographic records and preserve source provenance'
+            cand export-records 'Export canonical records with a conversion receipt'
+            cand deduplicate 'Deduplicate records without deleting source records'
+        }
+        &'searchright;help;import;records'= {
+        }
+        &'searchright;help;import;export-records'= {
+        }
+        &'searchright;help;import;deduplicate'= {
+        }
+        &'searchright;help;screen'= {
+            cand rank 'Rank records for prioritisation without making exclusion decisions'
+            cand study-graph 'Validate and summarise explicit record-report-study linkage'
+            cand validate-ranking-calibration 'Validate ranking calibration and its no-auto-exclusion contract'
+            cand living-diff 'Compare parent and current result sets for a living review'
+            cand validate-living-lineage 'Validate living-update lineage contracts'
+        }
+        &'searchright;help;screen;rank'= {
+        }
+        &'searchright;help;screen;study-graph'= {
+        }
+        &'searchright;help;screen;validate-ranking-calibration'= {
+        }
+        &'searchright;help;screen;living-diff'= {
+        }
+        &'searchright;help;screen;validate-living-lineage'= {
+        }
+        &'searchright;help;report'= {
+            cand prisma 'Validate or render a PRISMA flow contract'
+            cand provenance 'Build RO-Crate and W3C PROV-compatible exports'
+            cand render-diagnostics 'Render stable accessible diagnostics without ANSI-dependent output'
+        }
+        &'searchright;help;report;prisma'= {
+        }
+        &'searchright;help;report;provenance'= {
+        }
+        &'searchright;help;report;render-diagnostics'= {
+        }
+        &'searchright;help;completions'= {
+        }
+        &'searchright;help;manpage'= {
+        }
+        &'searchright;help;validate-plan'= {
+        }
+        &'searchright;help;validate-strategy'= {
+        }
+        &'searchright;help;validate-document-evidence'= {
+        }
+        &'searchright;help;compile'= {
+        }
+        &'searchright;help;deduplicate'= {
+        }
+        &'searchright;help;prisma'= {
+        }
+        &'searchright;help;verify-audit'= {
+        }
+        &'searchright;help;import-records'= {
+        }
+        &'searchright;help;export-records'= {
+        }
+        &'searchright;help;study-graph'= {
+        }
+        &'searchright;help;validate-search'= {
+        }
+        &'searchright;help;living-diff'= {
+        }
+        &'searchright;help;validate-living-lineage'= {
+        }
+        &'searchright;help;provenance'= {
+        }
+        &'searchright;help;rank'= {
+        }
+        &'searchright;help;inspect-content'= {
+        }
+        &'searchright;help;render-diagnostics'= {
+        }
+        &'searchright;help;evaluate-governance'= {
+        }
+        &'searchright;help;authorise-endpoint'= {
+        }
+        &'searchright;help;validate-amendment'= {
+        }
+        &'searchright;help;validate-standard-pack'= {
+        }
+        &'searchright;help;validate-standard-assessment'= {
+        }
+        &'searchright;help;validate-ranking-calibration'= {
+        }
+        &'searchright;help;validate-discovery-run'= {
+        }
+        &'searchright;help;verify-workflow-trace'= {
+        }
+        &'searchright;help;discovery-candidates'= {
+        }
+        &'searchright;help;verify-provider-component'= {
+        }
+        &'searchright;help;plan-licensed-request'= {
+        }
+        &'searchright;help;validate-benchmark-report'= {
+        }
+        &'searchright;help;providers'= {
+        }
+        &'searchright;help;workflow'= {
+        }
+        &'searchright;help;help'= {
+        }
+    ]
+    $completions[$command]
+}

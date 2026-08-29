@@ -1,0 +1,982 @@
+
+using namespace System.Management.Automation
+using namespace System.Management.Automation.Language
+
+Register-ArgumentCompleter -Native -CommandName 'searchright' -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+
+    $commandElements = $commandAst.CommandElements
+    $command = @(
+        'searchright'
+        for ($i = 1; $i -lt $commandElements.Count; $i++) {
+            $element = $commandElements[$i]
+            if ($element -isnot [StringConstantExpressionAst] -or
+                $element.StringConstantType -ne [StringConstantType]::BareWord -or
+                $element.Value.StartsWith('-') -or
+                $element.Value -eq $wordToComplete) {
+                break
+        }
+        $element.Value
+    }) -join ';'
+
+    $completions = @(switch ($command) {
+        'searchright' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('-V', '-V ', [CompletionResultType]::ParameterName, 'Print version')
+            [CompletionResult]::new('--version', '--version', [CompletionResultType]::ParameterName, 'Print version')
+            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Preview or apply creation of a conservative local CLI configuration')
+            [CompletionResult]::new('plan', 'plan', [CompletionResultType]::ParameterValue, 'Review-plan operations')
+            [CompletionResult]::new('source', 'source', [CompletionResultType]::ParameterValue, 'Source and provider operations')
+            [CompletionResult]::new('strategy', 'strategy', [CompletionResultType]::ParameterValue, 'Search-strategy operations')
+            [CompletionResult]::new('run', 'run', [CompletionResultType]::ParameterValue, 'Bounded execution-authority operations')
+            [CompletionResult]::new('import', 'import', [CompletionResultType]::ParameterValue, 'Record import operations')
+            [CompletionResult]::new('screen', 'screen', [CompletionResultType]::ParameterValue, 'Human-governed screening support operations')
+            [CompletionResult]::new('report', 'report', [CompletionResultType]::ParameterValue, 'Reporting and provenance operations')
+            [CompletionResult]::new('completions', 'completions', [CompletionResultType]::ParameterValue, 'Generate a shell completion script on standard output')
+            [CompletionResult]::new('manpage', 'manpage', [CompletionResultType]::ParameterValue, 'Generate the searchright(1) manual page on standard output')
+            [CompletionResult]::new('validate-plan', 'validate-plan', [CompletionResultType]::ParameterValue, 'Validate a review plan and report readiness findings')
+            [CompletionResult]::new('validate-strategy', 'validate-strategy', [CompletionResultType]::ParameterValue, 'Validate a source-specific search strategy')
+            [CompletionResult]::new('validate-document-evidence', 'validate-document-evidence', [CompletionResultType]::ParameterValue, 'Validate neutral, non-canonical document extraction evidence')
+            [CompletionResult]::new('compile', 'compile', [CompletionResultType]::ParameterValue, 'Compile a portable strategy into source syntax')
+            [CompletionResult]::new('deduplicate', 'deduplicate', [CompletionResultType]::ParameterValue, 'Deduplicate a JSON/YAML array of bibliographic records')
+            [CompletionResult]::new('prisma', 'prisma', [CompletionResultType]::ParameterValue, 'Validate or render a PRISMA flow contract')
+            [CompletionResult]::new('verify-audit', 'verify-audit', [CompletionResultType]::ParameterValue, 'Verify a JSONL hash-chained audit ledger')
+            [CompletionResult]::new('import-records', 'import-records', [CompletionResultType]::ParameterValue, 'Import bibliographic records and preserve source provenance')
+            [CompletionResult]::new('export-records', 'export-records', [CompletionResultType]::ParameterValue, 'Export canonical records with a conversion receipt')
+            [CompletionResult]::new('study-graph', 'study-graph', [CompletionResultType]::ParameterValue, 'Validate and summarise a record-report-study graph')
+            [CompletionResult]::new('validate-search', 'validate-search', [CompletionResultType]::ParameterValue, 'Evaluate PRESS, seed-set recall and translation-loss gates')
+            [CompletionResult]::new('living-diff', 'living-diff', [CompletionResultType]::ParameterValue, 'Compare parent and current result sets for a living review')
+            [CompletionResult]::new('validate-living-lineage', 'validate-living-lineage', [CompletionResultType]::ParameterValue, 'Validate a set of living-update lineage contracts')
+            [CompletionResult]::new('provenance', 'provenance', [CompletionResultType]::ParameterValue, 'Build RO-Crate and W3C PROV-compatible exports')
+            [CompletionResult]::new('rank', 'rank', [CompletionResultType]::ParameterValue, 'Rank records transparently for prioritisation only')
+            [CompletionResult]::new('inspect-content', 'inspect-content', [CompletionResultType]::ParameterValue, 'Inspect untrusted text for instruction-like or active-content markers')
+            [CompletionResult]::new('render-diagnostics', 'render-diagnostics', [CompletionResultType]::ParameterValue, 'Render stable accessible diagnostics without ANSI-dependent output')
+            [CompletionResult]::new('evaluate-governance', 'evaluate-governance', [CompletionResultType]::ParameterValue, 'Evaluate a data-handling request against an institutional policy')
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Authorise an HTTPS endpoint against an execution envelope')
+            [CompletionResult]::new('validate-amendment', 'validate-amendment', [CompletionResultType]::ParameterValue, 'Validate a protocol amendment')
+            [CompletionResult]::new('validate-standard-pack', 'validate-standard-pack', [CompletionResultType]::ParameterValue, 'Validate a methodological standards pack')
+            [CompletionResult]::new('validate-standard-assessment', 'validate-standard-assessment', [CompletionResultType]::ParameterValue, 'Validate an assessment against a standards pack')
+            [CompletionResult]::new('validate-ranking-calibration', 'validate-ranking-calibration', [CompletionResultType]::ParameterValue, 'Validate ranking calibration and its no-auto-exclusion contract')
+            [CompletionResult]::new('validate-discovery-run', 'validate-discovery-run', [CompletionResultType]::ParameterValue, 'Validate a supplementary-discovery run')
+            [CompletionResult]::new('verify-workflow-trace', 'verify-workflow-trace', [CompletionResultType]::ParameterValue, 'Verify an evidence-bearing lifecycle trace against the finite assurance model')
+            [CompletionResult]::new('discovery-candidates', 'discovery-candidates', [CompletionResultType]::ParameterValue, 'Resolve bounded supplementary-discovery candidates for human release')
+            [CompletionResult]::new('verify-provider-component', 'verify-provider-component', [CompletionResultType]::ParameterValue, 'Verify a WASI provider-component manifest against exact component bytes')
+            [CompletionResult]::new('plan-licensed-request', 'plan-licensed-request', [CompletionResultType]::ParameterValue, 'Build a redacted bring-your-own-access request plan')
+            [CompletionResult]::new('validate-benchmark-report', 'validate-benchmark-report', [CompletionResultType]::ParameterValue, 'Validate a benchmark report and its explicit claim boundary')
+            [CompletionResult]::new('providers', 'providers', [CompletionResultType]::ParameterValue, 'List provider manifests available in the default no-network build')
+            [CompletionResult]::new('workflow', 'workflow', [CompletionResultType]::ParameterValue, 'Print the conservative agent workflow policy')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;init' {
+            [CompletionResult]::new('--target', '--target', [CompletionResultType]::ParameterName, 'target')
+            [CompletionResult]::new('--apply', '--apply', [CompletionResultType]::ParameterName, 'Apply the write. Without this flag the command is a dry run')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;plan' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('validate', 'validate', [CompletionResultType]::ParameterValue, 'Validate a review plan and report readiness findings')
+            [CompletionResult]::new('validate-amendment', 'validate-amendment', [CompletionResultType]::ParameterValue, 'Validate a protocol amendment')
+            [CompletionResult]::new('evaluate-governance', 'evaluate-governance', [CompletionResultType]::ParameterValue, 'Evaluate a data-handling request against institutional policy')
+            [CompletionResult]::new('workflow', 'workflow', [CompletionResultType]::ParameterValue, 'Print the conservative agent workflow policy')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;plan;validate' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;plan;validate-amendment' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;plan;evaluate-governance' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;plan;workflow' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;plan;help' {
+            [CompletionResult]::new('validate', 'validate', [CompletionResultType]::ParameterValue, 'Validate a review plan and report readiness findings')
+            [CompletionResult]::new('validate-amendment', 'validate-amendment', [CompletionResultType]::ParameterValue, 'Validate a protocol amendment')
+            [CompletionResult]::new('evaluate-governance', 'evaluate-governance', [CompletionResultType]::ParameterValue, 'Evaluate a data-handling request against institutional policy')
+            [CompletionResult]::new('workflow', 'workflow', [CompletionResultType]::ParameterValue, 'Print the conservative agent workflow policy')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;plan;help;validate' {
+            break
+        }
+        'searchright;plan;help;validate-amendment' {
+            break
+        }
+        'searchright;plan;help;evaluate-governance' {
+            break
+        }
+        'searchright;plan;help;workflow' {
+            break
+        }
+        'searchright;plan;help;help' {
+            break
+        }
+        'searchright;source' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('list', 'list', [CompletionResultType]::ParameterValue, 'List fixture-backed providers available without network access')
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Check endpoint authority without executing a request')
+            [CompletionResult]::new('validate-discovery-run', 'validate-discovery-run', [CompletionResultType]::ParameterValue, 'Validate a supplementary-discovery run')
+            [CompletionResult]::new('discovery-candidates', 'discovery-candidates', [CompletionResultType]::ParameterValue, 'Resolve discovery candidates for human release')
+            [CompletionResult]::new('verify-provider-component', 'verify-provider-component', [CompletionResultType]::ParameterValue, 'Verify a WASI provider-component manifest against exact bytes')
+            [CompletionResult]::new('plan-licensed-request', 'plan-licensed-request', [CompletionResultType]::ParameterValue, 'Build a redacted bring-your-own-access request plan')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;source;list' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;source;authorise-endpoint' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;source;validate-discovery-run' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;source;discovery-candidates' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;source;verify-provider-component' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;source;plan-licensed-request' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;source;help' {
+            [CompletionResult]::new('list', 'list', [CompletionResultType]::ParameterValue, 'List fixture-backed providers available without network access')
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Check endpoint authority without executing a request')
+            [CompletionResult]::new('validate-discovery-run', 'validate-discovery-run', [CompletionResultType]::ParameterValue, 'Validate a supplementary-discovery run')
+            [CompletionResult]::new('discovery-candidates', 'discovery-candidates', [CompletionResultType]::ParameterValue, 'Resolve discovery candidates for human release')
+            [CompletionResult]::new('verify-provider-component', 'verify-provider-component', [CompletionResultType]::ParameterValue, 'Verify a WASI provider-component manifest against exact bytes')
+            [CompletionResult]::new('plan-licensed-request', 'plan-licensed-request', [CompletionResultType]::ParameterValue, 'Build a redacted bring-your-own-access request plan')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;source;help;list' {
+            break
+        }
+        'searchright;source;help;authorise-endpoint' {
+            break
+        }
+        'searchright;source;help;validate-discovery-run' {
+            break
+        }
+        'searchright;source;help;discovery-candidates' {
+            break
+        }
+        'searchright;source;help;verify-provider-component' {
+            break
+        }
+        'searchright;source;help;plan-licensed-request' {
+            break
+        }
+        'searchright;source;help;help' {
+            break
+        }
+        'searchright;strategy' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('validate', 'validate', [CompletionResultType]::ParameterValue, 'Validate a source-specific search strategy')
+            [CompletionResult]::new('compile', 'compile', [CompletionResultType]::ParameterValue, 'Compile a portable strategy into source syntax')
+            [CompletionResult]::new('validate-search', 'validate-search', [CompletionResultType]::ParameterValue, 'Evaluate PRESS, seed-set recall and translation-loss gates')
+            [CompletionResult]::new('validate-standard-pack', 'validate-standard-pack', [CompletionResultType]::ParameterValue, 'Validate a methodological standards pack')
+            [CompletionResult]::new('validate-standard-assessment', 'validate-standard-assessment', [CompletionResultType]::ParameterValue, 'Validate an assessment against a standards pack')
+            [CompletionResult]::new('validate-benchmark-report', 'validate-benchmark-report', [CompletionResultType]::ParameterValue, 'Validate a benchmark report and its explicit claim boundary')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;strategy;validate' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;strategy;compile' {
+            [CompletionResult]::new('--dialect', '--dialect', [CompletionResultType]::ParameterName, 'dialect')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;strategy;validate-search' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;strategy;validate-standard-pack' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;strategy;validate-standard-assessment' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;strategy;validate-benchmark-report' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;strategy;help' {
+            [CompletionResult]::new('validate', 'validate', [CompletionResultType]::ParameterValue, 'Validate a source-specific search strategy')
+            [CompletionResult]::new('compile', 'compile', [CompletionResultType]::ParameterValue, 'Compile a portable strategy into source syntax')
+            [CompletionResult]::new('validate-search', 'validate-search', [CompletionResultType]::ParameterValue, 'Evaluate PRESS, seed-set recall and translation-loss gates')
+            [CompletionResult]::new('validate-standard-pack', 'validate-standard-pack', [CompletionResultType]::ParameterValue, 'Validate a methodological standards pack')
+            [CompletionResult]::new('validate-standard-assessment', 'validate-standard-assessment', [CompletionResultType]::ParameterValue, 'Validate an assessment against a standards pack')
+            [CompletionResult]::new('validate-benchmark-report', 'validate-benchmark-report', [CompletionResultType]::ParameterValue, 'Validate a benchmark report and its explicit claim boundary')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;strategy;help;validate' {
+            break
+        }
+        'searchright;strategy;help;compile' {
+            break
+        }
+        'searchright;strategy;help;validate-search' {
+            break
+        }
+        'searchright;strategy;help;validate-standard-pack' {
+            break
+        }
+        'searchright;strategy;help;validate-standard-assessment' {
+            break
+        }
+        'searchright;strategy;help;validate-benchmark-report' {
+            break
+        }
+        'searchright;strategy;help;help' {
+            break
+        }
+        'searchright;run' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Check endpoint authority without executing a request')
+            [CompletionResult]::new('verify-audit', 'verify-audit', [CompletionResultType]::ParameterValue, 'Verify a JSONL hash-chained audit ledger')
+            [CompletionResult]::new('verify-workflow-trace', 'verify-workflow-trace', [CompletionResultType]::ParameterValue, 'Verify an evidence-bearing lifecycle trace')
+            [CompletionResult]::new('inspect-content', 'inspect-content', [CompletionResultType]::ParameterValue, 'Inspect untrusted text without executing embedded instructions')
+            [CompletionResult]::new('validate-document-evidence', 'validate-document-evidence', [CompletionResultType]::ParameterValue, 'Validate neutral, non-canonical document extraction evidence')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;run;authorise-endpoint' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;run;verify-audit' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;run;verify-workflow-trace' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;run;inspect-content' {
+            [CompletionResult]::new('--subject-id', '--subject-id', [CompletionResultType]::ParameterName, 'subject-id')
+            [CompletionResult]::new('--policy', '--policy', [CompletionResultType]::ParameterName, 'policy')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;run;validate-document-evidence' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;run;help' {
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Check endpoint authority without executing a request')
+            [CompletionResult]::new('verify-audit', 'verify-audit', [CompletionResultType]::ParameterValue, 'Verify a JSONL hash-chained audit ledger')
+            [CompletionResult]::new('verify-workflow-trace', 'verify-workflow-trace', [CompletionResultType]::ParameterValue, 'Verify an evidence-bearing lifecycle trace')
+            [CompletionResult]::new('inspect-content', 'inspect-content', [CompletionResultType]::ParameterValue, 'Inspect untrusted text without executing embedded instructions')
+            [CompletionResult]::new('validate-document-evidence', 'validate-document-evidence', [CompletionResultType]::ParameterValue, 'Validate neutral, non-canonical document extraction evidence')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;run;help;authorise-endpoint' {
+            break
+        }
+        'searchright;run;help;verify-audit' {
+            break
+        }
+        'searchright;run;help;verify-workflow-trace' {
+            break
+        }
+        'searchright;run;help;inspect-content' {
+            break
+        }
+        'searchright;run;help;validate-document-evidence' {
+            break
+        }
+        'searchright;run;help;help' {
+            break
+        }
+        'searchright;import' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('records', 'records', [CompletionResultType]::ParameterValue, 'Import bibliographic records and preserve source provenance')
+            [CompletionResult]::new('export-records', 'export-records', [CompletionResultType]::ParameterValue, 'Export canonical records with a conversion receipt')
+            [CompletionResult]::new('deduplicate', 'deduplicate', [CompletionResultType]::ParameterValue, 'Deduplicate records without deleting source records')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;import;records' {
+            [CompletionResult]::new('--format', '--format', [CompletionResultType]::ParameterName, 'format')
+            [CompletionResult]::new('--source-receipt-id', '--source-receipt-id', [CompletionResultType]::ParameterName, 'source-receipt-id')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;import;export-records' {
+            [CompletionResult]::new('--review-id', '--review-id', [CompletionResultType]::ParameterName, 'review-id')
+            [CompletionResult]::new('--input-format', '--input-format', [CompletionResultType]::ParameterName, 'input-format')
+            [CompletionResult]::new('--output-format', '--output-format', [CompletionResultType]::ParameterName, 'output-format')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;import;deduplicate' {
+            [CompletionResult]::new('--title-threshold', '--title-threshold', [CompletionResultType]::ParameterName, 'title-threshold')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;import;help' {
+            [CompletionResult]::new('records', 'records', [CompletionResultType]::ParameterValue, 'Import bibliographic records and preserve source provenance')
+            [CompletionResult]::new('export-records', 'export-records', [CompletionResultType]::ParameterValue, 'Export canonical records with a conversion receipt')
+            [CompletionResult]::new('deduplicate', 'deduplicate', [CompletionResultType]::ParameterValue, 'Deduplicate records without deleting source records')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;import;help;records' {
+            break
+        }
+        'searchright;import;help;export-records' {
+            break
+        }
+        'searchright;import;help;deduplicate' {
+            break
+        }
+        'searchright;import;help;help' {
+            break
+        }
+        'searchright;screen' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('rank', 'rank', [CompletionResultType]::ParameterValue, 'Rank records for prioritisation without making exclusion decisions')
+            [CompletionResult]::new('study-graph', 'study-graph', [CompletionResultType]::ParameterValue, 'Validate and summarise explicit record-report-study linkage')
+            [CompletionResult]::new('validate-ranking-calibration', 'validate-ranking-calibration', [CompletionResultType]::ParameterValue, 'Validate ranking calibration and its no-auto-exclusion contract')
+            [CompletionResult]::new('living-diff', 'living-diff', [CompletionResultType]::ParameterValue, 'Compare parent and current result sets for a living review')
+            [CompletionResult]::new('validate-living-lineage', 'validate-living-lineage', [CompletionResultType]::ParameterValue, 'Validate living-update lineage contracts')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;screen;rank' {
+            [CompletionResult]::new('--query-term', '--query-term', [CompletionResultType]::ParameterName, 'query-term')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;screen;study-graph' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;screen;validate-ranking-calibration' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;screen;living-diff' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;screen;validate-living-lineage' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;screen;help' {
+            [CompletionResult]::new('rank', 'rank', [CompletionResultType]::ParameterValue, 'Rank records for prioritisation without making exclusion decisions')
+            [CompletionResult]::new('study-graph', 'study-graph', [CompletionResultType]::ParameterValue, 'Validate and summarise explicit record-report-study linkage')
+            [CompletionResult]::new('validate-ranking-calibration', 'validate-ranking-calibration', [CompletionResultType]::ParameterValue, 'Validate ranking calibration and its no-auto-exclusion contract')
+            [CompletionResult]::new('living-diff', 'living-diff', [CompletionResultType]::ParameterValue, 'Compare parent and current result sets for a living review')
+            [CompletionResult]::new('validate-living-lineage', 'validate-living-lineage', [CompletionResultType]::ParameterValue, 'Validate living-update lineage contracts')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;screen;help;rank' {
+            break
+        }
+        'searchright;screen;help;study-graph' {
+            break
+        }
+        'searchright;screen;help;validate-ranking-calibration' {
+            break
+        }
+        'searchright;screen;help;living-diff' {
+            break
+        }
+        'searchright;screen;help;validate-living-lineage' {
+            break
+        }
+        'searchright;screen;help;help' {
+            break
+        }
+        'searchright;report' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('prisma', 'prisma', [CompletionResultType]::ParameterValue, 'Validate or render a PRISMA flow contract')
+            [CompletionResult]::new('provenance', 'provenance', [CompletionResultType]::ParameterValue, 'Build RO-Crate and W3C PROV-compatible exports')
+            [CompletionResult]::new('render-diagnostics', 'render-diagnostics', [CompletionResultType]::ParameterValue, 'Render stable accessible diagnostics without ANSI-dependent output')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;report;prisma' {
+            [CompletionResult]::new('--format', '--format', [CompletionResultType]::ParameterName, 'format')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;report;provenance' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;report;render-diagnostics' {
+            [CompletionResult]::new('--format', '--format', [CompletionResultType]::ParameterName, 'format')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;report;help' {
+            [CompletionResult]::new('prisma', 'prisma', [CompletionResultType]::ParameterValue, 'Validate or render a PRISMA flow contract')
+            [CompletionResult]::new('provenance', 'provenance', [CompletionResultType]::ParameterValue, 'Build RO-Crate and W3C PROV-compatible exports')
+            [CompletionResult]::new('render-diagnostics', 'render-diagnostics', [CompletionResultType]::ParameterValue, 'Render stable accessible diagnostics without ANSI-dependent output')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;report;help;prisma' {
+            break
+        }
+        'searchright;report;help;provenance' {
+            break
+        }
+        'searchright;report;help;render-diagnostics' {
+            break
+        }
+        'searchright;report;help;help' {
+            break
+        }
+        'searchright;completions' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;manpage' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-plan' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-strategy' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-document-evidence' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;compile' {
+            [CompletionResult]::new('--dialect', '--dialect', [CompletionResultType]::ParameterName, 'dialect')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;deduplicate' {
+            [CompletionResult]::new('--title-threshold', '--title-threshold', [CompletionResultType]::ParameterName, 'title-threshold')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;prisma' {
+            [CompletionResult]::new('--format', '--format', [CompletionResultType]::ParameterName, 'format')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;verify-audit' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;import-records' {
+            [CompletionResult]::new('--format', '--format', [CompletionResultType]::ParameterName, 'format')
+            [CompletionResult]::new('--source-receipt-id', '--source-receipt-id', [CompletionResultType]::ParameterName, 'source-receipt-id')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;export-records' {
+            [CompletionResult]::new('--review-id', '--review-id', [CompletionResultType]::ParameterName, 'review-id')
+            [CompletionResult]::new('--input-format', '--input-format', [CompletionResultType]::ParameterName, 'input-format')
+            [CompletionResult]::new('--output-format', '--output-format', [CompletionResultType]::ParameterName, 'output-format')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;study-graph' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-search' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;living-diff' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-living-lineage' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;provenance' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;rank' {
+            [CompletionResult]::new('--query-term', '--query-term', [CompletionResultType]::ParameterName, 'query-term')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;inspect-content' {
+            [CompletionResult]::new('--subject-id', '--subject-id', [CompletionResultType]::ParameterName, 'subject-id')
+            [CompletionResult]::new('--policy', '--policy', [CompletionResultType]::ParameterName, 'policy')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;render-diagnostics' {
+            [CompletionResult]::new('--format', '--format', [CompletionResultType]::ParameterName, 'format')
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;evaluate-governance' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;authorise-endpoint' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-amendment' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-standard-pack' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-standard-assessment' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-ranking-calibration' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-discovery-run' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;verify-workflow-trace' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;discovery-candidates' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;verify-provider-component' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;plan-licensed-request' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;validate-benchmark-report' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;providers' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;workflow' {
+            [CompletionResult]::new('-h', '-h', [CompletionResultType]::ParameterName, 'Print help')
+            [CompletionResult]::new('--help', '--help', [CompletionResultType]::ParameterName, 'Print help')
+            break
+        }
+        'searchright;help' {
+            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Preview or apply creation of a conservative local CLI configuration')
+            [CompletionResult]::new('plan', 'plan', [CompletionResultType]::ParameterValue, 'Review-plan operations')
+            [CompletionResult]::new('source', 'source', [CompletionResultType]::ParameterValue, 'Source and provider operations')
+            [CompletionResult]::new('strategy', 'strategy', [CompletionResultType]::ParameterValue, 'Search-strategy operations')
+            [CompletionResult]::new('run', 'run', [CompletionResultType]::ParameterValue, 'Bounded execution-authority operations')
+            [CompletionResult]::new('import', 'import', [CompletionResultType]::ParameterValue, 'Record import operations')
+            [CompletionResult]::new('screen', 'screen', [CompletionResultType]::ParameterValue, 'Human-governed screening support operations')
+            [CompletionResult]::new('report', 'report', [CompletionResultType]::ParameterValue, 'Reporting and provenance operations')
+            [CompletionResult]::new('completions', 'completions', [CompletionResultType]::ParameterValue, 'Generate a shell completion script on standard output')
+            [CompletionResult]::new('manpage', 'manpage', [CompletionResultType]::ParameterValue, 'Generate the searchright(1) manual page on standard output')
+            [CompletionResult]::new('validate-plan', 'validate-plan', [CompletionResultType]::ParameterValue, 'Validate a review plan and report readiness findings')
+            [CompletionResult]::new('validate-strategy', 'validate-strategy', [CompletionResultType]::ParameterValue, 'Validate a source-specific search strategy')
+            [CompletionResult]::new('validate-document-evidence', 'validate-document-evidence', [CompletionResultType]::ParameterValue, 'Validate neutral, non-canonical document extraction evidence')
+            [CompletionResult]::new('compile', 'compile', [CompletionResultType]::ParameterValue, 'Compile a portable strategy into source syntax')
+            [CompletionResult]::new('deduplicate', 'deduplicate', [CompletionResultType]::ParameterValue, 'Deduplicate a JSON/YAML array of bibliographic records')
+            [CompletionResult]::new('prisma', 'prisma', [CompletionResultType]::ParameterValue, 'Validate or render a PRISMA flow contract')
+            [CompletionResult]::new('verify-audit', 'verify-audit', [CompletionResultType]::ParameterValue, 'Verify a JSONL hash-chained audit ledger')
+            [CompletionResult]::new('import-records', 'import-records', [CompletionResultType]::ParameterValue, 'Import bibliographic records and preserve source provenance')
+            [CompletionResult]::new('export-records', 'export-records', [CompletionResultType]::ParameterValue, 'Export canonical records with a conversion receipt')
+            [CompletionResult]::new('study-graph', 'study-graph', [CompletionResultType]::ParameterValue, 'Validate and summarise a record-report-study graph')
+            [CompletionResult]::new('validate-search', 'validate-search', [CompletionResultType]::ParameterValue, 'Evaluate PRESS, seed-set recall and translation-loss gates')
+            [CompletionResult]::new('living-diff', 'living-diff', [CompletionResultType]::ParameterValue, 'Compare parent and current result sets for a living review')
+            [CompletionResult]::new('validate-living-lineage', 'validate-living-lineage', [CompletionResultType]::ParameterValue, 'Validate a set of living-update lineage contracts')
+            [CompletionResult]::new('provenance', 'provenance', [CompletionResultType]::ParameterValue, 'Build RO-Crate and W3C PROV-compatible exports')
+            [CompletionResult]::new('rank', 'rank', [CompletionResultType]::ParameterValue, 'Rank records transparently for prioritisation only')
+            [CompletionResult]::new('inspect-content', 'inspect-content', [CompletionResultType]::ParameterValue, 'Inspect untrusted text for instruction-like or active-content markers')
+            [CompletionResult]::new('render-diagnostics', 'render-diagnostics', [CompletionResultType]::ParameterValue, 'Render stable accessible diagnostics without ANSI-dependent output')
+            [CompletionResult]::new('evaluate-governance', 'evaluate-governance', [CompletionResultType]::ParameterValue, 'Evaluate a data-handling request against an institutional policy')
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Authorise an HTTPS endpoint against an execution envelope')
+            [CompletionResult]::new('validate-amendment', 'validate-amendment', [CompletionResultType]::ParameterValue, 'Validate a protocol amendment')
+            [CompletionResult]::new('validate-standard-pack', 'validate-standard-pack', [CompletionResultType]::ParameterValue, 'Validate a methodological standards pack')
+            [CompletionResult]::new('validate-standard-assessment', 'validate-standard-assessment', [CompletionResultType]::ParameterValue, 'Validate an assessment against a standards pack')
+            [CompletionResult]::new('validate-ranking-calibration', 'validate-ranking-calibration', [CompletionResultType]::ParameterValue, 'Validate ranking calibration and its no-auto-exclusion contract')
+            [CompletionResult]::new('validate-discovery-run', 'validate-discovery-run', [CompletionResultType]::ParameterValue, 'Validate a supplementary-discovery run')
+            [CompletionResult]::new('verify-workflow-trace', 'verify-workflow-trace', [CompletionResultType]::ParameterValue, 'Verify an evidence-bearing lifecycle trace against the finite assurance model')
+            [CompletionResult]::new('discovery-candidates', 'discovery-candidates', [CompletionResultType]::ParameterValue, 'Resolve bounded supplementary-discovery candidates for human release')
+            [CompletionResult]::new('verify-provider-component', 'verify-provider-component', [CompletionResultType]::ParameterValue, 'Verify a WASI provider-component manifest against exact component bytes')
+            [CompletionResult]::new('plan-licensed-request', 'plan-licensed-request', [CompletionResultType]::ParameterValue, 'Build a redacted bring-your-own-access request plan')
+            [CompletionResult]::new('validate-benchmark-report', 'validate-benchmark-report', [CompletionResultType]::ParameterValue, 'Validate a benchmark report and its explicit claim boundary')
+            [CompletionResult]::new('providers', 'providers', [CompletionResultType]::ParameterValue, 'List provider manifests available in the default no-network build')
+            [CompletionResult]::new('workflow', 'workflow', [CompletionResultType]::ParameterValue, 'Print the conservative agent workflow policy')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'searchright;help;init' {
+            break
+        }
+        'searchright;help;plan' {
+            [CompletionResult]::new('validate', 'validate', [CompletionResultType]::ParameterValue, 'Validate a review plan and report readiness findings')
+            [CompletionResult]::new('validate-amendment', 'validate-amendment', [CompletionResultType]::ParameterValue, 'Validate a protocol amendment')
+            [CompletionResult]::new('evaluate-governance', 'evaluate-governance', [CompletionResultType]::ParameterValue, 'Evaluate a data-handling request against institutional policy')
+            [CompletionResult]::new('workflow', 'workflow', [CompletionResultType]::ParameterValue, 'Print the conservative agent workflow policy')
+            break
+        }
+        'searchright;help;plan;validate' {
+            break
+        }
+        'searchright;help;plan;validate-amendment' {
+            break
+        }
+        'searchright;help;plan;evaluate-governance' {
+            break
+        }
+        'searchright;help;plan;workflow' {
+            break
+        }
+        'searchright;help;source' {
+            [CompletionResult]::new('list', 'list', [CompletionResultType]::ParameterValue, 'List fixture-backed providers available without network access')
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Check endpoint authority without executing a request')
+            [CompletionResult]::new('validate-discovery-run', 'validate-discovery-run', [CompletionResultType]::ParameterValue, 'Validate a supplementary-discovery run')
+            [CompletionResult]::new('discovery-candidates', 'discovery-candidates', [CompletionResultType]::ParameterValue, 'Resolve discovery candidates for human release')
+            [CompletionResult]::new('verify-provider-component', 'verify-provider-component', [CompletionResultType]::ParameterValue, 'Verify a WASI provider-component manifest against exact bytes')
+            [CompletionResult]::new('plan-licensed-request', 'plan-licensed-request', [CompletionResultType]::ParameterValue, 'Build a redacted bring-your-own-access request plan')
+            break
+        }
+        'searchright;help;source;list' {
+            break
+        }
+        'searchright;help;source;authorise-endpoint' {
+            break
+        }
+        'searchright;help;source;validate-discovery-run' {
+            break
+        }
+        'searchright;help;source;discovery-candidates' {
+            break
+        }
+        'searchright;help;source;verify-provider-component' {
+            break
+        }
+        'searchright;help;source;plan-licensed-request' {
+            break
+        }
+        'searchright;help;strategy' {
+            [CompletionResult]::new('validate', 'validate', [CompletionResultType]::ParameterValue, 'Validate a source-specific search strategy')
+            [CompletionResult]::new('compile', 'compile', [CompletionResultType]::ParameterValue, 'Compile a portable strategy into source syntax')
+            [CompletionResult]::new('validate-search', 'validate-search', [CompletionResultType]::ParameterValue, 'Evaluate PRESS, seed-set recall and translation-loss gates')
+            [CompletionResult]::new('validate-standard-pack', 'validate-standard-pack', [CompletionResultType]::ParameterValue, 'Validate a methodological standards pack')
+            [CompletionResult]::new('validate-standard-assessment', 'validate-standard-assessment', [CompletionResultType]::ParameterValue, 'Validate an assessment against a standards pack')
+            [CompletionResult]::new('validate-benchmark-report', 'validate-benchmark-report', [CompletionResultType]::ParameterValue, 'Validate a benchmark report and its explicit claim boundary')
+            break
+        }
+        'searchright;help;strategy;validate' {
+            break
+        }
+        'searchright;help;strategy;compile' {
+            break
+        }
+        'searchright;help;strategy;validate-search' {
+            break
+        }
+        'searchright;help;strategy;validate-standard-pack' {
+            break
+        }
+        'searchright;help;strategy;validate-standard-assessment' {
+            break
+        }
+        'searchright;help;strategy;validate-benchmark-report' {
+            break
+        }
+        'searchright;help;run' {
+            [CompletionResult]::new('authorise-endpoint', 'authorise-endpoint', [CompletionResultType]::ParameterValue, 'Check endpoint authority without executing a request')
+            [CompletionResult]::new('verify-audit', 'verify-audit', [CompletionResultType]::ParameterValue, 'Verify a JSONL hash-chained audit ledger')
+            [CompletionResult]::new('verify-workflow-trace', 'verify-workflow-trace', [CompletionResultType]::ParameterValue, 'Verify an evidence-bearing lifecycle trace')
+            [CompletionResult]::new('inspect-content', 'inspect-content', [CompletionResultType]::ParameterValue, 'Inspect untrusted text without executing embedded instructions')
+            [CompletionResult]::new('validate-document-evidence', 'validate-document-evidence', [CompletionResultType]::ParameterValue, 'Validate neutral, non-canonical document extraction evidence')
+            break
+        }
+        'searchright;help;run;authorise-endpoint' {
+            break
+        }
+        'searchright;help;run;verify-audit' {
+            break
+        }
+        'searchright;help;run;verify-workflow-trace' {
+            break
+        }
+        'searchright;help;run;inspect-content' {
+            break
+        }
+        'searchright;help;run;validate-document-evidence' {
+            break
+        }
+        'searchright;help;import' {
+            [CompletionResult]::new('records', 'records', [CompletionResultType]::ParameterValue, 'Import bibliographic records and preserve source provenance')
+            [CompletionResult]::new('export-records', 'export-records', [CompletionResultType]::ParameterValue, 'Export canonical records with a conversion receipt')
+            [CompletionResult]::new('deduplicate', 'deduplicate', [CompletionResultType]::ParameterValue, 'Deduplicate records without deleting source records')
+            break
+        }
+        'searchright;help;import;records' {
+            break
+        }
+        'searchright;help;import;export-records' {
+            break
+        }
+        'searchright;help;import;deduplicate' {
+            break
+        }
+        'searchright;help;screen' {
+            [CompletionResult]::new('rank', 'rank', [CompletionResultType]::ParameterValue, 'Rank records for prioritisation without making exclusion decisions')
+            [CompletionResult]::new('study-graph', 'study-graph', [CompletionResultType]::ParameterValue, 'Validate and summarise explicit record-report-study linkage')
+            [CompletionResult]::new('validate-ranking-calibration', 'validate-ranking-calibration', [CompletionResultType]::ParameterValue, 'Validate ranking calibration and its no-auto-exclusion contract')
+            [CompletionResult]::new('living-diff', 'living-diff', [CompletionResultType]::ParameterValue, 'Compare parent and current result sets for a living review')
+            [CompletionResult]::new('validate-living-lineage', 'validate-living-lineage', [CompletionResultType]::ParameterValue, 'Validate living-update lineage contracts')
+            break
+        }
+        'searchright;help;screen;rank' {
+            break
+        }
+        'searchright;help;screen;study-graph' {
+            break
+        }
+        'searchright;help;screen;validate-ranking-calibration' {
+            break
+        }
+        'searchright;help;screen;living-diff' {
+            break
+        }
+        'searchright;help;screen;validate-living-lineage' {
+            break
+        }
+        'searchright;help;report' {
+            [CompletionResult]::new('prisma', 'prisma', [CompletionResultType]::ParameterValue, 'Validate or render a PRISMA flow contract')
+            [CompletionResult]::new('provenance', 'provenance', [CompletionResultType]::ParameterValue, 'Build RO-Crate and W3C PROV-compatible exports')
+            [CompletionResult]::new('render-diagnostics', 'render-diagnostics', [CompletionResultType]::ParameterValue, 'Render stable accessible diagnostics without ANSI-dependent output')
+            break
+        }
+        'searchright;help;report;prisma' {
+            break
+        }
+        'searchright;help;report;provenance' {
+            break
+        }
+        'searchright;help;report;render-diagnostics' {
+            break
+        }
+        'searchright;help;completions' {
+            break
+        }
+        'searchright;help;manpage' {
+            break
+        }
+        'searchright;help;validate-plan' {
+            break
+        }
+        'searchright;help;validate-strategy' {
+            break
+        }
+        'searchright;help;validate-document-evidence' {
+            break
+        }
+        'searchright;help;compile' {
+            break
+        }
+        'searchright;help;deduplicate' {
+            break
+        }
+        'searchright;help;prisma' {
+            break
+        }
+        'searchright;help;verify-audit' {
+            break
+        }
+        'searchright;help;import-records' {
+            break
+        }
+        'searchright;help;export-records' {
+            break
+        }
+        'searchright;help;study-graph' {
+            break
+        }
+        'searchright;help;validate-search' {
+            break
+        }
+        'searchright;help;living-diff' {
+            break
+        }
+        'searchright;help;validate-living-lineage' {
+            break
+        }
+        'searchright;help;provenance' {
+            break
+        }
+        'searchright;help;rank' {
+            break
+        }
+        'searchright;help;inspect-content' {
+            break
+        }
+        'searchright;help;render-diagnostics' {
+            break
+        }
+        'searchright;help;evaluate-governance' {
+            break
+        }
+        'searchright;help;authorise-endpoint' {
+            break
+        }
+        'searchright;help;validate-amendment' {
+            break
+        }
+        'searchright;help;validate-standard-pack' {
+            break
+        }
+        'searchright;help;validate-standard-assessment' {
+            break
+        }
+        'searchright;help;validate-ranking-calibration' {
+            break
+        }
+        'searchright;help;validate-discovery-run' {
+            break
+        }
+        'searchright;help;verify-workflow-trace' {
+            break
+        }
+        'searchright;help;discovery-candidates' {
+            break
+        }
+        'searchright;help;verify-provider-component' {
+            break
+        }
+        'searchright;help;plan-licensed-request' {
+            break
+        }
+        'searchright;help;validate-benchmark-report' {
+            break
+        }
+        'searchright;help;providers' {
+            break
+        }
+        'searchright;help;workflow' {
+            break
+        }
+        'searchright;help;help' {
+            break
+        }
+    })
+
+    $completions.Where{ $_.CompletionText -like "$wordToComplete*" } |
+        Sort-Object -Property ListItemText
+}
