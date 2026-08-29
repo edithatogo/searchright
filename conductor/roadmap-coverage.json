@@ -609,6 +609,10 @@
         {
           "commit": "c1414d5cb592c67a544f0c9390fa0e9e7fd41411",
           "summary": "Refresh the locked searchright package dependency list after removing the redundant UUID declaration so locked builds remain reproducible."
+        },
+        {
+          "commit": "e1cbf61522c065f0743c4f3186c9c96de2859499",
+          "summary": "Scope the GitHub CLI authentication preflight to github.com so unrelated configured enterprise-host credentials cannot block the required read-only control-plane audit."
         }
       ],
       "runtime_evidence": [
