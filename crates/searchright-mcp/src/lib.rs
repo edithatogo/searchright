@@ -1159,7 +1159,8 @@ impl SearchrightServer {
     }
 }
 
-#[expect(
+#[allow(
+    unknown_lints,
     clippy::unused_async_trait_impl,
     reason = "rmcp ServerHandler trait specifies async functions"
 )]

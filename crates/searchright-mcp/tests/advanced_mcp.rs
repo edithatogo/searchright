@@ -132,7 +132,8 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
 #[derive(Clone)]
 struct AcknowledgingClient;
 
-#[expect(
+#[allow(
+    unknown_lints,
     clippy::unused_async_trait_impl,
     reason = "rmcp ClientHandler trait specifies async functions"
 )]
