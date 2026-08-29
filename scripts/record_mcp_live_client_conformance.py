@@ -42,6 +42,9 @@ TRANSCRIPT_SPEC = {
     "success": "all tools advertised for each protocol era and both generate_prisma branches return schema-valid structuredContent",
     "governed_error": "semantically invalid validate_plan returns isError without structuredContent",
 }
+REPLACEABLE_RECEIPTS = {
+    f"verification/receipts/mcp-official-client-{version}.json" for version in TESTS
+}
 
 
 def source_revision() -> str:
@@ -66,9 +69,14 @@ def worktree_status() -> str:
 
 def require_clean_worktree() -> str:
     status = worktree_status()
-    if status:
+    source_status = "\n".join(
+        line
+        for line in status.splitlines()
+        if line[3:].split(" -> ")[-1] not in REPLACEABLE_RECEIPTS
+    )
+    if source_status:
         raise SystemExit("refusing to record MCP conformance receipts from a dirty worktree")
-    return sha256_bytes(status.encode("utf-8"))
+    return sha256_bytes(source_status.encode("utf-8"))
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -116,8 +124,8 @@ def run_test(test_name: str) -> tuple[list[str], subprocess.CompletedProcess[str
         TEST_TARGET,
         "--locked",
         test_name,
-        "--exact",
         "--",
+        "--exact",
         "--nocapture",
     ]
     with tempfile.TemporaryDirectory(prefix="searchright-mcp-receipt-") as store_root:
@@ -181,6 +189,7 @@ def receipt(
         "tracked_tree_clean": True,
         "tracked_status_sha256": worktree_status_sha256,
         "untracked_files_included_in_clean_check": True,
+        "replaceable_receipt_outputs_excluded_from_clean_check": sorted(REPLACEABLE_RECEIPTS),
         "assertions": [
             "protocol negotiation selects the requested supported era",
             "the typed client observes every tool advertised for its protocol era and each output schema",
