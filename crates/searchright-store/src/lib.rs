@@ -12,8 +12,8 @@ use evidence_search_core::{
     AuditLedger, AuditVerification, canonical_record_digest, verify_event_integrity,
 };
 use searchright_contracts::{
-    AuditEvent, BibliographicRecord, DecisionValue, ReviewerKind, ScreeningDecision,
-    ScreeningPolicy, SourceReceipt, Validate, validate_registered_audit_event,
+    AuditEvent, BibliographicRecord, ReviewerKind, ScreeningDecision, ScreeningPolicy,
+    SourceReceipt, Validate, validate_registered_audit_event,
 };
 use searchright_screening::{ScreeningBoard, is_exclusion_decision};
 use serde::{Deserialize, Serialize};
@@ -1000,7 +1000,7 @@ mod tests {
         decision_id: &str,
         reviewer_id: &str,
         reviewer_kind: ReviewerKind,
-        decision: DecisionValue,
+        decision: Dv,
     ) -> ScreeningDecision {
         ScreeningDecision {
             decision_id: decision_id.to_owned(),
@@ -1030,12 +1030,8 @@ mod tests {
     -> Result<(), Box<dyn std::error::Error>> {
         let directory = test_directory("screening-decision-restart-test");
         let policy = screening_policy();
-        let decision = screening_decision(
-            "decision-1",
-            "reviewer-1",
-            ReviewerKind::Human,
-            DecisionValue::Include,
-        );
+        let decision =
+            screening_decision("decision-1", "reviewer-1", ReviewerKind::Human, Dv::Include);
         let store = FileReviewStore::open(&directory)?;
         let first = store.append_screening_decision(&policy, &decision)?;
         assert_eq!(store.append_screening_decision(&policy, &decision)?, first);
@@ -1078,12 +1074,8 @@ mod tests {
         ));
         assert!(store.read_screening_decisions()?.is_empty());
 
-        let first = screening_decision(
-            "decision-1",
-            "reviewer-1",
-            ReviewerKind::Human,
-            DecisionValue::Include,
-        );
+        let first =
+            screening_decision("decision-1", "reviewer-1", ReviewerKind::Human, Dv::Include);
         store.append_screening_decision(&policy, &first)?;
         let conflict =
             screening_decision("decision-1", "reviewer-2", ReviewerKind::Human, Dv::Exclude);
@@ -1109,22 +1101,14 @@ mod tests {
         let directory = test_directory("screening-decision-policy-test");
         let policy = screening_policy();
         let store = FileReviewStore::open(&directory)?;
-        let decision = screening_decision(
-            "decision-1",
-            "reviewer-1",
-            ReviewerKind::Human,
-            DecisionValue::Include,
-        );
+        let decision =
+            screening_decision("decision-1", "reviewer-1", ReviewerKind::Human, Dv::Include);
         let relative = store.append_screening_decision(&policy, &decision)?;
 
         let mut changed_policy = policy;
         changed_policy.title_abstract_reviewers = 1;
-        let second = screening_decision(
-            "decision-2",
-            "reviewer-2",
-            ReviewerKind::Human,
-            DecisionValue::Include,
-        );
+        let second =
+            screening_decision("decision-2", "reviewer-2", ReviewerKind::Human, Dv::Include);
         assert!(matches!(
             store.append_screening_decision(&changed_policy, &second),
             Err(StoreError::InvalidScreeningDecision(_))
