@@ -3,11 +3,12 @@
 
 Parent phase key: `track-11-phase-4`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c`: Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries.
 
 ## Completion and evidence contract
 

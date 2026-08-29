@@ -63,5 +63,11 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [],
-  "external_evidence": []
+  "external_evidence": [],
+  "review_fixes": [
+    {
+      "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
+      "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
+    }
+  ]
 }
