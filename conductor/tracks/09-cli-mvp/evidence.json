@@ -2,28 +2,36 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "09",
   "title": "CLI MVP",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-08-29",
   "source_evidence": [
+    ".github/workflows/clean-room.yml",
+    "crates/searchright-cli/tests/cli_e2e.rs",
+    "crates/searchright-cli/tests/snapshots/",
     "crates/searchright-cli/src/main.rs",
     "crates/searchright/src/engine.rs",
     "contracts/interface-catalog.json",
-    "docs/adrs/0007-shared-application-facade.md"
+    "docs/adrs/0007-shared-application-facade.md",
+    "docs/cli-compatibility.md",
+    "scripts/check_cli_distribution.py"
   ],
   "traceability": "conductor/tracks/09-cli-mvp/traceability.json",
   "static_checks": [
+    "cargo test -p searchright-cli --locked",
+    "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
     "python scripts/validate_repository.py",
-    "python scripts/check_cli_mcp_parity.py"
+    "python scripts/check_cli_mcp_parity.py",
+    "python scripts/check_cli_distribution.py target/debug/searchright"
   ],
   "requirements": [
     "SR-028"
   ],
   "blockers": [
-    "Compile binaries and run cross-platform help, JSON, error and installation snapshots."
+    "Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "The grouped CLI hierarchy, stable JSON/error snapshots, dry-run/apply guard, completion and man-page generation, and local macOS build/install smoke are source-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-09",
@@ -45,6 +53,14 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
-  "external_evidence": []
+  "runtime_evidence": [
+    "verification/receipts/track-09-cli-review.json"
+  ],
+  "external_evidence": [],
+  "review_fixes": [
+    {
+      "commit": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
+      "summary": "Replace reflected parser failures with a stable non-sensitive JSON usage error while completing grouped CLI and distribution coverage."
+    }
+  ]
 }

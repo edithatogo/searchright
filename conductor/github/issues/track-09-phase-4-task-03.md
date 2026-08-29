@@ -3,11 +3,12 @@
 
 Parent phase key: `track-09-phase-4`
 Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e`: Replace reflected parser failures with a stable non-sensitive JSON usage error while completing grouped CLI and distribution coverage.
 
 ## Completion and evidence contract
 

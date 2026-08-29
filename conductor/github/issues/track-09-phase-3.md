@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Compile binaries and run cross-platform help, JSON, error and installation snapshots. (`track-09-phase-3-task-01`)
+- [ ] T01: Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision. (`track-09-phase-3-task-01`)
 
 ## Evidence rule
 

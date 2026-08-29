@@ -12,8 +12,8 @@ Expose stable scriptable operations through the shared application facade.
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `01, 02, 04, 05, 06, 07, 08`
 - Requirements: `SR-028`
@@ -28,6 +28,6 @@ Expose stable scriptable operations through the shared application facade.
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+The grouped CLI hierarchy, stable JSON/error snapshots, dry-run/apply guard, completion and man-page generation, and local macOS build/install smoke are source-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
