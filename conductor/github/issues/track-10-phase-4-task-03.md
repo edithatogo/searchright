@@ -8,6 +8,7 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `232003620e3a087f4025ca7a8e957f92cb169b51`: Close authority-boundary, immutable idempotency, exact source-preservation, structured-output, resource and prompt review findings while restoring architecture, source-structure and generated-state gates.
 
 ## Completion and evidence contract
 

@@ -585,6 +585,12 @@
       ],
       "higher_evidence_completed": true,
       "review_completed": true,
+      "review_fixes": [
+        {
+          "commit": "232003620e3a087f4025ca7a8e957f92cb169b51",
+          "summary": "Close authority-boundary, immutable idempotency, exact source-preservation, structured-output, resource and prompt review findings while restoring architecture, source-structure and generated-state gates."
+        }
+      ],
       "runtime_evidence": [
         "verification/receipts/mcp-2025-11-25-stdio.json",
         "verification/receipts/mcp-2026-07-28-stdio.json",
