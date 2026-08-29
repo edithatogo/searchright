@@ -2229,7 +2229,7 @@ mod tests {
             "operation_id": "mcp-endpoint-test",
             "review_id": "review-1",
             "network": "allowlisted_https",
-            "allowed_hosts": ["eutils.ncbi.nlm.nih.gov"],
+            "allowed_hosts": ["example.test"],
             "secret_handling": "environment_redacted",
             "full_text_handling": "metadata_only",
             "untrusted_content": "data_only",
@@ -2242,7 +2242,7 @@ mod tests {
         let result =
             SearchrightServer::default().authorise_endpoint(Parameters(EndpointInput {
                 envelope_json,
-                endpoint: format!("https://eutils.ncbi.nlm.nih.gov/path?api_key={secret}#fragment"),
+                endpoint: format!("https://example.test/path?api_key={secret}#fragment"),
             }))?;
         let encoded = serde_json::to_string(&result)?;
 
@@ -2252,7 +2252,7 @@ mod tests {
                 .structured_content
                 .as_ref()
                 .and_then(|value| value.get("endpoint")),
-            Some(&serde_json::json!("https://eutils.ncbi.nlm.nih.gov"))
+            Some(&serde_json::json!("https://example.test"))
         );
         assert!(!encoded.contains(secret));
         assert!(!encoded.contains("api_key"));
