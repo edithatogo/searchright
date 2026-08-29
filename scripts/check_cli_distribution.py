@@ -28,6 +28,19 @@ def normalise(value: str) -> str:
     return value.replace("\r\n", "\n")
 
 
+def normalise_help(value: str) -> str:
+    return normalise(value).replace("Usage: searchright.exe ", "Usage: searchright ")
+
+
+def help_normalisation_is_stable() -> bool:
+    return (
+        normalise_help("Usage: searchright.exe <COMMAND>\r\n")
+        == "Usage: searchright <COMMAND>\n"
+        and normalise_help("detail: searchright.exe remains literal\r\n")
+        == "detail: searchright.exe remains literal\n"
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("binary", type=Path)
@@ -39,9 +52,12 @@ def main() -> int:
             binary = executable
     errors: list[str] = []
 
+    if not help_normalisation_is_stable():
+        errors.append("help snapshot normalization self-test failed")
+
     help_result = invoke(binary, "--help")
     expected_help = (SNAPSHOTS / "help.txt").read_text(encoding="utf-8")
-    if help_result.returncode != 0 or normalise(help_result.stdout) != expected_help:
+    if help_result.returncode != 0 or normalise_help(help_result.stdout) != expected_help:
         errors.append("help output did not match the checked-in snapshot")
 
     with tempfile.TemporaryDirectory(prefix="searchright-cli-") as directory:
@@ -130,6 +146,7 @@ def main() -> int:
         "schema_version": "org.searchright.cli-distribution-check.v1",
         "status": "failed" if errors else "passed",
         "checks": [
+            "help_normalization_self_test",
             "help_snapshot",
             "dry_run_json",
             "no_clobber_apply_refusal",
