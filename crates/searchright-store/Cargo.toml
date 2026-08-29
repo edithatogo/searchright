@@ -13,6 +13,7 @@ blake3.workspace = true
 evidence-search-core = { path = "../evidence-search-core", version = "=0.1.0-alpha.1" }
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
 searchright-governance = { path = "../searchright-governance", version = "=0.1.0-alpha.1" }
+searchright-screening = { path = "../searchright-screening", version = "=0.1.0-alpha.1" }
 serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true

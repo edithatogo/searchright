@@ -3,11 +3,11 @@
 
 Parent phase key: `track-10-phase-3`
 Conductor plan: `conductor/tracks/10-mcp-mvp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.
+- [x] Complete the contracted planning, fixture-execution and screening authority paths through an opaque trusted-host verifier while default MCP and CLI adapters fail closed.
 
 ## Completion and evidence contract
 

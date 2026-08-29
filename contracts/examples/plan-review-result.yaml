@@ -1,0 +1,59 @@
+schema_version: org.searchright.plan-review-result.v1
+plan:
+  schema_version: org.searchright.review-plan.v1
+  review_id: result-example
+  title: Example review plan
+  review_kind: systematic
+  question:
+    text: What evidence is eligible?
+    framework:
+      kind: pico
+      elements:
+        population: People
+        intervention: Intervention
+        comparison: Comparator
+        outcome: Outcome
+    notes: []
+  objectives:
+    - Identify eligible evidence.
+  eligibility:
+    version: "1"
+    include:
+      - id: eligible
+        domain: population
+        rule: Includes the population of interest.
+        rationale: Matches the review question.
+        stage: any
+        priority: 1
+    exclude: []
+  information_sources:
+    - id: source-1
+      name: Example source
+      platform: Example platform
+      kind: database
+      provider: fixture
+      required: true
+      access_notes: []
+  strategy_ids:
+    - strategy-1
+  protocol:
+    registry: null
+    identifier: null
+    version: "1"
+    amendments: []
+  governance:
+    title_abstract_reviewers: 2
+    full_text_reviewers: 2
+    press_review_required: true
+    protocol_amendment_roles:
+      - review_lead
+    conflict_resolution: Human adjudication.
+assessment:
+  review_id: result-example
+  findings: []
+  ready_for_strategy_design: true
+persistence:
+  applied: false
+  object_id: null
+  digest: null
+  confirmed_by: null

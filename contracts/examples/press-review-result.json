@@ -1,0 +1,18 @@
+{
+  "schema_version": "org.searchright.press-review-result.v1",
+  "review": {
+    "press_review_id": "press-1",
+    "strategy_id": "strategy-medline-v1",
+    "strategy_version": "1.0",
+    "reviewer_id": "information-specialist-2",
+    "reviewed_at": "2026-08-06T00:00:00Z",
+    "findings": [],
+    "decision": "approved"
+  },
+  "persistence": {
+    "applied": false,
+    "object_id": null,
+    "digest": null,
+    "confirmed_by": null
+  }
+}

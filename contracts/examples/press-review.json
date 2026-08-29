@@ -1,0 +1,18 @@
+{
+  "press_review_id": "press-1",
+  "strategy_id": "strategy-medline-v1",
+  "strategy_version": "1.0",
+  "reviewer_id": "information-specialist-2",
+  "reviewed_at": "2026-08-06T00:00:00Z",
+  "findings": [
+    {
+      "finding_id": "finding-1",
+      "element": "limits_and_filters",
+      "severity": "advisory",
+      "message": "No language limit is applied.",
+      "recommendation": "Retain no language limit and document translation plans.",
+      "resolved": true
+    }
+  ],
+  "decision": "approved with advisory note"
+}

@@ -362,12 +362,42 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "plan-review-result",
+      "schema": "contracts/json-schema/plan-review-result.v1.schema.json",
+      "example": "contracts/examples/plan-review-result.yaml",
+      "schema_id": "https://schemas.searchright.dev/plan-review-result.v1.schema.json",
+      "rust_type": "PlanReviewOutcome",
+      "owner_track": "10",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "prisma-flow",
       "schema": "contracts/json-schema/prisma-flow.v1.schema.json",
       "example": "contracts/examples/prisma-flow.json",
       "schema_id": "https://schemas.searchright.dev/prisma-flow.v1.schema.json",
       "rust_type": "PrismaFlow",
       "owner_track": "08",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "press-review",
+      "schema": "contracts/json-schema/press-review.v1.schema.json",
+      "example": "contracts/examples/press-review.json",
+      "schema_id": "https://schemas.searchright.dev/press-review.v1.schema.json",
+      "rust_type": "PressReview",
+      "owner_track": "08",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "press-review-result",
+      "schema": "contracts/json-schema/press-review-result.v1.schema.json",
+      "example": "contracts/examples/press-review-result.json",
+      "schema_id": "https://schemas.searchright.dev/press-review-result.v1.schema.json",
+      "rust_type": "PressReviewOutcome",
+      "owner_track": "10",
       "stability": "alpha",
       "evidence_level": "static_verified"
     },

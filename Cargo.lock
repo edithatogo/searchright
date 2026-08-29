@@ -1919,8 +1919,13 @@ dependencies = [
  "searchright-validation",
  "serde",
  "serde_json",
+ "serde_yaml",
+ "sha2 0.11.0",
  "thiserror",
+ "time",
+ "tokio",
  "url",
+ "uuid",
 ]
 
 [[package]]
@@ -1982,6 +1987,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_yaml",
+ "tokio",
 ]
 
 [[package]]
@@ -2007,6 +2013,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2 0.11.0",
+ "time",
 ]
 
 [[package]]
@@ -2105,7 +2112,9 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_yaml",
+ "sha2 0.11.0",
  "thiserror",
+ "time",
  "tokio",
  "tokio-util",
  "tracing-subscriber",
@@ -2200,6 +2209,7 @@ dependencies = [
  "evidence-search-core",
  "searchright-contracts",
  "searchright-governance",
+ "searchright-screening",
  "serde",
  "serde_json",
  "sha2 0.11.0",

@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "805b6eb8ed5a90bcc544aa682f8bd6937ed7d70735d19b5d208e8d7fa7173090",
-      "size": 611625
+      "sha256": "9e56b5395befa1e0d2a9e304e40385755af1f6624490e2a632410877fb48f761",
+      "size": 611637
     },
     {
       "path": "conductor/github/project.json",
@@ -53,8 +53,8 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "c70f571a51e7ac7ba0d2f95aa1b0d0690dfbbaa9731b81276e648fcb9d2e29d6",
-      "size": 86144
+      "sha256": "54b13e5d728022dae5d5bddfbd356efddd50ae3c20b7caaa7e52d888a5995ede",
+      "size": 87077
     },
     {
       "path": "conductor/traceability-overrides.json",
@@ -88,8 +88,8 @@
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "d8b8ba86ec6be42770e2217dbe46b375e3767eed498726a5f4b5b08c4e94efdf",
-      "size": 24593
+      "sha256": "110548edef42d11ac782009c9eba0fde0d7324c850d81c720193b5a8be282bac",
+      "size": 25616
     },
     {
       "path": "contracts/migrations/registry.json",
@@ -98,8 +98,8 @@
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "491dad492a52bcf77436f83bc8477e18634042d0c4b69ed1dfc8d9c8df2a90a4",
-      "size": 27922
+      "sha256": "c4a0fafb8246a6d9dd188e4d7d17c6cb5d511da0f8fb310d49efc26de05a9b1e",
+      "size": 29127
     },
     {
       "path": "docs/safety/safety-case.md",
@@ -123,7 +123,7 @@
     },
     {
       "path": "integration/ecosystem-lock.json",
-      "sha256": "ee31adc0957e055e67767bc9eddd0a047db460ad5b0cd9ec43effd309ae72c77",
+      "sha256": "bdfd4642c3948374e8969ec04ed3e157bee0bc2740ec573879822701b1241a9a",
       "size": 2784
     },
     {

@@ -4,6 +4,11 @@ Usage: searchright <COMMAND>
 
 Commands:
   init                          Preview or apply creation of a conservative local CLI configuration
+  plan-review                   Validate and optionally persist a human-confirmed review-plan draft
+  press-review-strategy         Validate and optionally persist human-confirmed PRESS evidence
+  execute-search                Preview or apply deterministic fixture execution under an envelope
+  record-screening-decision     Persist one complete screening decision under the supplied role
+                                policy
   plan                          Review-plan operations
   source                        Source and provider operations
   strategy                      Search-strategy operations

@@ -10,8 +10,8 @@
       "event_type": "execution_committed",
       "current_payload_version": 1,
       "legacy_unversioned_payload_version": 1,
-      "allowed_payload_keys": ["_schema_version", "commit_id", "receipt_id", "record_count", "run_id"],
-      "payload_field_types": {"_schema_version": "integer", "commit_id": "string", "receipt_id": "string", "record_count": "integer", "run_id": "string"},
+      "allowed_payload_keys": ["_schema_version", "binding_digest", "commit_id", "receipt_id", "record_count", "run_id"],
+      "payload_field_types": {"_schema_version": "integer", "binding_digest": "string", "commit_id": "string", "receipt_id": "string", "record_count": "integer", "run_id": "string"},
       "versions": [{"version": 1, "status": "current"}],
       "migrations": []
     },

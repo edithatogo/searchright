@@ -43,6 +43,41 @@ fn dry_run_json_matches_the_stable_snapshot_without_writing() {
 }
 
 #[test]
+fn review_previews_do_not_create_the_local_store() {
+    let unique = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_else(|error| panic!("system clock must follow the epoch: {error}"))
+        .as_nanos();
+    let store = std::env::temp_dir().join(format!(
+        "searchright-cli-preview-{}-{unique}",
+        std::process::id()
+    ));
+    let store_argument = store.to_string_lossy().into_owned();
+    let repository = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .and_then(std::path::Path::parent)
+        .unwrap_or_else(|| panic!("workspace root must contain the CLI crate"));
+
+    for (command, example) in [
+        ("plan-review", "contracts/examples/review-plan.yaml"),
+        (
+            "press-review-strategy",
+            "contracts/examples/press-review.json",
+        ),
+    ] {
+        let input = repository.join(example);
+        let input_argument = input.to_string_lossy();
+        let output = run(&[command, &input_argument, "--store", &store_argument]);
+        assert!(
+            output.status.success(),
+            "{command} failed: {}",
+            text(&output.stderr)
+        );
+        assert!(!store.exists(), "{command} preview created the local store");
+    }
+}
+
+#[test]
 fn apply_creates_once_and_refusal_preserves_exact_bytes() {
     let unique = SystemTime::now()
         .duration_since(UNIX_EPOCH)

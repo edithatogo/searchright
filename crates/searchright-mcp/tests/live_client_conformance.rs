@@ -15,14 +15,29 @@ use rmcp::{
     service::RoleClient,
 };
 use searchright_mcp::live_client_success_cases;
-use std::{collections::BTreeMap, process::Stdio};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    io::Write,
+    process::Stdio,
+    time::{SystemTime, UNIX_EPOCH},
+};
 use tokio::process::{ChildStdin, ChildStdout, Command};
 
 type ClientService = rmcp::service::RunningService<RoleClient, ClientInfo>;
 type ChildTransport = (ChildStdout, ChildStdin);
 
 fn child_transport() -> anyhow::Result<ChildTransport> {
+    let store_root = if let Some(configured) = std::env::var_os("SEARCHRIGHT_MCP_STORE_ROOT") {
+        std::path::PathBuf::from(configured)
+    } else {
+        let unique = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
+        std::env::temp_dir().join(format!(
+            "searchright-track10-live-client-{}-{unique}",
+            std::process::id()
+        ))
+    };
     let mut child = Command::new(env!("CARGO_BIN_EXE_searchright-mcp"))
+        .env("SEARCHRIGHT_MCP_STORE_ROOT", store_root)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::null())
@@ -226,7 +241,10 @@ fn observed_type_matches(value: &serde_json::Value, expected: &str) -> bool {
     }
 }
 
-async fn assert_every_success_path(client: &ClientService) -> anyhow::Result<()> {
+async fn assert_every_success_path(
+    client: &ClientService,
+    expected_omitted: &[&str],
+) -> anyhow::Result<usize> {
     let advertised = client
         .list_tools(None)
         .await?
@@ -245,11 +263,31 @@ async fn assert_every_success_path(client: &ClientService) -> anyhow::Result<()>
     let cases = live_client_success_cases().map_err(anyhow::Error::msg)?;
     assert_eq!(
         cases.len(),
-        32,
-        "31 tools plus the second PRISMA union branch"
+        36,
+        "35 tools plus the second PRISMA union branch"
     );
+    let advertised_names = advertised.keys().cloned().collect::<BTreeSet<_>>();
+    let case_names = cases
+        .iter()
+        .map(|case| case.tool_name.to_owned())
+        .collect::<BTreeSet<_>>();
+    let omitted = case_names
+        .difference(&advertised_names)
+        .map(String::as_str)
+        .collect::<Vec<_>>();
+    assert_eq!(omitted, expected_omitted);
     let mut failures = Vec::new();
+    let mut invoked = 0;
     for case in cases {
+        if !advertised.contains_key(case.tool_name) {
+            continue;
+        }
+        if case.tool_name == "record_screening_decision" {
+            // The standalone stdio binary intentionally has no trusted host
+            // authority verifier, so its only always-write tool must fail closed.
+            continue;
+        }
+        invoked += 1;
         let response = client
             .peer()
             .call_tool_once(
@@ -267,11 +305,31 @@ async fn assert_every_success_path(client: &ClientService) -> anyhow::Result<()>
         }
     }
     anyhow::ensure!(failures.is_empty(), "{}", failures.join("\n"));
-    Ok(())
+    Ok(invoked)
 }
 
-fn assert_complete_advertised_catalogue(tools: &[rmcp::model::Tool]) {
-    assert_eq!(tools.len(), 31);
+fn report_observed_conformance(
+    protocol_version: &str,
+    tools: &[rmcp::model::Tool],
+    successes: usize,
+) {
+    let tool_names = tools
+        .iter()
+        .map(|tool| tool.name.as_ref())
+        .collect::<Vec<_>>();
+    let observation = format!(
+        "SEARCHRIGHT_MCP_CONFORMANCE {}\n",
+        serde_json::json!({
+            "protocol_version": protocol_version,
+            "advertised_tools": tool_names,
+            "success_cases_validated": successes,
+        })
+    );
+    let _write_result = std::io::stdout().write_all(observation.as_bytes());
+}
+
+fn assert_complete_advertised_catalogue(tools: &[rmcp::model::Tool], expected: usize) {
+    assert_eq!(tools.len(), expected);
     let names = tools
         .iter()
         .map(|tool| tool.name.as_ref())
@@ -309,9 +367,12 @@ async fn official_rmcp_current_client_consumes_structured_results_and_governed_e
         .peer_info()
         .ok_or_else(|| anyhow::anyhow!("current server peer information is absent"))?;
     assert_eq!(peer.protocol_version, ProtocolVersion::V_2026_07_28);
-    assert_complete_advertised_catalogue(&client.list_tools(None).await?.tools);
+    let tools = client.list_tools(None).await?.tools;
+    assert_complete_advertised_catalogue(&tools, 35);
 
-    assert_every_success_path(&client).await?;
+    let successes = assert_every_success_path(&client, &[]).await?;
+    assert_eq!(successes, 35);
+    report_observed_conformance("2026-07-28", &tools, successes);
 
     let governed_error = client
         .peer()
@@ -338,9 +399,21 @@ async fn official_rmcp_previous_era_client_consumes_structured_results_and_gover
         .peer_info()
         .ok_or_else(|| anyhow::anyhow!("previous-era server peer information is absent"))?;
     assert_eq!(peer.protocol_version, ProtocolVersion::V_2025_11_25);
-    assert_complete_advertised_catalogue(&client.list_tools(None).await?.tools);
+    let tools = client.list_tools(None).await?.tools;
+    assert_complete_advertised_catalogue(&tools, 31);
 
-    assert_every_success_path(&client).await?;
+    let successes = assert_every_success_path(
+        &client,
+        &[
+            "execute_search",
+            "plan_review",
+            "press_review_strategy",
+            "record_screening_decision",
+        ],
+    )
+    .await?;
+    assert_eq!(successes, 32);
+    report_observed_conformance("2025-11-25", &tools, successes);
 
     let governed_error = client
         .peer()

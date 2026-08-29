@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.searchright.dev/plan-review-result.v1.schema.json",
+  "title": "Searchright Plan Review Result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "plan", "assessment", "persistence"],
+  "properties": {
+    "schema_version": {"const": "org.searchright.plan-review-result.v1"},
+    "plan": {"$ref": "https://schemas.searchright.dev/review-plan.v1.schema.json"},
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["review_id", "findings", "ready_for_strategy_design"],
+      "properties": {
+        "review_id": {"type": "string", "minLength": 1},
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "blocking", "message"],
+            "properties": {
+              "code": {"type": "string", "minLength": 1},
+              "blocking": {"type": "boolean"},
+              "message": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "ready_for_strategy_design": {"type": "boolean"}
+      }
+    },
+    "persistence": {"$ref": "#/$defs/persistence"}
+  },
+  "$defs": {
+    "persistence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["applied", "object_id", "digest", "confirmed_by"],
+      "properties": {
+        "applied": {"type": "boolean"},
+        "object_id": {"type": ["string", "null"]},
+        "digest": {"type": ["string", "null"]},
+        "confirmed_by": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

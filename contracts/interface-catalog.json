@@ -2,6 +2,81 @@
   "schema_version": "org.searchright.interface-catalog.v1",
   "entries": [
     {
+      "operation": "plan-review",
+      "cli_variant": "PlanReview",
+      "mcp_tool": "plan_review",
+      "facade_method": "plan_review",
+      "authority": "human_confirmation",
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": "contracts/json-schema/plan-review-result.v1.schema.json"
+      }
+    },
+    {
+      "operation": "press-review-strategy",
+      "cli_variant": "PressReviewStrategy",
+      "mcp_tool": "press_review_strategy",
+      "facade_method": "press_review_strategy",
+      "authority": "human_confirmation",
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": "contracts/json-schema/press-review-result.v1.schema.json"
+      }
+    },
+    {
+      "operation": "execute-search",
+      "cli_variant": "ExecuteSearch",
+      "mcp_tool": "execute_search",
+      "facade_method": "execute_search",
+      "authority": "explicit_approval",
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "schema_version": {"const": "org.searchright.search-run.v1"},
+          "review_id": {"type": "string"},
+          "run_id": {"type": "string"},
+          "purpose": {"type": "string"},
+          "started_at": {"type": "string"},
+          "completed_at": {"type": ["string", "null"]},
+          "receipts": {"type": "array", "items": {"type": "object"}},
+          "supersedes_run_id": {"type": ["string", "null"]}
+        },
+        "required": ["schema_version", "review_id", "run_id", "purpose", "started_at", "completed_at", "receipts", "supersedes_run_id"]
+      }
+    },
+    {
+      "operation": "record-screening-decision",
+      "cli_variant": "RecordScreeningDecision",
+      "mcp_tool": "record_screening_decision",
+      "facade_method": "record_screening_decision",
+      "authority": "role_policy",
+      "stability": "alpha",
+      "output_contract": {
+        "root": "object",
+        "schema": null,
+        "fields": {
+          "decision_id": {"type": "string"},
+          "review_id": {"type": "string"},
+          "subject_id": {"type": "string"},
+          "round": {"type": "string"},
+          "reviewer_id": {"type": "string"},
+          "reviewer_kind": {"type": "string"},
+          "decision": {"type": "string"},
+          "exclusion_reason": {"type": ["object", "null"]},
+          "confidence": {"type": ["number", "null"]},
+          "decided_at": {"type": "string"},
+          "rationale": {"type": "string"},
+          "eligibility_version": {"type": "string"},
+          "agent_provenance": {"type": ["string", "null"]}
+        },
+        "required": ["decision_id", "review_id", "subject_id", "round", "reviewer_id", "reviewer_kind", "decision", "exclusion_reason", "confidence", "decided_at", "rationale", "eligibility_version", "agent_provenance"]
+      }
+    },
+    {
       "operation": "validate-plan",
       "cli_variant": "ValidatePlan",
       "mcp_tool": "validate_plan",

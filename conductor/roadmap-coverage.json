@@ -541,21 +541,26 @@
       "updated": "2026-08-29"
     },
     {
-      "blockers": [
-        "Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.",
-        "Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
         "python scripts/mcp_smoke.py target/debug/searchright-mcp",
         "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary for consequential effects. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.",
       "deliverables": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/effect_policy.rs",
         "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/advanced_mcp.rs",
         "crates/searchright-mcp/tests/live_client_conformance.rs",
+        "crates/searchright/src/authority.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-store/src/lib.rs",
+        "contracts/json-schema/plan-review-result.v1.schema.json",
+        "contracts/json-schema/press-review-result.v1.schema.json",
+        "contracts/json-schema/press-review.v1.schema.json",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
         "docs/mcp-compatibility.md",
@@ -569,11 +574,17 @@
       "evidence_level": "compiler_verified",
       "external_approval_required": false,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Expose typed, authority-annotated MCP tools over the same facade with stable structured outputs.",
       "requirements": [
         "SR-029"
       ],
+      "completed_higher_evidence_gates": [
+        "Complete the contracted planning, fixture-execution and screening authority paths through an opaque trusted-host verifier while default MCP and CLI adapters fail closed.",
+        "Extend bounded local resources and prompts to plan, run, queue, report and update-workflow contract metadata with no canonical authority claim."
+      ],
+      "higher_evidence_completed": true,
+      "review_completed": true,
       "runtime_evidence": [
         "verification/receipts/mcp-2025-11-25-stdio.json",
         "verification/receipts/mcp-2026-07-28-stdio.json",
@@ -581,9 +592,11 @@
         "verification/receipts/mcp-official-client-2026-07-28.json"
       ],
       "slug": "mcp-mvp",
-      "status": "partially_implemented",
+      "source_verified_on": "2026-08-30",
+      "status": "source_implemented",
       "title": "MCP stdio server MVP",
-      "track_id": "10"
+      "track_id": "10",
+      "updated": "2026-08-30"
     },
     {
       "blockers": [

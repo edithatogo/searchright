@@ -1,6 +1,6 @@
 # Plan: 10 MCP stdio server MVP
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **compiler_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **compiler_verified**.
 
 GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,10 +8,18 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-10-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-mcp/src/main.rs`
+  - [x] Present source path: `crates/searchright-mcp/src/effect_policy.rs`
   - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
+  - [x] Present source path: `crates/searchright-mcp/tests/advanced_mcp.rs`
   - [x] Present source path: `crates/searchright-mcp/tests/live_client_conformance.rs`
+  - [x] Present source path: `crates/searchright/src/authority.rs`
+  - [x] Present source path: `crates/searchright/src/engine.rs`
+  - [x] Present source path: `crates/searchright-store/src/lib.rs`
+  - [x] Present source path: `contracts/json-schema/plan-review-result.v1.schema.json`
+  - [x] Present source path: `contracts/json-schema/press-review-result.v1.schema.json`
+  - [x] Present source path: `contracts/json-schema/press-review.v1.schema.json`
   - [x] Present source path: `contracts/mcp/tool-catalog.json`
   - [x] Present source path: `contracts/interface-catalog.json`
   - [x] Present source path: `docs/mcp-compatibility.md`
@@ -35,8 +43,8 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-10-phase-3 -->
 
-- [ ] Complete the remaining contracted planning, execution and screening tool authority paths before claiming the full Track 10 surface complete.
-- [ ] Extend the bounded local resources and prompts to the plan, run, queue, report and update-workflow coverage named by the Track 10 specification.
+- [x] Complete the contracted planning, fixture-execution and screening authority paths through an opaque trusted-host verifier while default MCP and CLI adapters fail closed.
+- [x] Extend bounded local resources and prompts to plan, run, queue, report and update-workflow contract metadata with no canonical authority claim.
 
 ## Phase 4: Review and closeout
 
@@ -44,5 +52,5 @@ GitHub issue key: `track-10`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

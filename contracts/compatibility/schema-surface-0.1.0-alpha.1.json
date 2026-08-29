@@ -293,6 +293,30 @@
       "owner_track": "02"
     },
     {
+      "id": "plan-review-result",
+      "schema_id": "https://schemas.searchright.dev/plan-review-result.v1.schema.json",
+      "path": "contracts/json-schema/plan-review-result.v1.schema.json",
+      "sha256": "9f2715e7d821bb9e6167303c7707a20267e77a36be4361fa6cdcd060d26da078",
+      "stability": "alpha",
+      "owner_track": "10"
+    },
+    {
+      "id": "press-review",
+      "schema_id": "https://schemas.searchright.dev/press-review.v1.schema.json",
+      "path": "contracts/json-schema/press-review.v1.schema.json",
+      "sha256": "ac69ed9109166ccd3cb3c0cde60aec465d13c23ee3eb91095195061e993648fd",
+      "stability": "alpha",
+      "owner_track": "08"
+    },
+    {
+      "id": "press-review-result",
+      "schema_id": "https://schemas.searchright.dev/press-review-result.v1.schema.json",
+      "path": "contracts/json-schema/press-review-result.v1.schema.json",
+      "sha256": "15b4b9d08ca8cb2da0623f89eb45801518309c00d8390b1a7cb13bc63d91c505",
+      "stability": "alpha",
+      "owner_track": "10"
+    },
+    {
       "id": "prisma-flow",
       "schema_id": "https://schemas.searchright.dev/prisma-flow.v1.schema.json",
       "path": "contracts/json-schema/prisma-flow.v1.schema.json",

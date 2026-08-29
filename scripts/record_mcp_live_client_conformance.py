@@ -12,7 +12,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import subprocess
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,12 +26,20 @@ TESTS = {
 SOURCE_PATHS = (
     "Cargo.lock",
     "Cargo.toml",
+    "contracts/interface-catalog.json",
+    "contracts/mcp/tool-catalog.json",
+    "contracts/json-schema/press-review.v1.schema.json",
+    "crates/searchright/src/engine.rs",
+    "crates/searchright-store/src/lib.rs",
+    "crates/searchright-mcp/src/effect_policy.rs",
     "crates/searchright-mcp/src/lib.rs",
+    "crates/searchright-mcp/tests/advanced_mcp.rs",
     "crates/searchright-mcp/tests/live_client_conformance.rs",
+    "scripts/record_mcp_live_client_conformance.py",
 )
 TRANSCRIPT_SPEC = {
     "catalogue": "tools/list through official rmcp typed client",
-    "success": "all 31 tools and both generate_prisma branches return schema-valid structuredContent",
+    "success": "all tools advertised for each protocol era and both generate_prisma branches return schema-valid structuredContent",
     "governed_error": "semantically invalid validate_plan returns isError without structuredContent",
 }
 
@@ -44,9 +54,9 @@ def source_revision() -> str:
     ).stdout.strip()
 
 
-def tracked_status() -> str:
+def worktree_status() -> str:
     return subprocess.run(
-        ["git", "status", "--porcelain", "--untracked-files=no"],
+        ["git", "status", "--porcelain=v1", "--untracked-files=all"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -54,12 +64,10 @@ def tracked_status() -> str:
     ).stdout
 
 
-def require_clean_tracked_tree() -> str:
-    status = tracked_status()
+def require_clean_worktree() -> str:
+    status = worktree_status()
     if status:
-        raise SystemExit(
-            "refusing to record MCP conformance receipts from a dirty tracked tree"
-        )
+        raise SystemExit("refusing to record MCP conformance receipts from a dirty worktree")
     return sha256_bytes(status.encode("utf-8"))
 
 
@@ -79,14 +87,9 @@ def binary_path() -> Path | None:
     return next((candidate for candidate in candidates if candidate.is_file()), None)
 
 
-def advertised_tools() -> list[str]:
-    catalogue = json.loads((ROOT / "contracts/interface-catalog.json").read_text(encoding="utf-8"))
-    return sorted(entry["mcp_tool"] for entry in catalogue["entries"])
-
-
-def bindings(protocol_version: str) -> dict[str, object]:
+def bindings(protocol_version: str, observed: dict[str, object]) -> dict[str, object]:
     binary = binary_path()
-    tools = advertised_tools()
+    tools = observed["advertised_tools"]
     transcript = {"protocol_version": protocol_version, **TRANSCRIPT_SPEC, "tools": tools}
     return {
         "source_revision": source_revision(),
@@ -114,23 +117,54 @@ def run_test(test_name: str) -> tuple[list[str], subprocess.CompletedProcess[str
         "--locked",
         test_name,
         "--exact",
+        "--",
+        "--nocapture",
     ]
-    return command, subprocess.run(
-        command,
-        cwd=ROOT,
-        check=False,
-        capture_output=True,
-        text=True,
-    )
+    with tempfile.TemporaryDirectory(prefix="searchright-mcp-receipt-") as store_root:
+        environment = os.environ.copy()
+        environment["SEARCHRIGHT_MCP_STORE_ROOT"] = store_root
+        return command, subprocess.run(
+            command,
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+            env=environment,
+        )
+
+
+def observed_conformance(stdout: str, protocol_version: str) -> dict[str, object]:
+    prefix = "SEARCHRIGHT_MCP_CONFORMANCE "
+    observations = [
+        json.loads(line.removeprefix(prefix))
+        for line in stdout.splitlines()
+        if line.startswith(prefix)
+    ]
+    if len(observations) != 1 or observations[0].get("protocol_version") != protocol_version:
+        raise ValueError(f"missing unique conformance observation for {protocol_version}")
+    observation = observations[0]
+    tools = observation.get("advertised_tools")
+    successes = observation.get("success_cases_validated")
+    if not isinstance(tools, list) or not all(isinstance(tool, str) for tool in tools):
+        raise ValueError("conformance observation has invalid advertised_tools")
+    if tools != sorted(set(tools)):
+        raise ValueError("conformance observation tools are not unique and sorted")
+    if not isinstance(successes, int) or successes < len(tools):
+        raise ValueError("conformance observation has invalid success count")
+    return observation
 
 
 def receipt(
     protocol_version: str,
     test_name: str,
-    tracked_status_sha256: str,
+    worktree_status_sha256: str,
 ) -> dict[str, object]:
     command, completed = run_test(test_name)
     status = "passed" if completed.returncode == 0 else "failed"
+    observed = observed_conformance(completed.stdout, protocol_version) if status == "passed" else {
+        "advertised_tools": [],
+        "success_cases_validated": 0,
+    }
     return {
         "schema_version": "org.searchright.mcp-official-client-receipt.v1",
         "status": status,
@@ -143,13 +177,14 @@ def receipt(
         "test_name": test_name,
         "command": command,
         "exit_code": completed.returncode,
-        "bindings": bindings(protocol_version),
+        "bindings": bindings(protocol_version, observed),
         "tracked_tree_clean": True,
-        "tracked_status_sha256": tracked_status_sha256,
+        "tracked_status_sha256": worktree_status_sha256,
+        "untracked_files_included_in_clean_check": True,
         "assertions": [
             "protocol negotiation selects the requested supported era",
-            "the typed client observes all 31 advertised tools and their output schemas",
-            "all 31 successful tool paths expose structuredContent matching outputSchema",
+            "the typed client observes every tool advertised for its protocol era and each output schema",
+            "every advertised successful tool path exposes structuredContent matching outputSchema",
             "both generate_prisma union branches match the advertised outputSchema",
             "a malformed request remains a governed tool error without structuredContent",
         ],
@@ -157,8 +192,8 @@ def receipt(
             "This is local child-process stdio evidence, not an authenticated remote MCP deployment receipt.",
             "This does not establish third-party client interoperability beyond the official rmcp SDK version pinned by the workspace.",
         ],
-        "advertised_tools_validated": 31,
-        "success_cases_validated": 32,
+        "advertised_tools_validated": len(observed["advertised_tools"]),
+        "success_cases_validated": observed["success_cases_validated"],
         "stdout_sha256": sha256_bytes(completed.stdout.encode("utf-8")),
         "stderr_sha256": sha256_bytes(completed.stderr.encode("utf-8")),
     }
@@ -172,9 +207,9 @@ def main() -> int:
         help="write per-era receipts here; omit for JSON-only dry run",
     )
     args = parser.parse_args()
-    tracked_status_sha256 = require_clean_tracked_tree()
+    worktree_status_sha256 = require_clean_worktree()
     receipts = {
-        version: receipt(version, test, tracked_status_sha256)
+        version: receipt(version, test, worktree_status_sha256)
         for version, test in TESTS.items()
     }
     document = json.dumps(receipts, indent=2, sort_keys=True) + "\n"
