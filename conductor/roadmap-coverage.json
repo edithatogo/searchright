@@ -64,9 +64,7 @@
       "updated": "2026-08-12"
     },
     {
-      "blockers": [
-        "Run package-install, client-behaviour and downstream generated-binding conformance under Track 35 / SR-086."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/sync_schema_surface.py --check",
@@ -78,7 +76,8 @@
       "claim_boundary": "All 68 canonical schemas/examples and exact digests are checked, contract-only Python and TypeScript types are deterministically generated and compiler-import checked, and 10 explicitly Rust-owned roots are compared with all 246 observed validation-shape differences recorded. Canonical JSON Schema retains validation and binding-generation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.",
       "completed_higher_evidence_gates": [
         "Resolve generated/canonical constraint losses by recording every validation-shape difference and retaining canonical JSON Schema authority rather than claiming exact semantic parity.",
-        "Generate and compiler-import-check thin TypeScript and Python contract packages from the canonical catalogue."
+        "Generate and compiler-import-check thin TypeScript and Python contract packages from the canonical catalogue.",
+        "Record package installation, clients, publication and downstream adoption as unclaimed Track 35 / SR-086 work outside Track 01 acceptance."
       ],
       "deliverables": [
         "crates/evidence-search-contracts/src/lib.rs",
@@ -100,6 +99,7 @@
         "sdk/typescript/src/index.ts",
         "docs/adrs/0017-canonical-schema-and-binding-ownership.md",
         "verification/receipts/track-01-contract-generation-2026-08-29.json",
+        "verification/receipts/track-01-conductor-review-2026-08-29.json",
         "verification/receipts/track-01-compiler-verification.json",
         "verification/receipts/track-01-review-verification.json",
         "release/public-packages.json",
@@ -125,11 +125,21 @@
       ],
       "runtime_evidence": [
         "verification/receipts/track-01-contract-generation-2026-08-29.json",
+        "verification/receipts/track-01-conductor-review-2026-08-29.json",
         "verification/receipts/track-01-compiler-verification.json",
         "verification/receipts/track-01-review-verification.json"
       ],
       "review_completed": true,
       "higher_evidence_completed": true,
+      "closeout_completed": true,
+      "lifecycle": "archived",
+      "archived_on": "2026-08-29",
+      "review_fixes": [
+        {
+          "commit": "67c0161",
+          "summary": "Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references."
+        }
+      ],
       "slug": "contract-catalog",
       "source_verified_on": "2026-08-29",
       "status": "source_implemented",

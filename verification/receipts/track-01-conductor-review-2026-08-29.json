@@ -1,0 +1,37 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "01",
+  "observed_at": "2026-08-29T07:56:24Z",
+  "source_revision": "67c0161",
+  "status": "passed_after_remediation",
+  "findings": [
+    {
+      "severity": "high",
+      "status": "fixed",
+      "summary": "Duplicate Python and TypeScript declarations silently replaced schema-family types.",
+      "fix_commit": "67c0161"
+    },
+    {
+      "severity": "high",
+      "status": "fixed",
+      "summary": "Four cross-schema references degraded to unconstrained JsonValue fallbacks.",
+      "fix_commit": "67c0161"
+    }
+  ],
+  "checks": [
+    {
+      "command": "python3 scripts/generate_contract_bindings.py --check",
+      "status": "passed",
+      "contracts": 68,
+      "unresolved_references": 0
+    },
+    {
+      "command": "python3 scripts/check_contract_bindings.py",
+      "status": "passed",
+      "duplicate_python_declarations": 0,
+      "duplicate_typescript_declarations": 0
+    }
+  ],
+  "archive_boundary": "Track 01 contract catalogue and contract-only generation acceptance is complete. Package installation, clients, publication and downstream adoption remain unclaimed work owned by Track 35 / SR-086 and do not block semantic archival of Track 01.",
+  "external_mutations": false
+}

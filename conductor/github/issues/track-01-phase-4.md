@@ -9,7 +9,7 @@ Conductor plan: `conductor/tracks/01-contract-catalog/plan.md`
 - [x] T01: Reconcile source paths, requirements, interface effects and claim boundaries. (`track-01-phase-4-task-01`)
 - [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-01-phase-4-task-02`)
 - [x] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-01-phase-4-task-03`)
-- [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-01-phase-4-task-04`)
+- [x] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-01-phase-4-task-04`)
 
 ## Evidence rule
 

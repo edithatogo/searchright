@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Resolve generated/canonical constraint losses by recording every validation-shape difference and retaining canonical JSON Schema authority rather than claiming exact semantic parity.
+- [x] Generate and compiler-import-check thin TypeScript and Python contract packages from the canonical catalogue.
 
 ## Completion and evidence contract
 

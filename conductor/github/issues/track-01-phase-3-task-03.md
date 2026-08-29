@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Generate and compiler-import-check thin TypeScript and Python contract packages from the canonical catalogue.
+- [x] Record package installation, clients, publication and downstream adoption as unclaimed Track 35 / SR-086 work outside Track 01 acceptance.
 
 ## Completion and evidence contract
 

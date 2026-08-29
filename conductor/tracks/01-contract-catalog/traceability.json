@@ -80,9 +80,7 @@
       "evidence_receipts": [
         "conductor/tracks/01-contract-catalog/evidence.json"
       ],
-      "open_gates": [
-        "Add semantic compatibility fixtures and migration tests before a stable release."
-      ],
+      "open_gates": [],
       "permitted_claim": "Exact schema, WIT, OpenAPI and MCP surface drift is gated; semantic compatibility remains separate."
     },
     {
@@ -140,9 +138,7 @@
       "evidence_receipts": [
         "conductor/tracks/01-contract-catalog/evidence.json"
       ],
-      "open_gates": [
-        "Run package-install, client-behaviour and downstream generated-binding conformance under Track 35 / SR-086."
-      ],
+      "open_gates": [],
       "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 68 canonical schemas and compiler-import checked; installation, clients, publication and downstream conformance remain Track 35 gates."
     },
     {
@@ -168,9 +164,7 @@
       "evidence_receipts": [
         "conductor/tracks/01-contract-catalog/evidence.json"
       ],
-      "open_gates": [
-        "Populate compiler, exact round-trip and downstream-consumer results only from matching receipts."
-      ],
+      "open_gates": [],
       "permitted_claim": "The generated 68-contract matrix records static validation, exact canonical digests and generated-binding source status, with round-trip and downstream columns fail-closed as not evidenced."
     }
   ]

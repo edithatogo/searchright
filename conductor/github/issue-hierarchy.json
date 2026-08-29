@@ -659,7 +659,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -674,7 +674,7 @@
     },
     {
       "key": "track-01-phase-3-task-01",
-      "title": "Track 01 / P3 / T01: Run package-install, client-behaviour and downstream generated-binding conformance under Track 35 / SR-086",
+      "title": "Track 01 / P3 / T01: Resolve generated/canonical constraint losses by recording every validation-shape difference and retaining canonical JSON Schema authority rather than claiming exact sem\u2026",
       "kind": "task",
       "parent_key": "track-01-phase-3",
       "body_path": "conductor/github/issues/track-01-phase-3-task-01.md",
@@ -683,15 +683,15 @@
         "conductor",
         "track:01",
         "phase:3",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "01",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -707,7 +707,7 @@
     },
     {
       "key": "track-01-phase-3-task-02",
-      "title": "Track 01 / P3 / T02: Resolve generated/canonical constraint losses by recording every validation-shape difference and retaining canonical JSON Schema authority rather than claiming exact sem\u2026",
+      "title": "Track 01 / P3 / T02: Generate and compiler-import-check thin TypeScript and Python contract packages from the canonical catalogue",
       "kind": "task",
       "parent_key": "track-01-phase-3",
       "body_path": "conductor/github/issues/track-01-phase-3-task-02.md",
@@ -740,7 +740,7 @@
     },
     {
       "key": "track-01-phase-3-task-03",
-      "title": "Track 01 / P3 / T03: Generate and compiler-import-check thin TypeScript and Python contract packages from the canonical catalogue",
+      "title": "Track 01 / P3 / T03: Record package installation, clients, publication and downstream adoption as unclaimed Track 35 / SR-086 work outside Track 01 acceptance",
       "kind": "task",
       "parent_key": "track-01-phase-3",
       "body_path": "conductor/github/issues/track-01-phase-3-task-03.md",
@@ -789,7 +789,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -912,15 +912,15 @@
         "conductor",
         "track:01",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "01",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",

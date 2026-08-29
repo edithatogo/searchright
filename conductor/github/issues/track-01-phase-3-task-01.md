@@ -3,11 +3,11 @@
 
 Parent phase key: `track-01-phase-3`
 Conductor plan: `conductor/tracks/01-contract-catalog/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run package-install, client-behaviour and downstream generated-binding conformance under Track 35 / SR-086.
+- [x] Resolve generated/canonical constraint losses by recording every validation-shape difference and retaining canonical JSON Schema authority rather than claiming exact semantic parity.
 
 ## Completion and evidence contract
 

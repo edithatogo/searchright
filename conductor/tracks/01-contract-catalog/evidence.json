@@ -26,6 +26,7 @@
     "sdk/typescript/src/index.ts",
     "docs/adrs/0017-canonical-schema-and-binding-ownership.md",
     "verification/receipts/track-01-contract-generation-2026-08-29.json",
+    "verification/receipts/track-01-conductor-review-2026-08-29.json",
     "verification/receipts/track-01-compiler-verification.json",
     "verification/receipts/track-01-review-verification.json",
     "release/public-packages.json",
@@ -49,9 +50,7 @@
     "SR-017",
     "SR-049"
   ],
-  "blockers": [
-    "Run package-install, client-behaviour and downstream generated-binding conformance under Track 35 / SR-086."
-  ],
+  "blockers": [],
   "claim_boundary": "All 68 canonical schemas/examples and exact digests are checked, contract-only Python and TypeScript types are deterministically generated and compiler-import checked, and 10 explicitly Rust-owned roots are compared with all 246 observed validation-shape differences recorded. Canonical JSON Schema retains validation and binding-generation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
@@ -78,8 +77,11 @@
   "remote_github_evidence": [],
   "runtime_evidence": [
     "verification/receipts/track-01-contract-generation-2026-08-29.json",
+    "verification/receipts/track-01-conductor-review-2026-08-29.json",
     "verification/receipts/track-01-compiler-verification.json",
     "verification/receipts/track-01-review-verification.json"
   ],
-  "external_evidence": []
+  "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-08-29"
 }

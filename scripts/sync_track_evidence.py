@@ -199,6 +199,13 @@ def render_plan(entry: dict) -> str:
             "",
         ]
     )
+    review_fixes = entry.get("review_fixes", [])
+    if review_fixes:
+        for fix in review_fixes:
+            lines.insert(
+                -2,
+                f"  - [x] Review Fix: {fix['summary']} (`{fix['commit']}`)",
+            )
     return "\n".join(lines)
 
 
