@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Obtain independent PRESS review of representative generated strategies and appendices.
+- [ ] Obtain a hosted compiler-verified receipt for the exact committed revision.
 
 ## Completion and evidence contract
 

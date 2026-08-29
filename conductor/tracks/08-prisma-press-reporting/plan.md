@@ -1,6 +1,6 @@
 # Plan: 08 PRISMA, PRESS and reporting
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,13 +8,21 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-08-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-prisma/src/lib.rs`
+  - [x] Present source path: `crates/searchright-prisma/tests/reporting_fixtures.rs`
+  - [x] Present source path: `crates/searchright-prisma/tests/snapshots/`
   - [x] Present source path: `crates/searchright-validation/src/lib.rs`
+  - [x] Present source path: `crates/searchright/src/engine.rs`
+  - [x] Present source path: `crates/searchright-cli/src/main.rs`
+  - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
   - [x] Present source path: `contracts/examples/prisma-flow.json`
   - [x] Present source path: `contracts/examples/search-validation.yaml`
   - [x] Present source path: `contracts/examples/standard-assessment.yaml`
   - [x] Present source path: `docs/standards-and-provenance.md`
+  - [x] Present source path: `docs/prisma-jl-interop.md`
+  - [x] Present source path: `integration/fixtures/prisma-jl/flow-parity-v1.json`
+  - [x] Present source path: `verification/fixtures/track-08/press-workflow-complete.yaml`
   - [x] Assertion ledger: `conductor/tracks/08-prisma-press-reporting/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -29,8 +37,8 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-08-phase-3 -->
 
-- [ ] Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.
-- [ ] Obtain independent PRESS review of representative generated strategies and appendices.
+- [ ] Obtain an accountable independent PRESS review of representative generated strategies and appendices.
+- [ ] Obtain a hosted compiler-verified receipt for the exact committed revision.
 
 ## Phase 4: Review and closeout
 

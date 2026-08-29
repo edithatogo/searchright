@@ -1590,6 +1590,7 @@
       "dependsOn": [
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
