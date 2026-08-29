@@ -1,6 +1,6 @@
 # Plan: 07 Governed screening workflow
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **compiler_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
 
 GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered native subissue.
 

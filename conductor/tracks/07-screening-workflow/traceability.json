@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "07",
   "title": "Governed screening workflow",
-  "implementation_state": "fixture_proven",
+  "implementation_state": "source_implemented",
   "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/07-screening-workflow/spec.md#scope",
   "claim_boundary": "Source-implemented and compiler-verified across screening state machines, role assignments, blinding projections, criteria enforcement, amendment flows and review tool adapters. Phase 3 higher-evidence gate uses a structured agent-panel protocol simulating information specialists and methodologists; panel output is fixture-proven, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",

@@ -394,7 +394,7 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "horizon": "mvp",
-      "implementation_state": "fixture_proven",
+      "implementation_state": "source_implemented",
       "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
       "requirements": [
         "SR-020",
@@ -412,7 +412,7 @@
       "review_completed": true,
       "fixture_proven_on": "2026-08-29",
       "slug": "screening-workflow",
-      "status": "fixture_proven",
+      "status": "source_implemented",
       "title": "Governed screening workflow",
       "track_id": "07"
     },
