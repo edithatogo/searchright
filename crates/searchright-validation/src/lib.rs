@@ -95,10 +95,16 @@ pub fn assess(report: &SearchValidationReport) -> Result<SearchValidationSummary
         .count();
     let press_domains_covered = press_domains_covered(report);
     let press_review_complete = press_domains_covered == 6;
+    let press_decisions_approved = !report.press_reviews.is_empty()
+        && report
+            .press_reviews
+            .iter()
+            .all(|review| review.decision.permits_execution());
     let seed_recall_passes = report
         .minimum_seed_recall
         .is_none_or(|minimum| seeds.recall.is_some_and(|observed| observed >= minimum));
     let ready = press_review_complete
+        && press_decisions_approved
         && unresolved_major == 0
         && unacceptable_translations == 0
         && seed_recall_passes
@@ -110,6 +116,7 @@ pub fn assess(report: &SearchValidationReport) -> Result<SearchValidationSummary
         unacceptable_translations,
         press_domains_covered,
         press_review_complete,
+        press_decisions_approved,
     })
 }
 
@@ -128,6 +135,8 @@ pub struct SearchValidationSummary {
     pub press_domains_covered: usize,
     /// Whether all six PRESS domains have evidence-bearing findings.
     pub press_review_complete: bool,
+    /// Whether every recorded PRESS decision permits separate execution approval.
+    pub press_decisions_approved: bool,
 }
 
 /// Search-validation error.
@@ -152,6 +161,7 @@ mod tests {
         let summary = assess(&report)?;
         assert_eq!(summary.press_domains_covered, 1);
         assert!(!summary.press_review_complete);
+        assert!(summary.press_decisions_approved);
         assert!(!summary.ready);
         Ok(())
     }
@@ -164,7 +174,18 @@ mod tests {
         let summary = assess(&report)?;
         assert_eq!(summary.press_domains_covered, 6);
         assert!(summary.press_review_complete);
+        assert!(summary.press_decisions_approved);
         assert!(summary.ready);
+
+        let mut revision_required = report.clone();
+        let Some(review) = revision_required.press_reviews.first_mut() else {
+            return Err("six-domain fixture must contain a PRESS review".into());
+        };
+        review.decision = searchright_contracts::PressReviewDecision::RevisionRequired;
+        let revision_summary = assess(&revision_required)?;
+        assert!(revision_summary.press_review_complete);
+        assert!(!revision_summary.press_decisions_approved);
+        assert!(!revision_summary.ready);
 
         let mut same_person = report;
         same_person.approved_by = Some("fixture-information-specialist".to_owned());

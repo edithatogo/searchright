@@ -446,6 +446,9 @@
           },
           "press_review_complete": {
             "type": "boolean"
+          },
+          "press_decisions_approved": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -454,7 +457,8 @@
           "unresolved_major_findings",
           "unacceptable_translations",
           "press_domains_covered",
-          "press_review_complete"
+          "press_review_complete",
+          "press_decisions_approved"
         ]
       }
     },

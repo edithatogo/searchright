@@ -385,9 +385,12 @@ pub fn render_strategy_appendix_markdown(
     if strategy.dialect != compiled.dialect {
         return Err(PrismaError::AppendixDialectMismatch);
     }
+    if compiled.compiler_version != receipt.compiler_version {
+        return Err(PrismaError::AppendixCompilerMismatch);
+    }
 
     let mut output = format!(
-        "## Search strategy: {}\n\n- Information source and platform: {}\n- Source identifier: {}\n- Dialect: {}\n- Search date: {}\n- Strategy version evidence: compiler {}; compilation {}\n- Limits and filters: {}\n\n### Exact source-specific syntax\n\n",
+        "## Search strategy: {}\n\n- Information source and platform: {}\n- Source identifier: {}\n- Dialect: {}\n- Search date: {}\n- Strategy version evidence: compiler {}; compilation {}\n- Execution query fingerprint: {}\n- Limits and filters: {}\n\n### Exact source-specific syntax\n\n",
         escape_markdown_cell(&strategy.strategy_id),
         escape_markdown_cell(&receipt.source_label),
         escape_markdown_cell(&strategy.source_id),
@@ -395,6 +398,7 @@ pub fn render_strategy_appendix_markdown(
         escape_markdown_cell(&receipt.executed_at),
         escape_markdown_cell(&compiled.compiler_version),
         escape_markdown_cell(&compiled.compilation_hash),
+        escape_markdown_cell(&receipt.query_hash),
         escape_markdown_cell(&limit_summary(strategy)),
     );
     for line in compiled.query.split_inclusive('\n') {
@@ -615,6 +619,9 @@ pub enum PrismaError {
     /// Appendix strategy and compiled query used different dialects.
     #[error("strategy and compiled query must use the same source dialect")]
     AppendixDialectMismatch,
+    /// Appendix compilation and execution evidence came from different compilers.
+    #[error("compiled query and source receipt must use the same compiler version")]
+    AppendixCompilerMismatch,
 }
 
 fn identified_total(flow: &PrismaFlow) -> Result<u64, PrismaError> {
@@ -870,17 +877,23 @@ fn escape_xml(value: &str) -> String {
 }
 
 fn escape_typst(value: &str) -> String {
-    value
-        .replace('\\', "\\\\")
-        .replace('[', "\\[")
-        .replace(']', "\\]")
-        .replace('#', "\\#")
-        .replace(['\r', '\n'], " ")
+    let mut escaped = String::with_capacity(value.len());
+    for character in value.chars() {
+        match character {
+            '\r' | '\n' => escaped.push(' '),
+            '\\' | '#' | '[' | ']' | '$' | '*' | '_' | '`' | '<' | '>' | '@' => {
+                escaped.push('\\');
+                escaped.push(character);
+            }
+            _ => escaped.push(character),
+        }
+    }
+    escaped
 }
 
 #[cfg(test)]
 mod tests {
-    use searchright_contracts::{ExclusionCount, PressFinding};
+    use searchright_contracts::{ExclusionCount, PressFinding, PressReviewDecision};
 
     use super::*;
 
@@ -1003,6 +1016,17 @@ mod tests {
         );
     }
 
+    #[test]
+    fn typst_text_escapes_every_markup_control_character() {
+        for character in ['\\', '#', '[', ']', '$', '*', '_', '`', '<', '>', '@'] {
+            assert_eq!(
+                escape_typst(&character.to_string()),
+                format!("\\{character}")
+            );
+        }
+        assert_eq!(escape_typst("line one\r\nline two"), "line one  line two");
+    }
+
     fn press_review(elements: &[PressElement], unresolved: bool) -> PressReview {
         PressReview {
             press_review_id: "press-1".to_owned(),
@@ -1026,7 +1050,7 @@ mod tests {
                     resolved: !(unresolved && index == 0),
                 })
                 .collect(),
-            decision: "evidence recorded".to_owned(),
+            decision: PressReviewDecision::Approved,
         }
     }
 

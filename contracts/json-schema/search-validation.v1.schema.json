@@ -118,8 +118,12 @@
             }
           },
           "decision": {
-            "type": "string",
-            "minLength": 1
+            "enum": [
+              "approved",
+              "approved_with_advisory",
+              "revision_required",
+              "rejected"
+            ]
           }
         }
       }

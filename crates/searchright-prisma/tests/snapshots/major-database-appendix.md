@@ -5,6 +5,7 @@
 - Dialect: PubMed
 - Search date: 2026-08-06T00:00:00Z
 - Strategy version evidence: compiler evidence-search-compiler/0.1.0; compilation aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+- Execution query fingerprint: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 - Limits and filters: none recorded
 
 ### Exact source-specific syntax

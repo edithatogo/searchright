@@ -188,5 +188,9 @@ fn complete_major_database_appendix_matches_snapshot() -> Result<(), Box<dyn Err
 
     strategy.strategy_id.push_str("-mismatch");
     assert!(render_strategy_appendix_markdown(&strategy, &compiled, &receipt).is_err());
+
+    strategy.strategy_id.clone_from(&compiled.strategy_id);
+    receipt.compiler_version.push_str("-mismatch");
+    assert!(render_strategy_appendix_markdown(&strategy, &compiled, &receipt).is_err());
     Ok(())
 }

@@ -2413,6 +2413,7 @@ mod tests {
             "unacceptable_translations": 0,
             "press_domains_covered": 6,
             "press_review_complete": true,
+            "press_decisions_approved": true,
         });
         assert!(validate_tool_output("assess_search_validation", &valid).is_ok());
         let invalid = serde_json::json!({
@@ -2422,6 +2423,7 @@ mod tests {
             "unacceptable_translations": 0,
             "press_domains_covered": 7,
             "press_review_complete": true,
+            "press_decisions_approved": true,
         });
         assert!(validate_tool_output("assess_search_validation", &invalid).is_err());
     }
