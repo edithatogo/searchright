@@ -2,18 +2,20 @@
   "schema_version": "org.searchright.verification-receipt.v1",
   "track_id": "09",
   "recorded_at": "2026-08-29T19:33:34+10:00",
-  "source_revision": "dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513",
+  "source_revision": "46945efd3726b451674cdff8555b29a671df147b",
+  "source_tree": "ca69b5c34244469595275e3493157f231aa46bc2",
   "platform": "macOS",
   "toolchain": "rustc 1.98.0 (88d9e12ae 2026-08-18) (Homebrew)",
   "status": "passed_with_hosted_blocker",
   "checks": [
     {"command": "cargo fmt --all -- --check", "status": "passed"},
-    {"command": "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings", "status": "passed"},
-    {"command": "cargo test -p searchright-cli --locked", "status": "passed", "tests_passed": 10},
+    {"command": "cargo clippy --workspace --all-targets --all-features --locked -- -D warnings", "status": "passed"},
+    {"command": "cargo nextest run --workspace --all-features --locked", "status": "passed", "tests_passed": 266, "tests_skipped": 0},
     {"command": "python3 scripts/check_cli_distribution.py target/debug/searchright", "status": "passed"},
     {"command": "cargo install --path crates/searchright-cli --locked --root <temporary-directory> && python3 scripts/check_cli_distribution.py <temporary-directory>/bin/searchright", "status": "passed"},
     {"command": "python3 scripts/check_cli_mcp_parity.py", "status": "passed", "operations_checked": 31},
-    {"command": "python3 scripts/validate_repository.py", "status": "passed"}
+    {"command": "python3 scripts/validate_repository.py", "status": "passed"},
+    {"command": "bash scripts/verify.sh", "status": "passed", "static_gates_passed": 53}
   ],
   "review": {
     "status": "passed",
@@ -25,6 +27,14 @@
       {
         "commit": "dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513",
         "summary": "The hosted Linux, macOS and Windows CI matrix exercises both built and installed CLI distributions."
+      },
+      {
+        "commit": "de00f29127b303824b4e643e7fd5d573fcfc1451",
+        "summary": "No-clobber creation, canonical dispatch parity, safe actionable diagnostics and endpoint-origin redaction close the implementation review findings."
+      },
+      {
+        "commit": "46945efd3726b451674cdff8555b29a671df147b",
+        "summary": "Reserved test endpoints and refreshed integrity artifacts close the architecture, SBOM and source-manifest gates."
       }
     ]
   },

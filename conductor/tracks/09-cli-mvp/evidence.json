@@ -4,7 +4,7 @@
   "title": "CLI MVP",
   "status": "source_implemented",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "compiler_verified",
   "source_verified_on": "2026-08-29",
   "source_evidence": [
     ".github/workflows/clean-room.yml",
@@ -12,6 +12,8 @@
     "crates/searchright-cli/tests/cli_e2e.rs",
     "crates/searchright-cli/tests/snapshots/",
     "crates/searchright-cli/src/main.rs",
+    "crates/searchright-licensed/src/lib.rs",
+    "crates/searchright-mcp/src/lib.rs",
     "crates/searchright/src/engine.rs",
     "contracts/interface-catalog.json",
     "docs/adrs/0007-shared-application-facade.md",
@@ -32,7 +34,7 @@
   "blockers": [
     "Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision."
   ],
-  "claim_boundary": "The grouped CLI hierarchy, stable JSON/error snapshots, dry-run/apply guard, completion and man-page generation, and local macOS build/install smoke are source-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision.",
+  "claim_boundary": "The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, completion and man-page generation, and full local macOS verification are compiler-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision; release and publication are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-09",
@@ -55,7 +57,13 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-09-cli-review.json"
+    "verification/receipts/track-09-cli-review.json",
+    "verification/reviews/track-09-sealed-request.json",
+    "verification/reviews/track-09-implementation-correctness.json",
+    "verification/reviews/track-09-security-safety.json",
+    "verification/reviews/track-09-testing-ci.json",
+    "verification/reviews/track-09-methodology-authority.json",
+    "verification/reviews/track-09-adversarial.json"
   ],
   "external_evidence": [],
   "review_fixes": [
@@ -66,6 +74,14 @@
     {
       "commit": "dc28b6ac2221aa43a05f1ddf0b0c9641a63fd513",
       "summary": "Exercise built and installed CLI snapshots on the hosted Linux, macOS and Windows CI matrix, including Windows executable resolution."
+    },
+    {
+      "commit": "de00f29127b303824b4e643e7fd5d573fcfc1451",
+      "summary": "Close no-clobber, canonical dispatch, actionable diagnostic, endpoint credential-reflection and distribution-coverage review findings."
+    },
+    {
+      "commit": "46945efd3726b451674cdff8555b29a671df147b",
+      "summary": "Close architecture-fitness and generated SBOM/source-manifest review gates on the sealed candidate."
     }
   ]
 }

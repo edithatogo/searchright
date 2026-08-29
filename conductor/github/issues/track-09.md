@@ -14,7 +14,7 @@ Expose stable scriptable operations through the shared application facade.
 - Horizon: `mvp`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `compiler_verified`
 - Dependencies: `01, 02, 04, 05, 06, 07, 08`
 - Requirements: `SR-028`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Expose stable scriptable operations through the shared application facade.
 
 ## Claim boundary
 
-The grouped CLI hierarchy, stable JSON/error snapshots, dry-run/apply guard, completion and man-page generation, and local macOS build/install smoke are source-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision.
+The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, completion and man-page generation, and full local macOS verification are compiler-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision; release and publication are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

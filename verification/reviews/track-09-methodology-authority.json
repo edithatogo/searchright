@@ -1,0 +1,20 @@
+{
+  "schema_version": "org.searchright.sealed-review-response.v1",
+  "track_id": "09",
+  "role": "methodology_authority",
+  "reviewed_revision": "46945efd3726b451674cdff8555b29a671df147b",
+  "reviewed_tree": "ca69b5c34244469595275e3493157f231aa46bc2",
+  "disposition": "approved_with_claim_limits",
+  "critical_findings": [],
+  "high_findings": [],
+  "confirmed_boundaries": [
+    "screening remains human-governed and the CLI does not auto-exclude studies",
+    "document evidence remains non-canonical",
+    "record, report and study identities remain distinct",
+    "PRISMA remains a reporting contract rather than a conduct standard"
+  ],
+  "residual_limitations": [
+    "the CLI implementation is not methodological certification or provider-support evidence"
+  ],
+  "dissent": []
+}
