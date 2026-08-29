@@ -1,0 +1,12 @@
+{
+  "schema_version": "org.searchright.cli-result.v1",
+  "operation": "init",
+  "mode": "dry_run",
+  "target": "snapshot.json",
+  "changed": false,
+  "configuration": {
+    "schema_version": "org.searchright.cli-config.v1",
+    "network_enabled": false,
+    "write_authority": "explicit_apply"
+  }
+}

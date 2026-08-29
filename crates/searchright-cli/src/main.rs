@@ -13,12 +13,14 @@
 
 use std::{
     fs,
+    io::{self, Write},
     path::{Path, PathBuf},
     process::ExitCode,
 };
 
 use anyhow::{Context, Result, bail};
-use clap::{Parser, Subcommand, ValueEnum, error::ErrorKind};
+use clap::{CommandFactory, Parser, Subcommand, ValueEnum, error::ErrorKind};
+use clap_complete::{Shell, generate};
 use searchright::contracts::{
     AuditEvent, BenchmarkReport, BibliographicRecord, CompiledStrategy, DataHandlingRequest,
     Diagnostic, DiscoveryRun, DocumentEvidence, ExecutionEnvelope, InstitutionalPolicy,
@@ -87,6 +89,13 @@ enum Command {
         #[command(subcommand)]
         command: ReportCommand,
     },
+    /// Generate a shell completion script on standard output.
+    Completions {
+        #[arg(value_enum)]
+        shell: Shell,
+    },
+    /// Generate the searchright(1) manual page on standard output.
+    Manpage,
     /// Validate a review plan and report readiness findings.
     ValidatePlan { input: PathBuf },
     /// Validate a source-specific search strategy.
@@ -202,12 +211,35 @@ enum Command {
 enum PlanCommand {
     /// Validate a review plan and report readiness findings.
     Validate { input: PathBuf },
+    /// Validate a protocol amendment.
+    ValidateAmendment { input: PathBuf },
+    /// Evaluate a data-handling request against institutional policy.
+    EvaluateGovernance { policy: PathBuf, request: PathBuf },
+    /// Print the conservative agent workflow policy.
+    Workflow,
 }
 
 #[derive(Debug, Subcommand)]
 enum SourceCommand {
     /// List fixture-backed providers available without network access.
     List,
+    /// Check endpoint authority without executing a request.
+    AuthoriseEndpoint { input: PathBuf, endpoint: String },
+    /// Validate a supplementary-discovery run.
+    ValidateDiscoveryRun { input: PathBuf },
+    /// Resolve discovery candidates for human release.
+    DiscoveryCandidates { input: PathBuf },
+    /// Verify a WASI provider-component manifest against exact bytes.
+    VerifyProviderComponent {
+        manifest: PathBuf,
+        component: PathBuf,
+    },
+    /// Build a redacted bring-your-own-access request plan.
+    PlanLicensedRequest {
+        profile: PathBuf,
+        strategy: PathBuf,
+        endpoint: String,
+    },
 }
 
 #[derive(Debug, Subcommand)]
@@ -220,12 +252,34 @@ enum StrategyCommand {
         #[arg(long, value_enum)]
         dialect: DialectArg,
     },
+    /// Evaluate PRESS, seed-set recall and translation-loss gates.
+    ValidateSearch { input: PathBuf },
+    /// Validate a methodological standards pack.
+    ValidateStandardPack { input: PathBuf },
+    /// Validate an assessment against a standards pack.
+    ValidateStandardAssessment { input: PathBuf },
+    /// Validate a benchmark report and its explicit claim boundary.
+    ValidateBenchmarkReport { input: PathBuf },
 }
 
 #[derive(Debug, Subcommand)]
 enum RunCommand {
     /// Check endpoint authority without executing a request.
     AuthoriseEndpoint { input: PathBuf, endpoint: String },
+    /// Verify a JSONL hash-chained audit ledger.
+    VerifyAudit { input: PathBuf },
+    /// Verify an evidence-bearing lifecycle trace.
+    VerifyWorkflowTrace { input: PathBuf },
+    /// Inspect untrusted text without executing embedded instructions.
+    InspectContent {
+        input: PathBuf,
+        #[arg(long)]
+        subject_id: String,
+        #[arg(long, value_enum, default_value_t = ContentPolicyArg::DataOnly)]
+        policy: ContentPolicyArg,
+    },
+    /// Validate neutral, non-canonical document extraction evidence.
+    ValidateDocumentEvidence { input: PathBuf },
 }
 
 #[derive(Debug, Subcommand)]
@@ -237,6 +291,22 @@ enum ImportCommand {
         format: InterchangeArg,
         #[arg(long)]
         source_receipt_id: String,
+    },
+    /// Export canonical records with a conversion receipt.
+    ExportRecords {
+        input: PathBuf,
+        #[arg(long)]
+        review_id: String,
+        #[arg(long, value_enum, default_value_t = InterchangeArg::SearchrightJson)]
+        input_format: InterchangeArg,
+        #[arg(long, value_enum)]
+        output_format: InterchangeArg,
+    },
+    /// Deduplicate records without deleting source records.
+    Deduplicate {
+        input: PathBuf,
+        #[arg(long, default_value_t = 0.92)]
+        title_threshold: f64,
     },
 }
 
@@ -250,6 +320,12 @@ enum ScreenCommand {
     },
     /// Validate and summarise explicit record-report-study linkage.
     StudyGraph { input: PathBuf },
+    /// Validate ranking calibration and its no-auto-exclusion contract.
+    ValidateRankingCalibration { input: PathBuf },
+    /// Compare parent and current result sets for a living review.
+    LivingDiff { previous: PathBuf, current: PathBuf },
+    /// Validate living-update lineage contracts.
+    ValidateLivingLineage { input: PathBuf },
 }
 
 #[derive(Debug, Subcommand)]
@@ -262,6 +338,12 @@ enum ReportCommand {
     },
     /// Build RO-Crate and W3C PROV-compatible exports.
     Provenance { input: PathBuf },
+    /// Render stable accessible diagnostics without ANSI-dependent output.
+    RenderDiagnostics {
+        input: PathBuf,
+        #[arg(long, value_enum, default_value_t = DiagnosticFormatArg::PlainText)]
+        format: DiagnosticFormatArg,
+    },
 }
 
 #[derive(Debug, Clone, Copy, ValueEnum)]
@@ -401,10 +483,10 @@ fn main() -> ExitCode {
             print!("{error}");
             ExitCode::SUCCESS
         }
-        Err(error) => {
-            let message = error.to_string();
-            emit_error(&anyhow::anyhow!(message.trim().to_owned()), 2)
-        }
+        Err(_error) => emit_error(
+            &anyhow::anyhow!("command arguments did not match the CLI contract"),
+            2,
+        ),
     }
 }
 
@@ -417,9 +499,77 @@ fn execute(cli: Cli) -> Result<()> {
             let plan: ReviewPlan = read_document(&input)?;
             print_json(&SearchrightEngine::validate_plan(&plan)?)?;
         }
+        Command::Plan {
+            command: PlanCommand::ValidateAmendment { input },
+        } => {
+            let value: ProtocolAmendment = read_document(&input)?;
+            SearchrightEngine::validate_amendment(&value)?;
+            valid_receipt("protocol_amendment")?;
+        }
+        Command::Plan {
+            command: PlanCommand::EvaluateGovernance { policy, request },
+        } => {
+            let policy: InstitutionalPolicy = read_document(&policy)?;
+            let request: DataHandlingRequest = read_document(&request)?;
+            print_json(&SearchrightEngine::evaluate_governance(&policy, &request)?)?;
+        }
+        Command::Plan {
+            command: PlanCommand::Workflow,
+        } => print_json(&SearchrightEngine::workflow())?,
         Command::Source {
             command: SourceCommand::List,
         } => print_json(&SearchrightEngine::default_provider_manifests()?)?,
+        Command::Source {
+            command: SourceCommand::AuthoriseEndpoint { input, endpoint },
+        } => {
+            let envelope: ExecutionEnvelope = read_document(&input)?;
+            SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
+            print_json(&serde_json::json!({"authorised": true, "endpoint": endpoint}))?;
+        }
+        Command::Source {
+            command: SourceCommand::ValidateDiscoveryRun { input },
+        } => {
+            let value: DiscoveryRun = read_document(&input)?;
+            SearchrightEngine::validate_discovery_run(&value)?;
+            valid_receipt("discovery_run")?;
+        }
+        Command::Source {
+            command: SourceCommand::DiscoveryCandidates { input },
+        } => {
+            let run: DiscoveryRun = read_document(&input)?;
+            print_json(&SearchrightEngine::discovery_candidates(&run)?)?;
+        }
+        Command::Source {
+            command:
+                SourceCommand::VerifyProviderComponent {
+                    manifest,
+                    component,
+                },
+        } => {
+            let manifest: ProviderComponentManifest = read_document(&manifest)?;
+            let bytes = fs::read(&component)
+                .with_context(|| format!("could not read {}", component.display()))?;
+            SearchrightEngine::verify_provider_component(&manifest, &bytes)?;
+            print_json(&serde_json::json!({
+                "valid": true,
+                "component_id": manifest.component_id,
+                "bytes": bytes.len(),
+            }))?;
+        }
+        Command::Source {
+            command:
+                SourceCommand::PlanLicensedRequest {
+                    profile,
+                    strategy,
+                    endpoint,
+                },
+        } => {
+            let profile: LicensedAdapterProfile = read_document(&profile)?;
+            let strategy: CompiledStrategy = read_document(&strategy)?;
+            print_json(&SearchrightEngine::plan_licensed_request(
+                &profile, &strategy, &endpoint,
+            )?)?;
+        }
         Command::Strategy {
             command: StrategyCommand::Validate { input },
         } => {
@@ -440,12 +590,76 @@ fn execute(cli: Cli) -> Result<()> {
                 dialect.into(),
             )?)?;
         }
+        Command::Strategy {
+            command: StrategyCommand::ValidateSearch { input },
+        } => {
+            let report: SearchValidationReport = read_document(&input)?;
+            print_json(&SearchrightEngine::assess_search_validation(&report)?)?;
+        }
+        Command::Strategy {
+            command: StrategyCommand::ValidateStandardPack { input },
+        } => {
+            let value: StandardPack = read_document(&input)?;
+            SearchrightEngine::validate_standard_pack(&value)?;
+            valid_receipt("standard_pack")?;
+        }
+        Command::Strategy {
+            command: StrategyCommand::ValidateStandardAssessment { input },
+        } => {
+            let value: StandardAssessment = read_document(&input)?;
+            SearchrightEngine::validate_standard_assessment(&value)?;
+            valid_receipt("standard_assessment")?;
+        }
+        Command::Strategy {
+            command: StrategyCommand::ValidateBenchmarkReport { input },
+        } => {
+            let report: BenchmarkReport = read_document(&input)?;
+            SearchrightEngine::validate_benchmark_report(&report)?;
+            valid_receipt("benchmark_report")?;
+        }
         Command::Run {
             command: RunCommand::AuthoriseEndpoint { input, endpoint },
         } => {
             let envelope: ExecutionEnvelope = read_document(&input)?;
             SearchrightEngine::authorise_endpoint(&envelope, &endpoint)?;
             print_json(&serde_json::json!({"authorised": true, "endpoint": endpoint}))?;
+        }
+        Command::Run {
+            command: RunCommand::VerifyAudit { input },
+        } => print_json(&SearchrightEngine::verify_audit(read_jsonl(&input)?)?)?,
+        Command::Run {
+            command: RunCommand::VerifyWorkflowTrace { input },
+        } => {
+            let trace: WorkflowTrace = read_document(&input)?;
+            print_json(&SearchrightEngine::verify_workflow_trace(&trace)?)?;
+        }
+        Command::Run {
+            command:
+                RunCommand::InspectContent {
+                    input,
+                    subject_id,
+                    policy,
+                },
+        } => {
+            let content = fs::read_to_string(&input)
+                .with_context(|| format!("could not read {}", input.display()))?;
+            print_json(&SearchrightEngine::inspect_content(
+                &subject_id,
+                &content,
+                policy.into(),
+            ))?;
+        }
+        Command::Run {
+            command: RunCommand::ValidateDocumentEvidence { input },
+        } => {
+            let evidence: DocumentEvidence = read_document(&input)?;
+            SearchrightEngine::validate_document_evidence(&evidence)
+                .context("document evidence is invalid")?;
+            print_json(&serde_json::json!({
+                "valid": true,
+                "document_id": evidence.document_id,
+                "canonical_write_permitted": evidence.canonical_write_permitted,
+            }))?;
         }
         Command::Import {
             command:
@@ -463,6 +677,42 @@ fn execute(cli: Cli) -> Result<()> {
                 &source_receipt_id,
             )?)?;
         }
+        Command::Import {
+            command:
+                ImportCommand::ExportRecords {
+                    input,
+                    review_id,
+                    input_format,
+                    output_format,
+                },
+        } => {
+            let records: Vec<BibliographicRecord> = read_document(&input)?;
+            print_json(&SearchrightEngine::export_records(
+                &review_id,
+                &records,
+                input_format.into(),
+                output_format.into(),
+            )?)?;
+        }
+        Command::Import {
+            command:
+                ImportCommand::Deduplicate {
+                    input,
+                    title_threshold,
+                },
+        } => {
+            if !(0.0..=1.0).contains(&title_threshold) {
+                bail!("title-threshold must be between zero and one");
+            }
+            let records: Vec<BibliographicRecord> = read_document(&input)?;
+            print_json(&SearchrightEngine::deduplicate(
+                &records,
+                DedupConfig {
+                    title_similarity_threshold: title_threshold,
+                    ..DedupConfig::default()
+                },
+            )?)?;
+        }
         Command::Screen {
             command: ScreenCommand::Rank { input, query_term },
         } => {
@@ -474,6 +724,29 @@ fn execute(cli: Cli) -> Result<()> {
         } => {
             let graph: StudyGraph = read_document(&input)?;
             print_json(&SearchrightEngine::assess_study_graph(&graph)?)?;
+        }
+        Command::Screen {
+            command: ScreenCommand::ValidateRankingCalibration { input },
+        } => {
+            let value: RankingCalibration = read_document(&input)?;
+            SearchrightEngine::validate_ranking_calibration(&value)?;
+            valid_receipt("ranking_calibration")?;
+        }
+        Command::Screen {
+            command: ScreenCommand::LivingDiff { previous, current },
+        } => {
+            let previous: Vec<BibliographicRecord> = read_document(&previous)?;
+            let current: Vec<BibliographicRecord> = read_document(&current)?;
+            print_json(&SearchrightEngine::diff_living_records(
+                &previous, &current,
+            )?)?;
+        }
+        Command::Screen {
+            command: ScreenCommand::ValidateLivingLineage { input },
+        } => {
+            let runs: Vec<LivingUpdateRun> = read_document(&input)?;
+            SearchrightEngine::validate_living_lineage(&runs)?;
+            print_json(&serde_json::json!({"valid": true, "run_count": runs.len()}))?;
         }
         Command::Report {
             command: ReportCommand::Prisma { input, format },
@@ -493,6 +766,23 @@ fn execute(cli: Cli) -> Result<()> {
                 &provenance.receipts,
                 &provenance.events,
             )?)?;
+        }
+        Command::Report {
+            command: ReportCommand::RenderDiagnostics { input, format },
+        } => {
+            let diagnostics: Vec<Diagnostic> = read_document(&input)?;
+            let document = SearchrightEngine::render_diagnostics(&diagnostics, format.into())?;
+            print!("{document}");
+        }
+        Command::Completions { shell } => {
+            io::stdout()
+                .write_all(&completion_document(shell))
+                .context("could not write the shell completion script")?;
+        }
+        Command::Manpage => {
+            io::stdout()
+                .write_all(&manpage_document()?)
+                .context("could not write the searchright manual page")?;
         }
         Command::ValidatePlan { input } => {
             let plan: ReviewPlan = read_document(&input)?;
@@ -788,10 +1078,24 @@ fn print_json(value: &impl serde::Serialize) -> Result<()> {
     Ok(())
 }
 
+fn completion_document(shell: Shell) -> Vec<u8> {
+    let mut command = Cli::command();
+    let mut document = Vec::new();
+    generate(shell, &mut command, "searchright", &mut document);
+    document
+}
+
+fn manpage_document() -> Result<Vec<u8>> {
+    let mut document = Vec::new();
+    clap_mangen::Man::new(Cli::command())
+        .render(&mut document)
+        .context("could not render the searchright manual page")?;
+    Ok(document)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
-    use clap::CommandFactory;
 
     #[test]
     fn grouped_command_hierarchy_is_stable() {
@@ -801,10 +1105,105 @@ mod tests {
             .map(clap::Command::get_name)
             .collect::<Vec<_>>();
         for expected in [
-            "init", "plan", "source", "strategy", "run", "import", "screen", "report",
+            "init",
+            "plan",
+            "source",
+            "strategy",
+            "run",
+            "import",
+            "screen",
+            "report",
+            "completions",
+            "manpage",
         ] {
             assert!(names.contains(&expected), "missing {expected} command");
         }
+    }
+
+    #[test]
+    fn grouped_commands_cover_every_fixture_backed_operation() {
+        let command = Cli::command();
+        for (group, expected) in [
+            (
+                "plan",
+                &[
+                    "validate",
+                    "validate-amendment",
+                    "evaluate-governance",
+                    "workflow",
+                ][..],
+            ),
+            (
+                "source",
+                &[
+                    "list",
+                    "authorise-endpoint",
+                    "validate-discovery-run",
+                    "discovery-candidates",
+                    "verify-provider-component",
+                    "plan-licensed-request",
+                ][..],
+            ),
+            (
+                "strategy",
+                &[
+                    "validate",
+                    "compile",
+                    "validate-search",
+                    "validate-standard-pack",
+                    "validate-standard-assessment",
+                    "validate-benchmark-report",
+                ][..],
+            ),
+            (
+                "run",
+                &[
+                    "authorise-endpoint",
+                    "verify-audit",
+                    "verify-workflow-trace",
+                    "inspect-content",
+                    "validate-document-evidence",
+                ][..],
+            ),
+            ("import", &["records", "export-records", "deduplicate"][..]),
+            (
+                "screen",
+                &[
+                    "rank",
+                    "study-graph",
+                    "validate-ranking-calibration",
+                    "living-diff",
+                    "validate-living-lineage",
+                ][..],
+            ),
+            (
+                "report",
+                &["prisma", "provenance", "render-diagnostics"][..],
+            ),
+        ] {
+            let Some(parent) = command.find_subcommand(group) else {
+                panic!("missing {group} group");
+            };
+            let names = parent
+                .get_subcommands()
+                .map(clap::Command::get_name)
+                .collect::<Vec<_>>();
+            for child in expected {
+                assert!(names.contains(child), "missing {group} {child} command");
+            }
+        }
+    }
+
+    #[test]
+    fn completion_and_manpage_documents_are_generated_without_writes() -> Result<()> {
+        let completions = String::from_utf8(completion_document(Shell::Bash))?;
+        assert!(completions.contains("_searchright"));
+        assert!(completions.contains("validate-plan"));
+
+        let manpage = String::from_utf8(manpage_document()?)?;
+        assert!(manpage.contains(".TH searchright 1"));
+        assert!(manpage.contains("searchright\\-completions(1)"));
+        Ok(())
     }
 
     #[test]

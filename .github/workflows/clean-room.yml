@@ -86,7 +86,7 @@ jobs:
           cd "$CLEAN_SOURCE"
           cargo install --path crates/searchright-cli --locked --offline --root "$INSTALL_ROOT"
           cargo install --path crates/searchright-mcp --locked --offline --root "$INSTALL_ROOT"
-          "$INSTALL_ROOT/bin/searchright" --help
+          python scripts/check_cli_distribution.py "$INSTALL_ROOT/bin/searchright"
       - name: Exercise MCP discovery transcript
         env:
           INSTALL_ROOT: ${{ runner.temp }}/searchright-install
