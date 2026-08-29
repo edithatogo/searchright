@@ -9,6 +9,7 @@
   "source_evidence": [
     ".github/workflows/clean-room.yml",
     ".github/workflows/ci.yml",
+    "crates/searchright-cli/assets/completions/",
     "crates/searchright-cli/tests/cli_e2e.rs",
     "crates/searchright-cli/tests/snapshots/",
     "crates/searchright-cli/src/main.rs",
@@ -18,7 +19,8 @@
     "contracts/interface-catalog.json",
     "docs/adrs/0007-shared-application-facade.md",
     "docs/cli-compatibility.md",
-    "scripts/check_cli_distribution.py"
+    "scripts/check_cli_distribution.py",
+    "supply-chain/audits.toml"
   ],
   "traceability": "conductor/tracks/09-cli-mvp/traceability.json",
   "static_checks": [
@@ -31,10 +33,8 @@
   "requirements": [
     "SR-028"
   ],
-  "blockers": [
-    "Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision."
-  ],
-  "claim_boundary": "The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, completion and man-page generation, and full local macOS verification are compiler-verified. Cross-platform support remains unproven until hosted Linux, macOS and Windows receipts exist for the exact committed revision; release and publication are not claimed.",
+  "blockers": [],
+  "claim_boundary": "The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, static completion assets and man-page generation are compiler-verified with exact-revision hosted Linux, macOS and Windows evidence and a sealed advisory panel disposition. This is not methodological certification, live-provider support, package publication or release promotion.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-09",
@@ -49,13 +49,16 @@
       "track-09-phase-2-task-01",
       "track-09-phase-2-task-02",
       "track-09-phase-3-task-01",
+      "track-09-phase-3-task-02",
       "track-09-phase-4-task-01",
       "track-09-phase-4-task-02",
       "track-09-phase-4-task-03",
       "track-09-phase-4-task-04"
     ]
   },
-  "remote_github_evidence": [],
+  "remote_github_evidence": [
+    "verification/receipts/track-09-hosted-closeout.json"
+  ],
   "runtime_evidence": [
     "verification/receipts/track-09-cli-review.json",
     "verification/reviews/track-09-sealed-request.json",
@@ -63,9 +66,13 @@
     "verification/reviews/track-09-security-safety.json",
     "verification/reviews/track-09-testing-ci.json",
     "verification/reviews/track-09-methodology-authority.json",
-    "verification/reviews/track-09-adversarial.json"
+    "verification/reviews/track-09-adversarial.json",
+    "verification/receipts/track-09-hosted-closeout.json",
+    "verification/receipts/track-09-sealed-panel-closeout.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-08-29",
   "review_fixes": [
     {
       "commit": "8f0bfa2dbc125db339b5cb9b84a9bcd2f192d03e",
@@ -82,6 +89,10 @@
     {
       "commit": "46945efd3726b451674cdff8555b29a671df147b",
       "summary": "Close architecture-fitness and generated SBOM/source-manifest review gates on the sealed candidate."
+    },
+    {
+      "commit": "ac403d4bd37fd3365f1d1be6b42082aafad4fc42",
+      "summary": "Close hosted Windows snapshot, patch coverage and supply-chain findings with narrow executable-name normalization, static five-shell assets, exact dependency audits and removal of the rejected dynamic-completion dependency."
     }
   ]
 }

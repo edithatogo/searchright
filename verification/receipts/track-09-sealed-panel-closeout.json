@@ -1,0 +1,46 @@
+{
+  "schema_version": "org.searchright.sealed-panel-closeout.v1",
+  "track_id": "09",
+  "reviewed_revision": "ac403d4bd37fd3365f1d1be6b42082aafad4fc42",
+  "reviewed_tree": "3937826f28d69531d281010c15fee76ab12d40eb",
+  "candidate_head_revision": "ac403d4bd37fd3365f1d1be6b42082aafad4fc42",
+  "sealed_request": {
+    "path": "verification/reviews/track-09-sealed-request.json",
+    "sha256": "ccda49067298ba91fd3c4b71fb8366b9bf0ff3fcdad78c4328d3fcbcf26f30ac"
+  },
+  "role_responses": [
+    {
+      "role": "implementation_correctness",
+      "path": "verification/reviews/track-09-implementation-correctness.json",
+      "sha256": "3d02264c5b2b0bba3beba493d149fe3b8f11853552b052aeb169bcd166570f1f"
+    },
+    {
+      "role": "security_safety",
+      "path": "verification/reviews/track-09-security-safety.json",
+      "sha256": "8c08e50b50752beb780e1ee5e8cb3754d19fe364833f119e795c8cfed3ab2cee"
+    },
+    {
+      "role": "testing_ci",
+      "path": "verification/reviews/track-09-testing-ci.json",
+      "sha256": "ff07c0d76256e5611126e20ea506bb526482c5ac5f31652549678e5572f8eebc"
+    },
+    {
+      "role": "methodology_authority",
+      "path": "verification/reviews/track-09-methodology-authority.json",
+      "sha256": "72fccd576262ea1a7e5189cbb9a25876baf9a3c8c3074f066d0bc2031e88cc33"
+    },
+    {
+      "role": "adversarial",
+      "path": "verification/reviews/track-09-adversarial.json",
+      "sha256": "6771302a98286003e2b2317358b1631d4565daa2837f9c42e5619c106827f529"
+    }
+  ],
+  "dissent_preserved": true,
+  "dissent": [],
+  "critical_findings_open": 0,
+  "high_findings_open": 0,
+  "accountable_owner": "edithatogo",
+  "owner_adjudication": "approved_for_semantic_archive_after_exact-head hosted evidence and final admission",
+  "authorization_basis": "The accountable owner explicitly requested Track 09 review, fixes and archival.",
+  "claim_boundary": "The panel is advisory. This closeout does not certify methodology, live-provider support, registry submission, publication or release."
+}

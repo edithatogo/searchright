@@ -3,11 +3,11 @@
 
 Parent phase key: `track-09-phase-3`
 Conductor plan: `conductor/tracks/09-cli-mvp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain hosted Linux, macOS and Windows CLI snapshot receipts for the exact committed revision.
+- [x] Run the exact Track 09 implementation head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.
 
 ## Completion and evidence contract
 
