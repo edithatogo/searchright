@@ -9,7 +9,7 @@ const MAX_AUTHORITY_LIFETIME_SECONDS: u64 = 300;
 pub struct EffectAuthorityRequest {
     /// Consequential facade operation being authorised.
     pub tool_name: String,
-    /// Lowercase SHA-256 binding the exact submitted operation arguments.
+    /// Base64-encoded SHA-256 binding the exact submitted operation arguments.
     pub request_digest: String,
     /// Review or PRESS record identifier in the bounded operation.
     pub review_id: String,
