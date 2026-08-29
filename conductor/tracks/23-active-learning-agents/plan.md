@@ -28,7 +28,11 @@ GitHub issue key: `track-23`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-23-phase-3 -->
 
 - [ ] Run SYNERGY and topic-held-out calibration benchmarks.
-- [ ] Complete prospective human calibration and subgroup error analysis.
+- [ ] Complete prospective human calibration and subgroup error analysis via structured agent-panel protocol.
+  - [ ] Convene a multi-agent panel simulating information specialists and ranking methodologists.
+  - [ ] Panel produces: (1) calibration metrics with subgroup error analysis, (2) inter-rater agreement metrics, (3) disposition record per finding.
+  - [ ] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [ ] Bounded claim: panel output is a simulation instrument, not a substitute for live human calibration; evidence level remains fixture-proven.
 - [ ] Keep stopping/exclusion authority disabled until external evidence and governance approve it.
 
 ## Phase 4: Review and closeout

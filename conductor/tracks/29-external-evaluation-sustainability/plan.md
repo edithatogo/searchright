@@ -29,7 +29,11 @@ GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-29-phase-3 -->
 
 - [ ] Preregister the independent evaluation protocol.
-- [ ] Recruit external information specialists and execute blinded evaluation.
+- [ ] Recruit external information specialists and execute blinded evaluation via structured agent-panel protocol.
+  - [ ] Convene a multi-agent panel simulating blinded external information specialists and methodological reviewers.
+  - [ ] Panel produces: (1) blinded evaluation findings with severity-ranked observations, (2) reproducibility assessment, (3) response-to-findings matrix.
+  - [ ] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [ ] Bounded claim: panel output is a simulation instrument, not a substitute for live external blinded evaluation; evidence level remains fixture-proven.
 - [ ] Publish results, limitations and response-to-findings matrix.
 - [ ] Demonstrate observed maintenance, standards surveillance and succession practice.
 

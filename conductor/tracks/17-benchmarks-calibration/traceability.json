@@ -110,10 +110,10 @@
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json"
       ],
-      "open_gates": [
-        "Conduct prospective multi-model and human calibration under an approved protocol."
+"open_gates": [
+        "Conduct prospective multi-model and human calibration under an approved protocol via structured agent-panel protocol."
       ],
-      "permitted_claim": "No prospective model or human calibration has been run."
+  "permitted_claim": "No prospective model or human calibration has been run; agent-panel simulation only."
     },
     {
       "assertion_id": "T17-A006",

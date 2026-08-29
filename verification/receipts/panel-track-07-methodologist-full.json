@@ -1,0 +1,68 @@
+{
+  "panelist_role": "methodologist",
+  "overall_assessment": "The Track 07 governed screening workflow implements the structural skeleton of a rigorous systematic-review screening protocol—independent dual review, conflict detection, adjudication, agent authority gating, and export adapters. However, methodological adherence is undermined by three critical gaps: the audit trail is not truly append-only for canonical decisions (in-place mutation and deletion occur), role assignment is unauthenticated, and blinding is bypassable through direct data access. The design is source-complete and compiler-verified but requires substantive remediation before it can be endorsed as a trustworthy methodological instrument.",
+  "findings": [
+    {
+      "severity": "critical",
+      "description": "Canonical decisions are mutable and deletable despite an append-only history. `ScreeningBoard::amend_decision` overwrites the existing decision in `self.decisions` in place (line 435), and `ScreeningBoard::rescreen_subject` removes prior decisions entirely (lines 465-466). While `ScreeningHistoryEntry::Amendment` and `ScreeningHistoryEntry::ReScreen` are appended to `history`, the authoritative decision state diverges from the original record and prior decisions are destroyed rather than superseded. For systematic reviews, this breaks provenance chain-of-custody and violates PRISMA-S reporting integrity.",
+      "reference": "crates/searchright-screening/src/lib.rs:435, 465-466",
+      "recommendation": "Make `decisions` values immutable once recorded. Amendments should append a new decision version and reference the prior one; re-screen should mark prior decisions as superseded (not removed) and record the new eligibility_version. Consider hashing decision entries to create a tamper-evident chain."
+    },
+    {
+      "severity": "critical",
+      "description": "Role assignment and revocation are unauthenticated public methods with no authorization boundary. Any caller can invoke `ScreeningBoard::assign_role` or `ScreeningBoard::revoke_role` (lines 184-196) to grant themselves Screener, Adjudicator, or PolicyAdmin authority. This defeats the entire role-enforcement framework because write authority can be self-granted after instantiation.",
+      "reference": "crates/searchright-screening/src/lib.rs:184-196",
+      "recommendation": "Require an authenticated authority token or existing administrative role for `assign_role`/`revoke_role`. Role mutations should themselves be recorded in the append-only history. Consider making the role set immutable after board creation or requiring a bootstrapping policy-admin assignment at construction."
+    },
+    {
+      "severity": "major",
+      "description": "Blinding is a voluntary projection, not an enforced access control. `ScreeningBoard::decisions()` (line 584) and `ScreeningBoard::history()` (line 590) expose all raw decisions, including unmasked reviewer identities, rationales, and exclusion reasons. Any caller with board access can bypass `decisions_for_reviewer` entirely. Methodologically, blinding integrity requires that unauthorized views are structurally impossible, not merely convention-based.",
+      "reference": "crates/searchright-screening/src/lib.rs:584-586, 590-592",
+      "recommendation": "Separate the blinded projection surface from the raw state. Either make the raw decisions private and expose only `BlindedDecisionView` slices through role-aware methods, or split the board into a canonical state (restricted) and a read projection layer (public)."
+    },
+    {
+      "severity": "major",
+      "description": "Agent authority in the screening board is decoupled from the agent workflow authority gate. `searchright-agent::evaluate_operation` enforces workflow-stage permissions, but `searchright-screening::ScreeningBoard::submit` validates agent decisions only against the `AgentAuthority` policy field (lines 1133-1148). An agent can submit a screening decision without presenting an approved workflow operation receipt, creating an integration gap between execution authorization and screening-state mutation.",
+      "reference": "crates/searchright-screening/src/lib.rs:1133-1148; crates/searchright-agent/src/lib.rs:143-182",
+      "recommendation": "Integrate the authority evaluator into the screening board so that agent submissions require a valid `OperationRequest` approval receipt matching the current workflow stage, or at minimum require an `agent_provenance` field that references a verified operation receipt."
+    },
+    {
+      "severity": "major",
+      "description": "Decision binding to eligibility criteria versions is nominal, not enforced. While `ScreeningDecision.eligibility_version` is stored and validated as non-empty text (line 1108), there is no verification that the version matches a known eligibility contract, that the contract was active at decision time, or that the decision rationale references specific evidence excerpts. The `ExclusionReason.evidence` field is optional and never populated by validation logic (lines 761-778 import examples set it to `None`).",
+      "reference": "crates/searchright-screening/src/lib.rs:761-778, 1096-1151",
+      "recommendation": "Require `ExclusionReason.evidence` to contain a non-empty evidence excerpt for every exclusion. Validate `eligibility_version` against a registry of known protocol versions. Tie decisions to an explicit evidence-bearing passage or study section rather than free-text rationale alone."
+    },
+    {
+      "severity": "minor",
+      "description": "No built-in inter-rater reliability metrics are provided. The design correctly records independent decisions and derives `Consensus`/`Conflict` status, but there is no utility for calculating Cohen's kappa, Fleiss' kappa, or percent agreement. This is acknowledged as a Phase 3 gate but leaves the design incomplete as a methodological tool.",
+      "reference": "crates/searchright-screening/src/lib.rs:548-581; conductor/tracks/07-screening-workflow/plan.md:31-35",
+      "recommendation": "Add deterministic agreement-statistic utilities (at minimum unweighted Cohen's kappa for pairwise human decisions, with optional prevalence/bias adjustment). Include confidence intervals. This should be part of the core library, not deferred to an external panel."
+    },
+    {
+      "severity": "minor",
+      "description": "Blinded reviewer pseudonym is non-unique ('blinded-reviewer'). When multiple reviewers are blinded, their decisions are indistinguishable in the projection. While duplicate-submission prevention mitigates some risk, a reviewer who submitted multiple decisions cannot be distinguished from another blinded reviewer, and an observer seeing two 'blinded-reviewer' entries cannot tell if they represent one or two reviewers.",
+      "reference": "crates/searchright-screening/src/lib.rs:507-509",
+      "recommendation": "Use per-reviewer stable pseudonyms (e.g., hashed reviewer identifiers with a fixed salt) so that each reviewer's decisions are distinguishable in blinded form, while preserving unlinkability to real identities."
+    },
+    {
+      "severity": "minor",
+      "description": "The adjudication rule is unvalidated free text. `ScreeningPolicy.adjudication_rule` must be non-empty (line 1090), but there is no schema validation that it describes a procedurally valid adjudication method (e.g., discussion-then-independent-adjudication vs. coin-flip). Methodologically, the adjudication rule is a core protocol component that should be constrained to approved procedures.",
+      "reference": "crates/searchright-screening/src/lib.rs:1081-1094; contracts/examples/screening-policy.yaml:7",
+      "recommendation": "Validate `adjudication_rule` against an enumerated set of approved adjudication procedures or require it to match a structured adjudication schema."
+    },
+    {
+      "severity": "observation",
+      "description": "The `PolicyAdmin` role is permitted to amend individual screening decisions (lines 389-398). This conflates protocol administration (eligibility criteria, blinding policy, reviewer counts) with decision modification. Methodologically, these authorities should be separated: a policy admin should amend the protocol, not override an individual screener's decision. The current design allows a single actor to act as both administrator and reviewer.",
+      "reference": "crates/searchright-screening/src/lib.rs:389-398",
+      "recommendation": "Remove decision-amendment authority from `PolicyAdmin`. Amendments should require the original reviewer's identity or an explicit adjudication event. Policy admin should only trigger `rescreen_subject` or modify `ScreeningPolicy`."
+    },
+    {
+      "severity": "observation",
+      "description": "Agent exclusion confirmation requires the human decision to match the agent recommendation exactly (`DecisionValue::Exclude`), but does not validate that the human independently applied the same eligibility criteria or evidence. A human could confirm without substantive review, making the confirmation a rubber stamp. The design is methodologically safer than autonomous agent exclusion, but the confirmation quality is unverifiable.",
+      "reference": "crates/searchright-screening/src/lib.rs:294-327",
+      "recommendation": "Require the human confirmation decision to carry a distinct rationale or evidence reference demonstrating independent assessment, not merely matching the agent's outcome."
+    }
+  ],
+  "calibration_notes": "Methodologists will broadly agree on the criticality of blinding bypasses, mutable canonical state, and unauthenticated role assignment—these are fundamental threats to screening validity. There will be disagreement on whether eligibility-version validation and evidence-excerpt enforcement are strict requirements: some methodologists accept version tagging as sufficient, while others (particularly Cochrane/CRD guidance) require explicit evidence linkage. The unintegrated agent authority boundary will be seen as a significant gap by reviewers concerned about automation bias, though the current conservative default (AdvisoryOnly) is widely endorsed. Inter-rater reliability metric absence is universally recognized as incomplete for a screening workflow, but its deferral to Phase 3 is acceptable if explicitly documented.",
+  "disposition": "requires_re-evaluation"
+}

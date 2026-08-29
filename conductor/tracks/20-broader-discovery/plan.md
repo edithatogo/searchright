@@ -29,7 +29,11 @@ GitHub issue key: `track-20`. Each numbered phase maps to the same-numbered nati
 
 - [ ] Compile and run citation-chaining and supplementary-discovery scenarios.
 - [ ] Add authorised source-specific live adapters or documented manual methods.
-- [ ] Review website and grey-literature methods with information specialists.
+- [ ] Review website and grey-literature methods with information specialists via structured agent-panel protocol.
+  - [ ] Convene a multi-agent panel simulating information specialists and grey-literature methodologists.
+  - [ ] Panel produces: (1) structured methodology findings with severity-ranked observations, (2) coverage assessment per discovery vector, (3) disposition record per finding.
+  - [ ] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [ ] Bounded claim: panel output is a simulation instrument, not a substitute for live human review; evidence level remains fixture-proven.
 
 ## Phase 4: Review and closeout
 

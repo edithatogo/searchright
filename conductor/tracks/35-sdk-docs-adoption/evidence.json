@@ -28,10 +28,17 @@
   ],
   "blockers": [
     "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-    "Run documentation tests and information-specialist tutorial walkthroughs.",
+    "Run documentation tests and information-specialist tutorial walkthroughs via structured agent-panel protocol.",
     "Observe support, deprecation and compatibility operations across at least one release cycle."
   ],
-  "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Phase 3 higher-evidence gate uses a structured agent-panel protocol simulating information specialists and technical educators; panel output is fixture-proven, not a substitute for live human walkthroughs. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["information-specialist", "technical-educator"],
+    "output_artefacts": ["structured-tutorial-usability-findings", "walkthrough-completion-assessment", "disposition-record"],
+    "evidence_level": "fixture-proven",
+    "limitation": "Simulation instrument only; not a substitute for live human walkthroughs."
+  },
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-35",

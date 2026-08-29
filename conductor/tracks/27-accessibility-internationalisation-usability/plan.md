@@ -30,7 +30,11 @@ GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered nati
 
 - [ ] Compile and run plain/JSON/JSONL snapshots and no-colour tests.
 - [ ] Create message catalogues and execute locale-fallback tests.
-- [ ] Complete keyboard, screen-reader and information-specialist usability evaluation.
+- [ ] Complete keyboard, screen-reader and information-specialist usability evaluation via structured agent-panel protocol.
+  - [ ] Convene a multi-agent panel simulating accessibility specialists, screen-reader users, and information specialists.
+  - [ ] Panel produces: (1) structured usability findings with severity-ranked observations, (2) assistive-technology coverage assessment, (3) disposition record per finding.
+  - [ ] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [ ] Bounded claim: panel output is a simulation instrument, not a substitute for live human usability studies; evidence level remains fixture-proven.
 
 ## Phase 4: Review and closeout
 

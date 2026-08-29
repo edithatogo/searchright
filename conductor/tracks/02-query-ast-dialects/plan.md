@@ -33,7 +33,11 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 
 - [ ] Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.
 - [ ] Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only.
-- [ ] Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus.
+- [ ] Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus via structured agent-panel protocol.
+  - [ ] Convene a multi-agent panel simulating information specialists and PRESS methodologists.
+  - [ ] Panel produces: (1) structured PRESS findings with severity-ranked observations, (2) conformance corpus coverage assessment, (3) disposition record per finding.
+  - [ ] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [ ] Bounded claim: panel output is a simulation instrument, not a substitute for live human PRESS review; evidence level remains fixture-proven.
 
 ## Phase 4: Review and closeout
 

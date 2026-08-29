@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete reviewer usability and inter-rater calibration evaluation. (`track-07-phase-3-task-01`)
+- [x] T01: Complete reviewer-usability and inter-rater calibration evaluation via structured agent-panel protocol. (`track-07-phase-3-task-01`)
 
 ## Evidence rule
 

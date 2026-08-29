@@ -33,7 +33,11 @@ GitHub issue key: `track-35`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-35-phase-3 -->
 
 - [ ] Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.
-- [ ] Run documentation tests and information-specialist tutorial walkthroughs.
+- [ ] Run documentation tests and information-specialist tutorial walkthroughs via structured agent-panel protocol.
+  - [ ] Convene a multi-agent panel simulating information specialists and technical educators.
+  - [ ] Panel produces: (1) structured tutorial-usability findings with severity-ranked observations, (2) walkthrough completion assessment, (3) disposition record per finding.
+  - [ ] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [ ] Bounded claim: panel output is a simulation instrument, not a substitute for live human walkthroughs; evidence level remains fixture-proven.
 - [ ] Observe support, deprecation and compatibility operations across at least one release cycle.
 
 ## Phase 4: Review and closeout

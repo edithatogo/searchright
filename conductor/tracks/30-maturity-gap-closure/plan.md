@@ -46,13 +46,13 @@ GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered nati
 - [ ] LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.
 - [ ] LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.
 - [ ] LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval.
-- [ ] LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.
+- [ ] LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review via structured agent-panel protocol.
 - [ ] LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accountable launch-profile decision that keeps those effects unavailable and fail closed.
 - [ ] LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites.
 - [ ] LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence.
 - [ ] LP-009 / Track 32: execute exact-revision CiteWeft and Sourceright compiled canaries, dual-run parity and rollback without deleting recovery paths.
 - [ ] LP-010 / Track 16: exceed the governed maturity coverage target, triage mutation/fuzz/formal results, resolve or re-approve dependency exemptions and obtain an exact-candidate green matrix.
-- [ ] LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts.
+- [ ] LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts via structured agent-panel protocol.
 - [ ] LP-012 / Track 29: execute the preregistered sealed methodological evaluation and publish limitations, subgroup results and the accountable response matrix.
 - [ ] LP-013 / Track 33: execute encrypted restore, audit-chain, incident, cancellation and deployment-SLO rehearsals against the target profile.
 - [ ] LP-014 / Track 35: generate and install-smoke locked Python/TypeScript SDKs and complete fixture-backed tutorial walkthroughs.

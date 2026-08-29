@@ -1,0 +1,56 @@
+{
+  "panelist_role": "information-specialist",
+  "overall_assessment": "The governed screening workflow demonstrates a methodologically conservative design aligned with Cochrane/Campbell systematic review standards. However, two critical interop failures and silent loss of exclusion evidence during import undermine usability in a real review managed by an information specialist.",
+  "findings": [
+    {
+      "severity": "critical",
+      "description": "EPPI-Reviewer export claims compatibility but produces raw JSON serialization of internal ScreeningDecision structs, not the nested study/decision schema that EPPI-Reviewer expects.",
+      "reference": "crates/searchright-screening/src/lib.rs:685-690",
+      "recommendation": "Implement a true EPPI-Reviewer-compatible JSON structure."
+    },
+    {
+      "severity": "critical",
+      "description": "Import functions hardcode exclusion_reason.evidence to None and confidence to None for all imported decisions.",
+      "reference": "crates/searchright-screening/src/lib.rs:774, 881, 790, 897",
+      "recommendation": "Preserve evidence excerpts, confidence, and agent_provenance during import."
+    },
+    {
+      "severity": "major",
+      "description": "Independent blinding is automatically lifted for all reviewers once a round reaches Consensus or Resolved status.",
+      "reference": "crates/searchright-screening/src/lib.rs:491-499",
+      "recommendation": "Make unblinding an explicit, policy-governed event."
+    },
+    {
+      "severity": "major",
+      "description": "The adjudication_rule is a free-text string validated only for non-emptiness.",
+      "reference": "crates/searchright-contracts/src/screening.rs:126, 174-177",
+      "recommendation": "Introduce a structured adjudication_procedure enum."
+    },
+    {
+      "severity": "minor",
+      "description": "CSV header validation uses substring matching rather than exact field-name comparison.",
+      "reference": "crates/searchright-screening/src/lib.rs:705, 812",
+      "recommendation": "Replace substring checks with exact header parsing."
+    },
+    {
+      "severity": "minor",
+      "description": "PRISMA flow counts and screening decisions are maintained as separate canonical states with no automated derivation.",
+      "reference": "crates/searchright-prisma/src/lib.rs:85-155",
+      "recommendation": "Provide a deterministic, opt-in derivation path from ScreeningBoard to PrismaFlow."
+    },
+    {
+      "severity": "observation",
+      "description": "Workflow correctly enforces HumanOnly authority for PressReview and FullTextScreening stages.",
+      "reference": "crates/searchright-agent/src/lib.rs:255-260, 283-288",
+      "recommendation": "No action required; preserve these invariants."
+    },
+    {
+      "severity": "observation",
+      "description": "Role enforcement preserves adjudicator independence from original reviewers.",
+      "reference": "crates/searchright-screening/src/lib.rs:1100-1102, 365-370",
+      "recommendation": "No action required."
+    }
+  ],
+  "calibration_notes": "Information specialists will broadly agree on the criticality of the EPPI-Reviewer and evidence-loss findings. The blinding default will generate the most disagreement.",
+  "disposition": "approve_with_findings"
+}

@@ -8,7 +8,7 @@ Conductor plan: `conductor/tracks/27-accessibility-internationalisation-usabilit
 
 - [ ] T01: Compile and run plain/JSON/JSONL snapshots and no-colour tests. (`track-27-phase-3-task-01`)
 - [ ] T02: Create message catalogues and execute locale-fallback tests. (`track-27-phase-3-task-02`)
-- [ ] T03: Complete keyboard, screen-reader and information-specialist usability evaluation. (`track-27-phase-3-task-03`)
+- [ ] T03: Complete keyboard, screen-reader and information-specialist usability evaluation via structured agent-panel protocol. (`track-27-phase-3-task-03`)
 
 ## Evidence rule
 

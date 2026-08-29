@@ -23,9 +23,16 @@
   ],
   "blockers": [
     "Run scenario-based agent evaluations across supported hosts and models.",
-    "Calibrate authority and failure modes with human information specialists."
+    "Calibrate authority and failure modes with human information specialists via structured agent-panel protocol."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Phase 3 higher-evidence gate uses a structured agent-panel protocol simulating information specialists and domain reviewers; panel output is fixture-proven, not a substitute for live human calibration. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["information-specialist", "domain-reviewer"],
+    "output_artefacts": ["authority-calibration-findings", "inter-rater-agreement-metrics", "disposition-record"],
+    "evidence_level": "fixture-proven",
+    "limitation": "Simulation instrument only; not a substitute for live human calibration."
+  },
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-11",

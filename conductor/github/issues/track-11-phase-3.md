@@ -7,7 +7,7 @@ Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
 ## Task subissues
 
 - [ ] T01: Run scenario-based agent evaluations across supported hosts and models. (`track-11-phase-3-task-01`)
-- [ ] T02: Calibrate authority and failure modes with human information specialists. (`track-11-phase-3-task-02`)
+- [ ] T02: Calibrate authority and failure modes with human information specialists via structured agent-panel protocol. (`track-11-phase-3-task-02`)
 
 ## Evidence rule
 

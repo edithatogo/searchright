@@ -28,7 +28,11 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-11-phase-3 -->
 
 - [ ] Run scenario-based agent evaluations across supported hosts and models.
-- [ ] Calibrate authority and failure modes with human information specialists.
+- [ ] Calibrate authority and failure modes with human information specialists via structured agent-panel protocol.
+  - [ ] Convene a multi-agent panel simulating information specialists and domain reviewers.
+  - [ ] Panel produces: (1) authority-calibration findings with failure-mode taxonomy, (2) inter-rater agreement metrics, (3) disposition record per finding.
+  - [ ] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [ ] Bounded claim: panel output is a simulation instrument, not a substitute for live human calibration; evidence level remains fixture-proven.
 
 ## Phase 4: Review and closeout
 

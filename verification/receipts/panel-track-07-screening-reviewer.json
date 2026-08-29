@@ -1,0 +1,56 @@
+{
+  "panelist_role": "screening-reviewer",
+  "overall_assessment": "The Searchright screening workflow implements a structurally sound governed review model with independent blinding, role-based adjudication, and append-only audit history. The single-primary-exclusion-reason contract and human-only full-text authority align with systematic-review standards. However, a systemic authorization bypass in the role-gate logic, disconnected criteria validation, and permissive self-amendment by screeners represent fundamental governance weaknesses that would prevent approval for production use without remediation.",
+  "findings": [
+    {
+      "severity": "critical",
+      "description": "Systemic authorization bypass for unassigned principals. The role-check pattern in submit_inner (line 211), resolve (line 332), amend_decision (line 389), and rescreen_subject (line 454) allows any principal with NO role assignment to submit decisions, resolve conflicts, amend records, or trigger re-screens.",
+      "reference": "crates/searchright-screening/src/lib.rs:211,332,389,454",
+      "recommendation": "Invert the guard clauses to require an explicit role match."
+    },
+    {
+      "severity": "major",
+      "description": "Criteria validation is disconnected from decision submission. validate_decision_against_criteria (line 596) is never called by validate_decision (line 1096) or submit_inner.",
+      "reference": "crates/searchright-screening/src/lib.rs:596,1096",
+      "recommendation": "Wire validate_decision_against_criteria into validate_decision."
+    },
+    {
+      "severity": "major",
+      "description": "Screeners can amend their own prior decisions. amend_decision (line 389) authorizes both PolicyAdmin and Screener.",
+      "reference": "crates/searchright-screening/src/lib.rs:389-398",
+      "recommendation": "Restrict amendment authority to PolicyAdmin only."
+    },
+    {
+      "severity": "major",
+      "description": "No automatic third-reviewer escalation for two-reviewer conflicts.",
+      "reference": "crates/searchright-screening/src/lib.rs:548-581",
+      "recommendation": "Introduce an escalation policy when reviewer count is exhausted and conflict remains."
+    },
+    {
+      "severity": "minor",
+      "description": "Incomplete EPPI-Reviewer interoperability. Only export exists; no import function.",
+      "reference": "crates/searchright-screening/src/lib.rs:685-690",
+      "recommendation": "Implement import path and align export with EPPI-Reviewer schema."
+    },
+    {
+      "severity": "minor",
+      "description": "Hardcoded blinding pseudonym destroys cross-record linkage.",
+      "reference": "crates/searchright-screening/src/lib.rs:506-510",
+      "recommendation": "Use a deterministic per-reviewer pseudonym."
+    },
+    {
+      "severity": "minor",
+      "description": "Adjudication rule is non-enforceable free text.",
+      "reference": "crates/searchright-screening/src/lib.rs:1089-1092",
+      "recommendation": "Replace with a structured adjudication procedure enum."
+    },
+    {
+      "severity": "observation",
+      "description": "Covidence and Rayyan importers assign default reviewer IDs.",
+      "reference": "crates/searchright-screening/src/lib.rs:724-729,831-836",
+      "recommendation": "Require reviewer_id or generate unique deterministic identifiers."
+    }
+  ],
+  "calibration_notes": "Other systematic-review methodologists will strongly agree with the core design. They will unequivocally agree that the systemic role-gate bypass and self-amendment by screeners are critical governance failures.",
+  "disposition": "requires_re-evaluation"
+}
