@@ -78,6 +78,7 @@
     "Simplify the threshold guard using De Morgan's law without changing its accepted domain; strict Clippy and all 10 dedup tests pass (`58a1c2f`).",
     "Parse XML structurally, decode references once and quarantine damaged records without losing later valid records.",
     "Scope primary PubMed identifiers and fields to owning paths, reject malformed XML attributes, and preserve integration-panel dissent and remediation evidence.",
-    "Execute six archival-renderer regressions in the required static harness without changing unrelated track task identities."
+    "Execute six archival-renderer regressions in the required static harness without changing unrelated track task identities.",
+    "Enforce the separately approved CVX-0259 dependency exception with exact checksum, resolved-feature and expiry checks; preserve baseline decisions and risk-acceptance boundaries."
   ]
 }

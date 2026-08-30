@@ -58,4 +58,5 @@ GitHub issue key: `track-06`. Each numbered phase maps to the same-numbered nati
   - [x] Review fix: Parse XML structurally, decode references once and quarantine damaged records without losing later valid records.
   - [x] Review fix: Scope primary PubMed identifiers and fields to owning paths, reject malformed XML attributes, and preserve integration-panel dissent and remediation evidence.
   - [x] Review fix: Execute six archival-renderer regressions in the required static harness without changing unrelated track task identities.
+  - [x] Review fix: Enforce the separately approved CVX-0259 dependency exception with exact checksum, resolved-feature and expiry checks; preserve baseline decisions and risk-acceptance boundaries.
 - [x] Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.

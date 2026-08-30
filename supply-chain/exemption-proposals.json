@@ -8,6 +8,22 @@
   },
   "proposals": [
     {
+      "id": "CVX-0259",
+      "crate": "quick-xml",
+      "version": "0.41.0",
+      "criteria": "safe-to-deploy",
+      "status": "approved",
+      "owner": "edithatogo",
+      "rationale": "Track 06 locked quick-xml 0.41.0 default-only feature configuration; owner explicitly accepts unresolved package-wide audit risk until 2026-09-29; not an audit or safety certification",
+      "risk_summary": "Package-wide audit remains incomplete, with optional-feature findings outside the enabled Searchright path; see the exact owner decision receipt.",
+      "replacement_plan": "Obtain a qualifying imported or substantive agent-panel audit before expiry. Reassess any version, checksum or feature change.",
+      "linked_issue": "https://github.com/edithatogo/searchright/issues/89",
+      "proposed_at": "2026-08-30T09:01:04Z",
+      "decided_at": "2026-08-30T09:01:04Z",
+      "decision_evidence": ["verification/receipts/track-06-dependency-risk-approval.json"],
+      "expires_at": "2026-09-29"
+    },
+    {
       "id": "CVX-0001",
       "crate": "aho-corasick",
       "version": "1.1.5",

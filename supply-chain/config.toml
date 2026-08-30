@@ -630,6 +630,11 @@ version = "1.2.3"
 criteria = "safe-to-run"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 
+[[exemptions.quick-xml]]
+version = "0.41.0"
+criteria = "safe-to-deploy"
+notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/89; approved_on=2026-08-30T09:01:04Z; review_by=2026-09-29; rationale=Track 06 locked quick-xml 0.41.0 default-only feature configuration; owner explicitly accepts unresolved package-wide audit risk until 2026-09-29; not an audit or safety certification"
+
 [[exemptions.quinn]]
 version = "0.11.11"
 criteria = "safe-to-deploy"
