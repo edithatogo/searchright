@@ -18,7 +18,9 @@
     ".github/workflows/github-control-plane.yml",
     "docs/github-operating-system.md",
     "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
-    "contracts/json-schema/github-project.v1.schema.json"
+    "contracts/json-schema/github-project.v1.schema.json",
+    "scripts/check_pr_track_scope.py",
+    "tests/test_pr_track_scope.py"
   ],
   "traceability": "conductor/tracks/31-github-control-plane/traceability.json",
   "static_checks": [
@@ -36,7 +38,7 @@
     "SR-075"
   ],
   "blockers": [],
-  "claim_boundary": "The full bootstrap and audit passed on clean exact merged main, proving the declared GitHub control plane converged without deletion. Semantic archival retains canonical paths and stable remote identities; GitHub cannot promote product, methodology or release maturity.",
+  "claim_boundary": "Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-31",
@@ -68,11 +70,15 @@
   "runtime_evidence": [
     "verification/receipts/track-31-control-plane-apply.json",
     "verification/receipts/track-31-bootstrap-exact-main.json",
-    "verification/receipts/track-31-conductor-review.json"
+    "verification/receipts/track-31-conductor-review.json",
+    "verification/receipts/track-31-scope-parser-maintenance.json"
   ],
   "external_evidence": [
     "verification/receipts/track-31-control-plane-apply.json"
   ],
   "lifecycle": "archived",
-  "archived_on": "2026-08-12"
+  "archived_on": "2026-08-12",
+  "review_fixes": [
+    "Post-archive maintenance: preserve every flat or paginated PR filename and both rename paths, reject malformed metadata, and run the prior scope-policy tests under unittest discovery."
+  ]
 }

@@ -1,0 +1,26 @@
+{
+  "schema_version": "org.searchright.agent-panel-record.v1",
+  "track_id": "31",
+  "date": "2026-08-31",
+  "base_revision": "c9db17441e2db8d57f172ee1b8c889417554a14b",
+  "maintenance_scope": "Repair PR changed-file parsing and ensure existing scope tests execute under unittest discovery.",
+  "first_passes": [
+    {"agent": "track03_delta_review", "roles": ["implementation", "testing"], "finding": "P1: the real single-page gh api --paginate --slurp shape loses every file after unwrapping. Flat records likewise disappear. Original six pytest-style functions were not discovered by unittest."},
+    {"agent": "track03_safety", "roles": ["security", "adversarial"], "finding": "P1: renamed-file records omit previous_filename from scope admission, allowing removal from an undeclared track even after the page-shape fix."},
+    {"agent": "track03_methodology", "roles": ["acceptance", "governance"], "finding": "No actionable first-fix finding; verified 12 discovered tests including all six historical cases. Historical remote-audit receipts must not validate this new parser by implication."}
+  ],
+  "protocol": "Reviewers preserved separate first-pass findings before remediation. The second P1 was found independently after the initial page-shape repair; it was not waived.",
+  "validation_status": "full_validation_and_rereview_passed",
+  "full_validation_receipt": "verification/receipts/track-31-scope-parser-validation.json",
+  "final_source_sha256": {
+    "scripts/check_pr_track_scope.py": "21415b00b03f2cc3abc68895da4c7b18694320da1230ce5751420b6b40ca1218",
+    "tests/test_pr_track_scope.py": "6bae09eec9a51f47ae55cfb23eac8fec76b07165e9f3f8aa67e4fa4da1d41f6b"
+  },
+  "focused_tests_passed": 16,
+  "all_python_tests_passed": 62,
+  "python_log_sha256": "2cdca2e32f101129ee2a16853492eb8c7cf71eea7f49731402849b99de258a34",
+  "rereview": "Safety reviewer independently ran all 16 tests and found the rename finding addressed without remaining blockers in bounded scope.",
+  "actual_rest_check": "The repaired parser admitted Track02 PR664 using the real gh --paginate --slurp REST response and reported changed_track_paths=[02].",
+  "claim_boundary": "Track31 historical archival and exact-main remote audit are retained for their recorded revisions. This maintenance requires its own local and hosted evidence. Path/declaration admission is not proof of semantic ownership, technical inseparability or authority to merge.",
+  "authority": "No remote ruleset changes, deletion, release or owner promotion. Normal single-track PR delivery remains required."
+}

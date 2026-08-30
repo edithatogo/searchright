@@ -23,6 +23,8 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `docs/github-operating-system.md`
   - [x] Present source path: `contracts/json-schema/github-issue-hierarchy.v2.schema.json`
   - [x] Present source path: `contracts/json-schema/github-project.v1.schema.json`
+  - [x] Present source path: `scripts/check_pr_track_scope.py`
+  - [x] Present source path: `tests/test_pr_track_scope.py`
   - [x] Assertion ledger: `conductor/tracks/31-github-control-plane/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -51,4 +53,5 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Post-archive maintenance: preserve every flat or paginated PR filename and both rename paths, reject malformed metadata, and run the prior scope-policy tests under unittest discovery.
 - [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

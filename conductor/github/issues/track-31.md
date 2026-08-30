@@ -28,6 +28,6 @@ Create and synchronise the remote repository, epic, tracks, phases, tasks, Proje
 
 ## Claim boundary
 
-The full bootstrap and audit passed on clean exact merged main, proving the declared GitHub control plane converged without deletion. Semantic archival retains canonical paths and stable remote identities; GitHub cannot promote product, methodology or release maturity.
+Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
