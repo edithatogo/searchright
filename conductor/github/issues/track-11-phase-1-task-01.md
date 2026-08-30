@@ -14,6 +14,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `skills/systematic-search/references/handoffs.md`
   - [x] Present source path: `skills/systematic-search/evaluations/authority-scenarios.json`
   - [x] Present source path: `skills/systematic-search/evaluations/host-model-matrix.json`
+  - [x] Present source path: `skills/systematic-search/evaluations/host-evaluation-protocol.md`
+  - [x] Present source path: `scripts/run_agent_host_eval.py`
+  - [x] Present source path: `scripts/test_agent_host_eval.py`
   - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-protocol.md`
   - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-template.json`
   - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-recruitment.md`
