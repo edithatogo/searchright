@@ -782,13 +782,18 @@
             "scripts/check_agent_skill.py"
           ],
           "implementation_symbols": [
-            "scripts/check_agent_skill.py::validate"
+            "scripts/check_agent_skill.py::validate",
+            "scripts/check_agent_skill.py::validate_caller_policy"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-11-sibling-route.json",
+            "verification/receipts/systematic-search-skill.json"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
           ],
-          "permitted_claim": "A Searchright-authored thin-caller packet is prepared locally and statically checked; it has not been applied to or validated by the downstream companion repository.",
+          "permitted_claim": "The owner-approved Searchright-owned sibling caller is prepared with explicit user handoff and automated invocation disabled pending runtime admission. ARS PR 807 was closed without merge; all 158 local CI-manifest entries passed at its exact head 4e4264a. These historical proposal tests do not validate the revised sibling runtime. Downstream adoption, maintenance acceptance and any listing remain pending.",
           "state": "partially_implemented"
         },
         "T11-A006": {

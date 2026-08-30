@@ -1,0 +1,58 @@
+{
+  "schema_version": "org.searchright.sibling-route-decision.v1",
+  "track": "11",
+  "observed_at": "2026-08-31",
+  "status": "sibling_prepared_runtime_admission_pending",
+  "supersedes_current_status_in": ["verification/receipts/track-11-downstream-readiness.json"],
+  "owner_direction": {
+    "decision": "Proceed with the Searchright-owned sibling route recommended by upstream",
+    "reference": "Owner message in this task on 2026-08-31: Yes, proceed.",
+    "scope": "Placement and local preparation only; no waiver of adoption, maintenance, licence, calibration or registry gates"
+  },
+  "upstream": {
+    "repository": "Imbad0202/academic-research-skills",
+    "pull_request": 807,
+    "state": "CLOSED",
+    "merged_at": null,
+    "closed_at": "2026-08-30T15:05:27Z",
+    "head": "4e4264a2557f9d296119d3021c53266127ac581d",
+    "closure_reference": "https://github.com/Imbad0202/academic-research-skills/pull/807#issuecomment-5469458126",
+    "design_reference": "https://github.com/Imbad0202/academic-research-skills/issues/806#issuecomment-5469458016",
+    "reason": "Existing deep-research routing conflicts with a fifth top-level skill; a single-alpha in-tree binding is not accepted. Maintainer recommends a Searchright-owned sibling and possible future THIRD_PARTY listing."
+  },
+  "historical_consumer_validation": {
+    "tested_revision": "4e4264a2557f9d296119d3021c53266127ac581d",
+    "base_revision": "5debcd2efb686dce0205ba9094b6413dae5f89c0",
+    "command": ["python", "scripts/run_ci_pytest_manifest.py"],
+    "environment": "macOS; isolated Python 3.14.5 / pytest 9.1.1 with consumer development requirements; dependency check passed",
+    "manifest_entries": 158,
+    "status": "passed_from_terminal_log",
+    "exit_code_observed": null,
+    "completion_evidence": "All 158 group starts present; terminal log says CI pytest manifest run ok (158 entr(y/ies)). No FAILED test-summary lines found. Expired process session prevented direct exit-code readback.",
+    "log_sha256": "7fdb9712ffd4485d698ac026f12425215282674240499f4800f75f9bfa081de5",
+    "prior_failed_revision": "de9813d5e8c30a9ece6e3264d3f8fcc1f5f29e3b",
+    "prior_failure": "756-data-access-level-pins; systematic-search lacked EXPECTED_LEVELS registration",
+    "prior_log_sha256": "52b2719f4827d0c6c5243adce077c5e5f106689e983f1fc47c3411ffb4f72ca4",
+    "fix": "Registered raw data-access level with rationale; added three negative/positive pin regressions",
+    "scope": "Rejected proposal's local CI manifest, not all possible tests, hosted CI, revised sibling runtime or adoption"
+  },
+  "sibling": {
+    "path": "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
+    "routing": "explicit_user_handoff",
+    "automated_invocation": "disabled_pending_runtime_admission",
+    "upstream_routing_changed": false,
+    "upstream_content_copied": false,
+    "listing_submitted": false,
+    "adoption_gate": "T11-G001",
+    "adoption_status": "pending"
+  },
+  "remaining_admission": [
+    "Executable exact package/source/schema byte verifier",
+    "Actual synthetic artifact, handoff and approval receipt with computed hashes",
+    "Executable missing/incompatible/wrong-digest/malformed/denied/success and exclusion/amendment refusal cases",
+    "Full-pipeline and host-portability evidence",
+    "Licence review and explicit primary/backup maintenance commitment",
+    "Observed downstream maintainer acceptance; listing alone is not adoption"
+  ],
+  "claim_boundary": "Prepared sibling placement and historical local test evidence only. All four mandatory Track 11 gates remain pending. No runtime pin verifier, downstream adoption, methodological calibration, registry selection, submission or acceptance is claimed."
+}

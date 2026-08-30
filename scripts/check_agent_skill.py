@@ -87,6 +87,25 @@ def package_digest() -> tuple[str, int]:
     return digest.hexdigest(), len(paths)
 
 
+def validate_caller_policy(metadata: Any) -> list[str]:
+    """Check static sibling declarations, not runtime pin or authority evidence."""
+    if not isinstance(metadata, dict):
+        return ["thin caller metadata must be a mapping"]
+    expected = {
+        "status": "prepared_not_applied",
+        "producer": "edithatogo/searchright",
+        "consumer": "Imbad0202/academic-research-skills",
+        "deployment": "searchright_owned_sibling",
+        "routing": "explicit_user_handoff",
+        "automated_invocation": "disabled_pending_runtime_admission",
+    }
+    return [
+        f"thin caller {key} must be {value}"
+        for key, value in expected.items()
+        if metadata.get(key) != value
+    ]
+
+
 def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
     errors: list[str] = []
     try:
@@ -286,8 +305,7 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
         errors.append("human calibration template must not imply unobserved review")
 
     caller_metadata, caller_text = frontmatter(CALLER)
-    if caller_metadata.get("metadata", {}).get("status") != "prepared_not_applied":
-        errors.append("academic-research-skills caller must remain prepared_not_applied")
+    errors.extend(validate_caller_policy(caller_metadata.get("metadata")))
     caller_description = str(caller_metadata.get("description", ""))
     caller_boundary_text = re.sub(r"\s+", " ", caller_description + " " + caller_text)
     for phrase in (
@@ -337,6 +355,8 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
         "declared_host_model_pairs": len(pairs),
         "evaluated_host_model_pairs": evaluated_pairs,
         "downstream_integration": "prepared_not_applied",
+        "caller_deployment": "searchright_owned_sibling",
+        "caller_runtime_admission": "pending_automated_invocation_disabled",
         "registry_packet": "prepared_not_submitted",
         "errors": errors,
         "limitations": [
@@ -380,10 +400,12 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
-    suite = unittest.defaultTestLoader.loadTestsFromName("test_agent_host_eval")
+    suite = unittest.defaultTestLoader.loadTestsFromNames(
+        ["test_agent_host_eval", "test_agent_skill_policy"]
+    )
     test_result = unittest.TextTestRunner(stream=io.StringIO()).run(suite)
     if not test_result.wasSuccessful():
-        print(json.dumps({"status": "failed", "errors": ["host evaluation regression tests failed"]}, indent=2))
+        print(json.dumps({"status": "failed", "errors": ["agent skill regression tests failed"]}, indent=2))
         return 1
     if args.write:
         try:

@@ -1,5 +1,7 @@
 {
   "authority_scenarios": 12,
+  "caller_deployment": "searchright_owned_sibling",
+  "caller_runtime_admission": "pending_automated_invocation_disabled",
   "declared_host_model_pairs": 2,
   "downstream_integration": "prepared_not_applied",
   "errors": [],
@@ -10,7 +12,7 @@
     "Human information-specialist calibration and downstream consumer validation remain separate evidence."
   ],
   "package_files": 21,
-  "package_sha256": "772a193e9070cb070769f18bdbe701cbd03ca77012bdcaf32d4b416a4ea0f4ba",
+  "package_sha256": "ebbe823e5caeb27e25f210da981d107483898f166fd90cba96e14761793d2d01",
   "registry_packet": "prepared_not_submitted",
   "role_cards": 7,
   "schema_version": "org.searchright.agent-skill-verification-receipt.v1",

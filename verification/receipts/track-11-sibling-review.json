@@ -1,0 +1,22 @@
+{
+  "schema_version": "org.searchright.isolated-code-review.v1",
+  "track": "11",
+  "observed_at": "2026-08-31",
+  "reviewed_diff_sha256": "18cdf3a972fa5e696ea3f2205d7547a5121c4fb9d7cb9215c07484c1db266be5",
+  "base_revision": "e52ab9125ea84de0fcab85554594cd441bb9610a",
+  "first_passes": [
+    {"role": "methodology", "agent": "sibling_methodology", "findings": []},
+    {"role": "implementation", "agent": "sibling_implementation", "findings": []},
+    {"role": "testing", "agent": "sibling_testing", "findings": []},
+    {"role": "security_safety", "agent": "sibling_security", "findings": []},
+    {"role": "adversarial", "agent": "sibling_adversarial", "findings": []}
+  ],
+  "focused_validation": [
+    {"command": "python3 -m unittest discover -s scripts -p test_agent_skill_policy.py -v", "result": "4 passed"},
+    {"command": "PYTHONPATH=scripts python3 -B -m unittest test_agent_skill_policy test_agent_host_eval", "result": "14 passed in isolated testing review"},
+    {"command": "python3 scripts/check_agent_skill.py", "result": "passed"},
+    {"command": "python3 scripts/check_licence_firewall.py", "result": "passed; pre-existing standards-pack licence-review warning retained"}
+  ],
+  "subsequent_changes": "Generated source manifest includes the new tracked ADR and tests; this review receipt and plan closeout record are added after first passes.",
+  "claim_boundary": "Isolated code review of static sibling preparation only; not calibration, owner adjudication, full repository verification, runtime admission, downstream adoption or publication authority."
+}
