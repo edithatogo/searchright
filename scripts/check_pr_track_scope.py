@@ -27,15 +27,32 @@ def value(pattern: re.Pattern[str], body: str) -> str | None:
 
 
 def changed_files(payload: Any) -> list[str]:
-    pages = payload if isinstance(payload, list) else [payload]
-    if len(pages) == 1 and isinstance(pages[0], list):
-        pages = pages[0]
-    return [
-        str(item.get("filename"))
-        for page in pages
-        for item in (page if isinstance(page, list) else [])
-        if isinstance(item, dict) and item.get("filename")
-    ]
+    """Accept REST records or gh --paginate --slurp pages without losing records."""
+    if not isinstance(payload, list) or not payload:
+        raise ValueError("changed-file metadata must be a nonempty array")
+    if all(isinstance(item, dict) for item in payload):
+        pages = [payload]
+    elif all(isinstance(item, list) for item in payload):
+        pages = payload
+    else:
+        raise ValueError("changed-file metadata must contain records or pages, not mixed values")
+    files = []
+    for page_index, page in enumerate(pages):
+        if not page:
+            raise ValueError(f"changed-file page {page_index} is empty")
+        for record_index, item in enumerate(page):
+            if not isinstance(item, dict):
+                raise ValueError(f"changed-file page {page_index} record {record_index} must be an object")
+            filename = item.get("filename")
+            if not isinstance(filename, str) or not filename.strip():
+                raise ValueError(f"changed-file page {page_index} record {record_index} requires a nonblank string filename")
+            files.append(filename)
+            if item.get("status") == "renamed":
+                previous = item.get("previous_filename")
+                if not isinstance(previous, str) or not previous.strip():
+                    raise ValueError(f"changed-file page {page_index} record {record_index} rename requires a nonblank string previous_filename")
+                files.append(previous)
+    return files
 
 
 def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
@@ -110,7 +127,10 @@ def main() -> int:
     parser.add_argument("--files-json", type=Path, required=True)
     args = parser.parse_args()
     event = json.loads(args.event.read_text(encoding="utf-8"))
-    files = changed_files(json.loads(args.files_json.read_text(encoding="utf-8")))
+    try:
+        files = changed_files(json.loads(args.files_json.read_text(encoding="utf-8")))
+    except (ValueError, OSError) as error:
+        parser.error(f"invalid changed-file metadata: {error}")
     receipt = check(event, files)
     print(json.dumps(receipt, indent=2, sort_keys=True))
     return 1 if receipt["errors"] else 0

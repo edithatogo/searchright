@@ -5,7 +5,10 @@
   "implementation_state": "source_implemented",
   "evidence_level": "live_proven",
   "source_of_assertions": "conductor/tracks/31-github-control-plane/spec.md#scope",
-  "claim_boundary": "The complete bootstrap and read-only audit passed on clean exact merged main. Semantic archival preserves requirement ownership and remote identity; the projection cannot promote product, methodology or release maturity.",
+  "native_test_commands": [
+    "python3 -m unittest discover -s tests -p test_pr_track_scope.py"
+  ],
+  "claim_boundary": "Historical bootstrap and audit receipts remain revision-bound. Subsequent PR-scope parser maintenance requires separate evidence and does not inherit historic remote verification. Semantic archival preserves ownership and identity; projection does not promote product, methodology or release maturity.",
   "assertions": [
     {
       "assertion_id": "T31-A001",
@@ -130,10 +133,14 @@
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
         "contracts/json-schema/github-project.v1.schema.json",
-        "tests/test_github_common.py"
+        "tests/test_github_common.py",
+        "scripts/check_pr_track_scope.py",
+        "tests/test_pr_track_scope.py"
       ],
       "implementation_symbols": [
-        "scripts/audit_github_control_plane.py::main"
+        "scripts/audit_github_control_plane.py::main",
+        "scripts/check_pr_track_scope.py::changed_files",
+        "scripts/check_pr_track_scope.py::check"
       ],
       "deterministic_tests": [
         "python scripts/audit_github_control_plane.py --help"

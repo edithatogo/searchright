@@ -1,0 +1,18 @@
+{
+  "schema_version": "org.searchright.track-validation.v1",
+  "track_id": "31",
+  "recorded_at": "2026-08-30T21:53:57Z",
+  "status": "passed",
+  "revision": "248952f12a412a1c88dec77b838c1670d1c4546e",
+  "tree": "2ce4c180231bf58977f0ac29983adf3fdc2d09e0",
+  "base_revision": "c9db17441e2db8d57f172ee1b8c889417554a14b",
+  "commands": ["bash scripts/verify.sh", "python3 scripts/test_cargo_vet_governance.py", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --no-minimize-exemptions"],
+  "exit_code": 0,
+  "python_regression_tests": 62,
+  "static_gates": 57,
+  "workspace_tests": {"passed": 365, "skipped": 0},
+  "cargo_vet_governance_tests": 23,
+  "cargo_vet": {"fully_audited": 43, "exempted": 259},
+  "log_sha256": "b315606c05b5476a4898946d7f5c13c7d7f29a309e2f5bfc41d90eef1a32b887",
+  "claim_boundary": "Exact clean-snapshot local validation. Subsequent plan-SHA and receipt bookkeeping require final static checks; hosted final-head checks and exact merged-tree audit remain separate. No change to historical archive authority, hosted rulesets or release status."
+}

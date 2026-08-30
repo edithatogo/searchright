@@ -20,6 +20,8 @@ Canonical task state: **source task complete**.
   - [x] Present source path: `docs/github-operating-system.md`
   - [x] Present source path: `contracts/json-schema/github-issue-hierarchy.v2.schema.json`
   - [x] Present source path: `contracts/json-schema/github-project.v1.schema.json`
+  - [x] Present source path: `scripts/check_pr_track_scope.py`
+  - [x] Present source path: `tests/test_pr_track_scope.py`
   - [x] Assertion ledger: `conductor/tracks/31-github-control-plane/traceability.json`
 
 ## Completion and evidence contract
