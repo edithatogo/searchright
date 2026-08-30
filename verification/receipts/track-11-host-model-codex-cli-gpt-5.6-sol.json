@@ -59,7 +59,10 @@
   "prompt_sha256": "51eec5b64c541619e6b100606fdf0273fbb4c5fd289a79810eac189b5f336542",
   "scenario_sha256": "66fd93b35527338a58907b059d13785c547778ffbd929bdf86caf58e113bc875",
   "schema_version": "org.searchright.agent-host-model-evaluation.v1",
-  "status": "passed",
+  "status": "invalidated",
+  "original_observed_status": "passed",
+  "invalidation_reason": "The original prompt exposed each case's expected answer. The observed 12/12 is retained as historical output, not independent host/model evaluation evidence.",
+  "prompt_labels_omitted": false,
   "total_cases": 12,
   "usage": {
     "returncode": 0

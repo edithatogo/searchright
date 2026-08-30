@@ -652,7 +652,7 @@
         "cargo test -p searchright-agent --locked",
         "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
       ],
-      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. One exact Codex host/model evaluation passed; the downstream caller has a tested draft upstream contribution. A second host/model evaluation, upstream adoption and maintenance acceptance, two independent human calibrations, and registry selection, authorization and acceptance remain pending.",
+      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex host/model receipt is invalidated because its prompt exposed expected answers; no host/model evaluation is currently accepted. The downstream caller has a tested draft upstream contribution. Host/model evaluation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
       "deliverables": [
         "skills/systematic-search/SKILL.md",
         "skills/systematic-search/workflows/systematic-review.yaml",

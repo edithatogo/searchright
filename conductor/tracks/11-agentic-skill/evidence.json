@@ -45,7 +45,7 @@
     "Calibrate authority and failure modes with human information specialists.",
     "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
   ],
-  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. One exact Codex host/model evaluation passed; the downstream caller has a tested draft upstream contribution. A second host/model evaluation, upstream adoption and maintenance acceptance, two independent human calibrations, and registry selection, authorization and acceptance remain pending.",
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex host/model receipt is invalidated because its prompt exposed expected answers; no host/model evaluation is currently accepted. The downstream caller has a tested draft upstream contribution. Host/model evaluation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-11",

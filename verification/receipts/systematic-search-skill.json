@@ -3,14 +3,14 @@
   "declared_host_model_pairs": 2,
   "downstream_integration": "prepared_not_applied",
   "errors": [],
-  "evaluated_host_model_pairs": 1,
+  "evaluated_host_model_pairs": 0,
   "limitations": [
     "Static package checks and deterministic authority fixtures do not establish model behaviour or host compatibility.",
     "No companion repository, live provider, registry, screening decision or publication system was mutated.",
     "Human information-specialist calibration and downstream consumer validation remain separate evidence."
   ],
   "package_files": 20,
-  "package_sha256": "a5c2ae50b70f1658f13cf175de0abce6131ba6b82aefeb0aae6275d36e0cd320",
+  "package_sha256": "5d2e30f5d4d9f7af22ff88cd752175ee20882fb8502e813d2a3b0ce2cdb6b280",
   "registry_packet": "prepared_not_submitted",
   "role_cards": 7,
   "schema_version": "org.searchright.agent-skill-verification-receipt.v1",
