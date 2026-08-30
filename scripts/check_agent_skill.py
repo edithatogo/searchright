@@ -246,6 +246,7 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
                 continue
             if (
                 host_receipt.get("status") != "passed"
+                or host_receipt.get("prompt_labels_omitted") is not True
                 or host_receipt.get("host") != key[0]
                 or host_receipt.get("model") != key[1]
                 or host_receipt.get("host_version") != pair.get("host_version")

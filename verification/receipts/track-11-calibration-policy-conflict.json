@@ -1,0 +1,8 @@
+{
+  "status": "awaiting_owner_policy_resolution",
+  "gate": "T11-G003",
+  "sources": ["CODEX_HANDOFF.md", "conductor/roadmap-coverage.json", "skills/systematic-search/evaluations/human-calibration-protocol.md"],
+  "conflict": "CODEX_HANDOFF.md forbids requiring a second human or independent human review and specifies isolated agent-panel review with owner adjudication. Track 11's calibration wording and the subsequently authored protocol instead require human information specialists and two independent reviewers.",
+  "proposed_resolution": "Use the mandated isolated methodology, implementation, testing, security/safety and adversarial agent panel for internal authority calibration, preserve sealed first passes and dissent, and require accountable-owner adjudication. Do not present this as external specialist validation or change Track 29's separate external-validation claims.",
+  "claim_boundary": "This records a policy conflict and a proposal, not an amendment, completed calibration, or owner approval. T11-G003 remains pending."
+}
