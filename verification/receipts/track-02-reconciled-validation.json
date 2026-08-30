@@ -1,0 +1,18 @@
+{
+  "schema_version": "org.searchright.track-validation.v1",
+  "track_id": "02",
+  "recorded_at": "2026-08-30T21:31:10Z",
+  "status": "passed",
+  "revision": "d9d7c48a4dfab9ac02a7bb016efa8c55da09378a",
+  "tree": "bb7f48166672dd115eb767a4a9890f8b2bc318e0",
+  "base_revision": "b5112895664c0299a6b969eebd4a31a9a43a4810",
+  "commands": ["bash scripts/verify.sh", "python3 scripts/test_cargo_vet_governance.py", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --no-minimize-exemptions"],
+  "exit_code": 0,
+  "python_regression_tests": 46,
+  "static_gates": 57,
+  "workspace_tests": {"passed": 365, "skipped": 0},
+  "cargo_vet_governance_tests": 23,
+  "cargo_vet": {"fully_audited": 43, "exempted": 259},
+  "log_sha256": "0323b384d0bd1556fadfd30320fdbb62d9a547ba60dd87e4234351769bfe4342",
+  "claim_boundary": "Full local validation of the exact reconciled source revision. Later receipt-only bookkeeping does not change executable source. Hosted CI, merge, real-filter qualification, owner corpus approval and archive eligibility remain separate."
+}
