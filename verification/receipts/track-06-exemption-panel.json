@@ -1,0 +1,16 @@
+{
+  "track_id": "06",
+  "date": "2026-08-30",
+  "kind": "isolated_agent_advisory_review",
+  "scope": "CVX-0259 governance implementation, not package-wide dependency certification",
+  "agents": ["exemption_review", "exemption_tests"],
+  "findings": [
+    {"finding": "Renaming the exact approval ID could bypass scope checks", "resolution": "Bind all quick-xml approvals to CVX-0259; regression passes"},
+    {"finding": "Default-only metadata inspection missed all-features expansion", "resolution": "Inspect both default and all-features resolution; regression passes"},
+    {"finding": "Receipt track identity was not bound", "resolution": "Require Track 06 identity; regression passes"}
+  ],
+  "provenance_followup": "Live GitHub read verified Track 06 issue 89. New approval links issue 89; historical baseline issue 241 references remain unchanged. Reviewer negative probes reject substituting 241 in proposal, receipt or note.",
+  "validation": {"command": "python3 scripts/test_cargo_vet_governance.py", "passed": 23, "exit_code": 0, "cargo_calls": "mocked"},
+  "disposition": "No remaining actionable finding in reviewed exemption implementation; full repository and hosted gates remain distinct.",
+  "authority": "Only the user's explicit approval recorded in track-06-dependency-risk-approval.json authorizes the temporary exception. Agents confer no approval or certification."
+}

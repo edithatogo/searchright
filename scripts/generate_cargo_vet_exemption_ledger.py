@@ -38,6 +38,11 @@ def exemption_rows(config: dict) -> list[tuple[str, str, str]]:
 
 
 def main() -> int:
+    # This one-time baseline generator must never replace a later owner decision.
+    if LEDGER.exists():
+        existing = json.loads(LEDGER.read_text(encoding="utf-8"))
+        if any(p.get("decided_at") != APPROVED_ON for p in existing.get("proposals", [])):
+            raise SystemExit("refusing to overwrite post-baseline owner decisions")
     config_text = CONFIG.read_text(encoding="utf-8")
     config = tomllib.loads(config_text)
     rows = exemption_rows(config)

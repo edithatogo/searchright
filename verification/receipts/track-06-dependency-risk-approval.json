@@ -1,0 +1,25 @@
+{
+  "track_id": "06",
+  "decision": "approved",
+  "owner": "edithatogo",
+  "recorded_at": "2026-08-30T09:01:04Z",
+  "authorization": "User replied 'I explicitly approve' to the exact quick-xml 0.41.0 temporary exemption request through September 29, 2026, limited to Track 06's current locked features and accepting unresolved package-wide audit risk.",
+  "crate": "quick-xml",
+  "version": "0.41.0",
+  "checksum": "e660451e55124f798a69a5af3f49ccfbefbd41910eefd25caf2393e1f3473ec1",
+  "features": ["default"],
+  "feature_note": "The default feature is empty; serialize, async-tokio, encoding and other optional features are not enabled.",
+  "criterion": "safe-to-deploy",
+  "expires_at": "2026-09-29",
+  "linked_issue": "https://github.com/edithatogo/searchright/issues/89",
+  "reviewed_head": "29acc46e886e42c2fdb6013f584db56d272f2123",
+  "risks": [
+    "Package-wide audit remains incomplete; this is temporary risk acceptance, not certification.",
+    "An isolated test reproduced a UTF-8 boundary panic in optional deserialization, which Searchright does not enable.",
+    "Source review found unchecked namespace nesting in NsReader, outside Searchright's plain Reader path; 0.42.0 uses checked arithmetic.",
+    "Optional serializer empty-name and async writer spacing inconsistencies remain advisory source findings."
+  ],
+  "validation_context": "Track 06 full local verification passed 56 static gates and 321 Rust tests. Upstream default-feature unit tests passed 240 with 4 ignored. Neither result establishes a package-wide audit.",
+  "replacement_plan": "Obtain a qualifying imported or substantive agent-panel audit before expiry; version, checksum or resolved feature changes require a new decision.",
+  "authority_boundary": "No publisher trust, new registry trust, safety certification, release or publication is authorized. Existing baseline decisions are unchanged."
+}
