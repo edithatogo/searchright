@@ -91,9 +91,9 @@
       "commit": "6f86326",
       "summary": "Expose the current semantic-conformance receipt through canonical Track 02 evidence."
     },
-    "Preserve the semantic-parser phase task identity while named-filter and owner-decision gates remain open.",
-    "Reject foreign dialect syntax, unknown fields, undefined references and unmodeled limits; preserve Unicode clauses and correct native heading/proximity semantics.",
-    "Bound parser metadata, recursion, tokens and set expansion before expensive work; add independent adversarial and recursive Unicode properties.",
-    "Bind each loss-matrix dialect to exactly one matching fixture; retain agent-panel and owner-decision gates without requiring a second person."
+    {
+      "commit": "b98fc59",
+      "summary": "Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions."
+    }
   ]
 }

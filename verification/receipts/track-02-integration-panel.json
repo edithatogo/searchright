@@ -58,7 +58,8 @@
     "Historical compiler receipts are not fresh validation of integration fixes.",
     "Passing round trips do not establish vendor-language completeness or cross-database retrieval equivalence."
   ],
-  "remediation_status": "focused_validation_and_rereview_passed_full_validation_pending",
+  "remediation_status": "full_validation_passed_before_track_11_reconciliation",
+  "full_validation_receipt": "verification/receipts/track-02-integration-validation.json",
   "rereview": [
     "Correctness re-review verified the original eight issues and found a further CINAHL heading-token tail defect; that finding was retained and fixed, with five additional regressions.",
     "Safety reviewer found no blocking findings in the final quotation fix at the final native source digest below.",
