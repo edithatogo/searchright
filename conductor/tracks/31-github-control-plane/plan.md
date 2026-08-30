@@ -53,5 +53,5 @@ GitHub issue key: `track-31`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-  - [x] Review fix: Post-archive maintenance: preserve every flat or paginated PR filename and both rename paths, reject malformed metadata, and run the prior scope-policy tests under unittest discovery.
+  - Review fix `6425b89`: Post-archive maintenance: preserve paginated and renamed PR paths, reject malformed metadata, and run prior scope tests under unittest discovery.
 - [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

@@ -568,7 +568,7 @@ f8b7e5461b08b56b8c6f0e44675c476ee2d2ffc7e11b969bbb37abb3f14a4ded  ./conductor/gi
 50920d0d2461b4ef8caa850834bff11977c02d7eb20d17491c9c4c136db1a5df  ./conductor/github/issues/track-31-phase-3.md
 776c2a614850418755879b1a44c7cf95f8ada7f8e0fdffe62bade54d6d792a55  ./conductor/github/issues/track-31-phase-4-task-01.md
 9b43e48e3f7362ff338d5a921854bb8ffb1b580e1da33690d30869c7375f1df3  ./conductor/github/issues/track-31-phase-4-task-02.md
-b1fcec14407145c4e67acbb1a7b9213d72602c7497f2b663747c5f5ba0a34f3f  ./conductor/github/issues/track-31-phase-4-task-03.md
+d0b8d31f11be34dad3f31f3bba37bf73f420976f83b1240f1a4fd10bcdc7fb31  ./conductor/github/issues/track-31-phase-4-task-03.md
 b6adc8c1da9872297683fafe223dc211036332204245396d3d42308d21735a58  ./conductor/github/issues/track-31-phase-4-task-04.md
 d444aef8144d6ecc18b2b6f986c7184602d0781b5e77dea8cf34182091a00865  ./conductor/github/issues/track-31-phase-4.md
 5075c7ee25cd7fd22cbdf4d5575e963ad39f4ace6ff2e72aaf1cb7a0d723f3b4  ./conductor/github/issues/track-31.md
@@ -674,7 +674,7 @@ cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d  ./conductor/gi
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
-fbd0cf69ee31a25279327ff5d10e2fc202988670bec245453e6210ac0e41b8d4  ./conductor/roadmap-coverage.json
+3150ab5dc7bde4eedfdede82f7c634acd8d583954c72e58593e15a15e9d2e092  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
 5b70176398f0cd24d5648463d8c7c0351db3deb89bd08ecc5ce6f4ea16df131d  ./conductor/traceability-overrides.json
 23d55a325ff2526a3ae30c7e0dd8e56553e6d752308786a556d1c5ff27d7caca  ./conductor/tracks.md
@@ -834,9 +834,9 @@ d95c4a104871abac732be3671db71e66f5794a7c999fc57af4e46ac27db7741c  ./conductor/tr
 5519f486a2fd47479c76264c7a0a972855853154312b1877f76b57c7f8d79358  ./conductor/tracks/30-maturity-gap-closure/plan.md
 7308e681e3408358e56f0ad61c74a94bb691bfb90b74fa062c0528ccc8adad46  ./conductor/tracks/30-maturity-gap-closure/spec.md
 3561ec43f2de8da625521652ea38a0b4d47a56aeab9b8b639704175ab75fe820  ./conductor/tracks/30-maturity-gap-closure/traceability.json
-d515ba316ad015f2ecd23d2355db7f0c9ed69d052ce17da908f7a038ead05577  ./conductor/tracks/31-github-control-plane/evidence.json
+3a0da6653aa5d6313cc28b21932237ad91b9423efa24d776222e61b08e7d6d15  ./conductor/tracks/31-github-control-plane/evidence.json
 418eba06dcdb108960d9983222b52c058fef6c784cc411d28c0789d0f535a6ac  ./conductor/tracks/31-github-control-plane/metadata.json
-369fe08e5dbeee2e464f7644299bc09c4ca3c8de7b40943ccb4bf0d6b9116315  ./conductor/tracks/31-github-control-plane/plan.md
+83d02aaa9abd2090f7a5b939e205359c528d3c95e934df7d4613b5377577563d  ./conductor/tracks/31-github-control-plane/plan.md
 c1da79b1699bb8e106ab87dddc9de53f8b05df83969d425c34b28a0ef1a5fad6  ./conductor/tracks/31-github-control-plane/spec.md
 e3b7a17893a927831f92fae7c6f3ab2a5635c17e98c3bc75d206f344f0f20f04  ./conductor/tracks/31-github-control-plane/traceability.json
 3134b40d0a92ffd95dbaecfc4021c88b70f76886a74dc7e011eac8c28383b51b  ./conductor/tracks/32-cross-repository-release-train/evidence.json
@@ -874,7 +874,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 2480395a1b729a91443c67c12f65fe2fa6c75e8981a4553b90d636917a50f4fe  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-fe29c29c664a65370eab3f2bf25acf55d8f19aae1d3680d7f8c4eb1a713ed6c4  ./context/context-lock.json
+47772aa1fcf85fdee9baf377abea57aeb5482181cc3845033920b1cc983a05c5  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 2c15ea7b5f1f9d182fc959d1733958e1f0934effc8f47c8a78ecec02f85e3599  ./context/hazard-log.json
