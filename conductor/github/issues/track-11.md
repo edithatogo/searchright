@@ -28,6 +28,6 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 
 ## Claim boundary
 
-Compiler-verified local workflow, handoff and deterministic authority behaviour only. The downstream caller and registry packet are prepared but unapplied and unsubmitted; no supported-host/model, human-calibration, companion adoption, live-provider or registry-acceptance claim is made.
+Compiler-verified local workflow, handoff and deterministic authority behaviour are established. One exact Codex host/model evaluation passed; the downstream caller has a tested draft upstream contribution. A second host/model evaluation, upstream adoption and maintenance acceptance, two independent human calibrations, and registry selection, authorization and acceptance remain pending.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -1,0 +1,14 @@
+{
+  "authorization_expires_at": null,
+  "authorization_reference": null,
+  "authorized_operation": "registry_submission",
+  "claim_boundary": "This request is not authorization. Submission is prohibited until the target, namespace, principal, exact digest, operation and validity period are approved by an accountable human.",
+  "package_sha256": "a5c2ae50b70f1658f13cf175de0abce6131ba6b82aefeb0aae6275d36e0cd320",
+  "schema_version": "org.searchright.skill-registry-authorization-request.v1",
+  "skill": "systematic-search",
+  "status": "awaiting_artifact_bound_authorization",
+  "submitting_principal": null,
+  "target_namespace": null,
+  "target_registry": null,
+  "version": "0.1.0-alpha.1"
+}

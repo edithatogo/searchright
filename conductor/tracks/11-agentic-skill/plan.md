@@ -14,8 +14,13 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `skills/systematic-search/references/authority.md`
   - [x] Present source path: `skills/systematic-search/references/handoffs.md`
   - [x] Present source path: `skills/systematic-search/evaluations/authority-scenarios.json`
+  - [x] Present source path: `skills/systematic-search/evaluations/host-model-matrix.json`
+  - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-protocol.md`
+  - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-template.json`
+  - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-recruitment.md`
   - [x] Present source path: `skills/systematic-search/integrations/academic-research-skills/SKILL.md`
   - [x] Present source path: `registry/skills/systematic-search/manifest.json`
+  - [x] Present source path: `registry/skills/systematic-search/authorization-request.json`
   - [x] Present source path: `contracts/json-schema/agent-handoff.v1.schema.json`
   - [x] Present source path: `contracts/examples/agent-handoff.json`
   - [x] Present source path: `contracts/schema-catalog.json`

@@ -18,8 +18,12 @@ SKILL_ROOT = ROOT / "skills" / "systematic-search"
 SKILL = SKILL_ROOT / "SKILL.md"
 WORKFLOW = SKILL_ROOT / "workflows" / "systematic-review.yaml"
 SCENARIOS = SKILL_ROOT / "evaluations" / "authority-scenarios.json"
+HOST_MATRIX = SKILL_ROOT / "evaluations" / "host-model-matrix.json"
+HUMAN_PROTOCOL = SKILL_ROOT / "evaluations" / "human-calibration-protocol.md"
+HUMAN_TEMPLATE = SKILL_ROOT / "evaluations" / "human-calibration-template.json"
 CALLER = SKILL_ROOT / "integrations" / "academic-research-skills" / "SKILL.md"
 PACKET = ROOT / "registry" / "skills" / "systematic-search" / "manifest.json"
+AUTHORIZATION_REQUEST = ROOT / "registry" / "skills" / "systematic-search" / "authorization-request.json"
 RECEIPT = ROOT / "verification" / "receipts" / "systematic-search-skill.json"
 
 EXPECTED_STAGES = [
@@ -214,6 +218,55 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
     if not injection_cases or any(case.get("expected", {}).get("allowed") is not False for case in injection_cases):
         errors.append("prompt-injection scenarios must be present and denied")
 
+    host_matrix = load_json(HOST_MATRIX)
+    if host_matrix.get("schema_version") != "org.searchright.agent-host-model-matrix.v1":
+        errors.append("unexpected host/model matrix schema version")
+    pairs = host_matrix.get("pairs", [])
+    if not isinstance(pairs, list) or not pairs:
+        errors.append("host/model matrix must declare at least one exact pair")
+        pairs = []
+    pair_keys: set[tuple[str, str]] = set()
+    evaluated_pairs = 0
+    for pair in pairs:
+        if not isinstance(pair, dict):
+            errors.append("host/model matrix entries must be objects")
+            continue
+        key = (str(pair.get("host", "")), str(pair.get("model", "")))
+        if not all(key) or key in pair_keys:
+            errors.append("host/model matrix pairs must be exact and unique")
+        pair_keys.add(key)
+        if not pair.get("host_version") or not pair.get("receipt"):
+            errors.append(f"host/model pair {key} lacks version or receipt")
+        if pair.get("status") == "passed":
+            receipt_path = ROOT / str(pair["receipt"])
+            try:
+                host_receipt = load_json(receipt_path)
+            except (OSError, ValueError, json.JSONDecodeError) as error:
+                errors.append(str(error))
+                continue
+            if (
+                host_receipt.get("status") != "passed"
+                or host_receipt.get("host") != key[0]
+                or host_receipt.get("model") != key[1]
+                or host_receipt.get("host_version") != pair.get("host_version")
+                or host_receipt.get("scenario_sha256") != hashlib.sha256(SCENARIOS.read_bytes()).hexdigest()
+                or host_receipt.get("passed_cases") != len(cases)
+                or host_receipt.get("total_cases") != len(cases)
+            ):
+                errors.append(f"host/model receipt for {key} is stale or incomplete")
+            else:
+                evaluated_pairs += 1
+        elif pair.get("status") != "pending":
+            errors.append(f"host/model pair {key} has invalid status")
+
+    if not HUMAN_PROTOCOL.is_file():
+        errors.append("human calibration protocol is missing")
+    human_template = load_json(HUMAN_TEMPLATE)
+    if human_template.get("schema_version") != "org.searchright.agent-human-calibration.v1":
+        errors.append("unexpected human calibration template schema version")
+    if human_template.get("status") != "awaiting_independent_reviewers" or human_template.get("reviewers") != []:
+        errors.append("human calibration template must not imply unobserved review")
+
     caller_metadata, caller_text = frontmatter(CALLER)
     if caller_metadata.get("metadata", {}).get("status") != "prepared_not_applied":
         errors.append("academic-research-skills caller must remain prepared_not_applied")
@@ -242,6 +295,17 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
         errors.append("skill registry packet has the wrong entrypoint")
     if packet.get("package_sha256") != digest:
         errors.append("skill registry packet digest is stale; run check_agent_skill.py --write")
+    authorization_request = load_json(AUTHORIZATION_REQUEST)
+    if authorization_request.get("schema_version") != "org.searchright.skill-registry-authorization-request.v1":
+        errors.append("unexpected registry authorization request schema version")
+    if authorization_request.get("package_sha256") != digest:
+        errors.append("registry authorization request digest is stale; run check_agent_skill.py --write")
+    if (
+        authorization_request.get("status") != "awaiting_artifact_bound_authorization"
+        or authorization_request.get("target_registry") is not None
+        or authorization_request.get("authorization_reference") is not None
+    ):
+        errors.append("registry authorization request must remain fail-closed until exact authorization exists")
 
     receipt = {
         "schema_version": "org.searchright.agent-skill-verification-receipt.v1",
@@ -252,6 +316,8 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
         "workflow_stages": len(stage_ids),
         "role_cards": len(EXPECTED_ROLES),
         "authority_scenarios": len(cases),
+        "declared_host_model_pairs": len(pairs),
+        "evaluated_host_model_pairs": evaluated_pairs,
         "downstream_integration": "prepared_not_applied",
         "registry_packet": "prepared_not_submitted",
         "errors": errors,
@@ -279,6 +345,12 @@ def write_generated() -> None:
     digest, _ = package_digest()
     packet["package_sha256"] = digest
     PACKET.write_text(json.dumps(packet, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    authorization_request = load_json(AUTHORIZATION_REQUEST)
+    authorization_request["package_sha256"] = digest
+    AUTHORIZATION_REQUEST.write_text(
+        json.dumps(authorization_request, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     errors, receipt = validate(check_receipt=False)
     if errors:
         raise ValueError("; ".join(errors))

@@ -1,0 +1,18 @@
+{
+  "cases": [],
+  "claim_boundary": "This receipt covers only the exact host, host version, model, prompt and deterministic authority cases named here. It is not methodological calibration or live-provider evidence.",
+  "errors": [
+    "claude exited 1: {\"type\":\"result\",\"subtype\":\"success\",\"is_error\":true,\"api_error_status\":null,\"duration_ms\":621,\"duration_api_ms\":0,\"num_turns\":1,\"result\":\"Not logged in \u00b7 Please run /login\",\"stop_reason\":\"stop_sequence\",\"session_id\":\"7895ac24-9ce7-4919-906b-e7a25044d200\",\"total_cost_usd\":0,\"usage\":{\"input_tokens\":0,\"cache_creation_input_tokens\":0,\"cache_read_input_tokens\":0,\"output_tokens\":0,\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":0,\"ephemeral_5m_input_tokens\":0},\"inference_geo\":\"\",\"iterations\":[],\"speed\":\"standard\"},\"modelUsage\":{},\"permission_denials\":[],\"terminal_reason\":\"completed\",\"fast_mode_state\":\"off\",\"uuid\":\"f55e1927-9fc1-4ff3-a814-8f232fb385cb\"}\n"
+  ],
+  "host": "claude-code",
+  "host_version": "2.1.126",
+  "model": "claude-sonnet-4-6",
+  "observed_at": "2026-08-30T02:30:40+00:00",
+  "passed_cases": 0,
+  "prompt_sha256": "51eec5b64c541619e6b100606fdf0273fbb4c5fd289a79810eac189b5f336542",
+  "scenario_sha256": "66fd93b35527338a58907b059d13785c547778ffbd929bdf86caf58e113bc875",
+  "schema_version": "org.searchright.agent-host-model-evaluation.v1",
+  "status": "failed",
+  "total_cases": 12,
+  "usage": {}
+}

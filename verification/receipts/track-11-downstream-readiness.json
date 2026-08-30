@@ -1,0 +1,32 @@
+{
+  "schema_version": "org.searchright.downstream-adoption-readiness.v1",
+  "observed_at": "2026-08-30",
+  "producer_repository": "edithatogo/searchright",
+  "producer_revision": "3b3dfdc7f514dd70bcdd20e671b8608e6f41d00d",
+  "consumer_repository": "edithatogo/academic-research-skills",
+  "consumer_revision": "de9813d5e8c30a9ece6e3264d3f8fcc1f5f29e3b",
+  "consumer_upstream_repository": "Imbad0202/academic-research-skills",
+  "consumer_upstream_observed_revision": "5debcd2efb686dce0205ba9094b6413dae5f89c0",
+  "consumer_commits_behind_upstream": 397,
+  "consumer_license": "CC-BY-NC-4.0",
+  "licence_review": {
+    "status": "reviewed_with_boundary",
+    "finding": "The proposed caller is original Searchright-authored material, but an upstream contribution would be distributed under CC BY-NC 4.0. No upstream content may be copied into Searchright's MIT OR Apache-2.0 package."
+  },
+  "upstream_design_issue": "https://github.com/Imbad0202/academic-research-skills/issues/806",
+  "upstream_draft_pull_request": "https://github.com/Imbad0202/academic-research-skills/pull/807",
+  "consumer_validation": {
+    "focused_tests": "3 passed",
+    "command": "python3 -m pytest -q tests/test_searchright_systematic_search.py",
+    "handoff_schema": "passed against contracts/agent-handoff-v1.schema.json",
+    "full_suite": "not_completed"
+  },
+  "maintainer_commitment": {
+    "proposed_maintainer": "@edithatogo",
+    "required_commitment": "approximately six-week release synchronization and downstream issue triage",
+    "status": "awaiting_explicit_acceptance"
+  },
+  "prepared_caller": "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
+  "status": "awaiting_upstream_maintainer_and_maintenance_commitment",
+  "claim_boundary": "The focused consumer tests and handoff-schema validation passed on the draft contribution. This is not upstream adoption: the pull request is unmerged, upstream approval is pending, the full downstream suite was not completed, and the maintenance commitment has not been accepted."
+}
