@@ -126,6 +126,8 @@ def run_codex(model: str, text: str, schema: dict[str, Any]) -> tuple[dict[str, 
                 "--skip-git-repo-check", "--sandbox", "read-only",
                 "--disable", "shell_tool", "--disable", "unified_exec",
                 "--disable", "shell_snapshot", "-c", 'web_search="disabled"', "--json",
+                "-c", "skills.include_instructions=false",
+                "--disable", "plugins", "--disable", "memories",
                 "--model", model, "--output-schema", str(schema_path),
                 "--output-last-message", str(result_path), text,
             ],
@@ -141,6 +143,8 @@ def run_codex(model: str, text: str, schema: dict[str, Any]) -> tuple[dict[str, 
         item_types = check_codex_events(completed.stdout)
         return load(result_path), {"returncode": completed.returncode, "item_types": item_types,
                                   "isolated_cwd": True, "shell_tools_disabled": True,
+                                  "automatic_skill_instructions_disabled": True,
+                                  "plugins_disabled": True, "memories_disabled": True,
                                   "web_search_disabled": True, "event_integrity": "passed"}
 
 

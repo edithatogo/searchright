@@ -770,7 +770,7 @@
           "open_gates": [
             "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
           ],
-          "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority, including prompt-injection, forged, mis-scoped, expired, revoked, replayed and human-authority denials; model and host behaviour remain untested.",
+          "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority. A context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed the twelve public authority fixtures with strict event integrity; this is bounded fixture compliance, not general host support or calibration. The declared Claude pair remains pending.",
           "state": "partially_implemented"
         },
         "T11-A005": {

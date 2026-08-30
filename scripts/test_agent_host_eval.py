@@ -73,6 +73,9 @@ class EvaluationIntegrityTests(unittest.TestCase):
             self.assertIn("unified_exec", command)
             self.assertIn("shell_snapshot", command)
             self.assertIn('web_search="disabled"', command)
+            self.assertIn('skills.include_instructions=false', command)
+            for feature in ('plugins', 'memories'):
+                self.assertEqual(command[command.index(feature) - 1], '--disable')
             self.assertIn("--json", command)
             destination = Path(command[command.index("--output-last-message") + 1])
             destination.write_text('{"decisions":[]}', encoding="utf-8")
@@ -81,6 +84,16 @@ class EvaluationIntegrityTests(unittest.TestCase):
             result, evidence = runner.run_codex("test-model", "synthetic", runner.output_schema([]))
         self.assertEqual(result, {"decisions": []})
         self.assertEqual(evidence["event_integrity"], "passed")
+        self.assertTrue(evidence["automatic_skill_instructions_disabled"])
+        self.assertTrue(evidence["plugins_disabled"])
+        self.assertTrue(evidence["memories_disabled"])
+
+    def test_skill_catalogue_warning_is_still_rejected(self):
+        event = {"type": "item.completed", "item": {
+            "type": "error", "message": "Skill descriptions were shortened to fit the 2% skills context budget."
+        }}
+        with self.assertRaises(ValueError):
+            runner.check_codex_events(json.dumps(event))
 
     def test_malformed_decision_and_unknown_top_level_event_fail_closed(self):
         self.assertTrue(runner.evaluate({"decisions": [{"id": []}]}, self.suite)[1])

@@ -28,6 +28,6 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 
 ## Claim boundary
 
-Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex host/model receipt is invalidated because its prompt exposed expected answers; no host/model evaluation is currently accepted. The downstream caller has a tested draft upstream contribution. Host/model evaluation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.
+Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. The downstream caller has a focused-tested draft upstream contribution; full consumer validation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
