@@ -31,7 +31,10 @@ jobs:
       - name: Install validation dependencies
         run: python -m pip install --disable-pip-version-check -r requirements/validation.txt
       - name: Run complete network-free static harness
-        run: python scripts/run_static_harness.py
+        # Installation is separate from the network-free validation gate.
+        run: |
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+          python scripts/run_static_harness.py
 
 
   rust:
@@ -61,6 +64,8 @@ jobs:
         run: cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
       - name: Run unit and integration tests
         run: cargo test --workspace --all-features --locked
+      - name: Verify compiled canonical-schema drift baseline
+        run: python scripts/check_rust_schema_parity.py --check
       - name: Exercise built and installed CLI distribution contract
         shell: bash
         run: |

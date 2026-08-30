@@ -244,6 +244,7 @@ Once Rust 1.97.1 and dependency access are available:
 ```bash
 ./scripts/bootstrap.sh
 cargo generate-lockfile
+npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
 ./scripts/verify.sh
 
 cargo run -p searchright-cli -- validate-plan contracts/examples/review-plan.yaml

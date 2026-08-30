@@ -38,7 +38,9 @@ jobs:
       - name: Install cargo-machete
         run: cargo install cargo-machete --version 0.9.2 --locked
       - name: Verify repository
-        run: ./scripts/verify.sh
+        run: |
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+          ./scripts/verify.sh
       - name: Generate release inventories
         run: |
           python scripts/generate_source_sbom.py

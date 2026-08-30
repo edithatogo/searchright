@@ -28,6 +28,7 @@ jobs:
           persist-credentials: false
       - name: Validate rehearsal, roadmap and maturity dossier
         run: |
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
           python scripts/check_release_rehearsal.py
           python scripts/check_roadmap_coverage.py
           python scripts/check_maturity_dossier.py

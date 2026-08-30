@@ -10,18 +10,17 @@
           ],
           "implementation_paths": [
             "contracts/schema-catalog.json",
-              "scripts/validate_repository.py",
-              "crates/evidence-search-contracts/tests/schema_parity.rs"
+            "scripts/validate_repository.py",
+            "crates/evidence-search-contracts/tests/schema_parity.rs",
+            "contracts/compatibility/rust-schema-parity.json"
           ],
           "implementation_symbols": [
               "scripts/validate_repository.py::validate_schemas_and_examples",
               "evidence_search_contracts::rust_owned_schemas"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [
-              "Resolve the explicit generated/canonical constraint losses before claiming exact semantic parity."
-            ],
-            "permitted_claim": "All 60 checked-in JSON Schemas and examples are statically validated; nine explicitly Rust-owned roots have compiler-backed root-field parity, with exact constraint parity denied.",
+            "open_gates": [],
+            "permitted_claim": "All 68 checked-in JSON Schemas and examples are statically validated; 10 explicitly Rust-owned roots are compiler-generated and compared with every observed validation-shape difference recorded, while exact semantic parity remains denied.",
             "state": "source_implemented"
         },
         "T01-A002": {
@@ -31,18 +30,21 @@
           "implementation_paths": [
             "crates/evidence-search-contracts",
               "contracts/schema-catalog.json",
-              "crates/evidence-search-contracts/src/schema.rs",
-              "crates/evidence-search-contracts/tests/schema_parity.rs"
+            "crates/evidence-search-contracts/src/schema.rs",
+            "crates/evidence-search-contracts/tests/schema_parity.rs",
+            "crates/evidence-search-contracts/examples/export_schemas.rs",
+            "scripts/check_rust_schema_parity.py",
+            "contracts/compatibility/rust-schema-parity.json",
+            "docs/adrs/0017-canonical-schema-and-binding-ownership.md"
           ],
             "implementation_symbols": [
               "evidence_search_contracts::rust_owned_schemas",
-              "evidence_search_contracts::rust_schema_parity_report"
+              "export_schemas::main",
+              "scripts/check_rust_schema_parity.py::render_report"
             ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-              "Resolve additional-properties, uniqueness, constant, range and string-length losses before claiming exact semantic equality."
-            ],
-            "permitted_claim": "Nine neutral-core root schemas are generated from compiled Rust types and structurally diffed against canonical forms; the machine-readable loss report denies exact semantic parity.",
+          "open_gates": [],
+            "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and compared against canonical forms with schema-aware normalization and content-bound digests; observed differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed.",
             "state": "source_implemented"
         },
         "T01-A003": {
@@ -59,7 +61,6 @@
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Add semantic compatibility fixtures and migration tests before a stable release."
           ],
           "permitted_claim": "Exact schema, WIT, OpenAPI and MCP surface drift is gated; semantic compatibility remains separate.",
             "state": "source_implemented"
@@ -87,23 +88,30 @@
         },
         "T01-A005": {
           "deterministic_tests": [
+              "python scripts/check_contract_bindings.py",
               "python scripts/check_public_package_policy.py",
               "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "sdk/manifest.json",
+              "sdk/generated-contract-bindings.json",
+              "sdk/python/searchright_contracts/__init__.py",
+              "sdk/typescript/src/index.ts",
+              "scripts/generate_contract_bindings.py",
+              "scripts/check_contract_bindings.py",
               "release/public-packages.json",
               "contracts/compatibility/contract-conformance-matrix.json"
           ],
             "implementation_symbols": [
+              "scripts/generate_contract_bindings.py::render_outputs",
+              "scripts/check_contract_bindings.py::main",
               "scripts/check_public_package_policy.py::main",
               "scripts/sync_contract_conformance_matrix.py::render"
             ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-              "Generate, compile and install-smoke thin TypeScript/Python packages under Track 35 / SR-086 after the neutral schema surface stabilises."
             ],
-            "permitted_claim": "Thin-binding ownership, package identities and no-domain-logic policy are explicit; executable binding generation remains delegated to Track 35 and is not claimed here.",
+            "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 72 canonical schemas, statically type-checked and import-checked; installation, clients, publication and downstream conformance remain Track 35 gates.",
             "state": "source_implemented"
         },
         "T01-A006": {
@@ -123,10 +131,8 @@
               "scripts/sync_contract_conformance_matrix.py::render"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [
-              "Populate compiler, exact round-trip and downstream-consumer results only from matching receipts."
-            ],
-            "permitted_claim": "The generated 60-contract matrix records static validation and exact canonical digests, with compiler, round-trip and downstream columns fail-closed as not evidenced.",
+            "open_gates": [],
+            "permitted_claim": "The generated 68-contract matrix records static validation, exact canonical digests and generated-binding source status, with round-trip and downstream columns fail-closed as not evidenced.",
             "state": "source_implemented"
         }
       }

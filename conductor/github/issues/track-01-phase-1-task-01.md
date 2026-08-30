@@ -3,20 +3,31 @@
 
 Parent phase key: `track-01-phase-1`
 Conductor plan: `conductor/tracks/01-contract-catalog/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/evidence-search-contracts/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/lib.rs`
   - [x] Present source path: `contracts/schema-catalog.json`
   - [x] Present source path: `contracts/compatibility/schema-surface-0.1.0-alpha.1.json`
   - [x] Present source path: `contracts/compatibility/contract-conformance-matrix.json`
+  - [x] Present source path: `contracts/compatibility/rust-schema-parity.json`
   - [x] Present source path: `crates/evidence-search-contracts/src/schema.rs`
   - [x] Present source path: `crates/evidence-search-contracts/tests/schema_parity.rs`
+  - [x] Present source path: `crates/evidence-search-contracts/examples/export_schemas.rs`
   - [x] Present source path: `scripts/sync_schema_surface.py`
   - [x] Present source path: `scripts/sync_contract_conformance_matrix.py`
+  - [x] Present source path: `scripts/check_rust_schema_parity.py`
+  - [x] Present source path: `scripts/generate_contract_bindings.py`
+  - [x] Present source path: `scripts/check_contract_bindings.py`
+  - [x] Present source path: `sdk/generated-contract-bindings.json`
+  - [x] Present source path: `sdk/python/searchright_contracts/__init__.py`
+  - [x] Present source path: `sdk/typescript/src/index.ts`
+  - [x] Present source path: `docs/adrs/0017-canonical-schema-and-binding-ownership.md`
+  - [x] Present source path: `verification/receipts/track-01-contract-generation-2026-08-29.json`
+  - [x] Present source path: `verification/receipts/track-01-conductor-review-2026-08-29.json`
   - [x] Present source path: `verification/receipts/track-01-compiler-verification.json`
   - [x] Present source path: `verification/receipts/track-01-review-verification.json`
   - [x] Present source path: `release/public-packages.json`

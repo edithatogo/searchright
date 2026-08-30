@@ -2,20 +2,31 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "01",
   "title": "Contract catalogue and code generation",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-12",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "compiler_verified",
+  "source_verified_on": "2026-08-29",
   "source_evidence": [
     "crates/evidence-search-contracts/src/lib.rs",
     "crates/searchright-contracts/src/lib.rs",
     "contracts/schema-catalog.json",
     "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
     "contracts/compatibility/contract-conformance-matrix.json",
+    "contracts/compatibility/rust-schema-parity.json",
     "crates/evidence-search-contracts/src/schema.rs",
     "crates/evidence-search-contracts/tests/schema_parity.rs",
+    "crates/evidence-search-contracts/examples/export_schemas.rs",
     "scripts/sync_schema_surface.py",
     "scripts/sync_contract_conformance_matrix.py",
+    "scripts/check_rust_schema_parity.py",
+    "scripts/generate_contract_bindings.py",
+    "scripts/check_contract_bindings.py",
+    "sdk/generated-contract-bindings.json",
+    "sdk/python/searchright_contracts/__init__.py",
+    "sdk/typescript/src/index.ts",
+    "docs/adrs/0017-canonical-schema-and-binding-ownership.md",
+    "verification/receipts/track-01-contract-generation-2026-08-29.json",
+    "verification/receipts/track-01-conductor-review-2026-08-29.json",
     "verification/receipts/track-01-compiler-verification.json",
     "verification/receipts/track-01-review-verification.json",
     "release/public-packages.json",
@@ -27,6 +38,8 @@
     "python scripts/validate_repository.py",
     "python scripts/sync_schema_surface.py --check",
     "python scripts/sync_contract_conformance_matrix.py --check",
+    "python scripts/check_contract_bindings.py",
+    "python scripts/check_rust_schema_parity.py --check",
     "python scripts/check_public_package_policy.py"
   ],
   "requirements": [
@@ -37,12 +50,8 @@
     "SR-017",
     "SR-049"
   ],
-  "blockers": [
-    "Resolve the recorded Schemars/canonical constraint losses before claiming exact semantic schema parity.",
-    "Generate and compile the thin TypeScript/Python contract packages required by the original Track 01 scope.",
-    "Run downstream consumer and generated-binding conformance under Track 35 / SR-086."
-  ],
-  "claim_boundary": "Source implementation is compiler-backed for contract invariants and nine explicitly Rust-owned schema roots. All 60 canonical schemas/examples and exact digests are statically checked, but generated/canonical constraint losses, downstream consumers and Track 35 bindings remain separate evidence gates.",
+  "blockers": [],
+  "claim_boundary": "All 72 canonical schemas/examples and exact digests are checked; contract-only Python and TypeScript types are deterministically generated, statically type-checked and import-checked. Ten Rust-owned roots are compared with schema-aware normalization, content-bound digests and recorded differences. Canonical JSON Schema retains validation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-01",
@@ -67,8 +76,23 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
+    "verification/receipts/track-01-integration-verification.json",
+    "verification/receipts/track-01-contract-generation-2026-08-29.json",
+    "verification/receipts/track-01-conductor-review-2026-08-29.json",
     "verification/receipts/track-01-compiler-verification.json",
     "verification/receipts/track-01-review-verification.json"
   ],
-  "external_evidence": []
+  "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-08-29",
+  "review_fixes": [
+    {
+      "commit": "c393134",
+      "summary": "Resolve six integration-panel findings: preserve schema property/literal semantics, bind drift to schema digests, preserve generated TypeScript base fields and Python dictionaries, enforce pinned static typing and exercise compiled parity in CI. Verified locally with 55 static gates, 294 Rust tests and the Python test suite."
+    },
+    {
+      "commit": "67c0161",
+      "summary": "Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references."
+    }
+  ]
 }

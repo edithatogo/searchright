@@ -72,6 +72,34 @@ fn semantic_parity_scope_remains_fail_closed() -> Result<(), Box<dyn std::error:
     assert_eq!(scope.rust_owned_roots, 10);
     assert_eq!(scope.known_losses.len(), 9);
 
+    let workspace = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+    let report: Value = serde_json::from_str(&fs::read_to_string(
+        workspace.join(scope.difference_report),
+    )?)?;
+    assert_eq!(
+        report.get("schema_version").and_then(Value::as_str),
+        Some("org.searchright.rust-schema-parity-report.v1")
+    );
+    assert_eq!(
+        report.get("exact_semantic_parity").and_then(Value::as_bool),
+        Some(false)
+    );
+    assert_eq!(
+        report.get("registered_roots").and_then(Value::as_u64),
+        Some(scope.rust_owned_roots as u64)
+    );
+    let reported = report
+        .get("contracts")
+        .and_then(Value::as_object)
+        .ok_or("parity report contracts must be an object")?;
+    for entry in rust_owned_schemas() {
+        assert!(
+            reported.contains_key(entry.catalogue_id),
+            "missing recorded schema difference for {}",
+            entry.catalogue_id
+        );
+    }
+
     let encoded = serde_json::to_value(scope)?;
     assert_eq!(
         encoded.get("schema_version").and_then(Value::as_str),

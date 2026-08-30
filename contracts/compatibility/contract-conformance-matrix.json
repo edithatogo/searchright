@@ -1673,6 +1673,19 @@
       "status": "generated_client_planned"
     }
   },
+  "contract_bindings": {
+    "source": "contracts/schema-catalog.json",
+    "generator": "scripts/generate_contract_bindings.py",
+    "check": "scripts/check_contract_bindings.py",
+    "manifest": "sdk/generated-contract-bindings.json",
+    "status": "generated_compiler_checked",
+    "targets": {
+      "python": "searchright-contracts",
+      "typescript": "@searchright/contracts"
+    },
+    "domain_logic": false,
+    "automatic_publication": false
+  },
   "binding_ownership": {
     "track": "35",
     "requirement": "SR-086",
@@ -1683,5 +1696,5 @@
     "exact_parity": false,
     "scope_declaration": "evidence_search_contracts::rust_schema_parity_scope"
   },
-  "claim_boundary": "This matrix proves catalogue presence, declared static validation, and exact canonical digest equality only. It does not prove Rust compiler, round-trip, generated binding, install, or downstream conformance."
+  "claim_boundary": "This matrix proves catalogue presence, declared static validation, exact canonical digest equality and generated contract-binding source status only. It does not prove generated clients, package installation, publication, round-trip behavior or downstream conformance."
 }

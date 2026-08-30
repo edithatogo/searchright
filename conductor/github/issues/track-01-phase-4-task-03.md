@@ -8,6 +8,8 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `c393134`: Resolve six integration-panel findings: preserve schema property/literal semantics, bind drift to schema digests, preserve generated TypeScript base fields and Python dictionaries, enforce pinned static typing and exercise compiled parity in CI. Verified locally with 55 static gates, 294 Rust tests and the Python test suite.
+  - Review fix `67c0161`: Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references.
 
 ## Completion and evidence contract
 

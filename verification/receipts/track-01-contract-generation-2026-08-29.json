@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.track-contract-generation-verification.v1",
+  "track_id": "01",
+  "observed_at": "2026-08-29T07:47:42Z",
+  "source_revision": "6309e2da8b102ade234ddefec5c98e119db98802",
+  "toolchain": {
+    "rustc": "1.98.0 (88d9e12ae 2026-08-18)",
+    "python": "3.14.7",
+    "node": "26.7.0"
+  },
+  "status": "passed_with_explicit_limits",
+  "checks": [
+    {
+      "command": "bash scripts/verify.sh",
+      "status": "passed",
+      "static_harness_gates": 54,
+      "workspace_tests_passed": 253
+    },
+    {
+      "command": "python3 scripts/check_contract_bindings.py",
+      "status": "passed",
+      "canonical_contracts": 68,
+      "languages": [
+        "python",
+        "typescript"
+      ]
+    },
+    {
+      "command": "python3 scripts/check_rust_schema_parity.py --check",
+      "status": "passed_with_recorded_differences",
+      "registered_rust_roots": 10,
+      "recorded_difference_paths": 246,
+      "exact_semantic_parity": false
+    }
+  ],
+  "review_fixes": [
+    "Made canonical JSON Schema authority explicit and recorded every observed Rust-generated validation-shape difference.",
+    "Generated deterministic contract-only Python and TypeScript packages from the canonical 68-contract catalogue.",
+    "Added Python and Node syntax/import checks to the static harness and Rust parity checking to the full verification path.",
+    "Derived binding contract counts from the catalogue rather than hard-coding them in the checker."
+  ],
+  "limits": [
+    "The generated packages are contract-only types, not validators or clients.",
+    "Package installation, publication, client behaviour and downstream generated-binding conformance remain Track 35 / SR-086 gates.",
+    "Rust-generated schemas are compiler-backed drift diagnostics; exact semantic parity is explicitly not claimed."
+  ]
+}

@@ -8,11 +8,11 @@
     },
     "by_state": {
       "external_evidence_required": 10,
-      "partially_implemented": 104,
-      "scaffolded": 47,
-      "source_implemented": 39
+      "partially_implemented": 99,
+      "scaffolded": 46,
+      "source_implemented": 45
     },
-    "open_gate_entries": 396,
+    "open_gate_entries": 391,
     "total": 200,
     "track_level_only": 91,
     "without_symbol_mapping": 115
@@ -113,16 +113,16 @@
   },
   "schema_version": "org.searchright.evidence-debt.v1",
   "static_gates": {
-    "catalogued": 63,
-    "harness": 54,
+    "catalogued": 64,
+    "harness": 55,
     "unregistered_assertion_commands": []
   },
   "tracks": {
     "by_state": {
       "external_evidence_required": 3,
-      "partially_implemented": 22,
+      "partially_implemented": 21,
       "scaffolded": 7,
-      "source_implemented": 6
+      "source_implemented": 7
     },
     "total": 38
   }

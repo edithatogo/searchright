@@ -1,0 +1,18 @@
+{
+  "description": "Generated contract-only Searchright type bindings",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src/index.ts"
+  ],
+  "name": "@searchright/contracts",
+  "private": true,
+  "searchright": {
+    "domainLogic": false,
+    "generated": true,
+    "publish": false
+  },
+  "type": "module",
+  "version": "0.1.0-alpha.1"
+}

@@ -1,0 +1,11 @@
+[project]
+name = "searchright-contracts"
+version = "0.1.0a1"
+requires-python = ">=3.11"
+description = "Generated contract-only Searchright type bindings"
+dependencies = []
+
+[tool.searchright]
+generated = true
+domain_logic = false
+publish = false

@@ -25,6 +25,7 @@ test -f Cargo.lock || {
 
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
+python3 scripts/check_rust_schema_parity.py --check
 if cargo nextest --version >/dev/null 2>&1; then
   cargo nextest run --workspace --all-features --locked
 else

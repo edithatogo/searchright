@@ -31,6 +31,8 @@ pub struct RustSchemaParityScope {
     pub rust_owned_roots: usize,
     /// Semantic dimensions not represented completely by the generated schemas.
     pub known_losses: &'static [&'static str],
+    /// Workspace-relative machine-readable difference report.
+    pub difference_report: &'static str,
     /// Evidence boundary applied to this report.
     pub claim_boundary: &'static str,
 }
@@ -54,7 +56,8 @@ pub fn rust_schema_parity_scope() -> RustSchemaParityScope {
             "numeric ranges",
             "string length constraints",
         ],
-        claim_boundary: "This value declares the registered comparison scope only. Root-property-name results require the compiler test receipt; exact constraint and semantic parity remains fail-closed.",
+        difference_report: "contracts/compatibility/rust-schema-parity.json",
+        claim_boundary: "Compiled Rust schemas are drift diagnostics. The canonical JSON Schemas own validation and binding generation; every observed validation-shape difference is recorded and exact semantic parity remains fail-closed.",
     }
 }
 

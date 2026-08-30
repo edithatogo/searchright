@@ -12,9 +12,9 @@ Maintain versioned schemas, examples, standards packs and Rust wire types from o
 ## Contract
 
 - Horizon: `foundation`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `compiler_verified`
 - Dependencies: `00`
 - Requirements: `SR-001, SR-002, SR-003, SR-004, SR-017, SR-049`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Maintain versioned schemas, examples, standards packs and Rust wire types from o
 
 ## Claim boundary
 
-Source implementation is compiler-backed for contract invariants and nine explicitly Rust-owned schema roots. All 60 canonical schemas/examples and exact digests are statically checked, but generated/canonical constraint losses, downstream consumers and Track 35 bindings remain separate evidence gates.
+All 72 canonical schemas/examples and exact digests are checked; contract-only Python and TypeScript types are deterministically generated, statically type-checked and import-checked. Ten Rust-owned roots are compared with schema-aware normalization, content-bound digests and recorded differences. Canonical JSON Schema retains validation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
