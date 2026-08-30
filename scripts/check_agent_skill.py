@@ -267,6 +267,9 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
                 or host_receipt.get("usage", {}).get("isolated_cwd") is not True
                 or host_receipt.get("usage", {}).get("shell_tools_disabled") is not True
                 or host_receipt.get("usage", {}).get("web_search_disabled") is not True
+                or host_receipt.get("usage", {}).get("automatic_skill_instructions_disabled") is not True
+                or host_receipt.get("usage", {}).get("plugins_disabled") is not True
+                or host_receipt.get("usage", {}).get("memories_disabled") is not True
             ):
                 errors.append(f"host/model receipt for {key} lacks restricted-execution evidence")
             else:
