@@ -18,13 +18,13 @@
     },
     {
       "path": "benchmarks/methodology/manifest.json",
-      "sha256": "f892858cee4491a0832926f6fe44be0049265bff5ff69d50757d198eeacc42b3",
-      "size": 3851
+      "sha256": "d40f268e40e390e30e3133c7582c33045e804e1153f9ace5ef48096059d046c5",
+      "size": 3913
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "59773f9a2ec53d7247914df7f311133999ad1b2dcdf979681e7de6feee156530",
-      "size": 614096
+      "sha256": "c6b98e84ce5c7758c6c121e7a7ba701515aa080352625ace33cfd36e772ba253",
+      "size": 614213
     },
     {
       "path": "conductor/github/project.json",
@@ -53,8 +53,8 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "39790b2fbcbf083b2df3969cab4bf3e5ba6a752ef0bf6dc72c4a5e9ae5047b57",
-      "size": 97192
+      "sha256": "1c8f9f2349ac276ac359707fff14c15ed1192e84ac15cc5c9dc1c535ce8adb6f",
+      "size": 100055
     },
     {
       "path": "conductor/traceability-overrides.json",
@@ -83,12 +83,12 @@
     },
     {
       "path": "context/hazard-log.json",
-      "sha256": "2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244",
-      "size": 17239
+      "sha256": "2c15ea7b5f1f9d182fc959d1733958e1f0934effc8f47c8a78ecec02f85e3599",
+      "size": 17273
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "8740fb6150c9ce81d468bc0eb34139441e85d349e8c2e0a527b3df022af44fc9",
+      "sha256": "367ebb8f6cae04b926c1a0bb8e4ce6f62bef5eddfa142129d2afca33b73e06e3",
       "size": 25947
     },
     {
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "7100efafe9f8b98bd4edf7365f6aa56668655a3120dbf0ce7e3533eb56d416b5",
+      "sha256": "47b114fe6e7af0ac580ae31ead6151d0e4872b82c7dc7229f65c1e712a574247",
       "size": 3521
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "53b15ea5acf773b6ca610ce57227436ef8c9924633787cdd46b3b71a16c71fc9",
-      "size": 48500
+      "sha256": "a79ddf45284aa4895d6df5f0346b44485d8bd2df91b53840a371a4a055631156",
+      "size": 49125
     },
     {
       "path": "verification/harness-matrix.json",

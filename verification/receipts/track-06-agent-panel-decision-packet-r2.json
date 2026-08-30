@@ -1,0 +1,125 @@
+{
+  "schema_version": "org.searchright.agent-panel-decision-packet.v1",
+  "track_id": "06",
+  "created_at": "2026-08-30T03:39:12Z",
+  "reviewed_revision": "b5a5587c953a78015fe7f84d44f83ad63f29c5e1",
+  "reviewed_tree": "71803374c8775d58d87d4ad9c7974572fee23483",
+  "implementation_revision": "dc5b3ec35ddc91df269dc76cd3fa0bafca9db39a",
+  "prior_packet": "verification/receipts/track-06-agent-panel-decision-packet.json",
+  "panel_authority": "advisory_only",
+  "owner_authority": "sole_final_decision",
+  "aggregate_recommendation": "recommend_approve",
+  "panel": [
+    {
+      "role": "methodology",
+      "agent_id": "track06_methodology_panel",
+      "model_identity": "inherited Codex runtime",
+      "fixture_exposure": "Full repository and development-visible synthetic labels were available.",
+      "conflicts": "Agent review of project-authored fixtures; not leakage-resistant or externally blinded.",
+      "vote": "recommend_approve",
+      "findings": []
+    },
+    {
+      "role": "adversarial_testing",
+      "agent_id": "track06_adversarial_panel",
+      "model_identity": "inherited Codex runtime",
+      "fixture_exposure": "Full repository and development-visible synthetic labels were available.",
+      "conflicts": "Agent review occurred in the implementation workspace.",
+      "vote": "recommend_approve",
+      "findings": []
+    },
+    {
+      "role": "evidence_governance",
+      "agent_id": "track06_governance_panel",
+      "model_identity": "inherited Codex runtime",
+      "fixture_exposure": "Full repository, Conductor evidence and development-visible synthetic labels were available.",
+      "conflicts": "Agent assessed governance records authored in the same repository.",
+      "vote": "recommend_approve",
+      "findings": []
+    }
+  ],
+  "corpora": [
+    {
+      "corpus_id": "dedup-validation-synthetic",
+      "path": "benchmarks/methodology/fixtures/validation/dedup-cases.json",
+      "sha256": "9251e08cf79f6f4e491281a8f176e27cdd2291860f0e9bd3a1cca85ff1b05498",
+      "rights_basis": "CC0 synthetic metadata",
+      "labels": "development_visible"
+    },
+    {
+      "corpus_id": "study-linkage-validation-synthetic",
+      "path": "benchmarks/methodology/fixtures/validation/study-linkage-cases.json",
+      "sha256": "a1b7a6fc7bbea9fc1b62aee3fdc9f3f8de386fe506a1075063df095a4ba7ac10",
+      "rights_basis": "CC0 synthetic metadata",
+      "labels": "development_visible"
+    }
+  ],
+  "benchmark_manifests": {
+    "suite": {
+      "path": "benchmarks/methodology/manifest.json",
+      "sha256": "d40f268e40e390e30e3133c7582c33045e804e1153f9ace5ef48096059d046c5"
+    },
+    "sealed_partition": {
+      "path": "benchmarks/methodology/fixtures/sealed/manifest.json",
+      "sha256": "1f3e1261d672bc624c0e07fc03f73758a94a434b8181dd3cc7260a2c758ca6b3"
+    }
+  },
+  "sealed_evaluation": {
+    "label_digest": null,
+    "controlled_mount_executed": false,
+    "metrics_receipt": null,
+    "limitation": "No external sealed labels were mounted, compared or exposed. No general corpus-performance claim is available."
+  },
+  "local_validation": {
+    "focused_command": "cargo test -p searchright-interchange -p searchright-dedup -p searchright-study -p searchright-bench --locked",
+    "focused_result": "36 tests passed at the implementation revision",
+    "study_linkage": {
+      "expected_reports": 3,
+      "expected_positive_pairs": 1,
+      "pairwise_precision": 1.0,
+      "pairwise_recall": 1.0,
+      "cluster_purity": 1.0,
+      "abstention_rate": 0.0
+    },
+    "repository_verification": {
+      "static_gates": "53/53 passed",
+      "format": "passed",
+      "workspace_clippy": "passed",
+      "workspace_nextest": "270/270 passed",
+      "documentation_tests": "passed",
+      "documentation_build": "passed",
+      "dependency_policy": "passed with configured warnings",
+      "packaging_reproducibility": "passed"
+    }
+  },
+  "evidence_bindings": [
+    "verification/receipts/track-06-dedup-linkage-review.json",
+    "verification/receipts/track-06-interchange-golden.json",
+    "verification/receipts/track-06-study-linkage-validation.json",
+    "verification/receipts/source-manifest.sha256",
+    "context/context-lock.json"
+  ],
+  "finding_dispositions": [
+    "ISBN and trial-registration identifiers are candidate signals rather than automatic report duplicates, with false-merge regression coverage.",
+    "Study membership and ReportOfStudy edges remain consistent across detach, merge and split operations with operation-specific evidence validation.",
+    "Large-collection token blocking is complete over the supported positive-Jaccard threshold domain, with high-similarity and 64/65 boundary regressions.",
+    "BibTeX and EndNote importers quarantine unconsumed or unterminated input and preserve compact or same-line multiple records.",
+    "The study-linkage fixture executes all declared metrics and rejects unknown, omitted, ambiguous or assigned-and-abstained report coverage.",
+    "Detaching the sole report is explicitly rejected without graph mutation.",
+    "Title similarity thresholds reject zero, negative, above-one, NaN and infinite values; one remains supported."
+  ],
+  "claim_ceiling": "Compiler-backed deterministic behavior on development-visible synthetic fixtures only. No sealed, external, methodological-adequacy or general deduplication/linkage performance is established.",
+  "owner_decision": {
+    "status": "pending",
+    "options": [
+      "approve_and_authorize_archive",
+      "revise_and_repanel",
+      "reject_track_closeout"
+    ],
+    "selected": null,
+    "owner_identity": null,
+    "decided_at": null,
+    "rationale": null,
+    "conditions": []
+  }
+}

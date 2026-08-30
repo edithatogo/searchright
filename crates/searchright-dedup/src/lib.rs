@@ -86,8 +86,9 @@ pub struct Deduplicator {
 impl Deduplicator {
     /// Create a deduplicator with explicit, validated policy.
     pub fn new(config: DedupConfig) -> Result<Self, DedupError> {
-        if !config.title_similarity_threshold.is_finite()
-            || !(0.0..=1.0).contains(&config.title_similarity_threshold)
+        if !(config.title_similarity_threshold.is_finite()
+            && 0.0 < config.title_similarity_threshold
+            && config.title_similarity_threshold <= 1.0)
         {
             return Err(DedupError::InvalidTitleThreshold);
         }
@@ -323,13 +324,14 @@ fn build_candidate_pairs(
 
         // Title token indexing
         let tokens = normalise_tokens(&record.title);
-        for token in tokens.iter().take(3) {
-            if token.len() >= 4 {
-                blocks
-                    .entry(format!("tok:{token}"))
-                    .or_default()
-                    .push(index);
-            }
+        // Index every normalised token. Any pair with non-zero Jaccard title
+        // similarity shares at least one token, so this block is complete for
+        // the comparator rather than a heuristic sample of the title.
+        for token in &tokens {
+            blocks
+                .entry(format!("tok:{token}"))
+                .or_default()
+                .push(index);
         }
     }
 
@@ -380,20 +382,10 @@ fn exact_identifier_reason(
     ) {
         return Some("exact_pmid");
     }
-    if equal_normalised_valid(
-        left.identifiers.isbn.as_deref(),
-        right.identifiers.isbn.as_deref(),
-        normalise_isbn,
-        valid_isbn,
-    ) {
-        return Some("exact_isbn");
-    }
-    if equal_trimmed(
-        left.identifiers.trial_registration.as_deref(),
-        right.identifiers.trial_registration.as_deref(),
-    ) {
-        return Some("exact_trial_registration");
-    }
+    // ISBNs identify containers and trial registrations identify studies, so
+    // neither is sufficient to merge two report records automatically. They
+    // remain candidate-generation signals and may support a review-required
+    // fuzzy title match.
     None
 }
 
@@ -424,10 +416,6 @@ fn valid_pmid(value: &str) -> bool {
     !value.is_empty() && value.chars().all(|character| character.is_ascii_digit())
 }
 
-fn valid_isbn(value: &str) -> bool {
-    (value.len() == 10 || value.len() == 13) && value.chars().all(|ch| ch.is_ascii_alphanumeric())
-}
-
 /// Normalise ISBN removing prefixes, spaces, and hyphens.
 #[must_use]
 pub fn normalise_isbn(value: &str) -> String {
@@ -444,16 +432,6 @@ pub fn normalise_isbn(value: &str) -> String {
         .chars()
         .filter(char::is_ascii_alphanumeric)
         .collect()
-}
-
-fn equal_trimmed(left: Option<&str>, right: Option<&str>) -> bool {
-    match (left, right) {
-        (Some(left), Some(right)) => {
-            let left = left.trim().to_ascii_lowercase();
-            !left.is_empty() && left == right.trim().to_ascii_lowercase()
-        }
-        _ => false,
-    }
 }
 
 /// Normalise DOI resolver prefixes and case.
@@ -589,8 +567,8 @@ fn metadata_score(record: &BibliographicRecord) -> u16 {
 /// Deduplication configuration or input error.
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum DedupError {
-    /// Title threshold was `NaN`, infinite or outside zero to one.
-    #[error("title similarity threshold must be finite and between zero and one")]
+    /// Title threshold was `NaN`, infinite or outside greater-than-zero to one.
+    #[error("title similarity threshold must be finite, greater than zero and at most one")]
     InvalidTitleThreshold,
     /// Publication-year tolerance was negative.
     #[error("publication-year tolerance must be zero or greater")]
@@ -795,6 +773,101 @@ mod tests {
             Some(["a".to_owned(), "b".to_owned()].as_slice())
         );
         assert_eq!(result.proposed_duplicate_count, 1);
+        Ok(())
+    }
+
+    #[test]
+    fn shared_study_or_container_identifier_does_not_merge_distinct_reports()
+    -> Result<(), DedupError> {
+        let mut protocol = record("protocol", None, "Protocol for the alpha trial");
+        protocol.identifiers.trial_registration = Some("NCT00000001".to_owned());
+        protocol.identifiers.isbn = Some("978-1-4028-9462-6".to_owned());
+        let mut results = record("results", None, "Five year outcomes from the alpha trial");
+        results.identifiers.trial_registration = Some("NCT00000001".to_owned());
+        results.identifiers.isbn = Some("9781402894626".to_owned());
+
+        let result = Deduplicator::new(DedupConfig::default())?.cluster(&[protocol, results])?;
+        assert!(result.clusters.is_empty());
+        assert_eq!(result.proposed_duplicate_count, 0);
+        Ok(())
+    }
+
+    #[test]
+    fn large_collection_blocking_is_complete_for_high_jaccard_titles() -> Result<(), DedupError> {
+        let mut records = (0..63)
+            .map(|index| {
+                record(
+                    &format!("noise-{index}"),
+                    None,
+                    &format!("unique filler {index}"),
+                )
+            })
+            .collect::<Vec<_>>();
+        records.push(record(
+            "a",
+            None,
+            "alpha beta delta epsilon eta gamma iota kappa lambda theta zeta",
+        ));
+        records.push(record(
+            "b",
+            None,
+            "beta delta epsilon eta gamma iota kappa lambda theta zeta",
+        ));
+
+        let result = Deduplicator::new(DedupConfig {
+            title_similarity_threshold: 0.90,
+            ..DedupConfig::default()
+        })?
+        .cluster(&records)?;
+        assert!(
+            result
+                .clusters
+                .iter()
+                .any(|cluster| { cluster.record_ids == vec!["a".to_owned(), "b".to_owned()] })
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn title_similarity_threshold_rejects_invalid_boundaries() {
+        for threshold in [0.0, -0.1, 1.1, f64::NAN, f64::INFINITY] {
+            let result = Deduplicator::new(DedupConfig {
+                title_similarity_threshold: threshold,
+                ..DedupConfig::default()
+            });
+            assert!(matches!(result, Err(DedupError::InvalidTitleThreshold)));
+        }
+        assert!(
+            Deduplicator::new(DedupConfig {
+                title_similarity_threshold: 1.0,
+                ..DedupConfig::default()
+            })
+            .is_ok()
+        );
+    }
+
+    #[test]
+    fn blocking_boundary_preserves_disjoint_title_result() -> Result<(), DedupError> {
+        let records = (0..65)
+            .map(|index| {
+                record(
+                    &format!("record-{index}"),
+                    None,
+                    &format!("uniqueword{index}"),
+                )
+            })
+            .collect::<Vec<_>>();
+        let deduplicator = Deduplicator::new(DedupConfig {
+            title_similarity_threshold: 0.01,
+            ..DedupConfig::default()
+        })?;
+
+        let at_64 = deduplicator.cluster(&records[..64])?;
+        let at_65 = deduplicator.cluster(&records)?;
+        assert!(at_64.clusters.is_empty());
+        assert!(at_65.clusters.is_empty());
+        assert_eq!(at_64.retained_record_ids.len(), 64);
+        assert_eq!(at_65.retained_record_ids.len(), 65);
         Ok(())
     }
 

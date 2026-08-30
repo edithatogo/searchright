@@ -59,6 +59,7 @@ COMMANDS = [
     [sys.executable, "scripts/check_maturity_dossier.py"],
     [sys.executable, "scripts/check_launch_preparation_roadmap.py"],
     [sys.executable, "scripts/sync_track_evidence.py", "--check"],
+    [sys.executable, "scripts/check_track_archival.py"],
     [sys.executable, "scripts/check_rust_dependency_graph.py"],
     [sys.executable, "scripts/check_rust_source_structure.py"],
     [sys.executable, "scripts/audit_search_code.py", "--self-test"],

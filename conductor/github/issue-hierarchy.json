@@ -3051,7 +3051,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3075,15 +3075,15 @@
         "conductor",
         "track:06",
         "phase:3",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3099,7 +3099,7 @@
     },
     {
       "key": "track-06-phase-3-task-02",
-      "title": "Track 06 / P3 / T02: Evaluate linkage and deduplication against independently adjudicated corpora",
+      "title": "Track 06 / P3 / T02: Run a digest-bound multi-agent panel evaluation of linkage and deduplication, then obtain the repository owner's recorded decision",
       "kind": "task",
       "parent_key": "track-06-phase-3",
       "body_path": "conductor/github/issues/track-06-phase-3-task-02.md",
@@ -3108,15 +3108,15 @@
         "conductor",
         "track:06",
         "phase:3",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3148,7 +3148,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3262,7 +3262,7 @@
     },
     {
       "key": "track-06-phase-4-task-04",
-      "title": "Track 06 / P4 / T04: Close the track only when all applicable live, downstream, human and external gates are evidenced",
+      "title": "Track 06 / P4 / T04: Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision",
       "kind": "task",
       "parent_key": "track-06-phase-4",
       "body_path": "conductor/github/issues/track-06-phase-4-task-04.md",
@@ -3271,15 +3271,15 @@
         "conductor",
         "track:06",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",

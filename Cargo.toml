@@ -68,6 +68,7 @@ indexmap = { version = "2.12", features = ["serde"] }
 jsonwebtoken = { version = "11", features = ["aws_lc_rs"] }
 loom = "0.7.2"
 proptest = "1.8"
+quick-xml = "=0.41.0"
 reqwest = { version = "0.13.2", default-features = false, features = ["json", "rustls", "http2", "charset"] }
 rmcp = { version = "=3.1.2", features = ["server", "client", "elicitation", "macros", "transport-io", "schemars"] }
 schemars = "1.0"

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-06-phase-3`
 Conductor plan: `conductor/tracks/06-imports-dedup-linkage/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile and run golden import/export round-trip tests across every supported format.
+- [x] Compile and run golden import/export round-trip tests across every supported format.
 
 ## Completion and evidence contract
 

@@ -12,6 +12,9 @@ use searchright_contracts::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
+mod xml;
+use xml::{blocks as extract_all_xml_blocks, text as xml_element_text};
+
 /// A record or line that failed import parsing or validation and was quarantined with its line range.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct QuarantinedRecord {
@@ -51,6 +54,7 @@ pub fn import_records(
         InterchangeFormat::CslJson => import_csl_json(input, source_receipt_id),
         InterchangeFormat::Ris => import_tagged(input, source_receipt_id, TaggedFormat::Ris),
         InterchangeFormat::Nbib => import_tagged(input, source_receipt_id, TaggedFormat::Nbib),
+        InterchangeFormat::PubmedXml => import_pubmed_xml(input, source_receipt_id),
         InterchangeFormat::Csv => import_csv(input, source_receipt_id),
         InterchangeFormat::Bibtex => import_bibtex(input, source_receipt_id),
         InterchangeFormat::EndnoteXml => import_endnote_xml(input, source_receipt_id),
@@ -69,6 +73,7 @@ pub fn export_records(
         InterchangeFormat::CslJson => export_csl_json(records),
         InterchangeFormat::Ris => Ok(export_ris(records)),
         InterchangeFormat::Nbib => Ok(export_nbib(records)),
+        InterchangeFormat::PubmedXml => Ok(export_pubmed_xml(records)),
         InterchangeFormat::Csv => Ok(export_csv(records)),
         InterchangeFormat::Bibtex => Ok(export_bibtex(records)),
         InterchangeFormat::EndnoteXml => Ok(export_endnote_xml(records)),
@@ -658,67 +663,80 @@ pub fn import_bibtex(
     let mut records = Vec::new();
     let mut warnings = Vec::new();
     let mut quarantined = Vec::new();
-
-    let mut current_entry = String::new();
-    let mut in_entry = false;
-    let mut brace_depth = 0_usize;
-    let mut start_line = 1_usize;
-    let mut current_line;
-
-    for (line_idx, line) in input.lines().enumerate() {
-        current_line = line_idx.saturating_add(1);
-        let trimmed = line.trim();
-        if !in_entry && trimmed.starts_with('@') {
-            in_entry = true;
-            start_line = current_line;
-            current_entry.clear();
-            brace_depth = 0;
-        }
-
-        if in_entry {
-            current_entry.push_str(line);
-            current_entry.push('\n');
-            for ch in line.chars() {
-                if ch == '{' {
-                    brace_depth = brace_depth.saturating_add(1);
-                } else if ch == '}' {
-                    brace_depth = brace_depth.saturating_sub(1);
-                    if brace_depth == 0 {
-                        in_entry = false;
-                        let entry_str = std::mem::take(&mut current_entry);
-                        match parse_single_bibtex_entry(&entry_str, source_receipt_id) {
-                            Ok(record) => {
-                                if let Err(err) = record.validate() {
-                                    quarantined.push(QuarantinedRecord {
-                                        index: records.len().saturating_add(1),
-                                        raw_content: entry_str,
-                                        start_line,
-                                        end_line: current_line,
-                                        error: err.to_string(),
-                                    });
-                                    warnings.push(format!("BibTeX entry lines {start_line}-{current_line} failed validation: {err}"));
-                                } else {
-                                    records.push(record);
-                                }
-                            }
-                            Err(err) => {
-                                quarantined.push(QuarantinedRecord {
-                                    index: records.len().saturating_add(1),
-                                    raw_content: entry_str,
-                                    start_line,
-                                    end_line: current_line,
-                                    error: err.clone(),
-                                });
-                                warnings.push(format!(
-                                    "BibTeX parse error lines {start_line}-{current_line}: {err}"
-                                ));
-                            }
-                        }
-                        break;
-                    }
+    let mut cursor = 0_usize;
+    while cursor < input.len() {
+        let Some(relative_start) = input.get(cursor..).and_then(|rest| rest.find('@')) else {
+            quarantine_unconsumed_bibtex(
+                input,
+                cursor,
+                input.len(),
+                &mut quarantined,
+                &mut warnings,
+            );
+            break;
+        };
+        let start = cursor.saturating_add(relative_start);
+        quarantine_unconsumed_bibtex(input, cursor, start, &mut quarantined, &mut warnings);
+        let Some((opening_offset, opening)) = input
+            .get(start..)
+            .and_then(|rest| rest.char_indices().find(|(_, ch)| *ch == '{' || *ch == '('))
+        else {
+            quarantine_bibtex_range(
+                input,
+                start,
+                input.len(),
+                "BibTeX entry has no opening delimiter".to_owned(),
+                &mut quarantined,
+                &mut warnings,
+            );
+            break;
+        };
+        let opening_index = start.saturating_add(opening_offset);
+        let closing = if opening == '(' { ')' } else { '}' };
+        let Some(end) = find_bibtex_entry_end(input, opening_index, opening, closing) else {
+            quarantine_bibtex_range(
+                input,
+                start,
+                input.len(),
+                format!("Unterminated BibTeX entry: expected `{closing}`"),
+                &mut quarantined,
+                &mut warnings,
+            );
+            break;
+        };
+        let raw = input.get(start..end).unwrap_or_default();
+        let start_line = line_number_at(input, start);
+        let end_line = line_number_at(input, end);
+        match parse_single_bibtex_entry(raw, source_receipt_id) {
+            Ok(record) => match record.validate() {
+                Ok(()) => records.push(record),
+                Err(error) => {
+                    quarantined.push(QuarantinedRecord {
+                        index: quarantined.len().saturating_add(1),
+                        raw_content: raw.to_owned(),
+                        start_line,
+                        end_line,
+                        error: error.to_string(),
+                    });
+                    warnings.push(format!(
+                        "BibTeX entry lines {start_line}-{end_line} failed validation: {error}"
+                    ));
                 }
+            },
+            Err(error) => {
+                quarantined.push(QuarantinedRecord {
+                    index: quarantined.len().saturating_add(1),
+                    raw_content: raw.to_owned(),
+                    start_line,
+                    end_line,
+                    error: error.clone(),
+                });
+                warnings.push(format!(
+                    "BibTeX parse error lines {start_line}-{end_line}: {error}"
+                ));
             }
         }
+        cursor = end;
     }
 
     Ok(ImportResult {
@@ -726,6 +744,111 @@ pub fn import_bibtex(
         warnings,
         quarantined,
     })
+}
+
+fn find_bibtex_entry_end(
+    input: &str,
+    opening_index: usize,
+    opening: char,
+    closing: char,
+) -> Option<usize> {
+    let mut depth = 0_usize;
+    let mut brace_depth = 0_usize;
+    let mut in_quotes = false;
+    let mut escaped = false;
+    for (relative, ch) in input.get(opening_index..)?.char_indices() {
+        if escaped {
+            escaped = false;
+            continue;
+        }
+        if ch == '\\' {
+            escaped = true;
+            continue;
+        }
+        if ch == '"' && brace_depth == 0 {
+            in_quotes = !in_quotes;
+            continue;
+        }
+        if in_quotes {
+            continue;
+        }
+        if opening == '(' {
+            if ch == '{' {
+                brace_depth = brace_depth.saturating_add(1);
+                continue;
+            }
+            if ch == '}' && brace_depth > 0 {
+                brace_depth = brace_depth.saturating_sub(1);
+                continue;
+            }
+            if brace_depth > 0 {
+                continue;
+            }
+        }
+        if ch == opening {
+            depth = depth.saturating_add(1);
+        } else if ch == closing {
+            depth = depth.saturating_sub(1);
+            if depth == 0 {
+                return Some(
+                    opening_index
+                        .saturating_add(relative)
+                        .saturating_add(ch.len_utf8()),
+                );
+            }
+        }
+    }
+    None
+}
+
+fn quarantine_unconsumed_bibtex(
+    input: &str,
+    start: usize,
+    end: usize,
+    quarantined: &mut Vec<QuarantinedRecord>,
+    warnings: &mut Vec<String>,
+) {
+    let raw = input.get(start..end).unwrap_or_default();
+    if raw
+        .lines()
+        .all(|line| line.trim().is_empty() || line.trim().starts_with('%'))
+    {
+        return;
+    }
+    quarantine_bibtex_range(
+        input,
+        start,
+        end,
+        "Unconsumed content outside a BibTeX entry".to_owned(),
+        quarantined,
+        warnings,
+    );
+}
+
+fn quarantine_bibtex_range(
+    input: &str,
+    start: usize,
+    end: usize,
+    error: String,
+    quarantined: &mut Vec<QuarantinedRecord>,
+    warnings: &mut Vec<String>,
+) {
+    let start_line = line_number_at(input, start);
+    let end_line = if end == input.len() {
+        input.lines().count().max(start_line)
+    } else {
+        line_number_at(input, end)
+    };
+    quarantined.push(QuarantinedRecord {
+        index: quarantined.len().saturating_add(1),
+        raw_content: input.get(start..end).unwrap_or_default().to_owned(),
+        start_line,
+        end_line,
+        error: error.clone(),
+    });
+    warnings.push(format!(
+        "BibTeX content lines {start_line}-{end_line} was quarantined: {error}"
+    ));
 }
 
 fn parse_single_bibtex_entry(
@@ -736,9 +859,14 @@ fn parse_single_bibtex_entry(
     if !trimmed.starts_with('@') {
         return Err("Entry does not start with @".to_owned());
     }
-    let open_brace = trimmed
-        .find('{')
-        .ok_or_else(|| "Missing opening brace".to_owned())?;
+    let (open_brace, closing_delimiter) = trimmed
+        .char_indices()
+        .find(|(_, character)| *character == '{' || *character == '(')
+        .map(|(index, character)| (index, if character == '(' { ')' } else { '}' }))
+        .ok_or_else(|| "Missing opening delimiter".to_owned())?;
+    if !trimmed.ends_with(closing_delimiter) {
+        return Err(format!("Missing closing delimiter `{closing_delimiter}`"));
+    }
     let entry_type = trimmed
         .get(1..open_brace)
         .unwrap_or("")
@@ -884,83 +1012,177 @@ pub fn import_endnote_xml(
     input: &str,
     source_receipt_id: &str,
 ) -> Result<ImportResult, InterchangeError> {
+    import_xml_records(input, "record", "EndNote", |raw, index| {
+        let title =
+            extract_xml_tag(raw, "title").unwrap_or_else(|| "Untitled imported record".to_owned());
+        let native_id =
+            extract_xml_tag(raw, "rec-number").unwrap_or_else(|| format!("endnote-{index}"));
+        BibliographicRecord {
+            schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+            record_id: stable_record_id("endnote", &native_id),
+            source_receipt_id: source_receipt_id.to_owned(),
+            native_id,
+            kind: RecordKind::JournalArticle,
+            identifiers: RecordIdentifiers {
+                doi: extract_xml_tag(raw, "electronic-resource-num")
+                    .and_then(|doi| extract_doi(&doi).map(str::to_owned)),
+                pmid: extract_xml_tag(raw, "accession-num")
+                    .filter(|pmid| !pmid.is_empty() && pmid.chars().all(|ch| ch.is_ascii_digit())),
+                ..RecordIdentifiers::default()
+            },
+            title,
+            abstract_text: extract_xml_tag(raw, "abstract"),
+            authors: extract_all_xml_tags(raw, "author"),
+            container_title: extract_xml_tag(raw, "secondary-title"),
+            publication_year: extract_xml_tag(raw, "year")
+                .and_then(|year| year.get(..4).and_then(|value| value.parse::<i32>().ok())),
+            publication_date: None,
+            languages: Vec::new(),
+            subjects: Vec::new(),
+            urls: Vec::new(),
+            provider_metadata: Value::Null,
+        }
+    })
+}
+
+/// Import bibliographic records from PubMed XML without contacting NCBI.
+pub fn import_pubmed_xml(
+    input: &str,
+    source_receipt_id: &str,
+) -> Result<ImportResult, InterchangeError> {
+    import_xml_records(input, "PubmedArticle", "PubMed", |raw, index| {
+        let citation = xml::path(raw, &["MedlineCitation"])
+            .first()
+            .copied()
+            .unwrap_or(raw);
+        let article = xml::path(citation, &["Article"])
+            .first()
+            .copied()
+            .unwrap_or(citation);
+        let pmid = xml::path(citation, &["PMID"])
+            .first()
+            .and_then(|value| xml_element_text(value));
+        let native_id = pmid.clone().unwrap_or_else(|| format!("pubmed-{index}"));
+        let title = xml::path(article, &["ArticleTitle"])
+            .first()
+            .and_then(|value| xml_element_text(value))
+            .unwrap_or_else(|| "Untitled imported record".to_owned());
+        let authors = xml::path(article, &["AuthorList"])
+            .first()
+            .map_or_else(Vec::new, |value| pubmed_authors(value));
+        let journal = xml::path(article, &["Journal"])
+            .first()
+            .copied()
+            .unwrap_or(article);
+        let issue = xml::path(journal, &["JournalIssue"])
+            .first()
+            .copied()
+            .unwrap_or(journal);
+        let publication_year = xml::path(issue, &["PubDate"])
+            .first()
+            .and_then(|date| extract_xml_tag(date, "Year"))
+            .or_else(|| {
+                xml::path(article, &["Year"])
+                    .first()
+                    .and_then(|value| xml_element_text(value))
+            })
+            .and_then(|year| year.get(..4).and_then(|value| value.parse::<i32>().ok()));
+        let doi = xml::path(raw, &["PubmedData", "ArticleIdList", "ArticleId"])
+            .into_iter()
+            .filter(|value| xml::attribute(value, b"IdType").as_deref() == Some("doi"))
+            .find_map(|value| {
+                xml_element_text(value).and_then(|text| extract_doi(&text).map(str::to_owned))
+            });
+        BibliographicRecord {
+            schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+            record_id: stable_record_id("pubmed-xml", &native_id),
+            source_receipt_id: source_receipt_id.to_owned(),
+            native_id,
+            kind: RecordKind::JournalArticle,
+            identifiers: RecordIdentifiers {
+                doi,
+                pmid,
+                ..RecordIdentifiers::default()
+            },
+            title,
+            abstract_text: xml::path(article, &["Abstract"])
+                .first()
+                .and_then(|value| pubmed_abstract(value)),
+            authors,
+            container_title: xml::path(journal, &["Title"])
+                .first()
+                .and_then(|value| xml_element_text(value)),
+            publication_year,
+            publication_date: None,
+            languages: xml::path(article, &["Language"])
+                .into_iter()
+                .filter_map(xml_element_text)
+                .collect(),
+            subjects: xml::path(
+                citation,
+                &["MeshHeadingList", "MeshHeading", "DescriptorName"],
+            )
+            .into_iter()
+            .filter_map(xml_element_text)
+            .collect(),
+            urls: Vec::new(),
+            provider_metadata: Value::Null,
+        }
+    })
+}
+
+fn import_xml_records<F>(
+    input: &str,
+    record_tag: &str,
+    format_name: &str,
+    build_record: F,
+) -> Result<ImportResult, InterchangeError>
+where
+    F: Fn(&str, usize) -> BibliographicRecord,
+{
     let mut records = Vec::new();
     let mut warnings = Vec::new();
     let mut quarantined = Vec::new();
-
-    let mut current_record = String::new();
-    let mut in_record = false;
-    let mut start_line = 1_usize;
-
-    for (line_idx, line) in input.lines().enumerate() {
-        let line_num = line_idx.saturating_add(1);
-        if line.contains("<record>") {
-            in_record = true;
-            start_line = line_num;
-            current_record.clear();
-        }
-        if in_record {
-            current_record.push_str(line);
-            current_record.push('\n');
-            if line.contains("</record>") {
-                in_record = false;
-                let raw = std::mem::take(&mut current_record);
-                let title = extract_xml_tag(&raw, "title")
-                    .unwrap_or_else(|| "Untitled imported record".to_owned());
-                let authors = extract_all_xml_tags(&raw, "author");
-                let year = extract_xml_tag(&raw, "year")
-                    .and_then(|y| y.get(..4).and_then(|val| val.parse::<i32>().ok()));
-                let doi = extract_xml_tag(&raw, "electronic-resource-num")
-                    .and_then(|d| extract_doi(&d).map(str::to_owned));
-                let pmid = extract_xml_tag(&raw, "accession-num")
-                    .filter(|p| !p.is_empty() && p.chars().all(|ch| ch.is_ascii_digit()));
-                let container = extract_xml_tag(&raw, "secondary-title");
-                let abstract_text = extract_xml_tag(&raw, "abstract");
-                let native_id = extract_xml_tag(&raw, "rec-number")
-                    .unwrap_or_else(|| format!("endnote-{}", records.len().saturating_add(1)));
-
-                let record = BibliographicRecord {
-                    schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
-                        .to_owned(),
-                    record_id: stable_record_id("endnote", &native_id),
-                    source_receipt_id: source_receipt_id.to_owned(),
-                    native_id,
-                    kind: RecordKind::JournalArticle,
-                    identifiers: RecordIdentifiers {
-                        doi,
-                        pmid,
-                        ..RecordIdentifiers::default()
-                    },
-                    title,
-                    abstract_text,
-                    authors,
-                    container_title: container,
-                    publication_year: year,
-                    publication_date: None,
-                    languages: Vec::new(),
-                    subjects: Vec::new(),
-                    urls: Vec::new(),
-                    provider_metadata: Value::Null,
-                };
-
-                if let Err(err) = record.validate() {
-                    quarantined.push(QuarantinedRecord {
-                        index: records.len().saturating_add(1),
-                        raw_content: raw,
-                        start_line,
-                        end_line: line_num,
-                        error: err.to_string(),
-                    });
-                    warnings.push(format!(
-                        "EndNote record lines {start_line}-{line_num} failed validation: {err}"
-                    ));
-                } else {
-                    records.push(record);
-                }
-            }
+    let fragments = xml::fragments(input, record_tag).unwrap_or_else(|error| {
+        vec![xml::Fragment {
+            range: 0..input.len(),
+            error: Some(error),
+        }]
+    });
+    if fragments.is_empty() && !input.trim().is_empty() {
+        warnings.push(format!(
+            "{format_name} input contained no {record_tag} elements"
+        ));
+    }
+    for (ordinal, fragment) in fragments.into_iter().enumerate() {
+        let index = ordinal.saturating_add(1);
+        let start = fragment.range.start;
+        let end = fragment.range.end;
+        let raw = &input[fragment.range];
+        let parsed = fragment
+            .error
+            .map_or_else(|| xml::validate(raw), Err)
+            .and_then(|()| {
+                let record = build_record(raw, index);
+                record.validate().map_err(|error| error.to_string())?;
+                Ok(record)
+            });
+        if let Err(error) = parsed {
+            let start_line = line_number_at(input, start);
+            quarantined.push(QuarantinedRecord {
+                index,
+                raw_content: raw.to_owned(),
+                start_line,
+                end_line: line_number_at(input, end.saturating_sub(1)),
+                error: error.clone(),
+            });
+            warnings.push(format!(
+                "{format_name} record {index} failed validation: {error}"
+            ));
+        } else if let Ok(record) = parsed {
+            records.push(record);
         }
     }
-
     Ok(ImportResult {
         records,
         warnings,
@@ -968,49 +1190,62 @@ pub fn import_endnote_xml(
     })
 }
 
+fn line_number_at(input: &str, byte_offset: usize) -> usize {
+    input
+        .get(..byte_offset.min(input.len()))
+        .map_or(1, |prefix| {
+            prefix
+                .bytes()
+                .filter(|byte| *byte == b'\n')
+                .count()
+                .saturating_add(1)
+        })
+}
+
+fn pubmed_authors(xml: &str) -> Vec<String> {
+    extract_all_xml_blocks(xml, "Author")
+        .into_iter()
+        .filter_map(|author| {
+            let collective = extract_xml_tag(author, "CollectiveName");
+            if collective.is_some() {
+                return collective;
+            }
+            let family = extract_xml_tag(author, "LastName").unwrap_or_default();
+            let given = extract_xml_tag(author, "ForeName")
+                .or_else(|| extract_xml_tag(author, "Initials"))
+                .unwrap_or_default();
+            let rendered = format!("{family}, {given}")
+                .trim_matches([',', ' '])
+                .to_owned();
+            (!rendered.is_empty()).then_some(rendered)
+        })
+        .collect()
+}
+
+fn pubmed_abstract(xml: &str) -> Option<String> {
+    let sections = extract_all_xml_blocks(xml, "AbstractText")
+        .into_iter()
+        .filter_map(xml_element_text)
+        .filter(|text| !text.is_empty())
+        .collect::<Vec<_>>();
+    (!sections.is_empty()).then(|| sections.join(" "))
+}
+
+fn extract_first_xml_text(xml: &str, tag: &str) -> Option<String> {
+    extract_all_xml_blocks(xml, tag)
+        .first()
+        .and_then(|block| xml_element_text(block))
+}
+
 fn extract_xml_tag(xml: &str, tag: &str) -> Option<String> {
-    let open = format!("<{tag}>");
-    let close = format!("</{tag}>");
-    let start = xml.find(&open)?.saturating_add(open.len());
-    let end = xml.find(&close)?;
-    if start <= end {
-        Some(
-            xml.get(start..end)?
-                .trim()
-                .replace("&amp;", "&")
-                .replace("&lt;", "<")
-                .replace("&gt;", ">"),
-        )
-    } else {
-        None
-    }
+    extract_first_xml_text(xml, tag)
 }
 
 fn extract_all_xml_tags(xml: &str, tag: &str) -> Vec<String> {
-    let mut results = Vec::new();
-    let open = format!("<{tag}>");
-    let close = format!("</{tag}>");
-    let mut cursor = 0_usize;
-    while let Some(start_idx) = xml.get(cursor..).and_then(|sub| sub.find(&open)) {
-        let abs_start = cursor.saturating_add(start_idx).saturating_add(open.len());
-        if let Some(end_idx) = xml.get(abs_start..).and_then(|sub| sub.find(&close)) {
-            let abs_end = abs_start.saturating_add(end_idx);
-            if let Some(val) = xml.get(abs_start..abs_end) {
-                let cleaned = val
-                    .trim()
-                    .replace("&amp;", "&")
-                    .replace("&lt;", "<")
-                    .replace("&gt;", ">");
-                if !cleaned.is_empty() {
-                    results.push(cleaned);
-                }
-            }
-            cursor = abs_end.saturating_add(close.len());
-        } else {
-            break;
-        }
-    }
-    results
+    extract_all_xml_blocks(xml, tag)
+        .into_iter()
+        .filter_map(xml_element_text)
+        .collect()
 }
 
 fn export_json_lines(records: &[BibliographicRecord]) -> Result<String, InterchangeError> {
@@ -1063,6 +1298,9 @@ fn export_ris(records: &[BibliographicRecord]) -> String {
         if let Some(doi) = &record.identifiers.doi {
             push_tag(&mut output, "DO", doi);
         }
+        if let Some(pmid) = &record.identifiers.pmid {
+            push_tag(&mut output, "AN", pmid);
+        }
         for url in &record.urls {
             push_tag(&mut output, "UR", url);
         }
@@ -1096,6 +1334,59 @@ fn export_nbib(records: &[BibliographicRecord]) -> String {
         }
         output.push('\n');
     }
+    output
+}
+
+fn export_pubmed_xml(records: &[BibliographicRecord]) -> String {
+    let mut output = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PubmedArticleSet>\n".to_owned();
+    for record in records {
+        output.push_str("  <PubmedArticle><MedlineCitation>");
+        if let Some(pmid) = &record.identifiers.pmid {
+            output.push_str(&format!("<PMID>{}</PMID>", xml_escape(pmid)));
+        }
+        output.push_str("<Article>");
+        output.push_str(&format!(
+            "<ArticleTitle>{}</ArticleTitle>",
+            xml_escape(&record.title)
+        ));
+        if !record.authors.is_empty() {
+            output.push_str("<AuthorList>");
+            for author in &record.authors {
+                output.push_str(&format!(
+                    "<Author><CollectiveName>{}</CollectiveName></Author>",
+                    xml_escape(author)
+                ));
+            }
+            output.push_str("</AuthorList>");
+        }
+        if let Some(abstract_text) = &record.abstract_text {
+            output.push_str(&format!(
+                "<Abstract><AbstractText>{}</AbstractText></Abstract>",
+                xml_escape(abstract_text)
+            ));
+        }
+        if let Some(container) = &record.container_title {
+            output.push_str(&format!(
+                "<Journal><Title>{}</Title>",
+                xml_escape(container)
+            ));
+            if let Some(year) = record.publication_year {
+                output.push_str(&format!(
+                    "<JournalIssue><PubDate><Year>{year}</Year></PubDate></JournalIssue>"
+                ));
+            }
+            output.push_str("</Journal>");
+        }
+        output.push_str("</Article></MedlineCitation><PubmedData><ArticleIdList>");
+        if let Some(doi) = &record.identifiers.doi {
+            output.push_str(&format!(
+                "<ArticleId IdType=\"doi\">{}</ArticleId>",
+                xml_escape(doi)
+            ));
+        }
+        output.push_str("</ArticleIdList></PubmedData></PubmedArticle>\n");
+    }
+    output.push_str("</PubmedArticleSet>\n");
     output
 }
 
@@ -1244,11 +1535,10 @@ fn values(block: &BTreeMap<String, Vec<String>>, tags: &[&str]) -> Vec<String> {
 
 fn extract_doi(value: &str) -> Option<&str> {
     let trimmed = value.trim();
-    let candidate = trimmed
-        .strip_suffix(" [doi]")
-        .unwrap_or(trimmed)
+    let without_suffix = trimmed.strip_suffix(" [doi]").unwrap_or(trimmed);
+    let candidate = without_suffix
         .strip_prefix("https://doi.org/")
-        .unwrap_or(trimmed);
+        .unwrap_or(without_suffix);
     candidate.starts_with("10.").then_some(candidate)
 }
 
@@ -1362,6 +1652,110 @@ pub enum InterchangeError {
 mod tests {
     use super::*;
 
+    fn golden_record() -> BibliographicRecord {
+        BibliographicRecord {
+            schema_version: searchright_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
+            record_id: "golden-record-1".to_owned(),
+            source_receipt_id: "golden-source-1".to_owned(),
+            native_id: "golden-native-1".to_owned(),
+            kind: RecordKind::JournalArticle,
+            identifiers: RecordIdentifiers {
+                doi: Some("10.1000/golden".to_owned()),
+                pmid: Some("12345678".to_owned()),
+                ..RecordIdentifiers::default()
+            },
+            title: "Golden interoperability study".to_owned(),
+            abstract_text: Some("A deterministic round-trip fixture.".to_owned()),
+            authors: vec!["Example Research Group".to_owned()],
+            container_title: Some("Journal of Fixtures".to_owned()),
+            publication_year: Some(2026),
+            publication_date: None,
+            languages: Vec::new(),
+            subjects: Vec::new(),
+            urls: Vec::new(),
+            provider_metadata: Value::Null,
+        }
+    }
+
+    #[test]
+    fn every_supported_text_format_has_a_deterministic_golden_round_trip()
+    -> Result<(), InterchangeError> {
+        let source = golden_record();
+        let formats = [
+            InterchangeFormat::SearchrightJson,
+            InterchangeFormat::JsonLines,
+            InterchangeFormat::CslJson,
+            InterchangeFormat::Ris,
+            InterchangeFormat::Nbib,
+            InterchangeFormat::PubmedXml,
+            InterchangeFormat::Csv,
+            InterchangeFormat::Bibtex,
+            InterchangeFormat::EndnoteXml,
+        ];
+        for format in formats {
+            let first = export_records(std::slice::from_ref(&source), format.clone())?;
+            let second = export_records(std::slice::from_ref(&source), format.clone())?;
+            assert_eq!(first, second, "{format:?} export must be deterministic");
+            let imported = import_records(&first, format.clone(), "golden-round-trip")?;
+            assert!(
+                imported.quarantined.is_empty(),
+                "{format:?} quarantined a golden record"
+            );
+            assert_eq!(imported.records.len(), 1, "{format:?} record count");
+            if let Some(actual) = imported.records.first() {
+                assert_eq!(actual.title, source.title, "{format:?} title");
+                assert_eq!(actual.authors, source.authors, "{format:?} authors");
+                assert_eq!(
+                    actual.publication_year, source.publication_year,
+                    "{format:?} year"
+                );
+                assert_eq!(
+                    actual.identifiers.doi, source.identifiers.doi,
+                    "{format:?} DOI"
+                );
+                assert_eq!(
+                    actual.identifiers.pmid, source.identifiers.pmid,
+                    "{format:?} PMID"
+                );
+                assert_eq!(
+                    actual.container_title, source.container_title,
+                    "{format:?} container"
+                );
+            }
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn pubmed_xml_quarantines_an_unterminated_article_with_source_lines()
+    -> Result<(), InterchangeError> {
+        let input = "<PubmedArticleSet>\n<PubmedArticle>\n<MedlineCitation>";
+        let result = import_records(input, InterchangeFormat::PubmedXml, "pubmed-fixture")?;
+        assert!(result.records.is_empty());
+        assert_eq!(result.quarantined.len(), 1);
+        if let Some(quarantined) = result.quarantined.first() {
+            assert_eq!(quarantined.start_line, 2);
+            assert_eq!(quarantined.end_line, 3);
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn pubmed_xml_preserves_attributed_abstract_sections_and_inline_title_text()
+    -> Result<(), InterchangeError> {
+        let input = r#"<PubmedArticleSet><PubmedArticle><MedlineCitation><PMID>42</PMID><Article><ArticleTitle>Effects of <i>alpha</i> &amp; beta</ArticleTitle><Abstract><AbstractText Label="BACKGROUND">First section.</AbstractText><AbstractText Label="RESULTS">Second section.</AbstractText></Abstract></Article></MedlineCitation></PubmedArticle></PubmedArticleSet>"#;
+        let result = import_records(input, InterchangeFormat::PubmedXml, "pubmed-fixture")?;
+        assert_eq!(result.records.len(), 1);
+        if let Some(record) = result.records.first() {
+            assert_eq!(record.title, "Effects of alpha & beta");
+            assert_eq!(
+                record.abstract_text.as_deref(),
+                Some("First section. Second section.")
+            );
+        }
+        Ok(())
+    }
+
     #[test]
     fn ris_import_export_round_trip_preserves_title() {
         let input = "TY  - JOUR\nID  - 1\nTI  - Test article\nDO  - 10.1000/test\nER  - \n";
@@ -1412,6 +1806,41 @@ mod tests {
     }
 
     #[test]
+    fn parenthesized_bibtex_is_imported() -> Result<(), InterchangeError> {
+        let bib = "@article(smith2025,\n title = {Parenthesized entry},\n year = {2025}\n)\n";
+        let result = import_bibtex(bib, "receipt-bib")?;
+        assert_eq!(result.records.len(), 1);
+        assert!(result.quarantined.is_empty());
+        assert_eq!(result.records[0].title, "Parenthesized entry");
+        Ok(())
+    }
+
+    #[test]
+    fn parenthesized_bibtex_ignores_field_parentheses_and_reads_same_line_entries()
+    -> Result<(), InterchangeError> {
+        let bib = "@article(first, title = \"Open (question\", year = {2025}) @article{second, title = {Second entry}, year = {2026}}";
+        let result = import_bibtex(bib, "receipt-bib")?;
+        assert!(result.quarantined.is_empty());
+        assert_eq!(result.records.len(), 2);
+        assert_eq!(result.records[0].title, "Open (question");
+        assert_eq!(result.records[1].title, "Second entry");
+        Ok(())
+    }
+
+    #[test]
+    fn unterminated_bibtex_is_quarantined_with_line_range() -> Result<(), InterchangeError> {
+        let result = import_bibtex(
+            "@article{broken,\n title = {Missing close}\n",
+            "receipt-bib",
+        )?;
+        assert!(result.records.is_empty());
+        assert_eq!(result.quarantined.len(), 1);
+        assert_eq!(result.quarantined[0].start_line, 1);
+        assert_eq!(result.quarantined[0].end_line, 2);
+        Ok(())
+    }
+
+    #[test]
     fn endnote_xml_import_export_round_trip() -> Result<(), InterchangeError> {
         let xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><xml><records><record><rec-number>1</rec-number><titles><title>A Study on Search</title><secondary-title>Lancet</secondary-title></titles><contributors><authors><author>Smith, J.</author></authors></contributors><dates><year>2025</year></dates><electronic-resource-num>10.1000/study</electronic-resource-num></record></records></xml>";
         let res = import_records(xml, InterchangeFormat::EndnoteXml, "receipt-xml")?;
@@ -1423,6 +1852,31 @@ mod tests {
 
         let exported = export_records(&res.records, InterchangeFormat::EndnoteXml)?;
         assert!(exported.contains("<title>A Study on Search</title>"));
+        Ok(())
+    }
+
+    #[test]
+    fn unterminated_endnote_record_is_quarantined_with_line_range() -> Result<(), InterchangeError>
+    {
+        let result = import_endnote_xml(
+            "<xml>\n<record>\n<title>Missing close</title>",
+            "receipt-endnote",
+        )?;
+        assert!(result.records.is_empty());
+        assert_eq!(result.quarantined.len(), 1);
+        assert_eq!(result.quarantined[0].start_line, 2);
+        assert_eq!(result.quarantined[0].end_line, 3);
+        Ok(())
+    }
+
+    #[test]
+    fn compact_endnote_imports_every_same_line_record() -> Result<(), InterchangeError> {
+        let input = "<xml><records><record><rec-number>1</rec-number><title>First</title></record><record><rec-number>2</rec-number><title>Second</title></record></records></xml>";
+        let result = import_endnote_xml(input, "receipt-endnote")?;
+        assert!(result.quarantined.is_empty());
+        assert_eq!(result.records.len(), 2);
+        assert_eq!(result.records[0].native_id, "1");
+        assert_eq!(result.records[1].native_id, "2");
         Ok(())
     }
 

@@ -88,6 +88,23 @@ class TrackArchivalTests(unittest.TestCase):
         entry["completed_higher_evidence_gates"] = ["one", "two"]
         self.assertEqual(SYNC.task_counts(entry)[3], 3)
 
+    def test_review_history_preserves_both_record_shapes(self) -> None:
+        entry = dict(self.archived_entry(), deliverables=[], checks=[], review_fixes=[
+            "Historical reviewed fix (`abcdef0`).",
+            {"commit": "1234567", "summary": "Structured reviewed fix."},
+        ])
+        rendered = SYNC.render_plan(entry)
+        self.assertEqual(rendered.count("  - [x] Review fix: Historical reviewed fix (`abcdef0`)."), 1)
+        self.assertEqual(rendered.count("  - Review fix `1234567`: Structured reviewed fix."), 1)
+        self.assertEqual(SYNC.task_counts(entry)[4], 4)
+
+    def test_owner_decision_label_does_not_change_other_tracks(self) -> None:
+        entry = dict(self.archived_entry(), deliverables=[], checks=[])
+        default = SYNC.render_plan(entry)
+        entry["closeout_gate_label"] = "Close only after the owner's recorded panel decision."
+        self.assertIn("- [x] Close only after the owner's recorded panel decision.", SYNC.render_plan(entry))
+        self.assertIn("- [x] Close the track only when all applicable", default)
+
 
 if __name__ == "__main__":
     unittest.main()

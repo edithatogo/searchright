@@ -1,0 +1,112 @@
+{
+  "schema_version": "org.searchright.agent-panel-decision-packet.v1",
+  "track_id": "06",
+  "created_at": "2026-08-30T02:26:59Z",
+  "reviewed_revision": "fc2b6ba778b756d51952e535c47be53846494c48",
+  "policy_revision": "164fd4080e174cd370dc510b271edded09f636af",
+  "policy_tree": "ab14b0aa887c037f053537cd898f1fc7dcb3e02b",
+  "panel_authority": "advisory_only",
+  "owner_authority": "sole_final_decision",
+  "aggregate_recommendation": "recommend_revise",
+  "panel": [
+    {
+      "role": "methodology",
+      "agent_id": "track06_methodology_panel",
+      "model_identity": "inherited Codex runtime",
+      "fixture_exposure": "Full repository and development-visible synthetic labels were available.",
+      "conflicts": "Agent review of project-authored fixtures; not leakage-resistant or externally blinded.",
+      "vote": "recommend_revise"
+    },
+    {
+      "role": "adversarial_testing",
+      "agent_id": "track06_adversarial_panel",
+      "model_identity": "inherited Codex runtime",
+      "fixture_exposure": "Full repository and development-visible synthetic labels were available.",
+      "conflicts": "Agent review occurred in the implementation workspace.",
+      "vote": "recommend_revise"
+    },
+    {
+      "role": "evidence_governance",
+      "agent_id": "track06_governance_panel",
+      "model_identity": "inherited Codex runtime",
+      "fixture_exposure": "Full repository, Conductor evidence and development-visible synthetic labels were available.",
+      "conflicts": "Agent assessed governance records authored in the same repository.",
+      "vote": "recommend_revise"
+    }
+  ],
+  "corpora": [
+    {
+      "corpus_id": "dedup-validation-synthetic",
+      "path": "benchmarks/methodology/fixtures/validation/dedup-cases.json",
+      "sha256": "9251e08cf79f6f4e491281a8f176e27cdd2291860f0e9bd3a1cca85ff1b05498",
+      "rights_basis": "CC0 synthetic metadata",
+      "labels": "development_visible"
+    },
+    {
+      "corpus_id": "study-linkage-validation-synthetic",
+      "path": "benchmarks/methodology/fixtures/validation/study-linkage-cases.json",
+      "sha256": "a1b7a6fc7bbea9fc1b62aee3fdc9f3f8de386fe506a1075063df095a4ba7ac10",
+      "rights_basis": "CC0 synthetic metadata",
+      "labels": "development_visible"
+    }
+  ],
+  "sealed_evaluation": {
+    "manifest_sha256": "d40f268e40e390e30e3133c7582c33045e804e1153f9ace5ef48096059d046c5",
+    "label_digest": null,
+    "controlled_mount_executed": false,
+    "metrics_receipt": null,
+    "limitation": "No external sealed labels were mounted, compared or exposed. No general corpus-performance claim is available."
+  },
+  "environment": {
+    "rustc": "1.98.0 (88d9e12ae 2026-08-18)",
+    "host": "aarch64-apple-darwin",
+    "focused_command": "cargo test -p searchright-dedup -p searchright-study -p searchright-interchange --locked",
+    "focused_result": "17 tests passed at reviewed revision"
+  },
+  "findings": [
+    {
+      "severity": "high",
+      "area": "deduplication",
+      "finding": "Exact trial-registration and ISBN matches are automatic non-review duplicates even though these identifiers can identify a study or container rather than one report.",
+      "required_revision": "Use them as candidates or review-required evidence unless corroborated by report-level evidence; add false-merge regression tests."
+    },
+    {
+      "severity": "high",
+      "area": "study_graph",
+      "finding": "Study membership and ReportOfStudy links can contradict after detach, merge or split, and operation evidence endpoints are not constrained.",
+      "required_revision": "Enforce membership-link consistency and operation-specific evidence semantics with regression tests."
+    },
+    {
+      "severity": "medium",
+      "area": "deduplication",
+      "finding": "The greater-than-64-record blocking path is not proven complete relative to the exhaustive matcher and can miss high-Jaccard candidates.",
+      "required_revision": "Implement completeness-preserving candidate generation and blocked-versus-exhaustive differential tests."
+    },
+    {
+      "severity": "medium",
+      "area": "interchange",
+      "finding": "Truncated BibTeX and EndNote records, and parenthesized BibTeX entries, can be silently discarded rather than quarantined.",
+      "required_revision": "Quarantine all non-empty unconsumed input with line spans and test parenthesized or explicitly rejected syntax."
+    },
+    {
+      "severity": "medium",
+      "area": "benchmark",
+      "finding": "The study-linkage gold fixture is declared but not consumed by an executable metric path.",
+      "required_revision": "Execute the linkage fixture through declared metrics before re-panel."
+    }
+  ],
+  "claim_ceiling": "Compiler-backed deterministic behavior only. No external validation, methodological adequacy or general deduplication/linkage performance is established.",
+  "owner_decision": {
+    "status": "pending",
+    "options": [
+      "revise_and_repanel",
+      "reject_track_closeout",
+      "accept_residual_risk_and_authorize_archive"
+    ],
+    "selected": null,
+    "owner_identity": null,
+    "decided_at": null,
+    "rationale": null,
+    "conditions": []
+  }
+}

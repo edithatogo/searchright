@@ -506,7 +506,10 @@ enum InterchangeArg {
     CslJson,
     Ris,
     Nbib,
+    PubmedXml,
     Csv,
+    Bibtex,
+    EndnoteXml,
 }
 
 impl From<InterchangeArg> for InterchangeFormat {
@@ -517,7 +520,10 @@ impl From<InterchangeArg> for InterchangeFormat {
             InterchangeArg::CslJson => Self::CslJson,
             InterchangeArg::Ris => Self::Ris,
             InterchangeArg::Nbib => Self::Nbib,
+            InterchangeArg::PubmedXml => Self::PubmedXml,
             InterchangeArg::Csv => Self::Csv,
+            InterchangeArg::Bibtex => Self::Bibtex,
+            InterchangeArg::EndnoteXml => Self::EndnoteXml,
         }
     }
 }

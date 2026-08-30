@@ -57,6 +57,9 @@ maintain separate methodological logic.
 
 ## Implemented source surface
 
+See [Offline XML imports](docs/xml-imports.md) for PubMed/EndNote text decoding,
+record isolation, quarantine provenance and external-entity boundaries.
+
 ### Methodological contracts
 
 - Review questions and frameworks including PICO, PCC, SPIDER and PEO.
@@ -93,7 +96,7 @@ crates/searchright-study/              Record–report–study graph operations
 crates/searchright-screening/          Human-governed screening and reconciliation
 crates/searchright-validation/         PRESS, seed recall and translation gates
 crates/searchright-prisma/             PRISMA flow and PRISMA-S outputs
-crates/searchright-interchange/        Searchright JSON, JSONL, CSL, RIS, NBIB, CSV
+crates/searchright-interchange/        Searchright JSON, JSONL, CSL, RIS, NBIB, PubMed XML, CSV, BibTeX, EndNote XML
 crates/searchright-living/             Immutable update lineage and record diffs
 crates/searchright-provenance/         RO-Crate 1.3 and W3C PROV-style exports
 crates/searchright-ranking/            Explainable advisory ranking/calibration

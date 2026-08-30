@@ -9,6 +9,9 @@
   "source_evidence": [
     "crates/searchright-dedup/src/lib.rs",
     "crates/searchright-interchange/src/lib.rs",
+    "crates/searchright-interchange/src/xml.rs",
+    "crates/searchright-interchange/tests/xml_integrity.rs",
+    "docs/xml-imports.md",
     "crates/searchright-study/src/lib.rs",
     "contracts/examples/interchange-receipt.yaml",
     "contracts/examples/study-graph.yaml",
@@ -23,11 +26,8 @@
     "SR-018",
     "SR-019"
   ],
-  "blockers": [
-    "Compile and run golden import/export round-trip tests across every supported format.",
-    "Evaluate linkage and deduplication against independently adjudicated corpora."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Compiler-backed deterministic interchange round trips and source-level deduplication/linkage behaviour are evidenced. A digest-bound multi-agent panel may recommend disposition, but only the repository owner's recorded decision may close the evaluation gate.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-06",
@@ -51,7 +51,33 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-06-dedup-linkage-review.json"
+    "verification/receipts/track-06-dedup-linkage-review.json",
+    "verification/receipts/track-06-interchange-golden.json",
+    "verification/receipts/track-06-study-linkage-validation.json",
+    "verification/receipts/track-06-agent-panel-decision-packet.json",
+    "verification/receipts/track-06-agent-panel-decision-packet-r2.json",
+    "verification/receipts/track-06-owner-decision.json",
+    "verification/receipts/track-06-integration-panel-round-1.json",
+    "verification/receipts/track-06-integration-panel-round-2.json",
+    "verification/receipts/track-06-xml-remediation-review.json"
   ],
-  "external_evidence": []
+  "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-08-30",
+  "review_fixes": [
+    "Preserve attributed PubMed abstract sections and inline title text (`7af55c0`).",
+    "Treat ISBN and trial-registration matches as candidate signals rather than automatic report duplicates.",
+    "Make large-collection title-token blocking complete for the configured Jaccard comparator.",
+    "Enforce study-membership and ReportOfStudy-edge consistency with operation-specific evidence.",
+    "Support parenthesized BibTeX and quarantine unterminated BibTeX and EndNote records with line spans.",
+    "Execute the rights-clear study-linkage fixture through all four declared local regression metrics.",
+    "Parse compact multi-record EndNote and same-line BibTeX without silent record loss.",
+    "Require every labelled linkage report to be assigned or explicitly abstained.",
+    "Reject sole-report detachment explicitly without mutating the graph.",
+    "Reject zero and invalid title-similarity thresholds and cover the 64/65 blocking boundary.",
+    "Simplify the threshold guard using De Morgan's law without changing its accepted domain; strict Clippy and all 10 dedup tests pass (`58a1c2f`).",
+    "Parse XML structurally, decode references once and quarantine damaged records without losing later valid records.",
+    "Scope primary PubMed identifiers and fields to owning paths, reject malformed XML attributes, and preserve integration-panel dissent and remediation evidence.",
+    "Execute six archival-renderer regressions in the required static harness without changing unrelated track task identities."
+  ]
 }

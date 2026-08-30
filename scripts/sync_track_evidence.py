@@ -188,13 +188,16 @@ def render_plan(entry: dict) -> str:
         ]
     )
     for fix in entry.get("review_fixes", []):
-        lines.append(f"  - Review fix `{fix['commit']}`: {fix['summary']}")
+        if isinstance(fix, str):
+            lines.append(f"  - [x] Review fix: {fix}")
+        else:
+            lines.append(f"  - Review fix `{fix['commit']}`: {fix['summary']}")
     lines.extend(
         [
             (
-                "- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced."
+                f"- [x] {entry.get('closeout_gate_label', 'Close the track only when all applicable live, downstream, human and external gates are evidenced.')}"
                 if entry.get("closeout_completed", False)
-                else "- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced."
+                else f"- [ ] {entry.get('closeout_gate_label', 'Close the track only when all applicable live, downstream, human and external gates are evidenced.')}"
             ),
             "",
         ]

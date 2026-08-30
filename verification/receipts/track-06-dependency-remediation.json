@@ -1,0 +1,16 @@
+{
+  "track_id": "06",
+  "failed_validation_revision": "35b719b89a7b9d8bd78d48463cd062a51cecaa23",
+  "failed_validation_tree": "31969599d8cde0a3da1e3c2a6a696798e38208a1",
+  "prior_results": {
+    "static_gates_passed": 56,
+    "rust_tests_passed": 321,
+    "rust_tests_skipped": 0,
+    "format_clippy_doctests_rustdoc": "passed",
+    "compiled_schema_parity": "passed_with_10_recorded_differences",
+    "dependency_advisories": "failed"
+  },
+  "advisories": ["RUSTSEC-2026-0194", "RUSTSEC-2026-0195"],
+  "remediation": "Pin quick-xml 0.41.0 and adapt decoding calls to explicit XML 1.0 semantics. Duplicate-attribute checks remain enabled; no advisory suppression.",
+  "claim_boundary": "Records the failed full run and its dependency remediation. Full verification on the upgraded tree and hosted delivery remain required."
+}

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-06-phase-4`
 Conductor plan: `conductor/tracks/06-imports-dedup-linkage/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.
 
 ## Completion and evidence contract
 

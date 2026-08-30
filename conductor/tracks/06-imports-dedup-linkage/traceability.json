@@ -5,11 +5,11 @@
   "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/06-imports-dedup-linkage/spec.md#scope",
-  "claim_boundary": "Compiler-verified deterministic bibliographic import, Unicode-normalised deduplication blocking, and transactional report-study graph operations. Benchmarks against sealed private datasets and manual screening authority are not claimed.",
+  "claim_boundary": "Compiler-backed deterministic interchange, conservative deduplication, transactional report-study graph operations and rights-clear synthetic fixture regression metrics are evidenced. No external or sealed-corpus performance is claimed; an agent panel may recommend disposition, but only the repository owner decides closeout.",
   "assertions": [
     {
       "assertion_id": "T06-A001",
-      "statement": "Implement RIS, CSL JSON, nbib/PubMed XML, BibTeX, EndNote XML and CSV readers",
+      "statement": "Implement RIS, CSL JSON, NBIB, PubMed XML, BibTeX, EndNote XML and CSV readers",
       "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
@@ -22,16 +22,20 @@
         "searchright_interchange::import_csv",
         "searchright_interchange::import_bibtex",
         "searchright_interchange::import_endnote_xml",
+        "searchright_interchange::import_pubmed_xml",
         "searchright_interchange::conversion_receipt"
       ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-interchange"
+      ],
       "evidence_receipts": [
-        "verification/receipts/track-06-local-review.json"
+        "verification/receipts/track-06-interchange-golden.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Deterministic multi-format bibliographic imports and exports (RIS, NBIB, CSL-JSON, CSV, BibTeX, EndNote XML) are implemented and compiler-verified."
+      "permitted_claim": "Deterministic multi-format bibliographic imports and exports (Searchright JSON, JSONL, CSL JSON, RIS, NBIB, PubMed XML, CSV, BibTeX and EndNote XML) pass compiler-backed semantic round trips."
     },
     {
       "assertion_id": "T06-A002",
@@ -39,17 +43,23 @@
       "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-interchange/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs"
       ],
       "implementation_symbols": [
         "searchright_interchange::QuarantinedRecord",
-        "searchright_interchange::ImportResult"
+        "searchright_interchange::ImportResult",
+        "searchright_interchange::xml::fragments",
+        "searchright_interchange::xml::validate"
       ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-interchange --test xml_integrity"
+      ],
       "evidence_receipts": [
-        "verification/receipts/track-06-local-review.json"
+        "verification/receipts/track-06-interchange-golden.json"
       ],
       "open_gates": [],
       "permitted_claim": "Source line numbers and block line ranges are preserved for quarantined malformed records without failing valid batches."
@@ -71,7 +81,7 @@
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-06-local-review.json"
+        "verification/receipts/track-06-dedup-linkage-review.json"
       ],
       "open_gates": [],
       "permitted_claim": "Unicode diacritic/ligature decomposition, punctuation normalization, and ISBN-10/13 normalization are implemented and property-tested."
@@ -95,7 +105,7 @@
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-06-local-review.json"
+        "verification/receipts/track-06-dedup-linkage-review.json"
       ],
       "open_gates": [],
       "permitted_claim": "Report-to-study linkage, study merging, study splitting, and report detachment are implemented with transactional graph validation."
@@ -116,7 +126,7 @@
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-06-local-review.json"
+        "verification/receipts/track-06-dedup-linkage-review.json"
       ],
       "open_gates": [],
       "permitted_claim": "Deterministic multi-key candidate blocking and indexing enables scalable deduplication while preserving identical clustering results."
@@ -129,21 +139,31 @@
       "implementation_paths": [
         "crates/searchright-interchange/src/lib.rs",
         "crates/searchright-dedup/src/lib.rs",
-        "crates/searchright-study/src/lib.rs"
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-bench/src/lib.rs"
       ],
       "implementation_symbols": [
         "searchright_interchange::tests",
         "searchright_dedup::tests",
-        "searchright_study::tests"
+        "searchright_study::tests",
+        "searchright_bench::evaluate_study_linkage",
+        "searchright_bench::study_linkage_metric_contracts"
       ],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-interchange --test xml_integrity"
+      ],
       "evidence_receipts": [
-        "verification/receipts/track-06-local-review.json"
+        "verification/receipts/track-06-interchange-golden.json",
+        "verification/receipts/track-06-dedup-linkage-review.json",
+        "verification/receipts/track-06-study-linkage-validation.json",
+        "verification/receipts/track-06-agent-panel-decision-packet-r2.json",
+        "verification/receipts/track-06-owner-decision.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Round-trip property tests, Unicode normalization idempotence tests, permutation invariance tests, and transactional study graph mutation tests pass compiler verification."
+      "permitted_claim": "Compiler-backed synthetic regression tests and a digest-bound three-agent panel review are evidenced, with the repository owner's explicit approval for closeout. No sealed, external or general corpus-performance claim is established."
     }
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "track_id": "06",
+  "reviewed_head": "b1ebd38c44e3f41bc00c2256a6ca004d62d000f4",
+  "reviewed_staged_tree": "ef20d62eb8ba99beddcac2fde75ca754e9f5632a",
+  "authority": "advisory_only_owner_decides",
+  "votes": {
+    "track06_integration_correctness": "recommend_revise",
+    "track06_integration_governance": "recommend_approve",
+    "track06_integration_testing": "recommend_approve"
+  },
+  "findings": [
+    {"priority": "P1", "finding": "Cited-reference ArticleId can become the primary DOI because owning path and IdType are ignored."},
+    {"priority": "P2", "finding": "Invalid XML attribute names and literal less-than characters in attribute values pass validation."}
+  ],
+  "baseline_regressions": {"command": "cargo test -p searchright-interchange --test xml_integrity", "passed": 8, "failed": 2},
+  "full_verification": "Failed at packaging reproducibility because the integration tree contains staged changes; native full-workspace verification was not reached.",
+  "historical_approval": "Unchanged; does not extend to new XML implementation.",
+  "claim_boundary": "Preserves second-pass dissent and baseline evidence. Remediation requires new validation and review; no CI, merge or owner approval is claimed."
+}

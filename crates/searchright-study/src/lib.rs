@@ -24,6 +24,36 @@ pub fn validate_graph(graph: &StudyGraph) -> Result<(), StudyGraphError> {
         if !known.contains(link.to_id.as_str()) {
             return Err(StudyGraphError::UnknownObject(link.to_id.clone()));
         }
+        if link.relationship == EvidenceRelationship::ReportOfStudy {
+            let membership_exists = graph.studies.iter().any(|study| {
+                study.study_id == link.to_id
+                    && study
+                        .report_ids
+                        .iter()
+                        .any(|report_id| report_id == &link.from_id)
+            });
+            if !membership_exists {
+                return Err(StudyGraphError::InconsistentMembership {
+                    report_id: link.from_id.clone(),
+                    study_id: link.to_id.clone(),
+                });
+            }
+        }
+    }
+    for study in &graph.studies {
+        for report_id in &study.report_ids {
+            let link_exists = graph.links.iter().any(|link| {
+                link.relationship == EvidenceRelationship::ReportOfStudy
+                    && link.from_id == *report_id
+                    && link.to_id == study.study_id
+            });
+            if !link_exists {
+                return Err(StudyGraphError::InconsistentMembership {
+                    report_id: report_id.clone(),
+                    study_id: study.study_id.clone(),
+                });
+            }
+        }
     }
     Ok(())
 }
@@ -184,6 +214,18 @@ pub fn merge_studies(
             return Err(StudyGraphError::UnknownObject(src.to_owned()));
         }
     }
+    let moved_report_ids: BTreeSet<&str> = graph
+        .studies
+        .iter()
+        .filter(|study| source_study_ids.contains(&study.study_id.as_str()))
+        .flat_map(|study| study.report_ids.iter().map(String::as_str))
+        .collect();
+    if evidence.relationship != EvidenceRelationship::ReportOfStudy
+        || evidence.to_id != target_study_id
+        || !moved_report_ids.contains(evidence.from_id.as_str())
+    {
+        return Err(StudyGraphError::InvalidOperationEvidence("merge"));
+    }
 
     let mut candidate = graph.clone();
     let mut collected_report_ids = Vec::new();
@@ -258,6 +300,12 @@ pub fn split_study(
             )));
         }
     }
+    if evidence.relationship != EvidenceRelationship::ReportOfStudy
+        || evidence.to_id != new_study.study_id
+        || !report_ids_to_move.contains(&evidence.from_id.as_str())
+    {
+        return Err(StudyGraphError::InvalidOperationEvidence("split"));
+    }
 
     let mut candidate = graph.clone();
     let move_set: BTreeSet<&str> = report_ids_to_move.iter().copied().collect();
@@ -295,6 +343,29 @@ pub fn detach_report(
     evidence: EvidenceLink,
 ) -> Result<(), StudyGraphError> {
     validate_graph(graph)?;
+    if evidence.relationship
+        != EvidenceRelationship::Custom("report_detached_from_study".to_owned())
+        || evidence.from_id != report_id
+        || evidence.to_id != study_id
+    {
+        return Err(StudyGraphError::InvalidOperationEvidence("detach"));
+    }
+    let current_study = graph
+        .studies
+        .iter()
+        .find(|study| study.study_id == study_id)
+        .ok_or_else(|| StudyGraphError::UnknownObject(study_id.to_owned()))?;
+    if current_study.report_ids.len() == 1
+        && current_study
+            .report_ids
+            .iter()
+            .any(|identifier| identifier == report_id)
+    {
+        return Err(StudyGraphError::CannotDetachSoleReport {
+            report_id: report_id.to_owned(),
+            study_id: study_id.to_owned(),
+        });
+    }
     let mut candidate = graph.clone();
     let study = candidate
         .studies
@@ -308,7 +379,11 @@ pub fn detach_report(
         .position(|id| id == report_id)
         .ok_or_else(|| StudyGraphError::UnknownObject(format!("{report_id} in {study_id}")))?;
     study.report_ids.remove(pos);
-
+    candidate.links.retain(|link| {
+        !(link.relationship == EvidenceRelationship::ReportOfStudy
+            && link.from_id == report_id
+            && link.to_id == study_id)
+    });
     candidate.links.push(evidence);
     validate_graph(&candidate)?;
     *graph = candidate;
@@ -344,6 +419,29 @@ pub enum StudyGraphError {
     /// The attachment edge did not describe the requested report-to-study link.
     #[error("attachment link must connect the new report to the selected study")]
     InvalidAttachmentLink,
+    /// Membership and its evidence edge did not describe the same graph state.
+    #[error(
+        "report `{report_id}` membership in study `{study_id}` is inconsistent with ReportOfStudy evidence"
+    )]
+    InconsistentMembership {
+        /// Report side of the inconsistent membership.
+        report_id: String,
+        /// Study side of the inconsistent membership.
+        study_id: String,
+    },
+    /// Operation evidence did not have the required relationship and endpoints.
+    #[error("invalid {0} operation evidence")]
+    InvalidOperationEvidence(&'static str),
+    /// Detachment would create an invalid empty study.
+    #[error(
+        "cannot detach sole report `{report_id}` from study `{study_id}`; split, merge or remove the study explicitly"
+    )]
+    CannotDetachSoleReport {
+        /// Sole report that cannot be detached by this operation.
+        report_id: String,
+        /// Study that would otherwise become empty.
+        study_id: String,
+    },
     /// Invalid graph modification operation.
     #[error("invalid study graph operation: {0}")]
     InvalidOperation(String),
@@ -403,6 +501,16 @@ mod tests {
         let graph = graph();
         assert!(validate_graph(&graph).is_ok());
         assert!(unlinked_reports(&graph).is_empty());
+    }
+
+    #[test]
+    fn membership_requires_a_matching_report_of_study_edge() {
+        let mut graph = graph();
+        graph.links.clear();
+        assert!(matches!(
+            validate_graph(&graph),
+            Err(StudyGraphError::InconsistentMembership { .. })
+        ));
     }
 
     #[test]
@@ -517,5 +625,70 @@ mod tests {
         assert_eq!(graph.studies.len(), 2);
         assert_eq!(reports_per_study(&graph).get("study-1"), Some(&1));
         assert_eq!(reports_per_study(&graph).get("study-3"), Some(&1));
+    }
+
+    #[test]
+    fn detach_removes_membership_edge_and_validates_operation_evidence() {
+        let mut graph = graph();
+        graph.reports.push(Report {
+            report_id: "report-2".to_owned(),
+            record_ids: vec!["record-2".to_owned()],
+            title: "Companion report".to_owned(),
+            publication_year: Some(2025),
+            doi: None,
+            pmid: None,
+            registry_ids: Vec::new(),
+            retrieval_attempts: Vec::new(),
+        });
+        graph.studies[0].report_ids.push("report-2".to_owned());
+        graph.links.push(EvidenceLink {
+            link_id: "link-2".to_owned(),
+            from_id: "report-2".to_owned(),
+            to_id: "study-1".to_owned(),
+            relationship: EvidenceRelationship::ReportOfStudy,
+            confidence: 0.9,
+            evidence: vec!["shared registration".to_owned()],
+            asserted_by: "agent-panel".to_owned(),
+            asserted_at: "2026-08-30T00:00:00Z".to_owned(),
+        });
+        let evidence = EvidenceLink {
+            link_id: "detach-1".to_owned(),
+            from_id: "report-2".to_owned(),
+            to_id: "study-1".to_owned(),
+            relationship: EvidenceRelationship::Custom("report_detached_from_study".to_owned()),
+            confidence: 1.0,
+            evidence: vec!["reports describe distinct cohorts".to_owned()],
+            asserted_by: "agent-panel".to_owned(),
+            asserted_at: "2026-08-30T00:00:00Z".to_owned(),
+        };
+
+        assert!(detach_report(&mut graph, "report-2", "study-1", evidence).is_ok());
+        assert!(validate_graph(&graph).is_ok());
+        assert!(!graph.links.iter().any(|link| {
+            link.relationship == EvidenceRelationship::ReportOfStudy
+                && link.from_id == "report-2"
+                && link.to_id == "study-1"
+        }));
+    }
+
+    #[test]
+    fn detach_rejects_a_sole_report_without_mutating_the_graph() {
+        let mut graph = graph();
+        let original = graph.clone();
+        let evidence = EvidenceLink {
+            link_id: "detach-sole".to_owned(),
+            from_id: "report-1".to_owned(),
+            to_id: "study-1".to_owned(),
+            relationship: EvidenceRelationship::Custom("report_detached_from_study".to_owned()),
+            confidence: 1.0,
+            evidence: vec!["requested correction".to_owned()],
+            asserted_by: "agent-panel".to_owned(),
+            asserted_at: "2026-08-30T00:00:00Z".to_owned(),
+        };
+        assert!(matches!(
+            detach_report(&mut graph, "report-1", "study-1", evidence),
+            Err(StudyGraphError::CannotDetachSoleReport { .. })
+        ));
+        assert_eq!(graph, original);
     }
 }

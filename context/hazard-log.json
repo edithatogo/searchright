@@ -355,7 +355,7 @@
       "controls": [
         "Sealed benchmark identifiers",
         "No hidden labels in repository",
-        "Independent mounted evaluation set",
+      "Controlled external-label mount evaluated by an isolated agent panel",
         "Environment and corpus digest receipts"
       ],
       "evidence": [
@@ -364,7 +364,7 @@
       ],
       "hazard": "Benchmark labels or evaluation answers leak into development fixtures, prompts or ranking agents.",
       "id": "H-023",
-      "residual_status": "open_independent_evaluation",
+    "residual_status": "open_agent_panel_owner_decision",
       "severity": "high"
     },
     {
