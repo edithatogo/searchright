@@ -1415,6 +1415,7 @@
         "cargo-requirement:reqwest@0.13.2",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:tokio@1",
         "cargo-requirement:url@2.5",
         "cargo:evidence-search-contracts@0.1.0-alpha.1",
         "cargo:evidence-search-core@0.1.0-alpha.1"

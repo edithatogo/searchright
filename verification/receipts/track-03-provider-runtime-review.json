@@ -1,40 +1,69 @@
 {
   "schema_version": "org.searchright.verification-receipt.v1",
   "track_id": "03",
-  "source_revision": "41bb62b",
-  "recorded_at": "2026-08-12",
+  "baseline_revision": "4faaae96020afe58396b7c40b18fcb1fe13bb151",
+  "implementation_revision": "07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb",
+  "recorded_at": "2026-08-29",
   "environment": {
-    "toolchain": "1.97.1-x86_64-pc-windows-gnu",
-    "network": "disabled/not used",
-    "target_directory": "target-track03-gnu"
+    "toolchain": "workspace default on aarch64-apple-darwin",
+    "network": "enabled only for read-only Sourceright clone and dependency retrieval; no live provider request was executed",
+    "searchright_worktree": "/Volumes/PortableSSD/GitHub/searchright-track03",
+    "sourceright_checkout": "temporary detached read-only checkout"
   },
   "checks": [
     {
-      "command": "cargo +1.97.1-x86_64-pc-windows-gnu test -p evidence-search-core",
-      "result": "passed",
-      "tests_passed": 36
-    },
-    {
-      "command": "cargo +1.97.1-x86_64-pc-windows-gnu clippy -p evidence-search-core --all-targets --all-features -- -D warnings",
+      "command": "cargo test -p evidence-search-core -p searchright-sourceright-compat -p searchright-contracts -p searchright-connectors --all-features --locked",
       "result": "passed"
     },
     {
-      "command": "cargo fmt --all -- --check",
-      "result": "passed_after_format"
+      "command": "cargo clippy -p evidence-search-core -p searchright-contracts -p searchright-sourceright-compat -p searchright-connectors --all-targets --all-features --locked -- -D warnings",
+      "result": "passed"
+    },
+    {
+      "command": "cargo test -p searchright-contracts -p searchright-sourceright-compat --all-features --locked && cargo clippy -p searchright-contracts -p searchright-sourceright-compat --all-targets --all-features --locked -- -D warnings",
+      "result": "passed",
+      "review_fix_revision": "07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb"
+    },
+    {
+      "command": "python3 scripts/check_sourceright_migration.py",
+      "result": "passed",
+      "cases_checked": 7,
+      "symbols_mapped": 24
+    },
+    {
+      "command": "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test && cargo check --locked",
+      "repository": "edithatogo/sourceright",
+      "source_revision": "c5fa583431390eee1bf5eae04dc47b01c50d4a1e",
+      "result": "passed",
+      "ignored_tests": 1
     }
   ],
   "security_evidence": {
-    "literal_host_denials": [
-      "localhost",
-      "subdomain.localhost",
-      "IPv4 loopback",
-      "IPv4 private",
-      "IPv4 link-local/cloud metadata",
-      "IPv6 loopback",
-      "IPv6 link-local"
+    "resolved_answer_policy": "empty answers and any complete answer containing a prohibited IPv4 or IPv6 address fail closed",
+    "transport_binding": "each live request resolves its approved hostname, validates the complete deduplicated answer and pins that socket set into a no-proxy, redirect-disabled HTTPS-only client",
+    "deterministic_cases": [
+      "empty DNS answer rejected",
+      "mixed public and private DNS answer rejected",
+      "complete public DNS answer accepted for pinning",
+      "0/8, deprecated IPv6 site-local and NAT64 translation ranges rejected",
+      "response chunks rejected before the accumulated buffer exceeds policy",
+      "cutover readiness rejects blank, duplicate, invented or incomplete parity case and dimension coverage"
     ],
-    "resolved_answer_policy": "empty answers and any answer containing a prohibited IPv4 or IPv6 address fail closed",
-    "residual_blocker": "live connector transports do not yet demonstrate resolve-validate-pin behavior, so DNS rebinding resistance and H-002 closure are not claimed"
+    "hazard_h_002": "local_compiler_controls_passed_closure_pending_exact_revision_ci"
   },
-  "claim_boundary": "Compiler-backed deterministic endpoint-policy evidence only; no live provider, downstream Sourceright parity, cutover, SemVer or rollback claim."
+  "downstream_evidence": {
+    "source_revision": "c5fa583431390eee1bf5eae04dc47b01c50d4a1e",
+    "live_provider_blob": "57bc071c6afc7d5a4cb8ead12112919a446ebd24",
+    "inventory_drift": "provider runtime files unchanged from the original pinned inventory",
+    "baseline_quality_gates": "passed",
+    "shared_runtime_feature_canary": "not_performed",
+    "dual_run_parity": "not_performed",
+    "rollback_exercise": "not_performed"
+  },
+  "semver_evidence": {
+    "local_tool": "cargo-semver-checks unavailable",
+    "hosted_gate": ".github/workflows/public-api.yml",
+    "result": "not_executed"
+  },
+  "claim_boundary": "Compiler-backed Searchright runtime and compatibility evidence plus a clean read-only Sourceright baseline; no live provider, downstream integration, dual-run parity, SemVer, cutover, rollback, release or remote mutation claim."
 }

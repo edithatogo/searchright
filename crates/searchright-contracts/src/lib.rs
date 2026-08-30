@@ -80,7 +80,10 @@ pub use integration::{
 pub use interchange::{InterchangeFormat, InterchangeReceipt};
 pub use licensed::LicensedAdapterProfile;
 pub use living::{LivingUpdateRun, RecordChange, RecordChangeKind, UpdateCursor, UpdateRunStatus};
-pub use migration::{ParityDimensionResult, SourcerightParityReport};
+pub use migration::{
+    ParityDimensionResult, SOURCERIGHT_PARITY_CASE_IDS, SOURCERIGHT_PARITY_DIMENSIONS,
+    SourcerightParityReport,
+};
 pub use ops::{
     BackupKind, BackupManifest, ComponentHealth, HealthState, IncidentRecord, IncidentSeverity,
     TelemetryPolicy,

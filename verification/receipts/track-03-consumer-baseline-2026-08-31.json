@@ -1,0 +1,26 @@
+{
+  "schema_version": "org.searchright.consumer-baseline.v1",
+  "track_id": "03",
+  "recorded_at": "2026-08-30T21:24:12Z",
+  "repository": "edithatogo/sourceright",
+  "revision": "c5fa583431390eee1bf5eae04dc47b01c50d4a1e",
+  "tree": "91bab8ba8a5fc7f02b9a539ed7d7c0c6c6056d60",
+  "clean_before_and_after": true,
+  "discovery": "A clean standalone clone with the exact origin was found under foi-o/.repo-tools/sourceright. A separate dissociated clone was created from the declared remote; the existing checkout and parent-managed submodules were not altered.",
+  "status": "baseline_passed_not_integrated",
+  "toolchain": "1.97.1-aarch64-apple-darwin",
+  "commands": ["cargo check --locked", "cargo fmt --check", "cargo clippy --all-targets --locked -- -D warnings", "cargo test --locked"],
+  "exit_code": 0,
+  "tests_including_doctests": {"passed": 377, "failed": 0, "ignored": 1, "result_groups": 67},
+  "ignored_test": "citation_sync::tests::zotero_disposable_library_live_smoke_skips_without_credentials requires an explicit live opt-in and disposable-library credentials; it was not run.",
+  "logs_sha256": {
+    "cargo_check": "2a6b08f3741d4429935c4cb926dcdcabd0b61b1b640a440e1fa6436b5320b0c8",
+    "format_clippy_tests": "31bf62607c8298e943876bdccb0900583f7d3c35f15e75e6aca46733d5ffbb95"
+  },
+  "boundaries": [
+    "No Sourceright source changes, commits, remote branches, cutover, releases or live provider canaries occurred.",
+    "This baseline does not prove shared-runtime parity, compatibility, rollback or consumer integration.",
+    "The release-train ecosystem pin is not promoted merely because a newer consumer baseline was observed.",
+    "Sourceright AGENTS.md forbids automatic commits; downstream changes require respecting that target-specific authority boundary."
+  ]
+}

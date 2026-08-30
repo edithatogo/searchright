@@ -9,10 +9,13 @@ Canonical task state: **open evidence or implementation task**.
 
 - [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
   - [x] Present source path: `crates/evidence-search-core/src/provider.rs`
+  - [x] Present source path: `crates/searchright-connectors/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/migration.rs`
   - [x] Present source path: `crates/searchright-sourceright-compat/src/lib.rs`
   - [x] Present source path: `migration/sourceright/replacement-map.yaml`
   - [x] Present source path: `migration/sourceright/parity-cases.json`
   - [x] Present source path: `scripts/check_sourceright_migration.py`
+  - [x] Present source path: `tests/test_sourceright_migration.py`
   - [x] Present source path: `release/public-packages.json`
   - [x] Present source path: `public-api/README.md`
   - [x] Present source path: `docs/msrv-and-package-policy.md`

@@ -1,0 +1,40 @@
+{
+  "schema_version": "org.searchright.external-source-inventory.v1",
+  "track_id": "03",
+  "recorded_at": "2026-08-29",
+  "repository": "edithatogo/sourceright",
+  "revision": "c5fa583431390eee1bf5eae04dc47b01c50d4a1e",
+  "comparison_revision": "89f3d1a08037057160700df5bba319a64500b791",
+  "checkout_mode": "temporary detached read-only checkout",
+  "provider_surface": [
+    {
+      "path": "src/live_providers.rs",
+      "blob_sha": "57bc071c6afc7d5a4cb8ead12112919a446ebd24",
+      "role": "live provider runtime, endpoints, cache, retry and smoke orchestration"
+    },
+    {
+      "path": "src/providers.rs",
+      "blob_sha": "11b3e08d9d9913bbacf46ab569a84f7f3419a70c",
+      "role": "provider identities, fixture-backed results and Sourceright-specific candidate models"
+    }
+  ],
+  "drift_from_original_inventory": "none in Cargo.toml, src/providers.rs or src/live_providers.rs",
+  "comparison": {
+    "command": "git diff --quiet 89f3d1a08037057160700df5bba319a64500b791..c5fa583431390eee1bf5eae04dc47b01c50d4a1e -- Cargo.toml src/providers.rs src/live_providers.rs",
+    "result": "passed_no_difference",
+    "blob_hashes_at_both_revisions": {
+      "Cargo.toml": "d1ac8ee803de71da89321e8808efbb613912495f",
+      "src/providers.rs": "11b3e08d9d9913bbacf46ab569a84f7f3419a70c",
+      "src/live_providers.rs": "57bc071c6afc7d5a4cb8ead12112919a446ebd24"
+    }
+  },
+  "quality_gate": {
+    "command": "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test && cargo check --locked",
+    "result": "passed",
+    "ignored_tests": 1
+  },
+  "limitations": [
+    "No Sourceright file, branch, pull request or remote state was modified.",
+    "The baseline gate does not compile a shared-core feature or produce old/new parity evidence."
+  ]
+}

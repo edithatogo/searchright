@@ -1,10 +1,41 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeSet;
 
 use crate::{
     ContractError, SOURCERIGHT_PARITY_REPORT_SCHEMA_VERSION, Validate, require_schema_version,
     require_text,
 };
+
+/// Complete fixture catalogue required before a Sourceright cutover can be ready.
+pub const SOURCERIGHT_PARITY_CASE_IDS: &[&str] = &[
+    "bounded-retry",
+    "cache-write-replay",
+    "disabled-live",
+    "fixture-identifiers",
+    "malformed-payload",
+    "secret-redaction",
+    "undeclared-host",
+];
+
+/// Complete comparison surface required before a Sourceright cutover can be ready.
+pub const SOURCERIGHT_PARITY_DIMENSIONS: &[&str] = &[
+    "cache key redaction",
+    "disabled-live negative behaviour",
+    "endpoint and secret redaction",
+    "error classification",
+    "execution mode",
+    "fixture determinism",
+    "host policy",
+    "identifiers",
+    "malformed and adversarial response handling",
+    "normalised fields",
+    "provider identity",
+    "receipt counts",
+    "replay and cache behaviour",
+    "retry and rate behaviour",
+    "timeout behaviour",
+];
 
 /// Result for one Sourceright/shared-core migration parity dimension.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
@@ -23,7 +54,12 @@ pub struct ParityDimensionResult {
     pub note: String,
 }
 
-/// Evidence-bearing compatibility report for a Sourceright shared-core cutover.
+/// Advisory dimension summary for a Sourceright shared-core migration.
+///
+/// Version 1 does not bind observations to provider/fixture/case cells. Its
+/// readiness flag cannot prove execution coverage or authorize a cutover;
+/// operational consumers must separately require a complete validated matrix
+/// and the accountable owner's recorded decisions.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct SourcerightParityReport {
     /// Contract identifier.
@@ -36,7 +72,8 @@ pub struct SourcerightParityReport {
     pub case_ids: Vec<String>,
     /// Results across required parity dimensions.
     pub dimensions: Vec<ParityDimensionResult>,
-    /// Whether all dimensions are equivalent or explicitly approved.
+    /// Whether the supplied dimension summaries are accepted without blockers.
+    /// This is not verified case-level coverage or operational authorization.
     pub cutover_ready: bool,
     /// Outstanding blockers.
     pub blockers: Vec<String>,
@@ -59,6 +96,7 @@ impl Validate for SourcerightParityReport {
                 "sourceright_parity.case_ids",
             ));
         }
+        let case_ids = unique_nonblank(&self.case_ids, "sourceright_parity.case_ids")?;
         if self.dimensions.is_empty() {
             return Err(ContractError::EmptyCollection(
                 "sourceright_parity.dimensions",
@@ -69,12 +107,26 @@ impl Validate for SourcerightParityReport {
             require_text(&dimension.legacy_digest, "sourceright_parity.legacy_digest")?;
             require_text(&dimension.shared_digest, "sourceright_parity.shared_digest")?;
             require_text(&dimension.note, "sourceright_parity.note")?;
-            if !dimension.equivalent && dimension.approved_difference_id.is_none() {
-                return Err(ContractError::Invariant(format!(
-                    "non-equivalent dimension `{}` requires an approved difference identifier",
-                    dimension.dimension
-                )));
+            if let Some(approval) = &dimension.approved_difference_id {
+                require_text(approval, "sourceright_parity.approved_difference_id")?;
             }
+        }
+        let dimension_names = unique_nonblank(
+            &self
+                .dimensions
+                .iter()
+                .map(|item| item.dimension.clone())
+                .collect::<Vec<_>>(),
+            "sourceright_parity.dimensions",
+        )?;
+        let has_unapproved_difference = self
+            .dimensions
+            .iter()
+            .any(|item| !item.equivalent && item.approved_difference_id.is_none());
+        if has_unapproved_difference && self.blockers.is_empty() {
+            return Err(ContractError::Invariant(
+                "unapproved parity differences require an explicit blocker".to_owned(),
+            ));
         }
         let all_accepted = self
             .dimensions
@@ -85,6 +137,14 @@ impl Validate for SourcerightParityReport {
                 "cutover readiness must agree with parity dimensions and blockers".to_owned(),
             ));
         }
+        if self.cutover_ready
+            && (case_ids != expected_set(SOURCERIGHT_PARITY_CASE_IDS)
+                || dimension_names != expected_set(SOURCERIGHT_PARITY_DIMENSIONS))
+        {
+            return Err(ContractError::Invariant(
+                "cutover readiness requires exact parity case and dimension coverage".to_owned(),
+            ));
+        }
         if self.blockers.iter().any(|value| value.trim().is_empty()) {
             return Err(ContractError::Invariant(
                 "parity blockers must not be empty".to_owned(),
@@ -92,4 +152,24 @@ impl Validate for SourcerightParityReport {
         }
         Ok(())
     }
+}
+
+fn unique_nonblank(
+    values: &[String],
+    field: &'static str,
+) -> Result<BTreeSet<String>, ContractError> {
+    let mut unique = BTreeSet::new();
+    for value in values {
+        require_text(value, field)?;
+        if !unique.insert(value.clone()) {
+            return Err(ContractError::Invariant(format!(
+                "{field} must contain unique values"
+            )));
+        }
+    }
+    Ok(unique)
+}
+
+fn expected_set(values: &[&str]) -> BTreeSet<String> {
+    values.iter().map(|value| (*value).to_owned()).collect()
 }

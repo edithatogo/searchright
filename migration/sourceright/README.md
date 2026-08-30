@@ -3,10 +3,11 @@
 ## Observed source boundary
 
 The requested repository name `edithatogo/sourcerightlibrary` was not resolved
-on 2026-08-05. The active repository observed during this design pass was
-`edithatogo/sourceright`. The inspected `main`-branch blob for
+in the original inventory. The active repository was refreshed read-only on
+2026-08-29 at `c5fa583431390eee1bf5eae04dc47b01c50d4a1e`. The inspected `main`-branch blob for
 `src/live_providers.rs` was
 `57bc071c6afc7d5a4cb8ead12112919a446ebd24`.
+That provider blob is unchanged from the original inventory.
 
 That file currently combines four different concerns:
 
@@ -26,12 +27,12 @@ workflow over `evidence-search-core` rather than a second runtime.
 | Existing Sourceright responsibility | Target | Cutover state |
 | --- | --- | --- |
 | `LiveProviderConfig` environment parsing | Sourceright compatibility facade translating into `ExecutionPolicy` and provider manifests | Planned |
-| `LiveProviderRuntimeControls` | `searchright_contracts::ExecutionPolicy` | Contract available; parity unproven |
-| `LiveProviderExecution` | `evidence_search_core::ProviderMode` | Source available; parity unproven |
-| `fetch_json`, `fetch_text`, retry and interval control | `evidence_search_core::ProviderRegistry` | Source available; compile/integration unproven |
-| Endpoint builders | `searchright-connectors` provider adapters | Europe PMC and PubMed scaffolded; other providers planned |
-| File cache helpers | Content-addressed replay/cache service in shared core | Not implemented; retain temporarily |
-| Fixture payload parsing | Provider adapter parser, then Sourceright-specific result translation | Europe PMC partially scaffolded; other providers planned |
+| `LiveProviderRuntimeControls` | `searchright_contracts::ExecutionPolicy` | Compiler-tested; downstream parity unproven |
+| `LiveProviderExecution` | `evidence_search_core::ProviderMode` | Compiler-tested; downstream parity unproven |
+| `fetch_json`, `fetch_text`, retry and interval control | `evidence_search_core::ProviderRegistry` | Compiler-tested; downstream integration unproven |
+| Endpoint builders | `searchright-connectors` provider adapters | PubMed, Europe PMC, Crossref and OpenAlex are fixture-backed; remaining Sourceright providers require separate adapters |
+| File cache helpers | Content-addressed replay/cache service in shared core | Compiler-tested; retain the legacy cache until parity is demonstrated |
+| Fixture payload parsing | Provider adapter parser, then Sourceright-specific result translation | PubMed, Europe PMC, Crossref and OpenAlex parsers are fixture-backed; Sourceright-specific translation and downstream parity remain unimplemented |
 | `AcademicProviderResult` production and CSL comparison | Sourceright | Retained |
 | `LiveProviderSmokeState` public report | Sourceright facade backed by shared receipts plus compatibility fields | Planned |
 
@@ -87,6 +88,23 @@ shape must be derived from the pinned Sourceright commit and reviewed as a
 Sourceright API change.
 
 ## Release and rollback gates
+
+### Version 1 summary is not a cutover gate
+
+`SourcerightParityReport` v1 compares caller-supplied dimension summaries. Its
+`case_ids` catalogue is not a binding between each case and an executed
+provider/fixture observation. Even `cutover_ready: true` proves neither that
+every matrix cell ran nor that the owner approved a difference. No operational
+consumer currently switches runtimes from this flag. Incomplete execution
+reports must retain explicit blockers.
+
+A future cutover consumer must separately require a validated, revision-pinned
+provider × fixture × case × dimension matrix, with fixture provenance, exact
+observation digests, comparator identity and owner decision references. Missing,
+duplicate or unexpected cells must fail closed. Introduce that richer matrix as
+a separate versioned contract; preserve v1 bytes and provenance, and never
+convert a legacy summary into fabricated execution cells. The matrix, its
+negative/migration tests and downstream execution remain open acceptance work.
 
 - No coordinated crate release before `Cargo.lock`, package dry-runs and licence
   checks exist in both repositories.

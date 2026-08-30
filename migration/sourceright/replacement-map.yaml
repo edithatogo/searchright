@@ -1,9 +1,10 @@
 schema_version: searchright.sourceright-replacement-map.v1
-observed_at: '2026-08-05'
+observed_at: '2026-08-29'
 source:
   requested_repository: edithatogo/sourcerightlibrary
   resolved_repository: edithatogo/sourceright
   branch: main
+  revision: c5fa583431390eee1bf5eae04dc47b01c50d4a1e
   path: src/live_providers.rs
   blob_sha: 57bc071c6afc7d5a4cb8ead12112919a446ebd24
 target:

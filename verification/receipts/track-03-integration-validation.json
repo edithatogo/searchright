@@ -1,0 +1,18 @@
+{
+  "schema_version": "org.searchright.track-validation.v1",
+  "track_id": "03",
+  "recorded_at": "2026-08-30T21:45:59Z",
+  "status": "passed_before_delivery_reconciliation",
+  "revision": "37ee7270686fff42fdf7c471063670cd2aa5a9bd",
+  "tree": "b3ca1518b547f0b778d9715bb638c2fd201f963f",
+  "base_revision": "d9d7c48a4dfab9ac02a7bb016efa8c55da09378a",
+  "commands": ["bash scripts/verify.sh", "python3 scripts/test_cargo_vet_governance.py", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --no-minimize-exemptions"],
+  "exit_code": 0,
+  "python_regression_tests": 59,
+  "static_gates": 57,
+  "workspace_tests": {"passed": 376, "skipped": 0},
+  "cargo_vet_governance_tests": 23,
+  "cargo_vet": {"fully_audited": 43, "exempted": 259},
+  "log_sha256": "c6bc8b8332cc09cf5c888449e300f0106982e339d4fb96ac23cd1872d4c7449e",
+  "claim_boundary": "Exact local source snapshot validation, not a downstream runtime migration or operational transport proof. A later rebased delivery tree requires fresh reconciliation. No live provider, owner difference approval, cutover, release or archival is inferred."
+}
