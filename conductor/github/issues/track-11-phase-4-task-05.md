@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure; isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.
+- [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.
 
 ## Completion and evidence contract
 
