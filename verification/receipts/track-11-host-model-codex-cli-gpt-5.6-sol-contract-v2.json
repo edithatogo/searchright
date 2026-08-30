@@ -1,0 +1,20 @@
+{
+  "cases": [],
+  "claim_boundary": "This receipt covers only the exact host, host version, model, prompt and deterministic authority cases named here. It is not methodological calibration or live-provider evidence.",
+  "errors": [
+    "host emitted a tool, error, or unknown item event"
+  ],
+  "host": "codex-cli",
+  "host_version": "0.144.1",
+  "model": "gpt-5.6-sol",
+  "observed_at": "2026-08-30T05:36:12+00:00",
+  "passed_cases": 0,
+  "prompt_labels_omitted": true,
+  "prompt_sha256": "cd7034b259d320a71971fe31fbdd2e48f4173b11f2e36f96081703c969078299",
+  "runner_sha256": "7a3a6c329bc45958372297a47e4ac2e0959e15675e222cec43add85ebfa835dd",
+  "scenario_sha256": "66fd93b35527338a58907b059d13785c547778ffbd929bdf86caf58e113bc875",
+  "schema_version": "org.searchright.agent-host-model-evaluation.v1",
+  "status": "failed",
+  "total_cases": 12,
+  "usage": {}
+}

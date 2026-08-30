@@ -660,6 +660,9 @@
         "skills/systematic-search/references/handoffs.md",
         "skills/systematic-search/evaluations/authority-scenarios.json",
         "skills/systematic-search/evaluations/host-model-matrix.json",
+        "skills/systematic-search/evaluations/host-evaluation-protocol.md",
+        "scripts/run_agent_host_eval.py",
+        "scripts/test_agent_host_eval.py",
         "skills/systematic-search/evaluations/human-calibration-protocol.md",
         "skills/systematic-search/evaluations/human-calibration-template.json",
         "skills/systematic-search/evaluations/human-calibration-recruitment.md",
@@ -697,6 +700,7 @@
           "evidence": [
             "skills/systematic-search/evaluations/host-model-matrix.json",
             "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json",
+            "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol-contract-v2.json",
             "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json"
           ]
         },

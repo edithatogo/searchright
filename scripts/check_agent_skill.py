@@ -6,12 +6,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import io
 import re
 import sys
+import unittest
 from pathlib import Path
 from typing import Any
 
 import yaml
+import run_agent_host_eval as host_eval
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_ROOT = ROOT / "skills" / "systematic-search"
@@ -247,6 +250,8 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
             if (
                 host_receipt.get("status") != "passed"
                 or host_receipt.get("prompt_labels_omitted") is not True
+                or host_receipt.get("prompt_sha256") != hashlib.sha256(host_eval.prompt(scenarios).encode("utf-8")).hexdigest()
+                or host_receipt.get("runner_sha256") != host_eval.sha256(ROOT / "scripts/run_agent_host_eval.py")
                 or host_receipt.get("host") != key[0]
                 or host_receipt.get("model") != key[1]
                 or host_receipt.get("host_version") != pair.get("host_version")
@@ -255,6 +260,15 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
                 or host_receipt.get("total_cases") != len(cases)
             ):
                 errors.append(f"host/model receipt for {key} is stale or incomplete")
+            elif host_eval.evaluate({"decisions": host_receipt.get("cases")}, scenarios)[1]:
+                errors.append(f"host/model receipt for {key} contains incorrect or incomplete decisions")
+            elif key[0] == "codex-cli" and (
+                host_receipt.get("usage", {}).get("event_integrity") != "passed"
+                or host_receipt.get("usage", {}).get("isolated_cwd") is not True
+                or host_receipt.get("usage", {}).get("shell_tools_disabled") is not True
+                or host_receipt.get("usage", {}).get("web_search_disabled") is not True
+            ):
+                errors.append(f"host/model receipt for {key} lacks restricted-execution evidence")
             else:
                 evaluated_pairs += 1
         elif pair.get("status") != "pending":
@@ -363,6 +377,11 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
+    suite = unittest.defaultTestLoader.loadTestsFromName("test_agent_host_eval")
+    test_result = unittest.TextTestRunner(stream=io.StringIO()).run(suite)
+    if not test_result.wasSuccessful():
+        print(json.dumps({"status": "failed", "errors": ["host evaluation regression tests failed"]}, indent=2))
+        return 1
     if args.write:
         try:
             write_generated()
