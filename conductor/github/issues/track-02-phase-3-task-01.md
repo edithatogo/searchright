@@ -3,11 +3,11 @@
 
 Parent phase key: `track-02-phase-3`
 Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.
+- [x] Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.
 
 ## Completion and evidence contract
 

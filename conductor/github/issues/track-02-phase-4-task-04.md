@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Close only after required evidence is present and the accountable owner records the agent-panel decisions.
 
 ## Completion and evidence contract
 

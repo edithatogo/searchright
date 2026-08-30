@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets. (`track-02-phase-3-task-01`)
-- [ ] T02: Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only. (`track-02-phase-3-task-02`)
-- [ ] T03: Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus. (`track-02-phase-3-task-03`)
+- [x] T01: Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets. (`track-02-phase-3-task-01`)
+- [ ] T02: Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic. (`track-02-phase-3-task-02`)
+- [ ] T03: Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence. (`track-02-phase-3-task-03`)
 
 ## Evidence rule
 

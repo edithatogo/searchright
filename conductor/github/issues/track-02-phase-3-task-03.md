@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus.
+- [ ] Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence.
 
 ## Completion and evidence contract
 

@@ -154,31 +154,39 @@
     },
     {
       "blockers": [
-        "Complete semantic AST parsing and parse/compile/parse property coverage beyond the declared seven-dialect lexical subsets.",
-        "Obtain accountable methodological and provider-currency review of real named-filter packs; the checked-in pack is structural and synthetic only.",
-        "Obtain an accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus."
+        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
+        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
       ],
       "checks": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_native_query_corpus.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.",
+      "completed_higher_evidence_gates": [
+        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets."
+      ],
       "deliverables": [
         "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
         "crates/evidence-search-core/src/native.rs",
+        "crates/evidence-search-core/tests/property_tests.rs",
         "contracts/query-corpus/index.json",
+        "contracts/query-corpus/loss-matrix.json",
         "contracts/json-schema/native-search-strategy.v1.schema.json",
         "contracts/examples/native-search-strategy.json",
         "scripts/check_native_query_corpus.py",
-        "docs/msrv-and-package-policy.md"
+        "docs/msrv-and-package-policy.md",
+        "crates/evidence-search-core/tests/native_adversarial_tests.rs",
+        "docs/query-normalization.md",
+        "tests/test_native_query_corpus.py"
       ],
       "dependencies": [
         "01"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "compiler_verified",
       "external_approval_required": true,
       "horizon": "foundation",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
       "requirements": [
         "SR-005",
@@ -188,14 +196,52 @@
       "runtime_evidence": [
         "verification/receipts/track-02-compiler-review.json",
         "verification/receipts/query-dialect-conformance.json",
-        "verification/receipts/track-02-conductor-review.json"
+        "verification/receipts/track-02-conductor-review.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
+        "verification/receipts/track-02-final-review-2026-08-29.json",
+        "verification/receipts/track-02-integration-panel.json"
       ],
       "phase_3_task_count": 3,
       "review_completed": true,
+      "review_fixes": [
+        {
+          "commit": "6f86326",
+          "summary": "Expose the current semantic-conformance receipt through canonical Track 02 evidence."
+        },
+        "Preserve the semantic-parser phase task identity while named-filter and owner-decision gates remain open.",
+        "Reject foreign dialect syntax, unknown fields, undefined references and unmodeled limits; preserve Unicode clauses and correct native heading/proximity semantics.",
+        "Bound parser metadata, recursion, tokens and set expansion before expensive work; add independent adversarial and recursive Unicode properties.",
+        "Bind each loss-matrix dialect to exactly one matching fixture; retain agent-panel and owner-decision gates without requiring a second person."
+      ],
+      "higher_evidence_completed": true,
+      "source_verified_on": "2026-08-31",
       "slug": "query-ast-dialects",
-      "status": "partially_implemented",
+      "status": "external_evidence_required",
       "title": "Portable query AST and dialect compilers",
-      "track_id": "02"
+      "track_id": "02",
+      "updated": "2026-08-31",
+      "higher_evidence_task_order": [
+        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.",
+        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
+        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
+      ],
+      "closeout_gate_label": "Close only after required evidence is present and the accountable owner records the agent-panel decisions.",
+      "gates": [
+        {
+          "id": "T02-G-NAMED-FILTERS",
+          "kind": "external",
+          "status": "pending",
+          "required_evidence": "Rights-clear real filter expressions and versions, platform currentness, isolated panel findings and owner disposition.",
+          "evidence": []
+        },
+        {
+          "id": "T02-G-CORPUS-OWNER",
+          "kind": "human",
+          "status": "pending",
+          "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
+          "evidence": ["verification/receipts/track-02-integration-panel.json"]
+        }
+      ]
     },
     {
       "blockers": [

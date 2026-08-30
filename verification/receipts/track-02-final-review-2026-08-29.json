@@ -1,0 +1,49 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "02",
+  "reviewed_revision": "6f86326",
+  "status": "review_fixes_applied_external_gates_open",
+  "revision_range": "00fb03a..6f86326",
+  "findings": [
+    {
+      "severity": "medium",
+      "finding": "The latest semantic-conformance receipt was present in LP-005 but absent from the canonical Track 02 runtime-evidence list, leaving older incomplete-semantic receipts as the active track surface.",
+      "disposition": "fixed",
+      "fix_revision": "6f86326"
+    }
+  ],
+  "guide_results": [
+    {
+      "guide": "conductor/code_styleguides/rust.md",
+      "result": "pass",
+      "affected_paths": [
+        "crates/evidence-search-core/src/native.rs",
+        "crates/evidence-search-core/tests/property_tests.rs"
+      ]
+    },
+    {
+      "guide": "manifest-selected platform guides",
+      "result": "not_applicable",
+      "reason": "No platform guide is selected by the repository context manifest for the Track 02 paths."
+    }
+  ],
+  "validation": [
+    {
+      "command": "bash scripts/verify.sh",
+      "status": "passed",
+      "static_gates": 54,
+      "workspace_tests": 256
+    },
+    {
+      "command": "python3 scripts/run_static_harness.py",
+      "status": "passed",
+      "static_gates": 54
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Accountable methodological and provider-currency review of real named-filter packs is not evidenced.",
+    "Accountable independent information-specialist PRESS review of the digest-bound corpus is not evidenced."
+  ],
+  "claim_boundary": "This review verifies repository implementation, traceability and deterministic local evidence. It does not supply or substitute for accountable methodological, provider-current or independent PRESS review."
+}

@@ -11,9 +11,17 @@ use evidence_search_contracts::{
 pub const NATIVE_PARSER_VERSION: &str =
     concat!("evidence-search-native/", env!("CARGO_PKG_VERSION"));
 
+const MAX_NATIVE_BYTES: usize = 262_144;
+const MAX_NATIVE_LINES: usize = 4_096;
+const MAX_NATIVE_TOKENS: usize = 4_096;
+const MAX_NATIVE_DEPTH: usize = 64;
+const MAX_NATIVE_NODES: usize = 16_384;
+
 /// Parse native text into a source-preserving representation and attempt semantic normalization.
 ///
-/// Exact text, byte spans, line identifiers, comments and limit commands are always preserved.
+/// Exact raw text is always preserved. Within resource limits, line metadata,
+/// byte spans, comments and limit commands are also preserved. Oversized sources
+/// retain raw text with an unexpanded, zero-width Unknown line sentinel.
 /// When the native syntax belongs to a recognized dialect subset, a normalized
 /// `SearchStrategy` AST is extracted and validated.
 #[must_use]
@@ -24,6 +32,35 @@ pub fn parse_native_strategy(
 ) -> NativeSearchStrategy {
     let strategy_id = strategy_id.into();
     let raw_text = raw_text.into();
+    if raw_text.len() > MAX_NATIVE_BYTES
+        || raw_text.lines().take(MAX_NATIVE_LINES + 1).count() > MAX_NATIVE_LINES
+    {
+        return NativeSearchStrategy {
+            schema_version: NATIVE_SEARCH_STRATEGY_SCHEMA_VERSION.to_owned(),
+            strategy_id,
+            dialect,
+            raw_text,
+            // The unchanged contract requires a nonempty line collection. This
+            // zero-width Unknown sentinel does not claim any source was parsed.
+            lines: vec![NativeQueryLine {
+                line_id: "unexpanded-source".to_owned(),
+                native_set_id: None,
+                text: String::new(),
+                kind: NativeQueryLineKind::Unknown,
+                span: NativeSourceSpan { start_byte: 0, end_byte: 0 },
+            }],
+            semantic_strategy: None,
+            normalisation_state: NativeNormalisationState::RawOnly,
+            diagnostics: vec![NativeParseDiagnostic {
+                code: "native.resource_limit".to_owned(),
+                severity: NativeParseSeverity::Warning,
+                message: "source exceeds parsing limits; exact raw_text is preserved, line metadata and semantic expansion were not attempted".to_owned(),
+                span: None,
+                review_required: true,
+            }],
+            parser_version: NATIVE_PARSER_VERSION.to_owned(),
+        };
+    }
     let mut lines = Vec::new();
     let mut diagnostics = Vec::new();
     let mut byte_offset = 0_u64;
@@ -120,7 +157,22 @@ pub fn parse_native_strategy(
                 (Some(strategy), NativeNormalisationState::Complete)
             }
             Ok(strategy) => (Some(strategy), NativeNormalisationState::Partial),
-            Err(_) => (None, NativeNormalisationState::RawOnly),
+            Err(_) => {
+                diagnostics.push(NativeParseDiagnostic {
+                    code: format!(
+                        "native.{}.semantic_parse_failed",
+                        dialect_code(&dialect)
+                    ),
+                    severity: NativeParseSeverity::Warning,
+                    message: format!(
+                        "the declared {} syntax subset could not be normalized; exact source was preserved",
+                        dialect_code(&dialect)
+                    ),
+                    span: None,
+                    review_required: true,
+                });
+                (None, NativeNormalisationState::RawOnly)
+            }
         }
     };
 
@@ -202,11 +254,7 @@ const fn dialect_code(dialect: &SearchDialect) -> &'static str {
 fn is_supported_expression(dialect: &SearchDialect, value: &str) -> bool {
     let lower = value.to_ascii_lowercase();
     match dialect {
-        SearchDialect::PubMed => {
-            value.contains('[')
-                && value.contains(']')
-                && (lower.contains("[mesh terms]") || lower.contains("[title/abstract]"))
-        }
+        SearchDialect::PubMed => value.contains('[') && value.contains(']'),
         SearchDialect::OvidMedline => {
             (lower.starts_with("exp ") && value.ends_with('/'))
                 || has_ovid_field_suffix(&lower, &["ti", "ab", "kf"])
@@ -223,15 +271,24 @@ fn is_supported_expression(dialect: &SearchDialect, value: &str) -> bool {
                 || lower.starts_with("mh \"")
                 || lower.starts_with("ti ")
                 || lower.starts_with("ab ")
+                || lower.contains("ti ")
+                || lower.contains("ab ")
         }
         SearchDialect::Scopus => {
             (lower.starts_with("title-abs-key(")
                 || lower.starts_with("title(")
-                || lower.starts_with("abs("))
+                || lower.starts_with("abs(")
+                || lower.contains("title-abs-key(")
+                || lower.contains("title(")
+                || lower.contains("abs("))
                 && value.ends_with(')')
         }
         SearchDialect::WebOfScience => {
-            (lower.starts_with("ts=(") || lower.starts_with("ti=(")) && value.ends_with(')')
+            (lower.starts_with("ts=(")
+                || lower.starts_with("ti=(")
+                || lower.contains("ts=(")
+                || lower.contains("ti=("))
+                && value.ends_with(')')
         }
         SearchDialect::GenericBoolean => !value.trim().is_empty(),
         SearchDialect::EuropePmc
@@ -282,6 +339,11 @@ pub fn parse_native_semantic_strategy(
     dialect: &SearchDialect,
     raw_text: &str,
 ) -> Result<SearchStrategy, String> {
+    if raw_text.len() > MAX_NATIVE_BYTES
+        || raw_text.lines().take(MAX_NATIVE_LINES + 1).count() > MAX_NATIVE_LINES
+    {
+        return Err("native source exceeds semantic parsing resource limits".to_owned());
+    }
     if raw_text.trim().is_empty() {
         return Err("native strategy is empty".to_owned());
     }
@@ -289,6 +351,8 @@ pub fn parse_native_semantic_strategy(
     let mut last_expr: Option<QueryExpr> = None;
     let mut notes = Vec::new();
     let mut limits = SearchLimit::default();
+    let mut selected_set = None;
+    let mut stored_nodes = 0_usize;
 
     for raw_line in raw_text.lines() {
         let trimmed = raw_line.trim();
@@ -304,7 +368,7 @@ pub fn parse_native_semantic_strategy(
         }
 
         if lower.starts_with("limit ") || lower.starts_with("limits:") {
-            parse_limit_line(&lower, &mut limits);
+            parse_limit_line(&lower, selected_set.as_deref(), &mut limits)?;
             continue;
         }
 
@@ -313,13 +377,26 @@ pub fn parse_native_semantic_strategy(
         }
 
         let expr = parse_expression_body(dialect, body, &set_env)?;
+        if !limits.languages.is_empty() {
+            return Err(
+                "expressions after a limit require explicit methodological review".to_owned(),
+            );
+        }
         if let Some(set_id) = &native_set_id {
+            let (expression_nodes, _) = expression_size(&expr);
+            stored_nodes = stored_nodes.saturating_add(expression_nodes.saturating_mul(2));
+            if stored_nodes > MAX_NATIVE_NODES {
+                return Err(
+                    "native set storage exceeds semantic parsing resource limits".to_owned(),
+                );
+            }
             set_env.insert(set_id.clone(), expr.clone());
             let stripped = set_id.trim_start_matches(['#', 'S', 's']);
             if stripped != set_id {
                 set_env.insert(stripped.to_owned(), expr.clone());
             }
         }
+        selected_set = native_set_id;
         last_expr = Some(expr);
     }
 
@@ -341,21 +418,35 @@ pub fn parse_native_semantic_strategy(
     Ok(strategy)
 }
 
-fn parse_limit_line(lower: &str, limits: &mut SearchLimit) {
-    if lower.contains("english") {
-        if !limits
-            .languages
-            .iter()
-            .any(|lang| lang.eq_ignore_ascii_case("english"))
-        {
-            limits.languages.push("English".to_owned());
+fn parse_limit_line(
+    lower: &str,
+    selected_set: Option<&str>,
+    limits: &mut SearchLimit,
+) -> Result<(), String> {
+    let words: Vec<_> = lower.split_whitespace().collect();
+    let supported = match words.as_slice() {
+        ["limit", target, "to", "english"] | ["limit", target, "to", "english", "language"] => {
+            selected_set.is_some_and(|selected| selected.eq_ignore_ascii_case(target))
         }
-        if limits.rationale.is_empty() {
-            limits
-                .rationale
-                .push("Strategy language restriction".to_owned());
-        }
+        ["limits:", "english"] => true,
+        _ => false,
+    };
+    if !supported {
+        return Err("unsupported limit or limit target requires methodological review".to_owned());
     }
+    if !limits
+        .languages
+        .iter()
+        .any(|lang| lang.eq_ignore_ascii_case("english"))
+    {
+        limits.languages.push("English".to_owned());
+    }
+    if limits.rationale.is_empty() {
+        limits
+            .rationale
+            .push("Strategy language restriction".to_owned());
+    }
+    Ok(())
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -377,6 +468,44 @@ fn parse_expression_body(
     set_env: &BTreeMap<String, QueryExpr>,
 ) -> Result<QueryExpr, String> {
     let tokens = tokenize_expression(dialect, input, set_env)?;
+    let mut expanded_nodes = tokens.len();
+    let mut reference_depth = 0_usize;
+    let mut operator_depth = 0_usize;
+    let mut nesting = 0_usize;
+    let mut max_nesting = 0_usize;
+    for token in &tokens {
+        match token {
+            Token::SetRef(id) => {
+                let expr = set_env
+                    .get(id)
+                    .ok_or_else(|| "undefined set reference".to_owned())?;
+                let (nodes, depth) = expression_size(expr);
+                expanded_nodes = expanded_nodes.saturating_add(nodes);
+                reference_depth = reference_depth.max(depth);
+            }
+            Token::Not | Token::Proximity { .. } => operator_depth += 1,
+            Token::LParen | Token::LParenWithFields(_) => {
+                nesting += 1;
+                max_nesting = max_nesting.max(nesting);
+            }
+            Token::RParen(_) => {
+                nesting = nesting.saturating_sub(1);
+            }
+            _ => {}
+        }
+    }
+    if expanded_nodes > MAX_NATIVE_NODES
+        || reference_depth
+            .saturating_add(operator_depth)
+            .saturating_add(max_nesting)
+            .saturating_add(2)
+            > MAX_NATIVE_DEPTH
+    {
+        return Err(
+            "native expression expansion or depth exceeds semantic parsing resource limits"
+                .to_owned(),
+        );
+    }
     let mut cursor = 0;
     let expr = parse_or_expr(&tokens, &mut cursor, set_env)?;
     if cursor < tokens.len() {
@@ -384,7 +513,36 @@ fn parse_expression_body(
             "unexpected token after expression at index {cursor}"
         ));
     }
+    let (nodes, depth) = expression_size(&expr);
+    if nodes > MAX_NATIVE_NODES || depth > MAX_NATIVE_DEPTH {
+        return Err("native expression exceeds exact node or depth limits".to_owned());
+    }
     Ok(expr)
+}
+
+fn expression_size(expr: &QueryExpr) -> (usize, usize) {
+    let mut pending = vec![(expr, 1_usize)];
+    let mut nodes = 0_usize;
+    let mut max_depth = 0_usize;
+    while let Some((node, depth)) = pending.pop() {
+        nodes += 1;
+        max_depth = max_depth.max(depth);
+        match node {
+            QueryExpr::Term { .. } => {}
+            QueryExpr::And { children } | QueryExpr::Or { children } => {
+                pending.extend(children.iter().map(|child| (child, depth + 1)));
+            }
+            QueryExpr::Not { include, exclude } => {
+                pending.push((include, depth + 1));
+                pending.push((exclude, depth + 1));
+            }
+            QueryExpr::Proximity { left, right, .. } => {
+                pending.push((left, depth + 1));
+                pending.push((right, depth + 1));
+            }
+        }
+    }
+    (nodes, max_depth)
 }
 
 fn parse_or_expr(
@@ -549,17 +707,28 @@ fn tokenize_expression(
     set_env: &BTreeMap<String, QueryExpr>,
 ) -> Result<Vec<Token>, String> {
     let mut tokens = Vec::new();
-    let chars: Vec<char> = input.chars().collect();
     let mut i = 0;
 
-    while i < chars.len() {
-        if chars.get(i).copied().is_some_and(char::is_whitespace) {
-            i += 1;
+    while i < input.len() {
+        let current = input[i..]
+            .chars()
+            .next()
+            .ok_or_else(|| "invalid native cursor".to_owned())?;
+        if current.is_whitespace() {
+            i += current.len_utf8();
             continue;
         }
+        if tokens.len() >= MAX_NATIVE_TOKENS {
+            return Err("native token count exceeds semantic parsing resource limits".to_owned());
+        }
 
-        let slice = &input[char_byte_offset(input, i)..];
-        let lower = slice.to_ascii_lowercase();
+        let slice = &input[i..];
+        let lower = slice
+            .chars()
+            .take(64)
+            .collect::<String>()
+            .to_ascii_lowercase();
+        reject_foreign_prefix(dialect, &lower)?;
 
         // Check Scopus/WoS prefixed parenthesis groups: TITLE-ABS-KEY(...), TS=(...), etc.
         if lower.starts_with("title-abs-key(") {
@@ -611,60 +780,40 @@ fn tokenize_expression(
         // Check CINAHL TI / AB / AU / JN prefixes
         if lower.starts_with("ti ") {
             i += 3;
-            let term = parse_single_term(
-                dialect,
-                &input[char_byte_offset(input, i)..],
-                Some(vec![SearchField::Title]),
-            )?;
-            i += term_length(&input[char_byte_offset(input, i)..]);
+            let term = parse_single_term(dialect, &input[i..], Some(vec![SearchField::Title]))?;
+            i += term_length(&input[i..]);
             tokens.push(Token::Term(term));
             continue;
         }
         if lower.starts_with("ab ") {
             i += 3;
-            let term = parse_single_term(
-                dialect,
-                &input[char_byte_offset(input, i)..],
-                Some(vec![SearchField::Abstract]),
-            )?;
-            i += term_length(&input[char_byte_offset(input, i)..]);
+            let term = parse_single_term(dialect, &input[i..], Some(vec![SearchField::Abstract]))?;
+            i += term_length(&input[i..]);
             tokens.push(Token::Term(term));
             continue;
         }
         if lower.starts_with("au ") {
             i += 3;
-            let term = parse_single_term(
-                dialect,
-                &input[char_byte_offset(input, i)..],
-                Some(vec![SearchField::Author]),
-            )?;
-            i += term_length(&input[char_byte_offset(input, i)..]);
+            let term = parse_single_term(dialect, &input[i..], Some(vec![SearchField::Author]))?;
+            i += term_length(&input[i..]);
             tokens.push(Token::Term(term));
             continue;
         }
         if lower.starts_with("jn ") {
             i += 3;
-            let term = parse_single_term(
-                dialect,
-                &input[char_byte_offset(input, i)..],
-                Some(vec![SearchField::Journal]),
-            )?;
-            i += term_length(&input[char_byte_offset(input, i)..]);
+            let term = parse_single_term(dialect, &input[i..], Some(vec![SearchField::Journal]))?;
+            i += term_length(&input[i..]);
             tokens.push(Token::Term(term));
             continue;
         }
 
         // Parentheses
-        if chars.get(i) == Some(&'(') {
+        if current == '(' {
             // Check CINAHL (MH "heading+")
             if lower.starts_with("(mh \"") || lower.starts_with("(mh ") {
-                let end = slice
-                    .find(')')
-                    .ok_or_else(|| "unclosed CINAHL heading parenthesis".to_owned())?;
-                let heading_slice = &slice[1..end];
-                let term = parse_cinahl_heading(heading_slice)?;
+                let (term, length) = parse_cinahl_heading(slice)?;
                 tokens.push(Token::Term(term));
-                i += end + 1;
+                i += length;
                 continue;
             }
             tokens.push(Token::LParen);
@@ -672,8 +821,33 @@ fn tokenize_expression(
             continue;
         }
 
-        if chars.get(i) == Some(&')') {
+        if current == ')' {
             let after_paren = &slice[1..];
+            if let Some(after_dot) = after_paren.strip_prefix('.') {
+                let suffix = after_dot.split('.').next().unwrap_or("");
+                if !matches!(
+                    dialect,
+                    SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid
+                ) || !suffix
+                    .split(',')
+                    .all(|field| ["ti", "ab", "kf", "kw", "id", "au", "jn"].contains(&field))
+                {
+                    return Err("unknown or foreign group field suffix".to_owned());
+                }
+            }
+            if let Some(after_colon) = after_paren.strip_prefix(':') {
+                let suffix = after_colon
+                    .split(|c: char| !c.is_ascii_alphanumeric() && c != ',')
+                    .next()
+                    .unwrap_or("");
+                if !matches!(dialect, SearchDialect::Embase)
+                    || !suffix
+                        .split(',')
+                        .all(|field| ["ti", "ab", "kw", "au", "jt", "all"].contains(&field))
+                {
+                    return Err("unknown or foreign group field suffix".to_owned());
+                }
+            }
             let suffix_fields = extract_field_suffix(dialect, after_paren);
             let advance = 1 + suffix_fields.as_ref().map_or(0, |(_, len)| *len);
             let fields = suffix_fields.map(|(f, _)| f);
@@ -700,7 +874,29 @@ fn tokenize_expression(
         }
 
         // Proximity operators: adj\d+, NEAR/\d+, PRE/\d+, W/\d+, W\d+, N\d+
-        if let Some((distance, ordered, len)) = parse_proximity_operator(&lower) {
+        if let Some((distance, ordered, len)) = parse_proximity_operator(dialect, &lower) {
+            let allowed = match dialect {
+                SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid => {
+                    lower.starts_with("adj")
+                }
+                SearchDialect::Embase
+                | SearchDialect::WebOfScience
+                | SearchDialect::GenericBoolean => lower.starts_with("near/"),
+                SearchDialect::Scopus => lower.starts_with("w/") || lower.starts_with("pre/"),
+                SearchDialect::CinahlEbsco => {
+                    lower.starts_with(['n', 'w'])
+                        && lower.as_bytes().get(1).is_some_and(u8::is_ascii_digit)
+                }
+                _ => false,
+            };
+            if !allowed
+                || !slice
+                    .get(len..)
+                    .and_then(|remaining| remaining.chars().next())
+                    .is_none_or(|character| character.is_whitespace() || character == '(')
+            {
+                return Err("foreign or malformed native proximity operator".to_owned());
+            }
             tokens.push(Token::Proximity { distance, ordered });
             i += len;
             continue;
@@ -798,14 +994,7 @@ fn tokenize_expression(
         if matches!(dialect, SearchDialect::CinahlEbsco)
             && (lower.starts_with("mh \"") || lower.starts_with("mh "))
         {
-            let term = parse_cinahl_heading(slice)?;
-            let len = if let Some(end) = slice.find('"') {
-                slice[end + 1..]
-                    .find('"')
-                    .map_or(slice.len(), |e2| end + 1 + e2 + 1)
-            } else {
-                slice.find(' ').unwrap_or(slice.len())
-            };
+            let (term, len) = parse_cinahl_heading(slice)?;
             tokens.push(Token::Term(term));
             i += len;
             continue;
@@ -818,6 +1007,20 @@ fn tokenize_expression(
             i += ref_len;
             continue;
         }
+        let candidate = slice
+            .split(|c: char| c.is_whitespace() || c == ')' || c == '(')
+            .next()
+            .unwrap_or("");
+        let digits = candidate.trim_start_matches(['#', 'S', 's']);
+        if !digits.is_empty()
+            && digits.bytes().all(|byte| byte.is_ascii_digit())
+            && (!set_env.is_empty()
+                || candidate.starts_with('#')
+                || (matches!(dialect, SearchDialect::CinahlEbsco)
+                    && candidate.starts_with(['S', 's'])))
+        {
+            return Err("undefined native set reference".to_owned());
+        }
 
         // Regular search term
         let term = parse_single_term(dialect, slice, None)?;
@@ -829,7 +1032,26 @@ fn tokenize_expression(
     Ok(tokens)
 }
 
-fn parse_proximity_operator(lower: &str) -> Option<(u16, bool, usize)> {
+fn reject_foreign_prefix(dialect: &SearchDialect, lower: &str) -> Result<(), String> {
+    let scopus = ["title-abs-key(", "title(", "abs(", "auth(", "srctitle("]
+        .iter()
+        .any(|prefix| lower.starts_with(prefix));
+    let wos = ["ts=(", "ti=(", "au=(", "so=("]
+        .iter()
+        .any(|prefix| lower.starts_with(prefix));
+    let cinahl = ["ti ", "ab ", "au ", "jn ", "mh ", "(mh "]
+        .iter()
+        .any(|prefix| lower.starts_with(prefix));
+    if (scopus && !matches!(dialect, SearchDialect::Scopus))
+        || (wos && !matches!(dialect, SearchDialect::WebOfScience))
+        || (cinahl && !matches!(dialect, SearchDialect::CinahlEbsco))
+    {
+        return Err("field prefix belongs to a different native dialect".to_owned());
+    }
+    Ok(())
+}
+
+fn parse_proximity_operator(dialect: &SearchDialect, lower: &str) -> Option<(u16, bool, usize)> {
     if let Some(stripped) = lower.strip_prefix("adj") {
         let digits = stripped
             .chars()
@@ -867,7 +1089,11 @@ fn parse_proximity_operator(lower: &str) -> Option<(u16, bool, usize)> {
             .collect::<String>();
         if !digits.is_empty() {
             let d = digits.parse::<u16>().ok()?;
-            return Some((d, true, 2 + digits.len()));
+            return Some((
+                d,
+                !matches!(dialect, SearchDialect::Scopus),
+                2 + digits.len(),
+            ));
         }
     }
     if let Some(stripped) = lower.strip_prefix('w')
@@ -975,22 +1201,54 @@ fn parse_embase_fields(suffix: &str) -> Vec<SearchField> {
     }
 }
 
-fn parse_cinahl_heading(input: &str) -> Result<SearchTerm, String> {
-    let unquoted = input
-        .trim_start_matches("mh")
-        .trim_start_matches('(')
-        .trim();
-    let text_part = unquoted.trim_matches(['"', '(', ')', ' ']);
+fn parse_cinahl_heading(input: &str) -> Result<(SearchTerm, usize), String> {
+    let parenthesized = input.starts_with('(');
+    let body = input.strip_prefix('(').unwrap_or(input);
+    let after_prefix = body
+        .get(..2)
+        .filter(|prefix| prefix.eq_ignore_ascii_case("mh"))
+        .and_then(|_| body.get(2..))
+        .ok_or_else(|| "invalid CINAHL heading prefix".to_owned())?;
+    if !after_prefix.chars().next().is_some_and(char::is_whitespace) {
+        return Err("missing CINAHL heading separator".to_owned());
+    }
+    let quoted = after_prefix.trim_start();
+    let content = quoted
+        .strip_prefix('"')
+        .ok_or_else(|| "CINAHL heading must be quoted".to_owned())?;
+    let closing_quote = content
+        .find('"')
+        .ok_or_else(|| "unclosed CINAHL heading quote".to_owned())?;
+    let text_part = content
+        .get(..closing_quote)
+        .ok_or_else(|| "invalid CINAHL heading boundary".to_owned())?;
+    // Escaped quotes are outside this declared subset; never truncate at one.
+    if text_part.contains('\\') {
+        return Err("escaped CINAHL headings require review".to_owned());
+    }
+    let after_quote = content
+        .get(closing_quote + 1..)
+        .ok_or_else(|| "invalid CINAHL heading boundary".to_owned())?;
+    let remaining = if parenthesized {
+        after_quote
+            .trim_start()
+            .strip_prefix(')')
+            .ok_or_else(|| "unclosed CINAHL heading parenthesis".to_owned())?
+    } else {
+        after_quote
+    };
+    let length = input.len() - remaining.len();
     let explode = text_part.ends_with('+');
-    let heading = text_part.trim_end_matches('+').trim();
-    Ok(SearchTerm {
+    let heading = text_part.strip_suffix('+').unwrap_or(text_part);
+    let term = SearchTerm {
         text: heading.to_owned(),
         fields: vec![SearchField::SubjectHeading],
         vocabulary: None,
         explode,
         phrase: true,
         truncation: false,
-    })
+    };
+    Ok((term, length))
 }
 
 fn extract_set_reference(
@@ -1060,6 +1318,31 @@ fn parse_single_term(
 ) -> Result<SearchTerm, String> {
     let t_len = term_length(slice);
     let raw = &slice[..t_len];
+    if raw.is_empty() {
+        return Err("empty native term".to_owned());
+    }
+    if let Some(after_quote) = raw.strip_prefix('"')
+        && !after_quote.contains('"')
+    {
+        return Err("unclosed native term quote".to_owned());
+    }
+    if let Some(after_quote) = raw.strip_prefix('\'')
+        && !after_quote.contains('\'')
+    {
+        return Err("unclosed native term quote".to_owned());
+    }
+    let quoted = raw.starts_with('"') && raw.ends_with('"');
+    if !quoted
+        && ((raw.contains('[') || raw.contains(']')) && !matches!(dialect, SearchDialect::PubMed)
+            || raw.contains(':') && !matches!(dialect, SearchDialect::Embase)
+            || raw.ends_with('.')
+                && !matches!(
+                    dialect,
+                    SearchDialect::OvidMedline | SearchDialect::PsycInfoOvid
+                ))
+    {
+        return Err("field suffix belongs to a different native dialect".to_owned());
+    }
 
     // Check PubMed bracket tag: "term"[tag] or term[tag]
     if matches!(dialect, SearchDialect::PubMed) && raw.contains('[') && raw.ends_with(']') {
@@ -1069,6 +1352,27 @@ fn parse_single_term(
         let text_part = raw[..bracket_start].trim_matches('"');
         let tag = &raw[bracket_start + 1..raw.len() - 1];
         let tag_lower = tag.to_ascii_lowercase();
+        if ![
+            "mesh terms:noexp",
+            "mesh:noexp",
+            "mesh terms",
+            "mesh",
+            "title/abstract",
+            "tiab",
+            "title",
+            "ti",
+            "abstract",
+            "ab",
+            "author",
+            "au",
+            "journal",
+            "ta",
+            "all fields",
+        ]
+        .contains(&tag_lower.as_str())
+        {
+            return Err("unknown PubMed field tag".to_owned());
+        }
 
         if tag_lower.contains("mesh terms:noexp") || tag_lower.contains("mesh:noexp") {
             return Ok(SearchTerm {
@@ -1119,6 +1423,13 @@ fn parse_single_term(
     {
         let text_part = &raw[..dot_idx];
         let suffix = &raw[dot_idx + 1..];
+        if !suffix
+            .trim_end_matches('.')
+            .split(',')
+            .all(|field| ["ti", "ab", "kf", "kw", "id", "au", "jn"].contains(&field))
+        {
+            return Err("unknown Ovid field tag".to_owned());
+        }
         let fields = parse_ovid_fields(suffix.trim_end_matches('.'));
         let truncation = text_part.ends_with('*');
         let text = text_part.trim_end_matches('*').to_owned();
@@ -1139,6 +1450,12 @@ fn parse_single_term(
     {
         let text_part = &raw[..colon_idx];
         let suffix = &raw[colon_idx + 1..];
+        if !suffix
+            .split(',')
+            .all(|field| ["ti", "ab", "kw", "au", "jt", "all"].contains(&field))
+        {
+            return Err("unknown Embase field tag".to_owned());
+        }
         let fields = parse_embase_fields(suffix);
         let truncation = text_part.ends_with('*');
         let text = text_part.trim_end_matches('*').to_owned();
@@ -1169,17 +1486,12 @@ fn parse_single_term(
     })
 }
 
-fn char_byte_offset(s: &str, char_index: usize) -> usize {
-    s.char_indices()
-        .nth(char_index)
-        .map_or(s.len(), |(offset, _)| offset)
-}
-
 #[cfg(test)]
 mod tests {
     use evidence_search_contracts::{NativeQueryLineKind, Validate};
 
     use super::*;
+    use crate::compiler::QueryCompiler;
 
     #[test]
     fn preserves_numbered_ovid_lines_and_set_combinations() {
@@ -1453,5 +1765,290 @@ mod tests {
                 panic!("expected ordered Proximity query expression in Scopus");
             }
         }
+    }
+
+    #[test]
+    fn seven_dialect_compiler_outputs_parse_and_recompile_stably()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let dialects = [
+            SearchDialect::PubMed,
+            SearchDialect::OvidMedline,
+            SearchDialect::Embase,
+            SearchDialect::CinahlEbsco,
+            SearchDialect::PsycInfoOvid,
+            SearchDialect::Scopus,
+            SearchDialect::WebOfScience,
+        ];
+        for dialect in dialects {
+            let strategy = SearchStrategy {
+                schema_version: SEARCH_STRATEGY_SCHEMA_VERSION.to_owned(),
+                strategy_id: "round-trip".to_owned(),
+                review_id: "review-round-trip".to_owned(),
+                source_id: dialect_code(&dialect).to_owned(),
+                dialect: dialect.clone(),
+                query: QueryExpr::And {
+                    children: vec![
+                        QueryExpr::Term {
+                            term: SearchTerm {
+                                text: "genom".to_owned(),
+                                fields: vec![SearchField::TitleAbstract],
+                                vocabulary: None,
+                                explode: false,
+                                phrase: false,
+                                truncation: true,
+                            },
+                        },
+                        QueryExpr::Term {
+                            term: SearchTerm {
+                                text: "screening".to_owned(),
+                                fields: vec![SearchField::Title],
+                                vocabulary: None,
+                                explode: false,
+                                phrase: false,
+                                truncation: false,
+                            },
+                        },
+                    ],
+                },
+                limits: SearchLimit::default(),
+                translated_from: None,
+                notes: Vec::new(),
+            };
+            let compiled = QueryCompiler::compile(&strategy, dialect.clone())?;
+            let parsed = parse_native_strategy(
+                format!("round-trip-{}", dialect_code(&dialect)),
+                dialect.clone(),
+                format!("{}\n", compiled.query),
+            );
+            assert_eq!(
+                parsed.normalisation_state,
+                NativeNormalisationState::Complete,
+                "compiler output did not parse completely for {dialect:?}: {:?}",
+                parsed.diagnostics
+            );
+            let reparsed = parsed
+                .semantic_strategy
+                .ok_or_else(|| format!("missing semantic strategy for {dialect:?}"))?;
+            let recompiled = QueryCompiler::compile(&reparsed, dialect.clone())?;
+            assert_eq!(
+                recompiled.query, compiled.query,
+                "parse/compile rendering drift for {dialect:?}"
+            );
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn semantic_parse_failure_is_explicitly_review_required() {
+        let parsed = parse_native_strategy(
+            "malformed-cinahl",
+            SearchDialect::CinahlEbsco,
+            "(TI genom* AND\n",
+        );
+
+        assert_eq!(
+            parsed.normalisation_state,
+            NativeNormalisationState::RawOnly
+        );
+        assert!(parsed.semantic_strategy.is_none());
+        assert!(parsed.diagnostics.iter().any(|diagnostic| {
+            diagnostic.code == "native.cinahl_ebsco.semantic_parse_failed"
+                && diagnostic.review_required
+        }));
+    }
+
+    #[test]
+    fn foreign_native_fields_never_become_complete() {
+        for (dialect, source) in [
+            (SearchDialect::Scopus, "TS=(genom) AND TITLE(screening)"),
+            (
+                SearchDialect::WebOfScience,
+                "TITLE(genom) AND TI=(screening)",
+            ),
+            (SearchDialect::CinahlEbsco, "TS=(genom) AND TI screening"),
+            (SearchDialect::Scopus, "TITLE(genom[Title/Abstract])"),
+            (SearchDialect::Scopus, "TITLE(genom.ti.)"),
+            (
+                SearchDialect::OvidMedline,
+                "(genom).unknown. AND screening.ti.",
+            ),
+            (SearchDialect::Embase, "(genom):unknown AND screening:ti"),
+        ] {
+            let parsed = parse_native_strategy("foreign-fields", dialect, source);
+            assert_eq!(parsed.raw_text, source);
+            assert_eq!(
+                parsed.normalisation_state,
+                NativeNormalisationState::RawOnly
+            );
+            assert!(parsed.semantic_strategy.is_none());
+            assert!(
+                parsed
+                    .diagnostics
+                    .iter()
+                    .any(|diagnostic| diagnostic.review_required)
+            );
+        }
+    }
+
+    #[test]
+    fn native_resource_limits_reject_before_recursive_expansion() {
+        let deeply_nested = format!(
+            "{}TITLE(genom){}",
+            "(".repeat(MAX_NATIVE_DEPTH),
+            ")".repeat(MAX_NATIVE_DEPTH)
+        );
+        let mut expanding_sets = "1 genom.ti.\n".to_owned();
+        for number in 2..30 {
+            expanding_sets.push_str(&format!("{number} {} OR {}\n", number - 1, number - 1));
+        }
+        for (dialect, source) in [
+            (SearchDialect::Scopus, deeply_nested),
+            (SearchDialect::OvidMedline, expanding_sets),
+            (
+                SearchDialect::GenericBoolean,
+                "a".repeat(MAX_NATIVE_BYTES + 1),
+            ),
+            (
+                SearchDialect::GenericBoolean,
+                "a\n".repeat(MAX_NATIVE_LINES + 1),
+            ),
+        ] {
+            let parsed = parse_native_strategy("bounded", dialect, source.clone());
+            assert_eq!(parsed.raw_text, source);
+            assert!(parsed.semantic_strategy.is_none());
+            assert!(
+                parsed
+                    .diagnostics
+                    .iter()
+                    .any(|diagnostic| diagnostic.review_required)
+            );
+        }
+    }
+
+    #[test]
+    fn oversized_source_uses_bounded_unexpanded_metadata() {
+        let exact = "a".repeat(MAX_NATIVE_BYTES);
+        assert!(
+            parse_native_strategy("at-limit", SearchDialect::GenericBoolean, exact)
+                .semantic_strategy
+                .is_some()
+        );
+        for source in [
+            "a".repeat(MAX_NATIVE_BYTES + 1),
+            "a\n".repeat(MAX_NATIVE_LINES + 1),
+        ] {
+            let parsed =
+                parse_native_strategy("over-limit", SearchDialect::GenericBoolean, source.clone());
+            assert_eq!(parsed.raw_text, source);
+            assert_eq!(parsed.lines.len(), 1);
+            assert!(parsed.lines.iter().all(|line| line.text.is_empty()
+                && line.span.start_byte == 0
+                && line.span.end_byte == 0));
+            assert!(parsed.validate().is_ok());
+            assert_eq!(parsed.diagnostics.len(), 1);
+            assert!(
+                parsed
+                    .diagnostics
+                    .iter()
+                    .all(|diagnostic| diagnostic.code == "native.resource_limit"
+                        && diagnostic.review_required)
+            );
+        }
+    }
+
+    #[test]
+    fn token_limit_allows_trailing_whitespace_at_exact_boundary() {
+        let at_limit = "a ".repeat(MAX_NATIVE_TOKENS);
+        let env = BTreeMap::new();
+        let tokens = tokenize_expression(&SearchDialect::GenericBoolean, &at_limit, &env);
+        assert!(matches!(tokens, Ok(tokens) if tokens.len() == MAX_NATIVE_TOKENS));
+        assert!(
+            tokenize_expression(
+                &SearchDialect::GenericBoolean,
+                &format!("{at_limit}a"),
+                &env
+            )
+            .is_err()
+        );
+    }
+
+    #[test]
+    fn pubmed_supported_field_admission_includes_title_only() {
+        let parsed = parse_native_strategy("pubmed-title", SearchDialect::PubMed, "qéa[Title]");
+        assert_eq!(
+            parsed.normalisation_state,
+            NativeNormalisationState::Complete
+        );
+        assert!(parsed.semantic_strategy.is_some());
+        let unknown =
+            parse_native_strategy("pubmed-unknown", SearchDialect::PubMed, "qéa[Unknown]");
+        assert!(unknown.semantic_strategy.is_none());
+        assert!(
+            unknown
+                .diagnostics
+                .iter()
+                .any(|diagnostic| diagnostic.review_required)
+        );
+    }
+
+    #[test]
+    fn proximity_operators_are_dialect_bound_and_token_delimited() {
+        for (dialect, operator) in [
+            (SearchDialect::OvidMedline, "adj3"),
+            (SearchDialect::PsycInfoOvid, "adj3"),
+            (SearchDialect::Embase, "NEAR/3"),
+            (SearchDialect::WebOfScience, "NEAR/3"),
+            (SearchDialect::GenericBoolean, "NEAR/3"),
+            (SearchDialect::Scopus, "W/3"),
+            (SearchDialect::Scopus, "PRE/3"),
+            (SearchDialect::CinahlEbsco, "N3"),
+            (SearchDialect::CinahlEbsco, "W3"),
+        ] {
+            assert!(
+                parse_native_semantic_strategy("operator", &dialect, &format!("a {operator} b"))
+                    .is_ok()
+            );
+            assert!(
+                parse_native_semantic_strategy(
+                    "malformed",
+                    &dialect,
+                    &format!("a {operator}tail b")
+                )
+                .is_err()
+            );
+        }
+        for (dialect, operator) in [
+            (SearchDialect::PubMed, "NEAR/3"),
+            (SearchDialect::OvidMedline, "NEAR/3"),
+            (SearchDialect::PsycInfoOvid, "PRE/3"),
+            (SearchDialect::Embase, "adj3"),
+            (SearchDialect::WebOfScience, "W3"),
+            (SearchDialect::Scopus, "adj3"),
+            (SearchDialect::CinahlEbsco, "W/3"),
+            (SearchDialect::CinahlEbsco, "NEAR/3"),
+        ] {
+            assert!(
+                parse_native_semantic_strategy("foreign", &dialect, &format!("a {operator} b"))
+                    .is_err()
+            );
+        }
+    }
+
+    #[test]
+    fn exact_ast_depth_is_checked_after_group_parsing() {
+        let nested =
+            |groups: usize| format!("{}c{}", "a AND (b OR ".repeat(groups), ")".repeat(groups));
+        assert!(
+            parse_native_semantic_strategy("depth-ok", &SearchDialect::GenericBoolean, &nested(31))
+                .is_ok()
+        );
+        assert!(
+            parse_native_semantic_strategy(
+                "depth-over",
+                &SearchDialect::GenericBoolean,
+                &nested(32)
+            )
+            .is_err()
+        );
     }
 }

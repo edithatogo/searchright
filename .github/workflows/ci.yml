@@ -34,6 +34,7 @@ jobs:
         # Installation is separate from the network-free validation gate.
         run: |
           npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+          python -m unittest discover -s tests
           python scripts/run_static_harness.py
 
 

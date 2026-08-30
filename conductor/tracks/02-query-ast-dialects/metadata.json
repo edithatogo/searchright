@@ -3,15 +3,15 @@
   "track_id": "02",
   "slug": "query-ast-dialects",
   "title": "Portable query AST and dialect compilers",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
+  "status": "external_evidence_required",
+  "implementation_state": "source_implemented",
   "created": "2026-08-05",
-  "updated": "2026-08-09",
+  "updated": "2026-08-31",
   "dependencies": [
     "01"
   ],
   "horizon": "foundation",
-  "evidence_level": "source_verified",
+  "evidence_level": "compiler_verified",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/02-query-ast-dialects/evidence.json",
   "traceability_path": "conductor/tracks/02-query-ast-dialects/traceability.json",
@@ -39,5 +39,23 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "gates": [
+    {
+      "id": "T02-G-NAMED-FILTERS",
+      "kind": "external",
+      "status": "pending",
+      "required_evidence": "Rights-clear real filter expressions and versions, platform currentness, isolated panel findings and owner disposition.",
+      "evidence": []
+    },
+    {
+      "id": "T02-G-CORPUS-OWNER",
+      "kind": "human",
+      "status": "pending",
+      "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
+      "evidence": [
+        "verification/receipts/track-02-integration-panel.json"
+      ]
+    }
+  ]
 }

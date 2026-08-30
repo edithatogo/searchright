@@ -2,15 +2,15 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "02",
   "title": "Portable query AST and dialect compilers",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/02-query-ast-dialects/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.",
   "assertions": [
     {
       "assertion_id": "T02-A001",
       "statement": "Complete field/proximity/truncation semantics",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-contracts/src/query.rs",
@@ -25,17 +25,22 @@
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
       "open_gates": [
-        "Expand source-specific wildcard, controlled-vocabulary, subheading and line-set conformance against independently reviewed strategies."
+        "Expand source-specific wildcard, controlled-vocabulary, subheading and line-set conformance against strategies reviewed by an isolated agent panel, with findings submitted to the accountable owner for disposition."
       ],
-      "permitted_claim": "A portable query model and source-aware compiler are implemented for declared subsets; complete database semantics are not claimed."
+      "permitted_claim": "A portable query model and deterministic source-aware compiler are compiler-tested for the declared subsets; complete vendor-language or cross-database semantics are not claimed.",
+      "native_test_commands": [
+        "cargo test --locked -p evidence-search-core compiler::tests::seven_dialect_field_and_truncation_snapshots_are_stable -- --exact",
+        "cargo test --locked -p evidence-search-core compiler::tests::seven_dialect_proximity_snapshots_expose_order_loss -- --exact"
+      ]
     },
     {
       "assertion_id": "T02-A002",
       "statement": "Add line-numbered native strategy representation",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-contracts/src/query.rs",
@@ -45,24 +50,27 @@
       "implementation_symbols": [
         "evidence_search_contracts::query::NativeSearchStrategy",
         "evidence_search_contracts::query::NativeStrategyLine",
-        "evidence_search_core::native::parse_native_strategy"
+        "evidence_search_core::native::parse_native_strategy",
+        "evidence_search_core::native::parse_native_semantic_strategy"
       ],
       "deterministic_tests": [
         "python scripts/check_native_query_corpus.py",
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
-      "open_gates": [
-        "Complete semantic AST construction beyond the declared source-preserving lexical subsets."
-      ],
-      "permitted_claim": "Line-numbered native strategy source, spans, diagnostics and raw-source preservation are source implemented; semantic parsing remains deliberately partial."
+      "open_gates": [],
+      "permitted_claim": "Line-numbered native source, exact spans, diagnostics and raw text are preserved while the seven declared subsets produce validated semantic strategies; syntax outside those subsets remains raw-only and review-required.",
+      "native_test_commands": [
+        "cargo test --locked -p evidence-search-core native::tests::checked_in_native_corpus_is_source_preserving -- --exact"
+      ]
     },
     {
       "assertion_id": "T02-A003",
       "statement": "Build PubMed/Ovid MEDLINE/Embase/CINAHL/PsycINFO/Scopus/Web of Science corpus",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "path_and_gate_mapped",
       "implementation_paths": [
         "contracts/query-corpus/index.json",
@@ -83,17 +91,18 @@
         "python scripts/check_native_query_corpus.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
       "open_gates": [
-        "Obtain accountable independent information-specialist PRESS review of the digest-bound project-authored fixtures."
+        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
       ],
       "permitted_claim": "A seven-dialect source-preservation corpus exists and is statically validated; it is not an external conformance benchmark."
     },
     {
       "assertion_id": "T02-A004",
       "statement": "Add named filter contracts with source/version/citation",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-contracts/src/query.rs",
@@ -110,21 +119,23 @@
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
       "open_gates": [
-        "Obtain accountable methodological and provider-currency review of real filter packs; the checked-in fixture is structural only."
+        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic."
       ],
-      "permitted_claim": "Versioned named-filter contracts enforce citation, exact checksums, applicability, expiry, evidence-scaled validation and redistribution decisions; no real filter is methodologically or provider-current validated."
+      "permitted_claim": "Named-filter contracts validate source, version, citation, applicability and evidence metadata shape; they do not authenticate evidence or establish real-filter methodology, rights or currency."
     },
     {
       "assertion_id": "T02-A005",
       "statement": "Add syntax parsers for supported native dialect subsets",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-core/src/native.rs",
-        "contracts/query-corpus/index.json"
+        "contracts/query-corpus/index.json",
+        "contracts/query-corpus/loss-matrix.json"
       ],
       "implementation_symbols": [
         "evidence_search_core::native::parse_native_strategy"
@@ -133,39 +144,49 @@
         "python scripts/check_native_query_corpus.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
-      "open_gates": [
-        "Implement semantic AST construction, precedence and source-specific node extraction beyond the declared lexical subsets."
-      ],
-      "permitted_claim": "Seven bounded database-specific lexical subsets are recognised with stable source-spanned unsupported-syntax diagnostics; semantic AST parsing is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Seven bounded database-specific subsets construct validated ASTs with Boolean precedence, fields, headings, truncation, proximity and set references while unsupported syntax remains source-preserved and review-required.",
+      "native_test_commands": [
+        "cargo test --locked -p evidence-search-core --test native_adversarial_tests"
+      ]
     },
     {
       "assertion_id": "T02-A006",
       "statement": "Create metamorphic and round-trip translation tests",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-core/src/compiler.rs",
         "crates/evidence-search-core/src/native.rs",
-        "contracts/query-corpus/index.json"
+        "crates/evidence-search-core/tests/property_tests.rs",
+        "contracts/query-corpus/index.json",
+        "contracts/query-corpus/loss-matrix.json"
       ],
       "implementation_symbols": [
         "evidence_search_core::compiler::tests::canonical_json_round_trip_preserves_compilation",
         "evidence_search_core::compiler::tests::boolean_conjunction_reordering_preserves_term_set",
         "evidence_search_core::compiler::tests::seven_dialect_field_and_truncation_snapshots_are_stable",
-        "evidence_search_core::compiler::tests::seven_dialect_proximity_snapshots_expose_order_loss"
+        "evidence_search_core::compiler::tests::seven_dialect_proximity_snapshots_expose_order_loss",
+        "evidence_search_core::native::tests::seven_dialect_compiler_outputs_parse_and_recompile_stably",
+        "property_tests::prop_declared_dialect_subset_compile_parse_compile_is_stable"
       ],
       "deterministic_tests": [
         "python scripts/check_native_query_corpus.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/02-query-ast-dialects/evidence.json"
+        "conductor/tracks/02-query-ast-dialects/evidence.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
       "open_gates": [
-        "Add parse/compile/parse properties for future semantic native parsers and independently reviewed golden strategies."
+        "Obtain golden strategies reviewed by an isolated agent panel, with findings submitted to the accountable owner for disposition, before making methodological or provider-current conformance claims."
       ],
-      "permitted_claim": "Compiler JSON round-trip, Boolean reordering, semantic-hash sensitivity and seven-dialect field/truncation/proximity snapshots are compiler-tested; cross-database semantic equivalence is not proven."
+      "permitted_claim": "Compiler determinism, JSON round-trip, Boolean reordering, semantic-hash sensitivity, seven-dialect snapshots and compile/parse/compile stability are compiler-tested; cross-database retrieval equivalence is not proven.",
+      "native_test_commands": [
+        "cargo test --locked -p evidence-search-core --test property_tests prop_declared_dialect_subset_compile_parse_compile_is_stable -- --exact"
+      ]
     }
   ]
 }
