@@ -1,5 +1,6 @@
 {
   "schema_version": "searchright.sourceright-parity-cases.v1",
+  "source_revision": "c5fa583431390eee1bf5eae04dc47b01c50d4a1e",
   "source_blob_sha": "57bc071c6afc7d5a4cb8ead12112919a446ebd24",
   "cases": [
     {
@@ -18,7 +19,8 @@
       "dimensions": [
         "provider identity",
         "identifiers",
-        "normalised fields"
+        "normalised fields",
+        "fixture determinism"
       ],
       "fixture": "synthetic provider record",
       "expected_shared_behavior": "Identifiers and record fields are deterministic and source-linked."
@@ -27,6 +29,7 @@
       "case_id": "bounded-retry",
       "dimensions": [
         "retry and rate behaviour",
+        "timeout behaviour",
         "error classification"
       ],
       "fixture": "retryable failure followed by success",

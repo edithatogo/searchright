@@ -23,11 +23,13 @@
       ],
       "evidence": [
         "docs/security/egress-policy.md",
-        "crates/evidence-search-core/src/provider.rs"
+        "crates/evidence-search-core/src/provider.rs",
+        "crates/searchright-connectors/src/lib.rs",
+        "verification/receipts/track-03-provider-runtime-review.json"
       ],
       "hazard": "A crafted provider endpoint causes SSRF or cloud-metadata access.",
       "id": "H-002",
-      "residual_status": "open_adversarial_tests",
+      "residual_status": "open_transport_adversarial_runtime_evidence_and_exact_revision_ci",
       "severity": "critical"
     },
     {

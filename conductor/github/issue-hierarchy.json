@@ -1644,7 +1644,7 @@
     },
     {
       "key": "track-03-phase-3-task-01",
-      "title": "Track 03 / P3 / T01: Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport",
+      "title": "Track 03 / P3 / T01: Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing\u2026",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-01.md",
@@ -1677,7 +1677,7 @@
     },
     {
       "key": "track-03-phase-3-task-02",
-      "title": "Track 03 / P3 / T02: Run old/new Sourceright fixtures in the downstream repository",
+      "title": "Track 03 / P3 / T02: Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is n\u2026",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-02.md",

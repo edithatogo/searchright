@@ -10,10 +10,13 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 - [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
   - [x] Present source path: `crates/evidence-search-core/src/provider.rs`
+  - [x] Present source path: `crates/searchright-connectors/src/lib.rs`
+  - [x] Present source path: `crates/searchright-contracts/src/migration.rs`
   - [x] Present source path: `crates/searchright-sourceright-compat/src/lib.rs`
   - [x] Present source path: `migration/sourceright/replacement-map.yaml`
   - [x] Present source path: `migration/sourceright/parity-cases.json`
   - [x] Present source path: `scripts/check_sourceright_migration.py`
+  - [x] Present source path: `tests/test_sourceright_migration.py`
   - [x] Present source path: `release/public-packages.json`
   - [x] Present source path: `public-api/README.md`
   - [x] Present source path: `docs/msrv-and-package-policy.md`
@@ -33,8 +36,8 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-03-phase-3 -->
 
-- [ ] Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport.
-- [ ] Run old/new Sourceright fixtures in the downstream repository.
+- [ ] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
+- [ ] Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.
 - [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 
 ## Phase 4: Review and closeout
@@ -44,4 +47,11 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Disable proxy bypass, deny non-global address forms and bound streamed responses.
+  - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Fail closed on blank parity approvals and incomplete migration-case coverage.
+  - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Reconcile source-level claims with pinned Searchright and Sourceright evidence.
+  - Review fix `07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb`: Require exact, unique parity-case and dimension coverage before cutover readiness.
+  - Review fix `07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb`: Reconcile the fixture-parser migration table with the four fixture-backed adapters.
+  - [x] Review fix: Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions.
+  - [x] Review fix: Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

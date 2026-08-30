@@ -278,6 +278,7 @@ fn is_prohibited_endpoint_address(address: IpAddr) -> bool {
                 || address.is_documentation()
                 || address.is_unspecified()
                 || address.is_multicast()
+                || ipv4_in_prefix(address, Ipv4Addr::UNSPECIFIED, 8)
                 || ipv4_in_prefix(address, Ipv4Addr::new(100, 64, 0, 0), 10)
                 || ipv4_in_prefix(address, Ipv4Addr::new(192, 0, 0, 0), 24)
                 || ipv4_in_prefix(address, Ipv4Addr::new(198, 18, 0, 0), 15)
@@ -291,8 +292,11 @@ fn is_prohibited_endpoint_address(address: IpAddr) -> bool {
                 || address.is_unspecified()
                 || address.is_multicast()
                 || ipv6_in_prefix(address, Ipv6Addr::new(0xfc00, 0, 0, 0, 0, 0, 0, 0), 7)
+                || ipv6_in_prefix(address, Ipv6Addr::new(0xfec0, 0, 0, 0, 0, 0, 0, 0), 10)
                 || ipv6_in_prefix(address, Ipv6Addr::new(0xfe80, 0, 0, 0, 0, 0, 0, 0), 10)
                 || ipv6_in_prefix(address, Ipv6Addr::new(0x2001, 0x0db8, 0, 0, 0, 0, 0, 0), 32)
+                || ipv6_in_prefix(address, Ipv6Addr::new(0x0064, 0xff9b, 0, 0, 0, 0, 0, 0), 96)
+                || ipv6_in_prefix(address, Ipv6Addr::new(0x0064, 0xff9b, 1, 0, 0, 0, 0, 0), 48)
         }
     }
 }
@@ -1787,6 +1791,15 @@ mod tests {
                 validate_resolved_endpoint_addresses("test", "example.test", &[mapped_loopback])
                     .is_err()
             );
+            let zero_net = IpAddr::V4(Ipv4Addr::new(0, 0, 0, 1));
+            let site_local = IpAddr::V6(Ipv6Addr::new(0xfec0, 0, 0, 0, 0, 0, 0, 1));
+            let nat64_private = IpAddr::V6(Ipv6Addr::new(0x0064, 0xff9b, 0, 0, 0, 0, 0x0a00, 1));
+            for prohibited in [zero_net, site_local, nat64_private] {
+                assert!(
+                    validate_resolved_endpoint_addresses("test", "example.test", &[prohibited])
+                        .is_err()
+                );
+            }
         }
     }
 

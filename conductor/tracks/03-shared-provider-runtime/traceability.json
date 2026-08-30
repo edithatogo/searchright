@@ -5,7 +5,7 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/03-shared-provider-runtime/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists; no live provider, downstream integration, dual-run, SemVer, rollback, release or remote mutation claim is made.",
   "assertions": [
     {
       "assertion_id": "T03-A001",
@@ -21,12 +21,11 @@
         "python scripts/check_sourceright_migration.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/03-shared-provider-runtime/evidence.json"
+        "conductor/tracks/03-shared-provider-runtime/evidence.json",
+        "verification/receipts/track-03-sourceright-inventory.json"
       ],
-      "open_gates": [
-        "Refresh against the current Sourceright revision before cutover."
-      ],
-      "permitted_claim": "The observed Sourceright provider surface is inventoried at a pinned revision."
+      "open_gates": [],
+      "permitted_claim": "The current Sourceright provider surface is inventoried at a pinned revision and its provider blobs are unchanged from the original inventory."
     },
     {
       "assertion_id": "T03-A002",
@@ -47,10 +46,9 @@
         "conductor/tracks/03-shared-provider-runtime/evidence.json"
       ],
       "open_gates": [
-        "Compile the compatibility adapter in Searchright and Sourceright.",
         "Add a downstream feature-flag canary."
       ],
-      "permitted_claim": "A source compatibility adapter exists; downstream compilation is not proven."
+      "permitted_claim": "The compatibility adapter is compiler-tested in Searchright; downstream feature integration is not performed."
     },
     {
       "assertion_id": "T03-A003",
@@ -59,6 +57,7 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-core/src/provider.rs",
+        "crates/searchright-connectors/src/lib.rs",
         "integration/provider-contract-baselines.json"
       ],
       "implementation_symbols": [
@@ -73,10 +72,10 @@
         "verification/receipts/track-03-provider-runtime-review.json"
       ],
       "open_gates": [
-        "Prove cache and error parity against Sourceright.",
-        "Resolve, validate and pin accepted DNS answers in every live connector transport before closing H-002; literal and supplied-resolution denial logic is compiler-tested."
+        "Obtain exact-revision compiler CI and transport-level adversarial evidence for resolve-validate-pin behavior, proxy suppression, redirects and response bounds.",
+        "Prove cache and error parity against Sourceright."
       ],
-      "permitted_claim": "The shared runtime and endpoint-address denial logic are compiler-tested; Sourceright parity and live transport DNS pinning are not proven."
+      "permitted_claim": "The shared runtime and resolve-validate-pin live transport pass local compiler tests; CI, Sourceright parity and opt-in live execution are not proven."
     },
     {
       "assertion_id": "T03-A004",
@@ -95,7 +94,7 @@
         "conductor/tracks/03-shared-provider-runtime/evidence.json"
       ],
       "open_gates": [
-        "Run old/new fixtures and compare every parity dimension."
+        "Validate a complete provider/fixture/case/dimension execution matrix and run old/new fixtures; v1 summary readiness alone is not execution proof."
       ],
       "permitted_claim": "Parity cases are defined; dual-run results do not yet exist."
     },

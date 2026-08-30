@@ -874,8 +874,10 @@ mod live {
         SearchProvider, SearchRequest, Serialize, async_trait, parse_crossref_page,
         parse_europe_pmc_page, parse_openalex_page, parse_pubmed_summary_page,
     };
+    use evidence_search_core::validate_resolved_endpoint_addresses;
     use reqwest::header::{HeaderMap, RETRY_AFTER};
     use serde_json::Value;
+    use std::net::SocketAddr;
 
     const DEFAULT_MAX_RESPONSE_BYTES: u64 = 16 * 1024 * 1024;
 
@@ -892,11 +894,21 @@ mod live {
         pub openalex_mailto: Option<String>,
     }
 
-    fn build_client(provider: &str) -> Result<reqwest::Client, ProviderError> {
+    fn build_pinned_client(
+        provider: &str,
+        host: &str,
+        addresses: &[SocketAddr],
+    ) -> Result<reqwest::Client, ProviderError> {
+        let resolved = addresses.iter().map(SocketAddr::ip).collect::<Vec<_>>();
+        validate_resolved_endpoint_addresses(provider, host, &resolved)?;
         reqwest::Client::builder()
             .https_only(true)
+            // A system proxy would bypass origin-address pinning by resolving
+            // the CONNECT hostname outside this process.
+            .no_proxy()
             .redirect(reqwest::redirect::Policy::none())
             .user_agent(concat!("searchright/", env!("CARGO_PKG_VERSION")))
+            .resolve_to_addrs(host, addresses)
             .build()
             .map_err(|error| ProviderError::Upstream {
                 provider: provider.to_owned(),
@@ -912,24 +924,63 @@ mod live {
             .map(|seconds| seconds.saturating_mul(1_000))
     }
 
+    fn append_bounded_chunk(
+        bytes: &mut Vec<u8>,
+        chunk: &[u8],
+        maximum: u64,
+    ) -> Result<(), ProviderError> {
+        let chunk_size = u64::try_from(chunk.len()).unwrap_or(u64::MAX);
+        let next_size = u64::try_from(bytes.len())
+            .unwrap_or(u64::MAX)
+            .saturating_add(chunk_size);
+        if next_size > maximum {
+            return Err(ProviderError::BudgetExceeded {
+                kind: "response_bytes",
+                limit: maximum,
+            });
+        }
+        bytes.extend_from_slice(chunk);
+        Ok(())
+    }
+
     async fn fetch_json(
-        client: &reqwest::Client,
         provider: &str,
         endpoint: url::Url,
         request: &SearchRequest,
     ) -> Result<(Value, String), ProviderError> {
-        let response = client
-            .get(endpoint)
-            .send()
+        let host = endpoint.host_str().ok_or_else(|| ProviderError::Upstream {
+            provider: provider.to_owned(),
+            message: "approved endpoint omitted a DNS host".to_owned(),
+        })?;
+        let port = endpoint
+            .port_or_known_default()
+            .ok_or_else(|| ProviderError::Upstream {
+                provider: provider.to_owned(),
+                message: "approved endpoint omitted a transport port".to_owned(),
+            })?;
+        let mut addresses = tokio::net::lookup_host((host, port))
             .await
             .map_err(|_| ProviderError::Upstream {
                 provider: provider.to_owned(),
-                message: concat!(
-                    "network request failed before a response was available; ",
-                    "endpoint and query details were redacted"
-                )
-                .to_owned(),
-            })?;
+                message: "DNS resolution failed; endpoint details were redacted".to_owned(),
+            })?
+            .collect::<Vec<_>>();
+        addresses.sort_unstable();
+        addresses.dedup();
+        let client = build_pinned_client(provider, host, &addresses)?;
+        let mut response =
+            client
+                .get(endpoint)
+                .send()
+                .await
+                .map_err(|_| ProviderError::Upstream {
+                    provider: provider.to_owned(),
+                    message: concat!(
+                        "network request failed before a response was available; ",
+                        "endpoint and query details were redacted"
+                    )
+                    .to_owned(),
+                })?;
         let status = response.status();
         let retry_after_ms = retry_after_ms(response.headers());
         if status.as_u16() == 429 {
@@ -946,8 +997,19 @@ mod live {
                 message: status.to_string(),
             });
         }
-        let bytes = response
-            .bytes()
+        let maximum = request
+            .policy
+            .max_response_bytes
+            .unwrap_or(DEFAULT_MAX_RESPONSE_BYTES);
+        if response.content_length().is_some_and(|size| size > maximum) {
+            return Err(ProviderError::BudgetExceeded {
+                kind: "response_bytes",
+                limit: maximum,
+            });
+        }
+        let mut bytes = Vec::new();
+        while let Some(chunk) = response
+            .chunk()
             .await
             .map_err(|_| ProviderError::Upstream {
                 provider: provider.to_owned(),
@@ -956,17 +1018,9 @@ mod live {
                     "endpoint and query details were redacted"
                 )
                 .to_owned(),
-            })?;
-        let maximum = request
-            .policy
-            .max_response_bytes
-            .unwrap_or(DEFAULT_MAX_RESPONSE_BYTES);
-        let size = u64::try_from(bytes.len()).unwrap_or(u64::MAX);
-        if size > maximum {
-            return Err(ProviderError::BudgetExceeded {
-                kind: "response_bytes",
-                limit: maximum,
-            });
+            })?
+        {
+            append_bounded_chunk(&mut bytes, &chunk, maximum)?;
         }
         let digest = blake3::hash(&bytes).to_hex().to_string();
         let payload =
@@ -1006,19 +1060,17 @@ mod live {
     /// Opt-in PubMed `ESearch` plus `ESummary` adapter.
     #[derive(Debug, Clone)]
     pub struct PubMedProvider {
-        client: reqwest::Client,
         tool: Option<String>,
         email: Option<String>,
     }
 
     impl PubMedProvider {
         /// Construct a PubMed adapter with optional NCBI identity fields.
-        pub fn new(tool: Option<String>, email: Option<String>) -> Result<Self, ProviderError> {
-            Ok(Self {
-                client: build_client("pubmed")?,
-                tool,
-                email,
-            })
+        pub const fn new(
+            tool: Option<String>,
+            email: Option<String>,
+        ) -> Result<Self, ProviderError> {
+            Ok(Self { tool, email })
         }
     }
 
@@ -1067,8 +1119,7 @@ mod live {
                 provider: "pubmed".to_owned(),
                 message: error.to_string(),
             })?;
-            let (search, search_digest) =
-                fetch_json(&self.client, "pubmed", endpoint, request).await?;
+            let (search, search_digest) = fetch_json("pubmed", endpoint, request).await?;
             let result =
                 search
                     .get("esearchresult")
@@ -1116,8 +1167,7 @@ mod live {
                 provider: "pubmed".to_owned(),
                 message: error.to_string(),
             })?;
-            let (summary, summary_digest) =
-                fetch_json(&self.client, "pubmed", summary_endpoint, request).await?;
+            let (summary, summary_digest) = fetch_json("pubmed", summary_endpoint, request).await?;
             let mut page = parse_pubmed_summary_page(&summary)?;
             let next = offset.saturating_add(u32::try_from(pmids.len()).unwrap_or(u32::MAX));
             page.total_available = count;
@@ -1137,16 +1187,12 @@ mod live {
 
     /// Opt-in Europe PMC live adapter.
     #[derive(Debug, Clone)]
-    pub struct EuropePmcProvider {
-        client: reqwest::Client,
-    }
+    pub struct EuropePmcProvider;
 
     impl EuropePmcProvider {
         /// Construct a redirect-disabled HTTPS-only client for Europe PMC.
-        pub fn new() -> Result<Self, ProviderError> {
-            Ok(Self {
-                client: build_client("europe-pmc")?,
-            })
+        pub const fn new() -> Result<Self, ProviderError> {
+            Ok(Self)
         }
     }
 
@@ -1178,8 +1224,7 @@ mod live {
                 provider: "europe-pmc".to_owned(),
                 message: error.to_string(),
             })?;
-            let (payload, digest) =
-                fetch_json(&self.client, "europe-pmc", endpoint, request).await?;
+            let (payload, digest) = fetch_json("europe-pmc", endpoint, request).await?;
             let mut page = parse_europe_pmc_page(&payload)?;
             page.diagnostics
                 .insert("raw_response_digest".to_owned(), Value::String(digest));
@@ -1190,17 +1235,13 @@ mod live {
     /// Opt-in Crossref Works adapter.
     #[derive(Debug, Clone)]
     pub struct CrossrefProvider {
-        client: reqwest::Client,
         mailto: Option<String>,
     }
 
     impl CrossrefProvider {
         /// Construct a Crossref adapter with an optional polite-pool contact.
-        pub fn new(mailto: Option<String>) -> Result<Self, ProviderError> {
-            Ok(Self {
-                client: build_client("crossref")?,
-                mailto,
-            })
+        pub const fn new(mailto: Option<String>) -> Result<Self, ProviderError> {
+            Ok(Self { mailto })
         }
     }
 
@@ -1233,7 +1274,7 @@ mod live {
                 provider: "crossref".to_owned(),
                 message: error.to_string(),
             })?;
-            let (payload, digest) = fetch_json(&self.client, "crossref", endpoint, request).await?;
+            let (payload, digest) = fetch_json("crossref", endpoint, request).await?;
             let mut page = parse_crossref_page(&payload)?;
             page.diagnostics
                 .insert("raw_response_digest".to_owned(), Value::String(digest));
@@ -1244,17 +1285,13 @@ mod live {
     /// Opt-in OpenAlex Works adapter.
     #[derive(Debug, Clone)]
     pub struct OpenAlexProvider {
-        client: reqwest::Client,
         mailto: Option<String>,
     }
 
     impl OpenAlexProvider {
         /// Construct an OpenAlex adapter with an optional polite-pool contact.
-        pub fn new(mailto: Option<String>) -> Result<Self, ProviderError> {
-            Ok(Self {
-                client: build_client("openalex")?,
-                mailto,
-            })
+        pub const fn new(mailto: Option<String>) -> Result<Self, ProviderError> {
+            Ok(Self { mailto })
         }
     }
 
@@ -1287,7 +1324,7 @@ mod live {
                 provider: "openalex".to_owned(),
                 message: error.to_string(),
             })?;
-            let (payload, digest) = fetch_json(&self.client, "openalex", endpoint, request).await?;
+            let (payload, digest) = fetch_json("openalex", endpoint, request).await?;
             let mut page = parse_openalex_page(&payload)?;
             page.diagnostics
                 .insert("raw_response_digest".to_owned(), Value::String(digest));
@@ -1309,6 +1346,38 @@ mod live {
         registry.register(Arc::new(CrossrefProvider::new(config.crossref_mailto)?))?;
         registry.register(Arc::new(OpenAlexProvider::new(config.openalex_mailto)?))?;
         Ok(())
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::{append_bounded_chunk, build_pinned_client};
+        use std::net::{IpAddr, Ipv4Addr, SocketAddr};
+
+        #[test]
+        fn pinned_client_rejects_an_empty_dns_answer() {
+            assert!(build_pinned_client("test", "example.test", &[]).is_err());
+        }
+
+        #[test]
+        fn pinned_client_rejects_the_whole_answer_if_any_address_is_prohibited() {
+            let public = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(93, 184, 216, 34)), 443);
+            let private = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(10, 0, 0, 1)), 443);
+            assert!(build_pinned_client("test", "example.test", &[public, private]).is_err());
+        }
+
+        #[test]
+        fn pinned_client_accepts_and_pins_a_complete_public_answer() {
+            let public = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(93, 184, 216, 34)), 443);
+            assert!(build_pinned_client("test", "example.test", &[public]).is_ok());
+        }
+
+        #[test]
+        fn response_chunks_are_rejected_before_the_buffer_exceeds_its_budget() {
+            let mut bytes = vec![1, 2, 3];
+            assert!(append_bounded_chunk(&mut bytes, &[4], 4).is_ok());
+            assert!(append_bounded_chunk(&mut bytes, &[5], 4).is_err());
+            assert_eq!(bytes, vec![1, 2, 3, 4]);
+        }
     }
 }
 

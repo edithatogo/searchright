@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close hazard H-002 by resolving, validating and pinning complete DNS answers in each live connector transport.
+- [ ] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
 
 ## Completion and evidence contract
 
