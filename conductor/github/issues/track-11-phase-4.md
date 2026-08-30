@@ -10,7 +10,7 @@ Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
 - [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-11-phase-4-task-02`)
 - [x] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-11-phase-4-task-03`)
 - [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-11-phase-4-task-04`)
-- [x] T05: Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure; isolated five-role review recorded in verification/receipts/track-11-sibling-review.json. (`track-11-phase-4-task-05`)
+- [x] T05: Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json. (`track-11-phase-4-task-05`)
 
 ## Evidence rule
 

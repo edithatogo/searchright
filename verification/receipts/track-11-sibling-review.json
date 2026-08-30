@@ -18,5 +18,14 @@
     {"command": "python3 scripts/check_licence_firewall.py", "result": "passed; pre-existing standards-pack licence-review warning retained"}
   ],
   "subsequent_changes": "Generated source manifest includes the new tracked ADR and tests; this review receipt and plan closeout record are added after first passes.",
+  "full_verification": {
+    "revision": "e6969ac6bd56b92f4faf27997dff8060f526c702",
+    "command": "bash scripts/verify.sh",
+    "exit_code": 0,
+    "static_gates": "57 passed",
+    "native_tests": "341 passed, 0 skipped",
+    "other_gates": "format, strict workspace Clippy, recorded schema-difference parity, doctests, documentation and cargo-deny passed",
+    "boundary": "Local verification of the implementation commit; final plan-record and hosted-head verification remain distinct"
+  },
   "claim_boundary": "Isolated code review of static sibling preparation only; not calibration, owner adjudication, full repository verification, runtime admission, downstream adoption or publication authority."
 }

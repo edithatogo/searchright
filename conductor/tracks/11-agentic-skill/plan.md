@@ -67,4 +67,4 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - Review fix `b7f42271ca25860acc83ef16414b514e96f39c2b`: Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
-- [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure; isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.
+- [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.
