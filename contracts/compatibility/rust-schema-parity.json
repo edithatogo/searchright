@@ -5,11 +5,54 @@
     "rust_generated_role": "compiled_drift_diagnostic"
   },
   "claim_boundary": "The report proves that compiled generated roots were compared and all observed differences were recorded. It does not prove equivalence of JSON Schema and Rust cross-field validation or downstream consumer compatibility.",
+  "compared_schemas": {
+    "audit-event": {
+      "canonical_sha256": "21f27c6d6fecbf9727864d1f399e2a82e74455756b4347bc48c91becba43ac70",
+      "generated_sha256": "2c18e5b3450af7d9d9357babb418524d38a63c1c578f7c5ede90730a82d0de31"
+    },
+    "bibliographic-record": {
+      "canonical_sha256": "9f3d4525f53487b2a6d99e41a6c0115fd3f6312327faf1f49a1b236af645a74d",
+      "generated_sha256": "584dacce0aeafd5d7c80a4c930bcb2daa244523105510154ccad0aab61be24bd"
+    },
+    "compiled-strategy": {
+      "canonical_sha256": "6e506efe654fd8623e6869407985c42fd67b7ac1943091f43a070412cc219dcd",
+      "generated_sha256": "ca8dfabc351781e84643228ad6a47700dfc788aeee3884ac130f89e7911e4aa1"
+    },
+    "named-filter-pack": {
+      "canonical_sha256": "a6d91f47a9488b7228b5f1995379179c72f0f9924b6f6f82a7f4cea7714c9546",
+      "generated_sha256": "56a20f654561d1438946714ca586bacdca943aaa161f43da2900b8e23f040ce7"
+    },
+    "native-search-strategy": {
+      "canonical_sha256": "119e4e75742458ccabe85018a39ebf8afa88acc005415a7beeb7c43a2dbdf17d",
+      "generated_sha256": "f6388a1b5dee4f848abc3456fa3cee83a49f5d0d67a6e9701157ce36acf50936"
+    },
+    "provider-manifest": {
+      "canonical_sha256": "e4e462570bc0693a729e226c017d9b167ea7582e68113703c97df5e94c7635b8",
+      "generated_sha256": "9d10f3846972db8f7a3c72437acb711f22de8572fdf489f8c9313ab9ce32092a"
+    },
+    "provider-page": {
+      "canonical_sha256": "63bccfe84c449adb32cb4cd82645c930864baf7ffef09f59016411c64cb12c3d",
+      "generated_sha256": "ca736346405b45a7e8f188dee946c880dc35a0c4882b72670f0bfcbe2025edd3"
+    },
+    "search-run": {
+      "canonical_sha256": "c5482b077b2893504d87393e9c9d5e10dec429720843a3d5ca9e1d8b55ff6311",
+      "generated_sha256": "91e63d5ffe2a5ee66abce447a8f785f542ae71ba213d97c3f3c44f03829728cd"
+    },
+    "search-strategy": {
+      "canonical_sha256": "0429953278fef638010c766428a016b156c2d73eb85ce3623797c102905a3e32",
+      "generated_sha256": "188228a55c796ee4c98663ba00f2e4a716b08c2d44901ff95424c03e83a30f0c"
+    },
+    "source-receipt": {
+      "canonical_sha256": "39ff622ff64b6342e7f697e838ff1fddba3f1761b0266ea295fd4d82df65f96f",
+      "generated_sha256": "ce75b8fd7b9c8a3ebe395b748872012ad2f85cba6fde83971e18628ad33dc2e5"
+    }
+  },
   "contracts": {
     "audit-event": {
-      "difference_count": 17,
+      "difference_count": 18,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/actor/$ref",
         "/properties/actor/additionalProperties",
@@ -29,9 +72,10 @@
       ]
     },
     "bibliographic-record": {
-      "difference_count": 36,
+      "difference_count": 38,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/abstract_text/oneOf",
         "/properties/abstract_text/type",
@@ -63,6 +107,7 @@
         "/properties/subjects/default",
         "/properties/subjects/uniqueItems",
         "/properties/subjects/items/minLength",
+        "/properties/title/minLength",
         "/properties/urls/default",
         "/properties/urls/uniqueItems",
         "/properties/urls/items/minLength",
@@ -70,9 +115,10 @@
       ]
     },
     "compiled-strategy": {
-      "difference_count": 23,
+      "difference_count": 24,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/compilation_hash/minLength",
         "/properties/compilation_hash/pattern",
@@ -98,8 +144,9 @@
       ]
     },
     "named-filter-pack": {
-      "difference_count": 28,
+      "difference_count": 30,
       "difference_paths": [
+        "/$id",
         "/additionalProperties",
         "/$defs/FilterApplicability",
         "/$defs/FilterChecksum",
@@ -125,14 +172,16 @@
         "/properties/pack_id/minLength",
         "/properties/schema_version/const",
         "/properties/schema_version/type",
+        "/properties/title/minLength",
         "/properties/validated_on/$ref",
         "/properties/validated_on/type",
         "/properties/version/minLength"
       ]
     },
     "native-search-strategy": {
-      "difference_count": 39,
+      "difference_count": 40,
       "difference_paths": [
+        "/$id",
         "/additionalProperties",
         "/$defs/DateLimit",
         "/$defs/NativeNormalisationState",
@@ -175,9 +224,10 @@
       ]
     },
     "provider-manifest": {
-      "difference_count": 18,
+      "difference_count": 19,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/allowed_hosts/uniqueItems",
         "/properties/allowed_hosts/items/minLength",
@@ -198,9 +248,10 @@
       ]
     },
     "provider-page": {
-      "difference_count": 15,
+      "difference_count": 16,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/diagnostics/default",
         "/properties/diagnostics/propertyNames",
@@ -218,9 +269,10 @@
       ]
     },
     "search-run": {
-      "difference_count": 15,
+      "difference_count": 16,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/completed_at/oneOf",
         "/properties/completed_at/type",
@@ -238,9 +290,10 @@
       ]
     },
     "search-strategy": {
-      "difference_count": 22,
+      "difference_count": 23,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/dialect/$ref",
         "/properties/dialect/oneOf",
@@ -265,9 +318,10 @@
       ]
     },
     "source-receipt": {
-      "difference_count": 33,
+      "difference_count": 34,
       "difference_paths": [
         "/$defs",
+        "/$id",
         "/additionalProperties",
         "/properties/cache_hits/format",
         "/properties/cache_writes/format",

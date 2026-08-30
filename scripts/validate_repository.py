@@ -56,6 +56,7 @@ TEXT_SUFFIXES = {
 }
 SKIP_PARTS = {
     ".git",
+    "node_modules",
     "target",
     "__pycache__",
     ".pytest_cache",

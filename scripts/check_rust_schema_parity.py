@@ -15,16 +15,39 @@ REPORT = ROOT / "contracts" / "compatibility" / "rust-schema-parity.json"
 
 
 def canonicalise(value: Any) -> Any:
-    """Remove annotation-only keys while retaining validation semantics."""
-    if isinstance(value, dict):
-        return {
-            key: canonicalise(item)
-            for key, item in sorted(value.items())
-            if key not in {"$id", "$schema", "description", "title"}
-        }
-    if isinstance(value, list):
-        return [canonicalise(item) for item in value]
-    return value
+    """Remove schema annotations, never property names or literal instance data.
+
+    Dialect and reference-base keywords remain significant. Unknown keyword data
+    is preserved conservatively rather than assumed to contain nested schemas.
+    """
+    if not isinstance(value, dict):
+        return value
+    schema_maps = {"$defs", "definitions", "properties", "patternProperties", "dependentSchemas"}
+    schema_values = {"additionalProperties", "unevaluatedProperties", "propertyNames",
+                     "contains", "if", "then", "else", "not", "additionalItems",
+                     "unevaluatedItems", "contentSchema"}
+    schema_arrays = {"allOf", "anyOf", "oneOf", "prefixItems"}
+    result = {}
+    for key, item in sorted(value.items()):
+        if key in {"title", "description"}:
+            continue
+        if key in schema_maps and isinstance(item, dict):
+            result[key] = {name: canonicalise(schema) for name, schema in sorted(item.items())}
+        elif key == "dependencies" and isinstance(item, dict):
+            result[key] = {name: canonicalise(schema) if isinstance(schema, dict) else schema
+                           for name, schema in sorted(item.items())}
+        elif key in schema_values or (key == "items" and not isinstance(item, list)):
+            result[key] = canonicalise(item)
+        elif (key in schema_arrays or key == "items") and isinstance(item, list):
+            result[key] = [canonicalise(schema) for schema in item]
+        else:
+            result[key] = item
+    return result
+
+
+def semantic_digest(schema: Any) -> str:
+    encoded = json.dumps(canonicalise(schema), sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
 def difference_paths(left: Any, right: Any, path: str = "") -> list[str]:
@@ -84,6 +107,7 @@ def main() -> int:
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     paths = {entry["id"]: entry["schema"] for entry in catalog["entries"]}
     mismatches: dict[str, list[str]] = {}
+    compared_schemas: dict[str, dict[str, str]] = {}
     for contract_id, generated_schema in generated.items():
         schema_path = paths.get(contract_id)
         if schema_path is None:
@@ -92,6 +116,10 @@ def main() -> int:
         canonical = json.loads((ROOT / schema_path).read_text(encoding="utf-8"))
         generated_semantics = canonicalise(generated_schema)
         canonical_semantics = canonicalise(canonical)
+        compared_schemas[contract_id] = {
+            "canonical_sha256": semantic_digest(canonical),
+            "generated_sha256": semantic_digest(generated_schema),
+        }
         if generated_semantics != canonical_semantics:
             mismatches[contract_id] = difference_paths(
                 generated_semantics, canonical_semantics
@@ -105,6 +133,7 @@ def main() -> int:
             "binding_generation": "canonical_json_schema",
         },
         "registered_roots": len(generated),
+        "compared_schemas": compared_schemas,
         "exact_semantic_parity": not mismatches,
         "contracts": {
             contract_id: {

@@ -5,7 +5,7 @@
   "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/01-contract-catalog/spec.md#scope",
-  "claim_boundary": "All 68 canonical schemas/examples and exact digests are checked, contract-only Python and TypeScript types are deterministically generated and compiler-import checked, and 10 explicitly Rust-owned roots are compared with all 246 observed validation-shape differences recorded. Canonical JSON Schema retains validation and binding-generation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.",
+  "claim_boundary": "All 72 canonical schemas/examples and exact digests are checked; contract-only Python and TypeScript types are deterministically generated, statically type-checked and import-checked. Ten Rust-owned roots are compared with schema-aware normalization, content-bound digests and recorded differences. Canonical JSON Schema retains validation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.",
   "assertions": [
     {
       "assertion_id": "T01-A001",
@@ -59,7 +59,7 @@
         "conductor/tracks/01-contract-catalog/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and structurally diffed against canonical forms; all 246 observed validation-shape differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed."
+      "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and compared against canonical forms with schema-aware normalization and content-bound digests; observed differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed."
     },
     {
       "assertion_id": "T01-A003",
@@ -139,7 +139,7 @@
         "conductor/tracks/01-contract-catalog/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 68 canonical schemas and compiler-import checked; installation, clients, publication and downstream conformance remain Track 35 gates."
+      "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 72 canonical schemas, statically type-checked and import-checked; installation, clients, publication and downstream conformance remain Track 35 gates."
     },
     {
       "assertion_id": "T01-A006",

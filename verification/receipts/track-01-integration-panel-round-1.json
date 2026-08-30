@@ -1,0 +1,37 @@
+{
+  "schema_version": "org.searchright.agent-panel-review.v1",
+  "track_id": "01",
+  "reviewed_commit": "82d3b1e83e3f9b55cd7c9f3717fa154846f74462",
+  "reviewed_tree": "fb4102b31b33ea80d2b16a52e4066de0837b4802",
+  "base_commit": "1151dbbbe8692a68cb82586cbbe3bf6ef43eb637",
+  "authority": "advisory_agents_only_owner_decides",
+  "first_passes": [
+    {
+      "agent": "track01_integration_correctness",
+      "roles": ["implementation", "adversarial"],
+      "vote": "recommend_revise",
+      "findings": ["TS-SIBLINGS", "PY-MAPS", "PARITY-CONTENT"]
+    },
+    {
+      "agent": "track01_integration_governance",
+      "roles": ["methodology", "security_safety"],
+      "vote": "recommend_revise",
+      "findings": ["PARITY-NORMALIZATION", "BINDING-TYPECHECK"]
+    },
+    {
+      "agent": "track01_integration_testing",
+      "roles": ["testing", "ci"],
+      "vote": "recommend_revise",
+      "findings": ["PARITY-NORMALIZATION", "PARITY-CONTENT", "PARITY-CI"]
+    }
+  ],
+  "findings": {
+    "TS-SIBLINGS": "P2: TypeScript alternatives discard required sibling object fields.",
+    "PY-MAPS": "P2: Python map-only objects become empty TypedDict declarations.",
+    "PARITY-CONTENT": "P2: Difference paths alone do not detect changed constraint values at existing mismatch paths.",
+    "PARITY-NORMALIZATION": "P2: Recursive annotation removal discards real property names and literal instance data.",
+    "BINDING-TYPECHECK": "P2: Syntax/import checks do not establish the claimed static type correctness.",
+    "PARITY-CI": "P2: PR CI does not execute the compiled parity freshness checker."
+  },
+  "validation_boundary": "Read-only first passes; no Cargo or file edits by reviewers. Parent owns remediation and full verification. This receipt does not approve archival, merge or release."
+}

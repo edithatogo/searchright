@@ -8,7 +8,7 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-  - [x] Review Fix: Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references. (`67c0161`)
+  - Review fix `67c0161`: Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references.
 
 ## Completion and evidence contract
 

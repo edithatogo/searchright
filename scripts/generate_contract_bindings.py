@@ -55,7 +55,9 @@ def collect_python_objects(
 ) -> None:
     if not isinstance(schema, dict):
         return
-    if schema.get("type") == "object" or "properties" in schema:
+    if "properties" in schema or (
+        schema.get("type") == "object" and schema.get("additionalProperties") is False
+    ):
         objects[path] = (name, schema)
         for field_name, field_schema in sorted(schema.get("properties", {}).items()):
             collect_python_objects(
@@ -153,7 +155,11 @@ def typescript_type(schema: Any, references: dict[str, str]) -> str:
         return " | ".join(ts_literal(value) for value in schema["enum"])
     variants = schema.get("oneOf") or schema.get("anyOf")
     if isinstance(variants, list):
-        return " | ".join(dict.fromkeys(typescript_type(item, references) for item in variants))
+        union = " | ".join(dict.fromkeys(typescript_type(item, references) for item in variants))
+        base = {key: value for key, value in schema.items() if key not in {"oneOf", "anyOf"}}
+        if any(key in base for key in ("type", "properties", "required", "$ref")):
+            return f"({typescript_type(base, references)}) & ({union})"
+        return union
     kind = schema.get("type")
     if isinstance(kind, list):
         return " | ".join(
@@ -169,13 +175,13 @@ def typescript_type(schema: Any, references: dict[str, str]) -> str:
         return "null"
     if kind == "array":
         return f"ReadonlyArray<{typescript_type(schema.get('items', {}), references)}>"
-    if kind == "object" or "properties" in schema:
+    if kind == "object" or "properties" in schema or "required" in schema:
         properties = schema.get("properties", {})
         required = set(schema.get("required", []))
         fields = [
             f"readonly {json.dumps(name)}{'?' if name not in required else ''}: "
             f"{typescript_type(value, references)};"
-            for name, value in sorted(properties.items())
+            for name, value in sorted((properties | {name: {} for name in required - properties.keys()}).items())
         ]
         additional = schema.get("additionalProperties")
         if isinstance(additional, dict):

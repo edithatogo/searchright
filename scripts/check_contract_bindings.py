@@ -17,7 +17,12 @@ CATALOG = ROOT / "contracts/schema-catalog.json"
 def main() -> int:
     contract_count = len(json.loads(CATALOG.read_text(encoding="utf-8"))["entries"])
     commands = [
+        [sys.executable, "tests/test_contract_generation.py"],
         [sys.executable, "scripts/generate_contract_bindings.py", "--check"],
+        ["node", "requirements/bindings/node_modules/typescript/bin/tsc",
+         "--project", "tests/fixtures/bindings/tsconfig.json"],
+        ["node", "requirements/bindings/node_modules/pyright/index.js",
+         "--project", "tests/fixtures/bindings/pyrightconfig.json"],
         [
             "node",
             "--experimental-strip-types",
@@ -79,6 +84,28 @@ def main() -> int:
         if process.returncode != 0:
             errors.append(f"binding command failed: {' '.join(command[:3])}")
 
+    negative_command = [
+        "node", "requirements/bindings/node_modules/pyright/index.js",
+        "--project", "tests/fixtures/bindings/pyrightconfig.json", "--outputjson",
+        "tests/fixtures/bindings/invalid_map.py",
+    ]
+    negative = subprocess.run(negative_command, cwd=ROOT, check=False,
+                              capture_output=True, text=True)
+    try:
+        diagnostics = json.loads(negative.stdout).get("generalDiagnostics", [])
+    except json.JSONDecodeError:
+        diagnostics = []
+    rejected_as_expected = (
+        negative.returncode == 1 and len(diagnostics) == 1
+        and diagnostics[0].get("rule") == "reportAssignmentType"
+        and diagnostics[0].get("range", {}).get("start", {}).get("line") == 2
+        and Path(diagnostics[0].get("file", "")).name == "invalid_map.py"
+    )
+    results.append({"command": negative_command, "returncode": negative.returncode,
+                    "expected_rejection": rejected_as_expected})
+    if not rejected_as_expected:
+        errors.append("Python dictionary fixture did not reject the invalid value type")
+
     receipt = {
         "schema_version": "org.searchright.contract-binding-check.v1",
         "status": "failed" if errors else "passed",
@@ -87,7 +114,7 @@ def main() -> int:
         "checks": results,
         "errors": errors,
         "limitations": [
-            "Contract-only syntax and import evidence; package installation, client behaviour, publication and downstream conformance remain Track 35 gates."
+            "Contract-only static typing, assignment fixtures, syntax and import evidence; JSON Schema validation, package installation, client behaviour, publication and downstream conformance remain separate gates."
         ],
     }
     print(json.dumps(receipt, indent=2, sort_keys=True))

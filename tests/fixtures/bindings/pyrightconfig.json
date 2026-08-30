@@ -1,0 +1,6 @@
+{
+  "include": ["../../../sdk/python/searchright_contracts", "contracts.py"],
+  "extraPaths": ["../../../sdk/python"],
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "standard"
+}

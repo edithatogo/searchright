@@ -44,7 +44,7 @@
             ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
-            "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and structurally diffed against canonical forms; all 246 observed validation-shape differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed.",
+            "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and compared against canonical forms with schema-aware normalization and content-bound digests; observed differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed.",
             "state": "source_implemented"
         },
         "T01-A003": {
@@ -111,7 +111,7 @@
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             ],
-            "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 68 canonical schemas and compiler-import checked; installation, clients, publication and downstream conformance remain Track 35 gates.",
+            "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 72 canonical schemas, statically type-checked and import-checked; installation, clients, publication and downstream conformance remain Track 35 gates.",
             "state": "source_implemented"
         },
         "T01-A006": {

@@ -9,7 +9,7 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_PARTS = {".git", "target", "dist", "__pycache__", ".pytest_cache"}
+EXCLUDED_PARTS = {".git", "target", "dist", "__pycache__", ".pytest_cache", "node_modules"}
 PATTERNS: dict[str, re.Pattern[str]] = {
     "private_key_pem": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----"),
     "aws_access_key": re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b"),

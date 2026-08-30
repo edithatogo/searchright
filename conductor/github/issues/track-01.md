@@ -28,6 +28,6 @@ Maintain versioned schemas, examples, standards packs and Rust wire types from o
 
 ## Claim boundary
 
-All 68 canonical schemas/examples and exact digests are checked, contract-only Python and TypeScript types are deterministically generated and compiler-import checked, and 10 explicitly Rust-owned roots are compared with all 246 observed validation-shape differences recorded. Canonical JSON Schema retains validation and binding-generation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.
+All 72 canonical schemas/examples and exact digests are checked; contract-only Python and TypeScript types are deterministically generated, statically type-checked and import-checked. Ten Rust-owned roots are compared with schema-aware normalization, content-bound digests and recorded differences. Canonical JSON Schema retains validation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

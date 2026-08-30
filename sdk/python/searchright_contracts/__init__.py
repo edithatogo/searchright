@@ -173,7 +173,7 @@ ArchitecturePolicy = TypedDict(
     'final_eligibility_authority_source_roots': Required['list[str]'],
     'forbidden_dependency_prefixes_for_neutral_crates': Required['list[str]'],
     'forbidden_internal_edges': Required['list[ArchitecturePolicyForbiddenInternalEdgesItem]'],
-    'network_dependencies': Required['ArchitecturePolicyNetworkDependencies'],
+    'network_dependencies': Required['dict[str, list[str]]'],
     'neutral_crates': Required['list[str]'],
     'provider_endpoint_source_roots': Required['list[str]'],
     'public_package_default': Required["Literal['deny']"],
@@ -196,13 +196,6 @@ ArchitecturePolicyForbiddenInternalEdgesItem = TypedDict(
     'from': Required['str'],
     'reason': Required['str'],
     'to': Required['str'],
-    },
-)
-
-ArchitecturePolicyNetworkDependencies = TypedDict(
-    'ArchitecturePolicyNetworkDependencies',
-    {
-
     },
 )
 
@@ -252,15 +245,8 @@ AuditEventRegistryEventTypesItem = TypedDict(
     'event_type': Required['str'],
     'legacy_unversioned_payload_version': Required['int'],
     'migrations': Required['list[str]'],
-    'payload_field_types': Required['AuditEventRegistryEventTypesItemPayloadFieldTypes'],
+    'payload_field_types': Required["dict[str, Literal['boolean', 'integer', 'string']]"],
     'versions': Required['list[AuditEventRegistryEventTypesItemVersionsItem]'],
-    },
-)
-
-AuditEventRegistryEventTypesItemPayloadFieldTypes = TypedDict(
-    'AuditEventRegistryEventTypesItemPayloadFieldTypes',
-    {
-
     },
 )
 
@@ -349,17 +335,10 @@ BibliographicRecordIdentifiers = TypedDict(
     'doi': NotRequired['str | None'],
     'isbn': NotRequired['str | None'],
     'openalex': NotRequired['str | None'],
-    'other': NotRequired['BibliographicRecordIdentifiersOther'],
+    'other': NotRequired['dict[str, str]'],
     'pmcid': NotRequired['str | None'],
     'pmid': NotRequired['str | None'],
     'trial_registration': NotRequired['str | None'],
-    },
-)
-
-BibliographicRecordIdentifiersOther = TypedDict(
-    'BibliographicRecordIdentifiersOther',
-    {
-
     },
 )
 
@@ -689,26 +668,12 @@ EvidenceDebt = TypedDict(
 EvidenceDebtAssertions = TypedDict(
     'EvidenceDebtAssertions',
     {
-    'by_mapping_confidence': Required['EvidenceDebtAssertionsByMappingConfidence'],
-    'by_state': Required['EvidenceDebtAssertionsByState'],
+    'by_mapping_confidence': Required['dict[str, int]'],
+    'by_state': Required['dict[str, int]'],
     'open_gate_entries': Required['int'],
     'total': Required['int'],
     'track_level_only': Required['int'],
     'without_symbol_mapping': Required['int'],
-    },
-)
-
-EvidenceDebtAssertionsByMappingConfidence = TypedDict(
-    'EvidenceDebtAssertionsByMappingConfidence',
-    {
-
-    },
-)
-
-EvidenceDebtAssertionsByState = TypedDict(
-    'EvidenceDebtAssertionsByState',
-    {
-
     },
 )
 
@@ -758,15 +723,8 @@ EvidenceDebtStaticGates = TypedDict(
 EvidenceDebtTracks = TypedDict(
     'EvidenceDebtTracks',
     {
-    'by_state': Required['EvidenceDebtTracksByState'],
+    'by_state': Required['dict[str, int]'],
     'total': Required['int'],
-    },
-)
-
-EvidenceDebtTracksByState = TypedDict(
-    'EvidenceDebtTracksByState',
-    {
-
     },
 )
 
@@ -967,18 +925,11 @@ GithubIssueHierarchyV2NodesItem = TypedDict(
     'labels': Required['list[str]'],
     'parent_key': Required['str | None'],
     'phase_number': Required['int | None'],
-    'project_fields': Required['GithubIssueHierarchyV2NodesItemProjectFields'],
+    'project_fields': Required['dict[str, str | int]'],
     'status': Required["Literal['prepared_not_synced']"],
     'task_number': Required['int | None'],
     'title': Required['str'],
     'track_id': Required['str | None'],
-    },
-)
-
-GithubIssueHierarchyV2NodesItemProjectFields = TypedDict(
-    'GithubIssueHierarchyV2NodesItemProjectFields',
-    {
-
     },
 )
 
@@ -1733,18 +1684,11 @@ ProviderManifest = TypedDict(
 ProviderPage = TypedDict(
     'ProviderPage',
     {
-    'diagnostics': Required['ProviderPageDiagnostics'],
+    'diagnostics': Required['dict[str, JsonValue]'],
     'next_cursor': Required['str | None'],
     'records': Required['list[BibliographicRecord]'],
     'schema_version': Required["Literal['org.searchright.provider-page.v1']"],
     'total_available': Required['int | None'],
-    },
-)
-
-ProviderPageDiagnostics = TypedDict(
-    'ProviderPageDiagnostics',
-    {
-
     },
 )
 
@@ -2096,15 +2040,8 @@ ReviewPlanQuestion = TypedDict(
 ReviewPlanQuestionFramework = TypedDict(
     'ReviewPlanQuestionFramework',
     {
-    'elements': Required['ReviewPlanQuestionFrameworkElements'],
+    'elements': Required['dict[str, str]'],
     'kind': Required['ReviewPlanFrameworkKind'],
-    },
-)
-
-ReviewPlanQuestionFrameworkElements = TypedDict(
-    'ReviewPlanQuestionFrameworkElements',
-    {
-
     },
 )
 
@@ -2145,7 +2082,7 @@ ReviewStateSnapshot = TypedDict(
     'ReviewStateSnapshot',
     {
     'claim_boundary': Required['str'],
-    'event_type_counts': Required['ReviewStateSnapshotEventTypeCounts'],
+    'event_type_counts': Required['dict[str, int]'],
     'last_event_id': Required['str'],
     'plan_validated': Required['bool'],
     'protocol_amendments': Required['list[str]'],
@@ -2162,27 +2099,13 @@ ReviewStateSnapshot = TypedDict(
     },
 )
 
-ReviewStateSnapshotEventTypeCounts = TypedDict(
-    'ReviewStateSnapshotEventTypeCounts',
-    {
-
-    },
-)
-
 ReviewStateSnapshotScreening = TypedDict(
     'ReviewStateSnapshotScreening',
     {
     'advisory_recommendation_count': Required['int'],
-    'final_decision_counts': Required['ReviewStateSnapshotScreeningFinalDecisionCounts'],
+    'final_decision_counts': Required['dict[str, int]'],
     'final_decisions': Required['list[ReviewStateSnapshotScreeningFinalDecisionsItem]'],
     'rejected_final_authority_event_ids': Required['list[str]'],
-    },
-)
-
-ReviewStateSnapshotScreeningFinalDecisionCounts = TypedDict(
-    'ReviewStateSnapshotScreeningFinalDecisionCounts',
-    {
-
     },
 )
 
@@ -2732,19 +2655,16 @@ __all__ = [
     'ArchitecturePolicy',
     'ArchitecturePolicyExternalWriteScriptsItem',
     'ArchitecturePolicyForbiddenInternalEdgesItem',
-    'ArchitecturePolicyNetworkDependencies',
     'AuditEvent',
     'AuditEventActor',
     'AuditEventRegistry',
     'AuditEventRegistryEventTypesItem',
-    'AuditEventRegistryEventTypesItemPayloadFieldTypes',
     'AuditEventRegistryEventTypesItemVersionsItem',
     'BackupManifest',
     'BenchmarkReport',
     'BenchmarkReportMetric',
     'BibliographicRecord',
     'BibliographicRecordIdentifiers',
-    'BibliographicRecordIdentifiersOther',
     'BibliographicRecordKindVariant2',
     'CompiledStrategy',
     'CompiledStrategyDialectVariant2',
@@ -2773,15 +2693,12 @@ __all__ = [
     'DocumentEvidenceSpan',
     'EvidenceDebt',
     'EvidenceDebtAssertions',
-    'EvidenceDebtAssertionsByMappingConfidence',
-    'EvidenceDebtAssertionsByState',
     'EvidenceDebtMaturity',
     'EvidenceDebtPriorityQueueItem',
     'EvidenceDebtProviderPolicy',
     'EvidenceDebtPublication',
     'EvidenceDebtStaticGates',
     'EvidenceDebtTracks',
-    'EvidenceDebtTracksByState',
     'ExecutionEnvelope',
     'GateCatalog',
     'GateCatalogDefaultCapabilities',
@@ -2798,7 +2715,6 @@ __all__ = [
     'GithubIssueHierarchyNodesItem',
     'GithubIssueHierarchyV2',
     'GithubIssueHierarchyV2NodesItem',
-    'GithubIssueHierarchyV2NodesItemProjectFields',
     'GithubProject',
     'GithubProjectFieldsItem',
     'GithubProjectSync',
@@ -2863,7 +2779,6 @@ __all__ = [
     'ProviderComponentTrustPolicyTrustedKeysItem',
     'ProviderManifest',
     'ProviderPage',
-    'ProviderPageDiagnostics',
     'ProviderPolicySet',
     'ProviderPolicySetProvidersItem',
     'QueryAst',
@@ -2897,16 +2812,13 @@ __all__ = [
     'ReviewPlanProtocolVariant2',
     'ReviewPlanQuestion',
     'ReviewPlanQuestionFramework',
-    'ReviewPlanQuestionFrameworkElements',
     'ReviewPlanReviewKind',
     'ReviewPlanReviewKindVariant2',
     'ReviewPlanSource',
     'ReviewPlanSourceKind',
     'ReviewPlanSourceKindVariant2',
     'ReviewStateSnapshot',
-    'ReviewStateSnapshotEventTypeCounts',
     'ReviewStateSnapshotScreening',
-    'ReviewStateSnapshotScreeningFinalDecisionCounts',
     'ReviewStateSnapshotScreeningFinalDecisionsItem',
     'ReviewStateSnapshotSearchRunsItem',
     'SchemaMigrationPlan',
