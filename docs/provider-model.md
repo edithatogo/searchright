@@ -1,5 +1,10 @@
 # Provider model
 
+Supplementary sources and manual methods are governed separately from live
+bibliographic providers. See [Supplementary discovery methods](supplementary-discovery.md)
+for the source catalogue, exact-method logging, coverage-risk matrix, and
+fixture-only OpenCitations boundary.
+
 A provider adapter translates a canonical strategy, executes an authorised query
 and returns records plus an evidence receipt. It does not decide eligibility or
 silently mutate canonical records.

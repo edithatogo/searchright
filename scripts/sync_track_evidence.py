@@ -31,7 +31,7 @@ def task_counts(entry: dict) -> dict[int, int]:
     )
     declared = entry.get("phase_3_task_count")
     phase_three = int(declared) if isinstance(declared, int) and declared > 0 else max(1, higher_evidence_tasks)
-    return {1: 1, 2: 2, 3: phase_three, 4: 4}
+    return {1: 1, 2: 2, 3: phase_three, 4: 4 + len(entry.get("additional_closeout_tasks", []))}
 
 
 def issue_keys(track_id: str, entry: dict) -> dict[str, object]:
@@ -202,6 +202,12 @@ def render_plan(entry: dict) -> str:
             "",
         ]
     )
+    # Explicit historical tasks retain their identities; ordinary review fixes
+    # remain nested under the existing review task and never renumber tracks.
+    for task in entry.get("additional_closeout_tasks", []):
+        lines.append(f"- [x] {task}")
+    if entry.get("additional_closeout_tasks"):
+        lines.append("")
     return "\n".join(lines)
 
 

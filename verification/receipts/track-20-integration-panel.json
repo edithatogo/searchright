@@ -1,0 +1,34 @@
+{
+  "track_id": "20",
+  "date": "2026-08-30",
+  "kind": "isolated_agent_advisory_review",
+  "original_track_head": "4f26d1136ea0575f1c0ed43bf5465479896212b8",
+  "integration_base": "9ad6ea8fc39ff622e5354323f93e153bf7a3527a",
+  "scope": "Bounded manual/fixture implementation and integration; not live-source, legal, empirical-recall or methodological-adequacy certification",
+  "requests": [
+    {"agent": "track20_correctness_review", "role": "Correctness, adversarial behavior and testing", "request": "Inspect graph support, depth, input-order determinism, resource ceilings, identifiers and API behavior without editing or running Cargo"},
+    {"agent": "track20_methodology_review", "role": "Methodology, governance and privacy", "request": "Assess SR-042/043 manual/fixture acceptance, source-specific reporting, authority boundaries and assertion-level test evidence without live execution"}
+  ],
+  "preserved_findings": [
+    {"severity": "P1", "finding": "Prior traversal propagated over-depth evidence and depended on edge order", "resolution": "Use shortest prefix/reverse distances to identify exactly the edges supporting bounded walks; exhaustive graph oracle passes"},
+    {"severity": "P1", "finding": "Fan-in/fan-out evidence amplification was not bounded by maximum_records", "resolution": "Select retained candidates before evidence materialisation; enforce shared work and evidence-membership budgets with whole-call failure"},
+    {"severity": "P2", "finding": "Citing identifiers admitted controls; seeds and identifier bytes were unbounded", "resolution": "Validate tokens, bound seed count, individual/aggregate identifier bytes and custom-method labels"},
+    {"severity": "P2", "finding": "Privacy screening omitted log/candidate identifiers and coverage rationales", "resolution": "Apply bounded identifier and sensitive-pattern screening; preserve its non-de-identification limitation; regression assertions pass"},
+    {"severity": "P2", "finding": "Contact and coverage assertions referenced a static checker that did not execute their behavior", "resolution": "Map exact runtime tests and add reciprocal execution/method mismatch/duplicate-log regressions"},
+    {"severity": "documentation", "finding": "New limits, bounded-walk semantics and agent/owner boundaries needed documentation", "resolution": "Document exact ceilings, whole-call errors, unchanged wire schema, historical simulation and owner-only decision authority"}
+  ],
+  "re_review": "Both reviewing agents reported no remaining blocking finding within their source-review scopes after fixes. They did not execute Cargo, validate live policies or authorize promotion.",
+  "additional_oracle": "Correctness reviewer independently compared the distance criterion with exhaustive walks on 1200 deterministic random graphs with 2-6 nodes, depths 1-5 and multiple seeds; all matched. This Python oracle is supplementary, not Rust execution evidence.",
+  "parent_validation": {
+    "commands": ["cargo test -p searchright-contracts -p searchright-discovery --locked", "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets --all-features --locked -- -D warnings"],
+    "exit_code": 0,
+    "contract_tests": 34,
+    "discovery_tests": 19,
+    "log_sha256": "6ac68bacdd2569783df87f1e8e3647b46329c3ef203a29edd875e925b74982ce"
+  },
+  "validated_source_sha256": {
+    "crates/searchright-discovery/src/lib.rs": "f6db78be86ae1b301d9160a919e186e1c2e11cbf9b5290c3b35bbd70d1dc9c0f",
+    "crates/searchright-contracts/src/discovery.rs": "5541445845923a64d5184c8589d1590aa069c7eba623f60962a9ee25a9423b2d"
+  },
+  "authority": "Historical simulated-panel receipts remain unchanged. New agent reviews are advisory; the owner alone decides promotion. Full-workspace, hosted and merged evidence remain separate."
+}

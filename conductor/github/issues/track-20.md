@@ -12,9 +12,9 @@ Represent bounded trial-register, repository, website, citation-chaining and con
 ## Contract
 
 - Horizon: `beta`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `compiler_verified`
 - Dependencies: `04, 05`
 - Requirements: `SR-042, SR-043`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Represent bounded trial-register, repository, website, citation-chaining and con
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Compiler-verified bounded source methods and deterministic fixtures only. No live-provider support, exhaustive discovery, legal approval, topic-specific adequacy, or human-methodology endorsement is claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

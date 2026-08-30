@@ -1271,36 +1271,70 @@
       "track_id": "19"
     },
     {
-      "blockers": [
+      "blockers": [],
+      "completed_higher_evidence_gates": [
         "Compile and run citation-chaining and supplementary-discovery scenarios.",
         "Add authorised source-specific live adapters or documented manual methods.",
-        "Review website and grey-literature methods with information specialists."
+        "Run a structured simulated information-specialist and grey-literature methodology panel while retaining its non-human limitation."
       ],
       "checks": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_broader_discovery.py",
+        "cargo test -p searchright-contracts -p searchright-discovery",
+        "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Compiler-verified bounded source methods and deterministic fixtures only. No live-provider support, exhaustive discovery, legal approval, topic-specific adequacy, or human-methodology endorsement is claimed.",
       "deliverables": [
         "crates/searchright-discovery/src/lib.rs",
         "crates/searchright-contracts/src/discovery.rs",
         "contracts/examples/discovery-run.yaml",
-        "docs/provider-model.md"
+        "contracts/fixtures/discovery-source-methods.json",
+        "contracts/fixtures/opencitations-forward.json",
+        "docs/provider-model.md",
+        "docs/supplementary-discovery.md",
+        "scripts/check_broader_discovery.py"
       ],
       "dependencies": [
         "04",
         "05"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "compiler_verified",
       "external_approval_required": false,
       "horizon": "beta",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Represent bounded trial-register, repository, website, citation-chaining and contact-search methods with explicit limits.",
       "requirements": [
         "SR-042",
         "SR-043"
       ],
       "slug": "broader-discovery",
-      "status": "partially_implemented",
+      "runtime_evidence": [
+        "verification/receipts/track-20-broader-discovery.json",
+        "verification/receipts/track-20-methodology-panel.json",
+        "verification/receipts/track-20-conductor-review.json",
+        "verification/receipts/track-20-integration-panel.json"
+      ],
+      "phase_3_task_count": 3,
+      "additional_closeout_tasks": [
+        "Replace delimiter-ambiguous non-cryptographic citation edge IDs with length-framed BLAKE3 identifiers and reject padded, control-bearing or oversized fixture identifiers (`d0e73ea`).",
+        "Reconcile the final review receipt, metadata dates, closeout fields and semantic archive lifecycle while retaining canonical paths and stable GitHub keys."
+      ],
+      "review_completed": true,
+      "review_fixes": [
+        "Replace delimiter-ambiguous non-cryptographic citation edge IDs with length-framed BLAKE3 identifiers and reject padded, control-bearing or oversized fixture identifiers (`d0e73ea`).",
+        "Reconcile the final review receipt, metadata dates, closeout fields and semantic archive lifecycle while retaining canonical paths and stable GitHub keys.",
+        "Resolve candidate evidence by bounded-walk distances, cap cumulative traversal work and output memberships, and verify order/depth semantics against an exhaustive small-graph oracle.",
+        "Enforce seed, identifier, aggregate-byte and custom-method limits; reject control-bearing citing tokens.",
+        "Screen manual log identifiers, candidate identifiers and coverage rationales, and map assertions to exact runtime tests.",
+        "Retain historical Track 20 closeout task IDs explicitly without growing other tracks when review fixes are added."
+      ],
+      "higher_evidence_completed": true,
+      "closeout_completed": true,
+      "lifecycle": "archived",
+      "archived_on": "2026-08-29",
+      "source_verified_on": "2026-08-29",
+      "updated": "2026-08-30",
+      "status": "source_implemented",
       "title": "Grey literature, registers and supplementary discovery",
       "track_id": "20"
     },

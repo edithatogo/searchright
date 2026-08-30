@@ -2052,9 +2052,11 @@ dependencies = [
 name = "searchright-discovery"
 version = "0.1.0-alpha.1"
 dependencies = [
+ "blake3",
  "schemars",
  "searchright-contracts",
  "serde",
+ "serde_json",
  "thiserror",
 ]
 

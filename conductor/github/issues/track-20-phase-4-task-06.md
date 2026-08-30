@@ -1,13 +1,13 @@
-<!-- searchright-issue-key: track-20-phase-3-task-01 -->
-# Track 20 / Phase 3 / Task 01
+<!-- searchright-issue-key: track-20-phase-4-task-06 -->
+# Track 20 / Phase 4 / Task 06
 
-Parent phase key: `track-20-phase-3`
+Parent phase key: `track-20-phase-4`
 Conductor plan: `conductor/tracks/20-broader-discovery/plan.md`
 Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Compile and run citation-chaining and supplementary-discovery scenarios.
+- [x] Reconcile the final review receipt, metadata dates, closeout fields and semantic archive lifecycle while retaining canonical paths and stable GitHub keys.
 
 ## Completion and evidence contract
 

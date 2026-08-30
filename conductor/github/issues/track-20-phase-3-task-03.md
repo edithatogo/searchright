@@ -3,11 +3,11 @@
 
 Parent phase key: `track-20-phase-3`
 Conductor plan: `conductor/tracks/20-broader-discovery/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Review website and grey-literature methods with information specialists.
+- [x] Run a structured simulated information-specialist and grey-literature methodology panel while retaining its non-human limitation.
 
 ## Completion and evidence contract
 

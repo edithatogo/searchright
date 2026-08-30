@@ -28,6 +28,7 @@ COMMANDS = [
     [sys.executable, "scripts/reduce_review_events.py", "--self-test"],
     [sys.executable, "scripts/recovery_rehearsal.py", "--self-test"],
     [sys.executable, "scripts/check_methodology_benchmarks.py"],
+    [sys.executable, "scripts/check_broader_discovery.py"],
     [sys.executable, "scripts/check_licence_firewall.py"],
     [sys.executable, "scripts/check_companion_change_packets.py"],
     [sys.executable, "scripts/check_portfolio_project.py"],
