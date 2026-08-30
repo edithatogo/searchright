@@ -1,6 +1,12 @@
 {
   "schema_version": "org.searchright.query-dialect-loss-matrix.v1",
   "claim_boundary": "This matrix declares the bounded syntax exercised by project-authored fixtures. It is not a claim of complete database syntax, retrieval equivalence, or methodological validation.",
+  "verification": {
+    "semantic_parser": "evidence_search_core::native::parse_native_semantic_strategy",
+    "compile_parse_compile_property": "prop_declared_dialect_subset_compile_parse_compile_is_stable",
+    "exact_source_preservation": "checked_in_native_corpus_is_source_preserving",
+    "scope": "declared_project_authored_subsets"
+  },
   "dialects": [
     {
       "dialect": "pub_med",

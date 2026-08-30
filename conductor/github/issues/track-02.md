@@ -12,9 +12,9 @@ Deliver deterministic, reviewable query translation with explicit fidelity and l
 ## Contract
 
 - Horizon: `foundation`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `external_evidence_required`
+- Implementation: `source_implemented`
+- Evidence: `compiler_verified`
 - Dependencies: `01`
 - Requirements: `SR-005, SR-006, SR-007`
 - External approval required: `true`
@@ -28,6 +28,6 @@ Deliver deterministic, reviewable query translation with explicit fidelity and l
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

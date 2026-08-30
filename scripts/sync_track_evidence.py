@@ -164,13 +164,31 @@ def render_plan(entry: dict) -> str:
             "",
         ]
     )
-    for blocker in entry["blockers"]:
-        lines.append(f"- [ ] {blocker}")
-    if entry.get("higher_evidence_completed", False):
-        for gate in entry.get("completed_higher_evidence_gates", []):
-            lines.append(f"- [x] {gate}")
-    elif not entry["blockers"]:
-        lines.append("- [ ] Promote evidence only when a newer reproducible receipt justifies it.")
+    ordered_gates = entry.get("higher_evidence_task_order")
+    if ordered_gates is not None:
+        completed = entry.get("completed_higher_evidence_gates", [])
+        expected = entry["blockers"] + completed
+        if (
+            not isinstance(ordered_gates, list)
+            or any(not isinstance(gate, str) for gate in ordered_gates)
+            or len(set(ordered_gates)) != len(ordered_gates)
+            or len(set(expected)) != len(expected)
+            or set(ordered_gates) != set(expected)
+            or len(ordered_gates) != task_counts(entry)[3]
+            or (completed and not entry.get("higher_evidence_completed", False))
+        ):
+            raise ValueError("ordered higher-evidence tasks must cover each declared gate exactly once")
+        for gate in ordered_gates:
+            mark = "x" if gate in completed else " "
+            lines.append(f"- [{mark}] {gate}")
+    else:
+        for blocker in entry["blockers"]:
+            lines.append(f"- [ ] {blocker}")
+        if entry.get("higher_evidence_completed", False):
+            for gate in entry.get("completed_higher_evidence_gates", []):
+                lines.append(f"- [x] {gate}")
+        elif not entry["blockers"]:
+            lines.append("- [ ] Promote evidence only when a newer reproducible receipt justifies it.")
     lines.extend(
         [
             "",

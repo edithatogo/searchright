@@ -8,11 +8,11 @@
     },
     "by_state": {
       "external_evidence_required": 10,
-      "partially_implemented": 93,
+      "partially_implemented": 87,
       "scaffolded": 46,
-      "source_implemented": 51
+      "source_implemented": 57
     },
-    "open_gate_entries": 373,
+    "open_gate_entries": 371,
     "total": 200,
     "track_level_only": 85,
     "without_symbol_mapping": 109
@@ -22,10 +22,10 @@
   "launch_preparation": {
     "by_progress": {
       "completed": 1,
-      "not_started": 13,
-      "partially_evidenced": 2
+      "not_started": 12,
+      "partially_evidenced": 3
     },
-    "evidence_receipts": 7,
+    "evidence_receipts": 9,
     "external_gates": 11,
     "status": "not_ready",
     "work_packages": 16
@@ -120,9 +120,9 @@
   "tracks": {
     "by_state": {
       "external_evidence_required": 3,
-      "partially_implemented": 20,
+      "partially_implemented": 19,
       "scaffolded": 7,
-      "source_implemented": 8
+      "source_implemented": 9
     },
     "total": 38
   }

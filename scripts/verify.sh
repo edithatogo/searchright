@@ -7,6 +7,7 @@ if [[ "${1:-}" == "--static-only" ]]; then
   static_only=true
 fi
 
+python3 -m unittest discover -s tests
 python3 scripts/run_static_harness.py
 
 if $static_only; then

@@ -1,0 +1,86 @@
+{
+  "schema_version": "org.searchright.agent-panel-record.v1",
+  "track_id": "02",
+  "date": "2026-08-31",
+  "integration_base": "e52ab9125ea84de0fcab85554594cd441bb9610a",
+  "preserved_source_revision": "4faaae96020afe58396b7c40b18fcb1fe13bb151",
+  "import_scope": "Only Track 02 changes after 00fb03a; older Track 01 implementation was not imported.",
+  "first_pass_source_sha256": {
+    "crates/evidence-search-core/src/native.rs": "50780997b695c061234b4d8c1f84e608222e7e31103da729c80fb8441d569b25",
+    "crates/evidence-search-core/tests/property_tests.rs": "c3331388dc41e0760c709437470ecc07bc262c3f0ce1dcf221b915acdc1c87e7",
+    "contracts/query-corpus/index.json": "03122aa5a48a8ec59afc7fa7090b322199786adea64a20065831016a807ecce5",
+    "contracts/query-corpus/loss-matrix.json": "214cc23e5b5b1c7160b9868cd65886494e5747d5d1d83e1545aa7153dd7fc3ea",
+    "contracts/examples/named-filter-pack.json": "ea38a170e06ab4ca8ff82b77c587d37f90a1bd093edb62aba1646420c6663c98"
+  },
+  "protocol": "Three isolated first-pass agents reviewed without reading sibling outputs. Their sealed findings were shared only after first passes for remediation. No sealed benchmark labels, live providers or external writes were used by reviewers.",
+  "sealed_first_passes": [
+    {
+      "agent": "track02_correctness",
+      "role": "implementation and testing",
+      "method": "Read-only source review plus direct rustc probes using an existing contracts rlib; not full workspace verification.",
+      "findings": [
+        "P1: unsupported limit to humans silently disappeared while normalization reported Complete.",
+        "P1: a limit targeting a non-last set was applied to the last expression instead.",
+        "P1: unknown PubMed field tags silently became All fields.",
+        "P1: foreign dialect wrappers were accepted inside an otherwise admitted expression.",
+        "P1: an undefined numeric set reference became a literal search term.",
+        "P1: mixed byte/character cursor arithmetic could drop clauses following Unicode terms.",
+        "P1 source-confirmed: Scopus W/n proximity ordering disagreed with compiler semantics.",
+        "P1 source-confirmed: uppercase CINAHL MH prefix could contaminate heading text.",
+        "Coverage gap: two ASCII leaves and rendering equality did not test nested Boolean semantics, Unicode, fields, limits, headings or set references."
+      ]
+    },
+    {
+      "agent": "track02_safety",
+      "role": "security and adversarial review",
+      "method": "Read-only source analysis; no native execution in first pass.",
+      "findings": [
+        "Introduced P1: substring-based admission accepts foreign provider groups without per-token dialect checks.",
+        "Pre-existing: no bounded nesting, token or set-expansion limits before recursive parsing and cloning.",
+        "Pre-existing: byte/character cursor mismatch can omit later Unicode-adjacent clauses.",
+        "Pre-existing: unsupported limit commands can be ignored while reporting Complete."
+      ]
+    },
+    {
+      "agent": "track02_methodology",
+      "role": "methodology and acceptance",
+      "method": "Read-only corpus, contract, loss matrix and Conductor review; no empirical search or provider-currency assessment.",
+      "findings": [
+        "P2: active second-person reviewer wording conflicts with isolated-agent-panel plus accountable-owner governance.",
+        "P2: loss-matrix gate permits duplicate dialect rows and mismatched fixture/dialect bindings.",
+        "Named-filter contract metadata validation cannot authenticate evidence or qualify the synthetic fixture as a real validated filter.",
+        "The seven syntax fixtures lack a topic protocol, eligibility criteria and empirical retrieval outcomes; this panel cannot establish topic-specific PRESS adequacy, recall or equivalence."
+      ]
+    }
+  ],
+  "dissent_and_reservations": [
+    "The methodology reviewer supports bounded source delivery, not archival or methodological promotion while required materials and owner decisions are absent.",
+    "Historical compiler receipts are not fresh validation of integration fixes.",
+    "Passing round trips do not establish vendor-language completeness or cross-database retrieval equivalence."
+  ],
+  "remediation_status": "focused_validation_and_rereview_passed_full_validation_pending",
+  "rereview": [
+    "Correctness re-review verified the original eight issues and found a further CINAHL heading-token tail defect; that finding was retained and fixed, with five additional regressions.",
+    "Safety reviewer found no blocking findings in the final quotation fix at the final native source digest below.",
+    "Methodology re-review found no substantive governance waiver; its requested wording cleanup was applied and exact-source validation remains required before delivery."
+  ],
+  "final_source_sha256": {
+    "crates/evidence-search-core/src/native.rs": "1dbd603efb4735b3af7e7c78317d3cdc9be43915b22c0f94236643be4fbf4b07",
+    "crates/evidence-search-core/tests/property_tests.rs": "dcebb6b29b2f2143e2cace33cc3c5e2ca7be85614b67eec0aea8ffd6596cc679",
+    "crates/evidence-search-core/tests/native_adversarial_tests.rs": "5786c11d6f744089559eb3ad627749e6cd228759f3d98e7f1c6db210a4725039"
+  },
+  "parent_focused_validation": {
+    "core_unit_tests_passed": 55,
+    "independent_adversarial_tests_passed": 13,
+    "property_tests_passed": 5,
+    "strict_clippy_exit_code": 0,
+    "python_regression_tests_passed": 46,
+    "corpus_fixtures_passed": 7,
+    "focused_log_sha256": "ee29df03e1f510569a8bb775eaadacd1555da69cbff4117fb1458a4a85c03128",
+    "python_log_sha256": "06d248e8dc7126edd92c22601de50bd917b3f5d646e215e197a773408e83838c",
+    "corpus_log_sha256": "cfcfe79766282dd55afe3ba31b797d8855b4f9b1c17bc64f69b252dfdd76b712"
+  },
+  "owner_decision": "pending",
+  "archive_eligible": false,
+  "authority_boundary": "Agents advise. Only the accountable owner decides promotion. Historical second-person review wording is superseded, not historical evidence or unresolved scientific and rights requirements."
+}

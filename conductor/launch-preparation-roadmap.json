@@ -100,7 +100,7 @@
     },
     {
       "id": "LP-005",
-      "title": "Finish portable query fidelity and independently reviewed strategies",
+      "title": "Finish portable query fidelity and agent-panel strategy review",
       "owner_track": "02",
       "depends_on": [],
       "commands": [
@@ -111,12 +111,18 @@
         "verification/receipts/query-dialect-conformance.json",
         "verification/receipts/press-strategy-review.json"
       ],
-      "exit_criterion": "Versioned named filters and supported dialect semantics have complete loss reports, property tests and accountable information-specialist review.",
+      "exit_criterion": "Versioned named filters and declared dialect subsets have complete loss reports, property tests, isolated methodology/safety/adversarial agent-panel findings and the accountable owner's recorded disposition; real-filter rights and provider currency remain separately evidenced.",
       "external_gate": true,
       "progress": {
-        "status": "not_started",
-        "evidence_receipts": [],
-        "remaining_gates": ["Complete dialect semantics and accountable information-specialist PRESS review."]
+        "status": "partially_evidenced",
+        "evidence_receipts": [
+          "verification/receipts/query-dialect-conformance.json",
+          "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
+        ],
+        "remaining_gates": [
+          "Obtain rights-clear real named-filter versions, provider-current evidence, agent-panel findings and owner disposition.",
+          "Record the owner's disposition of the digest-bound corpus/loss-matrix panel; topic-specific adequacy needs separate protocol and empirical evidence."
+        ]
       }
     },
     {

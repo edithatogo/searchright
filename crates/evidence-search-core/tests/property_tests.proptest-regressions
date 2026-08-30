@@ -1,0 +1,7 @@
+# Seeds for failure cases proptest has generated in the past. It is
+# automatically read and these particular cases re-run before any
+# novel cases are generated.
+#
+# It is recommended to check this file in to source control so that
+# everyone who runs the test benefits from these saved cases.
+cc 8552f0a7c74bd156327baa2566076442f38f162694547d7e0fc969a0419f9dcf # shrinks to query = Term { term: SearchTerm { text: "qéa", fields: [Title], vocabulary: None, explode: false, phrase: false, truncation: false } }

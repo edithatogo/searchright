@@ -1,0 +1,33 @@
+{
+  "schema_version": "org.searchright.track-semantic-conformance.v1",
+  "track_id": "02",
+  "source_revision": "c64f350",
+  "status": "passed_with_external_human_gates_open",
+  "observed": {
+    "declared_dialects": 7,
+    "workspace_tests_passed": 256,
+    "static_harness_gates_passed": 54,
+    "native_corpus_fixtures_checked": 7,
+    "compile_parse_compile_property": "passed",
+    "exact_source_preservation": "passed",
+    "semantic_parse_failure_diagnostic": "passed"
+  },
+  "commands": [
+    "bash scripts/verify.sh",
+    "cargo test -p evidence-search-contracts -p evidence-search-core --locked",
+    "cargo clippy -p evidence-search-contracts -p evidence-search-core --all-targets --all-features --locked -- -D warnings",
+    "python3 scripts/check_native_query_corpus.py"
+  ],
+  "implemented_claims": [
+    "The portable AST compiles deterministically for the seven declared project-authored dialect subsets.",
+    "Compiler output can be parsed semantically and recompiled without rendering drift for those declared subsets.",
+    "Property tests cover compile, parse and recompile stability across generated terms, truncation and Boolean conjunction or disjunction.",
+    "Exact native text and source spans are preserved, and semantic parse failures remain RawOnly with an explicit review-required diagnostic.",
+    "The corpus loss matrix binds each conformance claim to its parser and executable property evidence."
+  ],
+  "external_gates": [
+    "Accountable methodological and provider-currency review of real named-filter packs.",
+    "Accountable independent information-specialist PRESS review of the digest-bound, rights-clear conformance corpus."
+  ],
+  "claim_boundary": "Compiler and test evidence covers only the seven explicitly declared project-authored syntax subsets. It does not establish complete vendor-language support, cross-database retrieval equivalence, real-filter methodological validity or currency, or PRESS approval."
+}

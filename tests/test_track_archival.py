@@ -98,6 +98,24 @@ class TrackArchivalTests(unittest.TestCase):
         self.assertEqual(rendered.count("  - Review fix `1234567`: Structured reviewed fix."), 1)
         self.assertEqual(SYNC.task_counts(entry)[4], 4)
 
+    def test_ordered_higher_evidence_tasks_keep_identity_when_completed(self) -> None:
+        entry = dict(self.archived_entry(), deliverables=[], checks=[],
+                     phase_3_task_count=3, blockers=["filter review", "panel decision"],
+                     completed_higher_evidence_gates=["semantic parser"],
+                     higher_evidence_task_order=["semantic parser", "filter review", "panel decision"])
+        rendered = SYNC.render_plan(entry)
+        self.assertLess(rendered.index("- [x] semantic parser"), rendered.index("- [ ] filter review"))
+        self.assertLess(rendered.index("- [ ] filter review"), rendered.index("- [ ] panel decision"))
+        self.assertEqual(SYNC.task_counts(entry)[3], 3)
+
+    def test_ordered_higher_evidence_tasks_reject_missing_or_duplicate_gates(self) -> None:
+        entry = dict(self.archived_entry(), deliverables=[], checks=[],
+                     phase_3_task_count=2, blockers=["open gate"],
+                     completed_higher_evidence_gates=["closed gate"])
+        for order in (["closed gate"], ["closed gate", "closed gate"], ["closed gate", "unknown gate"]):
+            with self.subTest(order=order), self.assertRaises(ValueError):
+                SYNC.render_plan(dict(entry, higher_evidence_task_order=order))
+
     def test_owner_decision_label_does_not_change_other_tracks(self) -> None:
         entry = dict(self.archived_entry(), deliverables=[], checks=[])
         default = SYNC.render_plan(entry)

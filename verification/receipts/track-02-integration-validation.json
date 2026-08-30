@@ -1,0 +1,28 @@
+{
+  "schema_version": "org.searchright.track-validation.v1",
+  "track_id": "02",
+  "validated_at": "2026-08-30T21:22:00Z",
+  "status": "passed_before_track_11_reconciliation",
+  "revision": "542cf8e9ad89779bdad9e04a0a58e4a986d8fe9b",
+  "tree": "b6c9711be15ab04ba913859b3c9c6ba32b111970",
+  "base_revision": "e52ab9125ea84de0fcab85554594cd441bb9610a",
+  "commands": [
+    "bash scripts/verify.sh",
+    "python3 scripts/test_cargo_vet_governance.py",
+    "python3 scripts/check_cargo_vet_governance.py",
+    "cargo vet --locked --no-minimize-exemptions"
+  ],
+  "exit_code": 0,
+  "python_regression_tests": 46,
+  "static_gates": 57,
+  "workspace_tests": {"passed": 365, "skipped": 0, "leaky": 3},
+  "cargo_vet_governance_tests": 23,
+  "cargo_vet": {"fully_audited": 43, "exempted": 259},
+  "log_sha256": "da9f27a1edec6e61d6162884939b68d68fc1197af7e1654aa1a40db865820ac0",
+  "limitations": [
+    "This receipt validates the stated snapshot, not a later rebased tree.",
+    "Existing rustdoc library/binary output-name collision and Clippy MSRV configuration warnings were not suppressed.",
+    "Dependency exemptions remain temporary approved risk acceptances, not source audits.",
+    "No real named-filter qualification, owner corpus approval, live-provider validation, release or archival is inferred."
+  ]
+}

@@ -34,18 +34,24 @@ def main()->int:
     if set(DIALECTS)!={item.get('dialect') for item in data.get('fixtures',[])}:
         errors.append('corpus must cover each declared MVP native dialect exactly at least once')
     matrix=json.loads(LOSS_MATRIX.read_text(encoding='utf-8'))
+    verification=matrix.get('verification',{})
+    for field in ('semantic_parser','compile_parse_compile_property','exact_source_preservation','scope'):
+        if not isinstance(verification.get(field),str) or not verification[field].strip():
+            errors.append(f'loss matrix verification requires non-empty {field}')
     rows=matrix.get('dialects',[])
-    if {row.get('dialect') for row in rows} != DIALECTS:
+    if len(rows) != len(DIALECTS) or {row.get('dialect') for row in rows} != DIALECTS:
         errors.append('loss matrix must cover each declared MVP native dialect exactly once')
-    fixture_ids={item.get('id') for item in data.get('fixtures',[])}
+    fixture_dialects={item.get('id'):item.get('dialect') for item in data.get('fixtures',[])}
     for row in rows:
         dialect=row.get('dialect')
-        if row.get('fixture_id') not in fixture_ids:
+        if row.get('fixture_id') not in fixture_dialects:
             errors.append(f'{dialect} loss matrix refers to an unknown fixture')
+        elif fixture_dialects[row.get('fixture_id')] != dialect:
+            errors.append(f'{dialect} loss matrix fixture belongs to a different dialect')
         if not row.get('supported_constructs'):
             errors.append(f'{dialect} loss matrix requires supported_constructs')
         if not row.get('known_losses'):
             errors.append(f'{dialect} loss matrix must fail closed with known_losses')
-    receipt={'schema_version':'org.searchright.native-query-corpus-receipt.v1','status':'failed' if errors else 'passed','fixtures_checked':checked,'dialects':sorted(DIALECTS),'rights_basis':provenance.get('rights_basis'),'external_methodological_review':provenance.get('external_methodological_review'),'errors':errors,'limitations':['Project-authored bounded syntax fixtures only; semantic equivalence and methodological validity require an accountable information-specialist review.']}
+    receipt={'schema_version':'org.searchright.native-query-corpus-receipt.v1','status':'failed' if errors else 'passed','fixtures_checked':checked,'dialects':sorted(DIALECTS),'rights_basis':provenance.get('rights_basis'),'external_methodological_review':provenance.get('external_methodological_review'),'errors':errors,'limitations':['Project-authored bounded syntax fixtures only; an isolated methodology, safety and adversarial agent panel must review exact corpus and loss-matrix digests, preserve first-pass findings and dissent, and submit findings to the accountable owner for decision. Panel findings and owner decisions alone do not establish provider currency, empirical retrieval equivalence or topic-specific methodological adequacy.']}
     print(json.dumps(receipt,indent=2,sort_keys=True)); return 1 if errors else 0
 if __name__=='__main__': raise SystemExit(main())
