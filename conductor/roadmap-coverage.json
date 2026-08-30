@@ -124,6 +124,7 @@
         "SR-049"
       ],
       "runtime_evidence": [
+        "verification/receipts/track-01-integration-verification.json",
         "verification/receipts/track-01-contract-generation-2026-08-29.json",
         "verification/receipts/track-01-conductor-review-2026-08-29.json",
         "verification/receipts/track-01-compiler-verification.json",
@@ -135,6 +136,10 @@
       "lifecycle": "archived",
       "archived_on": "2026-08-29",
       "review_fixes": [
+        {
+          "commit": "c393134",
+          "summary": "Resolve six integration-panel findings: preserve schema property/literal semantics, bind drift to schema digests, preserve generated TypeScript base fields and Python dictionaries, enforce pinned static typing and exercise compiled parity in CI. Verified locally with 55 static gates, 294 Rust tests and the Python test suite."
+        },
         {
           "commit": "67c0161",
           "summary": "Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references."
@@ -687,6 +692,9 @@
         "skills/systematic-search/references/handoffs.md",
         "skills/systematic-search/evaluations/authority-scenarios.json",
         "skills/systematic-search/evaluations/host-model-matrix.json",
+        "skills/systematic-search/evaluations/host-evaluation-protocol.md",
+        "scripts/run_agent_host_eval.py",
+        "scripts/test_agent_host_eval.py",
         "skills/systematic-search/evaluations/human-calibration-protocol.md",
         "skills/systematic-search/evaluations/human-calibration-template.json",
         "skills/systematic-search/evaluations/human-calibration-recruitment.md",
@@ -724,6 +732,7 @@
           "evidence": [
             "skills/systematic-search/evaluations/host-model-matrix.json",
             "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json",
+            "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol-contract-v2.json",
             "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json"
           ]
         },

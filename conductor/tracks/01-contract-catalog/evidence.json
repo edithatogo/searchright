@@ -76,6 +76,7 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
+    "verification/receipts/track-01-integration-verification.json",
     "verification/receipts/track-01-contract-generation-2026-08-29.json",
     "verification/receipts/track-01-conductor-review-2026-08-29.json",
     "verification/receipts/track-01-compiler-verification.json",
@@ -85,6 +86,10 @@
   "lifecycle": "archived",
   "archived_on": "2026-08-29",
   "review_fixes": [
+    {
+      "commit": "c393134",
+      "summary": "Resolve six integration-panel findings: preserve schema property/literal semantics, bind drift to schema digests, preserve generated TypeScript base fields and Python dictionaries, enforce pinned static typing and exercise compiled parity in CI. Verified locally with 55 static gates, 294 Rust tests and the Python test suite."
+    },
     {
       "commit": "67c0161",
       "summary": "Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references."

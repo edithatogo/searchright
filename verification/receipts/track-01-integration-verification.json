@@ -1,0 +1,37 @@
+{
+  "schema_version": "org.searchright.track-integration-verification.v1",
+  "track_id": "01",
+  "verified_commit": "c3931349fd0d4260dc41c4e467756bac0ef3e14d",
+  "verified_tree": "d0e3c73981ce192b463a2c64e1149b055c38f8ef",
+  "toolchain": "Rust 1.97.1 aarch64-apple-darwin",
+  "verification": {
+    "command": "bash scripts/verify.sh",
+    "exit_code": 0,
+    "static_gates_passed": 55,
+    "workspace_tests_passed": 294,
+    "workspace_tests_skipped": 0,
+    "format": "passed",
+    "strict_clippy": "passed",
+    "compiled_schema_report_freshness": "passed_with_recorded_differences",
+    "documentation_tests": "passed_zero_doctests",
+    "documentation_build": "passed",
+    "cargo_deny": "advisories_bans_licenses_sources_passed",
+    "python_command": "python3 -m pytest tests -q",
+    "python_tests_passed": 59,
+    "python_subtests_passed": 7,
+    "binding_typecheckers": {"typescript": "5.9.3", "pyright": "1.1.408"},
+    "npm_audit": "zero_reported_vulnerabilities_optional_dependencies_omitted"
+  },
+  "agent_panel": {
+    "first_pass_receipt": "verification/receipts/track-01-integration-panel-round-1.json",
+    "second_pass_reviewed_commit": "c3931349fd0d4260dc41c4e467756bac0ef3e14d",
+    "votes": {
+      "implementation_adversarial": "recommend_approve",
+      "methodology_security_safety": "recommend_approve",
+      "testing_ci": "recommend_approve"
+    },
+    "remaining_actionable_findings": [],
+    "authority": "advisory_only_owner_decides"
+  },
+  "claim_boundary": "Local exact-revision verification and agent review only. This receipt does not claim hosted CI, merge, downstream conformance, semantic schema equivalence, publication or release. Later main integration requires its own validation."
+}

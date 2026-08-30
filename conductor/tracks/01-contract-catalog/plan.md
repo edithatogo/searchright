@@ -66,5 +66,6 @@ GitHub issue key: `track-01`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `c393134`: Resolve six integration-panel findings: preserve schema property/literal semantics, bind drift to schema digests, preserve generated TypeScript base fields and Python dictionaries, enforce pinned static typing and exercise compiled parity in CI. Verified locally with 55 static gates, 294 Rust tests and the Python test suite.
   - Review fix `67c0161`: Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references.
 - [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
