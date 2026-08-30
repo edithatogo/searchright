@@ -12,8 +12,13 @@
     "skills/systematic-search/references/authority.md",
     "skills/systematic-search/references/handoffs.md",
     "skills/systematic-search/evaluations/authority-scenarios.json",
+    "skills/systematic-search/evaluations/host-model-matrix.json",
+    "skills/systematic-search/evaluations/human-calibration-protocol.md",
+    "skills/systematic-search/evaluations/human-calibration-template.json",
+    "skills/systematic-search/evaluations/human-calibration-recruitment.md",
     "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
     "registry/skills/systematic-search/manifest.json",
+    "registry/skills/systematic-search/authorization-request.json",
     "contracts/json-schema/agent-handoff.v1.schema.json",
     "contracts/examples/agent-handoff.json",
     "contracts/schema-catalog.json",
@@ -40,7 +45,7 @@
     "Calibrate authority and failure modes with human information specialists.",
     "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
   ],
-  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour only. The downstream caller and registry packet are prepared but unapplied and unsubmitted; no supported-host/model, human-calibration, companion adoption, live-provider or registry-acceptance claim is made.",
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. One exact Codex host/model evaluation passed; the downstream caller has a tested draft upstream contribution. A second host/model evaluation, upstream adoption and maintenance acceptance, two independent human calibrations, and registry selection, authorization and acceptance remain pending.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-11",
@@ -68,31 +73,53 @@
   "runtime_evidence": [
     "verification/receipts/track-11-agent-authority-review.json"
   ],
-  "external_evidence": [],
+  "external_evidence": [
+    "verification/receipts/track-11-downstream-readiness.json",
+    "https://github.com/Imbad0202/academic-research-skills/issues/806",
+    "https://github.com/Imbad0202/academic-research-skills/pull/807",
+    "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json",
+    "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json",
+    "verification/receipts/track-11-registry-target-assessment.json"
+  ],
   "gates": [
     {
       "id": "T11-G001",
       "kind": "downstream_adoption",
       "status": "pending",
-      "evidence": []
+      "evidence": [
+        "verification/receipts/track-11-downstream-readiness.json",
+        "https://github.com/Imbad0202/academic-research-skills/issues/806",
+        "https://github.com/Imbad0202/academic-research-skills/pull/807"
+      ]
     },
     {
       "id": "T11-G002",
       "kind": "host_model_evaluation",
       "status": "pending",
-      "evidence": []
+      "evidence": [
+        "skills/systematic-search/evaluations/host-model-matrix.json",
+        "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json",
+        "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json"
+      ]
     },
     {
       "id": "T11-G003",
       "kind": "human_methodology_calibration",
       "status": "pending",
-      "evidence": []
+      "evidence": [
+        "skills/systematic-search/evaluations/human-calibration-protocol.md",
+        "skills/systematic-search/evaluations/human-calibration-template.json",
+        "skills/systematic-search/evaluations/human-calibration-recruitment.md"
+      ]
     },
     {
       "id": "T11-G004",
       "kind": "registry_authorization_and_acceptance",
       "status": "pending",
-      "evidence": []
+      "evidence": [
+        "registry/skills/systematic-search/authorization-request.json",
+        "verification/receipts/track-11-registry-target-assessment.json"
+      ]
     }
   ],
   "review_fixes": [

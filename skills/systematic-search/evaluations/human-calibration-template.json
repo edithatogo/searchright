@@ -1,0 +1,14 @@
+{
+  "schema_version": "org.searchright.agent-human-calibration.v1",
+  "skill_package_sha256": "replace-with-exact-package-digest",
+  "protocol": "skills/systematic-search/evaluations/human-calibration-protocol.md",
+  "reviewers": [],
+  "case_decisions": [],
+  "agreement": null,
+  "adjudications": [],
+  "blocking_hazards": [
+    "Independent information-specialist review has not yet been performed."
+  ],
+  "status": "awaiting_independent_reviewers",
+  "claim_boundary": "This template is not human calibration evidence and cannot be used to close T11-G003."
+}

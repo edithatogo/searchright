@@ -1,0 +1,22 @@
+{
+  "schema_version": "org.searchright.registry-target-assessment.v1",
+  "observed_at": "2026-08-30",
+  "status": "target_selection_required",
+  "candidates": [
+    {
+      "name": "skills.sh",
+      "official_source": "https://skills.sh/docs",
+      "observed_distribution_model": "GitHub-hosted skills installed with the skills CLI; directory ranking is driven by anonymous install telemetry.",
+      "manual_acceptance_workflow_observed": false
+    },
+    {
+      "name": "Claude Code plugin marketplace",
+      "official_source": "https://code.claude.com/docs/en/plugin-marketplaces",
+      "observed_distribution_model": "Self-hosted marketplace catalogues configured and distributed by their owners.",
+      "central_acceptance_workflow_observed": false
+    }
+  ],
+  "decision": "Do not reinterpret T11-G004 from registry submission and observed acceptance into install telemetry or self-publication without a canonical gate amendment.",
+  "required_input": "Name the target registry, namespace and submitting principal, then provide artifact-bound authorization for the exact package digest and operation.",
+  "claim_boundary": "This assessment does not select a registry, authorize submission, publish the package, or prove registry acceptance."
+}

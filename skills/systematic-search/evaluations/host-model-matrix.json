@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.agent-host-model-matrix.v1",
+  "status": "evaluation_in_progress",
+  "support_policy": "Only exact host and model pairs with a passing receipt for every authority scenario may be claimed as evaluated. Installation, authentication, or a partial run is not support evidence.",
+  "required_cases": "skills/systematic-search/evaluations/authority-scenarios.json",
+  "pairs": [
+    {
+      "host": "codex-cli",
+      "host_version": "0.144.1",
+      "model": "gpt-5.6-sol",
+      "status": "passed",
+      "receipt": "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json"
+    },
+    {
+      "host": "claude-code",
+      "host_version": "2.1.126",
+      "model": "claude-sonnet-4-6",
+      "status": "pending",
+      "receipt": "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json"
+    }
+  ],
+  "claim_boundary": "This matrix is a bounded evaluation target, not a declaration that either pair is supported. Each pair remains pending until its exact receipt passes."
+}
