@@ -1,0 +1,22 @@
+{
+  "track_id": "06",
+  "date": "2026-08-30",
+  "source_commit": "0d52e78eaa358607e344376b25b1026fcbccfebe",
+  "source_tree": "fa9ed4b284dadd86f38cb4f1ed593144db59e01a",
+  "clean_snapshot_commit": "def9fc717775f1c8ef271a018012e8fffdfade2d",
+  "snapshot_tree_matches_source": true,
+  "full_validation": {
+    "command": "bash scripts/verify.sh",
+    "exit_code": 0,
+    "static_gates_passed": 56,
+    "rust_tests_passed": 321,
+    "rust_tests_skipped": 0,
+    "fmt_clippy_doctests_rustdoc_dependency_policy": "passed",
+    "schema_parity": "passed_with_10_recorded_differences",
+    "log_sha256": "cd856cdfd1bc8f250cabeb1745b76506f3606782196afbf5953c9b87a9bb752d"
+  },
+  "governance_tests": {"command": "python3 scripts/test_cargo_vet_governance.py", "passed": 23, "exit_code": 0},
+  "governance_gate": {"command": "python3 scripts/check_cargo_vet_governance.py", "exit_code": 0},
+  "cargo_vet": {"command": "cargo vet --locked --no-minimize-exemptions", "exit_code": 0, "fully_audited": 43, "exempted": 259},
+  "authority_boundary": "CVX-0259 is temporary owner-approved risk acceptance, not an audit. Local success is not hosted CI, merge, publication or release evidence."
+}
