@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Literal, NotRequired, Required, TypeAlias, TypedDict
 
 JsonValue: TypeAlias = None | bool | int | float | str | list['JsonValue'] | dict[str, 'JsonValue']
-CONTRACT_IDS = ('access-decision', 'access-request', 'agent-workflow', 'architecture-policy', 'audit-event', 'audit-event-registry', 'backup-manifest', 'benchmark-report', 'bibliographic-record', 'compiled-strategy', 'component-health', 'consumer-contract-suite', 'data-handling-decision', 'data-handling-request', 'data-lifecycle-decision', 'data-lifecycle-request', 'diagnostic', 'discovery-run', 'document-evidence', 'evidence-debt', 'execution-envelope', 'gate-catalog', 'github-control-plane-apply-summary', 'github-issue-hierarchy', 'github-issue-hierarchy-v2', 'github-project', 'github-repository-settings', 'incident-record', 'institutional-policy', 'integration-passport', 'integration-release-train', 'interchange-receipt', 'licensed-adapter', 'living-update', 'named-filter-pack', 'native-search-strategy', 'prisma-flow', 'protocol-amendment', 'provider-component', 'provider-component-release-signature', 'provider-component-trust-policy', 'provider-manifest', 'provider-page', 'provider-policy-set', 'query-ast', 'ranking-calibration', 'recovery-rehearsal', 'redaction-profile', 'release-rehearsal', 'research-object-handoff-plan', 'review-bundle-manifest', 'review-plan', 'review-state-snapshot', 'schema-migration-plan', 'schema-migration-registry', 'screening-decision', 'screening-policy', 'search-run', 'search-strategy', 'search-validation', 'source-receipt', 'sourceright-parity-report', 'standard-assessment', 'standard-pack', 'study-graph', 'telemetry-policy', 'tenant-policy', 'workflow-trace')
+CONTRACT_IDS = ('access-decision', 'access-request', 'agent-handoff', 'agent-workflow', 'architecture-policy', 'audit-event', 'audit-event-registry', 'backup-manifest', 'benchmark-report', 'bibliographic-record', 'compiled-strategy', 'component-health', 'consumer-contract-suite', 'data-handling-decision', 'data-handling-request', 'data-lifecycle-decision', 'data-lifecycle-request', 'diagnostic', 'discovery-run', 'document-evidence', 'evidence-debt', 'execution-envelope', 'gate-catalog', 'github-control-plane-apply-summary', 'github-issue-hierarchy', 'github-issue-hierarchy-v2', 'github-project', 'github-repository-settings', 'incident-record', 'institutional-policy', 'integration-passport', 'integration-release-train', 'interchange-receipt', 'licensed-adapter', 'living-update', 'named-filter-pack', 'native-search-strategy', 'plan-review-result', 'press-review', 'press-review-result', 'prisma-flow', 'protocol-amendment', 'provider-component', 'provider-component-release-signature', 'provider-component-trust-policy', 'provider-manifest', 'provider-page', 'provider-policy-set', 'query-ast', 'ranking-calibration', 'recovery-rehearsal', 'redaction-profile', 'release-rehearsal', 'research-object-handoff-plan', 'review-bundle-manifest', 'review-plan', 'review-state-snapshot', 'schema-migration-plan', 'schema-migration-registry', 'screening-decision', 'screening-policy', 'search-run', 'search-strategy', 'search-validation', 'source-receipt', 'sourceright-parity-report', 'standard-assessment', 'standard-pack', 'study-graph', 'telemetry-policy', 'tenant-policy', 'workflow-trace')
 
 AccessDecision = TypedDict(
     'AccessDecision',
@@ -34,6 +34,115 @@ AccessRequest = TypedDict(
     'tenant_id': Required['str'],
     },
 )
+
+AgentHandoff = TypedDict(
+    'AgentHandoff',
+    {
+    'approval_references': Required['list[AgentHandoffApprovalReferencesItem]'],
+    'artifacts': Required['list[AgentHandoffArtifactsItem]'],
+    'context_policy': Required["Literal['minimum_necessary', 'independent_review']"],
+    'execution_mode': Required["Literal['fixture_replay', 'live', None]"],
+    'from_role': Required['AgentHandoffRole'],
+    'handoff_id': Required['str'],
+    'review_id': Required['str'],
+    'schema_version': Required["Literal['org.searchright.agent-handoff.v1']"],
+    'to_role': Required['AgentHandoffRole'],
+    },
+)
+
+AgentHandoffApprovalReferencesItem = TypedDict(
+    'AgentHandoffApprovalReferencesItem',
+    {
+    'purpose': Required["Literal['review_plan', 'strategy_and_press', 'live_execution', 'deduplication_apply']"],
+    'receipt_id': Required['str'],
+    'review_id': Required['str'],
+    'scope_sha256': Required['AgentHandoffSha256'],
+    },
+)
+
+AgentHandoffArtifactsItem = TypedDict(
+    'AgentHandoffArtifactsItem',
+    {
+    'media_type': Required['str'],
+    'path': Required['str'],
+    'sha256': Required['AgentHandoffSha256'],
+    },
+)
+
+AgentHandoffVariant1 = TypedDict(
+    'AgentHandoffVariant1',
+    {
+    'approval_references': NotRequired['JsonValue'],
+    'execution_mode': NotRequired['None'],
+    'from_role': NotRequired["Literal['question-framer']"],
+    'to_role': NotRequired["Literal['information-specialist']"],
+    },
+)
+
+AgentHandoffVariant2 = TypedDict(
+    'AgentHandoffVariant2',
+    {
+    'approval_references': NotRequired['JsonValue'],
+    'context_policy': NotRequired["Literal['independent_review']"],
+    'execution_mode': NotRequired['None'],
+    'from_role': NotRequired["Literal['information-specialist']"],
+    'to_role': NotRequired["Literal['press-reviewer']"],
+    },
+)
+
+AgentHandoffVariant3 = TypedDict(
+    'AgentHandoffVariant3',
+    {
+    'approval_references': NotRequired['JsonValue'],
+    'execution_mode': NotRequired["Literal['fixture_replay']"],
+    'from_role': NotRequired["Literal['press-reviewer']"],
+    'to_role': NotRequired["Literal['execution-operator']"],
+    },
+)
+
+AgentHandoffVariant4 = TypedDict(
+    'AgentHandoffVariant4',
+    {
+    'approval_references': NotRequired['JsonValue'],
+    'execution_mode': NotRequired["Literal['live']"],
+    'from_role': NotRequired["Literal['press-reviewer']"],
+    'to_role': NotRequired["Literal['execution-operator']"],
+    },
+)
+
+AgentHandoffVariant5 = TypedDict(
+    'AgentHandoffVariant5',
+    {
+    'approval_references': NotRequired['JsonValue'],
+    'execution_mode': NotRequired['None'],
+    'from_role': NotRequired["Literal['execution-operator']"],
+    'to_role': NotRequired["Literal['dedup-adjudicator']"],
+    },
+)
+
+AgentHandoffVariant6 = TypedDict(
+    'AgentHandoffVariant6',
+    {
+    'approval_references': NotRequired['JsonValue'],
+    'execution_mode': NotRequired['None'],
+    'from_role': NotRequired["Literal['dedup-adjudicator']"],
+    'to_role': NotRequired["Literal['screening-assistant']"],
+    },
+)
+
+AgentHandoffVariant7 = TypedDict(
+    'AgentHandoffVariant7',
+    {
+    'approval_references': NotRequired['JsonValue'],
+    'execution_mode': NotRequired['None'],
+    'from_role': NotRequired["Literal['screening-assistant']"],
+    'to_role': NotRequired["Literal['reporting-auditor']"],
+    },
+)
+
+AgentHandoffRole: TypeAlias = Literal['question-framer', 'information-specialist', 'press-reviewer', 'execution-operator', 'dedup-adjudicator', 'screening-assistant', 'reporting-auditor']
+
+AgentHandoffSha256: TypeAlias = str
 
 AgentWorkflow = TypedDict(
     'AgentWorkflow',
@@ -1390,6 +1499,88 @@ NativeSearchStrategySpan = TypedDict(
     },
 )
 
+PlanReviewResult = TypedDict(
+    'PlanReviewResult',
+    {
+    'assessment': Required['PlanReviewResultAssessment'],
+    'persistence': Required['PlanReviewResultPersistence'],
+    'plan': Required['ReviewPlan'],
+    'schema_version': Required["Literal['org.searchright.plan-review-result.v1']"],
+    },
+)
+
+PlanReviewResultAssessment = TypedDict(
+    'PlanReviewResultAssessment',
+    {
+    'findings': Required['list[PlanReviewResultAssessmentFindingsItem]'],
+    'ready_for_strategy_design': Required['bool'],
+    'review_id': Required['str'],
+    },
+)
+
+PlanReviewResultAssessmentFindingsItem = TypedDict(
+    'PlanReviewResultAssessmentFindingsItem',
+    {
+    'blocking': Required['bool'],
+    'code': Required['str'],
+    'message': Required['str'],
+    },
+)
+
+PlanReviewResultPersistence = TypedDict(
+    'PlanReviewResultPersistence',
+    {
+    'applied': Required['bool'],
+    'confirmed_by': Required['str | None'],
+    'digest': Required['str | None'],
+    'object_id': Required['str | None'],
+    },
+)
+
+PressReview = TypedDict(
+    'PressReview',
+    {
+    'decision': Required['str'],
+    'findings': Required['list[PressReviewFindingsItem]'],
+    'press_review_id': Required['str'],
+    'reviewed_at': Required['str'],
+    'reviewer_id': Required['str'],
+    'strategy_id': Required['str'],
+    'strategy_version': Required['str'],
+    },
+)
+
+PressReviewFindingsItem = TypedDict(
+    'PressReviewFindingsItem',
+    {
+    'element': Required["Literal['translation_of_question', 'boolean_and_proximity', 'subject_headings', 'text_words', 'spelling_syntax_and_lines', 'limits_and_filters']"],
+    'finding_id': Required['str'],
+    'message': Required['str'],
+    'recommendation': Required['str'],
+    'resolved': Required['bool'],
+    'severity': Required["Literal['note', 'advisory', 'major', 'critical']"],
+    },
+)
+
+PressReviewResult = TypedDict(
+    'PressReviewResult',
+    {
+    'persistence': Required['PressReviewResultPersistence'],
+    'review': Required['PressReview'],
+    'schema_version': Required["Literal['org.searchright.press-review-result.v1']"],
+    },
+)
+
+PressReviewResultPersistence = TypedDict(
+    'PressReviewResultPersistence',
+    {
+    'applied': Required['bool'],
+    'confirmed_by': Required['str | None'],
+    'digest': Required['str | None'],
+    'object_id': Required['str | None'],
+    },
+)
+
 PrismaFlow = TypedDict(
     'PrismaFlow',
     {
@@ -2524,6 +2715,18 @@ __all__ = [
     'JsonValue',
     'AccessDecision',
     'AccessRequest',
+    'AgentHandoff',
+    'AgentHandoffApprovalReferencesItem',
+    'AgentHandoffArtifactsItem',
+    'AgentHandoffRole',
+    'AgentHandoffSha256',
+    'AgentHandoffVariant1',
+    'AgentHandoffVariant2',
+    'AgentHandoffVariant3',
+    'AgentHandoffVariant4',
+    'AgentHandoffVariant5',
+    'AgentHandoffVariant6',
+    'AgentHandoffVariant7',
     'AgentWorkflow',
     'AgentWorkflowStepsItem',
     'ArchitecturePolicy',
@@ -2640,6 +2843,14 @@ __all__ = [
     'NativeSearchStrategyDialectVariant2',
     'NativeSearchStrategyLinesItem',
     'NativeSearchStrategySpan',
+    'PlanReviewResult',
+    'PlanReviewResultAssessment',
+    'PlanReviewResultAssessmentFindingsItem',
+    'PlanReviewResultPersistence',
+    'PressReview',
+    'PressReviewFindingsItem',
+    'PressReviewResult',
+    'PressReviewResultPersistence',
     'PrismaFlow',
     'PrismaFlowFullTextExclusionsItem',
     'ProtocolAmendment',
