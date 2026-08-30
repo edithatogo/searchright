@@ -5587,6 +5587,39 @@
       }
     },
     {
+      "key": "track-11-phase-4-task-05",
+      "title": "Track 11 / P4 / T05: Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure\u2026",
+      "kind": "task",
+      "parent_key": "track-11-phase-4",
+      "body_path": "conductor/github/issues/track-11-phase-4-task-05.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:11",
+        "phase:4",
+        "state:source-complete"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "closed",
+      "track_id": "11",
+      "phase_number": 4,
+      "task_number": 5,
+      "project_fields": {
+        "Delivery status": "Source complete",
+        "Work kind": "Task",
+        "Horizon": "Mvp",
+        "Evidence level": "Compiler Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "No",
+        "Conductor key": "track-11-phase-4-task-05",
+        "Conductor path": "conductor/tracks/11-agentic-skill/plan.md",
+        "Track ID": "11",
+        "Phase": 4,
+        "Task": 5
+      }
+    },
+    {
       "key": "track-12",
       "title": "Track 12: CiteWeft scholarly extraction and document evidence",
       "kind": "track",

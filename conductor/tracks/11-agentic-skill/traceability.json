@@ -5,7 +5,7 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/11-agentic-skill/spec.md#scope",
-  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. The downstream caller has a focused-tested draft upstream contribution; full consumer validation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
   "assertions": [
     {
       "assertion_id": "T11-A001",
@@ -111,7 +111,7 @@
     },
     {
       "assertion_id": "T11-A005",
-      "statement": "Integrate into academic-research-skills as a thin caller",
+      "statement": "Prepare a Searchright-owned sibling thin caller for explicit academic-research-skills handoffs; downstream adoption remains separately gated",
       "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
@@ -119,18 +119,20 @@
         "scripts/check_agent_skill.py"
       ],
       "implementation_symbols": [
-        "scripts/check_agent_skill.py::validate"
+        "scripts/check_agent_skill.py::validate",
+        "scripts/check_agent_skill.py::validate_caller_policy"
       ],
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/11-agentic-skill/evidence.json"
+        "verification/receipts/track-11-sibling-route.json",
+        "verification/receipts/systematic-search-skill.json"
       ],
       "open_gates": [
         "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
       ],
-      "permitted_claim": "A Searchright-authored thin-caller packet is prepared locally and statically checked; it has not been applied to or validated by the downstream companion repository."
+      "permitted_claim": "The owner-approved Searchright-owned sibling caller is prepared with explicit user handoff and automated invocation disabled pending runtime admission. ARS PR 807 was closed without merge; all 158 local CI-manifest entries passed at its exact head 4e4264a. These historical proposal tests do not validate the revised sibling runtime. Downstream adoption, maintenance acceptance and any listing remain pending."
     },
     {
       "assertion_id": "T11-A006",

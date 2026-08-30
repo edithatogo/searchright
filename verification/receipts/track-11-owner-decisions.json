@@ -2,12 +2,13 @@
   "schema_version": "org.searchright.track-owner-decision-request.v1",
   "track": "11",
   "status": "awaiting_owner_decisions",
+  "placement_update": "Owner approved Searchright-owned sibling placement on 2026-08-31; see track-11-sibling-route.json. The package hash below identifies the historical decision-request packet, not the revised sibling package. Other decisions remain pending.",
   "skill_package_sha256": "772a193e9070cb070769f18bdbe701cbd03ca77012bdcaf32d4b416a4ea0f4ba",
   "requests": [
     {
       "gate": "T11-G001",
       "decision": "Explicitly accept or decline the proposed ongoing maintainer commitment for @edithatogo: approximately six-week release synchronization and downstream issue triage.",
-      "separate_external_requirement": "Upstream maintainer acceptance of draft PR 807; local tests cannot substitute for adoption."
+      "separate_external_requirement": "PR 807 was closed without merge. The approved sibling route still requires observed downstream acceptance and exact consumer evidence; a possible THIRD_PARTY listing or historical proposal tests cannot substitute for adoption."
     },
     {
       "gate": "T11-G002",

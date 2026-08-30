@@ -21,6 +21,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-template.json`
   - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-recruitment.md`
   - [x] Present source path: `skills/systematic-search/integrations/academic-research-skills/SKILL.md`
+  - [x] Present source path: `scripts/test_agent_skill_policy.py`
+  - [x] Present source path: `docs/adrs/0018-searchright-owned-sibling-caller.md`
+  - [x] Present source path: `verification/receipts/track-11-sibling-route.json`
   - [x] Present source path: `registry/skills/systematic-search/manifest.json`
   - [x] Present source path: `registry/skills/systematic-search/authorization-request.json`
   - [x] Present source path: `contracts/json-schema/agent-handoff.v1.schema.json`

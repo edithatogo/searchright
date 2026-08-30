@@ -6,7 +6,7 @@
   "status": "partially_implemented",
   "implementation_state": "partially_implemented",
   "created": "2026-08-05",
-  "updated": "2026-08-30",
+  "updated": "2026-08-31",
   "dependencies": [
     "10"
   ],
@@ -35,7 +35,8 @@
       "track-11-phase-4-task-01",
       "track-11-phase-4-task-02",
       "track-11-phase-4-task-03",
-      "track-11-phase-4-task-04"
+      "track-11-phase-4-task-04",
+      "track-11-phase-4-task-05"
     ],
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
@@ -47,6 +48,7 @@
       "kind": "downstream_adoption",
       "status": "pending",
       "evidence": [
+        "verification/receipts/track-11-sibling-route.json",
         "verification/receipts/track-11-downstream-readiness.json",
         "https://github.com/Imbad0202/academic-research-skills/issues/806",
         "https://github.com/Imbad0202/academic-research-skills/pull/807"

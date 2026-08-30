@@ -7,27 +7,38 @@ metadata:
   integration: academic-research-skills-systematic-search
   status: prepared_not_applied
   producer: edithatogo/searchright
-  consumer: edithatogo/academic-research-skills
+  consumer: Imbad0202/academic-research-skills
+  deployment: searchright_owned_sibling
+  routing: explicit_user_handoff
+  automated_invocation: disabled_pending_runtime_admission
 ---
 
 # Academic research systematic-search caller
 
-This Searchright-owned packet is the proposed downstream caller. It contains no
-copied `academic-research-skills` content and is not evidence that the companion
-repository adopted or validated it.
+This Searchright-owned sibling packet stays in Searchright. It contains no
+copied `academic-research-skills` (ARS) content and is not an installed ARS skill,
+accepted third-party listing, or evidence of downstream adoption. ARS PR 807 was
+closed without merge; its historical local tests do not validate this route.
 
 ## Trigger boundary
 
-Use only when the host has activated a systematic, scoping, rapid or living
-review workflow. Delegate to `systematic-search` for planning, strategy design,
-PRESS preparation, execution, deduplication, screening assistance and reporting.
+Use only after an explicit user handoff to Searchright for a systematic,
+scoping, rapid or living review. Do not register a fifth top-level ARS skill,
+capture ARS triggers, or alter its existing `deep-research` routing. An active
+ARS review is not itself permission to invoke Searchright.
+
+Prepare a human-controlled handoff to `systematic-search` for planning, strategy
+design, PRESS preparation, execution, deduplication, screening assistance and
+reporting. Automated invocation remains disabled pending runtime admission.
 
 Do not use for ordinary web search. Do not treat the caller as database access,
 live execution approval, PRESS approval or final screening authority.
 
 ## Delegation contract
 
-1. Load the Searchright `systematic-search` skill at the compatible version.
+1. Identify the exact Searchright `systematic-search` package, source revision
+   and compatible schema digests. Frontmatter or a declared digest alone is not
+   executable pin verification; do not automatically load or invoke this caller.
 2. Use the Searchright MCP tool catalogue or CLI; do not implement provider,
    retry, receipt, deduplication or PRISMA logic in this caller.
 3. Pass only validated contract documents and
@@ -46,6 +57,17 @@ available, disable automated tool invocation and return a human-controlled
 handoff listing the missing dependency. Never fall back to embedded provider
 calls or local PRISMA arithmetic.
 
-Downstream adoption remains blocked until the companion maintainer applies this
-packet, its CC BY-NC 4.0 content boundary is reviewed, and consumer scenario tests
-pass at an exact revision.
+Keep automated tool invocation disabled until an executable verifier checks
+actual pinned package/source/schema bytes and validates real synthetic handoff,
+artifact and approval receipts with computed hashes. Admission also requires
+executable missing-dependency, incompatible-version, wrong-digest, malformed,
+approval-denied, successful-handoff, final-exclusion and protocol-amendment
+refusal tests plus full-pipeline and host-portability evidence. Static metadata
+checks and phrase-presence tests do not meet that boundary.
+
+Downstream adoption remains a separate pending gate requiring maintainer
+acceptance, exact-revision consumer evidence, licence review and explicit
+maintenance commitments. A future `THIRD_PARTY.md` listing proves listing only.
+Do not copy ARS CC BY-NC 4.0 content into this MIT OR Apache-2.0 package. Rollback
+means retaining the manual handoff and disabling the sibling caller, not
+rewriting ARS history or reopening its closed proposal.

@@ -22,6 +22,9 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-template.json`
   - [x] Present source path: `skills/systematic-search/evaluations/human-calibration-recruitment.md`
   - [x] Present source path: `skills/systematic-search/integrations/academic-research-skills/SKILL.md`
+  - [x] Present source path: `scripts/test_agent_skill_policy.py`
+  - [x] Present source path: `docs/adrs/0018-searchright-owned-sibling-caller.md`
+  - [x] Present source path: `verification/receipts/track-11-sibling-route.json`
   - [x] Present source path: `registry/skills/systematic-search/manifest.json`
   - [x] Present source path: `registry/skills/systematic-search/authorization-request.json`
   - [x] Present source path: `contracts/json-schema/agent-handoff.v1.schema.json`
@@ -63,3 +66,5 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - Review fix `a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c`: Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries.
   - Review fix `b7f42271ca25860acc83ef16414b514e96f39c2b`: Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+
+- [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure; isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.

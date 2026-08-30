@@ -720,7 +720,7 @@
         "cargo test -p searchright-agent --locked",
         "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
       ],
-      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. The downstream caller has a focused-tested draft upstream contribution; full consumer validation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
       "deliverables": [
         "skills/systematic-search/SKILL.md",
         "skills/systematic-search/workflows/systematic-review.yaml",
@@ -735,6 +735,9 @@
         "skills/systematic-search/evaluations/human-calibration-template.json",
         "skills/systematic-search/evaluations/human-calibration-recruitment.md",
         "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
+        "scripts/test_agent_skill_policy.py",
+        "docs/adrs/0018-searchright-owned-sibling-caller.md",
+        "verification/receipts/track-11-sibling-route.json",
         "registry/skills/systematic-search/manifest.json",
         "registry/skills/systematic-search/authorization-request.json",
         "contracts/json-schema/agent-handoff.v1.schema.json",
@@ -756,6 +759,7 @@
           "kind": "downstream_adoption",
           "status": "pending",
           "evidence": [
+            "verification/receipts/track-11-sibling-route.json",
             "verification/receipts/track-11-downstream-readiness.json",
             "https://github.com/Imbad0202/academic-research-skills/issues/806",
             "https://github.com/Imbad0202/academic-research-skills/pull/807"
@@ -819,6 +823,7 @@
       "verification/receipts/track-11-agent-authority-review.json"
     ],
       "external_evidence": [
+        "verification/receipts/track-11-sibling-route.json",
         "verification/receipts/track-11-downstream-readiness.json",
         "https://github.com/Imbad0202/academic-research-skills/issues/806",
         "https://github.com/Imbad0202/academic-research-skills/pull/807",
@@ -831,7 +836,10 @@
       "status": "partially_implemented",
       "title": "Systematic-search agent skill and workflows",
       "track_id": "11",
-      "updated": "2026-08-30"
+      "additional_closeout_tasks": [
+        "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure; isolated five-role review recorded in verification/receipts/track-11-sibling-review.json."
+      ],
+      "updated": "2026-08-31"
     },
     {
       "blockers": [
