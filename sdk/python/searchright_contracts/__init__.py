@@ -1212,11 +1212,11 @@ InterchangeReceipt = TypedDict(
     'InterchangeReceipt',
     {
     'input_digest': Required['str'],
-    'input_format': Required["Literal['searchright_json', 'json_lines', 'csl_json', 'ris', 'nbib', 'bibtex', 'endnote_xml', 'csv', 'parquet'] | InterchangeReceiptInputFormatVariant2"],
+    'input_format': Required["Literal['searchright_json', 'json_lines', 'csl_json', 'ris', 'nbib', 'pubmed_xml', 'bibtex', 'endnote_xml', 'csv', 'parquet'] | InterchangeReceiptInputFormatVariant2"],
     'lossless': Required['bool'],
     'operation_id': Required['str'],
     'output_digest': Required['str'],
-    'output_format': Required["Literal['searchright_json', 'json_lines', 'csl_json', 'ris', 'nbib', 'bibtex', 'endnote_xml', 'csv', 'parquet'] | InterchangeReceiptOutputFormatVariant2"],
+    'output_format': Required["Literal['searchright_json', 'json_lines', 'csl_json', 'ris', 'nbib', 'pubmed_xml', 'bibtex', 'endnote_xml', 'csv', 'parquet'] | InterchangeReceiptOutputFormatVariant2"],
     'records_read': Required['int'],
     'records_written': Required['int'],
     'review_id': Required['str'],

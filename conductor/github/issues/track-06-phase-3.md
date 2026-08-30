@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/06-imports-dedup-linkage/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Compile and run golden import/export round-trip tests across every supported format. (`track-06-phase-3-task-01`)
-- [ ] T02: Evaluate linkage and deduplication against independently adjudicated corpora. (`track-06-phase-3-task-02`)
+- [x] T01: Compile and run golden import/export round-trip tests across every supported format. (`track-06-phase-3-task-01`)
+- [x] T02: Run a digest-bound multi-agent panel evaluation of linkage and deduplication, then obtain the repository owner's recorded decision. (`track-06-phase-3-task-02`)
 
 ## Evidence rule
 

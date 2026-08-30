@@ -10,6 +10,9 @@ Canonical task state: **source task complete**.
 - [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-dedup/src/lib.rs`
   - [x] Present source path: `crates/searchright-interchange/src/lib.rs`
+  - [x] Present source path: `crates/searchright-interchange/src/xml.rs`
+  - [x] Present source path: `crates/searchright-interchange/tests/xml_integrity.rs`
+  - [x] Present source path: `docs/xml-imports.md`
   - [x] Present source path: `crates/searchright-study/src/lib.rs`
   - [x] Present source path: `contracts/examples/interchange-receipt.yaml`
   - [x] Present source path: `contracts/examples/study-graph.yaml`

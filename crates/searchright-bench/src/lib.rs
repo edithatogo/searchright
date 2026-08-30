@@ -37,6 +37,17 @@ pub struct DedupEvaluation {
     pub review_required_records: u64,
 }
 
+/// Report-to-study linkage quality and explicit abstention burden.
+#[derive(Debug, Clone, PartialEq)]
+pub struct StudyLinkageEvaluation {
+    /// Pairwise report linkage precision, recall and F1.
+    pub link_metrics: BinaryMetrics,
+    /// Reports for which the linker made no study assignment.
+    pub abstained_reports: u64,
+    /// Total reports in the labelled fixture.
+    pub total_reports: u64,
+}
+
 /// Compare expected and observed sets of identifiers or identifier pairs.
 #[must_use]
 pub fn binary_metrics<T: Ord>(expected: &BTreeSet<T>, observed: &BTreeSet<T>) -> BinaryMetrics {
@@ -159,6 +170,104 @@ pub fn evaluate_dedup(
     })
 }
 
+/// Evaluate a report-study partition against visible, rights-clear labels.
+///
+/// This is a local regression path only. It does not read sealed labels and
+/// cannot establish external linkage performance.
+pub fn evaluate_study_linkage(
+    expected_studies: &[Vec<String>],
+    observed_studies: &[Vec<String>],
+    abstained_report_ids: &BTreeSet<String>,
+) -> Result<StudyLinkageEvaluation, BenchmarkError> {
+    let expected = expected_dedup_pairs(expected_studies)?;
+    let observed = expected_dedup_pairs(observed_studies)?;
+    let expected_report_ids = expected_studies
+        .iter()
+        .flatten()
+        .cloned()
+        .collect::<BTreeSet<_>>();
+    let observed_report_ids = observed_studies
+        .iter()
+        .flatten()
+        .cloned()
+        .collect::<BTreeSet<_>>();
+    if let Some(identifier) = abstained_report_ids.difference(&expected_report_ids).next() {
+        return Err(BenchmarkError::UnknownAbstentionReport(identifier.clone()));
+    }
+    if let Some(identifier) = observed_report_ids.difference(&expected_report_ids).next() {
+        return Err(BenchmarkError::UnknownObservedReport(identifier.clone()));
+    }
+    if let Some(identifier) = observed_report_ids
+        .intersection(abstained_report_ids)
+        .next()
+    {
+        return Err(BenchmarkError::AssignedAndAbstainedReport(
+            identifier.clone(),
+        ));
+    }
+    let accounted_report_ids = observed_report_ids
+        .union(abstained_report_ids)
+        .cloned()
+        .collect::<BTreeSet<_>>();
+    if let Some(identifier) = expected_report_ids.difference(&accounted_report_ids).next() {
+        return Err(BenchmarkError::UnaccountedExpectedReport(
+            identifier.clone(),
+        ));
+    }
+    let total_reports = usize_to_u64(
+        expected_studies
+            .iter()
+            .map(Vec::len)
+            .fold(0_usize, usize::saturating_add),
+    );
+    if abstained_report_ids.len() > usize::try_from(total_reports).unwrap_or(usize::MAX) {
+        return Err(BenchmarkError::InvalidAbstentionCount);
+    }
+    Ok(StudyLinkageEvaluation {
+        link_metrics: binary_metrics(&expected, &observed),
+        abstained_reports: usize_to_u64(abstained_report_ids.len()),
+        total_reports,
+    })
+}
+
+/// Build the declared study-linkage metric contracts.
+#[must_use]
+pub fn study_linkage_metric_contracts(evaluation: &StudyLinkageEvaluation) -> Vec<BenchmarkMetric> {
+    let pair_sample = evaluation
+        .link_metrics
+        .true_positive
+        .saturating_add(evaluation.link_metrics.false_positive)
+        .saturating_add(evaluation.link_metrics.false_negative);
+    let mut metrics = Vec::new();
+    for (name, value) in [
+        ("link_precision", evaluation.link_metrics.precision),
+        ("link_recall", evaluation.link_metrics.recall),
+        ("study_cluster_f1", evaluation.link_metrics.f1),
+    ] {
+        if let Some(value) = value {
+            metrics.push(BenchmarkMetric {
+                name: name.to_owned(),
+                value,
+                unit: "proportion".to_owned(),
+                lower_bound: None,
+                upper_bound: None,
+                sample_size: pair_sample,
+            });
+        }
+    }
+    if let Some(value) = ratio(evaluation.abstained_reports, evaluation.total_reports) {
+        metrics.push(BenchmarkMetric {
+            name: "abstention_rate".to_owned(),
+            value,
+            unit: "proportion".to_owned(),
+            lower_bound: None,
+            upper_bound: None,
+            sample_size: evaluation.total_reports,
+        });
+    }
+    metrics
+}
+
 /// Build stable benchmark metrics for a deduplication evaluation.
 #[must_use]
 pub fn dedup_metric_contracts(evaluation: &DedupEvaluation) -> Vec<BenchmarkMetric> {
@@ -271,6 +380,21 @@ pub enum BenchmarkError {
     /// One record appeared in more than one labelled expected cluster.
     #[error("expected duplicate record identifier `{0}` appears in multiple clusters")]
     DuplicateExpectedRecordId(String),
+    /// More abstentions were declared than labelled reports.
+    #[error("study-linkage abstentions exceed the labelled report count")]
+    InvalidAbstentionCount,
+    /// An abstention named a report absent from the labelled fixture.
+    #[error("study-linkage abstention references unknown report `{0}`")]
+    UnknownAbstentionReport(String),
+    /// An observed cluster named a report absent from the labelled fixture.
+    #[error("study-linkage observation references unknown report `{0}`")]
+    UnknownObservedReport(String),
+    /// A report was both assigned and declared as an abstention.
+    #[error("study-linkage report `{0}` is both assigned and abstained")]
+    AssignedAndAbstainedReport(String),
+    /// A labelled report was neither assigned nor explicitly abstained.
+    #[error("study-linkage expected report `{0}` is unaccounted for")]
+    UnaccountedExpectedReport(String),
     /// Candidate metric dropped beyond the configured threshold.
     #[error(
         "metric regressed from {baseline} to {candidate}; maximum permitted drop is {maximum_absolute_drop}"
@@ -308,6 +432,22 @@ mod tests {
         id: String,
         title: String,
         doi: Option<String>,
+    }
+
+    #[derive(Debug, Deserialize)]
+    struct StudyLinkageFixture {
+        schema_version: String,
+        partition: String,
+        reports: Vec<StudyLinkageFixtureReport>,
+        gold_studies: Vec<Vec<String>>,
+        rights_basis: String,
+    }
+
+    #[derive(Debug, Deserialize)]
+    struct StudyLinkageFixtureReport {
+        id: String,
+        registration: Option<String>,
+        kind: String,
     }
 
     fn benchmark_record(record: FixtureRecord) -> BibliographicRecord {
@@ -401,6 +541,85 @@ mod tests {
             ]
         );
         Ok(())
+    }
+
+    #[test]
+    #[allow(
+        clippy::float_cmp,
+        reason = "the synthetic fixture produces exact zero and one proportions"
+    )]
+    fn rights_clear_study_linkage_fixture_executes_declared_metrics()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let fixture: StudyLinkageFixture = serde_json::from_str(include_str!(
+            "../../../benchmarks/methodology/fixtures/validation/study-linkage-cases.json"
+        ))?;
+        assert_eq!(
+            fixture.schema_version,
+            "org.searchright.study-linkage-benchmark-fixture.v1"
+        );
+        assert_eq!(fixture.partition, "validation");
+        assert_eq!(fixture.rights_basis, "CC0 synthetic metadata");
+
+        let mut by_registration = std::collections::BTreeMap::<String, Vec<String>>::new();
+        let mut abstained = BTreeSet::new();
+        for report in fixture.reports {
+            assert!(!report.kind.trim().is_empty());
+            if let Some(registration) = report.registration.filter(|value| !value.trim().is_empty())
+            {
+                by_registration
+                    .entry(registration)
+                    .or_default()
+                    .push(report.id);
+            } else {
+                abstained.insert(report.id);
+            }
+        }
+        let observed = by_registration.into_values().collect::<Vec<_>>();
+        let evaluation = evaluate_study_linkage(&fixture.gold_studies, &observed, &abstained)?;
+        let metrics = study_linkage_metric_contracts(&evaluation);
+        assert_eq!(
+            metrics
+                .iter()
+                .map(|metric| metric.name.as_str())
+                .collect::<Vec<_>>(),
+            vec![
+                "link_precision",
+                "link_recall",
+                "study_cluster_f1",
+                "abstention_rate"
+            ]
+        );
+        assert!(metrics.iter().all(|metric| {
+            if metric.name == "abstention_rate" {
+                metric.value == 0.0
+            } else {
+                metric.value == 1.0
+            }
+        }));
+        Ok(())
+    }
+
+    #[test]
+    fn study_linkage_requires_every_labelled_report_to_be_accounted_for() {
+        let expected = vec![
+            vec!["r1".to_owned(), "r2".to_owned()],
+            vec!["r3".to_owned()],
+        ];
+        let missing_singleton = vec![vec!["r1".to_owned(), "r2".to_owned()]];
+        assert!(matches!(
+            evaluate_study_linkage(&expected, &missing_singleton, &BTreeSet::new()),
+            Err(BenchmarkError::UnaccountedExpectedReport(identifier)) if identifier == "r3"
+        ));
+
+        let with_unknown = vec![
+            vec!["r1".to_owned(), "r2".to_owned()],
+            vec!["r3".to_owned()],
+            vec!["r4".to_owned()],
+        ];
+        assert!(matches!(
+            evaluate_study_linkage(&expected, &with_unknown, &BTreeSet::new()),
+            Err(BenchmarkError::UnknownObservedReport(identifier)) if identifier == "r4"
+        ));
     }
 
     #[test]

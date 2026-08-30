@@ -1,0 +1,16 @@
+{
+  "track_id": "06",
+  "reviewed_head": "b1ebd38c44e3f41bc00c2256a6ca004d62d000f4",
+  "reviewed_staged_tree": "626b8eea6a8c61eb7e4f7176d73804edf1d19a2e",
+  "reviewer": "track06_integration_correctness",
+  "vote": "recommend_approve",
+  "authority": "advisory_only_owner_decides",
+  "scope": "Round-2 identifier-path and XML attribute-validation remediation; historical dissent preserved separately.",
+  "verification": [
+    {"command": "cargo clippy -p searchright-interchange --all-targets --all-features --locked -- -D warnings", "exit_code": 0, "note": "Existing workspace MSRV metadata mismatch warning remains; toolchain 1.97.1."},
+    {"command": "cargo test -p searchright-interchange --locked", "exit_code": 0, "unit_tests_passed": 13, "integration_tests_passed": 10, "tests_failed": 0},
+    {"command": "python3 scripts/generate_source_hash_manifest.py --check", "exit_code": 0, "files_verified": 1498}
+  ],
+  "remaining": ["Clean-tree packaging and full workspace verification", "Current-revision owner decision", "Track-scoped delivery and hosted checks"],
+  "claim_boundary": "Focused local remediation only. No full verification, new owner approval, PR or merge is claimed."
+}

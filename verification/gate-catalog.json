@@ -964,6 +964,19 @@
       "script": "scripts/sync_track_evidence.py"
     },
     {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_track_archival.py",
+      "compiler_required": false,
+      "covered_assertions": [],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-TRACK-ARCHIVAL",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_track_archival.py"
+    },
+    {
       "category": "source_structure",
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_rust_dependency_graph.py",

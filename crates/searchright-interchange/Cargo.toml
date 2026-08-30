@@ -10,6 +10,7 @@ publish = false
 
 [dependencies]
 blake3.workspace = true
+quick-xml.workspace = true
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
 schemars.workspace = true
 serde.workspace = true

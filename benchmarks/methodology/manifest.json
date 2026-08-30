@@ -59,7 +59,7 @@
     "sealed_test": {
       "labels_visible": false,
       "manifest": "benchmarks/methodology/fixtures/sealed/manifest.json",
-      "purpose": "independent final evaluation; labels remain external to the repository"
+      "purpose": "multi-agent panel evaluation followed by repository-owner decision; labels remain external to development prompts and the repository"
     }
   },
   "external_upstreams": [

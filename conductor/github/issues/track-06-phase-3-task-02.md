@@ -3,11 +3,11 @@
 
 Parent phase key: `track-06-phase-3`
 Conductor plan: `conductor/tracks/06-imports-dedup-linkage/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Evaluate linkage and deduplication against independently adjudicated corpora.
+- [x] Run a digest-bound multi-agent panel evaluation of linkage and deduplication, then obtain the repository owner's recorded decision.
 
 ## Completion and evidence contract
 

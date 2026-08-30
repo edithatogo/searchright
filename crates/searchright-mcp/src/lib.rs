@@ -2593,7 +2593,10 @@ fn parse_interchange(value: &str) -> Result<InterchangeFormat, String> {
         "csl_json" | "csl-json" => Ok(InterchangeFormat::CslJson),
         "ris" => Ok(InterchangeFormat::Ris),
         "nbib" | "pubmed" => Ok(InterchangeFormat::Nbib),
+        "pubmed_xml" | "pubmed-xml" => Ok(InterchangeFormat::PubmedXml),
         "csv" => Ok(InterchangeFormat::Csv),
+        "bibtex" => Ok(InterchangeFormat::Bibtex),
+        "endnote_xml" | "endnote-xml" => Ok(InterchangeFormat::EndnoteXml),
         _ => Err(format!("unsupported interchange format `{value}`")),
     }
 }

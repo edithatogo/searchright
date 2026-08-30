@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.study-linkage-validation-receipt.v1",
+  "track_id": "06",
+  "observed_at": "2026-08-30T13:00:00+10:00",
+  "source_revision": "23317cfc64bf7ec1a9bb7489f91f457ecefc979f",
+  "fixture": "benchmarks/methodology/fixtures/validation/study-linkage-cases.json",
+  "fixture_sha256": "a1b7a6fc7bbea9fc1b62aee3fdc9f3f8de386fe506a1075063df095a4ba7ac10",
+  "partition": "validation",
+  "labels": "development_visible",
+  "rights_basis": "CC0 synthetic metadata",
+  "status": "passed",
+  "command": "cargo test -p searchright-bench --locked rights_clear_study_linkage_fixture_executes_declared_metrics",
+  "reports": 3,
+  "expected_link_pairs": 1,
+  "metrics": [
+    {"name": "link_precision", "value": 1.0, "sample_size": 1},
+    {"name": "link_recall", "value": 1.0, "sample_size": 1},
+    {"name": "study_cluster_f1", "value": 1.0, "sample_size": 1},
+    {"name": "abstention_rate", "value": 0.0, "sample_size": 3}
+  ],
+  "coverage_validation": "Every expected report must appear exactly in an observed cluster or the explicit abstention set; unknown, overlapping and omitted report identities fail closed.",
+  "claim_boundary": "This compiler-backed local regression uses development-visible synthetic labels. It establishes neither sealed-corpus nor external study-linkage performance."
+}

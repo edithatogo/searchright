@@ -1,28 +1,27 @@
 {
   "schema_version": "org.searchright.track-review-verification.v1",
   "track_id": "06",
-  "observed_at": "2026-08-29T15:50:00+10:00",
-  "source_revision": "head",
+  "observed_at": "2026-08-30T13:39:12+10:00",
+  "source_revision": "dc5b3ec35ddc91df269dc76cd3fa0bafca9db39a",
   "toolchain": "1.98.0-aarch64-apple-darwin",
   "status": "passed",
   "checks": [
     {
-      "command": "cargo test -p searchright-interchange -p searchright-dedup -p searchright-study --locked",
+      "command": "cargo test -p searchright-interchange -p searchright-dedup -p searchright-study -p searchright-bench --locked",
       "status": "passed",
-      "tests_passed": 14
+      "tests_passed": 36
     },
     {
-      "command": "cargo clippy -p searchright-interchange -p searchright-dedup -p searchright-study --all-targets --all-features --locked -- -D warnings",
-      "status": "passed"
-    },
-    {
-      "command": "cargo test --workspace --locked",
+      "command": "cargo clippy -p searchright-interchange -p searchright-dedup -p searchright-study -p searchright-bench --all-targets --all-features --locked -- -D warnings",
       "status": "passed"
     }
   ],
   "limits": [
-    "Deduplication remains a review-required proposal and does not destructively remove records without review approval.",
-    "Full benchmark corpus screening authority is reserved for human review teams.",
+    "DOI and PMID remain report-level automatic duplicate evidence; ISBN and trial registration are candidate signals and any resulting fuzzy match remains review-required.",
+    "The study-linkage metrics execute development-visible CC0 synthetic labels only and establish no external or sealed-corpus performance.",
+    "Report detachment is transactional for multi-report studies and explicitly rejects detaching the sole report because empty studies are invalid.",
+    "Title similarity thresholds must be finite, greater than zero and at most one so large-input blocking and exhaustive comparison have the same supported domain.",
+    "Agent panels may recommend benchmark disposition; the repository owner retains the final recorded decision.",
     "Source-verified implementation and compiler verification are complete."
   ]
 }

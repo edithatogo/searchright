@@ -1,0 +1,18 @@
+{
+  "track_id": "06",
+  "reviewed_commit": "18bc07dfb1469542105d2bc7707d21716fe31470",
+  "reviewed_tree": "6f60addaecd1930955a859f7c35a060e70322f31",
+  "vote": "recommend_revise",
+  "authority": "advisory_only_owner_decides",
+  "findings": [
+    {"reviewer": "track06_integration_correctness", "priority": "P1", "finding": "Attribute-bearing XML record and PMID elements lose records or identifiers."},
+    {"reviewer": "track06_integration_correctness", "priority": "P2", "finding": "XML entities are double-decoded, numeric references remain escaped, and CDATA text is corrupted."},
+    {"reviewer": "track06_integration_correctness", "priority": "P1", "finding": "An unclosed XML record can consume a following valid record without quarantine."},
+    {"reviewer": "track06_integration_governance", "priority": "P2", "finding": "Restore the unrelated Track 05 phase_3_task_count safeguard."},
+    {"reviewer": "track06_integration_testing", "priority": "P2", "finding": "Run archival renderer regressions in the required static harness."}
+  ],
+  "baseline_regressions": {"command": "cargo test --locked -p searchright-interchange --test xml_integrity", "passed": 0, "failed": 6},
+  "baseline_verification": {"static_gates_passed": 54, "full_verification": "stopped_before_completion_after_panel_findings"},
+  "historical_approval": "Original approval and panel receipts remain unchanged and retain their historical revision bindings.",
+  "claim_boundary": "First-pass findings and baseline evidence only. This receipt does not claim that remediation, new review, CI or integration delivery has completed."
+}

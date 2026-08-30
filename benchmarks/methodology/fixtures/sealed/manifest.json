@@ -5,6 +5,6 @@
   "labels_present": false,
   "labels_location": "external controlled evaluation mount",
   "label_digest": null,
-  "release_condition": "An independent evaluator records the corpus version, label digest, configuration digest and environment receipt.",
+  "release_condition": "A multi-agent evaluation panel records the corpus version, label digest, configuration digest and environment receipt, discloses conflicts, and sends its recommendation to the repository owner for decision.",
   "claim_boundary": "Case identifiers do not expose labels or permit a performance claim."
 }

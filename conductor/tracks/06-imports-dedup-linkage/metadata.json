@@ -6,7 +6,7 @@
   "status": "source_implemented",
   "implementation_state": "source_implemented",
   "created": "2026-08-05",
-  "updated": "2026-08-09",
+  "updated": "2026-08-30",
   "dependencies": [
     "01",
     "05"
@@ -39,5 +39,7 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-08-30"
 }

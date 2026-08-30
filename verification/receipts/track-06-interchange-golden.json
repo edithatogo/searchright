@@ -1,0 +1,40 @@
+{
+  "schema_version": "org.searchright.track-verification.v1",
+  "track_id": "06",
+  "observed_at": "2026-08-29T21:12:28+10:00",
+  "base_revision": "53b86949db1bb48e51c02cee1a6c6116fd5651bb",
+  "source_revision": "23317cfc64bf7ec1a9bb7489f91f457ecefc979f",
+  "status": "passed",
+  "scope": "deterministic compiler-backed bibliographic interchange",
+  "checks": [
+    {
+      "command": "cargo test -p searchright-interchange --locked",
+      "status": "passed",
+      "tests_passed": 13
+    }
+  ],
+  "formats": [
+    "searchright_json",
+    "json_lines",
+    "csl_json",
+    "ris",
+    "nbib",
+    "pubmed_xml",
+    "csv",
+    "bibtex",
+    "endnote_xml"
+  ],
+  "assertions": [
+    "Each supported text format exports deterministically.",
+    "Each exported golden record imports without quarantine and preserves title, authors, year, DOI, PMID and container title.",
+    "An unterminated PubMed XML article is quarantined with its exact source line range.",
+    "Attributed PubMed abstract sections and inline title markup are preserved as normalized bibliographic text.",
+    "Parenthesized BibTeX entries are imported, while unterminated BibTeX and EndNote records are quarantined with source line ranges.",
+    "Multiple compact EndNote records and multiple same-line BibTeX entries are imported without silent loss; delimiters inside BibTeX field values do not terminate entries."
+  ],
+  "limitations": [
+    "Parquet and named custom formats remain explicitly unsupported by the text interchange runtime and are not included.",
+    "Semantic completeness beyond the asserted canonical fields is not claimed.",
+    "This receipt contains no repository-owner decision on the agent-panel deduplication and study-linkage evaluation."
+  ]
+}
