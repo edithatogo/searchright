@@ -1,0 +1,22 @@
+{
+  "track_id": "20",
+  "date": "2026-08-30",
+  "source_commit": "30c18fdf073eb350b15adc45fdee834a2dc4eb24",
+  "source_tree": "541eb4a59bf6ddf3cf4ccc367b792ed11bffabfc",
+  "clean_snapshot_commit": "e69c627993ac1837ea81408acd0aceafc6cb9bb3",
+  "snapshot_tree_matches_source": true,
+  "full_validation": {
+    "command": "bash scripts/verify.sh",
+    "exit_code": 0,
+    "static_gates_passed": 57,
+    "rust_tests_passed": 341,
+    "rust_tests_skipped": 0,
+    "fmt_clippy_doctests_rustdoc_dependency_policy": "passed",
+    "log_sha256": "f65e60a8edbefb7f248d8aba3557d5ded2a79ec79dcd33a26d2b53c4479f6710"
+  },
+  "governance_tests": {"passed": 23, "exit_code": 0},
+  "governance_gate": {"exit_code": 0},
+  "cargo_vet": {"exit_code": 0, "fully_audited": 43, "exempted": 259},
+  "environment_repair": "Installed locked ignored binding dependencies with npm ci after the initial snapshot lacked node_modules; binding check and full verification then passed without source or gate changes.",
+  "authority_boundary": "Deterministic fixture and compiler evidence only. No live-provider support, topic-specific adequacy, screening authority, publication or release promotion. Inherited dependency exemptions remain temporary risk acceptance, not audits."
+}
