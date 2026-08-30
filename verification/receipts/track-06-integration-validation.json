@@ -1,0 +1,22 @@
+{
+  "track_id": "06",
+  "source_revision": "2efb00e199b819a21e924f51d97fe15c8e41b1e1",
+  "source_tree": "33d794572f478cd37788cf8fd71bfb3cb8902163",
+  "clean_validation_snapshot": "c607a820a201b0d10977b6a8889a8760869866eb",
+  "validation_snapshot_has_identical_tree": true,
+  "command": "bash scripts/verify.sh",
+  "exit_code": 0,
+  "toolchain": "Rust 1.97.1, aarch64-apple-darwin",
+  "static_gates_passed": 56,
+  "workspace_tests_passed": 321,
+  "workspace_tests_skipped": 0,
+  "format_clippy_doctests_documentation": "passed",
+  "compiled_schema_parity": "passed_with_10_recorded_differences",
+  "dependency_advisories_bans_licenses_sources": "passed",
+  "verification_log_sha256": "3e5d038e2924ec8938db4a525dadd97e65ad888f0f0ff9b21e9f9dec74c3d468",
+  "python_suite": {"passed": 71, "subtests_passed": 7, "source_scope": "Same Python source as the final validated tree; executed before dependency-only remediation."},
+  "final_security_delta_review": {"reviewer": "track06_integration_correctness", "reviewed_tree": "33d794572f478cd37788cf8fd71bfb3cb8902163", "vote": "recommend_approve", "findings": []},
+  "delivery_authority": "User request: finish Track 06 validation and delivery, then integrate Track 20 and reassess remaining dependencies.",
+  "approval_boundary": "Delivery authorization is separate from the unchanged historical digest-bound methodological decision; no new methodological, release, publication or live-provider approval is inferred.",
+  "limitations": ["Local validation only; hosted CI and merge require their own observed evidence.", "Existing nonfatal MSRV metadata, rustdoc filename-collision and dependency duplication warnings are not represented as zero warnings."]
+}
