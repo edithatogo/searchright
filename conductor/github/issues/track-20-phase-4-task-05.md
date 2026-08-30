@@ -1,13 +1,13 @@
-<!-- searchright-issue-key: track-20-phase-3-task-01 -->
-# Track 20 / Phase 3 / Task 01
+<!-- searchright-issue-key: track-20-phase-4-task-05 -->
+# Track 20 / Phase 4 / Task 05
 
-Parent phase key: `track-20-phase-3`
+Parent phase key: `track-20-phase-4`
 Conductor plan: `conductor/tracks/20-broader-discovery/plan.md`
 Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Compile and run citation-chaining and supplementary-discovery scenarios.
+- [x] Replace delimiter-ambiguous non-cryptographic citation edge IDs with length-framed BLAKE3 identifiers and reject padded, control-bearing or oversized fixture identifiers (`d0e73ea`).
 
 ## Completion and evidence contract
 

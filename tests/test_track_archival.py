@@ -105,6 +105,17 @@ class TrackArchivalTests(unittest.TestCase):
         self.assertIn("- [x] Close only after the owner's recorded panel decision.", SYNC.render_plan(entry))
         self.assertIn("- [x] Close the track only when all applicable", default)
 
+    def test_explicit_historical_tasks_do_not_grow_with_review_fixes(self) -> None:
+        entry = dict(self.archived_entry(), deliverables=[], checks=[],
+                     additional_closeout_tasks=["Historical task five.", "Historical task six."],
+                     review_fixes=["A new nested review fix."])
+        self.assertEqual(SYNC.task_counts(entry)[4], 6)
+        rendered = SYNC.render_plan(entry)
+        self.assertEqual(rendered.count("- [x] Historical task five."), 1)
+        self.assertIn("  - [x] Review fix: A new nested review fix.", rendered)
+        entry["review_fixes"].append("Another nested fix.")
+        self.assertEqual(SYNC.task_counts(entry)[4], 6)
+
 
 if __name__ == "__main__":
     unittest.main()

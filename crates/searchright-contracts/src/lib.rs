@@ -53,7 +53,13 @@ pub use delivery::{
     RepositoryRuleset, RepositorySecurityControls, RepositoryVisibility, RulesetEnforcement,
 };
 pub use diagnostic::{Diagnostic, DiagnosticLocale, DiagnosticSeverity};
-pub use discovery::{DiscoveryEdge, DiscoveryMethod, DiscoveryRun};
+pub use discovery::{
+    ContactOutcome, DiscoveryAccessMode, DiscoveryCoverageAssessment, DiscoveryCoverageRisk,
+    DiscoveryEdge, DiscoveryMethod, DiscoveryRun, DiscoverySourceKind, DiscoverySourceMethod,
+    MAX_DISCOVERY_DEPTH, MAX_DISCOVERY_EDGES, MAX_DISCOVERY_IDENTIFIER_BYTES,
+    MAX_DISCOVERY_IDENTIFIER_TOTAL_BYTES, MAX_DISCOVERY_RECORDS, MAX_DISCOVERY_SEEDS,
+    ManualDiscoveryLog,
+};
 pub use document::{
     CitationCalloutEvidence, DocumentEvidence, DocumentExtractionProvenance, DocumentSpan,
     ExtractedFieldEvidence, ExtractedReferenceEvidence, ExtractionDiagnostic,

@@ -9,6 +9,9 @@ Canonical task state: **source task complete**.
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_broader_discovery.py`
+  - [x] `cargo test -p searchright-contracts -p searchright-discovery`
+  - [x] `cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings`
 
 ## Completion and evidence contract
 

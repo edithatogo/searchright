@@ -1,0 +1,8 @@
+{
+  "schema_version": "org.searchright.methodology-panel.v1", "track_id": "20", "recorded_on": "2026-08-29", "reviewed_revision": "7be836e5a704fbda69cdb83b4745f965acece738", "fix_revision": "48554a5", "panel_kind": "structured_agent_simulation",
+  "simulated_roles": ["information_specialist", "grey_literature_methodologist", "security_reviewer", "adversarial_tester"],
+  "vectors": {"trial_registers": "bounded_documented_methods", "repositories": "bounded_documented_methods", "conference_thesis_policy_and_web": "bounded_documented_methods", "forward_citation": "strict_bounded_fixture_adapter", "backward_citation": "scoped_manual_reference_checking", "contacts": "privacy_safe_outcome_logs", "handsearch": "structured_scope_and_result_counts", "coverage_risk": "canonical_reciprocal_matrix_validation"},
+  "findings_disposition": {"backward_citation_absent": "fixed", "contact_outcome_absent": "fixed", "coverage_log_contradiction": "fixed", "unbounded_graph_input": "fixed", "source_method_mismatch": "fixed", "sensitive_manual_text": "fixed", "caller_defined_completeness": "fixed", "citation_edge_id_collision": "fixed", "malformed_empty_citation_success": "fixed"},
+  "critical_findings_open": 0, "high_findings_open": 0,
+  "claim_boundary": "This is a fixture-based agent simulation instrument, not topic-specific human information-specialist review, legal approval, live-source evidence, or certification of methodological adequacy."
+}

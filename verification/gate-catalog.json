@@ -66,12 +66,6 @@
         "T19-A004",
         "T19-A005",
         "T19-A006",
-        "T20-A001",
-        "T20-A002",
-        "T20-A003",
-        "T20-A004",
-        "T20-A005",
-        "T20-A006",
         "T21-A001",
         "T21-A002",
         "T21-A003",
@@ -413,6 +407,26 @@
       "harness_gate": true,
       "network": false,
       "script": "scripts/check_methodology_benchmarks.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_broader_discovery.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T20-A001",
+        "T20-A002",
+        "T20-A003",
+        "T20-A004",
+        "T20-A005",
+        "T20-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-BROADER-DISCOVERY",
+      "harness_gate": true,
+      "network": false,
+      "script": "scripts/check_broader_discovery.py"
     },
     {
       "category": "safety_policy",

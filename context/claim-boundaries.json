@@ -1,7 +1,7 @@
 {
   "allowed_claims": [
     "The source repository contains versioned contracts, implementation scaffolds, assertion-level traceability and deterministic static checks.",
-    "The roadmap contains 199 acceptance assertions, of which 72 have individual symbol/test/evidence mappings; unmapped or partial assertions remain visibly below source implemented.",
+    "The roadmap contains 200 acceptance assertions, of which 115 have individual symbol/test/evidence mappings; unmapped or partial assertions remain visibly below source implemented.",
     "Four MVP connector vertical slices and rights-clear response baselines are present in source, but compilation and authorised live execution are not proven.",
     "Native strategy text, spans and translation-loss diagnostics are preserved for seven database dialect families; semantic parsing and equivalence remain deliberately partial.",
     "A deterministic review-bundle pack/verify self-test and a deterministic noncanonical review-state reducer pass locally.",

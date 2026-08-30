@@ -9,9 +9,11 @@ repository.workspace = true
 publish = false
 
 [dependencies]
+blake3.workspace = true
 schemars.workspace = true
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1" }
 serde.workspace = true
+serde_json.workspace = true
 thiserror.workspace = true
 
 [lints]

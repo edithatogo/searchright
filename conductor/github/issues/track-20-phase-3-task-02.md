@@ -3,11 +3,11 @@
 
 Parent phase key: `track-20-phase-3`
 Conductor plan: `conductor/tracks/20-broader-discovery/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Add authorised source-specific live adapters or documented manual methods.
+- [x] Add authorised source-specific live adapters or documented manual methods.
 
 ## Completion and evidence contract
 
