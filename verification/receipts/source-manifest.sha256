@@ -671,7 +671,7 @@ cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d  ./conductor/gi
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
-c93e64ed616782b6127af5357b931b0cd12f6ff1efbaa60a900f15c1011e09a0  ./conductor/roadmap-coverage.json
+116fe004e378248a57f87f91fd9ca0b53dc67a8cc7d262df0fc8f5fc81a1b13e  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
 165c45c1c6fae9034ba3804683e607cf384852859752c32805f0d76b7d3ae24b  ./conductor/traceability-overrides.json
 dd1a7cb53d4e8121b2fea83773070da4173d0aa934970638fb04c5748f666eb1  ./conductor/tracks.md
@@ -731,8 +731,8 @@ f11870ca57ed7e8e08a23ba8875df0333c6a7dad6efb2001b7f4f5605918f43b  ./conductor/tr
 a5313f3aded054d2933ba09b1f23078ba1ba8290966a61f92ae5919c955a8d16  ./conductor/tracks/10-mcp-mvp/scope-exception.md
 10665d2f602bf9bc4f243993187071feef3366924c2486a1b5243a823ef092c2  ./conductor/tracks/10-mcp-mvp/spec.md
 16c6a506b92f6298ef5414da47b9634f3487410c4582602cc4388c156ad9a3bb  ./conductor/tracks/10-mcp-mvp/traceability.json
-f7a7d48effdba311679b6ba66f2b8eeeb568ee8eb07ef583788b8c8825c3ebab  ./conductor/tracks/11-agentic-skill/evidence.json
-b7c09b8093cd332093d206e7e3801cfc8a3e1cb9271b5ea6db724f6adc044202  ./conductor/tracks/11-agentic-skill/metadata.json
+5f381d8fc0568e121cac8d7ffd7b44086d4189740c0aa72e9e1a5394bc480cb2  ./conductor/tracks/11-agentic-skill/evidence.json
+8127a1921ef4988f5c425b76acfbb219199424be597a93b96cfd3682906d9a61  ./conductor/tracks/11-agentic-skill/metadata.json
 542f1673804d0341e20d1ce7e36c3e786936ecee6c7e32ecd7fd0c991d50159f  ./conductor/tracks/11-agentic-skill/plan.md
 6e0cd0d086bf2d9c591c5849dda207ef81a6e8265e849b1706fde6025e8a4309  ./conductor/tracks/11-agentic-skill/spec.md
 896747ab7d24ae6d13ce4cc8248631e5be00c5141f2a7ababe6de1f2c284e3c7  ./conductor/tracks/11-agentic-skill/traceability.json
@@ -871,7 +871,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 2480395a1b729a91443c67c12f65fe2fa6c75e8981a4553b90d636917a50f4fe  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 1d66cc63a5f9f91ce165a2583bbb4890c2c909504407c3fda1f2634e18e29fbb  ./context/claim-boundaries.json
-50ae8e60d116e5ffd2ec7e77b896ccf2b690afe87c020ff1650d556e01fce545  ./context/context-lock.json
+f11227895fc360167b2f1063b6cae4add4726a968881aef52b94c81afcd4c499  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 2122148c8c97713671b52d1118fa2ed071836d113ae9a30cdde5f50c0fd19244  ./context/hazard-log.json
