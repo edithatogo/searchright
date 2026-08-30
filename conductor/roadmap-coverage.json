@@ -652,7 +652,7 @@
         "cargo test -p searchright-agent --locked",
         "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
       ],
-      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex host/model receipt is invalidated because its prompt exposed expected answers; no host/model evaluation is currently accepted. The downstream caller has a tested draft upstream contribution. Host/model evaluation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. The downstream caller has a focused-tested draft upstream contribution; full consumer validation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
       "deliverables": [
         "skills/systematic-search/SKILL.md",
         "skills/systematic-search/workflows/systematic-review.yaml",
@@ -701,6 +701,7 @@
             "skills/systematic-search/evaluations/host-model-matrix.json",
             "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json",
             "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol-contract-v2.json",
+            "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol-context-isolated.json",
             "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json"
           ]
         },
@@ -711,7 +712,8 @@
           "evidence": [
             "skills/systematic-search/evaluations/human-calibration-protocol.md",
             "skills/systematic-search/evaluations/human-calibration-template.json",
-            "skills/systematic-search/evaluations/human-calibration-recruitment.md"
+            "skills/systematic-search/evaluations/human-calibration-recruitment.md",
+            "verification/receipts/track-11-owner-decisions.json"
           ]
         },
         {
@@ -720,7 +722,8 @@
           "status": "pending",
           "evidence": [
             "registry/skills/systematic-search/authorization-request.json",
-            "verification/receipts/track-11-registry-target-assessment.json"
+            "verification/receipts/track-11-registry-target-assessment.json",
+            "verification/receipts/track-11-registry-target-assessment-v2.json"
           ]
         }
       ],

@@ -1,0 +1,21 @@
+{
+  "schema_version": "org.searchright.registry-target-assessment.v1",
+  "observed_at": "2026-08-30",
+  "status": "target_selection_required",
+  "supersedes_assessment": "verification/receipts/track-11-registry-target-assessment.json",
+  "candidates": [
+    {
+      "name": "Anthropic official Claude plugin directory",
+      "official_source": "https://claude.com/docs/plugins/submit",
+      "submission_url": "https://platform.claude.com/plugins/submit",
+      "observed_distribution_model": "Public GitHub plugin submitted through an authenticated form, reviewed before listing in claude-plugins-official.",
+      "central_acceptance_workflow_observed": true,
+      "preflight": "Prepare a Claude plugin wrapper and pass claude plugin validate; a bare SKILL.md packet is not proof of plugin readiness.",
+      "principal_requirement": "Console organization Developer, Admin or Owner; alternatively eligible claude.ai organization directory-management access.",
+      "ongoing_effect": "Official documentation says published plugin updates are picked up automatically from GitHub and screened. Future updates therefore need an explicit release/authorization policy, not merely approval of initial bytes."
+    }
+  ],
+  "decision": "The previous self-hosted-marketplace assessment missed the separate official directory submission route. Recommend considering that directory because it provides an observed acceptance boundary; this recommendation does not select the target or authorize submission.",
+  "required_input": "Accountable owner selects registry, namespace and submitting principal, approves directory terms and the final package digest, operation, validity period and future-update policy.",
+  "claim_boundary": "Research and preparation only. No registry selected, account authenticated, terms accepted, package submitted or listing accepted. Historical assessment remains preserved."
+}

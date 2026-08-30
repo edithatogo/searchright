@@ -1,0 +1,31 @@
+{
+  "schema_version": "org.searchright.track-owner-decision-request.v1",
+  "track": "11",
+  "status": "awaiting_owner_decisions",
+  "skill_package_sha256": "772a193e9070cb070769f18bdbe701cbd03ca77012bdcaf32d4b416a4ea0f4ba",
+  "requests": [
+    {
+      "gate": "T11-G001",
+      "decision": "Explicitly accept or decline the proposed ongoing maintainer commitment for @edithatogo: approximately six-week release synchronization and downstream issue triage.",
+      "separate_external_requirement": "Upstream maintainer acceptance of draft PR 807; local tests cannot substitute for adoption."
+    },
+    {
+      "gate": "T11-G002",
+      "decision": "Authenticate Claude locally using the intended account so the declared Claude Code 2.1.126 / claude-sonnet-4-6 evaluation can execute. Do not put credentials in this packet.",
+      "already_observed": "Codex CLI 0.144.1 / gpt-5.6-sol passed all twelve public authority fixtures in the context-isolated receipt."
+    },
+    {
+      "gate": "T11-G003",
+      "decision": "Approve or decline amending Track 11's two-independent-human requirement to the CODEX_HANDOFF protocol: isolated methodology, implementation, testing, security/safety and adversarial agent first passes, preserved dissent, then accountable-owner adjudication. This is internal authority calibration, not external specialist validation.",
+      "next_after_approval": "Amend the protocol and canonical gate wording, freeze exact package and review materials, run the isolated calibration panel, remediate findings and return the packet for owner adjudication. The code-review panel in this change is not that calibration panel."
+    },
+    {
+      "gate": "T11-G004",
+      "decision": "Select the target registry, namespace and submitting principal. The official Anthropic plugin directory is a researched candidate, not an authorized selection.",
+      "next_after_selection": "Prepare and validate the target-specific plugin wrapper, review directory terms and automatic-update policy, then request authorization bound to final package bytes, operation and expiry before submission.",
+      "separate_external_requirement": "Observed directory acceptance; submission alone cannot close the gate."
+    }
+  ],
+  "authorization_reference": null,
+  "claim_boundary": "A decision request only. No owner decision, authentication, maintenance acceptance, methodological adjudication, registry selection, submission authority or external acceptance is inferred from generic continuation instructions."
+}

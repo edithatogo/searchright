@@ -5,7 +5,7 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/11-agentic-skill/spec.md#scope",
-  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour only. The downstream caller and registry packet are prepared but unapplied and unsubmitted; no supported-host/model, human-calibration, companion adoption, live-provider or registry-acceptance claim is made.",
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. The downstream caller has a focused-tested draft upstream contribution; full consumer validation, upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
   "assertions": [
     {
       "assertion_id": "T11-A001",
@@ -107,7 +107,7 @@
       "open_gates": [
         "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
       ],
-      "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority, including prompt-injection, forged, mis-scoped, expired, revoked, replayed and human-authority denials; model and host behaviour remain untested."
+      "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority. A context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed the twelve public authority fixtures with strict event integrity; this is bounded fixture compliance, not general host support or calibration. The declared Claude pair remains pending."
     },
     {
       "assertion_id": "T11-A005",

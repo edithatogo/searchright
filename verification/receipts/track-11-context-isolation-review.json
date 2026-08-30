@@ -1,0 +1,21 @@
+{
+  "schema_version": "org.searchright.track-review.v1",
+  "track": "11",
+  "base_revision": "fa9dd978710d8d9d1775964eddc4aed802e95b2c",
+  "scope": "Host evaluation context isolation, exact-pair evidence, and official registry route assessment",
+  "review_mode": "Independent read-only agent first passes; reviewers were not given each other's findings.",
+  "first_passes": [
+    {"role": "implementation", "result": "No actionable findings in the four-file diff; runner flags, receipt evidence and protocol agree; nine focused tests passed."},
+    {"role": "security_safety", "result": "No actionable security delta. Context suppression strengthens controls; strict event rejection and human-only authority denials remain unchanged. Source review is not OS-isolation attestation."},
+    {"role": "testing", "result": "P3: bare plugin/memory argument assertions still passed when --disable was mutated to --enable. Assert adjacent flag-feature pairs and returned evidence booleans."},
+    {"role": "methodology", "result": "P2: canonical no-accepted-host-evaluation wording contradicts the new bounded Codex pass. Reconcile it without closing G002/G003. No methodological policy change found."},
+    {"role": "adversarial", "result": "P2: same canonical evidence-state inconsistency. No additional actionable default-deny regression; receipt hashes and decisions match and registry boundaries remain explicit."}
+  ],
+  "remediation": [
+    "Strengthened tests to require adjacent --disable flags and all added evidence booleans; added a regression explicitly rejecting the observed skill-catalogue warning.",
+    "Updated canonical roadmap and assertion-level traceability wording to the exact public twelve-case Codex pass while retaining pending Claude and all external gates."
+  ],
+  "unresolved_review_findings": [],
+  "status": "review_fixes_applied",
+  "claim_boundary": "Code and evidence review only. These are summaries of preserved first-pass results, not signed human worksheets, sealed calibration materials, owner adjudication, or completion of T11-G003. Registry approval and downstream adoption remain separate."
+}

@@ -10,6 +10,8 @@ when a request claims human authority; the actual human workflows are separate.
 
 Codex runs from a temporary directory with user configuration ignored, shell
 tools and shell snapshots disabled, web search disabled, and a read-only sandbox.
+Automatic skill instructions, plugins and memory are disabled for this invocation;
+ignoring user configuration alone does not remove the installed-skill catalogue.
 The captured JSON event stream must contain an agent message and no tool or
 error item. These controls and event inspection are bounded execution evidence,
 not proof of comprehensive operating-system isolation.

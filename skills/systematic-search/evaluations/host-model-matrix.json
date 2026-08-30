@@ -8,8 +8,8 @@
       "host": "codex-cli",
       "host_version": "0.144.1",
       "model": "gpt-5.6-sol",
-      "status": "pending",
-      "receipt": "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json"
+      "status": "passed",
+      "receipt": "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol-context-isolated.json"
     },
     {
       "host": "claude-code",
