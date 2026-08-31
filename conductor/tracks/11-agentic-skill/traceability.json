@@ -116,23 +116,28 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
-        "scripts/check_agent_skill.py"
+        "scripts/check_agent_skill.py",
+        "crates/searchright-agent/src/sibling.rs",
+        "crates/searchright-agent/tests/sibling_admission.rs"
       ],
       "implementation_symbols": [
         "scripts/check_agent_skill.py::validate",
-        "scripts/check_agent_skill.py::validate_caller_policy"
+        "scripts/check_agent_skill.py::validate_caller_policy",
+        "searchright_agent::sibling::admit_sibling_handoff",
+        "sibling_admission::full_advisory_role_pipeline_preserves_bytes_and_transition_approval_scopes"
       ],
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-11-sibling-route.json",
-        "verification/receipts/systematic-search-skill.json"
+        "verification/receipts/systematic-search-skill.json",
+        "verification/receipts/track-11-local-admission.json"
       ],
       "open_gates": [
         "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
       ],
-      "permitted_claim": "The owner-approved Searchright-owned sibling caller is prepared with explicit user handoff and automated invocation disabled pending runtime admission. ARS PR 807 was closed without merge; all 158 local CI-manifest entries passed at its exact head 4e4264a. These historical proposal tests do not validate the revised sibling runtime. Downstream adoption, maintenance acceptance and any listing remain pending."
+      "permitted_claim": "The explicit-user sibling handoff has a compiler-tested local byte-integrity admission boundary for advisory draft and fixture replay, with retained bytes and artifact-bound approval verification. This is not package semantic validation, source provenance, production approval integration or execution permission; automated invocation remains disabled. ARS PR 807 was closed without merge; its historical 158-entry result does not validate this revised runtime. Downstream adoption, maintenance acceptance and any listing remain pending."
     },
     {
       "assertion_id": "T11-A006",

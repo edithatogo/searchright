@@ -1,11 +1,25 @@
 {
   "schema_version": "org.searchright.track-maintenance-verification.v1",
   "track_id": "11",
-  "observed_at": "2026-08-31T03:13:25Z",
+  "observed_at": "2026-08-31T04:35:03Z",
   "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
   "implementation_commit": "1ee989d",
   "host_runner_commit": "8d1ae21",
-  "status": "focused_tests_and_isolated_review_passed_full_verification_pending",
+  "status": "full_pinned_verification_passed_before_latest_main_integration",
+  "full_verification": {
+    "command": "PATH=/Users/doughnut/.rustup/toolchains/1.97.1-aarch64-apple-darwin/bin:$PATH bash scripts/verify.sh",
+    "exit_code": 0,
+    "run_start_revision": "5c1c861",
+    "run_end_revision": "a4668d68962a3621c1682f06830b1a64758bcb40",
+    "binding_note": "Only the historical calibration receipt annotation changed during this run; compiler inputs were unchanged. Later traceability and documentation edits and latest-main integration require revalidation.",
+    "python_tests_passed": 62,
+    "static_gates_passed": 57,
+    "native_tests_passed": 374,
+    "native_tests_skipped": 0,
+    "log_sha256": "9d622dbbdcc7c88d0dbe55a8e48a859fe9e661123b51ce03888b0851ea4e35e1",
+    "warnings": ["Nextest reported two leaky tests; no test failures.", "Existing MSRV, documentation output-collision and cargo-deny warnings remained visible."],
+    "optional_gate_not_run": "cargo-machete is not installed; verify.sh skips this optional gate."
+  },
   "commands": [
     {"command": "cargo test -p searchright-agent --locked", "exit_code": 0, "tests_passed": 23},
     {"command": "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings", "exit_code": 0, "limitations": "Existing dependency MSRV configuration warning retained."},

@@ -677,7 +677,7 @@ aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/pr
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
 0b412a922cd84d1918e3006da4a3fb051b830cfd7f304514f4a78d3224e72ce9  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
-5b70176398f0cd24d5648463d8c7c0351db3deb89bd08ecc5ce6f4ea16df131d  ./conductor/traceability-overrides.json
+db457060563864d2664b1f8ff69d28c0cad219793cc0c37a67009874e0566531  ./conductor/traceability-overrides.json
 23d55a325ff2526a3ae30c7e0dd8e56553e6d752308786a556d1c5ff27d7caca  ./conductor/tracks.md
 b15da44039ebd0f10705366067f515d4597ed80906d4b4941d68a45fc9672a5b  ./conductor/tracks/00-foundation-conductor-toolchain/evidence.json
 04878802a3e896f3b746c0c653add81b39d9133de14934d6d7a4408d06e03cd2  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
@@ -739,7 +739,7 @@ a5313f3aded054d2933ba09b1f23078ba1ba8290966a61f92ae5919c955a8d16  ./conductor/tr
 b5917705276e51c5398957eee638fb8458edc1023444662905c136d35e20dd39  ./conductor/tracks/11-agentic-skill/metadata.json
 ae8b55078b9f1697e35035a69e3d09b190dcfbf89a1d532058e95c9960126bab  ./conductor/tracks/11-agentic-skill/plan.md
 8109587422f5bdb87862866471b8189cc1ce40b99e7dea80dcd5f9b9fa28c137  ./conductor/tracks/11-agentic-skill/spec.md
-359783d72a6ace200be4122375c74d21c534f4682570f2c1f6da48dfc766a178  ./conductor/tracks/11-agentic-skill/traceability.json
+40da4137d2ae13d51ac81528f0ef5ef90a93c59a229d3fd507903f277053c82f  ./conductor/tracks/11-agentic-skill/traceability.json
 2a3d45f076855079e7fb2a300b45f301aaaa8834f5ae491905e95f7b63f753bf  ./conductor/tracks/12-citeweft-document-evidence/evidence.json
 76cec87d44f4af239bf429e1ac484a64f3223e2e720480ed9fa1b2a5ff1fd5e0  ./conductor/tracks/12-citeweft-document-evidence/metadata.json
 207cffce24df605dcdaca14266106fd093f5d28cac6f9e138924d35642dbfebc  ./conductor/tracks/12-citeweft-document-evidence/plan.md
@@ -875,9 +875,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 2480395a1b729a91443c67c12f65fe2fa6c75e8981a4553b90d636917a50f4fe  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-9fcab837f16b4c8864f2a3de92f23e3808f9e570550e9872c1e43f869c3bf13f  ./context/context-lock.json
-9fcab837f16b4c8864f2a3de92f23e3808f9e570550e9872c1e43f869c3bf13f  ./context/context-lock.json
-9fcab837f16b4c8864f2a3de92f23e3808f9e570550e9872c1e43f869c3bf13f  ./context/context-lock.json
+df76f8605f0e5c40c409c7bb3a127f9aa9664b7ecd70b675c47afac24a688c1d  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1094,7 +1092,7 @@ dcebb6b29b2f2143e2cace33cc3c5e2ca7be85614b67eec0aea8ffd6596cc679  ./crates/evide
 eb4aaaa6bde8a46f065ae424024d56b70f004eba81cdd2facc34192a82e2cd7a  ./crates/searchright-access/src/lib.rs
 2ba8c29f60751b66a682c2f552a8d97127e8a5dc64add61b23bf7b20e654126d  ./crates/searchright-agent/Cargo.toml
 6a9cc3138b0cb13c001196366a256786511685dae33c6605d3ed1fcc5751f2c8  ./crates/searchright-agent/src/lib.rs
-f79c7c07b7ba5daf64e56434efebffdc79ebdfc37efd41cf46ab3b99609b455e  ./crates/searchright-agent/src/sibling.rs
+cb5d1c87d3977da0eb86020dce56880dfcb474c2ca089c832c5336fce8fb35fe  ./crates/searchright-agent/src/sibling.rs
 a1c1d83910040074845a301fc7a919021f936c1f8bd51cf3061a2624e3039ca2  ./crates/searchright-agent/tests/sibling_admission.rs
 a312282da3bc68acc73869e6c1be8ed4fe53a2f7e0951fe356ffa6fd75a7dde9  ./crates/searchright-agent/tests/skill_scenarios.rs
 bdc99842d381b1ccdd7a248529382d4fa6e5dd763f8e131bbf62bcad77da3205  ./crates/searchright-assurance/Cargo.toml
