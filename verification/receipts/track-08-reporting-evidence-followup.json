@@ -9,6 +9,32 @@
     {"command": "LibreOffice --headless --convert-to 'docx:Office Open XML Text', then --convert-to pdf; pdftoppm -scale-to 1500 -png", "status": "passed", "exit_code": 0, "toolchain": "LibreOffice 26.2.5.2; Poppler 26.08.0", "network_policy": "sandbox-exec denies network operations except local Unix sockets needed by LibreOffice IPC; isolated temporary user profile", "notes": "Normal and hostile synthetic HTML imported to real DOCX files and then rendered to two-page PDFs. All four final pages visually inspected: labels wrap without clipping, counts/reasons remain visible, repeated table headers retained. Prior bare docx conversion returned no export filter despite zero exit; not counted as success."}
   ],
   "ordered_cell_comparison": {"status": "passed", "normal_cells": 40, "hostile_cells": 40, "method": "HTMLParser th/td text compared in exact order with OOXML word/document.xml table-cell w:t text, using zipfile and ElementTree. All 40 cells in each fixture matched without whitespace normalization."},
+  "reproduction": {
+    "working_directory": "repository root",
+    "artifact_root": "/tmp/searchright-reporting-evidence.9dNAiz",
+    "fixture_generator": "crates/searchright-prisma/examples/render_reporting_fixture.rs",
+    "cell_comparison_script_sha256": "ca295872b2a23a17d4d2bd16b70015c2587d57954f275b09572603317ee0e76f",
+    "cell_comparison_command": "for fixture in normal hostile; do python3 -B crates/searchright-prisma/examples/compare_imported_table.py /tmp/searchright-reporting-evidence.9dNAiz/source/$fixture.html /tmp/searchright-reporting-evidence.9dNAiz/docx/$fixture.docx; done",
+    "commands": [
+      "cargo run -q -p searchright-prisma --example render_reporting_fixture -- html > /tmp/searchright-reporting-evidence.9dNAiz/source/normal.html",
+      "cargo run -q -p searchright-prisma --example render_reporting_fixture -- html --hostile > /tmp/searchright-reporting-evidence.9dNAiz/source/hostile.html",
+      "for fixture in normal hostile; do /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)(allow network* (local unix-socket))' /Applications/LibreOffice.app/Contents/MacOS/soffice -env:UserInstallation=file:///tmp/searchright-reporting-evidence.9dNAiz/lo-profile --headless --convert-to 'docx:Office Open XML Text' --outdir /tmp/searchright-reporting-evidence.9dNAiz/docx /tmp/searchright-reporting-evidence.9dNAiz/source/$fixture.html; done",
+      "for fixture in normal hostile; do /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)(allow network* (local unix-socket))' /Applications/LibreOffice.app/Contents/MacOS/soffice -env:UserInstallation=file:///tmp/searchright-reporting-evidence.9dNAiz/lo-profile --headless --convert-to pdf --outdir /tmp/searchright-reporting-evidence.9dNAiz/docx-pdf /tmp/searchright-reporting-evidence.9dNAiz/docx/$fixture.docx; pdftoppm -scale-to 1500 -png /tmp/searchright-reporting-evidence.9dNAiz/docx-pdf/$fixture.pdf /tmp/searchright-reporting-evidence.9dNAiz/png/docx-$fixture-final; done"
+    ],
+    "note": "Each command was observed individually for conversion success and followed by artifact and text checks; LibreOffice process exit alone is insufficient. Reproduction should use a fresh temporary directory and isolated profile."
+  },
+  "typst_visual_inspection": {
+    "status": "passed",
+    "toolchain": "Typst 0.15.1",
+    "scope": "Existing normal and hostile original fixture PDFs and PNGs inspected by implementation and main agents: all counts/reasons/lineage visible, no observed clipping or overlap. Each is one page. This records local fixture inspection, not general layout conformance.",
+    "normal_source_sha256": "3a45647de4ed4a625cef3b154cdcf607855ca8ce18a28cbede13b5e12d5c551c",
+    "hostile_source_sha256": "d036c724e9602cd12a40328a70cc3761052939917876696794b8aa54283d3c07",
+    "normal_pdf_sha256": "5bbed3968fc345b752a15b1bbe9ed9ececad10e5de04267074383879b837d71b",
+    "hostile_pdf_sha256": "7592fa7f648c2e1e44da5e6dca268e07568471b962f94dac20e86affc35ca74a",
+    "normal_png_sha256": "717549dbe564c65f65b39750f5ea60d785042aa520d953bfc8c765f0eaf48ec1",
+    "hostile_png_sha256": "8740d6efd2f1dbf21df698d3f89b68365a26eabf45dcc6427eefbf84571a72ae"
+  },
+  "superseded_attempts": [{"command": "python3 -B scripts/run_static_harness.py", "source_revision": "23f4b9bdf676ceb6a3bb65eaf409153952370638", "status": "failed", "passed_gates": 56, "failed_gate": "check_contract_bindings.py", "cause": "Ignored node_modules absent in new worktree: TypeScript and Pyright MODULE_NOT_FOUND", "repair": "npm ci --ignore-scripts --no-audit --no-fund --prefix requirements/bindings installs existing pinned lockfile dependencies without changing source or lockfile"}],
   "artifacts": {
     "normal_html_sha256": "34d599cdd2163b493266d134c35e9243ed6984eb1aa22ee171843271943a7c32",
     "hostile_html_sha256": "0fd469fb23e4b4f0069e1289e9c007c4739ccb273a69bfdc459c9f997dec2f65",
