@@ -1,0 +1,19 @@
+{
+  "schema_version": "org.searchright.track-validation.v1",
+  "track_id": "03",
+  "date": "2026-08-31",
+  "status": "passed",
+  "revision": "744c0eda5143aac2385437f51dd6e2162cd3de42",
+  "tree": "a0d6b9cd987b59b814340b8424dae02adbacbefc",
+  "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
+  "implementation_revision": "ca265354de725701085cd3e9d7a466a8c955f15d",
+  "commands": ["bash scripts/verify.sh", "python3 scripts/test_cargo_vet_governance.py", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --no-minimize-exemptions"],
+  "exit_code": 0,
+  "python_regression_tests": 75,
+  "static_gates": 57,
+  "workspace_tests": {"passed": 376, "skipped": 0},
+  "cargo_vet_governance_tests": 23,
+  "cargo_vet": {"fully_audited": 43, "exempted": 259},
+  "log_sha256": "59b4cf78dd81815c10f3b00d6ef872a1ee1a5af1122798269cd35cf6908c85ca",
+  "claim_boundary": "Local clean-snapshot full validation after reconciling Track02 and Track31. The delivery commit adds this receipt only to the validated tree. PR checks, exact merge and remote convergence remain separately observed. No socket-level transport, complete downstream execution matrix, live-provider, owner adjudication, cutover, release or archival claim."
+}

@@ -311,8 +311,8 @@
           "commit": "07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb",
           "summary": "Reconcile the fixture-parser migration table with the four fixture-backed adapters."
         },
-        "Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions.",
-        "Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover."
+        {"commit": "ca265354de725701085cd3e9d7a466a8c955f15d", "summary": "Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions."},
+        {"commit": "ca265354de725701085cd3e9d7a466a8c955f15d", "summary": "Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover."}
       ],
       "source_verified_on": "2026-08-29",
       "slug": "shared-provider-runtime",
