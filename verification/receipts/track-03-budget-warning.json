@@ -9,7 +9,7 @@
     "revision": "c0a4590642d17c3f7f5ca1644a43aeb394d96ccd",
     "tree": "f79f0b808539eb89e2a293accad0b38ad850b7e4",
     "exit_code": 0,
-    "commands": ["bash scripts/verify.sh", "python3 -m unittest tests.test_cargo_vet_governance", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --no-minimize-exemptions"],
+    "commands": ["bash scripts/verify.sh", "python3 scripts/test_cargo_vet_governance.py", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --no-minimize-exemptions"],
     "log_sha256": "fe101c3ae519c54846ec966cea98c9df53a1b1a02db3511672c041fa80f9eac8",
     "static_gates_passed": 57,
     "python_tests_passed": 75,
