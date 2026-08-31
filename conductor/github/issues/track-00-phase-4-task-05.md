@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.
+- [x] Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.
 
 ## Completion and evidence contract
 
