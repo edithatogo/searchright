@@ -5,6 +5,27 @@
   "status": "historical_failure_superseded_for_exact_source_tree",
   "source_revision": "8de03a088b5c17b28f5c22120a88fc586bb3ddaa",
   "source_tree": "2acf71fa28b7eda1298659b0d8641952c2ff669d",
+  "followup_review": {
+    "functional_revision": "f372c67181875b1bd533d78c0b0da1973e2c110f",
+    "canonical_revision": "c1989114ea34c05f53556e79a6ccff45972e29b0",
+    "implementation": "no actionable findings",
+    "testing": "no actionable findings; original local receipt, full-verification log and vet output hashes/counts authenticated",
+    "methodology": "no actionable findings",
+    "security": "no actionable findings",
+    "adversarial": "no actionable findings; original local receipt, full-verification log and vet output hashes/counts authenticated",
+    "claim_boundary": "Five isolated coding/evidence review roles, not methodological calibration, owner adjudication, external acceptance or an audit of exempted dependencies."
+  },
+  "followup_static_verification": {
+    "source_revision": "c1989114ea34c05f53556e79a6ccff45972e29b0",
+    "command": "bash scripts/verify.sh --static-only",
+    "status": "passed",
+    "exit_code": 0,
+    "python_tests_passed": 87,
+    "static_gates_passed": 57,
+    "log_sha256": "c82be8b1218e996414af0c4e25224ef654f4b850bb4c1d6a9b10a042bff2a20f",
+    "native_conductor_status": "passed",
+    "claim_boundary": "Clean exact-head static verification only; native compilation was not repeated for this evidence-only change."
+  },
   "full_verification": {
     "tested_revision": "c358e6820a963f89ea075f47ae3358c0eeedcbaf",
     "tested_tree": "2acf71fa28b7eda1298659b0d8641952c2ff669d",
