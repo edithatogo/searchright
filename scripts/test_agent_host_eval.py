@@ -95,6 +95,45 @@ class EvaluationIntegrityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             runner.check_codex_events(json.dumps(event))
 
+    def test_claude_adapter_isolates_context_and_disables_extension_inputs(self):
+        def fake_run(command, **kwargs):
+            self.assertNotEqual(kwargs["cwd"], runner.ROOT)
+            self.assertTrue(Path(kwargs["cwd"]).is_dir())
+            for flag in ("--disable-slash-commands", "--strict-mcp-config", "--no-chrome"):
+                self.assertIn(flag, command)
+            for flag in ("--tools", "--setting-sources"):
+                self.assertEqual(command[command.index(flag) + 1], "")
+            self.assertEqual(json.loads(command[command.index("--mcp-config") + 1]), {"mcpServers": {}})
+            self.assertIn("--system-prompt", command)
+            envelope = {"type": "result", "subtype": "success", "is_error": False,
+                        "structured_output": {"decisions": []}, "permission_denials": []}
+            return CompletedProcess(command, 0, json.dumps(envelope), "")
+        with patch.object(runner.subprocess, "run", side_effect=fake_run):
+            result, evidence = runner.run_claude("test-model", "synthetic", runner.output_schema([]))
+        self.assertEqual(result, {"decisions": []})
+        self.assertTrue(evidence["isolated_cwd"])
+        self.assertTrue(evidence["automatic_skill_instructions_disabled"])
+
+    def test_claude_errors_are_rejected_without_retaining_raw_output(self):
+        envelopes = [
+            {"type": "result", "subtype": "success", "is_error": True},
+            {"type": "result", "subtype": "error_max_budget_usd", "is_error": False},
+            {"type": "result", "subtype": "success", "is_error": False,
+             "permission_denials": [{"tool": "Bash"}]},
+        ]
+        for envelope in envelopes:
+            envelope["structured_output"] = {"decisions": []}
+            envelope["result"] = "PRIVATE_HOST_OUTPUT"
+            with self.subTest(envelope=envelope), patch.object(
+                runner.subprocess, "run", return_value=CompletedProcess([], 0, json.dumps(envelope), "")
+            ), self.assertRaises(RuntimeError) as error:
+                runner.run_claude("test-model", "synthetic", runner.output_schema([]))
+            self.assertNotIn("PRIVATE_HOST_OUTPUT", str(error.exception))
+        with patch.object(runner.subprocess, "run", return_value=CompletedProcess([], 1, "", "PRIVATE_HOST_OUTPUT")):
+            with self.assertRaises(RuntimeError) as error:
+                runner.run_claude("test-model", "synthetic", runner.output_schema([]))
+            self.assertNotIn("PRIVATE_HOST_OUTPUT", str(error.exception))
+
     def test_malformed_decision_and_unknown_top_level_event_fail_closed(self):
         self.assertTrue(runner.evaluate({"decisions": [{"id": []}]}, self.suite)[1])
         with self.assertRaises(ValueError):

@@ -16,6 +16,14 @@ The captured JSON event stream must contain an agent message and no tool or
 error item. These controls and event inspection are bounded execution evidence,
 not proof of comprehensive operating-system isolation.
 
+Claude also runs from an empty temporary directory, with an explicit system
+prompt, no settings sources, skills/slash commands disabled, empty strict MCP
+configuration, Chrome disabled and no built-in tools. Its result must declare
+success with `is_error=false`, no permission denials and structured decisions.
+Raw host output is not retained on failure. These are invocation and result
+checks, not the Codex event-stream audit or proof that Claude executed the
+evaluation. Authentication is separate and is never supplied by a fixture.
+
 The installed host version must match the matrix before execution. The receipt
 binds the observed host version, requested model, exact prompt, fixture bytes,
 runner bytes, decisions, and execution evidence. The requested model identifier
