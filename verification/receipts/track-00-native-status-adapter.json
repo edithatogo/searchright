@@ -2,22 +2,28 @@
   "schema_version": "org.searchright.track-maintenance-verification.v1",
   "track_id": "00",
   "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
-  "status": "focused_tests_passed_integration_pending",
+  "status": "review_fixes_passed_full_verification_pending",
+  "review_fix_commit": "f47c92a",
+  "review": {
+    "security": "P1 inspected-root code execution removed: status no longer launches scripts or subprocesses.",
+    "implementation_and_adversarial": "Malformed JSON object and truncated registry row inputs return structured failure.",
+    "testing": "Unknown lifecycle values fail even when repeated consistently across records.",
+    "methodology": "Independent first pass reported no findings; no external gate promoted."
+  },
   "commands": [
-    {"command": "python3 -B -m unittest discover -s tests -p test_conductor_status.py", "status": "passed", "tests": 8},
-    {"command": "python3 -B scripts/conductor_status.py", "status": "passed", "tracks": 38, "archived": 7, "completed_tasks": 204, "total_tasks": 400},
+    {"command": "python3 -B -m unittest discover -s tests -p test_conductor_status.py", "status": "passed", "tests": 12},
+    {"command": "python3 -B scripts/conductor_status.py", "status": "passed", "tracks": 38, "archived": 7, "completed_tasks": 205, "total_tasks": 401},
     {"command": "git diff --check", "status": "passed"},
     {"command": "bash scripts/verify.sh", "status": "failed", "preexisting_python_tests_passed": 62, "static_gates_passed": 54, "static_gates_total": 57}
   ],
-  "integration_blockers": [
+  "historical_initial_run_blockers": [
     "check_contract_bindings.py: this fresh worktree lacks requirements/bindings/node_modules TypeScript and Pyright dependencies.",
     "generate_source_hash_manifest.py --check: source manifest needs regeneration after integration stages the final added files.",
     "check_packaging_reproducibility.py: package generation requires a clean committed tree."
   ],
   "gates_not_run": ["cargo fmt", "cargo clippy", "Rust schema parity", "cargo nextest or cargo test", "Rust doctests", "cargo doc", "cargo deny", "cargo machete"],
   "remaining_integration": [
-    "Record this maintenance slice in Track 00 additional_closeout_tasks without changing existing stable task keys.",
-    "Refresh coordinated generated evidence and source manifest, commit, then run full verification from the clean integrated revision."
+    "Run full verification from the clean integrated revision with the actual pinned Rust 1.97.1 toolchain; dependencies and generated evidence have been refreshed."
   ],
   "claim_boundary": "Read-only native v3 status and adversarial local tests only. Does not migrate the installed skill, canonical track IDs, evidence statuses, in-place archives, or complete Track 00 or external gates."
 }
