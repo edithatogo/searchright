@@ -1,0 +1,37 @@
+{
+  "schema_version": "org.searchright.provider-page.v1",
+  "total_available": 1,
+  "next_cursor": null,
+  "diagnostics": {"raw_response_digest":"4ce25ca8bfd320105620062b7dd67e0d5aedae3a229328c285627b9f9812da46"},
+  "records": [{
+  "schema_version": "org.searchright.bibliographic-record.v1",
+  "record_id": "pubmed-123",
+  "source_receipt_id": "pending-receipt",
+  "native_id": "123",
+  "kind": "journal_article",
+  "identifiers": {"doi": "10.1000/efetch.fixture", "pmid": "123", "pmcid": "PMC123", "trial_registration": null, "openalex": null, "isbn": null, "other": {}},
+  "title": "Synthetic mixed title & evidence",
+  "abstract_text": "BACKGROUND: First & clear.\nRESULTS: Second result.",
+  "authors": ["Example Ada", "Synthetic Consortium"],
+  "container_title": "Synthetic Journal",
+  "publication_year": 2026,
+  "publication_date": "2026 Spring",
+  "languages": ["eng"],
+  "subjects": ["Synthetic Subject"],
+  "urls": ["https://pubmed.ncbi.nlm.nih.gov/123/"],
+  "provider_metadata": {
+    "format": "pubmed-efetch-xml",
+    "elocation_ids": [],
+    "abstract_sections": [
+      {"label":"BACKGROUND","nlm_category":"BACKGROUND","text":"First & clear.","attributes":{"Label":"BACKGROUND","NlmCategory":"BACKGROUND"}},
+      {"label":"RESULTS","nlm_category":"RESULTS","text":"Second result.","attributes":{"Label":"RESULTS","NlmCategory":"RESULTS"}}
+    ],
+    "author_components": [
+      {"last_name":"Example","fore_name":"Ada","initials":null,"suffix":null,"collective_name":null},
+      {"last_name":null,"fore_name":null,"initials":null,"suffix":null,"collective_name":"Synthetic Consortium"}
+    ],
+    "pub_date": {"Year":"2026","Season":"Spring"},
+    "mesh_headings": [{"descriptor":"Synthetic Subject","qualifiers":[]}]
+  }
+  }]
+}

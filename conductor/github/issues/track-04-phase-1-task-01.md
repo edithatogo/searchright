@@ -15,6 +15,12 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `provider-fixtures/mvp/europe-pmc.json`
   - [x] Present source path: `provider-fixtures/mvp/crossref.json`
   - [x] Present source path: `provider-fixtures/mvp/openalex.json`
+  - [x] Present source path: `crates/searchright-connectors/src/efetch.rs`
+  - [x] Present source path: `crates/searchright-connectors/tests/efetch_offline.rs`
+  - [x] Present source path: `crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml`
+  - [x] Present source path: `crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json`
+  - [x] Present source path: `tests/test_provider_contract_baselines.py`
+  - [x] Present source path: `docs/pubmed-efetch-mapping.md`
   - [x] Present source path: `crates/searchright-connectors/tests/parser_integrity.rs`
   - [x] Present source path: `crates/searchright-connectors/tests/canonical_pages.rs`
   - [x] Present source path: `crates/searchright-connectors/tests/fixtures`

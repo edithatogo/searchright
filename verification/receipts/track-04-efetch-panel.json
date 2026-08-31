@@ -1,0 +1,36 @@
+{
+  "schema_version": "org.searchright.agent-panel-record.v1",
+  "track_id": "04",
+  "date": "2026-08-31",
+  "base_revision": "ef5475cab17899a82d9ebe8eeebc7e8a882eceaa",
+  "scope": "Offline PubMed EFetch citation-and-abstract XML parser and endpoint builder; no live transport switch or article full-text acquisition.",
+  "first_passes": [
+    {"agent": "track03_delta_review", "roles": ["implementation", "testing"], "result": "Existing frozen bibliographic/page schema suffices. Implement an isolated bounded parser, preserve pubmed identities, reconcile exact requested PMID sets, and reject unsupported book records. Tests written before implementation; pre-implementation Cargo execution was not performed because the shared build target was occupied."},
+    {"agent": "track03_safety", "roles": ["security", "adversarial"], "result": "Require finite byte/depth/record/node/field/aggregate-text budgets, no DTD/custom entity resolution, exact structural identity paths, whole-page malformed/unsupported suffix rejection and sanitized errors. Preserve mixed content and explicit mapping limits."},
+    {"agent": "track03_methodology", "roles": ["methodology", "acceptance"], "result": "Citation and abstract data are not full article text. Preserve structured labels/order, author components, date precision and identifier agreement in explicit rendering plus metadata; do not invent missing data. Complete manually reviewed ProviderPage goldens must include envelope, pending receipt and independently calculated raw digest."}
+  ],
+  "review_findings": [
+    "Reject supplied but empty mapped containers rather than silently mapping them as absent.",
+    "Map ELocationID DOI values and reject cross-location identifier disagreements.",
+    "Compare complete ProviderPage outputs, not only selected record fields."
+  ],
+  "status": "bounded_source_reviewed_full_validation_pending",
+  "source_sha256": "413e337f0b0acf026e77ef49be72faf8f1cc5c14d205ba9a37828b1f0144cbe9",
+  "integration_recheck": {
+    "source_sha256": "8c5a05b2c0978a37d2bba5080f476208ccd026508685c01182c5c8baa17ae90d",
+    "change": "Elide an unnecessary lifetime to avoid the lexical delimiter check's false positive; add a conservative, unreviewed EFetch policy entry inherited from existing NCBI configuration.",
+    "focused_tests_passed": 52,
+    "focused_log_sha256": "970b09d1547793aeb0455e3a31e073c599e392b4535208a1d44853c7a41e7d7b",
+    "clippy_exit_code": 0,
+    "clippy_log_sha256": "44b6377c2d6648a5f97ebbf9c07c691fc3446199304e8873ab960b70c9a5311d",
+    "initial_full_attempt": {"revision": "200d600d41b0bf226eec6f7f7f66f20186b3b5a9", "log_sha256": "2f053eb4ee451823b17b472f06d1976230c4d248ce2db8d8f58c065ce0c0480a", "failed_static_gates": ["check_provider_policies.py: missing EFetch entry", "check_rust_source_structure.py: lexical lifetime false positive"], "native_gates_executed": false},
+    "targeted_static_rechecks": "Provider policies and Rust lexical structure both passed after correction; no gate was disabled."
+  },
+  "focused_validation": {"commands": ["cargo test -p searchright-connectors --all-features --locked", "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"], "exit_code": 0, "unit_tests": 14, "existing_golden_tests": 4, "efetch_tests": 16, "parser_regressions": 18, "log_sha256": "0813c595bf2e0e5cbf0d6ce71db7cadaaf129c18caf44beccd79de29d894f820"},
+  "fixture_blake3": "4ce25ca8bfd320105620062b7dd67e0d5aedae3a229328c285627b9f9812da46",
+  "golden_sha256": "5b67c8535a7ef64eed6349880d80501bd7ca0982e37abf770ee6c04e6518f93c",
+  "static_baseline_tests": {"passed": 7, "provider_baselines": 6, "independently_rerun_by": "track03_safety", "test_first_boundary": "Tests preceded implementation and initially reported missing-helper errors; raw baseline output was not preserved, so no baseline log digest is claimed."},
+  "rereviews": [{"agent": "track03_safety", "result": "Scalar nesting and declaration grammar findings fixed and re-reviewed. XML baseline checker independently tested. No remaining blocking finding within bounded scope."}, {"agent": "track03_methodology", "result": "Complete page golden and independent raw digest reviewed; mapping documentation matches the supported subset and explicit omissions."}],
+  "additional_fixed_findings": ["Leaf-only scalar extraction prevents nested unsupported elements from becoming identities or dates.", "XML declarations now validate supported pseudoattributes, order, values and duplicates.", "Mapped field cap is accurately documented as post-tree; the aggregate decoded-text bound is enforced before append."],
+  "authority_boundary": "No network retrieval, live-support claim, current provider-policy or rights approval, historical record/screening migration, release, cutover or archival. Agent review is advisory; owner decisions remain separate."
+}

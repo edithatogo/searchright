@@ -14,6 +14,12 @@
     "provider-fixtures/mvp/europe-pmc.json",
     "provider-fixtures/mvp/crossref.json",
     "provider-fixtures/mvp/openalex.json",
+    "crates/searchright-connectors/src/efetch.rs",
+    "crates/searchright-connectors/tests/efetch_offline.rs",
+    "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
+    "crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json",
+    "tests/test_provider_contract_baselines.py",
+    "docs/pubmed-efetch-mapping.md",
     "crates/searchright-connectors/tests/parser_integrity.rs",
     "crates/searchright-connectors/tests/canonical_pages.rs",
     "crates/searchright-connectors/tests/fixtures",
@@ -43,7 +49,7 @@
     "Verify upstream terms, rate limits and response changes at release time.",
     "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
   ],
-  "claim_boundary": "The reviewed parser slice passed 35 focused local tests and strict Clippy, including the premature-empty-page guard; final full validation remains pending. Track 04 remains partially implemented at source_verified. EFetch/full reports, runtime receipt binding, authorised live execution, current provider policy and historical identity migration are unproven; no whole-track completion or archival claim is made.",
+  "claim_boundary": "The imported parser and offline EFetch slice passed 52 focused local tests, with seven Python XML-baseline regressions; final integrated full validation remains pending. Bounded EFetch citation/abstract parsing and request construction are implemented offline, not article full text or live retrieval. Shared-transport wiring, runtime receipt binding, current policy/support, authorised live execution and historical migration remain unproven. Track 04 stays partially_implemented/source_verified and unarchived; no review-completion claim is made.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-04",
@@ -69,7 +75,16 @@
   "remote_github_evidence": [],
   "runtime_evidence": [
     "verification/receipts/track-04-fixture-compiler.json",
-    "verification/receipts/track-04-parser-panel.json"
+    "verification/receipts/track-04-parser-panel.json",
+    "verification/receipts/track-04-efetch-panel.json"
   ],
-  "external_evidence": []
+  "external_evidence": [],
+  "review_fixes": [
+    {
+      "commit": "7972c0b96419dd3a63137f5957f98636259e0926",
+      "summary": "Preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens."
+    },
+    "Pending commit: add bounded offline EFetch citation/abstract XML parsing and request construction, exact PMID reconciliation, structured metadata and complete synthetic-page golden without switching live transport.",
+    "Pending commit: add bounded XML digest/root/path baseline checks, restricted parser-source declarations and seven Python regressions without promoting static shape checks into execution evidence."
+  ]
 }

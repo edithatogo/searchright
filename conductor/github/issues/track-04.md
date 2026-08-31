@@ -28,6 +28,6 @@ Provide deterministic open-source adapters and opt-in live execution for major d
 
 ## Claim boundary
 
-The reviewed parser slice passed 35 focused local tests and strict Clippy, including the premature-empty-page guard; final full validation remains pending. Track 04 remains partially implemented at source_verified. EFetch/full reports, runtime receipt binding, authorised live execution, current provider policy and historical identity migration are unproven; no whole-track completion or archival claim is made.
+The imported parser and offline EFetch slice passed 52 focused local tests, with seven Python XML-baseline regressions; final integrated full validation remains pending. Bounded EFetch citation/abstract parsing and request construction are implemented offline, not article full text or live retrieval. Shared-transport wiring, runtime receipt binding, current policy/support, authorised live execution and historical migration remain unproven. Track 04 stays partially_implemented/source_verified and unarchived; no review-completion claim is made.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

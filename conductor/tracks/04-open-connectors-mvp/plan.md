@@ -16,6 +16,12 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `provider-fixtures/mvp/europe-pmc.json`
   - [x] Present source path: `provider-fixtures/mvp/crossref.json`
   - [x] Present source path: `provider-fixtures/mvp/openalex.json`
+  - [x] Present source path: `crates/searchright-connectors/src/efetch.rs`
+  - [x] Present source path: `crates/searchright-connectors/tests/efetch_offline.rs`
+  - [x] Present source path: `crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml`
+  - [x] Present source path: `crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json`
+  - [x] Present source path: `tests/test_provider_contract_baselines.py`
+  - [x] Present source path: `docs/pubmed-efetch-mapping.md`
   - [x] Present source path: `crates/searchright-connectors/tests/parser_integrity.rs`
   - [x] Present source path: `crates/searchright-connectors/tests/canonical_pages.rs`
   - [x] Present source path: `crates/searchright-connectors/tests/fixtures`
@@ -55,4 +61,7 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `7972c0b96419dd3a63137f5957f98636259e0926`: Preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens.
+  - [x] Review fix: Pending commit: add bounded offline EFetch citation/abstract XML parsing and request construction, exact PMID reconciliation, structured metadata and complete synthetic-page golden without switching live transport.
+  - [x] Review fix: Pending commit: add bounded XML digest/root/path baseline checks, restricted parser-source declarations and seven Python regressions without promoting static shape checks into execution evidence.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

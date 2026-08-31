@@ -8,6 +8,9 @@ Canonical task state: **open evidence or implementation task**.
 ## Canonical task
 
 - [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `7972c0b96419dd3a63137f5957f98636259e0926`: Preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens.
+  - [x] Review fix: Pending commit: add bounded offline EFetch citation/abstract XML parsing and request construction, exact PMID reconciliation, structured metadata and complete synthetic-page golden without switching live transport.
+  - [x] Review fix: Pending commit: add bounded XML digest/root/path baseline checks, restricted parser-source declarations and seven Python regressions without promoting static shape checks into execution evidence.
 
 ## Completion and evidence contract
 
