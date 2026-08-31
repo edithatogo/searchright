@@ -15,7 +15,7 @@ Canonical task state: **source task complete**.
   - Review fix `07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb`: Reconcile the fixture-parser migration table with the four fixture-backed adapters.
   - Review fix `ca265354de725701085cd3e9d7a466a8c955f15d`: Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions.
   - Review fix `ca265354de725701085cd3e9d7a466a8c955f15d`: Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover.
-  - [x] Review fix: Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions.
+  - Review fix `390ae69ba78b9431e464067ead51b75d8ecd1f2a`: Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions.
 
 ## Completion and evidence contract
 

@@ -98,6 +98,9 @@
       "commit": "ca265354de725701085cd3e9d7a466a8c955f15d",
       "summary": "Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover."
     },
-    "Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions."
+    {
+      "commit": "390ae69ba78b9431e464067ead51b75d8ecd1f2a",
+      "summary": "Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions."
+    }
   ]
 }

@@ -13,6 +13,8 @@
     "log_sha256": "fe101c3ae519c54846ec966cea98c9df53a1b1a02db3511672c041fa80f9eac8",
     "static_gates_passed": 57,
     "python_tests_passed": 75,
+    "native_tests_passed": 379,
+    "native_test_note": "Nextest reported two leaky tests; all 379 passed, zero skipped.",
     "cargo_vet_governance_tests_passed": 23,
     "fully_audited_dependencies": 43,
     "exempted_dependencies": 259,
