@@ -1,0 +1,48 @@
+{
+  "schema_version": "org.searchright.track-verification-reconciliation.v1",
+  "track_id": "00",
+  "observed_on": "2026-08-31",
+  "status": "historical_failure_superseded_for_exact_source_tree",
+  "source_revision": "8de03a088b5c17b28f5c22120a88fc586bb3ddaa",
+  "source_tree": "2acf71fa28b7eda1298659b0d8641952c2ff669d",
+  "full_verification": {
+    "tested_revision": "c358e6820a963f89ea075f47ae3358c0eeedcbaf",
+    "tested_tree": "2acf71fa28b7eda1298659b0d8641952c2ff669d",
+    "equivalence_check": "git rev-parse c358e6820a963f89ea075f47ae3358c0eeedcbaf^{tree} 8de03a088b5c17b28f5c22120a88fc586bb3ddaa^{tree}",
+    "equivalence": "whole_tree_identical",
+    "command": "bash scripts/verify.sh",
+    "toolchain": "Rust/Cargo 1.97.1 aarch64-apple-darwin; CARGO_BUILD_JOBS=2; cargo-machete 0.9.2",
+    "status": "passed",
+    "exit_code": 0,
+    "python_tests_passed": 87,
+    "static_gates_passed": 57,
+    "native_tests_passed": 392,
+    "native_tests_skipped": 0,
+    "other_gates_passed": ["format", "strict all-target all-feature workspace Clippy", "Rust schema parity with recorded differences", "doctests", "rustdoc", "cargo-deny", "cargo-machete with zero unused dependencies"],
+    "original_receipt_path": "/tmp/searchright-track00-latest-stack-verification.json",
+    "original_receipt_sha256": "b7bdaf356f4dff6fabb1c4a2d73d73f408d6419e91421b4fbc1559d827ae44fa",
+    "log_sha256": "1230ad365bb4787db95c47602c9a4bbc3e807d86b6ccf0ca3dd3ef6d23b32594"
+  },
+  "separate_dependency_policy_check": {
+    "source_revision": "8de03a088b5c17b28f5c22120a88fc586bb3ddaa",
+    "tracked_worktree_clean": true,
+    "command": "cargo vet check --locked --frozen --no-minimize-exemptions --no-registry-suggestions --output-format json",
+    "tool_version": "cargo-vet 0.10.2",
+    "status": "passed",
+    "exit_code": 0,
+    "fully_vetted": 43,
+    "partially_vetted": 0,
+    "vetted_with_existing_exemptions": 259,
+    "output_sha256": "1dded4513b9871fc2bdd3c8a8c2cfb09b0c38d506b9feb8239f3fb3f483598d0",
+    "policy_changes": 0,
+    "new_audits_or_attestations": 0,
+    "claim_boundary": "A frozen existing-policy pass, not proof that the 259 exempted dependencies were audited. This check was run separately; verify.sh does not invoke cargo-vet."
+  },
+  "historical_evidence": {
+    "preserved_receipt": "verification/receipts/track-00-local-verification.json",
+    "preserved_source_revision": "3f62b5ebc3efe3e619c05dfacdabc01b159f1aec",
+    "interpretation": "Earlier 51-gate and 273-dependency-gap/red-aggregate descriptions are historical, not the state of source_tree. Their original receipts are not rewritten or relabelled passed."
+  },
+  "external_gates": [{"assertion_id": "T00-A005", "status": "external_evidence_required", "requirement": "Explicit upstream mutation authority, observed repository-standards registration commit, and estate conformance against the exact Searchright revision remain absent from this evidence packet."}],
+  "claim_boundary": "Exact prior-tree local verification and a fresh frozen dependency-policy check only. This evidence-only follow-up does not claim a new full compilation, future-tree validation, all-dependency audit coverage, upstream registration, estate conformance, release authority or track completion."
+}
