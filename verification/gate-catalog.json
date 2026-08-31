@@ -1193,6 +1193,21 @@
     {
       "category": "repository_policy",
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/conductor_status.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T00-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CONDUCTOR-STATUS",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/conductor_status.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/mcp_smoke.py target/debug/searchright-mcp",
       "compiler_required": false,
       "covered_assertions": [
