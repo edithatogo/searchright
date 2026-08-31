@@ -149,24 +149,37 @@ def run_codex(model: str, text: str, schema: dict[str, Any]) -> tuple[dict[str, 
 
 
 def run_claude(model: str, text: str, schema: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
-    completed = subprocess.run(
-        [
-            "claude", "-p", "--model", model, "--tools", "",
-            "--no-session-persistence", "--output-format", "json",
-            "--json-schema", json.dumps(schema, separators=(",", ":")),
-            "--max-budget-usd", "1.00", text,
-        ],
-        cwd=ROOT,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        timeout=900,
-        check=False,
-    )
+    # Keep project instructions and extension configuration out of the measured
+    # prompt. Authentication remains the host's responsibility; never copy it.
+    with tempfile.TemporaryDirectory(prefix="searchright-claude-eval-") as directory:
+        completed = subprocess.run(
+            [
+                "claude", "-p", "--model", model, "--tools", "",
+                "--setting-sources", "", "--disable-slash-commands",
+                "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
+                "--no-chrome", "--system-prompt",
+                "Evaluate the supplied authority policy without executing operations. Return only the requested structured decisions.",
+                "--no-session-persistence", "--output-format", "json",
+                "--json-schema", json.dumps(schema, separators=(",", ":")),
+                "--max-budget-usd", "1.00", text,
+            ],
+            cwd=Path(directory),
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=900,
+            check=False,
+        )
     if completed.returncode != 0:
-        details = completed.stderr[-1000:] or completed.stdout[-1000:]
-        raise RuntimeError(f"claude exited {completed.returncode}: {details}")
-    envelope = json.loads(completed.stdout)
+        raise RuntimeError(f"claude exited {completed.returncode}; raw host output not retained")
+    try:
+        envelope = json.loads(completed.stdout)
+    except json.JSONDecodeError as error:
+        raise RuntimeError("claude returned malformed JSON; raw host output not retained") from error
+    if (not isinstance(envelope, dict) or envelope.get("type") != "result"
+            or envelope.get("subtype") != "success" or envelope.get("is_error") is not False
+            or envelope.get("permission_denials") != []):
+        raise RuntimeError("claude returned an error, incomplete result or permission denial; raw host output not retained")
     result = envelope.get("structured_output")
     if not isinstance(result, dict):
         raise RuntimeError("claude did not return structured_output")
@@ -174,6 +187,13 @@ def run_claude(model: str, text: str, schema: dict[str, Any]) -> tuple[dict[str,
         "returncode": completed.returncode,
         "total_cost_usd": envelope.get("total_cost_usd"),
         "model_usage": sorted((envelope.get("modelUsage") or {}).keys()),
+        "isolated_cwd": True,
+        "automatic_skill_instructions_disabled": True,
+        "setting_sources_disabled": True,
+        "mcp_servers_disabled": True,
+        "built_in_tools_disabled": True,
+        "system_prompt_explicit": True,
+        "boundary": "Invocation configuration and result-envelope checks, not a full event-stream audit or host-support claim.",
     }
     return result, usage
 
