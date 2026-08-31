@@ -586,7 +586,8 @@
         "SR-027"
       ],
       "runtime_evidence": [
-        "verification/receipts/track-08-reporting-review.json"
+        "verification/receipts/track-08-reporting-review.json",
+        "verification/receipts/track-08-render-formats.json"
       ],
       "review_completed": true,
       "slug": "prisma-press-reporting",

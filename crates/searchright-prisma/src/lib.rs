@@ -4,6 +4,9 @@
 
 use std::collections::BTreeSet;
 
+mod render;
+pub use render::{FlowFormat, render_flow};
+
 use searchright_contracts::{
     FindingSeverity, PRISMA_FLOW_SCHEMA_VERSION, PressElement, PressReview, PrismaFlow,
     PrismaSItem, PrismaSItemStatus, PrismaSLedger, SearchRun,
@@ -434,6 +437,9 @@ pub fn evidence_from_run(run: &SearchRun) -> SearchReportingEvidence {
 /// PRISMA arithmetic/reporting error.
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum PrismaError {
+    /// A validated flow could not be encoded as a reporting projection.
+    #[error("failed to encode derived reporting projection")]
+    RenderEncoding,
     /// The flow used a contract version unsupported by this crate.
     #[error("unsupported PRISMA schema version `{actual}`; expected `{expected}`")]
     SchemaVersion {
