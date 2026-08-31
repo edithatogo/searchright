@@ -592,7 +592,7 @@
       "review_completed": true,
       "slug": "prisma-press-reporting",
       "additional_closeout_tasks": [
-        "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections with deterministic and injection tests (`6f0dbd1`); external renderer execution, complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending."
+        "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Visual rendering, word-processor import, complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending."
       ],
       "status": "partially_implemented",
       "title": "PRISMA, PRESS and reporting",
