@@ -640,6 +640,40 @@
         }
       }
     },
+    "08": {
+      "assertions": {
+        "T08-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-prisma/src/render.rs",
+            "crates/searchright-prisma/src/lib.rs",
+            "crates/searchright-prisma/tests/render_formats.rs",
+            "crates/searchright-prisma/examples/render_typst_fixture.rs",
+            "docs/reporting-formats.md"
+          ],
+          "implementation_symbols": [
+            "searchright_prisma::render_flow",
+            "searchright_prisma::FlowFormat",
+            "searchright_prisma::validate_flow_variant"
+          ],
+          "deterministic_tests": [
+            "cargo test -p searchright-prisma --test render_formats --locked",
+            "cargo test -p searchright-prisma --locked",
+            "cargo clippy -p searchright-prisma --all-targets --locked -- -D warnings"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-08-render-formats.json"
+          ],
+          "open_gates": [
+            "Visual rendering and word-processor import evidence remain unobserved; HTML is not a DOCX archive.",
+            "Complete updated-review cohort representation and PRISMA.jl parity/ownership evidence remain open.",
+            "Independent PRESS review remains a separate human gate."
+          ],
+          "permitted_claim": "Six library-level derived reporting formats have deterministic count, lineage and injection tests; exact normal and hostile Typst sources compiled with Typst 0.15.1. This is not visual, word-processor, upstream parity or methodological certification evidence."
+        }
+      }
+    },
     "10": {
       "assertions": {
         "T10-A002": {

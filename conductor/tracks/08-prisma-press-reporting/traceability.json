@@ -115,27 +115,33 @@
       "assertion_id": "T08-A005",
       "statement": "Render Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly tables",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
+        "crates/searchright-prisma/src/render.rs",
         "crates/searchright-prisma/src/lib.rs",
-        "crates/searchright-validation/src/lib.rs",
-        "contracts/examples/prisma-flow.json",
-        "contracts/examples/search-validation.yaml",
-        "contracts/examples/standard-assessment.yaml",
-        "docs/standards-and-provenance.md"
+        "crates/searchright-prisma/tests/render_formats.rs",
+        "crates/searchright-prisma/examples/render_typst_fixture.rs",
+        "docs/reporting-formats.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_prisma::render_flow",
+        "searchright_prisma::FlowFormat",
+        "searchright_prisma::validate_flow_variant"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "cargo test -p searchright-prisma --test render_formats --locked",
+        "cargo test -p searchright-prisma --locked",
+        "cargo clippy -p searchright-prisma --all-targets --locked -- -D warnings"
       ],
       "evidence_receipts": [
-        "conductor/tracks/08-prisma-press-reporting/evidence.json"
+        "verification/receipts/track-08-render-formats.json"
       ],
       "open_gates": [
-        "Compile and run arithmetic, snapshot and standards-pack tests.",
-        "Obtain independent PRESS review of representative generated strategies and appendices."
+        "Visual rendering and word-processor import evidence remain unobserved; HTML is not a DOCX archive.",
+        "Complete updated-review cohort representation and PRISMA.jl parity/ownership evidence remain open.",
+        "Independent PRESS review remains a separate human gate."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Six library-level derived reporting formats have deterministic count, lineage and injection tests; exact normal and hostile Typst sources compiled with Typst 0.15.1. This is not visual, word-processor, upstream parity or methodological certification evidence."
     },
     {
       "assertion_id": "T08-A006",
