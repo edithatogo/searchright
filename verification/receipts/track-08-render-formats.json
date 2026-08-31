@@ -1,0 +1,19 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "08",
+  "observed_at": "2026-08-31T00:00:00Z",
+  "status": "focused_passed_full_verification_pending",
+  "source_binding": "Exact tracked source bytes are bound by verification/receipts/source-manifest.sha256 in the containing commit.",
+  "checks": [
+    {"command": "cargo test -p searchright-prisma --locked", "status": "passed", "tests_passed": 13},
+    {"command": "cargo clippy -p searchright-prisma --all-targets --locked -- -D warnings", "status": "passed", "notes": "Existing dependency MSRV configuration warning remains visible."},
+    {"command": "bash scripts/verify.sh", "status": "failed_before_compiler_gates", "notes": "Initial dirty-tree run: 62 Python tests and 54/57 static gates passed. Missing local TypeScript/Pyright tools, stale source hash manifest, and dirty-tree packaging blocked full run; revalidation pending."}
+  ],
+  "limits": [
+    "Library source generation only; no observed Typst compilation, word-processor import, browser rendering or DOCX archive generation.",
+    "Existing facade, CLI and MCP Mermaid operation is unchanged; new format adapters are library-only.",
+    "The v1 flow does not carry separate historic/new-study cohorts; complete updated-review template conformance is not claimed.",
+    "PRISMA.jl exact-revision output parity, fork maintenance disposition and independent PRESS review remain open.",
+    "Derived reporting evidence is not methodological certification."
+  ]
+}

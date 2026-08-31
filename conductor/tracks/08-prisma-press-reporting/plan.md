@@ -30,6 +30,7 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-08-phase-3 -->
 
 - [ ] Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.
+  - [x] Implement deterministic library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML tables with shared arithmetic validation, update lineage, text equivalents and injection tests; external renderer execution and PRISMA.jl parity remain open.
 - [ ] Obtain independent PRESS review of representative generated strategies and appendices.
 
 ## Phase 4: Review and closeout
