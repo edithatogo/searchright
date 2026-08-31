@@ -40,7 +40,30 @@ marked as runtime-proven.
 - No mandatory human approval is encoded for a solo-maintainer repository, but
   CI and explicit release environments protect irreversible operations.
 
-## Conductor upstream use
+## Native status protocol
+
+For status, run `python3 -B scripts/conductor_status.py` and the full
+`scripts/verify.sh` suite; report their outcomes separately. The status command
+is read-only and reconciles the actual table registry, top-level plan tasks,
+metadata, evidence, roadmap and in-place archive lifecycle, then invokes the
+native roadmap and generated-evidence checks. Its tests are
+`python3 -B -m unittest discover -s tests -p test_conductor_status.py`.
+
+Searchright uses `conductor.track-metadata.v3`: numeric stable track IDs,
+evidence-aware status, separate lifecycle and canonical paths retained under
+`conductor/tracks/`. Generic local skill validators requiring full-directory
+IDs, `new/in_progress/completed` statuses and physical archive relocation are
+not schema-compatible. Report this compatibility limitation separately; do not
+rewrite canonical IDs, evidence levels or paths to satisfy that validator.
+No generic skill installation or upstream-version migration is implied.
+
+Ledger opt-in or configured worktree isolation requires schema-specific ledger
+or exact lease validation. Until configured, report them as unconfigured and
+never infer ownership from a worktree directory. Repository integrity does not
+complete external gates or establish compiler, hosted, adoption or publication
+evidence. Status output is derived and never canonical authority.
+
+## Conductor upstream baseline
 
 The repository targets Conductor 0.3.0 and its current Context → Spec & Plan →
 Implement lifecycle. Use adaptive UX, smart logical reversion and review-fix

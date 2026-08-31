@@ -9,6 +9,7 @@
 ## Workflow
 
 - [Workflow](./workflow.md)
+- [Native Status Protocol](./workflow.md#native-status-protocol)
 - [Code Style Guides](./code_styleguides/)
 
 ## Planning

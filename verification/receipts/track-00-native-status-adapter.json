@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.track-maintenance-verification.v1",
+  "track_id": "00",
+  "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
+  "status": "focused_tests_passed_integration_pending",
+  "commands": [
+    {"command": "python3 -B -m unittest discover -s tests -p test_conductor_status.py", "status": "passed", "tests": 8},
+    {"command": "python3 -B scripts/conductor_status.py", "status": "passed", "tracks": 38, "archived": 7, "completed_tasks": 204, "total_tasks": 400},
+    {"command": "git diff --check", "status": "passed"},
+    {"command": "bash scripts/verify.sh", "status": "failed", "preexisting_python_tests_passed": 62, "static_gates_passed": 54, "static_gates_total": 57}
+  ],
+  "integration_blockers": [
+    "check_contract_bindings.py: this fresh worktree lacks requirements/bindings/node_modules TypeScript and Pyright dependencies.",
+    "generate_source_hash_manifest.py --check: source manifest needs regeneration after integration stages the final added files.",
+    "check_packaging_reproducibility.py: package generation requires a clean committed tree."
+  ],
+  "gates_not_run": ["cargo fmt", "cargo clippy", "Rust schema parity", "cargo nextest or cargo test", "Rust doctests", "cargo doc", "cargo deny", "cargo machete"],
+  "remaining_integration": [
+    "Record this maintenance slice in Track 00 additional_closeout_tasks without changing existing stable task keys.",
+    "Refresh coordinated generated evidence and source manifest, commit, then run full verification from the clean integrated revision."
+  ],
+  "claim_boundary": "Read-only native v3 status and adversarial local tests only. Does not migrate the installed skill, canonical track IDs, evidence statuses, in-place archives, or complete Track 00 or external gates."
+}
