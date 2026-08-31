@@ -126,12 +126,14 @@
       "implementation_symbols": [
         "searchright_prisma::render_flow",
         "searchright_prisma::FlowFormat",
-        "searchright_prisma::validate_flow_variant"
+        "searchright_prisma::validate_flow_variant",
+        "render_formats::formats_are_deterministic_and_reject_invalid_counts",
+        "render_formats::machine_projection_preserves_counts_and_update_lineage",
+        "render_formats::presentation_escapes_untrusted_labels",
+        "render_formats::every_presentation_format_contains_each_count_reason_and_lineage"
       ],
       "deterministic_tests": [
-        "cargo test -p searchright-prisma --test render_formats --locked",
-        "cargo test -p searchright-prisma --locked",
-        "cargo clippy -p searchright-prisma --all-targets --locked -- -D warnings"
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-08-render-formats.json"
