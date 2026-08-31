@@ -34,6 +34,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `scripts/check_provider_policies.py`
   - [x] Present source path: `docs/provider-governance.md`
   - [x] Present source path: `policy/redaction-profile.json`
+  - [x] Present source path: `crates/searchright-connectors/tests/cache_parser_version.rs`
   - [x] Assertion ledger: `conductor/tracks/04-open-connectors-mvp/traceability.json`
 
 ## Completion and evidence contract

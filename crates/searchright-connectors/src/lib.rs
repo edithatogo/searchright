@@ -21,6 +21,12 @@ use evidence_search_contracts::{
 use evidence_search_core::{ProviderError, ProviderMode, ProviderRegistry, SearchProvider};
 use serde::{Deserialize, Serialize};
 
+/// Source-owned behavior revision for current normalized provider pages.
+///
+/// Bump when parser identity, admission or mapping behavior changes so intact
+/// cached pages from an older parser cannot bypass the current implementation.
+pub const PROVIDER_PARSER_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), ".parser.2");
+
 /// A deterministic provider backed by checked-in or caller-supplied pages.
 #[derive(Debug, Clone)]
 pub struct FixtureProvider {
@@ -40,7 +46,8 @@ impl FixtureProvider {
     }
 
     /// Construct a fixture provider. Page keys are request cursors; `None` is
-    /// the first page.
+    /// the first page. The legacy package-only version is retained; this does
+    /// not assert which parser produced caller-supplied normalized pages.
     #[must_use]
     pub fn new(
         provider_id: impl Into<String>,
@@ -62,6 +69,16 @@ impl FixtureProvider {
             },
             pages,
         }
+    }
+
+    /// Explicitly bind caller-supplied pages to a declared behavior version.
+    ///
+    /// Registry admission validates the manifest. This declaration isolates cache
+    /// identities; it is not evidence that the named parser generated the pages.
+    #[must_use]
+    pub fn with_version(mut self, version: impl Into<String>) -> Self {
+        self.manifest.version = version.into();
+        self
     }
 
     /// Construct a one-page fixture.
@@ -1249,7 +1266,7 @@ mod live {
         ProviderManifest {
             provider_id: provider_id.to_owned(),
             display_name: display_name.to_owned(),
-            version: env!("CARGO_PKG_VERSION").to_owned(),
+            version: super::PROVIDER_PARSER_VERSION.to_owned(),
             support_level: ProviderSupportLevel::OptInLive,
             capabilities: vec![ProviderCapability::Search, ProviderCapability::Pagination],
             allowed_hosts: allowed_hosts.iter().map(|value| (*value).to_owned()).collect(),

@@ -35,6 +35,7 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `scripts/check_provider_policies.py`
   - [x] Present source path: `docs/provider-governance.md`
   - [x] Present source path: `policy/redaction-profile.json`
+  - [x] Present source path: `crates/searchright-connectors/tests/cache_parser_version.rs`
   - [x] Assertion ledger: `conductor/tracks/04-open-connectors-mvp/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -62,7 +63,8 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-  - Review fix `ff359cf9261872beb55a663e4eea6f043e58e443`: Rebased parser integrity fix: preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens; historical validation remains bound to its recorded revisions.
-  - Review fix `880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7`: Rebased bounded offline EFetch parser/request, exact PMID reconciliation, structured metadata and synthetic-page golden; XML static baseline and seven Python regressions remain distinct from execution evidence.
-  - [x] Review fix: Pending validation: parser-to-FixtureProvider/ProviderRegistry receipt binding, memory-cache replay and budget-warning tests on the rebased Track03 budget fix; not a live raw-response provenance chain.
+  - Review fix `3343d6a86b500e993f34ebe5e6518172ad7876b5`: Parser integrity: preserve stable PubMed/Crossref IDs, correct Europe PMC/OpenAlex identity forward-only, reject incomplete/malformed pages and compare complete synthetic goldens.
+  - Review fix `d9d1da3603da8ddc3c0c75f755fa6179f25ad89b`: Bounded offline EFetch citation/abstract parser and request builder, exact PMID reconciliation, structured metadata, complete XML golden and static baseline regressions; no live switch.
+  - Review fix `d13cbca321d4372b3a52ecef3f8c8e801472e864`: Actual fixture-runtime receipt binding, memory-cache replay/corruption checks and budget visibility; seven runtime tests pass after the separately delivered Track03 budget fix.
+  - Review fix `pending`: Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; reproduce old-cache bypass before 61 focused tests and strict Clippy pass. New pinned-toolchain full validation pending.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
