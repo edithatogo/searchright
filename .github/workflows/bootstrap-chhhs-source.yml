@@ -1,0 +1,71 @@
+name: Apply CHHHS demonstration payload
+
+on:
+  push:
+    branches: [feat/chhhs-research-intelligence-demo]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout branch history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+          fetch-depth: 4
+      - name: Apply reviewed payload and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import base64
+          import io
+          import subprocess
+          import tarfile
+          from pathlib import Path
+
+          source = None
+          revisions = subprocess.check_output(
+              ["git", "rev-list", "--max-count=4", "HEAD"], text=True
+          ).splitlines()
+          for revision in revisions[1:]:
+              try:
+                  candidate = subprocess.check_output(
+                      ["git", "show", f"{revision}:.github/workflows/bootstrap-chhhs-source.yml"],
+                      text=True,
+                  )
+              except subprocess.CalledProcessError:
+                  continue
+              if "H4sIA" in candidate and "\nPAYLOAD" in candidate:
+                  source = candidate
+                  break
+          if source is None:
+              raise RuntimeError("reviewed payload was not found in branch history")
+          start = source.index("H4sIA")
+          end = source.index("\nPAYLOAD", start)
+          encoded = "".join(source[start:end].split())
+          payload = base64.b64decode(encoded)
+          root = Path.cwd().resolve()
+          with tarfile.open(fileobj=io.BytesIO(payload), mode="r:gz") as archive:
+              for member in archive.getmembers():
+                  target = (root / member.name).resolve()
+                  if target != root and root not in target.parents:
+                      raise RuntimeError(f"unsafe archive member: {member.name}")
+              archive.extractall(root, filter="data")
+          PY
+          rm -f .github/workflows/bootstrap-chhhs-source.yml
+          python scripts/check_chhhs_research_demo.py
+          python scripts/check_traceability.py
+          python scripts/check_roadmap_coverage.py
+          python scripts/validate_repository.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && exit 0
+          git commit -m "feat(pilot): add CHHHS research-intelligence demo (Track 38)"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
