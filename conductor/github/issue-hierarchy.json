@@ -5620,6 +5620,39 @@
       }
     },
     {
+      "key": "track-11-phase-4-task-06",
+      "title": "Track 11 / P4 / T06: Implement synthetic local sibling byte/handoff admission (1ee989d) and isolated host-evaluation failure handling (8d1ae21); focused evidence is recorded in verification/\u2026",
+      "kind": "task",
+      "parent_key": "track-11-phase-4",
+      "body_path": "conductor/github/issues/track-11-phase-4-task-06.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:11",
+        "phase:4",
+        "state:source-complete"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "closed",
+      "track_id": "11",
+      "phase_number": 4,
+      "task_number": 6,
+      "project_fields": {
+        "Delivery status": "Source complete",
+        "Work kind": "Task",
+        "Horizon": "Mvp",
+        "Evidence level": "Compiler Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "No",
+        "Conductor key": "track-11-phase-4-task-06",
+        "Conductor path": "conductor/tracks/11-agentic-skill/plan.md",
+        "Track ID": "11",
+        "Phase": 4,
+        "Task": 6
+      }
+    },
+    {
       "key": "track-12",
       "title": "Track 12: CiteWeft scholarly extraction and document evidence",
       "kind": "track",

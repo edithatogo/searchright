@@ -901,7 +901,9 @@
       }
     ],
     "runtime_evidence": [
-      "verification/receipts/track-11-agent-authority-review.json"
+      "verification/receipts/track-11-agent-authority-review.json",
+      "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
+      "verification/receipts/track-11-local-admission.json"
     ],
       "external_evidence": [
         "verification/receipts/track-11-sibling-route.json",
@@ -918,7 +920,8 @@
       "title": "Systematic-search agent skill and workflows",
       "track_id": "11",
       "additional_closeout_tasks": [
-        "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json."
+        "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.",
+        "Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending."
       ],
       "updated": "2026-08-31"
     },
