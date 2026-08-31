@@ -5,7 +5,11 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/04-open-connectors-mvp/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "The reviewed parser slice passed 35 focused local tests and strict Clippy, including the premature-empty-page guard; final full validation remains pending. Track 04 remains partially implemented at source_verified, with EFetch/full-report retrieval, runtime receipt binding, authorised live execution, current provider policy and historical identity migration unproven. No archival or whole-track completion claim is made.",
+  "native_test_commands": [
+    "cargo test -p searchright-connectors --all-features --locked",
+    "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+  ],
   "assertions": [
     {
       "assertion_id": "T04-A001",
@@ -15,22 +19,29 @@
       "implementation_paths": [
         "crates/searchright-connectors/src/lib.rs",
         "provider-fixtures/mvp/pubmed-esearch.json",
-        "provider-fixtures/mvp/pubmed-esummary.json"
+        "provider-fixtures/mvp/pubmed-esummary.json",
+        "crates/searchright-connectors/tests/parser_integrity.rs",
+        "crates/searchright-connectors/tests/canonical_pages.rs",
+        "crates/searchright-connectors/tests/fixtures/pubmed-summary-page.json",
+        "docs/provider-parser-integrity.md"
       ],
       "implementation_symbols": [
-        "searchright_connectors::PubMedSearchProvider",
+        "searchright_connectors::PubMedProvider",
         "searchright_connectors::parse_pubmed_summary_page"
       ],
       "deterministic_tests": [
         "python scripts/check_provider_contract_baselines.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+        "conductor/tracks/04-open-connectors-mvp/evidence.json",
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json"
       ],
       "open_gates": [
-        "Compile fixture parsers and compare canonical ProviderPage output."
+        "Complete and validate EFetch/full-report retrieval; ESummary fixtures alone do not satisfy this scope.",
+        "Finish the empty-ID/nonzero-remaining guard and final full validation; prove actual runtime receipt binding and authorised retrieval separately."
       ],
-      "permitted_claim": "PubMed ESearch and ESummary source paths and fixtures exist; EFetch/full report retrieval and compiler evidence remain open."
+      "permitted_claim": "PubMed summary identity and full synthetic-page mapping are covered by the focused local parser tests; ESearch/ESummary integrity hardening is in progress. EFetch/full reports and actual retrieval completeness are not proven."
     },
     {
       "assertion_id": "T04-A002",
@@ -39,7 +50,11 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-connectors/src/lib.rs",
-        "provider-fixtures/mvp/europe-pmc.json"
+        "provider-fixtures/mvp/europe-pmc.json",
+        "crates/searchright-connectors/tests/parser_integrity.rs",
+        "crates/searchright-connectors/tests/canonical_pages.rs",
+        "crates/searchright-connectors/tests/fixtures/europe-pmc-page.json",
+        "docs/provider-parser-integrity.md"
       ],
       "implementation_symbols": [
         "searchright_connectors::parse_europe_pmc_page"
@@ -48,12 +63,15 @@
         "python scripts/check_provider_contract_baselines.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+        "conductor/tracks/04-open-connectors-mvp/evidence.json",
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json"
       ],
       "open_gates": [
-        "Compile fixture parsers and compare canonical ProviderPage output."
+        "Complete final full validation and separately prove runtime receipt binding and authorised live behaviour.",
+        "Keep historical Europe PMC identities unchanged unless a provenance-bound unambiguous migration is separately reviewed and authorised; no historical migration has executed."
       ],
-      "permitted_claim": "Europe PMC normalisation and response baselines are source implemented but not compiler- or live-proven."
+      "permitted_claim": "Focused local tests cover Europe PMC source-qualified identity and the complete synthetic-page mapping. This is forward-only parser evidence, not historical migration or live-provider proof."
     },
     {
       "assertion_id": "T04-A003",
@@ -63,7 +81,12 @@
       "implementation_paths": [
         "crates/searchright-connectors/src/lib.rs",
         "provider-fixtures/mvp/crossref.json",
-        "provider-fixtures/mvp/openalex.json"
+        "provider-fixtures/mvp/openalex.json",
+        "crates/searchright-connectors/tests/parser_integrity.rs",
+        "crates/searchright-connectors/tests/canonical_pages.rs",
+        "crates/searchright-connectors/tests/fixtures/crossref-page.json",
+        "crates/searchright-connectors/tests/fixtures/openalex-page.json",
+        "docs/provider-parser-integrity.md"
       ],
       "implementation_symbols": [
         "searchright_connectors::parse_crossref_page",
@@ -73,12 +96,15 @@
         "python scripts/check_provider_contract_baselines.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+        "conductor/tracks/04-open-connectors-mvp/evidence.json",
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json"
       ],
       "open_gates": [
-        "Compile fixture parsers and compare canonical ProviderPage output."
+        "Complete final full validation and separately prove runtime receipt binding and authorised live behaviour.",
+        "Keep historical OpenAlex identities unchanged; unresolved positional collisions must not be automatically mapped or transfer screening decisions."
       ],
-      "permitted_claim": "Crossref and OpenAlex source adapters and baselines exist; live compatibility is not claimed."
+      "permitted_claim": "Focused local tests cover Crossref and OpenAlex complete synthetic-page mappings, preserved Crossref identity and corrected OpenAlex native identity/title fallback. OpenAlex abstract reconstruction, full field coverage, historical migration and live compatibility are not claimed."
     },
     {
       "assertion_id": "T04-A004",
@@ -102,10 +128,12 @@
         "python scripts/check_provider_policies.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+        "conductor/tracks/04-open-connectors-mvp/evidence.json",
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json"
       ],
       "open_gates": [
-        "Compile fixture parsers and compare canonical ProviderPage output.",
+        "Complete final full validation; focused parser tests do not establish rate/identity policy compliance in live operation.",
         "Review current source policies and rate guidance before promoting each live provider."
       ],
       "permitted_claim": "Provider policy surfaces and conservative rate/identity defaults are source-identified and cross-checked; legal approval and current live compatibility are not claimed."
@@ -118,7 +146,11 @@
       "implementation_paths": [
         "integration/provider-contract-baselines.json",
         "provider-fixtures/mvp",
-        "scripts/check_provider_contract_baselines.py"
+        "scripts/check_provider_contract_baselines.py",
+        "crates/searchright-connectors/tests/canonical_pages.rs",
+        "crates/searchright-connectors/tests/fixtures",
+        "crates/searchright-connectors/tests/fixtures/README.md",
+        "docs/provider-parser-integrity.md"
       ],
       "implementation_symbols": [
         "scripts/check_provider_contract_baselines.py::main"
@@ -127,12 +159,14 @@
         "python scripts/check_provider_contract_baselines.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+        "conductor/tracks/04-open-connectors-mvp/evidence.json",
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json"
       ],
       "open_gates": [
-        "Compile fixture parsers and compare canonical ProviderPage output."
+        "Complete final full validation and prove actual runtime source-receipt binding and response-hash/replay correspondence separately."
       ],
-      "permitted_claim": "Rights-clear raw response baselines are hash-pinned; Rust replay output still requires compiler-backed golden tests."
+      "permitted_claim": "Hash-pinned synthetic inputs have manually authored complete ProviderPage goldens exercised by focused local tests. The pending-receipt placeholders do not prove actual receipt binding or live raw-response replay."
     },
     {
       "assertion_id": "T04-A006",
@@ -151,7 +185,9 @@
         "python scripts/check_redaction_policy.py --self-test"
       ],
       "evidence_receipts": [
-        "conductor/tracks/04-open-connectors-mvp/evidence.json"
+        "conductor/tracks/04-open-connectors-mvp/evidence.json",
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json"
       ],
       "open_gates": [
         "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts.",

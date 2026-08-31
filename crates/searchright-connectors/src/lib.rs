@@ -5,7 +5,10 @@
 
 #![forbid(unsafe_code)]
 
-use std::{collections::BTreeMap, sync::Arc};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    sync::Arc,
+};
 
 use async_trait::async_trait;
 use evidence_search_contracts::{
@@ -23,6 +26,16 @@ pub struct FixtureProvider {
 }
 
 impl FixtureProvider {
+    fn page_for_cursor(&self, cursor: Option<&String>) -> Result<ProviderPage, ProviderError> {
+        self.pages
+            .get(&cursor.cloned())
+            .cloned()
+            .ok_or_else(|| ProviderError::Upstream {
+                provider: self.manifest.provider_id.clone(),
+                message: "fixture has no page for requested cursor; cursor redacted".to_owned(),
+            })
+    }
+
     /// Construct a fixture provider. Page keys are request cursors; `None` is
     /// the first page.
     #[must_use]
@@ -85,13 +98,7 @@ impl SearchProvider for FixtureProvider {
     }
 
     async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError> {
-        self.pages
-            .get(&request.cursor)
-            .cloned()
-            .ok_or_else(|| ProviderError::Upstream {
-                provider: self.manifest.provider_id.clone(),
-                message: format!("fixture has no page for cursor {:?}", request.cursor),
-            })
+        self.page_for_cursor(request.cursor.as_ref())
     }
 }
 
@@ -265,7 +272,93 @@ impl PubMedSummaryRequest {
     }
 }
 
-/// Parse an NCBI `ESummary` response into canonical bibliographic records.
+/// Construct a fixed, payload-independent malformed-response diagnostic.
+fn malformed(provider: &str, message: &str) -> ProviderError {
+    ProviderError::MalformedResponse {
+        provider: provider.to_owned(),
+        format: "JSON",
+        message: message.to_owned(),
+    }
+}
+
+fn identity<'a>(
+    value: &'a serde_json::Value,
+    field: &str,
+    provider: &str,
+) -> Result<&'a str, ProviderError> {
+    value
+        .get(field)
+        .and_then(serde_json::Value::as_str)
+        .filter(|text| !text.trim().is_empty())
+        .ok_or_else(|| malformed(provider, "record identity is missing or malformed"))
+}
+
+/// Stable provider-qualified identity: each raw UTF-8 component is prefixed by
+/// its byte length and a colon. Europe PMC uses source then native ID. No page
+/// index, canonicalisation, or historical record rewriting participates.
+fn stable_record_id(provider: &str, components: &[&str]) -> String {
+    let mut result = provider.to_owned();
+    for component in components {
+        result.push_str(&format!(":{}:{component}", component.len()));
+    }
+    result
+}
+
+fn validate_rows(
+    rows: &[serde_json::Value],
+    provider: &str,
+    fields: &[&str],
+) -> Result<(), ProviderError> {
+    let mut seen = BTreeSet::new();
+    for row in rows {
+        if !row.is_object() || row.get("error").is_some() {
+            return Err(malformed(
+                provider,
+                "record is not an object or reports an error",
+            ));
+        }
+        let components = fields
+            .iter()
+            .map(|field| identity(row, field, provider))
+            .collect::<Result<Vec<_>, _>>()?;
+        if !seen.insert(stable_record_id(provider, &components)) {
+            return Err(malformed(provider, "duplicate record identity in page"));
+        }
+    }
+    Ok(())
+}
+
+fn optional_count(
+    value: &serde_json::Value,
+    field: &str,
+    provider: &str,
+) -> Result<Option<u64>, ProviderError> {
+    value
+        .get(field)
+        .map(|count| {
+            count
+                .as_u64()
+                .ok_or_else(|| malformed(provider, "present total count is malformed"))
+        })
+        .transpose()
+}
+
+fn optional_cursor(
+    value: &serde_json::Value,
+    field: &str,
+    provider: &str,
+) -> Result<Option<String>, ProviderError> {
+    match value.get(field) {
+        None | Some(serde_json::Value::Null) => Ok(None),
+        Some(cursor) => cursor
+            .as_str()
+            .filter(|text| !text.trim().is_empty())
+            .map(|text| Some(text.to_owned()))
+            .ok_or_else(|| malformed(provider, "present pagination cursor is malformed")),
+    }
+}
+
+/// Parse a complete PubMed summary page, rejecting missing or conflicting UIDs.
 pub fn parse_pubmed_summary_page(
     payload: &serde_json::Value,
 ) -> Result<ProviderPage, ProviderError> {
@@ -283,6 +376,28 @@ pub fn parse_pubmed_summary_page(
             provider: "pubmed".to_owned(),
             message: "response omitted result.uids".to_owned(),
         })?;
+    let mut seen = BTreeSet::new();
+    for uid in uids {
+        let pmid = uid
+            .as_str()
+            .filter(|text| !text.trim().is_empty())
+            .ok_or_else(|| malformed("pubmed", "summary UID is malformed"))?;
+        if !seen.insert(pmid) {
+            return Err(malformed("pubmed", "duplicate summary UID"));
+        }
+        let item = result
+            .get(pmid)
+            .ok_or_else(|| malformed("pubmed", "summary UID has no record"))?;
+        if !item.is_object()
+            || item.get("error").is_some()
+            || identity(item, "uid", "pubmed")? != pmid
+        {
+            return Err(malformed(
+                "pubmed",
+                "summary record is invalid or has mismatched UID",
+            ));
+        }
+    }
     let records = uids
         .iter()
         .filter_map(Value::as_str)
@@ -458,16 +573,24 @@ pub fn parse_europe_pmc_page(payload: &serde_json::Value) -> Result<ProviderPage
             provider: "europe-pmc".to_owned(),
             message: "response omitted resultList.result".to_owned(),
         })?;
+    validate_rows(list, "europe-pmc", &["source", "id"])?;
+    let total_available = optional_count(payload, "hitCount", "europe-pmc")?;
+    let next_cursor = optional_cursor(payload, "nextCursorMark", "europe-pmc")?;
     let records = list
         .iter()
-        .enumerate()
-        .map(|(index, value)| BibliographicRecord {
+        .map(|value| BibliographicRecord {
             schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
                 .to_owned(),
-            record_id: value
-                .get("id")
-                .and_then(Value::as_str)
-                .map_or_else(|| format!("europe-pmc-{index}"), str::to_owned),
+            record_id: stable_record_id(
+                "europe-pmc",
+                &[
+                    value
+                        .get("source")
+                        .and_then(Value::as_str)
+                        .unwrap_or_default(),
+                    value.get("id").and_then(Value::as_str).unwrap_or_default(),
+                ],
+            ),
             source_receipt_id: "pending-receipt".to_owned(),
             native_id: value
                 .get("id")
@@ -515,11 +638,8 @@ pub fn parse_europe_pmc_page(payload: &serde_json::Value) -> Result<ProviderPage
     Ok(ProviderPage {
         schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         records,
-        next_cursor: payload
-            .get("nextCursorMark")
-            .and_then(Value::as_str)
-            .map(str::to_owned),
-        total_available: payload.get("hitCount").and_then(Value::as_u64),
+        next_cursor,
+        total_available,
         diagnostics: BTreeMap::new(),
     })
 }
@@ -540,6 +660,9 @@ pub fn parse_crossref_page(payload: &serde_json::Value) -> Result<ProviderPage, 
             provider: "crossref".to_owned(),
             message: "response omitted message.items".to_owned(),
         })?;
+    validate_rows(items, "crossref", &["DOI"])?;
+    let total_available = optional_count(message, "total-results", "crossref")?;
+    let next_cursor = optional_cursor(message, "next-cursor", "crossref")?;
     let records = items
         .iter()
         .enumerate()
@@ -598,11 +721,8 @@ pub fn parse_crossref_page(payload: &serde_json::Value) -> Result<ProviderPage, 
     Ok(ProviderPage {
         schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         records,
-        next_cursor: message
-            .get("next-cursor")
-            .and_then(Value::as_str)
-            .map(str::to_owned),
-        total_available: message.get("total-results").and_then(Value::as_u64),
+        next_cursor,
+        total_available,
         diagnostics: BTreeMap::new(),
     })
 }
@@ -617,6 +737,13 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
             provider: "openalex".to_owned(),
             message: "response omitted results".to_owned(),
         })?;
+    validate_rows(items, "openalex", &["id"])?;
+    let meta = payload.get("meta").unwrap_or(&Value::Null);
+    if payload.get("meta").is_some() && !meta.is_object() {
+        return Err(malformed("openalex", "present metadata is not an object"));
+    }
+    let total_available = optional_count(meta, "count", "openalex")?;
+    let next_cursor = optional_cursor(meta, "next_cursor", "openalex")?;
     let records = items
         .iter()
         .enumerate()
@@ -628,7 +755,7 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
             BibliographicRecord {
                 schema_version: evidence_search_contracts::BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION
                     .to_owned(),
-                record_id: format!("openalex-{index}"),
+                record_id: stable_record_id("openalex", &[&native_id]),
                 source_receipt_id: "pending-receipt".to_owned(),
                 native_id,
                 kind: openalex_kind(value.get("type").and_then(Value::as_str)),
@@ -643,6 +770,13 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
                 title: value
                     .get("display_name")
                     .and_then(Value::as_str)
+                    .filter(|text| !text.trim().is_empty())
+                    .or_else(|| {
+                        value
+                            .get("title")
+                            .and_then(Value::as_str)
+                            .filter(|text| !text.trim().is_empty())
+                    })
                     .unwrap_or("[untitled]")
                     .to_owned(),
                 abstract_text: None,
@@ -701,15 +835,8 @@ pub fn parse_openalex_page(payload: &serde_json::Value) -> Result<ProviderPage, 
     Ok(ProviderPage {
         schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION.to_owned(),
         records,
-        next_cursor: payload
-            .get("meta")
-            .and_then(|meta| meta.get("next_cursor"))
-            .and_then(Value::as_str)
-            .map(str::to_owned),
-        total_available: payload
-            .get("meta")
-            .and_then(|meta| meta.get("count"))
-            .and_then(Value::as_u64),
+        next_cursor,
+        total_available,
         diagnostics: BTreeMap::new(),
     })
 }
@@ -880,6 +1007,84 @@ mod live {
     use std::net::SocketAddr;
 
     const DEFAULT_MAX_RESPONSE_BYTES: u64 = 16 * 1024 * 1024;
+
+    fn parse_search_ids(payload: &Value) -> Result<(u64, Vec<String>), ProviderError> {
+        let result = payload
+            .get("esearchresult")
+            .filter(|value| value.is_object())
+            .ok_or_else(|| super::malformed("pubmed", "missing ESearch result"))?;
+        if payload.get("error").is_some()
+            || result.get("error").is_some()
+            || result.get("errorlist").is_some()
+        {
+            return Err(super::malformed("pubmed", "ESearch reports an error"));
+        }
+        let count = result
+            .get("count")
+            .and_then(Value::as_str)
+            .filter(|text| !text.is_empty() && text.bytes().all(|byte| byte.is_ascii_digit()))
+            .and_then(|text| text.parse::<u64>().ok())
+            .ok_or_else(|| super::malformed("pubmed", "ESearch count is malformed"))?;
+        let ids = result
+            .get("idlist")
+            .and_then(Value::as_array)
+            .ok_or_else(|| super::malformed("pubmed", "ESearch ID list is malformed"))?;
+        let mut seen = std::collections::BTreeSet::new();
+        let mut output = Vec::new();
+        for id in ids {
+            let id = id
+                .as_str()
+                .filter(|text| !text.is_empty() && text.bytes().all(|byte| byte.is_ascii_digit()))
+                .ok_or_else(|| super::malformed("pubmed", "ESearch ID is malformed"))?;
+            if !seen.insert(id) {
+                return Err(super::malformed("pubmed", "duplicate ESearch ID"));
+            }
+            output.push(id.to_owned());
+        }
+        if u64::try_from(output.len()).unwrap_or(u64::MAX) > count {
+            return Err(super::malformed(
+                "pubmed",
+                "ESearch count is smaller than returned ID list",
+            ));
+        }
+        Ok((count, output))
+    }
+
+    fn validate_search_progress(
+        count: u64,
+        ids: &[String],
+        offset: u32,
+    ) -> Result<(), ProviderError> {
+        if ids.is_empty() && u64::from(offset) < count {
+            return Err(super::malformed(
+                "pubmed",
+                "ESearch returned no IDs before the reported result count was exhausted",
+            ));
+        }
+        Ok(())
+    }
+
+    fn reconcile_summary(requested: &[String], page: &ProviderPage) -> Result<(), ProviderError> {
+        let expected = requested
+            .iter()
+            .map(String::as_str)
+            .collect::<std::collections::BTreeSet<_>>();
+        let observed = page
+            .records
+            .iter()
+            .map(|record| record.native_id.as_str())
+            .collect::<std::collections::BTreeSet<_>>();
+        if expected.len() != requested.len()
+            || observed.len() != page.records.len()
+            || expected != observed
+        {
+            return Err(super::malformed(
+                "pubmed",
+                "ESummary identities differ from requested IDs",
+            ));
+        }
+        Ok(())
+    }
 
     /// Non-secret configuration for the four open MVP providers.
     #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -1120,30 +1325,9 @@ mod live {
                 message: error.to_string(),
             })?;
             let (search, search_digest) = fetch_json("pubmed", endpoint, request).await?;
-            let result =
-                search
-                    .get("esearchresult")
-                    .ok_or_else(|| ProviderError::MalformedResponse {
-                        provider: "pubmed".to_owned(),
-                        format: "JSON",
-                        message: "response omitted esearchresult".to_owned(),
-                    })?;
-            let count = result
-                .get("count")
-                .and_then(Value::as_str)
-                .and_then(|value| value.parse::<u64>().ok());
-            let pmids = result
-                .get("idlist")
-                .and_then(Value::as_array)
-                .ok_or_else(|| ProviderError::MalformedResponse {
-                    provider: "pubmed".to_owned(),
-                    format: "JSON",
-                    message: "response omitted esearchresult.idlist".to_owned(),
-                })?
-                .iter()
-                .filter_map(Value::as_str)
-                .map(str::to_owned)
-                .collect::<Vec<_>>();
+            let (count, pmids) = parse_search_ids(&search)?;
+            validate_search_progress(count, &pmids, offset)?;
+            let count = Some(count);
             if pmids.is_empty() {
                 return Ok(ProviderPage {
                     schema_version: evidence_search_contracts::PROVIDER_PAGE_SCHEMA_VERSION
@@ -1169,6 +1353,7 @@ mod live {
             })?;
             let (summary, summary_digest) = fetch_json("pubmed", summary_endpoint, request).await?;
             let mut page = parse_pubmed_summary_page(&summary)?;
+            reconcile_summary(&pmids, &page)?;
             let next = offset.saturating_add(u32::try_from(pmids.len()).unwrap_or(u32::MAX));
             page.total_available = count;
             page.next_cursor = count
@@ -1354,6 +1539,75 @@ mod live {
         use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 
         #[test]
+        fn esearch_rejects_malformed_counts_ids_and_errors() {
+            for count in [
+                serde_json::Value::Null,
+                serde_json::json!(1),
+                serde_json::json!("-1"),
+                serde_json::json!("invalid"),
+                serde_json::json!(""),
+            ] {
+                assert!(
+                    super::parse_search_ids(
+                        &serde_json::json!({"esearchresult": {"count": count, "idlist": []}})
+                    )
+                    .is_err()
+                );
+            }
+            for ids in [
+                serde_json::json!([123]),
+                serde_json::json!(["123", "123"]),
+                serde_json::json!([""]),
+                serde_json::json!(["abc"]),
+                serde_json::Value::Null,
+            ] {
+                assert!(
+                    super::parse_search_ids(
+                        &serde_json::json!({"esearchresult": {"count": "2", "idlist": ids}})
+                    )
+                    .is_err()
+                );
+            }
+            assert!(
+                super::parse_search_ids(
+                    &serde_json::json!({"esearchresult": {"count": "0", "idlist": ["123"]}})
+                )
+                .is_err()
+            );
+            assert!(super::parse_search_ids(&serde_json::json!({"esearchresult": {"count": "0", "idlist": [], "errorlist": {"phrasesnotfound": ["sensitive"]}}})).is_err());
+        }
+
+        #[test]
+        fn esearch_and_summary_reconciliation_is_exact() -> Result<(), Box<dyn std::error::Error>> {
+            let (count, ids) = super::parse_search_ids(
+                &serde_json::json!({"esearchresult": {"count": "2", "idlist": ["123", "456"]}}),
+            )?;
+            assert_eq!(count, 2);
+            let page = super::parse_pubmed_summary_page(
+                &serde_json::json!({"result": {"uids": ["456", "123"], "123": {"uid": "123"}, "456": {"uid": "456"}}}),
+            )?;
+            super::reconcile_summary(&ids, &page)?;
+            assert!(super::reconcile_summary(&["123".to_owned()], &page).is_err());
+            assert!(
+                super::reconcile_summary(&["123".to_owned(), "789".to_owned()], &page).is_err()
+            );
+            assert!(
+                super::reconcile_summary(&["123".to_owned(), "123".to_owned()], &page).is_err()
+            );
+            Ok(())
+        }
+
+        #[test]
+        fn esearch_empty_page_requires_exhausted_count_but_short_pages_are_allowed() {
+            assert!(super::validate_search_progress(10, &[], 0).is_err());
+            assert!(super::validate_search_progress(10, &[], 9).is_err());
+            assert!(super::validate_search_progress(10, &[], 10).is_ok());
+            assert!(super::validate_search_progress(10, &[], 11).is_ok());
+            assert!(super::validate_search_progress(0, &[], 0).is_ok());
+            assert!(super::validate_search_progress(10, &["123".to_owned()], 0).is_ok());
+        }
+
+        #[test]
         fn pinned_client_rejects_an_empty_dns_answer() {
             assert!(build_pinned_client("test", "example.test", &[]).is_err());
         }
@@ -1391,6 +1645,17 @@ pub use live::{
 mod tests {
     use super::*;
     use evidence_search_contracts::Validate;
+
+    #[test]
+    fn fixture_missing_cursor_error_is_redacted() {
+        let provider = FixtureProvider::one_page("test", "Test", Vec::new());
+        let error = provider.page_for_cursor(Some(&"secret-cursor-token".to_owned()));
+        assert!(error.is_err());
+        if let Err(error) = error {
+            assert!(!error.to_string().contains("secret-cursor-token"));
+            assert!(error.to_string().contains("redacted"));
+        }
+    }
 
     #[test]
     fn pubmed_endpoint_percent_encodes_query() {
@@ -1452,7 +1717,7 @@ mod tests {
     fn open_provider_parsers_emit_canonical_pages() {
         let europe = parse_europe_pmc_page(&serde_json::json!({
             "hitCount": 1,
-            "resultList": {"result": [{"id": "1", "title": "Europe PMC fixture"}]}
+            "resultList": {"result": [{"id": "1", "source": "MED", "title": "Europe PMC fixture"}]}
         }));
         let crossref = parse_crossref_page(&serde_json::json!({
             "message": {"total-results": 1, "items": [{"DOI": "10.1/example", "title": ["Crossref fixture"]}]}

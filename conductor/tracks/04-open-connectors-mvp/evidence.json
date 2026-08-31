@@ -14,6 +14,10 @@
     "provider-fixtures/mvp/europe-pmc.json",
     "provider-fixtures/mvp/crossref.json",
     "provider-fixtures/mvp/openalex.json",
+    "crates/searchright-connectors/tests/parser_integrity.rs",
+    "crates/searchright-connectors/tests/canonical_pages.rs",
+    "crates/searchright-connectors/tests/fixtures",
+    "docs/provider-parser-integrity.md",
     "scripts/check_provider_contract_baselines.py",
     "contracts/examples/provider-manifest.yaml",
     "contracts/examples/provider-page.yaml",
@@ -39,7 +43,7 @@
     "Verify upstream terms, rate limits and response changes at release time.",
     "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
   ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "The reviewed parser slice passed 35 focused local tests and strict Clippy, including the premature-empty-page guard; final full validation remains pending. Track 04 remains partially implemented at source_verified. EFetch/full reports, runtime receipt binding, authorised live execution, current provider policy and historical identity migration are unproven; no whole-track completion or archival claim is made.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-04",
@@ -64,7 +68,8 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-04-fixture-compiler.json"
+    "verification/receipts/track-04-fixture-compiler.json",
+    "verification/receipts/track-04-parser-panel.json"
   ],
   "external_evidence": []
 }

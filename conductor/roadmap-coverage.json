@@ -362,7 +362,7 @@
         "python scripts/check_provider_contract_baselines.py",
         "python scripts/check_provider_policies.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "The reviewed parser slice passed 35 focused local tests and strict Clippy, including the premature-empty-page guard; final full validation remains pending. Track 04 remains partially implemented at source_verified. EFetch/full reports, runtime receipt binding, authorised live execution, current provider policy and historical identity migration are unproven; no whole-track completion or archival claim is made.",
       "deliverables": [
         "crates/searchright-connectors/src/lib.rs",
         "integration/provider-contract-baselines.json",
@@ -371,6 +371,10 @@
         "provider-fixtures/mvp/europe-pmc.json",
         "provider-fixtures/mvp/crossref.json",
         "provider-fixtures/mvp/openalex.json",
+        "crates/searchright-connectors/tests/parser_integrity.rs",
+        "crates/searchright-connectors/tests/canonical_pages.rs",
+        "crates/searchright-connectors/tests/fixtures",
+        "docs/provider-parser-integrity.md",
         "scripts/check_provider_contract_baselines.py",
         "contracts/examples/provider-manifest.yaml",
         "contracts/examples/provider-page.yaml",
@@ -394,7 +398,18 @@
         "SR-016"
       ],
       "runtime_evidence": [
-        "verification/receipts/track-04-fixture-compiler.json"
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json"
+      ],
+      "native_test_commands": [
+        "cargo test -p searchright-connectors --all-features --locked",
+        "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+      ],
+      "open_acceptance_gates": [
+        "Finish the empty-ID/nonzero-remaining guard and final full validation without inferring completion from earlier focused results.",
+        "Implement and verify EFetch/full-report retrieval and actual runtime receipt binding separately from synthetic parser outputs.",
+        "Authorised live retrieval and current provider-policy review remain required; synthetic fixtures do not establish current upstream compatibility or rights approval.",
+        "Preserve historical Europe PMC/OpenAlex records and screening decisions; any necessary identity migration requires provenance-bound mapping and separate owner authority, and ambiguous collisions remain unresolved."
       ],
       "slug": "open-connectors-mvp",
       "status": "partially_implemented",
