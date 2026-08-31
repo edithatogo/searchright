@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.track-validation.v1",
+  "track_id": "03",
+  "date": "2026-08-31",
+  "base_revision": "3072b36b7a9f248e730d9878654860952762014b",
+  "source_sha256": "41864cf8d4608bd6ac9a5c7f12c7482565da18c3f7847fc4f8b225711a7618c1",
+  "status": "full_local_validation_passed",
+  "full_validation": {
+    "revision": "c0a4590642d17c3f7f5ca1644a43aeb394d96ccd",
+    "tree": "f79f0b808539eb89e2a293accad0b38ad850b7e4",
+    "exit_code": 0,
+    "commands": ["bash scripts/verify.sh", "python3 -m unittest tests.test_cargo_vet_governance", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --no-minimize-exemptions"],
+    "log_sha256": "fe101c3ae519c54846ec966cea98c9df53a1b1a02db3511672c041fa80f9eac8",
+    "static_gates_passed": 57,
+    "python_tests_passed": 75,
+    "cargo_vet_governance_tests_passed": 23,
+    "fully_audited_dependencies": 43,
+    "exempted_dependencies": 259,
+    "boundary": "Clean snapshot local validation; not hosted CI or merge proof. Exemptions are not audits."
+  },
+  "finding": "An exact max_records stop with a known continuation omitted a budget warning. Emit one warning, preserving no warning for exact terminal pages and one warning for within-page overflow.",
+  "commands": ["cargo test -p evidence-search-core --lib record_budget_ --locked", "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"],
+  "exit_code": 0,
+  "focused_tests_passed": 3,
+  "log_sha256": "af6bf9f6dbefd1710da0ad904f888d12d485763c643298bdbd03532537e9684c",
+  "test_first_boundary": "Tests were authored before the fix; pre-fix Cargo execution was not run because another validation owned the shared target.",
+  "panel": [{"agent": "track03_methodology", "role": "sealed finding and final acceptance review", "result": "No remaining finding in the three-case distinction; continuation does not prove additional matching records."}, {"agent": "track03_safety", "role": "bounded implementation and adversarial regressions", "result": "Three tests and strict core Clippy passed."}, {"agent": "root", "role": "correctness review", "result": "Guard preserves the current record limit and avoids duplicate warnings or extra provider calls."}],
+  "claim_boundary": "Budget-stop visibility only. No additional retrieval, live-provider support, source completeness, cache authenticity, downstream cutover, owner approval or archive promotion."
+}

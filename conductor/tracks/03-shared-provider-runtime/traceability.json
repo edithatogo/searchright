@@ -69,7 +69,9 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/03-shared-provider-runtime/evidence.json",
-        "verification/receipts/track-03-provider-runtime-review.json"
+        "verification/receipts/track-03-provider-runtime-review.json",
+        "verification/receipts/track-03-reconciled-validation.json",
+        "verification/receipts/track-03-budget-warning.json"
       ],
       "open_gates": [
         "Obtain exact-revision compiler CI and transport-level adversarial evidence for resolve-validate-pin behavior, proxy suppression, redirects and response bounds.",
