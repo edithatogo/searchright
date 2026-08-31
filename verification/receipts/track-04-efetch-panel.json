@@ -15,6 +15,21 @@
     "Compare complete ProviderPage outputs, not only selected record fields."
   ],
   "status": "bounded_source_reviewed_full_validation_pending",
+  "rebased_implementation_revision": "880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7",
+  "rebased_parser_revision": "ff359cf9261872beb55a663e4eea6f043e58e443",
+  "static_remediation_history": {
+    "failed_snapshot": "ebdd97f",
+    "failure": "Static harness failed only because evidence-debt provider policy count remained five after adding the sixth baseline.",
+    "failure_log": "/tmp/searchright-track04-static-remediation.log",
+    "remediation": "Regenerated evidence debt (five to six policy entries) and dependent source hashes; no gate disabled.",
+    "passed_snapshot": "4f6998f1f6f35965ab9706671b6858f4310f1bb7",
+    "passed_tree": "88548bed9b3286506a2ba49cea6e3b8be4af4c75",
+    "static_gates_passed": 57,
+    "exit_code": 0,
+    "log": "/tmp/searchright-track04-static-debt-remediation-20260831.log",
+    "log_sha256": "d74304d09e6381c3be1c4d42c9f3249bd946ee8ffa4cbeaa1e544d4510ec9130",
+    "boundary": "Historical static-only snapshot before rebase and runtime-test inclusion; not proof of the current full workspace or native runtime tests."
+  },
   "source_sha256": "413e337f0b0acf026e77ef49be72faf8f1cc5c14d205ba9a37828b1f0144cbe9",
   "integration_recheck": {
     "source_sha256": "8c5a05b2c0978a37d2bba5080f476208ccd026508685c01182c5c8baa17ae90d",

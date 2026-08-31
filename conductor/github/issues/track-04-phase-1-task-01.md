@@ -17,6 +17,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `provider-fixtures/mvp/openalex.json`
   - [x] Present source path: `crates/searchright-connectors/src/efetch.rs`
   - [x] Present source path: `crates/searchright-connectors/tests/efetch_offline.rs`
+  - [x] Present source path: `crates/searchright-connectors/tests/runtime_receipts.rs`
   - [x] Present source path: `crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml`
   - [x] Present source path: `crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json`
   - [x] Present source path: `tests/test_provider_contract_baselines.py`

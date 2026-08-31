@@ -95,6 +95,16 @@ runtime receipt binding, transport controls and separate authorised execution.
 
 ## Acceptance evidence required
 
+The separate `runtime_receipts.rs` fixture tests exercise parsed pages through
+the actual registry and in-memory page cache. Final execution on the rebased
+budget fix is pending. Their intended evidence is freshly issued receipts bound
+to returned records, cache-envelope integrity and synthetic replay—not live
+transport. Synthetic cursor scheduling is explicit, and fixture-added raw hashes
+are not evidence of an end-to-end raw-response hash chain into issued receipts.
+Replay compares bibliographic payloads after normalising only the new receipt
+binding. Cache corruption detection assumes a trusted backend; the test namespace
+is not proof of authenticated tenancy.
+
 Review complete serialized `ProviderPage` golden output manually against the
 synthetic XML: every identifier, field, null, collection, metadata association,
 record/section order, digest, count, cursor and pending receipt. Do not generate

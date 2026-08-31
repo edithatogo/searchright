@@ -8,9 +8,9 @@ Canonical task state: **open evidence or implementation task**.
 ## Canonical task
 
 - [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-  - Review fix `7972c0b96419dd3a63137f5957f98636259e0926`: Preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens.
-  - [x] Review fix: Pending commit: add bounded offline EFetch citation/abstract XML parsing and request construction, exact PMID reconciliation, structured metadata and complete synthetic-page golden without switching live transport.
-  - [x] Review fix: Pending commit: add bounded XML digest/root/path baseline checks, restricted parser-source declarations and seven Python regressions without promoting static shape checks into execution evidence.
+  - Review fix `ff359cf9261872beb55a663e4eea6f043e58e443`: Rebased parser integrity fix: preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens; historical validation remains bound to its recorded revisions.
+  - Review fix `880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7`: Rebased bounded offline EFetch parser/request, exact PMID reconciliation, structured metadata and synthetic-page golden; XML static baseline and seven Python regressions remain distinct from execution evidence.
+  - [x] Review fix: Pending validation: parser-to-FixtureProvider/ProviderRegistry receipt binding, memory-cache replay and budget-warning tests on the rebased Track03 budget fix; not a live raw-response provenance chain.
 
 ## Completion and evidence contract
 
