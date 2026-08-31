@@ -1,7 +1,11 @@
 use std::{
     collections::BTreeMap,
+    future::Future,
     net::{IpAddr, Ipv4Addr, Ipv6Addr},
-    sync::Arc,
+    sync::{
+        Arc,
+        atomic::{AtomicU64, Ordering},
+    },
     time::Duration,
 };
 
@@ -47,6 +51,16 @@ pub trait SearchProvider: Send + Sync {
     fn endpoint_label(&self) -> Option<String>;
     /// Execute one bounded page.
     async fn execute_page(&self, request: &SearchRequest) -> Result<ProviderPage, ProviderError>;
+    /// Execute with registry-owned admission. The compatibility default treats the
+    /// legacy page operation as one subrequest, not each HTTP request inside it.
+    /// Multi-call adapters must override this method and admit each operation.
+    async fn execute_page_with_context(
+        &self,
+        request: &SearchRequest,
+        context: &mut PageExecutionContext<'_>,
+    ) -> Result<ProviderPage, ProviderError> {
+        context.run_subrequest(|| self.execute_page(request)).await
+    }
     /// Whether an adapter failure is safe to retry under the bounded policy.
     fn is_retryable(&self, error: &ProviderError) -> bool {
         matches!(
@@ -311,18 +325,93 @@ fn ipv6_in_prefix(address: Ipv6Addr, network: Ipv6Addr, prefix: u32) -> bool {
     u128::from(address) & mask == u128::from(network) & mask
 }
 
+#[derive(Default)]
+struct RateLimiter {
+    last_call: Mutex<Option<tokio::time::Instant>>,
+    floor_ms: AtomicU64,
+}
+
+const MAX_SUBREQUESTS_PER_PAGE: u32 = 32;
+
+/// Registry-created, non-serializable admission context for one page attempt.
+///
+/// There is no public constructor. A trusted adapter must submit every external
+/// operation through this context; it is not a sandbox against bypassing adapters.
+/// The 32-operation page budget includes retries. Response-byte limits retain
+/// their existing per-response meaning and remain the transport's responsibility.
+pub struct PageExecutionContext<'a> {
+    limiter: &'a RateLimiter,
+    provider_id: &'a str,
+    mode: ProviderMode,
+    live_enabled: bool,
+    minimum_interval_ms: u64,
+    started: tokio::time::Instant,
+    total_timeout: Option<Duration>,
+    attempt_deadline: tokio::time::Instant,
+    per_operation_seconds: u64,
+    used: &'a mut u32,
+}
+
+impl PageExecutionContext<'_> {
+    /// Admit and run one operation under shared rate, page and total deadlines.
+    /// The factory is not called before admission. Dropping this future cancels
+    /// a pending wait/operation; detached work spawned by an adapter is not owned.
+    pub async fn run_subrequest<T, F, Fut>(&mut self, operation: F) -> Result<T, ProviderError>
+    where
+        F: FnOnce() -> Fut,
+        Fut: Future<Output = Result<T, ProviderError>>,
+    {
+        if self.mode == ProviderMode::Live && !self.live_enabled {
+            return Err(ProviderError::LiveDisabled(self.provider_id.to_owned()));
+        }
+        if *self.used >= MAX_SUBREQUESTS_PER_PAGE {
+            return Err(ProviderError::BudgetExceeded {
+                kind: "subrequests_per_page",
+                limit: u64::from(MAX_SUBREQUESTS_PER_PAGE),
+            });
+        }
+        let deadline = self.attempt_deadline;
+        let result = tokio::time::timeout_at(deadline, async {
+            let mut admission = apply_rate_limit(self.limiter, self.minimum_interval_ms).await?;
+            if tokio::time::Instant::now() >= deadline {
+                return Err(self.timeout_error());
+            }
+            *self.used += 1;
+            let future = operation();
+            self.limiter
+                .floor_ms
+                .fetch_max(self.minimum_interval_ms, Ordering::Relaxed);
+            *admission = Some(tokio::time::Instant::now());
+            drop(admission);
+            future.await
+        })
+        .await;
+        result.unwrap_or_else(|_| Err(self.timeout_error()))
+    }
+
+    fn timeout_error(&self) -> ProviderError {
+        operation_timeout_error(
+            self.provider_id,
+            self.per_operation_seconds,
+            self.started,
+            self.total_timeout,
+        )
+    }
+}
+
 struct ProviderSlot {
     provider: Arc<dyn SearchProvider>,
     manifest: ProviderManifest,
     mode: ProviderMode,
     endpoint_label: Option<String>,
-    last_call: Mutex<Option<tokio::time::Instant>>,
+    limiter: Arc<RateLimiter>,
 }
 
 /// Registry and bounded execution runtime.
 #[derive(Default)]
 pub struct ProviderRegistry {
     providers: BTreeMap<String, ProviderSlot>,
+    rate_groups: BTreeMap<String, Arc<RateLimiter>>,
     cache: Option<Arc<dyn PageCache>>,
     cache_namespace: Option<String>,
 }
@@ -366,6 +455,37 @@ impl ProviderRegistry {
 
     /// Register a provider under its validated manifest identifier.
     pub fn register(&mut self, provider: Arc<dyn SearchProvider>) -> Result<(), ProviderError> {
+        self.register_provider(provider, None)
+    }
+
+    /// Register a provider in an explicitly approved, registry-local rate group.
+    /// This is trusted host configuration, never a request-supplied authority key.
+    /// All member/request interval floors accumulate conservatively for this
+    /// registry's lifetime. Grouping does not merge provider or cache identities.
+    pub fn register_with_rate_group(
+        &mut self,
+        provider: Arc<dyn SearchProvider>,
+        group: impl Into<String>,
+    ) -> Result<(), ProviderError> {
+        let group = group.into();
+        if group.is_empty()
+            || group.len() > 64
+            || !group
+                .bytes()
+                .all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'-' | b'_'))
+        {
+            return Err(ProviderError::InvalidRequest(
+                "invalid rate group identifier".to_owned(),
+            ));
+        }
+        self.register_provider(provider, Some(group))
+    }
+
+    fn register_provider(
+        &mut self,
+        provider: Arc<dyn SearchProvider>,
+        group: Option<String>,
+    ) -> Result<(), ProviderError> {
         let manifest = provider.manifest();
         let mode = provider.mode();
         let endpoint_label = provider.endpoint_label();
@@ -373,6 +493,13 @@ impl ProviderRegistry {
         if self.providers.contains_key(&manifest.provider_id) {
             return Err(ProviderError::AlreadyRegistered(manifest.provider_id));
         }
+        let limiter = group.map_or_else(
+            || Arc::new(RateLimiter::default()),
+            |name| Arc::clone(self.rate_groups.entry(name).or_default()),
+        );
+        limiter
+            .floor_ms
+            .fetch_max(manifest.default_min_interval_ms, Ordering::Relaxed);
         self.providers.insert(
             manifest.provider_id.clone(),
             ProviderSlot {
@@ -380,7 +507,7 @@ impl ProviderRegistry {
                 manifest,
                 mode,
                 endpoint_label,
-                last_call: Mutex::new(None),
+                limiter,
             },
         );
         Ok(())
@@ -597,29 +724,50 @@ impl ProviderRegistry {
         }
 
         let mut retry_count = 0_u8;
+        let mut subrequests_used = 0_u32;
         loop {
             if slot.mode == ProviderMode::Live && !request.policy.live_enabled {
                 return Err(ProviderError::LiveDisabled(provider_id.to_owned()));
             }
-            self.apply_rate_limit(slot, minimum_interval_ms, started, total_timeout)
-                .await?;
             let operation_timeout = remaining_operation_timeout(
                 started,
                 total_timeout,
                 request.policy.timeout_seconds,
             )?;
-            let result =
-                tokio::time::timeout(operation_timeout, slot.provider.execute_page(request))
-                    .await
-                    .map_err(|_| {
-                        operation_timeout_error(
-                            provider_id,
-                            request.policy.timeout_seconds,
-                            started,
-                            total_timeout,
-                        )
-                    })
-                    .and_then(|page| page);
+            let attempt_deadline = tokio::time::Instant::now()
+                .checked_add(operation_timeout)
+                .ok_or_else(|| {
+                    ProviderError::InvalidRequest(
+                        "operation deadline exceeds platform range".to_owned(),
+                    )
+                })?;
+            let mut context = PageExecutionContext {
+                limiter: &slot.limiter,
+                provider_id,
+                mode: slot.mode,
+                live_enabled: request.policy.live_enabled,
+                minimum_interval_ms,
+                started,
+                total_timeout,
+                attempt_deadline,
+                per_operation_seconds: request.policy.timeout_seconds,
+                used: &mut subrequests_used,
+            };
+            let result = tokio::time::timeout_at(
+                attempt_deadline,
+                slot.provider
+                    .execute_page_with_context(request, &mut context),
+            )
+            .await
+            .map_err(|_| {
+                operation_timeout_error(
+                    provider_id,
+                    request.policy.timeout_seconds,
+                    started,
+                    total_timeout,
+                )
+            })
+            .and_then(|page| page);
 
             match result {
                 Ok(page) => {
@@ -678,6 +826,9 @@ impl ProviderRegistry {
                         .policy
                         .retry_max_delay_ms
                         .unwrap_or_else(|| base.saturating_mul(16));
+                    if provider_retry_after.is_some_and(|delay| delay > maximum) {
+                        return Err(error);
+                    }
                     let exponent = u32::from(retry_count.saturating_sub(1)).min(20);
                     let calculated = base.saturating_mul(1_u64 << exponent).min(maximum);
                     let delay_ms = provider_retry_after.unwrap_or(calculated).min(maximum);
@@ -693,28 +844,35 @@ impl ProviderRegistry {
             }
         }
     }
+}
 
-    async fn apply_rate_limit(
-        &self,
-        slot: &ProviderSlot,
-        min_interval_ms: u64,
-        started: tokio::time::Instant,
-        total_timeout: Option<Duration>,
-    ) -> Result<(), ProviderError> {
-        let delay = {
-            let mut reserved = slot.last_call.lock().await;
-            let now = tokio::time::Instant::now();
-            let next = reserved
-                .map(|previous| previous + Duration::from_millis(min_interval_ms))
-                .map_or(now, |candidate| candidate.max(now));
-            *reserved = Some(next);
-            drop(reserved);
-            next.saturating_duration_since(now)
+async fn apply_rate_limit(
+    limiter: &RateLimiter,
+    min_interval_ms: u64,
+) -> Result<tokio::sync::MutexGuard<'_, Option<tokio::time::Instant>>, ProviderError> {
+    // Keep the lock across the wait. Record actual admission, not a future
+    // reservation: delayed wakeups cannot release several operations in a burst.
+    let previous = limiter.last_call.lock().await;
+    loop {
+        let interval = Duration::from_millis(
+            limiter
+                .floor_ms
+                .load(Ordering::Relaxed)
+                .max(min_interval_ms),
+        );
+        let now = tokio::time::Instant::now();
+        let next = match *previous {
+            Some(last) => last.checked_add(interval).ok_or_else(|| {
+                ProviderError::InvalidRequest("rate interval exceeds platform range".to_owned())
+            })?,
+            None => now,
         };
-        if !delay.is_zero() {
-            sleep_within_total_budget(delay, started, total_timeout).await?;
+        if next <= now {
+            return Ok(previous);
         }
-        Ok(())
+        tokio::time::sleep_until(next).await;
+        // Re-read the monotonic floor after sleeping in case another execution
+        // raised it while this waiter owned the scheduling lock.
     }
 }
 

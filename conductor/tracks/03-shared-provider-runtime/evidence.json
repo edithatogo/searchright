@@ -17,7 +17,10 @@
     "tests/test_sourceright_migration.py",
     "release/public-packages.json",
     "public-api/README.md",
-    "docs/msrv-and-package-policy.md"
+    "docs/msrv-and-package-policy.md",
+    "crates/evidence-search-core/src/lib.rs",
+    "crates/evidence-search-core/tests/subrequest_context.rs",
+    "docs/provider-subrequest-context.md"
   ],
   "traceability": "conductor/tracks/03-shared-provider-runtime/traceability.json",
   "static_checks": [
@@ -36,7 +39,7 @@
     "Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.",
     "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
   ],
-  "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists; no live provider, downstream integration, dual-run, SemVer, rollback, release or remote mutation claim is made.",
+  "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists. The additive core-owned subrequest context has 74 focused native tests and strict Clippy passing; full validation for this slice and live-adapter adoption remain pending. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval; no live provider, downstream integration, dual-run, SemVer, rollback, release or archival claim is made.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-03",
@@ -66,7 +69,8 @@
     "verification/receipts/track-03-consumer-baseline-2026-08-31.json",
     "verification/receipts/track-03-integration-panel.json",
     "verification/receipts/track-03-reconciled-validation.json",
-    "verification/receipts/track-03-budget-warning.json"
+    "verification/receipts/track-03-budget-warning.json",
+    "verification/receipts/track-03-subrequest-context.json"
   ],
   "external_evidence": [],
   "review_fixes": [

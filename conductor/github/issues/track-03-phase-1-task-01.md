@@ -19,6 +19,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `release/public-packages.json`
   - [x] Present source path: `public-api/README.md`
   - [x] Present source path: `docs/msrv-and-package-policy.md`
+  - [x] Present source path: `crates/evidence-search-core/src/lib.rs`
+  - [x] Present source path: `crates/evidence-search-core/tests/subrequest_context.rs`
+  - [x] Present source path: `docs/provider-subrequest-context.md`
   - [x] Assertion ledger: `conductor/tracks/03-shared-provider-runtime/traceability.json`
 
 ## Completion and evidence contract

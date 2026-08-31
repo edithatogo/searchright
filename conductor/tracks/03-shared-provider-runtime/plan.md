@@ -20,6 +20,9 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `release/public-packages.json`
   - [x] Present source path: `public-api/README.md`
   - [x] Present source path: `docs/msrv-and-package-policy.md`
+  - [x] Present source path: `crates/evidence-search-core/src/lib.rs`
+  - [x] Present source path: `crates/evidence-search-core/tests/subrequest_context.rs`
+  - [x] Present source path: `docs/provider-subrequest-context.md`
   - [x] Assertion ledger: `conductor/tracks/03-shared-provider-runtime/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -46,7 +49,7 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Disable proxy bypass, deny non-global address forms and bound streamed responses.
   - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Fail closed on blank parity approvals and incomplete migration-case coverage.
   - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Reconcile source-level claims with pinned Searchright and Sourceright evidence.

@@ -258,7 +258,7 @@
         "python scripts/check_sourceright_migration.py",
         "python scripts/check_public_package_policy.py"
       ],
-      "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists; no live provider, downstream integration, dual-run, SemVer, rollback, release or remote mutation claim is made.",
+      "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists. The additive core-owned subrequest context has 74 focused native tests and strict Clippy passing; full validation for this slice and live-adapter adoption remain pending. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval; no live provider, downstream integration, dual-run, SemVer, rollback, release or archival claim is made.",
       "deliverables": [
         "crates/evidence-search-core/src/provider.rs",
         "crates/searchright-connectors/src/lib.rs",
@@ -270,7 +270,10 @@
         "tests/test_sourceright_migration.py",
         "release/public-packages.json",
         "public-api/README.md",
-        "docs/msrv-and-package-policy.md"
+        "docs/msrv-and-package-policy.md",
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/evidence-search-core/tests/subrequest_context.rs",
+        "docs/provider-subrequest-context.md"
       ],
       "dependencies": [
         "01",
@@ -293,9 +296,10 @@
         "verification/receipts/track-03-consumer-baseline-2026-08-31.json",
         "verification/receipts/track-03-integration-panel.json",
         "verification/receipts/track-03-reconciled-validation.json",
-        "verification/receipts/track-03-budget-warning.json"
+        "verification/receipts/track-03-budget-warning.json",
+        "verification/receipts/track-03-subrequest-context.json"
       ],
-      "review_completed": true,
+      "review_completed": false,
       "review_fixes": [
         {
           "commit": "e6bcbec1001a9725dfda2c6250e15796fff8e9c6",
@@ -317,16 +321,30 @@
           "commit": "07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb",
           "summary": "Reconcile the fixture-parser migration table with the four fixture-backed adapters."
         },
-        {"commit": "ca265354de725701085cd3e9d7a466a8c955f15d", "summary": "Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions."},
-        {"commit": "ca265354de725701085cd3e9d7a466a8c955f15d", "summary": "Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover."},
-        {"commit": "390ae69ba78b9431e464067ead51b75d8ecd1f2a", "summary": "Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions."}
+        {
+          "commit": "ca265354de725701085cd3e9d7a466a8c955f15d",
+          "summary": "Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions."
+        },
+        {
+          "commit": "ca265354de725701085cd3e9d7a466a8c955f15d",
+          "summary": "Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover."
+        },
+        {
+          "commit": "390ae69ba78b9431e464067ead51b75d8ecd1f2a",
+          "summary": "Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions."
+        }
       ],
       "source_verified_on": "2026-08-29",
       "slug": "shared-provider-runtime",
       "status": "integration_prepared",
       "title": "Shared provider runtime and Sourceright extraction",
       "track_id": "03",
-      "updated": "2026-08-31"
+      "updated": "2026-08-31",
+      "native_test_commands": [
+        "cargo test -p evidence-search-core --test subrequest_context --locked",
+        "cargo test -p evidence-search-core --lib --locked",
+        "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
+      ]
     },
     {
       "blockers": [
