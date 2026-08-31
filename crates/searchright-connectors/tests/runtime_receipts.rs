@@ -20,8 +20,8 @@ use evidence_search_core::{
     ProviderRegistry, SearchProvider, canonical_record_digest,
 };
 use searchright_connectors::{
-    FixtureProvider, parse_crossref_page, parse_europe_pmc_page, parse_openalex_page,
-    parse_pubmed_fetch_page, parse_pubmed_summary_page,
+    FixtureProvider, PROVIDER_PARSER_VERSION, parse_crossref_page, parse_europe_pmc_page,
+    parse_openalex_page, parse_pubmed_fetch_page, parse_pubmed_summary_page,
 };
 use serde_json::{Value, json};
 use tokio::sync::Mutex;
@@ -138,7 +138,8 @@ fn registry(
     let mut runtime =
         ProviderRegistry::new().with_cache(cache.clone(), "synthetic-authority".to_owned())?;
     runtime.register(Arc::new(CountedFixture {
-        fixture: FixtureProvider::new(id, "Synthetic runtime fixture", pages),
+        fixture: FixtureProvider::new(id, "Synthetic runtime fixture", pages)
+            .with_version(PROVIDER_PARSER_VERSION),
         observations: cache,
     }))?;
     Ok(runtime)

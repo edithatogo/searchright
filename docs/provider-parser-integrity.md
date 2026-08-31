@@ -71,6 +71,30 @@ records describe the same report or study; linkage remains explicit.
 
 ## Evidence and content limits
 
+### Normalized cache compatibility
+
+Current PubMed, Europe PMC, Crossref and OpenAlex live-shaped adapters advertise
+the source-owned `PROVIDER_PARSER_VERSION` (`<package-version>.parser.2`). Core
+cache identity already includes provider version. This revision separates
+previous package-only normalized cache entries from corrected parser identity,
+admission and mapping behavior, even when old entries have intact digests.
+Old entries are retained, not rewritten or deleted. A current-version miss with
+live execution disabled fails closed; it must not fall back to an old version.
+Future behavior changes require a deliberate parser-version bump.
+
+`FixtureProvider::new` retains its legacy package-only version for caller-supplied
+normalized pages and does not establish parser provenance. Callers may use
+`with_version` to declare an explicit compatibility version. This declaration
+is a cache boundary, not authentication or proof that those pages were produced
+by that parser. Current parser-to-runtime fixture tests declare the current
+version on both the populated fixture and its empty cache-only replay peer.
+
+Offline cache regressions use synthetic live-shaped stubs to seed both version
+namespaces. Actual adapters are invoked only with live execution disabled:
+old-version entries miss, current-version entries replay, and historical entries
+remain accessible under their old identity. No live response or provider-policy
+claim follows from that test.
+
 - Deterministic fixtures and adversarial parser tests establish only the tested
   local behavior. They do not establish current provider behavior, completeness
   of an actual search, live execution, terms compliance or rights clearance.

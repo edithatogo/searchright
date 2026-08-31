@@ -5,18 +5,39 @@
   "base_revision": "ef5475cab17899a82d9ebe8eeebc7e8a882eceaa",
   "scope": "Offline PubMed EFetch citation-and-abstract XML parser and endpoint builder; no live transport switch or article full-text acquisition.",
   "first_passes": [
-    {"agent": "track03_delta_review", "roles": ["implementation", "testing"], "result": "Existing frozen bibliographic/page schema suffices. Implement an isolated bounded parser, preserve pubmed identities, reconcile exact requested PMID sets, and reject unsupported book records. Tests written before implementation; pre-implementation Cargo execution was not performed because the shared build target was occupied."},
-    {"agent": "track03_safety", "roles": ["security", "adversarial"], "result": "Require finite byte/depth/record/node/field/aggregate-text budgets, no DTD/custom entity resolution, exact structural identity paths, whole-page malformed/unsupported suffix rejection and sanitized errors. Preserve mixed content and explicit mapping limits."},
-    {"agent": "track03_methodology", "roles": ["methodology", "acceptance"], "result": "Citation and abstract data are not full article text. Preserve structured labels/order, author components, date precision and identifier agreement in explicit rendering plus metadata; do not invent missing data. Complete manually reviewed ProviderPage goldens must include envelope, pending receipt and independently calculated raw digest."}
+    {
+      "agent": "track03_delta_review",
+      "roles": [
+        "implementation",
+        "testing"
+      ],
+      "result": "Existing frozen bibliographic/page schema suffices. Implement an isolated bounded parser, preserve pubmed identities, reconcile exact requested PMID sets, and reject unsupported book records. Tests written before implementation; pre-implementation Cargo execution was not performed because the shared build target was occupied."
+    },
+    {
+      "agent": "track03_safety",
+      "roles": [
+        "security",
+        "adversarial"
+      ],
+      "result": "Require finite byte/depth/record/node/field/aggregate-text budgets, no DTD/custom entity resolution, exact structural identity paths, whole-page malformed/unsupported suffix rejection and sanitized errors. Preserve mixed content and explicit mapping limits."
+    },
+    {
+      "agent": "track03_methodology",
+      "roles": [
+        "methodology",
+        "acceptance"
+      ],
+      "result": "Citation and abstract data are not full article text. Preserve structured labels/order, author components, date precision and identifier agreement in explicit rendering plus metadata; do not invent missing data. Complete manually reviewed ProviderPage goldens must include envelope, pending receipt and independently calculated raw digest."
+    }
   ],
   "review_findings": [
     "Reject supplied but empty mapped containers rather than silently mapping them as absent.",
     "Map ELocationID DOI values and reject cross-location identifier disagreements.",
     "Compare complete ProviderPage outputs, not only selected record fields."
   ],
-  "status": "bounded_source_reviewed_full_validation_pending",
-  "rebased_implementation_revision": "880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7",
-  "rebased_parser_revision": "ff359cf9261872beb55a663e4eea6f043e58e443",
+  "status": "bounded_local_scope_validated_whole_track_incomplete",
+  "rebased_implementation_revision": "d9d1da3603da8ddc3c0c75f755fa6179f25ad89b",
+  "rebased_parser_revision": "3343d6a86b500e993f34ebe5e6518172ad7876b5",
   "static_remediation_history": {
     "failed_snapshot": "ebdd97f",
     "failure": "Static harness failed only because evidence-debt provider policy count remained five after adding the sixth baseline.",
@@ -38,14 +59,55 @@
     "focused_log_sha256": "970b09d1547793aeb0455e3a31e073c599e392b4535208a1d44853c7a41e7d7b",
     "clippy_exit_code": 0,
     "clippy_log_sha256": "44b6377c2d6648a5f97ebbf9c07c691fc3446199304e8873ab960b70c9a5311d",
-    "initial_full_attempt": {"revision": "200d600d41b0bf226eec6f7f7f66f20186b3b5a9", "log_sha256": "2f053eb4ee451823b17b472f06d1976230c4d248ce2db8d8f58c065ce0c0480a", "failed_static_gates": ["check_provider_policies.py: missing EFetch entry", "check_rust_source_structure.py: lexical lifetime false positive"], "native_gates_executed": false},
+    "initial_full_attempt": {
+      "revision": "200d600d41b0bf226eec6f7f7f66f20186b3b5a9",
+      "log_sha256": "2f053eb4ee451823b17b472f06d1976230c4d248ce2db8d8f58c065ce0c0480a",
+      "failed_static_gates": [
+        "check_provider_policies.py: missing EFetch entry",
+        "check_rust_source_structure.py: lexical lifetime false positive"
+      ],
+      "native_gates_executed": false
+    },
     "targeted_static_rechecks": "Provider policies and Rust lexical structure both passed after correction; no gate was disabled."
   },
-  "focused_validation": {"commands": ["cargo test -p searchright-connectors --all-features --locked", "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"], "exit_code": 0, "unit_tests": 14, "existing_golden_tests": 4, "efetch_tests": 16, "parser_regressions": 18, "log_sha256": "0813c595bf2e0e5cbf0d6ce71db7cadaaf129c18caf44beccd79de29d894f820"},
+  "focused_validation": {
+    "commands": [
+      "cargo test -p searchright-connectors --all-features --locked",
+      "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+    ],
+    "exit_code": 0,
+    "unit_tests": 14,
+    "existing_golden_tests": 4,
+    "efetch_tests": 16,
+    "parser_regressions": 18,
+    "log_sha256": "0813c595bf2e0e5cbf0d6ce71db7cadaaf129c18caf44beccd79de29d894f820"
+  },
   "fixture_blake3": "4ce25ca8bfd320105620062b7dd67e0d5aedae3a229328c285627b9f9812da46",
   "golden_sha256": "5b67c8535a7ef64eed6349880d80501bd7ca0982e37abf770ee6c04e6518f93c",
-  "static_baseline_tests": {"passed": 7, "provider_baselines": 6, "independently_rerun_by": "track03_safety", "test_first_boundary": "Tests preceded implementation and initially reported missing-helper errors; raw baseline output was not preserved, so no baseline log digest is claimed."},
-  "rereviews": [{"agent": "track03_safety", "result": "Scalar nesting and declaration grammar findings fixed and re-reviewed. XML baseline checker independently tested. No remaining blocking finding within bounded scope."}, {"agent": "track03_methodology", "result": "Complete page golden and independent raw digest reviewed; mapping documentation matches the supported subset and explicit omissions."}],
-  "additional_fixed_findings": ["Leaf-only scalar extraction prevents nested unsupported elements from becoming identities or dates.", "XML declarations now validate supported pseudoattributes, order, values and duplicates.", "Mapped field cap is accurately documented as post-tree; the aggregate decoded-text bound is enforced before append."],
-  "authority_boundary": "No network retrieval, live-support claim, current provider-policy or rights approval, historical record/screening migration, release, cutover or archival. Agent review is advisory; owner decisions remain separate."
+  "static_baseline_tests": {
+    "passed": 7,
+    "provider_baselines": 6,
+    "independently_rerun_by": "track03_safety",
+    "test_first_boundary": "Tests preceded implementation and initially reported missing-helper errors; raw baseline output was not preserved, so no baseline log digest is claimed."
+  },
+  "rereviews": [
+    {
+      "agent": "track03_safety",
+      "result": "Scalar nesting and declaration grammar findings fixed and re-reviewed. XML baseline checker independently tested. No remaining blocking finding within bounded scope."
+    },
+    {
+      "agent": "track03_methodology",
+      "result": "Complete page golden and independent raw digest reviewed; mapping documentation matches the supported subset and explicit omissions."
+    }
+  ],
+  "additional_fixed_findings": [
+    "Leaf-only scalar extraction prevents nested unsupported elements from becoming identities or dates.",
+    "XML declarations now validate supported pseudoattributes, order, values and duplicates.",
+    "Mapped field cap is accurately documented as post-tree; the aggregate decoded-text bound is enforced before append."
+  ],
+  "authority_boundary": "No network retrieval, live-support claim, current provider-policy or rights approval, historical record/screening migration, release, cutover or archival. Agent review is advisory; owner decisions remain separate.",
+  "full_validation_receipt": "verification/receipts/track-04-full-validation.json",
+  "current_delivery_revision": "d13cbca321d4372b3a52ecef3f8c8e801472e864",
+  "validation_boundary": "Historical snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a passed 82 Python tests, 57 static gates, 429 native tests and 23 cargo-vet governance tests using Homebrew Rust/Cargo 1.98.0; it predates the cache-version fix and does not validate that fix. The current cache-version slice passes 61 focused connector tests and strict Clippy on Homebrew 1.98.0; new full validation with repository-pinned 1.97.1 remains pending. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; cache versions are declarations, not parser authenticity or parser execution on replay. Shared live-transport/EFetch wiring and per-HTTP rate admission remain pending; no live/current-policy support, article full text, end-to-end raw-response-to-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+  "cache_version_receipt": "verification/receipts/track-04-cache-version-panel.json"
 }

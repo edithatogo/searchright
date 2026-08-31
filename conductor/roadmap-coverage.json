@@ -362,7 +362,7 @@
         "python scripts/check_provider_contract_baselines.py",
         "python scripts/check_provider_policies.py"
       ],
-      "claim_boundary": "The imported parser and offline EFetch slice passed 52 focused local tests, with seven Python XML-baseline regressions; final integrated full validation remains pending. Bounded EFetch citation/abstract parsing and request construction are implemented offline, not article full text or live retrieval. Shared-transport wiring, runtime receipt binding, current policy/support, authorised live execution and historical migration remain unproven. Track 04 stays partially_implemented/source_verified and unarchived; no review-completion claim is made.",
+      "claim_boundary": "Historical snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a passed 82 Python tests, 57 static gates, 429 native tests and 23 cargo-vet governance tests using Homebrew Rust/Cargo 1.98.0; it predates the cache-version fix and does not validate that fix. The current cache-version slice passes 61 focused connector tests and strict Clippy on Homebrew 1.98.0; new full validation with repository-pinned 1.97.1 remains pending. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; cache versions are declarations, not parser authenticity or parser execution on replay. Shared live-transport/EFetch wiring and per-HTTP rate admission remain pending; no live/current-policy support, article full text, end-to-end raw-response-to-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
       "deliverables": [
         "crates/searchright-connectors/src/lib.rs",
         "integration/provider-contract-baselines.json",
@@ -389,7 +389,8 @@
         "integration/provider-policies/index.json",
         "scripts/check_provider_policies.py",
         "docs/provider-governance.md",
-        "policy/redaction-profile.json"
+        "policy/redaction-profile.json",
+        "crates/searchright-connectors/tests/cache_parser_version.rs"
       ],
       "dependencies": [
         "03"
@@ -408,7 +409,9 @@
         "verification/receipts/track-04-fixture-compiler.json",
         "verification/receipts/track-04-parser-panel.json",
         "verification/receipts/track-04-efetch-panel.json",
-        "verification/receipts/track-04-runtime-fixture-panel.json"
+        "verification/receipts/track-04-runtime-fixture-panel.json",
+        "verification/receipts/track-04-full-validation.json",
+        "verification/receipts/track-04-cache-version-panel.json"
       ],
       "native_test_commands": [
         "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
@@ -416,8 +419,8 @@
         "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
       ],
       "open_acceptance_gates": [
-        "Complete final integrated full validation without inferring completion from the imported slice's focused results.",
-        "Wire EFetch to the shared live transport and verify actual runtime receipt binding; offline citation/abstract parsing does not establish live or article-full-text retrieval.",
+        "Obtain fresh static validation after evidence bookkeeping and exact-head hosted validation; historical snapshot proof remains bound to its recorded tree.",
+        "Wire EFetch through the shared live transport with per-HTTP rate admission/shared NCBI grouping; local fixture receipt binding does not establish live retrieval or an end-to-end raw-response receipt chain.",
         "Authorised live retrieval and current provider-policy review remain required; synthetic fixtures do not establish current upstream compatibility or rights approval.",
         "Preserve historical Europe PMC/OpenAlex records and screening decisions; any necessary identity migration requires provenance-bound mapping and separate owner authority, and ambiguous collisions remain unresolved."
       ],
@@ -425,15 +428,29 @@
         "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py"
       ],
       "review_fixes": [
-        {"commit": "ff359cf9261872beb55a663e4eea6f043e58e443", "summary": "Rebased parser integrity fix: preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens; historical validation remains bound to its recorded revisions."},
-        {"commit": "880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7", "summary": "Rebased bounded offline EFetch parser/request, exact PMID reconciliation, structured metadata and synthetic-page golden; XML static baseline and seven Python regressions remain distinct from execution evidence."},
-        "Pending validation: parser-to-FixtureProvider/ProviderRegistry receipt binding, memory-cache replay and budget-warning tests on the rebased Track03 budget fix; not a live raw-response provenance chain."
+        {
+          "commit": "3343d6a86b500e993f34ebe5e6518172ad7876b5",
+          "summary": "Parser integrity: preserve stable PubMed/Crossref IDs, correct Europe PMC/OpenAlex identity forward-only, reject incomplete/malformed pages and compare complete synthetic goldens."
+        },
+        {
+          "commit": "d9d1da3603da8ddc3c0c75f755fa6179f25ad89b",
+          "summary": "Bounded offline EFetch citation/abstract parser and request builder, exact PMID reconciliation, structured metadata, complete XML golden and static baseline regressions; no live switch."
+        },
+        {
+          "commit": "d13cbca321d4372b3a52ecef3f8c8e801472e864",
+          "summary": "Actual fixture-runtime receipt binding, memory-cache replay/corruption checks and budget visibility; seven runtime tests pass after the separately delivered Track03 budget fix."
+        },
+        {
+          "commit": "pending",
+          "summary": "Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; reproduce old-cache bypass before 61 focused tests and strict Clippy pass. New pinned-toolchain full validation pending."
+        }
       ],
       "updated": "2026-08-31",
       "slug": "open-connectors-mvp",
       "status": "partially_implemented",
       "title": "Open provider connectors MVP",
-      "track_id": "04"
+      "track_id": "04",
+      "review_completed": false
     },
     {
       "blockers": [],

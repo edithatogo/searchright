@@ -3,11 +3,32 @@
   "track_id": "04",
   "date": "2026-08-31",
   "scope": "Offline parsed synthetic pages through FixtureProvider, ProviderRegistry, issued receipts and MemoryPageCache; no live adapters.",
-  "test_source_sha256": "c88b6cd37a7c902a8592ac1d39933ba18e213970dfc972ecc5e5b5745c83e38a",
+  "test_source_sha256": "f05b2c77d8e826fca2ccb6081dfe313a3fc48ab906ab03e88fd34cf83ee7a5ce",
   "first_passes": [
-    {"agent": "track03_delta_review", "roles": ["implementation", "testing"], "result": "Exercise four JSON parsers plus EFetch through the actual runtime; no production-code or dependency change in this slice."},
-    {"agent": "track03_safety", "roles": ["security", "adversarial"], "result": "Assert actual provider calls, precise cache/page counts, stale payload digest and wrong-key failure without fallback/overwrite, and distinguish trusted-backend corruption detection from authenticity."},
-    {"agent": "track03_methodology", "roles": ["methodology", "acceptance"], "result": "Fresh receipts bind returned records, not raw-response diagnostics. Preserve source pagination limitations and compare replay payloads after normalizing only receipt IDs; fixture-added raw hashes are not live propagation."}
+    {
+      "agent": "track03_delta_review",
+      "roles": [
+        "implementation",
+        "testing"
+      ],
+      "result": "Exercise four JSON parsers plus EFetch through the actual runtime; no production-code or dependency change in this slice."
+    },
+    {
+      "agent": "track03_safety",
+      "roles": [
+        "security",
+        "adversarial"
+      ],
+      "result": "Assert actual provider calls, precise cache/page counts, stale payload digest and wrong-key failure without fallback/overwrite, and distinguish trusted-backend corruption detection from authenticity."
+    },
+    {
+      "agent": "track03_methodology",
+      "roles": [
+        "methodology",
+        "acceptance"
+      ],
+      "result": "Fresh receipts bind returned records, not raw-response diagnostics. Preserve source pagination limitations and compare replay payloads after normalizing only receipt IDs; fixture-added raw hashes are not live propagation."
+    }
   ],
   "baseline": {
     "command": "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
@@ -20,8 +41,17 @@
     "interpretation": "Observed existing core warning gap, repaired in a separately scoped Track03 change; this baseline is not a passing acceptance receipt."
   },
   "review_fix": "Mixed-cache output now compares complete ordered records after normalizing only source_receipt_id.",
-  "rereviews": [{"agent": "track03_safety", "result": "Mixed-cache comparison gap fixed; no remaining blocking test-review finding."}, {"agent": "track03_methodology", "result": "Tests distinguish fixture scheduling, cache-envelope integrity and final record binding; no end-to-end raw-response provenance claim."}],
-  "status": "focused_runtime_and_clippy_passed_full_validation_pending",
+  "rereviews": [
+    {
+      "agent": "track03_safety",
+      "result": "Mixed-cache comparison gap fixed; no remaining blocking test-review finding."
+    },
+    {
+      "agent": "track03_methodology",
+      "result": "Tests distinguish fixture scheduling, cache-envelope integrity and final record binding; no end-to-end raw-response provenance claim."
+    }
+  ],
+  "status": "focused_passed_new_pinned_full_validation_pending",
   "post_budget_attempt": {
     "test_source_sha256": "7b6b5d9c764af9424c4e8074e2517d96a03ae63af8a16068869acf3904c5d432",
     "focused_tests_passed": 59,
@@ -35,12 +65,35 @@
   },
   "integration_base": "880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7",
   "budget_fix_base": "baa4aa3c261f6fa6fae8bb88b0655b90a83554b3",
-  "validation_boundary": "The prior six-pass/one-failure baseline and post-budget test-pass/Clippy-failure attempt remain historical. The Track03 budget fix is in ancestry; all seven corrected-source runtime tests and strict connector Clippy pass. Full-workspace validation remains pending.",
+  "validation_boundary": "Historical snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a passed 82 Python tests, 57 static gates, 429 native tests and 23 cargo-vet governance tests using Homebrew Rust/Cargo 1.98.0; it predates the cache-version fix and does not validate that fix. The current cache-version slice passes 61 focused connector tests and strict Clippy on Homebrew 1.98.0; new full validation with repository-pinned 1.97.1 remains pending. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; cache versions are declarations, not parser authenticity or parser execution on replay. Shared live-transport/EFetch wiring and per-HTTP rate admission remain pending; no live/current-policy support, article full text, end-to-end raw-response-to-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
   "current_validation": {
-    "commands": ["cargo test -p searchright-connectors --test runtime_receipts --all-features --locked", "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"],
+    "commands": [
+      "cargo test -p searchright-connectors --all-features --locked",
+      "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+    ],
     "exit_code": 0,
+    "connector_tests_passed": 61,
     "runtime_tests_passed": 7,
-    "log_sha256": "c4ef8fecdc49943c44380016409c5cf2005bb7603c5a8f0f691d2645accee371"
+    "log_sha256": "b8150d33a11669517ba4b43fd99667d287a6b8eda061a5519d4cba03bef4f948",
+    "toolchain": "Homebrew Rust/Cargo 1.98.0; repository-pinned 1.97.1 full validation pending"
   },
-  "authority_boundary": "No live-provider, authenticated tenancy, upstream completeness, end-to-end raw-response-to-receipt chain, cache-backend authenticity, source-policy approval, full-text or archival claim."
+  "authority_boundary": "No live-provider, authenticated tenancy, upstream completeness, end-to-end raw-response-to-receipt chain, cache-backend authenticity, source-policy approval, full-text or archival claim.",
+  "full_validation_receipt": "verification/receipts/track-04-full-validation.json",
+  "current_delivery_revision": "pending_cache_version_commit",
+  "cache_version_receipt": "verification/receipts/track-04-cache-version-panel.json",
+  "prior_validation_before_cache_version": {
+    "test_source_sha256": "c88b6cd37a7c902a8592ac1d39933ba18e213970dfc972ecc5e5b5745c83e38a",
+    "current_validation": {
+      "commands": [
+        "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
+        "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+      ],
+      "exit_code": 0,
+      "runtime_tests_passed": 7,
+      "log_sha256": "c4ef8fecdc49943c44380016409c5cf2005bb7603c5a8f0f691d2645accee371"
+    },
+    "delivery_revision": "d13cbca321d4372b3a52ecef3f8c8e801472e864",
+    "toolchain": "Homebrew Rust/Cargo 1.98.0"
+  },
+  "declared_parser_version": "<package-version>.parser.2"
 }

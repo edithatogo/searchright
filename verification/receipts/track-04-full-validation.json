@@ -1,0 +1,66 @@
+{
+  "schema_version": "org.searchright.track-validation.v1",
+  "track_id": "04",
+  "date": "2026-08-31",
+  "status": "full_local_validation_passed",
+  "revision": "8317f4f3211d0f5571c0529a878b6413a12ba44a",
+  "tree": "969225ea2f68acfbe1f727bfcf18400fb6308a7b",
+  "commands": [
+    "bash scripts/verify.sh",
+    "python3 scripts/test_cargo_vet_governance.py",
+    "python3 scripts/check_cargo_vet_governance.py",
+    "cargo vet --locked --no-minimize-exemptions"
+  ],
+  "exit_code": 0,
+  "python_tests_passed": 82,
+  "static_gates_passed": 57,
+  "native_tests_passed": 429,
+  "native_test_note": "Nextest reported one leaky test; all 429 passed, zero skipped.",
+  "cargo_vet_governance_tests_passed": 23,
+  "fully_audited_dependencies": 43,
+  "exempted_dependencies": 259,
+  "log_sha256": "fcbece255737ab7d613f09de1c941e79bf49b554b84c4c483ba2ec7166c71609",
+  "passed_gates": [
+    "workspace formatting",
+    "strict workspace Clippy",
+    "Rust/schema parity",
+    "workspace tests",
+    "doctests",
+    "documentation",
+    "cargo deny",
+    "cargo-vet governance",
+    "cargo vet"
+  ],
+  "optional_gate_followup": {
+    "initial_state": "cargo-machete was unavailable and verify.sh skipped its optional branch; the initial script exit is not proof of that optional check.",
+    "command": "/Users/doughnut/.cargo/bin/cargo-machete",
+    "version": "0.9.2",
+    "revision": "8317f4f3211d0f5571c0529a878b6413a12ba44a",
+    "exit_code": 0,
+    "result": "No unused dependencies found.",
+    "log_sha256": "17df39991aecc87a6a60263e0759e8e8d09559c2e7e27fa29219b7bbb7f15a64"
+  },
+  "prior_attempt": {
+    "revision": "46770e2576bd9f4a12d51cbf16e099c340f4b13f",
+    "tree": "b62fac42f2b589202399f31d41af7ff5bbb0d7a9",
+    "exit_code": 1,
+    "log_sha256": "39e7ca94a023294dbb7bdc3c038f7999f4a2f19557ef319153b9bd4e46e76fc9",
+    "failures": [
+      "check_roadmap_coverage: Track04 evidence paths differed from coverage deliverables",
+      "sync_track_evidence --check: Track04 evidence.json and plan.md stale"
+    ],
+    "remediation": "Regenerated track evidence before issue bodies, evidence debt, gate catalogue, context lock and source hashes; fresh clean snapshot passed all gates.",
+    "native_gates_executed": false
+  },
+  "delivery_reconciliation": "Rebased onto merged Track03 budget fix 9ff20229d0f7d2876cfba921c589cd68e77f7f14. Functional delivery head d13cbca321d4372b3a52ecef3f8c8e801472e864 differs from the validated snapshot only in a corrected test-command spelling in the excluded Track03 derived receipt. Subsequent evidence bookkeeping requires a fresh static check and hosted exact-head validation.",
+  "boundaries": [
+    "Synthetic parser/runtime/cache execution, not live provider support or current provider-policy approval",
+    "EFetch maps bounded citation/abstract XML, not article full text or live transport",
+    "Issued receipt binds returned records; raw-response diagnostics are not an end-to-end raw-response-to-receipt chain",
+    "Cache digest checks are corruption detection, not untrusted-backend authenticity",
+    "No historical identity migration, source completeness, release or archival promotion",
+    "Dependency exemptions are not audits; existing pinned quick-xml exception is unchanged"
+  ],
+  "toolchain": "Homebrew Rust/Cargo 1.98.0",
+  "evidence_scope": "Historical validation of snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a only; predates the cache-version fix. New repository-pinned 1.97.1 full validation remains pending."
+}
