@@ -685,7 +685,7 @@ e611f291fc402087be0c5f564e8f2af3b5a46e404cf3fe5e4b36d4c72756381e  ./conductor/tr
 488d8ad4d4cb6da7f8248a7796e212a15ca47f69a490872b91c2cf64e9519496  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
 101f9034741d1c0beafcac258e7924e7571b9b65383acea7131c96ecc13839a1  ./conductor/tracks/00-foundation-conductor-toolchain/plan.md
 7470e18debce0714cf1603324b8a75053739178d0f660d6adddf7e57b3153b10  ./conductor/tracks/00-foundation-conductor-toolchain/spec.md
-1f4ab550e54571902b1af0ed43666d2ace849c57855622aaeb9c3fab0d8af3c1  ./conductor/tracks/00-foundation-conductor-toolchain/traceability.json
+c59240ef2f9574479a2af3ab610f793eb5e4d1f922ab36d391273b335b8b2955  ./conductor/tracks/00-foundation-conductor-toolchain/traceability.json
 9f23cc52b45c0e815560e4aed7d42e2416b42c676c318412945d8b720217710a  ./conductor/tracks/01-contract-catalog/evidence.json
 7bd3f15a90a4c1b7b88641148795391c0f6eb4ac8c2effd888dfb4fbfb9ba32e  ./conductor/tracks/01-contract-catalog/metadata.json
 9403708ad358e6532c264bfd0c2d9068bcf091ab365a46ac452878840a2fb6f3  ./conductor/tracks/01-contract-catalog/plan.md
@@ -877,7 +877,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 003644dc05cba2d5b1ca6e4b4e6e04807d0b73d25949fa151ed81b7ea194f75d  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-d9e08870f7f1ded0a6b0932bd27f45a7bc2fbfe76761e86a6e3c524093af1e65  ./context/context-lock.json
+d6c904fc72edf2e463e20a7f665aa780cfe6bebbb89103d5641f2a122ca783fd  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1504,7 +1504,7 @@ c15a358f77b924e2b1eba4bc27539e6b7ae5fd452c29ee5a6b04ff9bb0e39d8c  ./typos.toml
 85704ee898a02fc2ac0be5b6bc0e8891a207e35d529bb71fe19dc813f85d6d15  ./verification/architecture-policy.json
 b714d90dc7ab979fdaac0a8a1e6b71f980201cdf37bba53bd203f466bd09ebf8  ./verification/coverage-policy.json
 143c7bdcdda3ce189e81f623a6e027f10fa85ac14714c50914982df0efa12f6b  ./verification/evidence-debt.json
-34f7ea908302e012d33b87b945cf4d5f141fe8dce71ef2d8ba22c132caaea52c  ./verification/gate-catalog.json
+0acd6f75b4595407a1fb1cf41caf9403b20929861d2b6c39443402f66cdebd36  ./verification/gate-catalog.json
 7b21436d10731345bc5447f7157a236bda45a224177f737c505f9c27baafe943  ./verification/harness-matrix.json
 78160001694a8e0a0bee9617d83011cb898cacadcccf4c8481f073c864bbed61  ./verification/recovery/rehearsal.json
 0b58540ae8094d6281b086b4e8480ea6ce85b22dbfc93b1a472e428296a00ec9  ./verification/reviews/track-05-adversarial-integrity.json

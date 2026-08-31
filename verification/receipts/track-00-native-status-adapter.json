@@ -2,7 +2,9 @@
   "schema_version": "org.searchright.track-maintenance-verification.v1",
   "track_id": "00",
   "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
-  "status": "review_fixes_passed_full_verification_pending",
+  "status": "full_verification_passed_at_recorded_revision",
+  "verified_revision": "9f271a62df3c14082c72ba00e8caa89bad68ecd0",
+  "toolchain": {"rustc": "1.97.1 (8bab26f4f 2026-07-14)", "cargo": "1.97.1 (c980f4866 2026-06-30)", "host": "aarch64-apple-darwin"},
   "review_fix_commit": "f47c92a",
   "review": {
     "security": "P1 inspected-root code execution removed: status no longer launches scripts or subprocesses.",
@@ -14,16 +16,18 @@
     {"command": "python3 -B -m unittest discover -s tests -p test_conductor_status.py", "status": "passed", "tests": 12},
     {"command": "python3 -B scripts/conductor_status.py", "status": "passed", "tracks": 38, "archived": 7, "completed_tasks": 205, "total_tasks": 401},
     {"command": "git diff --check", "status": "passed"},
-    {"command": "bash scripts/verify.sh", "status": "failed", "preexisting_python_tests_passed": 62, "static_gates_passed": 54, "static_gates_total": 57}
+    {"command": "bash scripts/verify.sh", "phase": "historical_initial_dirty_tree_run", "status": "failed", "preexisting_python_tests_passed": 62, "static_gates_passed": 54, "static_gates_total": 57},
+    {"command": "bash scripts/verify.sh", "phase": "clean_pinned_revision", "status": "passed", "exit_code": 0, "python_tests_passed": 74, "static_gates_passed": 57, "static_gates_total": 57, "native_tests_passed": 365, "native_tests_skipped": 0, "format": "passed", "clippy": "passed", "rust_schema_parity": "passed_with_recorded_differences", "doctests": "passed", "docs": "passed", "cargo_deny": "passed"}
   ],
   "historical_initial_run_blockers": [
     "check_contract_bindings.py: this fresh worktree lacks requirements/bindings/node_modules TypeScript and Pyright dependencies.",
     "generate_source_hash_manifest.py --check: source manifest needs regeneration after integration stages the final added files.",
     "check_packaging_reproducibility.py: package generation requires a clean committed tree."
   ],
-  "gates_not_run": ["cargo fmt", "cargo clippy", "Rust schema parity", "cargo nextest or cargo test", "Rust doctests", "cargo doc", "cargo deny", "cargo machete"],
+  "gates_not_run": ["Optional cargo machete: not installed; verify.sh conditionally skipped it.", "Independent cargo-vet dependency audit evidence: not supplied by this verify.sh run; existing assertion gate remains unchanged."],
+  "visible_warnings": ["Existing Clippy/Cargo MSRV configuration mismatch", "Existing searchright library/binary documentation output filename collision", "cargo-deny duplicate dependencies, unmatched allowed source and unencountered licenses"],
   "remaining_integration": [
-    "Run full verification from the clean integrated revision with the actual pinned Rust 1.97.1 toolchain; dependencies and generated evidence have been refreshed."
+    "Revalidate generated records after adding the T00-A002 maintenance mapping; rebase and hosted delivery are separate root-coordinated steps."
   ],
   "claim_boundary": "Read-only native v3 status and adversarial local tests only. Does not migrate the installed skill, canonical track IDs, evidence statuses, in-place archives, or complete Track 00 or external gates."
 }

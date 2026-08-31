@@ -42,20 +42,27 @@
         "conductor/tech-stack.md",
         "conductor/workflow.md",
         "conductor/requirements.md",
-        "conductor/design.md"
+        "conductor/design.md",
+        "scripts/conductor_status.py",
+        "tests/test_conductor_status.py"
       ],
       "implementation_symbols": [
-        "scripts/check_context_integrity.py::main"
+        "scripts/check_context_integrity.py::main",
+        "scripts/conductor_status.py::audit",
+        "scripts/conductor_status.py::main",
+        "tests/test_conductor_status.py::StatusTests"
       ],
       "deterministic_tests": [
         "python scripts/check_context_integrity.py",
-        "python scripts/sync_context_lock.py --check"
+        "python scripts/sync_context_lock.py --check",
+        "python scripts/conductor_status.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json"
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-native-status-adapter.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The Conductor handshake and all linked project context documents exist and resolve locally."
+      "permitted_claim": "The Conductor handshake and linked project context resolve locally. The native read-only v3 status adapter reconciles registry, plans, evidence and in-place archive state with adversarial tests; it neither executes inspected-root code nor promotes external gates."
     },
     {
       "assertion_id": "T00-A003",
