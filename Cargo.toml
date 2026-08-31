@@ -55,7 +55,7 @@ categories = ["command-line-utilities", "science", "text-processing"]
 
 [workspace.dependencies]
 citeweft = { version = "0.1.0", git = "https://github.com/edithatogo/citeweft.git", rev = "8c8932976250f9ca91c2bbda28ed68eeb191fa42" }
-anyhow = "1.0"
+anyhow = "1.0.104"
 async-trait = "0.1.89"
 aws-lc-rs = "1.18.0"
 axum = { version = "0.8", default-features = false, features = ["http1", "json", "tokio"] }
