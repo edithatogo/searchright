@@ -17,11 +17,11 @@ jobs:
         with:
           persist-credentials: false
       - name: Package source tree
-        run: tar --exclude=.git -czf source-tree.tgz .
+        run: git archive --format=tar.gz --output="$RUNNER_TEMP/source-tree.tgz" HEAD
       - name: Upload source tree
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: source-tree
-          path: source-tree.tgz
+          path: ${{ runner.temp }}/source-tree.tgz
           if-no-files-found: error
           retention-days: 1
