@@ -5,7 +5,7 @@
   "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/00-foundation-conductor-toolchain/spec.md#scope",
-  "claim_boundary": "Five of six foundation assertions are source implemented with commit-bound local GNU compiler/test evidence and hosted cross-platform compiler checks. Upstream repository-standards registration and estate conformance remain externally blocked, and the required dependency-trust gate is red; this is not a green aggregate verify.sh receipt.",
+  "claim_boundary": "Five of six foundation assertions are source implemented. The exact 8de03a0 tree has a whole-tree-equivalent pinned full verification pass and a separate frozen cargo-vet policy pass with 259 existing exemptions, not 259 new audits. Upstream repository-standards registration and estate conformance remain externally blocked; historical failed receipts retain their original scope.",
   "assertions": [
     {
       "assertion_id": "T00-A001",
@@ -159,13 +159,11 @@
         "python scripts/run_static_harness.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json"
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-verification-reconciliation.json"
       ],
-      "open_gates": [
-        "Supply reviewed cargo-vet audit evidence for 273 dependencies; do not substitute unaudited exemptions.",
-        "Complete repository-wide verify.sh only after every required gate passes."
-      ],
-      "permitted_claim": "One-command bootstrap and verification entry points exist; the 51-gate static harness and compiler/test jobs pass, while the required dependency-trust gate keeps the repository-wide aggregate harness red."
+      "open_gates": [],
+      "permitted_claim": "One-command bootstrap and verification entry points exist. The exact 8de03a0 tree equals the pinned full-verified c358e68 tree: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet 0.10.2 check passed existing policy with 43 fully vetted dependencies and 259 existing exemptions; exempted dependencies are not claimed audited. No future-tree verification or upstream estate conformance is implied."
     }
   ]
 }
