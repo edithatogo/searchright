@@ -2,27 +2,70 @@
   "schema_version": "org.searchright.agent-panel-record.v1",
   "track_id": "04",
   "date": "2026-08-31",
-  "status": "focused_passed_new_full_validation_pending",
+  "status": "full_pinned_local_validation_passed_whole_track_incomplete",
   "finding": "P1: unchanged adapter versions allowed intact older normalized cache pages to bypass corrected parser identities/admission and receive fresh receipts under the same version.",
   "fix": "All four JSON adapters use source-owned PROVIDER_PARSER_VERSION (<package-version>.parser.2). FixtureProvider retains its legacy constructor and adds an explicit with_version declaration. Current parser fixture/runtime tests use the matching current revision.",
   "source_sha256": "b2edb6150db8fb34bbb7ba1ddeddd283622a73bd87f2931d2ed68b94daeecc69",
   "cache_test_sha256": "1e033db953c58b9f6f19013bd9982a3a3d23c9bf138a6e352d1b0b532dc1d0a4",
   "runtime_test_sha256": "f05b2c77d8e826fca2ccb6081dfe313a3fc48ab906ab03e88fd34cf83ee7a5ce",
-  "baseline": {"passed": 0, "failed": 1, "result": "Reproduced intact old-version normalized-page replay instead of current-version miss.", "log_sha256": "32e538929968dc28cab51188062b035362abcb2c48ef75234d4c3bd7de43991e"},
+  "baseline": {
+    "passed": 0,
+    "failed": 1,
+    "result": "Reproduced intact old-version normalized-page replay instead of current-version miss.",
+    "log_sha256": "32e538929968dc28cab51188062b035362abcb2c48ef75234d4c3bd7de43991e"
+  },
   "focused_validation": {
-    "commands": ["cargo test -p searchright-connectors --all-features --locked", "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"],
+    "commands": [
+      "cargo test -p searchright-connectors --all-features --locked",
+      "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+    ],
     "exit_code": 0,
     "connector_tests_passed": 61,
-    "partition": {"unit": 14, "cache_version": 2, "canonical_pages": 4, "efetch": 16, "parser_integrity": 18, "runtime_receipts": 7},
+    "partition": {
+      "unit": 14,
+      "cache_version": 2,
+      "canonical_pages": 4,
+      "efetch": 16,
+      "parser_integrity": 18,
+      "runtime_receipts": 7
+    },
     "log_sha256": "b8150d33a11669517ba4b43fd99667d287a6b8eda061a5519d4cba03bef4f948",
-    "toolchain": "Homebrew Rust/Cargo 1.98.0; new repository-pinned 1.97.1 full validation remains pending."
+    "toolchain": "Homebrew Rust/Cargo 1.98.0; retained focused history, separate pinned full validation now passed."
   },
-  "prior_green_attempt": {"log_sha256": "cb3b52bd9059d13e3e91c60c72f95f0f3f804d3af43bb2039a5ff1f60d3d2bee", "result": "Connector tests passed, strict Clippy rejected a documentation paragraph style; split the paragraph without a lint waiver."},
+  "prior_green_attempt": {
+    "log_sha256": "cb3b52bd9059d13e3e91c60c72f95f0f3f804d3af43bb2039a5ff1f60d3d2bee",
+    "result": "Connector tests passed, strict Clippy rejected a documentation paragraph style; split the paragraph without a lint waiver."
+  },
   "panel": [
-    {"agent": "root", "role": "initial cache compatibility review", "result": "Identified missing behavior-version invalidation before delivery."},
-    {"agent": "track03_delta_review", "role": "independent correctness diagnosis and rereview", "result": "Confirmed P1; final version-only isolation, all four manifests, same-version replay and historical retention have no retained findings."},
-    {"agent": "track03_safety", "role": "test-first implementation and adversarial tests", "result": "Observed failing baseline, implemented version partitioning, passed 61 tests and strict Clippy without live execution."},
-    {"agent": "track03_methodology", "role": "sealed acceptance first pass and rereview", "result": "Version is the causal cache-key difference. Synthetic cache stimuli are not historical payload or mapping evidence. No blocking methodology finding."}
+    {
+      "agent": "root",
+      "role": "initial cache compatibility review",
+      "result": "Identified missing behavior-version invalidation before delivery."
+    },
+    {
+      "agent": "track03_delta_review",
+      "role": "independent correctness diagnosis and rereview",
+      "result": "Confirmed P1; final version-only isolation, all four manifests, same-version replay and historical retention have no retained findings."
+    },
+    {
+      "agent": "track03_safety",
+      "role": "test-first implementation and adversarial tests",
+      "result": "Observed failing baseline, implemented version partitioning, passed 61 tests and strict Clippy without live execution."
+    },
+    {
+      "agent": "track03_methodology",
+      "role": "sealed acceptance first pass and rereview",
+      "result": "Version is the causal cache-key difference. Synthetic cache stimuli are not historical payload or mapping evidence. No blocking methodology finding."
+    }
   ],
-  "boundaries": ["Old entries are retained, not deleted, rewritten or re-keyed", "Version declaration is not authenticity or attested parser provenance", "A cache hit reuses normalized pages; it does not execute the parser", "Actual adapters are invoked with live execution disabled; no network/provider-policy claim", "Prior full snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a predates this fix and is historical evidence only"]
+  "boundaries": [
+    "Old entries are retained, not deleted, rewritten or re-keyed",
+    "Version declaration is not authenticity or attested parser provenance",
+    "A cache hit reuses normalized pages; it does not execute the parser",
+    "Actual adapters are invoked with live execution disabled; no network/provider-policy claim",
+    "Prior full snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a predates this fix and is historical evidence only"
+  ],
+  "validation_boundary": "Full local validation of the cache-version slice passed on snapshot 6d995108106db62474e2746a2021f29e89603b95 using repository-pinned Rust/Cargo 1.97.1: 82 Python tests, 57 static gates, 431 native tests with zero skipped and 23 cargo-vet governance tests. Earlier 61 focused connector tests and strict Clippy used Homebrew 1.98.0; historical snapshot 8317 and its 429 native tests predate the cache-version fix. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; declared versions do not establish authenticity or parser execution on replay. Future EFetch orchestration adoption is not part of this proof. Shared live-transport/EFetch wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+  "pinned_full_validation_ref": "verification/receipts/track-04-full-validation.json#pinned_cache_version_validation",
+  "functional_commit": "d7854b0956eed7ec3730ab3219b358d5f1964e77"
 }

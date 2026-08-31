@@ -99,8 +99,10 @@ The separate `runtime_receipts.rs` fixture tests exercise parsed pages through
 the actual registry and in-memory page cache. All seven fixture-runtime tests
 passed with the budget fix, within a full local validation snapshot recorded in
 `verification/receipts/track-04-full-validation.json`. That Homebrew 1.98.0 run
-predates the cache-version fix; new repository-pinned 1.97.1 full validation is
-pending. The current version-declared fixture tests pass in the 61-test focused
+predates the cache-version fix. The separate pinned 1.97.1 cache-version snapshot
+6d995108106db62474e2746a2021f29e89603b95 passed 431 native tests; it does not
+cover future EFetch orchestration adoption. Version-declared fixture tests also
+pass in the 61-test focused
 Homebrew run recorded in `verification/receipts/track-04-cache-version-panel.json`.
 Their bounded evidence is freshly issued receipts bound
 to returned records, cache-envelope integrity and synthetic replay—not live

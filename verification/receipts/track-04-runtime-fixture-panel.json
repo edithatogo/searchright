@@ -51,7 +51,7 @@
       "result": "Tests distinguish fixture scheduling, cache-envelope integrity and final record binding; no end-to-end raw-response provenance claim."
     }
   ],
-  "status": "focused_passed_new_pinned_full_validation_pending",
+  "status": "full_pinned_local_validation_passed_whole_track_incomplete",
   "post_budget_attempt": {
     "test_source_sha256": "7b6b5d9c764af9424c4e8074e2517d96a03ae63af8a16068869acf3904c5d432",
     "focused_tests_passed": 59,
@@ -65,7 +65,7 @@
   },
   "integration_base": "880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7",
   "budget_fix_base": "baa4aa3c261f6fa6fae8bb88b0655b90a83554b3",
-  "validation_boundary": "Historical snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a passed 82 Python tests, 57 static gates, 429 native tests and 23 cargo-vet governance tests using Homebrew Rust/Cargo 1.98.0; it predates the cache-version fix and does not validate that fix. The current cache-version slice passes 61 focused connector tests and strict Clippy on Homebrew 1.98.0; new full validation with repository-pinned 1.97.1 remains pending. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; cache versions are declarations, not parser authenticity or parser execution on replay. Shared live-transport/EFetch wiring and per-HTTP rate admission remain pending; no live/current-policy support, article full text, end-to-end raw-response-to-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+  "validation_boundary": "Full local validation of the cache-version slice passed on snapshot 6d995108106db62474e2746a2021f29e89603b95 using repository-pinned Rust/Cargo 1.97.1: 82 Python tests, 57 static gates, 431 native tests with zero skipped and 23 cargo-vet governance tests. Earlier 61 focused connector tests and strict Clippy used Homebrew 1.98.0; historical snapshot 8317 and its 429 native tests predate the cache-version fix. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; declared versions do not establish authenticity or parser execution on replay. Future EFetch orchestration adoption is not part of this proof. Shared live-transport/EFetch wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
   "current_validation": {
     "commands": [
       "cargo test -p searchright-connectors --all-features --locked",
@@ -75,11 +75,11 @@
     "connector_tests_passed": 61,
     "runtime_tests_passed": 7,
     "log_sha256": "b8150d33a11669517ba4b43fd99667d287a6b8eda061a5519d4cba03bef4f948",
-    "toolchain": "Homebrew Rust/Cargo 1.98.0; repository-pinned 1.97.1 full validation pending"
+    "toolchain": "Homebrew Rust/Cargo 1.98.0; retained focused history, separate pinned full validation now passed."
   },
   "authority_boundary": "No live-provider, authenticated tenancy, upstream completeness, end-to-end raw-response-to-receipt chain, cache-backend authenticity, source-policy approval, full-text or archival claim.",
   "full_validation_receipt": "verification/receipts/track-04-full-validation.json",
-  "current_delivery_revision": "pending_cache_version_commit",
+  "current_delivery_revision": "d7854b0956eed7ec3730ab3219b358d5f1964e77",
   "cache_version_receipt": "verification/receipts/track-04-cache-version-panel.json",
   "prior_validation_before_cache_version": {
     "test_source_sha256": "c88b6cd37a7c902a8592ac1d39933ba18e213970dfc972ecc5e5b5745c83e38a",
@@ -95,5 +95,6 @@
     "delivery_revision": "d13cbca321d4372b3a52ecef3f8c8e801472e864",
     "toolchain": "Homebrew Rust/Cargo 1.98.0"
   },
-  "declared_parser_version": "<package-version>.parser.2"
+  "declared_parser_version": "<package-version>.parser.2",
+  "pinned_full_validation_ref": "verification/receipts/track-04-full-validation.json#pinned_cache_version_validation"
 }

@@ -6,7 +6,7 @@
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/04-open-connectors-mvp/spec.md#scope",
   "updated": "2026-08-31",
-  "claim_boundary": "Historical snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a passed 82 Python tests, 57 static gates, 429 native tests and 23 cargo-vet governance tests using Homebrew Rust/Cargo 1.98.0; it predates the cache-version fix and does not validate that fix. The current cache-version slice passes 61 focused connector tests and strict Clippy on Homebrew 1.98.0; new full validation with repository-pinned 1.97.1 remains pending. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; cache versions are declarations, not parser authenticity or parser execution on replay. Shared live-transport/EFetch wiring and per-HTTP rate admission remain pending; no live/current-policy support, article full text, end-to-end raw-response-to-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+  "claim_boundary": "Full local validation of the cache-version slice passed on snapshot 6d995108106db62474e2746a2021f29e89603b95 using repository-pinned Rust/Cargo 1.97.1: 82 Python tests, 57 static gates, 431 native tests with zero skipped and 23 cargo-vet governance tests. Earlier 61 focused connector tests and strict Clippy used Homebrew 1.98.0; historical snapshot 8317 and its 429 native tests predate the cache-version fix. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; declared versions do not establish authenticity or parser execution on replay. Future EFetch orchestration adoption is not part of this proof. Shared live-transport/EFetch wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
   "native_test_commands": [
     "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
     "cargo test -p searchright-connectors --all-features --locked",
@@ -30,8 +30,8 @@
       "summary": "Actual fixture-runtime receipt binding, memory-cache replay/corruption checks and budget visibility; seven runtime tests pass after the separately delivered Track03 budget fix."
     },
     {
-      "commit": "pending",
-      "summary": "Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; reproduce old-cache bypass before 61 focused tests and strict Clippy pass. New pinned-toolchain full validation pending."
+      "commit": "d7854b0956eed7ec3730ab3219b358d5f1964e77",
+      "summary": "Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; observed old-cache bypass, then 61 focused Homebrew tests/Clippy and full pinned 1.97.1 snapshot 6d995108106db62474e2746a2021f29e89603b95 passed."
     }
   ],
   "assertions": [
@@ -222,10 +222,9 @@
         "verification/receipts/track-04-cache-version-panel.json"
       ],
       "open_gates": [
-        "Prove the shared live-transport and end-to-end raw-response-to-issued-receipt chain separately; fixture record binding and cache-envelope integrity are locally tested.",
-        "Complete new repository-pinned 1.97.1 full validation after the cache-version fix; historical snapshot 8317 does not cover it."
+        "Prove the shared live-transport and end-to-end raw-response-to-issued-receipt chain separately; fixture record binding and cache-envelope integrity are locally tested."
       ],
-      "permitted_claim": "Hash-pinned JSON/XML fixtures have complete manually reviewed page goldens. Seven runtime tests prove issued-receipt binding to returned fixture records and memory-cache replay/integrity; seven Python tests cover static XML checks only. Fixture-added raw hashes bind cached page envelopes, not an end-to-end raw-response-to-issued-receipt chain. Current four-adapter cache-version regressions demonstrate version-only cache separation, retained old entries and current-version replay under live-disabled execution. Caller-declared versions are not authenticity or proof of parser execution."
+      "permitted_claim": "Hash-pinned JSON/XML fixtures have complete manually reviewed page goldens. Seven runtime tests prove issued-receipt binding to returned fixture records and memory-cache replay/integrity; seven Python tests cover static XML checks only. Fixture-added raw hashes bind cached page envelopes, not an end-to-end raw-response-to-issued-receipt chain. Current four-adapter cache-version regressions demonstrate version-only cache separation, retained old entries and current-version replay under live-disabled execution. Caller-declared versions are not authenticity or proof of parser execution. The cache-version slice passed pinned 1.97.1 full validation at snapshot 6d995108106db62474e2746a2021f29e89603b95; this does not validate future EFetch orchestration."
     },
     {
       "assertion_id": "T04-A006",
