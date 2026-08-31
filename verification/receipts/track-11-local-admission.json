@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.track-maintenance-verification.v1",
+  "track_id": "11",
+  "observed_at": "2026-08-31T02:55:15Z",
+  "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
+  "implementation_commit": "1ee989d",
+  "host_runner_commit": "8d1ae21",
+  "status": "focused_tests_passed_full_review_pending",
+  "commands": [
+    {"command": "cargo test -p searchright-agent --locked", "exit_code": 0, "tests_passed": 23},
+    {"command": "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings", "exit_code": 0, "limitations": "Existing dependency MSRV configuration warning retained."},
+    {"command": "PYTHONPATH=scripts python3 -B -m unittest test_agent_host_eval test_agent_skill_policy", "exit_code": 0, "tests_passed": 16}
+  ],
+  "host_model_receipt": "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
+  "host_model_result": "Codex CLI 0.144.1 / gpt-5.6-sol passed all 12 public authority cases against the updated runner; no general host support inferred.",
+  "claude_preflight": {"host_version": "2.1.126", "logged_in": false, "evaluation_executed": false},
+  "automated_invocation": "disabled_pending_runtime_admission",
+  "mandatory_gates": {"T11-G001": "pending", "T11-G002": "pending", "T11-G003": "pending", "T11-G004": "pending"},
+  "remaining_boundaries": [
+    "Real package/source provenance binding, production approval integration and supported-target execution-boundary review.",
+    "Explicit primary/backup maintenance commitment, licence review and downstream acceptance.",
+    "Claude authentication and exact-pair evaluation.",
+    "Accountable resolution of the two-human versus agent-panel calibration protocol conflict and subsequent adjudication.",
+    "Registry target, namespace, submitting principal, final artifact-bound authorization and observed acceptance."
+  ],
+  "claim_boundary": "Synthetic local byte-integrity and advisory handoff verification, not package semantic validation, source provenance, ARS invocation, production approval, methodological calibration, registry authorization or external acceptance. No OpenFisca action."
+}
