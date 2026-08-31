@@ -1,0 +1,97 @@
+{
+  "schema_version": "org.searchright.provider-page.v1",
+  "records": [
+    {
+      "schema_version": "org.searchright.bibliographic-record.v1",
+      "source_receipt_id": "pending-receipt",
+      "kind": "journal_article",
+      "identifiers": {
+        "doi": "10.1000/searchright.1",
+        "pmid": "00000001",
+        "pmcid": null,
+        "trial_registration": null,
+        "openalex": null,
+        "isbn": null,
+        "other": {}
+      },
+      "abstract_text": null,
+      "authors": [
+        "Fixture A"
+      ],
+      "container_title": "Searchright Fixture Journal",
+      "publication_year": 2026,
+      "publication_date": "2026/01/01 00:00",
+      "languages": [],
+      "subjects": [],
+      "urls": [
+        "https://pubmed.ncbi.nlm.nih.gov/00000001/"
+      ],
+      "record_id": "pubmed-00000001",
+      "native_id": "00000001",
+      "title": "Synthetic systematic-search fixture one",
+      "provider_metadata": {
+        "uid": "00000001",
+        "title": "Synthetic systematic-search fixture one",
+        "fulljournalname": "Searchright Fixture Journal",
+        "pubdate": "2026 Jan",
+        "sortpubdate": "2026/01/01 00:00",
+        "authors": [
+          {
+            "name": "Fixture A"
+          }
+        ],
+        "articleids": [
+          {
+            "idtype": "doi",
+            "value": "10.1000/searchright.1"
+          }
+        ]
+      }
+    },
+    {
+      "schema_version": "org.searchright.bibliographic-record.v1",
+      "source_receipt_id": "pending-receipt",
+      "kind": "journal_article",
+      "identifiers": {
+        "doi": null,
+        "pmid": "00000002",
+        "pmcid": null,
+        "trial_registration": null,
+        "openalex": null,
+        "isbn": null,
+        "other": {}
+      },
+      "abstract_text": null,
+      "authors": [
+        "Fixture B"
+      ],
+      "container_title": "Searchright Fixture Journal",
+      "publication_year": 2025,
+      "publication_date": "2025/12/01 00:00",
+      "languages": [],
+      "subjects": [],
+      "urls": [
+        "https://pubmed.ncbi.nlm.nih.gov/00000002/"
+      ],
+      "record_id": "pubmed-00000002",
+      "native_id": "00000002",
+      "title": "Synthetic systematic-search fixture two",
+      "provider_metadata": {
+        "uid": "00000002",
+        "title": "Synthetic systematic-search fixture two",
+        "fulljournalname": "Searchright Fixture Journal",
+        "pubdate": "2025 Dec",
+        "sortpubdate": "2025/12/01 00:00",
+        "authors": [
+          {
+            "name": "Fixture B"
+          }
+        ],
+        "articleids": []
+      }
+    }
+  ],
+  "next_cursor": null,
+  "total_available": 2,
+  "diagnostics": {}
+}

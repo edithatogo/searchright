@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.agent-panel-record.v1",
+  "track_id": "04",
+  "date": "2026-08-31",
+  "base_revision": "ec495fbaceb965a3595247492ff702180bb2ba84",
+  "first_pass_connector_sha256": "f36ec270337c6075929a1b2b8b0b9b7cb932798595f2c5a84a34bfcd965e0c99",
+  "protocol": "Separate implementation/testing, safety/adversarial and methodology first passes preceded shared remediation. Synthetic fixtures only; no live calls, sealed labels or source-policy approvals.",
+  "first_passes": [
+    {"agent": "track03_delta_review", "roles": ["implementation", "testing"], "findings": ["OpenAlex page-local IDs collide and change with ordering.", "PubMed drops malformed or missing summaries; other providers fabricate positional identities.", "Happy-path tests do not compare complete normalized output; EFetch remains genuinely absent."]},
+    {"agent": "track03_safety", "roles": ["security", "adversarial"], "findings": ["PubMed count/id filtering and unreconciled ESummary identities can yield silent incomplete retrieval.", "Europe PMC ignores source qualification; malformed identity rows become fabricated records.", "Fixture missing-cursor diagnostics disclose the opaque cursor.", "Malformed present pagination metadata is treated as absent."]},
+    {"agent": "track03_methodology", "roles": ["methodology", "acceptance"], "findings": ["OpenAlex loses the supplied title-only fixture's title.", "Golden acceptance must compare identity, fields, pagination, metadata and receipt placeholders field by field.", "Corrected identity algorithms require forward-only migration guidance; historical positional collisions cannot be safely auto-migrated.", "Unmapped inverted-index abstracts, EFetch/full-report retrieval and live compatibility must remain explicit limitations."]}
+  ],
+  "test_first_baseline": {
+    "command": "cargo test -p searchright-connectors --test parser_integrity --all-features --locked",
+    "exit_code": 101,
+    "passed": 2,
+    "failed": 16,
+    "log_sha256": "1b6c28b6d1ab11383c989587bd82f5d6a468c409cddb3528a9be8564cdc7c660",
+    "interpretation": "Expected pre-fix failures demonstrate the parser-integrity gaps; not a successful validation receipt."
+  },
+  "status": "bounded_remediation_reviewed_full_validation_pending",
+  "final_connector_sha256": "09f8c2b703ad0eda351ed1aeadc2e3489c8672ead4b9ae3d26d93ea8dd95326b",
+  "remediation": ["Reject invalid, missing, duplicate and conflicting identities; retain existing PubMed/Crossref IDs and use unambiguous source/native identities for Europe PMC/OpenAlex.", "Strictly parse present counts/cursors and PubMed ESearch counts/IDs; reconcile requested and returned summary identities.", "Reject premature empty ESearch pages while accepting exhausted offsets and short nonempty pages.", "Restore OpenAlex title fallback, redact fixture cursor errors, add manually reviewed complete synthetic golden pages and forward-only migration guidance."],
+  "focused_validation": {"commands": ["cargo test -p searchright-connectors --all-features --locked", "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"], "exit_code": 0, "unit_tests": 13, "parser_regressions": 18, "golden_pages": 4, "log_sha256": "3e5fe3e4643b7acd01246ca2ea50e4220cb96febff533ce0fe47732a2f589a4d"},
+  "rereviews": [{"agent": "track03_methodology", "result": "No additional actionable finding in bounded mapping correction; synthetic goldens are not live, receipt-binding, EFetch, policy or migration proof."}, {"agent": "track03_safety", "result": "Confirmed final offset-aware empty-page guard and regression; no remaining blocking finding within parser-integrity scope. Read-only review, not an independent Cargo execution."}],
+  "authority_boundary": "No automatic record, receipt, audit or screening-decision migration. No live provider, rights/currentness, full-text retrieval, source-policy approval or archival claim."
+}

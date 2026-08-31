@@ -15,6 +15,10 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `provider-fixtures/mvp/europe-pmc.json`
   - [x] Present source path: `provider-fixtures/mvp/crossref.json`
   - [x] Present source path: `provider-fixtures/mvp/openalex.json`
+  - [x] Present source path: `crates/searchright-connectors/tests/parser_integrity.rs`
+  - [x] Present source path: `crates/searchright-connectors/tests/canonical_pages.rs`
+  - [x] Present source path: `crates/searchright-connectors/tests/fixtures`
+  - [x] Present source path: `docs/provider-parser-integrity.md`
   - [x] Present source path: `scripts/check_provider_contract_baselines.py`
   - [x] Present source path: `contracts/examples/provider-manifest.yaml`
   - [x] Present source path: `contracts/examples/provider-page.yaml`

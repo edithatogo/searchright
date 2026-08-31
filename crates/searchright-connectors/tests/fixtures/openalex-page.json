@@ -1,0 +1,67 @@
+{
+  "schema_version": "org.searchright.provider-page.v1",
+  "records": [
+    {
+      "schema_version": "org.searchright.bibliographic-record.v1",
+      "source_receipt_id": "pending-receipt",
+      "kind": "journal_article",
+      "identifiers": {
+        "doi": "10.1000/searchright.5",
+        "pmid": null,
+        "pmcid": null,
+        "trial_registration": null,
+        "openalex": "https://openalex.org/W000000005",
+        "isbn": null,
+        "other": {}
+      },
+      "abstract_text": null,
+      "authors": [
+        "Fixture E"
+      ],
+      "container_title": "Searchright Fixture Journal",
+      "publication_year": 2026,
+      "publication_date": "2026-03-01",
+      "languages": [],
+      "subjects": [],
+      "urls": [
+        "https://doi.org/10.1000/searchright.5"
+      ],
+      "record_id": "openalex:31:https://openalex.org/W000000005",
+      "native_id": "https://openalex.org/W000000005",
+      "title": "Synthetic OpenAlex fixture",
+      "provider_metadata": {
+        "id": "https://openalex.org/W000000005",
+        "doi": "https://doi.org/10.1000/searchright.5",
+        "title": "Synthetic OpenAlex fixture",
+        "publication_year": 2026,
+        "publication_date": "2026-03-01",
+        "type": "article",
+        "authorships": [
+          {
+            "author": {
+              "id": "https://openalex.org/A000000005",
+              "display_name": "Fixture E"
+            }
+          }
+        ],
+        "primary_location": {
+          "source": {
+            "display_name": "Searchright Fixture Journal"
+          },
+          "landing_page_url": "https://doi.org/10.1000/searchright.5"
+        },
+        "abstract_inverted_index": {
+          "Synthetic": [
+            0
+          ],
+          "fixture": [
+            1
+          ]
+        }
+      }
+    }
+  ],
+  "next_cursor": "IlsxMDAuMCwgJ2h0dHBzOi8vb3BlbmFsZXgub3JnL1cwMDAwMDAwMDUnXSI=",
+  "total_available": 1,
+  "diagnostics": {}
+}

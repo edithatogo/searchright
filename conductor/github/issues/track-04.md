@@ -28,6 +28,6 @@ Provide deterministic open-source adapters and opt-in live execution for major d
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+The reviewed parser slice passed 35 focused local tests and strict Clippy, including the premature-empty-page guard; final full validation remains pending. Track 04 remains partially implemented at source_verified. EFetch/full reports, runtime receipt binding, authorised live execution, current provider policy and historical identity migration are unproven; no whole-track completion or archival claim is made.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
