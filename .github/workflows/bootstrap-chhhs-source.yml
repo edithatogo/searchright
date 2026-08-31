@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: true
-          fetch-depth: 2
+          fetch-depth: 4
       - name: Apply reviewed payload and commit
         shell: bash
         run: |
@@ -29,13 +29,27 @@ jobs:
           import tarfile
           from pathlib import Path
 
-          previous = subprocess.check_output(
-              ["git", "show", "HEAD^:.github/workflows/bootstrap-chhhs-source.yml"],
-              text=True,
-          )
-          start = previous.index("H4sIA")
-          end = previous.index("\nPAYLOAD", start)
-          payload = base64.b64decode(previous[start:end].strip(), validate=True)
+          source = None
+          revisions = subprocess.check_output(
+              ["git", "rev-list", "--max-count=4", "HEAD"], text=True
+          ).splitlines()
+          for revision in revisions[1:]:
+              try:
+                  candidate = subprocess.check_output(
+                      ["git", "show", f"{revision}:.github/workflows/bootstrap-chhhs-source.yml"],
+                      text=True,
+                  )
+              except subprocess.CalledProcessError:
+                  continue
+              if "H4sIA" in candidate and "\nPAYLOAD" in candidate:
+                  source = candidate
+                  break
+          if source is None:
+              raise RuntimeError("reviewed payload was not found in branch history")
+          start = source.index("H4sIA")
+          end = source.index("\nPAYLOAD", start)
+          encoded = "".join(source[start:end].split())
+          payload = base64.b64decode(encoded)
           root = Path.cwd().resolve()
           with tarfile.open(fileobj=io.BytesIO(payload), mode="r:gz") as archive:
               for member in archive.getmembers():
