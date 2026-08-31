@@ -1,11 +1,23 @@
 {
   "schema_version": "org.searchright.track-maintenance-verification.v1",
   "track_id": "11",
-  "observed_at": "2026-08-31T04:35:03Z",
+  "observed_at": "2026-08-31T04:51:44Z",
   "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
   "implementation_commit": "1ee989d",
   "host_runner_commit": "8d1ae21",
-  "status": "full_pinned_verification_passed_before_latest_main_integration",
+  "status": "full_pinned_integrated_verification_passed",
+  "integrated_verification": {
+    "tested_revision": "6549162c49bbb478c5d6118239092e6f4c38b42d",
+    "main_base": "3072b36b7a9f248e730d9878654860952762014b",
+    "command": "CARGO_BUILD_JOBS=2 PATH=/Users/doughnut/.rustup/toolchains/1.97.1-aarch64-apple-darwin/bin:$PATH bash scripts/verify.sh",
+    "exit_code": 0,
+    "python_tests_passed": 75,
+    "static_gates_passed": 57,
+    "native_tests_passed": 385,
+    "native_tests_skipped": 0,
+    "log_sha256": "79664938f21e1b80a7a253440a56c3a21e0a47cf4740b87b2adc66cbab8843e7",
+    "notes": "Formatting, strict workspace Clippy, schema parity with recorded differences, doctests, documentation and cargo-deny passed. Nextest reported one leaky test; existing warnings were retained. Optional cargo-machete was unavailable. Hosted checks and merge remain separately observed."
+  },
   "full_verification": {
     "command": "PATH=/Users/doughnut/.rustup/toolchains/1.97.1-aarch64-apple-darwin/bin:$PATH bash scripts/verify.sh",
     "exit_code": 0,
