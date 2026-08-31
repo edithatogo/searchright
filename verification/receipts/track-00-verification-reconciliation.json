@@ -26,6 +26,17 @@
     "native_conductor_status": "passed",
     "claim_boundary": "Clean exact-head static verification only; native compilation was not repeated for this evidence-only change."
   },
+  "superseded_integration_attempt": {
+    "source_revision": "d26e2260a993aff8486dd1c114459d2ebc11c016",
+    "command": "bash scripts/verify.sh --static-only",
+    "status": "failed",
+    "exit_code": 1,
+    "python_tests_passed": 87,
+    "static_gates_passed": 56,
+    "failed_gate": "generate_source_hash_manifest.py --check",
+    "cause": "During rebase conflict resolution, manifest generation observed repeated unmerged Git index stages for context-lock and evidence-debt and emitted duplicate hash rows.",
+    "repair": "Reran the native manifest generator after the Git index was resolved; removed four duplicate rows without changing source or policy. Subsequent clean-head validation must be observed separately."
+  },
   "full_verification": {
     "tested_revision": "c358e6820a963f89ea075f47ae3358c0eeedcbaf",
     "tested_tree": "2acf71fa28b7eda1298659b0d8641952c2ff669d",
