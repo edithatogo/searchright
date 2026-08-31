@@ -4,6 +4,16 @@
   "observed_on": "2026-08-31",
   "status": "focused_passed_pending_full_verification",
   "source_binding": "Containing commit source-manifest.sha256 binds implementation and original synthetic fixture generator bytes.",
+  "independent_review": {
+    "functional_revision": "855ce04d2dbb4ee3220e0cdd48ab7b7f18df5ebb",
+    "canonical_revision": "2c30fe50632063c570befbedbe210b147c45eee8",
+    "implementation": "no actionable findings",
+    "security": "no actionable findings",
+    "testing": "no actionable findings",
+    "methodology": "no actionable findings",
+    "adversarial": "no actionable findings",
+    "claim_boundary": "Five isolated coding review roles; not Track 11 calibration, owner adjudication, independent PRESS approval or external acceptance. Functional bytes are unchanged after integration onto actual Track 00 merged main. Later read-only cell-comparison helper received main-agent review; separate security delta review is pending."
+  },
   "checks": [
     {"command": "cargo test -p searchright-prisma --locked --tests", "status": "passed", "exit_code": 0, "tests_passed": 15, "toolchain": "Rust 1.97.1 aarch64-apple-darwin", "log_sha256": "be4b793f7b7c46569939275a36c587259b7343d218bf9bb871dec14109dfdc98", "notes": "One regression covers seven collection items by six empty, whitespace, mixed and populated cases, preserving original bytes and checking Partial notes."},
     {"command": "LibreOffice --headless --convert-to 'docx:Office Open XML Text', then --convert-to pdf; pdftoppm -scale-to 1500 -png", "status": "passed", "exit_code": 0, "toolchain": "LibreOffice 26.2.5.2; Poppler 26.08.0", "network_policy": "sandbox-exec denies network operations except local Unix sockets needed by LibreOffice IPC; isolated temporary user profile", "notes": "Normal and hostile synthetic HTML imported to real DOCX files and then rendered to two-page PDFs. All four final pages visually inspected: labels wrap without clipping, counts/reasons remain visible, repeated table headers retained. Prior bare docx conversion returned no export filter despite zero exit; not counted as success."}
@@ -49,7 +59,7 @@
     "Artifacts remain local temporary diagnostics, not published outputs. DOCX bytes are LibreOffice conversion products; the library emits HTML only.",
     "No Microsoft Word, browser or accessibility certification is claimed; arbitrary long unbroken labels and other document consumers remain unverified.",
     "Complete PRISMA-S items mean populated reporting links, not verified evidence truth or methodological acceptance.",
-    "Full workspace verification and independent coding review are pending for this follow-up; previous receipts retain their exact historical scope.",
+    "Full workspace verification is pending for this follow-up; previous receipts retain their exact historical scope.",
     "Updated cohort contract completeness, PRISMA.jl parity/ownership and independent PRESS approval remain open."
   ]
 }
