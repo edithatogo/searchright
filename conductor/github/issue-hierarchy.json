@@ -1882,15 +1882,15 @@
         "conductor",
         "track:03",
         "phase:4",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "03",
       "phase_number": 4,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Review",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Source Verified",
