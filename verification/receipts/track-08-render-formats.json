@@ -1,16 +1,25 @@
 {
   "schema_version": "org.searchright.track-review-verification.v1",
   "track_id": "08",
-  "observed_at": "2026-08-31T00:00:00Z",
+  "observed_at": "2026-08-31T03:13:25Z",
   "status": "focused_passed_full_verification_pending",
   "source_binding": "Exact tracked source bytes are bound by verification/receipts/source-manifest.sha256 in the containing commit.",
   "checks": [
-    {"command": "cargo test -p searchright-prisma --locked", "status": "passed", "tests_passed": 13},
+    {"command": "cargo test -p searchright-prisma --locked", "status": "passed", "tests_passed": 14, "toolchain": "Homebrew Rust 1.98.0; pinned 1.97.1 full verification pending"},
     {"command": "cargo clippy -p searchright-prisma --all-targets --locked -- -D warnings", "status": "passed", "notes": "Existing dependency MSRV configuration warning remains visible."},
-    {"command": "bash scripts/verify.sh", "status": "failed_before_compiler_gates", "notes": "Initial dirty-tree run: 62 Python tests and 54/57 static gates passed. Missing local TypeScript/Pyright tools, stale source hash manifest, and dirty-tree packaging blocked full run; revalidation pending."}
+    {"command": "bash scripts/verify.sh", "status": "failed_before_compiler_gates", "notes": "Initial dirty-tree run: 62 Python tests and 54/57 static gates passed. Missing local TypeScript/Pyright tools, stale source hash manifest, and dirty-tree packaging blocked full run; revalidation pending."},
+    {"command": "typst compile /tmp/searchright-track08-normal.typ /tmp/searchright-track08-normal.pdf", "status": "passed", "exit_code": 0, "toolchain": "typst 0.15.1", "source_sha256": "cb879e3417c2adb665ec89ae28c7eaa83a1d36b889afe5954b9309959f165166", "output_sha256": "514eea3972f0b4f3918738ad509ab662002f4b7755e309944179bfef4d3f63e2"},
+    {"command": "typst compile /tmp/searchright-track08-hostile.typ /tmp/searchright-track08-hostile.pdf", "status": "passed", "exit_code": 0, "toolchain": "typst 0.15.1", "source_sha256": "8dcb2bb5b27d5c429e1ab7c438df7ce3be83e54aeedc1596e50961611401991d", "output_sha256": "a8205a3f77e4aa30a4f706b544460f153ece7f5006804f61af982bf53f96d837"}
   ],
+  "independent_review": {
+    "implementation": "no actionable findings",
+    "security": "no actionable findings",
+    "adversarial": "no actionable findings",
+    "methodology": "no actionable findings",
+    "testing": "Added every_presentation_format_contains_each_count_reason_and_lineage to close the numeric-field completeness coverage gap."
+  },
   "limits": [
-    "Library source generation only; no observed Typst compilation, word-processor import, browser rendering or DOCX archive generation.",
+    "Library source generation and exact normal/hostile Typst compilation only; no visual inspection, word-processor import, browser rendering or DOCX archive generation.",
     "Existing facade, CLI and MCP Mermaid operation is unchanged; new format adapters are library-only.",
     "The v1 flow does not carry separate historic/new-study cohorts; complete updated-review template conformance is not claimed.",
     "PRISMA.jl exact-revision output parity, fork maintenance disposition and independent PRESS review remain open.",

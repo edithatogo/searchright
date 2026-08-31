@@ -41,4 +41,4 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
-- [x] Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections with deterministic and injection tests (`6f0dbd1`); external renderer execution, complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.
+- [x] Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Visual rendering, word-processor import, complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.
