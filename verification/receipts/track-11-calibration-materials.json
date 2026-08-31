@@ -2,6 +2,8 @@
   "schema_version": "org.searchright.calibration-materials.v1",
   "track": "11",
   "status": "prepared_not_reviewed",
+  "binding_status": "historical_not_current_calibration_ready",
+  "binding_note": "The package digest below identifies the original preparation packet, not the current sibling/host-runner package. Preserve these historical bytes. Freeze new exact materials only after the accountable owner resolves the calibration protocol; this packet cannot close T11-G003.",
   "skill_package_sha256": "772a193e9070cb070769f18bdbe701cbd03ca77012bdcaf32d4b416a4ea0f4ba",
   "rights_basis": "Original synthetic workflow descriptions and references to repository-owned query fixtures; no participant data or sealed benchmark labels.",
   "synthetic_workflows": [
