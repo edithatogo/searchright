@@ -62,5 +62,39 @@
     "Dependency exemptions are not audits; existing pinned quick-xml exception is unchanged"
   ],
   "toolchain": "Homebrew Rust/Cargo 1.98.0",
-  "evidence_scope": "Historical validation of snapshot 8317f4f3211d0f5571c0529a878b6413a12ba44a only; predates the cache-version fix. New repository-pinned 1.97.1 full validation remains pending."
+  "evidence_scope": "Top-level fields preserve historical Homebrew 1.98.0 snapshot 8317, including prior failure and optional-gate skip/follow-up. The separate pinned_cache_version_validation object records the later cache-version slice; neither run covers future EFetch orchestration.",
+  "pinned_cache_version_validation": {
+    "revision": "6d995108106db62474e2746a2021f29e89603b95",
+    "tree": "2cbe82a90df61f6d7feca3852257ee2f6bf2709b",
+    "functional_commit": "d7854b0956eed7ec3730ab3219b358d5f1964e77",
+    "toolchain": "Repository-pinned Rust/Cargo 1.97.1",
+    "commands": [
+      "bash scripts/verify.sh",
+      "python3 scripts/test_cargo_vet_governance.py",
+      "python3 scripts/check_cargo_vet_governance.py",
+      "cargo vet --locked --no-minimize-exemptions"
+    ],
+    "exit_code": 0,
+    "python_tests_passed": 82,
+    "static_gates_passed": 57,
+    "native_tests_passed": 431,
+    "native_tests_skipped": 0,
+    "cargo_vet_governance_tests_passed": 23,
+    "fully_audited_dependencies": 43,
+    "exempted_dependencies": 259,
+    "cargo_machete_version": "0.9.2",
+    "passed_gates": [
+      "formatting",
+      "strict workspace Clippy",
+      "Rust/schema parity",
+      "workspace tests",
+      "documentation and doctests",
+      "cargo deny",
+      "cargo machete",
+      "cargo-vet governance",
+      "cargo vet"
+    ],
+    "log_sha256": "cdf3961350d12b4fad08ece21e63de2f9b081df7e9a0fcfae6ad54bb6958223f",
+    "boundary": "Snapshot tree is identical to functional commit d7854b0956eed7ec3730ab3219b358d5f1964e77. Later bookkeeping/rebase requires refreshed static and exact-head hosted evidence; future EFetch orchestration is excluded."
+  }
 }
