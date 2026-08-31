@@ -64,7 +64,9 @@
     "verification/receipts/track-03-provider-runtime-review.json",
     "verification/receipts/track-03-sourceright-inventory.json",
     "verification/receipts/track-03-consumer-baseline-2026-08-31.json",
-    "verification/receipts/track-03-integration-panel.json"
+    "verification/receipts/track-03-integration-panel.json",
+    "verification/receipts/track-03-reconciled-validation.json",
+    "verification/receipts/track-03-budget-warning.json"
   ],
   "external_evidence": [],
   "review_fixes": [
@@ -95,6 +97,7 @@
     {
       "commit": "ca265354de725701085cd3e9d7a466a8c955f15d",
       "summary": "Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover."
-    }
+    },
+    "Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions."
   ]
 }

@@ -468,15 +468,20 @@ impl ProviderRegistry {
             cache_hits = cache_hits.saturating_add(u32::from(cache_hit));
             cache_writes = cache_writes.saturating_add(u32::from(cache_write));
 
+            let mut records_truncated = false;
             for record in page.records {
                 if usize_to_u64(records.len()) >= request.policy.max_records {
                     warnings.push("records truncated at max_records budget".to_owned());
+                    records_truncated = true;
                     request.cursor = None;
                     break;
                 }
                 records.push(record);
             }
             if usize_to_u64(records.len()) >= request.policy.max_records {
+                if !records_truncated && page.next_cursor.is_some() {
+                    warnings.push("records truncated at max_records budget".to_owned());
+                }
                 break;
             }
             request.cursor = page.next_cursor;
@@ -1001,6 +1006,12 @@ mod tests {
 
     struct RecordFixture;
 
+    struct BudgetFixture {
+        calls: Arc<AtomicUsize>,
+        extra_record: bool,
+        has_next_page: bool,
+    }
+
     struct CountingLive {
         calls: Arc<AtomicUsize>,
         endpoint: String,
@@ -1185,6 +1196,43 @@ mod tests {
     }
 
     #[async_trait]
+    impl SearchProvider for BudgetFixture {
+        fn manifest(&self) -> ProviderManifest {
+            EmptyFixture.manifest()
+        }
+
+        fn mode(&self) -> ProviderMode {
+            ProviderMode::Fixture
+        }
+
+        fn endpoint_label(&self) -> Option<String> {
+            None
+        }
+
+        async fn execute_page(
+            &self,
+            request: &SearchRequest,
+        ) -> Result<ProviderPage, ProviderError> {
+            self.calls.fetch_add(1, Ordering::SeqCst);
+            let mut page = RecordFixture.execute_page(request).await?;
+            if self.extra_record
+                && let Some(mut record) = page.records.first().cloned()
+            {
+                record.record_id = "record-2".to_owned();
+                record.native_id = "native-2".to_owned();
+                page.records.push(record);
+            }
+            page.next_cursor = self.has_next_page.then(|| "next-page".to_owned());
+            page.total_available = Some(if self.extra_record || self.has_next_page {
+                2
+            } else {
+                1
+            });
+            Ok(page)
+        }
+    }
+
+    #[async_trait]
     impl SearchProvider for CountingLive {
         fn manifest(&self) -> ProviderManifest {
             ProviderManifest {
@@ -1288,6 +1336,52 @@ mod tests {
         let configured = ProviderRegistry::new().with_cache(cache, namespace);
         assert!(configured.is_ok());
         configured.unwrap_or_default()
+    }
+
+    async fn assert_record_budget_warning(
+        extra_record: bool,
+        has_next_page: bool,
+        expected_warnings: usize,
+    ) -> Result<(), ProviderError> {
+        let calls = Arc::new(AtomicUsize::new(0));
+        let mut registry = ProviderRegistry::new();
+        registry.register(Arc::new(BudgetFixture {
+            calls: Arc::clone(&calls),
+            extra_record,
+            has_next_page,
+        }))?;
+        let mut bounded = request();
+        bounded.policy.max_records = 1;
+        let result = registry.execute("empty", bounded, "fixture").await?;
+        assert_eq!(calls.load(Ordering::SeqCst), 1);
+        assert_eq!(result.records.len(), 1);
+        assert_eq!(result.receipt.records_retrieved, 1);
+        assert_eq!(result.receipt.pages_retrieved, 1);
+        assert_eq!(
+            result
+                .receipt
+                .warnings
+                .iter()
+                .filter(|warning| warning.as_str() == "records truncated at max_records budget")
+                .count(),
+            expected_warnings,
+        );
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn record_budget_exact_page_with_continuation_warns() -> Result<(), ProviderError> {
+        assert_record_budget_warning(false, true, 1).await
+    }
+
+    #[tokio::test]
+    async fn record_budget_exact_terminal_page_does_not_warn() -> Result<(), ProviderError> {
+        assert_record_budget_warning(false, false, 0).await
+    }
+
+    #[tokio::test]
+    async fn record_budget_within_page_overflow_warns_once() -> Result<(), ProviderError> {
+        assert_record_budget_warning(true, true, 1).await
     }
 
     #[tokio::test]
