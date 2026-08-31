@@ -20,6 +20,25 @@
     "methodology": "no actionable findings",
     "testing": "Added every_presentation_format_contains_each_count_reason_and_lineage to close the numeric-field completeness coverage gap."
   },
+  "integrated_validation": {
+    "observed_at": "2026-08-31T05:02:22Z",
+    "verified_source_revision": "9f8fd3457dd486f7e9f2e7d22d95fc8908db9869",
+    "stack_base_revision": "6549162c49bbb478c5d6118239092e6f4c38b42d",
+    "original_pre_stack_revision": "ce3e2d7a00286ec29de421099436eedd515311d6",
+    "command": "CARGO_BUILD_JOBS=2 PATH=/Users/doughnut/.rustup/toolchains/1.97.1-aarch64-apple-darwin/bin:$PATH bash scripts/verify.sh",
+    "status": "passed",
+    "exit_code": 0,
+    "toolchain": "rustc 1.97.1 (8bab26f4f 2026-07-14), aarch64-apple-darwin",
+    "python_tests_passed": 75,
+    "static_gates_passed": 57,
+    "native_tests_passed": 389,
+    "native_tests_skipped": 0,
+    "native_tests_leaky": 2,
+    "log_sha256": "00ccee380fa376932f89c7d73fb5f68d3b6b0b3e50ecd53f205a46e4b14fae27",
+    "gates_passed": ["format", "strict workspace all-target all-feature Clippy", "Rust schema parity with recorded differences", "nextest", "doctests", "rustdoc", "cargo-deny"],
+    "optional_gates_not_run": ["cargo-machete unavailable"],
+    "claim_boundary": "Local exact-revision stack verification only. A future latest-main integration must be validated separately; no hosted checks, merge, publication or external reporting acceptance is implied. This follow-up changes only the receipt, not compiled source."
+  },
   "limits": [
     "Library source generation and exact normal/hostile Typst compilation only; no visual inspection, word-processor import, browser rendering or DOCX archive generation.",
     "Existing facade, CLI and MCP Mermaid operation is unchanged; new format adapters are library-only.",
