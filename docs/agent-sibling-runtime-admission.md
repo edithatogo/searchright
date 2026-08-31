@@ -1,7 +1,9 @@
 # Local sibling handoff admission
 
 Track 11 owns `searchright_agent::sibling::admit_sibling_handoff`. This is a
-local, read-only integrity boundary, not a tool launcher or an approval store.
+local integrity boundary, not a tool launcher or an approval store. Candidate
+files are read-only, but the supplied authority adapter may consume approvals;
+successful admission does not leave a one-use approval reusable.
 The Searchright-owned sibling still requires explicit user routing and keeps
 automated invocation disabled.
 

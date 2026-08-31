@@ -1,0 +1,17 @@
+{
+  "schema_version": "org.searchright.isolated-code-review.v1",
+  "track": "11",
+  "observed_at": "2026-08-31T03:13:25Z",
+  "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
+  "functional_head": "1ee989d49d91fee251ba02fdf623ae50cee06ae0",
+  "first_passes": [
+    {"role": "implementation", "agent": "consumer_pin_implementation", "findings": [], "test_evidence": "9 sibling-admission tests passed offline"},
+    {"role": "security_safety", "agent": "consumer_pin_security", "findings": [], "clarification": "Candidate bytes are read-only, but supplied authority adapters may consume approvals; documentation clarified."},
+    {"role": "adversarial", "agent": "consumer_pin_adversarial", "findings": []},
+    {"role": "methodology", "agent": "conductor_integrity", "findings": []},
+    {"role": "testing", "agent": "reporting_completion", "findings": []}
+  ],
+  "independence": "Each role reviewed the functional changes without other reviewers' findings. No listed reviewer authored this Track 11 implementation. Parent aggregated outcomes and retained limitations.",
+  "subsequent_changes": "Generated planning records and this review receipt; clarification that the approval adapter may consume approvals. Full required verification remains separately recorded.",
+  "claim_boundary": "Isolated code review only, not methodology calibration, owner adjudication, full verification, source provenance, automated invocation, downstream acceptance or registry approval. All four mandatory gates remain pending."
+}
