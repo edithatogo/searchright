@@ -59,6 +59,34 @@
       "terms_or_usage_url": "https://www.ncbi.nlm.nih.gov/books/NBK25497/"
     },
     {
+      "access_class": "open_with_optional_key",
+      "contact_identity_required": true,
+      "credential_environment_variables": ["NCBI_API_KEY"],
+      "credential_receipt_policy": "never_persist",
+      "documentation_url": "https://www.ncbi.nlm.nih.gov/books/NBK25499/",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
+      "live_canary_requires_opt_in": true,
+      "manual_review_required_before_live_release": true,
+      "minimum_interval_ms_with_key": 110,
+      "minimum_interval_ms_without_key": 350,
+      "notes": [
+        "Offline citation-and-abstract parser and endpoint builder only; live shared-transport wiring is not implemented.",
+        "Conservative policy configuration is inherited from the existing NCBI entries, not a new current-policy review or terms acceptance.",
+        "Identifier batches are bounded; receipts must omit contact and API-key values. Abstract availability does not grant redistribution rights."
+      ],
+      "policy_review_status": "source_identified_not_legally_approved",
+      "privacy_url": "https://www.nlm.nih.gov/web_policies.html",
+      "provider_id": "pubmed-efetch",
+      "query_classification": "internal_review_data",
+      "raw_response_retention": "disabled_by_default",
+      "redistribution_policy": "metadata_and_abstracts_subject_to_source_record_rights",
+      "response_classification": "public_metadata",
+      "review_due": "2026-11-09",
+      "review_evidence": [],
+      "source_checked_at": "2026-08-09",
+      "terms_or_usage_url": "https://www.ncbi.nlm.nih.gov/books/NBK25497/"
+    },
+    {
       "access_class": "open",
       "contact_identity_required": false,
       "credential_environment_variables": [],

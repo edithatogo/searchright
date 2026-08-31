@@ -5,6 +5,9 @@
 
 #![forbid(unsafe_code)]
 
+mod efetch;
+pub use efetch::{PubMedFetchRequest, parse_pubmed_fetch_page};
+
 use std::{
     collections::{BTreeMap, BTreeSet},
     sync::Arc,

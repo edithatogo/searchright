@@ -9,7 +9,7 @@
       "allowed_hosts": [
         "eutils.ncbi.nlm.nih.gov"
       ],
-      "parser_symbol": "PubMedSearchProvider::execute_page",
+      "parser_symbol": "PubMedProvider::execute_page",
       "fixture": "provider-fixtures/mvp/pubmed-esearch.json",
       "fixture_sha256": "45b822567cbc086000bf2091b255d6f7dd37435291bb719a58e732cbde7adb17",
       "shape_assertions": [
@@ -44,6 +44,33 @@
         }
       ],
       "live_canary_status": "not_executed"
+    },
+    {
+      "provider_id": "pubmed-efetch",
+      "endpoint": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
+      "allowed_hosts": ["eutils.ncbi.nlm.nih.gov"],
+      "format": "xml",
+      "parser_source": "crates/searchright-connectors/src/efetch.rs",
+      "parser_symbol": "parse_pubmed_fetch_page",
+      "fixture": "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
+      "fixture_sha256": "d02f5cd062196d7544f6b09d88dbc1eb7234b4893be507f5456ab55c0220bdd3",
+      "xml_root": "PubmedArticleSet",
+      "shape_assertions": [
+        {
+          "path": "PubmedArticle/MedlineCitation/PMID",
+          "equals": "123"
+        },
+        {
+          "path": "PubmedArticle/MedlineCitation/Article/ArticleTitle",
+          "equals": "Synthetic mixed title & evidence"
+        },
+        {
+          "path": "PubmedArticle/MedlineCitation/Article/Journal/JournalIssue/PubDate/Season",
+          "equals": "Spring"
+        }
+      ],
+      "live_canary_status": "not_executed",
+      "claim_boundary": "Bounded synthetic XML digest/root/path checks only; no EFetch execution, Rust parser behavior, full-text, live or current-provider compatibility claim."
     },
     {
       "provider_id": "europe-pmc",

@@ -53,8 +53,8 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "0428fd5dac240c71511040928411698a426594ef5e3d6376e22252c8daf0e6dc",
-      "size": 113906
+      "sha256": "d9c5ab0aa8064d9e30abda0fe5512ff1a7f084cacb53e9b2e979fd2bdbab79e2",
+      "size": 115379
     },
     {
       "path": "conductor/traceability-overrides.json",
@@ -138,13 +138,13 @@
     },
     {
       "path": "integration/provider-contract-baselines.json",
-      "sha256": "de035848fd479299176f646f3566b3b12bd4602600a2caf8398990f6c4d38c41",
-      "size": 3603
+      "sha256": "ed9199d900e74d98877cc98ac3cd143c49011f93d3c2bcaddd1d0de09f40ac85",
+      "size": 4789
     },
     {
       "path": "integration/provider-policies/index.json",
-      "sha256": "aab02dbf1470b130b0601f8b5977ab39a8828daf809d6d68192a8e09e005d6c3",
-      "size": 6665
+      "sha256": "1e929256a9309f9aa6a80948f49d7c796d1d46ebeae6e4eacc23e12a4a94e3a2",
+      "size": 8270
     },
     {
       "path": "integration/release-train.json",
@@ -183,7 +183,7 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "531f11106d004c1fdbad61caf7c1fa7dd7e028b8e0783361c4c5ea84ad4b809f",
+      "sha256": "a738e3fd01a643d8ef215700f26ec17b6a158a50543e1f80aad6519c5ea78f28",
       "size": 3521
     },
     {

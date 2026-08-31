@@ -2008,6 +2008,7 @@ dependencies = [
  "blake3",
  "evidence-search-contracts",
  "evidence-search-core",
+ "quick-xml",
  "reqwest",
  "serde",
  "serde_json",

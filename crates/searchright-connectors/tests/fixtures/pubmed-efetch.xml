@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation>
+      <PMID Version="1">123</PMID>
+      <Article>
+        <Journal><Title>Synthetic Journal</Title><JournalIssue><PubDate><Year>2026</Year><Season>Spring</Season></PubDate></JournalIssue></Journal>
+        <ArticleTitle>Synthetic <i>mixed</i> title &amp; evidence</ArticleTitle>
+        <Abstract>
+          <AbstractText Label="BACKGROUND" NlmCategory="BACKGROUND">First &amp; clear.</AbstractText>
+          <AbstractText Label="RESULTS" NlmCategory="RESULTS">Second <b>result</b>.</AbstractText>
+        </Abstract>
+        <AuthorList><Author><LastName>Example</LastName><ForeName>Ada</ForeName></Author><Author><CollectiveName>Synthetic Consortium</CollectiveName></Author></AuthorList>
+        <Language>eng</Language>
+      </Article>
+      <MeshHeadingList><MeshHeading><DescriptorName UI="D000001">Synthetic Subject</DescriptorName></MeshHeading></MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData><ArticleIdList><ArticleId IdType="pubmed">123</ArticleId><ArticleId IdType="doi">10.1000/efetch.fixture</ArticleId><ArticleId IdType="pmc">PMC123</ArticleId></ArticleIdList></PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

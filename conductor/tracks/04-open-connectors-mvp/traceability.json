@@ -5,10 +5,19 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/04-open-connectors-mvp/spec.md#scope",
-  "claim_boundary": "The reviewed parser slice passed 35 focused local tests and strict Clippy, including the premature-empty-page guard; final full validation remains pending. Track 04 remains partially implemented at source_verified, with EFetch/full-report retrieval, runtime receipt binding, authorised live execution, current provider policy and historical identity migration unproven. No archival or whole-track completion claim is made.",
+  "updated": "2026-08-31",
+  "claim_boundary": "The imported parser and offline EFetch slice passed 52 focused local tests, with seven XML-baseline Python regressions; final integrated full validation remains pending. EFetch citation-and-abstract parsing, exact PMID-batch reconciliation and synthetic complete-page mapping are implemented offline, not article full text or live retrieval. Shared-transport wiring, runtime receipt binding, authorised live execution, current provider policy/support and historical identity migration remain unproven. Track 04 stays partially_implemented/source_verified and unarchived; no review-completion claim is made.",
   "native_test_commands": [
     "cargo test -p searchright-connectors --all-features --locked",
     "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+  ],
+  "python_test_commands": [
+    "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py"
+  ],
+  "review_fixes": [
+    {"commit": "7972c0b96419dd3a63137f5957f98636259e0926", "summary": "Preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens."},
+    "Pending commit: add bounded offline EFetch citation/abstract XML parsing and request construction, exact PMID reconciliation, structured metadata and complete synthetic-page golden without switching live transport.",
+    "Pending commit: add bounded XML digest/root/path baseline checks, restricted parser-source declarations and seven Python regressions without promoting static shape checks into execution evidence."
   ],
   "assertions": [
     {
@@ -18,6 +27,11 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-connectors/src/lib.rs",
+        "crates/searchright-connectors/src/efetch.rs",
+        "crates/searchright-connectors/tests/efetch_offline.rs",
+        "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
+        "crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json",
+        "docs/pubmed-efetch-mapping.md",
         "provider-fixtures/mvp/pubmed-esearch.json",
         "provider-fixtures/mvp/pubmed-esummary.json",
         "crates/searchright-connectors/tests/parser_integrity.rs",
@@ -27,7 +41,9 @@
       ],
       "implementation_symbols": [
         "searchright_connectors::PubMedProvider",
-        "searchright_connectors::parse_pubmed_summary_page"
+        "searchright_connectors::parse_pubmed_summary_page",
+        "searchright_connectors::PubMedFetchRequest",
+        "searchright_connectors::parse_pubmed_fetch_page"
       ],
       "deterministic_tests": [
         "python scripts/check_provider_contract_baselines.py"
@@ -35,13 +51,14 @@
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
         "verification/receipts/track-04-fixture-compiler.json",
-        "verification/receipts/track-04-parser-panel.json"
+        "verification/receipts/track-04-parser-panel.json",
+        "verification/receipts/track-04-efetch-panel.json"
       ],
       "open_gates": [
-        "Complete and validate EFetch/full-report retrieval; ESummary fixtures alone do not satisfy this scope.",
-        "Finish the empty-ID/nonzero-remaining guard and final full validation; prove actual runtime receipt binding and authorised retrieval separately."
+        "Wire and validate EFetch through the shared live transport and actual runtime receipts; offline citation/abstract parsing is not article-full-text or live retrieval.",
+        "Complete final integrated full validation and separately establish authorised retrieval, current provider policy and support evidence."
       ],
-      "permitted_claim": "PubMed summary identity and full synthetic-page mapping are covered by the focused local parser tests; ESearch/ESummary integrity hardening is in progress. EFetch/full reports and actual retrieval completeness are not proven."
+      "permitted_claim": "Focused local tests cover PubMed ESearch/ESummary integrity and bounded offline EFetch request construction, citation/abstract mapping and exact PMID-batch reconciliation. Complete synthetic-page goldens do not prove live retrieval, article full text or actual search completeness."
     },
     {
       "assertion_id": "T04-A002",
@@ -65,7 +82,8 @@
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
         "verification/receipts/track-04-fixture-compiler.json",
-        "verification/receipts/track-04-parser-panel.json"
+        "verification/receipts/track-04-parser-panel.json",
+        "verification/receipts/track-04-efetch-panel.json"
       ],
       "open_gates": [
         "Complete final full validation and separately prove runtime receipt binding and authorised live behaviour.",
@@ -98,7 +116,8 @@
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
         "verification/receipts/track-04-fixture-compiler.json",
-        "verification/receipts/track-04-parser-panel.json"
+        "verification/receipts/track-04-parser-panel.json",
+        "verification/receipts/track-04-efetch-panel.json"
       ],
       "open_gates": [
         "Complete final full validation and separately prove runtime receipt binding and authorised live behaviour.",
@@ -130,7 +149,8 @@
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
         "verification/receipts/track-04-fixture-compiler.json",
-        "verification/receipts/track-04-parser-panel.json"
+        "verification/receipts/track-04-parser-panel.json",
+        "verification/receipts/track-04-efetch-panel.json"
       ],
       "open_gates": [
         "Complete final full validation; focused parser tests do not establish rate/identity policy compliance in live operation.",
@@ -150,6 +170,11 @@
         "crates/searchright-connectors/tests/canonical_pages.rs",
         "crates/searchright-connectors/tests/fixtures",
         "crates/searchright-connectors/tests/fixtures/README.md",
+        "crates/searchright-connectors/tests/efetch_offline.rs",
+        "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
+        "crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json",
+        "tests/test_provider_contract_baselines.py",
+        "docs/pubmed-efetch-mapping.md",
         "docs/provider-parser-integrity.md"
       ],
       "implementation_symbols": [
@@ -161,12 +186,13 @@
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
         "verification/receipts/track-04-fixture-compiler.json",
-        "verification/receipts/track-04-parser-panel.json"
+        "verification/receipts/track-04-parser-panel.json",
+        "verification/receipts/track-04-efetch-panel.json"
       ],
       "open_gates": [
         "Complete final full validation and prove actual runtime source-receipt binding and response-hash/replay correspondence separately."
       ],
-      "permitted_claim": "Hash-pinned synthetic inputs have manually authored complete ProviderPage goldens exercised by focused local tests. The pending-receipt placeholders do not prove actual receipt binding or live raw-response replay."
+      "permitted_claim": "Hash-pinned JSON and bounded synthetic XML inputs have manually reviewed complete ProviderPage goldens, including an independently computed raw XML digest. Seven Python regressions cover XML static admission/shape/digest checks, not Rust execution. Pending-receipt placeholders do not prove actual runtime binding or live raw-response replay."
     },
     {
       "assertion_id": "T04-A006",
@@ -187,7 +213,8 @@
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
         "verification/receipts/track-04-fixture-compiler.json",
-        "verification/receipts/track-04-parser-panel.json"
+        "verification/receipts/track-04-parser-panel.json",
+        "verification/receipts/track-04-efetch-panel.json"
       ],
       "open_gates": [
         "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts.",
