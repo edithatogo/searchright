@@ -1021,12 +1021,39 @@ mod live {
         SearchProvider, SearchRequest, Serialize, async_trait, parse_crossref_page,
         parse_europe_pmc_page, parse_openalex_page, parse_pubmed_summary_page,
     };
-    use evidence_search_core::validate_resolved_endpoint_addresses;
+    use evidence_search_core::{PageExecutionContext, validate_resolved_endpoint_addresses};
     use reqwest::header::{HeaderMap, RETRY_AFTER};
     use serde_json::Value;
     use std::net::SocketAddr;
 
     const DEFAULT_MAX_RESPONSE_BYTES: u64 = 16 * 1024 * 1024;
+    const EFETCH_MAX_RESPONSE_BYTES: u64 = 8 * 1024 * 1024;
+    const NCBI_RATE_GROUP: &str = "ncbi-eutils";
+
+    trait ByteTransport: Send + Sync {
+        fn fetch<'a>(
+            &'a self,
+            provider: &'a str,
+            endpoint: url::Url,
+            request: &'a SearchRequest,
+            maximum: u64,
+        ) -> std::pin::Pin<Box<dyn Future<Output = Result<Vec<u8>, ProviderError>> + Send + 'a>>;
+    }
+
+    struct HttpBytes;
+
+    impl ByteTransport for HttpBytes {
+        fn fetch<'a>(
+            &'a self,
+            provider: &'a str,
+            endpoint: url::Url,
+            request: &'a SearchRequest,
+            maximum: u64,
+        ) -> std::pin::Pin<Box<dyn Future<Output = Result<Vec<u8>, ProviderError>> + Send + 'a>>
+        {
+            Box::pin(fetch_bytes(provider, endpoint, request, maximum))
+        }
+    }
 
     fn parse_search_ids(payload: &Value) -> Result<(u64, Vec<String>), ProviderError> {
         let result = payload
@@ -1168,11 +1195,12 @@ mod live {
         Ok(())
     }
 
-    async fn fetch_json(
+    async fn fetch_bytes(
         provider: &str,
         endpoint: url::Url,
         request: &SearchRequest,
-    ) -> Result<(Value, String), ProviderError> {
+        maximum: u64,
+    ) -> Result<Vec<u8>, ProviderError> {
         let host = endpoint.host_str().ok_or_else(|| ProviderError::Upstream {
             provider: provider.to_owned(),
             message: "approved endpoint omitted a DNS host".to_owned(),
@@ -1225,7 +1253,8 @@ mod live {
         let maximum = request
             .policy
             .max_response_bytes
-            .unwrap_or(DEFAULT_MAX_RESPONSE_BYTES);
+            .unwrap_or(DEFAULT_MAX_RESPONSE_BYTES)
+            .min(maximum);
         if response.content_length().is_some_and(|size| size > maximum) {
             return Err(ProviderError::BudgetExceeded {
                 kind: "response_bytes",
@@ -1247,13 +1276,29 @@ mod live {
         {
             append_bounded_chunk(&mut bytes, &chunk, maximum)?;
         }
+        Ok(bytes)
+    }
+
+    fn decode_json(provider: &str, bytes: &[u8]) -> Result<Value, ProviderError> {
+        serde_json::from_slice(bytes).map_err(|_| ProviderError::MalformedResponse {
+            provider: provider.to_owned(),
+            format: "JSON",
+            message: "invalid JSON response; body redacted".to_owned(),
+        })
+    }
+
+    async fn fetch_json(
+        provider: &str,
+        endpoint: url::Url,
+        request: &SearchRequest,
+    ) -> Result<(Value, String), ProviderError> {
+        let maximum = request
+            .policy
+            .max_response_bytes
+            .unwrap_or(DEFAULT_MAX_RESPONSE_BYTES);
+        let bytes = fetch_bytes(provider, endpoint, request, maximum).await?;
         let digest = blake3::hash(&bytes).to_hex().to_string();
-        let payload =
-            serde_json::from_slice(&bytes).map_err(|error| ProviderError::MalformedResponse {
-                provider: provider.to_owned(),
-                format: "JSON",
-                message: error.to_string(),
-            })?;
+        let payload = decode_json(provider, &bytes)?;
         Ok((payload, digest))
     }
 
@@ -1302,12 +1347,14 @@ mod live {
     #[async_trait]
     impl SearchProvider for PubMedProvider {
         fn manifest(&self) -> ProviderManifest {
-            open_manifest(
+            let mut manifest = open_manifest(
                 "pubmed",
                 "PubMed",
                 &["eutils.ncbi.nlm.nih.gov"],
                 if self.email.is_some() { 350 } else { 1_000 },
-            )
+            );
+            manifest.version = format!("{}.subrequests.1", super::PROVIDER_PARSER_VERSION);
+            manifest
         }
 
         fn mode(&self) -> ProviderMode {
@@ -1318,20 +1365,52 @@ mod live {
             Some("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi".to_owned())
         }
 
-        async fn execute_page(
+        async fn execute_page(&self, _: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+            Err(context_required())
+        }
+
+        async fn execute_page_with_context(
             &self,
             request: &SearchRequest,
+            context: &mut PageExecutionContext<'_>,
         ) -> Result<ProviderPage, ProviderError> {
+            self.execute_with(request, context, false, &HttpBytes).await
+        }
+    }
+
+    fn context_required() -> ProviderError {
+        ProviderError::InvalidRequest(
+            "PubMed multi-request execution requires registry admission".to_owned(),
+        )
+    }
+
+    impl PubMedProvider {
+        async fn execute_with(
+            &self,
+            request: &SearchRequest,
+            context: &mut PageExecutionContext<'_>,
+            efetch: bool,
+            transport: &dyn ByteTransport,
+        ) -> Result<ProviderPage, ProviderError> {
+            let provider = if efetch { "pubmed-efetch" } else { "pubmed" };
             let offset = request
                 .cursor
                 .as_deref()
                 .unwrap_or("0")
                 .parse::<u32>()
-                .map_err(|error| {
-                    ProviderError::InvalidRequest(format!(
-                        "PubMed cursor must be a result offset: {error}"
-                    ))
+                .map_err(|_| {
+                    ProviderError::InvalidRequest(
+                        "PubMed cursor must be a result offset; value redacted".to_owned(),
+                    )
                 })?;
+            // Validate contact fields before even the search request. The EFetch
+            // endpoint builder owns this same conservative configuration contract.
+            super::PubMedFetchRequest {
+                pmids: vec!["1".to_owned()],
+                tool: self.tool.clone(),
+                email: self.email.clone(),
+            }
+            .endpoint()?;
             let endpoint = PubMedSearchRequest {
                 query: request.strategy.query.clone(),
                 page_size: request.page_size,
@@ -1340,11 +1419,21 @@ mod live {
                 email: self.email.clone(),
             }
             .endpoint()
-            .map_err(|error| ProviderError::Upstream {
-                provider: "pubmed".to_owned(),
-                message: error.to_string(),
+            .map_err(|_| {
+                ProviderError::InvalidRequest(
+                    "invalid PubMed search request; details redacted".to_owned(),
+                )
             })?;
-            let (search, search_digest) = fetch_json("pubmed", endpoint, request).await?;
+            let maximum = request
+                .policy
+                .max_response_bytes
+                .unwrap_or(DEFAULT_MAX_RESPONSE_BYTES);
+            let search_bytes = context
+                .run_subrequest(|| transport.fetch(provider, endpoint, request, maximum))
+                .await?;
+            enforce_byte_limit(&search_bytes, maximum)?;
+            let search_digest = blake3::hash(&search_bytes).to_hex().to_string();
+            let search = decode_json(provider, &search_bytes)?;
             let (count, pmids) = parse_search_ids(&search)?;
             validate_search_progress(count, &pmids, offset)?;
             let count = Some(count);
@@ -1361,20 +1450,55 @@ mod live {
                     )]),
                 });
             }
-            let summary_endpoint = PubMedSummaryRequest {
-                pmids: pmids.clone(),
-                tool: self.tool.clone(),
-                email: self.email.clone(),
+            let mut page;
+            let record_digest;
+            if efetch {
+                let endpoint = super::PubMedFetchRequest {
+                    pmids: pmids.clone(),
+                    tool: self.tool.clone(),
+                    email: self.email.clone(),
+                }
+                .endpoint()?;
+                let maximum = maximum.min(EFETCH_MAX_RESPONSE_BYTES);
+                let bytes = context
+                    .run_subrequest(|| transport.fetch(provider, endpoint, request, maximum))
+                    .await?;
+                enforce_byte_limit(&bytes, maximum)?;
+                let xml =
+                    std::str::from_utf8(&bytes).map_err(|_| ProviderError::MalformedResponse {
+                        provider: provider.to_owned(),
+                        format: "XML",
+                        message: "response is not UTF-8; body redacted".to_owned(),
+                    })?;
+                page = super::parse_pubmed_fetch_page(xml, &pmids)?;
+                record_digest = blake3::hash(&bytes).to_hex().to_string();
+            } else {
+                let summary_endpoint = PubMedSummaryRequest {
+                    pmids: pmids.clone(),
+                    tool: self.tool.clone(),
+                    email: self.email.clone(),
+                }
+                .endpoint()
+                .map_err(|error| ProviderError::Upstream {
+                    provider: "pubmed".to_owned(),
+                    message: error.to_string(),
+                })?;
+                let bytes = context
+                    .run_subrequest(|| {
+                        transport.fetch(provider, summary_endpoint, request, maximum)
+                    })
+                    .await?;
+                enforce_byte_limit(&bytes, maximum)?;
+                record_digest = blake3::hash(&bytes).to_hex().to_string();
+                let summary = decode_json(provider, &bytes)?;
+                page = parse_pubmed_summary_page(&summary)?;
+                reconcile_summary(&pmids, &page)?;
             }
-            .endpoint()
-            .map_err(|error| ProviderError::Upstream {
-                provider: "pubmed".to_owned(),
-                message: error.to_string(),
-            })?;
-            let (summary, summary_digest) = fetch_json("pubmed", summary_endpoint, request).await?;
-            let mut page = parse_pubmed_summary_page(&summary)?;
-            reconcile_summary(&pmids, &page)?;
-            let next = offset.saturating_add(u32::try_from(pmids.len()).unwrap_or(u32::MAX));
+            let next = offset
+                .checked_add(u32::try_from(pmids.len()).map_err(|_| context_required())?)
+                .ok_or_else(|| {
+                    ProviderError::InvalidRequest("PubMed result offset overflow".to_owned())
+                })?;
             page.total_available = count;
             page.next_cursor = count
                 .filter(|total| u64::from(next) < *total)
@@ -1383,10 +1507,66 @@ mod live {
                 "raw_response_digests".to_owned(),
                 Value::Array(vec![
                     Value::String(search_digest),
-                    Value::String(summary_digest),
+                    Value::String(record_digest),
                 ]),
             );
             Ok(page)
+        }
+    }
+
+    fn enforce_byte_limit(bytes: &[u8], maximum: u64) -> Result<(), ProviderError> {
+        if u64::try_from(bytes.len()).unwrap_or(u64::MAX) > maximum {
+            return Err(ProviderError::BudgetExceeded {
+                kind: "response_bytes",
+                limit: maximum,
+            });
+        }
+        Ok(())
+    }
+
+    /// Explicit opt-in `ESearch` plus `EFetch` citation/abstract adapter, not full text.
+    #[derive(Debug, Clone)]
+    pub struct PubMedEfetchProvider {
+        inner: PubMedProvider,
+    }
+
+    impl PubMedEfetchProvider {
+        /// Construct without making any network request. Registry context is required.
+        pub const fn new(
+            tool: Option<String>,
+            email: Option<String>,
+        ) -> Result<Self, ProviderError> {
+            Ok(Self {
+                inner: PubMedProvider { tool, email },
+            })
+        }
+    }
+
+    #[async_trait]
+    impl SearchProvider for PubMedEfetchProvider {
+        fn manifest(&self) -> ProviderManifest {
+            let mut manifest = self.inner.manifest();
+            "pubmed-efetch".clone_into(&mut manifest.provider_id);
+            "PubMed EFetch citations and abstracts".clone_into(&mut manifest.display_name);
+            manifest
+        }
+        fn mode(&self) -> ProviderMode {
+            ProviderMode::Live
+        }
+        fn endpoint_label(&self) -> Option<String> {
+            self.inner.endpoint_label()
+        }
+        async fn execute_page(&self, _: &SearchRequest) -> Result<ProviderPage, ProviderError> {
+            Err(context_required())
+        }
+        async fn execute_page_with_context(
+            &self,
+            request: &SearchRequest,
+            context: &mut PageExecutionContext<'_>,
+        ) -> Result<ProviderPage, ProviderError> {
+            self.inner
+                .execute_with(request, context, true, &HttpBytes)
+                .await
         }
     }
 
@@ -1543,14 +1723,32 @@ mod live {
         registry: &mut ProviderRegistry,
         config: LiveProviderConfig,
     ) -> Result<(), ProviderError> {
-        registry.register(Arc::new(PubMedProvider::new(
-            config.ncbi_tool,
-            config.ncbi_email,
-        )?))?;
+        registry.register_with_rate_group(
+            Arc::new(PubMedProvider::new(config.ncbi_tool, config.ncbi_email)?),
+            NCBI_RATE_GROUP,
+        )?;
         registry.register(Arc::new(EuropePmcProvider::new()?))?;
         registry.register(Arc::new(CrossrefProvider::new(config.crossref_mailto)?))?;
         registry.register(Arc::new(OpenAlexProvider::new(config.openalex_mailto)?))?;
         Ok(())
+    }
+
+    /// Explicitly register citation/abstract `EFetch` alongside the default summary
+    /// adapter, sharing the registry-local NCBI admission group. No live call occurs.
+    pub fn register_pubmed_efetch_provider(
+        registry: &mut ProviderRegistry,
+        tool: Option<String>,
+        email: Option<String>,
+    ) -> Result<(), ProviderError> {
+        registry.register_with_rate_group(
+            Arc::new(PubMedEfetchProvider::new(tool, email)?),
+            NCBI_RATE_GROUP,
+        )
+    }
+
+    #[cfg(test)]
+    mod orchestration_tests {
+        include!("pubmed_orchestration_tests.rs");
     }
 
     #[cfg(test)]
@@ -1657,8 +1855,9 @@ mod live {
 
 #[cfg(feature = "live")]
 pub use live::{
-    CrossrefProvider, EuropePmcProvider, LiveProviderConfig, OpenAlexProvider, PubMedProvider,
-    register_mvp_live_providers,
+    CrossrefProvider, EuropePmcProvider, LiveProviderConfig, OpenAlexProvider,
+    PubMedEfetchProvider, PubMedProvider, register_mvp_live_providers,
+    register_pubmed_efetch_provider,
 };
 
 #[cfg(test)]
