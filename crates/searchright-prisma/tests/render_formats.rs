@@ -90,3 +90,74 @@ fn presentation_escapes_untrusted_labels() -> Result<(), Box<dyn std::error::Err
     assert!(!typst.contains("\n#panic"));
     Ok(())
 }
+
+#[test]
+fn every_presentation_format_contains_each_count_reason_and_lineage()
+-> Result<(), Box<dyn std::error::Error>> {
+    let flow = flow()?;
+    let mut rows = vec![
+        ("Review".to_owned(), flow.review_id.clone()),
+        ("Variant".to_owned(), "updated_review".to_owned()),
+        ("Prior review".to_owned(), "prior-1".to_owned()),
+    ];
+    for (label, count) in [
+        ("Records from databases", flow.records_databases),
+        ("Records from registers", flow.records_registers),
+        ("Records from other sources", flow.records_other),
+        ("Duplicates removed", flow.duplicates_removed),
+        ("Automation removals", flow.automation_removed),
+        ("Other removals", flow.other_removed),
+        ("Records screened", flow.records_screened),
+        ("Records excluded", flow.records_excluded),
+        ("Reports sought", flow.reports_sought),
+        ("Reports not retrieved", flow.reports_not_retrieved),
+        ("Reports assessed", flow.reports_assessed),
+        ("Reports included", flow.reports_included),
+        ("Studies included", flow.studies_included),
+    ] {
+        rows.push((label.to_owned(), count.to_string()));
+    }
+    for reason in &flow.full_text_exclusions {
+        rows.push((
+            format!("Exclusion {}: {}", reason.reason_id, reason.label),
+            reason.count.to_string(),
+        ));
+    }
+    for format in [
+        FlowFormat::Markdown,
+        FlowFormat::Mermaid,
+        FlowFormat::Svg,
+        FlowFormat::Typst,
+        FlowFormat::DocxFriendlyHtml,
+    ] {
+        let rendered = render_flow(
+            &flow,
+            PrismaFlowVariant::UpdatedReview,
+            Some("prior-1"),
+            format,
+        )?;
+        for (label, value) in &rows {
+            let expected = match format {
+                FlowFormat::Markdown => format!("| {label} | {} |", value.replace('_', "&#95;")),
+                FlowFormat::Mermaid => format!("%% {label}: {value}\n"),
+                FlowFormat::Svg => format!(">{label}: {value}</text>"),
+                FlowFormat::Typst => format!(
+                    "text({}), text({}),",
+                    serde_json::to_string(label)?,
+                    serde_json::to_string(value)?
+                ),
+                FlowFormat::DocxFriendlyHtml => {
+                    format!("<th scope=\"row\">{label}</th><td>{value}</td>")
+                }
+                FlowFormat::Json => {
+                    return Err("JSON has its separate lossless-projection assertion".into());
+                }
+            };
+            assert!(
+                rendered.contains(&expected),
+                "{format:?} omitted or changed {label}"
+            );
+        }
+    }
+    Ok(())
+}
