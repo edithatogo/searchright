@@ -1,4 +1,5 @@
-//! Local sibling handoff admission, without discovery, invocation or external effects.
+//! Local sibling handoff admission, without discovery or package invocation.
+//! The supplied approval adapter may atomically consume one-use approvals.
 //!
 //! Pins must come from independently trusted owner policy, not from the candidate.
 //! Matching bytes proves integrity only, not provenance, licence clearance, host
