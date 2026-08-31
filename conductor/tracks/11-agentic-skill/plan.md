@@ -68,3 +68,9 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 - [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.
+
+### Runtime admission follow-up in progress
+
+- [~] Implement and review local sibling byte/handoff admission and isolated
+  host-evaluation failure handling. This is repository-owned preparation;
+  automated invocation and all four mandatory gates remain pending.
