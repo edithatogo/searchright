@@ -1,13 +1,15 @@
 {
   "schema_version": "org.searchright.track-review-verification.v1",
   "track_id": "08",
-  "observed_at": "2026-08-31T03:13:25Z",
-  "status": "focused_passed_full_verification_pending",
+  "observed_at": "2026-08-31T04:34:35Z",
+  "status": "passed_with_external_blockers",
+  "verified_source_revision": "42197c213664cd64eb4f2726e8b64342a3a58b50",
+  "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
   "source_binding": "Exact tracked source bytes are bound by verification/receipts/source-manifest.sha256 in the containing commit.",
   "checks": [
-    {"command": "cargo test -p searchright-prisma --locked", "status": "passed", "tests_passed": 14, "toolchain": "Homebrew Rust 1.98.0; pinned 1.97.1 full verification pending"},
+    {"command": "cargo test -p searchright-prisma --locked", "status": "passed", "tests_passed": 14, "toolchain": "Initial focused run Homebrew Rust 1.98.0; subsequent full workspace run pinned Rust 1.97.1"},
     {"command": "cargo clippy -p searchright-prisma --all-targets --locked -- -D warnings", "status": "passed", "notes": "Existing dependency MSRV configuration warning remains visible."},
-    {"command": "bash scripts/verify.sh", "status": "failed_before_compiler_gates", "notes": "Initial dirty-tree run: 62 Python tests and 54/57 static gates passed. Missing local TypeScript/Pyright tools, stale source hash manifest, and dirty-tree packaging blocked full run; revalidation pending."},
+    {"command": "PATH=/Users/doughnut/.rustup/toolchains/1.97.1-aarch64-apple-darwin/bin:$PATH bash scripts/verify.sh", "status": "passed", "exit_code": 0, "toolchain": "rustc 1.97.1 (8bab26f4f 2026-07-14), aarch64-apple-darwin", "python_tests_passed": 62, "static_gates_passed": 57, "native_tests_passed": 369, "native_tests_skipped": 0, "native_tests_leaky": 2, "log_sha256": "3dfa9b85563a351fec1688bdf9571ff0f1befe29e5364cbf6196624fcf058da0", "notes": "Format, strict all-target all-feature workspace Clippy, Rust schema parity, nextest, doctests, rustdoc and cargo-deny completed. Optional cargo-machete unavailable and skipped. Initial failed pre-commit/static runs were repaired without claiming their success."},
     {"command": "typst compile /tmp/searchright-track08-normal.typ /tmp/searchright-track08-normal.pdf", "status": "passed", "exit_code": 0, "toolchain": "typst 0.15.1", "source_sha256": "cb879e3417c2adb665ec89ae28c7eaa83a1d36b889afe5954b9309959f165166", "output_sha256": "514eea3972f0b4f3918738ad509ab662002f4b7755e309944179bfef4d3f63e2"},
     {"command": "typst compile /tmp/searchright-track08-hostile.typ /tmp/searchright-track08-hostile.pdf", "status": "passed", "exit_code": 0, "toolchain": "typst 0.15.1", "source_sha256": "8dcb2bb5b27d5c429e1ab7c438df7ce3be83e54aeedc1596e50961611401991d", "output_sha256": "a8205a3f77e4aa30a4f706b544460f153ece7f5006804f61af982bf53f96d837"}
   ],
