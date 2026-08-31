@@ -49,3 +49,4 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 - [x] Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.
+- [x] Reconcile historical aggregate-verification failures with exact-tree full verification and separate frozen cargo-vet policy evidence (`f372c67`); verification/receipts/track-00-verification-reconciliation.json preserves exemption limits and the unresolved upstream registration gate.
