@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "08",
+  "observed_on": "2026-08-31",
+  "status": "focused_passed_pending_full_verification",
+  "source_binding": "Containing commit source-manifest.sha256 binds implementation and original synthetic fixture generator bytes.",
+  "checks": [
+    {"command": "cargo test -p searchright-prisma --locked --tests", "status": "passed", "exit_code": 0, "tests_passed": 15, "toolchain": "Rust 1.97.1 aarch64-apple-darwin", "log_sha256": "be4b793f7b7c46569939275a36c587259b7343d218bf9bb871dec14109dfdc98", "notes": "One regression covers seven collection items by six empty, whitespace, mixed and populated cases, preserving original bytes and checking Partial notes."},
+    {"command": "LibreOffice --headless --convert-to 'docx:Office Open XML Text', then --convert-to pdf; pdftoppm -scale-to 1500 -png", "status": "passed", "exit_code": 0, "toolchain": "LibreOffice 26.2.5.2; Poppler 26.08.0", "network_policy": "sandbox-exec denies network operations except local Unix sockets needed by LibreOffice IPC; isolated temporary user profile", "notes": "Normal and hostile synthetic HTML imported to real DOCX files and then rendered to two-page PDFs. All four final pages visually inspected: labels wrap without clipping, counts/reasons remain visible, repeated table headers retained. Prior bare docx conversion returned no export filter despite zero exit; not counted as success."}
+  ],
+  "ordered_cell_comparison": {"status": "passed", "normal_cells": 40, "hostile_cells": 40, "method": "HTMLParser th/td text compared in exact order with OOXML word/document.xml table-cell w:t text, using zipfile and ElementTree. All 40 cells in each fixture matched without whitespace normalization."},
+  "artifacts": {
+    "normal_html_sha256": "34d599cdd2163b493266d134c35e9243ed6984eb1aa22ee171843271943a7c32",
+    "hostile_html_sha256": "0fd469fb23e4b4f0069e1289e9c007c4739ccb273a69bfdc459c9f997dec2f65",
+    "normal_docx_sha256": "b13ba87f0f6c2dc5e7aa60c9803e828b78abf3fbbd0619ba207bbe3c294e37c7",
+    "hostile_docx_sha256": "75793eaf1cde017c6f77b669d05fbb0543cde2608152618bc559c830ead38087",
+    "normal_docx_pdf_sha256": "dad505cb7dd367fdfcb3dcc2acf1fbc9c995f02d4a24f8dde52333ac205894cd",
+    "hostile_docx_pdf_sha256": "3ea6b8b4e6d2a8fa30f5a095f57b0ede7cba2a281c6d0dd383060ed7553aa7ba",
+    "normal_docx_pages_sha256": ["cd580ac7ccb56d0366efcfb758a8869dea246745dddf22eb5be6b3af9f141a6b", "6a5170c1936600135a4e731d4f06d0c82b6fc6101fcde355b9cee3983af04b49"],
+    "hostile_docx_pages_sha256": ["74cfa3bfb99c7d5a951d3e7ae203fa9afac27344f0e806a45eb5d2dc3b0ab75d", "f3729b49c0c6040de1899f33e782a83ad22137248192bee97c1690610b5ce2d8"]
+  },
+  "limits": [
+    "Artifacts remain local temporary diagnostics, not published outputs. DOCX bytes are LibreOffice conversion products; the library emits HTML only.",
+    "No Microsoft Word, browser or accessibility certification is claimed; arbitrary long unbroken labels and other document consumers remain unverified.",
+    "Complete PRISMA-S items mean populated reporting links, not verified evidence truth or methodological acceptance.",
+    "Full workspace verification and independent coding review are pending for this follow-up; previous receipts retain their exact historical scope.",
+    "Updated cohort contract completeness, PRISMA.jl parity/ownership and independent PRESS approval remain open."
+  ]
+}

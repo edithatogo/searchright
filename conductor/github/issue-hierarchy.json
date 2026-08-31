@@ -4231,6 +4231,39 @@
       }
     },
     {
+      "key": "track-08-phase-4-task-06",
+      "title": "Track 08 / P4 / T06: Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after f\u2026",
+      "kind": "task",
+      "parent_key": "track-08-phase-4",
+      "body_path": "conductor/github/issues/track-08-phase-4-task-06.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:08",
+        "phase:4",
+        "state:source-complete"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "closed",
+      "track_id": "08",
+      "phase_number": 4,
+      "task_number": 6,
+      "project_fields": {
+        "Delivery status": "Source complete",
+        "Work kind": "Task",
+        "Horizon": "Mvp",
+        "Evidence level": "Source Verified",
+        "Implementation state": "Partially Implemented",
+        "MoSCoW": "Must",
+        "External gate": "No",
+        "Conductor key": "track-08-phase-4-task-06",
+        "Conductor path": "conductor/tracks/08-prisma-press-reporting/plan.md",
+        "Track ID": "08",
+        "Phase": 4,
+        "Task": 6
+      }
+    },
+    {
       "key": "track-09",
       "title": "Track 09: CLI MVP",
       "kind": "track",
