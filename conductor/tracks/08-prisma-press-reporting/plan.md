@@ -30,7 +30,6 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-08-phase-3 -->
 
 - [ ] Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.
-  - [x] Implement deterministic library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML tables with shared arithmetic validation, update lineage, text equivalents and injection tests; external renderer execution and PRISMA.jl parity remain open.
 - [ ] Obtain independent PRESS review of representative generated strategies and appendices.
 
 ## Phase 4: Review and closeout
@@ -41,3 +40,5 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+
+- [x] Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections with deterministic and injection tests (`6f0dbd1`); external renderer execution, complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.
