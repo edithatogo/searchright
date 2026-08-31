@@ -39,7 +39,7 @@
     "Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.",
     "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
   ],
-  "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists. The additive core-owned subrequest context has 74 focused native tests and strict Clippy passing; full validation for this slice and live-adapter adoption remain pending. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval; no live provider, downstream integration, dual-run, SemVer, rollback, release or archival claim is made.",
+  "claim_boundary": "The additive core-owned subrequest context passed full local validation on snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257 with repository-pinned Rust/Cargo 1.97.1: 75 Python tests, 57 static gates, 395 native tests with zero skipped, and 23 cargo-vet governance tests. The earlier 74 focused native tests and strict Clippy used Homebrew 1.98.0. Evidence remains source_verified/partially_implemented; the validated snapshot is not a claim about merged current main. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval. Live-adapter adoption, transport adversarial/hosted evidence, complete downstream parity matrix, Sourceright cutover, SemVer and rollback remain open; no live, release or archival claim.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-03",
@@ -105,6 +105,10 @@
     {
       "commit": "390ae69ba78b9431e464067ead51b75d8ecd1f2a",
       "summary": "Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions."
+    },
+    {
+      "commit": "935d725877f6a6ca82bacefd8982e613981f068c",
+      "summary": "Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover."
     }
   ]
 }
