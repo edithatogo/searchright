@@ -1,0 +1,46 @@
+{
+  "schema_version": "org.searchright.agent-panel-record.v1",
+  "track_id": "04",
+  "date": "2026-08-31",
+  "scope": "Offline parsed synthetic pages through FixtureProvider, ProviderRegistry, issued receipts and MemoryPageCache; no live adapters.",
+  "test_source_sha256": "c88b6cd37a7c902a8592ac1d39933ba18e213970dfc972ecc5e5b5745c83e38a",
+  "first_passes": [
+    {"agent": "track03_delta_review", "roles": ["implementation", "testing"], "result": "Exercise four JSON parsers plus EFetch through the actual runtime; no production-code or dependency change in this slice."},
+    {"agent": "track03_safety", "roles": ["security", "adversarial"], "result": "Assert actual provider calls, precise cache/page counts, stale payload digest and wrong-key failure without fallback/overwrite, and distinguish trusted-backend corruption detection from authenticity."},
+    {"agent": "track03_methodology", "roles": ["methodology", "acceptance"], "result": "Fresh receipts bind returned records, not raw-response diagnostics. Preserve source pagination limitations and compare replay payloads after normalizing only receipt IDs; fixture-added raw hashes are not live propagation."}
+  ],
+  "baseline": {
+    "command": "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
+    "exit_code": 101,
+    "passed": 6,
+    "failed": 1,
+    "expected_failure": "exact_record_budget_with_continuation_is_explicitly_partial",
+    "test_source_sha256": "9e3492bfa2145d68e7fca0fbf2979c81039e17f594e2301535e63d3a373bb469",
+    "log_sha256": "c8950492a40aecce69c720663884c1e43df83933e8953e8ec15c0e8cac51e162",
+    "interpretation": "Observed existing core warning gap, repaired in a separately scoped Track03 change; this baseline is not a passing acceptance receipt."
+  },
+  "review_fix": "Mixed-cache output now compares complete ordered records after normalizing only source_receipt_id.",
+  "rereviews": [{"agent": "track03_safety", "result": "Mixed-cache comparison gap fixed; no remaining blocking test-review finding."}, {"agent": "track03_methodology", "result": "Tests distinguish fixture scheduling, cache-envelope integrity and final record binding; no end-to-end raw-response provenance claim."}],
+  "status": "focused_runtime_and_clippy_passed_full_validation_pending",
+  "post_budget_attempt": {
+    "test_source_sha256": "7b6b5d9c764af9424c4e8074e2517d96a03ae63af8a16068869acf3904c5d432",
+    "focused_tests_passed": 59,
+    "runtime_tests_passed": 7,
+    "clippy_exit_code": 101,
+    "clippy_finding": "Redundant clone in the new mixed-cache comparison at runtime_receipts.rs:354.",
+    "log": "/tmp/searchright-track04-post-budget-focused.log",
+    "log_sha256": "94da705c39a0c6a0e5bd37a8fbf6574e4205fb8348b222dbf5b1ed6f91578024",
+    "remediation": "Move mixed.records instead of cloning it; current runtime and strict Clippy rerun pending.",
+    "boundary": "Passing tests did not make the combined validation successful; strict Clippy failed."
+  },
+  "integration_base": "880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7",
+  "budget_fix_base": "baa4aa3c261f6fa6fae8bb88b0655b90a83554b3",
+  "validation_boundary": "The prior six-pass/one-failure baseline and post-budget test-pass/Clippy-failure attempt remain historical. The Track03 budget fix is in ancestry; all seven corrected-source runtime tests and strict connector Clippy pass. Full-workspace validation remains pending.",
+  "current_validation": {
+    "commands": ["cargo test -p searchright-connectors --test runtime_receipts --all-features --locked", "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"],
+    "exit_code": 0,
+    "runtime_tests_passed": 7,
+    "log_sha256": "c4ef8fecdc49943c44380016409c5cf2005bb7603c5a8f0f691d2645accee371"
+  },
+  "authority_boundary": "No live-provider, authenticated tenancy, upstream completeness, end-to-end raw-response-to-receipt chain, cache-backend authenticity, source-policy approval, full-text or archival claim."
+}

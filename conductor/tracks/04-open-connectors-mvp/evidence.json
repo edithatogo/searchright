@@ -16,6 +16,7 @@
     "provider-fixtures/mvp/openalex.json",
     "crates/searchright-connectors/src/efetch.rs",
     "crates/searchright-connectors/tests/efetch_offline.rs",
+    "crates/searchright-connectors/tests/runtime_receipts.rs",
     "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
     "crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json",
     "tests/test_provider_contract_baselines.py",
@@ -76,15 +77,19 @@
   "runtime_evidence": [
     "verification/receipts/track-04-fixture-compiler.json",
     "verification/receipts/track-04-parser-panel.json",
-    "verification/receipts/track-04-efetch-panel.json"
+    "verification/receipts/track-04-efetch-panel.json",
+    "verification/receipts/track-04-runtime-fixture-panel.json"
   ],
   "external_evidence": [],
   "review_fixes": [
     {
-      "commit": "7972c0b96419dd3a63137f5957f98636259e0926",
-      "summary": "Preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens."
+      "commit": "ff359cf9261872beb55a663e4eea6f043e58e443",
+      "summary": "Rebased parser integrity fix: preserve stable PubMed/Crossref identity, correct Europe PMC/OpenAlex identity forward-only, reject malformed/incomplete retrieval and verify complete synthetic page goldens; historical validation remains bound to its recorded revisions."
     },
-    "Pending commit: add bounded offline EFetch citation/abstract XML parsing and request construction, exact PMID reconciliation, structured metadata and complete synthetic-page golden without switching live transport.",
-    "Pending commit: add bounded XML digest/root/path baseline checks, restricted parser-source declarations and seven Python regressions without promoting static shape checks into execution evidence."
+    {
+      "commit": "880800bc1deebf8ee3f5dc7ab7c489b1b77a93c7",
+      "summary": "Rebased bounded offline EFetch parser/request, exact PMID reconciliation, structured metadata and synthetic-page golden; XML static baseline and seven Python regressions remain distinct from execution evidence."
+    },
+    "Pending validation: parser-to-FixtureProvider/ProviderRegistry receipt binding, memory-cache replay and budget-warning tests on the rebased Track03 budget fix; not a live raw-response provenance chain."
   ]
 }
