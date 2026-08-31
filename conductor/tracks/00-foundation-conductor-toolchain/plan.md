@@ -21,6 +21,8 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `verification/receipts/track-00-conductor-review.json`
   - [x] Present source path: `scripts/install-conductor.sh`
   - [x] Present source path: `scripts/install-conductor.ps1`
+  - [x] Present source path: `scripts/conductor_status.py`
+  - [x] Present source path: `tests/test_conductor_status.py`
   - [x] Assertion ledger: `conductor/tracks/00-foundation-conductor-toolchain/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -45,3 +47,5 @@ GitHub issue key: `track-00`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+
+- [x] Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.

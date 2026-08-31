@@ -38,7 +38,9 @@
         "verification/receipts/track-00-local-verification.json",
         "verification/receipts/track-00-conductor-review.json",
         "scripts/install-conductor.sh",
-        "scripts/install-conductor.ps1"
+        "scripts/install-conductor.ps1",
+        "scripts/conductor_status.py",
+        "tests/test_conductor_status.py"
       ],
       "dependencies": [],
       "evidence_level": "source_verified",
@@ -56,12 +58,14 @@
         "verification/receipts/track-00-conductor-review.json"
       ],
       "source_verified_on": "2026-08-12",
-      "updated": "2026-08-12",
       "slug": "foundation-conductor-toolchain",
       "status": "external_evidence_required",
       "title": "Foundation, Conductor and toolchain",
       "track_id": "00",
-      "updated": "2026-08-12"
+      "additional_closeout_tasks": [
+        "Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence."
+      ],
+      "updated": "2026-08-31"
     },
     {
       "blockers": [],

@@ -6,8 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
-import sys
 from pathlib import Path
 
 
@@ -19,6 +17,13 @@ def read(root: Path, relative: str) -> str:
     if not text.strip():
         raise ValueError(f"empty file: {relative}")
     return text
+
+
+def read_object(root: Path, relative: str) -> dict:
+    value = json.loads(read(root, relative))
+    if not isinstance(value, dict):
+        raise ValueError(f"JSON object required: {relative}")
+    return value
 
 
 def audit(root: Path) -> dict:
@@ -51,7 +56,9 @@ def audit(root: Path) -> dict:
         if re.search(r"isolation\s+mode\s*:\s*worktree", workflow, re.I):
             result["isolation"]["state"] = "inconsistent"
             errors.append("worktree isolation configured: exact lease validation is required separately")
-        coverage = json.loads(read(root, "conductor/roadmap-coverage.json"))["tracks"]
+        coverage = read_object(root, "conductor/roadmap-coverage.json")["tracks"]
+        if not isinstance(coverage, list) or any(not isinstance(entry, dict) for entry in coverage):
+            raise ValueError("roadmap tracks must be an array of objects")
         entries = {entry["track_id"]: entry for entry in coverage}
         if len(entries) != len(coverage):
             errors.append("duplicate roadmap track IDs")
@@ -65,8 +72,10 @@ def audit(root: Path) -> dict:
                 continue
             cells = [cell.strip() for cell in line.strip("|").split("|")]
             ident = cells[0]
+            if len(cells) != (4 if archived else 7):
+                raise ValueError(f"invalid registry row: {ident}")
             match = re.fullmatch(r"\[[^]]+\]\(([^)]+)\)", cells[1])
-            if not match or len(cells) != (4 if archived else 7):
+            if not match:
                 raise ValueError(f"invalid registry row: {ident}")
             if ident in rows:
                 errors.append(f"duplicate registry track: {ident}")
@@ -84,9 +93,11 @@ def audit(root: Path) -> dict:
                 read(root, "conductor/" + target)
                 if (root / "conductor" / target).resolve() != root / directory / "spec.md":
                     raise ValueError("registry target differs from canonical specification")
-                metadata = json.loads(read(root, directory + "/metadata.json"))
-                evidence = json.loads(read(root, directory + "/evidence.json"))
+                metadata = read_object(root, directory + "/metadata.json")
+                evidence = read_object(root, directory + "/evidence.json")
                 lifecycle = entry.get("lifecycle", "active")
+                if lifecycle not in ("active", "archived"):
+                    errors.append(f"track {ident}: invalid lifecycle")
                 if registry_archived != (lifecycle == "archived"):
                     errors.append(f"track {ident}: registry archive disagreement")
                 if cells[-1 if registry_archived else 5] != entry["evidence_level"]:
@@ -99,7 +110,16 @@ def audit(root: Path) -> dict:
                             errors.append(f"track {ident}: {key} disagreement")
                     if record.get("lifecycle", "active") != lifecycle:
                         errors.append(f"track {ident}: lifecycle disagreement")
+                    if record.get("gates", []) != entry.get("gates", []):
+                        errors.append(f"track {ident}: gate disagreement")
+                    if lifecycle == "archived" and record.get("archived_on") != entry.get("archived_on"):
+                        errors.append(f"track {ident}: archive date disagreement")
+                if evidence.get("blockers", []) != entry.get("blockers", []):
+                    errors.append(f"track {ident}: blocker disagreement")
                 plan = re.sub(r"```.*?```", "", read(root, directory + "/plan.md"), flags=re.S)
+                banner = f"Current status: **{entry['status']}**. Implementation state: **{entry['implementation_state']}**. Evidence level: **{entry['evidence_level']}**."
+                if banner not in plan:
+                    errors.append(f"track {ident}: plan status disagreement")
                 tasks = re.findall(r"^- \[([ x~])\] (.+)$", plan, re.M)
                 if not tasks:
                     errors.append(f"track {ident}: no top-level tasks")
@@ -139,17 +159,9 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     args = parser.parse_args()
     result = audit(args.root)
-    # These existing repository gates only read source when invoked this way.
-    result["native_checks"] = []
-    for command in (["scripts/check_roadmap_coverage.py"], ["scripts/sync_track_evidence.py", "--check"]):
-        try:
-            run = subprocess.run([sys.executable, "-B", *command], cwd=args.root, capture_output=True, text=True, check=False)
-            exit_code = run.returncode
-        except OSError:
-            exit_code = 127
-        result["native_checks"].append({"command": command, "exit_code": exit_code})
-        if exit_code:
-            result["errors"].append(f"native check failed: {' '.join(command)}; run directly for diagnostics")
+    # An inspected checkout is data, never a source of executable validator code.
+    # Run the broader native suite separately only after trusting that checkout.
+    result["native_checks"] = "not_executed_by_read_only_status"
     result["status"] = "failed" if result["errors"] else "passed"
     print(json.dumps(result, indent=2, sort_keys=True))
     return int(bool(result["errors"]))
