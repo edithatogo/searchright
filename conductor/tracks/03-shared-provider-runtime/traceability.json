@@ -5,7 +5,7 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/03-shared-provider-runtime/spec.md#scope",
-  "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists; no live provider, downstream integration, dual-run, SemVer, rollback, release or remote mutation claim is made.",
+  "claim_boundary": "Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists. The additive core-owned subrequest context has 74 focused native tests and strict Clippy passing; full validation for this slice and live-adapter adoption remain pending. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval; no live provider, downstream integration, dual-run, SemVer, rollback, release or archival claim is made.",
   "assertions": [
     {
       "assertion_id": "T03-A001",
@@ -58,11 +58,18 @@
       "implementation_paths": [
         "crates/evidence-search-core/src/provider.rs",
         "crates/searchright-connectors/src/lib.rs",
-        "integration/provider-contract-baselines.json"
+        "integration/provider-contract-baselines.json",
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/evidence-search-core/tests/subrequest_context.rs",
+        "docs/provider-subrequest-context.md"
       ],
       "implementation_symbols": [
         "evidence_search_core::provider::ProviderRegistry",
-        "evidence_search_core::provider::ExecutionPolicy"
+        "evidence_search_core::provider::ExecutionPolicy",
+        "evidence_search_core::provider::PageExecutionContext",
+        "evidence_search_core::provider::PageExecutionContext::run_subrequest",
+        "evidence_search_core::provider::ProviderRegistry::register_with_rate_group",
+        "evidence_search_core::provider::SearchProvider::execute_page_with_context"
       ],
       "deterministic_tests": [
         "python scripts/check_provider_contract_baselines.py"
@@ -71,13 +78,20 @@
         "conductor/tracks/03-shared-provider-runtime/evidence.json",
         "verification/receipts/track-03-provider-runtime-review.json",
         "verification/receipts/track-03-reconciled-validation.json",
-        "verification/receipts/track-03-budget-warning.json"
+        "verification/receipts/track-03-budget-warning.json",
+        "verification/receipts/track-03-subrequest-context.json"
       ],
       "open_gates": [
         "Obtain exact-revision compiler CI and transport-level adversarial evidence for resolve-validate-pin behavior, proxy suppression, redirects and response bounds.",
-        "Prove cache and error parity against Sourceright."
+        "Prove cache and error parity against Sourceright.",
+        "Complete full validation of the additive subrequest-context slice and adopt it in each live adapter before claiming per-HTTP admission; legacy defaults still admit one page, not hidden HTTP calls."
       ],
-      "permitted_claim": "The shared runtime and resolve-validate-pin live transport pass local compiler tests; CI, Sourceright parity and opt-in live execution are not proven."
+      "permitted_claim": "The shared runtime and resolve-validate-pin live transport pass local compiler tests. The nonserialized core page context and explicit registry-local rate groups pass 16 focused subrequest tests plus 58 core unit tests and strict Clippy. Admission, shared floors, cooperative deadlines/cancellation and cumulative subrequest bounds are fixture-tested; legacy timeout tightening is deliberate. This slice has no live-adapter adoption and full validation remains pending; current provider-policy compliance, CI, Sourceright parity and opt-in live execution are not proven.",
+      "native_test_commands": [
+        "cargo test -p evidence-search-core --test subrequest_context --locked",
+        "cargo test -p evidence-search-core --lib --locked",
+        "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
+      ]
     },
     {
       "assertion_id": "T03-A004",

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-03-phase-4`
 Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Disable proxy bypass, deny non-global address forms and bound streamed responses.
   - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Fail closed on blank parity approvals and incomplete migration-case coverage.
   - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Reconcile source-level claims with pinned Searchright and Sourceright evidence.

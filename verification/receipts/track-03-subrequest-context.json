@@ -1,0 +1,36 @@
+{
+  "schema_version": "org.searchright.agent-panel-record.v1",
+  "track_id": "03",
+  "date": "2026-08-31",
+  "base_revision": "6632bf26298edd7c4625cfcb3d89e5d8e4bfcda4",
+  "status": "focused_native_passed_full_validation_pending",
+  "source_sha256": "417ef51c1221ce9bc60fcbd3307f9f4a36aeeb0335eeb8f6bdb0437409d12b2e",
+  "test_sha256": "dc4b9ee9027d4c47c7e5922585e28c1724a970f43fcc947c4a5c222493c53f23",
+  "scope": "Additive nonserialized core page execution context, explicit registry-local shared rate groups, bounded cooperative subrequest admission and retry delay handling. No live adapter adoption in this slice.",
+  "first_passes": [
+    {"agent": "track03_safety", "role": "implementation and adversarial testing", "result": "Existing rate admission was page-level and slot-local; introduce a core-owned context without duplicating downstream rate primitives."},
+    {"agent": "track03_delta_review", "role": "correctness and compatibility", "result": "Use an additive defaulted provider method, explicit shared groups and unchanged cache identities; legacy hidden HTTP calls remain unproven."},
+    {"agent": "track03_methodology", "role": "methodology and acceptance", "result": "Test actual admission, cumulative deadlines, denied/cache non-interference and group floors; preserve registry-local and cooperative-adapter boundaries."}
+  ],
+  "findings_and_fixes": [
+    {"finding": "Denied live requests and cache hits could permanently raise shared rate floors before admission.", "fix": "Raise request floors only after actual synchronous factory invocation; add denial/cache regressions."},
+    {"finding": "Scheduling lock was released before factory invocation, overstating factory-start spacing.", "fix": "Hold scheduling guard through factory invocation, timestamp afterward, then release before awaiting the future."},
+    {"finding": "Test counters measured future-body polling rather than factory invocation.", "fix": "Add independent synchronous factory counters and denial/deadline/cancellation/cache assertions."},
+    {"finding": "Rate waits now consume the page-attempt timeout, unlike the legacy timing behavior.", "fix": "Explicitly document and regression-test deliberate conservative tightening; source compatibility does not mean identical timeout behavior. Overall deadline remains unchanged."},
+    {"finding": "Cooperative deadlines cannot preempt blocking factories or futures.", "fix": "Document nonblocking/cooperative adapter requirements; context is not a sandbox."}
+  ],
+  "rereview": "Methodology found both P2 fixes addressed; correctness found no retained source blocker, with factory-counter and cooperative-execution documentation fixes subsequently applied. Compiler validation then passed.",
+  "focused_validation": {
+    "commands": ["cargo test -p evidence-search-core --test subrequest_context --locked", "cargo test -p evidence-search-core --lib --locked", "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"],
+    "exit_code": 0,
+    "subrequest_tests_passed": 16,
+    "core_unit_tests_passed": 58,
+    "log_sha256": "32a38c5c16f9e61cb589a337cadf669b11ec762a47d000620887bde2575499a4",
+    "warning": "Existing clippy.toml/Cargo.toml MSRV configuration warning."
+  },
+  "prior_attempts": [
+    {"log_sha256": "ae3c965a161bff2be75644f2ac22cd6c1765e59855f5b43cdcaf98f92f72ea78", "passed": 13, "failed": 3, "cause": "Test requests had overall timeout below default per-operation timeout; existing request validator correctly rejected them.", "remediation": "Set valid one-second per-operation test timeout; no runtime-rule or expectation waiver."},
+    {"log_sha256": "1eec318e8a944e83ea8b5822067a1d04f6e892e98c0dd62b3bc3a505fb888d6d", "tests_passed": 74, "cause": "Strict Clippy rejected seven test-only style violations.", "remediation": "Use explicit map construction, release observation guards and destructure safe windows; no lint waivers."}
+  ],
+  "boundaries": ["Legacy provider default still admits one page, not hidden HTTP subrequests", "Explicit groups are trusted registry-local configuration, not process-wide or distributed policy compliance", "Per-response byte semantics unchanged; finite 32-subrequest page budget spans retries", "Cache hits do not invoke operation factories or raise request rate floors", "No network execution, current provider-policy approval, downstream cutover, public release or archival claim", "Full workspace, exact-head hosted API checks and delivery remain pending"]
+}

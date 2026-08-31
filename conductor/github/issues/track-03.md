@@ -28,6 +28,6 @@ Centralise bounded provider execution, caching, receipts and policy while prepar
 
 ## Claim boundary
 
-Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists; no live provider, downstream integration, dual-run, SemVer, rollback, release or remote mutation claim is made.
+Locally compiler-tested Searchright implementation and a read-only Sourceright baseline, retained at the repository-wide source-verified ceiling until exact-revision CI evidence exists. The additive core-owned subrequest context has 74 focused native tests and strict Clippy passing; full validation for this slice and live-adapter adoption remain pending. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval; no live provider, downstream integration, dual-run, SemVer, rollback, release or archival claim is made.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
