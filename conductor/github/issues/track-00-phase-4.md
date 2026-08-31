@@ -10,6 +10,7 @@ Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
 - [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-00-phase-4-task-02`)
 - [x] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-00-phase-4-task-03`)
 - [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-00-phase-4-task-04`)
+- [x] T05: Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence. (`track-00-phase-4-task-05`)
 
 ## Evidence rule
 

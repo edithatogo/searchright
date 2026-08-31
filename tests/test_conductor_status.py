@@ -5,6 +5,9 @@ import importlib.util
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
+import contextlib
+import io
 from pathlib import Path
 
 SPEC = importlib.util.spec_from_file_location("conductor_status", Path(__file__).resolve().parents[1] / "scripts/conductor_status.py")
@@ -68,6 +71,47 @@ class StatusTests(unittest.TestCase):
         report = audit(self.root)
         self.assertEqual(report["isolation"]["state"], "inconsistent")
         self.assertTrue(report["errors"])
+
+    def test_malformed_json_record_shapes_fail_structurally(self):
+        for filename in ("metadata.json", "evidence.json"):
+            for value in ([], None, True, "text"):
+                with self.subTest(filename=filename, value=value):
+                    path = self.root / "conductor/tracks/00-foundation-conductor-toolchain" / filename
+                    original = path.read_text()
+                    path.write_text(json.dumps(value))
+                    self.assertEqual(audit(self.root)["status"], "failed")
+                    path.write_text(original)
+
+    def test_truncated_registry_row_returns_failed_report(self):
+        self.edit("conductor/tracks.md", lambda s: s + "\n| 00 |\n")
+        self.assertEqual(audit(self.root)["status"], "failed")
+
+    def test_consistent_unknown_lifecycle_is_not_valid(self):
+        def change_entry(s):
+            data = json.loads(s)
+            if "tracks" in data:
+                data["tracks"][0]["lifecycle"] = "invented-lifecycle"
+            else:
+                data["lifecycle"] = "invented-lifecycle"
+            return json.dumps(data)
+        for path in ("conductor/roadmap-coverage.json",
+                     "conductor/tracks/00-foundation-conductor-toolchain/metadata.json",
+                     "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"):
+            self.edit(path, change_entry)
+        self.assertEqual(audit(self.root)["status"], "failed")
+
+    def test_cli_never_executes_code_from_inspected_root(self):
+        scripts = self.root / "scripts"
+        scripts.mkdir()
+        marker = self.root / "executed"
+        payload = f"from pathlib import Path\nPath({str(marker)!r}).touch()\n"
+        for name in ("check_roadmap_coverage.py", "sync_track_evidence.py"):
+            (scripts / name).write_text(payload)
+        output = io.StringIO()
+        with patch("sys.argv", ["conductor_status.py", "--root", str(self.root)]), contextlib.redirect_stdout(output):
+            self.assertEqual(MODULE.main(), 0)
+        self.assertFalse(marker.exists())
+        self.assertEqual(json.loads(output.getvalue())["status"], "passed")
 
 
 if __name__ == "__main__":

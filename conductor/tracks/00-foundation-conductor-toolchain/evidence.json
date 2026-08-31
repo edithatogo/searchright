@@ -18,7 +18,9 @@
     "verification/receipts/track-00-local-verification.json",
     "verification/receipts/track-00-conductor-review.json",
     "scripts/install-conductor.sh",
-    "scripts/install-conductor.ps1"
+    "scripts/install-conductor.ps1",
+    "scripts/conductor_status.py",
+    "tests/test_conductor_status.py"
   ],
   "traceability": "conductor/tracks/00-foundation-conductor-toolchain/traceability.json",
   "static_checks": [
@@ -46,7 +48,8 @@
       "track-00-phase-4-task-01",
       "track-00-phase-4-task-02",
       "track-00-phase-4-task-03",
-      "track-00-phase-4-task-04"
+      "track-00-phase-4-task-04",
+      "track-00-phase-4-task-05"
     ]
   },
   "remote_github_evidence": [

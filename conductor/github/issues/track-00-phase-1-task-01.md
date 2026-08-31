@@ -20,6 +20,8 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `verification/receipts/track-00-conductor-review.json`
   - [x] Present source path: `scripts/install-conductor.sh`
   - [x] Present source path: `scripts/install-conductor.ps1`
+  - [x] Present source path: `scripts/conductor_status.py`
+  - [x] Present source path: `tests/test_conductor_status.py`
   - [x] Assertion ledger: `conductor/tracks/00-foundation-conductor-toolchain/traceability.json`
 
 ## Completion and evidence contract

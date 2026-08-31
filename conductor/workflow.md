@@ -45,8 +45,10 @@ marked as runtime-proven.
 For status, run `python3 -B scripts/conductor_status.py` and the full
 `scripts/verify.sh` suite; report their outcomes separately. The status command
 is read-only and reconciles the actual table registry, top-level plan tasks,
-metadata, evidence, roadmap and in-place archive lifecycle, then invokes the
-native roadmap and generated-evidence checks. Its tests are
+metadata, evidence, roadmap and in-place archive lifecycle. It never executes
+code from the inspected checkout, including when `--root` names another tree.
+Run the native roadmap and generated-evidence checks separately after trusting
+the checkout; the status result does not claim those checks ran. Its tests are
 `python3 -B -m unittest discover -s tests -p test_conductor_status.py`.
 
 Searchright uses `conductor.track-metadata.v3`: numeric stable track IDs,
