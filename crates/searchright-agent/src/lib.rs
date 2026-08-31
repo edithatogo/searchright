@@ -2,6 +2,8 @@
 
 #![forbid(unsafe_code)]
 
+pub mod sibling;
+
 use schemars::JsonSchema;
 use searchright_contracts::{
     AGENT_WORKFLOW_SCHEMA_VERSION, AgentAuthority, ContractError, ReviewPlan, Validate,
