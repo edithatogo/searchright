@@ -13,8 +13,8 @@ Canonical task state: **source task complete**.
   - Review fix `e6bcbec1001a9725dfda2c6250e15796fff8e9c6`: Reconcile source-level claims with pinned Searchright and Sourceright evidence.
   - Review fix `07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb`: Require exact, unique parity-case and dimension coverage before cutover readiness.
   - Review fix `07144ea13c9fd5c4f1105d8a3c6582d3e3d25dfb`: Reconcile the fixture-parser migration table with the four fixture-backed adapters.
-  - [x] Review fix: Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions.
-  - [x] Review fix: Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover.
+  - Review fix `ca265354de725701085cd3e9d7a466a8c955f15d`: Reject missing or reassigned migration catalogue cells and Rust catalogue drift with mutation regressions.
+  - Review fix `ca265354de725701085cd3e9d7a466a8c955f15d`: Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover.
 
 ## Completion and evidence contract
 
