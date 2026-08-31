@@ -4,6 +4,16 @@
   "base_revision": "97fe03212e7f606361314b120013e47d5c809fcf",
   "status": "full_verification_passed_at_recorded_revision",
   "verified_revision": "9f271a62df3c14082c72ba00e8caa89bad68ecd0",
+  "post_mapping_verification": {
+    "revision": "60478ea50f3b0af554012ade3c5301514230ff0b",
+    "command": "bash scripts/verify.sh --static-only",
+    "status": "passed",
+    "exit_code": 0,
+    "python_tests_passed": 74,
+    "static_gates_passed": 57,
+    "static_gates_total": 57,
+    "boundary": "Only assertion mappings and generated metadata changed after the full verification revision; native code and test sources are unchanged."
+  },
   "toolchain": {"rustc": "1.97.1 (8bab26f4f 2026-07-14)", "cargo": "1.97.1 (c980f4866 2026-06-30)", "host": "aarch64-apple-darwin"},
   "review_fix_commit": "f47c92a",
   "review": {
@@ -27,7 +37,7 @@
   "gates_not_run": ["Optional cargo machete: not installed; verify.sh conditionally skipped it.", "Independent cargo-vet dependency audit evidence: not supplied by this verify.sh run; existing assertion gate remains unchanged."],
   "visible_warnings": ["Existing Clippy/Cargo MSRV configuration mismatch", "Existing searchright library/binary documentation output filename collision", "cargo-deny duplicate dependencies, unmatched allowed source and unencountered licenses"],
   "remaining_integration": [
-    "Revalidate generated records after adding the T00-A002 maintenance mapping; rebase and hosted delivery are separate root-coordinated steps."
+    "Rebase onto the root-coordinated current main and run combined verification before hosted delivery; no remote PR, merge or projection convergence is claimed by this receipt."
   ],
   "claim_boundary": "Read-only native v3 status and adversarial local tests only. Does not migrate the installed skill, canonical track IDs, evidence statuses, in-place archives, or complete Track 00 or external gates."
 }
