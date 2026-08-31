@@ -12,6 +12,26 @@ ROOT = Path(__file__).resolve().parents[1]
 PROFILE = ROOT / "policy" / "redaction-profile.json"
 
 
+def connector_transport_errors(source: str) -> list[str]:
+    """Check the known byte-reader source shape, not arbitrary Rust semantics."""
+    start = source.find("async fn fetch_bytes(")
+    end = source.find("fn decode_json(", start)
+    if start < 0 or end <= start:
+        return ["live connector byte-reader boundaries are missing"]
+    fetch = source[start:end]
+    status = fetch.find("let status = response.status()")
+    body = fetch.find("while let Some(chunk) = response")
+    if status < 0 or body <= status:
+        return ["live connector request/body failure boundaries are missing"]
+    errors = []
+    for name, region in (("request", fetch[:status]), ("body", fetch[body:])):
+        if "endpoint and query details were redacted" not in region:
+            errors.append(f"live connector {name} failure lacks the redaction boundary")
+        if "error.to_string()" in region:
+            errors.append(f"live connector {name} failure may serialise a query-bearing error")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--self-test", action="store_true")
@@ -52,17 +72,7 @@ def main() -> int:
     if redact_value(payload, profile) != redacted:
         errors.append("redaction is not deterministic")
     connector_source = (ROOT / "crates" / "searchright-connectors" / "src" / "lib.rs").read_text(encoding="utf-8")
-    live_start = connector_source.find("async fn fetch_json(")
-    live_end = connector_source.find("fn open_manifest(", live_start)
-    live_fetch = connector_source[live_start:live_end] if live_start >= 0 and live_end > live_start else ""
-    if live_fetch.count("endpoint and query details were redacted") < 2:
-        errors.append("live connector request failures do not preserve the redaction claim boundary")
-    request_failure = live_fetch[: live_fetch.find("let status = response.status()")]
-    body_start = live_fetch.find("let bytes = response")
-    body_end = live_fetch.find("let maximum = request", body_start)
-    body_failure = live_fetch[body_start:body_end]
-    if "error.to_string()" in request_failure or "error.to_string()" in body_failure:
-        errors.append("live connector transport failure may serialise a query-bearing error")
+    errors.extend(connector_transport_errors(connector_source))
     receipt = {
         "schema_version": "org.searchright.redaction-policy-receipt.v1",
         "status": "failed" if errors else "passed",
