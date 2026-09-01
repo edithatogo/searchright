@@ -1,0 +1,244 @@
+/ Source-specific query and fidelity evidence.
++#[derive(Debug, Clone)]
++pub struct ProviderSearchSpec {
++    /// Searchright provider identifier.
++    pub provider_id: &'static str,
++    /// Human-readable source label.
++    pub source_label: &'static str,
++    /// Compiled source-specific query.
++    pub strategy: CompiledStrategy,
++}
++
++/// Build the four free-API search specifications from the governed profile.
++#[must_use]
++pub fn provider_search_specs(profile: &InstitutionProfile) -> Vec<ProviderSearchSpec> {
++    let aliases = profile
++        .aliases
++        .iter()
++        .map(|alias| alias.text.as_str())
++        .collect::<Vec<_>>();
++    vec![
++        spec(
++            "pubmed",
++            "PubMed via NCBI E-utilities",
++            SearchDialect::PubMed,
++            affiliation_query(&aliases, "[Affiliation]", ""),
++            false,
++            profile,
++        ),
++        spec(
++            "europe-pmc",
++            "Europe PMC",
++            SearchDialect::EuropePmc,
++            affiliation_query(&aliases, "", "AFFILIATION:"),
++            false,
++            profile,
++        ),
++        spec(
++            "crossref",
++            "Crossref Works discovery",
++            SearchDialect::Crossref,
++            broad_query(&aliases),
++            true,
++            profile,
++        ),
++        spec(
++            "openalex",
++            "OpenAlex Works discovery",
++            SearchDialect::OpenAlex,
++            broad_query(&aliases),
++            true,
++            profile,
++        ),
++    ]
++}
++
++/// Execute the checked-in rights-clear fixture corpus through Searchright's provider runtime.
++pub async fn execute_fixture_search(
++    profile: &InstitutionProfile,
++    run_id: &str,
++) -> Result<SearchBatch, SearchError> {
++    profile.validate()?;
++    let specs = provider_search_specs(profile);
++    let pages = fixture_pages()?;
++    let mut registry = ProviderRegistry::new();
++    for spec in &specs {
++        let page = pages
++            .get(spec.provider_id)
++            .cloned()
++            .ok_or(SearchError::MissingFixture(spec.provider_id))?;
++        registry.register(Arc::new(FixtureProvider::one_page(
++            spec.provider_id,
++            spec.source_label,
++            page.records,
++        )))?;
++    }
++    execute_specs(&registry, &specs, run_id, false, &SearchOptions::default()).await
++}
++
++/// Execute the four opt-in free API providers. The caller must separately approve live access.
++#[cfg(feature = "live")]
++pub async fn execute_live_search(
++    profile: &InstitutionProfile,
++    run_id: &str,
++    options: &SearchOptions,
++) -> Result<SearchBatch, SearchError> {
++    use searchright::connectors::{LiveProviderConfig, register_mvp_live_providers};
++
++    profile.validate()?;
++    let specs = provider_search_specs(profile);
++    if !options.acknowledge_approximate_queries
++        && specs.iter().any(|item| item.strategy.review_required)
++    {
++        return Err(SearchError::ApproximateQueryReviewRequired);
++    }
++    let mut registry = ProviderRegistry::new();
++    register_mvp_live_providers(
++        &mut registry,
++        LiveProviderConfig {
++            ncbi_tool: options.ncbi_tool.clone(),
++            ncbi_email: options.ncbi_email.clone(),
++            crossref_mailto: options.crossref_mailto.clone(),
++            openalex_mailto: options.openalex_mailto.clone(),
++        },
++    )?;
++    execute_specs(&registry, &specs, run_id, true, options).await
++}
++
++/// Return a fail-closed error when the binary lacks opt-in live support.
++#[cfg(not(feature = "live"))]
++pub async fn execute_live_search(
++    _profile: &InstitutionProfile,
++    _run_id: &str,
++    _options: &SearchOptions,
++) -> Result<SearchBatch, SearchError> {
++    Err(SearchError::LiveFeatureDisabled)
++}
++
++async fn execute_specs(
++    registry: &ProviderRegistry,
++    specs: &[ProviderSearchSpec],
++    run_id: &str,
++    live: bool,
++    options: &SearchOptions,
++) -> Result<SearchBatch, SearchError> {
++    let mut records = Vec::new();
++    let mut receipts = Vec::new();
++    let mut provider_failures = Vec::new();
++    for spec in specs {
++        let request = SearchRequest {
++            review_id: "chhhs-publication-monitor".to_owned(),
++            run_id: run_id.to_owned(),
++            strategy: spec.strategy.clone(),
++            cursor: None,
++            page_size: options.page_size,
++            policy: ExecutionPolicy {
++                live_enabled: live,
++                max_records: options.max_records_per_source,
++                max_pages: options.max_pages_per_source,
++                timeout_seconds: options.timeout_seconds,
++                total_timeout_seconds: Some(options.total_timeout_seconds),
++                max_retries: 2,
++                min_interval_ms: 0,
++                retry_base_delay_ms: Some(500),
++                retry_max_delay_ms: Some(30_000),
++                max_response_bytes: Some(16 * 1024 * 1024),
++                replay_enabled: false,
++                cache_write_enabled: false,
++            },
++        };
++        match registry
++            .execute(spec.provider_id, request, spec.source_label)
++            .await
++        {
++            Ok(result) => {
++                records.extend(result.records.into_iter().map(|mut record| {
++                    record.record_id = format!("{}:{}", spec.provider_id, record.native_id);
++                    SourcedRecord {
++                        provider_id: spec.provider_id.to_owned(),
++                        record,
++                        carried_forward: false,
++                    }
++                }));
++                receipts.push(result.receipt);
++            }
++            Err(error) => provider_failures.push(provider_failure(spec.provider_id, &error)),
++        }
++    }
++    if receipts.is_empty() {
++        return Err(SearchError::AllProvidersFailed(provider_failures));
++    }
++    Ok(SearchBatch {
++        records,
++        receipts,
++        provider_failures,
++    })
++}
++
++fn provider_failure(provider_id: &str, error: &ProviderError) -> ProviderFailure {
++    let code = match error {
++        ProviderError::NotRegistered(_) => "not_registered",
++        ProviderError::AlreadyRegistered(_) => "already_registered",
++        ProviderError::InvalidManifest(_) => "invalid_manifest",
++        ProviderError::InvalidRequest(_) => "invalid_request",
++        ProviderError::LiveDisabled(_) => "live_disabled",
++        ProviderError::ReplayDisabled(_) => "replay_disabled",
++        ProviderError::BudgetExceeded { .. } => "budget_exceeded",
++        ProviderError::InvalidRecord { .. } => "invalid_record",
++        ProviderError::Timeout { .. } => "timeout",
++        ProviderError::RateLimited { .. } => "rate_limited",
++        ProviderError::HttpStatus { .. } => "http_status",
++        ProviderError::MalformedResponse { .. } => "malformed_response",
++        ProviderError::PolicyViolation { .. } => "policy_violation",
++        ProviderError::Cancelled { .. } => "cancelled",
++        ProviderError::Upstream { .. } => "upstream",
++        ProviderError::Cache(_) => "cache",
++        ProviderError::Serialization(_) => "serialization",
++        ProviderError::Timestamp(_) => "timestamp",
++    };
++    ProviderFailure {
++        provider_id: provider_id.to_owned(),
++        code: code.to_owned(),
++        message: error.to_string(),
++    }
++}
++
++fn spec(
++    provider_id: &'static str,
++    source_label: &'static str,
++    dialect: SearchDialect,
++    query: String,
++    approximate: bool,
++    profile: &InstitutionProfile,
++) -> ProviderSearchSpec {
++    let warning = StrategyWarning {
++        code: "institution_query.discovery_approximation".to_owned(),
++        message: "This provider exposes broad discovery search rather than a complete structured affiliation query; retrieved records require metadata attribution."
++            .to_owned(),
++        review_required: true,
++    };
++    let material = format!(
++        "{}\n{}\n{}\n{}",
++        provider_id, profile.profile_id, profile.version, query
++    );
++    ProviderSearchSpec {
++        provider_id,
++        source_label,
++        strategy: CompiledStrategy {
++            schema_version: COMPILED_STRATEGY_SCHEMA_VERSION.to_owned(),
++            strategy_id: format!("chhhs-institution-{provider_id}-{}", profile.version),
++            dialect,
++            query,
++            warnings: approximate.then_some(warning).into_iter().collect(),
++            fidelity: if approximate {
++                TranslationFidelity::Approximate
++            } else {
++                TranslationFidelity::SourceEquivalent
++            },
++            review_required: approximate,
++            loss_codes: approximate
++                .then(|| "institution_query.discovery_approximation".to_owned())
++                .into_iter()
++                .collect(),
++            compilation_hash: blake3::hash(material.as_bytes()).to_hex().to_string(),
++            compiler_version: 
