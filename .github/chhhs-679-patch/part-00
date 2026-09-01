@@ -1,0 +1,397 @@
+From 57c9e78826cd2db3b063515165e1d4e7bbb2dcfa Mon Sep 17 00:00:00 2001
+From: OpenAI working copy <noreply@example.invalid>
+Date: Tue, 1 Sep 2026 09:59:53 +0000
+Subject: [PATCH] feat(pilot): add CHHHS research intelligence demo (Track 36)
+
+---
+ .../workflows/chhhs-research-intelligence.yml |  59 ++
+ Cargo.lock                                    |  15 +
+ Cargo.toml                                    |   1 +
+ conductor/github/issue-hierarchy.json         |  32 +-
+ .../github/issues/track-36-phase-1-task-01.md |   7 +
+ .../github/issues/track-36-phase-2-task-01.md |   1 +
+ .../github/issues/track-36-phase-3-task-02.md |   2 +-
+ conductor/github/issues/track-36-phase-3.md   |   2 +-
+ conductor/github/issues/track-36.md           |   4 +-
+ conductor/roadmap-coverage.json               |  65 +-
+ conductor/tracks.md                           |   2 +-
+ .../36-release-candidate-pilots/evidence.json |  18 +-
+ .../36-release-candidate-pilots/metadata.json |   4 +-
+ .../36-release-candidate-pilots/plan.md       |  12 +-
+ .../36-release-candidate-pilots/spec.md       |   1 +
+ .../traceability.json                         |  46 +-
+ context/context-lock.json                     |  16 +-
+ crates/searchright-chhhs-demo/Cargo.toml      |  27 +
+ crates/searchright-chhhs-demo/README.md       |  69 ++
+ .../fixtures/crossref.json                    |  52 ++
+ .../fixtures/europe-pmc.json                  |  29 +
+ .../fixtures/openalex.json                    |  74 ++
+ .../fixtures/pubmed-esummary.json             |  27 +
+ .../resources/chhhs-institution-profile.json  |  50 ++
+ .../resources/research-taxonomy.json          | 119 ++++
+ .../searchright-chhhs-demo/src/attribution.rs | 403 +++++++++++
+ .../src/classification.rs                     | 196 ++++++
+ crates/searchright-chhhs-demo/src/lib.rs      |  90 +++
+ crates/searchright-chhhs-demo/src/main.rs     | 274 ++++++++
+ crates/searchright-chhhs-demo/src/model.rs    | 582 ++++++++++++++++
+ crates/searchright-chhhs-demo/src/pipeline.rs | 650 ++++++++++++++++++
+ crates/searchright-chhhs-demo/src/report.rs   | 618 +++++++++++++++++
+ crates/searchright-chhhs-demo/src/search.rs   | 438 ++++++++++++
+ crates/searchright-chhhs-demo/src/storage.rs  | 121 ++++
+ docs/pilots/chhhs-research-intelligence.md    |  58 ++
+ .../pilots/chhhs-research-intelligence.json   |  61 ++
+ scripts/check_chhhs_research_demo.py          | 188 +++++
+ verification/evidence-debt.json               |  21 +-
+ verification/gate-catalog.json                |  18 +-
+ .../receipts/chhhs-research-demo-source.json  |  21 +
+ verification/receipts/source-manifest.sha256  |  59 +-
+ verification/sbom/source-components.cdx.json  |  64 +-
+ 42 files changed, 4478 insertions(+), 118 deletions(-)
+ create mode 100644 .github/workflows/chhhs-research-intelligence.yml
+ create mode 100644 crates/searchright-chhhs-demo/Cargo.toml
+ create mode 100644 crates/searchright-chhhs-demo/README.md
+ create mode 100644 crates/searchright-chhhs-demo/fixtures/crossref.json
+ create mode 100644 crates/searchright-chhhs-demo/fixtures/europe-pmc.json
+ create mode 100644 crates/searchright-chhhs-demo/fixtures/openalex.json
+ create mode 100644 crates/searchright-chhhs-demo/fixtures/pubmed-esummary.json
+ create mode 100644 crates/searchright-chhhs-demo/resources/chhhs-institution-profile.json
+ create mode 100644 crates/searchright-chhhs-demo/resources/research-taxonomy.json
+ create mode 100644 crates/searchright-chhhs-demo/src/attribution.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/classification.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/lib.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/main.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/model.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/pipeline.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/report.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/search.rs
+ create mode 100644 crates/searchright-chhhs-demo/src/storage.rs
+ create mode 100644 docs/pilots/chhhs-research-intelligence.md
+ create mode 100644 release/pilots/chhhs-research-intelligence.json
+ create mode 100755 scripts/check_chhhs_research_demo.py
+ create mode 100644 verification/receipts/chhhs-research-demo-source.json
+
+diff --git a/.github/workflows/chhhs-research-intelligence.yml b/.github/workflows/chhhs-research-intelligence.yml
+new file mode 100644
+index 0000000..ef50081
+--- /dev/null
++++ b/.github/workflows/chhhs-research-intelligence.yml
+@@ -0,0 +1,59 @@
++name: CHHHS research intelligence demonstration
++
++on:
++  workflow_dispatch:
++  schedule:
++    - cron: "17 20 * * 0"
++
++permissions:
++  contents: read
++
++concurrency:
++  group: chhhs-research-intelligence
++  cancel-in-progress: false
++
++jobs:
++  refresh:
++    name: Refresh free metadata sources and render monthly report
++    runs-on: ubuntu-latest
++    timeout-minutes: 45
++    steps:
++      - name: Checkout
++        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
++        with:
++          persist-credentials: false
++      - name: Install repository-pinned Rust toolchain
++        run: rustup toolchain install 1.97.1 --profile minimal
++      - name: Restore non-authoritative monitor state
++        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
++        with:
++          path: .searchright/chhhs/state.json
++          key: chhhs-monitor-${{ runner.os }}-${{ github.run_id }}
++          restore-keys: |
++            chhhs-monitor-${{ runner.os }}-
++      - name: Run explicit live refresh
++        env:
++          NCBI_EMAIL: ${{ vars.NCBI_EMAIL }}
++          CROSSREF_MAILTO: ${{ vars.CROSSREF_MAILTO }}
++          OPENALEX_MAILTO: ${{ vars.OPENALEX_MAILTO }}
++        run: >-
++          cargo run --locked -p searchright-chhhs-demo --features live -- refresh
++          --live
++          --acknowledge-approximate-queries
++          --as-of "$(date -u +%F)"
++          --state .searchright/chhhs/state.json
++          --output reports/chhhs-research-intelligence
++      - name: Save non-authoritative monitor state
++        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
++        with:
++          path: .searchright/chhhs/state.json
++          key: chhhs-monitor-${{ runner.os }}-${{ github.run_id }}
++      - name: Preserve report and state as a review artifact
++        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
++        with:
++          name: chhhs-research-intelligence-${{ github.run_id }}
++          path: |
++            reports/chhhs-research-intelligence/
++            .searchright/chhhs/state.json
++          if-no-files-found: error
++          retention-days: 30
+diff --git a/Cargo.lock b/Cargo.lock
+index a0b042c..90490c2 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -1977,6 +1977,21 @@ dependencies = [
+  "thiserror",
+ ]
+ 
++[[package]]
++name = "searchright-chhhs-demo"
++version = "0.1.0-alpha.1"
++dependencies = [
++ "anyhow",
++ "blake3",
++ "clap",
++ "searchright",
++ "serde",
++ "serde_json",
++ "thiserror",
++ "time",
++ "tokio",
++]
++
+ [[package]]
+ name = "searchright-citeweft"
+ version = "0.1.0-alpha.1"
+diff --git a/Cargo.toml b/Cargo.toml
+index e6a5973..7356cd3 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -7,6 +7,7 @@ members = [
+   "crates/searchright-access",
+   "crates/searchright-assurance",
+   "crates/searchright-bench",
++  "crates/searchright-chhhs-demo",
+   "crates/searchright-cli",
+   "crates/searchright-connectors",
+   "crates/searchright-citeweft",
+diff --git a/conductor/github/issue-hierarchy.json b/conductor/github/issue-hierarchy.json
+index 0437c29..495ec28 100644
+--- a/conductor/github/issue-hierarchy.json
++++ b/conductor/github/issue-hierarchy.json
+@@ -18272,7 +18272,7 @@
+         "Work kind": "Track",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36",
+@@ -18302,7 +18302,7 @@
+         "Work kind": "Phase",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36-phase-1",
+@@ -18334,7 +18334,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "No",
+         "Conductor key": "track-36-phase-1-task-01",
+@@ -18366,7 +18366,7 @@
+         "Work kind": "Phase",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36-phase-2",
+@@ -18398,7 +18398,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "No",
+         "Conductor key": "track-36-phase-2-task-01",
+@@ -18431,7 +18431,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "No",
+         "Conductor key": "track-36-phase-2-task-02",
+@@ -18463,7 +18463,7 @@
+         "Work kind": "Phase",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36-phase-3",
+@@ -18495,7 +18495,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36-phase-3-task-01",
+@@ -18507,7 +18507,7 @@
+     },
+     {
+       "key": "track-36-phase-3-task-02",
+-      "title": "Track 36 / P3 / T02: Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals",
++      "title": "Track 36 / P3 / T02: Complete real local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals; the CHHHS source demonstration still requires iden\u2026",
+       "kind": "task",
+       "parent_key": "track-36-phase-3",
+       "body_path": "conductor/github/issues/track-36-phase-3-task-02.md",
+@@ -18528,7 +18528,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36-phase-3-task-02",
+@@ -18561,7 +18561,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36-phase-3-task-03",
+@@ -18593,7 +18593,7 @@
+         "Work kind": "Phase",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "Yes",
+         "Conductor key": "track-36-phase-4",
+@@ -18625,7 +18625,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "No",
+         "Conductor key": "track-36-phase-4-task-01",
+@@ -18658,7 +18658,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "No",
+         "Conductor key": "track-36-phase-4-task-02",
+@@ -18691,7 +18691,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "No",
+         "Conductor key": "track-36-phase-4-task-03",
+@@ -18724,7 +18724,7 @@
+         "Work kind": "Task",
+         "Horizon": "Mature",
+         "Evidence level": "Source Verified",
+-        "Implementation state": "Scaffolded",
++        "Implementation state": "Partially Implemented",
+         "MoSCoW": "Must",
+         "External gate": "No",
+         "Conductor key": "track-36-phase-4-task-04",
+diff --git a/conductor/github/issues/track-36-phase-1-task-01.md b/conductor/github/issues/track-36-phase-1-task-01.md
+index 0aaf6a6..b67a813 100644
+--- a/conductor/github/issues/track-36-phase-1-task-01.md
++++ b/conductor/github/issues/track-36-phase-1-task-01.md
+@@ -15,6 +15,13 @@ Canonical task state: **open evidence or implementation task**.
+   - [x] Present source path: `docs/pilots/pilot-protocol.md`
+   - [x] Present source path: `registry/status.json`
+   - [x] Present source path: `scripts/package_source.py`
++  - [x] Present source path: `Cargo.toml`
++  - [x] Present source path: `Cargo.lock`
++  - [x] Present source path: `crates/searchright-chhhs-demo`
++  - [x] Present source path: `release/pilots/chhhs-research-intelligence.json`
++  - [x] Present source path: `docs/pilots/chhhs-research-intelligence.md`
++  - [x] Present source path: `.github/workflows/chhhs-research-intelligence.yml`
++  - [x] Present source path: `scripts/check_chhhs_research_demo.py`
+   - [x] Assertion ledger: `conductor/tracks/36-release-candidate-pilots/traceability.json`
+ 
+ ## Completion and evidence contract
+diff --git a/conductor/github/issues/track-36-phase-2-task-01.md b/conductor/github/issues/track-36-phase-2-task-01.md
+index b8a7449..8a893fc 100644
+--- a/conductor/github/issues/track-36-phase-2-task-01.md
++++ b/conductor/github/issues/track-36-phase-2-task-01.md
+@@ -11,6 +11,7 @@ Canonical task state: **source task complete**.
+   - [x] `python scripts/check_release_rehearsal.py`
+   - [x] `python scripts/check_packaging_reproducibility.py`
+   - [x] `python scripts/check_maturity_dossier.py`
++  - [x] `python scripts/check_chhhs_research_demo.py`
+ 
+ ## Completion and evidence contract
+ 
+diff --git a/conductor/github/issues/track-36-phase-3-task-02.md b/conductor/github/issues/track-36-phase-3-task-02.md
+index a47fd25..26ef3c8 100644
+--- a/conductor/github/issues/track-36-phase-3-task-02.md
++++ b/conductor/github/issues/track-36-phase-3-task-02.md
+@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
+ 
+ ## Canonical task
+ 
+-- [ ] Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.
++- [ ] Complete real local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals; the CHHHS source demonstration still requires identity-register approval, retrospective calibration, named operators, live-provider review and durable storage.
+ 
+ ## Completion and evidence contract
+ 
+diff --git a/conductor/github/issues/track-36-phase-3.md b/conductor/github/issues/track-36-phase-3.md
+index 8783103..18de202 100644
+--- a/conductor/github/issues/track-36-phase-3.md
++++ b/conductor/github/issues/track-36-phase-3.md
+@@ -7,7 +7,7 @@ Conductor plan: `conductor/tracks/36-release-candidate-pilots/plan.md`
+ ## Task subissues
+ 
+ - [ ] T01: Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix. (`track-36-phase-3-task-01`)
+-- [ ] T02: Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals. (`track-36-phase-3-task-02`)
++- [ ] T02: Complete real local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals; the CHHHS source demonstration still requires identity-register approval, retrospective calibration, named operators, live-provider review and durable storage. (`track-36-phase-3-task-02`)
+ - [ ] T03: Validate exact release candidate packets and obtain explicit approval before any release or registry submission. (`track-36-phase-3-task-03`)
+ 
+ ## Evidence rule
+diff --git a/conductor/github/issues/track-36.md b/conductor/github/issues/track-36.md
+index 33d70e9..42c0a8a 100644
+--- a/conductor/github/issues/track-36.md
++++ b/conductor/github/issues/track-36.md
+@@ -13,7 +13,7 @@ Exercise the complete candidate in clean-room builds, downstream canaries, bound
+ 
+ - Horizon: `mature`
+ - Status: `release_prepared`
+-- Implementation: `scaffolded`
++- Implementation: `partially_implemented`
+ - Evidence: `source_verified`
+ - Dependencies: `18, 19, 29, 30, 31, 32, 33, 34, 35`
+ - Requirements: `SR-039, SR-040, SR-068, SR-089, SR-090, SR-091`
+@@ -28,6 +28,6 @@ Exercise the complete candidate in clean-room builds, downstream canaries, bound
+ 
+ ## Claim boundary
+ 
+-The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability gove
