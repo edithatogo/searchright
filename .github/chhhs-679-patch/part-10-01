@@ -1,0 +1,206 @@
+ntelligence.md
+@@ -0,0 +1,58 @@
++# CHHHS research intelligence demonstration pilot
++
++## Purpose
++
++This Track 36 vertical slice tests whether Searchright can support a bounded,
++self-hosted institutional publication-monitoring use case. It searches four free
++metadata APIs, deduplicates candidate records, applies conservative institution
++attribution and explainable thematic classification, and produces a monthly
++report bundle.
++
++## Staging
++
++1. **Fixture-only local demonstration.** Run the rights-clear synthetic corpus,
++   inspect every attribution class and confirm that Cairns-only geographic
++   references are excluded.
++2. **Retrospective calibration.** Compare candidate discovery with an
++   adjudicated internal CHHHS publication list. Freeze the institution profile,
++   labelling protocol and thresholds before measuring results.
++3. **Institution self-hosting.** Execute opt-in live searches in a controlled
++   CHHHS environment, retain receipts and state, and require human release of
++   reports.
++4. **Operational decision.** Continue, revise or stop only after data,
++   methodological, security, usability and workload exit criteria are reviewed.
++
++Remote multi-tenant deployment and autonomous publication are outside this
++pilot.
++
++## Attribution policy
++
++Structured metadata containing the governed canonical HHS name, a current
++alias or a verified durable identifier may support confirmed attribution.
++Facility and historical names support probable attribution and remain
++reviewable. Organisation names found only in titles, abstracts or subjects enter
++review rather than the attributed portfolio. “Cairns” by itself is never
++institutional evidence.
++
++The outcome describes metadata attribution only. It does not determine
++employment, institutional ownership, funding, endorsement, study-site status or
++research quality.
++
++## Data and privacy
++
++Only public bibliographic and affiliation metadata is in scope. The pilot does
++not require patient information, clinical data, restricted full text, licensed
++provider exports or credentials stored in monitor state. Staff-level
++performance profiling is prohibited without a separately approved purpose,
++policy and governance process.
++
++## Success and exit
++
++Before a real pilot starts, accountable reviewers must set prospective
++thresholds for sensitivity, positive predictive value, review workload,
++provider reliability and reproducibility. Any released report must be linked to
++validated state and Searchright receipts. False attribution, unexpected data
++collection, provider-policy breach or unrecoverable state triggers rollback.
++
++The machine-readable contract is
++`release/pilots/chhhs-research-intelligence.json`.
+diff --git a/release/pilots/chhhs-research-intelligence.json b/release/pilots/chhhs-research-intelligence.json
+new file mode 100644
+index 0000000..7eb3ba6
+--- /dev/null
++++ b/release/pilots/chhhs-research-intelligence.json
+@@ -0,0 +1,61 @@
++{
++  "schema_version": "org.searchright.institutional-pilot.v1",
++  "pilot_id": "chhhs-research-intelligence-demo",
++  "track_id": "36",
++  "title": "CHHHS research intelligence demonstration",
++  "status": "source_demonstration_ready_not_started",
++  "deployment_profile": "institution_self_hosted",
++  "accountable_roles": [
++    "CHHHS research governance sponsor",
++    "CHHHS research office operator",
++    "CHHHS information specialist or librarian reviewer"
++  ],
++  "data_classification": "public_bibliographic_metadata",
++  "permitted_data": [
++    "Public bibliographic metadata",
++    "Public author and institutional affiliation metadata",
++    "Searchright source receipts and redacted provider diagnostics",
++    "Human attribution adjudications without patient or restricted staff data"
++  ],
++  "prohibited_data": [
++    "Patient-identifiable or clinical data",
++    "Restricted full text",
++    "Licensed database credentials or exports",
++    "Unapproved staff performance profiles"
++  ],
++  "supported_sources": ["pubmed", "europe-pmc", "crossref", "openalex"],
++  "success_measures": [
++    {
++      "measure": "Attribution sensitivity against an adjudicated internal publication reference set",
++      "threshold": "Set prospectively before pilot start"
++    },
++    {
++      "measure": "Positive predictive value for confirmed and probable attribution",
++      "threshold": "Set prospectively before pilot start"
++    },
++    {
++      "measure": "Monthly manual-review workload",
++      "threshold": "Set prospectively before pilot start"
++    },
++    {
++      "measure": "Provider and report reproducibility from retained receipts and state",
++      "threshold": "100% of released reports linked to a validated run"
++    }
++  ],
++  "incident_contacts": [
++    "Named CHHHS research governance contact to be recorded before pilot start",
++    "Named technical operator to be recorded before pilot start"
++  ],
++  "rollback_criteria": [
++    "Material false attribution in a released report",
++    "Unexpected collection of non-public or restricted information",
++    "Unbounded provider requests or repeated provider-policy breach",
++    "Loss of state integrity or inability to reproduce a released report"
++  ],
++  "rollback_action": "Disable scheduled execution, preserve evidence, withdraw or correct affected reports, restore the last validated state, and require accountable restart approval.",
++  "exit_decision": "not_started",
++  "automatic_publication": false,
++  "automatic_performance_decisions": false,
++  "human_release_required": true,
++  "claim_boundary": "The source implementation and synthetic fixture demonstration are ready for review. No CHHHS institutional pilot, live completeness validation, operational deployment, released monthly report or organisational endorsement is claimed."
++}
+diff --git a/scripts/check_chhhs_research_demo.py b/scripts/check_chhhs_research_demo.py
+new file mode 100755
+index 0000000..080c75d
+--- /dev/null
++++ b/scripts/check_chhhs_research_demo.py
+@@ -0,0 +1,188 @@
++#!/usr/bin/env python3
++"""Validate the CHHHS institutional-publication pilot without network access."""
++from __future__ import annotations
++
++import json
++from pathlib import Path
++
++ROOT = Path(__file__).resolve().parents[1]
++
++REQUIRED_PATHS = [
++    "crates/searchright-chhhs-demo/Cargo.toml",
++    "crates/searchright-chhhs-demo/src/lib.rs",
++    "crates/searchright-chhhs-demo/src/main.rs",
++    "crates/searchright-chhhs-demo/src/attribution.rs",
++    "crates/searchright-chhhs-demo/src/classification.rs",
++    "crates/searchright-chhhs-demo/src/pipeline.rs",
++    "crates/searchright-chhhs-demo/src/report.rs",
++    "crates/searchright-chhhs-demo/src/search.rs",
++    "crates/searchright-chhhs-demo/src/storage.rs",
++    "crates/searchright-chhhs-demo/resources/chhhs-institution-profile.json",
++    "crates/searchright-chhhs-demo/resources/research-taxonomy.json",
++    "crates/searchright-chhhs-demo/fixtures/openalex.json",
++    "crates/searchright-chhhs-demo/fixtures/crossref.json",
++    "crates/searchright-chhhs-demo/fixtures/europe-pmc.json",
++    "crates/searchright-chhhs-demo/fixtures/pubmed-esummary.json",
++    "release/pilots/chhhs-research-intelligence.json",
++    "docs/pilots/chhhs-research-intelligence.md",
++    ".github/workflows/chhhs-research-intelligence.yml",
++]
++
++
++def load_json(relative: str) -> object:
++    return json.loads((ROOT / relative).read_text(encoding="utf-8"))
++
++
++def main() -> int:
++    errors: list[str] = []
++    for relative in REQUIRED_PATHS:
++        if not (ROOT / relative).is_file():
++            errors.append(f"missing {relative}")
++
++    profile = load_json(
++        "crates/searchright-chhhs-demo/resources/chhhs-institution-profile.json"
++    )
++    taxonomy = load_json(
++        "crates/searchright-chhhs-demo/resources/research-taxonomy.json"
++    )
++    pilot = load_json("release/pilots/chhhs-research-intelligence.json")
++    workflow = (ROOT / ".github/workflows/chhhs-research-intelligence.yml").read_text(
++        encoding="utf-8"
++    )
++    cargo = (ROOT / "crates/searchright-chhhs-demo/Cargo.toml").read_text(
++        encoding="utf-8"
++    )
++    search = (ROOT / "crates/searchright-chhhs-demo/src/search.rs").read_text(
++        encoding="utf-8"
++    )
++    pipeline = (ROOT / "crates/searchright-chhhs-demo/src/pipeline.rs").read_text(
++        encoding="utf-8"
++    )
++    report = (ROOT / "crates/searchright-chhhs-demo/src/report.rs").read_text(
++        encoding="utf-8"
++    )
++    openalex = load_json("crates/searchright-chhhs-demo/fixtures/openalex.json")
++    crossref = load_json("crates/searchright-chhhs-demo/fixtures/crossref.json")
++
++    if not isinstance(profile, dict):
++        errors.append("institution profile must be an object")
++    else:
++        if profile.get("schema_version") != "org.searchright.institution-profile.v1":
++            errors.append("unexpected institution-profile schema")
++        aliases = profile.get("aliases")
++        if not isinstance(aliases, list) or 
