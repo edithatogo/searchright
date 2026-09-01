@@ -1,0 +1,89 @@
+{
+  "schema_version": "org.searchright.chhhs-research-demo-config.v1",
+  "institution": {
+    "version": "2026-09-demo",
+    "canonical_name": "Cairns and Hinterland Hospital and Health Service",
+    "aliases": [
+      "Cairns and Hinterland Hospital and Health Service",
+      "Cairns and Hinterland Hospital and Health Service District",
+      "Cairns and Hinterland Health Service",
+      "Cairns and Hinterland HHS"
+    ],
+    "abbreviations": ["CHHHS"],
+    "facilities": [
+      "Cairns Hospital",
+      "Atherton Hospital",
+      "Babinda Hospital",
+      "Gordonvale Hospital",
+      "Herberton Hospital",
+      "Innisfail Hospital",
+      "Mareeba Hospital",
+      "Mossman Multi-Purpose Health Service",
+      "Tully Hospital"
+    ],
+    "identifiers": [],
+    "governance_status": "demonstration_aliases_pending_accountable_review"
+  },
+  "providers": ["pubmed", "europe_pmc", "crossref", "openalex"],
+  "taxonomy": {
+    "version": "2026-09-demo",
+    "themes": [
+      {
+        "id": "emergency_and_critical_care",
+        "label": "Emergency and critical care",
+        "terms": ["emergency department", "critical care", "intensive care", "trauma", "resuscitation"]
+      },
+      {
+        "id": "toxinology",
+        "label": "Toxinology",
+        "terms": ["envenomation", "snakebite", "jellyfish", "toxinology", "antivenom", "poisoning"]
+      },
+      {
+        "id": "rural_remote_and_first_nations_health",
+        "label": "Rural, remote and First Nations health",
+        "terms": ["rural", "remote", "aboriginal", "torres strait islander", "first nations", "health equity"]
+      },
+      {
+        "id": "infectious_diseases",
+        "label": "Infectious diseases",
+        "terms": ["infection", "infectious", "syphilis", "dengue", "melioidosis", "tuberculosis"]
+      },
+      {
+        "id": "maternal_child_and_genomic_health",
+        "label": "Maternal, child and genomic health",
+        "terms": ["paediatric", "pediatric", "child", "maternal", "pregnancy", "genomic", "genetic"]
+      },
+      {
+        "id": "health_services_and_implementation",
+        "label": "Health services and implementation",
+        "terms": ["health service", "implementation", "quality improvement", "model of care", "workforce", "telehealth"]
+      }
+    ],
+    "study_types": [
+      {
+        "id": "systematic_review",
+        "terms": ["systematic review", "meta-analysis", "meta analysis"]
+      },
+      {
+        "id": "randomised_trial",
+        "terms": ["randomised trial", "randomized trial", "randomised controlled", "randomized controlled"]
+      },
+      {
+        "id": "cohort_study",
+        "terms": ["cohort study", "retrospective cohort", "prospective cohort"]
+      },
+      {
+        "id": "qualitative_study",
+        "terms": ["qualitative study", "interviews", "focus groups"]
+      },
+      {
+        "id": "case_report_or_series",
+        "terms": ["case report", "case series"]
+      },
+      {
+        "id": "cross_sectional_study",
+        "terms": ["cross-sectional", "cross sectional"]
+      }
+    ]
+  }
+}
