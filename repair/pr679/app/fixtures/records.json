@@ -1,0 +1,74 @@
+[
+  {
+    "source": "pubmed",
+    "source_record_id": "demo-pubmed-001",
+    "title": "A regional emergency-department pathway for tropical envenomation",
+    "abstract": "This synthetic retrospective cohort study evaluates an emergency department pathway for envenomation and antivenom use in Far North Queensland.",
+    "doi": "10.9999/chhhs.demo.001",
+    "published": "2026-08-03",
+    "authors": ["A Example", "B Example"],
+    "affiliations": ["Emergency Department, Cairns Hospital, Cairns, Queensland, Australia"],
+    "institution_ids": [],
+    "url": "https://example.invalid/chhhs-demo-001"
+  },
+  {
+    "source": "openalex",
+    "source_record_id": "demo-openalex-W001",
+    "title": "A regional emergency-department pathway for tropical envenomation",
+    "abstract": "A synthetic retrospective cohort study of emergency care, snakebite and antivenom use undertaken at Cairns Hospital.",
+    "doi": "https://doi.org/10.9999/CHHHS.DEMO.001",
+    "published": "2026-08-03",
+    "authors": ["A Example", "B Example"],
+    "affiliations": ["Cairns Hospital, Cairns and Hinterland Hospital and Health Service, Queensland, Australia"],
+    "institution_ids": [],
+    "url": "https://example.invalid/chhhs-demo-001-openalex"
+  },
+  {
+    "source": "europe_pmc",
+    "source_record_id": "demo-epmc-002",
+    "title": "Telehealth-supported paediatric care in a rural health service",
+    "abstract": "This synthetic qualitative study uses interviews to examine telehealth implementation for paediatric care across rural communities.",
+    "doi": "10.9999/chhhs.demo.002",
+    "published": "2026-08-14",
+    "authors": ["C Example", "D Example"],
+    "affiliations": ["Paediatrics, Cairns and Hinterland Hospital and Health Service, Queensland, Australia"],
+    "institution_ids": [],
+    "url": "https://example.invalid/chhhs-demo-002"
+  },
+  {
+    "source": "crossref",
+    "source_record_id": "demo-crossref-003",
+    "title": "Quality improvement for antimicrobial stewardship at a regional hospital",
+    "abstract": "A synthetic health service quality improvement report concerning infectious diseases and antimicrobial stewardship.",
+    "doi": "10.9999/chhhs.demo.003",
+    "published": "2026-08-22",
+    "authors": ["E Example"],
+    "affiliations": ["Atherton Hospital, Queensland, Australia"],
+    "institution_ids": [],
+    "url": "https://example.invalid/chhhs-demo-003"
+  },
+  {
+    "source": "openalex",
+    "source_record_id": "demo-openalex-W004",
+    "title": "Community perceptions of dengue prevention in Cairns",
+    "abstract": "This synthetic cross-sectional study surveys Cairns residents. It contains a geographic mention but no CHHHS affiliation.",
+    "doi": "10.9999/chhhs.demo.false-positive",
+    "published": "2026-08-25",
+    "authors": ["F Example"],
+    "affiliations": ["Example University, Brisbane, Queensland, Australia"],
+    "institution_ids": [],
+    "url": "https://example.invalid/chhhs-demo-false-positive"
+  },
+  {
+    "source": "pubmed",
+    "source_record_id": "demo-pubmed-005",
+    "title": "A laboratory methods paper unrelated to the health service",
+    "abstract": "This synthetic record is included to exercise the insufficient-evidence path.",
+    "doi": "10.9999/chhhs.demo.unrelated",
+    "published": "2026-08-28",
+    "authors": ["G Example"],
+    "affiliations": ["Example Institute, Melbourne, Victoria, Australia"],
+    "institution_ids": [],
+    "url": "https://example.invalid/chhhs-demo-unrelated"
+  }
+]
