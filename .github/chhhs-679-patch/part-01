@@ -1,0 +1,278 @@
+rns implementation claims.
++The release-candidate programme remains prepared rather than executed. The CHHHS institutional-publication vertical slice is source implemented with rights-clear fixtures and explicit policy gates, but no live completeness, institutional calibration, operational deployment, released report or CHHHS endorsement is claimed.
+ 
+ > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
+diff --git a/conductor/roadmap-coverage.json b/conductor/roadmap-coverage.json
+index 210f8fd..d17dd4d 100644
+--- a/conductor/roadmap-coverage.json
++++ b/conductor/roadmap-coverage.json
+@@ -243,7 +243,9 @@
+           "kind": "human",
+           "status": "pending",
+           "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
+-          "evidence": ["verification/receipts/track-02-integration-panel.json"]
++          "evidence": [
++            "verification/receipts/track-02-integration-panel.json"
++          ]
+         }
+       ]
+     },
+@@ -530,13 +532,13 @@
+         "python scripts/validate_repository.py"
+       ],
+       "claim_boundary": "Compiler-backed deterministic interchange round trips and source-level deduplication/linkage behaviour are evidenced. A digest-bound multi-agent panel may recommend disposition, but only the repository owner's recorded decision may close the evaluation gate.",
+-    "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
++      "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
+       "deliverables": [
+         "crates/searchright-dedup/src/lib.rs",
+-      "crates/searchright-interchange/src/lib.rs",
+-      "crates/searchright-interchange/src/xml.rs",
+-      "crates/searchright-interchange/tests/xml_integrity.rs",
+-      "docs/xml-imports.md",
++        "crates/searchright-interchange/src/lib.rs",
++        "crates/searchright-interchange/src/xml.rs",
++        "crates/searchright-interchange/tests/xml_integrity.rs",
++        "docs/xml-imports.md",
+         "crates/searchright-study/src/lib.rs",
+         "contracts/examples/interchange-receipt.yaml",
+         "contracts/examples/study-graph.yaml",
+@@ -973,21 +975,21 @@
+         "SR-031"
+       ],
+       "review_completed": true,
+-    "review_fixes": [
+-      {
+-        "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
+-        "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
+-      },
+-      {
+-        "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
+-        "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
+-      }
+-    ],
+-    "runtime_evidence": [
+-      "verification/receipts/track-11-agent-authority-review.json",
+-      "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
+-      "verification/receipts/track-11-local-admission.json"
+-    ],
++      "review_fixes": [
++        {
++          "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
++          "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
++        },
++        {
++          "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
++          "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
++        }
++      ],
++      "runtime_evidence": [
++        "verification/receipts/track-11-agent-authority-review.json",
++        "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
++        "verification/receipts/track-11-local-admission.json"
++      ],
+       "external_evidence": [
+         "verification/receipts/track-11-sibling-route.json",
+         "verification/receipts/track-11-downstream-readiness.json",
+@@ -2253,15 +2255,16 @@
+     {
+       "blockers": [
+         "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+-        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
++        "Complete real local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals; the CHHHS source demonstration still requires identity-register approval, retrospective calibration, named operators, live-provider review and durable storage.",
+         "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+       ],
+       "checks": [
+         "python scripts/check_release_rehearsal.py",
+         "python scripts/check_packaging_reproducibility.py",
+-        "python scripts/check_maturity_dossier.py"
++        "python scripts/check_maturity_dossier.py",
++        "python scripts/check_chhhs_research_demo.py"
+       ],
+-      "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
++      "claim_boundary": "The release-candidate programme remains prepared rather than executed. The CHHHS institutional-publication vertical slice is source implemented with rights-clear fixtures and explicit policy gates, but no live completeness, institutional calibration, operational deployment, released report or CHHHS endorsement is claimed.",
+       "deliverables": [
+         "release/rehearsal.json",
+         "scripts/check_release_rehearsal.py",
+@@ -2269,7 +2272,14 @@
+         "docs/releases/release-candidate.md",
+         "docs/pilots/pilot-protocol.md",
+         "registry/status.json",
+-        "scripts/package_source.py"
++        "scripts/package_source.py",
++        "Cargo.toml",
++        "Cargo.lock",
++        "crates/searchright-chhhs-demo",
++        "release/pilots/chhhs-research-intelligence.json",
++        "docs/pilots/chhhs-research-intelligence.md",
++        ".github/workflows/chhhs-research-intelligence.yml",
++        "scripts/check_chhhs_research_demo.py"
+       ],
+       "dependencies": [
+         "18",
+@@ -2285,7 +2295,7 @@
+       "evidence_level": "source_verified",
+       "external_approval_required": true,
+       "horizon": "mature",
+-      "implementation_state": "scaffolded",
++      "implementation_state": "partially_implemented",
+       "outcome": "Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals.",
+       "requirements": [
+         "SR-039",
+@@ -2298,7 +2308,8 @@
+       "slug": "release-candidate-pilots",
+       "status": "release_prepared",
+       "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+-      "track_id": "36"
++      "track_id": "36",
++      "updated": "2026-09-01"
+     },
+     {
+       "blockers": [
+diff --git a/conductor/tracks.md b/conductor/tracks.md
+index 8adf8cd..6818c45 100644
+--- a/conductor/tracks.md
++++ b/conductor/tracks.md
+@@ -40,7 +40,7 @@ an explicit, approval-gated apply receipt exists.
+ | 33 | [Operational observability, backup, restore and incident response](tracks/33-operational-reliability/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments. |
+ | 34 | [Authenticated remote MCP, tenancy and data residency](tracks/34-authenticated-remote-mcp/spec.md) | mature | integration_prepared | partially_implemented | source_verified | Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment. |
+ | 35 | [Generated SDKs, fixture-backed documentation and adoption operations](tracks/35-sdk-docs-adoption/spec.md) | mature | scaffolded | scaffolded | source_verified | Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core. |
+-| 36 | [Release-candidate rehearsal, staged pilots and ecosystem rehearsal](tracks/36-release-candidate-pilots/spec.md) | mature | release_prepared | scaffolded | source_verified | Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals. |
++| 36 | [Release-candidate rehearsal, staged pilots and ecosystem rehearsal](tracks/36-release-candidate-pilots/spec.md) | mature | release_prepared | partially_implemented | source_verified | Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals. |
+ | 37 | [Final mature 1.0 release and long-term operations](tracks/37-maturity-1-0/spec.md) | mature | external_evidence_required | external_evidence_required | source_verified | Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness. |
+ 
+ ## Archived tracks
+diff --git a/conductor/tracks/36-release-candidate-pilots/evidence.json b/conductor/tracks/36-release-candidate-pilots/evidence.json
+index 717b56a..13884c1 100644
+--- a/conductor/tracks/36-release-candidate-pilots/evidence.json
++++ b/conductor/tracks/36-release-candidate-pilots/evidence.json
+@@ -3,7 +3,7 @@
+   "track_id": "36",
+   "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+   "status": "release_prepared",
+-  "implementation_state": "scaffolded",
++  "implementation_state": "partially_implemented",
+   "evidence_level": "source_verified",
+   "source_verified_on": "2026-08-06",
+   "source_evidence": [
+@@ -13,13 +13,21 @@
+     "docs/releases/release-candidate.md",
+     "docs/pilots/pilot-protocol.md",
+     "registry/status.json",
+-    "scripts/package_source.py"
++    "scripts/package_source.py",
++    "Cargo.toml",
++    "Cargo.lock",
++    "crates/searchright-chhhs-demo",
++    "release/pilots/chhhs-research-intelligence.json",
++    "docs/pilots/chhhs-research-intelligence.md",
++    ".github/workflows/chhhs-research-intelligence.yml",
++    "scripts/check_chhhs_research_demo.py"
+   ],
+   "traceability": "conductor/tracks/36-release-candidate-pilots/traceability.json",
+   "static_checks": [
+     "python scripts/check_release_rehearsal.py",
+     "python scripts/check_packaging_reproducibility.py",
+-    "python scripts/check_maturity_dossier.py"
++    "python scripts/check_maturity_dossier.py",
++    "python scripts/check_chhhs_research_demo.py"
+   ],
+   "requirements": [
+     "SR-039",
+@@ -31,10 +39,10 @@
+   ],
+   "blockers": [
+     "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+-    "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
++    "Complete real local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals; the CHHHS source demonstration still requires identity-register approval, retrospective calibration, named operators, live-provider review and durable storage.",
+     "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+   ],
+-  "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
++  "claim_boundary": "The release-candidate programme remains prepared rather than executed. The CHHHS institutional-publication vertical slice is source implemented with rights-clear fixtures and explicit policy gates, but no live completeness, institutional calibration, operational deployment, released report or CHHHS endorsement is claimed.",
+   "github_issue_keys": {
+     "epic": "roadmap-epic",
+     "track": "track-36",
+diff --git a/conductor/tracks/36-release-candidate-pilots/metadata.json b/conductor/tracks/36-release-candidate-pilots/metadata.json
+index 11447f5..db2578f 100644
+--- a/conductor/tracks/36-release-candidate-pilots/metadata.json
++++ b/conductor/tracks/36-release-candidate-pilots/metadata.json
+@@ -4,9 +4,9 @@
+   "slug": "release-candidate-pilots",
+   "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+   "status": "release_prepared",
+-  "implementation_state": "scaffolded",
++  "implementation_state": "partially_implemented",
+   "created": "2026-08-08",
+-  "updated": "2026-08-09",
++  "updated": "2026-09-01",
+   "dependencies": [
+     "18",
+     "19",
+diff --git a/conductor/tracks/36-release-candidate-pilots/plan.md b/conductor/tracks/36-release-candidate-pilots/plan.md
+index 7cb4204..937818e 100644
+--- a/conductor/tracks/36-release-candidate-pilots/plan.md
++++ b/conductor/tracks/36-release-candidate-pilots/plan.md
+@@ -1,6 +1,6 @@
+ # Plan: 36 Release-candidate rehearsal, staged pilots and ecosystem rehearsal
+ 
+-Current status: **release_prepared**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
++Current status: **release_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+ 
+ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered native subissue.
+ 
+@@ -16,6 +16,13 @@ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered nati
+   - [x] Present source path: `docs/pilots/pilot-protocol.md`
+   - [x] Present source path: `registry/status.json`
+   - [x] Present source path: `scripts/package_source.py`
++  - [x] Present source path: `Cargo.toml`
++  - [x] Present source path: `Cargo.lock`
++  - [x] Present source path: `crates/searchright-chhhs-demo`
++  - [x] Present source path: `release/pilots/chhhs-research-intelligence.json`
++  - [x] Present source path: `docs/pilots/chhhs-research-intelligence.md`
++  - [x] Present source path: `.github/workflows/chhhs-research-intelligence.yml`
++  - [x] Present source path: `scripts/check_chhhs_research_demo.py`
+   - [x] Assertion ledger: `conductor/tracks/36-release-candidate-pilots/traceability.json`
+ 
+ ## Phase 2: Source-level verification
+@@ -26,6 +33,7 @@ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered nati
+   - [x] `python scripts/check_release_rehearsal.py`
+   - [x] `python scripts/check_packaging_reproducibility.py`
+   - [x] `python scripts/check_maturity_dossier.py`
++  - [x] `python scripts/check_chhhs_research_demo.py`
+ - [x] Record machine-readable evidence without promoting compiler, live or external claims.
+ 
+ ## Phase 3: Higher-evidence gates
+@@ -33,7 +41,7 @@ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered nati
+ <!-- github-subissue-key: track-36-phase-3 -->
+ 
+ - [ ] Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
+-- [ ] Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.
++- [ ] Complete real local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals; the CHHHS source demonstration still requires identity-register approval, retrospective calibration, named operators, live-provider review and durable storage.
+ - [ ] Validate exact release candidate packets and obtain explicit approval before any release or registry submission.
+ 
+ ## Phase 4: Review and closeout
+diff --git a/conductor/tracks/36-release-candidate-pilots/spec.md b/conductor/tracks/36-release-candidate-pilots/spec.md
+index 8ef893b..eec62b4 100644
+--- a/conductor/tracks/36-release-candidate-pilots/spec.md
++++ b/conductor/tracks/36-release-candidate-pilots/spec.md
+@@ -8,6 +8,7 @@ Exercise the complete candidate in clean-room builds, downstream canaries, bound
+ 
+ - Clean-room release-candidate rehearsal
+ - Staged local, institutional and remote pilots
++- Reference institutional publication-intelligence vertical slices with explicit attribution, reporting and rollback boundaries
+ - Rollback and registry/ecosystem rehearsal
+ 
+ ## Requirements owned
+diff --git a/conductor/tracks/36-release-candidate-pilots/traceability.json b/conductor/tracks/36-release-candidate-pilots/traceability.json
+index d3fad7f..574f876 100644
+--- a/conductor/tracks/36-release-candidate-pilots/traceability.json
++++ b/conductor/tracks/36-release-candidate-pilots/traceability.json
+@@ -2,10 +2,10 @@
+   "schema_version": "org.searchright.track-traceability.v1",
+   "track_id": "36",
+   "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+-  "implementation_state": "scaffolded",
++  "implementation_state": "partially_implemented",
+   "evidence_level": "source_verified",
+   "source_of_assertions": "conductor/tracks/36-release-candidate-pilots/spec.md#scope",
+-  "claim_boundary": "The release candidate and pilot programme are prepared, not executed or accepted. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
++  "claim_boundary": "The release-candidate programme remains prepared rather than executed. The CHHHS institutional-publication vertical 
