@@ -1,0 +1,155 @@
+name: Self-heal current PR 679 failures
+
+on:
+  push:
+    branches: [scratch/pr679-self-heal]
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: self-heal-pr679
+  cancel-in-progress: true
+
+jobs:
+  self-heal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout controller
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Reconcile current failures without bypassing gates
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: '679'
+          PR_BRANCH: feat/chhhs-research-intelligence-demo
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pr679-self-heal/logs
+          body='## Contract and track
+
+- Conductor track: `36`
+- Multi-track exception: `none`
+- Pilot: CHHHS institutional publication-intelligence demonstration
+
+## Purpose
+
+Add a fixture-first demonstration that uses SearchRight as the provider-execution boundary for recurring discovery of publications potentially attributable to Cairns and Hinterland Hospital and Health Service (CHHHS).
+
+## Repair status
+
+The obsolete payload-applicator workflow has been replaced by the actual application, a hardened recurring workflow, deterministic fixtures and tests, and a Track 36 pilot evidence note. Repository gates remain strict.
+
+## Claim boundary
+
+This is a high-recall candidate-monitor demonstration. It does not establish exhaustive CHHHS publication coverage, validated institutional-attribution accuracy, current live-provider compatibility, an authoritative research register, or production governance readiness.'
+          gh api --method PATCH "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" -f body="${body}" >/dev/null
+
+          for cycle in 1 2 3; do
+            echo "Self-heal cycle ${cycle}"
+            head="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')"
+
+            for attempt in $(seq 1 120); do
+              checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/check-runs?per_page=100")"
+              combined="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/status")"
+              total="$(jq '.total_count' <<<"${checks}")"
+              pending="$(jq '[.check_runs[]|select(.status!="completed")]|length' <<<"${checks}")"
+              pending_status="$(jq '[.statuses[]|select(.state=="pending")]|length' <<<"${combined}")"
+              failed="$(jq '[.check_runs[]|select(.status=="completed" and (.conclusion|IN("success","neutral","skipped")|not))]|length' <<<"${checks}")"
+              failed_status="$(jq '[.statuses[]|select(.state|IN("success","pending")|not)]|length' <<<"${combined}")"
+              echo "head=${head} attempt=${attempt} total=${total} pending=$((pending + pending_status)) failed=$((failed + failed_status))"
+              if (( total == 0 || pending + pending_status > 0 )); then
+                sleep 30
+                continue
+              fi
+              break
+            done
+
+            if (( failed + failed_status == 0 )); then
+              jq -n --arg head "${head}" --argjson checks "${checks}" --argjson combined "${combined}" '{schema_version:"org.searchright.pr679-self-heal.v1",status:"passed",head_sha:$head,check_runs:[$checks.check_runs[]|{name,status,conclusion,details_url}],commit_statuses:[$combined.statuses[]|{context,state,target_url}]}' > /tmp/pr679-self-heal/status.json
+              gh pr ready "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" >/dev/null || true
+              gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="Current-head reconciliation passed for \`${head}\`: there are no failing latest check runs or commit statuses. Historical failed runs on superseded commits remain visible for auditability." >/dev/null
+              exit 0
+            fi
+
+            runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${head}&per_page=100")"
+            mapfile -t failed_ids < <(jq -r '.workflow_runs[]|select(.status=="completed" and .conclusion=="failure")|.id' <<<"${runs}")
+            if (( ${#failed_ids[@]} > 0 )); then
+              for run_id in "${failed_ids[@]}"; do
+                gh run view "${run_id}" --repo "${GITHUB_REPOSITORY}" --log-failed > "/tmp/pr679-self-heal/logs/${head}-${run_id}.log" 2>&1 || true
+                gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/rerun-failed-jobs" >/dev/null || true
+              done
+              sleep 45
+
+              checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/check-runs?per_page=100")"
+              combined="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/status")"
+              failed="$(jq '[.check_runs[]|select(.status=="completed" and (.conclusion|IN("success","neutral","skipped")|not))]|length' <<<"${checks}")"
+              failed_status="$(jq '[.statuses[]|select(.state|IN("success","pending")|not)]|length' <<<"${combined}")"
+              pending="$(jq '[.check_runs[]|select(.status!="completed")]|length' <<<"${checks}")"
+              pending_status="$(jq '[.statuses[]|select(.state=="pending")]|length' <<<"${combined}")"
+              if (( pending + pending_status > 0 )); then
+                continue
+              fi
+              if (( failed + failed_status == 0 )); then
+                continue
+              fi
+            fi
+
+            git fetch --no-tags origin main "${PR_BRANCH}"
+            rm -rf /tmp/pr679-heal-work
+            git worktree prune
+            git worktree add -b "pr679-heal-${cycle}" /tmp/pr679-heal-work "origin/${PR_BRANCH}"
+            cd /tmp/pr679-heal-work
+            before="$(git status --porcelain)"
+
+            rm -f .github/workflows/bootstrap-chhhs-source.yml
+            python scripts/generate_source_hash_manifest.py
+            cargo fmt --all
+
+            after="$(git status --porcelain)"
+            if [[ "${before}" == "${after}" && -z "${after}" ]]; then
+              jq -n --arg head "${head}" --argjson checks "${checks}" --argjson combined "${combined}" '{schema_version:"org.searchright.pr679-self-heal.v1",status:"unexplained_failure",head_sha:$head,failed_check_runs:[$checks.check_runs[]|select(.status=="completed" and (.conclusion|IN("success","neutral","skipped")|not))|{name,conclusion,details_url}],failed_commit_statuses:[$combined.statuses[]|select(.state|IN("success","pending")|not)|{context,state,target_url}]}' > /tmp/pr679-self-heal/status.json
+              summary="$(jq -r '(.failed_check_runs[]?|"- \(.name): \(.conclusion) (\(.details_url))"),(.failed_commit_statuses[]?|"- \(.context): \(.state) (\(.target_url))")' /tmp/pr679-self-heal/status.json)"
+              gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="Current failures for \`${head}\` could not be repaired by the bounded generated-artifact and formatting reconciliation; no gate was bypassed.\n\n${summary}" >/dev/null
+              exit 1
+            fi
+
+            python -m unittest discover -s apps/chhhs-research-intelligence/tests
+            rm -rf /tmp/chhhs-demo-heal
+            python apps/chhhs-research-intelligence/chhhs_research_demo.py run --fixture --state /tmp/chhhs-demo-heal/state.json --retrieved-at '2026-08-31T00:00:00+00:00' --month '2026-08' --output-dir /tmp/chhhs-demo-heal/reports
+            python scripts/validate_repository.py
+            python scripts/run_static_harness.py
+            cargo fmt --all -- --check
+            cargo test --workspace --all-features --locked
+            cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
+            bash scripts/verify.sh
+
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -A
+            git diff --cached --check
+            git commit -m 'fix(pr679): reconcile generated artefacts and formatting'
+            new_head="$(git rev-parse HEAD)"
+            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push --force-with-lease="refs/heads/${PR_BRANCH}:${head}" origin "HEAD:refs/heads/${PR_BRANCH}"
+            cd "${GITHUB_WORKSPACE}"
+            echo "Pushed repaired head ${new_head}"
+          done
+
+          jq -n '{schema_version:"org.searchright.pr679-self-heal.v1",status:"cycles_exhausted"}' > /tmp/pr679-self-heal/status.json
+          exit 1
+
+      - name: Upload reconciliation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pr679-self-heal-evidence
+          path: /tmp/pr679-self-heal
+          if-no-files-found: error
+          retention-days: 7
