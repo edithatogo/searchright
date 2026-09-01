@@ -1,0 +1,83 @@
+name: Monitor and rerun PR 679 checks
+
+on:
+  push:
+    branches: [scratch/recover-chhhs-payload-679-v2]
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: monitor-pr679
+  cancel-in-progress: true
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Monitor current PR head
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: '679'
+          OLD_HEAD: 9b452a4ee9b4e79bd02925014c308df359bbc7a7
+        run: |
+          set -euo pipefail
+          rerun_attempted=false
+          for attempt in $(seq 1 80); do
+            head_sha=$(gh api "repos/${REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')
+            if [[ "$head_sha" == "$OLD_HEAD" ]]; then
+              echo "Waiting for materialised payload commit (${attempt}/80)."
+              sleep 30
+              continue
+            fi
+
+            checks=$(gh api -H 'Accept: application/vnd.github+json' "repos/${REPOSITORY}/commits/${head_sha}/check-runs?per_page=100")
+            total=$(jq '.total_count' <<<"$checks")
+            pending=$(jq '[.check_runs[] | select(.status != "completed")] | length' <<<"$checks")
+            failed=$(jq '[.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not))] | length' <<<"$checks")
+            echo "head=$head_sha total=$total pending=$pending failed=$failed attempt=$attempt"
+
+            if (( total == 0 || pending > 0 )); then
+              sleep 30
+              continue
+            fi
+
+            if (( failed == 0 )); then
+              names=$(jq -r '[.check_runs[] | "- \(.name): \(.conclusion)"] | join("\n")' <<<"$checks")
+              gh api "repos/${REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="All latest checks for \\`${head_sha}\\` are complete without failures.\n\n${names}" >/dev/null
+              exit 0
+            fi
+
+            if [[ "$rerun_attempted" == false ]]; then
+              runs=$(gh api "repos/${REPOSITORY}/actions/runs?head_sha=${head_sha}&event=pull_request&per_page=100")
+              mapfile -t failed_runs < <(jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion == "failure") | .id' <<<"$runs")
+              if (( ${#failed_runs[@]} > 0 )); then
+                for run_id in "${failed_runs[@]}"; do
+                  gh api --method POST "repos/${REPOSITORY}/actions/runs/${run_id}/rerun-failed-jobs" >/dev/null || true
+                done
+                rerun_attempted=true
+                sleep 30
+                continue
+              fi
+            fi
+
+            summary=$(jq -r '[.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not)) | "- \(.name): \(.conclusion) (\(.details_url))"] | join("\n")' <<<"$checks")
+            gh api "repos/${REPOSITORY}/issues/${PR_NUMBER}/comments" -f body="Latest failing checks for \\`${head_sha}\\`:\n\n${summary}" >/dev/null
+            jq '{head_sha: $head, failures: [.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not)) | {name, conclusion, details_url}]}' --arg head "$head_sha" <<<"$checks" > pr679-failures.json
+            exit 1
+          done
+          echo 'Timed out waiting for the materialised PR head and completed checks.' >&2
+          exit 1
+      - name: Upload failure snapshot
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pr679-failure-snapshot
+          path: pr679-failures.json
+          if-no-files-found: ignore
+          retention-days: 3
