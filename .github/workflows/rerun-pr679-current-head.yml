@@ -1,0 +1,96 @@
+name: Rerun PR 679 current-head failures
+
+on:
+  push:
+    branches: [scratch/pr679-rerun-current]
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: rerun-pr679-current-head
+  cancel-in-progress: true
+
+jobs:
+  rerun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Checkout controller
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Rerun and audit the exact current head
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: '679'
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pr679-rerun/logs
+          head="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')"
+          printf '%s\n' "$head" > /tmp/pr679-rerun/head.txt
+
+          runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${head}&event=pull_request&per_page=100")"
+          mapfile -t failed_ids < <(jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion == "failure") | .id' <<<"$runs")
+          for run_id in "${failed_ids[@]}"; do
+            gh run view "$run_id" --repo "$GITHUB_REPOSITORY" --log-failed > "/tmp/pr679-rerun/logs/${run_id}-before.log" 2>&1 || true
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/rerun-failed-jobs" >/dev/null || true
+          done
+
+          for attempt in $(seq 1 120); do
+            current="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')"
+            if [[ "$current" != "$head" ]]; then
+              echo "PR head changed from $head to $current during bounded rerun" >&2
+              head="$current"
+              printf '%s\n' "$head" > /tmp/pr679-rerun/head.txt
+            fi
+            checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/check-runs?per_page=100")"
+            statuses="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/status")"
+            total="$(jq '.total_count' <<<"$checks")"
+            pending="$(jq '[.check_runs[] | select(.status != "completed")] | length' <<<"$checks")"
+            pending_status="$(jq '[.statuses[] | select(.state == "pending")] | length' <<<"$statuses")"
+            failed="$(jq '[.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not))] | length' <<<"$checks")"
+            failed_status="$(jq '[.statuses[] | select(.state | IN("success", "pending") | not)] | length' <<<"$statuses")"
+            echo "attempt=$attempt head=$head total=$total pending=$((pending + pending_status)) failed=$((failed + failed_status))"
+            if (( total == 0 || pending + pending_status > 0 )); then
+              sleep 30
+              continue
+            fi
+
+            jq -n \
+              --arg head "$head" \
+              --argjson checks "$checks" \
+              --argjson statuses "$statuses" \
+              '{schema_version:"org.searchright.pr679-exact-head-rerun.v1",head_sha:$head,current_failures:[$checks.check_runs[]|select(.status=="completed" and (.conclusion|IN("success","neutral","skipped")|not))|{kind:"check_run",name,conclusion,details_url}],current_status_failures:[$statuses.statuses[]|select(.state|IN("success","pending")|not)|{kind:"commit_status",name:.context,conclusion:.state,details_url:.target_url}],current_pending:[$checks.check_runs[]|select(.status!="completed")|{kind:"check_run",name,status,details_url}],current_status_pending:[$statuses.statuses[]|select(.state=="pending")|{kind:"commit_status",name:.context,status:.state,details_url:.target_url}]}' \
+              > /tmp/pr679-rerun/status.json
+
+            if (( failed + failed_status == 0 )); then
+              gh pr ready "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" >/dev/null || true
+              gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+                -f body="Exact-head rerun completed for \`${head}\`: zero current failures and zero pending checks. Earlier failed runs remain attached to superseded commits for auditability." >/dev/null
+            else
+              current_runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${head}&per_page=100")"
+              mapfile -t current_failed_ids < <(jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion == "failure") | .id' <<<"$current_runs")
+              for run_id in "${current_failed_ids[@]}"; do
+                gh run view "$run_id" --repo "$GITHUB_REPOSITORY" --log-failed > "/tmp/pr679-rerun/logs/${run_id}-after.log" 2>&1 || true
+              done
+              summary="$(jq -r '(.current_failures[]? | "- \(.name): \(.conclusion) (\(.details_url))"), (.current_status_failures[]? | "- \(.name): \(.conclusion) (\(.details_url))")' /tmp/pr679-rerun/status.json)"
+              gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+                -f body="Exact-head rerun for \`${head}\` still has current failures; none were hidden or deleted:\n\n${summary}" >/dev/null
+            fi
+            exit 0
+          done
+
+          jq -n --arg head "$head" '{schema_version:"org.searchright.pr679-exact-head-rerun.v1",head_sha:$head,status:"timed_out"}' > /tmp/pr679-rerun/status.json
+          exit 0
+      - name: Upload exact-head rerun evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pr679-exact-head-rerun-evidence
+          path: /tmp/pr679-rerun
+          if-no-files-found: error
+          retention-days: 7
