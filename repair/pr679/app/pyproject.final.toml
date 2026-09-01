@@ -1,0 +1,9 @@
+[project]
+name = "chhhs-research-intelligence-demo"
+version = "0.1.0"
+description = "Fixture-first CHHHS institutional publication-monitoring demonstration"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.ruff]
+line-length = 100
