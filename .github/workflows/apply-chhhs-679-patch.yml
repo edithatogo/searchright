@@ -44,7 +44,6 @@ jobs:
           python scripts/sync_context_lock.py
           python scripts/generate_evidence_debt.py
           python scripts/generate_source_sbom.py
-          python scripts/generate_source_hash_manifest.py
       - name: Run pre-commit source checks
         shell: bash
         run: |
@@ -55,13 +54,15 @@ jobs:
           python scripts/validate_repository.py
           cargo fmt --all -- --check
           git diff --check
-      - name: Create locally verified candidate commit
+      - name: Create manifest-complete candidate commit
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
+          python scripts/generate_source_hash_manifest.py
+          git add verification/receipts/source-manifest.sha256
           git commit -m "feat(pilot): add CHHHS research intelligence demo (Track 36)"
           test -z "$(git status --porcelain)"
       - name: Verify clean candidate before remote push
