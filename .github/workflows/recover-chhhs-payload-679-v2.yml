@@ -21,7 +21,7 @@ jobs:
         run: |
           set -euo pipefail
           git fetch --no-tags --depth=1 origin 67c10859e37e7db51bcce6c564841cdbe4e987e0
-          git show 67c10859e37e7db51bcce6c564841cdbe4e987e0:.github/workflows/bootstrap-chhhs-source.yml > "$RUNNER_TEMP/bootstrap-chhhs-source.yml"
+          git show 67c10859e37e7db51bcce6c564841cdbe4e987e0:.github/workflows/bootstrap-chhhs-source.yml > bootstrap-chhhs-source.yml
       - name: Recover and validate reviewed archive
         shell: bash
         run: |
@@ -34,7 +34,7 @@ jobs:
           import tarfile
           from pathlib import Path
 
-          source_path = Path('/tmp/bootstrap-chhhs-source.yml')
+          source_path = Path('bootstrap-chhhs-source.yml')
           lines = source_path.read_text(encoding='utf-8').splitlines()
           try:
               start = next(
@@ -55,9 +55,8 @@ jobs:
           digest = hashlib.sha256(payload).hexdigest()
 
           with tarfile.open(fileobj=io.BytesIO(payload), mode='r:gz') as archive:
-              members = archive.getmembers()
               inventory = []
-              for member in members:
+              for member in archive.getmembers():
                   path = Path(member.name)
                   if path.is_absolute() or '..' in path.parts:
                       raise RuntimeError(f'unsafe archive member: {member.name}')
@@ -66,8 +65,8 @@ jobs:
                   if member.isfile():
                       inventory.append(member.name)
 
-          Path('/tmp/recovered-chhhs-payload.tar.gz').write_bytes(payload)
-          Path('/tmp/recovered-chhhs-payload-inventory.json').write_text(
+          Path('recovered-chhhs-payload.tar.gz').write_bytes(payload)
+          Path('recovered-chhhs-payload-inventory.json').write_text(
               json.dumps(
                   {
                       'archive_sha256': digest,
@@ -85,7 +84,7 @@ jobs:
         with:
           name: recovered-chhhs-payload-679-v2
           path: |
-            /tmp/recovered-chhhs-payload.tar.gz
-            /tmp/recovered-chhhs-payload-inventory.json
+            recovered-chhhs-payload.tar.gz
+            recovered-chhhs-payload-inventory.json
           if-no-files-found: error
           retention-days: 1
