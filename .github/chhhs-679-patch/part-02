@@ -1,0 +1,442 @@
+slice is source implemented with rights-clear fixtures and explicit policy gates, but no live completeness, institutional calibration, operational deployment, released report or CHHHS endorsement is claimed.",
+   "assertions": [
+     {
+       "assertion_id": "T36-A001",
+@@ -39,33 +39,39 @@
+     },
+     {
+       "assertion_id": "T36-A002",
+-      "statement": "Staged local, institutional and remote pilots",
+-      "state": "scaffolded",
+-      "mapping_confidence": "track_level_only",
++      "statement": "Staged local, institutional and remote pilots, including the CHHHS institutional-publication reference vertical slice",
++      "state": "source_implemented",
++      "mapping_confidence": "symbol_and_test",
+       "implementation_paths": [
+-        "release/rehearsal.json",
+-        "scripts/check_release_rehearsal.py",
+-        ".github/workflows/release-candidate.yml",
+-        "docs/releases/release-candidate.md",
+-        "docs/pilots/pilot-protocol.md",
+-        "registry/status.json",
+-        "scripts/package_source.py"
++        "crates/searchright-chhhs-demo",
++        "release/pilots/chhhs-research-intelligence.json",
++        "docs/pilots/chhhs-research-intelligence.md",
++        ".github/workflows/chhhs-research-intelligence.yml",
++        "scripts/check_chhhs_research_demo.py"
++      ],
++      "implementation_symbols": [
++        "searchright_chhhs_demo::search::execute_fixture_search",
++        "searchright_chhhs_demo::search::execute_live_search",
++        "searchright_chhhs_demo::pipeline::process_search_batch",
++        "searchright_chhhs_demo::attribution::assess_attribution",
++        "searchright_chhhs_demo::classification::classify_record",
++        "searchright_chhhs_demo::report::build_monthly_report",
++        "searchright_chhhs_demo::report::write_report_bundle"
+       ],
+-      "implementation_symbols": [],
+       "deterministic_tests": [
+-        "python scripts/check_release_rehearsal.py",
+-        "python scripts/check_packaging_reproducibility.py",
+-        "python scripts/check_maturity_dossier.py"
++        "python scripts/check_chhhs_research_demo.py"
+       ],
+       "evidence_receipts": [
++        "verification/receipts/chhhs-research-demo-source.json",
+         "conductor/tracks/36-release-candidate-pilots/evidence.json"
+       ],
+       "open_gates": [
+-        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+-        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+-        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
++        "Complete exact-revision compiler, coverage and security checks for the application slice.",
++        "Approve a complete time-bounded CHHHS organisation and facility identity register.",
++        "Calibrate attribution against an adjudicated retrospective reference set and pre-specify sensitivity, precision and workload thresholds.",
++        "Execute authorised live-provider and institution-self-hosted pilot runs with named operators, durable storage, rollback rehearsal and accountable report release."
+       ],
+-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
++      "permitted_claim": "A Searchright-backed source implementation and rights-clear synthetic institutional-monitoring path exist; no live completeness, real institutional pilot or released CHHHS report is claimed."
+     },
+     {
+       "assertion_id": "T36-A003",
+diff --git a/context/context-lock.json b/context/context-lock.json
+index 7bc6e8c..a3f768c 100644
+--- a/context/context-lock.json
++++ b/context/context-lock.json
+@@ -23,8 +23,8 @@
+     },
+     {
+       "path": "conductor/github/issue-hierarchy.json",
+-      "sha256": "85036511e9d0314a119b2a220c887762d6410cd969c3fb03baccae409c9a1f22",
+-      "size": 621646
++      "sha256": "77cd7a92f550c0dff0d1662f271a7e46e931f778e4876456d2672f79ea413f62",
++      "size": 621874
+     },
+     {
+       "path": "conductor/github/project.json",
+@@ -53,8 +53,8 @@
+     },
+     {
+       "path": "conductor/roadmap-coverage.json",
+-      "sha256": "615e4d2953bb39d566244af47a9434c9719e6ed56ee104703fe3ecdb5c68a903",
+-      "size": 117162
++      "sha256": "0966fc9a8115d8d587cb444ea3b0423d0c740f3bde23a881a31f2cf1031cc64e",
++      "size": 117937
+     },
+     {
+       "path": "conductor/traceability-overrides.json",
+@@ -183,13 +183,13 @@
+     },
+     {
+       "path": "verification/evidence-debt.json",
+-      "sha256": "a738e3fd01a643d8ef215700f26ec17b6a158a50543e1f80aad6519c5ea78f28",
+-      "size": 3521
++      "sha256": "7f4cca1c49f05ae101f006bedf9d8cbe81b08759b58dafb70a675e88bd93bf70",
++      "size": 3549
+     },
+     {
+       "path": "verification/gate-catalog.json",
+-      "sha256": "0acd6f75b4595407a1fb1cf41caf9403b20929861d2b6c39443402f66cdebd36",
+-      "size": 50405
++      "sha256": "9742790b792d83f5419be0ceed85bfd529d5ed81485c326af84e8ea2c4e7434e",
++      "size": 51008
+     },
+     {
+       "path": "verification/harness-matrix.json",
+diff --git a/crates/searchright-chhhs-demo/Cargo.toml b/crates/searchright-chhhs-demo/Cargo.toml
+new file mode 100644
+index 0000000..b90956d
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/Cargo.toml
+@@ -0,0 +1,27 @@
++[package]
++name = "searchright-chhhs-demo"
++description = "Auditable institutional-publication monitoring demonstration for Cairns and Hinterland HHS."
++version.workspace = true
++edition.workspace = true
++rust-version.workspace = true
++license.workspace = true
++repository.workspace = true
++publish = false
++
++[features]
++default = []
++live = ["searchright/live"]
++
++[dependencies]
++anyhow.workspace = true
++blake3.workspace = true
++clap.workspace = true
++searchright = { path = "../searchright", version = "=0.1.0-alpha.1" }
++serde.workspace = true
++serde_json.workspace = true
++thiserror.workspace = true
++time.workspace = true
++tokio.workspace = true
++
++[lints]
++workspace = true
+diff --git a/crates/searchright-chhhs-demo/README.md b/crates/searchright-chhhs-demo/README.md
+new file mode 100644
+index 0000000..4e2ba22
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/README.md
+@@ -0,0 +1,69 @@
++# CHHHS research intelligence demonstration
++
++This non-publishable workspace application demonstrates an auditable institutional
++publication monitor for Cairns and Hinterland Hospital and Health Service
++(CHHHS). It is a reference pilot under Conductor Track 36, not an official CHHHS
++publication register.
++
++## What the vertical slice does
++
++1. Builds source-specific institution searches for PubMed, Europe PMC, Crossref
++   and OpenAlex.
++2. Executes those searches through Searchright's shared provider registry and
++   retains Searchright source receipts.
++3. Preserves provider records separately, then uses `searchright-dedup` to form
++   non-destructive cross-source candidate groups.
++4. Scores attribution against a versioned institution identity profile.
++5. Applies a versioned, transparent multi-label taxonomy to titles, abstracts
++   and subject metadata.
++6. Compares current and prior canonical records with `searchright-living`.
++7. Writes one structured monthly payload as JSON, CSV, Markdown and a
++   self-contained accessible HTML dashboard.
++
++Network execution is disabled in the default build. A live run requires all of:
++
++- compilation with `--features live`;
++- the `refresh --live` command-line flag; and
++- `--acknowledge-approximate-queries`, because Crossref and OpenAlex expose
++  broad discovery rather than a complete structured affiliation search in the
++  current connector surface.
++
++## Offline demonstration
++
++```bash
++cargo run --locked -p searchright-chhhs-demo -- seed-demo \
++  --as-of 2026-08-31 \
++  --state target/chhhs-demo/state.json \
++  --output target/chhhs-demo/reports
++```
++
++The rights-clear fixtures include cross-provider duplicates, direct HHS
++metadata, facility and historical aliases, and deliberately misleading
++geographic references to Cairns. Geographic references are retained for audit
++but are not attributed to CHHHS.
++
++## Opt-in live refresh
++
++```bash
++cargo run --locked -p searchright-chhhs-demo --features live -- refresh \
++  --live \
++  --acknowledge-approximate-queries \
++  --state .searchright/chhhs/state.json \
++  --output reports/chhhs-research-intelligence
++```
++
++Optional polite-pool contact values can be supplied through `NCBI_EMAIL`,
++`CROSSREF_MAILTO` and `OPENALEX_MAILTO`.
++
++## Governance boundary
++
++The checked-in profile is deliberately conservative. It does not assert a
++complete facility hierarchy or unreviewed durable organisation identifiers.
++Before operational use, CHHHS should approve a time-bounded institution and
++facility register, adjudicate a labelled validation set, and set acceptable
++precision, recall and review-workload thresholds.
++
++The application does not retrieve restricted full text, use patient data,
++profile staff performance, or autonomously make screening or institutional
++performance decisions. A monthly report is a metadata surveillance product,
++not proof of bibliographic completeness or scientific impact.
+diff --git a/crates/searchright-chhhs-demo/fixtures/crossref.json b/crates/searchright-chhhs-demo/fixtures/crossref.json
+new file mode 100644
+index 0000000..ba70b95
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/fixtures/crossref.json
+@@ -0,0 +1,52 @@
++{
++  "message": {
++    "total-results": 3,
++    "items": [
++      {
++        "DOI": "10.5555/chhhs.snakebite.2026",
++        "type": "journal-article",
++        "title": ["Snakebite outcomes in a regional emergency department cohort"],
++        "abstract": "A retrospective cohort study of antivenom and envenomation outcomes.",
++        "author": [
++          {
++            "given": "Alex",
++            "family": "Example",
++            "affiliation": [{"name": "Cairns and Hinterland Hospital and Health Service"}]
++          }
++        ],
++        "container-title": ["Synthetic Regional Medicine"],
++        "published-online": {"date-parts": [[2026, 8, 10]]},
++        "subject": ["Toxinology", "Emergency department", "Cohort"],
++        "URL": "https://doi.org/10.5555/chhhs.snakebite.2026"
++      },
++      {
++        "DOI": "10.5555/chhhs.mental-health.2026",
++        "type": "journal-article",
++        "title": ["Telepsychiatry access for rural communities: a cross-sectional service evaluation"],
++        "abstract": "Mental health access and telehealth implementation were assessed in rural communities.",
++        "author": [
++          {
++            "given": "Devon",
++            "family": "Example",
++            "affiliation": [{"name": "CHHHS"}]
++          }
++        ],
++        "container-title": ["Synthetic Health Services"],
++        "published-online": {"date-parts": [[2026, 8, 25]]},
++        "subject": ["Mental health", "Telehealth", "Cross-sectional"],
++        "URL": "https://doi.org/10.5555/chhhs.mental-health.2026"
++      },
++      {
++        "DOI": "10.5555/cairns-coral.2026",
++        "type": "journal-article",
++        "title": ["Coral recovery around Cairns after a marine heatwave"],
++        "abstract": "An ecological survey of coral recovery.",
++        "author": [{"given": "Ellis", "family": "Example", "affiliation": []}],
++        "container-title": ["Synthetic Marine Science"],
++        "published-online": {"date-parts": [[2026, 8, 27]]},
++        "subject": ["Marine ecology", "Survey"],
++        "URL": "https://doi.org/10.5555/cairns-coral.2026"
++      }
++    ]
++  }
++}
+diff --git a/crates/searchright-chhhs-demo/fixtures/europe-pmc.json b/crates/searchright-chhhs-demo/fixtures/europe-pmc.json
+new file mode 100644
+index 0000000..fc45cd4
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/fixtures/europe-pmc.json
+@@ -0,0 +1,29 @@
++{
++  "hitCount": 2,
++  "resultList": {
++    "result": [
++      {
++        "id": "EPMC-CHHHS-002",
++        "doi": "10.5555/chhhs.first-nations.2026",
++        "title": "First Nations patient experience in remote outpatient care",
++        "abstractText": "Qualitative interviews explored Aboriginal and Torres Strait Islander patient experience in remote health services.",
++        "authorString": "Bailey Example",
++        "journalTitle": "Synthetic Rural Health",
++        "pubYear": "2026",
++        "authorAffiliationDetailsList": {
++          "authorAffiliation": [{"affiliation": "Cairns Hospital"}]
++        }
++      },
++      {
++        "id": "EPMC-CHHHS-004",
++        "doi": "10.5555/chhhs.surgery.2026",
++        "title": "Perioperative pathways for regional elective surgery",
++        "abstractText": "A service evaluation examined elective surgery, anaesthesia and postoperative patient flow.",
++        "authorString": "Frankie Example",
++        "journalTitle": "Synthetic Surgery",
++        "pubYear": "2026",
++        "affiliation": "Cairns and Hinterland HHS"
++      }
++    ]
++  }
++}
+diff --git a/crates/searchright-chhhs-demo/fixtures/openalex.json b/crates/searchright-chhhs-demo/fixtures/openalex.json
+new file mode 100644
+index 0000000..56bec02
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/fixtures/openalex.json
+@@ -0,0 +1,74 @@
++{
++  "meta": {"count": 3, "next_cursor": null},
++  "results": [
++    {
++      "id": "https://openalex.org/WCHHHS001",
++      "doi": "https://doi.org/10.5555/chhhs.snakebite.2026",
++      "type": "article",
++      "display_name": "Snakebite outcomes in a regional emergency department cohort",
++      "publication_year": 2026,
++      "publication_date": "2026-08-10",
++      "language": "en",
++      "authorships": [
++        {
++          "author": {"display_name": "Alex Example"},
++          "institutions": [
++            {"display_name": "Cairns and Hinterland Hospital and Health Service", "ror": null}
++          ]
++        }
++      ],
++      "primary_location": {
++        "landing_page_url": "https://example.invalid/chhhs-snakebite",
++        "source": {"display_name": "Synthetic Regional Medicine"}
++      },
++      "topics": [
++        {"display_name": "Snakebite"},
++        {"display_name": "Emergency medicine"},
++        {"display_name": "Cohort"}
++      ]
++    },
++    {
++      "id": "https://openalex.org/WCHHHS002",
++      "doi": "https://doi.org/10.5555/chhhs.first-nations.2026",
++      "type": "article",
++      "display_name": "First Nations patient experience in remote outpatient care",
++      "publication_year": 2026,
++      "publication_date": "2026-08-18",
++      "language": "en",
++      "authorships": [
++        {
++          "author": {"display_name": "Bailey Example"},
++          "institutions": [{"display_name": "Cairns Hospital"}]
++        }
++      ],
++      "primary_location": {
++        "landing_page_url": "https://example.invalid/chhhs-first-nations",
++        "source": {"display_name": "Synthetic Rural Health"}
++      },
++      "topics": [
++        {"display_name": "Aboriginal and Torres Strait Islander health"},
++        {"display_name": "Remote health"},
++        {"display_name": "Qualitative"}
++      ]
++    },
++    {
++      "id": "https://openalex.org/WCAIRNS003",
++      "type": "article",
++      "display_name": "Rainfall patterns and mangrove growth near Cairns",
++      "publication_year": 2026,
++      "publication_date": "2026-08-22",
++      "language": "en",
++      "authorships": [
++        {
++          "author": {"display_name": "Casey Example"},
++          "institutions": [{"display_name": "Synthetic Coastal University"}]
++        }
++      ],
++      "primary_location": {
++        "landing_page_url": "https://example.invalid/cairns-rainfall",
++        "source": {"display_name": "Synthetic Environmental Science"}
++      },
++      "topics": [{"display_name": "Climate"}]
++    }
++  ]
++}
+diff --git a/crates/searchright-chhhs-demo/fixtures/pubmed-esummary.json b/crates/searchright-chhhs-demo/fixtures/pubmed-esummary.json
+new file mode 100644
+index 0000000..1f6cd85
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/fixtures/pubmed-esummary.json
+@@ -0,0 +1,27 @@
++{
++  "result": {
++    "uids": ["99000001", "99000002"],
++    "99000001": {
++      "uid": "99000001",
++      "title": "Telepsychiatry access for rural communities: a cross-sectional service evaluation",
++      "pubdate": "2026 Aug",
++      "sortpubdate": "2026/08/25 00:00",
++      "fulljournalname": "Synthetic Health Services",
++      "authors": [{"name": "Example D"}],
++      "articleids": [{"idtype": "doi", "value": "10.5555/chhhs.mental-health.2026"}],
++      "affiliation": "Cairns and Hinterland Hospital and Health Service",
++      "keywords": ["mental health", "telehealth", "cross-sectional"]
++    },
++    "99000002": {
++      "uid": "99000002",
++      "title": "Genomic sequencing for children with suspected rare disease",
++      "pubdate": "2026 Aug",
++      "sortpubdate": "2026/08/29 00:00",
++      "fulljournalname": "Synthetic Genomic Medicine",
++      "authors": [{"name": "Example G"}],
++      "articleids": [{"idtype": "doi", "value": "10.5555/chhhs.genomics.2026"}],
++      "institution": {"display_name": "Cairns Base Hospital"},
++      "keywords": ["genomics", "rare disease", "cohort"]
++    }
++  }
++}
+diff --git a/crates/searchright-chhhs-demo/resources/chhhs-institution-profile.json b/crates/searchright-chhhs-demo/resources/chhhs-institution-profile.json
+new file mode 100644
+index 0000000..7e86031
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/resources/chhhs-institution-profile.json
+@@ -0,0 +1,50 @@
++{
++  "schema_version": "org.searchright.institution-profile.v1",
++  "profile_id": "cairns-and-hinterland-hhs",
++  "version": "2026-09-demonstration-1",
++  "canonical_name": "Cairns and Hinterland Hospital and Health Service",
++  "aliases": [
++    {
++      "alias_id": "chhhs-canonical",
++      "text": "Cairns and Hinterland Hospital and Health Service",
++      "kind": "canonical",
++      "valid_from_year": null,
++      "valid_to_year": null
++    },
++    {
++      "alias_id": "chhhs-current-short",
++      "text": "Cairns and Hinterland H
