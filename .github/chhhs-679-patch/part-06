@@ -1,0 +1,488 @@
+tract identifier.
++    pub schema_version: String,
++    /// Taxonomy version applied.
++    pub taxonomy_version: String,
++    /// Ranked multi-label themes.
++    pub themes: Vec<CategoryScore>,
++    /// Highest-ranked study type.
++    pub study_type: CategoryScore,
++    /// Whether no specific study-type rule matched.
++    pub study_type_uncertain: bool,
++}
++
++/// Provider-normalised record with its source identity retained outside provider metadata.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct SourcedRecord {
++    /// Searchright provider identifier.
++    pub provider_id: String,
++    /// Canonical Searchright bibliographic record.
++    pub record: BibliographicRecord,
++    /// True when retained from prior state because its provider failed in the current run.
++    pub carried_forward: bool,
++}
++
++/// One deduplicated monitored publication candidate.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct MonitoredPaper {
++    /// Stable cross-source identifier selected by identifier precedence.
++    pub canonical_id: String,
++    /// Best available canonical record; source records remain named separately.
++    pub record: BibliographicRecord,
++    /// Providers contributing records to this candidate.
++    pub source_providers: Vec<String>,
++    /// Provider-specific record identifiers retained for audit.
++    pub source_record_ids: Vec<String>,
++    /// Institution-attribution result.
++    pub attribution: AttributionAssessment,
++    /// Explainable NLP classification.
++    pub classification: PaperClassification,
++    /// First monitor date in ISO calendar form.
++    pub first_seen: String,
++    /// Most recent successful observation date in ISO calendar form.
++    pub last_seen: String,
++    /// True when retained because one of its only sources failed during this refresh.
++    pub stale_due_to_provider_failure: bool,
++}
++
++/// Redacted provider failure retained in the run summary.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct ProviderFailure {
++    /// Provider identifier.
++    pub provider_id: String,
++    /// Stable failure category.
++    pub code: String,
++    /// Redacted diagnostic suitable for operators.
++    pub message: String,
++}
++
++/// Summary of one initial or update run.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct MonitorRun {
++    /// Stable run identifier.
++    pub run_id: String,
++    /// `initial`, `update`, or `fixture`.
++    pub purpose: String,
++    /// Monitor date in ISO calendar form.
++    pub as_of: String,
++    /// Searchright source receipts.
++    pub receipts: Vec<SourceReceipt>,
++    /// Partial-source failures.
++    pub provider_failures: Vec<ProviderFailure>,
++    /// Living-update record changes.
++    pub changes: Vec<RecordChange>,
++    /// Candidate count after deduplication.
++    pub candidate_count: usize,
++    /// Confirmed plus probable attributed papers.
++    pub attributed_count: usize,
++    /// Records requiring review.
++    pub review_count: usize,
++    /// Records without qualifying evidence.
++    pub excluded_count: usize,
++}
++
++/// Durable, append-oriented application state.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct MonitorState {
++    /// Contract identifier.
++    pub schema_version: String,
++    /// Institution profile identifier.
++    pub profile_id: String,
++    /// Profile version used for the latest run.
++    pub profile_version: String,
++    /// Taxonomy version used for the latest run.
++    pub taxonomy_version: String,
++    /// Provider-specific canonical records retained separately from deduplicated papers.
++    pub source_records: Vec<SourcedRecord>,
++    /// Latest known deduplicated candidates.
++    pub papers: Vec<MonitoredPaper>,
++    /// Bounded run history in chronological order.
++    pub runs: Vec<MonitorRun>,
++}
++
++impl MonitorState {
++    /// Validate persisted state before read or write.
++    pub fn validate(&self) -> Result<(), ModelError> {
++        if self.schema_version != MONITOR_STATE_SCHEMA_VERSION {
++            return Err(ModelError::InvalidSchemaVersion {
++                expected: MONITOR_STATE_SCHEMA_VERSION,
++                actual: self.schema_version.clone(),
++            });
++        }
++        require_text(&self.profile_id, "monitor_state.profile_id")?;
++        require_text(&self.profile_version, "monitor_state.profile_version")?;
++        require_text(&self.taxonomy_version, "monitor_state.taxonomy_version")?;
++        let mut source_identifiers = BTreeSet::new();
++        for sourced in &self.source_records {
++            require_text(&sourced.provider_id, "monitor_state.source_record.provider_id")?;
++            require_text(&sourced.record.record_id, "monitor_state.source_record.record_id")?;
++            sourced.record.validate().map_err(ModelError::BibliographicRecord)?;
++            if !source_identifiers.insert(sourced.record.record_id.as_str()) {
++                return Err(ModelError::DuplicateValue(
++                    "monitor_state.source_record.record_id",
++                ));
++            }
++        }
++        let mut identifiers = BTreeSet::new();
++        for paper in &self.papers {
++            require_text(&paper.canonical_id, "monitor_state.paper.canonical_id")?;
++            if !identifiers.insert(paper.canonical_id.as_str()) {
++                return Err(ModelError::DuplicateValue(
++                    "monitor_state.paper.canonical_id",
++                ));
++            }
++            paper.record.validate().map_err(ModelError::BibliographicRecord)?;
++            if paper.record.record_id != paper.canonical_id {
++                return Err(ModelError::RecordIdentityMismatch(
++                    paper.canonical_id.clone(),
++                ));
++            }
++        }
++        let mut run_ids = BTreeSet::new();
++        for run in &self.runs {
++            require_text(&run.run_id, "monitor_state.run.run_id")?;
++            if !run_ids.insert(run.run_id.as_str()) {
++                return Err(ModelError::DuplicateValue("monitor_state.run.run_id"));
++            }
++        }
++        Ok(())
++    }
++}
++
++/// Deterministic text normalisation shared by profile validation and matching.
++#[must_use]
++pub fn normalise_text(value: &str) -> String {
++    value
++        .chars()
++        .map(|character| {
++            if character.is_alphanumeric() {
++                character.to_ascii_lowercase()
++            } else {
++                ' '
++            }
++        })
++        .collect::<String>()
++        .split_whitespace()
++        .collect::<Vec<_>>()
++        .join(" ")
++}
++
++fn require_text(value: &str, field: &'static str) -> Result<(), ModelError> {
++    if value.trim().is_empty() {
++        Err(ModelError::EmptyText(field))
++    } else {
++        Ok(())
++    }
++}
++
++/// Application-contract validation error.
++#[derive(Debug, thiserror::Error)]
++pub enum ModelError {
++    /// Required text was blank.
++    #[error("required field `{0}` is empty")]
++    EmptyText(&'static str),
++    /// Required collection was empty.
++    #[error("required collection `{0}` is empty")]
++    EmptyCollection(&'static str),
++    /// A unique value was duplicated.
++    #[error("value in `{0}` is duplicated")]
++    DuplicateValue(&'static str),
++    /// Wire schema version differed from the expected application contract.
++    #[error("schema version must be `{expected}`, found `{actual}`")]
++    InvalidSchemaVersion {
++        /// Expected schema identifier.
++        expected: &'static str,
++        /// Actual schema identifier.
++        actual: String,
++    },
++    /// Alias validity range was inverted.
++    #[error("institution alias `{0}` has an inverted year range")]
++    InvalidYearRange(String),
++    /// Exactly one canonical alias is required.
++    #[error("institution profile requires exactly one canonical alias, found {0}")]
++    CanonicalAliasCount(u8),
++    /// Taxonomy fallback did not name a study-type rule.
++    #[error("fallback study type `{0}` is not declared")]
++    UnknownFallbackStudyType(String),
++    /// Canonical Searchright record failed its own contract validation.
++    #[error("bibliographic record is invalid: {0}")]
++    BibliographicRecord(searchright::contracts::ContractError),
++    /// Persisted record and paper identifiers diverged.
++    #[error("paper `{0}` does not own the same canonical record identifier")]
++    RecordIdentityMismatch(String),
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    fn profile() -> InstitutionProfile {
++        InstitutionProfile {
++            schema_version: INSTITUTION_PROFILE_SCHEMA_VERSION.to_owned(),
++            profile_id: "chhhs".to_owned(),
++            version: "1".to_owned(),
++            canonical_name: "Cairns and Hinterland Hospital and Health Service".to_owned(),
++            aliases: vec![InstitutionAlias {
++                alias_id: "canonical".to_owned(),
++                text: "Cairns and Hinterland Hospital and Health Service".to_owned(),
++                kind: AliasKind::Canonical,
++                valid_from_year: None,
++                valid_to_year: None,
++            }],
++            durable_identifiers: BTreeMap::new(),
++            governance_status: "demonstration".to_owned(),
++            notes: Vec::new(),
++        }
++    }
++
++    #[test]
++    fn profile_requires_one_canonical_alias() {
++        let mut value = profile();
++        value.aliases[0].kind = AliasKind::Current;
++        assert!(matches!(
++            value.validate(),
++            Err(ModelError::CanonicalAliasCount(0))
++        ));
++    }
++
++    #[test]
++    fn profile_rejects_normalised_duplicate_aliases() {
++        let mut value = profile();
++        let mut duplicate = value.aliases[0].clone();
++        duplicate.alias_id = "duplicate".to_owned();
++        duplicate.text = "Cairns & Hinterland Hospital and Health Service".to_owned();
++        value.aliases.push(duplicate);
++        assert!(matches!(
++            value.validate(),
++            Err(ModelError::DuplicateValue(
++                "institution_profile.aliases.text"
++            ))
++        ));
++    }
++
++    #[test]
++    fn normalisation_preserves_words_and_collapses_punctuation() {
++        assert_eq!(
++            normalise_text("  Cairns & Hinterland—HHS "),
++            "cairns hinterland hhs"
++        );
++    }
++}
+diff --git a/crates/searchright-chhhs-demo/src/pipeline.rs b/crates/searchright-chhhs-demo/src/pipeline.rs
+new file mode 100644
+index 0000000..c391176
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/pipeline.rs
+@@ -0,0 +1,650 @@
++//! Deterministic cross-source deduplication, enrichment, lineage and state construction.
++
++use std::collections::{BTreeMap, BTreeSet};
++
++use searchright::{
++    contracts::{BibliographicRecord, RecordIdentifiers},
++    dedup::{DedupConfig, DedupError, Deduplicator, normalise_doi},
++    living::{LivingError, diff_records},
++};
++use serde_json::Value;
++use time::{Date, macros::format_description};
++
++use crate::{
++    attribution::assess_attribution,
++    classification::classify_record,
++    model::{
++        AttributionLevel, InstitutionProfile, MONITOR_STATE_SCHEMA_VERSION, ModelError,
++        MonitorRun, MonitorState, MonitoredPaper, ResearchTaxonomy, SourcedRecord,
++    },
++    search::SearchBatch,
++};
++
++const MAX_RUN_HISTORY: usize = 24;
++
++/// Convert one Searchright execution batch into validated durable monitor state.
++pub fn process_search_batch(
++    previous: Option<&MonitorState>,
++    profile: &InstitutionProfile,
++    taxonomy: &ResearchTaxonomy,
++    mut batch: SearchBatch,
++    run_id: &str,
++    purpose: &str,
++    as_of: &str,
++) -> Result<MonitorState, PipelineError> {
++    profile.validate()?;
++    taxonomy.validate()?;
++    require_text(run_id, "run_id")?;
++    require_text(purpose, "purpose")?;
++    validate_iso_date(as_of)?;
++    if let Some(state) = previous {
++        state.validate()?;
++        if state.runs.iter().any(|run| run.run_id == run_id) {
++            return Err(PipelineError::DuplicateRun(run_id.to_owned()));
++        }
++    }
++
++    carry_records_from_failed_sources(previous, &mut batch);
++    normalise_source_record_ids(&mut batch.records)?;
++    let groups = deduplicate_groups(&batch.records)?;
++    let previous_by_id = previous
++        .map(|state| {
++            state
++                .papers
++                .iter()
++                .map(|paper| (paper.canonical_id.as_str(), paper))
++                .collect::<BTreeMap<_, _>>()
++        })
++        .unwrap_or_default();
++
++    let mut papers = Vec::new();
++    let mut canonical_ids = BTreeSet::new();
++    for group in groups {
++        let mut merged = merge_records(&group)?;
++        let canonical_id = canonical_id(&merged);
++        if !canonical_ids.insert(canonical_id.clone()) {
++            return Err(PipelineError::DuplicateCanonicalId(canonical_id));
++        }
++        merged.record_id.clone_from(&canonical_id);
++        let source_providers = unique_sorted(group.iter().map(|item| item.provider_id.clone()));
++        let source_record_ids = unique_sorted(
++            group
++                .iter()
++                .map(|item| item.record.record_id.clone()),
++        );
++        let attribution = assess_attribution(profile, &group);
++        let classification = classify_record(taxonomy, &merged);
++        let previous_paper = previous_by_id.get(canonical_id.as_str()).copied();
++        let first_seen = previous_paper.map_or_else(
++            || as_of.to_owned(),
++            |paper| paper.first_seen.clone(),
++        );
++        let stale_due_to_provider_failure = group.iter().all(|item| item.carried_forward);
++        let last_seen = if stale_due_to_provider_failure {
++            previous_paper.map_or_else(|| as_of.to_owned(), |paper| paper.last_seen.clone())
++        } else {
++            as_of.to_owned()
++        };
++        papers.push(MonitoredPaper {
++            canonical_id,
++            record: merged,
++            source_providers,
++            source_record_ids,
++            attribution,
++            classification,
++            first_seen,
++            last_seen,
++            stale_due_to_provider_failure,
++        });
++    }
++    papers.sort_by(paper_order);
++
++    let previous_records = previous.map_or_else(Vec::new, |state| {
++        state
++            .papers
++            .iter()
++            .map(|paper| record_for_diff(&paper.record))
++            .collect()
++    });
++    let current_records = papers
++        .iter()
++        .map(|paper| record_for_diff(&paper.record))
++        .collect::<Vec<_>>();
++    let changes = diff_records(&previous_records, &current_records)?;
++
++    let attributed_count = papers
++        .iter()
++        .filter(|paper| paper.attribution.level.included())
++        .count();
++    let review_count = papers
++        .iter()
++        .filter(|paper| paper.attribution.review_required)
++        .count();
++    let excluded_count = papers
++        .iter()
++        .filter(|paper| paper.attribution.level == AttributionLevel::Excluded)
++        .count();
++    let run = MonitorRun {
++        run_id: run_id.to_owned(),
++        purpose: purpose.to_owned(),
++        as_of: as_of.to_owned(),
++        receipts: batch.receipts,
++        provider_failures: batch.provider_failures,
++        changes,
++        candidate_count: papers.len(),
++        attributed_count,
++        review_count,
++        excluded_count,
++    };
++    let mut runs = previous.map_or_else(Vec::new, |state| state.runs.clone());
++    runs.push(run);
++    if runs.len() > MAX_RUN_HISTORY {
++        runs.drain(..runs.len().saturating_sub(MAX_RUN_HISTORY));
++    }
++    let mut source_records = batch.records;
++    source_records.sort_by(|left, right| left.record.record_id.cmp(&right.record.record_id));
++
++    let state = MonitorState {
++        schema_version: MONITOR_STATE_SCHEMA_VERSION.to_owned(),
++        profile_id: profile.profile_id.clone(),
++        profile_version: profile.version.clone(),
++        taxonomy_version: taxonomy.version.clone(),
++        source_records,
++        papers,
++        runs,
++    };
++    state.validate()?;
++    Ok(state)
++}
++
++fn carry_records_from_failed_sources(previous: Option<&MonitorState>, batch: &mut SearchBatch) {
++    let Some(previous) = previous else {
++        return;
++    };
++    let failed = batch
++        .provider_failures
++        .iter()
++        .map(|failure| failure.provider_id.as_str())
++        .collect::<BTreeSet<_>>();
++    if failed.is_empty() {
++        return;
++    }
++    let current_ids = batch
++        .records
++        .iter()
++        .map(|item| item.record.record_id.clone())
++        .collect::<BTreeSet<_>>();
++    batch.records.extend(
++        previous
++            .source_records
++            .iter()
++            .filter(|item| {
++                failed.contains(item.provider_id.as_str())
++                    && !current_ids.contains(&item.record.record_id)
++            })
++            .cloned()
++            .map(|mut item| {
++                item.carried_forward = true;
++                item
++            }),
++    );
++}
++
++fn normalise_source_record_ids(records: &mut [SourcedRecord]) -> Result<(), PipelineError> {
++    let mut seen = BTreeSet::new();
++    for sourced in records {
++        require_text(&sourced.provider_id, "source_record.provider_id")?;
++        require_text(&sourced.record.native_id, "source_record.native_id")?;
++        sourced.record.record_id = format!("{}:{}", sourced.provider_id, sourced.record.native_id);
++        if !seen.insert(sourced.record.record_id.clone()) {
++            return Err(PipelineError::DuplicateSourceRecord(
++                sourced.record.record_id.clone(),
++            ));
++        }
++    }
++    Ok(())
++}
++
++fn deduplicate_groups(records: &[SourcedRecord]) -> Result<Vec<Vec<SourcedRecord>>, PipelineError> {
++    let canonical = records
++        .iter()
++        .map(|item| item.record.clone())
++        .collect::<Vec<_>>();
++    let result =
