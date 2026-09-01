@@ -36,6 +36,101 @@ jobs:
           rm -rf .github/chhhs-679-patch
           rm -f .github/workflows/apply-chhhs-679-patch.yml
           rm -f .github/workflows/export-chhhs-679-patch.yml
+      - name: Apply compiler-discovered corrections
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          attribution = Path('crates/searchright-chhhs-demo/src/attribution.rs')
+          text = attribution.read_text(encoding='utf-8')
+          old = 'use std::collections::BTreeSet;\n\n'
+          if old not in text:
+              raise SystemExit('expected unused BTreeSet import was not found')
+          attribution.write_text(text.replace(old, '', 1), encoding='utf-8')
+
+          model = Path('crates/searchright-chhhs-demo/src/model.rs')
+          text = model.read_text(encoding='utf-8')
+          old = '''pub fn normalise_text(value: &str) -> String {
+    value
+        .chars()
+        .map(|character| {
+            if character.is_alphanumeric() {
+                character.to_ascii_lowercase()
+            } else {
+                ' '
+            }
+        })
+        .collect::<String>()
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ")
+}'''
+          new = '''pub fn normalise_text(value: &str) -> String {
+    let mut normalised = String::with_capacity(value.len());
+    for character in value.chars() {
+        if character == '&' {
+            normalised.push_str(" and ");
+        } else if character.is_alphanumeric() {
+            normalised.extend(character.to_lowercase());
+        } else {
+            normalised.push(' ');
+        }
+    }
+    normalised
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ")
+}'''
+          if old not in text:
+              raise SystemExit('expected normalise_text implementation was not found')
+          text = text.replace(old, new, 1)
+          text = text.replace(
+              '            "cairns hinterland hhs"\n',
+              '            "cairns and hinterland hhs"\n',
+              1,
+          )
+          model.write_text(text, encoding='utf-8')
+
+          fixture = Path('crates/searchright-chhhs-demo/fixtures/europe-pmc.json')
+          payload = json.loads(fixture.read_text(encoding='utf-8'))
+          rows = payload['resultList']['result']
+          for row in rows:
+              row['source'] = 'MED'
+          fixture.write_text(json.dumps(payload, indent=2) + '\n', encoding='utf-8')
+
+          taxonomy_path = Path('crates/searchright-chhhs-demo/resources/research-taxonomy.json')
+          taxonomy = json.loads(taxonomy_path.read_text(encoding='utf-8'))
+          redundant = {
+              'systematic-review': {'meta-analysis'},
+              'case-control-study': {'case-control'},
+              'cross-sectional-study': {'cross-sectional'},
+              'modelling-economic-evaluation': {'cost-effectiveness'},
+          }
+          removed = set()
+          for rule in taxonomy['study_types']:
+              excluded = redundant.get(rule['category_id'], set())
+              retained = []
+              for term in rule['terms']:
+                  if term in excluded:
+                      removed.add((rule['category_id'], term))
+                  else:
+                      retained.append(term)
+              rule['terms'] = retained
+          expected = {
+              (category, term)
+              for category, terms in redundant.items()
+              for term in terms
+          }
+          if removed != expected:
+              raise SystemExit(f'unexpected taxonomy correction set: {sorted(removed)}')
+          taxonomy_path.write_text(
+              json.dumps(taxonomy, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+          PY
       - name: Format and regenerate derived integrity artefacts
         shell: bash
         run: |
