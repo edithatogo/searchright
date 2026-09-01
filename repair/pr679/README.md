@@ -1,0 +1,1 @@
+This directory is a temporary, reviewable staging area used by the PR #679 repair controller. The controller copies the application, workflow and Track 36 pilot note into a clean worktree based on the latest `main`, runs all repository gates, and force-with-lease updates the existing PR branch. These staging files are not copied into the PR branch.
