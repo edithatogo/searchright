@@ -1,0 +1,493 @@
+ Deduplicator::new(DedupConfig::default())?.cluster(&canonical)?;
++    let by_id = records
++        .iter()
++        .map(|item| (item.record.record_id.as_str(), item))
++        .collect::<BTreeMap<_, _>>();
++    let mut clustered = BTreeSet::new();
++    let mut groups = Vec::new();
++    for cluster in result.clusters {
++        let mut group = Vec::new();
++        for record_id in cluster.record_ids {
++            let sourced = by_id
++                .get(record_id.as_str())
++                .ok_or_else(|| PipelineError::MissingDedupRecord(record_id.clone()))?;
++            clustered.insert(record_id);
++            group.push((*sourced).clone());
++        }
++        group.sort_by(|left, right| left.record.record_id.cmp(&right.record.record_id));
++        groups.push(group);
++    }
++    for sourced in records {
++        if !clustered.contains(&sourced.record.record_id) {
++            groups.push(vec![sourced.clone()]);
++        }
++    }
++    groups.sort_by(|left, right| {
++        left.first()
++            .map(|item| item.record.record_id.as_str())
++            .cmp(&right.first().map(|item| item.record.record_id.as_str()))
++    });
++    Ok(groups)
++}
++
++fn merge_records(group: &[SourcedRecord]) -> Result<BibliographicRecord, PipelineError> {
++    let representative = group
++        .iter()
++        .max_by(|left, right| {
++            completeness_score(&left.record)
++                .cmp(&completeness_score(&right.record))
++                .then_with(|| right.record.record_id.cmp(&left.record.record_id))
++        })
++        .ok_or(PipelineError::EmptyDedupGroup)?;
++    let mut merged = representative.record.clone();
++    for sourced in group {
++        merge_identifiers(&mut merged.identifiers, &sourced.record.identifiers);
++        if sourced
++            .record
++            .abstract_text
++            .as_ref()
++            .is_some_and(|candidate| {
++                merged
++                    .abstract_text
++                    .as_ref()
++                    .is_none_or(|current| candidate.len() > current.len())
++            })
++        {
++            merged.abstract_text.clone_from(&sourced.record.abstract_text);
++        }
++        if better_title(&sourced.record.title, &merged.title) {
++            merged.title.clone_from(&sourced.record.title);
++        }
++        if merged.container_title.is_none() {
++            merged.container_title.clone_from(&sourced.record.container_title);
++        }
++        if merged.publication_year.is_none() {
++            merged.publication_year = sourced.record.publication_year;
++        }
++        if merged.publication_date.is_none() {
++            merged.publication_date.clone_from(&sourced.record.publication_date);
++        }
++        append_unique(&mut merged.authors, sourced.record.authors.iter().cloned());
++        append_unique(
++            &mut merged.languages,
++            sourced.record.languages.iter().cloned(),
++        );
++        append_unique(&mut merged.subjects, sourced.record.subjects.iter().cloned());
++        append_unique(
++            &mut merged.subjects,
++            metadata_terms(&sourced.record.provider_metadata),
++        );
++        append_unique(&mut merged.urls, sourced.record.urls.iter().cloned());
++    }
++    Ok(merged)
++}
++
++fn merge_identifiers(target: &mut RecordIdentifiers, source: &RecordIdentifiers) {
++    if target.doi.is_none() {
++        target.doi.clone_from(&source.doi);
++    }
++    if target.pmid.is_none() {
++        target.pmid.clone_from(&source.pmid);
++    }
++    if target.pmcid.is_none() {
++        target.pmcid.clone_from(&source.pmcid);
++    }
++    if target.trial_registration.is_none() {
++        target
++            .trial_registration
++            .clone_from(&source.trial_registration);
++    }
++    if target.openalex.is_none() {
++        target.openalex.clone_from(&source.openalex);
++    }
++    if target.isbn.is_none() {
++        target.isbn.clone_from(&source.isbn);
++    }
++    for (namespace, identifier) in &source.other {
++        target
++            .other
++            .entry(namespace.clone())
++            .or_insert_with(|| identifier.clone());
++    }
++}
++
++fn metadata_terms(value: &Value) -> Vec<String> {
++    let mut output = Vec::new();
++    collect_metadata_terms(value, None, &mut output);
++    unique_sorted(output)
++}
++
++fn collect_metadata_terms(value: &Value, key: Option<&str>, output: &mut Vec<String>) {
++    match value {
++        Value::Object(object) => {
++            for (child_key, child) in object {
++                collect_metadata_terms(child, Some(child_key), output);
++            }
++        }
++        Value::Array(items) => {
++            for child in items {
++                collect_metadata_terms(child, key, output);
++            }
++        }
++        Value::String(text)
++            if key.is_some_and(|key| {
++                let key = key.to_ascii_lowercase();
++                key.contains("keyword")
++                    || key.contains("subject")
++                    || key.contains("topic")
++                    || key.contains("mesh")
++            }) && !text.trim().is_empty() =>
++        {
++            output.push(text.clone());
++        }
++        _ => {}
++    }
++}
++
++fn canonical_id(record: &BibliographicRecord) -> String {
++    if let Some(doi) = record.identifiers.doi.as_deref() {
++        let doi = normalise_doi(doi);
++        if !doi.is_empty() {
++            return format!("doi:{doi}");
++        }
++    }
++    if let Some(pmid) = record.identifiers.pmid.as_deref() {
++        return format!("pmid:{}", pmid.trim());
++    }
++    if let Some(openalex) = record.identifiers.openalex.as_deref() {
++        return format!(
++            "openalex:{}",
++            openalex
++                .trim()
++                .trim_end_matches('/')
++                .trim_start_matches("https://openalex.org/")
++        );
++    }
++    let material = format!(
++        "{}\n{:?}\n{}",
++        crate::model::normalise_text(&record.title),
++        record.publication_year,
++        record
++            .authors
++            .first()
++            .map_or("", String::as_str)
++            .to_ascii_lowercase()
++    );
++    format!("local:{}", blake3::hash(material.as_bytes()).to_hex())
++}
++
++fn record_for_diff(record: &BibliographicRecord) -> BibliographicRecord {
++    let mut output = record.clone();
++    output.source_receipt_id = "monitor-diff".to_owned();
++    output
++}
++
++fn completeness_score(record: &BibliographicRecord) -> usize {
++    usize::from(record.identifiers.doi.is_some()) * 20
++        + usize::from(record.identifiers.pmid.is_some()) * 10
++        + record.abstract_text.as_ref().map_or(0, String::len)
++        + record.authors.len() * 4
++        + record.subjects.len() * 3
++        + record.urls.len()
++        + record.title.len()
++}
++
++fn better_title(candidate: &str, current: &str) -> bool {
++    (current == "[untitled]" && candidate != "[untitled]")
++        || (candidate != "[untitled]" && candidate.len() > current.len())
++}
++
++fn append_unique<I>(target: &mut Vec<String>, values: I)
++where
++    I: IntoIterator<Item = String>,
++{
++    let mut seen = target.iter().cloned().collect::<BTreeSet<_>>();
++    for value in values {
++        if !value.trim().is_empty() && seen.insert(value.clone()) {
++            target.push(value);
++        }
++    }
++}
++
++fn unique_sorted<I>(values: I) -> Vec<String>
++where
++    I: IntoIterator<Item = String>,
++{
++    values
++        .into_iter()
++        .filter(|value| !value.trim().is_empty())
++        .collect::<BTreeSet<_>>()
++        .into_iter()
++        .collect()
++}
++
++fn paper_order(left: &MonitoredPaper, right: &MonitoredPaper) -> std::cmp::Ordering {
++    right
++        .record
++        .publication_date
++        .cmp(&left.record.publication_date)
++        .then_with(|| right.record.publication_year.cmp(&left.record.publication_year))
++        .then_with(|| left.record.title.cmp(&right.record.title))
++        .then_with(|| left.canonical_id.cmp(&right.canonical_id))
++}
++
++fn validate_iso_date(value: &str) -> Result<(), PipelineError> {
++    Date::parse(value, format_description!("[year]-[month]-[day]"))
++        .map(|_| ())
++        .map_err(|_| PipelineError::InvalidDate(value.to_owned()))
++}
++
++fn require_text(value: &str, field: &'static str) -> Result<(), PipelineError> {
++    if value.trim().is_empty() {
++        Err(PipelineError::EmptyText(field))
++    } else {
++        Ok(())
++    }
++}
++
++/// Pipeline construction error.
++#[derive(Debug, thiserror::Error)]
++pub enum PipelineError {
++    /// Application contract failed validation.
++    #[error(transparent)]
++    Model(#[from] ModelError),
++    /// Searchright deduplication failed.
++    #[error(transparent)]
++    Dedup(#[from] DedupError),
++    /// Searchright living-update comparison failed.
++    #[error(transparent)]
++    Living(#[from] LivingError),
++    /// Required local text was blank.
++    #[error("required field `{0}` is empty")]
++    EmptyText(&'static str),
++    /// Run date was not an ISO calendar date.
++    #[error("`{0}` is not an ISO calendar date")]
++    InvalidDate(String),
++    /// Run identifier already exists in prior state.
++    #[error("monitor run `{0}` already exists")]
++    DuplicateRun(String),
++    /// Provider records shared an identifier after namespacing.
++    #[error("source record `{0}` is duplicated")]
++    DuplicateSourceRecord(String),
++    /// Deduplication referred to a record absent from the source map.
++    #[error("deduplication referred to missing record `{0}`")]
++    MissingDedupRecord(String),
++    /// A deduplication group unexpectedly contained no record.
++    #[error("deduplication emitted an empty record group")]
++    EmptyDedupGroup,
++    /// Two groups resolved to the same canonical cross-source identity.
++    #[error("canonical publication identifier `{0}` is duplicated")]
++    DuplicateCanonicalId(String),
++}
++
++#[cfg(test)]
++mod tests {
++    use std::collections::BTreeMap;
++
++    use searchright::contracts::{
++        BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION, RecordIdentifiers, RecordKind,
++    };
++
++    use super::*;
++    use crate::{
++        model::{AliasKind, CategoryRule, InstitutionAlias, TAXONOMY_SCHEMA_VERSION},
++        search::execute_fixture_search,
++    };
++
++    fn profile() -> InstitutionProfile {
++        serde_json::from_str(include_str!("../resources/chhhs-institution-profile.json"))
++            .unwrap_or_else(|error| panic!("profile fixture should parse: {error}"))
++    }
++
++    fn taxonomy() -> ResearchTaxonomy {
++        serde_json::from_str(include_str!("../resources/research-taxonomy.json"))
++            .unwrap_or_else(|error| panic!("taxonomy fixture should parse: {error}"))
++    }
++
++    #[tokio::test]
++    async fn fixture_pipeline_deduplicates_and_excludes_geographic_false_positives() {
++        let batch = execute_fixture_search(&profile(), "fixture-2026-08")
++            .await
++            .unwrap_or_else(|error| panic!("fixture search should pass: {error}"));
++        let state = process_search_batch(
++            None,
++            &profile(),
++            &taxonomy(),
++            batch,
++            "fixture-2026-08",
++            "fixture",
++            "2026-08-31",
++        )
++        .unwrap_or_else(|error| panic!("pipeline should pass: {error}"));
++        assert_eq!(state.source_records.len(), 10);
++        assert_eq!(state.papers.len(), 7);
++        assert_eq!(state.runs[0].attributed_count, 5);
++        assert_eq!(state.runs[0].excluded_count, 2);
++        let rainfall = state
++            .papers
++            .iter()
++            .find(|paper| paper.record.title.contains("Rainfall"))
++            .unwrap_or_else(|| panic!("rainfall false positive should be retained for audit"));
++        assert_eq!(rainfall.attribution.level, AttributionLevel::Excluded);
++        let snakebite = state
++            .papers
++            .iter()
++            .find(|paper| paper.canonical_id.contains("snakebite"))
++            .unwrap_or_else(|| panic!("snakebite paper should exist"));
++        assert_eq!(snakebite.source_providers.len(), 2);
++        assert_eq!(snakebite.attribution.level, AttributionLevel::Confirmed);
++    }
++
++    #[test]
++    fn partial_provider_failure_carries_prior_records_without_false_missing_change() {
++        let profile = InstitutionProfile {
++            schema_version: crate::model::INSTITUTION_PROFILE_SCHEMA_VERSION.to_owned(),
++            profile_id: "chhhs".to_owned(),
++            version: "1".to_owned(),
++            canonical_name: "Cairns and Hinterland Hospital and Health Service".to_owned(),
++            aliases: vec![InstitutionAlias {
++                alias_id: "canonical".to_owned(),
++                text: "Cairns and Hinterland Hospital and Health Service".to_owned(),
++                kind: AliasKind::Canonical,
++                valid_from_year: None,
++                valid_to_year: None,
++            }],
++            durable_identifiers: BTreeMap::new(),
++            governance_status: "test".to_owned(),
++            notes: Vec::new(),
++        };
++        let taxonomy = ResearchTaxonomy {
++            schema_version: TAXONOMY_SCHEMA_VERSION.to_owned(),
++            version: "1".to_owned(),
++            themes: vec![CategoryRule {
++                category_id: "health-services".to_owned(),
++                label: "Health services".to_owned(),
++                terms: vec!["service".to_owned()],
++            }],
++            study_types: vec![CategoryRule {
++                category_id: "other".to_owned(),
++                label: "Other".to_owned(),
++                terms: vec!["other".to_owned()],
++            }],
++            fallback_study_type_id: "other".to_owned(),
++        };
++        let record = BibliographicRecord {
++            schema_version: BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
++            record_id: "openalex:W1".to_owned(),
++            source_receipt_id: "receipt".to_owned(),
++            native_id: "W1".to_owned(),
++            kind: RecordKind::JournalArticle,
++            identifiers: RecordIdentifiers {
++                doi: Some("10.5555/example".to_owned()),
++                ..RecordIdentifiers::default()
++            },
++            title: "Service evaluation".to_owned(),
++            abstract_text: None,
++            authors: Vec::new(),
++            container_title: None,
++            publication_year: Some(2026),
++            publication_date: None,
++            languages: Vec::new(),
++            subjects: Vec::new(),
++            urls: Vec::new(),
++            provider_metadata: serde_json::json!({
++                "institutions": [{"display_name": "Cairns and Hinterland Hospital and Health Service"}]
++            }),
++        };
++        let first = process_search_batch(
++            None,
++            &profile,
++            &taxonomy,
++            SearchBatch {
++                records: vec![SourcedRecord {
++                    provider_id: "openalex".to_owned(),
++                    record,
++                    carried_forward: false,
++                }],
++                receipts: Vec::new(),
++                provider_failures: Vec::new(),
++            },
++            "run-1",
++            "fixture",
++            "2026-08-01",
++        )
++        .unwrap_or_else(|error| panic!("first run should pass: {error}"));
++        let second = process_search_batch(
++            Some(&first),
++            &profile,
++            &taxonomy,
++            SearchBatch {
++                records: Vec::new(),
++                receipts: Vec::new(),
++                provider_failures: vec![crate::model::ProviderFailure {
++                    provider_id: "openalex".to_owned(),
++                    code: "timeout".to_owned(),
++                    message: "redacted timeout".to_owned(),
++                }],
++            },
++            "run-2",
++            "update",
++            "2026-09-01",
++        )
++        .unwrap_or_else(|error| panic!("partial run should pass: {error}"));
++        assert_eq!(second.papers.len(), 1);
++        assert!(second.papers[0].stale_due_to_provider_failure);
++        assert!(second.runs[1].changes.is_empty());
++        assert_eq!(second.papers[0].last_seen, "2026-08-01");
++    }
++}
+diff --git a/crates/searchright-chhhs-demo/src/report.rs b/crates/searchright-chhhs-demo/src/report.rs
+new file mode 100644
+index 0000000..953f3a9
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/report.rs
+@@ -0,0 +1,618 @@
++//! Deterministic monthly JSON, CSV, Markdown and self-contained HTML reporting.
++
++use std::{collections::BTreeMap, fs, path::Path};
++
++use searchright::contracts::RecordChangeKind;
++use serde::{Deserialize, Serialize};
++
++use crate::model::{AttributionLevel, MonitorRun, MonitorState, MonitoredPaper, ProviderFailure};
++
++/// Monthly-report wire identifier.
++pub const MONTHLY_REPORT_SCHEMA_VERSION: &str = "org.searchright.chhhs-monthly-report.v1";
++
++/// Calendar month used by the report interface.
++#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
++pub struct YearMonth {
++    year: i32,
++    month: u8,
++}
++
++impl YearMonth {
++    /// Parse `YYYY-MM`.
++    pub fn parse(value: &str) -> Result<Self, ReportError> {
++        let (year, month) = value
++            .split_once('-')
++            .ok_or_else(|| ReportError::InvalidMonth(value.to_owned()))?;
++        let year = year
++            .parse::<i32>()
++            .map_err(|_| ReportError::InvalidMonth(value.to_owned()))?;
++        let month = month
++            .parse::<u8>()
++            .map_err(|_| ReportError::InvalidMonth(value.to_owned()))?;
++        if !(1..=12).contains(&month) || year < 1 {
++            return Err(ReportError::InvalidMonth(value.to_owned()));
++        }
++        Ok(Self { year, month })
++    }
++
++    /// Render `YYYY-MM`.
++    #[must_use]
++    pub fn label(self) -> String {
++        format!("{:04}-{:02}", self.year, self.month)
++    }
++
++    fn contains(self, date: &str) -> bool {
++        date.starts_with(&self.label())
++    }
++}
++
++/// Summary counts displayed at the top of a
