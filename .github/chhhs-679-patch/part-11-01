@@ -1,0 +1,104 @@
+: "repository_policy",
+       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+diff --git a/verification/receipts/chhhs-research-demo-source.json b/verification/receipts/chhhs-research-demo-source.json
+new file mode 100644
+index 0000000..55f1d44
+--- /dev/null
++++ b/verification/receipts/chhhs-research-demo-source.json
+@@ -0,0 +1,21 @@
++{
++  "schema_version": "org.searchright.chhhs-demo-source-evidence.v1",
++  "track_id": "36",
++  "status": "source_verified",
++  "recorded_on": "2026-09-01",
++  "checks": [
++    {
++      "command": "python scripts/check_chhhs_research_demo.py",
++      "status": "passed",
++      "scope": "Network-free source, workflow, fixture and policy validation"
++    }
++  ],
++  "compiler_checks": {
++    "status": "pending_hosted_ci",
++    "commands": [
++      "cargo test -p searchright-chhhs-demo --all-features --locked",
++      "cargo clippy -p searchright-chhhs-demo --all-targets --all-features --locked -- -D warnings"
++    ]
++  },
++  "claim_boundary": "This receipt proves only the named network-free source check. Compiler, live-provider, institutional calibration, operational pilot and report-release evidence remain open."
++}
+diff --git a/verification/receipts/source-manifest.sha256 b/verification/receipts/source-manifest.sha256
+index 377c6cd..1b96306 100644
+--- a/verification/receipts/source-manifest.sha256
++++ b/verification/receipts/source-manifest.sha256
+@@ -7,6 +7,7 @@ ed52073385e93f7d864e262070366de5c2d7b0496fda20541ba4819fa92d074b  ./.github/ISSU
+ 4d7959b2ccfbfd01e913e1d10db9dd52b243c3d257ffd2e301eb4c023ea5ce82  ./.github/copilot-instructions.md
+ 5f2586e3fc3c921c49a1870f8e2d3d73879ff9de9215231c3bd65f2358f60b67  ./.github/dependabot.yml
+ 33a2b04330e597049e5959d1fde64d64d5d03b664f3bee5cf4cbc011cae4a080  ./.github/pull_request_template.md
++42308325639c8ffca815c592bee919a7708a7d76d2a49cd214b30269db998510  ./.github/workflows/chhhs-research-intelligence.yml
+ ed885101114ecd525ee170babaf5a4e479ea8a1cbdd2f24659fd2dd5dc736f88  ./.github/workflows/ci.yml
+ 455bb5a1bdcb1a09914fd9fcb56da4f4e2e8496e76f9932a425eb7c72be499fc  ./.github/workflows/clean-room.yml
+ 03c8e9e49e69b588ec7fc762ecc0bd34827aa97f479dc5206817d2f30cadba3a  ./.github/workflows/coverage.yml
+@@ -39,8 +40,8 @@ cfc13e6fbe6a5d7efccaac17fe8607dfd75b8a8058fcb223d6a451ab39319045  ./CLAUDE.md
+ 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
+ a4c85be1e44f9b9ce9e3c9d0dec7fb8b80910779adddcd63df504d576f183867  ./CONTEXT.md
+ 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
+-aa045fb092682ab2ac541212b842c1c18f24f0a9973ea6fb45d77d1abdd75425  ./Cargo.lock
+-7a0718e51bde354fbd2ca29488d5e052ea2f4cdd5400d29a4c9f8db6d2d601dd  ./Cargo.toml
++ce8942d3eeba114cb46f12a7520d45d20f1c0cfa16aad4af4c218041f982ea18  ./Cargo.lock
++3252b96463ac50ed74f638be4a35cb8c6a11c7f4915b3b375a308959eec4896d  ./Cargo.toml
+ c01619a340bc72f11fd220edfadc87227e481748dcb30dc01dce93dddc809780  ./Dockerfile
+ 578a4b18c4f2cb587a64af04b36d81ca8fdb30eb63de45233728adf4cd2c7bdf  ./GEMINI.md
+ e80ed3e27f0f4e6c140a76d8e77192856f0d9906a1af13e53f0fe01c63d3277b  ./GOVERNANCE.md
+@@ -71,7 +72,7 @@ daada8d2ffd7cf4154a04e29db29ce457410d01750bbd24528df73fdec82d7eb  ./compose.yaml
+ 1cf888df82b42dc75a048d2bcec654c9226c038b2f82ea9d0d9e9d14de426897  ./conductor/code_styleguides/rust.md
+ 68b48eb8ebafb37d976ef8e7923f802946d72c33b1185ad8fbfa2e54eac46575  ./conductor/design.md
+ 0735e60ae7509844102d89832e43f76241aca28c80f308887f64246ad5ae4633  ./conductor/github/README.md
+-85036511e9d0314a119b2a220c887762d6410cd969c3fb03baccae409c9a1f22  ./conductor/github/issue-hierarchy.json
++77cd7a92f550c0dff0d1662f271a7e46e931f778e4876456d2672f79ea413f62  ./conductor/github/issue-hierarchy.json
+ 9dede9de69f08960e59429c499a9bb5b098ab93d124d0b20cbaeedbe001382cd  ./conductor/github/issues/roadmap-epic.md
+ 5fb44ee062d12e12cd057daee326f5377920b39f6ef25f28af3710d1e306a47b  ./conductor/github/issues/track-00-phase-1-task-01.md
+ 75951fa3b36719a882aff9b75a556fa9da1cb71236e9674248349fa159cedc59  ./conductor/github/issues/track-00-phase-1.md
+@@ -636,21 +637,21 @@ bffbb3f2a3519ad68a702e516b92e83256d8a71e34f9f0ee019863096705f86d  ./conductor/gi
+ 32a0c89c556145d6ce42d0fc3d9566f84c3104728b5f899417695a7df49202a7  ./conductor/github/issues/track-35-phase-4-task-04.md
+ 904ca9e112db4be45a05bab477f4e788855eb6f8497bca9d4915a990bab6a06b  ./conductor/github/issues/track-35-phase-4.md
+ 87f5634e1ff1ffed565491cf0320aa3d0de180b6e68841f28781cbf4522ae990  ./conductor/github/issues/track-35.md
+-49a4aa94ae8a114a40333acfea5b787ea0481029d1a8d95a26c7955c19be9fb7  ./conductor/github/issues/track-36-phase-1-task-01.md
++a6e9a77b86918c3d4cef3f1db6514a9b86a123a50443ed8ee9e9145da699143a  ./conductor/github/issues/track-36-phase-1-task-01.md
+ 41bfbd5e6164578027b2231120f23b6e15bfdde1fa86dd9bc87b890672b79933  ./conductor/github/issues/track-36-phase-1.md
+-ac00034cc65ff5f890eeabeda61ce4dcb07ee1d2089a79439ec720c19c60bd1d  ./conductor/github/issues/track-36-phase-2-task-01.md
++ae877adae7aabb26d69072d6eb174ff6ee60e7d3ac38c4ab92e597fa675a378b  ./conductor/github/issues/track-36-phase-2-task-01.md
+ 3b13e54094ac14e68df86f8d43159452500783737349a694d87bff4ca7eb90fb  ./conductor/github/issues/track-36-phase-2-task-02.md
+ 76b8ac38f0ba681f21b2482119cd1e2eb6bf4aa01a798915481ddc92aeb63f83  ./conductor/github/issues/track-36-phase-2.md
+ 8aeac1c9fb58a7712952f85fca5e5f86e05f05392cfb0a75950470c48d913929  ./conductor/github/issues/track-36-phase-3-task-01.md
+-ff79a0647a533017e062b369fc18349918d27f90c9120293d41953c1374c344f  ./conductor/github/issues/track-36-phase-3-task-02.md
++a64e2085fe1d8d8581c3b31c226c77cda22f1eb856035bf5d501f13cd325d462  ./conductor/github/issues/track-36-phase-3-task-02.md
+ bdc0e3038e6639e998589eaf509fb25f6f62d9999283af8d8ddc49b319a20849  ./conductor/github/issues/track-36-phase-3-task-03.md
+-6316d7e86f0fa75e2c9ca99a7e553f834a5d68040a029cdf618040b65535c5b7  ./conductor/github/issues/track-36-phase-3.md
++4e34cce507fc1ea8bb79e13f983aae8335e8a54afcdad3af084b25c686b12992  ./conductor/github/issues/track-36-phase-3.md
+ 59aead2d64c0b0e1da355829b237bce16fb2e9887a844069a6a5362d4150366c  ./conductor/github/issues/track-36-phase-4-task-01.md
+ a52c3b5588db018479593898b173d2a1d87b0c595664c29e93c50c14cb2e9404  ./conductor/github/issues/track-36-phase-4-task-02.md
+ 16fa2b8c378c4fafe5744dc193ee18f41f0c40d8063ed0fb6db19cb7717a44b4  ./conductor/github/issues/track-36-phase-4-task-03.md
+ f2969637d98ccd1204901241b5b9bc1d44c2d940c9c8af06c2f6a0b08193166e  ./conductor/github/issues/track-36-phase-4-task-04.md
+ 07382c41e1d4fea32736aade3205d2b17638d5978c28dcf950911a5d5bc08943  ./conductor/github/issues/track-36-phase-4.md
+-4b7cf96ce5d7559e623bec1b173aa44ea4e977eda4732b6a89a606920409fb54  ./conductor/github/issues/track-36.md
++4abadd97d223d29101561712cdbabb1ec5262ed51b721139f290e427062a842e  ./conductor/github/issues/track-36.md
+ 223a7809e82401a596a3783ea60e9429768dce00f019d7ea88e9ab1ac15922fe  ./conductor/github/issues/track-37-phase-1-task-01.md
+ ba00ac9374256e262a1e70a8f556a88dae183d71ca956ca96daeb6299c123c95  ./conductor/github/issues/track-37-phase-1.md
+ 9660c1c5dbc09b6e9c07a82b5a1cba94b441d17af75eafd2686db169c816e7fd  ./conductor/github/issues/track-37-phase-2-task-01.md
+@@ -677,10 +678,10 @@ e5b61482643552c7323c90cd948a669c7f0b10bada1dfbaf9ef5b419fd0b4e9b  ./conductor/in
+ b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
+ aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
+ c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
+-615e4d2953bb39d566244af47a9434c9719e6ed56ee104703fe3ecdb5c68a903  ./conductor/roadmap-coverage.json
++0966fc9a8115d8d587cb444ea3b0423d0c740f3bde23a881a31f2cf1031cc64e  ./conductor/roadmap-coverage.json
+ defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
+ e611f291fc402087be0c5f564e8f2af3b5a46e404cf3fe5e4b36d4c72756381e  ./conductor/traceability-overrides.json
+-23d55a325ff2526a3ae30c7e0dd8e56553e6d752308786a556d1c5ff27d7caca  ./conductor/tracks.md
++eafa3a200155cb50145d73497d4a54ce9369057791d0a65afaffed841046ace7  ./conductor/tracks.md
+ 1453db9b2c4ce4bbd111bffcd4abe67b26836f58f3416993de79fe4b881561ce  ./conductor/tracks/00-foundation-conductor-toolchain/evidence.json
+ 488d8ad4d4cb6da7f8248a7796e212a15ca47f69a490872b91c2cf64e9519496  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
+ 101f9034741d1c0beafcac258e7924e7571b9b65383acea7131c96ecc13839a1  ./conductor/tracks/00-foundation-conductor-toolchain/plan.md
+@@ -862,11 +863,11 @@ f3739d2725a73e696552c21d8d76f344fe8d79940d5a37531578e9e25bc9d76c  ./conductor/tr
+ f0f2be332e43ca53bf9d9f37c225a27526cf1788b6d73f880ba28f212d58729e  ./conductor/tracks/35-sdk-docs-adoption/plan.md
+ de0e4ca27669a504ee3dc78d51e9317c9c553eb077
