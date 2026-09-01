@@ -1,0 +1,481 @@
+HS",
++      "kind": "current",
++      "valid_from_year": null,
++      "valid_to_year": null
++    },
++    {
++      "alias_id": "chhhs-acronym",
++      "text": "CHHHS",
++      "kind": "acronym",
++      "valid_from_year": null,
++      "valid_to_year": null
++    },
++    {
++      "alias_id": "cairns-hospital",
++      "text": "Cairns Hospital",
++      "kind": "facility",
++      "valid_from_year": null,
++      "valid_to_year": null
++    },
++    {
++      "alias_id": "cairns-base-hospital",
++      "text": "Cairns Base Hospital",
++      "kind": "historical",
++      "valid_from_year": null,
++      "valid_to_year": null
++    }
++  ],
++  "durable_identifiers": {},
++  "governance_status": "Demonstration profile requiring accountable CHHHS validation before operational attribution",
++  "notes": [
++    "The alias set is deliberately small and conservative.",
++    "Durable organisation identifiers and the complete facility hierarchy are not asserted until reviewed against an authoritative CHHHS register.",
++    "Facility and historical-name matches remain reviewable rather than automatically confirmed."
++  ]
++}
+diff --git a/crates/searchright-chhhs-demo/resources/research-taxonomy.json b/crates/searchright-chhhs-demo/resources/research-taxonomy.json
+new file mode 100644
+index 0000000..d484db3
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/resources/research-taxonomy.json
+@@ -0,0 +1,119 @@
++{
++  "schema_version": "org.searchright.research-taxonomy.v1",
++  "version": "chhhs-demonstration-2026-09-1",
++  "themes": [
++    {
++      "category_id": "tropical-medicine-toxinology",
++      "label": "Tropical medicine and toxinology",
++      "terms": ["snakebite", "envenomation", "antivenom", "toxinology", "venom", "tropical medicine"]
++    },
++    {
++      "category_id": "emergency-critical-care",
++      "label": "Emergency and critical care",
++      "terms": ["emergency department", "emergency medicine", "critical care", "intensive care", "resuscitation", "trauma"]
++    },
++    {
++      "category_id": "first-nations-health",
++      "label": "Aboriginal and Torres Strait Islander health",
++      "terms": ["aboriginal", "torres strait islander", "first nations", "indigenous health", "closing the gap"]
++    },
++    {
++      "category_id": "rural-remote-health",
++      "label": "Rural and remote health",
++      "terms": ["rural", "remote health", "regional health", "outreach", "telehealth"]
++    },
++    {
++      "category_id": "infectious-public-health",
++      "label": "Infectious diseases and public health",
++      "terms": ["infectious disease", "infection", "syphilis", "dengue", "malaria", "epidemiology", "public health", "outbreak"]
++    },
++    {
++      "category_id": "cancer-haematology",
++      "label": "Cancer and haematology",
++      "terms": ["cancer", "oncology", "tumour", "tumor", "haematology", "hematology", "leukaemia", "leukemia"]
++    },
++    {
++      "category_id": "mental-health",
++      "label": "Mental health and alcohol and other drugs",
++      "terms": ["mental health", "psychiatry", "psychosis", "depression", "suicide", "alcohol", "substance use"]
++    },
++    {
++      "category_id": "maternal-child-health",
++      "label": "Maternal, neonatal and paediatric health",
++      "terms": ["maternal", "pregnancy", "perinatal", "neonatal", "newborn", "paediatric", "pediatric", "child health"]
++    },
++    {
++      "category_id": "surgery-perioperative",
++      "label": "Surgery, anaesthesia and perioperative care",
++      "terms": ["surgery", "surgical", "anaesthesia", "anesthesia", "perioperative", "postoperative", "elective surgery"]
++    },
++    {
++      "category_id": "chronic-disease-rehabilitation",
++      "label": "Chronic disease and rehabilitation",
++      "terms": ["diabetes", "cardiovascular", "chronic disease", "rehabilitation", "renal", "kidney disease", "respiratory"]
++    },
++    {
++      "category_id": "health-services-digital-quality",
++      "label": "Health services, quality and digital health",
++      "terms": ["health services", "quality improvement", "patient flow", "digital health", "electronic medical record", "implementation", "service evaluation"]
++    },
++    {
++      "category_id": "genomics-rare-disease",
++      "label": "Genomics, rare disease and precision medicine",
++      "terms": ["genomic", "genetics", "rare disease", "precision medicine", "sequencing", "variant"]
++    }
++  ],
++  "study_types": [
++    {
++      "category_id": "randomised-trial",
++      "label": "Randomised controlled trial",
++      "terms": ["randomized controlled trial", "randomised controlled trial", "randomized trial", "randomised trial"]
++    },
++    {
++      "category_id": "systematic-review",
++      "label": "Systematic review or meta-analysis",
++      "terms": ["systematic review", "meta analysis", "meta-analysis", "scoping review"]
++    },
++    {
++      "category_id": "cohort-study",
++      "label": "Cohort study",
++      "terms": ["cohort", "longitudinal", "prospective study", "retrospective study"]
++    },
++    {
++      "category_id": "case-control-study",
++      "label": "Case-control study",
++      "terms": ["case control", "case-control"]
++    },
++    {
++      "category_id": "cross-sectional-study",
++      "label": "Cross-sectional study",
++      "terms": ["cross sectional", "cross-sectional", "survey"]
++    },
++    {
++      "category_id": "qualitative-study",
++      "label": "Qualitative study",
++      "terms": ["qualitative", "interview", "focus group", "thematic analysis"]
++    },
++    {
++      "category_id": "case-report-series",
++      "label": "Case report or case series",
++      "terms": ["case report", "case series"]
++    },
++    {
++      "category_id": "modelling-economic-evaluation",
++      "label": "Modelling or economic evaluation",
++      "terms": ["economic evaluation", "cost effectiveness", "cost-effectiveness", "simulation model", "decision model"]
++    },
++    {
++      "category_id": "protocol",
++      "label": "Protocol",
++      "terms": ["study protocol", "trial protocol", "protocol paper"]
++    },
++    {
++      "category_id": "other-or-unclear",
++      "label": "Other or unclear",
++      "terms": ["other or unclear"]
++    }
++  ],
++  "fallback_study_type_id": "other-or-unclear"
++}
+diff --git a/crates/searchright-chhhs-demo/src/attribution.rs b/crates/searchright-chhhs-demo/src/attribution.rs
+new file mode 100644
+index 0000000..d8871af
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/attribution.rs
+@@ -0,0 +1,403 @@
++//! Conservative, explainable institution-attribution rules.
++
++use std::collections::BTreeSet;
++
++use serde_json::Value;
++
++use crate::model::{
++    ATTRIBUTION_SCHEMA_VERSION, AliasKind, AttributionAssessment, AttributionEvidence,
++    AttributionField, AttributionLevel, InstitutionAlias, InstitutionProfile, SourcedRecord,
++    normalise_text,
++};
++
++const CONFIRMED_THRESHOLD: u8 = 90;
++const PROBABLE_THRESHOLD: u8 = 70;
++const REVIEW_THRESHOLD: u8 = 30;
++
++/// Assess a cross-source record group against one governed institution profile.
++#[must_use]
++pub fn assess_attribution(
++    profile: &InstitutionProfile,
++    records: &[SourcedRecord],
++) -> AttributionAssessment {
++    let mut evidence = Vec::new();
++    for sourced in records {
++        collect_durable_identifier_evidence(profile, sourced, &mut evidence);
++        collect_structured_evidence(profile, sourced, &mut evidence);
++        collect_unstructured_evidence(profile, sourced, &mut evidence);
++    }
++    evidence.sort_by(|left, right| {
++        right
++            .score
++            .cmp(&left.score)
++            .then_with(|| left.rule_id.cmp(&right.rule_id))
++            .then_with(|| left.matched_value.cmp(&right.matched_value))
++            .then_with(|| left.source_path.cmp(&right.source_path))
++    });
++    evidence.dedup_by(|left, right| {
++        left.rule_id == right.rule_id
++            && left.matched_value == right.matched_value
++            && left.field == right.field
++            && left.source_path == right.source_path
++    });
++
++    let score = evidence.first().map_or(0, |item| item.score);
++    let level = match score {
++        CONFIRMED_THRESHOLD..=u8::MAX => AttributionLevel::Confirmed,
++        PROBABLE_THRESHOLD..=89 => AttributionLevel::Probable,
++        REVIEW_THRESHOLD..=69 => AttributionLevel::Review,
++        _ => AttributionLevel::Excluded,
++    };
++    let review_required = matches!(level, AttributionLevel::Probable | AttributionLevel::Review);
++    let limitations = match level {
++        AttributionLevel::Confirmed => vec![
++            "Confirmation reflects metadata attribution, not authorship employment, study-site ownership, funding, or institutional endorsement."
++                .to_owned(),
++        ],
++        AttributionLevel::Probable => vec![
++            "Facility or historical-name evidence requires accountable validation against the governed CHHHS identity register."
++                .to_owned(),
++        ],
++        AttributionLevel::Review => vec![
++            "The institution was mentioned outside a qualifying structured affiliation field; no automatic attribution was made."
++                .to_owned(),
++        ],
++        AttributionLevel::Excluded => vec![
++            "No qualifying structured institutional evidence was found. A geographic mention of Cairns alone is never sufficient."
++                .to_owned(),
++        ],
++    };
++
++    AttributionAssessment {
++        schema_version: ATTRIBUTION_SCHEMA_VERSION.to_owned(),
++        profile_version: profile.version.clone(),
++        level,
++        score,
++        review_required,
++        evidence,
++        limitations,
++    }
++}
++
++fn collect_durable_identifier_evidence(
++    profile: &InstitutionProfile,
++    sourced: &SourcedRecord,
++    output: &mut Vec<AttributionEvidence>,
++) {
++    if profile.durable_identifiers.is_empty() {
++        return;
++    }
++    let strings = structured_strings(&sourced.record.provider_metadata);
++    for (scheme, identifier) in &profile.durable_identifiers {
++        let expected = normalise_identifier(identifier);
++        for item in &strings {
++            if normalise_identifier(&item.value) == expected {
++                output.push(AttributionEvidence {
++                    rule_id: format!("durable_identifier.{scheme}"),
++                    matched_value: identifier.clone(),
++                    field: AttributionField::DurableIdentifier,
++                    source_path: Some(format!("{}:{}", sourced.provider_id, item.path)),
++                    score: 100,
++                    explanation: format!(
++                        "The provider metadata contains the governed {scheme} identifier."
++                    ),
++                });
++            }
++        }
++    }
++}
++
++fn collect_structured_evidence(
++    profile: &InstitutionProfile,
++    sourced: &SourcedRecord,
++    output: &mut Vec<AttributionEvidence>,
++) {
++    for item in structured_strings(&sourced.record.provider_metadata) {
++        for alias in &profile.aliases {
++            if !alias.applies_to_year(sourced.record.publication_year)
++                || !alias_matches(alias, &item.value)
++            {
++                continue;
++            }
++            let (rule_id, score, explanation) = structured_rule(alias);
++            output.push(AttributionEvidence {
++                rule_id: rule_id.to_owned(),
++                matched_value: alias.text.clone(),
++                field: AttributionField::StructuredAffiliation,
++                source_path: Some(format!("{}:{}", sourced.provider_id, item.path)),
++                score,
++                explanation: explanation.to_owned(),
++            });
++        }
++    }
++}
++
++fn collect_unstructured_evidence(
++    profile: &InstitutionProfile,
++    sourced: &SourcedRecord,
++    output: &mut Vec<AttributionEvidence>,
++) {
++    let record = &sourced.record;
++    let mut fields = vec![(AttributionField::Title, record.title.as_str())];
++    if let Some(abstract_text) = record.abstract_text.as_deref() {
++        fields.push((AttributionField::Abstract, abstract_text));
++    }
++    for subject in &record.subjects {
++        fields.push((AttributionField::Subject, subject));
++    }
++    for (field, value) in fields {
++        for alias in &profile.aliases {
++            if !alias.applies_to_year(record.publication_year) || !alias_matches(alias, value) {
++                continue;
++            }
++            let score = match alias.kind {
++                AliasKind::Canonical | AliasKind::Current | AliasKind::Acronym => 45,
++                AliasKind::Facility | AliasKind::Historical => 35,
++            };
++            output.push(AttributionEvidence {
++                rule_id: "unstructured_institution_mention".to_owned(),
++                matched_value: alias.text.clone(),
++                field: field.clone(),
++                source_path: Some(sourced.provider_id.clone()),
++                score,
++                explanation: "The name occurs in descriptive metadata, which creates a review candidate but does not establish affiliation."
++                    .to_owned(),
++            });
++        }
++    }
++}
++
++fn structured_rule(alias: &InstitutionAlias) -> (&'static str, u8, &'static str) {
++    match alias.kind {
++        AliasKind::Canonical => (
++            "structured_canonical_affiliation",
++            98,
++            "A structured affiliation field contains the governed canonical organisation name.",
++        ),
++        AliasKind::Current => (
++            "structured_current_alias",
++            94,
++            "A structured affiliation field contains a governed current organisation alias.",
++        ),
++        AliasKind::Acronym => (
++            "structured_current_acronym",
++            92,
++            "A structured affiliation field contains the governed organisation acronym as a complete token.",
++        ),
++        AliasKind::Facility => (
++            "structured_facility_affiliation",
++            80,
++            "A structured affiliation field names a governed CHHHS facility; parent-organisation attribution remains reviewable.",
++        ),
++        AliasKind::Historical => (
++            "structured_historical_affiliation",
++            76,
++            "A structured affiliation field contains a historical name within its declared validity range.",
++        ),
++    }
++}
++
++fn alias_matches(alias: &InstitutionAlias, value: &str) -> bool {
++    let alias_text = normalise_text(&alias.text);
++    let candidate = normalise_text(value);
++    if alias.kind == AliasKind::Acronym {
++        candidate.split_whitespace().any(|token| token == alias_text)
++    } else {
++        contains_phrase(&candidate, &alias_text)
++    }
++}
++
++fn contains_phrase(haystack: &str, needle: &str) -> bool {
++    if needle.is_empty() {
++        return false;
++    }
++    let padded_haystack = format!(" {haystack} ");
++    let padded_needle = format!(" {needle} ");
++    padded_haystack.contains(&padded_needle)
++}
++
++fn normalise_identifier(value: &str) -> String {
++    value
++        .trim()
++        .trim_end_matches('/')
++        .to_ascii_lowercase()
++        .trim_start_matches("https://ror.org/")
++        .to_owned()
++}
++
++#[derive(Debug, Clone)]
++struct StructuredString {
++    path: String,
++    value: String,
++}
++
++fn structured_strings(value: &Value) -> Vec<StructuredString> {
++    let mut output = Vec::new();
++    visit_value(value, "$", false, &mut output);
++    output
++}
++
++fn visit_value(
++    value: &Value,
++    path: &str,
++    structured_context: bool,
++    output: &mut Vec<StructuredString>,
++) {
++    match value {
++        Value::Object(object) => {
++            for (key, child) in object {
++                let lower = key.to_ascii_lowercase();
++                let structured = structured_context || is_structured_key(&lower);
++                visit_value(child, &format!("{path}.{key}"), structured, output);
++            }
++        }
++        Value::Array(items) => {
++            for (index, child) in items.iter().enumerate() {
++                visit_value(child, &format!("{path}[{index}]"), structured_context, output);
++            }
++        }
++        Value::String(text) if structured_context && !text.trim().is_empty() => {
++            output.push(StructuredString {
++                path: path.to_owned(),
++                value: text.clone(),
++            });
++        }
++        _ => {}
++    }
++}
++
++fn is_structured_key(key: &str) -> bool {
++    [
++        "affiliat",
++        "institution",
++        "organisation",
++        "organization",
++        "ror",
++    ]
++    .iter()
++    .any(|marker| key.contains(marker))
++}
++
++#[cfg(test)]
++mod tests {
++    use std::collections::BTreeMap;
++
++    use searchright::contracts::{
++        BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION, BibliographicRecord, RecordIdentifiers, RecordKind,
++    };
++
++    use super::*;
++
++    fn profile() -> InstitutionProfile {
++        InstitutionProfile {
++            schema_version: crate::model::INSTITUTION_PROFILE_SCHEMA_VERSION.to_owned(),
++            profile_id: "chhhs".to_owned(),
++            version: "2026-09-demo".to_owned(),
++            canonical_name: "Cairns and Hinterland Hospital and Health Service".to_owned(),
++            aliases: vec![
++                InstitutionAlias {
++                    alias_id: "canonical".to_owned(),
++                    text: "Cairns and Hinterland Hospital and Health Service".to_owned(),
++                    kind: AliasKind::Canonical,
++                    valid_from_year: None,
++                    valid_to_year: None,
++                },
++                InstitutionAlias {
++                    alias_id: "cairns-hospital".to_owned(),
++                    text: "Cairns Hospital".to_owned(),
++                    kind: AliasKind::Facility,
++                    valid_from_year: None,
++                    valid_to_year: None,
++                },
++            ],
++            durable_identifiers: BTreeMap::new(),
++            governance_status: "demonstration".to_owned(),
++       
