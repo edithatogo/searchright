@@ -1,0 +1,388 @@
+ monthly report.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct ReportMetrics {
++    /// Deduplicated candidates in current state.
++    pub current_candidates: usize,
++    /// Current confirmed or probable attributed portfolio.
++    pub current_attributed: usize,
++    /// Newly first observed attributed papers in this month.
++    pub newly_attributed_this_month: usize,
++    /// Current records requiring attribution review.
++    pub review_queue: usize,
++    /// Current excluded candidates.
++    pub excluded_candidates: usize,
++    /// Current records retained after a provider failure.
++    pub stale_records: usize,
++}
++
++/// Compact paper representation safe for report publication.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct ReportPaper {
++    /// Stable canonical identifier.
++    pub canonical_id: String,
++    /// Article title.
++    pub title: String,
++    /// Authors as source text.
++    pub authors: Vec<String>,
++    /// Journal or container.
++    pub container_title: Option<String>,
++    /// Publication year.
++    pub publication_year: Option<i32>,
++    /// Publication date.
++    pub publication_date: Option<String>,
++    /// Attribution outcome.
++    pub attribution: AttributionLevel,
++    /// Attribution score.
++    pub attribution_score: u8,
++    /// Highest-ranked theme.
++    pub primary_theme: Option<String>,
++    /// Study-design label.
++    pub study_type: String,
++    /// Source providers.
++    pub sources: Vec<String>,
++    /// DOI when available.
++    pub doi: Option<String>,
++    /// Safe landing page when available.
++    pub url: Option<String>,
++    /// First monitor date.
++    pub first_seen: String,
++}
++
++/// Provider status for one report run.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct ProviderStatus {
++    /// Provider identifier.
++    pub provider_id: String,
++    /// Whether a successful receipt was present.
++    pub succeeded: bool,
++    /// Records reported by the successful receipt.
++    pub records_retrieved: u64,
++    /// Redacted failure details when the provider failed.
++    pub failure: Option<ProviderFailure>,
++}
++
++/// Structured report payload from which all renderings are generated.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct MonthlyReport {
++    /// Contract identifier.
++    pub schema_version: String,
++    /// Calendar month.
++    pub month: String,
++    /// Run identifier used as the report snapshot.
++    pub run_id: String,
++    /// Snapshot date.
++    pub generated_as_of: String,
++    /// Summary counts.
++    pub metrics: ReportMetrics,
++    /// Current provider outcomes.
++    pub providers: Vec<ProviderStatus>,
++    /// Theme counts across the attributed portfolio.
++    pub theme_counts: BTreeMap<String, usize>,
++    /// Study-type counts across the attributed portfolio.
++    pub study_type_counts: BTreeMap<String, usize>,
++    /// Newly attributed papers in this month.
++    pub new_papers: Vec<ReportPaper>,
++    /// Papers materially updated in the selected run.
++    pub updated_papers: Vec<ReportPaper>,
++    /// Current attributed portfolio.
++    pub attributed_portfolio: Vec<ReportPaper>,
++    /// Current probable or review-only candidates.
++    pub review_queue: Vec<ReportPaper>,
++    /// Methodological and operational caveats.
++    pub limitations: Vec<String>,
++}
++
++/// Build one monthly report from the latest run in the requested month, or latest state run.
++pub fn build_monthly_report(
++    state: &MonitorState,
++    month: YearMonth,
++) -> Result<MonthlyReport, ReportError> {
++    state.validate()?;
++    let run = select_run(state, month).ok_or(ReportError::NoRuns)?;
++    let mut attributed_portfolio = state
++        .papers
++        .iter()
++        .filter(|paper| paper.attribution.level.included())
++        .map(report_paper)
++        .collect::<Vec<_>>();
++    attributed_portfolio.sort_by(report_paper_order);
++    let mut new_papers = state
++        .papers
++        .iter()
++        .filter(|paper| {
++            paper.attribution.level.included() && month.contains(&paper.first_seen)
++        })
++        .map(report_paper)
++        .collect::<Vec<_>>();
++    new_papers.sort_by(report_paper_order);
++    let updated_ids = run
++        .changes
++        .iter()
++        .filter(|change| change.kind == RecordChangeKind::Updated)
++        .map(|change| change.record_id.as_str())
++        .collect::<std::collections::BTreeSet<_>>();
++    let mut updated_papers = state
++        .papers
++        .iter()
++        .filter(|paper| updated_ids.contains(paper.canonical_id.as_str()))
++        .map(report_paper)
++        .collect::<Vec<_>>();
++    updated_papers.sort_by(report_paper_order);
++    let mut review_queue = state
++        .papers
++        .iter()
++        .filter(|paper| paper.attribution.review_required)
++        .map(report_paper)
++        .collect::<Vec<_>>();
++    review_queue.sort_by(report_paper_order);
++
++    let attributed = state
++        .papers
++        .iter()
++        .filter(|paper| paper.attribution.level.included())
++        .collect::<Vec<_>>();
++    let theme_counts = count_themes(&attributed);
++    let study_type_counts = count_study_types(&attributed);
++    let providers = provider_statuses(run);
++    let excluded_candidates = state
++        .papers
++        .iter()
++        .filter(|paper| paper.attribution.level == AttributionLevel::Excluded)
++        .count();
++    let stale_records = state
++        .papers
++        .iter()
++        .filter(|paper| paper.stale_due_to_provider_failure)
++        .count();
++
++    Ok(MonthlyReport {
++        schema_version: MONTHLY_REPORT_SCHEMA_VERSION.to_owned(),
++        month: month.label(),
++        run_id: run.run_id.clone(),
++        generated_as_of: run.as_of.clone(),
++        metrics: ReportMetrics {
++            current_candidates: state.papers.len(),
++            current_attributed: attributed_portfolio.len(),
++            newly_attributed_this_month: new_papers.len(),
++            review_queue: review_queue.len(),
++            excluded_candidates,
++            stale_records,
++        },
++        providers,
++        theme_counts,
++        study_type_counts,
++        new_papers,
++        updated_papers,
++        attributed_portfolio,
++        review_queue,
++        limitations: vec![
++            "This is a high-recall candidate monitor over free metadata APIs, not proof that every CHHHS publication has been found."
++                .to_owned(),
++            "Confirmed attribution means qualifying metadata named the organisation; it does not establish employment, institutional ownership, funding, endorsement, or study-site status."
++                .to_owned(),
++            "Facility, historical-name and unstructured matches require accountable review before use as an official institutional record."
++                .to_owned(),
++            "Crossref and OpenAlex queries are broad discovery approximations; PubMed and Europe PMC coverage and metadata completeness also vary."
++                .to_owned(),
++            "Rule-based themes and study types are transparent demonstration classifications, not validated research-performance measures."
++                .to_owned(),
++        ],
++    })
++}
++
++/// Write JSON, CSV, Markdown and HTML from the same structured report payload.
++pub fn write_report_bundle(
++    report: &MonthlyReport,
++    output_root: &Path,
++) -> Result<Vec<std::path::PathBuf>, ReportError> {
++    let directory = output_root.join(&report.month);
++    fs::create_dir_all(&directory)?;
++    let json_path = directory.join("report.json");
++    let csv_path = directory.join("papers.csv");
++    let markdown_path = directory.join("report.md");
++    let html_path = directory.join("index.html");
++    fs::write(&json_path, format!("{}\n", serde_json::to_string_pretty(report)?))?;
++    fs::write(&csv_path, render_csv(report))?;
++    fs::write(&markdown_path, render_markdown(report))?;
++    fs::write(&html_path, render_html(report))?;
++    Ok(vec![json_path, csv_path, markdown_path, html_path])
++}
++
++/// Render the current attributed portfolio as UTF-8 CSV.
++#[must_use]
++pub fn render_csv(report: &MonthlyReport) -> String {
++    let mut output = String::from(
++        "canonical_id,title,authors,container,publication_year,publication_date,attribution,attribution_score,primary_theme,study_type,sources,doi,url,first_seen\n",
++    );
++    for paper in &report.attributed_portfolio {
++        let fields = [
++            paper.canonical_id.clone(),
++            paper.title.clone(),
++            paper.authors.join("; "),
++            paper.container_title.clone().unwrap_or_default(),
++            paper.publication_year.map_or_else(String::new, |value| value.to_string()),
++            paper.publication_date.clone().unwrap_or_default(),
++            format!("{:?}", paper.attribution).to_ascii_lowercase(),
++            paper.attribution_score.to_string(),
++            paper.primary_theme.clone().unwrap_or_default(),
++            paper.study_type.clone(),
++            paper.sources.join("; "),
++            paper.doi.clone().unwrap_or_default(),
++            paper.url.clone().unwrap_or_default(),
++            paper.first_seen.clone(),
++        ];
++        output.push_str(
++            &fields
++                .iter()
++                .map(|field| csv_escape(field))
++                .collect::<Vec<_>>()
++                .join(","),
++        );
++        output.push('\n');
++    }
++    output
++}
++
++/// Render an accessible Markdown report.
++#[must_use]
++pub fn render_markdown(report: &MonthlyReport) -> String {
++    let mut output = format!(
++        "# CHHHS research intelligence: {}\n\nGenerated from run `{}` as of {}.\n\n## Summary\n\n| Measure | Count |\n| --- | ---: |\n| Current candidates | {} |\n| Current attributed portfolio | {} |\n| Newly attributed this month | {} |\n| Attribution review queue | {} |\n| Excluded candidates | {} |\n| Stale after source failure | {} |\n\n",
++        report.month,
++        report.run_id,
++        report.generated_as_of,
++        report.metrics.current_candidates,
++        report.metrics.current_attributed,
++        report.metrics.newly_attributed_this_month,
++        report.metrics.review_queue,
++        report.metrics.excluded_candidates,
++        report.metrics.stale_records,
++    );
++    append_markdown_papers(&mut output, "Newly attributed papers", &report.new_papers);
++    append_markdown_papers(&mut output, "Attribution review queue", &report.review_queue);
++    output.push_str("## Limitations\n\n");
++    for limitation in &report.limitations {
++        output.push_str(&format!("- {limitation}\n"));
++    }
++    output
++}
++
++/// Render a self-contained static HTML dashboard.
++#[must_use]
++pub fn render_html(report: &MonthlyReport) -> String {
++    let cards = [
++        ("Candidates", report.metrics.current_candidates),
++        ("Attributed", report.metrics.current_attributed),
++        ("New this month", report.metrics.newly_attributed_this_month),
++        ("Review queue", report.metrics.review_queue),
++        ("Excluded", report.metrics.excluded_candidates),
++        ("Stale", report.metrics.stale_records),
++    ]
++    .iter()
++    .map(|(label, value)| {
++        format!(
++            "<section class=\"card\"><strong>{value}</strong><span>{}</span></section>",
++            escape_html(label)
++        )
++    })
++    .collect::<String>();
++    let provider_rows = report
++        .providers
++        .iter()
++        .map(|provider| {
++            let status = if provider.succeeded { "Succeeded" } else { "Failed" };
++            let detail = provider
++                .failure
++                .as_ref()
++                .map_or_else(String::new, |failure| failure.message.clone());
++            format!(
++                "<tr><td>{}</td><td>{status}</td><td>{}</td><td>{}</td></tr>",
++                escape_html(&provider.provider_id),
++                provider.records_retrieved,
++                escape_html(&detail)
++            )
++        })
++        .collect::<String>();
++    let theme_rows = count_rows(&report.theme_counts);
++    let study_rows = count_rows(&report.study_type_counts);
++    let new_rows = html_paper_rows(&report.new_papers);
++    let review_rows = html_paper_rows(&report.review_queue);
++    let limitations = report
++        .limitations
++        .iter()
++        .map(|item| format!("<li>{}</li>", escape_html(item)))
++        .collect::<String>();
++    format!(
++        "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>CHHHS research intelligence {month}</title><style>{style}</style></head><body><main><header><p class=\"eyebrow\">Searchright institutional pilot</p><h1>CHHHS research intelligence</h1><p class=\"subtitle\">Monthly metadata report for {month}. Snapshot {as_of}; run <code>{run_id}</code>.</p></header><section class=\"cards\">{cards}</section><section><h2>Source status</h2><div class=\"table-wrap\"><table><thead><tr><th>Provider</th><th>Status</th><th>Records</th><th>Diagnostic</th></tr></thead><tbody>{provider_rows}</tbody></table></div></section><div class=\"grid\"><section><h2>Themes</h2><table><thead><tr><th>Theme</th><th>Count</th></tr></thead><tbody>{theme_rows}</tbody></table></section><section><h2>Study types</h2><table><thead><tr><th>Study type</th><th>Count</th></tr></thead><tbody>{study_rows}</tbody></table></section></div><section><h2>Newly attributed this month</h2><div class=\"table-wrap\"><table><thead><tr><th>Paper</th><th>Attribution</th><th>Theme</th><th>Study type</th><th>Sources</th></tr></thead><tbody>{new_rows}</tbody></table></div></section><section><h2>Attribution review queue</h2><div class=\"table-wrap\"><table><thead><tr><th>Paper</th><th>Attribution</th><th>Theme</th><th>Study type</th><th>Sources</th></tr></thead><tbody>{review_rows}</tbody></table></div></section><aside><h2>Interpretation limits</h2><ul>{limitations}</ul></aside></main></body></html>",
++        month = escape_html(&report.month),
++        as_of = escape_html(&report.generated_as_of),
++        run_id = escape_html(&report.run_id),
++        style = HTML_STYLE,
++    )
++}
++
++const HTML_STYLE: &str = "
++:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:#17202a;background:#f4f7f8}*{box-sizing:border-box}body{margin:0}main{max-width:1180px;margin:0 auto;padding:3rem 1.25rem 5rem}header{padding:2.5rem;border-radius:1rem;background:#fff;border-top:6px solid #177e89;box-shadow:0 10px 28px rgba(20,42,55,.08)}h1{font-size:clamp(2rem,5vw,3.5rem);margin:.2rem 0}.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:#177e89}.subtitle{max-width:70ch;color:#4f5f68}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin:1.5rem 0}.card{background:#fff;padding:1.2rem;border-radius:.8rem;border:1px solid #dbe5e8}.card strong{display:block;font-size:2rem}.card span{color:#596a73}section,aside{margin-top:1.5rem;background:#fff;padding:1.5rem;border-radius:.8rem;border:1px solid #dbe5e8}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem}.grid section{margin-top:0}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.75rem;border-bottom:1px solid #e4ebed;vertical-align:top}th{font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;color:#50616a}.table-wrap{overflow-x:auto}.pill{display:inline-block;padding:.2rem .55rem;border-radius:999px;background:#e4f2f3;font-size:.8rem}a{color:#116b75}code{background:#eef3f4;padding:.15rem .3rem;border-radius:.25rem}aside{border-left:5px solid #c57b23}li+li{margin-top:.55rem}@media(max-width:640px){main{padding-top:1rem}header{padding:1.5rem}th,td{padding:.55rem}}
++";
++
++fn select_run(state: &MonitorState, month: YearMonth) -> Option<&MonitorRun> {
++    state
++        .runs
++        .iter()
++        .rev()
++        .find(|run| month.contains(&run.as_of))
++        .or_else(|| state.runs.last())
++}
++
++fn report_paper(paper: &MonitoredPaper) -> ReportPaper {
++    ReportPaper {
++        canonical_id: paper.canonical_id.clone(),
++        title: paper.record.title.clone(),
++        authors: paper.record.authors.clone(),
++        container_title: paper.record.container_title.clone(),
++        publication_year: paper.record.publication_year,
++        publication_date: paper.record.publication_date.clone(),
++        attribution: paper.attribution.level,
++        attribution_score: paper.attribution.score,
++        primary_theme: paper
++            .classification
++            .themes
++            .first()
++            .map(|theme| theme.label.clone()),
++        study_type: paper.classification.study_type.label.clone(),
++        sources: paper.source_providers.clone(),
++        doi: paper.record.identifiers.doi.clone(),
++        url: safe_url(&paper.record.urls),
++        first_seen: paper.first_seen.clone(),
++    }
++}
++
++fn safe_url(urls: &[String]) -> Option<String> {
++    urls.iter()
++        .find(|url| url.starts_with("https://") || url.starts_with("http://"))
++        .cloned()
++}
++
++fn report_paper_order(left: &ReportPaper, right: &ReportPaper) -> std::cmp::Ordering {
++    right
++        .publication_date
++        .cmp(&left.publication_date)
++        .then_with(|| right.publication_year.cmp(&left.publication_year))
++        .then_with(|| left.title.cmp(&right.title))
++}
++
++fn count_themes(papers: &[&MonitoredPaper]) -> BTreeMap<String, usize> {
++    let mut output = BTreeMap::new();
++    for paper in papers {
++        for theme in &paper.classification.themes {
++            *output.entry(theme.label.clone()).or_default() += 1;
++        }
++    }
++    output
++}
++
++fn count_study_types(papers: &[&MonitoredPaper]) -> BTreeMap<String, usize> {
++    let mut output = BTreeMap::new();
++    for paper in papers {
++        *output
++            .entry(paper.classification.study_type.label.clo
