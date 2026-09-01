@@ -11,29 +11,46 @@ jobs:
   apply:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - name: Checkout recovery branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: true
           fetch-depth: 0
-      - name: Install pinned Rust and Python
+      - name: Install pinned toolchains
         shell: bash
         run: |
           set -euo pipefail
           rustup toolchain install 1.97.1 --profile minimal --component clippy,rustfmt
           python -m pip install --disable-pip-version-check -r requirements/validation.txt
-      - name: Apply reviewed patch and verify
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+      - name: Apply reviewed source patch
         shell: bash
         run: |
           set -euo pipefail
-          cat .github/chhhs-679-patch/part-* > "$RUNNER_TEMP/chhhs-679.patch"
-          git apply --recount --check "$RUNNER_TEMP/chhhs-679.patch"
-          git apply --recount "$RUNNER_TEMP/chhhs-679.patch"
+          cat .github/chhhs-679-patch/part-* > "$RUNNER_TEMP/chhhs-679.full.patch"
+          head -n 5160 "$RUNNER_TEMP/chhhs-679.full.patch" > "$RUNNER_TEMP/chhhs-679.source.patch"
+          git apply --check "$RUNNER_TEMP/chhhs-679.source.patch"
+          git apply "$RUNNER_TEMP/chhhs-679.source.patch"
           rm -rf .github/chhhs-679-patch
           rm -f .github/workflows/apply-chhhs-679-patch.yml
+          rm -f .github/workflows/export-chhhs-679-patch.yml
+      - name: Format and regenerate derived integrity artefacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo fmt --all
+          python scripts/sync_context_lock.py
+          python scripts/generate_evidence_debt.py
+          python scripts/generate_source_sbom.py
+          python scripts/generate_source_hash_manifest.py
+      - name: Verify source, contracts and Rust implementation
+        shell: bash
+        run: |
+          set -euo pipefail
           python scripts/check_chhhs_research_demo.py
+          python -m unittest discover -s tests
           python scripts/check_workflow_hardening.py
           python scripts/validate_repository.py
           python scripts/run_static_harness.py
