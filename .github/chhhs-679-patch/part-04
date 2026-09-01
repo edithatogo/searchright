@@ -1,0 +1,502 @@
+      notes: Vec::new(),
++        }
++    }
++
++    fn sourced(title: &str, metadata: Value) -> SourcedRecord {
++        SourcedRecord {
++            provider_id: "fixture".to_owned(),
++            record: BibliographicRecord {
++                schema_version: BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
++                record_id: "fixture-1".to_owned(),
++                source_receipt_id: "receipt".to_owned(),
++                native_id: "1".to_owned(),
++                kind: RecordKind::JournalArticle,
++                identifiers: RecordIdentifiers::default(),
++                title: title.to_owned(),
++                abstract_text: None,
++                authors: Vec::new(),
++                container_title: None,
++                publication_year: Some(2026),
++                publication_date: None,
++                languages: Vec::new(),
++                subjects: Vec::new(),
++                urls: Vec::new(),
++                provider_metadata: metadata,
++            },
++            carried_forward: false,
++        }
++    }
++
++    #[test]
++    fn structured_canonical_affiliation_is_confirmed() {
++        let record = sourced(
++            "A study",
++            serde_json::json!({
++                "author": [{"affiliation": [{"name": "Cairns and Hinterland Hospital and Health Service"}]}]
++            }),
++        );
++        let result = assess_attribution(&profile(), &[record]);
++        assert_eq!(result.level, AttributionLevel::Confirmed);
++        assert!(!result.review_required);
++    }
++
++    #[test]
++    fn facility_affiliation_is_probable_and_reviewable() {
++        let record = sourced(
++            "A study",
++            serde_json::json!({"authorships": [{"institutions": [{"display_name": "Cairns Hospital"}]}]}),
++        );
++        let result = assess_attribution(&profile(), &[record]);
++        assert_eq!(result.level, AttributionLevel::Probable);
++        assert!(result.review_required);
++    }
++
++    #[test]
++    fn geographic_cairns_mention_is_not_attributed() {
++        let record = sourced(
++            "Rainfall patterns in Cairns",
++            serde_json::json!({"location": "Cairns, Queensland"}),
++        );
++        let result = assess_attribution(&profile(), &[record]);
++        assert_eq!(result.level, AttributionLevel::Excluded);
++        assert_eq!(result.score, 0);
++    }
++
++    #[test]
++    fn title_institution_mention_enters_review_only() {
++        let record = sourced(
++            "Research at Cairns and Hinterland Hospital and Health Service",
++            serde_json::json!({}),
++        );
++        let result = assess_attribution(&profile(), &[record]);
++        assert_eq!(result.level, AttributionLevel::Review);
++    }
++
++    #[test]
++    fn durable_ror_identifier_overrides_name_variation() {
++        let mut governed = profile();
++        governed
++            .durable_identifiers
++            .insert("ror".to_owned(), "https://ror.org/12345".to_owned());
++        let record = sourced(
++            "A study",
++            serde_json::json!({"institutions": [{"ror": "https://ror.org/12345/"}]}),
++        );
++        let result = assess_attribution(&governed, &[record]);
++        assert_eq!(result.level, AttributionLevel::Confirmed);
++        assert_eq!(result.score, 100);
++    }
++}
+diff --git a/crates/searchright-chhhs-demo/src/classification.rs b/crates/searchright-chhhs-demo/src/classification.rs
+new file mode 100644
+index 0000000..87e836f
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/classification.rs
+@@ -0,0 +1,196 @@
++//! Transparent multi-label thematic and study-design classification.
++
++use std::collections::BTreeSet;
++
++use searchright::contracts::BibliographicRecord;
++
++use crate::model::{
++    CLASSIFICATION_SCHEMA_VERSION, CategoryRule, CategoryScore, PaperClassification,
++    ResearchTaxonomy, normalise_text,
++};
++
++/// Classify one merged bibliographic record using a versioned ruleset.
++#[must_use]
++pub fn classify_record(
++    taxonomy: &ResearchTaxonomy,
++    record: &BibliographicRecord,
++) -> PaperClassification {
++    let title = normalise_text(&record.title);
++    let abstract_text = record
++        .abstract_text
++        .as_deref()
++        .map_or_else(String::new, normalise_text);
++    let subjects = normalise_text(&record.subjects.join(" "));
++
++    let mut themes = taxonomy
++        .themes
++        .iter()
++        .filter_map(|rule| score_rule(rule, &title, &abstract_text, &subjects))
++        .collect::<Vec<_>>();
++    themes.sort_by(category_order);
++
++    let mut study_types = taxonomy
++        .study_types
++        .iter()
++        .filter_map(|rule| score_rule(rule, &title, &abstract_text, &subjects))
++        .collect::<Vec<_>>();
++    study_types.sort_by(category_order);
++    let fallback = taxonomy
++        .study_types
++        .iter()
++        .find(|rule| rule.category_id == taxonomy.fallback_study_type_id)
++        .map_or_else(
++            || CategoryScore {
++                category_id: taxonomy.fallback_study_type_id.clone(),
++                label: "Other or unclear".to_owned(),
++                score: 0,
++                evidence_terms: Vec::new(),
++            },
++            |rule| CategoryScore {
++                category_id: rule.category_id.clone(),
++                label: rule.label.clone(),
++                score: 0,
++                evidence_terms: Vec::new(),
++            },
++        );
++    let specific = study_types
++        .into_iter()
++        .find(|score| score.category_id != taxonomy.fallback_study_type_id);
++    let study_type_uncertain = specific.is_none();
++
++    PaperClassification {
++        schema_version: CLASSIFICATION_SCHEMA_VERSION.to_owned(),
++        taxonomy_version: taxonomy.version.clone(),
++        themes,
++        study_type: specific.unwrap_or(fallback),
++        study_type_uncertain,
++    }
++}
++
++fn category_order(left: &CategoryScore, right: &CategoryScore) -> std::cmp::Ordering {
++    right
++        .score
++        .cmp(&left.score)
++        .then_with(|| left.label.cmp(&right.label))
++}
++
++fn score_rule(
++    rule: &CategoryRule,
++    title: &str,
++    abstract_text: &str,
++    subjects: &str,
++) -> Option<CategoryScore> {
++    let mut score = 0_u32;
++    let mut evidence = BTreeSet::new();
++    for term in &rule.terms {
++        let term = normalise_text(term);
++        let title_match = contains_term(title, &term);
++        let subject_match = contains_term(subjects, &term);
++        let abstract_match = contains_term(abstract_text, &term);
++        if title_match || subject_match || abstract_match {
++            evidence.insert(term);
++            score = score
++                .saturating_add(u32::from(title_match) * 3)
++                .saturating_add(u32::from(subject_match) * 2)
++                .saturating_add(u32::from(abstract_match));
++        }
++    }
++    (score > 0).then(|| CategoryScore {
++        category_id: rule.category_id.clone(),
++        label: rule.label.clone(),
++        score,
++        evidence_terms: evidence.into_iter().collect(),
++    })
++}
++
++fn contains_term(text: &str, term: &str) -> bool {
++    if text.is_empty() || term.is_empty() {
++        return false;
++    }
++    format!(" {text} ").contains(&format!(" {term} "))
++}
++
++#[cfg(test)]
++mod tests {
++    use searchright::contracts::{
++        BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION, RecordIdentifiers, RecordKind,
++    };
++
++    use super::*;
++
++    fn taxonomy() -> ResearchTaxonomy {
++        ResearchTaxonomy {
++            schema_version: crate::model::TAXONOMY_SCHEMA_VERSION.to_owned(),
++            version: "test".to_owned(),
++            themes: vec![
++                CategoryRule {
++                    category_id: "toxinology".to_owned(),
++                    label: "Toxinology".to_owned(),
++                    terms: vec!["snakebite".to_owned(), "antivenom".to_owned()],
++                },
++                CategoryRule {
++                    category_id: "emergency".to_owned(),
++                    label: "Emergency care".to_owned(),
++                    terms: vec!["emergency department".to_owned()],
++                },
++            ],
++            study_types: vec![
++                CategoryRule {
++                    category_id: "cohort".to_owned(),
++                    label: "Cohort study".to_owned(),
++                    terms: vec!["cohort".to_owned()],
++                },
++                CategoryRule {
++                    category_id: "other".to_owned(),
++                    label: "Other or unclear".to_owned(),
++                    terms: vec!["unclear".to_owned()],
++                },
++            ],
++            fallback_study_type_id: "other".to_owned(),
++        }
++    }
++
++    fn record(title: &str, abstract_text: &str) -> BibliographicRecord {
++        BibliographicRecord {
++            schema_version: BIBLIOGRAPHIC_RECORD_SCHEMA_VERSION.to_owned(),
++            record_id: "record".to_owned(),
++            source_receipt_id: "receipt".to_owned(),
++            native_id: "native".to_owned(),
++            kind: RecordKind::JournalArticle,
++            identifiers: RecordIdentifiers::default(),
++            title: title.to_owned(),
++            abstract_text: Some(abstract_text.to_owned()),
++            authors: Vec::new(),
++            container_title: None,
++            publication_year: Some(2026),
++            publication_date: None,
++            languages: Vec::new(),
++            subjects: vec!["Emergency department".to_owned()],
++            urls: Vec::new(),
++            provider_metadata: serde_json::json!({}),
++        }
++    }
++
++    #[test]
++    fn emits_ranked_multi_label_themes_and_study_type() {
++        let result = classify_record(
++            &taxonomy(),
++            &record(
++                "Snakebite cohort in an emergency department",
++                "Antivenom outcomes were assessed.",
++            ),
++        );
++        assert_eq!(result.themes.len(), 2);
++        assert!(result.themes.iter().any(|theme| theme.category_id == "toxinology"));
++        assert!(result.themes.iter().any(|theme| theme.category_id == "emergency"));
++        assert_eq!(result.study_type.category_id, "cohort");
++        assert!(!result.study_type_uncertain);
++    }
++
++    #[test]
++    fn falls_back_when_study_design_is_unclear() {
++        let result = classify_record(&taxonomy(), &record("Snakebite services", "Description"));
++        assert_eq!(result.study_type.category_id, "other");
++        assert!(result.study_type_uncertain);
++    }
++}
+diff --git a/crates/searchright-chhhs-demo/src/lib.rs b/crates/searchright-chhhs-demo/src/lib.rs
+new file mode 100644
+index 0000000..2bd48aa
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/lib.rs
+@@ -0,0 +1,90 @@
++//! Searchright institutional-publication intelligence demonstration for CHHHS.
++//!
++//! The crate provides a conservative, auditable vertical slice: free-provider
++//! discovery, source receipts, cross-source deduplication, explainable
++//! attribution and NLP classification, living-update lineage, and monthly
++//! report rendering. Network execution is disabled unless the `live` feature
++//! and an explicit operator flag are both present.
++
++#![forbid(unsafe_code)]
++
++pub mod attribution;
++pub mod classification;
++pub mod model;
++pub mod pipeline;
++pub mod report;
++pub mod search;
++pub mod storage;
++
++use std::{fs, path::Path};
++
++use model::{InstitutionProfile, ResearchTaxonomy};
++
++/// Load and validate the checked-in demonstration institution profile.
++pub fn embedded_profile() -> Result<InstitutionProfile, ConfigError> {
++    parse_profile(include_str!(
++        "../resources/chhhs-institution-profile.json"
++    ))
++}
++
++/// Load and validate the checked-in transparent research taxonomy.
++pub fn embedded_taxonomy() -> Result<ResearchTaxonomy, ConfigError> {
++    parse_taxonomy(include_str!("../resources/research-taxonomy.json"))
++}
++
++/// Load a profile override, or the checked-in profile when no path is supplied.
++pub fn load_profile(path: Option<&Path>) -> Result<InstitutionProfile, ConfigError> {
++    match path {
++        Some(path) => parse_profile(&fs::read_to_string(path)?),
++        None => embedded_profile(),
++    }
++}
++
++/// Load a taxonomy override, or the checked-in taxonomy when no path is supplied.
++pub fn load_taxonomy(path: Option<&Path>) -> Result<ResearchTaxonomy, ConfigError> {
++    match path {
++        Some(path) => parse_taxonomy(&fs::read_to_string(path)?),
++        None => embedded_taxonomy(),
++    }
++}
++
++fn parse_profile(text: &str) -> Result<InstitutionProfile, ConfigError> {
++    let value: InstitutionProfile = serde_json::from_str(text)?;
++    value.validate()?;
++    Ok(value)
++}
++
++fn parse_taxonomy(text: &str) -> Result<ResearchTaxonomy, ConfigError> {
++    let value: ResearchTaxonomy = serde_json::from_str(text)?;
++    value.validate()?;
++    Ok(value)
++}
++
++/// Configuration loading error.
++#[derive(Debug, thiserror::Error)]
++pub enum ConfigError {
++    /// File operation failed.
++    #[error(transparent)]
++    Io(#[from] std::io::Error),
++    /// JSON decoding failed.
++    #[error(transparent)]
++    Json(#[from] serde_json::Error),
++    /// Configuration contract failed validation.
++    #[error(transparent)]
++    Model(#[from] model::ModelError),
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn checked_in_configuration_is_valid() {
++        let profile = embedded_profile()
++            .unwrap_or_else(|error| panic!("profile should validate: {error}"));
++        let taxonomy = embedded_taxonomy()
++            .unwrap_or_else(|error| panic!("taxonomy should validate: {error}"));
++        assert_eq!(profile.profile_id, "cairns-and-hinterland-hhs");
++        assert!(taxonomy.themes.len() >= 10);
++    }
++}
+diff --git a/crates/searchright-chhhs-demo/src/main.rs b/crates/searchright-chhhs-demo/src/main.rs
+new file mode 100644
+index 0000000..1979b69
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/main.rs
+@@ -0,0 +1,274 @@
++//! Command-line entry point for the CHHHS institutional-publication pilot.
++
++#![forbid(unsafe_code)]
++
++use std::{io::Write, path::PathBuf};
++
++use anyhow::{Context, Result, bail};
++use clap::{Parser, Subcommand};
++use searchright_chhhs_demo::{
++    load_profile, load_taxonomy,
++    pipeline::process_search_batch,
++    report::{YearMonth, build_monthly_report, write_report_bundle},
++    search::{SearchOptions, execute_fixture_search, execute_live_search},
++    storage::{load_state, save_state},
++};
++use time::OffsetDateTime;
++
++#[derive(Debug, Parser)]
++#[command(
++    name = "searchright-chhhs-demo",
++    version,
++    about = "Auditable CHHHS publication discovery and monthly reporting demonstration"
++)]
++struct Cli {
++    #[command(subcommand)]
++    command: Command,
++}
++
++#[derive(Debug, Subcommand)]
++enum Command {
++    /// Run the complete offline pipeline over rights-clear synthetic provider fixtures.
++    SeedDemo {
++        /// Durable JSON state path.
++        #[arg(long, default_value = ".searchright/chhhs/state.json")]
++        state: PathBuf,
++        /// Root directory for monthly report bundles.
++        #[arg(long, default_value = "reports/chhhs-research-intelligence")]
++        output: PathBuf,
++        /// Fixed monitor date in YYYY-MM-DD form.
++        #[arg(long)]
++        as_of: Option<String>,
++        /// Optional institution-profile override.
++        #[arg(long)]
++        profile: Option<PathBuf>,
++        /// Optional taxonomy override.
++        #[arg(long)]
++        taxonomy: Option<PathBuf>,
++    },
++    /// Execute opt-in live searches against free APIs and update prior state.
++    Refresh {
++        /// Explicitly authorize live network execution for this invocation.
++        #[arg(long)]
++        live: bool,
++        /// Acknowledge that Crossref and OpenAlex use broad discovery approximations.
++        #[arg(long)]
++        acknowledge_approximate_queries: bool,
++        /// Durable JSON state path.
++        #[arg(long, default_value = ".searchright/chhhs/state.json")]
++        state: PathBuf,
++        /// Root directory for monthly report bundles.
++        #[arg(long, default_value = "reports/chhhs-research-intelligence")]
++        output: PathBuf,
++        /// Monitor date in YYYY-MM-DD form.
++        #[arg(long)]
++        as_of: Option<String>,
++        /// Optional institution-profile override.
++        #[arg(long)]
++        profile: Option<PathBuf>,
++        /// Optional taxonomy override.
++        #[arg(long)]
++        taxonomy: Option<PathBuf>,
++        /// Maximum records accepted from each provider.
++        #[arg(long, default_value_t = 2_000)]
++        max_records_per_source: u64,
++        /// Maximum pages accepted from each provider.
++        #[arg(long, default_value_t = 20)]
++        max_pages_per_source: u32,
++        /// Provider page size.
++        #[arg(long, default_value_t = 100)]
++        page_size: u32,
++        /// Optional NCBI contact email.
++        #[arg(long, env = "NCBI_EMAIL")]
++        ncbi_email: Option<String>,
++        /// Optional Crossref polite-pool contact email.
++        #[arg(long, env = "CROSSREF_MAILTO")]
++        crossref_mailto: Option<String>,
++        /// Optional OpenAlex contact email.
++        #[arg(long, env = "OPENALEX_MAILTO")]
++        openalex_mailto: Option<String>,
++    },
++    /// Regenerate a report bundle from validated persisted state.
++    Report {
++        /// Durable JSON state path.
++        #[arg(long, default_value = ".searchright/chhhs/state.json")]
++        state: PathBuf,
++        /// Month in YYYY-MM form.
++        #[arg(long)]
++        month: String,
++        /// Root directory for monthly report bundles.
++        #[arg(long, default_value = "reports/chhhs-research-intelligence")]
++        output: PathBuf,
++    },
++    /// Validate configuration and optional persisted state without network access.
++    Validate {
++        /// Optional institution-profile override.
++        #[arg(long)]
++        profile: Option<PathBuf>,
++        /// Optional taxonomy override.
++        #
