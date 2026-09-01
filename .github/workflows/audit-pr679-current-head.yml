@@ -1,0 +1,126 @@
+name: Audit PR 679 current head
+
+on:
+  push:
+    branches: [scratch/pr679-status-audit]
+
+permissions:
+  actions: write
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: audit-pr679-current-head
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Checkout audit controller
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Audit exact PR head and hosted checks
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: '679'
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pr679-audit/logs
+          rerun_done=false
+
+          for attempt in $(seq 1 120); do
+            pr="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}")"
+            head="$(jq -r '.head.sha' <<<"${pr}")"
+            files="$(gh api --paginate --slurp "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files?per_page=100")"
+            files_flat="$(jq -c '[.[][]]' <<<"${files}")"
+
+            has_app="$(jq '[.[] | select(.filename == "apps/chhhs-research-intelligence/README.md")] | length' <<<"${files_flat}")"
+            has_track="$(jq '[.[] | select(.filename == "conductor/tracks/36-release-candidate-pilots/chhhs-research-intelligence.md")] | length' <<<"${files_flat}")"
+            has_payload="$(jq '[.[] | select(.filename == ".github/workflows/bootstrap-chhhs-source.yml")] | length' <<<"${files_flat}")"
+            if (( has_app != 1 || has_track != 1 || has_payload != 0 )); then
+              jq -n \
+                --arg head "${head}" \
+                --argjson has_app "${has_app}" \
+                --argjson has_track "${has_track}" \
+                --argjson has_payload "${has_payload}" \
+                '{schema_version:"org.searchright.pr679-current-head-audit.v1",status:"invalid_diff",head_sha:$head,has_app:$has_app,has_track_36:$has_track,has_obsolete_payload_workflow:$has_payload}' \
+                > /tmp/pr679-audit/status.json
+              exit 1
+            fi
+
+            checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/check-runs?per_page=100")"
+            combined="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${head}/status")"
+            check_total="$(jq '.total_count' <<<"${checks}")"
+            check_pending="$(jq '[.check_runs[] | select(.status != "completed")] | length' <<<"${checks}")"
+            check_failed="$(jq '[.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not))] | length' <<<"${checks}")"
+            status_pending="$(jq '[.statuses[] | select(.state == "pending")] | length' <<<"${combined}")"
+            status_failed="$(jq '[.statuses[] | select(.state | IN("success", "pending") | not)] | length' <<<"${combined}")"
+            echo "attempt=${attempt} head=${head} checks=${check_total} pending=$((check_pending + status_pending)) failed=$((check_failed + status_failed))"
+
+            if (( check_total == 0 || check_pending + status_pending > 0 )); then
+              sleep 30
+              continue
+            fi
+
+            if (( check_failed + status_failed == 0 )); then
+              jq -n \
+                --arg head "${head}" \
+                --argjson pr "${pr}" \
+                --argjson checks "${checks}" \
+                --argjson combined "${combined}" \
+                --argjson files "${files_flat}" \
+                '{schema_version:"org.searchright.pr679-current-head-audit.v1",status:"passed",head_sha:$head,draft:$pr.draft,mergeable:$pr.mergeable,mergeable_state:$pr.mergeable_state,files:[$files[]|.filename],check_runs:[$checks.check_runs[]|{name,status,conclusion,details_url}],commit_statuses:[$combined.statuses[]|{context,state,target_url}]}' \
+                > /tmp/pr679-audit/status.json
+              gh pr ready "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" >/dev/null || true
+              gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+                -f body="Exact-head audit passed for \`${head}\`: the obsolete payload workflow is absent, the application and Track 36 pilot note are present, and all latest check runs and commit statuses completed without failure. Historical red runs on superseded commits remain visible but are not current." >/dev/null
+              exit 0
+            fi
+
+            runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${head}&per_page=100")"
+            if [[ "${rerun_done}" == false ]]; then
+              mapfile -t failed_ids < <(jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion == "failure") | .id' <<<"${runs}")
+              if (( ${#failed_ids[@]} > 0 )); then
+                for run_id in "${failed_ids[@]}"; do
+                  gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/rerun-failed-jobs" >/dev/null || true
+                done
+                rerun_done=true
+                sleep 30
+                continue
+              fi
+            fi
+
+            jq -n \
+              --arg head "${head}" \
+              --argjson checks "${checks}" \
+              --argjson combined "${combined}" \
+              --argjson runs "${runs}" \
+              '{schema_version:"org.searchright.pr679-current-head-audit.v1",status:"failed",head_sha:$head,failed_check_runs:[$checks.check_runs[]|select(.status=="completed" and (.conclusion|IN("success","neutral","skipped")|not))|{name,conclusion,details_url}],failed_commit_statuses:[$combined.statuses[]|select(.state|IN("success","pending")|not)|{context,state,target_url}],failed_workflow_runs:[$runs.workflow_runs[]|select(.status=="completed" and .conclusion=="failure")|{id,name,html_url}]}' \
+              > /tmp/pr679-audit/status.json
+
+            mapfile -t failed_ids < <(jq -r '.failed_workflow_runs[].id' /tmp/pr679-audit/status.json)
+            for run_id in "${failed_ids[@]}"; do
+              gh run view "${run_id}" --repo "${GITHUB_REPOSITORY}" --log-failed > "/tmp/pr679-audit/logs/${run_id}.log" 2>&1 || true
+            done
+            summary="$(jq -r '(.failed_check_runs[]? | "- \(.name): \(.conclusion) (\(.details_url))"), (.failed_commit_statuses[]? | "- \(.context): \(.state) (\(.target_url))")' /tmp/pr679-audit/status.json)"
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+              -f body="The exact-head audit still finds current failures for \`${head}\` after one bounded rerun:\n\n${summary}" >/dev/null
+            exit 1
+          done
+
+          jq -n '{schema_version:"org.searchright.pr679-current-head-audit.v1",status:"timed_out"}' > /tmp/pr679-audit/status.json
+          exit 1
+
+      - name: Upload exact audit evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pr679-current-head-audit
+          path: /tmp/pr679-audit
+          if-no-files-found: error
+          retention-days: 7
