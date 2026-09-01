@@ -1,0 +1,85 @@
+name: CHHHS research intelligence demonstration
+
+on:
+  schedule:
+    - cron: '17 18 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chhhs-research-intelligence-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  fixture-demonstration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6.1.0
+        with:
+          python-version: '3.13'
+          cache: false
+      - name: Run rights-clear fixture tests and monthly report
+        shell: bash
+        working-directory: apps/chhhs-research-intelligence
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests
+          rm -rf output
+          python chhhs_research_demo.py run \
+            --fixture \
+            --state output/state.json \
+            --retrieved-at '2026-08-31T00:00:00+00:00' \
+            --month '2026-08' \
+            --output-dir output/reports
+      - name: Upload deterministic demonstration
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: chhhs-research-intelligence-fixture-${{ github.run_id }}
+          path: apps/chhhs-research-intelligence/output
+          if-no-files-found: error
+          retention-days: 30
+
+  opt-in-live-update:
+    if: ${{ vars.CHHHS_ENABLE_LIVE_MONITOR == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v6.1.0
+        with:
+          python-version: '3.13'
+          cache: false
+      - name: Run SearchRight-mediated update and current monthly report
+        shell: bash
+        working-directory: apps/chhhs-research-intelligence
+        env:
+          CHHHS_SEARCHRIGHT_COMMAND: ${{ vars.CHHHS_SEARCHRIGHT_COMMAND }}
+        run: |
+          set -euo pipefail
+          test -n "$CHHHS_SEARCHRIGHT_COMMAND"
+          month="$(date -u +%Y-%m)"
+          mkdir -p output
+          python chhhs_research_demo.py update --state output/state.json
+          python chhhs_research_demo.py report \
+            --state output/state.json \
+            --month "$month" \
+            --output-dir output/reports
+      - name: Upload live candidate report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: chhhs-research-intelligence-live-${{ github.run_id }}
+          path: apps/chhhs-research-intelligence/output
+          if-no-files-found: error
+          retention-days: 30
