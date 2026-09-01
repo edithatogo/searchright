@@ -29,8 +29,8 @@ jobs:
         run: |
           set -euo pipefail
           cat .github/chhhs-679-patch/part-* > "$RUNNER_TEMP/chhhs-679.patch"
-          git apply --check "$RUNNER_TEMP/chhhs-679.patch"
-          git apply "$RUNNER_TEMP/chhhs-679.patch"
+          git apply --recount --check "$RUNNER_TEMP/chhhs-679.patch"
+          git apply --recount "$RUNNER_TEMP/chhhs-679.patch"
           rm -rf .github/chhhs-679-patch
           rm -f .github/workflows/apply-chhhs-679-patch.yml
           python scripts/check_chhhs_research_demo.py
