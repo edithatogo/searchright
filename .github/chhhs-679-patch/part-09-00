@@ -1,0 +1,261 @@
+ne())
++            .or_default() += 1;
++    }
++    output
++}
++
++fn provider_statuses(run: &MonitorRun) -> Vec<ProviderStatus> {
++    let mut status = BTreeMap::new();
++    for receipt in &run.receipts {
++        status.insert(
++            receipt.provider_id.clone(),
++            ProviderStatus {
++                provider_id: receipt.provider_id.clone(),
++                succeeded: true,
++                records_retrieved: receipt.records_retrieved,
++                failure: None,
++            },
++        );
++    }
++    for failure in &run.provider_failures {
++        status.insert(
++            failure.provider_id.clone(),
++            ProviderStatus {
++                provider_id: failure.provider_id.clone(),
++                succeeded: false,
++                records_retrieved: 0,
++                failure: Some(failure.clone()),
++            },
++        );
++    }
++    status.into_values().collect()
++}
++
++fn append_markdown_papers(output: &mut String, heading: &str, papers: &[ReportPaper]) {
++    output.push_str(&format!("## {heading}\n\n"));
++    if papers.is_empty() {
++        output.push_str("No records.\n\n");
++        return;
++    }
++    for paper in papers {
++        output.push_str(&format!(
++            "- **{}** ({}) — {:?}, score {}; {}; {}.\n",
++            paper.title,
++            paper.publication_year.map_or_else(|| "n.d.".to_owned(), |year| year.to_string()),
++            paper.attribution,
++            paper.attribution_score,
++            paper.primary_theme.as_deref().unwrap_or("Unclassified theme"),
++            paper.study_type,
++        ));
++    }
++    output.push('\n');
++}
++
++fn count_rows(counts: &BTreeMap<String, usize>) -> String {
++    counts
++        .iter()
++        .map(|(label, count)| {
++            format!(
++                "<tr><td>{}</td><td>{count}</td></tr>",
++                escape_html(label)
++            )
++        })
++        .collect()
++}
++
++fn html_paper_rows(papers: &[ReportPaper]) -> String {
++    if papers.is_empty() {
++        return "<tr><td colspan=\"5\">No records.</td></tr>".to_owned();
++    }
++    papers
++        .iter()
++        .map(|paper| {
++            let title = paper.url.as_ref().map_or_else(
++                || escape_html(&paper.title),
++                |url| {
++                    format!(
++                        "<a href=\"{}\" rel=\"noreferrer\">{}</a>",
++                        escape_html(url),
++                        escape_html(&paper.title)
++                    )
++                },
++            );
++            format!(
++                "<tr><td>{title}<br><small>{}</small></td><td><span class=\"pill\">{:?} {}</span></td><td>{}</td><td>{}</td><td>{}</td></tr>",
++                escape_html(&paper.authors.join("; ")),
++                paper.attribution,
++                paper.attribution_score,
++                escape_html(paper.primary_theme.as_deref().unwrap_or("Unclassified")),
++                escape_html(&paper.study_type),
++                escape_html(&paper.sources.join(", ")),
++            )
++        })
++        .collect()
++}
++
++fn csv_escape(value: &str) -> String {
++    if value.chars().any(|character| matches!(character, ',' | '"' | '\n' | '\r')) {
++        format!("\"{}\"", value.replace('"', "\"\""))
++    } else {
++        value.to_owned()
++    }
++}
++
++fn escape_html(value: &str) -> String {
++    value
++        .replace('&', "&amp;")
++        .replace('<', "&lt;")
++        .replace('>', "&gt;")
++        .replace('"', "&quot;")
++        .replace('\'', "&#39;")
++}
++
++/// Report construction or output error.
++#[derive(Debug, thiserror::Error)]
++pub enum ReportError {
++    /// State contract failed validation.
++    #[error(transparent)]
++    Model(#[from] crate::model::ModelError),
++    /// Month was not in `YYYY-MM` form.
++    #[error("`{0}` is not a valid YYYY-MM month")]
++    InvalidMonth(String),
++    /// State contained no completed run.
++    #[error("monitor state contains no reportable run")]
++    NoRuns,
++    /// File operation failed.
++    #[error(transparent)]
++    Io(#[from] std::io::Error),
++    /// JSON encoding failed.
++    #[error(transparent)]
++    Json(#[from] serde_json::Error),
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++    use crate::{
++        embedded_profile, embedded_taxonomy, pipeline::process_search_batch,
++        search::execute_fixture_search,
++    };
++
++    #[test]
++    fn year_month_parser_rejects_invalid_values() {
++        assert!(YearMonth::parse("2026-08").is_ok());
++        assert!(YearMonth::parse("2026-13").is_err());
++        assert!(YearMonth::parse("August 2026").is_err());
++    }
++
++    #[tokio::test]
++    async fn fixture_report_has_consistent_metrics_and_escapes_html() {
++        let profile = embedded_profile()
++            .unwrap_or_else(|error| panic!("profile should load: {error}"));
++        let taxonomy = embedded_taxonomy()
++            .unwrap_or_else(|error| panic!("taxonomy should load: {error}"));
++        let batch = execute_fixture_search(&profile, "fixture-report")
++            .await
++            .unwrap_or_else(|error| panic!("fixture search should pass: {error}"));
++        let mut state = process_search_batch(
++            None,
++            &profile,
++            &taxonomy,
++            batch,
++            "fixture-report",
++            "fixture",
++            "2026-08-31",
++        )
++        .unwrap_or_else(|error| panic!("pipeline should pass: {error}"));
++        state.papers[0].record.title = "A <script>alert(1)</script> paper".to_owned();
++        let report = build_monthly_report(
++            &state,
++            YearMonth::parse("2026-08")
++                .unwrap_or_else(|error| panic!("month should parse: {error}")),
++        )
++        .unwrap_or_else(|error| panic!("report should build: {error}"));
++        assert_eq!(report.metrics.current_candidates, 7);
++        assert_eq!(report.metrics.current_attributed, 5);
++        assert_eq!(report.metrics.newly_attributed_this_month, 5);
++        let html = render_html(&report);
++        assert!(!html.contains("<script>alert(1)</script>"));
++        assert!(html.contains("&lt;script&gt;alert(1)&lt;/script&gt;"));
++        let csv = render_csv(&report);
++        assert!(csv.starts_with("canonical_id,title"));
++    }
++}
+diff --git a/crates/searchright-chhhs-demo/src/search.rs b/crates/searchright-chhhs-demo/src/search.rs
+new file mode 100644
+index 0000000..e8b26fd
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/search.rs
+@@ -0,0 +1,438 @@
++//! Searchright-backed fixture and opt-in live source execution.
++
++use std::{collections::BTreeMap, sync::Arc};
++
++use searchright::{
++    connectors::{
++        FixtureProvider, parse_crossref_page, parse_europe_pmc_page, parse_openalex_page,
++        parse_pubmed_summary_page,
++    },
++    contracts::{
++        COMPILED_STRATEGY_SCHEMA_VERSION, CompiledStrategy, ExecutionPolicy, ProviderPage,
++        SearchDialect, SearchRequest, SourceReceipt, StrategyWarning, TranslationFidelity,
++    },
++    core::{ProviderError, ProviderRegistry},
++};
++
++use crate::model::{InstitutionProfile, ProviderFailure, SourcedRecord};
++
++/// Search execution result before deduplication and institutional assessment.
++#[derive(Debug, Clone)]
++pub struct SearchBatch {
++    /// Provider-tagged canonical records.
++    pub records: Vec<SourcedRecord>,
++    /// Searchright source receipts from successful sources.
++    pub receipts: Vec<SourceReceipt>,
++    /// Redacted failures from sources that did not complete.
++    pub provider_failures: Vec<ProviderFailure>,
++}
++
++/// Operator-controlled limits and optional polite-pool identity.
++#[derive(Debug, Clone)]
++pub struct SearchOptions {
++    /// Maximum records accepted from each source.
++    pub max_records_per_source: u64,
++    /// Maximum pages accepted from each source.
++    pub max_pages_per_source: u32,
++    /// Records requested per page.
++    pub page_size: u32,
++    /// Per-operation timeout in seconds.
++    pub timeout_seconds: u64,
++    /// Overall source timeout in seconds.
++    pub total_timeout_seconds: u64,
++    /// Whether approximate Crossref and OpenAlex queries were acknowledged.
++    pub acknowledge_approximate_queries: bool,
++    /// NCBI tool identifier.
++    pub ncbi_tool: Option<String>,
++    /// NCBI contact email.
++    pub ncbi_email: Option<String>,
++    /// Crossref polite-pool contact email.
++    pub crossref_mailto: Option<String>,
++    /// OpenAlex polite-pool contact email.
++    pub openalex_mailto: Option<String>,
++}
++
++impl Default for SearchOptions {
++    fn default() -> Self {
++        Self {
++            max_records_per_source: 2_000,
++            max_pages_per_source: 20,
++            page_size: 100,
++            timeout_seconds: 30,
++            total_timeout_seconds: 600,
++            acknowledge_approximate_queries: false,
++            ncbi_tool: Some("searchright-chhhs-demo".to_owned()),
++            ncbi_email: None,
++            crossref_mailto: None,
++            openalex_mailto: None,
++        }
++    }
++}
++
++//
