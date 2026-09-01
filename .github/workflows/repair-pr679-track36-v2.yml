@@ -1,0 +1,168 @@
+name: Repair PR 679 as Track 36 pilot v2
+
+on:
+  push:
+    branches: [scratch/pr679-track36-repair-v2]
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: repair-pr679-track36
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repair controller
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Rebuild and validate the PR branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: '679'
+          PR_BRANCH: feat/chhhs-research-intelligence-demo
+          STAGE_BRANCH: scratch/recover-chhhs-payload-679-v2
+        run: |
+          set -euo pipefail
+          exec > >(tee -a /tmp/pr679-local-gates.log) 2>&1
+
+          old_head="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')"
+          echo "Observed PR head: ${old_head}"
+
+          git fetch --no-tags origin main "${PR_BRANCH}" "${STAGE_BRANCH}"
+          rm -rf /tmp/pr679-track36
+          git worktree prune
+          git worktree add -b repair-pr679-track36-v2-work /tmp/pr679-track36 origin/main
+          cd /tmp/pr679-track36
+
+          mkdir -p apps/chhhs-research-intelligence/fixtures
+          mkdir -p apps/chhhs-research-intelligence/tests
+          mkdir -p .github/workflows
+          mkdir -p conductor/tracks/36-release-candidate-pilots
+
+          git show "origin/${STAGE_BRANCH}:repair/pr679/app/README.md" > apps/chhhs-research-intelligence/README.md
+          git show "origin/${STAGE_BRANCH}:repair/pr679/app/pyproject.final.toml" > apps/chhhs-research-intelligence/pyproject.toml
+          git show "origin/${STAGE_BRANCH}:repair/pr679/app/chhhs_research_demo.py" > apps/chhhs-research-intelligence/chhhs_research_demo.py
+          git show "origin/${STAGE_BRANCH}:repair/pr679/app/config.json" > apps/chhhs-research-intelligence/config.json
+          git show "origin/${STAGE_BRANCH}:repair/pr679/app/fixtures/records.json" > apps/chhhs-research-intelligence/fixtures/records.json
+          git show "origin/${STAGE_BRANCH}:repair/pr679/app/tests/test_demo_final.py" > apps/chhhs-research-intelligence/tests/test_demo.py
+          git show "origin/${STAGE_BRANCH}:repair/pr679/chhhs-research-monitor.yml" > .github/workflows/chhhs-research-monitor.yml
+          git show "origin/${STAGE_BRANCH}:repair/pr679/chhhs-track36-pilot.md" > conductor/tracks/36-release-candidate-pilots/chhhs-research-intelligence.md
+          git show "origin/${STAGE_BRANCH}:repair/pr679/track36-pr-body.md" > /tmp/pr679-body.md
+
+          rm -f .github/workflows/bootstrap-chhhs-source.yml
+          chmod +x apps/chhhs-research-intelligence/chhhs_research_demo.py
+
+          rm -rf /tmp/chhhs-demo
+          python -m unittest discover -s apps/chhhs-research-intelligence/tests
+          python apps/chhhs-research-intelligence/chhhs_research_demo.py run \
+            --fixture \
+            --state /tmp/chhhs-demo/state.json \
+            --retrieved-at '2026-08-31T00:00:00+00:00' \
+            --month '2026-08' \
+            --output-dir /tmp/chhhs-demo/reports
+
+          python scripts/generate_source_hash_manifest.py
+          python scripts/validate_repository.py
+          python scripts/run_static_harness.py
+          cargo fmt --all -- --check
+          cargo test --workspace --all-features --locked
+          cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
+          bash scripts/verify.sh
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git commit -m 'feat(pilot): add CHHHS research intelligence demonstration (Track 36)'
+          new_head="$(git rev-parse HEAD)"
+          printf '%s\n' "${new_head}" > /tmp/pr679-new-head.txt
+
+          gh api --method PATCH "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" \
+            -f title='feat(pilot): add CHHHS research intelligence demonstration (Track 36)' \
+            -f body="$(cat /tmp/pr679-body.md)" >/dev/null
+
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push \
+            --force-with-lease="refs/heads/${PR_BRANCH}:${old_head}" \
+            origin "HEAD:refs/heads/${PR_BRANCH}"
+          echo "Pushed validated PR head: ${new_head}"
+
+      - name: Monitor exact hosted check suite
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: '679'
+        run: |
+          set -euo pipefail
+          expected_head="$(cat /tmp/pr679-new-head.txt)"
+          rerun_done=false
+          for attempt in $(seq 1 120); do
+            current_head="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq '.head.sha')"
+            if [[ "${current_head}" != "${expected_head}" ]]; then
+              echo "PR head changed unexpectedly: expected ${expected_head}, observed ${current_head}" >&2
+              exit 1
+            fi
+
+            checks="$(gh api "repos/${GITHUB_REPOSITORY}/commits/${expected_head}/check-runs?per_page=100")"
+            total="$(jq '.total_count' <<<"${checks}")"
+            pending="$(jq '[.check_runs[] | select(.status != "completed")] | length' <<<"${checks}")"
+            failed="$(jq '[.check_runs[] | select(.status == "completed" and (.conclusion | IN("success", "neutral", "skipped") | not))] | length' <<<"${checks}")"
+            echo "attempt=${attempt} total=${total} pending=${pending} failed=${failed}"
+
+            if (( total == 0 || pending > 0 )); then
+              sleep 30
+              continue
+            fi
+
+            if (( failed == 0 )); then
+              jq --arg head "${expected_head}" '{schema_version:"org.searchright.pr679-hosted-checks.v1",status:"passed",head_sha:$head,checks:[.check_runs[]|{name,status,conclusion,details_url}]}' <<<"${checks}" > /tmp/pr679-hosted-checks.json
+              gh pr ready "${PR_NUMBER}" --repo "${GITHUB_REPOSITORY}" >/dev/null || true
+              gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+                -f body="Repair complete for \`${expected_head}\`: the actual Track 36 source files replaced the failed payload workflow, the complete local gate set passed before push, and every latest hosted check completed without failure." >/dev/null
+              exit 0
+            fi
+
+            if [[ "${rerun_done}" == false ]]; then
+              runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${expected_head}&event=pull_request&per_page=100")"
+              mapfile -t failed_run_ids < <(jq -r '.workflow_runs[] | select(.status == "completed" and .conclusion == "failure") | .id' <<<"${runs}")
+              if (( ${#failed_run_ids[@]} > 0 )); then
+                for run_id in "${failed_run_ids[@]}"; do
+                  gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/rerun-failed-jobs" >/dev/null || true
+                done
+                rerun_done=true
+                sleep 30
+                continue
+              fi
+            fi
+
+            jq --arg head "${expected_head}" '{schema_version:"org.searchright.pr679-hosted-checks.v1",status:"failed",head_sha:$head,failures:[.check_runs[]|select(.status=="completed" and (.conclusion|IN("success","neutral","skipped")|not))|{name,conclusion,details_url}]}' <<<"${checks}" > /tmp/pr679-hosted-checks.json
+            summary="$(jq -r '.failures[] | "- \(.name): \(.conclusion) (\(.details_url))"' /tmp/pr679-hosted-checks.json)"
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
+              -f body="Latest checks still failing for \`${expected_head}\` after one bounded rerun:\n\n${summary}" >/dev/null
+            exit 1
+          done
+          echo 'Timed out waiting for hosted checks.' >&2
+          exit 1
+
+      - name: Upload exact repair evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pr679-track36-repair-v2-evidence
+          path: |
+            /tmp/pr679-new-head.txt
+            /tmp/pr679-local-gates.log
+            /tmp/pr679-hosted-checks.json
+            /tmp/chhhs-demo
+          if-no-files-found: ignore
+          retention-days: 7
