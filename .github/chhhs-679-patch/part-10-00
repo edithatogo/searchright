@@ -1,0 +1,256 @@
+"searchright-chhhs-institution-query/1".to_owned(),
++        },
++    }
++}
++
++fn broad_query(aliases: &[&str]) -> String {
++    aliases
++        .iter()
++        .map(|alias| format!("\"{}\"", escape_query(alias)))
++        .collect::<Vec<_>>()
++        .join(" OR ")
++}
++
++fn affiliation_query(aliases: &[&str], suffix: &str, prefix: &str) -> String {
++    aliases
++        .iter()
++        .map(|alias| format!("{prefix}\"{}\"{suffix}", escape_query(alias)))
++        .collect::<Vec<_>>()
++        .join(" OR ")
++}
++
++fn escape_query(value: &str) -> String {
++    value.replace('"', "\\\"")
++}
++
++fn fixture_pages() -> Result<BTreeMap<&'static str, ProviderPage>, SearchError> {
++    let openalex = parse_openalex_page(&parse_fixture(include_str!("../fixtures/openalex.json"))?)?;
++    let crossref = parse_crossref_page(&parse_fixture(include_str!("../fixtures/crossref.json"))?)?;
++    let europe = parse_europe_pmc_page(&parse_fixture(include_str!(
++        "../fixtures/europe-pmc.json"
++    ))?)?;
++    let pubmed = parse_pubmed_summary_page(&parse_fixture(include_str!(
++        "../fixtures/pubmed-esummary.json"
++    ))?)?;
++    Ok(BTreeMap::from([
++        ("openalex", openalex),
++        ("crossref", crossref),
++        ("europe-pmc", europe),
++        ("pubmed", pubmed),
++    ]))
++}
++
++fn parse_fixture(text: &str) -> Result<serde_json::Value, SearchError> {
++    Ok(serde_json::from_str(text)?)
++}
++
++/// Search and provider-execution error.
++#[derive(Debug, thiserror::Error)]
++pub enum SearchError {
++    /// Institution-profile validation failed.
++    #[error(transparent)]
++    Profile(#[from] crate::model::ModelError),
++    /// Fixture JSON was invalid.
++    #[error(transparent)]
++    Json(#[from] serde_json::Error),
++    /// Searchright provider execution failed.
++    #[error(transparent)]
++    Provider(#[from] ProviderError),
++    /// A named fixture source was absent.
++    #[error("fixture page for provider `{0}` is missing")]
++    MissingFixture(&'static str),
++    /// Operator did not acknowledge broad discovery-query limitations.
++    #[error("Crossref and OpenAlex discovery queries require --acknowledge-approximate-queries")]
++    ApproximateQueryReviewRequired,
++    /// Binary was compiled without the opt-in live feature.
++    #[error("live search is unavailable; rebuild with --features live")]
++    LiveFeatureDisabled,
++    /// No provider returned a usable source receipt.
++    #[error("all configured providers failed")]
++    AllProvidersFailed(Vec<ProviderFailure>),
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    fn profile() -> InstitutionProfile {
++        serde_json::from_str(include_str!("../resources/chhhs-institution-profile.json"))
++            .unwrap_or_else(|error| panic!("profile fixture should parse: {error}"))
++    }
++
++    #[test]
++    fn source_queries_preserve_source_specific_affiliation_intent() {
++        let specs = provider_search_specs(&profile());
++        let pubmed = specs
++            .iter()
++            .find(|item| item.provider_id == "pubmed")
++            .unwrap_or_else(|| panic!("PubMed spec should exist"));
++        let europe = specs
++            .iter()
++            .find(|item| item.provider_id == "europe-pmc")
++            .unwrap_or_else(|| panic!("Europe PMC spec should exist"));
++        let crossref = specs
++            .iter()
++            .find(|item| item.provider_id == "crossref")
++            .unwrap_or_else(|| panic!("Crossref spec should exist"));
++        assert!(pubmed.strategy.query.contains("[Affiliation]"));
++        assert!(europe.strategy.query.contains("AFFILIATION:"));
++        assert!(crossref.strategy.review_required);
++    }
++
++    #[tokio::test]
++    async fn fixtures_execute_through_searchright_runtime() {
++        let batch = execute_fixture_search(&profile(), "fixture-run")
++            .await
++            .unwrap_or_else(|error| panic!("fixture search should pass: {error}"));
++        assert_eq!(batch.receipts.len(), 4);
++        assert_eq!(batch.records.len(), 10);
++        assert!(batch.provider_failures.is_empty());
++        assert!(
++            batch
++                .records
++                .iter()
++                .all(|item| item.record.record_id.starts_with(&item.provider_id))
++        );
++    }
++
++    #[cfg(not(feature = "live"))]
++    #[tokio::test]
++    async fn default_build_fails_closed_for_live_execution() {
++        let result = execute_live_search(&profile(), "live-run", &SearchOptions::default()).await;
++        assert!(matches!(result, Err(SearchError::LiveFeatureDisabled)));
++    }
++}
+diff --git a/crates/searchright-chhhs-demo/src/storage.rs b/crates/searchright-chhhs-demo/src/storage.rs
+new file mode 100644
+index 0000000..afdd9bc
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/storage.rs
+@@ -0,0 +1,121 @@
++//! Validated JSON persistence with same-directory replacement.
++
++use std::{fs, io::Write, path::Path};
++
++use crate::model::{ModelError, MonitorState};
++
++/// Load monitor state when the file exists.
++pub fn load_state(path: &Path) -> Result<Option<MonitorState>, StorageError> {
++    if !path.exists() {
++        return Ok(None);
++    }
++    let state: MonitorState = serde_json::from_slice(&fs::read(path)?)?;
++    state.validate()?;
++    Ok(Some(state))
++}
++
++/// Validate and replace monitor state using a temporary file in the same directory.
++pub fn save_state(path: &Path, state: &MonitorState) -> Result<(), StorageError> {
++    state.validate()?;
++    let parent = path.parent().unwrap_or_else(|| Path::new("."));
++    fs::create_dir_all(parent)?;
++    let file_name = path
++        .file_name()
++        .and_then(|name| name.to_str())
++        .unwrap_or("state.json");
++    let temporary = parent.join(format!(".{file_name}.{}.tmp", std::process::id()));
++    let bytes = serde_json::to_vec_pretty(state)?;
++    let mut file = fs::File::create(&temporary)?;
++    file.write_all(&bytes)?;
++    file.write_all(b"\n")?;
++    file.sync_all()?;
++    match fs::rename(&temporary, path) {
++        Ok(()) => {}
++        Err(_) if path.exists() => {
++            fs::remove_file(path)?;
++            fs::rename(&temporary, path)?;
++        }
++        Err(error) => return Err(error.into()),
++    }
++    Ok(())
++}
++
++/// State persistence error.
++#[derive(Debug, thiserror::Error)]
++pub enum StorageError {
++    /// File operation failed.
++    #[error(transparent)]
++    Io(#[from] std::io::Error),
++    /// JSON encoding or decoding failed.
++    #[error(transparent)]
++    Json(#[from] serde_json::Error),
++    /// State contract failed validation.
++    #[error(transparent)]
++    Model(#[from] ModelError),
++}
++
++#[cfg(test)]
++mod tests {
++    use std::{
++        collections::BTreeSet,
++        fs,
++        sync::atomic::{AtomicU64, Ordering},
++    };
++
++    use super::*;
++    use crate::model::MONITOR_STATE_SCHEMA_VERSION;
++
++    fn empty_state() -> MonitorState {
++        MonitorState {
++            schema_version: MONITOR_STATE_SCHEMA_VERSION.to_owned(),
++            profile_id: "chhhs".to_owned(),
++            profile_version: "1".to_owned(),
++            taxonomy_version: "1".to_owned(),
++            source_records: Vec::new(),
++            papers: Vec::new(),
++            runs: Vec::new(),
++        }
++    }
++
++    fn temporary_path(label: &str) -> std::path::PathBuf {
++        static NEXT: AtomicU64 = AtomicU64::new(0);
++        let unique = format!(
++            "searchright-chhhs-{label}-{}-{}",
++            std::process::id(),
++            NEXT.fetch_add(1, Ordering::Relaxed)
++        );
++        std::env::temp_dir().join(unique).join("state.json")
++    }
++
++    #[test]
++    fn state_round_trip_validates_before_and_after_write() {
++        let path = temporary_path("round-trip");
++        let state = empty_state();
++        save_state(&path, &state).unwrap_or_else(|error| panic!("save should pass: {error}"));
++        let loaded = load_state(&path)
++            .unwrap_or_else(|error| panic!("load should pass: {error}"))
++            .unwrap_or_else(|| panic!("state should exist"));
++        assert_eq!(loaded, state);
++        let parent = path.parent().unwrap_or_else(|| Path::new("."));
++        fs::remove_dir_all(parent)
++            .unwrap_or_else(|error| panic!("temporary directory should be removable: {error}"));
++    }
++
++    #[test]
++    fn absent_state_is_not_an_error() {
++        let path = temporary_path("absent");
++        assert!(
++            load_state(&path)
++                .unwrap_or_else(|error| panic!("absent load should pass: {error}"))
++                .is_none()
++        );
++    }
++
++    #[test]
++    fn temporary_paths_are_distinct_for_named_tests() {
++        let paths = [temporary_path("a"), temporary_path("b")]
++            .into_iter()
++            .collect::<BTreeSet<_>>();
++        assert_eq!(paths.len(), 2);
++    }
++}
+diff --git a/docs/pilots/chhhs-research-intelligence.md b/docs/pilots/chhhs-research-intelligence.md
+new file mode 100644
+index 0000000..80a4cdf
+--- /dev/null
++++ b/docs/pilots/chhhs-research-i
