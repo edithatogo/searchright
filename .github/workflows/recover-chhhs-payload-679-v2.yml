@@ -22,7 +22,7 @@ jobs:
           set -euo pipefail
           git fetch --no-tags --depth=1 origin 67c10859e37e7db51bcce6c564841cdbe4e987e0
           git show 67c10859e37e7db51bcce6c564841cdbe4e987e0:.github/workflows/bootstrap-chhhs-source.yml > bootstrap-chhhs-source.yml
-      - name: Recover and validate reviewed archive
+      - name: Diagnose, recover and validate reviewed archive
         shell: bash
         run: |
           set -euo pipefail
@@ -31,25 +31,42 @@ jobs:
           import hashlib
           import io
           import json
+          import string
           import tarfile
           from pathlib import Path
 
           source_path = Path('bootstrap-chhhs-source.yml')
           lines = source_path.read_text(encoding='utf-8').splitlines()
-          try:
-              start = next(
-                  index + 1
-                  for index, line in enumerate(lines)
-                  if "<<'PAYLOAD'" in line and 'chhhs-payload.b64' in line
+          start = next(
+              index + 1
+              for index, line in enumerate(lines)
+              if "<<'PAYLOAD'" in line and 'chhhs-payload.b64' in line
+          )
+          end = next(index for index in range(start, len(lines)) if lines[index] == 'PAYLOAD')
+          payload_lines = [line.strip() for line in lines[start:end]]
+          encoded = ''.join(payload_lines)
+          allowed = set(string.ascii_letters + string.digits + '+/=')
+          invalid = [(index, character) for index, character in enumerate(encoded) if character not in allowed]
+          diagnostics = {
+              'source_line_count': len(lines),
+              'payload_line_count': len(payload_lines),
+              'payload_line_lengths': [len(line) for line in payload_lines],
+              'encoded_length_before_padding': len(encoded),
+              'invalid_character_count': len(invalid),
+              'first_invalid_characters': [
+                  {'offset': offset, 'character': repr(character)}
+                  for offset, character in invalid[:20]
+              ],
+          }
+          if invalid:
+              offset = invalid[0][0]
+              diagnostics['first_invalid_context'] = encoded[max(0, offset - 120):offset + 120]
+              Path('recovered-chhhs-payload-diagnostics.json').write_text(
+                  json.dumps(diagnostics, indent=2) + '\n', encoding='utf-8'
               )
-          except StopIteration as exc:
-              raise RuntimeError('payload heredoc start marker not found') from exc
-          try:
-              end = next(index for index in range(start, len(lines)) if lines[index] == 'PAYLOAD')
-          except StopIteration as exc:
-              raise RuntimeError('payload heredoc end marker not found') from exc
+              print(json.dumps(diagnostics, indent=2))
+              raise RuntimeError('historical payload contains non-base64 characters')
 
-          encoded = ''.join(line.strip() for line in lines[start:end])
           encoded += '=' * (-len(encoded) % 4)
           payload = base64.b64decode(encoded, validate=True)
           digest = hashlib.sha256(payload).hexdigest()
@@ -66,25 +83,25 @@ jobs:
                       inventory.append(member.name)
 
           Path('recovered-chhhs-payload.tar.gz').write_bytes(payload)
+          diagnostics.update(
+              {
+                  'archive_sha256': digest,
+                  'file_count': len(inventory),
+                  'files': sorted(inventory),
+              }
+          )
           Path('recovered-chhhs-payload-inventory.json').write_text(
-              json.dumps(
-                  {
-                      'archive_sha256': digest,
-                      'encoded_length': len(encoded),
-                      'file_count': len(inventory),
-                      'files': sorted(inventory),
-                  },
-                  indent=2,
-              ) + '\n',
-              encoding='utf-8',
+              json.dumps(diagnostics, indent=2) + '\n', encoding='utf-8'
           )
           PY
       - name: Upload recovered payload
+        if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: recovered-chhhs-payload-679-v2
           path: |
             recovered-chhhs-payload.tar.gz
             recovered-chhhs-payload-inventory.json
-          if-no-files-found: error
+            recovered-chhhs-payload-diagnostics.json
+          if-no-files-found: warn
           retention-days: 1
