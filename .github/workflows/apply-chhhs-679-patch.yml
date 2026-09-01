@@ -1,0 +1,52 @@
+name: Apply CHHHS PR 679 patch
+
+on:
+  push:
+    branches: [scratch/apply-chhhs-679-clean]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout recovery branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Install pinned Rust and Python
+        shell: bash
+        run: |
+          set -euo pipefail
+          rustup toolchain install 1.97.1 --profile minimal --component clippy,rustfmt
+          python -m pip install --disable-pip-version-check -r requirements/validation.txt
+      - name: Apply reviewed patch and verify
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .github/chhhs-679-patch/part-* > "$RUNNER_TEMP/chhhs-679.patch"
+          git apply --check "$RUNNER_TEMP/chhhs-679.patch"
+          git apply "$RUNNER_TEMP/chhhs-679.patch"
+          rm -rf .github/chhhs-679-patch
+          rm -f .github/workflows/apply-chhhs-679-patch.yml
+          python scripts/check_chhhs_research_demo.py
+          python scripts/check_workflow_hardening.py
+          python scripts/validate_repository.py
+          python scripts/run_static_harness.py
+          cargo fmt --all -- --check
+          cargo test -p searchright-chhhs-demo --all-features --locked
+          cargo clippy -p searchright-chhhs-demo --all-targets --all-features --locked -- -D warnings
+          git diff --check
+      - name: Commit applied source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat(pilot): add CHHHS research intelligence demo (Track 36)"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
