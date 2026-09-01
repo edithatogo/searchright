@@ -1,0 +1,223 @@
+ len(aliases) < 4:
++            errors.append("institution profile lacks a conservative alias set")
++        elif sum(alias.get("kind") == "canonical" for alias in aliases if isinstance(alias, dict)) != 1:
++            errors.append("institution profile must have exactly one canonical alias")
++        if profile.get("governance_status", "").lower().find("demonstration") < 0:
++            errors.append("institution profile must retain its demonstration governance boundary")
++        if profile.get("durable_identifiers") not in ({}, None):
++            errors.append("unreviewed durable institution identifiers must not be asserted")
++
++    if not isinstance(taxonomy, dict):
++        errors.append("research taxonomy must be an object")
++    else:
++        if taxonomy.get("schema_version") != "org.searchright.research-taxonomy.v1":
++            errors.append("unexpected taxonomy schema")
++        if len(taxonomy.get("themes", [])) < 10:
++            errors.append("taxonomy lacks the intended thematic breadth")
++        study_types = taxonomy.get("study_types", [])
++        ids = {
++            item.get("category_id")
++            for item in study_types
++            if isinstance(item, dict)
++        }
++        if taxonomy.get("fallback_study_type_id") not in ids:
++            errors.append("taxonomy fallback is not a declared study type")
++
++    if not isinstance(pilot, dict):
++        errors.append("pilot contract must be an object")
++    else:
++        if pilot.get("track_id") != "36":
++            errors.append("CHHHS pilot must remain owned by Track 36")
++        if pilot.get("status") != "source_demonstration_ready_not_started":
++            errors.append("pilot source must not claim an executed institutional pilot")
++        if pilot.get("automatic_publication") is not False:
++            errors.append("monthly report publication must require human release")
++        if pilot.get("automatic_performance_decisions") is not False:
++            errors.append("staff or service performance decisions must remain prohibited")
++        if pilot.get("human_release_required") is not True:
++            errors.append("pilot reports require accountable human release")
++        if pilot.get("data_classification") != "public_bibliographic_metadata":
++            errors.append("pilot data classification must remain public metadata")
++        if len(pilot.get("rollback_criteria", [])) < 4:
++            errors.append("pilot rollback criteria are incomplete")
++
++    if 'searchright = { path = "../searchright"' not in cargo:
++        errors.append("demo must consume the Searchright facade rather than copied runtime logic")
++    for marker in (
++        "ProviderRegistry",
++        "SourceReceipt",
++        "parse_pubmed_summary_page",
++        "parse_europe_pmc_page",
++        "parse_crossref_page",
++        "parse_openalex_page",
++    ):
++        if marker not in search:
++            errors.append(f"search implementation lacks {marker}")
++    for marker in ("Deduplicator", "diff_records", "assess_attribution", "classify_record"):
++        if marker not in pipeline:
++            errors.append(f"pipeline implementation lacks {marker}")
++    for marker in (
++        "not proof that every CHHHS publication has been found",
++        "does not establish employment",
++        "broad discovery approximations",
++    ):
++        if marker not in report:
++            errors.append(f"monthly report omits limitation: {marker}")
++
++    false_positive_titles = []
++    if isinstance(openalex, dict):
++        false_positive_titles.extend(
++            item.get("display_name", "")
++            for item in openalex.get("results", [])
++            if isinstance(item, dict)
++        )
++    if isinstance(crossref, dict):
++        message = crossref.get("message", {})
++        if isinstance(message, dict):
++            for item in message.get("items", []):
++                if isinstance(item, dict):
++                    false_positive_titles.extend(item.get("title", []))
++    if not any("Cairns" in title for title in false_positive_titles):
++        errors.append("fixtures lack a Cairns-only false-positive regression case")
++
++    for marker in (
++        "schedule:",
++        "permissions:\n  contents: read",
++        "persist-credentials: false",
++        "--features live -- refresh",
++        "--live",
++        "--acknowledge-approximate-queries",
++        "actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
++        "actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
++    ):
++        if marker not in workflow:
++            errors.append(f"scheduled workflow lacks {marker!r}")
++    for prohibited in ("git push", "contents: write", "pull-requests: write"):
++        if prohibited in workflow:
++            errors.append(f"scheduled workflow must not contain {prohibited!r}")
++
++    receipt = {
++        "schema_version": "org.searchright.chhhs-demo-static-receipt.v1",
++        "status": "failed" if errors else "passed",
++        "paths_checked": len(REQUIRED_PATHS),
++        "theme_count": len(taxonomy.get("themes", [])) if isinstance(taxonomy, dict) else 0,
++        "study_type_count": len(taxonomy.get("study_types", [])) if isinstance(taxonomy, dict) else 0,
++        "errors": errors,
++        "limitations": [
++            "Network-free source and policy validation only.",
++            "Compiler, live-provider, institutional calibration and released-report evidence remain separate gates.",
++        ],
++    }
++    print(json.dumps(receipt, indent=2, sort_keys=True))
++    return 1 if errors else 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/verification/evidence-debt.json b/verification/evidence-debt.json
+index f3e1125..76ac709 100644
+--- a/verification/evidence-debt.json
++++ b/verification/evidence-debt.json
+@@ -4,18 +4,19 @@
+       "contract_mapped": 1,
+       "path_and_gate_mapped": 7,
+       "symbol_and_gate_mapped": 108,
+-      "track_level_only": 84
++      "symbol_and_test": 1,
++      "track_level_only": 83
+     },
+     "by_state": {
+       "external_evidence_required": 10,
+       "partially_implemented": 87,
+-      "scaffolded": 46,
+-      "source_implemented": 57
++      "scaffolded": 45,
++      "source_implemented": 58
+     },
+-    "open_gate_entries": 374,
++    "open_gate_entries": 375,
+     "total": 200,
+-    "track_level_only": 84,
+-    "without_symbol_mapping": 108
++    "track_level_only": 83,
++    "without_symbol_mapping": 107
+   },
+   "claim_boundary": "The register exposes unresolved proof and implementation work. Counts are not a quality score and cannot be used to promote claims without the named evidence.",
+   "evidence_ceiling": "source_verified",
+@@ -58,7 +59,7 @@
+       ],
+       "debt": "assertion_specific_proof",
+       "priority": 1,
+-      "reason": "84 assertions retain track-level-only mappings."
++      "reason": "83 assertions retain track-level-only mappings."
+     },
+     {
+       "closure_evidence": [
+@@ -113,15 +114,15 @@
+   },
+   "schema_version": "org.searchright.evidence-debt.v1",
+   "static_gates": {
+-    "catalogued": 67,
++    "catalogued": 68,
+     "harness": 57,
+     "unregistered_assertion_commands": []
+   },
+   "tracks": {
+     "by_state": {
+       "external_evidence_required": 3,
+-      "partially_implemented": 19,
+-      "scaffolded": 7,
++      "partially_implemented": 20,
++      "scaffolded": 6,
+       "source_implemented": 9
+     },
+     "total": 38
+diff --git a/verification/gate-catalog.json b/verification/gate-catalog.json
+index 7ef7927..3fa613e 100644
+--- a/verification/gate-catalog.json
++++ b/verification/gate-catalog.json
+@@ -915,7 +915,6 @@
+       "compiler_required": false,
+       "covered_assertions": [
+         "T36-A001",
+-        "T36-A002",
+         "T36-A003"
+       ],
+       "evidence_ceiling": "source_verified",
+@@ -935,7 +934,6 @@
+         "T30-A003",
+         "T30-A004",
+         "T36-A001",
+-        "T36-A002",
+         "T36-A003",
+         "T37-A001",
+         "T37-A002",
+@@ -1100,7 +1098,6 @@
+         "T18-A005",
+         "T18-A006",
+         "T36-A001",
+-        "T36-A002",
+         "T36-A003"
+       ],
+       "evidence_ceiling": "source_reproducible",
+@@ -1140,6 +1137,21 @@
+       "network": false,
+       "script": "scripts/check_cargo_vet_governance.py"
+     },
++    {
++      "category": "search_method",
++      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
++      "command": "python scripts/check_chhhs_research_demo.py",
++      "compiler_required": false,
++      "covered_assertions": [
++        "T36-A002"
++      ],
++      "evidence_ceiling": "source_verified",
++      "external_writes": false,
++      "gate_id": "SR-GATE-CHECK-CHHHS-RESEARCH-DEMO",
++      "harness_gate": false,
++      "network": false,
++      "script": "scripts/check_chhhs_research_demo.py"
++    },
+     {
+       "category"
