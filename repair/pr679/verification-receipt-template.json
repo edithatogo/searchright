@@ -1,0 +1,17 @@
+{
+  "schema_version": "org.searchright.track-36-chhhs-demo-local-receipt.v1",
+  "pilot_id": "track-36-chhhs-research-intelligence-demo",
+  "status": "passed",
+  "evidence_level": "compiler_and_fixture_verified",
+  "commands": [
+    "python -m unittest discover -s apps/chhhs-research-intelligence/tests",
+    "python apps/chhhs-research-intelligence/chhhs_research_demo.py run --fixture --state /tmp/chhhs-demo/state.json --retrieved-at 2026-08-31T00:00:00+00:00 --month 2026-08 --output-dir /tmp/chhhs-demo/reports",
+    "python scripts/validate_repository.py",
+    "python scripts/run_static_harness.py",
+    "cargo fmt --all -- --check",
+    "cargo test --workspace --all-features --locked",
+    "cargo clippy --workspace --all-targets --all-features --locked -- -D warnings",
+    "bash scripts/verify.sh"
+  ],
+  "claim_boundary": "This receipt records exact-head compiler, fixture and static validation executed by the repair controller. It does not prove live-provider coverage, institutional attribution validity, exhaustive discovery, external methodological review or production readiness."
+}
