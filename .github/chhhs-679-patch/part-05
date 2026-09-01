@@ -1,0 +1,486 @@
+[arg(long)]
++        taxonomy: Option<PathBuf>,
++        /// Optional state to validate.
++        #[arg(long)]
++        state: Option<PathBuf>,
++    },
++}
++
++#[tokio::main]
++async fn main() -> Result<()> {
++    let cli = Cli::parse();
++    match cli.command {
++        Command::SeedDemo {
++            state,
++            output,
++            as_of,
++            profile,
++            taxonomy,
++        } => {
++            let as_of = as_of.unwrap_or_else(today_utc);
++            let profile = load_profile(profile.as_deref()).context("load institution profile")?;
++            let taxonomy = load_taxonomy(taxonomy.as_deref()).context("load taxonomy")?;
++            let run_id = format!("fixture-{as_of}");
++            let batch = execute_fixture_search(&profile, &run_id)
++                .await
++                .context("execute Searchright fixture sources")?;
++            let next = process_search_batch(
++                None,
++                &profile,
++                &taxonomy,
++                batch,
++                &run_id,
++                "fixture",
++                &as_of,
++            )
++            .context("process fixture search")?;
++            save_state(&state, &next).context("save monitor state")?;
++            let month = month_from_date(&as_of)?;
++            let report = build_monthly_report(&next, month).context("build monthly report")?;
++            let files = write_report_bundle(&report, &output).context("write report bundle")?;
++            write_summary(&state, &files, &next)?;
++        }
++        Command::Refresh {
++            live,
++            acknowledge_approximate_queries,
++            state,
++            output,
++            as_of,
++            profile,
++            taxonomy,
++            max_records_per_source,
++            max_pages_per_source,
++            page_size,
++            ncbi_email,
++            crossref_mailto,
++            openalex_mailto,
++        } => {
++            if !live {
++                bail!("live refresh is denied unless --live is supplied");
++            }
++            let as_of = as_of.unwrap_or_else(today_utc);
++            let profile = load_profile(profile.as_deref()).context("load institution profile")?;
++            let taxonomy = load_taxonomy(taxonomy.as_deref()).context("load taxonomy")?;
++            let previous = load_state(&state).context("load prior monitor state")?;
++            let run_id = format!(
++                "update-{as_of}-{}",
++                OffsetDateTime::now_utc().unix_timestamp()
++            );
++            let options = SearchOptions {
++                max_records_per_source,
++                max_pages_per_source,
++                page_size,
++                acknowledge_approximate_queries,
++                ncbi_email,
++                crossref_mailto,
++                openalex_mailto,
++                ..SearchOptions::default()
++            };
++            let batch = execute_live_search(&profile, &run_id, &options)
++                .await
++                .context("execute opt-in Searchright live sources")?;
++            let next = process_search_batch(
++                previous.as_ref(),
++                &profile,
++                &taxonomy,
++                batch,
++                &run_id,
++                "update",
++                &as_of,
++            )
++            .context("process live update")?;
++            save_state(&state, &next).context("save monitor state")?;
++            let report = build_monthly_report(&next, month_from_date(&as_of)?)
++                .context("build monthly report")?;
++            let files = write_report_bundle(&report, &output).context("write report bundle")?;
++            write_summary(&state, &files, &next)?;
++        }
++        Command::Report {
++            state,
++            month,
++            output,
++        } => {
++            let value = load_state(&state)
++                .context("load monitor state")?
++                .context("monitor state file does not exist")?;
++            let report = build_monthly_report(&value, YearMonth::parse(&month)?)
++                .context("build monthly report")?;
++            let files = write_report_bundle(&report, &output).context("write report bundle")?;
++            write_summary(&state, &files, &value)?;
++        }
++        Command::Validate {
++            profile,
++            taxonomy,
++            state,
++        } => {
++            load_profile(profile.as_deref()).context("validate institution profile")?;
++            load_taxonomy(taxonomy.as_deref()).context("validate taxonomy")?;
++            if let Some(path) = state {
++                load_state(&path)
++                    .context("validate monitor state")?
++                    .context("monitor state file does not exist")?;
++            }
++            write_stdout("CHHHS demonstration configuration is valid.\n")?;
++        }
++    }
++    Ok(())
++}
++
++fn today_utc() -> String {
++    OffsetDateTime::now_utc().date().to_string()
++}
++
++fn month_from_date(date: &str) -> Result<YearMonth> {
++    let month = date
++        .get(..7)
++        .context("monitor date must use YYYY-MM-DD form")?;
++    Ok(YearMonth::parse(month)?)
++}
++
++fn write_summary(
++    state_path: &std::path::Path,
++    files: &[PathBuf],
++    state: &searchright_chhhs_demo::model::MonitorState,
++) -> Result<()> {
++    let latest = state.runs.last().context("state has no latest run")?;
++    let mut text = format!(
++        "run={} candidates={} attributed={} review={} excluded={} state={}\n",
++        latest.run_id,
++        latest.candidate_count,
++        latest.attributed_count,
++        latest.review_count,
++        latest.excluded_count,
++        state_path.display(),
++    );
++    for file in files {
++        text.push_str(&format!("report={}\n", file.display()));
++    }
++    write_stdout(&text)
++}
++
++fn write_stdout(value: &str) -> Result<()> {
++    let mut output = std::io::stdout().lock();
++    output.write_all(value.as_bytes())?;
++    output.flush()?;
++    Ok(())
++}
+diff --git a/crates/searchright-chhhs-demo/src/model.rs b/crates/searchright-chhhs-demo/src/model.rs
+new file mode 100644
+index 0000000..608035a
+--- /dev/null
++++ b/crates/searchright-chhhs-demo/src/model.rs
+@@ -0,0 +1,582 @@
++//! Versioned application contracts for the institutional-publication demonstration.
++
++use std::collections::{BTreeMap, BTreeSet};
++
++use searchright::contracts::{BibliographicRecord, RecordChange, SourceReceipt, Validate};
++use serde::{Deserialize, Serialize};
++
++/// Monitor-state wire identifier.
++pub const MONITOR_STATE_SCHEMA_VERSION: &str = "org.searchright.chhhs-monitor-state.v1";
++/// Institution-profile wire identifier.
++pub const INSTITUTION_PROFILE_SCHEMA_VERSION: &str =
++    "org.searchright.institution-profile.v1";
++/// Taxonomy wire identifier.
++pub const TAXONOMY_SCHEMA_VERSION: &str = "org.searchright.research-taxonomy.v1";
++/// Attribution-assessment wire identifier.
++pub const ATTRIBUTION_SCHEMA_VERSION: &str = "org.searchright.institution-attribution.v1";
++/// Classification-assessment wire identifier.
++pub const CLASSIFICATION_SCHEMA_VERSION: &str = "org.searchright.paper-classification.v1";
++
++/// The role played by one institution name in the governed identity profile.
++#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
++#[serde(rename_all = "snake_case")]
++pub enum AliasKind {
++    /// Exact legal or canonical organisation name.
++    Canonical,
++    /// Current accepted alternative name.
++    Current,
++    /// Current acronym that must match as a complete token.
++    Acronym,
++    /// Facility name that is evidence for, but not identical to, the HHS.
++    Facility,
++    /// Historical name that requires date-aware review.
++    Historical,
++}
++
++/// One governed institution alias.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct InstitutionAlias {
++    /// Stable alias identifier.
++    pub alias_id: String,
++    /// Exact source text to match after deterministic normalisation.
++    pub text: String,
++    /// Alias role.
++    pub kind: AliasKind,
++    /// First applicable publication year, when known.
++    pub valid_from_year: Option<i32>,
++    /// Last applicable publication year, when known.
++    pub valid_to_year: Option<i32>,
++}
++
++impl InstitutionAlias {
++    /// Whether the alias can apply to a publication year.
++    #[must_use]
++    pub fn applies_to_year(&self, year: Option<i32>) -> bool {
++        let Some(year) = year else {
++            return true;
++        };
++        self.valid_from_year.is_none_or(|from| year >= from)
++            && self.valid_to_year.is_none_or(|to| year <= to)
++    }
++}
++
++/// Versioned institution identity used for candidate attribution.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct InstitutionProfile {
++    /// Contract identifier.
++    pub schema_version: String,
++    /// Stable profile identifier.
++    pub profile_id: String,
++    /// Immutable profile version.
++    pub version: String,
++    /// Canonical organisation name.
++    pub canonical_name: String,
++    /// Governed aliases.
++    pub aliases: Vec<InstitutionAlias>,
++    /// Verified durable identifiers, namespaced by scheme such as `ror`.
++    #[serde(default)]
++    pub durable_identifiers: BTreeMap<String, String>,
++    /// Human-readable governance status.
++    pub governance_status: String,
++    /// Scope and limitation notes.
++    #[serde(default)]
++    pub notes: Vec<String>,
++}
++
++impl InstitutionProfile {
++    /// Validate local profile invariants.
++    pub fn validate(&self) -> Result<(), ModelError> {
++        require_text(&self.schema_version, "institution_profile.schema_version")?;
++        if self.schema_version != INSTITUTION_PROFILE_SCHEMA_VERSION {
++            return Err(ModelError::InvalidSchemaVersion {
++                expected: INSTITUTION_PROFILE_SCHEMA_VERSION,
++                actual: self.schema_version.clone(),
++            });
++        }
++        require_text(&self.profile_id, "institution_profile.profile_id")?;
++        require_text(&self.version, "institution_profile.version")?;
++        require_text(&self.canonical_name, "institution_profile.canonical_name")?;
++        require_text(
++            &self.governance_status,
++            "institution_profile.governance_status",
++        )?;
++        if self.aliases.is_empty() {
++            return Err(ModelError::EmptyCollection("institution_profile.aliases"));
++        }
++        let mut identifiers = BTreeSet::new();
++        let mut aliases = BTreeSet::new();
++        let mut canonical = 0_u8;
++        for alias in &self.aliases {
++            require_text(&alias.alias_id, "institution_profile.aliases.alias_id")?;
++            require_text(&alias.text, "institution_profile.aliases.text")?;
++            if !identifiers.insert(alias.alias_id.as_str()) {
++                return Err(ModelError::DuplicateValue(
++                    "institution_profile.aliases.alias_id",
++                ));
++            }
++            let normalised = normalise_text(&alias.text);
++            if !aliases.insert(normalised) {
++                return Err(ModelError::DuplicateValue(
++                    "institution_profile.aliases.text",
++                ));
++            }
++            if alias.kind == AliasKind::Canonical {
++                canonical = canonical.saturating_add(1);
++            }
++            if let (Some(from), Some(to)) = (alias.valid_from_year, alias.valid_to_year)
++                && from > to
++            {
++                return Err(ModelError::InvalidYearRange(alias.alias_id.clone()));
++            }
++        }
++        if canonical != 1 {
++            return Err(ModelError::CanonicalAliasCount(canonical));
++        }
++        for (scheme, identifier) in &self.durable_identifiers {
++            require_text(scheme, "institution_profile.durable_identifiers.scheme")?;
++            require_text(
++                identifier,
++                "institution_profile.durable_identifiers.identifier",
++            )?;
++        }
++        Ok(())
++    }
++}
++
++/// One deterministic taxonomy rule.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct CategoryRule {
++    /// Stable category identifier.
++    pub category_id: String,
++    /// Human-readable label.
++    pub label: String,
++    /// Lowercase terms or phrases used as transparent evidence.
++    pub terms: Vec<String>,
++}
++
++/// Versioned thematic and study-design taxonomy.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct ResearchTaxonomy {
++    /// Contract identifier.
++    pub schema_version: String,
++    /// Immutable taxonomy version.
++    pub version: String,
++    /// Multi-label research themes.
++    pub themes: Vec<CategoryRule>,
++    /// Mutually ranked study-design rules.
++    pub study_types: Vec<CategoryRule>,
++    /// Fallback study type when no rule matches.
++    pub fallback_study_type_id: String,
++}
++
++impl ResearchTaxonomy {
++    /// Validate category identifiers, labels and terms.
++    pub fn validate(&self) -> Result<(), ModelError> {
++        if self.schema_version != TAXONOMY_SCHEMA_VERSION {
++            return Err(ModelError::InvalidSchemaVersion {
++                expected: TAXONOMY_SCHEMA_VERSION,
++                actual: self.schema_version.clone(),
++            });
++        }
++        require_text(&self.version, "research_taxonomy.version")?;
++        require_text(
++            &self.fallback_study_type_id,
++            "research_taxonomy.fallback_study_type_id",
++        )?;
++        if self.themes.is_empty() || self.study_types.is_empty() {
++            return Err(ModelError::EmptyCollection(
++                "research_taxonomy.categories",
++            ));
++        }
++        let mut identifiers = BTreeSet::new();
++        for rule in self.themes.iter().chain(&self.study_types) {
++            require_text(&rule.category_id, "research_taxonomy.category_id")?;
++            require_text(&rule.label, "research_taxonomy.label")?;
++            if rule.terms.is_empty() {
++                return Err(ModelError::EmptyCollection("research_taxonomy.terms"));
++            }
++            if !identifiers.insert(rule.category_id.as_str()) {
++                return Err(ModelError::DuplicateValue(
++                    "research_taxonomy.category_id",
++                ));
++            }
++            let mut terms = BTreeSet::new();
++            for term in &rule.terms {
++                require_text(term, "research_taxonomy.term")?;
++                if !terms.insert(normalise_text(term)) {
++                    return Err(ModelError::DuplicateValue("research_taxonomy.term"));
++                }
++            }
++        }
++        if !self
++            .study_types
++            .iter()
++            .any(|rule| rule.category_id == self.fallback_study_type_id)
++        {
++            return Err(ModelError::UnknownFallbackStudyType(
++                self.fallback_study_type_id.clone(),
++            ));
++        }
++        Ok(())
++    }
++}
++
++/// Attribution outcome used by the report and review queue.
++#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
++#[serde(rename_all = "snake_case")]
++pub enum AttributionLevel {
++    /// Structured evidence identifies CHHHS directly.
++    Confirmed,
++    /// Structured facility or historical evidence is strong but needs governance review.
++    Probable,
++    /// Unstructured evidence is insufficient for automatic attribution.
++    Review,
++    /// No qualifying institutional evidence was found.
++    Excluded,
++}
++
++impl AttributionLevel {
++    /// Whether the record enters the attributed portfolio.
++    #[must_use]
++    pub const fn included(self) -> bool {
++        matches!(self, Self::Confirmed | Self::Probable)
++    }
++}
++
++/// Location of one attribution signal.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++#[serde(rename_all = "snake_case")]
++pub enum AttributionField {
++    /// Provider-native affiliation or institution structure.
++    StructuredAffiliation,
++    /// Durable organisation identifier.
++    DurableIdentifier,
++    /// Article title.
++    Title,
++    /// Abstract text.
++    Abstract,
++    /// Subject or topic metadata.
++    Subject,
++}
++
++/// Explainable evidence supporting or weakening attribution.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct AttributionEvidence {
++    /// Stable rule identifier.
++    pub rule_id: String,
++    /// Alias or identifier that matched.
++    pub matched_value: String,
++    /// Source field.
++    pub field: AttributionField,
++    /// Provider-native path when available.
++    pub source_path: Option<String>,
++    /// Integer evidence score from zero to 100.
++    pub score: u8,
++    /// Plain-language interpretation.
++    pub explanation: String,
++}
++
++/// Institution-attribution assessment.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct AttributionAssessment {
++    /// Contract identifier.
++    pub schema_version: String,
++    /// Profile version applied.
++    pub profile_version: String,
++    /// Final outcome.
++    pub level: AttributionLevel,
++    /// Maximum deterministic score.
++    pub score: u8,
++    /// Whether an accountable person should adjudicate the record.
++    pub review_required: bool,
++    /// Evidence in stable order.
++    pub evidence: Vec<AttributionEvidence>,
++    /// Important caveats.
++    pub limitations: Vec<String>,
++}
++
++/// One scored taxonomy category.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct CategoryScore {
++    /// Stable category identifier.
++    pub category_id: String,
++    /// Human-readable label.
++    pub label: String,
++    /// Deterministic relevance score.
++    pub score: u32,
++    /// Matched terms in stable order.
++    pub evidence_terms: Vec<String>,
++}
++
++/// Explainable thematic and study-design classification.
++#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
++pub struct PaperClassification {
++    /// Con
