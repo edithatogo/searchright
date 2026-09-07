@@ -41,7 +41,7 @@
     {
       "integration_id": "standards-check-reporting-packs",
       "repository": "edithatogo/standards_check",
-      "revision": "f248d7c4dd40dd34cb45b5b6150b4750a5b28864",
+      "revision": "f1e7b6c6e283865c1b7dbb34dbe33d8bf6f6c799",
       "path": "integration/passports/standards-check-reporting-packs.json"
     },
     {
@@ -54,35 +54,67 @@
   "candidate_integrations": [
     {
       "repository": "edithatogo/scholarly-publishing-agents",
-      "required_before_activation": ["exact revision pin", "MCP/skill consumer contract", "scenario parity"]
+      "required_before_activation": [
+        "exact revision pin",
+        "MCP/skill consumer contract",
+        "scenario parity"
+      ]
     },
     {
       "repository": "edithatogo/co-researcher",
-      "required_before_activation": ["exact revision pin", "MCP capability envelope", "human-authority tests"]
+      "required_before_activation": [
+        "exact revision pin",
+        "MCP capability envelope",
+        "human-authority tests"
+      ]
     },
     {
       "repository": "edithatogo/ee_trd",
-      "required_before_activation": ["exact revision pin", "search-log import fixture", "PRISMA-S migration issue"]
+      "required_before_activation": [
+        "exact revision pin",
+        "search-log import fixture",
+        "PRISMA-S migration issue"
+      ]
     },
     {
       "repository": "edithatogo/reimbursement-atlas",
-      "required_before_activation": ["exact revision pin", "custom-search inventory", "repository-specific parity set"]
+      "required_before_activation": [
+        "exact revision pin",
+        "custom-search inventory",
+        "repository-specific parity set"
+      ]
     },
     {
       "repository": "edithatogo/global-medicines-atlas",
-      "required_before_activation": ["exact revision pin", "custom-search inventory", "repository-specific parity set"]
+      "required_before_activation": [
+        "exact revision pin",
+        "custom-search inventory",
+        "repository-specific parity set"
+      ]
     },
     {
       "repository": "edithatogo/osf-mcp-server",
-      "required_before_activation": ["exact revision pin", "deposit/registration contract", "write-preview and approval gate"]
+      "required_before_activation": [
+        "exact revision pin",
+        "deposit/registration contract",
+        "write-preview and approval gate"
+      ]
     },
     {
       "repository": "edithatogo/mcp-registry",
-      "required_before_activation": ["exact revision pin", "submission validation contract", "external approval"]
+      "required_before_activation": [
+        "exact revision pin",
+        "submission validation contract",
+        "external approval"
+      ]
     },
     {
       "repository": "edithatogo/authentext",
-      "required_before_activation": ["exact revision pin", "documentation-only capability", "prose quality receipt contract"]
+      "required_before_activation": [
+        "exact revision pin",
+        "documentation-only capability",
+        "prose quality receipt contract"
+      ]
     }
   ],
   "claim_boundary": "Only entries under passports are active prepared integrations; candidates are not dependencies or compatibility claims."

@@ -14,4 +14,4 @@ SearchRight may consume an exact-pinned, rights-cleared Canonical Standard Pack 
 
 The integration is local, read-only, network-off and write-off by default. SearchRight retains its current versioned standards packs and native rendering path as the degraded mode. Pin changes require review of schemas, rights, fixtures and semantic differences. A failed canary restores the prior pin and preserves the receipt.
 
-The verified StandardFlow foundation is pinned at `f248d7c4dd40dd34cb45b5b6150b4750a5b28864` from `edithatogo/standards_check#59`. The primary foundation contract and Rust gates passed at this revision; merge, consumer parity and external validation remain separate evidence.
+The verified StandardFlow foundation is pinned at `f1e7b6c6e283865c1b7dbb34dbe33d8bf6f6c799` from `edithatogo/standards_check#59`. The primary foundation contract and Rust gates passed at this revision; merge, consumer parity and external validation remain separate evidence.
