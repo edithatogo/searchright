@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.integration-passport-index.v1",
-  "generated_at": "2026-08-06",
+  "generated_at": "2026-09-08",
   "passports": [
     {
       "integration_id": "citeweft-document-evidence",
@@ -41,7 +41,7 @@
     {
       "integration_id": "standards-check-reporting-packs",
       "repository": "edithatogo/standards_check",
-      "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+      "revision": "f1e7b6c6e283865c1b7dbb34dbe33d8bf6f6c799",
       "path": "integration/passports/standards-check-reporting-packs.json"
     },
     {
