@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.integration-passport-index.v1",
-  "generated_at": "2026-08-06",
+  "generated_at": "2026-09-08",
   "passports": [
     {
       "integration_id": "citeweft-document-evidence",
@@ -41,7 +41,7 @@
     {
       "integration_id": "standards-check-reporting-packs",
       "repository": "edithatogo/standards_check",
-      "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+      "revision": "820898e7ae21784145f98e04d8fc482367a6f015",
       "path": "integration/passports/standards-check-reporting-packs.json"
     },
     {
@@ -54,67 +54,35 @@
   "candidate_integrations": [
     {
       "repository": "edithatogo/scholarly-publishing-agents",
-      "required_before_activation": [
-        "exact revision pin",
-        "MCP/skill consumer contract",
-        "scenario parity"
-      ]
+      "required_before_activation": ["exact revision pin", "MCP/skill consumer contract", "scenario parity"]
     },
     {
       "repository": "edithatogo/co-researcher",
-      "required_before_activation": [
-        "exact revision pin",
-        "MCP capability envelope",
-        "human-authority tests"
-      ]
+      "required_before_activation": ["exact revision pin", "MCP capability envelope", "human-authority tests"]
     },
     {
       "repository": "edithatogo/ee_trd",
-      "required_before_activation": [
-        "exact revision pin",
-        "search-log import fixture",
-        "PRISMA-S migration issue"
-      ]
+      "required_before_activation": ["exact revision pin", "search-log import fixture", "PRISMA-S migration issue"]
     },
     {
       "repository": "edithatogo/reimbursement-atlas",
-      "required_before_activation": [
-        "exact revision pin",
-        "custom-search inventory",
-        "repository-specific parity set"
-      ]
+      "required_before_activation": ["exact revision pin", "custom-search inventory", "repository-specific parity set"]
     },
     {
       "repository": "edithatogo/global-medicines-atlas",
-      "required_before_activation": [
-        "exact revision pin",
-        "custom-search inventory",
-        "repository-specific parity set"
-      ]
+      "required_before_activation": ["exact revision pin", "custom-search inventory", "repository-specific parity set"]
     },
     {
       "repository": "edithatogo/osf-mcp-server",
-      "required_before_activation": [
-        "exact revision pin",
-        "deposit/registration contract",
-        "write-preview and approval gate"
-      ]
+      "required_before_activation": ["exact revision pin", "deposit/registration contract", "write-preview and approval gate"]
     },
     {
       "repository": "edithatogo/mcp-registry",
-      "required_before_activation": [
-        "exact revision pin",
-        "submission validation contract",
-        "external approval"
-      ]
+      "required_before_activation": ["exact revision pin", "submission validation contract", "external approval"]
     },
     {
       "repository": "edithatogo/authentext",
-      "required_before_activation": [
-        "exact revision pin",
-        "documentation-only capability",
-        "prose quality receipt contract"
-      ]
+      "required_before_activation": ["exact revision pin", "documentation-only capability", "prose quality receipt contract"]
     }
   ],
   "claim_boundary": "Only entries under passports are active prepared integrations; candidates are not dependencies or compatibility claims."

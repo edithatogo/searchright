@@ -6,30 +6,42 @@
   "automatic_revision_updates": false,
   "integration_id": "standards-check-reporting-packs",
   "repository": "edithatogo/standards_check",
-  "revision": "f54b25aec7e206881e2d5542e42cfda43c96921c",
+  "revision": "820898e7ae21784145f98e04d8fc482367a6f015",
   "default_branch": "main",
   "canonical_upstream": null,
   "local_fork_role": "original",
-  "code_license": "NOASSERTION",
-  "content_license": "NOASSERTION",
+  "code_license": "MIT OR Apache-2.0 for the proposed Rust workspace; legacy scripts remain MIT",
+  "content_license": "Item-specific; repository-authored documentation is generally CC BY 4.0 except where noted",
   "model_license": null,
-  "redistribution": "Consume provenance metadata and non-infringing operational summaries only until repository and source-item reuse rights are documented.",
+  "redistribution": "Consume rights-cleared Canonical Standard Packs, provenance metadata, schemas and non-infringing normalized requirements only; never copy restricted source text automatically.",
   "licence_review_status": "review_required",
-  "drift_policy": "Report source, pack and licence metadata drift; do not copy revised checklist text automatically.",
+  "drift_policy": "Report source, schema, pack, recipe, rights and exact-revision drift; require human review before changing this pin or adopting revised standard text.",
   "mode": "documentation_pack",
-  "dependency_direction": "searchright_consumes_upstream",
+  "dependency_direction": "bidirectional_via_neutral_contract",
   "feature_flag": null,
   "inputs": [
     {
-      "name": "Reporting checklist source and sidecar inventory",
-      "version": "observed-2026-06-27",
-      "path": "source/index.yml and schemas/sidecar.schema.json",
+      "name": "StandardFlow Canonical Standard Pack",
+      "version": "dev.standardflow.standard-pack.v1",
+      "path": "schemas/standard-pack.v1.schema.json",
       "required": true
+    },
+    {
+      "name": "StandardFlow artefact recipe",
+      "version": "dev.standardflow.artifact-recipe.v1",
+      "path": "schemas/artifact-recipe.v1.schema.json",
+      "required": false
     }
   ],
   "outputs": [
     {
-      "name": "Searchright standard pack",
+      "name": "SearchRight review-flow evidence",
+      "version": "dev.standardflow.ecosystem-evidence.v1",
+      "path": "integration/fixtures/standardflow-review-flow-evidence.json",
+      "required": true
+    },
+    {
+      "name": "SearchRight standards pack",
       "version": "org.searchright.standard-pack.v1",
       "path": "contracts/json-schema/standard-pack.v1.schema.json",
       "required": true
@@ -37,19 +49,28 @@
   ],
   "allowed_capabilities": [
     "documentation_read",
-    "metadata_write"
+    "local_contract_validation",
+    "fixture_exchange",
+    "local_render_request"
   ],
   "verification": [
     {
-      "id": "standards-provenance",
+      "id": "integration-passport-parity",
+      "command": "python scripts/check_integration_passports.py",
+      "evidence_level": "source_verified",
+      "required": true
+    },
+    {
+      "id": "searchright-repository-validation",
       "command": "python scripts/validate_repository.py",
       "evidence_level": "source_verified",
       "required": true
     }
   ],
   "rollback": [
-    "Retain the prior versioned Searchright standards pack.",
-    "Do not overwrite a pack until provenance, licence and numbering checks pass."
+    "Restore the prior exact standards_check revision in this passport, the index and integration/locks.json.",
+    "Continue using the current versioned SearchRight standards packs and native PRISMA renderer when StandardFlow is absent or incompatible.",
+    "Preserve failed consumer fixtures and do not overwrite a pack until provenance, licence, numbering and semantic checks pass."
   ],
-  "claim_boundary": "standards_check is a provenance upstream; Searchright assessments do not imply endorsement by the reporting-standard authors."
+  "claim_boundary": "SearchRight remains authoritative for review/search state and PRISMA counts. StandardFlow may validate and render a receipt but cannot change screening decisions or reconstruct missing counts. This prepared pin does not prove downstream compilation, parity, rights clearance or adoption of standards_check PR #59."
 }
