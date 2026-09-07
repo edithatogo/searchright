@@ -6,7 +6,7 @@
   "automatic_revision_updates": false,
   "integration_id": "standards-check-reporting-packs",
   "repository": "edithatogo/standards_check",
-  "revision": "820898e7ae21784145f98e04d8fc482367a6f015",
+  "revision": "f248d7c4dd40dd34cb45b5b6150b4750a5b28864",
   "default_branch": "main",
   "canonical_upstream": null,
   "local_fork_role": "original",
@@ -72,5 +72,5 @@
     "Continue using the current versioned SearchRight standards packs and native PRISMA renderer when StandardFlow is absent or incompatible.",
     "Preserve failed consumer fixtures and do not overwrite a pack until provenance, licence, numbering and semantic checks pass."
   ],
-  "claim_boundary": "SearchRight remains authoritative for review/search state and PRISMA counts. StandardFlow may validate and render a receipt but cannot change screening decisions or reconstruct missing counts. This prepared pin does not prove downstream compilation, parity, rights clearance or adoption of standards_check PR #59."
+  "claim_boundary": "SearchRight remains authoritative for review/search state and PRISMA counts. StandardFlow may validate and render a receipt but cannot change screening decisions or reconstruct missing counts. This prepared pin does not prove merge, downstream compatibility, rights clearance or external validation."
 }
