@@ -1,0 +1,195 @@
+name: Refresh StandardFlow generated integration state
+
+on:
+  push:
+    branches:
+      - feat/standardflow-contract-boundary
+    paths:
+      - ".github/workflows/refresh-standardflow-generated-state.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-standardflow-generated-state
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      STANDARDFLOW_REVISION: f1e7b6c6e283865c1b7dbb34dbe33d8bf6f6c799
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.ref_name }}
+          persist-credentials: true
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.14"
+      - name: Update contracts and reciprocal fixtures
+        shell: bash
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import os
+          from pathlib import Path
+
+          pin = os.environ["STANDARDFLOW_REVISION"]
+
+          def load(path: str):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path: str, value):
+              Path(path).write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+
+          passport_path = "integration/passports/standards-check-reporting-packs.json"
+          passport = load(passport_path)
+          passport["revision"] = pin
+          passport["claim_boundary"] = (
+              "SearchRight remains authoritative for review/search state and PRISMA counts. "
+              "StandardFlow may validate and render a receipt but cannot change screening decisions "
+              "or reconstruct missing counts. The exact pin passed the producer foundation gates; "
+              "merge, consumer parity, rights clearance and external validation remain separate evidence."
+          )
+          save(passport_path, passport)
+
+          index_path = "integration/passports/index.json"
+          index = load(index_path)
+          for entry in index["passports"]:
+              if entry["integration_id"] == "standards-check-reporting-packs":
+                  entry["revision"] = pin
+          index["generated_at"] = "2026-09-08"
+          save(index_path, index)
+
+          locks_path = "integration/locks.json"
+          locks = load(locks_path)
+          for entry in locks["repositories"]:
+              if entry["repository"] == "edithatogo/standards_check":
+                  entry["revision"] = pin
+          locks["generated_at"] = "2026-09-08"
+          save(locks_path, locks)
+
+          fixture_path = "integration/fixtures/standardflow-review-flow-evidence.json"
+          fixture = load(fixture_path)
+          fixture["artifact_provenance"] = {
+              "kind": "pull_request_head",
+              "repository": "edithatogo/searchright",
+              "pull_request": 688,
+              "path": fixture_path,
+              "immutable": False,
+          }
+          mutable_note = (
+              "The artifact location is a mutable pull-request head until an immutable post-merge "
+              "receipt is issued."
+          )
+          if mutable_note not in fixture["limitations"]:
+              fixture["limitations"].append(mutable_note)
+          save(fixture_path, fixture)
+
+          suite_path = "integration/consumer-contract-suite.json"
+          suite = load(suite_path)
+          inbound = {
+              "id": "standards-check-to-searchright-packs",
+              "integration_id": "standards-check-reporting-packs",
+              "producer": "edithatogo/standards_check",
+              "consumer": "edithatogo/searchright",
+              "contract_version": "dev.standardflow.standard-pack.v1",
+              "producer_contracts": [
+                  f"external://edithatogo/standards_check/schemas/standard-pack.v1.schema.json@{pin}",
+                  f"external://edithatogo/standards_check/schemas/artifact-recipe.v1.schema.json@{pin}",
+              ],
+              "consumer_contracts": [
+                  "contracts/json-schema/standard-pack.v1.schema.json",
+                  "contracts/standards/index.json",
+              ],
+              "fixture_paths": [
+                  "contracts/examples/standard-pack.yaml",
+                  "integration/passports/standards-check-reporting-packs.json",
+              ],
+              "producer_gates": [
+                  "external: StandardFlow foundation contracts and Rust gates",
+              ],
+              "consumer_gates": [
+                  "python scripts/check_integration_passports.py",
+                  "python scripts/validate_repository.py",
+              ],
+              "failure_semantics": (
+                  "Quarantine the affected pack, preserve the previously verified SearchRight pack, "
+                  "and do not promote rights or semantic changes automatically."
+              ),
+              "automatic_promotion": False,
+              "status": "prepared_not_executed",
+          }
+          outbound = {
+              "id": "searchright-to-standardflow-review-flow",
+              "integration_id": "standards-check-reporting-packs",
+              "producer": "edithatogo/searchright",
+              "consumer": "edithatogo/standards_check",
+              "contract_version": "dev.standardflow.ecosystem-evidence.v1",
+              "producer_contracts": [
+                  "contracts/json-schema/prisma-flow.v1.schema.json",
+                  fixture_path,
+              ],
+              "consumer_contracts": [
+                  f"external://edithatogo/standards_check/schemas/ecosystem-evidence.v1.schema.json@{pin}",
+              ],
+              "fixture_paths": [
+                  fixture_path,
+                  passport_path,
+              ],
+              "producer_gates": [
+                  "python scripts/check_integration_passports.py",
+                  "python scripts/validate_repository.py",
+              ],
+              "consumer_gates": [
+                  "external: StandardFlow consumer-driven fixture validation",
+              ],
+              "failure_semantics": (
+                  "Keep SearchRight as the PRISMA count system of record, disable the optional "
+                  "StandardFlow render handoff, and preserve the failed envelope for review."
+              ),
+              "automatic_promotion": False,
+              "status": "prepared_not_executed",
+          }
+          replacement_ids = {inbound["id"], outbound["id"]}
+          updated = []
+          inserted = False
+          for interaction in suite["interactions"]:
+              if interaction["id"] == inbound["id"]:
+                  updated.extend([inbound, outbound])
+                  inserted = True
+              elif interaction["id"] not in replacement_ids:
+                  updated.append(interaction)
+          if not inserted:
+              updated.extend([inbound, outbound])
+          suite["interactions"] = updated
+          suite["generated_at"] = "2026-09-08"
+          save(suite_path, suite)
+
+          docs_path = Path("docs/standardflow-integration.md")
+          docs = docs_path.read_text(encoding="utf-8")
+          docs = docs.replace("f248d7c4dd40dd34cb45b5b6150b4750a5b28864", pin)
+          docs_path.write_text(docs, encoding="utf-8")
+          PY
+      - name: Regenerate governed derived state
+        shell: bash
+        run: |
+          git rm .github/workflows/refresh-standardflow-generated-state.yml
+          python scripts/sync_ecosystem_lock.py
+          python scripts/generate_source_hash_manifest.py
+          python scripts/check_integration_passports.py
+          python scripts/validate_repository.py
+      - name: Commit the deterministic refresh
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "chore(integration): regenerate StandardFlow contract state"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
