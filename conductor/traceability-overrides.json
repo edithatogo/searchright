@@ -1,6 +1,20 @@
 {
   "schema_version": "org.searchright.traceability-overrides.v1",
   "tracks": {
+    "00": {
+      "assertions": {
+        "T00-A006": {
+          "state": "source_implemented",
+          "mapping_confidence": "path_and_gate_mapped",
+          "implementation_paths": ["scripts/bootstrap.sh", "scripts/bootstrap.ps1", "scripts/verify.sh", "scripts/run_static_harness.py", "verification/receipts/track-00-local-verification.json"],
+          "implementation_symbols": ["scripts/run_static_harness.py::main"],
+          "deterministic_tests": ["python scripts/run_static_harness.py"],
+          "evidence_receipts": ["verification/receipts/track-00-local-verification.json", "verification/receipts/track-00-verification-reconciliation.json"],
+          "open_gates": [],
+          "permitted_claim": "One-command bootstrap and verification entry points exist. The exact 8de03a0 tree equals the pinned full-verified c358e68 tree: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet 0.10.2 check passed existing policy with 43 fully vetted dependencies and 259 existing exemptions; exempted dependencies are not claimed audited. No future-tree verification or upstream estate conformance is implied."
+        }
+      }
+    },
     "01": {
       "assertions": {
           "T01-A001": {

@@ -25,7 +25,7 @@
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Source-verified implementation with commit-bound local GNU compiler/test evidence, hosted cross-platform compiler checks and an audited GitHub control plane. Full verify.sh remains red on dependency-trust evidence, and upstream repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Source-verified foundation implementation with exact 8de03a0 whole-tree-equivalent full verification: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet policy check passed with 43 fully vetted dependencies and 259 existing exemptions, not 259 audited dependencies. Earlier failed receipts remain historical; upstream repository-standards registration and estate conformance remain open. No future-tree validation or track completion is implied.",
       "deliverables": [
         "Cargo.toml",
         "rust-toolchain.toml",
@@ -55,7 +55,8 @@
       ],
       "runtime_evidence": [
         "verification/receipts/track-00-local-verification.json",
-        "verification/receipts/track-00-conductor-review.json"
+        "verification/receipts/track-00-conductor-review.json",
+        "verification/receipts/track-00-verification-reconciliation.json"
       ],
       "source_verified_on": "2026-08-12",
       "slug": "foundation-conductor-toolchain",
@@ -63,7 +64,8 @@
       "title": "Foundation, Conductor and toolchain",
       "track_id": "00",
       "additional_closeout_tasks": [
-        "Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence."
+        "Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.",
+        "Reconcile historical aggregate-verification failures with exact-tree full verification and separate frozen cargo-vet policy evidence (`f372c67`); verification/receipts/track-00-verification-reconciliation.json preserves exemption limits and the unresolved upstream registration gate."
       ],
       "updated": "2026-08-31"
     },

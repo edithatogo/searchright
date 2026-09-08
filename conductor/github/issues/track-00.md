@@ -28,6 +28,6 @@ Establish the Git repository, Conductor context, pinned toolchain, standards inh
 
 ## Claim boundary
 
-Source-verified implementation with commit-bound local GNU compiler/test evidence, hosted cross-platform compiler checks and an audited GitHub control plane. Full verify.sh remains red on dependency-trust evidence, and upstream repository-standards registration and estate conformance remain open. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Source-verified foundation implementation with exact 8de03a0 whole-tree-equivalent full verification: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet policy check passed with 43 fully vetted dependencies and 259 existing exemptions, not 259 audited dependencies. Earlier failed receipts remain historical; upstream repository-standards registration and estate conformance remain open. No future-tree validation or track completion is implied.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
