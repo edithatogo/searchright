@@ -95,9 +95,18 @@ async fn old_parser_cache_cannot_bypass_current_live_adapter_but_is_preserved() 
     for provider in providers {
         let cache = Arc::new(MemoryPageCache::new());
         let current_manifest = provider.manifest();
-        assert_eq!(current_manifest.version, PROVIDER_PARSER_VERSION);
-        assert_ne!(current_manifest.version, env!("CARGO_PKG_VERSION"));
+        // The EFetch orchestration revision appends `.subrequests.1` to the
+        // PubMed adapters' behavior versions; the other adapters stay plain.
         let id = current_manifest.provider_id.clone();
+        assert_eq!(
+            current_manifest.version,
+            if id == "pubmed" {
+                format!("{PROVIDER_PARSER_VERSION}.subrequests.1")
+            } else {
+                PROVIDER_PARSER_VERSION.to_string()
+            }
+        );
+        assert_ne!(current_manifest.version, env!("CARGO_PKG_VERSION"));
         let mut old_manifest = current_manifest.clone();
         old_manifest.version = env!("CARGO_PKG_VERSION").into();
         let mut old_page = parse_openalex_page(
