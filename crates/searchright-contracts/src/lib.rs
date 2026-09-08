@@ -18,6 +18,8 @@ mod licensed;
 mod living;
 mod migration;
 mod ops;
+/// Additive v2 parity evidence contracts; no runtime cutover authority.
+pub mod parity_matrix;
 mod plan;
 mod plugin;
 mod policy;

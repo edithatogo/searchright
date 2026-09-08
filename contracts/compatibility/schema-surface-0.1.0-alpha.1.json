@@ -525,6 +525,22 @@
       "owner_track": "05"
     },
     {
+      "id": "sourceright-parity-catalogue-v2",
+      "schema_id": "https://schemas.searchright.dev/sourceright-parity-catalogue.v2.schema.json",
+      "path": "contracts/json-schema/sourceright-parity-catalogue.v2.schema.json",
+      "sha256": "716e8da990a7205b8fe5ee469c06c976f7471c14debe17c635db82db7a8a6703",
+      "stability": "alpha",
+      "owner_track": "03"
+    },
+    {
+      "id": "sourceright-parity-matrix-v2",
+      "schema_id": "https://schemas.searchright.dev/sourceright-parity-matrix.v2.schema.json",
+      "path": "contracts/json-schema/sourceright-parity-matrix.v2.schema.json",
+      "sha256": "31daca7a60bc80ee7ce4d4407e265f4997b65ae454786b71bef6750b6634a950",
+      "stability": "alpha",
+      "owner_track": "03"
+    },
+    {
       "id": "sourceright-parity-report",
       "schema_id": "https://schemas.searchright.dev/sourceright-parity-report.v1.schema.json",
       "path": "contracts/json-schema/sourceright-parity-report.v1.schema.json",

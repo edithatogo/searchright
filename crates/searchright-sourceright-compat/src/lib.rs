@@ -2,6 +2,9 @@
 
 #![forbid(unsafe_code)]
 
+/// Bounded additive v2 matrix validation, not execution or cutover authorization.
+pub mod parity_matrix;
+
 use evidence_search_core::ProviderMode;
 use schemars::JsonSchema;
 use searchright_contracts::{
