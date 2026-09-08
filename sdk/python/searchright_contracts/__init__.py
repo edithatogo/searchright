@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Literal, NotRequired, Required, TypeAlias, TypedDict
 
 JsonValue: TypeAlias = None | bool | int | float | str | list['JsonValue'] | dict[str, 'JsonValue']
-CONTRACT_IDS = ('access-decision', 'access-request', 'agent-handoff', 'agent-workflow', 'architecture-policy', 'audit-event', 'audit-event-registry', 'backup-manifest', 'benchmark-report', 'bibliographic-record', 'compiled-strategy', 'component-health', 'consumer-contract-suite', 'data-handling-decision', 'data-handling-request', 'data-lifecycle-decision', 'data-lifecycle-request', 'diagnostic', 'discovery-run', 'document-evidence', 'evidence-debt', 'execution-envelope', 'gate-catalog', 'github-control-plane-apply-summary', 'github-issue-hierarchy', 'github-issue-hierarchy-v2', 'github-project', 'github-repository-settings', 'incident-record', 'institutional-policy', 'integration-passport', 'integration-release-train', 'interchange-receipt', 'licensed-adapter', 'living-update', 'named-filter-pack', 'native-search-strategy', 'plan-review-result', 'press-review', 'press-review-result', 'prisma-flow', 'protocol-amendment', 'provider-component', 'provider-component-release-signature', 'provider-component-trust-policy', 'provider-manifest', 'provider-page', 'provider-policy-set', 'query-ast', 'ranking-calibration', 'recovery-rehearsal', 'redaction-profile', 'release-rehearsal', 'research-object-handoff-plan', 'review-bundle-manifest', 'review-plan', 'review-state-snapshot', 'schema-migration-plan', 'schema-migration-registry', 'screening-decision', 'screening-policy', 'search-run', 'search-strategy', 'search-validation', 'source-receipt', 'sourceright-parity-report', 'standard-assessment', 'standard-pack', 'study-graph', 'telemetry-policy', 'tenant-policy', 'workflow-trace')
+CONTRACT_IDS = ('access-decision', 'access-request', 'agent-handoff', 'agent-workflow', 'architecture-policy', 'audit-event', 'audit-event-registry', 'backup-manifest', 'benchmark-report', 'bibliographic-record', 'compiled-strategy', 'component-health', 'consumer-contract-suite', 'data-handling-decision', 'data-handling-request', 'data-lifecycle-decision', 'data-lifecycle-request', 'diagnostic', 'discovery-run', 'document-evidence', 'evidence-debt', 'execution-envelope', 'gate-catalog', 'github-control-plane-apply-summary', 'github-issue-hierarchy', 'github-issue-hierarchy-v2', 'github-project', 'github-repository-settings', 'incident-record', 'institutional-policy', 'integration-passport', 'integration-release-train', 'interchange-receipt', 'licensed-adapter', 'living-update', 'named-filter-pack', 'native-search-strategy', 'plan-review-result', 'press-review', 'press-review-result', 'prisma-flow', 'protocol-amendment', 'provider-component', 'provider-component-release-signature', 'provider-component-trust-policy', 'provider-manifest', 'provider-page', 'provider-policy-set', 'query-ast', 'ranking-calibration', 'recovery-rehearsal', 'redaction-profile', 'release-rehearsal', 'research-object-handoff-plan', 'review-bundle-manifest', 'review-plan', 'review-state-snapshot', 'schema-migration-plan', 'schema-migration-registry', 'screening-decision', 'screening-policy', 'search-run', 'search-strategy', 'search-validation', 'source-receipt', 'sourceright-parity-catalogue-v2', 'sourceright-parity-matrix-v2', 'sourceright-parity-report', 'standard-assessment', 'standard-pack', 'study-graph', 'telemetry-policy', 'tenant-policy', 'workflow-trace')
 
 AccessDecision = TypedDict(
     'AccessDecision',
@@ -2415,6 +2415,153 @@ SourceReceiptPolicy = TypedDict(
     },
 )
 
+SourcerightParityCatalogueV2 = TypedDict(
+    'SourcerightParityCatalogueV2',
+    {
+    'cells': Required['list[SourcerightParityCatalogueV2Expected]'],
+    'evidence_kind': Required["Literal['synthetic', 'declared_execution']"],
+    'legacy': Required['SourcerightParityCatalogueV2Binding'],
+    'schema_version': Required["Literal['org.searchright.sourceright-parity-catalogue.v2']"],
+    'shared': Required['SourcerightParityCatalogueV2Binding'],
+    },
+)
+
+SourcerightParityCatalogueV2Binding = TypedDict(
+    'SourcerightParityCatalogueV2Binding',
+    {
+    'config_sha256': Required['str'],
+    'harness_sha256': Required['str'],
+    'repository': Required['str'],
+    'revision': Required['str'],
+    'side': Required["Literal['legacy', 'shared']"],
+    },
+)
+
+SourcerightParityCatalogueV2Expected = TypedDict(
+    'SourcerightParityCatalogueV2Expected',
+    {
+    'comparator_id': Required["Literal['canonical-json-blake3.v1']"],
+    'key': Required['SourcerightParityCatalogueV2Key'],
+    'provenance': Required['SourcerightParityCatalogueV2Provenance'],
+    },
+)
+
+SourcerightParityCatalogueV2Key = TypedDict(
+    'SourcerightParityCatalogueV2Key',
+    {
+    'case_id': Required["Literal['disabled-live', 'fixture-identifiers', 'bounded-retry', 'cache-write-replay', 'malformed-payload', 'undeclared-host', 'secret-redaction']"],
+    'dimension': Required['str'],
+    'fixture_sha256': Required['str'],
+    'provider_id': Required['str'],
+    },
+)
+
+SourcerightParityCatalogueV2Legacy = TypedDict(
+    'SourcerightParityCatalogueV2Legacy',
+    {
+    'side': NotRequired["Literal['legacy']"],
+    },
+)
+
+SourcerightParityCatalogueV2Provenance = TypedDict(
+    'SourcerightParityCatalogueV2Provenance',
+    {
+    'rights_basis': Required['str'],
+    'source_id': Required['str'],
+    },
+)
+
+SourcerightParityCatalogueV2Shared = TypedDict(
+    'SourcerightParityCatalogueV2Shared',
+    {
+    'side': NotRequired["Literal['shared']"],
+    },
+)
+
+SourcerightParityMatrixV2 = TypedDict(
+    'SourcerightParityMatrixV2',
+    {
+    'cells': Required['list[SourcerightParityMatrixV2Observed]'],
+    'evidence_kind': Required["Literal['synthetic', 'declared_execution']"],
+    'legacy': Required['SourcerightParityMatrixV2Binding'],
+    'schema_version': Required["Literal['org.searchright.sourceright-parity-matrix.v2']"],
+    'shared': Required['SourcerightParityMatrixV2Binding'],
+    },
+)
+
+SourcerightParityMatrixV2Binding = TypedDict(
+    'SourcerightParityMatrixV2Binding',
+    {
+    'config_sha256': Required['str'],
+    'harness_sha256': Required['str'],
+    'repository': Required['str'],
+    'revision': Required['str'],
+    'side': Required["Literal['legacy', 'shared']"],
+    },
+)
+
+SourcerightParityMatrixV2Expected = TypedDict(
+    'SourcerightParityMatrixV2Expected',
+    {
+    'comparator_id': Required["Literal['canonical-json-blake3.v1']"],
+    'key': Required['SourcerightParityMatrixV2Key'],
+    'provenance': Required['SourcerightParityMatrixV2Provenance'],
+    },
+)
+
+SourcerightParityMatrixV2Key = TypedDict(
+    'SourcerightParityMatrixV2Key',
+    {
+    'case_id': Required["Literal['disabled-live', 'fixture-identifiers', 'bounded-retry', 'cache-write-replay', 'malformed-payload', 'undeclared-host', 'secret-redaction']"],
+    'dimension': Required['str'],
+    'fixture_sha256': Required['str'],
+    'provider_id': Required['str'],
+    },
+)
+
+SourcerightParityMatrixV2Legacy = TypedDict(
+    'SourcerightParityMatrixV2Legacy',
+    {
+    'side': NotRequired["Literal['legacy']"],
+    },
+)
+
+SourcerightParityMatrixV2Observation = TypedDict(
+    'SourcerightParityMatrixV2Observation',
+    {
+    'digest': Required['str'],
+    'evidence_sha256': Required['str'],
+    'execution_id': Required['str'],
+    'status': Required["Literal['success', 'provider_error', 'harness_failure', 'skipped']"],
+    'value': Required['JsonValue'],
+    },
+)
+
+SourcerightParityMatrixV2Observed = TypedDict(
+    'SourcerightParityMatrixV2Observed',
+    {
+    'decision_references': Required['list[str]'],
+    'expected': Required['SourcerightParityMatrixV2Expected'],
+    'legacy': Required['SourcerightParityMatrixV2Observation'],
+    'shared': Required['SourcerightParityMatrixV2Observation'],
+    },
+)
+
+SourcerightParityMatrixV2Provenance = TypedDict(
+    'SourcerightParityMatrixV2Provenance',
+    {
+    'rights_basis': Required['str'],
+    'source_id': Required['str'],
+    },
+)
+
+SourcerightParityMatrixV2Shared = TypedDict(
+    'SourcerightParityMatrixV2Shared',
+    {
+    'side': NotRequired["Literal['shared']"],
+    },
+)
+
 SourcerightParityReport = TypedDict(
     'SourcerightParityReport',
     {
@@ -2843,6 +2990,22 @@ __all__ = [
     'SearchValidationTranslationAssessmentsItem',
     'SourceReceipt',
     'SourceReceiptPolicy',
+    'SourcerightParityCatalogueV2',
+    'SourcerightParityCatalogueV2Binding',
+    'SourcerightParityCatalogueV2Expected',
+    'SourcerightParityCatalogueV2Key',
+    'SourcerightParityCatalogueV2Legacy',
+    'SourcerightParityCatalogueV2Provenance',
+    'SourcerightParityCatalogueV2Shared',
+    'SourcerightParityMatrixV2',
+    'SourcerightParityMatrixV2Binding',
+    'SourcerightParityMatrixV2Expected',
+    'SourcerightParityMatrixV2Key',
+    'SourcerightParityMatrixV2Legacy',
+    'SourcerightParityMatrixV2Observation',
+    'SourcerightParityMatrixV2Observed',
+    'SourcerightParityMatrixV2Provenance',
+    'SourcerightParityMatrixV2Shared',
     'SourcerightParityReport',
     'SourcerightParityReportDimensionsItem',
     'StandardAssessment',

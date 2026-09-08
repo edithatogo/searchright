@@ -1,14 +1,14 @@
 {
   "automatic_publication": false,
   "claim_boundary": "Generated contract-only types mirror the canonical JSON Schema surface. They are not clients, validators, published packages, or downstream compatibility evidence.",
-  "contracts": 72,
+  "contracts": 74,
   "domain_logic": false,
   "files": {
     "sdk/python/pyproject.toml": "8d88e52b73a64596da09ef017cc463380b6395967d6d0533dec1ab63223a6d8f",
-    "sdk/python/searchright_contracts/__init__.py": "540fd451db0d7a891c60c71e65bc8238aa63ec91147bddea3b30d46f2ccdf788",
+    "sdk/python/searchright_contracts/__init__.py": "5b5e1b6f9a4b688677f94b3ca51b469d16c886705045ca744ea15616c6b32cf3",
     "sdk/python/searchright_contracts/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "sdk/typescript/package.json": "3e58b0359431fd1109d9f43f8ec601de71198c747c3a551703b1118505f7d957",
-    "sdk/typescript/src/index.ts": "dedb2804de2367fd4ca19ace44bf887657be5dde21aa06238422b2c40e77401d"
+    "sdk/typescript/src/index.ts": "ce993a051b24bcd0728eb8cb195f8cdd0164c6c7227692bee4e22ae2e6b1b1a7"
   },
   "packages": {
     "python": "searchright-contracts",
