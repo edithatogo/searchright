@@ -8,14 +8,17 @@ living literature searches. One product facade exposes the same governed
 operations through a Rust API, CLI, Model Context Protocol (MCP) server and
 agent skill.
 
-> **Current evidence level — source-verified alpha, assertion-rebaselined.**
-> The repository has a broad source surface and a passing network-free harness,
-> but roadmap scope is no longer inferred from file presence. Each track is
-> decomposed into acceptance assertions classified as contracted, scaffolded or
-> partially implemented unless stronger evidence exists. This environment has
-> not produced Rust compilation, a committed `Cargo.lock`, live-provider
-> receipts, downstream cutover, registry acceptance or external methodological
-> validation.
+> **Current evidence level: source-verified technical alpha with historical
+> hosted admission and bounded exact-head clean-room evidence.**
+> The repository contains a committed `Cargo.lock` and compiler-backed hosted
+> evidence. The observed `main` revision is
+> `9b4a4a4dba818d75f9dbb9ee6be458871b09a878`; exact-head clean-room workflow
+> run `34338222604` succeeded. The last fully admitted revision in the committed
+> evidence record is `10f983d44e67c08be44131ea6e2b7cf75dc147f6`.
+> No complete exact-head admission matrix, live-provider evidence, downstream
+> cutover, registry acceptance or external methodological validation is claimed.
+> See `PROJECT_STATUS.md` and
+> `verification/receipts/project-status-snapshot.json`.
 
 ## Why Searchright
 
@@ -119,8 +122,8 @@ crates/searchright-ops/                Health, telemetry, backup and incident co
 
 ### Contracts, integration and standards
 
-- **60** Draft 2020-12 JSON Schemas with 60 conforming examples.
-- A machine-readable schema catalogue and a **31-operation**
+- **74** Draft 2020-12 JSON Schemas with 74 conforming examples.
+- A machine-readable schema catalogue and a **35-operation**
   CLI–MCP–facade interface catalogue.
 - OpenAPI and WIT boundary contracts.
 - Eight exact-revision integration passports and eight matching
@@ -138,10 +141,10 @@ submodules, copied implementation code and automatic dependency promotion.
 ## Implementation truth model
 
 Every one of the 38 Conductor tracks now has assertion-level traceability. The
-current 199 acceptance assertions include 72 with explicit symbol/test/gate
-mappings; the remainder retain conservative track-level status. A track cannot
-be promoted merely because a named file exists, an issue is closed or a remote
-Project field changes.
+current 200 acceptance assertions include 108 symbol-and-gate mappings, seven
+path-and-gate mappings, one contract mapping and 84 conservative track-level
+mappings. A track cannot be promoted merely because a named file exists, an
+issue is closed or a remote Project field changes.
 
 The repository distinguishes:
 
@@ -186,18 +189,18 @@ MoSCoW requirements and **38 ordered tracks** spanning foundation through a
 version 1.0 maturity dossier. Every track has `spec.md`, a four-phase `plan.md`,
 `metadata.json`, `evidence.json`, source work and higher-evidence blockers.
 
-The canonical roadmap deterministically renders **583 GitHub work items** in a four-level hierarchy:
+The canonical roadmap deterministically renders **595 GitHub work items** in a four-level hierarchy:
 
 - one roadmap epic;
 - 38 track issues;
 - 152 phase subissues, four under each track;
-- 392 task subissues corresponding to every top-level Conductor task.
+- 404 task subissues corresponding to every top-level Conductor task.
 
 Remote mutation is dry-run first and requires an explicit workflow input, a
 protected write environment, issue/project scopes, a clean Git tree and a
 second environment opt-in. A declarative GitHub Project v2 manifest owns 12
 custom fields and six views, including a separate implementation-gap view; an additive synchroniser creates or updates the
-Project and places all 583 issue nodes into it without deleting or archiving
+Project and places all 595 issue nodes into it without deleting or archiving
 remote work. A one-command bootstrap controller can create the remote repository,
 apply settings and the main-branch ruleset, synchronise the issue hierarchy, and
 create/populate the Project. The public Searchright repository, issue hierarchy
@@ -228,16 +231,16 @@ coverage, mutation, fuzzing, Kani proofs, Loom concurrency exploration, Miri,
 offline builds, reproducible archives and binaries, attestations, MCP transcripts
 and human methodological evaluation.
 
-The network-free aggregate harness currently runs **51 static gates**, with a
-**53-command gate catalogue** covering the harness and auxiliary traceability
-commands. Gates include assertion traceability, evidence ceilings and debt,
-architectural fitness, package-surface policy, contract-surface freezing,
+The network-free aggregate harness currently runs **57 static gates**, with a
+**67-gate catalogue** covering the harness and auxiliary traceability commands.
+Gates include assertion traceability, evidence ceilings and debt, architectural
+fitness, package-surface policy, contract-surface freezing,
 schema migration governance, provider policy manifests, receipt redaction,
 reference recovery mechanics, provider baselines, a rights-clear end-to-end
 contract reference slice, review-bundle and review-state self-tests, benchmark
 leakage controls, licence firewalls, portfolio consistency and exact
-CI/developer-tool pin parity. Configured
-compiler, runtime, live and external gates do not become passing evidence until
+CI/developer-tool pin parity. Configured compiler, runtime, live and external
+gates do not become passing evidence until
 their receipts are observed.
 
 ## Intended local use
