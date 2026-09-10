@@ -24,6 +24,8 @@ SCENARIOS = SKILL_ROOT / "evaluations" / "authority-scenarios.json"
 HOST_MATRIX = SKILL_ROOT / "evaluations" / "host-model-matrix.json"
 HUMAN_PROTOCOL = SKILL_ROOT / "evaluations" / "human-calibration-protocol.md"
 HUMAN_TEMPLATE = SKILL_ROOT / "evaluations" / "human-calibration-template.json"
+AGENT_PANEL_PROTOCOL = SKILL_ROOT / "evaluations" / "agent-panel-protocol.md"
+AGENT_PANEL_TEMPLATE = SKILL_ROOT / "evaluations" / "agent-panel-template.json"
 CALLER = SKILL_ROOT / "integrations" / "academic-research-skills" / "SKILL.md"
 PACKET = ROOT / "registry" / "skills" / "systematic-search" / "manifest.json"
 AUTHORIZATION_REQUEST = ROOT / "registry" / "skills" / "systematic-search" / "authorization-request.json"
@@ -49,6 +51,7 @@ EXPECTED_ROLES = [
 ]
 REQUIRED_REFERENCES = [
     "authority.md",
+    "agent-panel.md",
     "failure-modes.md",
     "handoffs.md",
     "methodology.md",
@@ -130,6 +133,23 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
     for phrase in ("telemetry disabled", "credentials", "full text", "explicit allowlist"):
         if phrase.lower() not in skill_text.lower():
             errors.append(f"portable skill lacks data boundary phrase {phrase!r}")
+    governance_text = re.sub(r"\s+", " ", skill_text.lower())
+    for phrase in (
+        "single accountable human-owner",
+        "sealed panel",
+        "preserves individual findings, abstentions and dissent",
+        "it is not independent human press peer review",
+    ):
+        if phrase not in governance_text:
+            errors.append(f"skill lacks single-owner agent-panel boundary {phrase!r}")
+    obsolete = (
+        "a human information specialist should review",
+        "two reviewers/adjudicator as protocolled",
+    )
+    authority_text = (SKILL_ROOT / "references" / "authority.md").read_text(encoding="utf-8")
+    for phrase in obsolete:
+        if phrase.lower() in (skill_text + "\n" + authority_text).lower():
+            errors.append(f"obsolete mandatory second-human wording remains: {phrase!r}")
 
     methodology = re.sub(
         r"\s+",
@@ -161,6 +181,7 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
     checkpoints = workflow.get("human_checkpoints", [])
     for checkpoint in (
         "review_plan_approval",
+        "agent_panel_adjudication",
         "strategy_and_press_approval",
         "live_execution_approval",
         "deduplication_apply",
@@ -183,20 +204,40 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
     execute = stage_by_id.get("execute", {})
     screen = stage_by_id.get("screen", {})
     deduplicate = stage_by_id.get("deduplicate", {})
-    if press.get("isolation") != "independent_context":
-        errors.append("PRESS stage must use independent context")
+    if workflow.get("accountable_owner_model") != "single_human_owner":
+        errors.append("workflow must declare the single accountable owner model")
+    if press.get("review_model") != "owner_adjudicated_agent_panel":
+        errors.append("PRESS stage must use the owner-adjudicated agent-panel model")
+    if press.get("isolation") != "sealed_first_passes":
+        errors.append("PRESS stage must use sealed first-pass isolation")
+    if press.get("authority") != "advisory_only":
+        errors.append("PRESS agent panel must remain advisory only")
+    expected_panel_roles = [
+        "methodology",
+        "information_retrieval",
+        "implementation_testing",
+        "security_privacy_rights",
+        "adversarial_replication",
+    ]
+    if press.get("panel_roles") != expected_panel_roles:
+        errors.append("PRESS stage must retain all five sealed panel roles")
+    if press.get("claim_boundary") != "agent_panel_is_not_independent_human_peer_review":
+        errors.append("PRESS stage must deny an independent-human-review claim")
     execution_modes = execute.get("modes", {})
     fixture_mode = execution_modes.get("fixture_replay", {}) if isinstance(execution_modes, dict) else {}
     live_mode = execution_modes.get("live", {}) if isinstance(execution_modes, dict) else {}
     if fixture_mode.get("network") is not False or fixture_mode.get("requires") != []:
         errors.append("fixture/replay execution must be network-free and require no live approval")
     if live_mode.get("network") is not True or live_mode.get("requires") != [
+        "agent_panel_adjudication",
         "strategy_and_press_approval",
         "live_execution_approval",
     ]:
-        errors.append("live execution must require strategy/PRESS and live-execution approvals")
+        errors.append("live execution must require panel adjudication, strategy and live approvals")
     if screen.get("authority") != "advisory_only":
         errors.append("screening assistant must remain advisory only")
+    if screen.get("final_decision_authority") != "accountable_owner_or_designated_human":
+        errors.append("final screening authority must remain with the owner or a designated human")
     if "deduplication_apply" not in deduplicate.get("requires", []):
         errors.append("deduplication stage must require the human apply checkpoint")
     for index, role in enumerate(EXPECTED_ROLES[:-1]):
@@ -296,13 +337,24 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
         elif pair.get("status") != "pending":
             errors.append(f"host/model pair {key} has invalid status")
 
+    if not AGENT_PANEL_PROTOCOL.is_file():
+        errors.append("agent-panel evaluation protocol is missing")
+    panel_template = load_json(AGENT_PANEL_TEMPLATE)
+    if panel_template.get("schema_version") != "org.searchright.agent-panel-review.v1":
+        errors.append("unexpected agent-panel template schema version")
+    if panel_template.get("status") != "awaiting_panel":
+        errors.append("agent-panel template must remain awaiting_panel until executed")
+    if panel_template.get("panel_roles") != expected_panel_roles:
+        errors.append("agent-panel template must retain the five required roles")
+    if panel_template.get("responses") != [] or panel_template.get("owner_id") is not None:
+        errors.append("agent-panel template must not imply an executed panel or owner adjudication")
     if not HUMAN_PROTOCOL.is_file():
-        errors.append("human calibration protocol is missing")
+        errors.append("optional human calibration protocol is missing")
     human_template = load_json(HUMAN_TEMPLATE)
     if human_template.get("schema_version") != "org.searchright.agent-human-calibration.v1":
         errors.append("unexpected human calibration template schema version")
-    if human_template.get("status") != "awaiting_independent_reviewers" or human_template.get("reviewers") != []:
-        errors.append("human calibration template must not imply unobserved review")
+    if human_template.get("status") != "optional_not_scheduled" or human_template.get("reviewers") != []:
+        errors.append("optional human calibration template must not imply an observed or required review")
 
     caller_metadata, caller_text = frontmatter(CALLER)
     errors.extend(validate_caller_policy(caller_metadata.get("metadata")))
@@ -358,11 +410,14 @@ def validate(*, check_receipt: bool = True) -> tuple[list[str], dict[str, Any]]:
         "caller_deployment": "searchright_owned_sibling",
         "caller_runtime_admission": "pending_automated_invocation_disabled",
         "registry_packet": "prepared_not_submitted",
+        "review_governance": "single_accountable_owner_with_sealed_agent_panel",
+        "agent_panel_status": panel_template.get("status"),
+        "optional_human_calibration": human_template.get("status"),
         "errors": errors,
         "limitations": [
             "Static package checks and deterministic authority fixtures do not establish model behaviour or host compatibility.",
             "No companion repository, live provider, registry, screening decision or publication system was mutated.",
-            "Human information-specialist calibration and downstream consumer validation remain separate evidence."
+            "Owner-adjudicated agent-panel execution, optional external human calibration and downstream consumer validation remain separate evidence."
         ],
     }
     if check_receipt:
@@ -401,7 +456,7 @@ def main() -> int:
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args()
     suite = unittest.defaultTestLoader.loadTestsFromNames(
-        ["test_agent_host_eval", "test_agent_skill_policy"]
+        ["test_agent_host_eval", "test_agent_skill_policy", "test_agent_panel_governance"]
     )
     test_result = unittest.TextTestRunner(stream=io.StringIO()).run(suite)
     if not test_result.wasSuccessful():
