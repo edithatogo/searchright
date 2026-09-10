@@ -1,0 +1,250 @@
+name: Track 17 finalise Hugging Face fixture package
+
+on:
+  push:
+    branches:
+      - codex/track-17-hf-methodology-fixtures
+
+permissions:
+  contents: write
+
+concurrency:
+  group: track-17-hf-methodology-fixtures
+  cancel-in-progress: true
+
+jobs:
+  finalise:
+    if: ${{ !contains(github.event.head_commit.message, '[skip track17 finalise]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/validation.txt
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements/validation.txt
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+
+      - name: Remove one-shot finaliser
+        run: rm .github/workflows/track-17-hf-fixtures-finalise.yml
+
+      - name: Reconcile Track 17 and static harness inputs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          root = Path('.')
+          coverage_path = root / 'conductor/roadmap-coverage.json'
+          coverage = json.loads(coverage_path.read_text(encoding='utf-8'))
+          entry = next(row for row in coverage['tracks'] if row['track_id'] == '17')
+
+          execute = 'Execute versioned benchmark suites and publish raw receipts.'
+          panel = (
+              'Complete the prospective multi-model sealed agent-panel calibration '
+              'pilot and accountable-owner adjudication; optional external human '
+              'calibration remains a separate evidence class.'
+          )
+          subgroup = (
+              'Assess subgroup, topic and source-specific performance before any '
+              'ranking claim.'
+          )
+          hub = (
+              'Obtain explicit accountable-owner approval, publish the exact '
+              'manifest-backed Hugging Face package, and record an immutable Hub '
+              'revision and post-publication file-set receipt.'
+          )
+          blockers = [execute, panel, subgroup, hub]
+          entry['blockers'] = blockers
+          entry['phase_3_task_count'] = len(blockers)
+          entry['higher_evidence_task_order'] = blockers
+          entry['closeout_gate_label'] = (
+              'Close the track only when applicable benchmark, sealed agent-panel, '
+              'owner-adjudication, subgroup and immutable publication gates are evidenced.'
+          )
+          entry['claim_boundary'] = (
+              'Rights-clear synthetic validation fixtures, anti-leakage policy and a '
+              'deterministic Hugging Face package are source implemented. The package '
+              'excludes sealed labels, external corpora, provider responses, credentials '
+              'and personal data. No Hugging Face repository, Hub revision, external '
+              'performance result, methodological validation or state-of-the-art claim '
+              'is established until separately observed receipts exist.'
+          )
+          entry['updated'] = '2026-09-10'
+          entry['external_approval_required'] = True
+
+          deliverables = entry.setdefault('deliverables', [])
+          for path in (
+              'registry/huggingface/searchright-methodology-fixtures/README.md',
+              'registry/huggingface/searchright-methodology-fixtures/source-allowlist.json',
+              'registry/huggingface/searchright-methodology-fixtures/dataset-manifest.json',
+              'registry/huggingface/searchright-methodology-fixtures/status.json',
+              'scripts/build_hf_methodology_fixtures.py',
+              'scripts/publish_hf_methodology_fixtures.py',
+              'scripts/check_hf_methodology_fixtures.py',
+              'tests/test_huggingface_methodology_package.py',
+              'tests/test_huggingface_publisher.py',
+              '.github/workflows/huggingface-dataset-release.yml',
+              'docs/evaluation/huggingface-methodology-fixtures.md',
+          ):
+              if path not in deliverables:
+                  deliverables.append(path)
+          checks = entry.setdefault('checks', [])
+          for command in (
+              'python scripts/check_hf_methodology_fixtures.py',
+              'python scripts/build_hf_methodology_fixtures.py --check --output target/huggingface/searchright-methodology-fixtures',
+          ):
+              if command not in checks:
+                  checks.append(command)
+
+          coverage_path.write_text(
+              json.dumps(coverage, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+
+          overrides_path = root / 'conductor/traceability-overrides.json'
+          overrides = json.loads(overrides_path.read_text(encoding='utf-8'))
+          assertions = (
+              overrides.setdefault('tracks', {})
+              .setdefault('17', {})
+              .setdefault('assertions', {})
+          )
+          assertions['T17-A005'] = {
+              'state': 'scaffolded',
+              'mapping_confidence': 'symbol_and_gate_mapped',
+              'implementation_paths': [
+                  'docs/evaluation/benchmark-and-calibration-protocol.md',
+                  'skills/systematic-search/evaluations/agent-panel-protocol.md',
+              ],
+              'implementation_symbols': [],
+              'deterministic_tests': [
+                  'python scripts/check_methodology_benchmarks.py',
+              ],
+              'evidence_receipts': [
+                  'conductor/tracks/17-benchmarks-calibration/evidence.json',
+              ],
+              'open_gates': [panel],
+              'permitted_claim': (
+                  'The prospective calibration protocol can use a sealed multi-model '
+                  'agent panel with accountable-owner adjudication. No prospective panel '
+                  'or optional external human calibration result is claimed.'
+              ),
+          }
+          assertions['T17-A006'] = {
+              'state': 'partially_implemented',
+              'mapping_confidence': 'symbol_and_gate_mapped',
+              'implementation_paths': [
+                  'benchmarks/methodology/manifest.json',
+                  'registry/huggingface/searchright-methodology-fixtures/README.md',
+                  'registry/huggingface/searchright-methodology-fixtures/source-allowlist.json',
+                  'registry/huggingface/searchright-methodology-fixtures/dataset-manifest.json',
+                  'registry/huggingface/searchright-methodology-fixtures/status.json',
+                  'scripts/build_hf_methodology_fixtures.py',
+                  'scripts/publish_hf_methodology_fixtures.py',
+                  'scripts/check_hf_methodology_fixtures.py',
+                  '.github/workflows/huggingface-dataset-release.yml',
+              ],
+              'implementation_symbols': [
+                  'scripts/build_hf_methodology_fixtures.py::render_manifest',
+                  'scripts/build_hf_methodology_fixtures.py::build',
+                  'scripts/build_hf_methodology_fixtures.py::verify_output',
+                  'scripts/publish_hf_methodology_fixtures.py::publish',
+              ],
+              'deterministic_tests': [
+                  'python scripts/check_methodology_benchmarks.py',
+                  'python scripts/check_hf_methodology_fixtures.py',
+                  'python scripts/build_hf_methodology_fixtures.py --check --output target/huggingface/searchright-methodology-fixtures',
+              ],
+              'evidence_receipts': [
+                  'registry/huggingface/searchright-methodology-fixtures/dataset-manifest.json',
+                  'conductor/tracks/17-benchmarks-calibration/evidence.json',
+              ],
+              'open_gates': [hub],
+              'permitted_claim': (
+                  'A deterministic, rights-clear Hugging Face source package and '
+                  'protected publisher are implemented and tested. No Hub repository, '
+                  'revision, publication, discoverability or external benchmark result '
+                  'is claimed.'
+              ),
+          }
+          overrides_path.write_text(
+              json.dumps(overrides, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+
+          harness_path = root / 'scripts/run_static_harness.py'
+          harness = harness_path.read_text(encoding='utf-8')
+          command = '    [sys.executable, "scripts/check_hf_methodology_fixtures.py"],\n'
+          if command not in harness:
+              needle = '    [sys.executable, "scripts/check_methodology_benchmarks.py"],\n'
+              if harness.count(needle) != 1:
+                  raise SystemExit('could not locate methodology benchmark gate')
+              harness = harness.replace(needle, needle + command)
+              harness_path.write_text(harness, encoding='utf-8', newline='\n')
+          PY
+
+      - name: Generate exact dataset and derived repository evidence
+        run: |
+          python scripts/build_hf_methodology_fixtures.py \
+            --write-manifest \
+            --output target/huggingface/searchright-methodology-fixtures
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+
+          status_path = Path('registry/huggingface/searchright-methodology-fixtures/status.json')
+          manifest_path = Path('registry/huggingface/searchright-methodology-fixtures/dataset-manifest.json')
+          status = json.loads(status_path.read_text(encoding='utf-8'))
+          status['last_verified_manifest_sha256'] = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+          status_path.write_text(json.dumps(status, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+          python scripts/sync_track_evidence.py
+          python scripts/sync_traceability.py
+          python scripts/render_github_issues.py
+          python scripts/check_gate_catalog.py --write
+          python scripts/generate_evidence_debt.py --write
+          python scripts/generate_source_hash_manifest.py
+
+      - name: Verify package, publisher and generated control plane
+        run: |
+          python scripts/check_hf_methodology_fixtures.py
+          python scripts/build_hf_methodology_fixtures.py \
+            --check \
+            --output target/huggingface/searchright-methodology-fixtures
+          python scripts/publish_hf_methodology_fixtures.py \
+            --package-dir target/huggingface/searchright-methodology-fixtures \
+            --repo-id edithatogo/searchright-methodology-fixtures \
+            --visibility public \
+            --receipt target/huggingface/dry-run-receipt.json
+          python scripts/check_methodology_benchmarks.py
+          python scripts/sync_track_evidence.py --check
+          python scripts/sync_traceability.py --check
+          python scripts/render_github_issues.py --check
+          python scripts/check_gate_catalog.py --check
+          python scripts/generate_evidence_debt.py --check
+          python scripts/check_github_issue_hierarchy.py
+          python scripts/check_github_project.py
+          python scripts/check_workflow_hardening.py
+          python scripts/generate_source_hash_manifest.py --check
+          python scripts/run_static_harness.py
+
+      - name: Commit clean generated tranche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          test -n "$(git status --porcelain)"
+          git commit -m "feat(17): prepare deterministic Hugging Face methodology fixtures [skip track17 finalise]"
+          git push origin HEAD:codex/track-17-hf-methodology-fixtures

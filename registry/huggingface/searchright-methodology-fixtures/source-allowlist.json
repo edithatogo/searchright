@@ -1,0 +1,106 @@
+{
+  "schema_version": "org.searchright.huggingface-source-allowlist.v1",
+  "dataset_id": "edithatogo/searchright-methodology-fixtures",
+  "licence": "Apache-2.0",
+  "files": [
+    {
+      "source_path": "benchmarks/methodology/manifest.json",
+      "target_path": "benchmarks/methodology/manifest.json",
+      "media_type": "application/json",
+      "rights_basis": "Searchright-authored benchmark protocol; external upstream names are references only and no upstream records are redistributed."
+    },
+    {
+      "source_path": "benchmarks/methodology/fixtures/validation/dedup-cases.json",
+      "target_path": "benchmarks/methodology/fixtures/validation/dedup-cases.json",
+      "media_type": "application/json",
+      "rights_basis": "Searchright-authored synthetic fixture."
+    },
+    {
+      "source_path": "benchmarks/methodology/fixtures/validation/study-linkage-cases.json",
+      "target_path": "benchmarks/methodology/fixtures/validation/study-linkage-cases.json",
+      "media_type": "application/json",
+      "rights_basis": "Searchright-authored synthetic fixture."
+    },
+    {
+      "source_path": "benchmarks/methodology/fixtures/validation/screening-cases.json",
+      "target_path": "benchmarks/methodology/fixtures/validation/screening-cases.json",
+      "media_type": "application/json",
+      "rights_basis": "Searchright-authored synthetic fixture; labels are advisory benchmark targets only."
+    },
+    {
+      "source_path": "benchmarks/methodology/fixtures/validation/living-update-cases.json",
+      "target_path": "benchmarks/methodology/fixtures/validation/living-update-cases.json",
+      "media_type": "application/json",
+      "rights_basis": "Searchright-authored synthetic fixture."
+    },
+    {
+      "source_path": "contracts/examples/prisma-flow.json",
+      "target_path": "contracts/examples/prisma-flow.json",
+      "media_type": "application/json",
+      "rights_basis": "Searchright-authored synthetic contract example."
+    },
+    {
+      "source_path": "contracts/query-corpus/index.json",
+      "target_path": "contracts/query-corpus/index.json",
+      "media_type": "application/json",
+      "rights_basis": "Searchright-authored corpus index."
+    },
+    {
+      "source_path": "contracts/query-corpus/pubmed.txt",
+      "target_path": "contracts/query-corpus/pubmed.txt",
+      "media_type": "text/plain",
+      "rights_basis": "Searchright-authored syntax fixture; no provider help text or third-party strategy was copied."
+    },
+    {
+      "source_path": "contracts/query-corpus/ovid-medline.txt",
+      "target_path": "contracts/query-corpus/ovid-medline.txt",
+      "media_type": "text/plain",
+      "rights_basis": "Searchright-authored syntax fixture; no provider help text or third-party strategy was copied."
+    },
+    {
+      "source_path": "contracts/query-corpus/embase.txt",
+      "target_path": "contracts/query-corpus/embase.txt",
+      "media_type": "text/plain",
+      "rights_basis": "Searchright-authored syntax fixture; no provider help text or third-party strategy was copied."
+    },
+    {
+      "source_path": "contracts/query-corpus/cinahl-ebsco.txt",
+      "target_path": "contracts/query-corpus/cinahl-ebsco.txt",
+      "media_type": "text/plain",
+      "rights_basis": "Searchright-authored syntax fixture; no provider help text or third-party strategy was copied."
+    },
+    {
+      "source_path": "contracts/query-corpus/psycinfo-ovid.txt",
+      "target_path": "contracts/query-corpus/psycinfo-ovid.txt",
+      "media_type": "text/plain",
+      "rights_basis": "Searchright-authored syntax fixture; no provider help text or third-party strategy was copied."
+    },
+    {
+      "source_path": "contracts/query-corpus/scopus.txt",
+      "target_path": "contracts/query-corpus/scopus.txt",
+      "media_type": "text/plain",
+      "rights_basis": "Searchright-authored syntax fixture; no provider help text or third-party strategy was copied."
+    },
+    {
+      "source_path": "contracts/query-corpus/web-of-science.txt",
+      "target_path": "contracts/query-corpus/web-of-science.txt",
+      "media_type": "text/plain",
+      "rights_basis": "Searchright-authored syntax fixture; no provider help text or third-party strategy was copied."
+    },
+    {
+      "source_path": "LICENSE-APACHE",
+      "target_path": "LICENSE",
+      "media_type": "text/plain",
+      "rights_basis": "Apache-2.0 licence text distributed with Searchright."
+    }
+  ],
+  "excluded": [
+    "benchmarks/methodology/fixtures/sealed/**",
+    "external upstream datasets including SYNERGY",
+    "provider responses",
+    "licensed database content",
+    "credentials and environment files",
+    "personal or patient data"
+  ],
+  "claim_boundary": "Only the exact allowlisted source files may enter the Hugging Face package. Presence in Searchright does not by itself authorise redistribution."
+}

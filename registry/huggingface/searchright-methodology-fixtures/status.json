@@ -1,0 +1,15 @@
+{
+  "schema_version": "org.searchright.huggingface-dataset-status.v1",
+  "dataset_id": "edithatogo/searchright-methodology-fixtures",
+  "repo_type": "dataset",
+  "visibility": "public",
+  "status": "prepared_not_published",
+  "source_repository": "edithatogo/searchright",
+  "owner": "edithatogo",
+  "release_environment": "huggingface-dataset-release",
+  "token_secret": "HF_TOKEN",
+  "publishing_authority": "accountable_owner_only",
+  "current_hub_revision": null,
+  "last_verified_manifest_sha256": null,
+  "claim_boundary": "Source packaging and a protected publication path are prepared. The Hugging Face dataset repository, revision, acceptance, discoverability and external benchmark validity are not claimed until an observed publication receipt exists."
+}
