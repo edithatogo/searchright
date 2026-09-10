@@ -40,8 +40,7 @@ jobs:
         run: |
           git fetch --no-tags origin codex/track-11-agent-panel-governance
           git checkout origin/codex/track-11-agent-panel-governance -- \
-            scripts/check_gate_catalog.py \
-            tests/test_gate_catalog_native_commands.py
+            scripts/check_gate_catalog.py
 
       - name: Register the additive v2 contract
         run: |
