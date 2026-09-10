@@ -69,8 +69,11 @@ jobs:
           path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
           PY
 
-      - name: Remove one-shot finaliser
-        run: rm .github/workflows/track-16-native-gate-catalog-finalise.yml
+      - name: Remove one-shot orchestration
+        run: |
+          rm -f \
+            .github/workflows/track-16-native-gate-catalog-finalise.yml \
+            .github/workflows/track-16-diagnose-static.yml
 
       - name: Generate canonical catalogue and contract projections
         run: |
