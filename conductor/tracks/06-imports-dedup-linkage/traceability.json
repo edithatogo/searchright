@@ -5,165 +5,163 @@
   "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/06-imports-dedup-linkage/spec.md#scope",
-  "claim_boundary": "Compiler-backed deterministic interchange, conservative deduplication, transactional report-study graph operations and rights-clear synthetic fixture regression metrics are evidenced. No external or sealed-corpus performance is claimed; an agent panel may recommend disposition, but only the repository owner decides closeout.",
+  "claim_boundary": "Compiler-backed deterministic interchange round trips and source-level deduplication/linkage behaviour are evidenced. A digest-bound multi-agent panel may recommend disposition, but only the repository owner's recorded decision may close the evaluation gate.",
   "assertions": [
     {
       "assertion_id": "T06-A001",
-      "statement": "Implement RIS, CSL JSON, NBIB, PubMed XML, BibTeX, EndNote XML and CSV readers",
+      "statement": "Implement RIS, CSL JSON, nbib/PubMed XML and CSV readers",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
+        "crates/searchright-dedup/src/lib.rs",
         "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-contracts/src/interchange.rs"
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
+        "crates/searchright-study/src/lib.rs",
+        "contracts/examples/interchange-receipt.yaml",
+        "contracts/examples/study-graph.yaml",
+        "docs/adrs/0005-record-report-study-separation.md"
       ],
-      "implementation_symbols": [
-        "searchright_interchange::import_records",
-        "searchright_interchange::export_records",
-        "searchright_interchange::import_csv",
-        "searchright_interchange::import_bibtex",
-        "searchright_interchange::import_endnote_xml",
-        "searchright_interchange::import_pubmed_xml",
-        "searchright_interchange::conversion_receipt"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
-      "native_test_commands": [
-        "cargo test --locked -p searchright-interchange"
-      ],
       "evidence_receipts": [
-        "verification/receipts/track-06-interchange-golden.json"
+        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Deterministic multi-format bibliographic imports and exports (Searchright JSON, JSONL, CSL JSON, RIS, NBIB, PubMed XML, CSV, BibTeX and EndNote XML) pass compiler-backed semantic round trips."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T06-A002",
       "statement": "Preserve source line/range provenance and malformed-record quarantine",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
+        "crates/searchright-dedup/src/lib.rs",
         "crates/searchright-interchange/src/lib.rs",
-        "crates/searchright-interchange/src/xml.rs"
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
+        "crates/searchright-study/src/lib.rs",
+        "contracts/examples/interchange-receipt.yaml",
+        "contracts/examples/study-graph.yaml",
+        "docs/adrs/0005-record-report-study-separation.md"
       ],
-      "implementation_symbols": [
-        "searchright_interchange::QuarantinedRecord",
-        "searchright_interchange::ImportResult",
-        "searchright_interchange::xml::fragments",
-        "searchright_interchange::xml::validate"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
-      "native_test_commands": [
-        "cargo test --locked -p searchright-interchange --test xml_integrity"
-      ],
       "evidence_receipts": [
-        "verification/receipts/track-06-interchange-golden.json"
+        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Source line numbers and block line ranges are preserved for quarantined malformed records without failing valid batches."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T06-A003",
       "statement": "Expand identifier normalization and Unicode title handling",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs"
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
+        "crates/searchright-study/src/lib.rs",
+        "contracts/examples/interchange-receipt.yaml",
+        "contracts/examples/study-graph.yaml",
+        "docs/adrs/0005-record-report-study-separation.md"
       ],
-      "implementation_symbols": [
-        "searchright_dedup::normalise_unicode_text",
-        "searchright_dedup::normalise_isbn",
-        "searchright_dedup::normalise_doi"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-06-dedup-linkage-review.json"
+        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Unicode diacritic/ligature decomposition, punctuation normalization, and ISBN-10/13 normalization are implemented and property-tested."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T06-A004",
       "statement": "Add report-to-study linkage model and manual merge/split",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "crates/searchright-study/src/lib.rs"
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
+        "crates/searchright-study/src/lib.rs",
+        "contracts/examples/interchange-receipt.yaml",
+        "contracts/examples/study-graph.yaml",
+        "docs/adrs/0005-record-report-study-separation.md"
       ],
-      "implementation_symbols": [
-        "searchright_study::merge_studies",
-        "searchright_study::split_study",
-        "searchright_study::detach_report",
-        "searchright_study::link_report_to_study",
-        "searchright_study::attach_report"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-06-dedup-linkage-review.json"
+        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Report-to-study linkage, study merging, study splitting, and report detachment are implemented with transactional graph validation."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T06-A005",
       "statement": "Add large-corpus blocking/indexing without changing deterministic results",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "crates/searchright-dedup/src/lib.rs"
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
+        "crates/searchright-study/src/lib.rs",
+        "contracts/examples/interchange-receipt.yaml",
+        "contracts/examples/study-graph.yaml",
+        "docs/adrs/0005-record-report-study-separation.md"
       ],
-      "implementation_symbols": [
-        "searchright_dedup::Deduplicator::cluster",
-        "searchright_dedup::build_candidate_pairs"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-06-dedup-linkage-review.json"
+        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Deterministic multi-key candidate blocking and indexing enables scalable deduplication while preserving identical clustering results."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T06-A006",
       "statement": "Validate against review datasets and adversarial fixtures",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "crates/searchright-interchange/src/lib.rs",
         "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
         "crates/searchright-study/src/lib.rs",
-        "crates/searchright-bench/src/lib.rs"
+        "contracts/examples/interchange-receipt.yaml",
+        "contracts/examples/study-graph.yaml",
+        "docs/adrs/0005-record-report-study-separation.md"
       ],
-      "implementation_symbols": [
-        "searchright_interchange::tests",
-        "searchright_dedup::tests",
-        "searchright_study::tests",
-        "searchright_bench::evaluate_study_linkage",
-        "searchright_bench::study_linkage_metric_contracts"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py"
       ],
-      "native_test_commands": [
-        "cargo test --locked -p searchright-interchange --test xml_integrity"
-      ],
       "evidence_receipts": [
-        "verification/receipts/track-06-interchange-golden.json",
-        "verification/receipts/track-06-dedup-linkage-review.json",
-        "verification/receipts/track-06-study-linkage-validation.json",
-        "verification/receipts/track-06-agent-panel-decision-packet-r2.json",
-        "verification/receipts/track-06-owner-decision.json"
+        "conductor/tracks/06-imports-dedup-linkage/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Compiler-backed synthetic regression tests and a digest-bound three-agent panel review are evidenced, with the repository owner's explicit approval for closeout. No sealed, external or general corpus-performance claim is established."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     }
   ]
 }

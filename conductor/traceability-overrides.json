@@ -6,10 +6,23 @@
         "T00-A006": {
           "state": "source_implemented",
           "mapping_confidence": "path_and_gate_mapped",
-          "implementation_paths": ["scripts/bootstrap.sh", "scripts/bootstrap.ps1", "scripts/verify.sh", "scripts/run_static_harness.py", "verification/receipts/track-00-local-verification.json"],
-          "implementation_symbols": ["scripts/run_static_harness.py::main"],
-          "deterministic_tests": ["python scripts/run_static_harness.py"],
-          "evidence_receipts": ["verification/receipts/track-00-local-verification.json", "verification/receipts/track-00-verification-reconciliation.json"],
+          "implementation_paths": [
+            "scripts/bootstrap.sh",
+            "scripts/bootstrap.ps1",
+            "scripts/verify.sh",
+            "scripts/run_static_harness.py",
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_symbols": [
+            "scripts/run_static_harness.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/run_static_harness.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-00-local-verification.json",
+            "verification/receipts/track-00-verification-reconciliation.json"
+          ],
           "open_gates": [],
           "permitted_claim": "One-command bootstrap and verification entry points exist. The exact 8de03a0 tree equals the pinned full-verified c358e68 tree: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet 0.10.2 check passed existing policy with 43 fully vetted dependencies and 259 existing exemptions; exempted dependencies are not claimed audited. No future-tree verification or upstream estate conformance is implied."
         }
@@ -17,10 +30,10 @@
     },
     "01": {
       "assertions": {
-          "T01-A001": {
-            "deterministic_tests": [
-              "python scripts/validate_repository.py",
-              "python scripts/sync_contract_conformance_matrix.py --check"
+        "T01-A001": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "contracts/schema-catalog.json",
@@ -29,21 +42,21 @@
             "contracts/compatibility/rust-schema-parity.json"
           ],
           "implementation_symbols": [
-              "scripts/validate_repository.py::validate_schemas_and_examples",
-              "evidence_search_contracts::rust_owned_schemas"
+            "scripts/validate_repository.py::validate_schemas_and_examples",
+            "evidence_search_contracts::rust_owned_schemas"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [],
-            "permitted_claim": "All 68 checked-in JSON Schemas and examples are statically validated; 10 explicitly Rust-owned roots are compiler-generated and compared with every observed validation-shape difference recorded, while exact semantic parity remains denied.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "All 68 checked-in JSON Schemas and examples are statically validated; 10 explicitly Rust-owned roots are compiler-generated and compared with every observed validation-shape difference recorded, while exact semantic parity remains denied.",
+          "state": "source_implemented"
         },
         "T01-A002": {
           "deterministic_tests": [
-              "python scripts/sync_contract_conformance_matrix.py --check"
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "crates/evidence-search-contracts",
-              "contracts/schema-catalog.json",
+            "contracts/schema-catalog.json",
             "crates/evidence-search-contracts/src/schema.rs",
             "crates/evidence-search-contracts/tests/schema_parity.rs",
             "crates/evidence-search-contracts/examples/export_schemas.rs",
@@ -51,20 +64,20 @@
             "contracts/compatibility/rust-schema-parity.json",
             "docs/adrs/0017-canonical-schema-and-binding-ownership.md"
           ],
-            "implementation_symbols": [
-              "evidence_search_contracts::rust_owned_schemas",
-              "export_schemas::main",
-              "scripts/check_rust_schema_parity.py::render_report"
-            ],
+          "implementation_symbols": [
+            "evidence_search_contracts::rust_owned_schemas",
+            "export_schemas::main",
+            "scripts/check_rust_schema_parity.py::render_report"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
-            "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and compared against canonical forms with schema-aware normalization and content-bound digests; observed differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed.",
-            "state": "source_implemented"
+          "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and compared against canonical forms with schema-aware normalization and content-bound digests; observed differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed.",
+          "state": "source_implemented"
         },
         "T01-A003": {
           "deterministic_tests": [
-              "python scripts/sync_schema_surface.py --check",
-              "python scripts/check_schema_migrations.py"
+            "python scripts/sync_schema_surface.py --check",
+            "python scripts/check_schema_migrations.py"
           ],
           "implementation_paths": [
             "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
@@ -74,14 +87,13 @@
             "scripts/sync_schema_surface.py::render"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-          ],
+          "open_gates": [],
           "permitted_claim": "Exact schema, WIT, OpenAPI and MCP surface drift is gated; semantic compatibility remains separate.",
-            "state": "source_implemented"
+          "state": "source_implemented"
         },
         "T01-A004": {
           "deterministic_tests": [
-              "python scripts/validate_repository.py"
+            "python scripts/validate_repository.py"
           ],
           "implementation_paths": [
             "crates/searchright-contracts/src/study.rs",
@@ -90,64 +102,63 @@
             "contracts/json-schema/study-graph.v1.schema.json",
             "contracts/json-schema/protocol-amendment.v1.schema.json"
           ],
-            "implementation_symbols": [
-              "searchright_contracts::study::StudyGraph::validate",
-              "searchright_contracts::amendment::ProtocolAmendment::validate",
-              "searchright_study::attach_report"
-            ],
+          "implementation_symbols": [
+            "searchright_contracts::study::StudyGraph::validate",
+            "searchright_contracts::amendment::ProtocolAmendment::validate",
+            "searchright_study::attach_report"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [],
-            "permitted_claim": "Report/study linkage and protocol-amendment invariants are compiler-tested, including duplicate report references within a study, duplicate amendment paths and transactional attachment failure.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "Report/study linkage and protocol-amendment invariants are compiler-tested, including duplicate report references within a study, duplicate amendment paths and transactional attachment failure.",
+          "state": "source_implemented"
         },
         "T01-A005": {
           "deterministic_tests": [
-              "python scripts/check_contract_bindings.py",
-              "python scripts/check_public_package_policy.py",
-              "python scripts/sync_contract_conformance_matrix.py --check"
+            "python scripts/check_contract_bindings.py",
+            "python scripts/check_public_package_policy.py",
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "sdk/manifest.json",
-              "sdk/generated-contract-bindings.json",
-              "sdk/python/searchright_contracts/__init__.py",
-              "sdk/typescript/src/index.ts",
-              "scripts/generate_contract_bindings.py",
-              "scripts/check_contract_bindings.py",
-              "release/public-packages.json",
-              "contracts/compatibility/contract-conformance-matrix.json"
+            "sdk/generated-contract-bindings.json",
+            "sdk/python/searchright_contracts/__init__.py",
+            "sdk/typescript/src/index.ts",
+            "scripts/generate_contract_bindings.py",
+            "scripts/check_contract_bindings.py",
+            "release/public-packages.json",
+            "contracts/compatibility/contract-conformance-matrix.json"
           ],
-            "implementation_symbols": [
-              "scripts/generate_contract_bindings.py::render_outputs",
-              "scripts/check_contract_bindings.py::main",
-              "scripts/check_public_package_policy.py::main",
-              "scripts/sync_contract_conformance_matrix.py::render"
-            ],
+          "implementation_symbols": [
+            "scripts/generate_contract_bindings.py::render_outputs",
+            "scripts/check_contract_bindings.py::main",
+            "scripts/check_public_package_policy.py::main",
+            "scripts/sync_contract_conformance_matrix.py::render"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-            ],
-            "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 72 canonical schemas, statically type-checked and import-checked; installation, clients, publication and downstream conformance remain Track 35 gates.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 72 canonical schemas, statically type-checked and import-checked; installation, clients, publication and downstream conformance remain Track 35 gates.",
+          "state": "source_implemented"
         },
         "T01-A006": {
           "deterministic_tests": [
-              "python scripts/check_traceability.py",
-              "python scripts/sync_contract_conformance_matrix.py --check"
+            "python scripts/check_traceability.py",
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "contracts/schema-catalog.json",
             "conductor/traceability-overrides.json",
-              "scripts/check_traceability.py",
-              "contracts/compatibility/contract-conformance-matrix.json",
-              "scripts/sync_contract_conformance_matrix.py"
+            "scripts/check_traceability.py",
+            "contracts/compatibility/contract-conformance-matrix.json",
+            "scripts/sync_contract_conformance_matrix.py"
           ],
           "implementation_symbols": [
-              "scripts/check_traceability.py::main",
-              "scripts/sync_contract_conformance_matrix.py::render"
+            "scripts/check_traceability.py::main",
+            "scripts/sync_contract_conformance_matrix.py::render"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [],
-            "permitted_claim": "The generated 68-contract matrix records static validation, exact canonical digests and generated-binding source status, with round-trip and downstream columns fail-closed as not evidenced.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "The generated 68-contract matrix records static validation, exact canonical digests and generated-binding source status, with round-trip and downstream columns fail-closed as not evidenced.",
+          "state": "source_implemented"
         }
       }
     },
@@ -760,27 +771,38 @@
         },
         "T11-A002": {
           "deterministic_tests": [
-            "python scripts/check_agent_skill.py"
+            "python scripts/check_agent_skill.py",
+            "python scripts/test_agent_panel_governance.py"
           ],
           "implementation_paths": [
             "skills/systematic-search/workflows/systematic-review.yaml",
             "skills/systematic-search/references/authority.md",
+            "skills/systematic-search/references/agent-panel.md",
             "skills/systematic-search/references/failure-modes.md",
             "skills/systematic-search/references/methodology.md",
             "skills/systematic-search/references/tool-map.md",
-            "crates/searchright-agent/src/lib.rs"
+            "skills/systematic-search/evaluations/agent-panel-protocol.md",
+            "skills/systematic-search/evaluations/agent-panel-template.json",
+            "crates/searchright-agent/src/lib.rs",
+            "scripts/check_agent_skill.py",
+            "scripts/test_agent_panel_governance.py"
           ],
           "implementation_symbols": [
             "searchright_agent::AgentWorkflow::systematic_search",
-            "searchright_agent::AgentWorkflow::validate"
+            "searchright_agent::AgentWorkflow::validate",
+            "scripts/check_agent_skill.py::validate"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Run scenario-based agent evaluations across supported hosts and models.",
-            "Calibrate authority and failure modes with human information specialists."
+            "Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication.",
+            "Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change."
           ],
-          "permitted_claim": "Planning through reporting stages and conservative authority gates are compiler-checked locally; host/model behaviour and human calibration are not established.",
-          "state": "partially_implemented"
+          "permitted_claim": "Planning through reporting stages, a sealed five-role advisory panel contract and owner-only consequential authority are compiler-checked. The panel and exact host/model evaluations remain unexecuted for the current package; independent human peer review is not claimed.",
+          "state": "partially_implemented",
+          "evidence_receipts": [
+            "verification/receipts/systematic-search-skill.json",
+            "conductor/tracks/11-agentic-skill/evidence.json"
+          ]
         },
         "T11-A003": {
           "deterministic_tests": [
@@ -805,10 +827,16 @@
         },
         "T11-A004": {
           "deterministic_tests": [
-            "python scripts/check_agent_skill.py"
+            "python scripts/check_agent_skill.py",
+            "python scripts/test_agent_panel_governance.py",
+            "python -m unittest tests.test_gate_catalog_native_commands"
           ],
           "implementation_paths": [
             "skills/systematic-search/evaluations/authority-scenarios.json",
+            "skills/systematic-search/evaluations/agent-panel-protocol.md",
+            "skills/systematic-search/evaluations/agent-panel-template.json",
+            "scripts/test_agent_panel_governance.py",
+            "tests/test_gate_catalog_native_commands.py",
             "crates/searchright-agent/tests/skill_scenarios.rs",
             "crates/searchright-agent/src/lib.rs"
           ],
@@ -818,10 +846,15 @@
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
+            "Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change.",
+            "Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication."
           ],
-          "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority. A context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed the twelve public authority fixtures with strict event integrity; this is bounded fixture compliance, not general host support or calibration. The declared Claude pair remains pending.",
-          "state": "partially_implemented"
+          "permitted_claim": "Deterministic fixtures and governance tests cover authority, panel isolation, dissent and claim boundaries. The gate catalogue distinguishes source scripts from native compiler/tool commands. These checks do not establish current host/model behaviour, panel completion or methodological validity.",
+          "state": "partially_implemented",
+          "evidence_receipts": [
+            "verification/receipts/systematic-search-skill.json",
+            "conductor/tracks/11-agentic-skill/evidence.json"
+          ]
         },
         "T11-A005": {
           "deterministic_tests": [

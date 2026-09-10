@@ -5,140 +5,172 @@
   "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/00-foundation-conductor-toolchain/spec.md#scope",
-  "claim_boundary": "Five of six foundation assertions are source implemented. The exact 8de03a0 tree has a whole-tree-equivalent pinned full verification pass and a separate frozen cargo-vet policy pass with 259 existing exemptions, not 259 new audits. Upstream repository-standards registration and estate conformance remain externally blocked; historical failed receipts retain their original scope.",
+  "claim_boundary": "Source-verified foundation implementation with exact 8de03a0 whole-tree-equivalent full verification: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet policy check passed with 43 fully vetted dependencies and 259 existing exemptions, not 259 audited dependencies. Earlier failed receipts remain historical; upstream repository-standards registration and estate conformance remain open. No future-tree validation or track completion is implied.",
   "assertions": [
     {
       "assertion_id": "T00-A001",
       "statement": "Record upstream Conductor 0.3.0 and supported host installation paths",
-      "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
         "conductor/upstream.lock.json",
+        "conductor/index.md",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "Cargo.lock",
+        "docs/repository-standards-alignment.md",
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-conductor-review.json",
         "scripts/install-conductor.sh",
         "scripts/install-conductor.ps1",
-        "verification/receipts/track-00-local-verification.json"
+        "scripts/conductor_status.py",
+        "tests/test_conductor_status.py"
       ],
-      "implementation_symbols": [
-        "scripts/check_context_integrity.py::main"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_context_integrity.py"
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json"
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "The 0.3.0 repository baseline and supported installers are recorded; Gemini CLI has a separately recorded enabled Conductor 0.4.1 host."
+      "open_gates": [
+        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
     },
     {
       "assertion_id": "T00-A002",
       "statement": "Create product, guidelines, stack, workflow, requirements and design context",
-      "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
         "conductor/index.md",
         "conductor/product.md",
-        "conductor/product-guidelines.md",
-        "conductor/tech-stack.md",
         "conductor/workflow.md",
-        "conductor/requirements.md",
-        "conductor/design.md",
+        "Cargo.lock",
+        "docs/repository-standards-alignment.md",
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-conductor-review.json",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1",
         "scripts/conductor_status.py",
         "tests/test_conductor_status.py"
       ],
-      "implementation_symbols": [
-        "scripts/check_context_integrity.py::main",
-        "scripts/conductor_status.py::audit",
-        "scripts/conductor_status.py::main",
-        "tests/test_conductor_status.py::StatusTests"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_context_integrity.py",
-        "python scripts/sync_context_lock.py --check",
-        "python scripts/conductor_status.py"
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json",
-        "verification/receipts/track-00-native-status-adapter.json"
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "The Conductor handshake and linked project context resolve locally. The native read-only v3 status adapter reconciles registry, plans, evidence and in-place archive state with adversarial tests; it neither executes inspected-root code nor promotes external gates."
+      "open_gates": [
+        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
     },
     {
       "assertion_id": "T00-A003",
       "statement": "Pin Rust stable and document nightly/experimental policy",
-      "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
+        "Cargo.toml",
         "rust-toolchain.toml",
-        "conductor/tech-stack.md",
-        "docs/msrv-and-package-policy.md",
-        "verification/receipts/track-00-local-verification.json"
+        "conductor/upstream.lock.json",
+        "conductor/index.md",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "Cargo.lock",
+        "docs/repository-standards-alignment.md",
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-conductor-review.json",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1",
+        "scripts/conductor_status.py",
+        "tests/test_conductor_status.py"
       ],
-      "implementation_symbols": [
-        "scripts/check_toolchain_manifest.py::main"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_toolchain_manifest.py"
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json"
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Rust 1.97.1 is pinned; exact GNU compiler execution passed locally and hosted Windows, macOS, Linux and declared-version jobs passed on PR #569."
+      "open_gates": [
+        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
     },
     {
       "assertion_id": "T00-A004",
       "statement": "Generate and commit Cargo.lock in a networked Rust environment",
-      "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "state": "external_evidence_required",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "Cargo.lock",
         "Cargo.toml",
-        "verification/receipts/track-00-local-verification.json"
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/index.md",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "Cargo.lock",
+        "docs/repository-standards-alignment.md",
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-conductor-review.json",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1",
+        "scripts/conductor_status.py",
+        "tests/test_conductor_status.py"
       ],
-      "implementation_symbols": [
-        "scripts/check_rust_dependency_graph.py::main"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_rust_dependency_graph.py"
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json"
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Cargo.lock is committed at implementation revision 3f62b5ebc3efe3e619c05dfacdabc01b159f1aec, and exact Rust 1.97.1 GNU workspace check plus 55 tests passed against that revision."
+      "open_gates": [
+        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
+      ],
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
     },
     {
       "assertion_id": "T00-A005",
       "statement": "Register repository in repository-standards and run estate conformance",
       "state": "external_evidence_required",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "integration/passports/repository-standards-inheritance.json",
-        "migration/estate/repositories.json",
-        "migration/companion-repositories/repository-standards.json",
-        "docs/repository-standards-alignment.md"
+        "Cargo.toml",
+        "rust-toolchain.toml",
+        "conductor/upstream.lock.json",
+        "conductor/index.md",
+        "conductor/product.md",
+        "conductor/workflow.md",
+        "Cargo.lock",
+        "docs/repository-standards-alignment.md",
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-conductor-review.json",
+        "scripts/install-conductor.sh",
+        "scripts/install-conductor.ps1",
+        "scripts/conductor_status.py",
+        "tests/test_conductor_status.py"
       ],
-      "implementation_symbols": [
-        "scripts/check_integration_passports.py::main",
-        "scripts/check_integration_drift.py::main",
-        "scripts/check_companion_change_packets.py::main"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_integration_passports.py",
-        "python scripts/check_integration_drift.py",
-        "python scripts/check_companion_change_packets.py"
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json"
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json"
       ],
       "open_gates": [
-        "Obtain explicit authority to modify edithatogo/repository-standards despite the prepared packet's remote_mutation_permitted=false policy.",
-        "Add edithatogo/searchright to the upstream registry and run estate conformance against the exact Searchright revision.",
-        "Record the observed upstream commit and conformance receipt."
+        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
       ],
-      "permitted_claim": "Policy inheritance and a prepared registration packet exist; upstream registration and estate conformance do not."
+      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
     },
     {
       "assertion_id": "T00-A006",

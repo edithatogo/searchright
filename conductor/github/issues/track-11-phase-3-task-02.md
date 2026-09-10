@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run scenario-based agent evaluations across supported hosts and models.
+- [ ] Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication.
 
 ## Completion and evidence contract
 

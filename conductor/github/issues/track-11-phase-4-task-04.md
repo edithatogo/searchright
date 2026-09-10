@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Close the track only when applicable downstream, host/model, sealed agent-panel, accountable-owner and registry gates are evidenced; optional external human calibration remains a separate evidence class.
 
 ## Completion and evidence contract
 

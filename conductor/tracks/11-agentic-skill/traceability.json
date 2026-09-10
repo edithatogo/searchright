@@ -5,11 +5,11 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/11-agentic-skill/spec.md#scope",
-  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The default internal review gate is a sealed five-role agent panel with preserved dissent and accountable-owner adjudication; it has not yet been executed for the new package digest. Agent-panel output is not independent human PRESS peer review. Exact host/model receipts were reset to pending after the package changed. Downstream adoption, runtime admission, optional external human calibration, registry authorisation and acceptance remain separate evidence and are not claimed.",
   "assertions": [
     {
       "assertion_id": "T11-A001",
-      "statement": "Publish SKILL.md with trigger and non-trigger boundaries",
+      "statement": "Publish `SKILL.md` with trigger and non-trigger boundaries.",
       "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
@@ -31,36 +31,44 @@
     },
     {
       "assertion_id": "T11-A002",
-      "statement": "Add planning, strategy, PRESS, execution, screening and reporting references",
+      "statement": "Add planning, strategy, PRESS-aligned critique, execution, screening and reporting references, including a sealed five-role agent panel with preserved dissent, accountable-owner adjudication and distinct automated, agent-panel and independent-human evidence classes.",
       "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/workflows/systematic-review.yaml",
         "skills/systematic-search/references/authority.md",
+        "skills/systematic-search/references/agent-panel.md",
         "skills/systematic-search/references/failure-modes.md",
         "skills/systematic-search/references/methodology.md",
         "skills/systematic-search/references/tool-map.md",
-        "crates/searchright-agent/src/lib.rs"
+        "skills/systematic-search/evaluations/agent-panel-protocol.md",
+        "skills/systematic-search/evaluations/agent-panel-template.json",
+        "crates/searchright-agent/src/lib.rs",
+        "scripts/check_agent_skill.py",
+        "scripts/test_agent_panel_governance.py"
       ],
       "implementation_symbols": [
         "searchright_agent::AgentWorkflow::systematic_search",
-        "searchright_agent::AgentWorkflow::validate"
+        "searchright_agent::AgentWorkflow::validate",
+        "scripts/check_agent_skill.py::validate"
       ],
       "deterministic_tests": [
-        "python scripts/check_agent_skill.py"
+        "python scripts/check_agent_skill.py",
+        "python scripts/test_agent_panel_governance.py"
       ],
       "evidence_receipts": [
+        "verification/receipts/systematic-search-skill.json",
         "conductor/tracks/11-agentic-skill/evidence.json"
       ],
       "open_gates": [
-        "Run scenario-based agent evaluations across supported hosts and models.",
-        "Calibrate authority and failure modes with human information specialists."
+        "Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication.",
+        "Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change."
       ],
-      "permitted_claim": "Planning through reporting stages and conservative authority gates are compiler-checked locally; host/model behaviour and human calibration are not established."
+      "permitted_claim": "Planning through reporting stages, a sealed five-role advisory panel contract and owner-only consequential authority are compiler-checked. The panel and exact host/model evaluations remain unexecuted for the current package; independent human peer review is not claimed."
     },
     {
       "assertion_id": "T11-A003",
-      "statement": "Create subagent role cards and handoff contracts",
+      "statement": "Create subagent role cards and handoff contracts.",
       "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
@@ -86,11 +94,15 @@
     },
     {
       "assertion_id": "T11-A004",
-      "statement": "Add scenario, prompt-injection and authority tests",
+      "statement": "Add scenario, prompt-injection, authority, panel-isolation and claim-boundary tests.",
       "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "skills/systematic-search/evaluations/authority-scenarios.json",
+        "skills/systematic-search/evaluations/agent-panel-protocol.md",
+        "skills/systematic-search/evaluations/agent-panel-template.json",
+        "scripts/test_agent_panel_governance.py",
+        "tests/test_gate_catalog_native_commands.py",
         "crates/searchright-agent/tests/skill_scenarios.rs",
         "crates/searchright-agent/src/lib.rs"
       ],
@@ -99,19 +111,23 @@
         "skill_scenarios::deterministic_authority_scenarios_match_the_real_evaluator"
       ],
       "deterministic_tests": [
-        "python scripts/check_agent_skill.py"
+        "python scripts/check_agent_skill.py",
+        "python scripts/test_agent_panel_governance.py",
+        "python -m unittest tests.test_gate_catalog_native_commands"
       ],
       "evidence_receipts": [
+        "verification/receipts/systematic-search-skill.json",
         "conductor/tracks/11-agentic-skill/evidence.json"
       ],
       "open_gates": [
-        "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
+        "Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change.",
+        "Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication."
       ],
-      "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority. A context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed the twelve public authority fixtures with strict event integrity; this is bounded fixture compliance, not general host support or calibration. The declared Claude pair remains pending."
+      "permitted_claim": "Deterministic fixtures and governance tests cover authority, panel isolation, dissent and claim boundaries. The gate catalogue distinguishes source scripts from native compiler/tool commands. These checks do not establish current host/model behaviour, panel completion or methodological validity."
     },
     {
       "assertion_id": "T11-A005",
-      "statement": "Prepare a Searchright-owned sibling thin caller for explicit academic-research-skills handoffs; downstream adoption remains separately gated",
+      "statement": "Prepare a Searchright-owned sibling thin caller for explicit academic-research-skills handoffs; downstream adoption remains separately gated.",
       "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
@@ -141,7 +157,7 @@
     },
     {
       "assertion_id": "T11-A006",
-      "statement": "Publish skill registry packets after observed validation",
+      "statement": "Publish skill registry packets only after observed validation and explicit owner authorisation.",
       "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [

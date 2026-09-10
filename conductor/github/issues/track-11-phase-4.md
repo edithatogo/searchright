@@ -9,7 +9,7 @@ Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
 - [x] T01: Reconcile source paths, requirements, interface effects and claim boundaries. (`track-11-phase-4-task-01`)
 - [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-11-phase-4-task-02`)
 - [x] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-11-phase-4-task-03`)
-- [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-11-phase-4-task-04`)
+- [ ] T04: Close the track only when applicable downstream, host/model, sealed agent-panel, accountable-owner and registry gates are evidenced; optional external human calibration remains a separate evidence class. (`track-11-phase-4-task-04`)
 - [x] T05: Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json. (`track-11-phase-4-task-05`)
 - [x] T06: Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending. (`track-11-phase-4-task-06`)
 

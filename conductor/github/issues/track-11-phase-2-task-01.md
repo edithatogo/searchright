@@ -12,6 +12,8 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_agent_skill.py`
   - [x] `cargo test -p searchright-agent --locked`
   - [x] `cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings`
+  - [x] `python scripts/test_agent_panel_governance.py`
+  - [x] `python -m unittest tests.test_gate_catalog_native_commands`
 
 ## Completion and evidence contract
 

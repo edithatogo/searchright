@@ -5,10 +5,7 @@
   "implementation_state": "source_implemented",
   "evidence_level": "live_proven",
   "source_of_assertions": "conductor/tracks/31-github-control-plane/spec.md#scope",
-  "native_test_commands": [
-    "python3 -m unittest discover -s tests -p test_pr_track_scope.py"
-  ],
-  "claim_boundary": "Historical bootstrap and audit receipts remain revision-bound. Subsequent PR-scope parser maintenance requires separate evidence and does not inherit historic remote verification. Semantic archival preserves ownership and identity; projection does not promote product, methodology or release maturity.",
+  "claim_boundary": "Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity.",
   "assertions": [
     {
       "assertion_id": "T31-A001",
@@ -28,7 +25,8 @@
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
         "contracts/json-schema/github-project.v1.schema.json",
-        "tests/test_github_bootstrap_secret.py"
+        "scripts/check_pr_track_scope.py",
+        "tests/test_pr_track_scope.py"
       ],
       "implementation_symbols": [
         "scripts/bootstrap_github.py::main"
@@ -37,14 +35,10 @@
         "python scripts/bootstrap_github.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-31-control-plane-apply.json",
-        "verification/receipts/track-31-bootstrap-exact-main.json",
-        "verification/receipts/track-31-audit-exact-main.json"
+        "conductor/tracks/31-github-control-plane/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The controller verified the public repository, origin and pushed exact merged main during the full bootstrap."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T31-A002",
@@ -63,7 +57,9 @@
         ".github/workflows/github-control-plane.yml",
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
-        "contracts/json-schema/github-project.v1.schema.json"
+        "contracts/json-schema/github-project.v1.schema.json",
+        "scripts/check_pr_track_scope.py",
+        "tests/test_pr_track_scope.py"
       ],
       "implementation_symbols": [
         "scripts/sync_github_issues.py::main"
@@ -72,13 +68,10 @@
         "python scripts/sync_github_issues.py --repo edithatogo/searchright"
       ],
       "evidence_receipts": [
-        "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-31-control-plane-apply.json",
-        "verification/receipts/track-31-audit-exact-main.json"
+        "conductor/tracks/31-github-control-plane/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The exact-main apply and audit observed 583 canonical issues and all 582 native relationships without deletion."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T31-A003",
@@ -98,7 +91,8 @@
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
         "contracts/json-schema/github-project.v1.schema.json",
-        "tests/test_github_project_values.py"
+        "scripts/check_pr_track_scope.py",
+        "tests/test_pr_track_scope.py"
       ],
       "implementation_symbols": [
         "scripts/sync_github_project.py::main"
@@ -107,13 +101,10 @@
         "python scripts/sync_github_project.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-31-control-plane-apply.json",
-        "verification/receipts/track-31-audit-exact-main.json"
+        "conductor/tracks/31-github-control-plane/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The exact-main apply and audit observed all 583 canonical Project items with zero recognised value drift; three additive items remain outside deletion authority."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T31-A004",
@@ -133,27 +124,20 @@
         "docs/github-operating-system.md",
         "contracts/json-schema/github-issue-hierarchy.v2.schema.json",
         "contracts/json-schema/github-project.v1.schema.json",
-        "tests/test_github_common.py",
         "scripts/check_pr_track_scope.py",
         "tests/test_pr_track_scope.py"
       ],
       "implementation_symbols": [
-        "scripts/audit_github_control_plane.py::main",
-        "scripts/check_pr_track_scope.py::changed_files",
-        "scripts/check_pr_track_scope.py::check"
+        "scripts/audit_github_control_plane.py::main"
       ],
       "deterministic_tests": [
         "python scripts/audit_github_control_plane.py --help"
       ],
       "evidence_receipts": [
-        "conductor/tracks/31-github-control-plane/evidence.json",
-        "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-31-control-plane-apply.json",
-        "verification/receipts/track-31-bootstrap-exact-main.json",
-        "verification/receipts/track-31-audit-exact-main.json"
+        "conductor/tracks/31-github-control-plane/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The exact-main bootstrap applied protected-branch environment policies and the complete seven-check ruleset; the audit found full payload parity."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     }
   ]
 }

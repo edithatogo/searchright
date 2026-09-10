@@ -5,79 +5,217 @@
   "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/09-cli-mvp/spec.md#scope",
-  "claim_boundary": "The grouped CLI hierarchy, stable JSON/error snapshots, dry-run/apply guard, static completion assets and man-page generation are compiler-verified with exact-revision hosted Linux, macOS and Windows evidence. This is not methodological certification, live-provider support, package publication or release promotion.",
+  "claim_boundary": "The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, static completion assets and man-page generation are compiler-verified with exact-revision hosted Linux, macOS and Windows evidence and a sealed advisory panel disposition. This is not methodological certification, live-provider support, package publication or release promotion.",
   "assertions": [
     {
       "assertion_id": "T09-A001",
       "statement": "Add init/plan/source/strategy/run/import/screen/report command hierarchy",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": ["crates/searchright-cli/src/main.rs", "crates/searchright-cli/tests/cli_e2e.rs", "crates/searchright/src/engine.rs", "contracts/interface-catalog.json"],
-      "implementation_symbols": ["Command", "PlanCommand", "SourceCommand", "StrategyCommand", "RunCommand", "ImportCommand", "ScreenCommand", "ReportCommand", "execute", "tests::grouped_commands_cover_every_fixture_backed_operation"],
-      "deterministic_tests": ["python scripts/check_cli_mcp_parity.py", "python scripts/check_cli_distribution.py target/debug/searchright"],
-      "evidence_receipts": ["verification/receipts/track-09-cli-review.json"],
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/clean-room.yml",
+        ".github/workflows/ci.yml",
+        "crates/searchright-cli/assets/completions/",
+        "crates/searchright-cli/tests/cli_e2e.rs",
+        "crates/searchright-cli/tests/snapshots/",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md",
+        "docs/cli-compatibility.md",
+        "scripts/check_cli_distribution.py",
+        "supply-chain/audits.toml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "cargo test -p searchright-cli --locked",
+        "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/check_cli_distribution.py target/debug/searchright"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
       "open_gates": [],
-      "permitted_claim": "Every interface-catalogue operation is reachable through the grouped CLI hierarchy and checked against the shared application facade."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T09-A002",
       "statement": "Support JSON output and actionable diagnostics everywhere",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": ["crates/searchright-cli/src/main.rs", "crates/searchright-cli/tests/cli_e2e.rs", "crates/searchright-cli/tests/snapshots/usage-error.json"],
-      "implementation_symbols": ["emit_error", "print_json", "cli_e2e::usage_errors_are_machine_readable_and_stable"],
-      "deterministic_tests": ["python scripts/check_cli_distribution.py target/debug/searchright"],
-      "evidence_receipts": ["verification/receipts/track-09-cli-review.json"],
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/clean-room.yml",
+        ".github/workflows/ci.yml",
+        "crates/searchright-cli/assets/completions/",
+        "crates/searchright-cli/tests/cli_e2e.rs",
+        "crates/searchright-cli/tests/snapshots/",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md",
+        "docs/cli-compatibility.md",
+        "scripts/check_cli_distribution.py",
+        "supply-chain/audits.toml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "cargo test -p searchright-cli --locked",
+        "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/check_cli_distribution.py target/debug/searchright"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
       "open_gates": [],
-      "permitted_claim": "Successful operations and CLI failures expose stable machine-readable JSON without reflecting arbitrary parser input."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T09-A003",
       "statement": "Add dry-run/apply semantics for writes",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": ["crates/searchright-cli/src/main.rs", "crates/searchright-cli/assets/completions/", "crates/searchright-cli/tests/cli_e2e.rs", "docs/cli-compatibility.md"],
-      "implementation_symbols": ["initialise", "tests::init_defaults_to_dry_run", "tests::init_refuses_to_overwrite", "cli_e2e::dry_run_json_matches_the_stable_snapshot_without_writing"],
-      "deterministic_tests": ["python scripts/check_cli_distribution.py target/debug/searchright"],
-      "evidence_receipts": ["verification/receipts/track-09-cli-review.json"],
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/clean-room.yml",
+        ".github/workflows/ci.yml",
+        "crates/searchright-cli/assets/completions/",
+        "crates/searchright-cli/tests/cli_e2e.rs",
+        "crates/searchright-cli/tests/snapshots/",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md",
+        "docs/cli-compatibility.md",
+        "scripts/check_cli_distribution.py",
+        "supply-chain/audits.toml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "cargo test -p searchright-cli --locked",
+        "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/check_cli_distribution.py target/debug/searchright"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
       "open_gates": [],
-      "permitted_claim": "The CLI defaults its external write operation to dry-run and requires explicit --apply before creating state."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T09-A004",
       "statement": "Add shell completions and man pages",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": ["crates/searchright-cli/src/main.rs", "crates/searchright-cli/tests/cli_e2e.rs", "docs/cli-compatibility.md"],
-      "implementation_symbols": ["completion_document", "manpage_document", "cli_e2e::distribution_documents_are_available_without_filesystem_writes"],
-      "deterministic_tests": ["python scripts/check_cli_distribution.py target/debug/searchright"],
-      "evidence_receipts": ["verification/receipts/track-09-cli-review.json"],
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/clean-room.yml",
+        ".github/workflows/ci.yml",
+        "crates/searchright-cli/assets/completions/",
+        "crates/searchright-cli/tests/cli_e2e.rs",
+        "crates/searchright-cli/tests/snapshots/",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md",
+        "docs/cli-compatibility.md",
+        "scripts/check_cli_distribution.py",
+        "supply-chain/audits.toml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "cargo test -p searchright-cli --locked",
+        "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/check_cli_distribution.py target/debug/searchright"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
       "open_gates": [],
-      "permitted_claim": "The executable emits shell completion and roff man-page documents to standard output without writing files."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T09-A005",
       "statement": "Add snapshot, install and cross-platform end-to-end tests",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": [".github/workflows/clean-room.yml", ".github/workflows/ci.yml", "crates/searchright-cli/tests/cli_e2e.rs", "crates/searchright-cli/tests/snapshots/", "scripts/check_cli_distribution.py"],
-      "implementation_symbols": ["cli_e2e::help_output_matches_the_cross_platform_snapshot", "cli_e2e::dry_run_json_matches_the_stable_snapshot_without_writing", "cli_e2e::usage_errors_are_machine_readable_and_stable", "cli_e2e::distribution_documents_are_available_without_filesystem_writes", "check_cli_distribution.main"],
-      "deterministic_tests": ["python scripts/check_cli_distribution.py target/debug/searchright", "python scripts/check_workflow_hardening.py"],
-      "evidence_receipts": ["verification/receipts/track-09-cli-review.json", "verification/receipts/track-09-hosted-closeout.json"],
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/clean-room.yml",
+        ".github/workflows/ci.yml",
+        "crates/searchright-cli/assets/completions/",
+        "crates/searchright-cli/tests/cli_e2e.rs",
+        "crates/searchright-cli/tests/snapshots/",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md",
+        "docs/cli-compatibility.md",
+        "scripts/check_cli_distribution.py",
+        "supply-chain/audits.toml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "cargo test -p searchright-cli --locked",
+        "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/check_cli_distribution.py target/debug/searchright"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
       "open_gates": [],
-      "permitted_claim": "Snapshot and installed-binary checks passed on the exact reviewed implementation revision in hosted Linux, macOS and Windows jobs."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T09-A006",
       "statement": "Publish CLI compatibility policy",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
-      "implementation_paths": ["docs/cli-compatibility.md", "docs/adrs/0007-shared-application-facade.md"],
-      "implementation_symbols": ["docs/cli-compatibility.md#stable-surfaces", "docs/cli-compatibility.md#change-policy"],
-      "deterministic_tests": ["python scripts/validate_repository.py", "python scripts/check_cli_distribution.py target/debug/searchright"],
-      "evidence_receipts": ["verification/receipts/track-09-cli-review.json"],
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        ".github/workflows/clean-room.yml",
+        ".github/workflows/ci.yml",
+        "crates/searchright-cli/assets/completions/",
+        "crates/searchright-cli/tests/cli_e2e.rs",
+        "crates/searchright-cli/tests/snapshots/",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-licensed/src/lib.rs",
+        "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "contracts/interface-catalog.json",
+        "docs/adrs/0007-shared-application-facade.md",
+        "docs/cli-compatibility.md",
+        "scripts/check_cli_distribution.py",
+        "supply-chain/audits.toml"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "cargo test -p searchright-cli --locked",
+        "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/check_cli_distribution.py target/debug/searchright"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/09-cli-mvp/evidence.json"
+      ],
       "open_gates": [],
-      "permitted_claim": "The repository documents the alpha compatibility surface, JSON and exit contracts, mutation guard, distribution documents and change policy."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     }
   ]
 }

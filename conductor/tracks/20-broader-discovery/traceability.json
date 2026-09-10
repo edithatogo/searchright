@@ -11,178 +11,169 @@
       "assertion_id": "T20-A001",
       "statement": "ClinicalTrials.gov, WHO ICTRP pathway and ANZCTR contracts",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "contracts/fixtures/discovery-source-methods.json",
+        "crates/searchright-discovery/src/lib.rs",
         "crates/searchright-contracts/src/discovery.rs",
-        "crates/searchright-discovery/src/lib.rs"
+        "contracts/examples/discovery-run.yaml",
+        "contracts/fixtures/discovery-source-methods.json",
+        "contracts/fixtures/opencitations-forward.json",
+        "docs/provider-model.md",
+        "docs/supplementary-discovery.md",
+        "scripts/check_broader_discovery.py"
       ],
-      "implementation_symbols": [
-        "DiscoverySourceMethod",
-        "source_method_catalog",
-        "validate_method_reporting"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_broader_discovery.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_broader_discovery.py",
+        "cargo test -p searchright-contracts -p searchright-discovery",
+        "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-20-broader-discovery.json",
-        "verification/receipts/track-20-methodology-panel.json"
+        "conductor/tracks/20-broader-discovery/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Bounded documented register methods are source implemented; live source support and exhaustive retrieval are not claimed.",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-discovery tests::source_catalog_covers_every_named_discovery_vector -- --exact"
-      ]
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T20-A002",
       "statement": "Repositories: OSF, Zenodo, Figshare, Dataverse and institutional search",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "contracts/fixtures/discovery-source-methods.json",
+        "crates/searchright-discovery/src/lib.rs",
         "crates/searchright-contracts/src/discovery.rs",
-        "crates/searchright-discovery/src/lib.rs"
+        "contracts/examples/discovery-run.yaml",
+        "contracts/fixtures/discovery-source-methods.json",
+        "contracts/fixtures/opencitations-forward.json",
+        "docs/provider-model.md",
+        "docs/supplementary-discovery.md",
+        "scripts/check_broader_discovery.py"
       ],
-      "implementation_symbols": [
-        "DiscoverySourceMethod",
-        "source_method_catalog",
-        "validate_method_reporting"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_broader_discovery.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_broader_discovery.py",
+        "cargo test -p searchright-contracts -p searchright-discovery",
+        "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-20-broader-discovery.json",
-        "verification/receipts/track-20-methodology-panel.json"
+        "conductor/tracks/20-broader-discovery/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Bounded documented repository methods are source implemented; live source support and exhaustive retrieval are not claimed.",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-discovery tests::source_catalog_covers_every_named_discovery_vector -- --exact"
-      ]
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T20-A003",
       "statement": "Conference, thesis, policy and organisational website strategies",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
         "contracts/fixtures/discovery-source-methods.json",
+        "contracts/fixtures/opencitations-forward.json",
+        "docs/provider-model.md",
         "docs/supplementary-discovery.md",
-        "crates/searchright-discovery/src/lib.rs"
+        "scripts/check_broader_discovery.py"
       ],
-      "implementation_symbols": [
-        "DiscoverySourceMethod",
-        "ManualDiscoveryLog",
-        "validate_method_reporting"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_broader_discovery.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_broader_discovery.py",
+        "cargo test -p searchright-contracts -p searchright-discovery",
+        "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-20-broader-discovery.json",
-        "verification/receipts/track-20-methodology-panel.json"
+        "conductor/tracks/20-broader-discovery/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Bounded documented grey-literature methods are source implemented; methodological comprehensiveness is not claimed.",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-discovery tests::source_catalog_covers_every_named_discovery_vector -- --exact"
-      ]
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T20-A004",
       "statement": "Backward/forward citation chaining with OpenCitations and provider evidence",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "contracts/fixtures/opencitations-forward.json",
+        "crates/searchright-discovery/src/lib.rs",
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
         "contracts/fixtures/discovery-source-methods.json",
-        "crates/searchright-discovery/src/lib.rs"
+        "contracts/fixtures/opencitations-forward.json",
+        "docs/provider-model.md",
+        "docs/supplementary-discovery.md",
+        "scripts/check_broader_discovery.py"
       ],
-      "implementation_symbols": [
-        "parse_opencitations_forward_fixture",
-        "bounded_candidates",
-        "DiscoveryEdge"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_broader_discovery.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_broader_discovery.py",
+        "cargo test -p searchright-contracts -p searchright-discovery",
+        "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-20-broader-discovery.json",
-        "verification/receipts/track-20-methodology-panel.json"
+        "conductor/tracks/20-broader-discovery/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Fixture-backed bounded forward chaining and documented bounded backward checking are source implemented; citation completeness is not claimed.",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-discovery tests::source_catalog_covers_every_named_discovery_vector -- --exact",
-        "cargo test --locked -p searchright-discovery tests::bounded_walk_evidence_respects_depth_and_input_order -- --exact",
-        "cargo test --locked -p searchright-discovery tests::exhaustive_small_graphs_match_walk_oracle -- --exact",
-        "cargo test --locked -p searchright-discovery tests::work_and_evidence_budgets_reject_instead_of_truncating -- --exact",
-        "cargo test --locked -p searchright-discovery tests::citing_tokens_reject_controls_without_changing_length_errors -- --exact"
-      ]
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T20-A005",
       "statement": "Contact and handsearch logs",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "crates/searchright-contracts/src/discovery.rs",
         "crates/searchright-discovery/src/lib.rs",
-        "docs/supplementary-discovery.md"
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "contracts/fixtures/discovery-source-methods.json",
+        "contracts/fixtures/opencitations-forward.json",
+        "docs/provider-model.md",
+        "docs/supplementary-discovery.md",
+        "scripts/check_broader_discovery.py"
       ],
-      "implementation_symbols": [
-        "ManualDiscoveryLog",
-        "ContactOutcome",
-        "validate_method_reporting"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_broader_discovery.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_broader_discovery.py",
+        "cargo test -p searchright-contracts -p searchright-discovery",
+        "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-20-broader-discovery.json",
-        "verification/receipts/track-20-methodology-panel.json"
+        "conductor/tracks/20-broader-discovery/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Privacy-safe contact outcomes and scoped handsearch logs are source implemented; contacts remain human actions.",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-discovery tests::source_catalog_covers_every_named_discovery_vector -- --exact",
-        "cargo test --locked -p searchright-contracts discovery::tests::contact_logs_require_privacy_safe_consistent_outcomes -- --exact",
-        "cargo test --locked -p searchright-contracts discovery::tests::manual_discovery_dates_are_calendar_valid -- --exact"
-      ]
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T20-A006",
       "statement": "Source coverage/risk matrix and manual-method reporting",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "crates/searchright-contracts/src/discovery.rs",
         "crates/searchright-discovery/src/lib.rs",
-        "docs/supplementary-discovery.md"
+        "crates/searchright-contracts/src/discovery.rs",
+        "contracts/examples/discovery-run.yaml",
+        "contracts/fixtures/discovery-source-methods.json",
+        "contracts/fixtures/opencitations-forward.json",
+        "docs/provider-model.md",
+        "docs/supplementary-discovery.md",
+        "scripts/check_broader_discovery.py"
       ],
-      "implementation_symbols": [
-        "DiscoveryCoverageAssessment",
-        "DiscoveryCoverageRisk",
-        "validate_method_reporting"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/check_broader_discovery.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_broader_discovery.py",
+        "cargo test -p searchright-contracts -p searchright-discovery",
+        "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-20-broader-discovery.json",
-        "verification/receipts/track-20-methodology-panel.json"
+        "conductor/tracks/20-broader-discovery/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Canonical per-source coverage and risk reporting is source implemented; a completed matrix does not certify adequacy.",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-discovery tests::source_catalog_covers_every_named_discovery_vector -- --exact",
-        "cargo test --locked -p searchright-discovery tests::reporting_requires_complete_risk_coverage_and_execution_logs -- --exact",
-        "cargo test --locked -p searchright-discovery tests::reporting_rejects_mismatched_and_unexpected_execution_logs -- --exact",
-        "cargo test --locked -p searchright-discovery tests::reporting_rejects_catalog_subsets -- --exact"
-      ]
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     }
   ]
 }
