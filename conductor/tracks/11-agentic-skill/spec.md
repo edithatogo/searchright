@@ -9,11 +9,9 @@ workflows with conservative authority under the single-accountable-owner model.
 
 - Publish `SKILL.md` with trigger and non-trigger boundaries.
 - Add planning, strategy, PRESS-aligned critique, execution, screening and
-  reporting references.
-- Implement a sealed five-role agent panel with preserved dissent and explicit
-  accountable-owner adjudication.
-- Keep automated lint, owner-adjudicated agent review and independent human PRESS
-  peer review as distinct evidence classes.
+  reporting references, including a sealed five-role agent panel with preserved
+  dissent, accountable-owner adjudication and distinct automated, agent-panel and
+  independent-human evidence classes.
 - Create subagent role cards and handoff contracts.
 - Add scenario, prompt-injection, authority, panel-isolation and claim-boundary
   tests.
