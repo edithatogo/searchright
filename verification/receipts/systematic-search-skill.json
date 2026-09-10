@@ -1,19 +1,22 @@
 {
+  "agent_panel_status": "awaiting_panel",
   "authority_scenarios": 12,
   "caller_deployment": "searchright_owned_sibling",
   "caller_runtime_admission": "pending_automated_invocation_disabled",
   "declared_host_model_pairs": 2,
   "downstream_integration": "prepared_not_applied",
   "errors": [],
-  "evaluated_host_model_pairs": 1,
+  "evaluated_host_model_pairs": 0,
   "limitations": [
     "Static package checks and deterministic authority fixtures do not establish model behaviour or host compatibility.",
     "No companion repository, live provider, registry, screening decision or publication system was mutated.",
-    "Human information-specialist calibration and downstream consumer validation remain separate evidence."
+    "Owner-adjudicated agent-panel execution, optional external human calibration and downstream consumer validation remain separate evidence."
   ],
-  "package_files": 21,
-  "package_sha256": "c7517b7093f267ce3d543e7136a80527169aea8670e149d3f234865ab54f1d6c",
+  "optional_human_calibration": "optional_not_scheduled",
+  "package_files": 24,
+  "package_sha256": "b5340c559e43326beaaecf8b5c30d28dc39319feef9fb4f9287d2f12d2d02f7d",
   "registry_packet": "prepared_not_submitted",
+  "review_governance": "single_accountable_owner_with_sealed_agent_panel",
   "role_cards": 7,
   "schema_version": "org.searchright.agent-skill-verification-receipt.v1",
   "skill": "systematic-search",

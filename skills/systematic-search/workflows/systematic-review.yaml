@@ -2,8 +2,10 @@ schema_version: org.searchright.skill-workflow.v1
 name: systematic-review
 handoff_contract: org.searchright.agent-handoff.v1
 handoff_policy: approved_artifact_references_only
+accountable_owner_model: single_human_owner
 human_checkpoints:
   - review_plan_approval
+  - agent_panel_adjudication
   - strategy_and_press_approval
   - live_execution_approval
   - deduplication_apply
@@ -21,9 +23,19 @@ stages:
     output: search-strategies/
   - id: press
     agent: press-reviewer
-    isolation: independent_context
+    review_model: owner_adjudicated_agent_panel
+    isolation: sealed_first_passes
+    authority: advisory_only
+    panel_roles:
+      - methodology
+      - information_retrieval
+      - implementation_testing
+      - security_privacy_rights
+      - adversarial_replication
+    requires: [review_plan_approval]
     handoff_to: execution-operator
-    output: press-review.yaml
+    output: reviews/agent-panel/
+    claim_boundary: agent_panel_is_not_independent_human_peer_review
   - id: execute
     agent: execution-operator
     handoff_to: dedup-adjudicator
@@ -33,7 +45,10 @@ stages:
         requires: []
       live:
         network: true
-        requires: [strategy_and_press_approval, live_execution_approval]
+        requires:
+          - agent_panel_adjudication
+          - strategy_and_press_approval
+          - live_execution_approval
     output: source-receipts.json
   - id: deduplicate
     agent: dedup-adjudicator
@@ -43,8 +58,10 @@ stages:
   - id: screen
     agent: screening-assistant
     authority: advisory_only
+    final_decision_authority: accountable_owner_or_designated_human
     handoff_to: reporting-auditor
     output: screening-recommendations.jsonl
   - id: report
     agent: reporting-auditor
+    requires: [final_reporting_review]
     output: reporting-audit.json

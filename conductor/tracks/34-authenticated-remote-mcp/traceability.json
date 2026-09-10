@@ -11,84 +11,106 @@
       "assertion_id": "T34-A001",
       "statement": "Authenticated remote MCP deployment boundary",
       "state": "partially_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
+        "crates/searchright-access/src/lib.rs",
+        "crates/searchright-contracts/src/access.rs",
+        "contracts/examples/tenant-policy.json",
+        "contracts/examples/access-request.json",
+        "contracts/examples/access-decision.json",
+        "docs/security/authenticated-remote-mcp.md",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "docs/security/threat-model.md",
         "crates/searchright-mcp/src/remote.rs",
         "crates/searchright-mcp/src/bin/searchright-mcp-http.rs",
-        "crates/searchright-mcp/Cargo.toml",
-        "docs/security/authenticated-remote-mcp.md"
+        "scripts/remote_mcp_conformance.py"
       ],
-      "implementation_symbols": [
-        "searchright_mcp::remote::RemoteRuntimeConfig",
-        "searchright_mcp::remote::run_from_environment",
-        "searchright_mcp::SearchrightServer::remote_http"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py",
         "python scripts/remote_mcp_conformance.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/remote-mcp-auth-conformance.json"
+        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
       ],
       "open_gates": [
-        "Exercise a real IdP and trusted TLS edge in an approved isolated deployment.",
-        "Rehearse deployment rollback and preserve exact configuration-bound evidence."
+        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
       ],
-      "permitted_claim": "A disabled-by-default, loopback-only authenticated read-only Streamable HTTP adapter is fixture-tested. Hosted availability or security is not claimed."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
     {
       "assertion_id": "T34-A002",
       "statement": "Default-deny scopes and human-only final decisions",
       "state": "partially_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-access/src/lib.rs",
         "crates/searchright-contracts/src/access.rs",
-        "crates/searchright-mcp/src/remote.rs"
+        "contracts/examples/tenant-policy.json",
+        "contracts/examples/access-request.json",
+        "contracts/examples/access-decision.json",
+        "docs/security/authenticated-remote-mcp.md",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "docs/security/threat-model.md",
+        "crates/searchright-mcp/src/remote.rs",
+        "crates/searchright-mcp/src/bin/searchright-mcp-http.rs",
+        "scripts/remote_mcp_conformance.py"
       ],
-      "implementation_symbols": [
-        "searchright_access::authorise",
-        "searchright_access::authorise_with_replay",
-        "searchright_mcp::remote::RemoteState::authorise"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py",
         "python scripts/remote_mcp_conformance.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/remote-mcp-auth-conformance.json"
+        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
       ],
       "open_gates": [
-        "Keep the remote tool surface read-only until a method-specific scope and cryptographically bound approval design is reviewed."
+        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
       ],
-      "permitted_claim": "The current remote tool surface is exhaustively classified read-only and requires review_read; state-changing remote authority is not available."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
     {
       "assertion_id": "T34-A003",
       "statement": "Tenant isolation, residency, rate and cancellation budgets",
       "state": "partially_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
-        "crates/searchright-mcp/src/remote.rs",
         "crates/searchright-access/src/lib.rs",
-        "docs/security/threat-model.md"
+        "crates/searchright-contracts/src/access.rs",
+        "contracts/examples/tenant-policy.json",
+        "contracts/examples/access-request.json",
+        "contracts/examples/access-decision.json",
+        "docs/security/authenticated-remote-mcp.md",
+        "contracts/openapi/searchright-http.openapi.yaml",
+        "docs/security/threat-model.md",
+        "crates/searchright-mcp/src/remote.rs",
+        "crates/searchright-mcp/src/bin/searchright-mcp-http.rs",
+        "scripts/remote_mcp_conformance.py"
       ],
-      "implementation_symbols": [
-        "searchright_mcp::remote::RemoteState::authorise",
-        "searchright_mcp::remote::RuntimePermit",
-        "searchright_mcp::remote::bounded_request",
-        "searchright_access::ReplayLedger"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_default_deny.py",
+        "python scripts/check_rust_source_structure.py",
         "python scripts/remote_mcp_conformance.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/remote-mcp-tenancy-adversarial.json"
+        "conductor/tracks/34-authenticated-remote-mcp/evidence.json"
       ],
       "open_gates": [
-        "Prove shared atomic replay, rate and task budgets across multiple replicas.",
-        "Prove deployment, storage, replication and logging residency rather than token-claim region alone.",
-        "Complete independent security/privacy review and approved rollback rehearsal."
+        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
       ],
-      "permitted_claim": "In-process tenant, region, replay, rate, concurrency, timeout and redacted-audit controls are fixture-tested; multi-tenant deployment isolation is not claimed."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     }
   ]
 }

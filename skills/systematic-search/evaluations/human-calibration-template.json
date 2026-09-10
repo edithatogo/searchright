@@ -6,9 +6,7 @@
   "case_decisions": [],
   "agreement": null,
   "adjudications": [],
-  "blocking_hazards": [
-    "Independent information-specialist review has not yet been performed."
-  ],
-  "status": "awaiting_independent_reviewers",
-  "claim_boundary": "This template is not human calibration evidence and cannot be used to close T11-G003."
+  "blocking_hazards": [],
+  "status": "optional_not_scheduled",
+  "claim_boundary": "This template is not human calibration evidence. External human calibration is optional and remains distinct from the owner-adjudicated agent-panel gate."
 }

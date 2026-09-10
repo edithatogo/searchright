@@ -1,33 +1,38 @@
-# Human calibration reviewer request
+# Optional external human calibration invitation
 
-Track 11 requires two independent information specialists to review the
-systematic-search skill under the protocol in `human-calibration-protocol.md`.
-The reviewers must not have authored the implementation or fixtures.
+Searchright's default review gate is an isolated five-role agent panel followed
+by accountable-owner adjudication. An external information specialist is not
+required for ordinary project development or track closeout.
+
+This invitation template is available when the owner elects to obtain an
+additional external human calibration or an actual independent human PRESS peer
+review for a specific strategy.
 
 ## Requested review
 
-1. Confirm your name or stable professional identifier, relevant information-
-   retrieval expertise, independence from the implementation, and review date.
-2. Independently score all 12 scenarios in the supplied calibration packet.
-3. Record whether each response preserves PICO/PCC and PRESS boundaries,
-   accurately distinguishes reporting from conduct, and leaves exclusions and
-   methodological amendments with accountable humans.
-4. Return the completed packet without seeing the other reviewer's scores.
-5. Participate in documented adjudication only after both independent packets
-   have been frozen.
+1. Confirm an attributable or controlled pseudonymous identifier, relevant
+   information-retrieval experience, conflicts and review date.
+2. State whether the work is general human calibration or independent human
+   PRESS peer review of a named strategy.
+3. Review the supplied frozen materials without seeing any other first-pass
+   review.
+4. Record findings against the six PRESS domains, authority boundaries and
+   reporting/conduct distinctions.
+5. Return the completed packet before any cross-reviewer adjudication.
 
-Passing requires at least 90% pre-adjudication agreement and zero authority-
-boundary failures. A reviewer invitation, identity, or unsigned template is not
-calibration evidence. Searchright maintainers must not complete or attest a
-review on another person's behalf.
+A reviewer invitation, identity record or unsigned template is not evidence.
+Searchright agents and maintainers must not complete or attest an external
+review on another person's behalf. Agent-panel findings remain separately
+labelled and may not be represented as human peer review.
 
 ## Material supplied
 
-- `human-calibration-protocol.md`
-- `human-calibration-template.json`
-- the exact skill package identified by its SHA-256 digest
-- the deterministic 12-scenario evaluation set
+- `human-calibration-protocol.md`;
+- `human-calibration-template.json`;
+- the exact skill package identified by SHA-256;
+- the deterministic authority scenarios;
+- the specific strategy and independence declaration when PRESS peer review is
+  requested.
 
-Return completed packets through the repository's approved private evidence
-channel. Do not include licensed full text, credentials, patient identifiers,
-or other sensitive source material.
+Do not include licensed full text, credentials, patient identifiers or other
+sensitive source material.

@@ -33,6 +33,12 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `crates/searchright-agent/tests/skill_scenarios.rs`
   - [x] Present source path: `scripts/check_agent_skill.py`
   - [x] Present source path: `verification/receipts/systematic-search-skill.json`
+  - [x] Present source path: `skills/systematic-search/references/agent-panel.md`
+  - [x] Present source path: `skills/systematic-search/evaluations/agent-panel-protocol.md`
+  - [x] Present source path: `skills/systematic-search/evaluations/agent-panel-template.json`
+  - [x] Present source path: `scripts/test_agent_panel_governance.py`
+  - [x] Present source path: `tests/test_gate_catalog_native_commands.py`
+  - [x] Present source path: `docs/adrs/0019-single-owner-agent-panel-governance.md`
   - [x] Assertion ledger: `conductor/tracks/11-agentic-skill/traceability.json`
 
 ## Completion and evidence contract

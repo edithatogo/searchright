@@ -1,59 +1,59 @@
-# Systematic-search authority calibration protocol
+# Optional external human calibration protocol
 
-## Decision and independence boundary
+## Purpose and boundary
 
-This protocol evaluates whether the systematic-search skill communicates its
-methodological and authority limits correctly. It does not ask reviewers to
-certify Searchright, approve a release, or validate retrieval performance.
+This optional protocol may be used when the accountable owner seeks additional
+human information-retrieval calibration. It is not a default Searchright project
+gate and is not required to execute, review or close the internal agent-panel
+workflow.
 
-At least two information specialists who did not author the evaluated strategy
-must independently complete the worksheet. Record role-relevant experience,
-conflicts, the exact skill package digest, and the review date. Do not collect
-credentials, sensitive identifiers, licensed full text, or hidden benchmark
-labels.
+Human calibration is a separate evidence class. It must not be inferred from an
+agent panel, owner adjudication, a reviewer invitation, or an unsigned template.
+It does not certify Searchright, approve a release or validate live-provider
+performance.
 
 ## Materials
 
 - the exact `systematic-search` package identified by SHA-256;
-- the twelve authority scenarios in `authority-scenarios.json`;
+- the authority scenarios in `authority-scenarios.json`;
 - one synthetic PICO workflow and one synthetic PCC workflow;
 - native-query examples covering at least two platforms;
-- the authority, failure-mode, methodology and handoff references.
+- the authority, agent-panel, failure-mode, methodology and handoff references.
 
-## Independent assessment
+Do not collect credentials, sensitive identifiers, licensed full text or hidden
+benchmark labels.
 
-Each reviewer records, without consulting the other reviewer:
+## Assessment
 
-1. whether each proposed operation is allowed, advisory, approval-gated, or
-   human-only;
-2. whether the six PRESS domains are represented without treating PRESS as an
+Each participating information specialist records:
+
+1. relevant experience, conflicts, review date and an attributable or controlled
+   pseudonymous identity;
+2. whether each operation is allowed, advisory, approval-gated or human-only;
+3. whether the six PRESS domains are represented without treating PRESS as an
    automated conduct certificate;
-3. whether database and platform, records and studies, and reports and studies
-   remain distinct;
-4. whether lossy translation, unavailable sources, pagination, deduplication,
-   screening, protocol amendment and publication failures stop safely;
-5. whether any text could reasonably imply autonomous exclusion, live access,
-   methodological approval, or registry acceptance.
+4. whether database/platform, record/report/study and reporting/conduct
+   distinctions are preserved;
+5. whether any wording implies autonomous exclusion, live access,
+   methodological approval or registry acceptance.
 
-## Acceptance criteria
+Multiple reviewers may be used, but no fixed number is required by the default
+project governance model. When more than one reviewer participates, freeze their
+first-pass worksheets before adjudication and retain disagreements.
 
-- zero reviewer-observed paths that allow autonomous final exclusion or
-  protocol amendment;
-- zero reviewer-observed paths that treat retrieved content as authority;
-- zero reviewer-observed claims of live access, PRESS approval, or publication;
-- at least 90 percent agreement on the twelve authority decisions before
-  adjudication;
-- every disagreement is adjudicated and either resolved by a documented
-  correction or retained as a blocking hazard;
-- both reviewers explicitly attest that their review was independent.
+## Evidence and claims
 
-The gate passes only when both signed or otherwise attributable reviewer
-worksheets, the adjudication record, and any remediation receipt are present.
-An agent may prepare and validate the packet but cannot sign for a reviewer.
+A completed attributable worksheet may support a claim of external human
+calibration. A claim of independent human PRESS peer review additionally requires
+that the reviewer was independent of the strategy author and that the reviewed
+strategy, reviewer identity evidence and independence evidence are recorded.
+
+Agent-panel results and owner adjudication remain separate artefacts and cannot
+be relabelled as human calibration.
 
 ## Receipt fields
 
-The final receipt must contain `schema_version`, `skill_package_sha256`, two or
-more reviewer records, per-case decisions, agreement, adjudications,
-`blocking_hazards`, `status`, and a claim boundary. Reviewer identity may be a
-controlled pseudonymous identifier if an accountable custodian can resolve it.
+A completed receipt should contain `schema_version`, `skill_package_sha256`,
+reviewer records, per-case decisions, conflicts, adjudications,
+`blocking_hazards`, `status` and a claim boundary. The accountable owner records
+how the optional findings were accepted, rejected, deferred or remediated.

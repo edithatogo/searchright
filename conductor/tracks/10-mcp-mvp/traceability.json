@@ -5,17 +5,25 @@
   "implementation_state": "source_implemented",
   "evidence_level": "compiler_verified",
   "source_of_assertions": "conductor/tracks/10-mcp-mvp/spec.md#scope",
-  "claim_boundary": "Compiler-verified local stdio implementation only. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Live providers, remote hosted MCP, methodological certification, final screening automation, publication and release require separate evidence.",
+  "claim_boundary": "The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary that binds consequential effects to exact canonical local-store bytes. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.",
   "assertions": [
     {
       "assertion_id": "T10-A001",
       "statement": "Complete contracted planning/execution/screening tools",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/effect_policy.rs",
         "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/advanced_mcp.rs",
         "crates/searchright-mcp/tests/live_client_conformance.rs",
+        "crates/searchright/src/authority.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-store/src/lib.rs",
+        "contracts/json-schema/plan-review-result.v1.schema.json",
+        "contracts/json-schema/press-review-result.v1.schema.json",
+        "contracts/json-schema/press-review.v1.schema.json",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
         "docs/mcp-compatibility.md",
@@ -23,17 +31,7 @@
         "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
-      "implementation_symbols": [
-        "searchright_mcp::SearchrightServer::plan_review",
-        "searchright_mcp::SearchrightServer::press_review_strategy",
-        "searchright_mcp::SearchrightServer::execute_search",
-        "searchright_mcp::SearchrightServer::record_screening_decision",
-        "searchright::SearchrightEngine::plan_review",
-        "searchright::SearchrightEngine::press_review_strategy",
-        "searchright::SearchrightEngine::execute_search",
-        "searchright::SearchrightEngine::record_screening_decision",
-        "searchright::verify_effect_authority"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
@@ -44,12 +42,12 @@
         "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The planning, PRESS, network-disabled fixture execution and screening operations delegate to the shared facade and require an opaque trusted-host grant bound to exact request, principal, policy and canonical local-store bytes for writes; default MCP and CLI adapters fail closed. Live-provider execution and automated final screening are not claimed."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T10-A002",
       "statement": "Return structuredContent matching outputSchema",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-mcp/src/lib.rs",
@@ -69,17 +67,25 @@
         "verification/receipts/mcp-official-client-2026-07-28.json"
       ],
       "open_gates": [],
-      "permitted_claim": "All 35 current-protocol local stdio tools advertise closed success schemas and fail closed before emitting structured output that violates the registered contract; the previous era preserves 31 tools and both generate_prisma success branches are covered."
+      "permitted_claim": "All 31 local stdio tools advertise field-level success schemas and fail closed before emitting structured output that violates the registered contract; both generate_prisma success branches are covered."
     },
     {
       "assertion_id": "T10-A003",
       "statement": "Add resources for plans, runs, queues and reports",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/effect_policy.rs",
         "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/advanced_mcp.rs",
         "crates/searchright-mcp/tests/live_client_conformance.rs",
+        "crates/searchright/src/authority.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-store/src/lib.rs",
+        "contracts/json-schema/plan-review-result.v1.schema.json",
+        "contracts/json-schema/press-review-result.v1.schema.json",
+        "contracts/json-schema/press-review.v1.schema.json",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
         "docs/mcp-compatibility.md",
@@ -87,12 +93,7 @@
         "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
-      "implementation_symbols": [
-        "searchright_mcp::contract_resource",
-        "searchright_mcp::read_advanced_resource",
-        "searchright_mcp::SearchrightServer::list_resources",
-        "searchright_mcp::SearchrightServer::read_resource"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
@@ -103,17 +104,25 @@
         "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The current local profile exposes bounded plan, run, queue and report contract-metadata resources with pagination and explicit noncanonical, no-authority claim boundaries. Canonical review instances are not exposed as resources."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T10-A004",
       "statement": "Add prompts for planning/PRESS/update workflows",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/effect_policy.rs",
         "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/advanced_mcp.rs",
         "crates/searchright-mcp/tests/live_client_conformance.rs",
+        "crates/searchright/src/authority.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-store/src/lib.rs",
+        "contracts/json-schema/plan-review-result.v1.schema.json",
+        "contracts/json-schema/press-review-result.v1.schema.json",
+        "contracts/json-schema/press-review.v1.schema.json",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
         "docs/mcp-compatibility.md",
@@ -121,12 +130,7 @@
         "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
-      "implementation_symbols": [
-        "searchright_mcp::advanced_prompts",
-        "searchright_mcp::SearchrightServer::list_prompts",
-        "searchright_mcp::SearchrightServer::get_prompt",
-        "searchright_mcp::SearchrightServer::complete"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
@@ -137,12 +141,12 @@
         "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The current local profile exposes bounded plan-review, PRESS-check and update-workflow prompts with injection-resistant identifiers, enumerated modes and no execution or screening authority."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     },
     {
       "assertion_id": "T10-A005",
       "statement": "Run official SDK/examples and protocol transcript conformance",
-      "state": "source_implemented",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-mcp/tests/live_client_conformance.rs",
@@ -161,17 +165,25 @@
         "verification/receipts/mcp-official-client-2026-07-28.json"
       ],
       "open_gates": [],
-      "permitted_claim": "The pinned official rmcp 3.1.2 client negotiates both supported protocol eras against the real child-process stdio binary and validates 35 current-protocol and 32 previous-era successful structured results plus governed errors; the default-deny screening write has schema coverage but no standalone-binary success claim. Unrelated clients and remote hosted MCP are not claimed."
+      "permitted_claim": "The pinned official rmcp 3.1.2 client negotiates both supported protocol eras against the real child-process stdio binary and preserves 32 successful structured result shapes plus governed errors; unrelated third-party clients and remote transport are not claimed."
     },
     {
       "assertion_id": "T10-A006",
       "statement": "Test cancellation, pagination, errors and backwards compatibility",
       "state": "source_implemented",
-      "mapping_confidence": "symbol_and_gate_mapped",
+      "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "crates/searchright-mcp/src/main.rs",
+        "crates/searchright-mcp/src/effect_policy.rs",
         "crates/searchright-mcp/src/lib.rs",
+        "crates/searchright-mcp/tests/advanced_mcp.rs",
         "crates/searchright-mcp/tests/live_client_conformance.rs",
+        "crates/searchright/src/authority.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-store/src/lib.rs",
+        "contracts/json-schema/plan-review-result.v1.schema.json",
+        "contracts/json-schema/press-review-result.v1.schema.json",
+        "contracts/json-schema/press-review.v1.schema.json",
         "contracts/mcp/tool-catalog.json",
         "contracts/interface-catalog.json",
         "docs/mcp-compatibility.md",
@@ -179,13 +191,7 @@
         "scripts/record_mcp_live_client_conformance.py",
         "server.json"
       ],
-      "implementation_symbols": [
-        "advanced_mcp::task_is_current_capability_gated_and_cooperatively_cancelled",
-        "advanced_mcp::resources_prompts_cache_pagination_and_mrtr_are_bounded",
-        "advanced_mcp::completion_and_form_elicitation_are_bounded_and_non_authoritative",
-        "advanced_mcp::previous_era_profile_is_static_and_cannot_create_tasks_or_use_mrtr",
-        "live_client_conformance::assert_every_success_path"
-      ],
+      "implementation_symbols": [],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
@@ -196,7 +202,7 @@
         "conductor/tracks/10-mcp-mvp/evidence.json"
       ],
       "open_gates": [],
-      "permitted_claim": "Deterministic local tests cover cancellation, task limits, resource/prompt pagination, completion errors, current/previous protocol negotiation, remote effect filtering, authority spoof rejection and preview no-store semantics."
+      "permitted_claim": "Source implementation is mapped, but compiler and runtime evidence remain separate."
     }
   ]
 }

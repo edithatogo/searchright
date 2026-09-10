@@ -5425,7 +5425,7 @@
     },
     {
       "key": "track-11-phase-3-task-02",
-      "title": "Track 11 / P3 / T02: Run scenario-based agent evaluations across supported hosts and models",
+      "title": "Track 11 / P3 / T02: Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication",
       "kind": "task",
       "parent_key": "track-11-phase-3",
       "body_path": "conductor/github/issues/track-11-phase-3-task-02.md",
@@ -5458,7 +5458,7 @@
     },
     {
       "key": "track-11-phase-3-task-03",
-      "title": "Track 11 / P3 / T03: Calibrate authority and failure modes with human information specialists",
+      "title": "Track 11 / P3 / T03: Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change",
       "kind": "task",
       "parent_key": "track-11-phase-3",
       "body_path": "conductor/github/issues/track-11-phase-3-task-03.md",
@@ -5654,7 +5654,7 @@
     },
     {
       "key": "track-11-phase-4-task-04",
-      "title": "Track 11 / P4 / T04: Close the track only when all applicable live, downstream, human and external gates are evidenced",
+      "title": "Track 11 / P4 / T04: Close the track only when applicable downstream, host/model, sealed agent-panel, accountable-owner and registry gates are evidenced; optional external human calibration\u2026",
       "kind": "task",
       "parent_key": "track-11-phase-4",
       "body_path": "conductor/github/issues/track-11-phase-4-task-04.md",

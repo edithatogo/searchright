@@ -245,7 +245,9 @@
           "kind": "human",
           "status": "pending",
           "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
-          "evidence": ["verification/receipts/track-02-integration-panel.json"]
+          "evidence": [
+            "verification/receipts/track-02-integration-panel.json"
+          ]
         }
       ]
     },
@@ -532,13 +534,13 @@
         "python scripts/validate_repository.py"
       ],
       "claim_boundary": "Compiler-backed deterministic interchange round trips and source-level deduplication/linkage behaviour are evidenced. A digest-bound multi-agent panel may recommend disposition, but only the repository owner's recorded decision may close the evaluation gate.",
-    "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
+      "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
       "deliverables": [
         "crates/searchright-dedup/src/lib.rs",
-      "crates/searchright-interchange/src/lib.rs",
-      "crates/searchright-interchange/src/xml.rs",
-      "crates/searchright-interchange/tests/xml_integrity.rs",
-      "docs/xml-imports.md",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
         "crates/searchright-study/src/lib.rs",
         "contracts/examples/interchange-receipt.yaml",
         "contracts/examples/study-graph.yaml",
@@ -876,17 +878,19 @@
     {
       "blockers": [
         "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
-        "Run scenario-based agent evaluations across supported hosts and models.",
-        "Calibrate authority and failure modes with human information specialists.",
+        "Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication.",
+        "Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change.",
         "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_agent_skill.py",
         "cargo test -p searchright-agent --locked",
-        "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
+        "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings",
+        "python scripts/test_agent_panel_governance.py",
+        "python -m unittest tests.test_gate_catalog_native_commands"
       ],
-      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The default internal review gate is a sealed five-role agent panel with preserved dissent and accountable-owner adjudication; it has not yet been executed for the new package digest. Agent-panel output is not independent human PRESS peer review. Exact host/model receipts were reset to pending after the package changed. Downstream adoption, runtime admission, optional external human calibration, registry authorisation and acceptance remain separate evidence and are not claimed.",
       "deliverables": [
         "skills/systematic-search/SKILL.md",
         "skills/systematic-search/workflows/systematic-review.yaml",
@@ -912,7 +916,13 @@
         "crates/searchright-agent/src/lib.rs",
         "crates/searchright-agent/tests/skill_scenarios.rs",
         "scripts/check_agent_skill.py",
-        "verification/receipts/systematic-search-skill.json"
+        "verification/receipts/systematic-search-skill.json",
+        "skills/systematic-search/references/agent-panel.md",
+        "skills/systematic-search/evaluations/agent-panel-protocol.md",
+        "skills/systematic-search/evaluations/agent-panel-template.json",
+        "scripts/test_agent_panel_governance.py",
+        "tests/test_gate_catalog_native_commands.py",
+        "docs/adrs/0019-single-owner-agent-panel-governance.md"
       ],
       "dependencies": [
         "10"
@@ -975,21 +985,21 @@
         "SR-031"
       ],
       "review_completed": true,
-    "review_fixes": [
-      {
-        "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
-        "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
-      },
-      {
-        "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
-        "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
-      }
-    ],
-    "runtime_evidence": [
-      "verification/receipts/track-11-agent-authority-review.json",
-      "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
-      "verification/receipts/track-11-local-admission.json"
-    ],
+      "review_fixes": [
+        {
+          "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
+          "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
+        },
+        {
+          "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
+          "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
+        }
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-11-agent-authority-review.json",
+        "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
+        "verification/receipts/track-11-local-admission.json"
+      ],
       "external_evidence": [
         "verification/receipts/track-11-sibling-route.json",
         "verification/receipts/track-11-downstream-readiness.json",
@@ -1008,7 +1018,15 @@
         "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.",
         "Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending."
       ],
-      "updated": "2026-08-31"
+      "updated": "2026-09-10",
+      "phase_3_task_count": 4,
+      "higher_evidence_task_order": [
+        "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
+        "Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication.",
+        "Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change.",
+        "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
+      ],
+      "closeout_gate_label": "Close the track only when applicable downstream, host/model, sealed agent-panel, accountable-owner and registry gates are evidenced; optional external human calibration remains a separate evidence class."
     },
     {
       "blockers": [

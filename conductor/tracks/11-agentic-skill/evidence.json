@@ -31,14 +31,22 @@
     "crates/searchright-agent/src/lib.rs",
     "crates/searchright-agent/tests/skill_scenarios.rs",
     "scripts/check_agent_skill.py",
-    "verification/receipts/systematic-search-skill.json"
+    "verification/receipts/systematic-search-skill.json",
+    "skills/systematic-search/references/agent-panel.md",
+    "skills/systematic-search/evaluations/agent-panel-protocol.md",
+    "skills/systematic-search/evaluations/agent-panel-template.json",
+    "scripts/test_agent_panel_governance.py",
+    "tests/test_gate_catalog_native_commands.py",
+    "docs/adrs/0019-single-owner-agent-panel-governance.md"
   ],
   "traceability": "conductor/tracks/11-agentic-skill/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_agent_skill.py",
     "cargo test -p searchright-agent --locked",
-    "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
+    "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings",
+    "python scripts/test_agent_panel_governance.py",
+    "python -m unittest tests.test_gate_catalog_native_commands"
   ],
   "requirements": [
     "SR-022",
@@ -47,11 +55,11 @@
   ],
   "blockers": [
     "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
-    "Run scenario-based agent evaluations across supported hosts and models.",
-    "Calibrate authority and failure modes with human information specialists.",
+    "Run the sealed five-role agent panel, preserve first-pass findings, abstentions and dissent, and record accountable-owner adjudication.",
+    "Re-run scenario-based agent evaluations across every supported exact host/model pair after each skill-package digest change.",
     "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
   ],
-  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The default internal review gate is a sealed five-role agent panel with preserved dissent and accountable-owner adjudication; it has not yet been executed for the new package digest. Agent-panel output is not independent human PRESS peer review. Exact host/model receipts were reset to pending after the package changed. Downstream adoption, runtime admission, optional external human calibration, registry authorisation and acceptance remain separate evidence and are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-11",

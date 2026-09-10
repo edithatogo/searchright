@@ -1,14 +1,14 @@
 {
   "schema_version": "org.searchright.agent-host-model-matrix.v1",
   "status": "evaluation_in_progress",
-  "support_policy": "Only exact host and model pairs with a passing receipt for every authority scenario may be claimed as evaluated. Installation, authentication, or a partial run is not support evidence.",
+  "support_policy": "Only exact host and model pairs with a passing receipt for the current skill-package digest and every authority scenario may be claimed as evaluated. Installation, authentication, a historical receipt, or a partial run is not support evidence.",
   "required_cases": "skills/systematic-search/evaluations/authority-scenarios.json",
   "pairs": [
     {
       "host": "codex-cli",
       "host_version": "0.144.1",
       "model": "gpt-5.6-sol",
-      "status": "passed",
+      "status": "pending",
       "receipt": "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json"
     },
     {
@@ -19,5 +19,5 @@
       "receipt": "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json"
     }
   ],
-  "claim_boundary": "This matrix is a bounded evaluation target, not a declaration that either pair is supported. Each pair remains pending until its exact receipt passes."
+  "claim_boundary": "The skill package changed under ADR 0019, so the previous Codex receipt is retained only as historical evidence and does not transfer to the new package digest. Both exact host/model pairs require fresh sealed evaluation before support is claimed."
 }

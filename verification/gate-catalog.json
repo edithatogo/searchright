@@ -7,10 +7,16 @@
   "gates": [
     {
       "category": "contract_validation",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/validate_repository.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A001",
+        "T00-A002",
+        "T00-A003",
+        "T00-A004",
+        "T00-A005",
         "T01-A001",
         "T01-A004",
         "T02-A001",
@@ -19,7 +25,6 @@
         "T05-A001",
         "T05-A002",
         "T05-A003",
-        "T05-A004",
         "T05-A005",
         "T06-A001",
         "T06-A002",
@@ -39,6 +44,11 @@
         "T08-A004",
         "T08-A005",
         "T08-A006",
+        "T09-A001",
+        "T09-A002",
+        "T09-A003",
+        "T09-A004",
+        "T09-A005",
         "T09-A006",
         "T10-A001",
         "T10-A003",
@@ -66,6 +76,12 @@
         "T19-A004",
         "T19-A005",
         "T19-A006",
+        "T20-A001",
+        "T20-A002",
+        "T20-A003",
+        "T20-A004",
+        "T20-A005",
+        "T20-A006",
         "T21-A001",
         "T21-A002",
         "T21-A003",
@@ -116,6 +132,9 @@
         "T33-A001",
         "T33-A002",
         "T33-A003",
+        "T34-A001",
+        "T34-A002",
+        "T34-A003",
         "T35-A001",
         "T35-A002",
         "T35-A003"
@@ -125,12 +144,14 @@
       "gate_id": "SR-GATE-VALIDATE-REPOSITORY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/validate_repository.py"
     },
     {
       "category": "claim_evidence",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_traceability.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T01-A006"
@@ -140,12 +161,14 @@
       "gate_id": "SR-GATE-CHECK-TRACEABILITY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_traceability.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_gate_catalog.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T16-A004",
@@ -157,12 +180,14 @@
       "gate_id": "SR-GATE-CHECK-GATE-CATALOG-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_gate_catalog.py"
     },
     {
       "category": "claim_evidence",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/generate_evidence_debt.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T16-A006",
@@ -174,12 +199,14 @@
       "gate_id": "SR-GATE-GENERATE-EVIDENCE-DEBT-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/generate_evidence_debt.py"
     },
     {
       "category": "source_structure",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_public_package_policy.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T01-A005",
@@ -191,12 +218,14 @@
       "gate_id": "SR-GATE-CHECK-PUBLIC-PACKAGE-POLICY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_public_package_policy.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_architecture_fitness.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T16-A004"
@@ -206,12 +235,14 @@
       "gate_id": "SR-GATE-CHECK-ARCHITECTURE-FITNESS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_architecture_fitness.py"
     },
     {
       "category": "contract_validation",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/sync_schema_surface.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T01-A003",
@@ -226,12 +257,14 @@
       "gate_id": "SR-GATE-SYNC-SCHEMA-SURFACE-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/sync_schema_surface.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/sync_contract_conformance_matrix.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T01-A001",
@@ -248,12 +281,14 @@
       "gate_id": "SR-GATE-SYNC-CONTRACT-CONFORMANCE-MATRIX-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/sync_contract_conformance_matrix.py"
     },
     {
       "category": "contract_validation",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_schema_migrations.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T01-A003",
@@ -265,12 +300,14 @@
       "gate_id": "SR-GATE-CHECK-SCHEMA-MIGRATIONS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_schema_migrations.py"
     },
     {
       "category": "search_method",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_native_query_corpus.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T02-A002",
@@ -284,12 +321,14 @@
       "gate_id": "SR-GATE-CHECK-NATIVE-QUERY-CORPUS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_native_query_corpus.py"
     },
     {
       "category": "search_method",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_provider_contract_baselines.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T03-A003",
@@ -305,12 +344,14 @@
       "gate_id": "SR-GATE-CHECK-PROVIDER-CONTRACT-BASELINES",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_provider_contract_baselines.py"
     },
     {
       "category": "search_method",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_provider_policies.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T04-A004",
@@ -321,12 +362,14 @@
       "gate_id": "SR-GATE-CHECK-PROVIDER-POLICIES",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_provider_policies.py"
     },
     {
       "category": "deterministic_reference_model",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/review_bundle.py self-test",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T05-A006",
@@ -340,12 +383,14 @@
       "gate_id": "SR-GATE-REVIEW-BUNDLE-SELF-TEST",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/review_bundle.py"
     },
     {
       "category": "deterministic_reference_model",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_vertical_slice.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T16-A002",
@@ -356,27 +401,32 @@
       "gate_id": "SR-GATE-CHECK-VERTICAL-SLICE",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_vertical_slice.py"
     },
     {
       "category": "deterministic_reference_model",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/reduce_review_events.py --self-test",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T05-A003"
+        "T05-A003",
+        "T05-A004"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
       "gate_id": "SR-GATE-REDUCE-REVIEW-EVENTS-SELF-TEST",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/reduce_review_events.py"
     },
     {
       "category": "deterministic_reference_model",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/recovery_rehearsal.py --self-test",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T33-A002"
@@ -386,12 +436,14 @@
       "gate_id": "SR-GATE-RECOVERY-REHEARSAL-SELF-TEST",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/recovery_rehearsal.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_methodology_benchmarks.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T17-A001",
@@ -406,12 +458,14 @@
       "gate_id": "SR-GATE-CHECK-METHODOLOGY-BENCHMARKS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_methodology_benchmarks.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_broader_discovery.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T20-A001",
@@ -426,12 +480,14 @@
       "gate_id": "SR-GATE-CHECK-BROADER-DISCOVERY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_broader_discovery.py"
     },
     {
       "category": "safety_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_licence_firewall.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T17-A002"
@@ -441,15 +497,16 @@
       "gate_id": "SR-GATE-CHECK-LICENCE-FIREWALL",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_licence_firewall.py"
     },
     {
       "category": "ecosystem_compatibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_companion_change_packets.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A005",
         "T14-A007",
         "T15-A002",
         "T15-A003",
@@ -460,12 +517,14 @@
       "gate_id": "SR-GATE-CHECK-COMPANION-CHANGE-PACKETS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_companion_change_packets.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_portfolio_project.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T15-A003",
@@ -476,12 +535,14 @@
       "gate_id": "SR-GATE-CHECK-PORTFOLIO-PROJECT",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_portfolio_project.py"
     },
     {
       "category": "ecosystem_compatibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/sync_ecosystem_lock.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T15-A006",
@@ -492,12 +553,14 @@
       "gate_id": "SR-GATE-SYNC-ECOSYSTEM-LOCK-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/sync_ecosystem_lock.py"
     },
     {
       "category": "ecosystem_compatibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_citeweft_integration.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T12-A001",
@@ -510,15 +573,16 @@
       "gate_id": "SR-GATE-CHECK-CITEWEFT-INTEGRATION",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_citeweft_integration.py"
     },
     {
       "category": "ecosystem_compatibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_integration_passports.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A005",
         "T13-A001",
         "T15-A004"
       ],
@@ -527,12 +591,14 @@
       "gate_id": "SR-GATE-CHECK-INTEGRATION-PASSPORTS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_integration_passports.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_consumer_contracts.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T13-A001",
@@ -544,15 +610,16 @@
       "gate_id": "SR-GATE-CHECK-CONSUMER-CONTRACTS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_consumer_contracts.py"
     },
     {
       "category": "ecosystem_compatibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_integration_drift.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A005",
         "T13-A001"
       ],
       "evidence_ceiling": "source_verified",
@@ -560,12 +627,14 @@
       "gate_id": "SR-GATE-CHECK-INTEGRATION-DRIFT",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_integration_drift.py"
     },
     {
       "category": "control_plane_dry_run",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/render_github_issues.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T13-A002"
@@ -575,12 +644,14 @@
       "gate_id": "SR-GATE-RENDER-GITHUB-ISSUES-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/render_github_issues.py"
     },
     {
       "category": "control_plane_dry_run",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_github_issue_hierarchy.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T13-A002"
@@ -590,12 +661,14 @@
       "gate_id": "SR-GATE-CHECK-GITHUB-ISSUE-HIERARCHY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_github_issue_hierarchy.py"
     },
     {
       "category": "control_plane_dry_run",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_github_project.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [],
       "evidence_ceiling": "source_verified",
@@ -603,12 +676,14 @@
       "gate_id": "SR-GATE-CHECK-GITHUB-PROJECT",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_github_project.py"
     },
     {
       "category": "control_plane_dry_run",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/sync_github_issues.py --repo edithatogo/searchright",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T13-A003",
@@ -619,12 +694,14 @@
       "gate_id": "SR-GATE-SYNC-GITHUB-ISSUES-REPO",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/sync_github_issues.py"
     },
     {
       "category": "control_plane_dry_run",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/sync_github_project.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T13-A003",
@@ -635,12 +712,14 @@
       "gate_id": "SR-GATE-SYNC-GITHUB-PROJECT",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/sync_github_project.py"
     },
     {
       "category": "control_plane_dry_run",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/bootstrap_github.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T13-A003",
@@ -651,16 +730,16 @@
       "gate_id": "SR-GATE-BOOTSTRAP-GITHUB",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/bootstrap_github.py"
     },
     {
       "category": "context_integrity",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_context_integrity.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A001",
-        "T00-A002",
         "T13-A004",
         "T14-A007"
       ],
@@ -669,15 +748,16 @@
       "gate_id": "SR-GATE-CHECK-CONTEXT-INTEGRITY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_context_integrity.py"
     },
     {
       "category": "context_integrity",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/sync_context_lock.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A002",
         "T13-A004"
       ],
       "evidence_ceiling": "source_verified",
@@ -685,27 +765,34 @@
       "gate_id": "SR-GATE-SYNC-CONTEXT-LOCK-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/sync_context_lock.py"
     },
     {
       "category": "safety_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_default_deny.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T16-A005"
+        "T16-A005",
+        "T34-A001",
+        "T34-A002",
+        "T34-A003"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
       "gate_id": "SR-GATE-CHECK-DEFAULT-DENY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_default_deny.py"
     },
     {
       "category": "deterministic_reference_model",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_redaction_policy.py --self-test",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T04-A006",
@@ -718,15 +805,16 @@
       "gate_id": "SR-GATE-CHECK-REDACTION-POLICY-SELF-TEST",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_redaction_policy.py"
     },
     {
       "category": "safety_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_workflow_hardening.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T09-A005",
         "T16-A003",
         "T16-A004",
         "T18-A001",
@@ -749,15 +837,16 @@
       "gate_id": "SR-GATE-CHECK-WORKFLOW-HARDENING",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_workflow_hardening.py"
     },
     {
       "category": "source_structure",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_toolchain_manifest.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A003",
         "T16-A001",
         "T16-A004"
       ],
@@ -766,15 +855,22 @@
       "gate_id": "SR-GATE-CHECK-TOOLCHAIN-MANIFEST",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_toolchain_manifest.py"
     },
     {
       "category": "interface_parity",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_cli_mcp_parity.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T09-A001",
+        "T09-A002",
+        "T09-A003",
+        "T09-A004",
+        "T09-A005",
+        "T09-A006",
         "T10-A001",
         "T10-A003",
         "T10-A004",
@@ -793,12 +889,14 @@
       "gate_id": "SR-GATE-CHECK-CLI-MCP-PARITY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_cli_mcp_parity.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_agent_skill.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T11-A001",
@@ -813,12 +911,14 @@
       "gate_id": "SR-GATE-CHECK-AGENT-SKILL",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_agent_skill.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_sourceright_migration.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T03-A001",
@@ -836,12 +936,14 @@
       "gate_id": "SR-GATE-CHECK-SOURCERIGHT-MIGRATION",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_sourceright_migration.py"
     },
     {
       "category": "claim_evidence",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_roadmap_coverage.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T30-A001",
@@ -856,12 +958,14 @@
       "gate_id": "SR-GATE-CHECK-ROADMAP-COVERAGE",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_roadmap_coverage.py"
     },
     {
       "category": "ecosystem_compatibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_release_train.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T03-A006",
@@ -874,12 +978,14 @@
       "gate_id": "SR-GATE-CHECK-RELEASE-TRAIN",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_release_train.py"
     },
     {
       "category": "interface_parity",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_sdk_examples.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T35-A001",
@@ -891,12 +997,14 @@
       "gate_id": "SR-GATE-CHECK-SDK-EXAMPLES",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_sdk_examples.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_contract_bindings.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T01-A005"
@@ -906,12 +1014,14 @@
       "gate_id": "SR-GATE-CHECK-CONTRACT-BINDINGS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_contract_bindings.py"
     },
     {
       "category": "release_preparation",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_release_rehearsal.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T36-A001",
@@ -923,12 +1033,14 @@
       "gate_id": "SR-GATE-CHECK-RELEASE-REHEARSAL",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_release_rehearsal.py"
     },
     {
       "category": "claim_evidence",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_maturity_dossier.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T30-A001",
@@ -946,12 +1058,14 @@
       "gate_id": "SR-GATE-CHECK-MATURITY-DOSSIER",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_maturity_dossier.py"
     },
     {
       "category": "claim_evidence",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_launch_preparation_roadmap.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T30-A001",
@@ -962,12 +1076,14 @@
       "gate_id": "SR-GATE-CHECK-LAUNCH-PREPARATION-ROADMAP",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_launch_preparation_roadmap.py"
     },
     {
       "category": "claim_evidence",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/sync_track_evidence.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [],
       "evidence_ceiling": "source_verified",
@@ -975,12 +1091,14 @@
       "gate_id": "SR-GATE-SYNC-TRACK-EVIDENCE-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/sync_track_evidence.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_track_archival.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [],
       "evidence_ceiling": "source_verified",
@@ -988,15 +1106,16 @@
       "gate_id": "SR-GATE-CHECK-TRACK-ARCHIVAL",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_track_archival.py"
     },
     {
       "category": "source_structure",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_rust_dependency_graph.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
-        "T00-A004",
         "T12-A001",
         "T12-A002",
         "T12-A003",
@@ -1007,12 +1126,14 @@
       "gate_id": "SR-GATE-CHECK-RUST-DEPENDENCY-GRAPH",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_rust_dependency_graph.py"
     },
     {
       "category": "source_structure",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_rust_source_structure.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T26-A001",
@@ -1022,19 +1143,24 @@
         "T26-A005",
         "T33-A001",
         "T33-A002",
-        "T33-A003"
+        "T33-A003",
+        "T34-A001",
+        "T34-A002",
+        "T34-A003"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
       "gate_id": "SR-GATE-CHECK-RUST-SOURCE-STRUCTURE",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_rust_source_structure.py"
     },
     {
       "category": "search_method",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/audit_search_code.py --self-test",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T15-A001"
@@ -1044,12 +1170,14 @@
       "gate_id": "SR-GATE-AUDIT-SEARCH-CODE-SELF-TEST",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/audit_search_code.py"
     },
     {
       "category": "safety_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_secrets.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T16-A005"
@@ -1059,12 +1187,14 @@
       "gate_id": "SR-GATE-CHECK-SECRETS",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_secrets.py"
     },
     {
       "category": "source_reproducibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/generate_source_sbom.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [],
       "evidence_ceiling": "source_reproducible",
@@ -1072,12 +1202,14 @@
       "gate_id": "SR-GATE-GENERATE-SOURCE-SBOM-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/generate_source_sbom.py"
     },
     {
       "category": "source_reproducibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/generate_source_hash_manifest.py --check",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [],
       "evidence_ceiling": "source_reproducible",
@@ -1085,12 +1217,14 @@
       "gate_id": "SR-GATE-GENERATE-SOURCE-HASH-MANIFEST-CHECK",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/generate_source_hash_manifest.py"
     },
     {
       "category": "source_reproducibility",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_packaging_reproducibility.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T18-A001",
@@ -1108,12 +1242,119 @@
       "gate_id": "SR-GATE-CHECK-PACKAGING-REPRODUCIBILITY",
       "harness_gate": true,
       "network": false,
+      "program": "python",
       "script": "scripts/check_packaging_reproducibility.py"
     },
     {
+      "category": "compiler_validation",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "cargo clippy -p searchright-cli --all-targets --locked -- -D warnings",
+      "command_kind": "rust_toolchain",
+      "compiler_required": true,
+      "covered_assertions": [
+        "T09-A001",
+        "T09-A002",
+        "T09-A003",
+        "T09-A004",
+        "T09-A005",
+        "T09-A006"
+      ],
+      "evidence_ceiling": "compiler_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CARGO-CLIPPY-DFC6D849E7",
+      "harness_gate": false,
+      "network": true,
+      "program": "cargo",
+      "script": null
+    },
+    {
+      "category": "compiler_validation",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings",
+      "command_kind": "rust_toolchain",
+      "compiler_required": true,
+      "covered_assertions": [
+        "T20-A001",
+        "T20-A002",
+        "T20-A003",
+        "T20-A004",
+        "T20-A005",
+        "T20-A006"
+      ],
+      "evidence_ceiling": "compiler_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CARGO-CLIPPY-5B07BD3E21",
+      "harness_gate": false,
+      "network": true,
+      "program": "cargo",
+      "script": null
+    },
+    {
+      "category": "compiler_validation",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "cargo test -p searchright-cli --locked",
+      "command_kind": "rust_toolchain",
+      "compiler_required": true,
+      "covered_assertions": [
+        "T09-A001",
+        "T09-A002",
+        "T09-A003",
+        "T09-A004",
+        "T09-A005",
+        "T09-A006"
+      ],
+      "evidence_ceiling": "compiler_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CARGO-TEST-B61C1DA20F",
+      "harness_gate": false,
+      "network": true,
+      "program": "cargo",
+      "script": null
+    },
+    {
+      "category": "compiler_validation",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "cargo test -p searchright-contracts -p searchright-discovery",
+      "command_kind": "rust_toolchain",
+      "compiler_required": true,
+      "covered_assertions": [
+        "T20-A001",
+        "T20-A002",
+        "T20-A003",
+        "T20-A004",
+        "T20-A005",
+        "T20-A006"
+      ],
+      "evidence_ceiling": "compiler_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CARGO-TEST-16296C75A2",
+      "harness_gate": false,
+      "network": true,
+      "program": "cargo",
+      "script": null
+    },
+    {
+      "category": "python_runtime_validation",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python -m unittest tests.test_gate_catalog_native_commands",
+      "command_kind": "python_module",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T11-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-PYTHON-A575AB45C0",
+      "harness_gate": false,
+      "network": false,
+      "program": "python",
+      "script": null
+    },
+    {
       "category": "control_plane_dry_run",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/audit_github_control_plane.py --help",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T31-A004"
@@ -1123,27 +1364,14 @@
       "gate_id": "SR-GATE-AUDIT-GITHUB-CONTROL-PLANE-HELP",
       "harness_gate": false,
       "network": false,
+      "program": "python",
       "script": "scripts/audit_github_control_plane.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
-      "command": "python scripts/check_cargo_vet_governance.py",
-      "compiler_required": false,
-      "covered_assertions": [
-        "T16-A004"
-      ],
-      "evidence_ceiling": "source_verified",
-      "external_writes": false,
-      "gate_id": "SR-GATE-CHECK-CARGO-VET-GOVERNANCE",
-      "harness_gate": false,
-      "network": false,
-      "script": "scripts/check_cargo_vet_governance.py"
-    },
-    {
-      "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_cli_distribution.py target/debug/searchright",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T09-A001",
@@ -1158,57 +1386,14 @@
       "gate_id": "SR-GATE-CHECK-CLI-DISTRIBUTION",
       "harness_gate": false,
       "network": false,
+      "program": "python",
       "script": "scripts/check_cli_distribution.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
-      "command": "python scripts/check_coverage_policy.py",
-      "compiler_required": false,
-      "covered_assertions": [
-        "T16-A003"
-      ],
-      "evidence_ceiling": "source_verified",
-      "external_writes": false,
-      "gate_id": "SR-GATE-CHECK-COVERAGE-POLICY",
-      "harness_gate": false,
-      "network": false,
-      "script": "scripts/check_coverage_policy.py"
-    },
-    {
-      "category": "search_method",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
-      "command": "python scripts/check_research_object_handoff.py",
-      "compiler_required": false,
-      "covered_assertions": [
-        "T05-A006"
-      ],
-      "evidence_ceiling": "source_verified",
-      "external_writes": false,
-      "gate_id": "SR-GATE-CHECK-RESEARCH-OBJECT-HANDOFF",
-      "harness_gate": false,
-      "network": false,
-      "script": "scripts/check_research_object_handoff.py"
-    },
-    {
-      "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
-      "command": "python scripts/conductor_status.py",
-      "compiler_required": false,
-      "covered_assertions": [
-        "T00-A002"
-      ],
-      "evidence_ceiling": "source_verified",
-      "external_writes": false,
-      "gate_id": "SR-GATE-CONDUCTOR-STATUS",
-      "harness_gate": false,
-      "network": false,
-      "script": "scripts/conductor_status.py"
-    },
-    {
-      "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/mcp_smoke.py target/debug/searchright-mcp",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T10-A001",
@@ -1221,12 +1406,14 @@
       "gate_id": "SR-GATE-MCP-SMOKE",
       "harness_gate": false,
       "network": false,
+      "program": "python",
       "script": "scripts/mcp_smoke.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T10-A001",
@@ -1241,12 +1428,14 @@
       "gate_id": "SR-GATE-RECORD-MCP-LIVE-CLIENT-CONFORMANCE-RECEIPT-DIR",
       "harness_gate": false,
       "network": false,
+      "program": "python",
       "script": "scripts/record_mcp_live_client_conformance.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/remote_mcp_conformance.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T34-A001",
@@ -1258,12 +1447,14 @@
       "gate_id": "SR-GATE-REMOTE-MCP-CONFORMANCE",
       "harness_gate": false,
       "network": false,
+      "program": "python",
       "script": "scripts/remote_mcp_conformance.py"
     },
     {
       "category": "repository_policy",
-      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/run_static_harness.py",
+      "command_kind": "repository_script",
       "compiler_required": false,
       "covered_assertions": [
         "T00-A006",
@@ -1278,7 +1469,26 @@
       "gate_id": "SR-GATE-RUN-STATIC-HARNESS",
       "harness_gate": false,
       "network": false,
+      "program": "python",
       "script": "scripts/run_static_harness.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Catalogue presence does not establish execution. A passing receipt may establish only this gate's declared evidence ceiling; it does not establish live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/test_agent_panel_governance.py",
+      "command_kind": "repository_script",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T11-A002",
+        "T11-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-TEST-AGENT-PANEL-GOVERNANCE",
+      "harness_gate": false,
+      "network": false,
+      "program": "python",
+      "script": "scripts/test_agent_panel_governance.py"
     }
   ],
   "generated_from": [
@@ -1286,5 +1496,5 @@
     "conductor/tracks/*/traceability.json",
     "scripts/check_gate_catalog.py"
   ],
-  "schema_version": "org.searchright.gate-catalog.v1"
+  "schema_version": "org.searchright.gate-catalog.v2"
 }

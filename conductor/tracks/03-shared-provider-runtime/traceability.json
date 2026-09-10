@@ -21,11 +21,12 @@
         "python scripts/check_sourceright_migration.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/03-shared-provider-runtime/evidence.json",
-        "verification/receipts/track-03-sourceright-inventory.json"
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "The current Sourceright provider surface is inventoried at a pinned revision and its provider blobs are unchanged from the original inventory."
+      "open_gates": [
+        "Refresh against the current Sourceright revision before cutover."
+      ],
+      "permitted_claim": "The observed Sourceright provider surface is inventoried at a pinned revision."
     },
     {
       "assertion_id": "T03-A002",
@@ -46,9 +47,10 @@
         "conductor/tracks/03-shared-provider-runtime/evidence.json"
       ],
       "open_gates": [
+        "Compile the compatibility adapter in Searchright and Sourceright.",
         "Add a downstream feature-flag canary."
       ],
-      "permitted_claim": "The compatibility adapter is compiler-tested in Searchright; downstream feature integration is not performed."
+      "permitted_claim": "A source compatibility adapter exists; downstream compilation is not proven."
     },
     {
       "assertion_id": "T03-A003",
@@ -57,41 +59,23 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/evidence-search-core/src/provider.rs",
-        "crates/searchright-connectors/src/lib.rs",
-        "integration/provider-contract-baselines.json",
-        "crates/evidence-search-core/src/lib.rs",
-        "crates/evidence-search-core/tests/subrequest_context.rs",
-        "docs/provider-subrequest-context.md"
+        "integration/provider-contract-baselines.json"
       ],
       "implementation_symbols": [
         "evidence_search_core::provider::ProviderRegistry",
-        "evidence_search_core::provider::ExecutionPolicy",
-        "evidence_search_core::provider::PageExecutionContext",
-        "evidence_search_core::provider::PageExecutionContext::run_subrequest",
-        "evidence_search_core::provider::ProviderRegistry::register_with_rate_group",
-        "evidence_search_core::provider::SearchProvider::execute_page_with_context"
+        "evidence_search_core::provider::ExecutionPolicy"
       ],
       "deterministic_tests": [
         "python scripts/check_provider_contract_baselines.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/03-shared-provider-runtime/evidence.json",
-        "verification/receipts/track-03-provider-runtime-review.json",
-        "verification/receipts/track-03-reconciled-validation.json",
-        "verification/receipts/track-03-budget-warning.json",
-        "verification/receipts/track-03-subrequest-context.json"
+        "conductor/tracks/03-shared-provider-runtime/evidence.json"
       ],
       "open_gates": [
-        "Obtain exact-revision compiler CI and transport-level adversarial evidence for resolve-validate-pin behavior, proxy suppression, redirects and response bounds.",
-        "Prove cache and error parity against Sourceright.",
-        "Adopt the core context in each live adapter before claiming per-HTTP admission; legacy defaults still admit one page, not hidden HTTP calls."
+        "Compile runtime tests.",
+        "Prove cache and error parity against Sourceright."
       ],
-      "permitted_claim": "The core context's admission, shared floors, cooperative deadlines/cancellation and cumulative subrequest bounds are fixture-tested; legacy timeout tightening is deliberate. Full repository-pinned 1.97.1 local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257 (75 Python, 57 static, 395 native with zero skipped, 23 vet governance tests). No live-adapter adoption occurs in this slice; current provider-policy compliance, transport adversarial/hosted evidence, Sourceright parity and opt-in live execution remain unproven.",
-      "native_test_commands": [
-        "cargo test -p evidence-search-core --test subrequest_context --locked",
-        "cargo test -p evidence-search-core --lib --locked",
-        "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
-      ]
+      "permitted_claim": "Bounded retry, timing, rate, cache-key and receipt source logic is implemented but not compiler- or parity-proven."
     },
     {
       "assertion_id": "T03-A004",
@@ -110,7 +94,7 @@
         "conductor/tracks/03-shared-provider-runtime/evidence.json"
       ],
       "open_gates": [
-        "Validate a complete provider/fixture/case/dimension execution matrix and run old/new fixtures; v1 summary readiness alone is not execution proof."
+        "Run old/new fixtures and compare every parity dimension."
       ],
       "permitted_claim": "Parity cases are defined; dual-run results do not yet exist."
     },
@@ -157,13 +141,6 @@
         "Retain rollback for at least one compatible release."
       ],
       "permitted_claim": "No Sourceright code has been removed or switched by this repository."
-    }
-  ],
-  "updated": "2026-08-31",
-  "review_fixes": [
-    {
-      "commit": "935d725877f6a6ca82bacefd8982e613981f068c",
-      "summary": "Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover."
     }
   ]
 }
