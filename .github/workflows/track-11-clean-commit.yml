@@ -108,13 +108,18 @@ jobs:
               'skills/systematic-search/evaluations/agent-panel-protocol.md',
               'skills/systematic-search/evaluations/agent-panel-template.json',
               'scripts/test_agent_panel_governance.py',
+              'tests/test_gate_catalog_native_commands.py',
               'docs/adrs/0019-single-owner-agent-panel-governance.md',
           ):
               if path not in deliverables:
                   deliverables.append(path)
           checks = entry.setdefault('checks', [])
-          if 'python scripts/test_agent_panel_governance.py' not in checks:
-              checks.append('python scripts/test_agent_panel_governance.py')
+          for command in (
+              'python scripts/test_agent_panel_governance.py',
+              'python -m unittest tests.test_gate_catalog_native_commands',
+          ):
+              if command not in checks:
+                  checks.append(command)
 
           for gate in entry.get('gates', []):
               evidence = str(gate.get('required_evidence', '')).lower()
@@ -193,6 +198,7 @@ jobs:
                       'skills/systematic-search/evaluations/agent-panel-protocol.md',
                       'skills/systematic-search/evaluations/agent-panel-template.json',
                       'scripts/test_agent_panel_governance.py',
+                      'tests/test_gate_catalog_native_commands.py',
                       'crates/searchright-agent/tests/skill_scenarios.rs',
                       'crates/searchright-agent/src/lib.rs',
                   ],
@@ -203,6 +209,7 @@ jobs:
                   'deterministic_tests': [
                       'python scripts/check_agent_skill.py',
                       'python scripts/test_agent_panel_governance.py',
+                      'python -m unittest tests.test_gate_catalog_native_commands',
                   ],
                   'evidence_receipts': [
                       'verification/receipts/systematic-search-skill.json',
@@ -211,9 +218,10 @@ jobs:
                   'open_gates': [hosts, panel],
                   'permitted_claim': (
                       'Deterministic fixtures and governance tests cover authority, '
-                      'panel isolation, dissent and claim boundaries. They do not '
-                      'establish current host/model behaviour, panel completion or '
-                      'methodological validity.'
+                      'panel isolation, dissent and claim boundaries. The gate catalogue '
+                      'distinguishes source scripts from native compiler/tool commands. '
+                      'These checks do not establish current host/model behaviour, panel '
+                      'completion or methodological validity.'
                   ),
               }
           )
@@ -229,19 +237,20 @@ jobs:
           python scripts/sync_track_evidence.py
           python scripts/sync_traceability.py
           python scripts/render_github_issues.py
-          python scripts/generate_evidence_debt.py
-          python scripts/check_gate_catalog.py
+          python scripts/check_gate_catalog.py --write
+          python scripts/generate_evidence_debt.py --write
           python scripts/generate_source_hash_manifest.py
 
       - name: Verify focused governance, projections and workflow policy
         run: |
           python scripts/test_agent_panel_governance.py
+          python -m unittest tests.test_gate_catalog_native_commands
           python scripts/check_agent_skill.py
           python scripts/sync_track_evidence.py --check
           python scripts/sync_traceability.py --check
           python scripts/render_github_issues.py --check
-          python scripts/generate_evidence_debt.py --check
           python scripts/check_gate_catalog.py --check
+          python scripts/generate_evidence_debt.py --check
           python scripts/check_github_issue_hierarchy.py
           python scripts/check_github_project.py
           python scripts/check_workflow_hardening.py
