@@ -1,0 +1,114 @@
+name: Track 16 finalise native gate catalogue v2
+
+on:
+  push:
+    branches:
+      - codex/track-16-native-gate-catalog-v2
+
+permissions:
+  contents: write
+
+concurrency:
+  group: track-16-native-gate-catalog-v2
+  cancel-in-progress: true
+
+jobs:
+  finalise:
+    if: ${{ !contains(github.event.head_commit.message, '[skip track16-v2 finalise]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/validation.txt
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements/validation.txt
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+
+      - name: Import the reviewed Track 16 source files only
+        run: |
+          git fetch --no-tags origin \
+            codex/track-11-agent-panel-governance \
+            codex/track-16-native-gate-catalog
+          git checkout origin/codex/track-11-agent-panel-governance -- \
+            scripts/check_gate_catalog.py
+          git checkout origin/codex/track-16-native-gate-catalog -- \
+            tests/test_gate_catalog_native_commands.py \
+            contracts/json-schema/gate-catalog.v2.schema.json \
+            contracts/compatibility/gate-catalog-v1-to-v2.md
+
+      - name: Register the additive v2 contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          path = Path('contracts/schema-catalog.json')
+          value = json.loads(path.read_text(encoding='utf-8'))
+          entries = value['entries']
+          identifier = 'gate-catalog-v2'
+          if not any(entry['id'] == identifier for entry in entries):
+              entries.append(
+                  {
+                      'id': identifier,
+                      'schema': 'contracts/json-schema/gate-catalog.v2.schema.json',
+                      'example': 'contracts/examples/gate-catalog-v2.json',
+                      'schema_id': 'https://schemas.searchright.dev/gate-catalog.v2.schema.json',
+                      'rust_type': 'GateCatalogV2',
+                      'owner_track': '16',
+                      'stability': 'alpha',
+                      'evidence_level': 'static_verified',
+                  }
+              )
+          value['entries'] = sorted(entries, key=lambda entry: entry['id'])
+          path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          PY
+
+      - name: Remove the one-shot finaliser
+        run: rm .github/workflows/track-16-native-gate-catalog-v2-finalise.yml
+
+      - name: Generate canonical catalogue and contract projections
+        run: |
+          python scripts/check_gate_catalog.py --write
+          cp verification/gate-catalog.json contracts/examples/gate-catalog-v2.json
+          python scripts/generate_contract_bindings.py --write
+          python scripts/sync_schema_surface.py --write
+          python scripts/sync_contract_conformance_matrix.py --write
+          python scripts/sync_context_lock.py
+          python scripts/generate_source_hash_manifest.py
+
+      - name: Verify v1 retention, v2 semantics and all static gates
+        run: |
+          test -f contracts/json-schema/gate-catalog.v1.schema.json
+          test -f contracts/examples/gate-catalog.json
+          python -m unittest tests.test_gate_catalog_native_commands
+          python scripts/check_gate_catalog.py --check
+          python scripts/generate_contract_bindings.py --check
+          python scripts/sync_schema_surface.py --check
+          python scripts/sync_contract_conformance_matrix.py --check
+          python scripts/check_contract_bindings.py
+          python scripts/validate_repository.py
+          python scripts/sync_context_lock.py --check
+          python scripts/generate_source_hash_manifest.py --check
+          python scripts/run_static_harness.py
+          git diff --check
+
+      - name: Commit the clean generated tranche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          test -n "$(git status --porcelain)"
+          git commit -m "fix(16): catalogue native verification commands [skip track16-v2 finalise]"
+          git push origin HEAD:codex/track-16-native-gate-catalog-v2
