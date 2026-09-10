@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import re
 import unittest
 
 import yaml
@@ -18,9 +19,13 @@ EXPECTED_PANEL_ROLES = [
 ]
 
 
+def normalized(path: Path) -> str:
+    return re.sub(r"\s+", " ", path.read_text(encoding="utf-8").lower())
+
+
 class AgentPanelGovernanceTests(unittest.TestCase):
     def test_skill_declares_single_owner_and_sealed_panel(self) -> None:
-        text = (SKILL_ROOT / "SKILL.md").read_text(encoding="utf-8").lower()
+        text = normalized(SKILL_ROOT / "SKILL.md")
         for phrase in (
             "single accountable human-owner",
             "sealed panel",
@@ -81,11 +86,9 @@ class AgentPanelGovernanceTests(unittest.TestCase):
 
     def test_agent_panel_template_is_unexecuted_and_fail_closed(self) -> None:
         template = json.loads(
-            (
-                SKILL_ROOT
-                / "evaluations"
-                / "agent-panel-template.json"
-            ).read_text(encoding="utf-8")
+            (SKILL_ROOT / "evaluations" / "agent-panel-template.json").read_text(
+                encoding="utf-8"
+            )
         )
         self.assertEqual(
             template["schema_version"],
