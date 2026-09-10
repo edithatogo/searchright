@@ -38,9 +38,12 @@ jobs:
 
       - name: Import the reviewed Track 16 source files only
         run: |
-          git fetch --no-tags origin codex/track-16-native-gate-catalog
+          git fetch --no-tags origin \
+            codex/track-11-agent-panel-governance \
+            codex/track-16-native-gate-catalog
+          git checkout origin/codex/track-11-agent-panel-governance -- \
+            scripts/check_gate_catalog.py
           git checkout origin/codex/track-16-native-gate-catalog -- \
-            scripts/check_gate_catalog.py \
             tests/test_gate_catalog_native_commands.py \
             contracts/json-schema/gate-catalog.v2.schema.json \
             contracts/compatibility/gate-catalog-v1-to-v2.md
