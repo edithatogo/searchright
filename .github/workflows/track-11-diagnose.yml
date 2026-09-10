@@ -1,0 +1,44 @@
+name: Track 11 diagnose governance regeneration
+
+on:
+  push:
+    branches:
+      - codex/track-11-agent-panel-governance
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    if: ${{ !contains(github.event.head_commit.message, '[skip track11 diagnose]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/validation.txt
+      - name: Install validation dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements/validation.txt
+      - name: Capture diagnostic
+        run: |
+          set +e
+          python scripts/check_agent_skill.py --write > track11-diagnostic.txt 2>&1
+          status=$?
+          set -e
+          printf '\nexit_status=%s\n' "$status" >> track11-diagnostic.txt
+          cat track11-diagnostic.txt
+      - name: Commit diagnostic and generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(11): capture governance regeneration diagnostic [skip track11 regen] [skip track11 capture] [skip track11 diagnose]"
+          git push origin HEAD:codex/track-11-agent-panel-governance
