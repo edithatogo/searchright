@@ -1,0 +1,107 @@
+name: Publish Hugging Face methodology fixtures
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: Create/update the exact Hugging Face dataset after protected approval
+        required: true
+        type: boolean
+        default: false
+      visibility:
+        description: Dataset visibility
+        required: true
+        type: choice
+        default: public
+        options:
+          - public
+          - private
+
+permissions:
+  contents: read
+
+concurrency:
+  group: huggingface-methodology-fixtures-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+
+      - name: Build and verify deterministic package
+        run: |
+          python scripts/build_hf_methodology_fixtures.py \
+            --check \
+            --output target/huggingface-bundle/package
+          python scripts/publish_hf_methodology_fixtures.py \
+            --package-dir target/huggingface-bundle/package \
+            --repo-id edithatogo/searchright-methodology-fixtures \
+            --visibility '${{ inputs.visibility }}' \
+            --receipt target/huggingface-bundle/dry-run-receipt.json
+
+      - name: Preserve exact publication bundle
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: searchright-huggingface-methodology-${{ github.sha }}
+          path: target/huggingface-bundle
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    if: ${{ inputs.apply }}
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: huggingface-dataset-release
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/huggingface-release.txt
+
+      - name: Install pinned Hugging Face client
+        run: python -m pip install --disable-pip-version-check -r requirements/huggingface-release.txt
+
+      - name: Download exact planned bundle
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: searchright-huggingface-methodology-${{ github.sha }}
+          path: target/huggingface-bundle
+
+      - name: Publish exact allowlisted file set
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SEARCHRIGHT_HF_APPLY: '1'
+        run: |
+          python scripts/publish_hf_methodology_fixtures.py \
+            --apply \
+            --package-dir target/huggingface-bundle/package \
+            --repo-id edithatogo/searchright-methodology-fixtures \
+            --visibility '${{ inputs.visibility }}' \
+            --receipt target/huggingface-bundle/publication-receipt.json
+
+      - name: Preserve publication receipt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: searchright-huggingface-publication-${{ github.sha }}
+          path: target/huggingface-bundle/publication-receipt.json
+          if-no-files-found: error
+          retention-days: 90

@@ -28,3 +28,15 @@ See `conductor/requirements.md` rows whose Track owner includes `17`.
 ## Out of scope
 
 Work owned by later tracks is documented but not promoted as implemented.
+
+## Hugging Face distribution amendment — 2026-09-10
+
+The rights-clear synthetic validation fixtures may be projected into the
+`edithatogo/searchright-methodology-fixtures` Hugging Face dataset. GitHub remains
+the canonical source. The projection must be generated from an exact allowlist,
+exclude sealed labels and external corpora, carry a dataset card and per-file
+integrity manifest, and require an accountable-owner-approved protected release.
+
+A prepared package, dataset card or dry run is not publication. A Hub commit is
+not methodological validation or a performance claim. See
+`docs/evaluation/huggingface-methodology-fixtures.md`.
