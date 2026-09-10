@@ -1,0 +1,73 @@
+name: Track 16 diagnose native gate catalogue v2
+
+on:
+  push:
+    branches:
+      - codex/track-16-native-gate-catalog-v2
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/validation.txt
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements/validation.txt
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+      - name: Native command unit tests
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python -m unittest tests.test_gate_catalog_native_commands
+      - name: Gate catalogue freshness and semantics
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/check_gate_catalog.py --check
+      - name: Generated contract bindings
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/generate_contract_bindings.py --check
+      - name: Schema surface
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/sync_schema_surface.py --check
+      - name: Contract conformance matrix
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/sync_contract_conformance_matrix.py --check
+      - name: Contract binding policy
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/check_contract_bindings.py
+      - name: Repository schema validation
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/validate_repository.py
+      - name: Context lock
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/sync_context_lock.py --check
+      - name: Source manifest
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/generate_source_hash_manifest.py --check
+      - name: Aggregate static harness
+        if: ${{ always() }}
+        continue-on-error: true
+        run: python scripts/run_static_harness.py
+      - name: Diff hygiene
+        if: ${{ always() }}
+        continue-on-error: true
+        run: git diff --check
