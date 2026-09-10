@@ -1,0 +1,54 @@
+name: Track 16 diagnose aggregate static gate
+
+on:
+  push:
+    branches:
+      - codex/track-16-native-gate-catalog
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements/validation.txt
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements/validation.txt
+          npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
+      - name: Run gates individually and print the first failure
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          spec = importlib.util.spec_from_file_location(
+              'searchright_static_harness', Path('scripts/run_static_harness.py')
+          )
+          if spec is None or spec.loader is None:
+              raise SystemExit('could not load static harness')
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          for index, command in enumerate(module.COMMANDS, start=1):
+              result = subprocess.run(command, text=True, capture_output=True)
+              print(f'{index:02d}/{len(module.COMMANDS):02d} rc={result.returncode} command={command!r}')
+              if result.returncode:
+                  print('--- stdout ---')
+                  print(result.stdout[-12000:])
+                  print('--- stderr ---', file=sys.stderr)
+                  print(result.stderr[-12000:], file=sys.stderr)
+                  raise SystemExit(result.returncode)
+          PY
