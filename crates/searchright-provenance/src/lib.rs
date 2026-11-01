@@ -327,9 +327,8 @@ mod tests {
     }
 
     fn fixture() -> (ReviewPlan, SourceReceipt, AuditEvent) {
-        let plan =
-            noyalib::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
-                .unwrap_or_else(|error| panic!("review-plan fixture must deserialize: {error}"));
+        let plan = noyalib::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
+            .unwrap_or_else(|error| panic!("review-plan fixture must deserialize: {error}"));
         let mut receipt: SourceReceipt = noyalib::from_str(include_str!(
             "../../../contracts/examples/source-receipt.yaml"
         ))
