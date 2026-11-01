@@ -1119,7 +1119,7 @@ ba8d10541b25dbf09e2b6b1a6d49b9bcb811bfd7baebac6844fa594581309160  ./crates/searc
 5ee9f2b8180e5491362fe946057e5dbadc11105362458e769b9f9a92fc2a658d  ./crates/searchright-cli/assets/completions/searchright.zsh
 aa8870b872f9b32d8d133f659f90bc0ef9391c8414742aec4cc410830b5567be  ./crates/searchright-cli/src/main.rs
 ebc69f34fec09ea517bd3eb28c6efad8c04660e21315cf4ec8d9f822ff4e85aa  ./crates/searchright-cli/tests/cli_e2e.rs
-1ac68a19491da42bddeadce72e00368bf910a91158531161e011ac9b2b34f78b  ./crates/searchright-cli/tests/snapshots/help.txt
+c01a15e54645777db30912ddba7ce93638d66d2648c4ca8290e6686f4bb447ad  ./crates/searchright-cli/tests/snapshots/help.txt
 ce23fcb1de921c16a75e7c7dae232d41435e847a81a416cf317b3358f1ab86cb  ./crates/searchright-cli/tests/snapshots/init.json
 d4fce610b9b698c766ab0060c778b208f03759a2d466cf321360e03a05e18825  ./crates/searchright-cli/tests/snapshots/usage-error.json
 b9fbe8cecd185f79711e83860aed4f484d2f20772f002305ec36ce77117e645e  ./crates/searchright-connectors/Cargo.toml
