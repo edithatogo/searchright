@@ -256,6 +256,12 @@ enum Command {
     },
     /// Validate a benchmark report and its explicit claim boundary.
     ValidateBenchmarkReport { input: PathBuf },
+    /// Read a bounded publisher JSON response and emit a regulatory record with provenance.
+    RegulatoryRecord {
+        provider: String,
+        id: String,
+        input: PathBuf,
+    },
     /// List provider manifests available in the default no-network build.
     Providers,
     /// Print the conservative agent workflow policy.
@@ -286,6 +292,13 @@ enum PlanCommand {
 
 #[derive(Debug, Subcommand)]
 enum SourceCommand {
+    /// Read a bounded publisher JSON response and emit a regulatory record with provenance.
+    RegulatoryRecord {
+        provider: String,
+        id: String,
+        input: PathBuf,
+    },
+
     /// List fixture-backed providers available without network access.
     List,
     /// Check endpoint authority without executing a request.
@@ -632,6 +645,7 @@ const fn command_stage(command: &Command) -> &'static str {
         Command::VerifyProviderComponent { .. } => "verify-provider-component",
         Command::PlanLicensedRequest { .. } => "plan-licensed-request",
         Command::ValidateBenchmarkReport { .. } => "validate-benchmark-report",
+        Command::RegulatoryRecord { .. } => "regulatory-record",
         Command::Providers => "providers",
         Command::Workflow => "workflow",
         Command::Completions { .. } => "completions",
@@ -668,6 +682,15 @@ fn canonical_command(command: Command) -> Command {
             PlanCommand::Workflow => Command::Workflow,
         },
         Command::Source { command } => match command {
+            SourceCommand::RegulatoryRecord {
+                provider,
+                id,
+                input,
+            } => Command::RegulatoryRecord {
+                provider,
+                id,
+                input,
+            },
             SourceCommand::List => Command::Providers,
             SourceCommand::AuthoriseEndpoint { input, endpoint } => {
                 Command::AuthoriseEndpoint { input, endpoint }
@@ -1123,6 +1146,20 @@ fn execute(command: Command) -> Result<()> {
             let report: BenchmarkReport = read_document(&input)?;
             SearchrightEngine::validate_benchmark_report(&report)?;
             valid_receipt("benchmark_report")?;
+        }
+        Command::RegulatoryRecord {
+            provider,
+            id,
+            input,
+        } => {
+            use searchright::connectors::regulatory::{MAX_RESPONSE_BYTES, regulatory_record};
+            use std::io::Read;
+            let mut bytes = Vec::new();
+            fs::File::open(input)?
+                .take(MAX_RESPONSE_BYTES as u64 + 1)
+                .read_to_end(&mut bytes)?;
+            let record = regulatory_record(&provider, &id, &bytes).map_err(anyhow::Error::msg)?;
+            print_json(&record)?;
         }
         Command::Providers => {
             print_json(&SearchrightEngine::default_provider_manifests()?)?;

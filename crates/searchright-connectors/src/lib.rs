@@ -6,6 +6,7 @@
 #![forbid(unsafe_code)]
 
 mod efetch;
+pub mod regulatory;
 pub use efetch::{PubMedFetchRequest, parse_pubmed_fetch_page};
 
 use std::{
