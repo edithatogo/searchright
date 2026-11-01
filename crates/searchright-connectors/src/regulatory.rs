@@ -30,13 +30,16 @@ pub fn regulatory_record(
         "ema-epar" => ("data", "id", "European Medicines Agency"),
         _ => return Err("expected drugsfda, ema-medicines or ema-epar".into()),
     };
-    let rows = root[items].as_array().ok_or("missing publisher records")?;
+    let rows = root
+        .get(items)
+        .and_then(Value::as_array)
+        .ok_or("missing publisher records")?;
     let total = if provider == "drugsfda" {
-        &root["meta"]["results"]["total"]
+        root.pointer("/meta/results/total")
     } else {
-        &root["meta"]["total_records"]
+        root.pointer("/meta/total_records")
     };
-    if total.as_u64() != Some(rows.len() as u64) {
+    if total.and_then(Value::as_u64) != Some(rows.len() as u64) {
         return Err("incomplete publisher response".into());
     }
     let mut matches = rows.iter().filter(|r| r[key].as_str() == Some(id));
@@ -92,7 +95,7 @@ pub fn regulatory_record(
         languages: Vec::new(),
         subjects: Vec::new(),
         urls,
-        provider_metadata: json!({"publisher_meta":root["meta"],"record":row}),
+        provider_metadata: json!({"publisher_meta":root.get("meta"),"record":row}),
     })
 }
 
@@ -106,7 +109,7 @@ mod tests {
             "submissions":[{"submission_type":"SUPPL","submission_number":"2"}]});
         let raw = json!({"meta":{"results":{"total":1}},"results":[application]}).to_string();
         let record = regulatory_record("drugsfda", "BLA123456", raw.as_bytes())?;
-        assert_eq!(record.provider_metadata["record"], application);
+        assert_eq!(record.provider_metadata.get("record"), Some(&application));
         assert!(regulatory_record("drugsfda", "BLA000001", raw.as_bytes()).is_err());
         Ok(())
     }
@@ -118,8 +121,11 @@ mod tests {
         let record = regulatory_record("ema-epar", "1", raw.to_string().as_bytes())?;
         assert_eq!(record.native_id, "1");
         assert_eq!(
-            record.provider_metadata["record"]["ema_product_number"],
-            "EMEA/H/C/000001"
+            record
+                .provider_metadata
+                .pointer("/record/ema_product_number")
+                .and_then(Value::as_str),
+            Some("EMEA/H/C/000001")
         );
         assert_eq!(record.urls, ["https://www.ema.europa.eu/example.pdf"]);
         Ok(())
@@ -129,14 +135,14 @@ mod tests {
     fn ema_checks_snapshot_completeness_and_identity() -> Result<(), String> {
         let row = json!({"category":"Human","ema_product_number":"EMEA/H/C/000001",
             "name_of_medicine":"Example","medicine_status":"Authorised"});
-        let mut payload = json!({"meta":{"total_records":1},"data":[row]});
+        let payload = json!({"meta":{"total_records":1},"data":[row]});
         let parse = |p: &Value| {
             regulatory_record("ema-medicines", "EMEA/H/C/000001", p.to_string().as_bytes())
         };
         assert_eq!(parse(&payload)?.title, "Example");
-        payload["meta"]["total_records"] = json!(2);
+        let payload = json!({"meta":{"total_records":2},"data":[row]});
         assert!(parse(&payload).is_err());
-        payload["data"] = json!([row, row]);
+        let payload = json!({"meta":{"total_records":2},"data":[row,row]});
         assert!(parse(&payload).is_err());
         Ok(())
     }
