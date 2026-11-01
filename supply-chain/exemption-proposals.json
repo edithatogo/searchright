@@ -12,7 +12,7 @@
       "crate": "quick-xml",
       "version": "0.41.0",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "expired",
       "owner": "edithatogo",
       "rationale": "Track 06 locked quick-xml 0.41.0 default-only feature configuration; owner explicitly accepts unresolved package-wide audit risk until 2026-09-29; not an audit or safety certification",
       "risk_summary": "Package-wide audit remains incomplete, with optional-feature findings outside the enabled Searchright path; see the exact owner decision receipt.",
