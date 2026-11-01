@@ -43,12 +43,15 @@ pub use searchright_store as store;
 pub use searchright_study as study;
 pub use searchright_validation as validation;
 
-/// Parse a submitted YAML document with strict flow indentation and the default resource budget.
+/// Parse a submitted YAML document without anchor or merge expansion.
 ///
 /// # Errors
 /// Returns the parser error for malformed YAML or a value incompatible with the expected type.
 pub fn parse_yaml<'de, T: serde::Deserialize<'de>>(input: &'de str) -> Result<T, noyalib::Error> {
-    noyalib::from_str_borrowing(input)
+    let config = noyalib::ParserConfig::default()
+        .max_merge_keys(0)
+        .with_policy(noyalib::policy::DenyAnchors);
+    noyalib::from_str_borrowing_with_config(input, &config)
 }
 
 #[cfg(test)]
@@ -60,6 +63,8 @@ mod tests {
     #[test]
     fn submitted_yaml_observes_document_and_indentation_boundaries() -> Result<(), noyalib::Error> {
         for malformed in [
+            "base: &base {a: 1}\ncopy: {<<: *base}",
+            "<<: [{a: 1}, {b: 2}]",
             "query: \"treatment\"#comment",
             "sources: [a, b, ]#comment",
             "sources: [a, b,#comment\n]",
