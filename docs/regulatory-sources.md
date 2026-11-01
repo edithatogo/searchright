@@ -7,3 +7,5 @@ Use an FDA application number or an EMA human medicine identifier to retrieve on
     searchright source regulatory-record drugsfda BLA761034 fda-run/source.json
 
 The fetch command requires Python 3.15, curl, and a built SearchRight CLI. The last command replays a saved response offline. These are exact-ID supplementary searches. A product's current status or a US submission date cannot on its own establish the date a specific indication was withdrawn abroad. Assessment documents and indication history require separate review.
+
+Use `ema-epar` with a publisher document ID to capture the assessment document's metadata and original PDF link. For example, document 3787 is the Tecentriq public assessment report. Join to a medicine using the publisher's ema_product_number in the native metadata. Document metadata and translated links do not establish what the PDF says.

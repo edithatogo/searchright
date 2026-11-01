@@ -27,7 +27,8 @@ pub fn regulatory_record(
             "US Food and Drug Administration",
         ),
         "ema-medicines" => ("data", "ema_product_number", "European Medicines Agency"),
-        _ => return Err("expected drugsfda or ema-medicines".into()),
+        "ema-epar" => ("data", "id", "European Medicines Agency"),
+        _ => return Err("expected drugsfda, ema-medicines or ema-epar".into()),
     };
     let rows = root[items].as_array().ok_or("missing publisher records")?;
     let total = if provider == "drugsfda" {
@@ -43,7 +44,13 @@ pub fn regulatory_record(
     if matches.next().is_some() {
         return Err("ambiguous publisher identifier".into());
     }
-    let (title, urls) = if provider == "ema-medicines" {
+    let (title, urls) = if provider == "ema-epar" {
+        let title = row["name"].as_str().ok_or("missing EPAR document title")?;
+        let url = row["document_url"]
+            .as_str()
+            .ok_or("missing EPAR document URL")?;
+        (title.to_owned(), vec![url.to_owned()])
+    } else if provider == "ema-medicines" {
         if row["category"] != "Human" {
             return Err("expected a human medicine".into());
         }
@@ -101,6 +108,20 @@ mod tests {
         let record = regulatory_record("drugsfda", "BLA123456", raw.as_bytes())?;
         assert_eq!(record.provider_metadata["record"], application);
         assert!(regulatory_record("drugsfda", "BLA000001", raw.as_bytes()).is_err());
+        Ok(())
+    }
+
+    #[test]
+    fn epar_preserves_document_identity_and_product_linkage() -> Result<(), String> {
+        let raw = json!({"meta":{"total_records":1},"data":[{"id":"1","name":"Assessment",
+            "ema_product_number":"EMEA/H/C/000001","document_url":"https://www.ema.europa.eu/example.pdf"}]});
+        let record = regulatory_record("ema-epar", "1", raw.to_string().as_bytes())?;
+        assert_eq!(record.native_id, "1");
+        assert_eq!(
+            record.provider_metadata["record"]["ema_product_number"],
+            "EMEA/H/C/000001"
+        );
+        assert_eq!(record.urls, ["https://www.ema.europa.eu/example.pdf"]);
         Ok(())
     }
 
