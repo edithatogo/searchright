@@ -254,9 +254,7 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
                     return Err(invalid("XML depth or element limit exceeded"));
                 }
                 nodes += 1;
-                let name = std::str::from_utf8(start.name().as_ref())
-                    .map_err(|_| invalid("XML element name is not UTF-8"))?
-                    .to_owned();
+                let name = start.name().as_ref().to_owned();
                 if !valid_name(&name) {
                     return Err(invalid("unsupported XML element name"));
                 }
@@ -273,18 +271,16 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
                     if node.attributes.len() >= 64 {
                         return Err(invalid("XML attribute count limit exceeded"));
                     }
-                    let key = std::str::from_utf8(attribute.key.as_ref())
-                        .map_err(|_| invalid("invalid XML attribute name"))?
-                        .to_owned();
+                    let key = attribute.key.as_ref().to_owned();
                     if !valid_name(&key) {
                         return Err(invalid("unsupported XML attribute name"));
                     }
                     let value = attribute
-                        .decoded_and_normalized_value(XmlVersion::Implicit1_0, reader.decoder())
+                        .normalized_value(XmlVersion::Implicit1_0)
                         .map_err(|_| invalid("unsupported XML attribute entity"))?;
                     if value.len() > MAX_FIELD
                         || !valid_characters(&value)
-                        || attribute.value.contains(&b'<')
+                        || attribute.value.contains('<')
                     {
                         return Err(invalid("invalid or oversized XML attribute"));
                     }
@@ -300,9 +296,7 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
             }
             Event::End(_) => close_node(&mut stack, &mut root, &mut total_text)?,
             Event::Text(text) => {
-                let text = text
-                    .decode()
-                    .map_err(|_| invalid("invalid XML text encoding"))?;
+                let text: &str = &text;
                 if let Some(node) = stack.last_mut() {
                     node.direct_nonwhitespace |= !text.trim().is_empty();
                     append_text(&mut node.text, &text, &mut total_text)?;
@@ -311,9 +305,7 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
                 }
             }
             Event::CData(text) => {
-                let text = text
-                    .decode()
-                    .map_err(|_| invalid("invalid CDATA encoding"))?;
+                let text: &str = &text;
                 let node = stack
                     .last_mut()
                     .ok_or_else(|| invalid("CDATA outside XML root"))?;
@@ -321,9 +313,7 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
                 append_text(&mut node.text, &text, &mut total_text)?;
             }
             Event::GeneralRef(reference) => {
-                let name = reference
-                    .decode()
-                    .map_err(|_| invalid("invalid XML reference"))?;
+                let name: &str = &reference;
                 let escaped = format!("&{name};");
                 let text = quick_xml::escape::unescape(&escaped)
                     .map_err(|_| invalid("custom or invalid XML entity rejected"))?;
@@ -338,7 +328,7 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
                     || declaration
                     || !stack.is_empty()
                     || root.is_some()
-                    || !declaration_is_valid(decl.as_ref())
+                    || !declaration_is_valid(decl.as_bytes())
                 {
                     return Err(invalid("unsupported or misplaced XML declaration"));
                 }

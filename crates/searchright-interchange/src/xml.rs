@@ -28,7 +28,7 @@ pub(super) fn fragments(input: &str, tag: &str) -> Result<Vec<Fragment>, String>
         let after = offset(&reader)?;
         match event {
             Ok(Event::Start(ref start) | Event::Empty(ref start))
-                if start.name().as_ref() == tag.as_bytes() =>
+                if start.name().as_ref() == tag =>
             {
                 if let Some(previous) = active.take() {
                     result.push(Fragment {
@@ -45,7 +45,7 @@ pub(super) fn fragments(input: &str, tag: &str) -> Result<Vec<Fragment>, String>
                     active = Some(before);
                 }
             }
-            Ok(Event::End(end)) if end.name().as_ref() == tag.as_bytes() => {
+            Ok(Event::End(end)) if end.name().as_ref() == tag => {
                 if let Some(start) = active.take() {
                     result.push(Fragment {
                         range: start..after,
@@ -90,7 +90,7 @@ fn check_characters(text: &str) -> Result<(), String> {
 }
 
 fn reference_text(reference: &quick_xml::events::BytesRef<'_>) -> Result<String, String> {
-    let name = reference.decode().map_err(|error| error.to_string())?;
+    let name = reference.as_ref();
     let escaped = format!("&{name};");
     let text = quick_xml::escape::unescape(&escaped).map_err(|error| error.to_string())?;
     check_characters(&text)?;
@@ -105,8 +105,7 @@ const fn name_start(ch: char) -> bool {
         '\u{fdf0}'..='\u{fffd}' | '\u{10000}'..='\u{effff}')
 }
 
-fn check_name(bytes: &[u8]) -> Result<(), String> {
-    let name = std::str::from_utf8(bytes).map_err(|error| error.to_string())?;
+fn check_name(name: &str) -> Result<(), String> {
     let mut chars = name.chars();
     if !chars.next().is_some_and(name_start)
         || !chars.all(|ch| {
@@ -135,11 +134,11 @@ pub(super) fn validate(xml: &str) -> Result<(), String> {
                 for attribute in start.attributes() {
                     let attribute = attribute.map_err(|error| error.to_string())?;
                     check_name(attribute.key.as_ref())?;
-                    if attribute.value.contains(&b'<') {
+                    if attribute.value.contains('<') {
                         return Err("literal '<' in XML attribute value".into());
                     }
                     let value = attribute
-                        .decoded_and_normalized_value(XmlVersion::Implicit1_0, reader.decoder())
+                        .normalized_value(XmlVersion::Implicit1_0)
                         .map_err(|error| error.to_string())?;
                     check_characters(&value)?;
                 }
@@ -182,7 +181,7 @@ pub(super) fn path<'a>(xml: &'a str, names: &[&str]) -> Vec<&'a str> {
         let Ok(after) = offset(&reader) else { break };
         match event {
             Event::Start(ref start) | Event::Empty(ref start) => {
-                stack.push(start.name().as_ref().to_vec());
+                stack.push(start.name().as_ref().as_bytes().to_vec());
                 let matched = stack.len() == names.len().saturating_add(1)
                     && stack
                         .iter()
@@ -223,9 +222,9 @@ pub(super) fn attribute(xml: &str, name: &[u8]) -> Option<String> {
     start
         .attributes()
         .filter_map(Result::ok)
-        .find(|attr| attr.key.as_ref() == name)
+        .find(|attr| attr.key.as_ref().as_bytes() == name)
         .and_then(|attr| {
-            attr.decoded_and_normalized_value(XmlVersion::Implicit1_0, reader.decoder())
+            attr.normalized_value(XmlVersion::Implicit1_0)
                 .ok()
                 .map(std::borrow::Cow::into_owned)
         })
@@ -246,12 +245,12 @@ pub(super) fn blocks<'a>(xml: &'a str, tag: &str) -> Vec<&'a str> {
             Event::Start(start) => {
                 if active.is_some() {
                     depth += 1;
-                } else if start.name().as_ref() == tag.as_bytes() {
+                } else if start.name().as_ref() == tag {
                     active = Some(before);
                     depth = 1;
                 }
             }
-            Event::Empty(start) if active.is_none() && start.name().as_ref() == tag.as_bytes() => {
+            Event::Empty(start) if active.is_none() && start.name().as_ref() == tag => {
                 if let Some(block) = xml.get(before..after) {
                     result.push(block);
                 }
@@ -278,8 +277,8 @@ pub(super) fn text(xml: &str) -> Option<String> {
     let mut result = String::new();
     loop {
         match reader.read_event().ok()? {
-            Event::Text(text) => result.push_str(&text.xml_content(XmlVersion::Implicit1_0).ok()?),
-            Event::CData(text) => result.push_str(&text.xml_content(XmlVersion::Implicit1_0).ok()?),
+            Event::Text(text) => result.push_str(&text.xml_content(XmlVersion::Implicit1_0)),
+            Event::CData(text) => result.push_str(&text.xml_content(XmlVersion::Implicit1_0)),
             Event::GeneralRef(reference) => result.push_str(&reference_text(&reference).ok()?),
             Event::Eof => break,
             _ => {}
