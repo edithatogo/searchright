@@ -282,7 +282,7 @@
       "version": "1.0"
     },
     {
-      "bom-ref": "cargo-requirement:serde_yaml@0.9",
+      "bom-ref": "cargo-requirement:serde_yaml@0.10.7",
       "name": "serde_yaml",
       "properties": [
         {
@@ -290,10 +290,10 @@
           "value": "version-requirement-not-resolved"
         }
       ],
-      "purl": "pkg:cargo/serde_yaml@0.9",
+      "purl": "pkg:cargo/serde_yaml@0.10.7",
       "scope": "required",
       "type": "library",
-      "version": "0.9"
+      "version": "0.10.7"
     },
     {
       "bom-ref": "cargo-requirement:sha2@0.11",
@@ -1402,7 +1402,7 @@
         "cargo-requirement:clap_mangen@0.2",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:tokio@1",
         "cargo:searchright@0.1.0-alpha.1"
       ],
@@ -1494,7 +1494,7 @@
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:url@2.5",
         "cargo:searchright-contracts@0.1.0-alpha.1"
@@ -1520,7 +1520,7 @@
         "cargo-requirement:rmcp@=3.1.2",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:time@0.3",
@@ -1563,7 +1563,7 @@
     {
       "dependsOn": [
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1574,7 +1574,7 @@
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1643,7 +1643,7 @@
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
+        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:time@0.3",
@@ -1705,7 +1705,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:8b06eccd-b7ec-5c35-af87-c3324befe7ff",
+  "serialNumber": "urn:uuid:05841f22-0d39-5ca5-b044-2729608b2341",
   "specVersion": "1.6",
   "version": 1
 }
