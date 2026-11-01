@@ -1192,7 +1192,7 @@ fn emit_operation_error(stage: &str, error: &anyhow::Error) -> ExitCode {
         Some(serde_json::error::Category::Syntax | serde_json::error::Category::Eof)
     ) || error
         .chain()
-        .any(<dyn std::error::Error + 'static>::is::<serde_yaml::Error>);
+        .any(<dyn std::error::Error + 'static>::is::<noyalib::Error>);
     let is_document_contract = matches!(json_category, Some(serde_json::error::Category::Data));
     let (category, message, corrective_action) = if is_io {
         (
@@ -1236,7 +1236,7 @@ fn read_document<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
     let content =
         fs::read_to_string(path).with_context(|| format!("could not read {}", path.display()))?;
     match path.extension().and_then(|extension| extension.to_str()) {
-        Some("yaml" | "yml") => serde_yaml::from_str(&content)
+        Some("yaml" | "yml") => searchright::parse_yaml(&content)
             .with_context(|| format!("invalid YAML in {}", path.display())),
         _ => serde_json::from_str(&content)
             .with_context(|| format!("invalid JSON in {}", path.display())),

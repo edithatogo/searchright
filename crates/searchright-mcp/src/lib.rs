@@ -155,7 +155,7 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     let licensed_adapter = json_example(include_str!(
         "../../../contracts/examples/licensed-adapter.yaml"
     ))?;
-    let mut compiled_strategy = serde_yaml::from_str::<serde_json::Value>(include_str!(
+    let mut compiled_strategy = noyalib::from_str::<serde_json::Value>(include_str!(
         "../../../contracts/examples/compiled-strategy.yaml"
     ))
     .map_err(|error| format!("compiled strategy fixture must parse: {error}"))?;
@@ -215,7 +215,7 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     let diagnostic = json_example(include_str!("../../../contracts/examples/diagnostic.yaml"))?;
 
     let component_bytes = b"searchright-mcp-conformance-component";
-    let mut component_manifest = serde_yaml::from_str::<serde_json::Value>(include_str!(
+    let mut component_manifest = noyalib::from_str::<serde_json::Value>(include_str!(
         "../../../contracts/examples/provider-component.yaml"
     ))
     .map_err(|error| format!("provider component fixture must parse: {error}"))?;
@@ -480,14 +480,14 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
 }
 
 fn json_example(document: &str) -> Result<String, String> {
-    let value = serde_yaml::from_str::<serde_json::Value>(document)
+    let value = searchright::parse_yaml::<serde_json::Value>(document)
         .map_err(|error| format!("MCP conformance fixture must parse: {error}"))?;
     serde_json::to_string(&value)
         .map_err(|error| format!("MCP conformance fixture must serialize: {error}"))
 }
 
 fn json_example_with_review_id(document: &str, review_id: &str) -> Result<String, String> {
-    let mut value = serde_yaml::from_str::<serde_json::Value>(document)
+    let mut value = searchright::parse_yaml::<serde_json::Value>(document)
         .map_err(|error| format!("MCP conformance fixture must parse: {error}"))?;
     let object = value
         .as_object_mut()
@@ -2546,7 +2546,7 @@ fn parse_document<T: serde::de::DeserializeOwned>(
     format: Option<&str>,
 ) -> Result<T, String> {
     match format.unwrap_or("json") {
-        "yaml" | "yml" => serde_yaml::from_str(document).map_err(|error| error.to_string()),
+        "yaml" | "yml" => searchright::parse_yaml(document).map_err(|error| error.to_string()),
         "json" => serde_json::from_str(document).map_err(|error| error.to_string()),
         other => Err(format!("unsupported document format `{other}`")),
     }

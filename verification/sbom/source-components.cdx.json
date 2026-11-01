@@ -184,6 +184,20 @@
       "version": "0.7.2"
     },
     {
+      "bom-ref": "cargo-requirement:noyalib@=0.0.58",
+      "name": "noyalib",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/noyalib@=0.0.58",
+      "scope": "required",
+      "type": "library",
+      "version": "=0.0.58"
+    },
+    {
       "bom-ref": "cargo-requirement:proptest@1.8",
       "name": "proptest",
       "properties": [
@@ -280,20 +294,6 @@
       "scope": "required",
       "type": "library",
       "version": "1.0"
-    },
-    {
-      "bom-ref": "cargo-requirement:serde_yaml@0.10.7",
-      "name": "serde_yaml",
-      "properties": [
-        {
-          "name": "searchright:resolution",
-          "value": "version-requirement-not-resolved"
-        }
-      ],
-      "purl": "pkg:cargo/serde_yaml@0.10.7",
-      "scope": "required",
-      "type": "library",
-      "version": "0.10.7"
     },
     {
       "bom-ref": "cargo-requirement:sha2@0.11",
@@ -1400,9 +1400,9 @@
         "cargo-requirement:anyhow@1.0",
         "cargo-requirement:clap@4.5",
         "cargo-requirement:clap_mangen@0.2",
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:tokio@1",
         "cargo:searchright@0.1.0-alpha.1"
       ],
@@ -1491,10 +1491,10 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:url@2.5",
         "cargo:searchright-contracts@0.1.0-alpha.1"
@@ -1517,10 +1517,10 @@
         "cargo-requirement:base64@0.23",
         "cargo-requirement:blake3@1.8",
         "cargo-requirement:jsonwebtoken@11",
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:rmcp@=3.1.2",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:time@0.3",
@@ -1562,8 +1562,8 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1571,10 +1571,10 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1640,10 +1640,10 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.10.7",
         "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:time@0.3",
@@ -1705,7 +1705,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:0333c9b7-7ba9-55ce-9a3e-1a6cfa2151b2",
+  "serialNumber": "urn:uuid:60b51914-e251-51fd-bce0-accfb3bd684e",
   "specVersion": "1.6",
   "version": 1
 }

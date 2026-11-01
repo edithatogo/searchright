@@ -328,9 +328,9 @@ mod tests {
 
     fn fixture() -> (ReviewPlan, SourceReceipt, AuditEvent) {
         let plan =
-            serde_yaml::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
+            noyalib::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
                 .unwrap_or_else(|error| panic!("review-plan fixture must deserialize: {error}"));
-        let mut receipt: SourceReceipt = serde_yaml::from_str(include_str!(
+        let mut receipt: SourceReceipt = noyalib::from_str(include_str!(
             "../../../contracts/examples/source-receipt.yaml"
         ))
         .unwrap_or_else(|error| panic!("source-receipt fixture must deserialize: {error}"));

@@ -18,7 +18,7 @@ fn canonical_prisma_flow_fixture_satisfies_arithmetic() -> Result<(), Box<dyn Er
 
 #[test]
 fn canonical_press_fixture_remains_explicitly_incomplete() -> Result<(), Box<dyn Error>> {
-    let report: SearchValidationReport = serde_yaml::from_str(include_str!(
+    let report: SearchValidationReport = noyalib::from_str(include_str!(
         "../../../contracts/examples/search-validation.yaml"
     ))?;
     report.validate()?;
@@ -33,13 +33,13 @@ fn canonical_press_fixture_remains_explicitly_incomplete() -> Result<(), Box<dyn
 #[test]
 fn standards_pack_fixtures_preserve_reporting_and_conduct_boundaries() -> Result<(), Box<dyn Error>>
 {
-    let scoping: StandardPack = serde_yaml::from_str(include_str!(
+    let scoping: StandardPack = noyalib::from_str(include_str!(
         "../../../contracts/standards/packs/prisma-scr-2018.yaml"
     ))?;
-    let living: StandardPack = serde_yaml::from_str(include_str!(
+    let living: StandardPack = noyalib::from_str(include_str!(
         "../../../contracts/standards/packs/prisma-lsr-2024.yaml"
     ))?;
-    let press: StandardPack = serde_yaml::from_str(include_str!(
+    let press: StandardPack = noyalib::from_str(include_str!(
         "../../../contracts/standards/packs/press-2015.yaml"
     ))?;
 

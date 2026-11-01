@@ -805,7 +805,7 @@ fn persist_confirmed_artifact<T: Serialize + DeserializeOwned + PartialEq>(
     }
     let reparsed: T = match document_format {
         "json" => serde_json::from_str(submitted_document)?,
-        "yaml" | "yml" => serde_yaml::from_str(submitted_document)
+        "yaml" | "yml" => crate::parse_yaml(submitted_document)
             .map_err(|error| EngineError::InvalidSubmittedDocument(error.to_string()))?,
         _ => return Err(EngineError::UnsupportedDocumentFormat),
     };
@@ -985,8 +985,8 @@ mod tests {
         }
     }
 
-    fn valid_plan() -> Result<ReviewPlan, serde_yaml::Error> {
-        serde_yaml::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
+    fn valid_plan() -> Result<ReviewPlan, noyalib::Error> {
+        noyalib::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
     }
 
     fn valid_press_review() -> Result<PressReview, serde_json::Error> {
@@ -995,14 +995,14 @@ mod tests {
         ))
     }
 
-    fn valid_screening_policy() -> Result<ScreeningPolicy, serde_yaml::Error> {
-        serde_yaml::from_str(include_str!(
+    fn valid_screening_policy() -> Result<ScreeningPolicy, noyalib::Error> {
+        noyalib::from_str(include_str!(
             "../../../contracts/examples/screening-policy.yaml"
         ))
     }
 
-    fn valid_screening_decision() -> Result<ScreeningDecision, serde_yaml::Error> {
-        serde_yaml::from_str(include_str!(
+    fn valid_screening_decision() -> Result<ScreeningDecision, noyalib::Error> {
+        noyalib::from_str(include_str!(
             "../../../contracts/examples/screening-decision.yaml"
         ))
     }
@@ -1015,11 +1015,11 @@ mod tests {
         }
     }
 
-    fn fixture_request() -> Result<SearchRequest, serde_yaml::Error> {
+    fn fixture_request() -> Result<SearchRequest, noyalib::Error> {
         Ok(SearchRequest {
             review_id: "fixture-review".to_owned(),
             run_id: "fixture-run".to_owned(),
-            strategy: serde_yaml::from_str(include_str!(
+            strategy: noyalib::from_str(include_str!(
                 "../../../contracts/examples/compiled-strategy.yaml"
             ))?,
             cursor: None,

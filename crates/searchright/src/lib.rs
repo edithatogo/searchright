@@ -43,11 +43,46 @@ pub use searchright_store as store;
 pub use searchright_study as study;
 pub use searchright_validation as validation;
 
+/// Parse a submitted YAML document with strict flow indentation and the default resource budget.
+///
+/// # Errors
+/// Returns the parser error for malformed YAML or a value incompatible with the expected type.
+pub fn parse_yaml<'de, T: serde::Deserialize<'de>>(input: &'de str) -> Result<T, noyalib::Error> {
+    noyalib::from_str_borrowing(input)
+}
+
 #[cfg(test)]
 mod tests {
     use serde_json::Value;
 
     use super::{InterchangeExport, PlanAssessment, PrismaArtifact, StudyGraphAssessment};
+
+    #[test]
+    fn submitted_yaml_observes_document_and_indentation_boundaries() -> Result<(), noyalib::Error> {
+        for malformed in [
+            "query: \"treatment\"#comment",
+            "sources: [a, b, ]#comment",
+            "sources: [a, b,#comment\n]",
+            "query: >#comment\n  treatment",
+            "---\nquery: yes\n%YAML 1.2\n---\nother: no",
+            "value\n%YAML 1.2\n---\nother",
+            "!tag \"one\"\n%TAG ! tag:example.org,2000:x/\n---\n!tag \"two\"",
+            "query: \"one\ntwo\"",
+            "sources: [one,\ntwo]",
+            "empty: >\n \n  \n   \n # comment",
+        ] {
+            assert!(
+                super::parse_yaml::<Value>(malformed).is_err(),
+                "{malformed:?}"
+            );
+        }
+        let valid = "query: \"term#literal\" # comment\nsources: [one,\n  two]";
+        assert_eq!(
+            super::parse_yaml::<Value>(valid)?,
+            serde_json::json!({"query": "term#literal", "sources": ["one", "two"]})
+        );
+        Ok(())
+    }
 
     fn assert_schema_has_payload_shape<T: schemars::JsonSchema>() {
         let value = match serde_json::to_value(schemars::schema_for!(T)) {

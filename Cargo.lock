@@ -1072,6 +1072,8 @@ checksum = "d466e9454f08e4a911e14806c24e16fba1b4c121d1ea474396f396069cf949d9"
 dependencies = [
  "equivalent",
  "hashbrown",
+ "serde",
+ "serde_core",
 ]
 
 [[package]]
@@ -1193,10 +1195,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2"
 
 [[package]]
-name = "libyaml-rs"
-version = "0.3.0"
+name = "libm"
+version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2e126dda6f34391ab7b444f9922055facc83c07a910da3eb16f1e4d9c45dc777"
+checksum = "b6d2cec3eae94f9f509c767b45932f1ada8350c4bdb85af2fcab4a3c14807981"
 
 [[package]]
 name = "linux-raw-sys"
@@ -1271,6 +1273,21 @@ dependencies = [
  "libc",
  "wasi",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "noyalib"
+version = "0.0.58"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3fad8f1a552070f6ba5f60f25e880f7b6daeda8fe138f589345141d31a21a3bb"
+dependencies = [
+ "hashbrown",
+ "indexmap",
+ "libm",
+ "memchr",
+ "rustc-hash",
+ "serde_core",
+ "smallvec",
 ]
 
 [[package]]
@@ -1850,12 +1867,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ryu"
-version = "1.0.23"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9774ba4a74de5f7b1c1451ed6cd5285a32eddb5cccb8cc655a4e50009e06477f"
-
-[[package]]
 name = "same-file"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1910,6 +1921,7 @@ name = "searchright"
 version = "0.1.0-alpha.1"
 dependencies = [
  "evidence-search-core",
+ "noyalib",
  "schemars",
  "searchright-agent",
  "searchright-assurance",
@@ -1939,7 +1951,6 @@ dependencies = [
  "time",
  "tokio",
  "url",
- "yaml_serde",
 ]
 
 [[package]]
@@ -1999,11 +2010,11 @@ dependencies = [
  "anyhow",
  "clap",
  "clap_mangen",
+ "noyalib",
  "searchright",
  "serde",
  "serde_json",
  "tokio",
- "yaml_serde",
 ]
 
 [[package]]
@@ -2098,13 +2109,13 @@ dependencies = [
 name = "searchright-licensed"
 version = "0.1.0-alpha.1"
 dependencies = [
+ "noyalib",
  "schemars",
  "searchright-contracts",
  "serde",
  "serde_json",
  "thiserror",
  "url",
- "yaml_serde",
 ]
 
 [[package]]
@@ -2126,6 +2137,7 @@ dependencies = [
  "base64 0.23.1",
  "blake3",
  "jsonwebtoken",
+ "noyalib",
  "rmcp",
  "searchright",
  "searchright-access",
@@ -2138,7 +2150,6 @@ dependencies = [
  "tokio",
  "tokio-util",
  "tracing-subscriber",
- "yaml_serde",
 ]
 
 [[package]]
@@ -2175,22 +2186,22 @@ dependencies = [
 name = "searchright-prisma"
 version = "0.1.0-alpha.1"
 dependencies = [
+ "noyalib",
  "searchright-contracts",
  "serde_json",
  "thiserror",
- "yaml_serde",
 ]
 
 [[package]]
 name = "searchright-provenance"
 version = "0.1.0-alpha.1"
 dependencies = [
+ "noyalib",
  "schemars",
  "searchright-contracts",
  "serde",
  "serde_json",
  "thiserror",
- "yaml_serde",
 ]
 
 [[package]]
@@ -3204,19 +3215,6 @@ name = "writeable"
 version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ffae5123b2d3fc086436f8834ae3ab053a283cfac8fe0a0b8eaae044768a4c4"
-
-[[package]]
-name = "yaml_serde"
-version = "0.10.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "33b729a08a9a6be689bbad3e2bf8015926db54b6622cc89c3a5f7dc174b9e918"
-dependencies = [
- "indexmap",
- "itoa",
- "libyaml-rs",
- "ryu",
- "serde",
-]
 
 [[package]]
 name = "yoke"
