@@ -296,7 +296,6 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
             }
             Event::End(_) => close_node(&mut stack, &mut root, &mut total_text)?,
             Event::Text(text) => {
-                let text: &str = &text;
                 if let Some(node) = stack.last_mut() {
                     node.direct_nonwhitespace |= !text.trim().is_empty();
                     append_text(&mut node.text, &text, &mut total_text)?;
@@ -305,7 +304,6 @@ fn decode_tree(xml: &str) -> Result<Node, ProviderError> {
                 }
             }
             Event::CData(text) => {
-                let text: &str = &text;
                 let node = stack
                     .last_mut()
                     .ok_or_else(|| invalid("CDATA outside XML root"))?;
