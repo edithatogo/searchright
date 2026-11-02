@@ -499,6 +499,15 @@ impl SearchrightEngine {
     ) -> Result<InterchangeExport, EngineError> {
         let input = serde_json::to_vec(records)?;
         let document = searchright_interchange::export_records(records, output_format.clone())?;
+        let lossless = matches!(
+            output_format,
+            InterchangeFormat::SearchrightJson | InterchangeFormat::JsonLines
+        );
+        let warnings = if lossless {
+            Vec::new()
+        } else {
+            vec!["This format projects bibliographic fields. Retain canonical records to preserve full provenance and metadata.".to_owned()]
+        };
         let receipt = searchright_interchange::conversion_receipt(
             review_id,
             input_format,
@@ -507,8 +516,8 @@ impl SearchrightEngine {
             document.as_bytes(),
             records.len(),
             records.len(),
-            Vec::new(),
-            true,
+            warnings,
+            lossless,
         )?;
         Ok(InterchangeExport { document, receipt })
     }
@@ -921,6 +930,31 @@ mod tests {
     use super::*;
 
     static TEMPORARY_DIRECTORY_SEQUENCE: AtomicU64 = AtomicU64::new(0);
+
+    #[test]
+    fn export_receipts_distinguish_canonical_records_from_citation_projections()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let record: BibliographicRecord = serde_yaml::from_str(include_str!(
+            "../../../contracts/examples/bibliographic-record.yaml"
+        ))?;
+        for (format, lossless) in [
+            (InterchangeFormat::Ris, false),
+            (InterchangeFormat::SearchrightJson, true),
+            (InterchangeFormat::JsonLines, true),
+        ] {
+            let export = SearchrightEngine::export_records(
+                "fixture",
+                std::slice::from_ref(&record),
+                InterchangeFormat::SearchrightJson,
+                format.clone(),
+            )?;
+            let imported = SearchrightEngine::import_records(&export.document, format, "reimport")?;
+            assert_eq!(imported.records == std::slice::from_ref(&record), lossless);
+            assert_eq!(export.receipt.lossless, lossless);
+            assert_eq!(export.receipt.warnings.is_empty(), lossless);
+        }
+        Ok(())
+    }
 
     struct TestVerifier;
 
