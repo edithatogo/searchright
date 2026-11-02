@@ -1,0 +1,12 @@
+[package]
+name = "typed-merge-regression"
+version = "0.0.0"
+edition = "2024"
+publish = false
+[dependencies]
+noyalib = { version = "=0.0.58", default-features = false, features = ["std","include"] }
+
+[patch.crates-io]
+noyalib = { path = "../../vendor/noyalib" }
+
+[workspace]

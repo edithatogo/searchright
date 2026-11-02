@@ -31,7 +31,7 @@ members = [
   "crates/searchright-study",
   "crates/searchright-validation",
 ]
-exclude = ["fuzz"]
+exclude = ["fuzz", "vendor/noyalib"]
 
 default-members = [
   "crates/searchright",
@@ -139,3 +139,6 @@ print_stdout = "deny"
 todo = "deny"
 unimplemented = "deny"
 unwrap_used = "deny"
+
+[patch.crates-io]
+noyalib = { path = "vendor/noyalib" }

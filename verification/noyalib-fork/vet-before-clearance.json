@@ -1,0 +1,41 @@
+{
+  "conclusion": "fail (vetting)",
+  "failures": [
+    {
+      "name": "libm",
+      "version": "0.2.16",
+      "missing_criteria": [
+        "safe-to-deploy"
+      ]
+    },
+    {
+      "name": "noyalib",
+      "version": "0.0.58",
+      "missing_criteria": [
+        "safe-to-deploy"
+      ]
+    },
+    {
+      "name": "quick-xml",
+      "version": "0.42.0",
+      "missing_criteria": [
+        "safe-to-deploy"
+      ]
+    },
+    {
+      "name": "rustls",
+      "version": "0.23.46",
+      "missing_criteria": [
+        "safe-to-deploy"
+      ]
+    },
+    {
+      "name": "tokio",
+      "version": "1.54.1",
+      "missing_criteria": [
+        "safe-to-deploy"
+      ]
+    }
+  ],
+  "suggest": null
+}
