@@ -1153,6 +1153,11 @@ mod live {
     ) -> Result<reqwest::Client, ProviderError> {
         let resolved = addresses.iter().map(SocketAddr::ip).collect::<Vec<_>>();
         validate_resolved_endpoint_addresses(provider, host, &resolved)?;
+        // Respect a provider installed by the host. Concurrent initialisation is
+        // safe: rustls retains the first provider installed by any caller.
+        if rustls::crypto::CryptoProvider::get_default().is_none() {
+            let _ = rustls::crypto::aws_lc_rs::default_provider().install_default();
+        }
         reqwest::Client::builder()
             .https_only(true)
             // A system proxy would bypass origin-address pinning by resolving
