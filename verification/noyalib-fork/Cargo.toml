@@ -7,6 +7,6 @@ publish = false
 noyalib = { version = "=0.0.58", default-features = false, features = ["std","include"] }
 
 [patch.crates-io]
-noyalib = { path = "../../vendor/noyalib" }
+noyalib = { path = "../../third_party/noyalib" }
 
 [workspace]
