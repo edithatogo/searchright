@@ -1806,7 +1806,15 @@
       "slug": "living-updates",
       "status": "partially_implemented",
       "title": "Living reviews, amendments and update lineage",
-      "track_id": "22"
+      "track_id": "22",
+      "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/track-22-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        "Upgrade all six Track 22 assertions (T22-A001..T22-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-living, and test_living_updates_governance.py; create unit test suite in tests/test_living_updates_governance.py validating living update schema, protocol amendment schema, human release safeguards forbidding automated inclusion, PRISMA-LSR reporting constraints, and run lineage invariants; harden unit tests in crates/searchright-living and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open multi-cycle scenario and change attribution gates without false promotion."
+      ],
+      "updated": "2026-11-04"
     },
     {
       "blockers": [

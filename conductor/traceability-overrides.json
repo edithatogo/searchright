@@ -3211,6 +3211,236 @@
         }
       }
     },
+    "22": {
+      "assertions": {
+        "T22-A001": {
+          "statement": "Immutable run lineage and supersession model",
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-living/src/lib.rs",
+            "crates/searchright-contracts/src/living.rs",
+            "crates/searchright-contracts/src/amendment.rs",
+            "contracts/examples/living-update.yaml",
+            "contracts/examples/protocol-amendment.yaml",
+            "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+            "tests/test_living_updates_governance.py"
+          ],
+          "implementation_symbols": [
+            "crates/searchright-contracts/src/living.rs::LivingUpdateRun",
+            "crates/searchright-living/src/lib.rs::LivingUpdateRun",
+            "tests/test_living_updates_governance.py::LivingUpdatesGovernanceTests"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/22-living-updates/evidence.json",
+            "verification/receipts/track-22-conductor-review-2026-11-04.json"
+          ],
+          "open_gates": [
+            "Compile and run multi-cycle living-review and amendment scenarios.",
+            "Pilot a real update and independently reproduce change attribution."
+          ],
+          "permitted_claim": "Immutable living update run lineage and acyclic supersession models are verified in contracts and living engine logic; live multi-cycle update execution remains gated on live scenario runs."
+        },
+        "T22-A002": {
+          "statement": "Date/cursor/high-water update strategies",
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-living/src/lib.rs",
+            "crates/searchright-contracts/src/living.rs",
+            "crates/searchright-contracts/src/amendment.rs",
+            "contracts/examples/living-update.yaml",
+            "contracts/examples/protocol-amendment.yaml",
+            "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+            "tests/test_living_updates_governance.py"
+          ],
+          "implementation_symbols": [
+            "crates/searchright-contracts/src/living.rs::UpdateStrategy",
+            "crates/searchright-living/src/lib.rs::LivingUpdateRun"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/22-living-updates/evidence.json",
+            "verification/receipts/track-22-conductor-review-2026-11-04.json"
+          ],
+          "open_gates": [
+            "Compile and run multi-cycle living-review and amendment scenarios.",
+            "Pilot a real update and independently reproduce change attribution."
+          ],
+          "permitted_claim": "Date-window, cursor, high-water mark, and snapshot update strategies are classified and validated in source contracts; live provider cursor synchronization remains gated on multi-cycle scenario tests."
+        },
+        "T22-A003": {
+          "statement": "Cross-run deduplication and changed-record detection",
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-living/src/lib.rs",
+            "crates/searchright-contracts/src/living.rs",
+            "crates/searchright-contracts/src/amendment.rs",
+            "contracts/examples/living-update.yaml",
+            "contracts/examples/protocol-amendment.yaml",
+            "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+            "tests/test_living_updates_governance.py"
+          ],
+          "implementation_symbols": [
+            "crates/searchright-living/src/lib.rs::record_digest",
+            "crates/searchright-living/src/lib.rs::diff_record_sets",
+            "crates/searchright-contracts/src/living.rs::RecordChange"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/22-living-updates/evidence.json",
+            "verification/receipts/track-22-conductor-review-2026-11-04.json"
+          ],
+          "open_gates": [
+            "Compile and run multi-cycle living-review and amendment scenarios.",
+            "Pilot a real update and independently reproduce change attribution."
+          ],
+          "permitted_claim": "Deterministic BLAKE3 record digest calculation and change classification (added, updated, missing, unchanged) are verified in source unit tests; real-world change attribution remains gated on pilot runs."
+        },
+        "T22-A004": {
+          "statement": "Alerting with human triage and no automatic inclusion",
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-living/src/lib.rs",
+            "crates/searchright-contracts/src/living.rs",
+            "crates/searchright-contracts/src/amendment.rs",
+            "contracts/examples/living-update.yaml",
+            "contracts/examples/protocol-amendment.yaml",
+            "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+            "tests/test_living_updates_governance.py"
+          ],
+          "implementation_symbols": [
+            "crates/searchright-contracts/src/amendment.rs::ProtocolAmendment",
+            "crates/searchright-contracts/src/living.rs::LivingUpdateRun",
+            "tests/test_living_updates_governance.py::LivingUpdatesGovernanceTests"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/22-living-updates/evidence.json",
+            "verification/receipts/track-22-conductor-review-2026-11-04.json"
+          ],
+          "open_gates": [
+            "Compile and run multi-cycle living-review and amendment scenarios.",
+            "Pilot a real update and independently reproduce change attribution."
+          ],
+          "permitted_claim": "Living update record change safeguards strictly mandate human release before screening, and protocol amendments enforce rationale and approval gates; automated inclusion without human triage is forbidden."
+        },
+        "T22-A005": {
+          "statement": "PRISMA-LSR reporting and cadence dashboard",
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-living/src/lib.rs",
+            "crates/searchright-contracts/src/living.rs",
+            "crates/searchright-contracts/src/amendment.rs",
+            "contracts/examples/living-update.yaml",
+            "contracts/examples/protocol-amendment.yaml",
+            "contracts/standards/packs/prisma-lsr-2024.yaml",
+            "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+            "tests/test_living_updates_governance.py"
+          ],
+          "implementation_symbols": [
+            "crates/searchright-contracts/src/living.rs::LivingUpdateRun",
+            "crates/searchright-contracts/src/amendment.rs::ProtocolAmendment"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/22-living-updates/evidence.json",
+            "verification/receipts/track-22-conductor-review-2026-11-04.json"
+          ],
+          "open_gates": [
+            "Compile and run multi-cycle living-review and amendment scenarios.",
+            "Pilot a real update and independently reproduce change attribution."
+          ],
+          "permitted_claim": "PRISMA-LSR reporting consideration contracts and update cadence tracking schemas are verified in source; multi-cycle cadence dashboard telemetry remains gated."
+        },
+        "T22-A006": {
+          "statement": "Reproducible scheduled execution with approval policy",
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_paths": [
+            "crates/searchright-living/src/lib.rs",
+            "crates/searchright-contracts/src/living.rs",
+            "crates/searchright-contracts/src/amendment.rs",
+            "contracts/examples/living-update.yaml",
+            "contracts/examples/protocol-amendment.yaml",
+            "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+            "tests/test_living_updates_governance.py"
+          ],
+          "implementation_symbols": [
+            "crates/searchright-contracts/src/amendment.rs::ProtocolAmendment",
+            "tests/test_living_updates_governance.py::LivingUpdatesGovernanceTests"
+          ],
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_living_updates_governance.py",
+            "cargo test --locked -p searchright-living -p searchright-contracts"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/22-living-updates/evidence.json",
+            "verification/receipts/track-22-conductor-review-2026-11-04.json"
+          ],
+          "open_gates": [
+            "Compile and run multi-cycle living-review and amendment scenarios.",
+            "Pilot a real update and independently reproduce change attribution."
+          ],
+          "permitted_claim": "Scheduled execution approval policies and protocol amendment governance are verified in source contracts and governance test suites; production execution scheduling remains gated on live scenario pilots."
+        }
+      }
+    },
     "24": {
       "assertions": {
         "T24-A001": {

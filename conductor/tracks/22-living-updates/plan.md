@@ -38,5 +38,6 @@ GitHub issue key: `track-22`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 22 assertions (T22-A001..T22-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-living, and test_living_updates_governance.py; create unit test suite in tests/test_living_updates_governance.py validating living update schema, protocol amendment schema, human release safeguards forbidding automated inclusion, PRISMA-LSR reporting constraints, and run lineage invariants; harden unit tests in crates/searchright-living and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open multi-cycle scenario and change attribution gates without false promotion.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
