@@ -188,6 +188,7 @@
       "covered_assertions": [
         "T01-A005",
         "T03-A005",
+        "T14-A005",
         "T32-A003"
       ],
       "evidence_ceiling": "source_verified",
@@ -458,6 +459,8 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A005",
+        "T14-A003",
+        "T14-A004",
         "T14-A007",
         "T15-A002",
         "T15-A003",
@@ -877,6 +880,7 @@
       "compiler_required": false,
       "covered_assertions": [
         "T03-A006",
+        "T14-A005",
         "T32-A001",
         "T32-A002",
         "T32-A003"

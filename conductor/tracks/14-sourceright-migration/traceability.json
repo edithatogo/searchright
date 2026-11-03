@@ -11,7 +11,7 @@
       "assertion_id": "T14-A001",
       "statement": "Create Sourceright branch/PR and compatibility facade",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/README.md",
         "migration/sourceright/replacement-map.yaml",
@@ -21,7 +21,12 @@
         "migration/companion-repositories/sourceright.json",
         "docs/integration-architecture.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_sourceright_compat::LegacyRuntimeConfig::execution_policy",
+        "searchright_sourceright_compat::provider_mode",
+        "searchright_sourceright_compat::build_report",
+        "scripts/check_sourceright_migration.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_sourceright_migration.py"
@@ -35,13 +40,16 @@
         "Remove superseded downstream code only after the deletion gate passes.",
         "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-sourceright-compat"
+      ]
     },
     {
       "assertion_id": "T14-A002",
       "statement": "Run all existing Sourceright fixtures through shared core",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/README.md",
         "migration/sourceright/replacement-map.yaml",
@@ -51,7 +59,12 @@
         "migration/companion-repositories/sourceright.json",
         "docs/integration-architecture.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_sourceright_compat::build_report",
+        "searchright_sourceright_compat::parity_matrix::validate_execution_matrix",
+        "searchright_contracts::migration::SourcerightParityReport::validate",
+        "scripts/check_sourceright_migration.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_sourceright_migration.py"
@@ -65,13 +78,17 @@
         "Remove superseded downstream code only after the deletion gate passes.",
         "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-sourceright-compat",
+        "cargo test --locked -p searchright-contracts"
+      ]
     },
     {
       "assertion_id": "T14-A003",
       "statement": "Replace custom generic code in bounded commits",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/README.md",
         "migration/sourceright/replacement-map.yaml",
@@ -81,10 +98,14 @@
         "migration/companion-repositories/sourceright.json",
         "docs/integration-architecture.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_sourceright_migration.py::main",
+        "scripts/check_companion_change_packets.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_sourceright_migration.py"
+        "python scripts/check_sourceright_migration.py",
+        "python scripts/check_companion_change_packets.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/14-sourceright-migration/evidence.json"
@@ -95,13 +116,16 @@
         "Remove superseded downstream code only after the deletion gate passes.",
         "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-sourceright-compat"
+      ]
     },
     {
       "assertion_id": "T14-A004",
       "statement": "Document retained Sourceright-specific responsibilities",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/README.md",
         "migration/sourceright/replacement-map.yaml",
@@ -111,27 +135,30 @@
         "migration/companion-repositories/sourceright.json",
         "docs/integration-architecture.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_sourceright_migration.py::main",
+        "scripts/check_companion_change_packets.py::main",
+        "scripts/validate_repository.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_sourceright_migration.py"
+        "python scripts/check_sourceright_migration.py",
+        "python scripts/check_companion_change_packets.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/14-sourceright-migration/evidence.json"
       ],
-      "open_gates": [
-        "Open and merge the downstream Sourceright integration after dual-run parity.",
-        "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes.",
-        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Retained Sourceright-specific responsibilities and replacement boundaries are documented in migration/sourceright/README.md, replacement-map.yaml, and companion packets and validated by check_sourceright_migration.py.",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-sourceright-compat"
+      ]
     },
     {
       "assertion_id": "T14-A005",
       "statement": "Publish coordinated crates/releases and migration guide",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/README.md",
         "migration/sourceright/replacement-map.yaml",
@@ -141,10 +168,16 @@
         "migration/companion-repositories/sourceright.json",
         "docs/integration-architecture.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_sourceright_migration.py::main",
+        "scripts/check_release_train.py::main",
+        "scripts/check_public_package_policy.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_sourceright_migration.py"
+        "python scripts/check_sourceright_migration.py",
+        "python scripts/check_release_train.py",
+        "python scripts/check_public_package_policy.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/14-sourceright-migration/evidence.json"
@@ -155,13 +188,16 @@
         "Remove superseded downstream code only after the deletion gate passes.",
         "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-sourceright-compat"
+      ]
     },
     {
       "assertion_id": "T14-A006",
       "statement": "Remove deprecated paths after one release cycle",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/README.md",
         "migration/sourceright/replacement-map.yaml",
@@ -171,7 +207,10 @@
         "migration/companion-repositories/sourceright.json",
         "docs/integration-architecture.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_sourceright_migration.py::main",
+        "searchright_sourceright_compat::parity_matrix::validate_execution_matrix"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_sourceright_migration.py"
@@ -185,19 +224,26 @@
         "Remove superseded downstream code only after the deletion gate passes.",
         "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-sourceright-compat"
+      ]
     },
     {
       "assertion_id": "T14-A007",
       "statement": "Expose provenance-bearing scholarly-integrity signals through an advisory, human-governed Searchright consumer boundary",
       "state": "scaffolded",
-      "mapping_confidence": "contract_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/companion-repositories/sourceright.json",
         "docs/integration-architecture.md",
         "crates/searchright-screening/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_companion_change_packets.py::main",
+        "scripts/check_context_integrity.py::main",
+        "searchright_screening::adjudicate"
+      ],
       "deterministic_tests": [
         "python scripts/check_companion_change_packets.py",
         "python scripts/check_context_integrity.py"
@@ -210,7 +256,10 @@
         "Add a Searchright advisory consumer contract and evaluate false-positive linkage.",
         "Verify that integrity signals cannot bypass human final eligibility authority."
       ],
-      "permitted_claim": "A downstream change contract and human-authority boundary are recorded; no integrity-signal producer, consumer or evaluation result is claimed."
+      "permitted_claim": "A downstream change contract and human-authority boundary are recorded; no integrity-signal producer, consumer or evaluation result is claimed.",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-screening"
+      ]
     }
   ]
 }
