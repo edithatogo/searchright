@@ -219,7 +219,7 @@ mod tests {
     use citeweft::{
         citeweft::{
             Diagnostic, DiagnosticSeverity, EngineProvenance, Identifier, ReferenceRecord,
-            ScholarlyDocument, TextSpan, SCHEMA_VERSION as CITEWEFT_SCHEMA_VERSION,
+            SCHEMA_VERSION as CITEWEFT_SCHEMA_VERSION, ScholarlyDocument, TextSpan,
         },
         reference_model::DeterministicReferenceModel,
     };
@@ -338,11 +338,7 @@ mod tests {
         assert!(span.start_byte.is_none());
         assert!(span.end_byte.is_none());
 
-        let field_names: Vec<&str> = reference
-            .fields
-            .iter()
-            .map(|f| f.field.as_str())
-            .collect();
+        let field_names: Vec<&str> = reference.fields.iter().map(|f| f.field.as_str()).collect();
         assert_eq!(
             field_names,
             vec![
@@ -390,8 +386,14 @@ mod tests {
         assert_eq!(d2.subject_id.as_deref(), Some("ref-001"));
 
         assert_eq!(evidence.provenance.backend, "grobid");
-        assert_eq!(evidence.provenance.backend_version.as_deref(), Some("0.8.0"));
-        assert_eq!(evidence.provenance.configuration, "tei-header-and-citations");
+        assert_eq!(
+            evidence.provenance.backend_version.as_deref(),
+            Some("0.8.0")
+        );
+        assert_eq!(
+            evidence.provenance.configuration,
+            "tei-header-and-citations"
+        );
         assert_eq!(
             evidence.provenance.input_sha256.as_deref(),
             Some("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
@@ -484,12 +486,14 @@ mod tests {
 
         // 4. Unsupported diagnostic severity must fail closed.
         let mut invalid_diag_evidence = baseline.clone();
-        invalid_diag_evidence.diagnostics.push(ExtractionDiagnostic {
-            code: "ERR_CUSTOM".to_owned(),
-            severity: "catastrophic".to_owned(),
-            message: "unexpected severity".to_owned(),
-            subject_id: None,
-        });
+        invalid_diag_evidence
+            .diagnostics
+            .push(ExtractionDiagnostic {
+                code: "ERR_CUSTOM".to_owned(),
+                severity: "catastrophic".to_owned(),
+                message: "unexpected severity".to_owned(),
+                subject_id: None,
+            });
         assert!(invalid_diag_evidence.validate().is_err());
 
         // 5. Permitting canonical write must fail closed.
@@ -499,14 +503,16 @@ mod tests {
 
         // 6. Duplicate reference IDs must fail closed.
         let mut dup_ref_evidence = baseline;
-        dup_ref_evidence.references.push(ExtractedReferenceEvidence {
-            reference_id: "ref-adv".to_owned(),
-            raw_citation: "Another citation".to_owned(),
-            fields: Vec::new(),
-            span: None,
-            confidence: None,
-            review_required: true,
-        });
+        dup_ref_evidence
+            .references
+            .push(ExtractedReferenceEvidence {
+                reference_id: "ref-adv".to_owned(),
+                raw_citation: "Another citation".to_owned(),
+                fields: Vec::new(),
+                span: None,
+                confidence: None,
+                review_required: true,
+            });
         assert!(dup_ref_evidence.validate().is_err());
     }
 
