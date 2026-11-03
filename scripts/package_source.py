@@ -55,33 +55,36 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--output-dir", type=Path, default=ROOT / "dist" / "source")
-    parser.add_argument("--prefix", default="searchright")
-    args = parser.parse_args()
-    output_dir = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
-    # Packaging is based exclusively on ``git ls-files`` below, so deliberate
-    # untracked build inputs (for example ``cargo vendor`` output in clean-room
-    # CI) cannot affect the archive. Still reject staged or unstaged changes to
-    # tracked source, which would make the package differ from the committed
-    # revision it claims to represent.
-    unstaged = subprocess.run(
-        ["git", "diff", "--quiet", "--exit-code"],
-        cwd=ROOT,
-        check=False,
-    ).returncode
-    staged = subprocess.run(
-        ["git", "diff", "--cached", "--quiet", "--exit-code"],
-        cwd=ROOT,
-        check=False,
-    ).returncode
-    if unstaged or staged:
-        raise SystemExit(
-            "source packaging requires no staged or unstaged changes to tracked files"
-        )
+def package_source(
+    output_dir: Path,
+    prefix: str = "searchright",
+    source_epoch: int | None = None,
+    verify_clean: bool = True,
+) -> dict[str, object]:
+    """Create reproducible source archives (ZIP and TAR.GZ) and metadata manifests."""
+    if verify_clean:
+        # Packaging is based exclusively on ``git ls-files`` below, so deliberate
+        # untracked build inputs (for example ``cargo vendor`` output in clean-room
+        # CI) cannot affect the archive. Still reject staged or unstaged changes to
+        # tracked source, which would make the package differ from the committed
+        # revision it claims to represent.
+        unstaged = subprocess.run(
+            ["git", "diff", "--quiet", "--exit-code"],
+            cwd=ROOT,
+            check=False,
+        ).returncode
+        staged = subprocess.run(
+            ["git", "diff", "--cached", "--quiet", "--exit-code"],
+            cwd=ROOT,
+            check=False,
+        ).returncode
+        if unstaged or staged:
+            raise SystemExit(
+                "source packaging requires no staged or unstaged changes to tracked files"
+            )
     output_dir.mkdir(parents=True, exist_ok=True)
-    source_epoch = epoch()
+    if source_epoch is None:
+        source_epoch = epoch()
     members = files()
     manifest = {
         "schema_version": "org.searchright.source-archive-manifest.v1",
@@ -97,9 +100,9 @@ def main() -> int:
         ],
     }
     manifest_bytes = (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode()
-    zip_path = output_dir / f"{args.prefix}-source.zip"
-    tar_path = output_dir / f"{args.prefix}-source.tar.gz"
-    manifest_path = output_dir / f"{args.prefix}-source-manifest.json"
+    zip_path = output_dir / f"{prefix}-source.zip"
+    tar_path = output_dir / f"{prefix}-source.tar.gz"
+    manifest_path = output_dir / f"{prefix}-source-manifest.json"
     manifest_path.write_bytes(manifest_bytes)
 
     zip_time = max(source_epoch, 315532800)  # ZIP cannot encode dates before 1980.
@@ -107,7 +110,7 @@ def main() -> int:
     date_time = datetime.datetime.fromtimestamp(zip_time, tz=datetime.timezone.utc).timetuple()[:6]
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in members:
-            relative = f"{args.prefix}/{path.relative_to(ROOT).as_posix()}"
+            relative = f"{prefix}/{path.relative_to(ROOT).as_posix()}"
             info = zipfile.ZipInfo(relative, date_time=date_time)
             mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
             info.external_attr = mode << 16
@@ -117,7 +120,7 @@ def main() -> int:
     tar_buffer = io.BytesIO()
     with tarfile.open(fileobj=tar_buffer, mode="w", format=tarfile.PAX_FORMAT) as archive:
         for path in members:
-            relative = f"{args.prefix}/{path.relative_to(ROOT).as_posix()}"
+            relative = f"{prefix}/{path.relative_to(ROOT).as_posix()}"
             info = archive.gettarinfo(str(path), arcname=relative)
             info.uid = 0
             info.gid = 0
@@ -148,8 +151,23 @@ def main() -> int:
             {"path": manifest_path.name, "sha256": sha256(manifest_path), "size": manifest_path.stat().st_size},
         ],
     }
-    receipt_path = output_dir / f"{args.prefix}-source-packaging-receipt.json"
+    receipt_path = output_dir / f"{prefix}-source-packaging-receipt.json"
     receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return receipt
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output-dir", type=Path, default=ROOT / "dist" / "source")
+    parser.add_argument("--prefix", default="searchright")
+    parser.add_argument("--allow-dirty", action="store_true", help="Allow packaging with dirty git tree")
+    args = parser.parse_args()
+    output_dir = args.output_dir if args.output_dir.is_absolute() else ROOT / args.output_dir
+    receipt = package_source(
+        output_dir=output_dir,
+        prefix=args.prefix,
+        verify_clean=not args.allow_dirty,
+    )
     print(json.dumps(receipt, indent=2, sort_keys=True))
     return 0
 
