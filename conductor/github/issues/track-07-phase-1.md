@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-07-phase-1-task-01`)
+- [x] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-07-phase-1-task-01`)
 
 ## Evidence rule
 

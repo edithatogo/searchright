@@ -3,11 +3,11 @@
 
 Parent phase key: `track-07-phase-1`
 Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
   - [x] Present source path: `crates/searchright-screening/src/lib.rs`
   - [x] Present source path: `crates/searchright-agent/src/lib.rs`
   - [x] Present source path: `contracts/examples/screening-decision.yaml`

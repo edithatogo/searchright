@@ -4,13 +4,99 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
+use schemars::JsonSchema;
 use searchright_contracts::{
-    AgentAuthority, ConflictResolution, DecisionValue, ReviewerKind, ScreeningDecision,
-    ScreeningPolicy, ScreeningRound,
+    AgentAuthority, ConflictResolution, DecisionValue, ExclusionReason, ReviewerKind,
+    ScreeningDecision, ScreeningPolicy, ScreeningRound,
 };
+use serde::{Deserialize, Serialize};
+
+/// Reviewer role in the governed screening workflow.
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize, JsonSchema,
+)]
+#[serde(rename_all = "snake_case")]
+pub enum ReviewerRole {
+    /// Independent primary screener.
+    Screener,
+    /// Independent adjudicator for conflicting decisions.
+    Adjudicator,
+    /// Policy administrator managing protocol rules, amendments and re-screening.
+    PolicyAdmin,
+}
+
+/// Blinded view of a screening decision.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+pub struct BlindedDecisionView {
+    /// Decision identifier.
+    pub decision_id: String,
+    /// Review identifier.
+    pub review_id: String,
+    /// Subject identifier.
+    pub subject_id: String,
+    /// Screening round.
+    pub round: ScreeningRound,
+    /// Reviewer identifier or blinded pseudonym.
+    pub reviewer_id: String,
+    /// Reviewer class.
+    pub reviewer_kind: ReviewerKind,
+    /// Decision value, or `None` if blinded to the requesting principal.
+    pub decision: Option<DecisionValue>,
+    /// Exclusion reason, or `None` if blinded.
+    pub exclusion_reason: Option<ExclusionReason>,
+    /// Confidence for agent recommendations or optional human calibration.
+    pub confidence: Option<f64>,
+    /// Decision timestamp.
+    pub decided_at: String,
+    /// Evidence-bearing explanation, or `None` if blinded.
+    pub rationale: Option<String>,
+    /// Eligibility-contract version applied.
+    pub eligibility_version: String,
+    /// Model/tool provenance for agent decisions.
+    pub agent_provenance: Option<String>,
+    /// Whether this view has been blinded/masked.
+    pub is_blinded: bool,
+}
+
+/// Governed amendment to an existing screening decision.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+pub struct ScreeningAmendment {
+    /// Stable amendment identifier.
+    pub amendment_id: String,
+    /// Decision identifier of the prior decision being superseded.
+    pub target_decision_id: String,
+    /// New replacement decision.
+    pub updated_decision: ScreeningDecision,
+    /// Rationale for the amendment.
+    pub amendment_reason: String,
+    /// Principal who authorized the amendment.
+    pub amended_by: String,
+    /// Timestamp of amendment.
+    pub amended_at: String,
+}
+
+/// Request to re-open a subject/round for re-screening under a new eligibility version.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+pub struct ReScreenRequest {
+    /// Stable re-screen request identifier.
+    pub request_id: String,
+    /// Subject identifier to re-screen.
+    pub subject_id: String,
+    /// Screening round.
+    pub round: ScreeningRound,
+    /// New eligibility version contract to apply.
+    pub new_eligibility_version: String,
+    /// Justification/rationale for the re-screen.
+    pub reason: String,
+    /// Principal requesting the re-screen.
+    pub requested_by: String,
+    /// Timestamp.
+    pub requested_at: String,
+}
 
 /// Derived status for a subject and round.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum ScreeningStatus {
     /// No or insufficient independent decisions.
     Pending {
@@ -28,7 +114,8 @@ pub enum ScreeningStatus {
 }
 
 /// Append-only record of a successful screening-board transition.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum ScreeningHistoryEntry {
     /// An independent human decision or agent recommendation was accepted.
     Decision(ScreeningDecision),
@@ -41,6 +128,10 @@ pub enum ScreeningHistoryEntry {
     },
     /// A conflict was resolved by an independent human adjudicator.
     Resolution(ConflictResolution),
+    /// A prior decision was amended under governance.
+    Amendment(ScreeningAmendment),
+    /// A subject/round was re-opened for governed re-screening.
+    ReScreen(ReScreenRequest),
 }
 
 /// Validated, non-mutating preview of a bulk submission.
@@ -62,6 +153,7 @@ impl BulkSubmissionPreview {
 #[derive(Debug, Clone)]
 pub struct ScreeningBoard {
     policy: ScreeningPolicy,
+    roles: BTreeMap<String, BTreeSet<ReviewerRole>>,
     decisions: BTreeMap<(String, ScreeningRound), Vec<ScreeningDecision>>,
     resolutions: BTreeMap<(String, ScreeningRound), ConflictResolution>,
     history: Vec<ScreeningHistoryEntry>,
@@ -74,6 +166,7 @@ impl ScreeningBoard {
         validate_policy(&policy)?;
         Ok(Self {
             policy,
+            roles: BTreeMap::new(),
             decisions: BTreeMap::new(),
             resolutions: BTreeMap::new(),
             history: Vec::new(),
@@ -87,6 +180,27 @@ impl ScreeningBoard {
         &self.policy
     }
 
+    /// Assign a role to a reviewer.
+    pub fn assign_role(&mut self, reviewer_id: &str, role: ReviewerRole) {
+        self.roles
+            .entry(reviewer_id.to_owned())
+            .or_default()
+            .insert(role);
+    }
+
+    /// Revoke a role from a reviewer.
+    pub fn revoke_role(&mut self, reviewer_id: &str, role: ReviewerRole) {
+        if let Some(roles) = self.roles.get_mut(reviewer_id) {
+            roles.remove(&role);
+        }
+    }
+
+    /// Query the assigned roles for a reviewer.
+    #[must_use]
+    pub fn reviewer_roles(&self, reviewer_id: &str) -> BTreeSet<ReviewerRole> {
+        self.roles.get(reviewer_id).cloned().unwrap_or_default()
+    }
+
     /// Record an independent decision after authority checks.
     pub fn submit(&mut self, decision: ScreeningDecision) -> Result<(), ScreeningError> {
         self.submit_inner(decision)
@@ -94,6 +208,15 @@ impl ScreeningBoard {
 
     fn submit_inner(&mut self, decision: ScreeningDecision) -> Result<(), ScreeningError> {
         validate_decision(&decision, &self.policy)?;
+        if let Some(assigned) = self.roles.get(&decision.reviewer_id)
+            && !assigned.is_empty()
+            && !assigned.contains(&ReviewerRole::Screener)
+        {
+            return Err(ScreeningError::UnauthorizedRole {
+                reviewer_id: decision.reviewer_id,
+                required_role: "screener",
+            });
+        }
         let key = (decision.subject_id.clone(), decision.round);
         if self.resolutions.contains_key(&key) {
             return Err(ScreeningError::RoundFinalized);
@@ -206,6 +329,15 @@ impl ScreeningBoard {
     /// Resolve a conflict using an explicit human adjudication record.
     pub fn resolve(&mut self, resolution: ConflictResolution) -> Result<(), ScreeningError> {
         validate_resolution_fields(&resolution)?;
+        if let Some(assigned) = self.roles.get(&resolution.adjudicator_id)
+            && !assigned.is_empty()
+            && !assigned.contains(&ReviewerRole::Adjudicator)
+        {
+            return Err(ScreeningError::UnauthorizedRole {
+                reviewer_id: resolution.adjudicator_id,
+                required_role: "adjudicator",
+            });
+        }
         let key = (resolution.subject_id.clone(), resolution.round);
         if self.resolutions.contains_key(&key) {
             return Err(ScreeningError::RoundFinalized);
@@ -241,6 +373,174 @@ impl ScreeningBoard {
             .push(ScreeningHistoryEntry::Resolution(resolution));
         self.revision += 1;
         Ok(())
+    }
+
+    /// Govern an amendment to a prior screening decision.
+    pub fn amend_decision(&mut self, amendment: ScreeningAmendment) -> Result<(), ScreeningError> {
+        require_screening_text(&amendment.amendment_id, "amendment.amendment_id")?;
+        require_screening_text(
+            &amendment.target_decision_id,
+            "amendment.target_decision_id",
+        )?;
+        require_screening_text(&amendment.amendment_reason, "amendment.amendment_reason")?;
+        require_screening_text(&amendment.amended_by, "amendment.amended_by")?;
+        require_screening_text(&amendment.amended_at, "amendment.amended_at")?;
+
+        if let Some(assigned) = self.roles.get(&amendment.amended_by)
+            && !assigned.is_empty()
+            && !assigned.contains(&ReviewerRole::PolicyAdmin)
+            && !assigned.contains(&ReviewerRole::Screener)
+        {
+            return Err(ScreeningError::UnauthorizedRole {
+                reviewer_id: amendment.amended_by.clone(),
+                required_role: "policy_admin_or_screener",
+            });
+        }
+
+        validate_decision(&amendment.updated_decision, &self.policy)?;
+
+        let key = (
+            amendment.updated_decision.subject_id.clone(),
+            amendment.updated_decision.round,
+        );
+        if self.resolutions.contains_key(&key) {
+            return Err(ScreeningError::RoundFinalized);
+        }
+
+        let existing =
+            self.decisions
+                .get_mut(&key)
+                .ok_or_else(|| ScreeningError::UnknownTargetDecision {
+                    decision_id: amendment.target_decision_id.clone(),
+                })?;
+
+        let pos = existing
+            .iter()
+            .position(|d| d.decision_id == amendment.target_decision_id)
+            .ok_or_else(|| ScreeningError::UnknownTargetDecision {
+                decision_id: amendment.target_decision_id.clone(),
+            })?;
+
+        let target_item =
+            existing
+                .get_mut(pos)
+                .ok_or_else(|| ScreeningError::UnknownTargetDecision {
+                    decision_id: amendment.target_decision_id.clone(),
+                })?;
+
+        if target_item.reviewer_id != amendment.updated_decision.reviewer_id {
+            return Err(ScreeningError::ReviewerMismatch);
+        }
+
+        *target_item = amendment.updated_decision.clone();
+        self.history
+            .push(ScreeningHistoryEntry::Amendment(amendment));
+        self.revision += 1;
+        Ok(())
+    }
+
+    /// Re-open a subject and round for governed re-screening under a new eligibility version.
+    pub fn rescreen_subject(&mut self, request: ReScreenRequest) -> Result<(), ScreeningError> {
+        require_screening_text(&request.request_id, "rescreen.request_id")?;
+        require_screening_text(&request.subject_id, "rescreen.subject_id")?;
+        require_screening_text(
+            &request.new_eligibility_version,
+            "rescreen.new_eligibility_version",
+        )?;
+        require_screening_text(&request.reason, "rescreen.reason")?;
+        require_screening_text(&request.requested_by, "rescreen.requested_by")?;
+        require_screening_text(&request.requested_at, "rescreen.requested_at")?;
+
+        if let Some(assigned) = self.roles.get(&request.requested_by)
+            && !assigned.is_empty()
+            && !assigned.contains(&ReviewerRole::PolicyAdmin)
+        {
+            return Err(ScreeningError::UnauthorizedRole {
+                reviewer_id: request.requested_by.clone(),
+                required_role: "policy_admin",
+            });
+        }
+
+        let key = (request.subject_id.clone(), request.round);
+        self.resolutions.remove(&key);
+        self.decisions.remove(&key);
+
+        self.history.push(ScreeningHistoryEntry::ReScreen(request));
+        self.revision += 1;
+        Ok(())
+    }
+
+    /// Project decisions for a requesting principal with independent blinding applied.
+    #[must_use]
+    pub fn decisions_for_reviewer(
+        &self,
+        requesting_reviewer_id: &str,
+        round: Option<ScreeningRound>,
+    ) -> Vec<BlindedDecisionView> {
+        let requesting_roles = self.reviewer_roles(requesting_reviewer_id);
+        let is_admin = requesting_roles.contains(&ReviewerRole::PolicyAdmin);
+
+        let mut views = Vec::new();
+        for ((subject_id, dec_round), decisions) in &self.decisions {
+            if let Some(target_round) = round
+                && *dec_round != target_round
+            {
+                continue;
+            }
+            let status = self.status(subject_id, *dec_round);
+            let round_unblinded = matches!(
+                status,
+                ScreeningStatus::Consensus(_) | ScreeningStatus::Resolved(_)
+            );
+
+            for decision in decisions {
+                let is_self = decision.reviewer_id == requesting_reviewer_id;
+                let should_reveal =
+                    !self.policy.independent_blinding || is_self || round_unblinded || is_admin;
+
+                views.push(BlindedDecisionView {
+                    decision_id: decision.decision_id.clone(),
+                    review_id: decision.review_id.clone(),
+                    subject_id: decision.subject_id.clone(),
+                    round: decision.round,
+                    reviewer_id: if should_reveal {
+                        decision.reviewer_id.clone()
+                    } else {
+                        "blinded-reviewer".to_owned()
+                    },
+                    reviewer_kind: decision.reviewer_kind.clone(),
+                    decision: if should_reveal {
+                        Some(decision.decision)
+                    } else {
+                        None
+                    },
+                    exclusion_reason: if should_reveal {
+                        decision.exclusion_reason.clone()
+                    } else {
+                        None
+                    },
+                    confidence: if should_reveal {
+                        decision.confidence
+                    } else {
+                        None
+                    },
+                    decided_at: decision.decided_at.clone(),
+                    rationale: if should_reveal {
+                        Some(decision.rationale.clone())
+                    } else {
+                        None
+                    },
+                    eligibility_version: decision.eligibility_version.clone(),
+                    agent_provenance: if should_reveal {
+                        decision.agent_provenance.clone()
+                    } else {
+                        None
+                    },
+                    is_blinded: !should_reveal,
+                });
+            }
+        }
+        views
     }
 
     /// Derive current status from independent human decisions.
@@ -292,6 +592,370 @@ impl ScreeningBoard {
     }
 }
 
+/// Validate a decision against configured operational criteria.
+pub fn validate_decision_against_criteria(
+    decision: &ScreeningDecision,
+    allowed_criteria: &[(&str, &str)],
+) -> Result<(), ScreeningError> {
+    if let Some(reason) = &decision.exclusion_reason {
+        let matched = allowed_criteria
+            .iter()
+            .any(|(c_id, r_id)| *c_id == reason.criterion_id && *r_id == reason.reason_id);
+        if !matched && !allowed_criteria.is_empty() {
+            return Err(ScreeningError::CriterionMismatch {
+                criterion_id: reason.criterion_id.clone(),
+                reason_id: reason.reason_id.clone(),
+            });
+        }
+    }
+    Ok(())
+}
+
+/// Export decisions to Covidence-compatible CSV format.
+#[must_use]
+pub fn export_covidence_csv(board: &ScreeningBoard) -> String {
+    let mut csv = String::from(
+        "Study ID,Round,Reviewer ID,Decision,Exclusion Reason,Rationale,Eligibility Version,Decided At\n",
+    );
+    for decision in board.decisions() {
+        let dec_str = match decision.decision {
+            DecisionValue::Include => "Include",
+            DecisionValue::Exclude => "Exclude",
+            DecisionValue::Unclear => "Unclear",
+        };
+        let reason_str = decision
+            .exclusion_reason
+            .as_ref()
+            .map_or("", |r| r.label.as_str());
+        let round_str = match decision.round {
+            ScreeningRound::TitleAbstract => "Title/Abstract",
+            ScreeningRound::FullText => "Full Text",
+        };
+        csv.push_str(&format!(
+            "{},{},{},{},{},{},{},{}\n",
+            escape_csv(&decision.subject_id),
+            escape_csv(round_str),
+            escape_csv(&decision.reviewer_id),
+            escape_csv(dec_str),
+            escape_csv(reason_str),
+            escape_csv(&decision.rationale),
+            escape_csv(&decision.eligibility_version),
+            escape_csv(&decision.decided_at),
+        ));
+    }
+    csv
+}
+
+/// Export decisions to Rayyan-compatible CSV format.
+#[must_use]
+pub fn export_rayyan_csv(board: &ScreeningBoard) -> String {
+    let mut csv = String::from(
+        "key,rayyan_round,user,rayyan_decision,rayyan_reason,rayyan_notes,eligibility_version,decided_at\n",
+    );
+    for decision in board.decisions() {
+        let dec_str = match decision.decision {
+            DecisionValue::Include => "Included",
+            DecisionValue::Exclude => "Excluded",
+            DecisionValue::Unclear => "Maybe",
+        };
+        let reason_str = decision
+            .exclusion_reason
+            .as_ref()
+            .map_or("", |r| r.label.as_str());
+        let round_str = match decision.round {
+            ScreeningRound::TitleAbstract => "title_abstract",
+            ScreeningRound::FullText => "full_text",
+        };
+        csv.push_str(&format!(
+            "{},{},{},{},{},{},{},{}\n",
+            escape_csv(&decision.subject_id),
+            escape_csv(round_str),
+            escape_csv(&decision.reviewer_id),
+            escape_csv(dec_str),
+            escape_csv(reason_str),
+            escape_csv(&decision.rationale),
+            escape_csv(&decision.eligibility_version),
+            escape_csv(&decision.decided_at),
+        ));
+    }
+    csv
+}
+
+/// Export decisions to EPPI-Reviewer compatible JSON structure.
+pub fn export_eppi_reviewer_json(board: &ScreeningBoard) -> Result<String, ScreeningError> {
+    let decisions: Vec<&ScreeningDecision> = board.decisions().collect();
+    serde_json::to_string_pretty(&decisions).map_err(|err| ScreeningError::SerializationError {
+        message: err.to_string(),
+    })
+}
+
+/// Import decisions from Covidence-compatible CSV format.
+pub fn import_covidence_csv(
+    csv_content: &str,
+    review_id: &str,
+    round: ScreeningRound,
+    eligibility_version: &str,
+) -> Result<Vec<ScreeningDecision>, ScreeningError> {
+    let mut lines = csv_content.lines();
+    let header = lines
+        .next()
+        .ok_or_else(|| ScreeningError::InvalidImportData {
+            reason: "empty CSV file".to_owned(),
+        })?;
+    if !header.contains("Study ID") && !header.contains("Decision") {
+        return Err(ScreeningError::InvalidImportData {
+            reason: "invalid Covidence CSV header".to_owned(),
+        });
+    }
+
+    let mut decisions = Vec::new();
+    for (line_num, line) in lines.enumerate() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let cols = parse_csv_line(trimmed);
+        if cols.len() < 4 {
+            return Err(ScreeningError::InvalidImportData {
+                reason: format!("insufficient columns on line {}", line_num + 2),
+            });
+        }
+        let subject_id = cols.first().map_or("", String::as_str).trim().to_owned();
+        let reviewer_id = cols
+            .get(2)
+            .map(String::as_str)
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .unwrap_or("imported-reviewer")
+            .to_owned();
+        let dec_str = cols
+            .get(3)
+            .map(String::as_str)
+            .map_or("", str::trim)
+            .to_lowercase();
+        let decision_val = match dec_str.as_str() {
+            "include" | "included" => DecisionValue::Include,
+            "exclude" | "excluded" => DecisionValue::Exclude,
+            "unclear" | "maybe" => DecisionValue::Unclear,
+            other => {
+                return Err(ScreeningError::InvalidImportData {
+                    reason: format!("unrecognized decision `{other}` on line {}", line_num + 2),
+                });
+            }
+        };
+        let reason_str = cols.get(4).map(String::as_str).map_or("", str::trim);
+        let rationale = cols
+            .get(5)
+            .map(String::as_str)
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .unwrap_or("Imported from Covidence");
+        let decided_at = cols
+            .get(7)
+            .map(String::as_str)
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .unwrap_or("2026-08-01T00:00:00Z")
+            .to_owned();
+
+        let exclusion_reason = if decision_val == DecisionValue::Exclude {
+            Some(ExclusionReason {
+                reason_id: if reason_str.is_empty() {
+                    "unspecified-exclusion".to_owned()
+                } else {
+                    slugify(reason_str)
+                },
+                criterion_id: "eligibility".to_owned(),
+                label: if reason_str.is_empty() {
+                    "Unspecified exclusion".to_owned()
+                } else {
+                    reason_str.to_owned()
+                },
+                evidence: None,
+            })
+        } else {
+            None
+        };
+
+        decisions.push(ScreeningDecision {
+            decision_id: format!("covidence-import-{subject_id}-{reviewer_id}"),
+            review_id: review_id.to_owned(),
+            subject_id,
+            round,
+            reviewer_id,
+            reviewer_kind: ReviewerKind::Human,
+            decision: decision_val,
+            exclusion_reason,
+            confidence: None,
+            decided_at,
+            rationale: rationale.to_owned(),
+            eligibility_version: eligibility_version.to_owned(),
+            agent_provenance: None,
+        });
+    }
+    Ok(decisions)
+}
+
+/// Import decisions from Rayyan-compatible CSV format.
+pub fn import_rayyan_csv(
+    csv_content: &str,
+    review_id: &str,
+    round: ScreeningRound,
+    eligibility_version: &str,
+) -> Result<Vec<ScreeningDecision>, ScreeningError> {
+    let mut lines = csv_content.lines();
+    let header = lines
+        .next()
+        .ok_or_else(|| ScreeningError::InvalidImportData {
+            reason: "empty CSV file".to_owned(),
+        })?;
+    if !header.contains("key") && !header.contains("rayyan_decision") {
+        return Err(ScreeningError::InvalidImportData {
+            reason: "invalid Rayyan CSV header".to_owned(),
+        });
+    }
+
+    let mut decisions = Vec::new();
+    for (line_num, line) in lines.enumerate() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let cols = parse_csv_line(trimmed);
+        if cols.len() < 4 {
+            return Err(ScreeningError::InvalidImportData {
+                reason: format!("insufficient columns on line {}", line_num + 2),
+            });
+        }
+        let subject_id = cols.first().map_or("", String::as_str).trim().to_owned();
+        let reviewer_id = cols
+            .get(2)
+            .map(String::as_str)
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .unwrap_or("imported-reviewer")
+            .to_owned();
+        let dec_str = cols
+            .get(3)
+            .map(String::as_str)
+            .map_or("", str::trim)
+            .to_lowercase();
+        let decision_val = match dec_str.as_str() {
+            "included" | "include" => DecisionValue::Include,
+            "excluded" | "exclude" => DecisionValue::Exclude,
+            "maybe" | "unclear" => DecisionValue::Unclear,
+            other => {
+                return Err(ScreeningError::InvalidImportData {
+                    reason: format!("unrecognized decision `{other}` on line {}", line_num + 2),
+                });
+            }
+        };
+        let reason_str = cols.get(4).map(String::as_str).map_or("", str::trim);
+        let notes = cols
+            .get(5)
+            .map(String::as_str)
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .unwrap_or("Imported from Rayyan");
+        let decided_at = cols
+            .get(7)
+            .map(String::as_str)
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .unwrap_or("2026-08-01T00:00:00Z")
+            .to_owned();
+
+        let exclusion_reason = if decision_val == DecisionValue::Exclude {
+            Some(ExclusionReason {
+                reason_id: if reason_str.is_empty() {
+                    "unspecified-exclusion".to_owned()
+                } else {
+                    slugify(reason_str)
+                },
+                criterion_id: "eligibility".to_owned(),
+                label: if reason_str.is_empty() {
+                    "Unspecified exclusion".to_owned()
+                } else {
+                    reason_str.to_owned()
+                },
+                evidence: None,
+            })
+        } else {
+            None
+        };
+
+        decisions.push(ScreeningDecision {
+            decision_id: format!("rayyan-import-{subject_id}-{reviewer_id}"),
+            review_id: review_id.to_owned(),
+            subject_id,
+            round,
+            reviewer_id,
+            reviewer_kind: ReviewerKind::Human,
+            decision: decision_val,
+            exclusion_reason,
+            confidence: None,
+            decided_at,
+            rationale: notes.to_owned(),
+            eligibility_version: eligibility_version.to_owned(),
+            agent_provenance: None,
+        });
+    }
+    Ok(decisions)
+}
+
+fn escape_csv(val: &str) -> String {
+    if val.contains(',') || val.contains('"') || val.contains('\n') || val.contains('\r') {
+        let escaped = val.replace('"', "\"\"");
+        format!("\"{escaped}\"")
+    } else {
+        val.to_owned()
+    }
+}
+
+fn parse_csv_line(line: &str) -> Vec<String> {
+    let mut fields = Vec::new();
+    let mut in_quotes = false;
+    let mut current = String::new();
+    let mut chars = line.chars().peekable();
+    while let Some(ch) = chars.next() {
+        if in_quotes {
+            if ch == '"' {
+                if chars.peek() == Some(&'"') {
+                    current.push('"');
+                    chars.next();
+                } else {
+                    in_quotes = false;
+                }
+            } else {
+                current.push(ch);
+            }
+        } else if ch == '"' {
+            in_quotes = true;
+        } else if ch == ',' {
+            fields.push(current.trim().to_owned());
+            current.clear();
+        } else {
+            current.push(ch);
+        }
+    }
+    fields.push(current.trim().to_owned());
+    fields
+}
+
+fn slugify(s: &str) -> String {
+    s.chars()
+        .map(|c| {
+            if c.is_ascii_alphanumeric() {
+                c.to_ascii_lowercase()
+            } else {
+                '-'
+            }
+        })
+        .collect::<String>()
+        .trim_matches('-')
+        .to_owned()
+}
+
 /// Screening-policy error.
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum ScreeningError {
@@ -325,6 +989,14 @@ pub enum ScreeningError {
     /// Adjudicator role was used for an independent screening decision.
     #[error("adjudicators resolve conflicts and cannot submit independent screening decisions")]
     InvalidReviewerRole,
+    /// Principal attempted an operation without the required role assignment.
+    #[error("reviewer `{reviewer_id}` does not have required role `{required_role}`")]
+    UnauthorizedRole {
+        /// Identifier of reviewer.
+        reviewer_id: String,
+        /// Required role name.
+        required_role: &'static str,
+    },
     /// Required independent decisions have already been recorded.
     #[error("the required independent human decisions are already complete")]
     IndependentReviewComplete,
@@ -373,6 +1045,37 @@ pub enum ScreeningError {
     /// Empty bulk operations are not meaningful or auditable.
     #[error("bulk submission must contain at least one decision")]
     EmptyBulkSubmission,
+    /// Target decision for amendment was not found.
+    #[error("target decision `{decision_id}` not found on board")]
+    UnknownTargetDecision {
+        /// Target decision ID.
+        decision_id: String,
+    },
+    /// Reviewer ID in amendment did not match original decision reviewer.
+    #[error("reviewer ID in amended decision does not match original decision reviewer")]
+    ReviewerMismatch,
+    /// Criterion or reason does not match allowed criteria for this review.
+    #[error(
+        "exclusion reason `{reason_id}` for criterion `{criterion_id}` is not in allowed review criteria"
+    )]
+    CriterionMismatch {
+        /// Criterion ID.
+        criterion_id: String,
+        /// Reason ID.
+        reason_id: String,
+    },
+    /// Import data format error.
+    #[error("failed to import external screening data: {reason}")]
+    InvalidImportData {
+        /// Details.
+        reason: String,
+    },
+    /// Serialization error.
+    #[error("failed to serialize screening data: {message}")]
+    SerializationError {
+        /// Details.
+        message: String,
+    },
 }
 
 fn validate_policy(policy: &ScreeningPolicy) -> Result<(), ScreeningError> {
@@ -526,49 +1229,221 @@ mod tests {
     }
 
     #[test]
-    fn invalid_policy_is_rejected() {
+    fn invalid_policy_is_rejected() -> Result<(), ScreeningError> {
         let mut invalid = policy();
         invalid.full_text_reviewers = 0;
         assert!(matches!(
             ScreeningBoard::new(invalid),
             Err(ScreeningError::InvalidReviewerCount)
         ));
+        Ok(())
     }
 
     #[test]
-    fn agent_cannot_exclude_by_default() {
-        let board = ScreeningBoard::new(policy());
-        assert!(board.is_ok());
-        if let Ok(mut board) = board {
-            let result = board.submit(decision(
-                "agent",
-                ReviewerKind::Agent,
-                DecisionValue::Exclude,
-            ));
-            assert_eq!(result, Err(ScreeningError::AgentExclusionDenied));
-        }
+    fn agent_cannot_exclude_by_default() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        let result = board.submit(decision(
+            "agent",
+            ReviewerKind::Agent,
+            DecisionValue::Exclude,
+        ));
+        assert_eq!(result, Err(ScreeningError::AgentExclusionDenied));
+        Ok(())
     }
 
     #[test]
-    fn disagreement_creates_conflict() {
-        let board = ScreeningBoard::new(policy());
-        assert!(board.is_ok());
-        if let Ok(mut board) = board {
-            assert!(
-                board
-                    .submit(decision("a", ReviewerKind::Human, DecisionValue::Include))
-                    .is_ok()
-            );
-            assert!(
-                board
-                    .submit(decision("b", ReviewerKind::Human, DecisionValue::Exclude))
-                    .is_ok()
-            );
-            assert_eq!(
-                board.status("record-1", ScreeningRound::TitleAbstract),
-                ScreeningStatus::Conflict
-            );
-        }
+    fn disagreement_creates_conflict() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        board.submit(decision("a", ReviewerKind::Human, DecisionValue::Include))?;
+        board.submit(decision("b", ReviewerKind::Human, DecisionValue::Exclude))?;
+        assert_eq!(
+            board.status("record-1", ScreeningRound::TitleAbstract),
+            ScreeningStatus::Conflict
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn blinded_view_hides_other_reviewer_decisions_until_unblinded() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        board.submit(decision("a", ReviewerKind::Human, DecisionValue::Include))?;
+
+        let view_a = board.decisions_for_reviewer("a", Some(ScreeningRound::TitleAbstract));
+        assert_eq!(view_a.len(), 1);
+        let first_a = view_a
+            .first()
+            .ok_or(ScreeningError::EmptyField { field: "view_a" })?;
+        assert_eq!(first_a.decision, Some(DecisionValue::Include));
+        assert!(!first_a.is_blinded);
+
+        let view_b = board.decisions_for_reviewer("b", Some(ScreeningRound::TitleAbstract));
+        assert_eq!(view_b.len(), 1);
+        let first_b = view_b
+            .first()
+            .ok_or(ScreeningError::EmptyField { field: "view_b" })?;
+        assert_eq!(first_b.decision, None);
+        assert_eq!(first_b.rationale, None);
+        assert!(first_b.is_blinded);
+
+        board.submit(decision("b", ReviewerKind::Human, DecisionValue::Include))?;
+        assert_eq!(
+            board.status("record-1", ScreeningRound::TitleAbstract),
+            ScreeningStatus::Consensus(DecisionValue::Include)
+        );
+
+        let view_b_unblinded =
+            board.decisions_for_reviewer("b", Some(ScreeningRound::TitleAbstract));
+        assert_eq!(view_b_unblinded.len(), 2);
+        assert!(view_b_unblinded.iter().all(|v| !v.is_blinded));
+        let unblinded_0 = view_b_unblinded.first().ok_or(ScreeningError::EmptyField {
+            field: "view_b_unblinded",
+        })?;
+        let unblinded_1 = view_b_unblinded.get(1).ok_or(ScreeningError::EmptyField {
+            field: "view_b_unblinded",
+        })?;
+        assert_eq!(unblinded_0.decision, Some(DecisionValue::Include));
+        assert_eq!(unblinded_1.decision, Some(DecisionValue::Include));
+        Ok(())
+    }
+
+    #[test]
+    fn reviewer_role_enforcement() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        board.assign_role("screener-1", ReviewerRole::Screener);
+        board.assign_role("adjudicator-1", ReviewerRole::Adjudicator);
+
+        let mut dec = decision("adjudicator-1", ReviewerKind::Human, DecisionValue::Include);
+        dec.decision_id = "d-adj".to_owned();
+        let submit_err = board.submit(dec);
+        assert!(matches!(
+            submit_err,
+            Err(ScreeningError::UnauthorizedRole {
+                required_role: "screener",
+                ..
+            })
+        ));
+
+        let mut screener_dec = decision("screener-1", ReviewerKind::Human, DecisionValue::Include);
+        screener_dec.decision_id = "d-scr".to_owned();
+        board.submit(screener_dec)?;
+        Ok(())
+    }
+
+    #[test]
+    fn criteria_validation_rejects_unlisted_reasons() -> Result<(), ScreeningError> {
+        let dec = decision("a", ReviewerKind::Human, DecisionValue::Exclude);
+        let allowed = [("population", "wrong-population")];
+        assert!(validate_decision_against_criteria(&dec, &allowed).is_ok());
+
+        let invalid_allowed = [("intervention", "wrong-intervention")];
+        assert!(matches!(
+            validate_decision_against_criteria(&dec, &invalid_allowed),
+            Err(ScreeningError::CriterionMismatch { .. })
+        ));
+        Ok(())
+    }
+
+    #[test]
+    fn governed_amendment_preserves_history() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        board.submit(decision("a", ReviewerKind::Human, DecisionValue::Include))?;
+
+        let mut updated = decision("a", ReviewerKind::Human, DecisionValue::Exclude);
+        updated.decision_id = "d-a-amended".to_owned();
+        let amendment = ScreeningAmendment {
+            amendment_id: "amend-001".to_owned(),
+            target_decision_id: "d-a".to_owned(),
+            updated_decision: updated,
+            amendment_reason: "Found paediatric exclusion criterion in appendix".to_owned(),
+            amended_by: "a".to_owned(),
+            amended_at: "2026-08-10T00:00:00Z".to_owned(),
+        };
+
+        board.amend_decision(amendment)?;
+        assert_eq!(board.history().len(), 2);
+        assert!(matches!(
+            board.history().last(),
+            Some(ScreeningHistoryEntry::Amendment(_))
+        ));
+
+        let current: Vec<&ScreeningDecision> = board.decisions().collect();
+        assert_eq!(current.len(), 1);
+        let first_current = current
+            .first()
+            .ok_or(ScreeningError::EmptyField { field: "current" })?;
+        assert_eq!(first_current.decision, DecisionValue::Exclude);
+        Ok(())
+    }
+
+    #[test]
+    fn governed_rescreen_resets_round_state() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        board.assign_role("admin-1", ReviewerRole::PolicyAdmin);
+        board.submit(decision("a", ReviewerKind::Human, DecisionValue::Include))?;
+        board.submit(decision("b", ReviewerKind::Human, DecisionValue::Include))?;
+        assert_eq!(
+            board.status("record-1", ScreeningRound::TitleAbstract),
+            ScreeningStatus::Consensus(DecisionValue::Include)
+        );
+
+        let rescreen = ReScreenRequest {
+            request_id: "rescreen-001".to_owned(),
+            subject_id: "record-1".to_owned(),
+            round: ScreeningRound::TitleAbstract,
+            new_eligibility_version: "2.0".to_owned(),
+            reason: "Protocol amendment broadening eligible population".to_owned(),
+            requested_by: "admin-1".to_owned(),
+            requested_at: "2026-08-20T00:00:00Z".to_owned(),
+        };
+
+        board.rescreen_subject(rescreen)?;
+        assert_eq!(
+            board.status("record-1", ScreeningRound::TitleAbstract),
+            ScreeningStatus::Pending {
+                submitted: 0,
+                required: 2,
+            }
+        );
+        assert!(matches!(
+            board.history().last(),
+            Some(ScreeningHistoryEntry::ReScreen(_))
+        ));
+        Ok(())
+    }
+
+    #[test]
+    fn covidence_and_rayyan_export_import_roundtrip() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        board.submit(decision("a", ReviewerKind::Human, DecisionValue::Include))?;
+        board.submit(decision("b", ReviewerKind::Human, DecisionValue::Exclude))?;
+
+        let cov_csv = export_covidence_csv(&board);
+        assert!(cov_csv.contains("record-1"));
+        assert!(cov_csv.contains("Wrong population"));
+
+        let imported_cov =
+            import_covidence_csv(&cov_csv, "r1", ScreeningRound::TitleAbstract, "1")?;
+        assert_eq!(imported_cov.len(), 2);
+        let first_cov = imported_cov.first().ok_or(ScreeningError::EmptyField {
+            field: "imported_cov",
+        })?;
+        let second_cov = imported_cov.get(1).ok_or(ScreeningError::EmptyField {
+            field: "imported_cov",
+        })?;
+        assert_eq!(first_cov.decision, DecisionValue::Include);
+        assert_eq!(second_cov.decision, DecisionValue::Exclude);
+
+        let rayyan_csv = export_rayyan_csv(&board);
+        assert!(rayyan_csv.contains("record-1"));
+        assert!(rayyan_csv.contains("Wrong population"));
+
+        let imported_rayyan =
+            import_rayyan_csv(&rayyan_csv, "r1", ScreeningRound::TitleAbstract, "1")?;
+        assert_eq!(imported_rayyan.len(), 2);
+
+        let eppi_json = export_eppi_reviewer_json(&board)?;
+        assert!(eppi_json.contains("wrong-population"));
+        Ok(())
     }
 
     #[test]

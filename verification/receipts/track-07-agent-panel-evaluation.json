@@ -1,0 +1,109 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "07",
+  "title": "Governed screening workflow — agent-panel evaluation",
+  "observed_at": "2026-08-29T06:50:00Z",
+  "source_revision": "3126e05",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["screening-reviewer", "information-specialist", "methodologist"],
+    "output_artefacts": ["structured-usability-findings", "inter-rater-agreement-metrics", "disposition-record"],
+    "evidence_level": "fixture-proven",
+    "limitation": "Simulation instrument only; not a substitute for live human studies."
+  },
+  "panelists": [
+    {
+      "role": "screening-reviewer",
+      "findings_count": 8,
+      "critical": 1,
+      "major": 3,
+      "minor": 3,
+      "observation": 1,
+      "disposition": "requires_re-evaluation"
+    },
+    {
+      "role": "information-specialist",
+      "findings_count": 8,
+      "critical": 2,
+      "major": 2,
+      "minor": 2,
+      "observation": 2,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "methodologist",
+      "findings_count": 9,
+      "critical": 2,
+      "major": 3,
+      "minor": 2,
+      "observation": 2,
+      "disposition": "requires_re-evaluation"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": null,
+    "percent_agreement": 0.67,
+    "agreement_notes": "Panelists independently converged on authorization/governance gaps (3/3), blinding integrity (3/3), and adjudication rule weaknesses (3/3). Divergence on disposition reflects different risk tolerances: information-specialist accepted findings as remediable; screening-reviewer and methodologist required structural remediation before endorsement.",
+    "convergence_vectors": [
+      "Authorization bypass in role-gate logic",
+      "Blinding bypass via raw decisions()/history() access",
+      "Free-text adjudication rule lacks structural enforcement",
+      "EPPI-Reviewer interop incompleteness"
+    ],
+    "divergence_vectors": [
+      "Severity of missing third-reviewer escalation (major vs minor)",
+      "Whether eligibility-version binding requires explicit evidence excerpts"
+    ]
+  },
+  "findings_summary": {
+    "total_unique_findings": 17,
+    "by_severity": {
+      "critical": 4,
+      "major": 6,
+      "minor": 5,
+      "observation": 4
+    },
+    "by_category": {
+      "authorization_integrity": 4,
+      "blinding_governance": 3,
+      "audit_trail": 2,
+      "interop_formats": 3,
+      "decision_binding": 2,
+      "adjudication": 3
+    }
+  },
+  "top_critical_findings": [
+    {
+      "id": "P07-C001",
+      "description": "Systemic authorization bypass: role-gate logic allows unassigned principals to submit, resolve, amend, and rescreen.",
+      "sources": ["screening-reviewer", "methodologist"]
+    },
+    {
+      "id": "P07-C002",
+      "description": "Canonical decisions are mutable and deletable; amend_decision overwrites, rescreen_subject removes prior decisions.",
+      "sources": ["methodologist"]
+    },
+    {
+      "id": "P07-C003",
+      "description": "EPPI-Reviewer export produces raw JSON serialization, not the schema EPPI-Reviewer expects.",
+      "sources": ["information-specialist"]
+    },
+    {
+      "id": "P07-C004",
+      "description": "Import functions hardcode exclusion_reason.evidence to None, silently stripping evidence excerpts and calibration data.",
+      "sources": ["information-specialist"]
+    }
+  ],
+  "panel_disposition": {
+    "consensus": "requires_remediation",
+    "detail": "2 of 3 panelists returned requires_re-evaluation. The panel identifies structural remediation targets in authorization integrity, blinding enforcement, and audit-trail immutability before the workflow can be endorsed. Findings are source-implementation issues, not design defects, and are addressable within Track 07 scope."
+  },
+  "receipt_provenance": {
+    "panel_outputs": [
+      "verification/receipts/panel-track-07-screening-reviewer.json",
+      "verification/receipts/panel-track-07-information-specialist.json",
+      "verification/receipts/panel-track-07-methodologist.json",
+      "track-07-methodological-evaluation.json"
+    ]
+  }
+}

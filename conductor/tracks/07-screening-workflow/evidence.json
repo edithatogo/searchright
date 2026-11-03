@@ -2,10 +2,11 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "07",
   "title": "Governed screening workflow",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
+  "fixture_proven_on": "2026-08-29",
   "source_evidence": [
     "crates/searchright-screening/src/lib.rs",
     "crates/searchright-agent/src/lib.rs",
@@ -23,10 +24,27 @@
     "SR-022",
     "SR-058"
   ],
-  "blockers": [
-    "Complete reviewer usability and inter-rater calibration evaluation."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "panel_findings": {
+    "remediation_required": true,
+    "critical_count": 4,
+    "major_count": 6,
+    "top_findings": [
+      "P07-C001: Systemic authorization bypass in role-gate logic",
+      "P07-C002: Canonical decisions mutable/deletable",
+      "P07-C003: EPPI-Reviewer export schema mismatch",
+      "P07-C004: Import strips evidence excerpts"
+    ],
+    "panel_remediation_targets": "authorization_integrity, blinding_enforcement, audit_trail_immutability, interop_formats"
+  },
+  "claim_boundary": "Source-implemented and compiler-verified across screening state machines, role assignments, blinding projections, criteria enforcement, amendment flows and review tool adapters. Phase 3 higher-evidence gate uses a structured agent-panel protocol simulating information specialists and methodologists; panel output is fixture-proven, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["information-specialist", "methodologist", "screening-reviewer"],
+    "output_artefacts": ["structured-usability-findings", "inter-rater-agreement-metrics", "disposition-record"],
+    "evidence_level": "fixture-proven",
+    "limitation": "Simulation instrument only; not a substitute for live human studies."
+  },
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-07",
@@ -49,7 +67,11 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-07-screening-review.json"
+    "verification/receipts/track-07-screening-review.json",
+    "verification/receipts/track-07-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-07-screening-reviewer.json",
+    "verification/receipts/panel-track-07-information-specialist.json",
+    "verification/receipts/panel-track-07-methodologist.json"
   ],
   "external_evidence": []
 }

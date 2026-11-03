@@ -2131,7 +2131,11 @@ dependencies = [
 name = "searchright-screening"
 version = "0.1.0-alpha.1"
 dependencies = [
+ "proptest",
+ "schemars",
  "searchright-contracts",
+ "serde",
+ "serde_json",
  "thiserror",
 ]
 

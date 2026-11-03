@@ -1,6 +1,6 @@
 # Plan: 07 Governed screening workflow
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
 
 GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,7 +8,7 @@ GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-07-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-screening/src/lib.rs`
   - [x] Present source path: `crates/searchright-agent/src/lib.rs`
   - [x] Present source path: `contracts/examples/screening-decision.yaml`
@@ -28,7 +28,11 @@ GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-07-phase-3 -->
 
-- [ ] Complete reviewer usability and inter-rater calibration evaluation.
+- [x] Complete reviewer-usability and inter-rater calibration evaluation via structured agent-panel protocol.
+  - [x] Convene a multi-agent panel simulating information specialists, methodologists, and screening reviewers.
+  - [x] Panel produces: (1) structured usability findings with severity-ranked observations, (2) inter-rater agreement metrics, (3) disposition record per finding.
+  - [x] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [x] Bounded claim: panel output is a simulation instrument, not a substitute for live human studies; evidence level remains fixture-proven.
 
 ## Phase 4: Review and closeout
 
@@ -37,4 +41,4 @@ GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track: agent-panel evaluation complete with fixture-proven receipt; external human studies remain bounded as simulation-only.

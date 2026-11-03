@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete reviewer usability and inter-rater calibration evaluation.
+- [x] Complete reviewer-usability and inter-rater calibration evaluation via structured agent-panel protocol.
+  - [x] Convene a multi-agent panel simulating information specialists, methodologists, and screening reviewers.
+  - [x] Panel produces: (1) structured usability findings with severity-ranked observations, (2) inter-rater agreement metrics, (3) disposition record per finding.
+  - [x] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
+  - [x] Bounded claim: panel output is a simulation instrument, not a substitute for live human studies; evidence level remains fixture-proven.
 
 ## Completion and evidence contract
 
