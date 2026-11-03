@@ -222,4 +222,97 @@ mod tests {
             matches!(value.validate(), Err(ContractError::Invariant(message)) if message.contains("duplicate change path"))
         );
     }
+
+    #[test]
+    fn amendment_rejects_invalid_schema_version() {
+        let mut value = amendment(AmendmentDecision::Proposed);
+        value.schema_version = "invalid-schema".to_owned();
+        assert!(matches!(
+            value.validate(),
+            Err(ContractError::Invariant(message)) if message.contains("schema_version")
+        ));
+    }
+
+    #[test]
+    fn amendment_requires_mandatory_text_fields() {
+        let mut value = amendment(AmendmentDecision::Proposed);
+        value.amendment_id = "".to_owned();
+        assert!(matches!(
+            value.validate(),
+            Err(ContractError::EmptyField(_))
+        ));
+
+        let mut value2 = amendment(AmendmentDecision::Proposed);
+        value2.retrospective_impact = "   ".to_owned();
+        assert!(matches!(
+            value2.validate(),
+            Err(ContractError::EmptyField(_))
+        ));
+    }
+
+    #[test]
+    fn amendment_rejects_identical_version_before_and_after() {
+        let mut value = amendment(AmendmentDecision::Proposed);
+        value.version_before = "1.0".to_owned();
+        value.version_after = "1.0".to_owned();
+        assert!(
+            matches!(value.validate(), Err(ContractError::Invariant(message)) if message.contains("must change the protocol version"))
+        );
+    }
+
+    #[test]
+    fn amendment_rejects_empty_changes() {
+        let mut value = amendment(AmendmentDecision::Proposed);
+        value.changes.clear();
+        assert!(matches!(
+            value.validate(),
+            Err(ContractError::EmptyCollection(_))
+        ));
+    }
+
+    #[test]
+    fn amendment_change_validates_required_and_optional_fields() {
+        let change_empty_path = AmendmentChange {
+            path: "".to_owned(),
+            before: None,
+            after: "value".to_owned(),
+            rationale: "valid rationale".to_owned(),
+        };
+        assert!(matches!(
+            change_empty_path.validate(),
+            Err(ContractError::EmptyField(_))
+        ));
+
+        let change_blank_before = AmendmentChange {
+            path: "/field".to_owned(),
+            before: Some("   ".to_owned()),
+            after: "value".to_owned(),
+            rationale: "valid rationale".to_owned(),
+        };
+        assert!(matches!(
+            change_blank_before.validate(),
+            Err(ContractError::EmptyField(_))
+        ));
+    }
+
+    #[test]
+    fn decided_amendment_handles_rejected_and_withdrawn_states() {
+        let mut rejected = amendment(AmendmentDecision::Rejected);
+        rejected.decided_by = Some("lead-reviewer".to_owned());
+        rejected.decided_at = Some("2026-08-12T01:00:00Z".to_owned());
+        assert!(rejected.validate().is_ok());
+
+        let mut withdrawn = amendment(AmendmentDecision::Withdrawn);
+        withdrawn.decided_by = Some("author".to_owned());
+        withdrawn.decided_at = Some("2026-08-12T02:00:00Z".to_owned());
+        assert!(withdrawn.validate().is_ok());
+
+        let mut incomplete = amendment(AmendmentDecision::Rejected);
+        incomplete.decided_by = None;
+        incomplete.decided_at = Some("2026-08-12T01:00:00Z".to_owned());
+        assert!(matches!(
+            incomplete.validate(),
+            Err(ContractError::Invariant(message)) if message.contains("decision maker")
+        ));
+    }
 }
