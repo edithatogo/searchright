@@ -10,6 +10,7 @@ Canonical task state: **source task complete**.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `6f86326`: Expose the current semantic-conformance receipt through canonical Track 02 evidence.
   - Review fix `b98fc59`: Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions.
+  - Review fix `0e2fff8`: Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt.
 
 ## Completion and evidence contract
 
