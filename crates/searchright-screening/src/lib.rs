@@ -1587,7 +1587,7 @@ mod tests {
             board.preview_bulk(duplicate),
             Err(ScreeningError::DuplicateReviewer { .. })
         ));
-        assert!(board.history().is_empty());
+        assert_eq!(board.history(), []);
         Ok(())
     }
 }

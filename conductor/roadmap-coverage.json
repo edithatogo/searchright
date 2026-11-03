@@ -1316,7 +1316,18 @@
       "slug": "sourceright-migration",
       "status": "integration_prepared",
       "title": "Sourceright migration and shared releases",
-      "track_id": "14"
+      "track_id": "14",
+      "review_completed": true,
+      "updated": "2026-11-04",
+      "runtime_evidence": [
+        "verification/receipts/track-14-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        {
+          "commit": "97c36d0",
+          "summary": "Upgrade Track 14 assertions to symbol_and_gate_mapped with native tests, add unit tests for LegacyRuntimeConfig execution_policy and provider_mode in searchright-sourceright-compat, refactor check_sourceright_migration main entry point, and record conductor review receipt."
+        }
+      ]
     },
     {
       "blockers": [
