@@ -1,0 +1,94 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "15",
+  "reviewed_revision": "33dd012",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "estate-audit-and-companion-validation",
+      "mode": "isolated_first_pass",
+      "finding": "Inspected scripts/audit_search_code.py and scripts/check_companion_change_packets.py; enhanced check_companion_change_packets.py to validate estate registers (migration/estate/repositories.json and migration/estate/replacement-decisions.json) for valid schemas, non-empty entries, and unique repository identifiers while preserving fail-closed non-mutating guarantees.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "unit-and-adversarial-testing",
+      "mode": "isolated_first_pass",
+      "finding": "Authored comprehensive unit and adversarial tests in tests/test_estate_migration.py covering audit_search_code.self_test, directory scanning with pattern matching and ignored directory skipping (.git, target, node_modules, .venv), check_companion_change_packets.main, and adversarial rejection of remote_mutation_permitted=True, automatic_apply=True, and invalid estate registers.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all six Track 15 assertions (T15-A001..T15-A006) to symbol_and_gate_mapped with concrete implementation symbols (scripts/audit_search_code.py::scan/self_test/main, scripts/check_companion_change_packets.py::main, scripts/validate_repository.py::validate_serialised_documents, scripts/check_portfolio_project.py::main, scripts/check_integration_passports.py::main, scripts/check_consumer_contracts.py::main, scripts/sync_ecosystem_lock.py::main) in both conductor/tracks/15-estate-migration/traceability.json and conductor/traceability-overrides.json.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "methodology-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved Phase 3 higher-evidence blockers without false promotion: repository-specific scans against local checkouts or GitHub indexes, opening and merging replacement changes in affected repositories, and deleting duplicate code only after parity and rollback evidence remain open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Enhanced scripts/check_companion_change_packets.py to validate migration/estate/repositories.json and migration/estate/replacement-decisions.json schema, required fields, and unique repository IDs while preserving receipt schema and passed status.",
+    "Added unit and adversarial test suite in tests/test_estate_migration.py covering audit_search_code pattern detection and directory skipping, companion change packet validation, and adversarial rejection of mutation permissions, automatic apply, and invalid estate metadata.",
+    "Upgraded assertions T15-A001..T15-A006 to symbol_and_gate_mapped with concrete implementation symbols in conductor/tracks/15-estate-migration/traceability.json and conductor/traceability-overrides.json.",
+    "Preserved open Phase 3 estate gates without claiming premature completion."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/audit_search_code.py --self-test",
+      "status": "passed",
+      "patterns": 12
+    },
+    {
+      "command": "python3 -B scripts/check_companion_change_packets.py",
+      "status": "passed",
+      "packets_checked": 11,
+      "changes_checked": 55
+    },
+    {
+      "command": "python3 -B scripts/check_roadmap_coverage.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B scripts/check_traceability.py",
+      "status": "passed",
+      "assertions": 200
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests",
+      "status": "passed",
+      "tests_passed": 138
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "Run repository-specific scans against current local checkouts or GitHub indexes.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    },
+    {
+      "gate_id": "Open, test and merge replacement changes in each affected repository.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    },
+    {
+      "gate_id": "Delete duplicate code only after repository-specific parity and rollback evidence.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Run repository-specific scans against current local checkouts or GitHub indexes.",
+    "Open, test and merge replacement changes in each affected repository.",
+    "Delete duplicate code only after repository-specific parity and rollback evidence."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}
