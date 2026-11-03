@@ -15,6 +15,12 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `crates/searchright-ranking/src/lib.rs`
   - [x] Present source path: `crates/searchright-validation/src/lib.rs`
   - [x] Present source path: `docs/evaluation/benchmark-and-calibration-protocol.md`
+  - [x] Present source path: `scripts/check_benchmark_governance.py`
+  - [x] Present source path: `scripts/check_calibration_harness.py`
+  - [x] Present source path: `scripts/check_dataset_provenance.py`
+  - [x] Present source path: `scripts/check_hf_dataset_eval_contracts.py`
+  - [x] Present source path: `tests/test_benchmark_calibration_governance.py`
+  - [x] Present source path: `verification/receipts/track-17-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/17-benchmarks-calibration/traceability.json`
 
 ## Completion and evidence contract

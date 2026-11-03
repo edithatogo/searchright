@@ -1500,7 +1500,11 @@
       ],
       "checks": [
         "python scripts/check_methodology_benchmarks.py",
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_benchmark_governance.py",
+        "python scripts/check_calibration_harness.py",
+        "python scripts/check_dataset_provenance.py",
+        "python scripts/check_hf_dataset_eval_contracts.py"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
@@ -1510,7 +1514,13 @@
         "crates/searchright-bench/src/lib.rs",
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-validation/src/lib.rs",
-        "docs/evaluation/benchmark-and-calibration-protocol.md"
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "scripts/check_benchmark_governance.py",
+        "scripts/check_calibration_harness.py",
+        "scripts/check_dataset_provenance.py",
+        "scripts/check_hf_dataset_eval_contracts.py",
+        "tests/test_benchmark_calibration_governance.py",
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "dependencies": [
         "02",
@@ -1529,9 +1539,17 @@
         "SR-038"
       ],
       "slug": "benchmarks-calibration",
-      "status": "scaffolded",
+      "status": "partially_implemented",
       "title": "Benchmarks, search validation and human calibration",
-      "track_id": "17"
+      "track_id": "17",
+      "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        "Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers."
+      ],
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
