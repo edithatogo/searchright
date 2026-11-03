@@ -43,5 +43,6 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `0ea3f2d`: Upgrade Track 12 assertions to symbol_and_gate_mapped with native tests, add unit tests for from_scholarly_document and adversarial contract validation, and record conductor review receipt.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

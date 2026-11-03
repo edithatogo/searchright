@@ -1166,7 +1166,18 @@
       "slug": "citeweft-document-evidence",
       "status": "integration_prepared",
       "title": "CiteWeft scholarly extraction and document evidence",
-      "track_id": "12"
+      "track_id": "12",
+      "review_completed": true,
+      "updated": "2026-11-04",
+      "runtime_evidence": [
+        "verification/receipts/track-12-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        {
+          "commit": "0ea3f2d",
+          "summary": "Upgrade Track 12 assertions to symbol_and_gate_mapped with native tests, add unit tests for from_scholarly_document and adversarial contract validation, and record conductor review receipt."
+        }
+      ]
     },
     {
       "blockers": [

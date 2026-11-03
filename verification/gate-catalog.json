@@ -1007,10 +1007,7 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A004",
-        "T12-A001",
-        "T12-A002",
-        "T12-A003",
-        "T12-A004"
+        "T12-A001"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,

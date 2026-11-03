@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "a43c14d412133c68548caef99aad638551c38269c67a228fdb12c4458698693e",
-      "size": 624064
+      "sha256": "51979afcdf9cf1c3026fae76c2e286548556ad9bde171262bba8c81cfabf2d8c",
+      "size": 624077
     },
     {
       "path": "conductor/github/project.json",
@@ -53,13 +53,13 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "1510d781519e64007fc3a630b7fa1d83b70cc92edc9b5c1f108174b2ce8e68fa",
-      "size": 125482
+      "sha256": "f97f9eadd7cd7d0b260ea78f10984557df28941c68a58a0bfe048d5ab38c8bea",
+      "size": 125953
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "8236684fb49bb0e8adff0f5feaa07f11c0f0ef248e664e24dab5a0f78a761a1b",
-      "size": 139880
+      "sha256": "e5f2530a575c19fbf509729c7bd13105bf9b906dfec50a06f2539c25126d919c",
+      "size": 145628
     },
     {
       "path": "context/capability-matrix.json",
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "47508eb5f88f0999190fe8a7e45169f3978fa9b2ad435bd927dec3148830a302",
+      "sha256": "4588dd9bc0a6672f678420732f222eab79e0ac5000351d240ac649c448253b07",
       "size": 3516
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "911a2137873b2bcafb1c22c3c2425773e5686c36f81ee2b09008b7fba7ee680d",
-      "size": 50605
+      "sha256": "da8bfa4d4387448ebd8c315ac060ff55c19572b99070fd92901365a3a1ba0500",
+      "size": 50545
     },
     {
       "path": "verification/harness-matrix.json",

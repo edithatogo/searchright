@@ -10,123 +10,128 @@
     {
       "assertion_id": "T12-A001",
       "statement": "Pin the CiteWeft revision and feature-gate the adapter",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
+        "Cargo.toml",
+        "crates/searchright-citeweft/Cargo.toml",
         "crates/searchright-citeweft/src/lib.rs",
-        "crates/searchright-contracts/src/document.rs",
-        "contracts/json-schema/document-evidence.v1.schema.json",
-        "contracts/examples/document-evidence.json",
         "integration/citeweft-compatibility.json",
-        "docs/citeweft-integration.md",
-        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
         "scripts/check_citeweft_integration.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_citeweft_integration.py::main",
+        "searchright_citeweft::from_scholarly_document",
+        "searchright_citeweft::from_reference_model_report"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_citeweft_integration.py",
         "python scripts/check_rust_dependency_graph.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-citeweft"
+      ],
       "evidence_receipts": [
-        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json",
+        "verification/receipts/track-12-conductor-review-2026-11-04.json"
       ],
-      "open_gates": [
-        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
-        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
-        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "The CiteWeft workspace dependency revision is pinned and gated to searchright-citeweft only, and the adapter compiles and passes unit tests on the pinned toolchain."
     },
     {
       "assertion_id": "T12-A002",
       "statement": "Preserve references, callouts, source spans, uncertainty, diagnostics and provenance",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-citeweft/src/lib.rs",
         "crates/searchright-contracts/src/document.rs",
         "contracts/json-schema/document-evidence.v1.schema.json",
-        "contracts/examples/document-evidence.json",
-        "integration/citeweft-compatibility.json",
-        "docs/citeweft-integration.md",
-        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
-        "scripts/check_citeweft_integration.py"
+        "contracts/examples/document-evidence.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_citeweft::from_scholarly_document",
+        "searchright_citeweft::from_reference_model_report",
+        "searchright_contracts::document::DocumentSpan::validate",
+        "searchright_contracts::document::DocumentEvidence::validate"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_citeweft_integration.py",
-        "python scripts/check_rust_dependency_graph.py"
+        "python scripts/check_citeweft_integration.py"
+      ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-citeweft",
+        "cargo test --locked -p searchright-contracts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json",
+        "verification/receipts/track-12-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
-        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
-        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
-        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
     },
     {
       "assertion_id": "T12-A003",
       "statement": "Forbid canonical writes and default full-text retention",
-      "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-citeweft/src/lib.rs",
         "crates/searchright-contracts/src/document.rs",
-        "contracts/json-schema/document-evidence.v1.schema.json",
-        "contracts/examples/document-evidence.json",
-        "integration/citeweft-compatibility.json",
-        "docs/citeweft-integration.md",
-        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
-        "scripts/check_citeweft_integration.py"
+        "crates/searchright-citeweft/src/lib.rs",
+        "scripts/check_citeweft_integration.py",
+        "docs/adrs/0013-citeweft-document-evidence-boundary.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_contracts::document::DocumentEvidence::validate",
+        "searchright_citeweft::from_scholarly_document",
+        "searchright_citeweft::from_reference_model_report",
+        "scripts/check_citeweft_integration.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_citeweft_integration.py",
-        "python scripts/check_rust_dependency_graph.py"
+        "python scripts/check_citeweft_integration.py"
+      ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-citeweft",
+        "cargo test --locked -p searchright-contracts"
       ],
       "evidence_receipts": [
-        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json",
+        "verification/receipts/track-12-conductor-review-2026-11-04.json"
       ],
-      "open_gates": [
-        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
-        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
-        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
-      ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "open_gates": [],
+      "permitted_claim": "DocumentEvidence::validate rejects canonical_write_permitted=true, and both searchright-citeweft adapters hardcode canonical_write_permitted=false and retained_full_text=false."
     },
     {
       "assertion_id": "T12-A004",
       "statement": "Prepare downstream Sourceright compatibility and rollback",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-citeweft/src/lib.rs",
-        "crates/searchright-contracts/src/document.rs",
-        "contracts/json-schema/document-evidence.v1.schema.json",
-        "contracts/examples/document-evidence.json",
         "integration/citeweft-compatibility.json",
         "docs/citeweft-integration.md",
-        "docs/adrs/0013-citeweft-document-evidence-boundary.md",
-        "scripts/check_citeweft_integration.py"
+        "scripts/check_citeweft_integration.py",
+        "crates/searchright-contracts/src/document.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_citeweft_integration.py::main",
+        "searchright_contracts::document::DocumentEvidence::validate"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
-        "python scripts/check_citeweft_integration.py",
-        "python scripts/check_rust_dependency_graph.py"
+        "python scripts/check_citeweft_integration.py"
+      ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-citeweft"
       ],
       "evidence_receipts": [
-        "conductor/tracks/12-citeweft-document-evidence/evidence.json"
+        "conductor/tracks/12-citeweft-document-evidence/evidence.json",
+        "verification/receipts/track-12-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
-        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
-        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
         "Run downstream Sourceright consumer-driven compatibility and rollback tests."
       ],
       "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
