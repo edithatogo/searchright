@@ -1,0 +1,65 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "08",
+  "observed_on": "2026-08-31",
+  "status": "focused_passed_pending_full_verification",
+  "source_binding": "Containing commit source-manifest.sha256 binds implementation and original synthetic fixture generator bytes.",
+  "independent_review": {
+    "functional_revision": "855ce04d2dbb4ee3220e0cdd48ab7b7f18df5ebb",
+    "canonical_revision": "2c30fe50632063c570befbedbe210b147c45eee8",
+    "implementation": "no actionable findings",
+    "security": "no actionable findings",
+    "testing": "no actionable findings",
+    "methodology": "no actionable findings",
+    "adversarial": "no actionable findings",
+    "claim_boundary": "Five isolated coding review roles; not Track 11 calibration, owner adjudication, independent PRESS approval or external acceptance. Functional bytes are unchanged after integration onto actual Track 00 merged main. Later read-only cell-comparison helper received main-agent review; separate security delta review is pending."
+  },
+  "checks": [
+    {"command": "cargo test -p searchright-prisma --locked --tests", "status": "passed", "exit_code": 0, "tests_passed": 15, "toolchain": "Rust 1.97.1 aarch64-apple-darwin", "log_sha256": "be4b793f7b7c46569939275a36c587259b7343d218bf9bb871dec14109dfdc98", "notes": "One regression covers seven collection items by six empty, whitespace, mixed and populated cases, preserving original bytes and checking Partial notes."},
+    {"command": "LibreOffice --headless --convert-to 'docx:Office Open XML Text', then --convert-to pdf; pdftoppm -scale-to 1500 -png", "status": "passed", "exit_code": 0, "toolchain": "LibreOffice 26.2.5.2; Poppler 26.08.0", "network_policy": "sandbox-exec denies network operations except local Unix sockets needed by LibreOffice IPC; isolated temporary user profile", "notes": "Normal and hostile synthetic HTML imported to real DOCX files and then rendered to two-page PDFs. All four final pages visually inspected: labels wrap without clipping, counts/reasons remain visible, repeated table headers retained. Prior bare docx conversion returned no export filter despite zero exit; not counted as success."}
+  ],
+  "ordered_cell_comparison": {"status": "passed", "normal_cells": 40, "hostile_cells": 40, "method": "HTMLParser th/td text compared in exact order with OOXML word/document.xml table-cell w:t text, using zipfile and ElementTree. All 40 cells in each fixture matched without whitespace normalization."},
+  "reproduction": {
+    "working_directory": "repository root",
+    "artifact_root": "/tmp/searchright-reporting-evidence.9dNAiz",
+    "fixture_generator": "crates/searchright-prisma/examples/render_reporting_fixture.rs",
+    "cell_comparison_script_sha256": "ca295872b2a23a17d4d2bd16b70015c2587d57954f275b09572603317ee0e76f",
+    "cell_comparison_command": "for fixture in normal hostile; do python3 -B crates/searchright-prisma/examples/compare_imported_table.py /tmp/searchright-reporting-evidence.9dNAiz/source/$fixture.html /tmp/searchright-reporting-evidence.9dNAiz/docx/$fixture.docx; done",
+    "commands": [
+      "cargo run -q -p searchright-prisma --example render_reporting_fixture -- html > /tmp/searchright-reporting-evidence.9dNAiz/source/normal.html",
+      "cargo run -q -p searchright-prisma --example render_reporting_fixture -- html --hostile > /tmp/searchright-reporting-evidence.9dNAiz/source/hostile.html",
+      "for fixture in normal hostile; do /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)(allow network* (local unix-socket))' /Applications/LibreOffice.app/Contents/MacOS/soffice -env:UserInstallation=file:///tmp/searchright-reporting-evidence.9dNAiz/lo-profile --headless --convert-to 'docx:Office Open XML Text' --outdir /tmp/searchright-reporting-evidence.9dNAiz/docx /tmp/searchright-reporting-evidence.9dNAiz/source/$fixture.html; done",
+      "for fixture in normal hostile; do /usr/bin/sandbox-exec -p '(version 1)(allow default)(deny network*)(allow network* (local unix-socket))' /Applications/LibreOffice.app/Contents/MacOS/soffice -env:UserInstallation=file:///tmp/searchright-reporting-evidence.9dNAiz/lo-profile --headless --convert-to pdf --outdir /tmp/searchright-reporting-evidence.9dNAiz/docx-pdf /tmp/searchright-reporting-evidence.9dNAiz/docx/$fixture.docx; pdftoppm -scale-to 1500 -png /tmp/searchright-reporting-evidence.9dNAiz/docx-pdf/$fixture.pdf /tmp/searchright-reporting-evidence.9dNAiz/png/docx-$fixture-final; done"
+    ],
+    "note": "Each command was observed individually for conversion success and followed by artifact and text checks; LibreOffice process exit alone is insufficient. Reproduction should use a fresh temporary directory and isolated profile."
+  },
+  "typst_visual_inspection": {
+    "status": "passed",
+    "toolchain": "Typst 0.15.1",
+    "scope": "Existing normal and hostile original fixture PDFs and PNGs inspected by implementation and main agents: all counts/reasons/lineage visible, no observed clipping or overlap. Each is one page. This records local fixture inspection, not general layout conformance.",
+    "normal_source_sha256": "3a45647de4ed4a625cef3b154cdcf607855ca8ce18a28cbede13b5e12d5c551c",
+    "hostile_source_sha256": "d036c724e9602cd12a40328a70cc3761052939917876696794b8aa54283d3c07",
+    "normal_pdf_sha256": "5bbed3968fc345b752a15b1bbe9ed9ececad10e5de04267074383879b837d71b",
+    "hostile_pdf_sha256": "7592fa7f648c2e1e44da5e6dca268e07568471b962f94dac20e86affc35ca74a",
+    "normal_png_sha256": "717549dbe564c65f65b39750f5ea60d785042aa520d953bfc8c765f0eaf48ec1",
+    "hostile_png_sha256": "8740d6efd2f1dbf21df698d3f89b68365a26eabf45dcc6427eefbf84571a72ae"
+  },
+  "superseded_attempts": [{"command": "python3 -B scripts/run_static_harness.py", "source_revision": "23f4b9bdf676ceb6a3bb65eaf409153952370638", "status": "failed", "passed_gates": 56, "failed_gate": "check_contract_bindings.py", "cause": "Ignored node_modules absent in new worktree: TypeScript and Pyright MODULE_NOT_FOUND", "repair": "npm ci --ignore-scripts --no-audit --no-fund --prefix requirements/bindings installs existing pinned lockfile dependencies without changing source or lockfile"}],
+  "artifacts": {
+    "normal_html_sha256": "34d599cdd2163b493266d134c35e9243ed6984eb1aa22ee171843271943a7c32",
+    "hostile_html_sha256": "0fd469fb23e4b4f0069e1289e9c007c4739ccb273a69bfdc459c9f997dec2f65",
+    "normal_docx_sha256": "b13ba87f0f6c2dc5e7aa60c9803e828b78abf3fbbd0619ba207bbe3c294e37c7",
+    "hostile_docx_sha256": "75793eaf1cde017c6f77b669d05fbb0543cde2608152618bc559c830ead38087",
+    "normal_docx_pdf_sha256": "dad505cb7dd367fdfcb3dcc2acf1fbc9c995f02d4a24f8dde52333ac205894cd",
+    "hostile_docx_pdf_sha256": "3ea6b8b4e6d2a8fa30f5a095f57b0ede7cba2a281c6d0dd383060ed7553aa7ba",
+    "normal_docx_pages_sha256": ["cd580ac7ccb56d0366efcfb758a8869dea246745dddf22eb5be6b3af9f141a6b", "6a5170c1936600135a4e731d4f06d0c82b6fc6101fcde355b9cee3983af04b49"],
+    "hostile_docx_pages_sha256": ["74cfa3bfb99c7d5a951d3e7ae203fa9afac27344f0e806a45eb5d2dc3b0ab75d", "f3729b49c0c6040de1899f33e782a83ad22137248192bee97c1690610b5ce2d8"]
+  },
+  "limits": [
+    "Artifacts remain local temporary diagnostics, not published outputs. DOCX bytes are LibreOffice conversion products; the library emits HTML only.",
+    "No Microsoft Word, browser or accessibility certification is claimed; arbitrary long unbroken labels and other document consumers remain unverified.",
+    "Complete PRISMA-S items mean populated reporting links, not verified evidence truth or methodological acceptance.",
+    "Full workspace verification is pending for this follow-up; previous receipts retain their exact historical scope.",
+    "Updated cohort contract completeness, PRISMA.jl parity/ownership and independent PRESS approval remain open."
+  ]
+}

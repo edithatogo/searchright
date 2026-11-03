@@ -679,14 +679,15 @@
             "python scripts/validate_repository.py"
           ],
           "evidence_receipts": [
-            "verification/receipts/track-08-render-formats.json"
+            "verification/receipts/track-08-render-formats.json",
+            "verification/receipts/track-08-reporting-evidence-followup.json"
           ],
           "open_gates": [
-            "Visual rendering and word-processor import evidence remain unobserved; HTML is not a DOCX archive.",
+            "Local LibreOffice fixture import and visual checks are recorded; Microsoft Word and general consumer conformance remain unverified. The library emits HTML, not a DOCX archive.",
             "Complete updated-review cohort representation and PRISMA.jl parity/ownership evidence remain open.",
             "Independent PRESS review remains a separate human gate."
           ],
-          "permitted_claim": "Six library-level derived reporting formats have deterministic count, lineage and injection tests; exact normal and hostile Typst sources compiled with Typst 0.15.1. This is not visual, word-processor, upstream parity or methodological certification evidence."
+          "permitted_claim": "Six library-level reporting formats have deterministic count, lineage and injection tests. Exact normal/hostile synthetic sources have local Typst compilation and LibreOffice import/visual receipts. This is not Microsoft Word, general consumer conformance, upstream parity or methodological certification evidence."
         }
       }
     },

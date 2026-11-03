@@ -98,7 +98,7 @@ pub fn render_flow(
         }
         FlowFormat::DocxFriendlyHtml => {
             let mut output = format!(
-                "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Derived reporting table</title></head><body><p>{BOUNDARY}</p><table><caption>PRISMA-style flow counts</caption><thead><tr><th scope=\"col\">Field</th><th scope=\"col\">Value</th></tr></thead><tbody>"
+                "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Derived reporting table</title><style>body{{font-family:serif;}}table{{table-layout:fixed;border-collapse:collapse;}}th,td{{text-align:left;vertical-align:top;overflow-wrap:anywhere;}}tbody th{{font-weight:normal;}}</style></head><body><p>{BOUNDARY}</p><table width=\"100%\" border=\"1\" cellpadding=\"6\" cellspacing=\"0\"><caption>PRISMA-style flow counts</caption><colgroup><col width=\"60%\"><col width=\"40%\"></colgroup><thead><tr><th scope=\"col\">Field</th><th scope=\"col\">Value</th></tr></thead><tbody>"
             );
             for (label, value) in rows {
                 output.push_str(&format!(

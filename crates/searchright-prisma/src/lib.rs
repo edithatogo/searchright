@@ -552,38 +552,33 @@ fn ledger(
     evidence: &[String],
     missing_note: &str,
 ) -> PrismaSLedger {
+    let populated = evidence
+        .iter()
+        .filter(|value| !value.trim().is_empty())
+        .count();
+    let status = if !complete || populated == 0 {
+        PrismaSItemStatus::Missing
+    } else if populated != evidence.len() {
+        PrismaSItemStatus::Partial
+    } else {
+        PrismaSItemStatus::Complete
+    };
     PrismaSLedger {
         item,
-        status: if complete {
-            PrismaSItemStatus::Complete
-        } else {
-            PrismaSItemStatus::Missing
-        },
+        status,
         evidence: evidence.to_vec(),
-        note: if complete {
-            "Evidence linked.".to_owned()
-        } else {
-            missing_note.to_owned()
+        note: match status {
+            PrismaSItemStatus::Complete => "Evidence linked.".to_owned(),
+            PrismaSItemStatus::Partial => {
+                "Some provided evidence entries are blank; reporting remains incomplete.".to_owned()
+            }
+            _ => missing_note.to_owned(),
         },
     }
 }
 
 fn optional_collection_ledger(item: PrismaSItem, values: &[String], note: &str) -> PrismaSLedger {
-    if values.is_empty() {
-        PrismaSLedger {
-            item,
-            status: PrismaSItemStatus::Missing,
-            evidence: Vec::new(),
-            note: note.to_owned(),
-        }
-    } else {
-        PrismaSLedger {
-            item,
-            status: PrismaSItemStatus::Complete,
-            evidence: values.to_vec(),
-            note: "Evidence linked.".to_owned(),
-        }
-    }
+    ledger(item, !values.is_empty(), values, note)
 }
 
 fn optional_ledger(item: PrismaSItem, value: Option<&str>, note: &str) -> PrismaSLedger {
