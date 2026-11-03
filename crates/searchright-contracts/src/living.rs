@@ -40,7 +40,7 @@ pub enum UpdateStrategy {
 impl UpdateStrategy {
     /// Canonical string identifier for this update strategy.
     #[must_use]
-    pub const fn as_str(&self) -> &'static str {
+    pub const fn as_str(self) -> &'static str {
         match self {
             Self::Date => "date",
             Self::Cursor => "cursor",
