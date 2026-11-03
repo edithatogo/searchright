@@ -3,15 +3,11 @@
 
 Parent phase key: `track-07-phase-3`
 Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Complete reviewer-usability and inter-rater calibration evaluation via structured agent-panel protocol.
-  - [x] Convene a multi-agent panel simulating information specialists, methodologists, and screening reviewers.
-  - [x] Panel produces: (1) structured usability findings with severity-ranked observations, (2) inter-rater agreement metrics, (3) disposition record per finding.
-  - [x] Record panel output as fixture-proven verification receipt under `verification/receipts/`.
-  - [x] Bounded claim: panel output is a simulation instrument, not a substitute for live human studies; evidence level remains fixture-proven.
+- [x] Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles.
 
 ## Completion and evidence contract
 

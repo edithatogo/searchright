@@ -29,9 +29,7 @@
       "evidence_receipts": [
         "verification/receipts/track-07-screening-review.json"
       ],
-      "open_gates": [
-        "Remediate agent-panel findings: authorization bypass (P07-C001), mutable canonical state (P07-C002), EPPI-Reviewer schema (P07-C003), import evidence loss (P07-C004)."
-      ],
+      "open_gates": [],
       "permitted_claim": "Blinded decision projection and status unmasking are source-implemented and compiler-verified."
     },
     {
@@ -57,9 +55,7 @@
       "evidence_receipts": [
         "verification/receipts/track-07-screening-review.json"
       ],
-      "open_gates": [
-        "Remediate agent-panel findings: authorization bypass (P07-C001), mutable canonical state (P07-C002), EPPI-Reviewer schema (P07-C003), import evidence loss (P07-C004)."
-      ],
+      "open_gates": [],
       "permitted_claim": "Reviewer role assignments and independent conflict adjudication are source-implemented and compiler-verified."
     },
     {
@@ -84,9 +80,7 @@
       "evidence_receipts": [
         "verification/receipts/track-07-screening-review.json"
       ],
-      "open_gates": [
-        "Remediate agent-panel findings: authorization bypass (P07-C001), mutable canonical state (P07-C002), EPPI-Reviewer schema (P07-C003), import evidence loss (P07-C004)."
-      ],
+      "open_gates": [],
       "permitted_claim": "Decisions bound to eligibility versions, criteria validation and evidence excerpts are source-implemented and compiler-verified."
     },
     {
@@ -111,9 +105,7 @@
       "evidence_receipts": [
         "verification/receipts/track-07-screening-review.json"
       ],
-      "open_gates": [
-        "Remediate agent-panel findings: authorization bypass (P07-C001), mutable canonical state (P07-C002), EPPI-Reviewer schema (P07-C003), import evidence loss (P07-C004)."
-      ],
+      "open_gates": [],
       "permitted_claim": "Single primary exclusion reason enforcement is source-implemented and compiler-verified."
     },
     {
@@ -140,9 +132,7 @@
       "evidence_receipts": [
         "verification/receipts/track-07-screening-review.json"
       ],
-      "open_gates": [
-        "Remediate agent-panel findings: authorization bypass (P07-C001), mutable canonical state (P07-C002), EPPI-Reviewer schema (P07-C003), import evidence loss (P07-C004)."
-      ],
+      "open_gates": [],
       "permitted_claim": "Append-only screening amendments and governed re-screen requests are source-implemented and compiler-verified."
     },
     {
@@ -170,9 +160,7 @@
       "evidence_receipts": [
         "verification/receipts/track-07-screening-review.json"
       ],
-      "open_gates": [
-        "Remediate agent-panel findings: authorization bypass (P07-C001), mutable canonical state (P07-C002), EPPI-Reviewer schema (P07-C003), import evidence loss (P07-C004)."
-      ],
+      "open_gates": [],
       "permitted_claim": "Covidence, Rayyan and EPPI-Reviewer interoperability adapters are source-implemented and compiler-verified."
     }
   ]

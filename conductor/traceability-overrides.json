@@ -6,10 +6,23 @@
         "T00-A006": {
           "state": "source_implemented",
           "mapping_confidence": "path_and_gate_mapped",
-          "implementation_paths": ["scripts/bootstrap.sh", "scripts/bootstrap.ps1", "scripts/verify.sh", "scripts/run_static_harness.py", "verification/receipts/track-00-local-verification.json"],
-          "implementation_symbols": ["scripts/run_static_harness.py::main"],
-          "deterministic_tests": ["python scripts/run_static_harness.py"],
-          "evidence_receipts": ["verification/receipts/track-00-local-verification.json", "verification/receipts/track-00-verification-reconciliation.json"],
+          "implementation_paths": [
+            "scripts/bootstrap.sh",
+            "scripts/bootstrap.ps1",
+            "scripts/verify.sh",
+            "scripts/run_static_harness.py",
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_symbols": [
+            "scripts/run_static_harness.py::main"
+          ],
+          "deterministic_tests": [
+            "python scripts/run_static_harness.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-00-local-verification.json",
+            "verification/receipts/track-00-verification-reconciliation.json"
+          ],
           "open_gates": [],
           "permitted_claim": "One-command bootstrap and verification entry points exist. The exact 8de03a0 tree equals the pinned full-verified c358e68 tree: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet 0.10.2 check passed existing policy with 43 fully vetted dependencies and 259 existing exemptions; exempted dependencies are not claimed audited. No future-tree verification or upstream estate conformance is implied."
         }
@@ -17,10 +30,10 @@
     },
     "01": {
       "assertions": {
-          "T01-A001": {
-            "deterministic_tests": [
-              "python scripts/validate_repository.py",
-              "python scripts/sync_contract_conformance_matrix.py --check"
+        "T01-A001": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "contracts/schema-catalog.json",
@@ -29,21 +42,21 @@
             "contracts/compatibility/rust-schema-parity.json"
           ],
           "implementation_symbols": [
-              "scripts/validate_repository.py::validate_schemas_and_examples",
-              "evidence_search_contracts::rust_owned_schemas"
+            "scripts/validate_repository.py::validate_schemas_and_examples",
+            "evidence_search_contracts::rust_owned_schemas"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [],
-            "permitted_claim": "All 68 checked-in JSON Schemas and examples are statically validated; 10 explicitly Rust-owned roots are compiler-generated and compared with every observed validation-shape difference recorded, while exact semantic parity remains denied.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "All 68 checked-in JSON Schemas and examples are statically validated; 10 explicitly Rust-owned roots are compiler-generated and compared with every observed validation-shape difference recorded, while exact semantic parity remains denied.",
+          "state": "source_implemented"
         },
         "T01-A002": {
           "deterministic_tests": [
-              "python scripts/sync_contract_conformance_matrix.py --check"
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "crates/evidence-search-contracts",
-              "contracts/schema-catalog.json",
+            "contracts/schema-catalog.json",
             "crates/evidence-search-contracts/src/schema.rs",
             "crates/evidence-search-contracts/tests/schema_parity.rs",
             "crates/evidence-search-contracts/examples/export_schemas.rs",
@@ -51,20 +64,20 @@
             "contracts/compatibility/rust-schema-parity.json",
             "docs/adrs/0017-canonical-schema-and-binding-ownership.md"
           ],
-            "implementation_symbols": [
-              "evidence_search_contracts::rust_owned_schemas",
-              "export_schemas::main",
-              "scripts/check_rust_schema_parity.py::render_report"
-            ],
+          "implementation_symbols": [
+            "evidence_search_contracts::rust_owned_schemas",
+            "export_schemas::main",
+            "scripts/check_rust_schema_parity.py::render_report"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
-            "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and compared against canonical forms with schema-aware normalization and content-bound digests; observed differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed.",
-            "state": "source_implemented"
+          "permitted_claim": "Ten neutral-core root schemas are generated from compiled Rust types and compared against canonical forms with schema-aware normalization and content-bound digests; observed differences are recorded and canonical JSON Schema retains authority, so exact semantic parity remains fail-closed.",
+          "state": "source_implemented"
         },
         "T01-A003": {
           "deterministic_tests": [
-              "python scripts/sync_schema_surface.py --check",
-              "python scripts/check_schema_migrations.py"
+            "python scripts/sync_schema_surface.py --check",
+            "python scripts/check_schema_migrations.py"
           ],
           "implementation_paths": [
             "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
@@ -74,14 +87,13 @@
             "scripts/sync_schema_surface.py::render"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-          ],
+          "open_gates": [],
           "permitted_claim": "Exact schema, WIT, OpenAPI and MCP surface drift is gated; semantic compatibility remains separate.",
-            "state": "source_implemented"
+          "state": "source_implemented"
         },
         "T01-A004": {
           "deterministic_tests": [
-              "python scripts/validate_repository.py"
+            "python scripts/validate_repository.py"
           ],
           "implementation_paths": [
             "crates/searchright-contracts/src/study.rs",
@@ -90,64 +102,63 @@
             "contracts/json-schema/study-graph.v1.schema.json",
             "contracts/json-schema/protocol-amendment.v1.schema.json"
           ],
-            "implementation_symbols": [
-              "searchright_contracts::study::StudyGraph::validate",
-              "searchright_contracts::amendment::ProtocolAmendment::validate",
-              "searchright_study::attach_report"
-            ],
+          "implementation_symbols": [
+            "searchright_contracts::study::StudyGraph::validate",
+            "searchright_contracts::amendment::ProtocolAmendment::validate",
+            "searchright_study::attach_report"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [],
-            "permitted_claim": "Report/study linkage and protocol-amendment invariants are compiler-tested, including duplicate report references within a study, duplicate amendment paths and transactional attachment failure.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "Report/study linkage and protocol-amendment invariants are compiler-tested, including duplicate report references within a study, duplicate amendment paths and transactional attachment failure.",
+          "state": "source_implemented"
         },
         "T01-A005": {
           "deterministic_tests": [
-              "python scripts/check_contract_bindings.py",
-              "python scripts/check_public_package_policy.py",
-              "python scripts/sync_contract_conformance_matrix.py --check"
+            "python scripts/check_contract_bindings.py",
+            "python scripts/check_public_package_policy.py",
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "sdk/manifest.json",
-              "sdk/generated-contract-bindings.json",
-              "sdk/python/searchright_contracts/__init__.py",
-              "sdk/typescript/src/index.ts",
-              "scripts/generate_contract_bindings.py",
-              "scripts/check_contract_bindings.py",
-              "release/public-packages.json",
-              "contracts/compatibility/contract-conformance-matrix.json"
+            "sdk/generated-contract-bindings.json",
+            "sdk/python/searchright_contracts/__init__.py",
+            "sdk/typescript/src/index.ts",
+            "scripts/generate_contract_bindings.py",
+            "scripts/check_contract_bindings.py",
+            "release/public-packages.json",
+            "contracts/compatibility/contract-conformance-matrix.json"
           ],
-            "implementation_symbols": [
-              "scripts/generate_contract_bindings.py::render_outputs",
-              "scripts/check_contract_bindings.py::main",
-              "scripts/check_public_package_policy.py::main",
-              "scripts/sync_contract_conformance_matrix.py::render"
-            ],
+          "implementation_symbols": [
+            "scripts/generate_contract_bindings.py::render_outputs",
+            "scripts/check_contract_bindings.py::main",
+            "scripts/check_public_package_policy.py::main",
+            "scripts/sync_contract_conformance_matrix.py::render"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-            ],
-            "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 72 canonical schemas, statically type-checked and import-checked; installation, clients, publication and downstream conformance remain Track 35 gates.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "Thin Python and TypeScript contract-only packages are deterministically generated from all 72 canonical schemas, statically type-checked and import-checked; installation, clients, publication and downstream conformance remain Track 35 gates.",
+          "state": "source_implemented"
         },
         "T01-A006": {
           "deterministic_tests": [
-              "python scripts/check_traceability.py",
-              "python scripts/sync_contract_conformance_matrix.py --check"
+            "python scripts/check_traceability.py",
+            "python scripts/sync_contract_conformance_matrix.py --check"
           ],
           "implementation_paths": [
             "contracts/schema-catalog.json",
             "conductor/traceability-overrides.json",
-              "scripts/check_traceability.py",
-              "contracts/compatibility/contract-conformance-matrix.json",
-              "scripts/sync_contract_conformance_matrix.py"
+            "scripts/check_traceability.py",
+            "contracts/compatibility/contract-conformance-matrix.json",
+            "scripts/sync_contract_conformance_matrix.py"
           ],
           "implementation_symbols": [
-              "scripts/check_traceability.py::main",
-              "scripts/sync_contract_conformance_matrix.py::render"
+            "scripts/check_traceability.py::main",
+            "scripts/sync_contract_conformance_matrix.py::render"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-            "open_gates": [],
-            "permitted_claim": "The generated 68-contract matrix records static validation, exact canonical digests and generated-binding source status, with round-trip and downstream columns fail-closed as not evidenced.",
-            "state": "source_implemented"
+          "open_gates": [],
+          "permitted_claim": "The generated 68-contract matrix records static validation, exact canonical digests and generated-binding source status, with round-trip and downstream columns fail-closed as not evidenced.",
+          "state": "source_implemented"
         }
       }
     },
@@ -654,40 +665,310 @@
         }
       }
     },
-    "08": {
+    "07": {
       "assertions": {
-        "T08-A005": {
-          "state": "partially_implemented",
-          "mapping_confidence": "symbol_and_gate_mapped",
-          "implementation_paths": [
-            "crates/searchright-prisma/src/render.rs",
-            "crates/searchright-prisma/src/lib.rs",
-            "crates/searchright-prisma/tests/render_formats.rs",
-            "crates/searchright-prisma/examples/render_typst_fixture.rs",
-            "docs/reporting-formats.md"
-          ],
-          "implementation_symbols": [
-            "searchright_prisma::render_flow",
-            "searchright_prisma::FlowFormat",
-            "searchright_prisma::validate_flow_variant",
-            "render_formats::formats_are_deterministic_and_reject_invalid_counts",
-            "render_formats::machine_projection_preserves_counts_and_update_lineage",
-            "render_formats::presentation_escapes_untrusted_labels",
-            "render_formats::every_presentation_format_contains_each_count_reason_and_lineage"
-          ],
+        "T07-A001": {
           "deterministic_tests": [
             "python scripts/validate_repository.py"
           ],
           "evidence_receipts": [
+            "verification/receipts/track-07-screening-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-screening/src/lib.rs",
+            "crates/searchright-agent/src/lib.rs",
+            "contracts/examples/screening-decision.yaml",
+            "contracts/examples/screening-policy.yaml",
+            "docs/adrs/0003-agent-authority.md"
+          ],
+          "implementation_symbols": [
+            "searchright_screening::ScreeningBoard::decisions_for_reviewer",
+            "searchright_screening::BlindedDecisionView"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Blinded decision projection and status unmasking are source-implemented and compiler-verified.",
+          "state": "source_implemented"
+        },
+        "T07-A002": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-07-screening-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-screening/src/lib.rs",
+            "crates/searchright-agent/src/lib.rs",
+            "contracts/examples/screening-decision.yaml",
+            "contracts/examples/screening-policy.yaml",
+            "docs/adrs/0003-agent-authority.md"
+          ],
+          "implementation_symbols": [
+            "searchright_screening::ReviewerRole",
+            "searchright_screening::ScreeningBoard::assign_role",
+            "searchright_screening::ScreeningBoard::resolve"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Reviewer role assignments and independent conflict adjudication are source-implemented and compiler-verified.",
+          "state": "source_implemented"
+        },
+        "T07-A003": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-07-screening-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-screening/src/lib.rs",
+            "crates/searchright-agent/src/lib.rs",
+            "contracts/examples/screening-decision.yaml",
+            "contracts/examples/screening-policy.yaml",
+            "docs/adrs/0003-agent-authority.md"
+          ],
+          "implementation_symbols": [
+            "searchright_screening::validate_decision_against_criteria",
+            "searchright_screening::ScreeningBoard::submit"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Decisions bound to eligibility versions, criteria validation and evidence excerpts are source-implemented and compiler-verified.",
+          "state": "source_implemented"
+        },
+        "T07-A004": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-07-screening-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-screening/src/lib.rs",
+            "crates/searchright-agent/src/lib.rs",
+            "contracts/examples/screening-decision.yaml",
+            "contracts/examples/screening-policy.yaml",
+            "docs/adrs/0003-agent-authority.md"
+          ],
+          "implementation_symbols": [
+            "searchright_screening::validate_decision",
+            "searchright_screening::ScreeningBoard::submit"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Single primary exclusion reason enforcement is source-implemented and compiler-verified.",
+          "state": "source_implemented"
+        },
+        "T07-A005": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-07-screening-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-screening/src/lib.rs",
+            "crates/searchright-agent/src/lib.rs",
+            "contracts/examples/screening-decision.yaml",
+            "contracts/examples/screening-policy.yaml",
+            "docs/adrs/0003-agent-authority.md"
+          ],
+          "implementation_symbols": [
+            "searchright_screening::ScreeningAmendment",
+            "searchright_screening::ReScreenRequest",
+            "searchright_screening::ScreeningBoard::amend_decision",
+            "searchright_screening::ScreeningBoard::rescreen_subject"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Append-only screening amendments and governed re-screen requests are source-implemented and compiler-verified.",
+          "state": "source_implemented"
+        },
+        "T07-A006": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-07-screening-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-screening/src/lib.rs",
+            "crates/searchright-agent/src/lib.rs",
+            "contracts/examples/screening-decision.yaml",
+            "contracts/examples/screening-policy.yaml",
+            "docs/adrs/0003-agent-authority.md"
+          ],
+          "implementation_symbols": [
+            "searchright_screening::export_covidence_csv",
+            "searchright_screening::import_covidence_csv",
+            "searchright_screening::export_rayyan_csv",
+            "searchright_screening::import_rayyan_csv",
+            "searchright_screening::export_eppi_reviewer_json"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Covidence, Rayyan and EPPI-Reviewer interoperability adapters are source-implemented and compiler-verified.",
+          "state": "source_implemented"
+        }
+      }
+    },
+    "08": {
+      "assertions": {
+        "T08-A001": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/08-prisma-press-reporting/evidence.json",
+            "verification/receipts/track-08-reporting-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-prisma/src/lib.rs",
+            "crates/searchright-contracts/src/prisma.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_prisma::SearchReportingEvidence",
+            "searchright_prisma::prisma_s_ledger",
+            "searchright_prisma::build_prisma_s_ledger"
+          ],
+          "mapping_confidence": "assertion_level",
+          "open_gates": [],
+          "permitted_claim": "The source maps all 16 PRISMA-S reporting items to evidence, missing, or not-applicable states; this is not conduct certification.",
+          "state": "source_implemented"
+        },
+        "T08-A002": {
+          "deterministic_tests": [
+            "python scripts/check_vertical_slice.py",
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/08-prisma-press-reporting/evidence.json",
+            "verification/receipts/track-08-reporting-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-prisma/src/lib.rs",
+            "contracts/examples/prisma-flow.json"
+          ],
+          "implementation_symbols": [
+            "searchright_prisma::PrismaFlowVariant",
+            "searchright_prisma::validate_flow_variant",
+            "searchright_prisma::derive_reporting_assessment"
+          ],
+          "mapping_confidence": "assertion_level",
+          "open_gates": [],
+          "permitted_claim": "New-review and updated-review contexts are source-implemented with fail-closed lineage and arithmetic validation.",
+          "state": "source_implemented"
+        },
+        "T08-A003": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/08-prisma-press-reporting/evidence.json",
+            "verification/receipts/track-08-reporting-review.json"
+          ],
+          "implementation_paths": [
+            "contracts/standards/packs/prisma-scr-2018.yaml",
+            "contracts/standards/packs/prisma-lsr-2024.yaml",
+            "crates/searchright-prisma/tests/reporting_fixtures.rs"
+          ],
+          "implementation_symbols": [
+            "searchright_contracts::StandardFamily::PrismaScR",
+            "searchright_contracts::StandardFamily::PrismaLsr",
+            "searchright_contracts::StandardPack::validate"
+          ],
+          "mapping_confidence": "assertion_level",
+          "open_gates": [],
+          "permitted_claim": "Versioned PRISMA-ScR and PRISMA-LSR reporting profiles are source-implemented; they do not guarantee journal acceptance.",
+          "state": "source_implemented"
+        },
+        "T08-A004": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python scripts/sync_schema_surface.py --check"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/08-prisma-press-reporting/evidence.json",
+            "verification/receipts/track-08-reporting-review.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-contracts/src/validation.rs",
+            "crates/searchright-validation/src/lib.rs",
+            "verification/fixtures/track-08/press-workflow-complete.yaml"
+          ],
+          "implementation_symbols": [
+            "searchright_contracts::PressReview::validate",
+            "searchright_validation::press_domains_covered",
+            "searchright_validation::assess"
+          ],
+          "mapping_confidence": "assertion_level",
+          "open_gates": [
+            "Obtain an accountable independent PRESS review of representative generated strategies and appendices."
+          ],
+          "permitted_claim": "The six-domain PRESS workflow is source-implemented and fails closed on incomplete coverage or conflated reviewer/approver identity; the fixture is not independent review evidence.",
+          "state": "source_implemented"
+        },
+        "T08-A005": {
+          "deterministic_tests": [
+            "python scripts/check_cli_mcp_parity.py",
+            "python scripts/sync_schema_surface.py --check",
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/08-prisma-press-reporting/evidence.json",
+            "verification/receipts/track-08-reporting-review.json",
             "verification/receipts/track-08-render-formats.json",
             "verification/receipts/track-08-reporting-evidence-followup.json"
           ],
-          "open_gates": [
-            "Local LibreOffice fixture import and visual checks are recorded; Microsoft Word and general consumer conformance remain unverified. The library emits HTML, not a DOCX archive.",
-            "Complete updated-review cohort representation and PRISMA.jl parity/ownership evidence remain open.",
-            "Independent PRESS review remains a separate human gate."
+          "implementation_paths": [
+            "crates/searchright-prisma/src/lib.rs",
+            "crates/searchright-prisma/src/render.rs",
+            "crates/searchright-prisma/tests/snapshots/",
+            "crates/searchright-prisma/tests/render_formats.rs",
+            "crates/searchright/src/engine.rs",
+            "crates/searchright-cli/src/main.rs",
+            "crates/searchright-mcp/src/lib.rs"
           ],
-          "permitted_claim": "Six library-level reporting formats have deterministic count, lineage and injection tests. Exact normal/hostile synthetic sources have local Typst compilation and LibreOffice import/visual receipts. This is not Microsoft Word, general consumer conformance, upstream parity or methodological certification evidence."
+          "implementation_symbols": [
+            "searchright_prisma::render_markdown",
+            "searchright_prisma::render_mermaid",
+            "searchright_prisma::render_svg",
+            "searchright_prisma::render_typst",
+            "searchright_prisma::render_docx_table",
+            "searchright_prisma::render_strategy_appendix_markdown",
+            "searchright::PrismaOutput",
+            "searchright_prisma::render_flow",
+            "searchright_prisma::FlowFormat"
+          ],
+          "mapping_confidence": "assertion_level",
+          "open_gates": [
+            "Obtain a hosted compiler-verified receipt for the exact committed revision."
+          ],
+          "permitted_claim": "All six named render families plus the PRISMA-S ledger are source-implemented behind one facade, with accessible deterministic snapshots and a complete major-database appendix fixture.",
+          "state": "source_implemented"
+        },
+        "T08-A006": {
+          "deterministic_tests": [
+            "python scripts/check_integration_passports.py",
+            "python scripts/check_integration_drift.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/08-prisma-press-reporting/evidence.json",
+            "verification/receipts/track-08-reporting-review.json"
+          ],
+          "implementation_paths": [
+            "integration/fixtures/prisma-jl/flow-parity-v1.json",
+            "docs/prisma-jl-interop.md",
+            "integration/passports/prisma-jl-flow-interop.json"
+          ],
+          "implementation_symbols": [
+            "crates/searchright-prisma/tests/reporting_fixtures.rs::prisma_jl_overlap_is_fixture_proven_with_explicit_losses"
+          ],
+          "mapping_confidence": "assertion_level",
+          "open_gates": [],
+          "permitted_claim": "The common count projection is fixture-mapped at the pinned PRISMA.jl fork revision with explicit losses; Searchright owns Searchright arithmetic and PRISMA.jl remains an optional presentation comparator. Complete cross-model equivalence is not claimed.",
+          "state": "source_implemented"
         }
       }
     },

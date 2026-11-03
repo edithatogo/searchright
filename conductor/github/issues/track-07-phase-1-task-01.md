@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-screening/src/lib.rs`
   - [x] Present source path: `crates/searchright-agent/src/lib.rs`
   - [x] Present source path: `contracts/examples/screening-decision.yaml`

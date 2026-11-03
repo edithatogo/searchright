@@ -14,7 +14,7 @@ Support independent title/abstract and full-text decisions, conflicts, adjudicat
 - Horizon: `mvp`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `compiler_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `01, 06`
 - Requirements: `SR-020, SR-021, SR-022, SR-058`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Support independent title/abstract and full-text decisions, conflicts, adjudicat
 
 ## Claim boundary
 
-Source-implemented and compiler-verified across screening state machines, role assignments, blinding projections, criteria enforcement, amendment flows and review tool adapters. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

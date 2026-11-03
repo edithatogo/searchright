@@ -107,6 +107,10 @@ def render_evidence(entry: dict) -> str:
     }
     if entry.get("gates"):
         value["gates"] = entry["gates"]
+    if entry.get("panel_findings"):
+        value["panel_findings"] = entry["panel_findings"]
+    if entry.get("panel_protocol"):
+        value["panel_protocol"] = entry["panel_protocol"]
     if entry.get("lifecycle") == "archived":
         value["lifecycle"] = "archived"
         value["archived_on"] = entry["archived_on"]
@@ -209,7 +213,8 @@ def render_plan(entry: dict) -> str:
         if isinstance(fix, str):
             lines.append(f"  - [x] Review fix: {fix}")
         else:
-            lines.append(f"  - Review fix `{fix['commit']}`: {fix['summary']}")
+            commit_id = fix.get("commit") or fix.get("sha")
+            lines.append(f"  - Review fix `{commit_id}`: {fix['summary']}")
     lines.extend(
         [
             (

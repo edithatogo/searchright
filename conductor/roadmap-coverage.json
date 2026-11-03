@@ -245,7 +245,9 @@
           "kind": "human",
           "status": "pending",
           "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
-          "evidence": ["verification/receipts/track-02-integration-panel.json"]
+          "evidence": [
+            "verification/receipts/track-02-integration-panel.json"
+          ]
         }
       ]
     },
@@ -532,13 +534,13 @@
         "python scripts/validate_repository.py"
       ],
       "claim_boundary": "Compiler-backed deterministic interchange round trips and source-level deduplication/linkage behaviour are evidenced. A digest-bound multi-agent panel may recommend disposition, but only the repository owner's recorded decision may close the evaluation gate.",
-    "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
+      "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
       "deliverables": [
         "crates/searchright-dedup/src/lib.rs",
-      "crates/searchright-interchange/src/lib.rs",
-      "crates/searchright-interchange/src/xml.rs",
-      "crates/searchright-interchange/tests/xml_integrity.rs",
-      "docs/xml-imports.md",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
         "crates/searchright-study/src/lib.rs",
         "contracts/examples/interchange-receipt.yaml",
         "contracts/examples/study-graph.yaml",
@@ -644,7 +646,14 @@
       "slug": "screening-workflow",
       "status": "source_implemented",
       "title": "Governed screening workflow",
-      "track_id": "07"
+      "track_id": "07",
+      "lifecycle": "archived",
+      "archived_on": "2026-08-31",
+      "closeout_completed": true,
+      "higher_evidence_completed": true,
+      "completed_higher_evidence_gates": [
+        "Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles."
+      ]
     },
     {
       "blockers": [
@@ -696,8 +705,8 @@
       "review_completed": true,
       "review_fixes": [
         {
-          "sha": "c234c41f940b37e153e9bf151458059e63c51b47",
-          "summary": "Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls."
+          "summary": "Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls.",
+          "commit": "c234c41f940b37e153e9bf151458059e63c51b47"
         }
       ],
       "completed_higher_evidence_gates": [
@@ -1011,21 +1020,21 @@
         "SR-031"
       ],
       "review_completed": true,
-    "review_fixes": [
-      {
-        "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
-        "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
-      },
-      {
-        "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
-        "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
-      }
-    ],
-    "runtime_evidence": [
-      "verification/receipts/track-11-agent-authority-review.json",
-      "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
-      "verification/receipts/track-11-local-admission.json"
-    ],
+      "review_fixes": [
+        {
+          "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
+          "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
+        },
+        {
+          "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
+          "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
+        }
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-11-agent-authority-review.json",
+        "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
+        "verification/receipts/track-11-local-admission.json"
+      ],
       "external_evidence": [
         "verification/receipts/track-11-sibling-route.json",
         "verification/receipts/track-11-downstream-readiness.json",
