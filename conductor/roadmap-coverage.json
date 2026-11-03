@@ -1739,7 +1739,9 @@
         "contracts/licensed/embase.yaml",
         "contracts/licensed/scopus.yaml",
         "contracts/licensed/web-of-science.yaml",
-        "contracts/examples/licensed-adapter.yaml"
+        "contracts/examples/licensed-adapter.yaml",
+        "tests/test_licensed_adapters_governance.py",
+        "verification/receipts/track-21-conductor-review-2026-11-04.json"
       ],
       "dependencies": [
         "03",
@@ -1757,7 +1759,15 @@
       "slug": "licensed-adapters",
       "status": "scaffolded",
       "title": "Licensed BYO-access adapters",
-      "track_id": "21"
+      "track_id": "21",
+      "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        "Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion."
+      ],
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
