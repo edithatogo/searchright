@@ -3,20 +3,20 @@
     "by_mapping_confidence": {
       "assertion_level": 6,
       "contract_mapped": 1,
-      "path_and_gate_mapped": 7,
-      "symbol_and_gate_mapped": 113,
+      "path_and_gate_mapped": 6,
+      "symbol_and_gate_mapped": 114,
       "track_level_only": 73
     },
     "by_state": {
       "external_evidence_required": 10,
-      "partially_implemented": 75,
-      "scaffolded": 46,
-      "source_implemented": 69
+      "partially_implemented": 74,
+      "scaffolded": 45,
+      "source_implemented": 71
     },
-    "open_gate_entries": 349,
+    "open_gate_entries": 350,
     "total": 200,
     "track_level_only": 73,
-    "without_symbol_mapping": 97
+    "without_symbol_mapping": 93
   },
   "claim_boundary": "The register exposes unresolved proof and implementation work. Counts are not a quality score and cannot be used to promote claims without the named evidence.",
   "evidence_ceiling": "source_verified",

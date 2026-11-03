@@ -282,7 +282,14 @@
         "docs/msrv-and-package-policy.md",
         "crates/evidence-search-core/src/lib.rs",
         "crates/evidence-search-core/tests/subrequest_context.rs",
-        "docs/provider-subrequest-context.md"
+        "docs/provider-subrequest-context.md",
+        "crates/searchright-contracts/src/parity_matrix.rs",
+        "crates/searchright-sourceright-compat/src/parity_matrix.rs",
+        "crates/searchright-sourceright-compat/tests/parity_matrix.rs",
+        "docs/parity-execution-matrix-v2.md",
+        "scripts/run_local_api_evidence.py",
+        "tests/test_local_api_evidence.py",
+        "docs/local-api-evidence.md"
       ],
       "dependencies": [
         "01",
@@ -306,7 +313,8 @@
         "verification/receipts/track-03-integration-panel.json",
         "verification/receipts/track-03-reconciled-validation.json",
         "verification/receipts/track-03-budget-warning.json",
-        "verification/receipts/track-03-subrequest-context.json"
+        "verification/receipts/track-03-subrequest-context.json",
+        "verification/receipts/track-03-conductor-review-2026-11-03.json"
       ],
       "review_completed": true,
       "review_fixes": [
@@ -345,6 +353,10 @@
         {
           "commit": "935d725877f6a6ca82bacefd8982e613981f068c",
           "summary": "Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover."
+        },
+        {
+          "commit": "ebd519f",
+          "summary": "Reconcile Track 03 traceability, deliverables, and assertion mappings with commits 3f52b4d and 9b4a4a4, resolve searchright-contracts PressReview test compilation error and searchright-connectors clippy assertions, add parity matrix decision reference regressions, add candidate policy drift tests, and record conductor review receipt."
         }
       ],
       "source_verified_on": "2026-08-29",
@@ -352,10 +364,11 @@
       "status": "integration_prepared",
       "title": "Shared provider runtime and Sourceright extraction",
       "track_id": "03",
-      "updated": "2026-08-31",
+      "updated": "2026-11-03",
       "native_test_commands": [
         "cargo test -p evidence-search-core --test subrequest_context --locked",
         "cargo test -p evidence-search-core --lib --locked",
+        "cargo test -p searchright-sourceright-compat --test parity_matrix --locked",
         "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
       ],
       "review_scope": "Bounded source/fixture review of the implemented runtime and subrequest context only; open track evidence and adoption gates are not closed."

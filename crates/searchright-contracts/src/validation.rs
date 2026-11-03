@@ -300,7 +300,7 @@ mod press_review_tests {
             reviewer_id: "reviewer-1".to_owned(),
             reviewed_at: reviewed_at.to_owned(),
             findings: Vec::new(),
-            decision: "approved".to_owned(),
+            decision: PressReviewDecision::Approved,
         }
     }
 

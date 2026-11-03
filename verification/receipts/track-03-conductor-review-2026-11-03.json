@@ -1,0 +1,114 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "03",
+  "reviewed_revision": "ebd519f",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "shared-provider-runtime-and-compat-validation",
+      "mode": "isolated_first_pass",
+      "finding": "Resolved PressReview.decision compiler type mismatch in searchright-contracts validation test; resolved clippy::assert_is_empty warning in searchright-connectors pubmed_orchestration_tests.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "sourceright-parity-matrix-v2",
+      "mode": "isolated_first_pass",
+      "finding": "Added decision_references_enforce_uniqueness_bounds_and_text_hygiene regression test verifying duplicate, malformed, and >16 decision reference bounds fail closed.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "candidate-public-api-planner",
+      "mode": "isolated_first_pass",
+      "finding": "Added test_candidate_policy_drift_is_rejected in test_local_api_evidence.py verifying toolchain and package list drift in release/public-packages.json fail closed.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Reconciled Track 03 traceability overrides, assertion mapping, and deliverables with merged commits 3f52b4d and 9b4a4a4; external gates H-002 transport CI, downstream dual-run execution, and cutover/rollback remain open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Upgraded T03-A001 and T03-A002 to source_implemented, and T03-A004 and T03-A005 to partially_implemented in conductor/traceability-overrides.json and conductor/tracks/03-shared-provider-runtime/traceability.json.",
+    "Mapped implementation symbols, paths, and tests across T03-A001 through T03-A006 reflecting parity matrix v2 and local API evidence planner.",
+    "Added 7 new Track 03 source files to deliverables in conductor/roadmap-coverage.json and conductor/tracks/03-shared-provider-runtime/evidence.json.",
+    "Resolved PressReview test compilation error in searchright-contracts.",
+    "Resolved clippy::assert_is_empty warning in searchright-connectors pubmed_orchestration_tests.",
+    "Added adversarial test in searchright-sourceright-compat/tests/parity_matrix.rs for decision reference uniqueness, bounds, and hygiene.",
+    "Added candidate policy drift regression test in tests/test_local_api_evidence.py."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/check_sourceright_migration.py",
+      "status": "passed",
+      "cases_checked": 7,
+      "symbols_mapped": 24,
+      "declared_dimensions": 10
+    },
+    {
+      "command": "python3 -B scripts/check_public_package_policy.py",
+      "status": "passed",
+      "public_candidates": 3,
+      "workspace_packages": 30
+    },
+    {
+      "command": "python3 -B scripts/check_release_train.py",
+      "status": "passed",
+      "components": 3,
+      "stages": 6
+    },
+    {
+      "command": "python3 -B -m unittest tests/test_sourceright_migration.py tests/test_local_api_evidence.py",
+      "status": "passed",
+      "tests_passed": 30
+    },
+    {
+      "command": "cargo test --locked -p evidence-search-core -p searchright-contracts -p searchright-sourceright-compat -p searchright-connectors",
+      "status": "passed",
+      "tests_passed": 197,
+      "breakdown": {
+        "evidence_search_core": 93,
+        "searchright_contracts": 34,
+        "searchright_sourceright_compat": 19,
+        "searchright_connectors": 51
+      }
+    },
+    {
+      "command": "cargo clippy --locked -p evidence-search-core -p searchright-contracts -p searchright-sourceright-compat -p searchright-connectors --all-targets --all-features -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T03-G-TRANSPORT-CI",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002."
+    },
+    {
+      "gate_id": "T03-G-DOWNSTREAM-PARITY",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority."
+    },
+    {
+      "gate_id": "T03-G-SOURCERIGHT-CUTOVER",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.",
+    "Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream.",
+    "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
+  ],
+  "claim_boundary": "Schema-bound v2 parity execution matrix, candidate API evidence planner, and core execution policy runtime are compiler-tested and fixture-verified. No downstream Sourceright dual-run, live-adapter HTTP admission, or cutover authority is claimed."
+}

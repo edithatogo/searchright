@@ -22,6 +22,13 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `crates/evidence-search-core/src/lib.rs`
   - [x] Present source path: `crates/evidence-search-core/tests/subrequest_context.rs`
   - [x] Present source path: `docs/provider-subrequest-context.md`
+  - [x] Present source path: `crates/searchright-contracts/src/parity_matrix.rs`
+  - [x] Present source path: `crates/searchright-sourceright-compat/src/parity_matrix.rs`
+  - [x] Present source path: `crates/searchright-sourceright-compat/tests/parity_matrix.rs`
+  - [x] Present source path: `docs/parity-execution-matrix-v2.md`
+  - [x] Present source path: `scripts/run_local_api_evidence.py`
+  - [x] Present source path: `tests/test_local_api_evidence.py`
+  - [x] Present source path: `docs/local-api-evidence.md`
   - [x] Assertion ledger: `conductor/tracks/03-shared-provider-runtime/traceability.json`
 
 ## Completion and evidence contract

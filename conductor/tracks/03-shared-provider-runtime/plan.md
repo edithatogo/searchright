@@ -23,6 +23,13 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `crates/evidence-search-core/src/lib.rs`
   - [x] Present source path: `crates/evidence-search-core/tests/subrequest_context.rs`
   - [x] Present source path: `docs/provider-subrequest-context.md`
+  - [x] Present source path: `crates/searchright-contracts/src/parity_matrix.rs`
+  - [x] Present source path: `crates/searchright-sourceright-compat/src/parity_matrix.rs`
+  - [x] Present source path: `crates/searchright-sourceright-compat/tests/parity_matrix.rs`
+  - [x] Present source path: `docs/parity-execution-matrix-v2.md`
+  - [x] Present source path: `scripts/run_local_api_evidence.py`
+  - [x] Present source path: `tests/test_local_api_evidence.py`
+  - [x] Present source path: `docs/local-api-evidence.md`
   - [x] Assertion ledger: `conductor/tracks/03-shared-provider-runtime/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -59,4 +66,5 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
   - Review fix `ca265354de725701085cd3e9d7a466a8c955f15d`: Preserve transport-execution evidence and complete downstream matrix gates; v1 summary readiness cannot authorize cutover.
   - Review fix `390ae69ba78b9431e464067ead51b75d8ecd1f2a`: Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions.
   - Review fix `935d725877f6a6ca82bacefd8982e613981f068c`: Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover.
+  - Review fix `ebd519f`: Reconcile Track 03 traceability, deliverables, and assertion mappings with commits 3f52b4d and 9b4a4a4, resolve searchright-contracts PressReview test compilation error and searchright-connectors clippy assertions, add parity matrix decision reference regressions, add candidate policy drift tests, and record conductor review receipt.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

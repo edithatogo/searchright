@@ -127,6 +127,8 @@ def assertion_coverage() -> tuple[dict[str, list[str]], set[str]]:
             assertion_id = assertion.get("assertion_id")
             for raw in assertion.get("deterministic_tests", []):
                 command = normalise_command(raw)
+                if not any(part.startswith("scripts/") for part in shlex.split(command)):
+                    continue
                 all_commands.add(command)
                 if assertion_id:
                     by_command[command].append(assertion_id)

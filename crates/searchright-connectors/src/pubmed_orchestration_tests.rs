@@ -163,7 +163,7 @@ async fn empty_result_and_lower_policy_limit_are_enforced_offline() -> TestResul
     let result = registry
         .execute("pubmed-efetch", request(), "synthetic")
         .await?;
-    assert!(result.records.is_empty());
+    assert_eq!(result.records, [] as [evidence_search_contracts::BibliographicRecord; 0]);
     assert_eq!(provider.transport.factories.load(Ordering::SeqCst), 1);
     let provider = adapter(true, vec![search(1, &["1"]), xml()])?;
     let mut registry = ProviderRegistry::new();

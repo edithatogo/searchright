@@ -306,19 +306,27 @@
       "assertions": {
         "T03-A001": {
           "deterministic_tests": [
-            "python scripts/check_sourceright_migration.py"
+            "python scripts/check_sourceright_migration.py",
+            "python3 -m unittest tests/test_sourceright_migration.py"
           ],
           "implementation_paths": [
             "migration/sourceright/replacement-map.yaml",
-            "migration/sourceright/parity-cases.json"
+            "migration/sourceright/parity-cases.json",
+            "crates/searchright-contracts/src/migration.rs",
+            "scripts/check_sourceright_migration.py",
+            "tests/test_sourceright_migration.py"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_sourceright_migration.py::rust_catalogue",
+            "searchright_contracts::migration::SOURCERIGHT_PARITY_CASE_IDS",
+            "searchright_contracts::migration::SOURCERIGHT_PARITY_DIMENSIONS"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Refresh against the current Sourceright revision before cutover."
           ],
           "permitted_claim": "The observed Sourceright provider surface is inventoried at a pinned revision.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T03-A002": {
           "deterministic_tests": [
@@ -329,34 +337,56 @@
             "release/public-packages.json"
           ],
           "implementation_symbols": [
-            "searchright_sourceright_compat::legacy_runtime_controls"
+            "searchright_sourceright_compat::LegacyRuntimeConfig::execution_policy",
+            "searchright_sourceright_compat::provider_mode",
+            "searchright_sourceright_compat::build_report"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
-            "Compile the compatibility adapter in Searchright and Sourceright.",
             "Add a downstream feature-flag canary."
           ],
-          "permitted_claim": "A source compatibility adapter exists; downstream compilation is not proven.",
-          "state": "partially_implemented"
+          "permitted_claim": "The compatibility adapter is compiler-tested in Searchright; downstream feature integration is not performed.",
+          "state": "source_implemented"
         },
         "T03-A003": {
           "deterministic_tests": [
             "python scripts/check_provider_contract_baselines.py"
           ],
+          "evidence_receipts": [
+            "conductor/tracks/03-shared-provider-runtime/evidence.json",
+            "verification/receipts/track-03-provider-runtime-review.json",
+            "verification/receipts/track-03-reconciled-validation.json",
+            "verification/receipts/track-03-budget-warning.json",
+            "verification/receipts/track-03-subrequest-context.json"
+          ],
           "implementation_paths": [
             "crates/evidence-search-core/src/provider.rs",
-            "integration/provider-contract-baselines.json"
+            "crates/searchright-connectors/src/lib.rs",
+            "integration/provider-contract-baselines.json",
+            "crates/evidence-search-core/src/lib.rs",
+            "crates/evidence-search-core/tests/subrequest_context.rs",
+            "docs/provider-subrequest-context.md"
           ],
           "implementation_symbols": [
             "evidence_search_core::provider::ProviderRegistry",
-            "evidence_search_core::provider::ExecutionPolicy"
+            "evidence_search_core::provider::ExecutionPolicy",
+            "evidence_search_core::provider::PageExecutionContext",
+            "evidence_search_core::provider::PageExecutionContext::run_subrequest",
+            "evidence_search_core::provider::ProviderRegistry::register_with_rate_group",
+            "evidence_search_core::provider::SearchProvider::execute_page_with_context"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-            "Compile runtime tests.",
-            "Prove cache and error parity against Sourceright."
+          "native_test_commands": [
+            "cargo test -p evidence-search-core --test subrequest_context --locked",
+            "cargo test -p evidence-search-core --lib --locked",
+            "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
           ],
-          "permitted_claim": "Bounded retry, timing, rate, cache-key and receipt source logic is implemented but not compiler- or parity-proven.",
+          "open_gates": [
+            "Obtain exact-revision compiler CI and transport-level adversarial evidence for resolve-validate-pin behavior, proxy suppression, redirects and response bounds.",
+            "Prove cache and error parity against Sourceright.",
+            "Adopt the core context in each live adapter before claiming per-HTTP admission; legacy defaults still admit one page, not hidden HTTP calls."
+          ],
+          "permitted_claim": "The core context's admission, shared floors, cooperative deadlines/cancellation and cumulative subrequest bounds are fixture-tested; legacy timeout tightening is deliberate. Full repository-pinned 1.97.1 local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257 (75 Python, 57 static, 395 native with zero skipped, 23 vet governance tests). No live-adapter adoption occurs in this slice; current provider-policy compliance, transport adversarial/hosted evidence, Sourceright parity and opt-in live execution remain unproven.",
           "state": "partially_implemented"
         },
         "T03-A004": {
@@ -365,26 +395,47 @@
           ],
           "implementation_paths": [
             "migration/sourceright/parity-cases.json",
-            "integration/consumer-contract-suite.json"
+            "integration/consumer-contract-suite.json",
+            "crates/searchright-contracts/src/parity_matrix.rs",
+            "crates/searchright-sourceright-compat/src/parity_matrix.rs",
+            "crates/searchright-sourceright-compat/tests/parity_matrix.rs",
+            "contracts/json-schema/sourceright-parity-catalogue.v2.schema.json",
+            "contracts/json-schema/sourceright-parity-matrix.v2.schema.json",
+            "docs/parity-execution-matrix-v2.md"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "searchright_sourceright_compat::parity_matrix::expected_catalogue_digest",
+            "searchright_sourceright_compat::parity_matrix::observation_digest",
+            "searchright_sourceright_compat::parity_matrix::validate_execution_matrix"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-            "Run old/new fixtures and compare every parity dimension."
+          "native_test_commands": [
+            "cargo test -p searchright-sourceright-compat --test parity_matrix --locked"
           ],
-          "permitted_claim": "Parity cases are defined; dual-run results do not yet exist.",
-          "state": "scaffolded"
+          "open_gates": [
+            "Execute old/new Sourceright fixtures downstream against the v2 parity matrix; local v2 matrix validation covers synthetic/caller-supplied observations only and does not authenticate downstream execution."
+          ],
+          "permitted_claim": "Schema-bound v2 parity execution matrix and digest-verified cell comparator are compiler-tested in Searchright; downstream old/new Sourceright dual-run execution remains pending.",
+          "state": "partially_implemented"
         },
         "T03-A005": {
           "deterministic_tests": [
-            "python scripts/check_public_package_policy.py"
+            "python scripts/check_public_package_policy.py",
+            "python3 -m unittest tests/test_local_api_evidence.py"
           ],
           "implementation_paths": [
             "release/public-packages.json",
             "public-api/README.md",
-            ".github/workflows/public-api.yml"
+            ".github/workflows/public-api.yml",
+            "scripts/check_public_package_policy.py",
+            "scripts/run_local_api_evidence.py",
+            "tests/test_local_api_evidence.py",
+            "docs/local-api-evidence.md"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_public_package_policy.py::main",
+            "scripts/run_local_api_evidence.py::main"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Run cargo-semver-checks and public API snapshots after compiler bootstrap."
@@ -398,9 +449,12 @@
           ],
           "implementation_paths": [
             "migration/companion-repositories/sourceright.json",
-            "integration/release-train.json"
+            "integration/release-train.json",
+            "scripts/check_release_train.py"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_release_train.py::main"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Modify and test Sourceright through an approved downstream pull request.",
