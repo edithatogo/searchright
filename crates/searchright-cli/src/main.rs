@@ -38,7 +38,8 @@ use serde::Deserialize;
 #[command(
     name = "searchright",
     version,
-    about = "Contract-first systematic-search infrastructure"
+    about = "Contract-first systematic-search infrastructure",
+    term_width = 100
 )]
 struct Cli {
     #[command(subcommand)]

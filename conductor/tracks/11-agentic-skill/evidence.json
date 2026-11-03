@@ -150,6 +150,10 @@
     {
       "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
       "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
+    },
+    {
+      "commit": "6b046f1",
+      "summary": "Reconcile Track 11 traceability, deliverables, and assertion mappings across all six assertions with native test commands; bootstrap unit test script module discovery."
     }
   ]
 }

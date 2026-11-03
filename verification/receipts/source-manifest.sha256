@@ -245,7 +245,7 @@ a63d61a14d7e700c7d8e08f0834c9e422054f11ebb9fb01999cfc29743540863  ./conductor/gi
 b1c70cb02c3ba6a138b5eb0f2e2f66909b235bb75144d57e5ca904c13d5b3671  ./conductor/github/issues/track-11-phase-3.md
 1684cd4612151ea0e7bfce88ee246feff9bdfc2f615edeb66f65979557eb2cb0  ./conductor/github/issues/track-11-phase-4-task-01.md
 3500ab986a637f4e04c63866458ceb144c01b951e957a0c71fcbaa655deccbf8  ./conductor/github/issues/track-11-phase-4-task-02.md
-027bbde9ceec7d93d50649e7cc43df14285d0fc814f2f9f4e31a6906044c53bf  ./conductor/github/issues/track-11-phase-4-task-03.md
+64c6d94387f5c6e02137aeb5bcecdc4a4e2bc47fb0f0020898130cdef94aae44  ./conductor/github/issues/track-11-phase-4-task-03.md
 4f917ff00de21aa4aa7fd6d51560190bc37b3572fba3361e18c5ba8e6c183d36  ./conductor/github/issues/track-11-phase-4-task-04.md
 b09129b157945aee70974b9683230dcc1c9291ac65155521e449d5243d66933c  ./conductor/github/issues/track-11-phase-4-task-05.md
 bd21173be20769a2e52db70668e3713e5812b96981e690a0f255e4a674238d25  ./conductor/github/issues/track-11-phase-4-task-06.md
@@ -679,7 +679,7 @@ e5b61482643552c7323c90cd948a669c7f0b10bada1dfbaf9ef5b419fd0b4e9b  ./conductor/in
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
-e26fb6e6a12eace1bc5283eab8e1ff7a200fbbdb6d0670d8135d629460d8e491  ./conductor/roadmap-coverage.json
+d05a993339d6cc52b520a0fad0c6c0656f36ea172208a9948b0f5fcc26374cdb  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
 ad16575e57726ae0c9f24efe9adfa6c91d9ea7d6920989b428d7b1bce4ad8176  ./conductor/traceability-overrides.json
 532cfa4a3aa053ceeebf132dcb2f7ef93023697ee4de6a35be38680270b335dc  ./conductor/tracks.md
@@ -739,9 +739,9 @@ f11870ca57ed7e8e08a23ba8875df0333c6a7dad6efb2001b7f4f5605918f43b  ./conductor/tr
 a5313f3aded054d2933ba09b1f23078ba1ba8290966a61f92ae5919c955a8d16  ./conductor/tracks/10-mcp-mvp/scope-exception.md
 10665d2f602bf9bc4f243993187071feef3366924c2486a1b5243a823ef092c2  ./conductor/tracks/10-mcp-mvp/spec.md
 16c6a506b92f6298ef5414da47b9634f3487410c4582602cc4388c156ad9a3bb  ./conductor/tracks/10-mcp-mvp/traceability.json
-3bd46a7d892a160d4bb6438ff192e186cc238de4e35adc9c8191d3a2da2b0768  ./conductor/tracks/11-agentic-skill/evidence.json
+b246eb342a6ecc3878233ca3cc544365012bd9a0b9c3a4cec0cf843ea1164e9e  ./conductor/tracks/11-agentic-skill/evidence.json
 9153c49183a013c55aed1737a6c04ec92e0f8bcfa424df07f901b0401ab6ade2  ./conductor/tracks/11-agentic-skill/metadata.json
-71e24ab79b7300c4c0ccfd804ac658fd338af10bb4e9b21a86dd6a2b06ee2cfd  ./conductor/tracks/11-agentic-skill/plan.md
+fedf229cb8eb81f8f6aa2200ced945c3b0b2259c71765e251c4ac31b57934a90  ./conductor/tracks/11-agentic-skill/plan.md
 8109587422f5bdb87862866471b8189cc1ce40b99e7dea80dcd5f9b9fa28c137  ./conductor/tracks/11-agentic-skill/spec.md
 d7cc600aeaa527e7c67e1b95c763fd0d7c0c4485620c7c4c2e6d7a6972181747  ./conductor/tracks/11-agentic-skill/traceability.json
 2a3d45f076855079e7fb2a300b45f301aaaa8834f5ae491905e95f7b63f753bf  ./conductor/tracks/12-citeweft-document-evidence/evidence.json
@@ -879,7 +879,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 003644dc05cba2d5b1ca6e4b4e6e04807d0b73d25949fa151ed81b7ea194f75d  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-8e9ad2e6ff14f4a016a09f628de9a737d6e1864a3f1fa446fee9b0f370cd0d47  ./context/context-lock.json
+ba933d6025a893acf186aabc0004ab2c0c1c6f55c3a6b1d173c50962dd3c8206  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1118,7 +1118,7 @@ d837d10c583d00700047552ff4eb13be58a0c8e287db085068c72a3182264500  ./crates/searc
 ba8d10541b25dbf09e2b6b1a6d49b9bcb811bfd7baebac6844fa594581309160  ./crates/searchright-cli/assets/completions/searchright.fish
 4b4033cafd56e0525417a33fed9a97c4955d5f9b68c429b1153d65394a49d99b  ./crates/searchright-cli/assets/completions/searchright.powershell
 5ee9f2b8180e5491362fe946057e5dbadc11105362458e769b9f9a92fc2a658d  ./crates/searchright-cli/assets/completions/searchright.zsh
-c2bdd3e97b20ae4aeec7eb341b376a8d3ea70c50e3ba30b26949022c7aecb8e6  ./crates/searchright-cli/src/main.rs
+8bd0a8a29f19eca1158e422caac8cb27d6bdd0c43208f642619ec69c56219982  ./crates/searchright-cli/src/main.rs
 08ed78bbcfe17b45ad04d85ac59b9b505cd20defe0136c451d08d030c4f23c32  ./crates/searchright-cli/tests/cli_e2e.rs
 c01a15e54645777db30912ddba7ce93638d66d2648c4ca8290e6686f4bb447ad  ./crates/searchright-cli/tests/snapshots/help.txt
 ce23fcb1de921c16a75e7c7dae232d41435e847a81a416cf317b3358f1ab86cb  ./crates/searchright-cli/tests/snapshots/init.json
@@ -1530,7 +1530,7 @@ fd8719453eeda71e973fc0b234f5a48377ef2cb444c143c16caa0319275a095a  ./tests/fixtur
 30d4c2afa827ec2cb314cf90beb224ba8e08e9588395b256fbf07769f3d7f7d6  ./tests/fixtures/bindings/pyrightconfig.json
 f2aa5003cd31da2e86a62a6c3733c7731844f67925c462f55a6c82c9b5953b71  ./tests/fixtures/bindings/tsconfig.json
 d5e0b20af882115e7f3c8b3cf1e3b59d6ee61adac294a9ab751fa8ae7da53c61  ./tests/fixtures/security/hostile-metadata.json
-cb750fc801cc9b7810429d1b79f51914439d4acd5031e91d319f4adf37693cca  ./tests/test_conductor_status.py
+147b77131e0379a8b6287b98487361a7e6ad956d53f2783ccc3e2a156d3bd8a8  ./tests/test_conductor_status.py
 4bee0136e31dcea9555cdcbba6da24308f594c27628d76d01a01168b69f6599d  ./tests/test_connector_redaction_source.py
 84dc0f720e83449c6bc4cdb45f903760b5f353326754f84f47aca87f0380c858  ./tests/test_contract_generation.py
 4ea65012431118f14390e0ed2a02c52d2407c39b8e955a650152658982ea5bfd  ./tests/test_coverage_policy.py
@@ -2441,7 +2441,7 @@ c15a358f77b924e2b1eba4bc27539e6b7ae5fd452c29ee5a6b04ff9bb0e39d8c  ./typos.toml
 b714d90dc7ab979fdaac0a8a1e6b71f980201cdf37bba53bd203f466bd09ebf8  ./verification/coverage-policy.json
 220139ac9962cb578d38ebf87cad62281e24a593bb7ca3e849737eda2cfa4eac  ./verification/evidence-debt.json
 29900da330acfda39c17add9ef7a72d491ccb7bd736fb54b82326fba7cbde7e5  ./verification/fixtures/track-08/press-workflow-complete.yaml
-413847d6a53fdcac3746fc2b210b4b9628d22ea095a96a44397fd4a5d65e2b1a  ./verification/gate-catalog.json
+942036e80cdc422b659de1e90da7ff162623ce8bd138c20996750f80995974c8  ./verification/gate-catalog.json
 7b21436d10731345bc5447f7157a236bda45a224177f737c505f9c27baafe943  ./verification/harness-matrix.json
 5dfe40f5778ecafd265d90440628fdcac08e2fd87c1628398ce9b985aa0ef346  ./verification/noyalib-fork/Cargo.lock
 745bb3fe5bd43de5ae08250c820a6b80e68d5a6b17e8704866a18fe9504c062a  ./verification/noyalib-fork/Cargo.toml
