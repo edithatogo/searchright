@@ -1,0 +1,87 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "21",
+  "reviewed_revision": "2a53f1b",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "licensed-adapter-contract-and-schema-compliance",
+      "mode": "isolated_first_pass",
+      "finding": "Audited contracts/licensed/index.json, embase.yaml, scopus.yaml, and web-of-science.yaml. Verified provider identifiers (-byo), query dialects, credential environment variables, live opt-in flags, and allowed HTTPS hostnames.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "credential-hygiene-and-zero-raw-storage-policy",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-licensed/src/lib.rs and crates/searchright-contracts/src/licensed.rs. Confirmed that persist_raw_responses is strictly false, credentials are never logged or stored, and credential-bearing endpoints fail closed.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "request-planning-and-redaction-harness",
+      "mode": "isolated_first_pass",
+      "finding": "Audited request planning in searchright-licensed. Verified plan_request and plan_licensed_request alias, endpoint origin redaction, host allowlist enforcement, and dialect checking.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all six Track 21 assertions (T21-A001..T21-A006) from track_level_only (6/6 empty symbols) to symbol_and_gate_mapped with concrete implementation symbols across crates/searchright-contracts, crates/searchright-licensed, contracts/licensed, and tests/test_licensed_adapters_governance.py in both conductor/tracks/21-licensed-adapters/traceability.json and conductor/traceability-overrides.json (0/6 empty symbols).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved licensed adapter gating state without premature completion: implementation_state remains scaffolded; external vendor terms confirmation, credential acquisition, and live smoke receipts remain explicitly open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_licensed_adapters_governance.py validating licensed adapter index schema, profile invariants, bare DNS host allowlists, uppercase environment variable constraints, zero raw response persistence, and prohibition of scraping or bundled access.",
+    "Hardened unit tests in crates/searchright-licensed/src/lib.rs and crates/searchright-contracts/src/licensed.rs without forbidden fragments, verifying endpoint origin redaction, credential failure modes, dialect mismatches, and plan_licensed_request alias.",
+    "Upgraded assertions T21-A001 through T21-A006 to symbol_and_gate_mapped with concrete implementation symbols, deterministic tests, and native test commands in both conductor/tracks/21-licensed-adapters/traceability.json and conductor/traceability-overrides.json (0/6 empty symbol mappings).",
+    "Preserved open maturity blockers: obtaining authorised user credentials, testing vendor live transports without storing credentials, and recording user-run smoke receipts without false promotion."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_licensed_adapters_governance.py",
+      "status": "passed",
+      "tests_passed": 5
+    },
+    {
+      "command": "cargo test --locked -p searchright-licensed -p searchright-contracts",
+      "status": "passed",
+      "tests_passed": 58
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T21-G-VENDOR-CREDENTIALS-TERMS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Obtain authorised user credentials and confirm current vendor terms."
+    },
+    {
+      "gate_id": "T21-G-LIVE-TRANSPORT-TESTS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Implement/test vendor-specific live transports without storing credentials."
+    },
+    {
+      "gate_id": "T21-G-SMOKE-RECEIPTS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Record redacted user-run smoke receipts; no bundled access is permitted."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Obtain authorised user credentials and confirm current vendor terms.",
+    "Implement/test vendor-specific live transports without storing credentials.",
+    "Record redacted user-run smoke receipts; no bundled access is permitted."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

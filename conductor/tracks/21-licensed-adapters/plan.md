@@ -16,6 +16,8 @@ GitHub issue key: `track-21`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `contracts/licensed/scopus.yaml`
   - [x] Present source path: `contracts/licensed/web-of-science.yaml`
   - [x] Present source path: `contracts/examples/licensed-adapter.yaml`
+  - [x] Present source path: `tests/test_licensed_adapters_governance.py`
+  - [x] Present source path: `verification/receipts/track-21-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/21-licensed-adapters/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -40,5 +42,6 @@ GitHub issue key: `track-21`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
