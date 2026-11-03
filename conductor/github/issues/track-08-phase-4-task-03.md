@@ -9,6 +9,7 @@ Canonical task state: **source task complete**.
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `c234c41f940b37e153e9bf151458059e63c51b47`: Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls.
+  - Review fix `b48dff0`: Reconcile Track 08 traceability, deliverables, and assertion mappings across all reporting renderers and PRESS workflows; resolve strict YAML ingestion and Clippy assert hygiene in shared facade and CLI/MCP test surfaces.
 
 ## Completion and evidence contract
 
