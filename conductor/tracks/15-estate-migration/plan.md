@@ -16,6 +16,7 @@ GitHub issue key: `track-15`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `scripts/audit_search_code.py`
   - [x] Present source path: `scripts/check_companion_change_packets.py`
   - [x] Present source path: `docs/estate-integration.md`
+  - [x] Present source path: `tests/test_estate_migration.py`
   - [x] Assertion ledger: `conductor/tracks/15-estate-migration/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -41,5 +42,6 @@ GitHub issue key: `track-15`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `33dd012`: Upgrade Track 15 assertions to symbol_and_gate_mapped with concrete implementation symbols, enhance check_companion_change_packets to validate estate registers, add unit and adversarial test suite in tests/test_estate_migration.py, and record conductor review receipt.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

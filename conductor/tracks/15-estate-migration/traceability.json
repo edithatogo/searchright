@@ -17,6 +17,8 @@
         "scripts/audit_search_code.py"
       ],
       "implementation_symbols": [
+        "scripts/audit_search_code.py::scan",
+        "scripts/audit_search_code.py::self_test",
         "scripts/audit_search_code.py::main"
       ],
       "deterministic_tests": [
@@ -40,7 +42,10 @@
         "migration/estate/replacement-decisions.json",
         "migration/companion-repositories/index.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_companion_change_packets.py::main",
+        "scripts/validate_repository.py::validate_serialised_documents"
+      ],
       "deterministic_tests": [
         "python scripts/check_companion_change_packets.py"
       ],
@@ -61,7 +66,10 @@
         "migration/companion-repositories/index.json",
         "integration/github/portfolio-project.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_companion_change_packets.py::main",
+        "scripts/check_portfolio_project.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_companion_change_packets.py",
         "python scripts/check_portfolio_project.py"
@@ -83,7 +91,10 @@
         "migration/companion-repositories",
         "integration/passports"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_companion_change_packets.py::main",
+        "scripts/check_integration_passports.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_companion_change_packets.py",
         "python scripts/check_integration_passports.py"
@@ -105,7 +116,10 @@
         "migration/companion-repositories",
         "integration/consumer-contract-suite.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_consumer_contracts.py::main",
+        "scripts/check_companion_change_packets.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_consumer_contracts.py"
       ],
@@ -127,7 +141,10 @@
         "integration/github/portfolio-project.json",
         "integration/ecosystem-lock.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_portfolio_project.py::main",
+        "scripts/sync_ecosystem_lock.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_portfolio_project.py",
         "python scripts/sync_ecosystem_lock.py --check"

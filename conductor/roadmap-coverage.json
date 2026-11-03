@@ -1347,7 +1347,8 @@
         "migration/companion-repositories/index.json",
         "scripts/audit_search_code.py",
         "scripts/check_companion_change_packets.py",
-        "docs/estate-integration.md"
+        "docs/estate-integration.md",
+        "tests/test_estate_migration.py"
       ],
       "dependencies": [
         "13",
@@ -1364,7 +1365,18 @@
       "slug": "estate-migration",
       "status": "partially_implemented",
       "title": "GitHub estate audit and custom-code replacement",
-      "track_id": "15"
+      "track_id": "15",
+      "review_completed": true,
+      "updated": "2026-11-04",
+      "runtime_evidence": [
+        "verification/receipts/track-15-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        {
+          "commit": "33dd012",
+          "summary": "Upgrade Track 15 assertions to symbol_and_gate_mapped with concrete implementation symbols, enhance check_companion_change_packets to validate estate registers, add unit and adversarial test suite in tests/test_estate_migration.py, and record conductor review receipt."
+        }
+      ]
     },
     {
       "blockers": [

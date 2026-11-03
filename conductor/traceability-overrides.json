@@ -2062,6 +2062,8 @@
             "scripts/audit_search_code.py"
           ],
           "implementation_symbols": [
+            "scripts/audit_search_code.py::scan",
+            "scripts/audit_search_code.py::self_test",
             "scripts/audit_search_code.py::main"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
@@ -2080,7 +2082,10 @@
             "migration/estate/replacement-decisions.json",
             "migration/companion-repositories/index.json"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_companion_change_packets.py::main",
+            "scripts/validate_repository.py::validate_serialised_documents"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Refresh exact revisions and owners before each migration."
@@ -2097,7 +2102,10 @@
             "migration/companion-repositories/index.json",
             "integration/github/portfolio-project.json"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_companion_change_packets.py::main",
+            "scripts/check_portfolio_project.py::main"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Confirm priority with active project owners and current repository state."
@@ -2114,7 +2122,10 @@
             "migration/companion-repositories",
             "integration/passports"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_companion_change_packets.py::main",
+            "scripts/check_integration_passports.py::main"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Implement approved changes in each companion repository and run its native tests."
@@ -2130,7 +2141,10 @@
             "migration/companion-repositories",
             "integration/consumer-contract-suite.json"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_consumer_contracts.py::main",
+            "scripts/check_companion_change_packets.py::main"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Dual-run old and new paths before deleting any custom code.",
@@ -2148,7 +2162,10 @@
             "integration/github/portfolio-project.json",
             "integration/ecosystem-lock.json"
           ],
-          "implementation_symbols": [],
+          "implementation_symbols": [
+            "scripts/check_portfolio_project.py::main",
+            "scripts/sync_ecosystem_lock.py::main"
+          ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Run estate conformance against current remotes and close only evidence-proven migrations."
