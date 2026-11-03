@@ -100,5 +100,6 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 16 assertions (T16-A001..T16-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; refactor tests/test_coverage_policy.py to define CoveragePolicyTests; record green hosted PR #718 (a2e7a5d) and merged PRs #719-#723 verification across all 27 hosted jobs; record conductor review receipt and preserve remaining maturity blockers.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

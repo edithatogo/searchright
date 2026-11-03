@@ -58,6 +58,7 @@
         "T14-A004",
         "T14-A005",
         "T14-A006",
+        "T16-A001",
         "T18-A001",
         "T18-A002",
         "T18-A003",
@@ -1013,7 +1014,8 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A004",
-        "T12-A001"
+        "T12-A001",
+        "T16-A001"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -1292,6 +1294,21 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/run_static_harness.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/test_cargo_vet_governance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-TEST-CARGO-VET-GOVERNANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/test_cargo_vet_governance.py"
     }
   ],
   "generated_from": [

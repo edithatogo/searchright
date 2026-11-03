@@ -3,11 +3,12 @@
 
 Parent phase key: `track-16-phase-4`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 16 assertions (T16-A001..T16-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; refactor tests/test_coverage_policy.py to define CoveragePolicyTests; record green hosted PR #718 (a2e7a5d) and merged PRs #719-#723 verification across all 27 hosted jobs; record conductor review receipt and preserve remaining maturity blockers.
 
 ## Completion and evidence contract
 
