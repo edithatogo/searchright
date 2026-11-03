@@ -441,6 +441,7 @@
       "command": "python scripts/check_licence_firewall.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T13-A001",
         "T17-A002"
       ],
       "evidence_ceiling": "source_verified",
@@ -475,6 +476,7 @@
       "command": "python scripts/check_portfolio_project.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T13-A001",
         "T15-A003",
         "T15-A006"
       ],

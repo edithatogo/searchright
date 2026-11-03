@@ -8,6 +8,7 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `7eb4ea7`: Upgrade Track 13 assertions to symbol_and_gate_mapped with native test commands, add unit tests for IntegrationPassport, GitHubIssueHierarchy, and GitHubProjectManifest validation in searchright-contracts, and record conductor review receipt.
 
 ## Completion and evidence contract
 

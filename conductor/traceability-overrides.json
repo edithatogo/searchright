@@ -1670,21 +1670,43 @@
           "deterministic_tests": [
             "python scripts/check_integration_passports.py",
             "python scripts/check_consumer_contracts.py",
-            "python scripts/check_integration_drift.py"
+            "python scripts/check_integration_drift.py",
+            "python scripts/check_portfolio_project.py",
+            "python scripts/check_licence_firewall.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/13-integration-passports-github-context/evidence.json",
+            "verification/receipts/track-13-github-evidence-reconciliation.json",
+            "verification/receipts/track-13-conductor-review-2026-11-04.json"
           ],
           "implementation_paths": [
             "integration/passports/index.json",
             "integration/consumer-contract-suite.json",
+            "integration/github/portfolio-project.json",
+            "crates/searchright-contracts/src/integration.rs",
             "scripts/check_integration_passports.py",
             "scripts/check_consumer_contracts.py",
-            "scripts/check_integration_drift.py"
+            "scripts/check_integration_drift.py",
+            "scripts/check_portfolio_project.py",
+            "scripts/check_licence_firewall.py"
           ],
           "implementation_symbols": [
+            "searchright_contracts::integration::IntegrationPassport::validate",
             "scripts/check_integration_passports.py::main",
             "scripts/check_consumer_contracts.py::main",
-            "scripts/check_integration_drift.py::main"
+            "scripts/check_integration_drift.py::main",
+            "scripts/check_portfolio_project.py::main",
+            "scripts/check_licence_firewall.py::main"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-contracts"
+          ],
+          "open_gates": [
+            "Execute consumer-driven contract tests in each pinned downstream repository.",
+            "Record scheduled integration-drift receipts against the live repository estate."
+          ],
+          "permitted_claim": "Integration passports and local drift checks are source-verified; downstream execution and scheduled live-estate drift remain separate evidence gates.",
           "state": "source_implemented"
         },
         "T13-A002": {
@@ -1692,16 +1714,31 @@
             "python scripts/render_github_issues.py --check",
             "python scripts/check_github_issue_hierarchy.py"
           ],
+          "evidence_receipts": [
+            "conductor/tracks/13-integration-passports-github-context/evidence.json",
+            "verification/receipts/github-control-plane-audit.json",
+            "verification/receipts/track-13-github-evidence-reconciliation.json",
+            "verification/receipts/track-13-conductor-review-2026-11-04.json"
+          ],
           "implementation_paths": [
             "conductor/github/issue-hierarchy.json",
+            "crates/searchright-contracts/src/integration.rs",
             "scripts/render_github_issues.py",
             "scripts/check_github_issue_hierarchy.py"
           ],
           "implementation_symbols": [
+            "searchright_contracts::integration::GithubIssueHierarchy::validate",
             "scripts/render_github_issues.py::main",
             "scripts/check_github_issue_hierarchy.py::main"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-contracts"
+          ],
+          "open_gates": [
+            "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision."
+          ],
+          "permitted_claim": "The historical read-only audit observed 568 canonical issues and all 567 expected native subissue relationships; Track 13's 15-node topology is unchanged in current source, but current-head parity is not claimed.",
           "state": "source_implemented"
         },
         "T13-A003": {
@@ -1710,7 +1747,14 @@
             "python scripts/sync_github_project.py",
             "python scripts/bootstrap_github.py"
           ],
+          "evidence_receipts": [
+            "conductor/tracks/13-integration-passports-github-context/evidence.json",
+            "verification/receipts/github-control-plane-audit.json",
+            "verification/receipts/track-13-github-evidence-reconciliation.json",
+            "verification/receipts/track-13-conductor-review-2026-11-04.json"
+          ],
           "implementation_paths": [
+            "crates/searchright-contracts/src/integration.rs",
             "scripts/sync_github_issues.py",
             "scripts/sync_github_project.py",
             "scripts/bootstrap_github.py"
@@ -1721,6 +1765,13 @@
             "scripts/bootstrap_github.py::main"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-contracts"
+          ],
+          "open_gates": [
+            "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision."
+          ],
+          "permitted_claim": "An approval-gated apply occurred and a later read-only audit observed zero issue, relationship, label or task-state drift with zero audit mutations; parity with later source revisions is not claimed.",
           "state": "source_implemented"
         },
         "T13-A004": {
@@ -1728,17 +1779,30 @@
             "python scripts/check_context_integrity.py",
             "python scripts/sync_context_lock.py --check"
           ],
+          "evidence_receipts": [
+            "conductor/tracks/13-integration-passports-github-context/evidence.json",
+            "verification/receipts/track-13-github-evidence-reconciliation.json",
+            "verification/receipts/track-13-conductor-review-2026-11-04.json"
+          ],
           "implementation_paths": [
             "CONTEXT.md",
             "context/manifest.json",
             "context/context-lock.json",
-            "scripts/check_context_integrity.py"
+            "scripts/check_context_integrity.py",
+            "scripts/sync_context_lock.py"
           ],
           "implementation_symbols": [
             "scripts/check_context_integrity.py::main",
             "scripts/sync_context_lock.py::main"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-contracts"
+          ],
+          "open_gates": [
+            "Re-run context integrity and context-lock checks after the final merged revision is known."
+          ],
+          "permitted_claim": "The context spine is source-verified locally; its final merged-revision lock remains a closeout gate.",
           "state": "source_implemented"
         }
       }

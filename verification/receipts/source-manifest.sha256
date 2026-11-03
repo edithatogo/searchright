@@ -277,7 +277,7 @@ c48cfa8d929f7d958abd76184dab07890d4de993669f34c9ee5a2868cbf1a5ed  ./conductor/gi
 764c4a94949b5624b10d82408689e5be6c26b821d6b4fa59d91a1355746b2732  ./conductor/github/issues/track-13-phase-3.md
 c0fcbee8567eaf046600f2046a795116903ad3d4ed220126da121717ea1ec463  ./conductor/github/issues/track-13-phase-4-task-01.md
 0fd4d21d938b1d2b854ed7779950115e92befcc87e3ab29543a893944cf6f203  ./conductor/github/issues/track-13-phase-4-task-02.md
-3c39db2ff48c4bd52301a311893eee311d23cc30add0c68b57fea265f282dabb  ./conductor/github/issues/track-13-phase-4-task-03.md
+174bfa53a618cfb23f630bcf844711db8af79100cc4c96ba350f15b29bb0bd62  ./conductor/github/issues/track-13-phase-4-task-03.md
 de9644575302ca1f243bc47d4be3eb2ca2b5a9501f46065eaa0aec6c8ab7aa41  ./conductor/github/issues/track-13-phase-4-task-04.md
 6f5e14f4718879910960141f981b6451d8756639f3da1b53ee713806f948fc21  ./conductor/github/issues/track-13-phase-4.md
 504e0a55c5a59b34a82c8b8e24d65ec44b68c08ca1ef5a70a8b8246d3664de64  ./conductor/github/issues/track-13.md
@@ -679,9 +679,9 @@ e5b61482643552c7323c90cd948a669c7f0b10bada1dfbaf9ef5b419fd0b4e9b  ./conductor/in
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
-f97f9eadd7cd7d0b260ea78f10984557df28941c68a58a0bfe048d5ab38c8bea  ./conductor/roadmap-coverage.json
+bf3007b83705f60e970eee305b54c0cd89e8131f95366a202b3090e4ad8e3877  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
-e5f2530a575c19fbf509729c7bd13105bf9b906dfec50a06f2539c25126d919c  ./conductor/traceability-overrides.json
+e9816115cc98f9914fd491b7710c6a61e1d85be32da9588eaae40485b042f0ab  ./conductor/traceability-overrides.json
 532cfa4a3aa053ceeebf132dcb2f7ef93023697ee4de6a35be38680270b335dc  ./conductor/tracks.md
 6be1112433f2862b938bdd43304d59ad38d9a20c9fe96c33ca2532e33615918b  ./conductor/tracks/00-foundation-conductor-toolchain/evidence.json
 a84681e6819d0fd48aae7c0f5640d79720cd71ca9804fdce7e6dc1fe0cfa12f7  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
@@ -749,11 +749,11 @@ d1b5742f5bc855f463959c92304f804e16af8de903af6281fc5f2afc1059ec6b  ./conductor/tr
 71288fb76d60eb7193159cba516a70aa2cbce28e591501a474ed7dd5b6388ef2  ./conductor/tracks/12-citeweft-document-evidence/plan.md
 a7a0c7e49ecfbd0825152ffe82df080f8c1076a2552d4977d81f3d66ea5a3fd1  ./conductor/tracks/12-citeweft-document-evidence/spec.md
 3905decb8365e296fc94e777421f6cade9b9319834c11812df789b06479b0a04  ./conductor/tracks/12-citeweft-document-evidence/traceability.json
-8d743176ca03794bf5f7820a5462d94ab11a59dfa1a880dc886ca7e1321e6db8  ./conductor/tracks/13-integration-passports-github-context/evidence.json
-1767be2316d56131281ec9159ac20e209f1429a5fa8c9198cadb2c628008cf3c  ./conductor/tracks/13-integration-passports-github-context/metadata.json
-9d807f912a5828244f2a643e291b2d8ffd22c5a7611db9ca31bb91b05e5b740b  ./conductor/tracks/13-integration-passports-github-context/plan.md
+7cd207c88236f1732cf9831578764b45d40ede473c0c23a47e15cada462e6639  ./conductor/tracks/13-integration-passports-github-context/evidence.json
+100117d22ed8353d1eeadba135fc2a988cdbde96455abcc5d19f8b0ab4d36215  ./conductor/tracks/13-integration-passports-github-context/metadata.json
+91da6190d555d20859c6fbcf2d22ae7c2493635d72d5f89262cac0f5b7e57035  ./conductor/tracks/13-integration-passports-github-context/plan.md
 d0aa1f8ee4cf4f560dc5296968b9894a67c9018f42b6676177f269205aec9ffd  ./conductor/tracks/13-integration-passports-github-context/spec.md
-872a66c479af6d29940e5e5aacc09e04d82fa93ad2032476dbcbbe34d23b42ac  ./conductor/tracks/13-integration-passports-github-context/traceability.json
+45360179c29d497b68cda081dce3d7a00bafe831c76dd32891360d4995277d83  ./conductor/tracks/13-integration-passports-github-context/traceability.json
 52061d0187d378d8a1df53a3fd1a21b878b4b014f280ddaada3a50a64f5ce22d  ./conductor/tracks/14-sourceright-migration/evidence.json
 864c544815c5c5be7a29f32e0064c39c59d22955dae811e4426b56a038ae8a2d  ./conductor/tracks/14-sourceright-migration/metadata.json
 e847b9ca419624208a7aa30866372c50bb6e8980ed4f49b6c807daca5aa44663  ./conductor/tracks/14-sourceright-migration/plan.md
@@ -879,7 +879,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 003644dc05cba2d5b1ca6e4b4e6e04807d0b73d25949fa151ed81b7ea194f75d  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-dd9c4da9dea5631d14c19f2f02fc48d5d28e6874a4c000347ecd1a1654f1580e  ./context/context-lock.json
+15423642cac88cb4568f737a2ce913c7bcd4ac142c2063a842703aea586c7b24  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1152,7 +1152,7 @@ fd53b639903d9ef2b433029d0c454fcd41c0962ff5efafa00751704fa3a4cfaa  ./crates/searc
 5541445845923a64d5184c8589d1590aa069c7eba623f60962a9ee25a9423b2d  ./crates/searchright-contracts/src/discovery.rs
 db0fe96e385dd4d299ea551c5e4954c59ffcd63cce0bd646dc17138bdb20a322  ./crates/searchright-contracts/src/document.rs
 9489e9e55af241f95b82761cce80e0f5d35dfe419af7dfe9c78a10ed1e96e0ed  ./crates/searchright-contracts/src/governance.rs
-e2b273e1ef67a27e5bd72c583ad32d2571565d6528c2f12899548b0309d0f198  ./crates/searchright-contracts/src/integration.rs
+756aad71d10ba2b78f9f5e23b8a2b384d0bfd5b6649f3cddeb6cf28f3b32e85a  ./crates/searchright-contracts/src/integration.rs
 dae275de6e751e1ef67a0c40e49b8162a3b50b4a9e7b36d7805788486e6226cb  ./crates/searchright-contracts/src/interchange.rs
 5ae01e6cb9ee0e3489beaf3e370afcc07509a5c47f30981c7230b1c991f40f60  ./crates/searchright-contracts/src/lib.rs
 96cfe3813a20b4aada64fb7442f0123c1f28bb7367b17e88427c941fb302b18a  ./crates/searchright-contracts/src/licensed.rs
@@ -2441,7 +2441,7 @@ c15a358f77b924e2b1eba4bc27539e6b7ae5fd452c29ee5a6b04ff9bb0e39d8c  ./typos.toml
 b714d90dc7ab979fdaac0a8a1e6b71f980201cdf37bba53bd203f466bd09ebf8  ./verification/coverage-policy.json
 4588dd9bc0a6672f678420732f222eab79e0ac5000351d240ac649c448253b07  ./verification/evidence-debt.json
 29900da330acfda39c17add9ef7a72d491ccb7bd736fb54b82326fba7cbde7e5  ./verification/fixtures/track-08/press-workflow-complete.yaml
-da8bfa4d4387448ebd8c315ac060ff55c19572b99070fd92901365a3a1ba0500  ./verification/gate-catalog.json
+57745049ada6386f0c8a8192f019a462d97ef14a091842e14fbacd257c6fec9b  ./verification/gate-catalog.json
 7b21436d10731345bc5447f7157a236bda45a224177f737c505f9c27baafe943  ./verification/harness-matrix.json
 5dfe40f5778ecafd265d90440628fdcac08e2fd87c1628398ce9b985aa0ef346  ./verification/noyalib-fork/Cargo.lock
 745bb3fe5bd43de5ae08250c820a6b80e68d5a6b17e8704866a18fe9504c062a  ./verification/noyalib-fork/Cargo.toml

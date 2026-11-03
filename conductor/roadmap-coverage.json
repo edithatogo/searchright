@@ -1253,6 +1253,9 @@
         "verification/receipts/track-13-github-evidence-reconciliation.json"
       ],
       "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/track-13-conductor-review-2026-11-04.json"
+      ],
       "horizon": "alpha",
       "implementation_state": "source_implemented",
       "outcome": "Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked.",
@@ -1265,7 +1268,14 @@
       "slug": "integration-passports-github-context",
       "status": "source_implemented",
       "title": "Integration passports, GitHub issue hierarchy and context spine",
-      "track_id": "13"
+      "track_id": "13",
+      "updated": "2026-11-04",
+      "review_fixes": [
+        {
+          "commit": "7eb4ea7",
+          "summary": "Upgrade Track 13 assertions to symbol_and_gate_mapped with native test commands, add unit tests for IntegrationPassport, GitHubIssueHierarchy, and GitHubProjectManifest validation in searchright-contracts, and record conductor review receipt."
+        }
+      ]
     },
     {
       "blockers": [
