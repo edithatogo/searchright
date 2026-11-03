@@ -1,3 +1,5 @@
+use std::collections::BTreeSet;
+
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use time::{OffsetDateTime, format_description::well_known::Rfc3339};
@@ -40,6 +42,28 @@ pub enum FindingSeverity {
     Critical,
 }
 
+/// Structured outcome of an independent PRESS review.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum PressReviewDecision {
+    /// The reviewed strategy is approved without a required correction.
+    Approved,
+    /// The reviewed strategy is approved with non-blocking advisory findings.
+    ApprovedWithAdvisory,
+    /// The strategy must be revised before execution approval.
+    RevisionRequired,
+    /// The reviewed strategy is rejected for execution in its current form.
+    Rejected,
+}
+
+impl PressReviewDecision {
+    /// Whether this review outcome permits a separate human execution approval.
+    #[must_use]
+    pub const fn permits_execution(self) -> bool {
+        matches!(self, Self::Approved | Self::ApprovedWithAdvisory)
+    }
+}
+
 /// One PRESS finding.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
 pub struct PressFinding {
@@ -73,8 +97,8 @@ pub struct PressReview {
     /// Findings.
     #[serde(default)]
     pub findings: Vec<PressFinding>,
-    /// Overall decision.
-    pub decision: String,
+    /// Structured overall decision.
+    pub decision: PressReviewDecision,
 }
 
 /// Known relevant report used for recall-oriented validation.
@@ -161,9 +185,14 @@ impl Validate for PressReview {
                 "search_validation.reviewed_at must be an RFC 3339 timestamp".to_owned(),
             )
         })?;
-        require_text(&self.decision, "search_validation.decision")?;
+        let mut finding_ids = BTreeSet::new();
         for finding in &self.findings {
             finding.validate()?;
+            if !finding_ids.insert(finding.finding_id.as_str()) {
+                return Err(ContractError::Invariant(
+                    "PRESS finding identifiers must be unique within a review".to_owned(),
+                ));
+            }
         }
         Ok(())
     }
@@ -219,6 +248,11 @@ impl Validate for SearchValidationReport {
                     "PRESS review strategy identifier does not match validation report".to_owned(),
                 ));
             }
+            if review.strategy_version != self.strategy_version {
+                return Err(ContractError::Invariant(
+                    "PRESS review strategy version does not match validation report".to_owned(),
+                ));
+            }
         }
         for seed in &self.seed_records {
             seed.validate()?;
@@ -239,6 +273,16 @@ impl Validate for SearchValidationReport {
                 )
             })?;
             require_text(approver, "search_validation.approved_by")?;
+            if self
+                .press_reviews
+                .iter()
+                .any(|review| review.reviewer_id == approver)
+            {
+                return Err(ContractError::Invariant(
+                    "PRESS reviewer and execution approver must be independently identified"
+                        .to_owned(),
+                ));
+            }
         }
         Ok(())
     }

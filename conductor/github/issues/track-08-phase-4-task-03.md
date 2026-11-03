@@ -8,6 +8,7 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix `c234c41f940b37e153e9bf151458059e63c51b47`: Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls.
 
 ## Completion and evidence contract
 

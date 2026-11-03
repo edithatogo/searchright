@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.
+- [ ] Obtain an accountable independent PRESS review of representative generated strategies and appendices.
 
 ## Completion and evidence contract
 

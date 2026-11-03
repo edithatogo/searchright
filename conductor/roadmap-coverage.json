@@ -648,20 +648,28 @@
     },
     {
       "blockers": [
-        "Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.",
-        "Obtain independent PRESS review of representative generated strategies and appendices."
+        "Obtain an accountable independent PRESS review of representative generated strategies and appendices.",
+        "Obtain a hosted compiler-verified receipt for the exact committed revision."
       ],
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.",
       "deliverables": [
         "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-prisma/tests/reporting_fixtures.rs",
+        "crates/searchright-prisma/tests/snapshots/",
         "crates/searchright-validation/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs",
         "contracts/examples/prisma-flow.json",
         "contracts/examples/search-validation.yaml",
         "contracts/examples/standard-assessment.yaml",
-        "docs/standards-and-provenance.md"
+        "docs/standards-and-provenance.md",
+        "docs/prisma-jl-interop.md",
+        "integration/fixtures/prisma-jl/flow-parity-v1.json",
+        "verification/fixtures/track-08/press-workflow-complete.yaml"
       ],
       "dependencies": [
         "01",
@@ -669,9 +677,9 @@
         "07"
       ],
       "evidence_level": "source_verified",
-      "external_approval_required": false,
+      "external_approval_required": true,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct.",
       "requirements": [
         "SR-023",
@@ -686,14 +694,26 @@
         "verification/receipts/track-08-reporting-evidence-followup.json"
       ],
       "review_completed": true,
+      "review_fixes": [
+        {
+          "sha": "c234c41f940b37e153e9bf151458059e63c51b47",
+          "summary": "Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls."
+        }
+      ],
+      "completed_higher_evidence_gates": [
+        "Complete wider render-format coverage and record bounded PRISMA.jl parity with explicit ownership and loss evidence."
+      ],
+      "phase_3_task_count": 2,
       "slug": "prisma-press-reporting",
       "additional_closeout_tasks": [
         "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Subsequent local visual/import evidence is recorded separately; complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.",
         "Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after fixing wrapped HTML labels. No Microsoft Word, external parity or methodological acceptance is claimed."
       ],
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "PRISMA, PRESS and reporting",
-      "track_id": "08"
+      "track_id": "08",
+      "updated": "2026-08-29",
+      "source_verified_on": "2026-08-29"
     },
     {
       "blockers": [],

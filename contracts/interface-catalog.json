@@ -513,13 +513,27 @@
           "unacceptable_translations": {
             "type": "integer",
             "minimum": 0
+          },
+          "press_domains_covered": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "press_review_complete": {
+            "type": "boolean"
+          },
+          "press_decisions_approved": {
+            "type": "boolean"
           }
         },
         "required": [
           "ready",
           "seed_recall",
           "unresolved_major_findings",
-          "unacceptable_translations"
+          "unacceptable_translations",
+          "press_domains_covered",
+          "press_review_complete",
+          "press_decisions_approved"
         ]
       }
     },

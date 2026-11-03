@@ -498,6 +498,10 @@ enum PrismaFormat {
     #[default]
     Json,
     Mermaid,
+    Markdown,
+    Svg,
+    Typst,
+    DocxTable,
     Ledger,
 }
 
@@ -506,6 +510,10 @@ impl From<PrismaFormat> for PrismaOutput {
         match value {
             PrismaFormat::Json => Self::Json,
             PrismaFormat::Mermaid => Self::Mermaid,
+            PrismaFormat::Markdown => Self::Markdown,
+            PrismaFormat::Svg => Self::Svg,
+            PrismaFormat::Typst => Self::Typst,
+            PrismaFormat::DocxTable => Self::DocxTable,
             PrismaFormat::Ledger => Self::PrismaSLedger,
         }
     }
@@ -990,7 +998,11 @@ fn execute(command: Command) -> Result<()> {
         Command::Prisma { input, format } => {
             let flow: PrismaFlow = read_document(&input)?;
             match SearchrightEngine::prisma(&flow, format.into())? {
-                PrismaArtifact::Mermaid(document) => println!("{document}"),
+                PrismaArtifact::Mermaid(document)
+                | PrismaArtifact::Markdown(document)
+                | PrismaArtifact::Svg(document)
+                | PrismaArtifact::Typst(document)
+                | PrismaArtifact::DocxTable(document) => println!("{document}"),
                 artifact => print_json(&artifact)?,
             }
         }
