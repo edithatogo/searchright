@@ -236,7 +236,7 @@ mod tests {
     #[test]
     fn amendment_requires_mandatory_text_fields() {
         let mut value = amendment(AmendmentDecision::Proposed);
-        value.amendment_id = "".to_owned();
+        value.amendment_id = String::new();
         assert!(matches!(
             value.validate(),
             Err(ContractError::EmptyField(_))
@@ -273,7 +273,7 @@ mod tests {
     #[test]
     fn amendment_change_validates_required_and_optional_fields() {
         let change_empty_path = AmendmentChange {
-            path: "".to_owned(),
+            path: String::new(),
             before: None,
             after: "value".to_owned(),
             rationale: "valid rationale".to_owned(),
