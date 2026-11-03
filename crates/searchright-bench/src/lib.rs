@@ -349,9 +349,9 @@ pub fn regression_gate(
 /// Manifest describing a sealed benchmark partition split and its integrity controls.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct SealedSplitManifest {
-    /// Schema version (e.g. "org.searchright.sealed-benchmark-manifest.v1").
+    /// Schema version (e.g. `org.searchright.sealed-benchmark-manifest.v1`).
     pub schema_version: String,
-    /// Partition identifier (e.g. "sealed_test").
+    /// Partition identifier (e.g. `sealed_test`).
     pub partition: String,
     /// Unique case identifiers in the sealed partition.
     pub case_ids: Vec<String>,
@@ -516,7 +516,7 @@ pub fn expected_calibration_error(predictions: &[(f64, bool)], num_bins: usize) 
     }
     let total = usize_to_u64(predictions.len());
     let total_f = u64_to_f64(total);
-    let bin_width = 1.0 / usize_to_u64(num_bins) as f64;
+    let num_bins_f = u64_to_f64(usize_to_u64(num_bins));
     let mut bin_counts = vec![0_u64; num_bins];
     let mut bin_conf_sums = vec![0.0_f64; num_bins];
     let mut bin_acc_sums = vec![0.0_f64; num_bins];
@@ -525,28 +525,37 @@ pub fn expected_calibration_error(predictions: &[(f64, bool)], num_bins: usize) 
         if !conf.is_finite() || !(0.0..=1.0).contains(&conf) {
             return None;
         }
-        let bin_idx = if conf >= 1.0 {
-            num_bins.saturating_sub(1)
-        } else {
-            let idx = (conf / bin_width).floor() as usize;
-            idx.min(num_bins.saturating_sub(1))
-        };
-        bin_counts[bin_idx] = bin_counts[bin_idx].saturating_add(1);
-        bin_conf_sums[bin_idx] += conf;
-        if outcome {
-            bin_acc_sums[bin_idx] += 1.0;
+        let mut bin_idx = num_bins.saturating_sub(1);
+        for candidate_idx in 0..num_bins.saturating_sub(1) {
+            let upper = u64_to_f64(usize_to_u64(candidate_idx.saturating_add(1))) / num_bins_f;
+            if conf < upper {
+                bin_idx = candidate_idx;
+                break;
+            }
+        }
+        if let Some(count) = bin_counts.get_mut(bin_idx) {
+            *count = count.saturating_add(1);
+        }
+        if let Some(conf_sum) = bin_conf_sums.get_mut(bin_idx) {
+            *conf_sum += conf;
+        }
+        if outcome && let Some(acc_sum) = bin_acc_sums.get_mut(bin_idx) {
+            *acc_sum += 1.0;
         }
     }
 
-    let mut ece = 0.0;
-    for i in 0..num_bins {
-        let count = bin_counts[i];
+    let mut ece = 0.0_f64;
+    for ((&count, &conf_sum), &acc_sum) in bin_counts
+        .iter()
+        .zip(bin_conf_sums.iter())
+        .zip(bin_acc_sums.iter())
+    {
         if count > 0 {
             let count_f = u64_to_f64(count);
-            let avg_conf = bin_conf_sums[i] / count_f;
-            let avg_acc = bin_acc_sums[i] / count_f;
+            let avg_conf = conf_sum / count_f;
+            let avg_acc = acc_sum / count_f;
             let weight = count_f / total_f;
-            ece += weight * (avg_acc - avg_conf).abs();
+            ece = weight.mul_add((avg_acc - avg_conf).abs(), ece);
         }
     }
     Some(ece)
@@ -561,14 +570,14 @@ pub fn brier_score(predictions: &[(f64, bool)]) -> Option<f64> {
     if predictions.is_empty() {
         return None;
     }
-    let mut sum_sq_error = 0.0;
+    let mut sum_sq_error = 0.0_f64;
     for &(prob, outcome) in predictions {
         if !prob.is_finite() || !(0.0..=1.0).contains(&prob) {
             return None;
         }
         let y = if outcome { 1.0 } else { 0.0 };
         let diff = prob - y;
-        sum_sq_error += diff * diff;
+        sum_sq_error = f64::mul_add(diff, diff, sum_sq_error);
     }
     Some(sum_sq_error / u64_to_f64(usize_to_u64(predictions.len())))
 }
@@ -812,7 +821,7 @@ mod tests {
         let mut by_registration = BTreeMap::<String, Vec<String>>::new();
         let mut abstained = BTreeSet::new();
         for report in fixture.reports {
-            assert!(!report.kind.trim().is_empty());
+            assert_ne!(report.kind.trim(), "");
             if let Some(registration) = report.registration.filter(|value| !value.trim().is_empty())
             {
                 by_registration
@@ -944,7 +953,7 @@ mod tests {
             Err(BenchmarkError::InvalidManifest(_))
         ));
 
-        let mut duplicate_case = valid_manifest.clone();
+        let mut duplicate_case = valid_manifest;
         duplicate_case.case_ids = vec!["case-001".to_owned(), "case-001".to_owned()];
         assert!(matches!(
             duplicate_case.validate(),
@@ -969,7 +978,10 @@ mod tests {
         };
 
         let clean_text = "This text discusses general systematic review benchmarks.";
-        assert!(check_split_contamination(&manifest, clean_text).is_empty());
+        assert_eq!(
+            check_split_contamination(&manifest, clean_text),
+            Vec::<String>::new()
+        );
 
         let contaminated_text = "Here we tune our prompts on secret-case-alpha for better scores.";
         let findings = check_split_contamination(&manifest, contaminated_text);
@@ -1050,7 +1062,7 @@ mod tests {
 
         assert!(validate_public_benchmark_report(&valid_report).is_ok());
 
-        let mut empty_metrics = valid_report.clone();
+        let mut empty_metrics = valid_report;
         empty_metrics.metrics.clear();
         assert!(matches!(
             validate_public_benchmark_report(&empty_metrics),
