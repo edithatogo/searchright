@@ -1618,13 +1618,15 @@
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
-        "registry/status.json",
-        "registry/official-mcp/README.md",
+        "glama.json",
         "registry/glama/README.md",
-        "registry/smithery/README.md",
         "registry/joss/paper.md",
+        "registry/official-mcp/README.md",
+        "registry/smithery/README.md",
+        "registry/status.json",
         "server.json",
-        "glama.json"
+        "tests/test_registries_publication_governance.py",
+        "verification/receipts/track-19-conductor-review-2026-11-04.json"
       ],
       "dependencies": [
         "13",
@@ -1642,7 +1644,15 @@
       "slug": "registries-publication",
       "status": "submission_prepared",
       "title": "Registries and scholarly publication",
-      "track_id": "19"
+      "track_id": "19",
+      "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/track-19-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion."
+      ],
+      "updated": "2026-11-04"
     },
     {
       "blockers": [],

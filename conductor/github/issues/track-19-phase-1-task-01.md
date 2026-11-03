@@ -8,13 +8,15 @@ Canonical task state: **open evidence or implementation task**.
 ## Canonical task
 
 - [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `registry/status.json`
-  - [x] Present source path: `registry/official-mcp/README.md`
-  - [x] Present source path: `registry/glama/README.md`
-  - [x] Present source path: `registry/smithery/README.md`
-  - [x] Present source path: `registry/joss/paper.md`
-  - [x] Present source path: `server.json`
   - [x] Present source path: `glama.json`
+  - [x] Present source path: `registry/glama/README.md`
+  - [x] Present source path: `registry/joss/paper.md`
+  - [x] Present source path: `registry/official-mcp/README.md`
+  - [x] Present source path: `registry/smithery/README.md`
+  - [x] Present source path: `registry/status.json`
+  - [x] Present source path: `server.json`
+  - [x] Present source path: `tests/test_registries_publication_governance.py`
+  - [x] Present source path: `verification/receipts/track-19-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/19-registries-publication/traceability.json`
 
 ## Completion and evidence contract
