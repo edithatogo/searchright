@@ -53,10 +53,14 @@
       "remote_github_evidence": [
         "verification/receipts/github-control-plane-audit.json"
       ],
+      "review_fixes": [
+        "Upgrade all six Track 00 assertions (T00-A001..T00-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; record conductor review receipt and preserve the open upstream repository-standards estate conformance gate."
+      ],
       "runtime_evidence": [
         "verification/receipts/track-00-local-verification.json",
         "verification/receipts/track-00-conductor-review.json",
-        "verification/receipts/track-00-verification-reconciliation.json"
+        "verification/receipts/track-00-verification-reconciliation.json",
+        "verification/receipts/track-00-conductor-review-2026-11-04.json"
       ],
       "source_verified_on": "2026-08-12",
       "slug": "foundation-conductor-toolchain",
@@ -67,7 +71,7 @@
         "Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.",
         "Reconcile historical aggregate-verification failures with exact-tree full verification and separate frozen cargo-vet policy evidence (`f372c67`); verification/receipts/track-00-verification-reconciliation.json preserves exemption limits and the unresolved upstream registration gate."
       ],
-      "updated": "2026-08-31"
+      "updated": "2026-11-04"
     },
     {
       "blockers": [],
