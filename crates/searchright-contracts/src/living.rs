@@ -320,7 +320,7 @@ mod tests {
     #[test]
     fn validate_requires_run_id_and_review_id() {
         let mut update = completed_run();
-        update.run_id = "".to_owned();
+        update.run_id = String::new();
         assert!(matches!(
             update.validate(),
             Err(ContractError::EmptyField(_))
@@ -434,7 +434,7 @@ mod tests {
     #[test]
     fn validate_cursor_fields_require_text() {
         let cursor = UpdateCursor {
-            provider_id: "".to_owned(),
+            provider_id: String::new(),
             cursor_kind: "date".to_owned(),
             value: "2026-08-01".to_owned(),
             retrieved_through: None,
