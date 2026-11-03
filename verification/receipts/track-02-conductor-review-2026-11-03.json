@@ -1,0 +1,89 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "02",
+  "reviewed_revision": "PENDING_COMMIT_SHA",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "dialect-compiler-and-native-parser",
+      "mode": "isolated_first_pass",
+      "finding": "Compiler and native parser asserts triggered clippy::assert_is_empty on newer Rust toolchains; upgraded assertions to exact empty slice checks; added adversarial regression test for unmatched parentheses across PubMed, Ovid MEDLINE, Scopus, and Web of Science.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "corpus-and-loss-matrix-traceability",
+      "mode": "isolated_first_pass",
+      "finding": "T02-A003 assertion in conductor/traceability-overrides.json and track traceability lacked symbol mapping and native test command; upgraded T02-A003 to symbol_and_gate_mapped with evidence_search_core::native::tests::checked_in_native_corpus_is_source_preserving and exact cargo test command.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "methodology-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "External and owner gates T02-G-NAMED-FILTERS and T02-G-CORPUS-OWNER must remain open without false completion until rights-clear real named-filter expressions and accountable owner disposition of panel findings are evidenced.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Upgraded T02-A003 in conductor/traceability-overrides.json and conductor/tracks/02-query-ast-dialects/traceability.json to symbol_and_gate_mapped with implementation symbol evidence_search_core::native::tests::checked_in_native_corpus_is_source_preserving and exact native test command.",
+    "Resolved clippy::assert_is_empty warnings in compiler.rs, native.rs, and tests/subrequest_context.rs by comparing with empty slices.",
+    "Added unmatched_parentheses_cannot_normalize_completely adversarial regression test in native_adversarial_tests.rs covering PubMed, Ovid MEDLINE, Scopus, and Web of Science.",
+    "Added tests/__init__.py to permit deterministic python3 -B -m unittest execution for test_native_query_corpus.py."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/check_native_query_corpus.py",
+      "status": "passed",
+      "fixtures_checked": 7
+    },
+    {
+      "command": "python3 -B -m unittest tests/test_native_query_corpus.py",
+      "status": "passed",
+      "tests_passed": 8
+    },
+    {
+      "command": "cargo test --locked -p evidence-search-contracts -p evidence-search-core",
+      "status": "passed",
+      "tests_passed": 101,
+      "breakdown": {
+        "evidence_search_contracts_named_filters": 6,
+        "evidence_search_contracts_schema_parity": 2,
+        "evidence_search_core_lib": 58,
+        "evidence_search_core_native_adversarial": 14,
+        "evidence_search_core_property": 5,
+        "evidence_search_core_subrequest_context": 16
+      }
+    },
+    {
+      "command": "cargo clippy --locked -p evidence-search-contracts -p evidence-search-core --all-targets --all-features -- -D warnings",
+      "status": "passed"
+    },
+    {
+      "command": "cargo test --locked -p evidence-search-core native::tests::checked_in_native_corpus_is_source_preserving -- --exact",
+      "status": "passed",
+      "tests_passed": 1
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T02-G-NAMED-FILTERS",
+      "status": "pending",
+      "disposition": "preserved_open"
+    },
+    {
+      "gate_id": "T02-G-CORPUS-OWNER",
+      "status": "pending",
+      "disposition": "preserved_open"
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Rights-clear real named-filter expressions, exact versions and provider-current evidence remain pending panel review and owner decision.",
+    "Accountable owner disposition of the exact digest-bound corpus/loss-matrix panel findings remains pending."
+  ],
+  "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed."
+}

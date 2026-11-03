@@ -328,7 +328,7 @@ fn rate_group_names_fail_closed() {
                 )
                 .is_err()
         );
-        assert!(registry.manifests().is_empty());
+        assert_eq!(registry.manifests(), [] as [ProviderManifest; 0]);
     }
 }
 

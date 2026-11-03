@@ -257,6 +257,21 @@ fn unmatched_leading_term_quotes_cannot_normalize_completely() {
 }
 
 #[test]
+fn unmatched_parentheses_cannot_normalize_completely() {
+    for (dialect, raw) in [
+        (SearchDialect::PubMed, "(\"cancer\"[Title/Abstract]\n"),
+        (SearchDialect::OvidMedline, "1. (exp Genomics/\n"),
+        (SearchDialect::Scopus, "TITLE(genome\n"),
+        (SearchDialect::WebOfScience, "TS=(genome\n"),
+    ] {
+        let parsed = parse_native_strategy("unmatched-paren", dialect.clone(), raw);
+        assert_eq!(parsed.raw_text, raw);
+        assert_review_required(&parsed);
+        assert!(parse_native_semantic_strategy("unmatched-paren", &dialect, raw).is_err());
+    }
+}
+
+#[test]
 fn ordinary_apostrophe_inside_unquoted_term_is_retained() {
     let parsed = parse_native_strategy("apostrophe", SearchDialect::CinahlEbsco, "TI Crohn's\n");
     assert_eq!(
