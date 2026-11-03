@@ -1,0 +1,104 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "08",
+  "reviewed_revision": "d0f470e",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "prisma-s-and-reporting-ledgers",
+      "mode": "isolated_first_pass",
+      "finding": "Verified 16-item PRISMA-S ledger evidence evaluation fails closed for blank and mixed whitespace strings across all collection items; verified reporting assessments preserve derived evidence boundary without claiming conduct certification.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "prisma-flow-and-render-formats",
+      "mode": "isolated_first_pass",
+      "finding": "Verified PRISMA 2020 new-review and updated-review variant flows with arithmetic validation, update lineage preservation, and deterministic snapshot generation across Markdown, JSON, Mermaid, SVG, Typst (with markup escaping), and DOCX-friendly HTML tables.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "press-peer-review-and-standards-workflow",
+      "mode": "isolated_first_pass",
+      "finding": "Verified six-domain PRESS review workflow fails closed on incomplete domain coverage, unresolved material findings, or conflated reviewer and execution approver identities; validated PRISMA-ScR and PRISMA-LSR standards packs.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "prisma-jl-parity-and-traceability",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Reconciled Track 08 traceability overrides, deliverables, assertion mappings, and native test commands with all reporting renderers, examples, and fixtures; preserved open independent PRESS review and hosted compiler receipt gates.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Reconciled conductor/traceability-overrides.json and conductor/tracks/08-prisma-press-reporting/traceability.json across all 6 assertions T08-A001..T08-A006 with exact native_test_commands.",
+    "Added crates/searchright-prisma/src/render.rs, tests/render_formats.rs, tests/ledger_evidence.rs, examples/render_reporting_fixture.rs, examples/render_typst_fixture.rs, examples/compare_imported_table.py, crates/searchright-contracts/src/{prisma,validation}.rs, contracts/standards/packs/prisma-{scr-2018,lsr-2024}.yaml, and integration/passports/prisma-jl-flow-interop.json to Track 08 deliverables and implementation paths.",
+    "Replaced lingering serde_yaml reference in crates/searchright/src/engine.rs:963 with crate::parse_yaml to strictly enforce YAML document and boundary parsing without anchor/merge expansion.",
+    "Resolved clippy assert_is_empty warnings across crates/searchright/src/engine.rs, crates/searchright-cli/tests/cli_e2e.rs, and crates/searchright-mcp/tests/advanced_mcp.rs for clean zero-warning builds under -D warnings.",
+    "Executed 109 native Rust unit and integration tests across searchright-prisma, searchright-validation, searchright-contracts, searchright, searchright-cli, and searchright-mcp, and verified strict Clippy."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/check_cli_mcp_parity.py",
+      "status": "passed",
+      "operations_checked": 35
+    },
+    {
+      "command": "python3 -B scripts/sync_schema_surface.py --check",
+      "status": "passed",
+      "schemas_checked": 74
+    },
+    {
+      "command": "python3 -B scripts/check_integration_passports.py",
+      "status": "passed",
+      "passports_checked": 8
+    },
+    {
+      "command": "python3 -B scripts/check_integration_drift.py",
+      "status": "passed",
+      "integrations_checked": 8
+    },
+    {
+      "command": "cargo test --locked -p searchright-prisma -p searchright-validation -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-features",
+      "status": "passed",
+      "tests_passed": 109,
+      "breakdown": {
+        "searchright_prisma_lib": 8,
+        "searchright_prisma_ledger_evidence": 1,
+        "searchright_prisma_render_formats": 4,
+        "searchright_prisma_reporting_fixtures": 6,
+        "searchright_validation_lib": 2,
+        "searchright_contracts_lib": 34,
+        "searchright_lib": 10,
+        "searchright_cli_lib": 7,
+        "searchright_cli_e2e": 8,
+        "searchright_mcp_lib": 17,
+        "searchright_mcp_advanced": 10,
+        "searchright_mcp_conformance": 2
+      }
+    },
+    {
+      "command": "cargo clippy --locked -p searchright-prisma -p searchright-validation -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-targets --all-features -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T08-G-PRESS-INDEPENDENT-REVIEW",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Obtain an accountable independent PRESS review of representative generated strategies and appendices."
+    },
+    {
+      "gate_id": "T08-G-HOSTED-COMPILER-RECEIPT",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Obtain a hosted compiler-verified receipt for the exact committed revision."
+    }
+  ],
+  "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed."
+}

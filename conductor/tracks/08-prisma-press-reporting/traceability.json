@@ -5,66 +5,167 @@
   "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/08-prisma-press-reporting/spec.md#scope",
-  "claim_boundary": "All six acceptance assertions have individual source and deterministic fixture mappings. The repository evidence ceiling remains source_verified until hosted compiler evidence exists, and the checked-in PRESS workflow fixture is not an accountable independent methodological review.",
+  "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.",
   "assertions": [
     {
       "assertion_id": "T08-A001",
       "statement": "Complete 16-item PRISMA-S evidence mapping",
-      "state": "source_implemented",
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json",
+        "verification/receipts/track-08-reporting-review.json",
+        "verification/receipts/track-08-reporting-evidence-followup.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
+      ],
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-contracts/src/prisma.rs",
+        "crates/searchright-prisma/tests/ledger_evidence.rs"
+      ],
+      "implementation_symbols": [
+        "searchright_prisma::SearchReportingEvidence",
+        "searchright_prisma::prisma_s_ledger",
+        "searchright_prisma::build_prisma_s_ledger",
+        "searchright_contracts::PrismaSItem",
+        "searchright_contracts::PrismaSItemStatus",
+        "searchright_contracts::PrismaSLedger"
+      ],
       "mapping_confidence": "assertion_level",
-      "implementation_paths": ["crates/searchright-prisma/src/lib.rs", "crates/searchright-contracts/src/prisma.rs"],
-      "implementation_symbols": ["searchright_prisma::SearchReportingEvidence", "searchright_prisma::prisma_s_ledger", "searchright_prisma::build_prisma_s_ledger"],
-      "deterministic_tests": ["python scripts/validate_repository.py"],
-      "evidence_receipts": ["conductor/tracks/08-prisma-press-reporting/evidence.json", "verification/receipts/track-08-reporting-review.json"],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --test ledger_evidence",
+        "cargo test --locked -p searchright-prisma --lib tests::report_derivation_preserves_non_certification_boundary"
+      ],
       "open_gates": [],
-      "permitted_claim": "The source maps all 16 PRISMA-S reporting items to evidence, missing, or not-applicable states; this is not conduct certification."
+      "permitted_claim": "The source maps all 16 PRISMA-S reporting items to evidence, missing, or not-applicable states; this is not conduct certification.",
+      "state": "source_implemented"
     },
     {
       "assertion_id": "T08-A002",
       "statement": "Implement PRISMA 2020 new/update flow variants",
-      "state": "source_implemented",
+      "deterministic_tests": [
+        "python scripts/check_vertical_slice.py",
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json",
+        "verification/receipts/track-08-reporting-review.json",
+        "verification/receipts/track-08-render-formats.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
+      ],
+      "implementation_paths": [
+        "crates/searchright-prisma/src/lib.rs",
+        "contracts/examples/prisma-flow.json",
+        "crates/searchright-contracts/src/prisma.rs"
+      ],
+      "implementation_symbols": [
+        "searchright_prisma::PrismaFlowVariant",
+        "searchright_prisma::validate_flow_variant",
+        "searchright_prisma::derive_reporting_assessment",
+        "searchright_contracts::PrismaFlow"
+      ],
       "mapping_confidence": "assertion_level",
-      "implementation_paths": ["crates/searchright-prisma/src/lib.rs", "contracts/examples/prisma-flow.json"],
-      "implementation_symbols": ["searchright_prisma::PrismaFlowVariant", "searchright_prisma::validate_flow_variant", "searchright_prisma::derive_reporting_assessment"],
-      "deterministic_tests": ["python scripts/check_vertical_slice.py", "python scripts/validate_repository.py"],
-      "evidence_receipts": ["conductor/tracks/08-prisma-press-reporting/evidence.json", "verification/receipts/track-08-reporting-review.json"],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --lib tests::update_variant_requires_distinct_lineage",
+        "cargo test --locked -p searchright-prisma --lib tests::every_flow_arithmetic_boundary_is_checked",
+        "cargo test --locked -p searchright-prisma --test reporting_fixtures canonical_prisma_flow_fixture_satisfies_arithmetic"
+      ],
       "open_gates": [],
-      "permitted_claim": "New-review and updated-review contexts are source-implemented with fail-closed lineage and arithmetic validation."
+      "permitted_claim": "New-review and updated-review contexts are source-implemented with fail-closed lineage and arithmetic validation.",
+      "state": "source_implemented"
     },
     {
       "assertion_id": "T08-A003",
       "statement": "Add PRISMA-ScR and PRISMA-LSR profiles",
-      "state": "source_implemented",
+      "deterministic_tests": [
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json",
+        "verification/receipts/track-08-reporting-review.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
+      ],
+      "implementation_paths": [
+        "contracts/standards/packs/prisma-scr-2018.yaml",
+        "contracts/standards/packs/prisma-lsr-2024.yaml",
+        "crates/searchright-prisma/tests/reporting_fixtures.rs",
+        "contracts/examples/standard-assessment.yaml"
+      ],
+      "implementation_symbols": [
+        "searchright_contracts::StandardFamily::PrismaScR",
+        "searchright_contracts::StandardFamily::PrismaLsr",
+        "searchright_contracts::StandardPack::validate",
+        "searchright_prisma::tests::reporting_fixtures::standards_pack_fixtures_preserve_reporting_and_conduct_boundaries"
+      ],
       "mapping_confidence": "assertion_level",
-      "implementation_paths": ["contracts/standards/packs/prisma-scr-2018.yaml", "contracts/standards/packs/prisma-lsr-2024.yaml", "crates/searchright-prisma/tests/reporting_fixtures.rs"],
-      "implementation_symbols": ["searchright_contracts::StandardFamily::PrismaScR", "searchright_contracts::StandardFamily::PrismaLsr", "searchright_contracts::StandardPack::validate"],
-      "deterministic_tests": ["python scripts/validate_repository.py"],
-      "evidence_receipts": ["conductor/tracks/08-prisma-press-reporting/evidence.json", "verification/receipts/track-08-reporting-review.json"],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --test reporting_fixtures standards_pack_fixtures_preserve_reporting_and_conduct_boundaries"
+      ],
       "open_gates": [],
-      "permitted_claim": "Versioned PRISMA-ScR and PRISMA-LSR reporting profiles are source-implemented; they do not guarantee journal acceptance."
+      "permitted_claim": "Versioned PRISMA-ScR and PRISMA-LSR reporting profiles are source-implemented; they do not guarantee journal acceptance.",
+      "state": "source_implemented"
     },
     {
       "assertion_id": "T08-A004",
       "statement": "Create six-domain PRESS review contract and workflow",
-      "state": "source_implemented",
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/sync_schema_surface.py --check"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json",
+        "verification/receipts/track-08-reporting-review.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
+      ],
+      "implementation_paths": [
+        "crates/searchright-contracts/src/validation.rs",
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-prisma/src/lib.rs",
+        "verification/fixtures/track-08/press-workflow-complete.yaml"
+      ],
+      "implementation_symbols": [
+        "searchright_contracts::PressReview::validate",
+        "searchright_validation::press_domains_covered",
+        "searchright_validation::assess",
+        "searchright_prisma::PressEvidenceState"
+      ],
       "mapping_confidence": "assertion_level",
-      "implementation_paths": ["crates/searchright-contracts/src/validation.rs", "crates/searchright-validation/src/lib.rs", "verification/fixtures/track-08/press-workflow-complete.yaml"],
-      "implementation_symbols": ["searchright_contracts::PressReview::validate", "searchright_validation::press_domains_covered", "searchright_validation::assess"],
-      "deterministic_tests": ["python scripts/validate_repository.py", "python scripts/sync_schema_surface.py --check"],
-      "evidence_receipts": ["conductor/tracks/08-prisma-press-reporting/evidence.json", "verification/receipts/track-08-reporting-review.json"],
-      "open_gates": ["Obtain an accountable independent PRESS review of representative generated strategies and appendices."],
-      "permitted_claim": "The six-domain PRESS workflow is source-implemented and fails closed on incomplete coverage or conflated reviewer/approver identity; the fixture is not independent review evidence."
+      "native_test_commands": [
+        "cargo test --locked -p searchright-validation --lib tests::six_domain_press_workflow_requires_separate_approval",
+        "cargo test --locked -p searchright-validation --lib tests::approved_but_incomplete_press_record_fails_closed",
+        "cargo test --locked -p searchright-prisma --lib tests::press_state_is_fail_closed_across_all_six_domains",
+        "cargo test --locked -p searchright-prisma --test reporting_fixtures canonical_press_fixture_remains_explicitly_incomplete"
+      ],
+      "open_gates": [
+        "Obtain an accountable independent PRESS review of representative generated strategies and appendices."
+      ],
+      "permitted_claim": "The six-domain PRESS workflow is source-implemented and fails closed on incomplete coverage or conflated reviewer/approver identity; the fixture is not independent review evidence.",
+      "state": "source_implemented"
     },
     {
       "assertion_id": "T08-A005",
       "statement": "Render Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly tables",
-      "state": "source_implemented",
-      "mapping_confidence": "assertion_level",
+      "deterministic_tests": [
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/validate_repository.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/08-prisma-press-reporting/evidence.json",
+        "verification/receipts/track-08-reporting-review.json",
+        "verification/receipts/track-08-render-formats.json",
+        "verification/receipts/track-08-reporting-evidence-followup.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
+      ],
       "implementation_paths": [
         "crates/searchright-prisma/src/lib.rs",
         "crates/searchright-prisma/src/render.rs",
         "crates/searchright-prisma/tests/snapshots/",
         "crates/searchright-prisma/tests/render_formats.rs",
+        "crates/searchright-prisma/examples/render_reporting_fixture.rs",
+        "crates/searchright-prisma/examples/render_typst_fixture.rs",
+        "crates/searchright-prisma/examples/compare_imported_table.py",
         "crates/searchright/src/engine.rs",
         "crates/searchright-cli/src/main.rs",
         "crates/searchright-mcp/src/lib.rs"
@@ -80,33 +181,49 @@
         "searchright_prisma::render_flow",
         "searchright_prisma::FlowFormat"
       ],
+      "mapping_confidence": "assertion_level",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --test render_formats",
+        "cargo test --locked -p searchright-prisma --test reporting_fixtures accessible_renderings_match_checked_in_snapshots",
+        "cargo test --locked -p searchright-prisma --test reporting_fixtures complete_major_database_appendix_matches_snapshot",
+        "cargo test --locked -p searchright-prisma --lib tests::typst_text_escapes_every_markup_control_character",
+        "cargo test --locked -p searchright-prisma --lib tests::arithmetic_and_mermaid_validate"
+      ],
+      "open_gates": [
+        "Obtain a hosted compiler-verified receipt for the exact committed revision."
+      ],
+      "permitted_claim": "All six named render families plus the PRISMA-S ledger are source-implemented behind one facade, with accessible deterministic snapshots and a complete major-database appendix fixture.",
+      "state": "source_implemented"
+    },
+    {
+      "assertion_id": "T08-A006",
+      "statement": "Establish PRISMA.jl parity then choose canonical ownership",
       "deterministic_tests": [
-        "python scripts/check_cli_mcp_parity.py",
-        "python scripts/sync_schema_surface.py --check",
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_integration_drift.py",
         "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/08-prisma-press-reporting/evidence.json",
         "verification/receipts/track-08-reporting-review.json",
-        "verification/receipts/track-08-render-formats.json",
-        "verification/receipts/track-08-reporting-evidence-followup.json"
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
       ],
-      "open_gates": [
-        "Obtain a hosted compiler-verified receipt for the exact committed revision."
+      "implementation_paths": [
+        "integration/fixtures/prisma-jl/flow-parity-v1.json",
+        "docs/prisma-jl-interop.md",
+        "integration/passports/prisma-jl-flow-interop.json",
+        "crates/searchright-prisma/tests/reporting_fixtures.rs"
       ],
-      "permitted_claim": "All six named render families plus the PRISMA-S ledger are source-implemented behind one facade, with accessible deterministic snapshots and a complete major-database appendix fixture."
-    },
-    {
-      "assertion_id": "T08-A006",
-      "statement": "Establish PRISMA.jl parity then choose canonical ownership",
-      "state": "source_implemented",
+      "implementation_symbols": [
+        "crates/searchright-prisma/tests/reporting_fixtures.rs::prisma_jl_overlap_is_fixture_proven_with_explicit_losses"
+      ],
       "mapping_confidence": "assertion_level",
-      "implementation_paths": ["integration/fixtures/prisma-jl/flow-parity-v1.json", "docs/prisma-jl-interop.md", "integration/passports/prisma-jl-flow-interop.json"],
-      "implementation_symbols": ["crates/searchright-prisma/tests/reporting_fixtures.rs::prisma_jl_overlap_is_fixture_proven_with_explicit_losses"],
-      "deterministic_tests": ["python scripts/check_integration_passports.py", "python scripts/check_integration_drift.py"],
-      "evidence_receipts": ["conductor/tracks/08-prisma-press-reporting/evidence.json", "verification/receipts/track-08-reporting-review.json"],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --test reporting_fixtures prisma_jl_overlap_is_fixture_proven_with_explicit_losses"
+      ],
       "open_gates": [],
-      "permitted_claim": "The common count projection is fixture-mapped at the pinned PRISMA.jl fork revision with explicit losses; Searchright owns Searchright arithmetic and PRISMA.jl remains an optional presentation comparator. Complete cross-model equivalence is not claimed."
+      "permitted_claim": "The common count projection is fixture-mapped at the pinned PRISMA.jl fork revision with explicit losses; Searchright owns Searchright arithmetic and PRISMA.jl remains an optional presentation comparator. Complete cross-model equivalence is not claimed.",
+      "state": "source_implemented"
     }
   ]
 }

@@ -692,23 +692,38 @@
         "Obtain a hosted compiler-verified receipt for the exact committed revision."
       ],
       "checks": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_integration_drift.py"
       ],
       "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.",
       "deliverables": [
         "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-prisma/src/render.rs",
         "crates/searchright-prisma/tests/reporting_fixtures.rs",
+        "crates/searchright-prisma/tests/render_formats.rs",
+        "crates/searchright-prisma/tests/ledger_evidence.rs",
         "crates/searchright-prisma/tests/snapshots/",
+        "crates/searchright-prisma/examples/render_reporting_fixture.rs",
+        "crates/searchright-prisma/examples/render_typst_fixture.rs",
+        "crates/searchright-prisma/examples/compare_imported_table.py",
         "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-contracts/src/prisma.rs",
+        "crates/searchright-contracts/src/validation.rs",
         "crates/searchright/src/engine.rs",
         "crates/searchright-cli/src/main.rs",
         "crates/searchright-mcp/src/lib.rs",
         "contracts/examples/prisma-flow.json",
         "contracts/examples/search-validation.yaml",
         "contracts/examples/standard-assessment.yaml",
+        "contracts/standards/packs/prisma-scr-2018.yaml",
+        "contracts/standards/packs/prisma-lsr-2024.yaml",
         "docs/standards-and-provenance.md",
         "docs/prisma-jl-interop.md",
         "integration/fixtures/prisma-jl/flow-parity-v1.json",
+        "integration/passports/prisma-jl-flow-interop.json",
         "verification/fixtures/track-08/press-workflow-complete.yaml"
       ],
       "dependencies": [
@@ -731,7 +746,8 @@
       "runtime_evidence": [
         "verification/receipts/track-08-reporting-review.json",
         "verification/receipts/track-08-render-formats.json",
-        "verification/receipts/track-08-reporting-evidence-followup.json"
+        "verification/receipts/track-08-reporting-evidence-followup.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
       ],
       "review_completed": true,
       "review_fixes": [
@@ -752,8 +768,14 @@
       "status": "source_implemented",
       "title": "PRISMA, PRESS and reporting",
       "track_id": "08",
-      "updated": "2026-08-29",
-      "source_verified_on": "2026-08-29"
+      "updated": "2026-11-03",
+      "source_verified_on": "2026-08-29",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --all-features",
+        "cargo test --locked -p searchright-validation --all-features",
+        "cargo test --locked -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-features",
+        "cargo clippy --locked -p searchright-prisma -p searchright-validation -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-targets --all-features -- -D warnings"
+      ]
     },
     {
       "blockers": [],

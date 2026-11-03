@@ -8,23 +8,38 @@
   "source_verified_on": "2026-08-29",
   "source_evidence": [
     "crates/searchright-prisma/src/lib.rs",
+    "crates/searchright-prisma/src/render.rs",
     "crates/searchright-prisma/tests/reporting_fixtures.rs",
+    "crates/searchright-prisma/tests/render_formats.rs",
+    "crates/searchright-prisma/tests/ledger_evidence.rs",
     "crates/searchright-prisma/tests/snapshots/",
+    "crates/searchright-prisma/examples/render_reporting_fixture.rs",
+    "crates/searchright-prisma/examples/render_typst_fixture.rs",
+    "crates/searchright-prisma/examples/compare_imported_table.py",
     "crates/searchright-validation/src/lib.rs",
+    "crates/searchright-contracts/src/prisma.rs",
+    "crates/searchright-contracts/src/validation.rs",
     "crates/searchright/src/engine.rs",
     "crates/searchright-cli/src/main.rs",
     "crates/searchright-mcp/src/lib.rs",
     "contracts/examples/prisma-flow.json",
     "contracts/examples/search-validation.yaml",
     "contracts/examples/standard-assessment.yaml",
+    "contracts/standards/packs/prisma-scr-2018.yaml",
+    "contracts/standards/packs/prisma-lsr-2024.yaml",
     "docs/standards-and-provenance.md",
     "docs/prisma-jl-interop.md",
     "integration/fixtures/prisma-jl/flow-parity-v1.json",
+    "integration/passports/prisma-jl-flow-interop.json",
     "verification/fixtures/track-08/press-workflow-complete.yaml"
   ],
   "traceability": "conductor/tracks/08-prisma-press-reporting/traceability.json",
   "static_checks": [
-    "python scripts/validate_repository.py"
+    "python scripts/validate_repository.py",
+    "python scripts/check_cli_mcp_parity.py",
+    "python scripts/sync_schema_surface.py --check",
+    "python scripts/check_integration_passports.py",
+    "python scripts/check_integration_drift.py"
   ],
   "requirements": [
     "SR-023",
@@ -65,7 +80,8 @@
   "runtime_evidence": [
     "verification/receipts/track-08-reporting-review.json",
     "verification/receipts/track-08-render-formats.json",
-    "verification/receipts/track-08-reporting-evidence-followup.json"
+    "verification/receipts/track-08-reporting-evidence-followup.json",
+    "verification/receipts/track-08-conductor-review-2026-11-03.json"
   ],
   "external_evidence": [],
   "review_fixes": [

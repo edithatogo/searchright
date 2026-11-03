@@ -237,7 +237,7 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
     let ResourceContents::TextResourceContents { text, .. } = content else {
         anyhow::bail!("workflow resource is not text")
     };
-    assert!(!text.is_empty());
+    assert_ne!(text, "");
 
     for uri in resource_uris {
         let resource = client

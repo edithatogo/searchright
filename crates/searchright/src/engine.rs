@@ -960,7 +960,7 @@ mod tests {
     #[test]
     fn export_receipts_distinguish_canonical_records_from_citation_projections()
     -> Result<(), Box<dyn std::error::Error>> {
-        let record: BibliographicRecord = serde_yaml::from_str(include_str!(
+        let record: BibliographicRecord = crate::parse_yaml(include_str!(
             "../../../contracts/examples/bibliographic-record.yaml"
         ))?;
         for (format, lossless) in [
@@ -1129,7 +1129,7 @@ mod tests {
             SearchExecutionOperation::Preview,
         )
         .await?;
-        assert!(preview.receipts.is_empty());
+        assert_eq!(preview.receipts, []);
 
         let directory = TemporaryDirectory::new("fixture-execution")?;
         let store = FileReviewStore::open(&directory.0)?;
