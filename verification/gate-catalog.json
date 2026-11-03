@@ -60,11 +60,7 @@
         "T14-A006",
         "T16-A001",
         "T18-A001",
-        "T18-A002",
-        "T18-A003",
-        "T18-A004",
         "T18-A005",
-        "T18-A006",
         "T19-A001",
         "T19-A002",
         "T19-A003",
@@ -190,6 +186,7 @@
         "T01-A005",
         "T03-A005",
         "T14-A005",
+        "T18-A001",
         "T32-A003"
       ],
       "evidence_ceiling": "source_verified",
@@ -742,11 +739,8 @@
         "T09-A005",
         "T16-A003",
         "T16-A004",
-        "T18-A001",
         "T18-A002",
-        "T18-A003",
         "T18-A004",
-        "T18-A005",
         "T18-A006",
         "T26-A001",
         "T26-A002",
@@ -929,6 +923,7 @@
       "command": "python scripts/check_release_rehearsal.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T18-A006",
         "T36-A001",
         "T36-A002",
         "T36-A003"
@@ -1079,7 +1074,9 @@
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/generate_source_sbom.py --check",
       "compiler_required": false,
-      "covered_assertions": [],
+      "covered_assertions": [
+        "T18-A003"
+      ],
       "evidence_ceiling": "source_reproducible",
       "external_writes": false,
       "gate_id": "SR-GATE-GENERATE-SOURCE-SBOM-CHECK",
@@ -1092,7 +1089,9 @@
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/generate_source_hash_manifest.py --check",
       "compiler_required": false,
-      "covered_assertions": [],
+      "covered_assertions": [
+        "T18-A003"
+      ],
       "evidence_ceiling": "source_reproducible",
       "external_writes": false,
       "gate_id": "SR-GATE-GENERATE-SOURCE-HASH-MANIFEST-CHECK",
@@ -1106,11 +1105,9 @@
       "command": "python scripts/check_packaging_reproducibility.py",
       "compiler_required": false,
       "covered_assertions": [
-        "T18-A001",
         "T18-A002",
         "T18-A003",
         "T18-A004",
-        "T18-A005",
         "T18-A006",
         "T36-A001",
         "T36-A002",
@@ -1174,7 +1171,8 @@
       "command": "python scripts/check_cargo_vet_governance.py",
       "compiler_required": false,
       "covered_assertions": [
-        "T16-A004"
+        "T16-A004",
+        "T18-A001"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,

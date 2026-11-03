@@ -8,16 +8,18 @@ Canonical task state: **open evidence or implementation task**.
 ## Canonical task
 
 - [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `.github/workflows/release.yml`
-  - [x] Present source path: `scripts/package_source.py`
-  - [x] Present source path: `Dockerfile`
-  - [x] Present source path: `CITATION.cff`
-  - [x] Present source path: `CHANGELOG.md`
-  - [x] Present source path: `SECURITY.md`
   - [x] Present source path: `.github/workflows/clean-room.yml`
+  - [x] Present source path: `.github/workflows/release.yml`
+  - [x] Present source path: `CHANGELOG.md`
+  - [x] Present source path: `CITATION.cff`
+  - [x] Present source path: `Dockerfile`
+  - [x] Present source path: `SECURITY.md`
   - [x] Present source path: `scripts/check_packaging_reproducibility.py`
   - [x] Present source path: `scripts/mcp_smoke.py`
+  - [x] Present source path: `scripts/package_source.py`
+  - [x] Present source path: `tests/test_alpha_release_packaging.py`
   - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Present source path: `verification/receipts/track-18-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/18-alpha-release/traceability.json`
 
 ## Completion and evidence contract

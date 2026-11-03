@@ -1,0 +1,106 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "18",
+  "reviewed_revision": "815b251",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "release-reproducibility-and-packaging-integrity",
+      "mode": "isolated_first_pass",
+      "finding": "Audited scripts/package_source.py, scripts/check_packaging_reproducibility.py, .github/workflows/clean-room.yml, and .github/workflows/release.yml. Refactored package_source to expose modular package_source and compare_archives functions with deterministic header normalization (uid/gid 0, empty uname/gname, SOURCE_DATE_EPOCH mtime) and added comprehensive unit test suite in tests/test_alpha_release_packaging.py.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "workflow-hardening-and-clean-room-governance",
+      "mode": "isolated_first_pass",
+      "finding": "Audited workflow permission matrices, action commit SHA pinnings, pull_request_target restrictions, and clean-room offline build/install gates via scripts/check_workflow_hardening.py and verification/harness-matrix.json. Confirmed clean-room offline installation and MCP discovery transcript requirements remain strictly gated on passing local and CI evidence.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "sbom-and-provenance-governance",
+      "mode": "isolated_first_pass",
+      "finding": "Verified scripts/generate_source_sbom.py and scripts/generate_source_hash_manifest.py contracts. Verified source-level CycloneDX inventory generation without overclaiming full binary dependency resolution prior to release build, and verified repository-local SHA-256 manifest integrity excluding volatile receipt outputs.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all six Track 18 assertions (T18-A001..T18-A006) from track_level_only (6/6 empty symbols) to symbol_and_gate_mapped with concrete implementation symbols across scripts/package_source.py, scripts/check_packaging_reproducibility.py, scripts/generate_source_sbom.py, scripts/generate_source_hash_manifest.py, scripts/mcp_smoke.py, scripts/check_cli_distribution.py, scripts/check_workflow_hardening.py, and scripts/check_release_rehearsal.py in both conductor/tracks/18-alpha-release/traceability.json and conductor/traceability-overrides.json (0/6 empty symbols).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved release gating state without premature completion: implementation_state remains scaffolded; external release/signing/tagging blockers (verifying committed Cargo.lock, clean-room cross-platform binary builds, container image build, cryptographic provenance and attestations) remain explicitly open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Refactored scripts/package_source.py to expose modular package_source with deterministic timestamp, file sorting, and metadata generation.",
+    "Refactored scripts/check_packaging_reproducibility.py to expose modular compare_archives and run_package helpers with optional test flag.",
+    "Created tests/test_alpha_release_packaging.py exercising sha256 hashing, SOURCE_DATE_EPOCH handling, tracked file filtering, member verification, archive mismatch detection, and full package_source artifact generation with normalized TAR/ZIP headers.",
+    "Upgraded assertions T18-A001 through T18-A006 to symbol_and_gate_mapped with concrete implementation symbols, deterministic tests, and native test commands in both conductor/tracks/18-alpha-release/traceability.json and conductor/traceability-overrides.json (0/6 empty symbol mappings).",
+    "Preserved open release blockers: verifying committed Cargo.lock, clean-room cross-platform binary builds, container image build, and signed release artefacts without false promotion."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/check_packaging_reproducibility.py --allow-dirty",
+      "status": "passed",
+      "artifacts_compared": 4,
+      "files_checked": 2651
+    },
+    {
+      "command": "python3 -B scripts/check_workflow_hardening.py",
+      "status": "passed",
+      "workflows_checked": 16,
+      "jobs_checked": 33,
+      "checkouts_checked": 31
+    },
+    {
+      "command": "python3 -B scripts/check_release_rehearsal.py",
+      "status": "passed",
+      "gates": 10,
+      "pilot_profiles": 3
+    },
+    {
+      "command": "python3 -B scripts/generate_source_sbom.py --check",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B scripts/generate_source_hash_manifest.py --check",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_alpha_release_packaging.py",
+      "status": "passed",
+      "tests_passed": 6
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T18-G-CARGO-LOCK-RELEASE-WORKFLOW",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Verify the committed Cargo.lock and pass the full release workflow."
+    },
+    {
+      "gate_id": "T18-G-INSTALL-SMOKE-BINARIES-OCI",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Build/install-smoke supported binaries and OCI image."
+    },
+    {
+      "gate_id": "T18-G-SIGNED-TAG-CHECKSUMS-ATTESTATIONS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Create signed tag, checksums, attestations and public release artefacts."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Verify the committed Cargo.lock and pass the full release workflow.",
+    "Build/install-smoke supported binaries and OCI image.",
+    "Create signed tag, checksums, attestations and public release artefacts."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}
