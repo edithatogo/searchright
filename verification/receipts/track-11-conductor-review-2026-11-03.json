@@ -1,0 +1,102 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "11",
+  "reviewed_revision": "6b046f1",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "agentic-skill-entrypoint-and-boundaries",
+      "mode": "isolated_first_pass",
+      "finding": "Verified systematic-search SKILL.md trigger and non-trigger boundaries, role cards, references, data boundaries (telemetry disabled, credential and full-text restrictions), and registry packet fail-closed policies.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "advisory-workflow-and-least-context-handoff",
+      "mode": "isolated_first_pass",
+      "finding": "Verified seven-stage systematic search workflow, least-context agent handoff schema (org.searchright.agent-handoff.v1), artifact-bound transition approvals, and rejection of injected prompts or unapproved consequential operations.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "searchright-owned-sibling-caller-admission",
+      "mode": "isolated_first_pass",
+      "finding": "Verified searchright_owned_sibling deployment and explicit_user_handoff admission pipeline in crates/searchright-agent/src/sibling.rs and tests/sibling_admission.rs; confirmed automated invocation remains disabled_pending_runtime_admission and external live operations fail closed.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "evaluations-traceability-and-gate-governance",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Reconciled Track 11 deliverables, traceability overrides, and assertion mappings (T11-A001..T11-A006) with native test commands (cargo test --locked -p searchright-agent) and added missing sibling sources to deliverables; resolved unit test script module resolution; preserved four open external/human gates (T11-G001..T11-G004).",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Reconciled conductor/traceability-overrides.json and conductor/tracks/11-agentic-skill/traceability.json across all 6 assertions T11-A001..T11-A006 with exact native_test_commands.",
+    "Added crates/searchright-agent/src/sibling.rs and crates/searchright-agent/tests/sibling_admission.rs to Track 11 deliverables and implementation paths in roadmap-coverage.json and plan.md.",
+    "Added sys.path bootstrapping to scripts/test_agent_host_eval.py and scripts/test_agent_skill_policy.py so both direct script execution and 'python3 -B -m unittest' discover runner and checker modules without PYTHONPATH overrides.",
+    "Executed 23 native Rust unit and integration tests across searchright-agent (13 in src/lib.rs, 9 in tests/sibling_admission.rs, 1 in tests/skill_scenarios.rs), 16 Python regression tests across test_agent_host_eval and test_agent_skill_policy, and verified strict Clippy under -D warnings."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/check_agent_skill.py",
+      "status": "passed",
+      "authority_scenarios": 12,
+      "package_files": 21,
+      "package_sha256": "c7517b7093f267ce3d543e7136a80527169aea8670e149d3f234865ab54f1d6c"
+    },
+    {
+      "command": "python3 -B -m unittest scripts/test_agent_host_eval.py scripts/test_agent_skill_policy.py",
+      "status": "passed",
+      "tests_passed": 16
+    },
+    {
+      "command": "cargo test --locked -p searchright-agent --all-features",
+      "status": "passed",
+      "tests_passed": 23,
+      "breakdown": {
+        "searchright_agent_lib": 13,
+        "searchright_agent_sibling_admission": 9,
+        "searchright_agent_skill_scenarios": 1
+      }
+    },
+    {
+      "command": "cargo clippy --locked -p searchright-agent --all-targets --all-features -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T11-G001",
+      "kind": "downstream_adoption",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
+    },
+    {
+      "gate_id": "T11-G002",
+      "kind": "host_model_evaluation",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Run scenario-based agent evaluations across supported hosts and models."
+    },
+    {
+      "gate_id": "T11-G003",
+      "kind": "human_methodology_calibration",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Calibrate authority and failure modes with human information specialists."
+    },
+    {
+      "gate_id": "T11-G004",
+      "kind": "registry_authorization_and_acceptance",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
+    }
+  ],
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending."
+}

@@ -41,7 +41,7 @@ searchright-access = { path = "../searchright-access", version = "=0.1.0-alpha.1
 searchright-contracts = { path = "../searchright-contracts", version = "=0.1.0-alpha.1", optional = true }
 serde.workspace = true
 serde_json.workspace = true
-serde_yaml.workspace = true
+noyalib.workspace = true
 sha2.workspace = true
 time.workspace = true
 tokio.workspace = true

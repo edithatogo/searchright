@@ -15,7 +15,7 @@ press_reviews:
     message: No language limit is applied.
     recommendation: Retain no language limit and document translation plans.
     resolved: true
-  decision: approved with advisory note
+  decision: approved_with_advisory
 seed_records:
 - seed_id: seed-1
   identifier: 10.1000/example

@@ -29,6 +29,16 @@ class CargoVetGovernanceTests(unittest.TestCase):
         self.real_load_json = checker.load_json
         self.lock = checker.load_toml(checker.ROOT / "Cargo.lock")
         self.approval = checker.load_json(checker.ROOT / checker.TRACK06_RECEIPT)
+        # Replay the former decision at its original date using its exact scope.
+        self.proposal()["status"] = "approved"
+        self.config["exemptions"]["quick-xml"] = [{
+            "version": "0.41.0", "criteria": "safe-to-deploy",
+            "notes": (f"accountable_owner={checker.REQUIRED_OWNER}; issue={checker.TRACK06_ISSUE}; "
+                      f"approved_on={checker.TRACK06_DECIDED_AT}; review_by={checker.TRACK06_EXPIRY}; "
+                      f"rationale={checker.TRACK06_RATIONALE}"),
+        }]
+        package = next(p for p in self.lock["package"] if p["name"] == "quick-xml")
+        package.update(version="0.41.0", checksum=checker.TRACK06_CHECKSUM)
         self.missing_approval = False
         self.metadata_error = None
         self.all_features_metadata = None

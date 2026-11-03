@@ -205,7 +205,8 @@
         "verification/receipts/track-02-conductor-review.json",
         "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
         "verification/receipts/track-02-final-review-2026-08-29.json",
-        "verification/receipts/track-02-integration-panel.json"
+        "verification/receipts/track-02-integration-panel.json",
+        "verification/receipts/track-02-conductor-review-2026-11-03.json"
       ],
       "phase_3_task_count": 3,
       "review_completed": true,
@@ -217,6 +218,10 @@
         {
           "commit": "b98fc59",
           "summary": "Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions."
+        },
+        {
+          "commit": "0e2fff8",
+          "summary": "Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt."
         }
       ],
       "higher_evidence_completed": true,
@@ -245,7 +250,9 @@
           "kind": "human",
           "status": "pending",
           "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
-          "evidence": ["verification/receipts/track-02-integration-panel.json"]
+          "evidence": [
+            "verification/receipts/track-02-integration-panel.json"
+          ]
         }
       ]
     },
@@ -275,7 +282,14 @@
         "docs/msrv-and-package-policy.md",
         "crates/evidence-search-core/src/lib.rs",
         "crates/evidence-search-core/tests/subrequest_context.rs",
-        "docs/provider-subrequest-context.md"
+        "docs/provider-subrequest-context.md",
+        "crates/searchright-contracts/src/parity_matrix.rs",
+        "crates/searchright-sourceright-compat/src/parity_matrix.rs",
+        "crates/searchright-sourceright-compat/tests/parity_matrix.rs",
+        "docs/parity-execution-matrix-v2.md",
+        "scripts/run_local_api_evidence.py",
+        "tests/test_local_api_evidence.py",
+        "docs/local-api-evidence.md"
       ],
       "dependencies": [
         "01",
@@ -299,7 +313,8 @@
         "verification/receipts/track-03-integration-panel.json",
         "verification/receipts/track-03-reconciled-validation.json",
         "verification/receipts/track-03-budget-warning.json",
-        "verification/receipts/track-03-subrequest-context.json"
+        "verification/receipts/track-03-subrequest-context.json",
+        "verification/receipts/track-03-conductor-review-2026-11-03.json"
       ],
       "review_completed": true,
       "review_fixes": [
@@ -338,6 +353,10 @@
         {
           "commit": "935d725877f6a6ca82bacefd8982e613981f068c",
           "summary": "Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover."
+        },
+        {
+          "commit": "d43a11a",
+          "summary": "Reconcile Track 03 traceability, deliverables, and assertion mappings with commits 3f52b4d and 9b4a4a4, resolve searchright-contracts PressReview test compilation error and searchright-connectors clippy assertions, add parity matrix decision reference regressions, add candidate policy drift tests, and record conductor review receipt."
         }
       ],
       "source_verified_on": "2026-08-29",
@@ -345,10 +364,11 @@
       "status": "integration_prepared",
       "title": "Shared provider runtime and Sourceright extraction",
       "track_id": "03",
-      "updated": "2026-08-31",
+      "updated": "2026-11-03",
       "native_test_commands": [
         "cargo test -p evidence-search-core --test subrequest_context --locked",
         "cargo test -p evidence-search-core --lib --locked",
+        "cargo test -p searchright-sourceright-compat --test parity_matrix --locked",
         "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
       ],
       "review_scope": "Bounded source/fixture review of the implemented runtime and subrequest context only; open track evidence and adoption gates are not closed."
@@ -362,9 +382,10 @@
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_provider_contract_baselines.py",
-        "python scripts/check_provider_policies.py"
+        "python scripts/check_provider_policies.py",
+        "python scripts/check_redaction_policy.py --self-test"
       ],
-      "claim_boundary": "Full local validation of the cache-version slice passed on snapshot 6d995108106db62474e2746a2021f29e89603b95 using repository-pinned Rust/Cargo 1.97.1: 82 Python tests, 57 static gates, 431 native tests with zero skipped and 23 cargo-vet governance tests. Earlier 61 focused connector tests and strict Clippy used Homebrew 1.98.0; historical snapshot 8317 and its 429 native tests predate the cache-version fix. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; declared versions do not establish authenticity or parser execution on replay. Future EFetch orchestration adoption is not part of this proof. Shared live-transport/EFetch wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+      "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
       "deliverables": [
         "crates/searchright-connectors/src/lib.rs",
         "integration/provider-contract-baselines.json",
@@ -375,11 +396,15 @@
         "provider-fixtures/mvp/openalex.json",
         "crates/searchright-connectors/src/efetch.rs",
         "crates/searchright-connectors/tests/efetch_offline.rs",
+        "crates/searchright-connectors/tests/efetch_orchestration.rs",
+        "crates/searchright-connectors/src/pubmed_orchestration_tests.rs",
         "crates/searchright-connectors/tests/runtime_receipts.rs",
         "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
         "crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json",
         "tests/test_provider_contract_baselines.py",
+        "tests/test_connector_redaction_source.py",
         "docs/pubmed-efetch-mapping.md",
+        "docs/efetch-orchestration-design.md",
         "crates/searchright-connectors/tests/parser_integrity.rs",
         "crates/searchright-connectors/tests/canonical_pages.rs",
         "crates/searchright-connectors/tests/fixtures",
@@ -413,12 +438,15 @@
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
-        "verification/receipts/track-04-cache-version-panel.json"
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "native_test_commands": [
         "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
+        "cargo test -p searchright-connectors --test efetch_orchestration --all-features --locked",
         "cargo test -p searchright-connectors --all-features --locked",
-        "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+        "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings",
+        "cargo test -p searchright-connectors --test cache_parser_version --all-features --locked"
       ],
       "open_acceptance_gates": [
         "Obtain fresh static validation after evidence bookkeeping and exact-head hosted validation; historical snapshot proof remains bound to its recorded tree.",
@@ -427,7 +455,8 @@
         "Preserve historical Europe PMC/OpenAlex records and screening decisions; any necessary identity migration requires provenance-bound mapping and separate owner authority, and ambiguous collisions remain unresolved."
       ],
       "python_test_commands": [
-        "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py"
+        "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py",
+        "python3 -m unittest discover -s tests -p test_connector_redaction_source.py"
       ],
       "review_fixes": [
         {
@@ -445,15 +474,19 @@
         {
           "commit": "d7854b0956eed7ec3730ab3219b358d5f1964e77",
           "summary": "Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; observed old-cache bypass, then 61 focused Homebrew tests/Clippy and full pinned 1.97.1 snapshot 6d995108106db62474e2746a2021f29e89603b95 passed."
+        },
+        {
+          "commit": "362c4bf",
+          "summary": "Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt."
         }
       ],
-      "updated": "2026-08-31",
+      "updated": "2026-11-03",
       "slug": "open-connectors-mvp",
       "status": "partially_implemented",
       "title": "Open provider connectors MVP",
       "track_id": "04",
       "review_completed": true,
-      "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache and cache-version review only; future orchestration and open track gates remain incomplete."
+      "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache, cache-version and opt-in bounded EFetch orchestration review; live network execution, authorized canaries and open track gates remain incomplete."
     },
     {
       "blockers": [],
@@ -532,13 +565,13 @@
         "python scripts/validate_repository.py"
       ],
       "claim_boundary": "Compiler-backed deterministic interchange round trips and source-level deduplication/linkage behaviour are evidenced. A digest-bound multi-agent panel may recommend disposition, but only the repository owner's recorded decision may close the evaluation gate.",
-    "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
+      "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
       "deliverables": [
         "crates/searchright-dedup/src/lib.rs",
-      "crates/searchright-interchange/src/lib.rs",
-      "crates/searchright-interchange/src/xml.rs",
-      "crates/searchright-interchange/tests/xml_integrity.rs",
-      "docs/xml-imports.md",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/xml.rs",
+        "crates/searchright-interchange/tests/xml_integrity.rs",
+        "docs/xml-imports.md",
         "crates/searchright-study/src/lib.rs",
         "contracts/examples/interchange-receipt.yaml",
         "contracts/examples/study-graph.yaml",
@@ -594,13 +627,22 @@
       "updated": "2026-08-30"
     },
     {
-      "blockers": [
-        "Complete reviewer usability and inter-rater calibration evaluation."
-      ],
+      "blockers": [],
+      "panel_findings": {
+        "remediation_required": true,
+        "critical_count": 4,
+        "major_count": 6,
+        "top_findings": [
+          "P07-C001: Systemic authorization bypass in role-gate logic",
+          "P07-C002: Canonical decisions mutable/deletable",
+          "P07-C003: EPPI-Reviewer export schema mismatch",
+          "P07-C004: Import strips evidence excerpts"
+        ]
+      },
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-screening/src/lib.rs",
         "crates/searchright-agent/src/lib.rs",
@@ -612,10 +654,10 @@
         "01",
         "06"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
       "requirements": [
         "SR-020",
@@ -624,30 +666,65 @@
         "SR-058"
       ],
       "runtime_evidence": [
-        "verification/receipts/track-07-screening-review.json"
+        "verification/receipts/track-07-screening-review.json",
+        "verification/receipts/track-07-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-07-screening-reviewer.json",
+        "verification/receipts/panel-track-07-information-specialist.json",
+        "verification/receipts/panel-track-07-methodologist.json"
       ],
       "review_completed": true,
+      "fixture_proven_on": "2026-08-29",
       "slug": "screening-workflow",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Governed screening workflow",
-      "track_id": "07"
+      "track_id": "07",
+      "lifecycle": "archived",
+      "archived_on": "2026-08-31",
+      "closeout_completed": true,
+      "higher_evidence_completed": true,
+      "completed_higher_evidence_gates": [
+        "Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles."
+      ]
     },
     {
       "blockers": [
-        "Complete wider render-format coverage and PRISMA.jl parity/ownership evidence.",
-        "Obtain independent PRESS review of representative generated strategies and appendices."
+        "Obtain an accountable independent PRESS review of representative generated strategies and appendices.",
+        "Obtain a hosted compiler-verified receipt for the exact committed revision."
       ],
       "checks": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_cli_mcp_parity.py",
+        "python scripts/sync_schema_surface.py --check",
+        "python scripts/check_integration_passports.py",
+        "python scripts/check_integration_drift.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.",
       "deliverables": [
         "crates/searchright-prisma/src/lib.rs",
+        "crates/searchright-prisma/src/render.rs",
+        "crates/searchright-prisma/tests/reporting_fixtures.rs",
+        "crates/searchright-prisma/tests/render_formats.rs",
+        "crates/searchright-prisma/tests/ledger_evidence.rs",
+        "crates/searchright-prisma/tests/snapshots/",
+        "crates/searchright-prisma/examples/render_reporting_fixture.rs",
+        "crates/searchright-prisma/examples/render_typst_fixture.rs",
+        "crates/searchright-prisma/examples/compare_imported_table.py",
         "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-contracts/src/prisma.rs",
+        "crates/searchright-contracts/src/validation.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs",
         "contracts/examples/prisma-flow.json",
         "contracts/examples/search-validation.yaml",
         "contracts/examples/standard-assessment.yaml",
-        "docs/standards-and-provenance.md"
+        "contracts/standards/packs/prisma-scr-2018.yaml",
+        "contracts/standards/packs/prisma-lsr-2024.yaml",
+        "docs/standards-and-provenance.md",
+        "docs/prisma-jl-interop.md",
+        "integration/fixtures/prisma-jl/flow-parity-v1.json",
+        "integration/passports/prisma-jl-flow-interop.json",
+        "verification/fixtures/track-08/press-workflow-complete.yaml"
       ],
       "dependencies": [
         "01",
@@ -655,9 +732,9 @@
         "07"
       ],
       "evidence_level": "source_verified",
-      "external_approval_required": false,
+      "external_approval_required": true,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct.",
       "requirements": [
         "SR-023",
@@ -668,16 +745,41 @@
       ],
       "runtime_evidence": [
         "verification/receipts/track-08-reporting-review.json",
-        "verification/receipts/track-08-render-formats.json"
+        "verification/receipts/track-08-render-formats.json",
+        "verification/receipts/track-08-reporting-evidence-followup.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
       ],
       "review_completed": true,
+      "review_fixes": [
+        {
+          "summary": "Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls.",
+          "commit": "c234c41f940b37e153e9bf151458059e63c51b47"
+        },
+        {
+          "summary": "Reconcile Track 08 traceability, deliverables, and assertion mappings across all reporting renderers and PRESS workflows; resolve strict YAML ingestion and Clippy assert hygiene in shared facade and CLI/MCP test surfaces.",
+          "commit": "b48dff0"
+        }
+      ],
+      "completed_higher_evidence_gates": [
+        "Complete wider render-format coverage and record bounded PRISMA.jl parity with explicit ownership and loss evidence."
+      ],
+      "phase_3_task_count": 2,
       "slug": "prisma-press-reporting",
       "additional_closeout_tasks": [
-        "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Visual rendering, word-processor import, complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending."
+        "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Subsequent local visual/import evidence is recorded separately; complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.",
+        "Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after fixing wrapped HTML labels. No Microsoft Word, external parity or methodological acceptance is claimed."
       ],
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "PRISMA, PRESS and reporting",
-      "track_id": "08"
+      "track_id": "08",
+      "updated": "2026-11-03",
+      "source_verified_on": "2026-08-29",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --all-features",
+        "cargo test --locked -p searchright-validation --all-features",
+        "cargo test --locked -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-features",
+        "cargo clippy --locked -p searchright-prisma -p searchright-validation -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-targets --all-features -- -D warnings"
+      ]
     },
     {
       "blockers": [],
@@ -912,7 +1014,9 @@
         "crates/searchright-agent/src/lib.rs",
         "crates/searchright-agent/tests/skill_scenarios.rs",
         "scripts/check_agent_skill.py",
-        "verification/receipts/systematic-search-skill.json"
+        "verification/receipts/systematic-search-skill.json",
+        "crates/searchright-agent/src/sibling.rs",
+        "crates/searchright-agent/tests/sibling_admission.rs"
       ],
       "dependencies": [
         "10"
@@ -975,21 +1079,26 @@
         "SR-031"
       ],
       "review_completed": true,
-    "review_fixes": [
-      {
-        "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
-        "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
-      },
-      {
-        "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
-        "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
-      }
-    ],
-    "runtime_evidence": [
-      "verification/receipts/track-11-agent-authority-review.json",
-      "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
-      "verification/receipts/track-11-local-admission.json"
-    ],
+      "review_fixes": [
+        {
+          "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
+          "summary": "Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries."
+        },
+        {
+          "commit": "b7f42271ca25860acc83ef16414b514e96f39c2b",
+          "summary": "Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates."
+        },
+        {
+          "commit": "6b046f1",
+          "summary": "Reconcile Track 11 traceability, deliverables, and assertion mappings across all six assertions with native test commands; bootstrap unit test script module discovery."
+        }
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-11-agent-authority-review.json",
+        "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
+        "verification/receipts/track-11-local-admission.json",
+        "verification/receipts/track-11-conductor-review-2026-11-03.json"
+      ],
       "external_evidence": [
         "verification/receipts/track-11-sibling-route.json",
         "verification/receipts/track-11-downstream-readiness.json",
@@ -1008,7 +1117,11 @@
         "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.",
         "Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending."
       ],
-      "updated": "2026-08-31"
+      "updated": "2026-11-03",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent --all-features",
+        "cargo clippy --locked -p searchright-agent --all-targets --all-features -- -D warnings"
+      ]
     },
     {
       "blockers": [
@@ -2347,5 +2460,5 @@
       "track_id": "37"
     }
   ],
-  "updated": "2026-08-12"
+  "updated": "2026-08-29"
 }

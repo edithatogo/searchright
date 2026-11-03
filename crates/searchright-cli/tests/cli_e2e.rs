@@ -31,7 +31,7 @@ fn help_output_matches_the_cross_platform_snapshot() {
         stable_help_text(&output.stdout),
         include_str!("snapshots/help.txt")
     );
-    assert!(output.stderr.is_empty());
+    assert_eq!(output.stderr, b"");
 }
 
 #[test]
@@ -39,7 +39,7 @@ fn dry_run_json_matches_the_stable_snapshot_without_writing() {
     let output = run(&["init", "--target", "snapshot.json"]);
     assert!(output.status.success());
     assert_eq!(text(&output.stdout), include_str!("snapshots/init.json"));
-    assert!(output.stderr.is_empty());
+    assert_eq!(output.stderr, b"");
 }
 
 #[test]
@@ -103,7 +103,7 @@ fn apply_creates_once_and_refusal_preserves_exact_bytes() {
 
     let refusal = run(&["init", "--target", &target_argument, "--apply"]);
     assert_eq!(refusal.status.code(), Some(3));
-    assert!(refusal.stdout.is_empty());
+    assert_eq!(refusal.stdout, b"");
     let error: serde_json::Value = serde_json::from_slice(&refusal.stderr)
         .unwrap_or_else(|decode_error| panic!("refusal must be JSON: {decode_error}"));
     assert_eq!(
@@ -130,7 +130,7 @@ fn operation_errors_name_a_safe_stage_and_category_without_reflecting_paths() {
     let secret = "TRACK09_PATH_SENTINEL_SECRET";
     let output = run(&["validate-plan", secret]);
     assert_eq!(output.status.code(), Some(3));
-    assert!(output.stdout.is_empty());
+    assert_eq!(output.stdout, b"");
     let stderr = text(&output.stderr);
     assert!(!stderr.contains(secret));
     let error: serde_json::Value = serde_json::from_str(&stderr)
@@ -191,7 +191,7 @@ fn operation_errors_distinguish_syntax_from_contract_failures() {
 fn usage_errors_are_machine_readable_and_stable() {
     let output = run(&["invalid-command"]);
     assert_eq!(output.status.code(), Some(2));
-    assert!(output.stdout.is_empty());
+    assert_eq!(output.stdout, b"");
     let actual: serde_json::Value = serde_json::from_slice(&output.stderr)
         .unwrap_or_else(|error| panic!("usage error must be JSON: {error}"));
     let expected: serde_json::Value =

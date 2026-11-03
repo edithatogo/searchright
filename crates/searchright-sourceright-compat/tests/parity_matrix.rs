@@ -372,3 +372,30 @@ fn catalogue_case_dimension_assignments_exactly_match_v1_source_catalogue() -> T
     assert_eq!(assignments, 20);
     Ok(())
 }
+
+#[test]
+fn decision_references_enforce_uniqueness_bounds_and_text_hygiene() -> TestResult {
+    let (expected, matrix, pin) = fixture()?;
+    let mut invalid = matrix.clone();
+    let cell = first_mut(&mut invalid.cells)?;
+    cell.decision_references = vec!["ref-1".into(), "ref-1".into()];
+    assert_eq!(
+        validate_execution_matrix(&expected, &pin, &invalid),
+        Err(MatrixError::Metadata)
+    );
+    let mut invalid = matrix.clone();
+    let cell = first_mut(&mut invalid.cells)?;
+    cell.decision_references = vec!["  ref-whitespace  ".into()];
+    assert_eq!(
+        validate_execution_matrix(&expected, &pin, &invalid),
+        Err(MatrixError::Metadata)
+    );
+    let mut invalid = matrix;
+    let cell = first_mut(&mut invalid.cells)?;
+    cell.decision_references = (0..17).map(|i| format!("ref-{i}")).collect();
+    assert_eq!(
+        validate_execution_matrix(&expected, &pin, &invalid),
+        Err(MatrixError::Limit)
+    );
+    Ok(())
+}

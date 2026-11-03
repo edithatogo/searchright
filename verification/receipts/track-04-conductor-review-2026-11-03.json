@@ -1,0 +1,104 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "04",
+  "reviewed_revision": "362c4bf",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "pubmed-efetch-orchestration",
+      "mode": "isolated_first_pass",
+      "finding": "Verified bounded opt-in EFetch orchestration via pubmed_orchestration_tests and efetch_orchestration tests; confirmed subrequest admission through PageExecutionContext, shared NCBI rate grouping, isolated cache behavior versions, and XML parser/byte limits.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "connector-transport-and-redaction",
+      "mode": "isolated_first_pass",
+      "finding": "Verified connector byte-reader lexical bounds and redaction markers via check_redaction_policy --self-test and test_connector_redaction_source; confirmed live connector request/stream errors redact endpoint and query details.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "regulatory-and-fixture-integrity",
+      "mode": "isolated_first_pass",
+      "finding": "Verified FDA/EMA regulatory record extraction, canonical page comparisons, and offline EFetch XML golden tests with strict limits and entity rejection.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Reconciled Track 04 traceability overrides, assertion mapping, and deliverables with merged commits 8fc737e and 6f4a66c; populated non-empty symbols across all assertions (including T04-A006); preserved open live network and authorized canary gates.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Synchronized conductor/traceability-overrides.json and conductor/tracks/04-open-connectors-mvp/traceability.json across all 6 assertions T04-A001..T04-A006.",
+    "Added crates/searchright-connectors/src/pubmed_orchestration_tests.rs, crates/searchright-connectors/tests/efetch_orchestration.rs, docs/efetch-orchestration-design.md, and tests/test_connector_redaction_source.py to Track 04 deliverables and implementation paths.",
+    "Mapped searchright_connectors::PubMedEfetchProvider and searchright_connectors::register_pubmed_efetch_provider symbols to T04-A001 and updated permitted claim for bounded opt-in EFetch orchestration.",
+    "Mapped scripts/check_redaction_policy.py::connector_transport_errors, scripts/check_redaction_policy.py::main, and scripts/check_provider_policies.py::main symbols to T04-A006 so all assertions have non-empty implementation symbols.",
+    "Executed 11 Python unit tests, 75 native Rust tests across searchright-connectors, and verified strict Clippy with zero warnings."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/check_provider_contract_baselines.py",
+      "status": "passed",
+      "providers_checked": 6
+    },
+    {
+      "command": "python3 -B scripts/check_provider_policies.py",
+      "status": "passed",
+      "providers": 6
+    },
+    {
+      "command": "python3 -B scripts/check_redaction_policy.py --self-test",
+      "status": "passed",
+      "replacement_count": 7
+    },
+    {
+      "command": "python3 -B -m unittest tests/test_provider_contract_baselines.py tests/test_connector_redaction_source.py",
+      "status": "passed",
+      "tests_passed": 11
+    },
+    {
+      "command": "cargo test --locked -p searchright-connectors --all-features",
+      "status": "passed",
+      "tests_passed": 75,
+      "breakdown": {
+        "lib_unit_and_orchestration": 25,
+        "cache_parser_version": 2,
+        "canonical_pages": 4,
+        "efetch_offline": 16,
+        "efetch_orchestration": 3,
+        "parser_integrity": 18,
+        "runtime_receipts": 7
+      }
+    },
+    {
+      "command": "cargo clippy --locked -p searchright-connectors --all-targets --all-features -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T04-G-LIVE-SMOKES",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Run authorised, redacted live smokes for each advertised provider."
+    },
+    {
+      "gate_id": "T04-G-UPSTREAM-TERMS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Verify upstream terms, rate limits and response changes at release time."
+    },
+    {
+      "gate_id": "T04-G-PROVIDER-POLICY-PROMOTION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
+    }
+  ]
+}

@@ -119,8 +119,8 @@ pub use study::{
     StudyGraph,
 };
 pub use validation::{
-    FindingSeverity, PressElement, PressFinding, PressReview, SearchValidationReport, SeedRecord,
-    TranslationLossAssessment,
+    FindingSeverity, PressElement, PressFinding, PressReview, PressReviewDecision,
+    SearchValidationReport, SeedRecord, TranslationLossAssessment,
 };
 
 /// Canonical screening-policy contract version.

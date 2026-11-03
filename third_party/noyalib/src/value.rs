@@ -1,0 +1,1836 @@
+//! YAML value types.
+
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Copyright (c) 2026 Noyalib. All rights reserved.
+
+use crate::prelude::*;
+use core::cmp::Ordering;
+use core::hash::{Hash, Hasher};
+
+mod convert;
+mod mapping;
+mod number;
+mod serde_impl;
+pub use mapping::{Mapping, MappingAny};
+pub(crate) use number::write_float;
+pub use number::{Number, ParseNumberError};
+
+/// A YAML sequence (array/list).
+pub type Sequence = Vec<Value>;
+
+#[cfg(feature = "arbitrary")]
+#[cfg_attr(docsrs, doc(cfg(feature = "arbitrary")))]
+mod arbitrary_impls;
+mod tag;
+pub use tag::{MaybeTag, Tag, TaggedValue, check_for_tag, nobang};
+
+/// Represents any valid YAML value.
+#[derive(Debug, Clone, Default)]
+pub enum Value {
+    /// Represents a YAML null value.
+    #[default]
+    Null,
+    /// Represents a YAML boolean.
+    Bool(bool),
+    /// Represents a YAML number (integer or float).
+    Number(Number),
+    /// Represents a YAML string.
+    String(String),
+    /// Represents a YAML sequence (array).
+    Sequence(Sequence),
+    /// Represents a YAML mapping (object).
+    Mapping(Mapping),
+    /// Represents a tagged YAML value.
+    Tagged(Box<TaggedValue>),
+}
+
+impl Value {
+    /// Returns `true` if the value is `Value::Null`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert!(Value::Null.is_null());
+    /// assert!(!Value::from(false).is_null());
+    /// ```
+    #[must_use]
+    pub fn is_null(&self) -> bool {
+        matches!(self, Self::Null)
+    }
+
+    /// Returns `true` if the value is a boolean.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert!(Value::from(true).is_bool());
+    /// assert!(!Value::from(1_i64).is_bool());
+    /// ```
+    #[must_use]
+    pub fn is_bool(&self) -> bool {
+        matches!(self, Self::Bool(_))
+    }
+
+    /// Returns `true` if the value is a number (integer or float).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert!(Value::from(42_i64).is_number());
+    /// assert!(Value::from(1.5).is_number());
+    /// assert!(!Value::from("42").is_number());
+    /// ```
+    #[must_use]
+    pub fn is_number(&self) -> bool {
+        matches!(self, Self::Number(_))
+    }
+
+    /// Returns `true` if the value is a string.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert!(Value::from("hello").is_string());
+    /// assert!(!Value::from(42_i64).is_string());
+    /// ```
+    #[must_use]
+    pub fn is_string(&self) -> bool {
+        matches!(self, Self::String(_))
+    }
+
+    /// Returns `true` if the value is a sequence (YAML list).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("[1, 2, 3]").unwrap();
+    /// assert!(v.is_sequence());
+    /// ```
+    #[must_use]
+    pub fn is_sequence(&self) -> bool {
+        matches!(self, Self::Sequence(_))
+    }
+
+    /// Returns `true` if the value is a mapping (YAML map).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("a: 1\nb: 2\n").unwrap();
+    /// assert!(v.is_mapping());
+    /// ```
+    #[must_use]
+    pub fn is_mapping(&self) -> bool {
+        matches!(self, Self::Mapping(_))
+    }
+
+    /// Returns `true` if the value is tagged (custom YAML tag).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("!Custom 'hello'\n").unwrap();
+    /// assert!(v.is_tagged());
+    /// ```
+    #[must_use]
+    pub fn is_tagged(&self) -> bool {
+        matches!(self, Self::Tagged(_))
+    }
+
+    /// Returns the value as a boolean if it is one.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert_eq!(Value::from(true).as_bool(), Some(true));
+    /// assert_eq!(Value::from("true").as_bool(), None);
+    /// ```
+    #[must_use]
+    pub fn as_bool(&self) -> Option<bool> {
+        match self {
+            Self::Bool(b) => Some(*b),
+            _ => None,
+        }
+    }
+
+    /// Returns `Some(())` if the value is null, `None` otherwise.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert_eq!(Value::Null.as_null(), Some(()));
+    /// assert_eq!(Value::from(0_i64).as_null(), None);
+    /// ```
+    #[must_use]
+    pub fn as_null(&self) -> Option<()> {
+        match self {
+            Self::Null => Some(()),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as an `i64` if it is an integer.
+    ///
+    /// Floats return `None` even when the underlying value is a
+    /// whole number; the type tag is part of the test.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert_eq!(Value::from(42_i64).as_i64(), Some(42));
+    /// assert_eq!(Value::from(1.5).as_i64(), None);
+    /// ```
+    #[must_use]
+    pub fn as_i64(&self) -> Option<i64> {
+        match self {
+            Self::Number(n) => n.as_i64(),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as a `u64` if it is a non-negative integer.
+    ///
+    /// Negative integers return `None`. Floats also return `None`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert_eq!(Value::from(42_i64).as_u64(), Some(42));
+    /// assert_eq!(Value::from(-1_i64).as_u64(), None);
+    /// ```
+    #[must_use]
+    pub fn as_u64(&self) -> Option<u64> {
+        match self {
+            Self::Number(n) => n.as_u64(),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as an `f64` if it is a number.
+    ///
+    /// Integers are widened to `f64` (with the usual `i64 → f64`
+    /// precision loss for magnitudes above 2^53).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert_eq!(Value::from(42_i64).as_f64(), Some(42.0));
+    /// assert_eq!(Value::from(1.5).as_f64(), Some(1.5));
+    /// assert_eq!(Value::from("42").as_f64(), None);
+    /// ```
+    #[must_use]
+    pub fn as_f64(&self) -> Option<f64> {
+        match self {
+            Self::Number(n) => Some(n.as_f64()),
+            _ => None,
+        }
+    }
+
+    /// Returns `true` if the value is an integer that fits in `i64`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert!(Value::from(42_i64).is_i64());
+    /// assert!(!Value::from(1.5).is_i64());
+    /// ```
+    #[must_use]
+    pub fn is_i64(&self) -> bool {
+        match self {
+            Self::Number(n) => n.is_i64(),
+            _ => false,
+        }
+    }
+
+    /// Returns `true` if the value is a non-negative integer that fits in `u64`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert!(Value::from(42_i64).is_u64());
+    /// assert!(!Value::from(-1_i64).is_u64());
+    /// ```
+    #[must_use]
+    pub fn is_u64(&self) -> bool {
+        match self {
+            Self::Number(n) => n.is_u64(),
+            _ => false,
+        }
+    }
+
+    /// Returns `true` if the value is a number (always convertible to `f64`).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert!(Value::from(42_i64).is_f64());
+    /// assert!(Value::from(1.5).is_f64());
+    /// ```
+    #[must_use]
+    pub fn is_f64(&self) -> bool {
+        matches!(self, Self::Number(_))
+    }
+
+    /// Returns the value as a string slice if it is a string.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Value;
+    /// assert_eq!(Value::from("hello").as_str(), Some("hello"));
+    /// assert_eq!(Value::from(42_i64).as_str(), None);
+    /// ```
+    #[must_use]
+    pub fn as_str(&self) -> Option<&str> {
+        match self {
+            Self::String(s) => Some(s),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as a sequence if it is one.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("[1, 2, 3]").unwrap();
+    /// assert_eq!(v.as_sequence().map(|s| s.len()), Some(3));
+    /// ```
+    #[must_use]
+    pub fn as_sequence(&self) -> Option<&Sequence> {
+        match self {
+            Self::Sequence(s) => Some(s),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as a mutable sequence if it is one.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let mut v: Value = from_str("[1, 2]").unwrap();
+    /// if let Some(seq) = v.as_sequence_mut() {
+    ///     seq.push(Value::from(3_i64));
+    /// }
+    /// assert_eq!(v.as_sequence().unwrap().len(), 3);
+    /// ```
+    #[must_use]
+    pub fn as_sequence_mut(&mut self) -> Option<&mut Sequence> {
+        match self {
+            Self::Sequence(s) => Some(s),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as a mapping if it is one.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("a: 1\nb: 2\n").unwrap();
+    /// let m = v.as_mapping().unwrap();
+    /// assert_eq!(m.get("a").and_then(Value::as_i64), Some(1));
+    /// ```
+    #[must_use]
+    pub fn as_mapping(&self) -> Option<&Mapping> {
+        match self {
+            Self::Mapping(m) => Some(m),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as a mutable mapping if it is one.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let mut v: Value = from_str("a: 1\n").unwrap();
+    /// if let Some(m) = v.as_mapping_mut() {
+    ///     m.insert("b", Value::from(2_i64));
+    /// }
+    /// assert_eq!(v.as_mapping().unwrap().len(), 2);
+    /// ```
+    #[must_use]
+    pub fn as_mapping_mut(&mut self) -> Option<&mut Mapping> {
+        match self {
+            Self::Mapping(m) => Some(m),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as a tagged value if it is one.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("!Custom 'hi'\n").unwrap();
+    /// let tv = v.as_tagged().unwrap();
+    /// assert_eq!(tv.tag().as_str(), "!Custom");
+    /// ```
+    #[must_use]
+    pub fn as_tagged(&self) -> Option<&TaggedValue> {
+        match self {
+            Self::Tagged(t) => Some(t),
+            _ => None,
+        }
+    }
+
+    /// Returns the value as a mutable tagged value if it is one.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Tag, Value};
+    /// let mut v: Value = from_str("!A 'x'\n").unwrap();
+    /// if let Some(tv) = v.as_tagged_mut() {
+    ///     // mutate inner via value_mut
+    ///     *tv.value_mut() = Value::from("y");
+    /// }
+    /// assert_eq!(v.as_tagged().unwrap().value().as_str(), Some("y"));
+    /// # let _ = Tag::new("!A");
+    /// ```
+    #[must_use]
+    pub fn as_tagged_mut(&mut self) -> Option<&mut TaggedValue> {
+        match self {
+            Self::Tagged(t) => Some(t),
+            _ => None,
+        }
+    }
+
+    /// Index into a sequence or mapping.
+    ///
+    /// Accepts a string key (for mappings) or a `usize` index
+    /// (for sequences).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("a: [1, 2, 3]\n").unwrap();
+    /// assert_eq!(v.get("a").unwrap().get(0).and_then(Value::as_i64), Some(1));
+    /// ```
+    #[must_use]
+    pub fn get<I: ValueIndex>(&self, index: I) -> Option<&Self> {
+        index.index_into(self)
+    }
+
+    /// Mutably index into a sequence or mapping.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let mut v: Value = from_str("a: 1\n").unwrap();
+    /// if let Some(slot) = v.get_mut("a") {
+    ///     *slot = Value::from(2_i64);
+    /// }
+    /// assert_eq!(v.get("a").and_then(Value::as_i64), Some(2));
+    /// ```
+    #[must_use]
+    pub fn get_mut<I: ValueIndex>(&mut self, index: I) -> Option<&mut Self> {
+        index.index_into_mut(self)
+    }
+
+    /// Access a nested value through a prevalidated [`QueryPath`].
+    ///
+    /// Unlike [`get_path`](Self::get_path), this separates path syntax
+    /// validation from lookup, so a missing value cannot be confused with
+    /// malformed user input.
+    #[must_use]
+    pub fn get_query_path(&self, path: &QueryPath) -> Option<&Self> {
+        let mut current = self;
+
+        for segment in path.segments() {
+            current = match segment {
+                QuerySegment::Key(key) => current.get(key.as_str())?,
+                QuerySegment::Index(idx) => current.get(*idx)?,
+                QuerySegment::Wildcard | QuerySegment::RecursiveDescent => {
+                    return self.query_path(path).into_iter().next();
+                }
+            };
+        }
+
+        Some(current)
+    }
+
+    /// Access a nested value using a path string.
+    ///
+    /// Supports dot notation for mappings and bracket notation for sequences:
+    /// - `"foo.bar"` - access key "bar" in mapping "foo"
+    /// - `"items[0]"` - access index 0 in sequence "items"
+    /// - `"items[0].name"` - access key "name" in first element of sequence
+    ///   "items"
+    /// - `"labels[\"app.kubernetes.io/name\"]"` - a bracket-quoted segment
+    ///   is one key, whatever it contains; see [`crate::path`] for the
+    ///   grammar and for [`crate::path::join_keys`], which spells a path
+    ///   from literal keys
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let yaml = r#"
+    /// server:
+    ///   host: localhost
+    ///   port: 8080
+    /// items:
+    ///   - name: first
+    ///   - name: second
+    /// "#;
+    ///
+    /// let value: Value = from_str(yaml).unwrap();
+    ///
+    /// assert_eq!(
+    ///     value.get_path("server.host").unwrap().as_str(),
+    ///     Some("localhost")
+    /// );
+    /// assert_eq!(value.get_path("server.port").unwrap().as_i64(), Some(8080));
+    /// assert_eq!(
+    ///     value.get_path("items[0].name").unwrap().as_str(),
+    ///     Some("first")
+    /// );
+    /// assert_eq!(
+    ///     value.get_path("items[1].name").unwrap().as_str(),
+    ///     Some("second")
+    /// );
+    /// ```
+    #[must_use]
+    pub fn get_path(&self, path: &str) -> Option<&Self> {
+        let segments = parse_path(path);
+        let mut current = self;
+
+        for segment in segments {
+            current = match segment {
+                QuerySegment::Key(key) => current.get(key.as_str())?,
+                QuerySegment::Index(idx) => current.get(idx)?,
+                QuerySegment::Wildcard | QuerySegment::RecursiveDescent => {
+                    // For get_path, return the first match
+                    return self.query(path).into_iter().next();
+                }
+            };
+        }
+
+        Some(current)
+    }
+
+    /// Query nested values through a prevalidated [`QueryPath`].
+    #[must_use]
+    pub fn query_path(&self, path: &QueryPath) -> Vec<&Self> {
+        let mut results = Vec::new();
+        query_recursive(self, path.segments(), 0, &mut results);
+        results
+    }
+
+    /// Query nested values using an extended path expression.
+    ///
+    /// Returns all matching values. Supports:
+    /// - Dot notation: `"foo.bar.baz"`
+    /// - Bracket indexing: `"items[0]"`
+    /// - Quoted keys: `"labels[\"app.kubernetes.io/name\"]"` — one key,
+    ///   whatever it contains (see [`crate::path`])
+    /// - Wildcard: `"items[*]"` or `"items.*"` — matches all children
+    /// - Recursive descent: `"..name"` — finds `name` at any depth
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let yaml = "items:\n  - name: a\n    v: 1\n  - name: b\n    v: 2\n";
+    /// let value: Value = from_str(yaml).unwrap();
+    ///
+    /// // Wildcard: all items
+    /// let all = value.query("items[*].name");
+    /// assert_eq!(all.len(), 2);
+    ///
+    /// // Recursive descent: find "name" at any depth
+    /// let names = value.query("..name");
+    /// assert_eq!(names.len(), 2);
+    /// ```
+    #[must_use]
+    pub fn query(&self, path: &str) -> Vec<&Self> {
+        let segments = parse_path(path);
+        let mut results = Vec::new();
+        query_recursive(self, &segments, 0, &mut results);
+        results
+    }
+
+    /// Mutably access a nested value through a prevalidated [`QueryPath`].
+    ///
+    /// Wildcard and recursive-descent segments do not identify one mutable
+    /// value and therefore return `None`.
+    #[must_use]
+    pub fn get_query_path_mut(&mut self, path: &QueryPath) -> Option<&mut Self> {
+        let mut current = self;
+
+        for segment in path.segments() {
+            current = match segment {
+                QuerySegment::Key(key) => current.get_mut(key.as_str())?,
+                QuerySegment::Index(idx) => current.get_mut(*idx)?,
+                QuerySegment::Wildcard | QuerySegment::RecursiveDescent => return None,
+            };
+        }
+
+        Some(current)
+    }
+
+    /// Mutably access a nested value using a path string.
+    ///
+    /// See [`get_path`](Self::get_path) for path syntax documentation.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let yaml = "server:\n  port: 8080\n";
+    /// let mut value: Value = from_str(yaml).unwrap();
+    ///
+    /// if let Some(port) = value.get_path_mut("server.port") {
+    ///     *port = Value::from(9090);
+    /// }
+    ///
+    /// assert_eq!(value.get_path("server.port").unwrap().as_i64(), Some(9090));
+    /// ```
+    #[must_use]
+    pub fn get_path_mut(&mut self, path: &str) -> Option<&mut Self> {
+        let segments = parse_path(path);
+        let mut current = self;
+
+        for segment in segments {
+            current = match segment {
+                QuerySegment::Key(key) => current.get_mut(key.as_str())?,
+                QuerySegment::Index(idx) => current.get_mut(idx)?,
+                QuerySegment::Wildcard | QuerySegment::RecursiveDescent => return None,
+            };
+        }
+
+        Some(current)
+    }
+
+    /// Deep merge another value into this one.
+    ///
+    /// Merge behavior:
+    /// - Mappings: keys from `other` are merged recursively; `other` keys
+    ///   override `self` keys
+    /// - Sequences: `other` sequence replaces `self` sequence (use
+    ///   `merge_concat` for concatenation)
+    /// - Scalars: `other` value replaces `self` value
+    /// - Null in `other`: replaces `self` value
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let mut base: Value = from_str(
+    ///     "
+    /// server:
+    ///   host: localhost
+    ///   port: 8080
+    /// ",
+    /// )
+    /// .unwrap();
+    ///
+    /// let override_val: Value = from_str(
+    ///     "
+    /// server:
+    ///   port: 9090
+    ///   ssl: true
+    /// ",
+    /// )
+    /// .unwrap();
+    ///
+    /// base.merge(override_val);
+    ///
+    /// assert_eq!(
+    ///     base.get_path("server.host").unwrap().as_str(),
+    ///     Some("localhost")
+    /// );
+    /// assert_eq!(base.get_path("server.port").unwrap().as_i64(), Some(9090));
+    /// assert_eq!(base.get_path("server.ssl").unwrap().as_bool(), Some(true));
+    /// ```
+    pub fn merge(&mut self, other: Self) {
+        match (self, other) {
+            (Self::Mapping(base), Self::Mapping(other)) => {
+                for (key, other_value) in other {
+                    match base.get_mut(&key) {
+                        Some(base_value) => {
+                            base_value.merge(other_value);
+                        }
+                        None => {
+                            let _ = base.insert(key, other_value);
+                        }
+                    }
+                }
+            }
+            (this, other) => {
+                *this = other;
+            }
+        }
+    }
+
+    /// Deep merge with sequence concatenation.
+    ///
+    /// Similar to [`merge`](Self::merge), but sequences are concatenated
+    /// instead of replaced.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let mut base: Value = from_str("items:\n  - a\n  - b\n").unwrap();
+    /// let other: Value = from_str("items:\n  - c\n  - d\n").unwrap();
+    ///
+    /// base.merge_concat(other);
+    ///
+    /// let items = base.get("items").unwrap().as_sequence().unwrap();
+    /// assert_eq!(items.len(), 4);
+    /// ```
+    pub fn merge_concat(&mut self, other: Self) {
+        match (self, other) {
+            (Self::Mapping(base), Self::Mapping(other)) => {
+                for (key, other_value) in other {
+                    match base.get_mut(&key) {
+                        Some(base_value) => {
+                            base_value.merge_concat(other_value);
+                        }
+                        None => {
+                            let _ = base.insert(key, other_value);
+                        }
+                    }
+                }
+            }
+            (Self::Sequence(base), Self::Sequence(other)) => {
+                base.extend(other);
+            }
+            (this, other) => {
+                *this = other;
+            }
+        }
+    }
+
+    /// Remove a key from a mapping.
+    ///
+    /// Returns the removed value if the key existed and this is a mapping.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let mut value: Value = from_str("a: 1\nb: 2\n").unwrap();
+    /// let removed = value.remove("a");
+    ///
+    /// assert_eq!(removed.unwrap().as_i64(), Some(1));
+    /// assert!(value.get("a").is_none());
+    /// ```
+    pub fn remove(&mut self, key: &str) -> Option<Self> {
+        match self {
+            Self::Mapping(map) => map.shift_remove(key),
+            _ => None,
+        }
+    }
+
+    /// Insert a key-value pair into a mapping.
+    ///
+    /// Returns the previous value if the key existed. Returns `None` if this is
+    /// not a mapping.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let mut value: Value = from_str("a: 1\n").unwrap();
+    /// value.insert("b", Value::from(2));
+    ///
+    /// assert_eq!(value.get("b").unwrap().as_i64(), Some(2));
+    /// ```
+    pub fn insert(&mut self, key: impl Into<String>, value: Self) -> Option<Self> {
+        match self {
+            Self::Mapping(map) => map.insert(key.into(), value),
+            _ => None,
+        }
+    }
+
+    /// Performs merging of `<<` keys into the surrounding mapping.
+    ///
+    /// This implements YAML's merge key functionality as described in
+    /// <https://yaml.org/type/merge.html>.
+    ///
+    /// The merge key `<<` is used to indicate that all the keys of one or more
+    /// specified mappings should be inserted into the current mapping. If a key
+    /// already exists in the current mapping, its value is NOT overridden.
+    ///
+    /// # Examples
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let config = r#"
+    /// defaults: &defaults
+    ///   timeout: 30
+    ///   retries: 3
+    ///
+    /// server:
+    ///   <<: *defaults
+    ///   host: localhost
+    ///   timeout: 60
+    /// "#;
+    ///
+    /// let mut value: Value = from_str(config).unwrap();
+    /// value.apply_merge().unwrap();
+    ///
+    /// // The server mapping now has merged values from defaults
+    /// assert_eq!(value["server"]["host"].as_str(), Some("localhost"));
+    /// assert_eq!(value["server"]["timeout"].as_i64(), Some(60)); // Not overridden
+    /// assert_eq!(value["server"]["retries"].as_i64(), Some(3));  // Merged from defaults
+    /// ```
+    ///
+    /// # Multiple Merge Sources
+    ///
+    /// When `<<` is followed by a sequence of mappings, they are merged in
+    /// order. Earlier mappings in the sequence take precedence for
+    /// duplicate keys.
+    ///
+    /// ```rust
+    /// use noyalib::{from_str, Value};
+    ///
+    /// let yaml = r#"
+    /// a: &a
+    ///   x: 1
+    /// b: &b
+    ///   x: 2
+    ///   y: 2
+    /// merged:
+    ///   <<: [*a, *b]
+    ///   z: 3
+    /// "#;
+    ///
+    /// let mut value: Value = from_str(yaml).unwrap();
+    /// value.apply_merge().unwrap();
+    ///
+    /// assert_eq!(value["merged"]["x"].as_i64(), Some(1)); // From *a (first)
+    /// assert_eq!(value["merged"]["y"].as_i64(), Some(2)); // From *b
+    /// assert_eq!(value["merged"]["z"].as_i64(), Some(3)); // Direct value
+    /// ```
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if:
+    /// - A merge key value is a scalar (not a mapping or sequence of mappings)
+    /// - A merge key value is a tagged value
+    /// - A sequence in a merge key contains non-mapping values
+    pub fn apply_merge(&mut self) -> crate::Result<()> {
+        match self {
+            Self::Mapping(mapping) => {
+                // First, recursively apply merge to all values
+                for value in mapping.values_mut() {
+                    value.apply_merge()?;
+                }
+
+                // Then process the << key if present
+                let merge_value = mapping.remove("<<");
+                let merge_sequence = match merge_value {
+                    Some(Self::Sequence(seq)) => seq,
+                    Some(value) => vec![value],
+                    None => vec![],
+                };
+
+                // Process each merge source
+                for value in merge_sequence {
+                    match value {
+                        Self::Mapping(merge_map) => {
+                            // Merge keys from source, but don't override existing keys
+                            for (k, v) in merge_map {
+                                let _ = mapping.entry(k).or_insert(v);
+                            }
+                        }
+                        Self::Sequence(_) => {
+                            return Err(crate::Error::SequenceInMergeElement);
+                        }
+                        Self::Tagged(_) => {
+                            return Err(crate::Error::TaggedInMerge);
+                        }
+                        _ => {
+                            return Err(crate::Error::ScalarInMergeElement);
+                        }
+                    }
+                }
+            }
+            Self::Sequence(seq) => {
+                // Recursively apply merge to sequence elements
+                for value in seq {
+                    value.apply_merge()?;
+                }
+            }
+            Self::Tagged(tagged) => {
+                // Recursively apply merge to tagged value
+                tagged.value_mut().apply_merge()?;
+            }
+            // Scalars don't need merge processing
+            _ => {}
+        }
+
+        Ok(())
+    }
+
+    /// Substitute every `${name}` reference inside string scalars
+    /// with the corresponding entry from `properties`. The walk is
+    /// recursive — strings nested inside sequences, mappings, and
+    /// tagged values are all visited.
+    ///
+    /// String keys in mappings are treated as opaque and never
+    /// interpolated; only string *values* are touched. This avoids
+    /// surprising key-rename interactions and keeps the schema
+    /// stable.
+    ///
+    /// `${{` and `}}` escape sequences let users include literal
+    /// `${` and `}` in a scalar that should not be interpreted as
+    /// an interpolation site.
+    ///
+    /// # Errors
+    ///
+    /// Returns `Error::Custom` with the offending placeholder name
+    /// when a `${name}` reference is not present in `properties`.
+    /// Use [`Value::interpolate_properties_lossy`] to substitute an
+    /// empty string for unknown placeholders without erroring.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// use std::collections::HashMap;
+    ///
+    /// let mut value: Value = from_str("\
+    /// service:
+    ///   name: ${APP_NAME}
+    ///   port: ${BIND_PORT}
+    /// ").unwrap();
+    ///
+    /// let mut props = HashMap::new();
+    /// props.insert("APP_NAME".to_string(), "noyalib".to_string());
+    /// props.insert("BIND_PORT".to_string(), "8080".to_string());
+    ///
+    /// value.interpolate_properties(&props).unwrap();
+    /// assert_eq!(value["service"]["name"].as_str(), Some("noyalib"));
+    /// // The numeric value stays as a string — re-deserialize the
+    /// // tree if you need typed coercion.
+    /// assert_eq!(value["service"]["port"].as_str(), Some("8080"));
+    /// ```
+    #[cfg(feature = "std")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "std")))]
+    pub fn interpolate_properties<S>(
+        &mut self,
+        properties: &std::collections::HashMap<String, S>,
+    ) -> crate::Result<()>
+    where
+        S: AsRef<str>,
+    {
+        self.interpolate_inner(
+            &|name| match properties.get(name) {
+                Some(v) => ResolveOutcome::Found(v.as_ref().to_owned()),
+                None => ResolveOutcome::Missing,
+            },
+            MissingAction::Error(false),
+        )
+    }
+
+    /// Like [`Value::interpolate_properties`] but redacts the
+    /// placeholder name from any error surfaced when an unknown
+    /// `${name}` is encountered — useful when the placeholder
+    /// name itself is sensitive (e.g. it carries an audit-trail
+    /// secret identifier, or it's used in a context where logs
+    /// are externally indexed).
+    ///
+    /// On success this method is identical to
+    /// `interpolate_properties`. On failure the error reads
+    /// `interpolate_properties: unknown placeholder
+    /// ${"<redacted>"}` instead of including the original name.
+    /// Substituted *values* (the contents of the property map)
+    /// are never echoed to errors — that's the responsibility of
+    /// the caller's downstream validators.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// use std::collections::HashMap;
+    ///
+    /// let mut value: Value = from_str("token: ${SECRET_TOKEN_NAME}").unwrap();
+    /// // Empty property map — substitution fails. With the
+    /// // redacting variant the placeholder name does not leak.
+    /// let props: HashMap<String, String> = HashMap::new();
+    /// let err = value.interpolate_properties_redacted(&props).unwrap_err();
+    /// let msg = err.to_string();
+    /// assert!(msg.contains("<redacted>"));
+    /// assert!(!msg.contains("SECRET_TOKEN_NAME"));
+    /// ```
+    #[cfg(feature = "std")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "std")))]
+    pub fn interpolate_properties_redacted<S>(
+        &mut self,
+        properties: &std::collections::HashMap<String, S>,
+    ) -> crate::Result<()>
+    where
+        S: AsRef<str>,
+    {
+        self.interpolate_inner(
+            &|name| match properties.get(name) {
+                Some(v) => ResolveOutcome::Found(v.as_ref().to_owned()),
+                None => ResolveOutcome::Missing,
+            },
+            MissingAction::Error(true),
+        )
+    }
+
+    /// Like [`Value::interpolate_properties`] but never errors —
+    /// unknown placeholders are replaced with an empty string. The
+    /// motivating use case is environment-variable expansion where
+    /// missing variables should silently degrade rather than abort
+    /// the load.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// use std::collections::HashMap;
+    ///
+    /// let mut value: Value = from_str("greeting: hello ${WHO}, hello ${MISSING}").unwrap();
+    /// let mut props: HashMap<String, String> = HashMap::new();
+    /// props.insert("WHO".into(), "world".into());
+    ///
+    /// value.interpolate_properties_lossy(&props);
+    /// assert_eq!(value["greeting"].as_str(), Some("hello world, hello "));
+    /// ```
+    #[cfg(feature = "std")]
+    #[cfg_attr(docsrs, doc(cfg(feature = "std")))]
+    pub fn interpolate_properties_lossy<S>(
+        &mut self,
+        properties: &std::collections::HashMap<String, S>,
+    ) where
+        S: AsRef<str>,
+    {
+        // Missing entries fall back to the empty string (and
+        // honour any `${name:-default}` syntax along the way).
+        // The walk never errors so the outer call is total.
+        let _ = self.interpolate_inner(
+            &|name| match properties.get(name) {
+                Some(v) => ResolveOutcome::Found(v.as_ref().to_owned()),
+                None => ResolveOutcome::Missing,
+            },
+            MissingAction::Empty,
+        );
+    }
+
+    /// Internal interpolation driver — `resolve` returns a
+    /// [`ResolveOutcome`] tri-state so the walker can distinguish
+    /// found / missing / errored. `missing_action` decides what
+    /// happens when a placeholder is missing *and* has no
+    /// `:-default` fallback.
+    #[cfg(feature = "std")]
+    pub(crate) fn interpolate_inner(
+        &mut self,
+        resolve: &dyn Fn(&str) -> ResolveOutcome,
+        missing_action: MissingAction,
+    ) -> crate::Result<()> {
+        self.interpolate_inner_bounded(resolve, missing_action, None)
+    }
+
+    /// Bounded counterpart to [`Self::interpolate_inner`] that charges
+    /// post-expansion scalar and key byte lengths against `max_scalar_bytes`.
+    #[cfg(feature = "std")]
+    pub(crate) fn interpolate_inner_bounded(
+        &mut self,
+        resolve: &dyn Fn(&str) -> ResolveOutcome,
+        missing_action: MissingAction,
+        max_scalar_bytes: Option<usize>,
+    ) -> crate::Result<()> {
+        let mut observed = 0usize;
+        self.interpolate_walk(resolve, missing_action, max_scalar_bytes, &mut observed)
+    }
+
+    #[cfg(feature = "std")]
+    fn interpolate_walk(
+        &mut self,
+        resolve: &dyn Fn(&str) -> ResolveOutcome,
+        missing_action: MissingAction,
+        max_scalar_bytes: Option<usize>,
+        observed: &mut usize,
+    ) -> crate::Result<()> {
+        match self {
+            Self::String(s) => {
+                if let Some(updated) =
+                    expand_placeholders(s, resolve, missing_action, max_scalar_bytes, *observed)?
+                {
+                    *s = updated;
+                }
+                *observed = observed.saturating_add(s.len());
+                check_interpolated_scalar_budget(*observed, max_scalar_bytes)?;
+            }
+            Self::Sequence(seq) => {
+                for v in seq {
+                    v.interpolate_walk(resolve, missing_action, max_scalar_bytes, observed)?;
+                }
+            }
+            Self::Mapping(map) => {
+                for (k, v) in map.iter_mut() {
+                    *observed = observed.saturating_add(k.len());
+                    check_interpolated_scalar_budget(*observed, max_scalar_bytes)?;
+                    v.interpolate_walk(resolve, missing_action, max_scalar_bytes, observed)?;
+                }
+            }
+            Self::Tagged(tagged) => {
+                tagged.value_mut().interpolate_walk(
+                    resolve,
+                    missing_action,
+                    max_scalar_bytes,
+                    observed,
+                )?;
+            }
+            // Null / Bool / Number have no string content; nothing to do.
+            Self::Null | Self::Bool(_) | Self::Number(_) => {}
+        }
+        Ok(())
+    }
+
+    /// Recursively strips tags from this value, returning the untagged value.
+    ///
+    /// If the value is `Value::Tagged`, the inner value is returned
+    /// (recursively untagged). Sequences and mappings have their elements
+    /// recursively untagged.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("!Custom 'hi'\n").unwrap();
+    /// assert!(v.is_tagged());
+    /// let untagged = v.untag();
+    /// assert_eq!(untagged.as_str(), Some("hi"));
+    /// ```
+    #[must_use]
+    pub fn untag(self) -> Self {
+        match self {
+            Self::Tagged(tagged) => tagged.value.untag(),
+            Self::Sequence(seq) => Self::Sequence(seq.into_iter().map(Self::untag).collect()),
+            Self::Mapping(map) => {
+                let untagged: Mapping = map.into_iter().map(|(k, v)| (k, v.untag())).collect();
+                Self::Mapping(untagged)
+            }
+            other => other,
+        }
+    }
+
+    /// Returns a reference to the innermost untagged value.
+    ///
+    /// If the value is `Value::Tagged`, returns a reference to the inner value
+    /// (recursively following tags). Does not recurse into sequences or
+    /// mappings.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let v: Value = from_str("!Custom 'hi'\n").unwrap();
+    /// assert_eq!(v.untag_ref().as_str(), Some("hi"));
+    /// ```
+    #[must_use]
+    pub fn untag_ref(&self) -> &Self {
+        match self {
+            Self::Tagged(tagged) => tagged.value.untag_ref(),
+            other => other,
+        }
+    }
+
+    /// Returns a mutable reference to the innermost untagged value.
+    ///
+    /// If the value is `Value::Tagged`, returns a mutable reference to the
+    /// inner value (recursively following tags). Does not recurse into
+    /// sequences or mappings.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let mut v: Value = from_str("!Custom 'hi'\n").unwrap();
+    /// *v.untag_mut() = Value::from("bye");
+    /// assert_eq!(v.untag_ref().as_str(), Some("bye"));
+    /// ```
+    #[must_use]
+    pub fn untag_mut(&mut self) -> &mut Self {
+        match self {
+            Self::Tagged(tagged) => tagged.value.untag_mut(),
+            other => other,
+        }
+    }
+}
+
+// Use shared path parsing from the path module.
+use crate::path::{QueryPath, QuerySegment, parse_query_path};
+
+/// Backwards-compatible alias.
+fn parse_path(path: &str) -> Vec<QuerySegment> {
+    parse_query_path(path)
+}
+
+/// Recursively query a Value tree against path segments.
+fn query_recursive<'a>(
+    value: &'a Value,
+    segments: &[QuerySegment],
+    depth: usize,
+    results: &mut Vec<&'a Value>,
+) {
+    if depth >= segments.len() {
+        results.push(value);
+        return;
+    }
+
+    match &segments[depth] {
+        QuerySegment::Key(key) => {
+            if let Some(child) = value.get(key.as_str()) {
+                query_recursive(child, segments, depth + 1, results);
+            }
+        }
+        QuerySegment::Index(idx) => {
+            if let Some(child) = value.get(*idx) {
+                query_recursive(child, segments, depth + 1, results);
+            }
+        }
+        QuerySegment::Wildcard => match value {
+            Value::Sequence(seq) => {
+                for item in seq {
+                    query_recursive(item, segments, depth + 1, results);
+                }
+            }
+            Value::Mapping(map) => {
+                for (_, v) in map {
+                    query_recursive(v, segments, depth + 1, results);
+                }
+            }
+            _ => {}
+        },
+        QuerySegment::RecursiveDescent => {
+            // Match the remaining path at this level and all descendants
+            let remaining = &segments[depth + 1..];
+            if !remaining.is_empty() {
+                // Try matching the rest of the path at this node
+                query_recursive(value, segments, depth + 1, results);
+                // Recurse into all children
+                match value {
+                    Value::Sequence(seq) => {
+                        for item in seq {
+                            query_recursive(item, segments, depth, results);
+                        }
+                    }
+                    Value::Mapping(map) => {
+                        for (_, v) in map {
+                            query_recursive(v, segments, depth, results);
+                        }
+                    }
+                    Value::Tagged(t) => {
+                        query_recursive(t.value(), segments, depth, results);
+                    }
+                    _ => {}
+                }
+            }
+        }
+    }
+}
+
+impl PartialEq for Value {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Self::Null, Self::Null) => true,
+            (Self::Bool(a), Self::Bool(b)) => a == b,
+            (Self::Number(a), Self::Number(b)) => a == b,
+            (Self::String(a), Self::String(b)) => a == b,
+            (Self::Sequence(a), Self::Sequence(b)) => a == b,
+            (Self::Mapping(a), Self::Mapping(b)) => a == b,
+            (Self::Tagged(a), Self::Tagged(b)) => a == b,
+            _ => false,
+        }
+    }
+}
+
+impl Eq for Value {}
+
+impl Hash for Value {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        // Discriminant for variant type
+        core::mem::discriminant(self).hash(state);
+        match self {
+            Self::Null => {}
+            Self::Bool(b) => b.hash(state),
+            Self::Number(n) => n.hash(state),
+            Self::String(s) => s.hash(state),
+            Self::Sequence(seq) => {
+                seq.len().hash(state);
+                for v in seq {
+                    v.hash(state);
+                }
+            }
+            Self::Mapping(map) => {
+                map.len().hash(state);
+                for (k, v) in map {
+                    k.hash(state);
+                    v.hash(state);
+                }
+            }
+            Self::Tagged(tagged) => {
+                tagged.tag().hash(state);
+                tagged.value().hash(state);
+            }
+        }
+    }
+}
+
+impl PartialOrd for Value {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for Value {
+    fn cmp(&self, other: &Self) -> Ordering {
+        // Order: Null < Bool < Number < String < Sequence < Mapping < Tagged
+        fn type_order(v: &Value) -> u8 {
+            match v {
+                Value::Null => 0,
+                Value::Bool(_) => 1,
+                Value::Number(_) => 2,
+                Value::String(_) => 3,
+                Value::Sequence(_) => 4,
+                Value::Mapping(_) => 5,
+                Value::Tagged(_) => 6,
+            }
+        }
+
+        match type_order(self).cmp(&type_order(other)) {
+            Ordering::Equal => {}
+            ord => return ord,
+        }
+
+        match (self, other) {
+            (Self::Null, Self::Null) => Ordering::Equal,
+            (Self::Bool(a), Self::Bool(b)) => a.cmp(b),
+            (Self::Number(a), Self::Number(b)) => a.cmp(b),
+            (Self::String(a), Self::String(b)) => a.cmp(b),
+            (Self::Sequence(a), Self::Sequence(b)) => a.len().cmp(&b.len()).then_with(|| {
+                for (av, bv) in a.iter().zip(b.iter()) {
+                    match av.cmp(bv) {
+                        Ordering::Equal => continue,
+                        ord => return ord,
+                    }
+                }
+                Ordering::Equal
+            }),
+            (Self::Mapping(a), Self::Mapping(b)) => a.len().cmp(&b.len()).then_with(|| {
+                for ((ak, av), (bk, bv)) in a.iter().zip(b.iter()) {
+                    match ak.cmp(bk) {
+                        Ordering::Equal => {}
+                        ord => return ord,
+                    }
+                    match av.cmp(bv) {
+                        Ordering::Equal => continue,
+                        ord => return ord,
+                    }
+                }
+                Ordering::Equal
+            }),
+            (Self::Tagged(a), Self::Tagged(b)) => a
+                .tag()
+                .as_str()
+                .cmp(b.tag().as_str())
+                .then_with(|| a.value().cmp(b.value())),
+            _ => unreachable!("type_order check ensures same variants"),
+        }
+    }
+}
+
+impl fmt::Display for Value {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Null => write!(f, "null"),
+            Self::Bool(b) => write!(f, "{b}"),
+            Self::Number(n) => write!(f, "{n}"),
+            Self::String(s) => write!(f, "{s}"),
+            Self::Sequence(s) => {
+                write!(f, "[")?;
+                for (i, v) in s.iter().enumerate() {
+                    if i > 0 {
+                        write!(f, ", ")?;
+                    }
+                    write!(f, "{v}")?;
+                }
+                write!(f, "]")
+            }
+            Self::Mapping(m) => {
+                write!(f, "{{")?;
+                for (i, (k, v)) in m.iter().enumerate() {
+                    if i > 0 {
+                        write!(f, ", ")?;
+                    }
+                    write!(f, "{k}: {v}")?;
+                }
+                write!(f, "}}")
+            }
+            Self::Tagged(t) => write!(f, "{t}"),
+        }
+    }
+}
+
+/// A type that can be used to index into a `Value`.
+///
+/// This trait provides methods for accessing elements within a [`Value`] by
+/// index. It is implemented for:
+/// - `usize` - for indexing into sequences
+/// - `&str` - for indexing into mappings by string key
+/// - `String` - for indexing into mappings by owned string
+/// - `&String` - for indexing into mappings by string reference
+///
+/// # Examples
+///
+/// ```rust
+/// use noyalib::{from_str, Value, ValueIndex};
+///
+/// let yaml = r#"
+/// items:
+///   - name: first
+///   - name: second
+/// config:
+///   host: localhost
+/// "#;
+///
+/// let value: Value = from_str(yaml).unwrap();
+///
+/// // Using usize to index into sequences
+/// assert_eq!(
+///     value
+///         .get("items")
+///         .unwrap()
+///         .get(0)
+///         .unwrap()
+///         .get("name")
+///         .unwrap()
+///         .as_str(),
+///     Some("first")
+/// );
+///
+/// // Using &str to index into mappings
+/// assert_eq!(
+///     value.get("config").unwrap().get("host").unwrap().as_str(),
+///     Some("localhost")
+/// );
+/// ```
+pub trait ValueIndex {
+    /// Index into a value, returning a reference to the element if found.
+    ///
+    /// Returns `None` if:
+    /// - The value is not the appropriate type for this index (e.g., indexing a
+    ///   mapping with `usize`)
+    /// - The index/key doesn't exist
+    fn index_into(self, value: &Value) -> Option<&Value>;
+
+    /// Mutably index into a value, returning a mutable reference to the element
+    /// if found.
+    ///
+    /// Returns `None` if:
+    /// - The value is not the appropriate type for this index
+    /// - The index/key doesn't exist
+    fn index_into_mut(self, value: &mut Value) -> Option<&mut Value>;
+
+    /// Index into a value, inserting a default value if the key doesn't exist.
+    ///
+    /// This method is useful for building nested structures or ensuring a key
+    /// exists.
+    ///
+    /// # Behavior
+    ///
+    /// - For sequences: panics if the index is out of bounds
+    /// - For mappings: creates a null entry if the key doesn't exist
+    /// - For null values: converts to an empty mapping (for string keys only)
+    ///
+    /// # Panics
+    ///
+    /// Panics if:
+    /// - The value is not the appropriate type for this index
+    /// - Indexing a sequence with an out-of-bounds index
+    fn index_or_insert(self, value: &mut Value) -> &mut Value;
+}
+
+impl ValueIndex for usize {
+    fn index_into(self, value: &Value) -> Option<&Value> {
+        match value {
+            Value::Sequence(s) => s.get(self),
+            Value::Tagged(t) => self.index_into(t.value()),
+            _ => None,
+        }
+    }
+
+    fn index_into_mut(self, value: &mut Value) -> Option<&mut Value> {
+        match value {
+            Value::Sequence(s) => s.get_mut(self),
+            Value::Tagged(t) => self.index_into_mut(t.value_mut()),
+            _ => None,
+        }
+    }
+
+    #[track_caller]
+    fn index_or_insert(self, value: &mut Value) -> &mut Value {
+        match value {
+            Value::Sequence(s) => {
+                let len = s.len();
+                s.get_mut(self).unwrap_or_else(|| {
+                    panic!("cannot access index {self} of YAML sequence of length {len}")
+                })
+            }
+            Value::Tagged(t) => self.index_or_insert(t.value_mut()),
+            _ => panic!(
+                "cannot access index {} of YAML {}",
+                self,
+                value_type_name(value)
+            ),
+        }
+    }
+}
+
+impl ValueIndex for &str {
+    fn index_into(self, value: &Value) -> Option<&Value> {
+        match value {
+            Value::Mapping(m) => m.get(self),
+            Value::Tagged(t) => self.index_into(t.value()),
+            _ => None,
+        }
+    }
+
+    fn index_into_mut(self, value: &mut Value) -> Option<&mut Value> {
+        match value {
+            Value::Mapping(m) => m.get_mut(self),
+            Value::Tagged(t) => self.index_into_mut(t.value_mut()),
+            _ => None,
+        }
+    }
+
+    #[track_caller]
+    fn index_or_insert(self, value: &mut Value) -> &mut Value {
+        // If the value is null, convert it to an empty mapping
+        if matches!(value, Value::Null) {
+            *value = Value::Mapping(Mapping::new());
+        }
+
+        match value {
+            Value::Mapping(m) => {
+                let _ = m.entry(self.to_owned()).or_insert(Value::Null);
+                m.get_mut(self).unwrap()
+            }
+            Value::Tagged(t) => self.index_or_insert(t.value_mut()),
+            _ => panic!(
+                "cannot access key {:?} in YAML {}",
+                self,
+                value_type_name(value)
+            ),
+        }
+    }
+}
+
+impl ValueIndex for String {
+    fn index_into(self, value: &Value) -> Option<&Value> {
+        self.as_str().index_into(value)
+    }
+
+    fn index_into_mut(self, value: &mut Value) -> Option<&mut Value> {
+        self.as_str().index_into_mut(value)
+    }
+
+    #[track_caller]
+    fn index_or_insert(self, value: &mut Value) -> &mut Value {
+        self.as_str().index_or_insert(value)
+    }
+}
+
+impl ValueIndex for &String {
+    fn index_into(self, value: &Value) -> Option<&Value> {
+        self.as_str().index_into(value)
+    }
+
+    fn index_into_mut(self, value: &mut Value) -> Option<&mut Value> {
+        self.as_str().index_into_mut(value)
+    }
+
+    #[track_caller]
+    fn index_or_insert(self, value: &mut Value) -> &mut Value {
+        self.as_str().index_or_insert(value)
+    }
+}
+
+impl ValueIndex for &Value {
+    fn index_into(self, value: &Value) -> Option<&Value> {
+        match self {
+            Value::String(s) => s.as_str().index_into(value),
+            Value::Number(Number::Integer(n)) if *n >= 0 => {
+                usize::try_from(*n).ok()?.index_into(value)
+            }
+            _ => None,
+        }
+    }
+
+    fn index_into_mut(self, value: &mut Value) -> Option<&mut Value> {
+        match self {
+            Value::String(s) => s.as_str().index_into_mut(value),
+            Value::Number(Number::Integer(n)) if *n >= 0 => {
+                usize::try_from(*n).ok()?.index_into_mut(value)
+            }
+            _ => None,
+        }
+    }
+
+    #[track_caller]
+    fn index_or_insert(self, value: &mut Value) -> &mut Value {
+        match self {
+            Value::String(s) => s.as_str().index_or_insert(value),
+            Value::Number(Number::Integer(n)) if *n >= 0 => {
+                let idx =
+                    usize::try_from(*n).unwrap_or_else(|_| panic!("index {n} overflows usize"));
+                idx.index_or_insert(value)
+            }
+            _ => panic!("cannot index with {self:?}"),
+        }
+    }
+}
+
+/// Expand `${name}` placeholders in `s` using the supplied
+/// resolver. Returns:
+///
+/// - `Ok(None)` when no placeholders are present (caller can avoid
+///   allocating a fresh `String`),
+/// - `Ok(Some(expanded))` when at least one placeholder was found,
+/// - `Err(_)` when the resolver returned an error for a
+///   placeholder.
+///
+/// Escape sequences:
+/// - `${{` produces a literal `${` (placeholder NOT recognised),
+/// - `}}` produces a literal `}`.
+///
+/// Placeholder names match `[A-Za-z_][A-Za-z0-9_.]*` — letters,
+/// digits, underscore, dot. The dot allows hierarchical names like
+/// `${db.host}` for users who want to namespace their property
+/// maps. Anything that does not match is a parse error.
+/// Outcome of resolving a placeholder name.
+///
+/// Three-way return so [`expand_placeholders`] can distinguish a
+/// genuinely missing key (which may then defer to a `:-default`
+/// fallback) from a key whose own resolution errored.
+#[cfg(feature = "std")]
+pub(crate) enum ResolveOutcome {
+    /// Name resolved cleanly.
+    Found(String),
+    /// Name not in the resolver's lookup table.
+    Missing,
+    /// Resolution failed for a non-missing reason. Reserved for
+    /// future resolver impls that may surface I/O or permissions
+    /// errors (e.g. environment-variable-backed resolvers); not
+    /// produced by the in-memory `properties` map path today.
+    #[allow(dead_code)]
+    Error(crate::Error),
+}
+
+/// What to do when a placeholder has no map entry and no
+/// `:-default` fallback.
+#[cfg(feature = "std")]
+#[derive(Debug, Clone, Copy)]
+pub(crate) enum MissingAction {
+    /// Substitute the empty string. Lossy/non-strict mode.
+    Empty,
+    /// Surface an error. Boolean is `true` to redact the
+    /// placeholder name from the error message.
+    Error(bool),
+}
+
+#[cfg(feature = "std")]
+#[inline]
+fn check_interpolated_scalar_budget(
+    observed: usize,
+    max_scalar_bytes: Option<usize>,
+) -> crate::Result<()> {
+    if let Some(limit) = max_scalar_bytes
+        && observed > limit
+    {
+        return Err(crate::Error::Budget(
+            crate::BudgetBreach::MaxTotalScalarBytes { limit, observed },
+        ));
+    }
+    Ok(())
+}
+
+#[cfg(feature = "std")]
+fn parse_placeholder_token(
+    s: &str,
+    name_start: usize,
+) -> crate::Result<(&str, Option<&str>, usize)> {
+    let bytes = s.as_bytes();
+    let mut j = name_start;
+    while j < bytes.len() && bytes[j] != b'}' && bytes[j] != b':' {
+        let c = bytes[j];
+        let ok = c.is_ascii_alphanumeric() || c == b'_' || c == b'.';
+        if !ok {
+            return Err(crate::Error::Custom(format!(
+                "interpolate_properties: invalid character {:?} in placeholder",
+                c as char
+            )));
+        }
+        j += 1;
+    }
+    if j >= bytes.len() {
+        return Err(crate::Error::Custom(
+            "interpolate_properties: unterminated `${...}` placeholder".into(),
+        ));
+    }
+    if name_start == j {
+        return Err(crate::Error::Custom(
+            "interpolate_properties: empty placeholder `${}`".into(),
+        ));
+    }
+    let name = &s[name_start..j];
+    let mut default: Option<&str> = None;
+    let mut close = j;
+    if bytes[j] == b':' {
+        if j + 1 >= bytes.len() || bytes[j + 1] != b'-' {
+            return Err(crate::Error::Custom(
+                "interpolate_properties: expected `:-default` after `${name:`".into(),
+            ));
+        }
+        let default_start = j + 2;
+        let close_offset = bytes[default_start..]
+            .iter()
+            .position(|&b| b == b'}')
+            .ok_or_else(|| {
+                crate::Error::Custom(
+                    "interpolate_properties: unterminated `${name:-default}`".into(),
+                )
+            })?;
+        close = default_start + close_offset;
+        default = Some(&s[default_start..close]);
+    }
+    Ok((name, default, close))
+}
+
+#[cfg(feature = "std")]
+fn resolve_placeholder_value(
+    name: &str,
+    default: Option<&str>,
+    resolve: &dyn Fn(&str) -> ResolveOutcome,
+    missing_action: MissingAction,
+) -> crate::Result<String> {
+    match resolve(name) {
+        ResolveOutcome::Found(v) => Ok(v),
+        ResolveOutcome::Missing => match default {
+            Some(d) => Ok(d.to_owned()),
+            None => match missing_action {
+                MissingAction::Empty => Ok(String::new()),
+                MissingAction::Error(redact) => Err(crate::Error::Custom(if redact {
+                    "interpolate_properties: unknown placeholder `${<redacted>}`".into()
+                } else {
+                    format!("interpolate_properties: unknown placeholder `${{{name}}}`")
+                })),
+            },
+        },
+        ResolveOutcome::Error(e) => Err(e),
+    }
+}
+
+#[cfg(feature = "std")]
+fn expand_placeholders(
+    s: &str,
+    resolve: &dyn Fn(&str) -> ResolveOutcome,
+    missing_action: MissingAction,
+    max_scalar_bytes: Option<usize>,
+    observed_base: usize,
+) -> crate::Result<Option<String>> {
+    let bytes = s.as_bytes();
+    // Fast path: no `$` and no `}` → no allocation, no walk.
+    if !bytes.contains(&b'$') && !bytes.contains(&b'}') {
+        return Ok(None);
+    }
+    let mut out = String::with_capacity(s.len());
+    let mut i = 0;
+    let mut touched = false;
+    while i < bytes.len() {
+        let b = bytes[i];
+        if b == b'$' && i + 1 < bytes.len() && bytes[i + 1] == b'$' {
+            // Escape: `$$` → literal `$`.
+            out.push('$');
+            i += 2;
+            touched = true;
+            continue;
+        }
+        if b == b'$' && i + 1 < bytes.len() && bytes[i + 1] == b'{' {
+            // Escape: `${{` → literal `${`.
+            if i + 2 < bytes.len() && bytes[i + 2] == b'{' {
+                out.push_str("${");
+                i += 3;
+                touched = true;
+                continue;
+            }
+            let (name, default, close) = parse_placeholder_token(s, i + 2)?;
+            let value = resolve_placeholder_value(name, default, resolve, missing_action)?;
+            let next_len = observed_base
+                .saturating_add(out.len())
+                .saturating_add(value.len());
+            check_interpolated_scalar_budget(next_len, max_scalar_bytes)?;
+            out.push_str(&value);
+            i = close + 1;
+            touched = true;
+            continue;
+        }
+        if b == b'}' && i + 1 < bytes.len() && bytes[i + 1] == b'}' {
+            // Escape: `}}` → literal `}`.
+            out.push('}');
+            i += 2;
+            touched = true;
+            continue;
+        }
+        // Multi-byte UTF-8 — push the leading byte's char in one go.
+        let c = s[i..].chars().next().expect("char at boundary");
+        out.push(c);
+        i += c.len_utf8();
+    }
+    if touched { Ok(Some(out)) } else { Ok(None) }
+}
+
+/// Returns the type name of a value for error messages.
+fn value_type_name(value: &Value) -> &'static str {
+    match value {
+        Value::Null => "null",
+        Value::Bool(_) => "boolean",
+        Value::Number(_) => "number",
+        Value::String(_) => "string",
+        Value::Sequence(_) => "sequence",
+        Value::Mapping(_) => "mapping",
+        Value::Tagged(_) => "tagged value",
+    }
+}

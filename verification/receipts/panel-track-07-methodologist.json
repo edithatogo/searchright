@@ -1,0 +1,68 @@
+{
+  "panelist_role": "methodologist",
+  "overall_assessment": "The Track 07 governed screening workflow implements the structural skeleton of a rigorous systematic-review screening protocol. However, methodological adherence is undermined by three critical gaps: the audit trail is not truly append-only for canonical decisions, role assignment is unauthenticated, and blinding is bypassable through direct data access.",
+  "findings": [
+    {
+      "severity": "critical",
+      "description": "Canonical decisions are mutable and deletable despite an append-only history. amend_decision overwrites existing decisions, and rescreen_subject removes prior decisions entirely.",
+      "reference": "crates/searchright-screening/src/lib.rs:435, 465-466",
+      "recommendation": "Make decisions values immutable once recorded."
+    },
+    {
+      "severity": "critical",
+      "description": "Role assignment and revocation are unauthenticated public methods with no authorization boundary.",
+      "reference": "crates/searchright-screening/src/lib.rs:184-196",
+      "recommendation": "Require an authenticated authority token for assign_role/revoke_role."
+    },
+    {
+      "severity": "major",
+      "description": "Blinding is a voluntary projection, not an enforced access control.",
+      "reference": "crates/searchright-screening/src/lib.rs:584-586, 590-592",
+      "recommendation": "Separate the blinded projection surface from the raw state."
+    },
+    {
+      "severity": "major",
+      "description": "Agent authority in the screening board is decoupled from the agent workflow authority gate.",
+      "reference": "crates/searchright-screening/src/lib.rs:1133-1148",
+      "recommendation": "Integrate the authority evaluator into the screening board."
+    },
+    {
+      "severity": "major",
+      "description": "Decision binding to eligibility criteria versions is nominal, not enforced.",
+      "reference": "crates/searchright-screening/src/lib.rs:761-778, 1096-1151",
+      "recommendation": "Require evidence excerpts for every exclusion; validate eligibility_version against known protocol versions."
+    },
+    {
+      "severity": "minor",
+      "description": "No built-in inter-rater reliability metrics are provided.",
+      "reference": "crates/searchright-screening/src/lib.rs:548-581",
+      "recommendation": "Add deterministic agreement-statistic utilities."
+    },
+    {
+      "severity": "minor",
+      "description": "Blinded reviewer pseudonym is non-unique.",
+      "reference": "crates/searchright-screening/src/lib.rs:507-509",
+      "recommendation": "Use per-reviewer stable pseudonyms."
+    },
+    {
+      "severity": "minor",
+      "description": "The adjudication rule is unvalidated free text.",
+      "reference": "crates/searchright-screening/src/lib.rs:1081-1094",
+      "recommendation": "Validate adjudication_rule against enumerated procedures."
+    },
+    {
+      "severity": "observation",
+      "description": "PolicyAdmin role can amend individual screening decisions, conflating protocol administration with decision modification.",
+      "reference": "crates/searchright-screening/src/lib.rs:389-398",
+      "recommendation": "Remove decision-amendment authority from PolicyAdmin."
+    },
+    {
+      "severity": "observation",
+      "description": "Agent exclusion confirmation does not validate that the human independently applied the same eligibility criteria.",
+      "reference": "crates/searchright-screening/src/lib.rs:294-327",
+      "recommendation": "Require distinct rationale or evidence reference in human confirmation."
+    }
+  ],
+  "calibration_notes": "Methodologists will broadly agree on the criticality of blinding bypasses, mutable canonical state, and unauthenticated role assignment.",
+  "disposition": "requires_re-evaluation"
+}

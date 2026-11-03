@@ -10,7 +10,7 @@ publish = false
 
 [features]
 default = []
-live = ["dep:reqwest", "dep:tokio"]
+live = ["dep:reqwest", "dep:rustls", "dep:tokio"]
 
 [dependencies]
 async-trait.workspace = true
@@ -19,6 +19,7 @@ quick-xml.workspace = true
 evidence-search-core = { path = "../evidence-search-core", version = "=0.1.0-alpha.1" }
 evidence-search-contracts = { path = "../evidence-search-contracts", version = "=0.1.0-alpha.1" }
 reqwest = { workspace = true, optional = true }
+rustls = { workspace = true, optional = true }
 tokio = { workspace = true, optional = true }
 serde.workspace = true
 serde_json.workspace = true

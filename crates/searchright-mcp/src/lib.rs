@@ -93,8 +93,8 @@ pub struct McpToolSuccessCase {
 
 /// Return a full local-only success matrix for every advertised MCP tool.
 ///
-/// `generate_prisma` has two rows because its structured JSON and text-backed
-/// Mermaid result branches use the same declared union output contract.
+/// `generate_prisma` has one row for every supported rendering so its structured
+/// and text-backed result branches share the same declared union output contract.
 #[doc(hidden)]
 pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     let review_plan = json_example(include_str!("../../../contracts/examples/review-plan.yaml"))?;
@@ -155,7 +155,7 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     let licensed_adapter = json_example(include_str!(
         "../../../contracts/examples/licensed-adapter.yaml"
     ))?;
-    let mut compiled_strategy = serde_yaml::from_str::<serde_json::Value>(include_str!(
+    let mut compiled_strategy = noyalib::from_str::<serde_json::Value>(include_str!(
         "../../../contracts/examples/compiled-strategy.yaml"
     ))
     .map_err(|error| format!("compiled strategy fixture must parse: {error}"))?;
@@ -215,7 +215,7 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
     let diagnostic = json_example(include_str!("../../../contracts/examples/diagnostic.yaml"))?;
 
     let component_bytes = b"searchright-mcp-conformance-component";
-    let mut component_manifest = serde_yaml::from_str::<serde_json::Value>(include_str!(
+    let mut component_manifest = noyalib::from_str::<serde_json::Value>(include_str!(
         "../../../contracts/examples/provider-component.yaml"
     ))
     .map_err(|error| format!("provider component fixture must parse: {error}"))?;
@@ -301,7 +301,45 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
         ),
         fixture(
             "generate_prisma",
-            [("flow_json", prisma_flow), ("output", "mermaid".to_owned())],
+            [
+                ("flow_json", prisma_flow.clone()),
+                ("output", "mermaid".to_owned()),
+            ],
+        ),
+        fixture(
+            "generate_prisma",
+            [
+                ("flow_json", prisma_flow.clone()),
+                ("output", "markdown".to_owned()),
+            ],
+        ),
+        fixture(
+            "generate_prisma",
+            [
+                ("flow_json", prisma_flow.clone()),
+                ("output", "svg".to_owned()),
+            ],
+        ),
+        fixture(
+            "generate_prisma",
+            [
+                ("flow_json", prisma_flow.clone()),
+                ("output", "typst".to_owned()),
+            ],
+        ),
+        fixture(
+            "generate_prisma",
+            [
+                ("flow_json", prisma_flow.clone()),
+                ("output", "docx_table".to_owned()),
+            ],
+        ),
+        fixture(
+            "generate_prisma",
+            [
+                ("flow_json", prisma_flow),
+                ("output", "prisma_s_ledger".to_owned()),
+            ],
         ),
         fixture("verify_audit", [("audit_jsonl", String::new())]),
         fixture(
@@ -480,14 +518,14 @@ pub fn live_client_success_cases() -> Result<Vec<McpToolSuccessCase>, String> {
 }
 
 fn json_example(document: &str) -> Result<String, String> {
-    let value = serde_yaml::from_str::<serde_json::Value>(document)
+    let value = searchright::parse_yaml::<serde_json::Value>(document)
         .map_err(|error| format!("MCP conformance fixture must parse: {error}"))?;
     serde_json::to_string(&value)
         .map_err(|error| format!("MCP conformance fixture must serialize: {error}"))
 }
 
 fn json_example_with_review_id(document: &str, review_id: &str) -> Result<String, String> {
-    let mut value = serde_yaml::from_str::<serde_json::Value>(document)
+    let mut value = searchright::parse_yaml::<serde_json::Value>(document)
         .map_err(|error| format!("MCP conformance fixture must parse: {error}"))?;
     let object = value
         .as_object_mut()
@@ -558,7 +596,8 @@ struct DedupInput {
 struct PrismaInput {
     /// JSON `PrismaFlow` contract.
     flow_json: String,
-    /// `json`, `mermaid` or `prisma_s_ledger`.
+    /// `json`, `mermaid`, `markdown`, `svg`, `typst`, `docx_table` or
+    /// `prisma_s_ledger`.
     output: String,
 }
 
@@ -1055,7 +1094,7 @@ impl SearchrightServer {
     }
 
     #[tool(
-        description = "Read-only: validate PRISMA arithmetic and render JSON, Mermaid or the PRISMA-S ledger"
+        description = "Read-only: validate PRISMA arithmetic and render JSON, Mermaid, Markdown, SVG, Typst, a DOCX-friendly table or the PRISMA-S ledger"
     )]
     fn generate_prisma(
         &self,
@@ -1066,16 +1105,31 @@ impl SearchrightServer {
         let output = match input.output.as_str() {
             "json" => PrismaOutput::Json,
             "mermaid" => PrismaOutput::Mermaid,
+            "markdown" => PrismaOutput::Markdown,
+            "svg" => PrismaOutput::Svg,
+            "typst" => PrismaOutput::Typst,
+            "docx_table" => PrismaOutput::DocxTable,
             "prisma_s_ledger" => PrismaOutput::PrismaSLedger,
             _ => {
                 return Err(invalid_params(
-                    "output must be json, mermaid or prisma_s_ledger".to_owned(),
+                    "output must be json, mermaid, markdown, svg, typst, docx_table or prisma_s_ledger"
+                        .to_owned(),
                 ));
             }
         };
         match SearchrightEngine::prisma(&flow, output) {
             Ok(PrismaArtifact::Mermaid(document)) => {
                 text_success("generate_prisma", "mermaid", document)
+            }
+            Ok(PrismaArtifact::Markdown(document)) => {
+                text_success("generate_prisma", "markdown", document)
+            }
+            Ok(PrismaArtifact::Svg(document)) => text_success("generate_prisma", "svg", document),
+            Ok(PrismaArtifact::Typst(document)) => {
+                text_success("generate_prisma", "typst", document)
+            }
+            Ok(PrismaArtifact::DocxTable(document)) => {
+                text_success("generate_prisma", "docx_table", document)
             }
             Ok(artifact) => json_success("generate_prisma", &artifact),
             Err(error) => Ok(tool_error(error.to_string())),
@@ -2546,7 +2600,7 @@ fn parse_document<T: serde::de::DeserializeOwned>(
     format: Option<&str>,
 ) -> Result<T, String> {
     match format.unwrap_or("json") {
-        "yaml" | "yml" => serde_yaml::from_str(document).map_err(|error| error.to_string()),
+        "yaml" | "yml" => searchright::parse_yaml(document).map_err(|error| error.to_string()),
         "json" => serde_json::from_str(document).map_err(|error| error.to_string()),
         other => Err(format!("unsupported document format `{other}`")),
     }
@@ -3424,6 +3478,30 @@ mod tests {
     }
 
     #[test]
+    fn output_registry_enforces_press_domain_bounds() {
+        let valid = serde_json::json!({
+            "ready": false,
+            "seed_recall": {"retrieved": 0, "total": 0, "recall": null},
+            "unresolved_major_findings": 0,
+            "unacceptable_translations": 0,
+            "press_domains_covered": 6,
+            "press_review_complete": true,
+            "press_decisions_approved": true,
+        });
+        assert!(validate_tool_output("assess_search_validation", &valid).is_ok());
+        let invalid = serde_json::json!({
+            "ready": false,
+            "seed_recall": {"retrieved": 0, "total": 0, "recall": null},
+            "unresolved_major_findings": 0,
+            "unacceptable_translations": 0,
+            "press_domains_covered": 7,
+            "press_review_complete": true,
+            "press_decisions_approved": true,
+        });
+        assert!(validate_tool_output("assess_search_validation", &invalid).is_err());
+    }
+
+    #[test]
     fn live_client_success_matrix_covers_every_advertised_tool_and_prisma_branch()
     -> Result<(), String> {
         let cases = live_client_success_cases()?;
@@ -3432,13 +3510,13 @@ mod tests {
         let covered: BTreeSet<_> = cases.iter().map(|case| case.tool_name).collect();
 
         assert_eq!(expected, covered);
-        assert_eq!(cases.len(), advertised.len() + 1);
+        assert_eq!(cases.len(), advertised.len() + 6);
         assert_eq!(
             cases
                 .iter()
                 .filter(|case| case.tool_name == "generate_prisma")
                 .count(),
-            2
+            7
         );
         assert!(
             cases

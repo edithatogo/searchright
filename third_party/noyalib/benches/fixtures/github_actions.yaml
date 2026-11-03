@@ -1,0 +1,109 @@
+# SPDX-License-Identifier: MIT OR Apache-2.0
+# Copyright (c) 2026 Noyalib. All rights reserved.
+#
+# Realistic-shape GitHub Actions workflow used as a benchmark fixture.
+# Heavy use of multi-line block scalars, expression interpolation
+# (preserved as plain scalars), matrix strategy, and short keys —
+# representative of CI/CD config files in the wild.
+name: CI
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+      - "release/**"
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 6 * * 1"
+permissions:
+  contents: read
+  pull-requests: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  RUSTFLAGS: "-Dwarnings"
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: full
+jobs:
+  test:
+    name: Test (${{ matrix.os }}, ${{ matrix.toolchain }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        toolchain:
+          - stable
+          - nightly
+        include:
+          - os: ubuntu-latest
+            toolchain: "1.75.0"
+            label: msrv
+        exclude:
+          - os: windows-latest
+            toolchain: nightly
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          components: rustfmt, clippy
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Run tests
+        run: cargo test --all-features
+      - name: Lint
+        run: cargo clippy --all-targets -- -D warnings
+      - name: Format check
+        run: cargo fmt --all -- --check
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: rustsec/audit-check@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+  coverage:
+    name: Coverage gate (≥95%)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+      - name: Generate coverage
+        run: |
+          cargo +nightly llvm-cov --workspace --all-features --no-fail-fast \
+            --lcov --output-path lcov.info
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: lcov.info
+          fail_ci_if_error: true
+  release-pgo:
+    name: Release (PGO)
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+      - name: PGO build
+        run: cargo xtask pgo-build
+      - name: Verify
+        run: |
+          ./target/release/noyafmt --version
+          ls -la target/release/noyafmt

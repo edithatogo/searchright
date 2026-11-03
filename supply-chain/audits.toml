@@ -7,8 +7,32 @@ criteria = "safe-to-deploy"
 version = "0.2.33"
 notes = "Track 09 source review: forbids unsafe code and renders clap metadata to caller-provided writers or paths; no network or process execution paths found."
 
+[[audits.noyalib]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+version = "0.0.58"
+notes = "Track 16 source review of maintained parser fork (third_party/noyalib): #![forbid(unsafe_code)] enforced at crate root; alias expansion, mapping width, and included-node budgets verified against upstream fixture hashes; no network or process execution paths enabled."
+
+[[audits.quick-xml]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+version = "0.42.0"
+notes = "Track 16 source review: XML parser 0.42.0 with default feature set only; no unsafe blocks, network, or process execution paths in enabled Searchright XML parsing path."
+
 [[audits.roff]]
 who = "OpenAI Codex <noreply@openai.com>"
 criteria = "safe-to-deploy"
 version = "1.1.1"
 notes = "Track 09 source review: pure ROFF document construction and escaped writer output; no unsafe, network, process, or filesystem access paths found."
+
+[[audits.rustls]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+delta = "0.23.43 -> 0.23.46"
+notes = "Track 16 security advisory patch review: TLS protocol and handshake security fixes from 0.23.43 to 0.23.46 paired with audited rustls-webpki 0.103.16."
+
+[[audits.tokio]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+delta = "1.53.1 -> 1.54.1"
+notes = "Track 16 security advisory patch review: runtime maintenance and advisory remediation update from 1.53.1 to 1.54.1."

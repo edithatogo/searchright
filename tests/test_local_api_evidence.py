@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from run_local_api_evidence import BUILD_OVERRIDES, CommandResult, collect_evidence
+from run_local_api_evidence import BUILD_OVERRIDES, PACKAGES, CommandResult, collect_evidence
 
 
 class FakeRunner:
@@ -185,6 +185,18 @@ class LocalApiEvidenceTests(unittest.TestCase):
                 self.assertEqual(report["rejected_build_overrides"], [name])
                 self.assertNotIn("private_api", json.dumps(report))
         self.assertEqual(self.fake.calls, [])
+
+    def test_candidate_policy_drift_is_rejected(self):
+        policy_path = self.root / "release/public-packages.json"
+        policy_path.write_text(json.dumps({"development_toolchain": "1.98.0", "packages": [{"name": n} for n in PACKAGES]}))
+        report = self.run_evidence(execute=True)
+        self.assertEqual(report["status"], "blocked")
+        self.assertIn("candidate policy changed", report.get("error", ""))
+
+        policy_path.write_text(json.dumps({"development_toolchain": "1.97.1", "packages": [{"name": "unexpected"}]}))
+        report = self.run_evidence(execute=True)
+        self.assertEqual(report["status"], "blocked")
+        self.assertIn("candidate policy changed", report.get("error", ""))
 
 
 if __name__ == "__main__":

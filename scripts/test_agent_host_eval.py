@@ -1,10 +1,15 @@
 """Network-free regression tests for evaluation input/scorer separation."""
 import copy
 import json
+import sys
 import unittest
-from unittest.mock import patch
-from subprocess import CompletedProcess
 from pathlib import Path
+from subprocess import CompletedProcess
+from unittest.mock import patch
+
+_SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
 
 import run_agent_host_eval as runner
 

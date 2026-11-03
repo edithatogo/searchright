@@ -2326,7 +2326,7 @@ SearchValidation = TypedDict(
 SearchValidationPressReviewsItem = TypedDict(
     'SearchValidationPressReviewsItem',
     {
-    'decision': Required['str'],
+    'decision': Required["Literal['approved', 'approved_with_advisory', 'revision_required', 'rejected']"],
     'findings': Required['list[SearchValidationPressReviewsItemFindingsItem]'],
     'press_review_id': Required['str'],
     'reviewed_at': Required['str'],

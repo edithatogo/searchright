@@ -8,6 +8,7 @@ external review. It aggregates failures so one run produces a useful repair list
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -153,9 +154,23 @@ def load_data(path: Path) -> Any:
     return None
 
 
+# Parser test vectors include malformed YAML and significant whitespace.
+NOYALIB_VECTORS = {
+    name: digest
+    for line in (ROOT / "verification/noyalib-fork/fixture-hashes.sha256").read_text().splitlines()
+    for digest, name in [line.split("  ", 1)]
+}
+
+
 def validate_serialised_documents() -> None:
     """Parse every JSON, TOML and YAML document in the repository."""
+    for name, digest in NOYALIB_VECTORS.items():
+        vector = ROOT / name
+        if not vector.is_file() or hashlib.sha256(vector.read_bytes()).hexdigest() != digest:
+            error(f"parser test vector changed: {name}")
     for path in repository_files():
+        if relative(path) in NOYALIB_VECTORS:
+            continue
         if path.suffix == ".json":
             load_json(path)
         elif path.suffix == ".toml":
@@ -976,6 +991,8 @@ def validate_text_hygiene() -> None:
     pattern = re.compile(r"\b(?:" + "|".join(re.escape(item) for item in forbidden_words) + r")\b")
     checked = 0
     for path in repository_files():
+        if relative(path) in NOYALIB_VECTORS:
+            continue
         if path.suffix not in TEXT_SUFFIXES and path.name not in {"Dockerfile", "Makefile", "NOTICE"}:
             continue
         text = read_text(path)

@@ -75,8 +75,9 @@ record isolation, quarantine provenance and external-entity boundaries.
 - Records, reports, studies, retrieval attempts and evidence-bearing linkage.
 - Dual-phase screening, reviewer authority, conflicts and full-text exclusion
   reasons.
-- PRISMA 2020 flow arithmetic, PRISMA-S ledgers, PRESS findings and seed-set
-  validation.
+- PRISMA 2020 flow arithmetic with JSON, Mermaid, Markdown, SVG, Typst and
+  DOCX-friendly outputs; PRISMA-S ledgers; complete source appendices; and
+  fail-closed PRESS/seed-set validation.
 - Living-review lineage, ranking calibration, supplementary discovery,
   interchange, diagnostics, governance, benchmark and provider-component
   contracts.

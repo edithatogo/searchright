@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "781d47c5acb48cee9461f5fb2779f2c9b5625a1901abe703cc486e00ec657fc8",
-      "size": 622849
+      "sha256": "a43c14d412133c68548caef99aad638551c38269c67a228fdb12c4458698693e",
+      "size": 624064
     },
     {
       "path": "conductor/github/project.json",
@@ -53,13 +53,13 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "c5e1ee4b7865d6a8ff77b9725a47c7a87ab0012cdfd5eee4db79e36eac7ddcb2",
-      "size": 117619
+      "sha256": "d05a993339d6cc52b520a0fad0c6c0656f36ea172208a9948b0f5fcc26374cdb",
+      "size": 125110
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "7fcfb2b53fcfa2ee43dd73145063ab1e9dc16283348bf74626c25d085ba2ea43",
-      "size": 102353
+      "sha256": "ad16575e57726ae0c9f24efe9adfa6c91d9ea7d6920989b428d7b1bce4ad8176",
+      "size": 133007
     },
     {
       "path": "context/capability-matrix.json",
@@ -88,7 +88,7 @@
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "b8e004a1bf6f8f4bcc21b952b93609f896bc7fecb4938173e957d8b8e5edbbf2",
+      "sha256": "ce89e254edbacc54622cdd860daf48c7b622fee5c20a6bfcd2b001ee97560968",
       "size": 26696
     },
     {
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "8140a54f1c394f5f600d3b38d7c126d53be75a5c8a0fe5f0ad3d09ce28cc38a3",
-      "size": 3521
+      "sha256": "220139ac9962cb578d38ebf87cad62281e24a593bb7ca3e849737eda2cfa4eac",
+      "size": 3549
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "0acd6f75b4595407a1fb1cf41caf9403b20929861d2b6c39443402f66cdebd36",
-      "size": 50405
+      "sha256": "942036e80cdc422b659de1e90da7ff162623ce8bd138c20996750f80995974c8",
+      "size": 50525
     },
     {
       "path": "verification/harness-matrix.json",

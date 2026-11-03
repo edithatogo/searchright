@@ -8,8 +8,9 @@ mod render;
 pub use render::{FlowFormat, render_flow};
 
 use searchright_contracts::{
-    FindingSeverity, PRISMA_FLOW_SCHEMA_VERSION, PressElement, PressReview, PrismaFlow,
-    PrismaSItem, PrismaSItemStatus, PrismaSLedger, SearchRun,
+    CompiledStrategy, FindingSeverity, PRISMA_FLOW_SCHEMA_VERSION, PressElement, PressReview,
+    PrismaFlow, PrismaSItem, PrismaSItemStatus, PrismaSLedger, SearchDialect, SearchRun,
+    SearchStrategy, SourceReceipt, Validate,
 };
 
 /// PRISMA 2020 flow context selected by the review protocol.
@@ -298,6 +299,124 @@ pub fn render_mermaid(flow: &PrismaFlow) -> Result<String, PrismaError> {
     mermaid_flow(flow)
 }
 
+/// Render a validated flow as a compact, accessible Markdown table.
+pub fn render_markdown(flow: &PrismaFlow) -> Result<String, PrismaError> {
+    let rows = flow_rows(flow)?;
+    let mut output = format!(
+        "# PRISMA 2020 flow: {}\n\n> Derived reporting output; not methodological certification.\n\n| Stage | Count |\n|---|---:|\n",
+        escape_markdown_cell(&flow.review_id)
+    );
+    for (label, count) in rows {
+        output.push_str(&format!("| {} | {count} |\n", escape_markdown_cell(&label)));
+    }
+    Ok(output)
+}
+
+/// Render a validated flow as a self-contained accessible SVG document.
+pub fn render_svg(flow: &PrismaFlow) -> Result<String, PrismaError> {
+    let rows = flow_rows(flow)?;
+    let row_height = 38_u64;
+    let height = 86_u64 + row_height * u64::try_from(rows.len()).unwrap_or(u64::MAX);
+    let mut output = format!(
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"720\" height=\"{height}\" viewBox=\"0 0 720 {height}\" role=\"img\" aria-labelledby=\"prisma-title prisma-desc\">\n  <title id=\"prisma-title\">PRISMA 2020 flow for {}</title>\n  <desc id=\"prisma-desc\">Validated counts rendered as a linear reporting flow. This output is not methodological certification.</desc>\n  <style>text {{ font-family: sans-serif; fill: #111827; }} .box {{ fill: #f8fafc; stroke: #334155; stroke-width: 1.5; }} .count {{ font-weight: 700; }}</style>\n",
+        escape_xml(&flow.review_id)
+    );
+    for (index, (label, count)) in rows.iter().enumerate() {
+        let y = 54_u64 + row_height * u64::try_from(index).unwrap_or(u64::MAX);
+        output.push_str(&format!(
+            "  <rect class=\"box\" x=\"20\" y=\"{y}\" width=\"680\" height=\"30\" rx=\"4\"/>\n  <text x=\"32\" y=\"{}\">{}</text>\n  <text class=\"count\" text-anchor=\"end\" x=\"688\" y=\"{}\">n = {count}</text>\n",
+            y + 20,
+            escape_xml(label),
+            y + 20,
+        ));
+    }
+    output.push_str("</svg>\n");
+    Ok(output)
+}
+
+/// Render a validated flow as deterministic Typst table source.
+pub fn render_typst(flow: &PrismaFlow) -> Result<String, PrismaError> {
+    let rows = flow_rows(flow)?;
+    let mut output = format!(
+        "#heading(level: 1)[PRISMA 2020 flow: {}]\n#quote[Derived reporting output; not methodological certification.]\n#table(\n  columns: (1fr, auto),\n  inset: 6pt,\n  table.header([*Stage*], [*Count*]),\n",
+        escape_typst(&flow.review_id)
+    );
+    for (label, count) in rows {
+        output.push_str(&format!("  [{}], [{count}],\n", escape_typst(&label)));
+    }
+    output.push_str(")\n");
+    Ok(output)
+}
+
+/// Render a validated flow as an HTML table that can be pasted into DOCX editors.
+pub fn render_docx_table(flow: &PrismaFlow) -> Result<String, PrismaError> {
+    let rows = flow_rows(flow)?;
+    let mut output = format!(
+        "<table>\n  <caption>PRISMA 2020 flow for {}</caption>\n  <thead><tr><th scope=\"col\">Stage</th><th scope=\"col\">Count</th></tr></thead>\n  <tbody>\n",
+        escape_xml(&flow.review_id)
+    );
+    for (label, count) in rows {
+        output.push_str(&format!(
+            "    <tr><th scope=\"row\">{}</th><td>{count}</td></tr>\n",
+            escape_xml(&label)
+        ));
+    }
+    output.push_str(
+        "  </tbody>\n  <tfoot><tr><td colspan=\"2\">Derived reporting output; not methodological certification.</td></tr></tfoot>\n</table>\n",
+    );
+    Ok(output)
+}
+
+/// Render one complete source strategy appendix while preserving native query text.
+///
+/// The appendix reports recorded syntax, date and limits. It does not certify
+/// term choice, recall or methodological adequacy.
+pub fn render_strategy_appendix_markdown(
+    strategy: &SearchStrategy,
+    compiled: &CompiledStrategy,
+    receipt: &SourceReceipt,
+) -> Result<String, PrismaError> {
+    strategy.validate()?;
+    compiled.validate()?;
+    receipt.validate()?;
+    if strategy.strategy_id != compiled.strategy_id || strategy.strategy_id != receipt.strategy_id {
+        return Err(PrismaError::AppendixStrategyMismatch);
+    }
+    if strategy.review_id != receipt.review_id {
+        return Err(PrismaError::AppendixReviewMismatch);
+    }
+    if strategy.dialect != compiled.dialect {
+        return Err(PrismaError::AppendixDialectMismatch);
+    }
+    if compiled.compiler_version != receipt.compiler_version {
+        return Err(PrismaError::AppendixCompilerMismatch);
+    }
+
+    let mut output = format!(
+        "## Search strategy: {}\n\n- Information source and platform: {}\n- Source identifier: {}\n- Dialect: {}\n- Search date: {}\n- Strategy version evidence: compiler {}; compilation {}\n- Execution query fingerprint: {}\n- Limits and filters: {}\n\n### Exact source-specific syntax\n\n",
+        escape_markdown_cell(&strategy.strategy_id),
+        escape_markdown_cell(&receipt.source_label),
+        escape_markdown_cell(&strategy.source_id),
+        dialect_label(&strategy.dialect),
+        escape_markdown_cell(&receipt.executed_at),
+        escape_markdown_cell(&compiled.compiler_version),
+        escape_markdown_cell(&compiled.compilation_hash),
+        escape_markdown_cell(&receipt.query_hash),
+        escape_markdown_cell(&limit_summary(strategy)),
+    );
+    for line in compiled.query.split_inclusive('\n') {
+        output.push_str("    ");
+        output.push_str(line);
+    }
+    if !compiled.query.ends_with('\n') {
+        output.push('\n');
+    }
+    output.push_str(
+        "\n> Generated reporting appendix; exact syntax is preserved, but term choice and search adequacy require independent review.\n",
+    );
+    Ok(output)
+}
+
 /// Build a conservative PRISMA-S ledger from flow evidence alone.
 ///
 /// Only total-record and deduplication items can be evidenced by a flow contract;
@@ -437,6 +556,9 @@ pub fn evidence_from_run(run: &SearchRun) -> SearchReportingEvidence {
 /// PRISMA arithmetic/reporting error.
 #[derive(Debug, thiserror::Error, PartialEq, Eq)]
 pub enum PrismaError {
+    /// A shared contract failed semantic validation before rendering.
+    #[error(transparent)]
+    Contract(#[from] searchright_contracts::ContractError),
     /// A validated flow could not be encoded as a reporting projection.
     #[error("failed to encode derived reporting projection")]
     RenderEncoding,
@@ -494,6 +616,18 @@ pub enum PrismaError {
     /// An update flow points to itself as its prior review.
     #[error("updated-review PRISMA flow cannot use its own review identifier as prior lineage")]
     SelfReferentialUpdateLineage,
+    /// Appendix inputs did not refer to the same strategy.
+    #[error("strategy, compiled query and source receipt must share one strategy identifier")]
+    AppendixStrategyMismatch,
+    /// Appendix inputs did not refer to the same review.
+    #[error("strategy and source receipt must share one review identifier")]
+    AppendixReviewMismatch,
+    /// Appendix strategy and compiled query used different dialects.
+    #[error("strategy and compiled query must use the same source dialect")]
+    AppendixDialectMismatch,
+    /// Appendix compilation and execution evidence came from different compilers.
+    #[error("compiled query and source receipt must use the same compiler version")]
+    AppendixCompilerMismatch,
 }
 
 fn identified_total(flow: &PrismaFlow) -> Result<u64, PrismaError> {
@@ -530,6 +664,114 @@ fn full_text_exclusion_total(flow: &PrismaFlow) -> Result<u64, PrismaError> {
         })
 }
 
+fn flow_rows(flow: &PrismaFlow) -> Result<Vec<(String, u64)>, PrismaError> {
+    validate_flow(flow)?;
+    let mut rows = vec![
+        (
+            "Records identified from databases".to_owned(),
+            flow.records_databases,
+        ),
+        (
+            "Records identified from registers".to_owned(),
+            flow.records_registers,
+        ),
+        (
+            "Records identified from other sources".to_owned(),
+            flow.records_other,
+        ),
+        (
+            "Total records identified".to_owned(),
+            identified_total(flow)?,
+        ),
+        ("Duplicates removed".to_owned(), flow.duplicates_removed),
+        (
+            "Records removed by automation".to_owned(),
+            flow.automation_removed,
+        ),
+        ("Other records removed".to_owned(), flow.other_removed),
+        ("Records screened".to_owned(), flow.records_screened),
+        ("Records excluded".to_owned(), flow.records_excluded),
+        (
+            "Reports sought for retrieval".to_owned(),
+            flow.reports_sought,
+        ),
+        (
+            "Reports not retrieved".to_owned(),
+            flow.reports_not_retrieved,
+        ),
+        (
+            "Reports assessed for eligibility".to_owned(),
+            flow.reports_assessed,
+        ),
+    ];
+    rows.extend(
+        flow.full_text_exclusions
+            .iter()
+            .map(|reason| (format!("Reports excluded: {}", reason.label), reason.count)),
+    );
+    rows.push((
+        "Reports of included studies".to_owned(),
+        flow.reports_included,
+    ));
+    rows.push((
+        "Studies included in review".to_owned(),
+        flow.studies_included,
+    ));
+    Ok(rows)
+}
+
+fn limit_summary(strategy: &SearchStrategy) -> String {
+    let limits = &strategy.limits;
+    let mut parts = Vec::new();
+    if let Some(date) = &limits.publication_date {
+        parts.push(format!(
+            "publication years {} to {}",
+            date.from_year
+                .map_or_else(|| "open".to_owned(), |year| year.to_string()),
+            date.to_year
+                .map_or_else(|| "open".to_owned(), |year| year.to_string())
+        ));
+    }
+    if !limits.languages.is_empty() {
+        parts.push(format!("languages: {}", limits.languages.join(", ")));
+    }
+    if !limits.publication_types.is_empty() {
+        parts.push(format!(
+            "publication types: {}",
+            limits.publication_types.join(", ")
+        ));
+    }
+    if !limits.filters.is_empty() {
+        parts.push(format!("filters: {}", limits.filters.join(", ")));
+    }
+    if !limits.rationale.is_empty() {
+        parts.push(format!("rationale: {}", limits.rationale.join("; ")));
+    }
+    if parts.is_empty() {
+        "none recorded".to_owned()
+    } else {
+        parts.join("; ")
+    }
+}
+
+fn dialect_label(dialect: &SearchDialect) -> &str {
+    match dialect {
+        SearchDialect::PubMed => "PubMed",
+        SearchDialect::OvidMedline => "Ovid MEDLINE",
+        SearchDialect::Embase => "Embase.com",
+        SearchDialect::EuropePmc => "Europe PMC",
+        SearchDialect::CinahlEbsco => "CINAHL via EBSCOhost",
+        SearchDialect::PsycInfoOvid => "PsycINFO via Ovid",
+        SearchDialect::Scopus => "Scopus",
+        SearchDialect::WebOfScience => "Web of Science",
+        SearchDialect::Crossref => "Crossref",
+        SearchDialect::OpenAlex => "OpenAlex",
+        SearchDialect::ClinicalTrialsGov => "ClinicalTrials.gov",
+        SearchDialect::GenericBoolean => "generic Boolean",
+        SearchDialect::Custom(name) => name,
+    }
+}
+
 fn checked_sum<const N: usize>(values: [u64; N], field: &'static str) -> Result<u64, PrismaError> {
     values.into_iter().try_fold(0_u64, |total, value| {
         total
@@ -552,38 +794,33 @@ fn ledger(
     evidence: &[String],
     missing_note: &str,
 ) -> PrismaSLedger {
+    let populated = evidence
+        .iter()
+        .filter(|value| !value.trim().is_empty())
+        .count();
+    let status = if !complete || populated == 0 {
+        PrismaSItemStatus::Missing
+    } else if populated != evidence.len() {
+        PrismaSItemStatus::Partial
+    } else {
+        PrismaSItemStatus::Complete
+    };
     PrismaSLedger {
         item,
-        status: if complete {
-            PrismaSItemStatus::Complete
-        } else {
-            PrismaSItemStatus::Missing
-        },
+        status,
         evidence: evidence.to_vec(),
-        note: if complete {
-            "Evidence linked.".to_owned()
-        } else {
-            missing_note.to_owned()
+        note: match status {
+            PrismaSItemStatus::Complete => "Evidence linked.".to_owned(),
+            PrismaSItemStatus::Partial => {
+                "Some provided evidence entries are blank; reporting remains incomplete.".to_owned()
+            }
+            _ => missing_note.to_owned(),
         },
     }
 }
 
 fn optional_collection_ledger(item: PrismaSItem, values: &[String], note: &str) -> PrismaSLedger {
-    if values.is_empty() {
-        PrismaSLedger {
-            item,
-            status: PrismaSItemStatus::Missing,
-            evidence: Vec::new(),
-            note: note.to_owned(),
-        }
-    } else {
-        PrismaSLedger {
-            item,
-            status: PrismaSItemStatus::Complete,
-            evidence: values.to_vec(),
-            note: "Evidence linked.".to_owned(),
-        }
-    }
+    ledger(item, !values.is_empty(), values, note)
 }
 
 fn optional_ledger(item: PrismaSItem, value: Option<&str>, note: &str) -> PrismaSLedger {
@@ -623,9 +860,41 @@ fn escape_mermaid(value: &str) -> String {
         .replace(['\r', '\n'], " ")
 }
 
+fn escape_markdown_cell(value: &str) -> String {
+    value
+        .replace('\\', "\\\\")
+        .replace('|', "\\|")
+        .replace(['\r', '\n'], " ")
+}
+
+fn escape_xml(value: &str) -> String {
+    value
+        .replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+        .replace('"', "&quot;")
+        .replace('\'', "&apos;")
+        .replace(['\r', '\n'], " ")
+}
+
+fn escape_typst(value: &str) -> String {
+    let mut escaped = String::with_capacity(value.len());
+    for character in value.chars() {
+        match character {
+            '\r' | '\n' => escaped.push(' '),
+            '\\' | '#' | '[' | ']' | '$' | '*' | '_' | '`' | '<' | '>' | '@' => {
+                escaped.push('\\');
+                escaped.push(character);
+            }
+            _ => escaped.push(character),
+        }
+    }
+    escaped
+}
+
 #[cfg(test)]
 mod tests {
-    use searchright_contracts::{ExclusionCount, PressFinding};
+    use searchright_contracts::{ExclusionCount, PressFinding, PressReviewDecision};
 
     use super::*;
 
@@ -748,6 +1017,17 @@ mod tests {
         );
     }
 
+    #[test]
+    fn typst_text_escapes_every_markup_control_character() {
+        for character in ['\\', '#', '[', ']', '$', '*', '_', '`', '<', '>', '@'] {
+            assert_eq!(
+                escape_typst(&character.to_string()),
+                format!("\\{character}")
+            );
+        }
+        assert_eq!(escape_typst("line one\r\nline two"), "line one  line two");
+    }
+
     fn press_review(elements: &[PressElement], unresolved: bool) -> PressReview {
         PressReview {
             press_review_id: "press-1".to_owned(),
@@ -771,7 +1051,7 @@ mod tests {
                     resolved: !(unresolved && index == 0),
                 })
                 .collect(),
-            decision: "evidence recorded".to_owned(),
+            decision: PressReviewDecision::Approved,
         }
     }
 

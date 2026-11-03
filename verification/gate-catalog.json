@@ -215,6 +215,8 @@
       "compiler_required": false,
       "covered_assertions": [
         "T01-A003",
+        "T08-A004",
+        "T08-A005",
         "T24-A001",
         "T24-A002",
         "T24-A003",
@@ -348,6 +350,7 @@
       "command": "python scripts/check_vertical_slice.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T08-A002",
         "T16-A002",
         "T16-A006"
       ],
@@ -519,6 +522,7 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A005",
+        "T08-A006",
         "T13-A001",
         "T15-A004"
       ],
@@ -553,6 +557,7 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A005",
+        "T08-A006",
         "T13-A001"
       ],
       "evidence_ceiling": "source_verified",
@@ -774,6 +779,7 @@
       "command": "python scripts/check_cli_mcp_parity.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T08-A005",
         "T09-A001",
         "T10-A001",
         "T10-A003",

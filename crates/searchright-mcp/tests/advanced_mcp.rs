@@ -237,7 +237,7 @@ async fn resources_prompts_cache_pagination_and_mrtr_are_bounded() -> anyhow::Re
     let ResourceContents::TextResourceContents { text, .. } = content else {
         anyhow::bail!("workflow resource is not text")
     };
-    assert!(!text.is_empty());
+    assert_ne!(text, "");
 
     for uri in resource_uris {
         let resource = client
@@ -371,7 +371,7 @@ async fn completion_and_form_elicitation_are_bounded_and_non_authoritative() -> 
     assert!(!serialized.contains("authority_granted"));
 
     let plan: serde_json::Value =
-        serde_yaml::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))?;
+        noyalib::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))?;
     let mut arguments = JsonObject::new();
     arguments.insert(
         "document".to_owned(),
@@ -398,10 +398,10 @@ async fn completion_and_form_elicitation_are_bounded_and_non_authoritative() -> 
     );
     assert!(!store_root.exists());
 
-    let policy: serde_json::Value = serde_yaml::from_str(include_str!(
+    let policy: serde_json::Value = noyalib::from_str(include_str!(
         "../../../contracts/examples/screening-policy.yaml"
     ))?;
-    let mut decision: serde_json::Value = serde_yaml::from_str(include_str!(
+    let mut decision: serde_json::Value = noyalib::from_str(include_str!(
         "../../../contracts/examples/screening-decision.yaml"
     ))?;
     let decision_object = decision
@@ -509,7 +509,7 @@ async fn verifier_principal_mismatch_is_denied_without_store_delta() -> anyhow::
         )
         .await?;
     let plan: serde_json::Value =
-        serde_yaml::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))?;
+        noyalib::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))?;
     let mut arguments = JsonObject::new();
     arguments.insert(
         "document".to_owned(),

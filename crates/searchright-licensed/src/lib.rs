@@ -116,11 +116,11 @@ mod tests {
     use super::*;
 
     fn inputs() -> (LicensedAdapterProfile, CompiledStrategy) {
-        let profile: LicensedAdapterProfile = serde_yaml::from_str(include_str!(
+        let profile: LicensedAdapterProfile = noyalib::from_str(include_str!(
             "../../../contracts/examples/licensed-adapter.yaml"
         ))
         .unwrap_or_else(|error| panic!("licensed adapter fixture must parse: {error}"));
-        let mut strategy: CompiledStrategy = serde_yaml::from_str(include_str!(
+        let mut strategy: CompiledStrategy = noyalib::from_str(include_str!(
             "../../../contracts/examples/compiled-strategy.yaml"
         ))
         .unwrap_or_else(|error| panic!("compiled strategy fixture must parse: {error}"));

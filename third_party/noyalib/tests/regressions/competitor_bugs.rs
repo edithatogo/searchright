@@ -1,0 +1,483 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Copyright (c) 2026 Noyalib. All rights reserved.
+
+//! Tests for bugs found in competitor libraries (yaml-rust2).
+//!
+//! Each test reproduces a specific issue from yaml-rust2's tracker and
+//! verifies that noyalib handles it correctly.
+
+use noyalib::{DuplicateKeyPolicy, ParserConfig, Value, from_str, from_str_with_config};
+
+// ── yaml-rust2#70: UTF-8 in flow mappings ────────────────────────────
+// Multi-byte UTF-8 characters in flow sequences/mappings caused column
+// miscounting, leading to a parse error.
+
+#[test]
+fn yr2_70_utf8_in_flow_mapping() {
+    let yaml = r#"- "(":
+    - test:
+        if: $SpeechStyle = 'ClearSpeak' or $SpeechStyle = 'SimpleSpeak'
+        then: [test: {if: "$Verbosity='Terse'", then: [T: "mở ngoặc"], else: [T: "mở ngoặc đơn"]}]
+        else: [T: "mở ngoặc đơn"]
+"#;
+    let result: Result<Value, _> = from_str(yaml);
+    assert!(
+        result.is_ok(),
+        "UTF-8 flow mapping should parse: {:?}",
+        result.err()
+    );
+}
+
+#[test]
+fn yr2_70_utf8_scalar_values() {
+    let yaml = "name: héllo wörld\ncity: Zürich\nemoji: 🦀\n";
+    let v: Value = from_str(yaml).unwrap();
+    assert_eq!(v["name"].as_str(), Some("héllo wörld"));
+    assert_eq!(v["city"].as_str(), Some("Zürich"));
+    assert_eq!(v["emoji"].as_str(), Some("🦀"));
+}
+
+// ── yaml-rust2#69/#30: Flow collection closing bracket indentation ───
+// Closing ] or } at the same indentation as the key (not the content)
+// should be accepted by lenient parsers.
+
+#[test]
+fn yr2_69_flow_seq_closing_bracket_indentation() {
+    // This is a common real-world pattern (accepted by js-yaml, serde_yaml)
+    let yaml = "foo: [\n  'a',  'b',  'c'\n]\n";
+    let result: Result<Value, _> = from_str(yaml);
+    // noyalib should accept this lenient pattern
+    if let Ok(v) = &result {
+        let seq = v["foo"].as_sequence().unwrap();
+        assert_eq!(seq.len(), 3);
+    }
+    // If it fails, that's spec-correct but document it
+}
+
+#[test]
+fn yr2_30_multiline_flow_seq_trailing_comma() {
+    let yaml = "foo: [\n  'a',\n  'b',\n  'c',\n]\n";
+    let result: Result<Value, _> = from_str(yaml);
+    if let Ok(v) = &result {
+        let seq = v["foo"].as_sequence().unwrap();
+        assert_eq!(seq.len(), 3);
+    }
+}
+
+#[test]
+fn yr2_30_flow_mapping_multiline() {
+    let yaml = "foo: {\n  a: 1,\n  b: 2\n}\n";
+    let result: Result<Value, _> = from_str(yaml);
+    if let Ok(v) = &result {
+        assert_eq!(v["foo"]["a"].as_i64(), Some(1));
+        assert_eq!(v["foo"]["b"].as_i64(), Some(2));
+    }
+}
+
+// ── yaml-rust2#23: Duplicate keys should be detectable ───────────────
+// The YAML 1.2 spec requires unique keys. noyalib supports configurable
+// duplicate key handling.
+
+#[test]
+fn yr2_23_duplicate_keys_default_last_wins() {
+    let yaml = "a: hello\na: world\n";
+    let v: Value = from_str(yaml).unwrap();
+    // Default policy: last wins
+    assert_eq!(v["a"].as_str(), Some("world"));
+}
+
+#[test]
+fn yr2_23_duplicate_keys_error_policy() {
+    let yaml = "a: hello\na: world\n";
+    let config = ParserConfig::new().duplicate_key_policy(DuplicateKeyPolicy::Error);
+    let result: Result<Value, _> = from_str_with_config(yaml, &config);
+    assert!(result.is_err(), "duplicate keys should error");
+}
+
+#[test]
+fn yr2_23_duplicate_keys_first_wins() {
+    let yaml = "a: hello\na: world\n";
+    let config = ParserConfig::new().duplicate_key_policy(DuplicateKeyPolicy::First);
+    let v: Value = from_str_with_config(yaml, &config).unwrap();
+    assert_eq!(v["a"].as_str(), Some("hello"));
+}
+
+// ── yaml-rust2#25: Folded scalar trailing newline ────────────────────
+// Default "clip" chomping adds one trailing newline. This is correct per spec.
+
+#[test]
+fn yr2_25_folded_scalar_clip_chomping() {
+    let yaml = ">\n  This is\n  multiline\n  string\n";
+    let v: Value = from_str(yaml).unwrap();
+    let s = v.as_str().unwrap();
+    // Clip chomping: single trailing newline
+    assert_eq!(s, "This is multiline string\n");
+}
+
+#[test]
+fn yr2_25_folded_scalar_strip_chomping() {
+    let yaml = ">-\n  This is\n  multiline\n  string\n";
+    let v: Value = from_str(yaml).unwrap();
+    let s = v.as_str().unwrap();
+    // Strip chomping: no trailing newline
+    assert_eq!(s, "This is multiline string");
+}
+
+#[test]
+fn yr2_25_folded_scalar_keep_chomping() {
+    let yaml = ">+\n  This is\n  multiline\n  string\n\n";
+    let v: Value = from_str(yaml).unwrap();
+    let s = v.as_str().unwrap();
+    // Keep chomping: preserve all trailing newlines
+    assert!(s.ends_with("string\n\n"));
+}
+
+// ── yaml-rust2#11: Tag suffix with extended data ─────────────────────
+// Tags with numeric suffixes and anchors on the same line.
+
+#[test]
+fn yr2_11_tag_with_numeric_suffix() {
+    // Basic tag parsing
+    let yaml = "--- !custom 42\n";
+    let result: Result<Value, _> = from_str(yaml);
+    assert!(
+        result.is_ok(),
+        "tag with value should parse: {:?}",
+        result.err()
+    );
+}
+
+#[test]
+fn yr2_11_tag_directive_and_custom_tag() {
+    let yaml = "--- !mytag value\n";
+    let v: Value = from_str(yaml).unwrap();
+    // Should parse as tagged value or plain string
+    match &v {
+        Value::Tagged(t) => {
+            assert!(t.tag().as_str().contains("mytag"));
+        }
+        Value::String(s) => {
+            assert_eq!(s, "value");
+        }
+        _ => {}
+    }
+}
+
+// ── yaml-rust2#29: Deep indentation block scalars ────────────────────
+// Deeply nested structures with block scalars should parse correctly.
+
+#[test]
+fn yr2_29_deep_indentation_block_scalar() {
+    let yaml = "\
+a:
+  b:
+    c:
+      d:
+        e:
+          f:
+            g:
+              h:
+                i: |
+                  deeply indented block scalar
+";
+    let v: Value = from_str(yaml).unwrap();
+    let inner = v.get_path("a.b.c.d.e.f.g.h.i").and_then(|v| v.as_str());
+    assert_eq!(inner, Some("deeply indented block scalar\n"));
+}
+
+#[test]
+fn yr2_29_comment_between_directive_and_doc_start() {
+    let yaml = "%YAML 1.2\n# This is a comment\n---\nfoo: bar\n";
+    let result: Result<Value, _> = from_str(yaml);
+    // Should either parse or gracefully handle the directive
+    let _ = result;
+}
+
+// ── yaml-rust2#21: Comment handling ──────────────────────────────────
+// Comments should be stripped during parsing (YAML spec) but data preserved.
+
+#[test]
+fn yr2_21_comments_stripped_data_preserved() {
+    let yaml = "value:\n  # comment here\n  '002':\n    - name: foo\n";
+    let v: Value = from_str(yaml).unwrap();
+    let name = v
+        .get_path("value.002")
+        .and_then(|v| v.as_sequence())
+        .and_then(|s| s.first())
+        .and_then(|v| v.get("name"))
+        .and_then(|v| v.as_str());
+    assert_eq!(name, Some("foo"));
+}
+
+#[test]
+fn yr2_21_inline_comments_stripped() {
+    let yaml = "host: localhost  # primary host\nport: 5432       # postgres default\n";
+    let v: Value = from_str(yaml).unwrap();
+    assert_eq!(v["host"].as_str(), Some("localhost"));
+    assert_eq!(v["port"].as_i64(), Some(5432));
+}
+
+// ── yaml-rust2#27: Source spans (Marker) on parsed nodes ─────────────
+// noyalib supports this via Spanned<T>.
+
+#[test]
+fn yr2_27_source_spans_via_spanned() {
+    use noyalib::Spanned;
+
+    #[derive(serde::Deserialize)]
+    struct Config {
+        host: Spanned<String>,
+        port: Spanned<u16>,
+    }
+
+    let yaml = "host: localhost\nport: 8080\n";
+    let config: Config = from_str(yaml).unwrap();
+    assert_eq!(config.host.value, "localhost");
+    assert!(config.host.start.line() >= 1);
+    assert_eq!(config.port.value, 8080);
+    assert!(config.port.start.line() >= 1);
+}
+
+// ── yaml-rust2#34: Tag handle resolution ─────────────────────────────
+
+#[test]
+fn yr2_34_basic_tag_handles() {
+    let yaml = "--- !e!foo bar\n";
+    let result: Result<Value, _> = from_str(yaml);
+    // Should parse (tag may or may not be preserved depending on resolution)
+    let _ = result;
+}
+
+#[test]
+fn yr2_34_standard_tags() {
+    let yaml = "!!int 42\n";
+    let v: Value = from_str(yaml).unwrap();
+    // !!int should resolve to integer
+    match &v {
+        Value::Number(_) | Value::Tagged(_) => {} // either is acceptable
+        other => panic!("expected number or tagged, got {other:?}"),
+    }
+}
+
+// ── yaml-rust2#22: Multi-document parsing ────────────────────────────
+
+#[test]
+fn yr2_22_multi_document_parsing() {
+    let yaml = "---\nfoo: bar\n---\nbaz: qux\n";
+    let docs = noyalib::load_all(yaml).unwrap();
+    let docs: Vec<_> = docs.collect::<Result<Vec<_>, _>>().unwrap();
+    assert_eq!(docs.len(), 2);
+    assert_eq!(docs[0]["foo"].as_str(), Some("bar"));
+    assert_eq!(docs[1]["baz"].as_str(), Some("qux"));
+}
+
+#[test]
+fn yr2_22_multi_document_typed() {
+    #[derive(Debug, serde::Deserialize, PartialEq)]
+    struct Doc {
+        name: String,
+    }
+
+    let yaml = "---\nname: first\n---\nname: second\n";
+    let docs: Vec<Doc> = noyalib::load_all_as(yaml).unwrap();
+    assert_eq!(docs.len(), 2);
+    assert_eq!(docs[0].name, "first");
+    assert_eq!(docs[1].name, "second");
+}
+
+// ── Additional edge cases inspired by the issues ─────────────────────
+
+#[test]
+fn mixed_utf8_in_keys_and_values() {
+    let yaml = "日本語: こんにちは\nclé: valeur\n";
+    let v: Value = from_str(yaml).unwrap();
+    assert_eq!(v["日本語"].as_str(), Some("こんにちは"));
+    assert_eq!(v["clé"].as_str(), Some("valeur"));
+}
+
+#[test]
+fn deeply_nested_flow_with_utf8() {
+    let yaml = "{a: {b: {c: \"café\"}}}\n";
+    let v: Value = from_str(yaml).unwrap();
+    assert_eq!(v["a"]["b"]["c"].as_str(), Some("café"));
+}
+
+#[test]
+fn empty_flow_collections() {
+    let yaml = "empty_seq: []\nempty_map: {}\n";
+    let v: Value = from_str(yaml).unwrap();
+    assert!(
+        v["empty_seq"].as_sequence().unwrap().is_empty(),
+        "expected empty, got {:?}",
+        v["empty_seq"].as_sequence().unwrap()
+    );
+    assert!(
+        v["empty_map"].as_mapping().unwrap().is_empty(),
+        "expected empty, got {:?}",
+        v["empty_map"].as_mapping().unwrap()
+    );
+}
+
+#[test]
+fn anchor_alias_in_flow() {
+    let yaml = "[&a 1, *a, *a]\n";
+    let v: Value = from_str(yaml).unwrap();
+    let seq = v.as_sequence().unwrap();
+    assert_eq!(seq[0].as_i64(), Some(1));
+    assert_eq!(seq[1].as_i64(), Some(1));
+    assert_eq!(seq[2].as_i64(), Some(1));
+}
+
+#[test]
+fn literal_block_scalar_with_explicit_indent() {
+    let yaml = "script: |2\n    #!/bin/bash\n    echo hello\n";
+    let result: Result<Value, _> = from_str(yaml);
+    if let Ok(v) = result {
+        let s = v["script"].as_str().unwrap();
+        assert!(s.contains("#!/bin/bash"));
+    }
+}
+
+#[test]
+fn comment_shaped_line_is_block_scalar_content() {
+    // Found by fuzz_diff: serde_yaml_ng strips a `#` line inside a
+    // block scalar as if it were a comment and reads `>\n#` as the
+    // empty string. The spec reads it as content — the folded
+    // scalar's indentation auto-detects from its first non-empty
+    // line (`#` at column 0, valid content for a root node), and
+    // comments cannot occur inside scalar content.
+    let v: Value = from_str(">\n#").unwrap();
+    assert_eq!(v.as_str(), Some("#\n"));
+    let v: Value = from_str("|\n#x\n#y\n").unwrap();
+    assert_eq!(v.as_str(), Some("#x\n#y\n"));
+    // After leading breaks too (artifact `|+` with CR breaks): ng
+    // ends the scalar at the `#` line; it is content.
+    // The first `\r` ends the header; one empty line precedes `#`.
+    let v: Value = from_str("|+\r\r#\r\r").unwrap();
+    assert_eq!(v.as_str(), Some("\n#\n\n"));
+    // With clip chomping ng is left with only breaks, so it returns ""
+    // (artifact `|\r\r#|z`); the `#|z` line is content.
+    let v: Value = from_str("|\r\r#|z").unwrap();
+    assert_eq!(v.as_str(), Some("\n#|z\n"));
+}
+
+#[test]
+fn anchor_name_may_contain_colon() {
+    // Found by fuzz_diff (artifact `&a:`): serde_yaml_ng ends the
+    // anchor at the colon and reads a block mapping with an empty
+    // key ({"": null}). Per YAML 1.2 §6.9.2, ns-anchor-char is
+    // ns-char minus the flow indicators, so `:` is a legal anchor
+    // character: `&a:` anchors the (empty) document node under the
+    // name `a:` and the document itself is null.
+    let v: Value = from_str("&a:").unwrap();
+    assert!(v.is_null());
+    // The anchored node can still be a scalar that follows.
+    let v: Value = from_str("&a: 1").unwrap();
+    assert_eq!(v.as_i64(), Some(1));
+    // Same for `?` (artifact `&r??`): ng ends the name at `r` and
+    // reads the string "??"; the spec reads an anchor named `r??`.
+    let v: Value = from_str("&r??\n").unwrap();
+    assert!(v.is_null());
+}
+
+#[test]
+fn signed_binary_literal_is_a_string_in_yaml_12() {
+    // Found by fuzz_diff (input `-0b0`): serde_yaml_ng resolves the
+    // YAML 1.1 binary form with a sign to the integer 0. YAML 1.2's
+    // core schema has no `0b` binary resolution at all, so noyalib
+    // reads a plain string. The compat shim opts back into the 1.1
+    // reading (`-0b101` is -5 there), pinned by the contract suite.
+    let v: Value = from_str("-0b0").unwrap();
+    assert_eq!(v.as_str(), Some("-0b0"));
+    let v: Value = from_str("0b11").unwrap();
+    assert_eq!(v.as_str(), Some("0b11"));
+}
+
+#[test]
+fn question_mark_may_start_a_flow_key() {
+    // Found by fuzz_diff; the input is yaml-test-suite 652Z verbatim.
+    // serde_yaml_ng reads `?foo` as the explicit-key indicator and
+    // yields the key "foo". Per YAML 1.2 §7.3.3 (ns-plain-first), a
+    // `?` followed by a safe non-space character starts a plain
+    // scalar, so the key is "?foo".
+    let v: Value = from_str("{ ?foo: bar,\nbar: 42\n}\n").unwrap();
+    assert_eq!(v["?foo"].as_str(), Some("bar"));
+    assert_eq!(v["bar"].as_i64(), Some(42));
+    assert!(v.get("foo").is_none());
+    // The same rule in a flow sequence (artifact `[?=?)\r@]`): ng
+    // builds a single-pair mapping, the spec reads one plain scalar.
+    let v: Value = from_str("[?=?)\r@]").unwrap();
+    assert_eq!(v[0].as_str(), Some("?=?) @"));
+}
+
+#[test]
+fn tab_only_line_is_white_space() {
+    // Found by fuzz_serde_yaml_compat (input `\t`): libyaml rejects a
+    // tab that starts a line ("cannot start any token"). A line of only
+    // white space, or white space and a comment, is an l-comment line
+    // (YAML 1.2.2 §6.6), so `\t` alone is an empty stream.
+    let v: Value = from_str("\t").unwrap();
+    assert!(v.is_null());
+    let v: Value = from_str("k: 1\n\t\n\t# note\n").unwrap();
+    assert_eq!(v["k"].as_i64(), Some(1));
+}
+
+#[test]
+fn root_block_scalar_content_may_start_at_column_0() {
+    // Found by fuzz_serde_yaml_compat (input `>-\n[`): libyaml ends a
+    // root block scalar at a column-0 line. A root node's parent
+    // indentation is -1, so column 0 is content (yaml-test-suite FP8R).
+    let v: Value = from_str(">-\n[").unwrap();
+    assert_eq!(v.as_str(), Some("["));
+}
+
+#[test]
+fn clipped_block_scalar_key_keeps_its_final_break() {
+    // Found by fuzz_diff: a folded key that ends the input keeps its
+    // clipped line break (as a value does, yaml-test-suite L24T); ng
+    // drops it.
+    let v: Value = from_str("? >\n  k\n").unwrap();
+    assert!(v.get("k\n").is_some(), "{v:?}");
+    let v: Value = from_str("? >\r\n  *z").unwrap();
+    assert!(v.get("*z\n").is_some(), "{v:?}");
+}
+
+#[test]
+fn overflowing_float_literal_is_infinity() {
+    // Found by fuzz_diff: a core-schema float literal past f64's range
+    // resolves to infinity (the serde_yaml compat profile keeps it as a
+    // string instead); serde_yaml_ng keeps the text.
+    let v: Value = from_str("3e999").unwrap();
+    assert_eq!(v.as_f64(), Some(f64::INFINITY));
+    let v: Value = from_str("-3e999").unwrap();
+    assert_eq!(v.as_f64(), Some(f64::NEG_INFINITY));
+}
+
+#[test]
+fn empty_key_entries_in_flow_sequences() {
+    // Found by fuzz_diff (input `[?\n\r,\r\r:]`): libyaml cannot read
+    // an empty-key entry in a flow sequence and serde_yaml_ng drops one.
+    // The spec allows it (yaml-test-suite CFD4).
+    let v: Value = from_str("[?, :]").unwrap();
+    assert_eq!(v.as_sequence().map(Vec::len), Some(2), "{v:?}");
+    // A `Value` spells the empty (null) key canonically.
+    let v: Value = from_str("[a, : x]").unwrap();
+    assert_eq!(v[1]["null"].as_str(), Some("x"), "{v:?}");
+}
+
+#[test]
+fn tab_before_a_root_scalar_is_separation() {
+    // Found by fuzz_serde_yaml_compat (input `\t$0`).
+    let v: Value = from_str("\t$0").unwrap();
+    assert_eq!(v.as_str(), Some("$0"));
+}
+
+#[test]
+fn comment_touching_a_block_header_is_an_error() {
+    // Found by fuzz_serde_yaml_compat (input `|#`): libyaml takes the
+    // `#` as a comment. It needs white space before it (YAML 1.2.2
+    // §6.6; yaml-test-suite X4QW is the error case).
+    assert!(from_str::<Value>("|#").is_err());
+    assert!(from_str::<Value>("a: >-# c\n  x\n").is_err());
+    assert!(from_str::<Value>("a: > # c\n  x\n").is_ok());
+}
