@@ -5,24 +5,28 @@
   "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/00-foundation-conductor-toolchain/spec.md#scope",
-  "claim_boundary": "Five of six foundation assertions are source implemented. The exact 8de03a0 tree has a whole-tree-equivalent pinned full verification pass and a separate frozen cargo-vet policy pass with 259 existing exemptions, not 259 new audits. Upstream repository-standards registration and estate conformance remain externally blocked; historical failed receipts retain their original scope.",
+  "claim_boundary": "Source-verified foundation implementation with exact 8de03a0 whole-tree-equivalent full verification: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet policy check passed with 43 fully vetted dependencies and 259 existing exemptions, not 259 audited dependencies. Earlier failed receipts remain historical; upstream repository-standards registration and estate conformance remain open. No future-tree validation or track completion is implied.",
   "assertions": [
     {
       "assertion_id": "T00-A001",
       "statement": "Record upstream Conductor 0.3.0 and supported host installation paths",
       "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "conductor/upstream.lock.json",
         "scripts/install-conductor.sh",
         "scripts/install-conductor.ps1",
+        "scripts/check_context_integrity.py",
+        "scripts/validate_repository.py",
         "verification/receipts/track-00-local-verification.json"
       ],
       "implementation_symbols": [
-        "scripts/check_context_integrity.py::main"
+        "scripts/check_context_integrity.py::main",
+        "scripts/validate_repository.py::validate_conductor"
       ],
       "deterministic_tests": [
-        "python scripts/check_context_integrity.py"
+        "python scripts/check_context_integrity.py",
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"
@@ -34,7 +38,7 @@
       "assertion_id": "T00-A002",
       "statement": "Create product, guidelines, stack, workflow, requirements and design context",
       "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "conductor/index.md",
         "conductor/product.md",
@@ -43,6 +47,7 @@
         "conductor/workflow.md",
         "conductor/requirements.md",
         "conductor/design.md",
+        "scripts/check_context_integrity.py",
         "scripts/conductor_status.py",
         "tests/test_conductor_status.py"
       ],
@@ -55,7 +60,8 @@
       "deterministic_tests": [
         "python scripts/check_context_integrity.py",
         "python scripts/sync_context_lock.py --check",
-        "python scripts/conductor_status.py"
+        "python scripts/conductor_status.py",
+        "python3 -B -m unittest discover -s tests -p test_conductor_status.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json",
@@ -68,18 +74,22 @@
       "assertion_id": "T00-A003",
       "statement": "Pin Rust stable and document nightly/experimental policy",
       "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "rust-toolchain.toml",
         "conductor/tech-stack.md",
         "docs/msrv-and-package-policy.md",
+        "scripts/check_toolchain_manifest.py",
+        "scripts/validate_repository.py",
         "verification/receipts/track-00-local-verification.json"
       ],
       "implementation_symbols": [
-        "scripts/check_toolchain_manifest.py::main"
+        "scripts/check_toolchain_manifest.py::main",
+        "scripts/validate_repository.py::validate_action_and_tool_pins"
       ],
       "deterministic_tests": [
-        "python scripts/check_toolchain_manifest.py"
+        "python scripts/check_toolchain_manifest.py",
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"
@@ -91,17 +101,21 @@
       "assertion_id": "T00-A004",
       "statement": "Generate and commit Cargo.lock in a networked Rust environment",
       "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "Cargo.lock",
         "Cargo.toml",
+        "scripts/check_rust_dependency_graph.py",
+        "scripts/validate_repository.py",
         "verification/receipts/track-00-local-verification.json"
       ],
       "implementation_symbols": [
-        "scripts/check_rust_dependency_graph.py::main"
+        "scripts/check_rust_dependency_graph.py::main",
+        "scripts/validate_repository.py::validate_workspace"
       ],
       "deterministic_tests": [
-        "python scripts/check_rust_dependency_graph.py"
+        "python scripts/check_rust_dependency_graph.py",
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json"
@@ -113,12 +127,15 @@
       "assertion_id": "T00-A005",
       "statement": "Register repository in repository-standards and run estate conformance",
       "state": "external_evidence_required",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "integration/passports/repository-standards-inheritance.json",
         "migration/estate/repositories.json",
         "migration/companion-repositories/repository-standards.json",
-        "docs/repository-standards-alignment.md"
+        "docs/repository-standards-alignment.md",
+        "scripts/check_integration_passports.py",
+        "scripts/check_integration_drift.py",
+        "scripts/check_companion_change_packets.py"
       ],
       "implementation_symbols": [
         "scripts/check_integration_passports.py::main",
@@ -144,19 +161,22 @@
       "assertion_id": "T00-A006",
       "statement": "Create one-command bootstrap and verification receipts",
       "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "scripts/bootstrap.sh",
         "scripts/bootstrap.ps1",
         "scripts/verify.sh",
         "scripts/run_static_harness.py",
+        "scripts/validate_repository.py",
         "verification/receipts/track-00-local-verification.json"
       ],
       "implementation_symbols": [
-        "scripts/run_static_harness.py::main"
+        "scripts/run_static_harness.py::main",
+        "scripts/validate_repository.py::main"
       ],
       "deterministic_tests": [
-        "python scripts/run_static_harness.py"
+        "python scripts/run_static_harness.py",
+        "python scripts/validate_repository.py"
       ],
       "evidence_receipts": [
         "verification/receipts/track-00-local-verification.json",

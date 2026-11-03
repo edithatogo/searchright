@@ -3,28 +3,171 @@
   "tracks": {
     "00": {
       "assertions": {
-        "T00-A006": {
-          "state": "source_implemented",
-          "mapping_confidence": "path_and_gate_mapped",
+        "T00-A001": {
+          "deterministic_tests": [
+            "python scripts/check_context_integrity.py",
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-00-local-verification.json"
+          ],
           "implementation_paths": [
-            "scripts/bootstrap.sh",
-            "scripts/bootstrap.ps1",
-            "scripts/verify.sh",
-            "scripts/run_static_harness.py",
+            "conductor/upstream.lock.json",
+            "scripts/install-conductor.sh",
+            "scripts/install-conductor.ps1",
+            "scripts/check_context_integrity.py",
+            "scripts/validate_repository.py",
             "verification/receipts/track-00-local-verification.json"
           ],
           "implementation_symbols": [
-            "scripts/run_static_harness.py::main"
+            "scripts/check_context_integrity.py::main",
+            "scripts/validate_repository.py::validate_conductor"
           ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "The 0.3.0 repository baseline and supported installers are recorded; Gemini CLI has a separately recorded enabled Conductor 0.4.1 host.",
+          "state": "source_implemented"
+        },
+        "T00-A002": {
           "deterministic_tests": [
-            "python scripts/run_static_harness.py"
+            "python scripts/check_context_integrity.py",
+            "python scripts/sync_context_lock.py --check",
+            "python scripts/conductor_status.py",
+            "python3 -B -m unittest discover -s tests -p test_conductor_status.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-00-local-verification.json",
+            "verification/receipts/track-00-native-status-adapter.json"
+          ],
+          "implementation_paths": [
+            "conductor/index.md",
+            "conductor/product.md",
+            "conductor/product-guidelines.md",
+            "conductor/tech-stack.md",
+            "conductor/workflow.md",
+            "conductor/requirements.md",
+            "conductor/design.md",
+            "scripts/check_context_integrity.py",
+            "scripts/conductor_status.py",
+            "tests/test_conductor_status.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_context_integrity.py::main",
+            "scripts/conductor_status.py::audit",
+            "scripts/conductor_status.py::main",
+            "tests/test_conductor_status.py::StatusTests"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "The Conductor handshake and linked project context resolve locally. The native read-only v3 status adapter reconciles registry, plans, evidence and in-place archive state with adversarial tests; it neither executes inspected-root code nor promotes external gates.",
+          "state": "source_implemented"
+        },
+        "T00-A003": {
+          "deterministic_tests": [
+            "python scripts/check_toolchain_manifest.py",
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_paths": [
+            "rust-toolchain.toml",
+            "conductor/tech-stack.md",
+            "docs/msrv-and-package-policy.md",
+            "scripts/check_toolchain_manifest.py",
+            "scripts/validate_repository.py",
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_symbols": [
+            "scripts/check_toolchain_manifest.py::main",
+            "scripts/validate_repository.py::validate_action_and_tool_pins"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Rust 1.97.1 is pinned; exact GNU compiler execution passed locally and hosted Windows, macOS, Linux and declared-version jobs passed on PR #569.",
+          "state": "source_implemented"
+        },
+        "T00-A004": {
+          "deterministic_tests": [
+            "python scripts/check_rust_dependency_graph.py",
+            "python scripts/validate_repository.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_paths": [
+            "Cargo.lock",
+            "Cargo.toml",
+            "scripts/check_rust_dependency_graph.py",
+            "scripts/validate_repository.py",
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_symbols": [
+            "scripts/check_rust_dependency_graph.py::main",
+            "scripts/validate_repository.py::validate_workspace"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [],
+          "permitted_claim": "Cargo.lock is committed at implementation revision 3f62b5ebc3efe3e619c05dfacdabc01b159f1aec, and exact Rust 1.97.1 GNU workspace check plus 55 tests passed against that revision.",
+          "state": "source_implemented"
+        },
+        "T00-A005": {
+          "deterministic_tests": [
+            "python scripts/check_integration_passports.py",
+            "python scripts/check_integration_drift.py",
+            "python scripts/check_companion_change_packets.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_paths": [
+            "integration/passports/repository-standards-inheritance.json",
+            "migration/estate/repositories.json",
+            "migration/companion-repositories/repository-standards.json",
+            "docs/repository-standards-alignment.md",
+            "scripts/check_integration_passports.py",
+            "scripts/check_integration_drift.py",
+            "scripts/check_companion_change_packets.py"
+          ],
+          "implementation_symbols": [
+            "scripts/check_integration_passports.py::main",
+            "scripts/check_integration_drift.py::main",
+            "scripts/check_companion_change_packets.py::main"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Obtain explicit authority to modify edithatogo/repository-standards despite the prepared packet's remote_mutation_permitted=false policy.",
+            "Add edithatogo/searchright to the upstream registry and run estate conformance against the exact Searchright revision.",
+            "Record the observed upstream commit and conformance receipt."
+          ],
+          "permitted_claim": "Policy inheritance and a prepared registration packet exist; upstream registration and estate conformance do not.",
+          "state": "external_evidence_required"
+        },
+        "T00-A006": {
+          "deterministic_tests": [
+            "python scripts/run_static_harness.py",
+            "python scripts/validate_repository.py"
           ],
           "evidence_receipts": [
             "verification/receipts/track-00-local-verification.json",
             "verification/receipts/track-00-verification-reconciliation.json"
           ],
+          "implementation_paths": [
+            "scripts/bootstrap.sh",
+            "scripts/bootstrap.ps1",
+            "scripts/verify.sh",
+            "scripts/run_static_harness.py",
+            "scripts/validate_repository.py",
+            "verification/receipts/track-00-local-verification.json"
+          ],
+          "implementation_symbols": [
+            "scripts/run_static_harness.py::main",
+            "scripts/validate_repository.py::main"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [],
-          "permitted_claim": "One-command bootstrap and verification entry points exist. The exact 8de03a0 tree equals the pinned full-verified c358e68 tree: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet 0.10.2 check passed existing policy with 43 fully vetted dependencies and 259 existing exemptions; exempted dependencies are not claimed audited. No future-tree verification or upstream estate conformance is implied."
+          "permitted_claim": "One-command bootstrap and verification entry points exist. The exact 8de03a0 tree equals the pinned full-verified c358e68 tree: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet 0.10.2 check passed existing policy with 43 fully vetted dependencies and 259 existing exemptions; exempted dependencies are not claimed audited. No future-tree verification or upstream estate conformance is implied.",
+          "state": "source_implemented"
         }
       }
     },

@@ -53,13 +53,13 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "d05a993339d6cc52b520a0fad0c6c0656f36ea172208a9948b0f5fcc26374cdb",
-      "size": 125110
+      "sha256": "1510d781519e64007fc3a630b7fa1d83b70cc92edc9b5c1f108174b2ce8e68fa",
+      "size": 125482
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "ad16575e57726ae0c9f24efe9adfa6c91d9ea7d6920989b428d7b1bce4ad8176",
-      "size": 133007
+      "sha256": "8236684fb49bb0e8adff0f5feaa07f11c0f0ef248e664e24dab5a0f78a761a1b",
+      "size": 139880
     },
     {
       "path": "context/capability-matrix.json",
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "220139ac9962cb578d38ebf87cad62281e24a593bb7ca3e849737eda2cfa4eac",
-      "size": 3549
+      "sha256": "47508eb5f88f0999190fe8a7e45169f3978fa9b2ad435bd927dec3148830a302",
+      "size": 3516
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "942036e80cdc422b659de1e90da7ff162623ce8bd138c20996750f80995974c8",
-      "size": 50525
+      "sha256": "911a2137873b2bcafb1c22c3c2425773e5686c36f81ee2b09008b7fba7ee680d",
+      "size": 50605
     },
     {
       "path": "verification/harness-matrix.json",

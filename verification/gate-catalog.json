@@ -11,6 +11,10 @@
       "command": "python scripts/validate_repository.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A001",
+        "T00-A003",
+        "T00-A004",
+        "T00-A006",
         "T01-A001",
         "T01-A004",
         "T02-A001",
