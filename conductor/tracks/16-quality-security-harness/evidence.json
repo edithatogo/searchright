@@ -96,7 +96,7 @@
     "Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.",
     "Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion."
   ],
-  "claim_boundary": "Hosted PR #569 evidence is bound to exact head 560c78c: cross-platform compiler/test/Clippy, selected formal/fuzz/security, clean-room and static jobs passed, while coverage and cargo-vet failed. Coverage-ratchet commit e91352c and cargo-vet governance commits dc02719/324baf4 are locally source-verified only until a new hosted head runs. The greater-than-90-percent coverage target, mutation, Scorecard, complete dependency audits and aggregate release gates remain open.",
+  "claim_boundary": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-16",
@@ -121,6 +121,11 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
-  "external_evidence": []
+  "runtime_evidence": [
+    "verification/receipts/track-16-conductor-review-2026-11-04.json"
+  ],
+  "external_evidence": [],
+  "review_fixes": [
+    "Upgrade all six Track 16 assertions (T16-A001..T16-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; refactor tests/test_coverage_policy.py to define CoveragePolicyTests; record green hosted PR #718 (a2e7a5d) and merged PRs #719-#723 verification across all 27 hosted jobs; record conductor review receipt and preserve remaining maturity blockers."
+  ]
 }

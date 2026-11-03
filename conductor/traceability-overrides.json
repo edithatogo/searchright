@@ -2178,32 +2178,38 @@
     "16": {
       "assertions": {
         "T16-A001": {
-          "deterministic_tests": [
-            "python scripts/check_toolchain_manifest.py"
-          ],
-          "evidence_receipts": [
-            "conductor/tracks/16-quality-security-harness/evidence.json"
-          ],
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
           "implementation_paths": [
             "rust-toolchain.toml",
-            ".github/workflows/ci.yml"
+            ".github/workflows/ci.yml",
+            "scripts/check_toolchain_manifest.py",
+            "scripts/check_rust_dependency_graph.py",
+            "scripts/validate_repository.py"
           ],
-          "implementation_symbols": [],
-          "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-            "Install Rust 1.97.1, generate Cargo.lock and make compiler CI green."
+          "implementation_symbols": [
+            "scripts/check_toolchain_manifest.py::main",
+            "scripts/check_rust_dependency_graph.py::main",
+            "scripts/validate_repository.py::validate_workspace"
           ],
-          "permitted_claim": "No lockfile or compiler-green claim is made.",
-          "state": "scaffolded"
-        },
-        "T16-A002": {
           "deterministic_tests": [
-            "python scripts/run_static_harness.py",
-            "python scripts/check_vertical_slice.py"
+            "python scripts/check_toolchain_manifest.py",
+            "python scripts/check_rust_dependency_graph.py",
+            "python scripts/validate_repository.py"
           ],
           "evidence_receipts": [
-            "conductor/tracks/16-quality-security-harness/evidence.json"
+            "conductor/tracks/16-quality-security-harness/evidence.json",
+            "verification/receipts/track-16-hosted-pr-560c78c.json",
+            "verification/receipts/track-16-conductor-review-2026-11-04.json"
           ],
+          "open_gates": [
+            "Scheduled mutation and push-context OpenSSF Scorecard suites remain open on candidate heads."
+          ],
+          "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main; scheduled mutation and push-context OpenSSF Scorecard remain open."
+        },
+        "T16-A002": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
           "implementation_paths": [
             "tests",
             "fuzz",
@@ -2212,45 +2218,64 @@
             ".github/workflows/formal.yml",
             "scripts/run_static_harness.py",
             "verification/vertical-slice",
-            "scripts/check_vertical_slice.py"
+            "scripts/check_vertical_slice.py",
+            "tests/test_coverage_policy.py"
           ],
-          "implementation_symbols": [],
-          "mapping_confidence": "symbol_and_gate_mapped",
+          "implementation_symbols": [
+            "scripts/run_static_harness.py::main",
+            "scripts/check_vertical_slice.py::main",
+            "tests/test_coverage_policy.py::CoveragePolicyTests"
+          ],
+          "deterministic_tests": [
+            "python scripts/run_static_harness.py",
+            "python scripts/check_vertical_slice.py",
+            "python3 -B -m unittest discover -s tests -p test_coverage_policy.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/16-quality-security-harness/evidence.json",
+            "verification/receipts/track-16-hosted-pr-560c78c.json",
+            "verification/receipts/track-16-conductor-review-2026-11-04.json"
+          ],
           "open_gates": [
-            "Compile and execute Rust unit, integration, property, metamorphic, CDC, fuzz and mutation suites."
+            "Run the scheduled mutation suite on the exact candidate and retain its hosted artifact.",
+            "Raise measured line coverage above 90 percent with meaningful tests; the 61 percent admission ratchet is not the maturity target."
           ],
-          "permitted_claim": "Network-free static gates and Rust test source exist; Rust test execution remains open.",
-          "state": "partially_implemented"
+          "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust, clean-room, formal (Kani, Loom, Miri, cargo-careful) and bounded fuzz targets on main; scheduled mutation and >90% coverage maturity target remain open."
         },
         "T16-A003": {
-          "deterministic_tests": [
-            "python scripts/check_workflow_hardening.py"
-          ],
-          "evidence_receipts": [
-            "conductor/tracks/16-quality-security-harness/evidence.json"
-          ],
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
           "implementation_paths": [
             "codecov.yml",
-            ".github/workflows/coverage.yml"
+            ".github/workflows/coverage.yml",
+            "verification/coverage-policy.json",
+            "scripts/check_coverage_policy.py",
+            "scripts/check_workflow_hardening.py",
+            "tests/test_coverage_policy.py"
           ],
-          "implementation_symbols": [],
-          "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-            "Run llvm-cov and enforce measured coverage above the declared threshold."
+          "implementation_symbols": [
+            "scripts/check_coverage_policy.py::main",
+            "scripts/check_workflow_hardening.py::main",
+            "tests/test_coverage_policy.py::CoveragePolicyTests"
           ],
-          "permitted_claim": "Coverage automation is configured but no coverage result is claimed.",
-          "state": "scaffolded"
-        },
-        "T16-A004": {
           "deterministic_tests": [
-            "python scripts/check_toolchain_manifest.py",
             "python scripts/check_workflow_hardening.py",
-            "python scripts/check_gate_catalog.py --check",
-            "python scripts/check_architecture_fitness.py"
+            "python scripts/check_coverage_policy.py",
+            "python3 -B -m unittest discover -s tests -p test_coverage_policy.py"
           ],
           "evidence_receipts": [
-            "conductor/tracks/16-quality-security-harness/evidence.json"
+            "conductor/tracks/16-quality-security-harness/evidence.json",
+            "verification/receipts/track-16-hosted-pr-560c78c.json",
+            "verification/receipts/track-16-conductor-review-2026-11-04.json"
           ],
+          "open_gates": [
+            "Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity."
+          ],
+          "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 ran and passed hosted LLVM coverage with the non-regression admission ratchet on main; >90% line coverage remains the open maturity target."
+        },
+        "T16-A004": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
           "implementation_paths": [
             "deny.toml",
             "supply-chain/config.toml",
@@ -2261,28 +2286,40 @@
             "verification/gate-catalog.json",
             "verification/architecture-policy.json",
             "scripts/check_gate_catalog.py",
-            "scripts/check_architecture_fitness.py"
+            "scripts/check_architecture_fitness.py",
+            "scripts/check_cargo_vet_governance.py",
+            "scripts/test_cargo_vet_governance.py",
+            "docs/security/cargo-vet-governance.md",
+            "supply-chain/exemption-proposals.json"
           ],
           "implementation_symbols": [
             "scripts/check_gate_catalog.py::main",
-            "scripts/check_architecture_fitness.py::main"
+            "scripts/check_architecture_fitness.py::main",
+            "scripts/check_cargo_vet_governance.py::main",
+            "scripts/test_cargo_vet_governance.py::CargoVetGovernanceTests"
           ],
-          "mapping_confidence": "symbol_and_gate_mapped",
-          "open_gates": [
-            "Install and execute cargo-deny, audit, vet, semver, public-api and other configured tools."
-          ],
-          "permitted_claim": "Security, supply-chain, API and architecture gates are explicitly catalogued with source-level evidence ceilings; compiler-backed tool execution remains open.",
-          "state": "partially_implemented"
-        },
-        "T16-A005": {
           "deterministic_tests": [
-            "python scripts/check_default_deny.py",
-            "python scripts/check_secrets.py",
-            "python scripts/check_redaction_policy.py --self-test"
+            "python scripts/check_toolchain_manifest.py",
+            "python scripts/check_workflow_hardening.py",
+            "python scripts/check_gate_catalog.py --check",
+            "python scripts/check_architecture_fitness.py",
+            "python scripts/check_cargo_vet_governance.py",
+            "python scripts/test_cargo_vet_governance.py"
           ],
           "evidence_receipts": [
-            "conductor/tracks/16-quality-security-harness/evidence.json"
+            "conductor/tracks/16-quality-security-harness/evidence.json",
+            "verification/receipts/track-16-hosted-pr-560c78c.json",
+            "verification/receipts/track-16-conductor-review-2026-11-04.json"
           ],
+          "open_gates": [
+            "Replace temporary exact-version exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.",
+            "Run OpenSSF Scorecard in a push context for the exact candidate."
+          ],
+          "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed CodeQL, cargo-vet governance, dependency review, and public API/SemVer on main; replacing temporary exemptions before 2026-11-10 and push-context Scorecard remain open."
+        },
+        "T16-A005": {
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
           "implementation_paths": [
             "scripts/check_default_deny.py",
             "scripts/check_secrets.py",
@@ -2294,25 +2331,28 @@
           ],
           "implementation_symbols": [
             "scripts/redaction.py::redact_value",
-            "scripts/check_redaction_policy.py::main"
+            "scripts/check_redaction_policy.py::main",
+            "scripts/check_default_deny.py::main",
+            "scripts/check_secrets.py::main"
           ],
-          "mapping_confidence": "symbol_and_gate_mapped",
+          "deterministic_tests": [
+            "python scripts/check_default_deny.py",
+            "python scripts/check_secrets.py",
+            "python scripts/check_redaction_policy.py --self-test"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/16-quality-security-harness/evidence.json",
+            "verification/receipts/track-16-hosted-pr-560c78c.json",
+            "verification/receipts/track-16-conductor-review-2026-11-04.json"
+          ],
           "open_gates": [
             "Compile and run SSRF, parser bomb and resource-exhaustion adversarial tests."
           ],
-          "permitted_claim": "Static authority, secret, redaction and hazard controls pass deterministic adversarial cases; complete runtime abuse and resource-exhaustion testing remains open.",
-          "state": "partially_implemented"
+          "permitted_claim": "Static authority, secret, redaction and hazard controls pass deterministic adversarial cases; complete runtime abuse and resource-exhaustion testing remains open."
         },
         "T16-A006": {
-          "deterministic_tests": [
-            "python scripts/run_static_harness.py",
-            "python scripts/check_vertical_slice.py",
-            "python scripts/check_gate_catalog.py --check",
-            "python scripts/generate_evidence_debt.py --check"
-          ],
-          "evidence_receipts": [
-            "conductor/tracks/16-quality-security-harness/evidence.json"
-          ],
+          "state": "partially_implemented",
+          "mapping_confidence": "symbol_and_gate_mapped",
           "implementation_paths": [
             "verification/receipts",
             "scripts/run_static_harness.py",
@@ -2328,15 +2368,24 @@
           ],
           "implementation_symbols": [
             "scripts/run_static_harness.py::main",
+            "scripts/check_vertical_slice.py::main",
             "scripts/check_gate_catalog.py::main",
             "scripts/generate_evidence_debt.py::main"
           ],
-          "mapping_confidence": "symbol_and_gate_mapped",
+          "deterministic_tests": [
+            "python scripts/run_static_harness.py",
+            "python scripts/check_vertical_slice.py",
+            "python scripts/check_gate_catalog.py --check",
+            "python scripts/generate_evidence_debt.py --check"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/16-quality-security-harness/evidence.json",
+            "verification/receipts/track-16-conductor-review-2026-11-04.json"
+          ],
           "open_gates": [
             "Generate compiler, coverage, live, external and release receipts at the corresponding evidence levels."
           ],
-          "permitted_claim": "Machine-readable static receipts, gate evidence ceilings and evidence-debt registers are produced; higher evidence receipts are not fabricated.",
-          "state": "partially_implemented"
+          "permitted_claim": "Machine-readable static and exact-head hosted receipts are produced with failed, skipped and unhosted gates preserved; release receipts are produced only as gates execute."
         }
       }
     },
