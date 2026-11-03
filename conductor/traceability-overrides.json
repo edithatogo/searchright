@@ -2801,6 +2801,201 @@
         }
       }
     },
+    "19": {
+      "assertions": {
+        "T19-A001": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/19-registries-publication/evidence.json",
+            "verification/receipts/track-19-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "server.json",
+            "scripts/validate_repository.py",
+            "tests/test_registries_publication_governance.py"
+          ],
+          "implementation_symbols": [
+            "scripts/validate_repository.py::validate_registry_truthfulness",
+            "scripts/validate_repository.py::validate_publication_packets",
+            "tests/test_registries_publication_governance.py::RegistriesPublicationGovernanceTests"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "open_gates": [
+            "Publish a verified release that registry packets can reference.",
+            "Submit to each external registry with maintainer approval."
+          ],
+          "permitted_claim": "Official MCP Registry packet format and schema target are verified in server.json; external submission and mcp-publisher validation remain gated on release availability.",
+          "state": "scaffolded"
+        },
+        "T19-A002": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/19-registries-publication/evidence.json",
+            "verification/receipts/track-19-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "glama.json",
+            "registry/glama/README.md",
+            "registry/smithery/README.md",
+            "registry/smithery/mcpb-manifest.template.json",
+            "scripts/validate_repository.py",
+            "tests/test_registries_publication_governance.py"
+          ],
+          "implementation_symbols": [
+            "scripts/validate_repository.py::validate_registry_truthfulness",
+            "scripts/validate_repository.py::validate_publication_packets",
+            "tests/test_registries_publication_governance.py::RegistriesPublicationGovernanceTests"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "open_gates": [
+            "Publish a verified release that registry packets can reference.",
+            "Submit to each external registry with maintainer approval."
+          ],
+          "permitted_claim": "Glama maintainer configuration and Smithery MCPB template are verified in source; external registry submissions remain pending.",
+          "state": "scaffolded"
+        },
+        "T19-A003": {
+          "deterministic_tests": [
+            "python scripts/check_public_package_policy.py",
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/19-registries-publication/evidence.json",
+            "verification/receipts/track-19-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "release/public-packages.json",
+            "scripts/check_public_package_policy.py",
+            "scripts/validate_repository.py",
+            "tests/test_registries_publication_governance.py"
+          ],
+          "implementation_symbols": [
+            "scripts/validate_repository.py::validate_publication_packets",
+            "scripts/check_public_package_policy.py::main",
+            "tests/test_registries_publication_governance.py::RegistriesPublicationGovernanceTests"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "python3 -B scripts/check_public_package_policy.py",
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "open_gates": [
+            "Publish a verified release that registry packets can reference.",
+            "Submit to each external registry with maintainer approval."
+          ],
+          "permitted_claim": "Package publication policy enforces deny-by-default and requires supply-chain evidence; crates.io publication and GitHub release artefacts remain gated on verified release.",
+          "state": "scaffolded"
+        },
+        "T19-A004": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/19-registries-publication/evidence.json",
+            "verification/receipts/track-19-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "registry/official-mcp/README.md",
+            "scripts/submit-registries.sh",
+            "scripts/validate_repository.py",
+            "tests/test_registries_publication_governance.py"
+          ],
+          "implementation_symbols": [
+            "scripts/submit-registries.sh::main",
+            "scripts/validate_repository.py::validate_registry_truthfulness",
+            "tests/test_registries_publication_governance.py::RegistriesPublicationGovernanceTests"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "open_gates": [
+            "Publish a verified release that registry packets can reference.",
+            "Submit to each external registry with maintainer approval."
+          ],
+          "permitted_claim": "Registry submission script enforces manual authorization gates and pre-flight checks; official MCP Registry submission remains pending package availability.",
+          "state": "scaffolded"
+        },
+        "T19-A005": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/19-registries-publication/evidence.json",
+            "verification/receipts/track-19-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "registry/status.json",
+            "scripts/validate_repository.py",
+            "tests/test_registries_publication_governance.py"
+          ],
+          "implementation_symbols": [
+            "scripts/validate_repository.py::validate_registry_truthfulness",
+            "tests/test_registries_publication_governance.py::RegistriesPublicationGovernanceTests"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "open_gates": [
+            "Record public listing, rejection or revision evidence."
+          ],
+          "permitted_claim": "Registry status tracks target states and explicit blockers without claiming premature publication; public acceptance URLs will be recorded upon external listing.",
+          "state": "scaffolded"
+        },
+        "T19-A006": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/19-registries-publication/evidence.json",
+            "verification/receipts/track-19-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "registry/joss/paper.md",
+            "CITATION.cff",
+            "scripts/validate_repository.py",
+            "tests/test_registries_publication_governance.py"
+          ],
+          "implementation_symbols": [
+            "scripts/validate_repository.py::validate_publication_packets",
+            "tests/test_registries_publication_governance.py::RegistriesPublicationGovernanceTests"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "python3 -B scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_registries_publication_governance.py"
+          ],
+          "open_gates": [
+            "Publish a verified release that registry packets can reference.",
+            "Complete JOSS submission requirements and independent review."
+          ],
+          "permitted_claim": "Citation metadata and draft JOSS software paper outline are prepared and aligned; submission requires external use, archived release, and independent review.",
+          "state": "scaffolded"
+        }
+      }
+    },
     "24": {
       "assertions": {
         "T24-A001": {

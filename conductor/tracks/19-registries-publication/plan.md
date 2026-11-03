@@ -9,13 +9,15 @@ GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-19-phase-1 -->
 
 - [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `registry/status.json`
-  - [x] Present source path: `registry/official-mcp/README.md`
-  - [x] Present source path: `registry/glama/README.md`
-  - [x] Present source path: `registry/smithery/README.md`
-  - [x] Present source path: `registry/joss/paper.md`
-  - [x] Present source path: `server.json`
   - [x] Present source path: `glama.json`
+  - [x] Present source path: `registry/glama/README.md`
+  - [x] Present source path: `registry/joss/paper.md`
+  - [x] Present source path: `registry/official-mcp/README.md`
+  - [x] Present source path: `registry/smithery/README.md`
+  - [x] Present source path: `registry/status.json`
+  - [x] Present source path: `server.json`
+  - [x] Present source path: `tests/test_registries_publication_governance.py`
+  - [x] Present source path: `verification/receipts/track-19-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/19-registries-publication/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -41,5 +43,6 @@ GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
