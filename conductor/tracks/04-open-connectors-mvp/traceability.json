@@ -5,16 +5,18 @@
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/04-open-connectors-mvp/spec.md#scope",
-  "updated": "2026-08-31",
-  "claim_boundary": "Full local validation of the cache-version slice passed on snapshot 6d995108106db62474e2746a2021f29e89603b95 using repository-pinned Rust/Cargo 1.97.1: 82 Python tests, 57 static gates, 431 native tests with zero skipped and 23 cargo-vet governance tests. Earlier 61 focused connector tests and strict Clippy used Homebrew 1.98.0; historical snapshot 8317 and its 429 native tests predate the cache-version fix. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; declared versions do not establish authenticity or parser execution on replay. Future EFetch orchestration adoption is not part of this proof. Shared live-transport/EFetch wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+  "updated": "2026-11-03",
+  "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
   "native_test_commands": [
     "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
+    "cargo test -p searchright-connectors --test efetch_orchestration --all-features --locked",
     "cargo test -p searchright-connectors --all-features --locked",
     "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings",
     "cargo test -p searchright-connectors --test cache_parser_version --all-features --locked"
   ],
   "python_test_commands": [
-    "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py"
+    "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py",
+    "python3 -m unittest discover -s tests -p test_connector_redaction_source.py"
   ],
   "review_fixes": [
     {
@@ -32,6 +34,10 @@
     {
       "commit": "d7854b0956eed7ec3730ab3219b358d5f1964e77",
       "summary": "Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; observed old-cache bypass, then 61 focused Homebrew tests/Clippy and full pinned 1.97.1 snapshot 6d995108106db62474e2746a2021f29e89603b95 passed."
+    },
+    {
+      "commit": "62e34dd",
+      "summary": "Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt."
     }
   ],
   "assertions": [
@@ -44,10 +50,13 @@
         "crates/searchright-connectors/src/lib.rs",
         "crates/searchright-connectors/src/efetch.rs",
         "crates/searchright-connectors/tests/efetch_offline.rs",
+        "crates/searchright-connectors/tests/efetch_orchestration.rs",
+        "crates/searchright-connectors/src/pubmed_orchestration_tests.rs",
         "crates/searchright-connectors/tests/runtime_receipts.rs",
         "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
         "crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json",
         "docs/pubmed-efetch-mapping.md",
+        "docs/efetch-orchestration-design.md",
         "provider-fixtures/mvp/pubmed-esearch.json",
         "provider-fixtures/mvp/pubmed-esummary.json",
         "crates/searchright-connectors/tests/parser_integrity.rs",
@@ -57,6 +66,8 @@
       ],
       "implementation_symbols": [
         "searchright_connectors::PubMedProvider",
+        "searchright_connectors::PubMedEfetchProvider",
+        "searchright_connectors::register_pubmed_efetch_provider",
         "searchright_connectors::parse_pubmed_summary_page",
         "searchright_connectors::PubMedFetchRequest",
         "searchright_connectors::parse_pubmed_fetch_page"
@@ -70,13 +81,15 @@
         "verification/receipts/track-04-parser-panel.json",
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
-        "verification/receipts/track-04-full-validation.json"
+        "verification/receipts/track-04-full-validation.json",
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Wire EFetch through the shared live transport with per-HTTP admission and shared NCBI rate grouping; offline citation/abstract parsing is not article-full-text or live retrieval.",
         "Obtain exact-head hosted validation, authorised live retrieval and current provider-policy/support evidence."
       ],
-      "permitted_claim": "Focused local tests cover PubMed ESearch/ESummary integrity and bounded offline EFetch request construction, citation/abstract mapping and exact PMID-batch reconciliation. Complete synthetic-page goldens do not prove live retrieval, article full text or actual search completeness."
+      "permitted_claim": "Focused local tests cover PubMed ESearch/ESummary integrity, bounded offline EFetch request construction and XML citation/abstract mapping, and bounded opt-in EFetch orchestration with per-subrequest admission and shared NCBI rate grouping in offline/double tests while keeping live retrieval open. Complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness."
     },
     {
       "assertion_id": "T04-A002",
@@ -103,7 +116,9 @@
         "verification/receipts/track-04-parser-panel.json",
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
-        "verification/receipts/track-04-full-validation.json"
+        "verification/receipts/track-04-full-validation.json",
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Obtain exact-head hosted validation and separately prove shared live-transport wiring, per-HTTP rate admission, authorised live execution and real-provider receipts.",
@@ -139,7 +154,9 @@
         "verification/receipts/track-04-parser-panel.json",
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
-        "verification/receipts/track-04-full-validation.json"
+        "verification/receipts/track-04-full-validation.json",
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Obtain exact-head hosted validation and separately prove shared live-transport wiring, per-HTTP rate admission, authorised live execution and real-provider receipts.",
@@ -174,7 +191,9 @@
         "verification/receipts/track-04-parser-panel.json",
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
-        "verification/receipts/track-04-full-validation.json"
+        "verification/receipts/track-04-full-validation.json",
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Review live per-HTTP rate/identity policy compliance; passing synthetic runtime tests do not establish provider-current operational compliance.",
@@ -219,7 +238,8 @@
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
-        "verification/receipts/track-04-cache-version-panel.json"
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Prove the shared live-transport and end-to-end raw-response-to-issued-receipt chain separately; fixture record binding and cache-envelope integrity are locally tested."
@@ -234,13 +254,19 @@
       "implementation_paths": [
         "integration/provider-contract-baselines.json",
         "integration/provider-policies/index.json",
-        "scripts/check_redaction_policy.py"
+        "scripts/check_redaction_policy.py",
+        "tests/test_connector_redaction_source.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_redaction_policy.py::connector_transport_errors",
+        "scripts/check_redaction_policy.py::main",
+        "scripts/check_provider_policies.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_provider_contract_baselines.py",
         "python scripts/check_provider_policies.py",
-        "python scripts/check_redaction_policy.py --self-test"
+        "python scripts/check_redaction_policy.py --self-test",
+        "python3 -B -m unittest tests/test_connector_redaction_source.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
@@ -248,7 +274,9 @@
         "verification/receipts/track-04-parser-panel.json",
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
-        "verification/receipts/track-04-full-validation.json"
+        "verification/receipts/track-04-full-validation.json",
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts.",

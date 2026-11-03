@@ -382,9 +382,10 @@
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_provider_contract_baselines.py",
-        "python scripts/check_provider_policies.py"
+        "python scripts/check_provider_policies.py",
+        "python scripts/check_redaction_policy.py --self-test"
       ],
-      "claim_boundary": "Full local validation of the cache-version slice passed on snapshot 6d995108106db62474e2746a2021f29e89603b95 using repository-pinned Rust/Cargo 1.97.1: 82 Python tests, 57 static gates, 431 native tests with zero skipped and 23 cargo-vet governance tests. Earlier 61 focused connector tests and strict Clippy used Homebrew 1.98.0; historical snapshot 8317 and its 429 native tests predate the cache-version fix. Synthetic fixture records bind to issued receipts and version-partitioned memory-cache replay; declared versions do not establish authenticity or parser execution on replay. Future EFetch orchestration adoption is not part of this proof. Shared live-transport/EFetch wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+      "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
       "deliverables": [
         "crates/searchright-connectors/src/lib.rs",
         "integration/provider-contract-baselines.json",
@@ -395,11 +396,15 @@
         "provider-fixtures/mvp/openalex.json",
         "crates/searchright-connectors/src/efetch.rs",
         "crates/searchright-connectors/tests/efetch_offline.rs",
+        "crates/searchright-connectors/tests/efetch_orchestration.rs",
+        "crates/searchright-connectors/src/pubmed_orchestration_tests.rs",
         "crates/searchright-connectors/tests/runtime_receipts.rs",
         "crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml",
         "crates/searchright-connectors/tests/fixtures/pubmed-efetch-page.json",
         "tests/test_provider_contract_baselines.py",
+        "tests/test_connector_redaction_source.py",
         "docs/pubmed-efetch-mapping.md",
+        "docs/efetch-orchestration-design.md",
         "crates/searchright-connectors/tests/parser_integrity.rs",
         "crates/searchright-connectors/tests/canonical_pages.rs",
         "crates/searchright-connectors/tests/fixtures",
@@ -433,12 +438,15 @@
         "verification/receipts/track-04-efetch-panel.json",
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
-        "verification/receipts/track-04-cache-version-panel.json"
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
       ],
       "native_test_commands": [
         "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
+        "cargo test -p searchright-connectors --test efetch_orchestration --all-features --locked",
         "cargo test -p searchright-connectors --all-features --locked",
-        "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings"
+        "cargo clippy -p searchright-connectors --all-targets --all-features --locked -- -D warnings",
+        "cargo test -p searchright-connectors --test cache_parser_version --all-features --locked"
       ],
       "open_acceptance_gates": [
         "Obtain fresh static validation after evidence bookkeeping and exact-head hosted validation; historical snapshot proof remains bound to its recorded tree.",
@@ -447,7 +455,8 @@
         "Preserve historical Europe PMC/OpenAlex records and screening decisions; any necessary identity migration requires provenance-bound mapping and separate owner authority, and ambiguous collisions remain unresolved."
       ],
       "python_test_commands": [
-        "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py"
+        "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py",
+        "python3 -m unittest discover -s tests -p test_connector_redaction_source.py"
       ],
       "review_fixes": [
         {
@@ -465,15 +474,19 @@
         {
           "commit": "d7854b0956eed7ec3730ab3219b358d5f1964e77",
           "summary": "Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; observed old-cache bypass, then 61 focused Homebrew tests/Clippy and full pinned 1.97.1 snapshot 6d995108106db62474e2746a2021f29e89603b95 passed."
+        },
+        {
+          "commit": "62e34dd",
+          "summary": "Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt."
         }
       ],
-      "updated": "2026-08-31",
+      "updated": "2026-11-03",
       "slug": "open-connectors-mvp",
       "status": "partially_implemented",
       "title": "Open provider connectors MVP",
       "track_id": "04",
       "review_completed": true,
-      "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache and cache-version review only; future orchestration and open track gates remain incomplete."
+      "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache, cache-version and opt-in bounded EFetch orchestration review; live network execution, authorized canaries and open track gates remain incomplete."
     },
     {
       "blockers": [],
