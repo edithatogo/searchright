@@ -1,0 +1,117 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "17",
+  "reviewed_revision": "cd92e4b",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "benchmark-and-anti-leakage-governance",
+      "mode": "isolated_first_pass",
+      "finding": "Audited benchmarks/methodology/manifest.json, benchmarks/methodology/fixtures/sealed/manifest.json, and benchmark report schema. Added scripts/check_benchmark_governance.py and scripts/check_hf_dataset_eval_contracts.py to enforce anti-leakage controls, sealed partition isolation, non-committed labels policy, and configuration/environment digest requirements.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "calibration-and-prioritisation-harness",
+      "mode": "isolated_first_pass",
+      "finding": "Inspected prioritisation contracts and protocol strata in docs/evaluation/benchmark-and-calibration-protocol.md. Implemented SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score in searchright-bench with zero unwrap/expect and complete unit tests, backed by scripts/check_calibration_harness.py.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "dataset-provenance-and-licence-firewall",
+      "mode": "isolated_first_pass",
+      "finding": "Audited integration/passports/synergy-screening-benchmark.json against ASReview canonical upstream and CC0-1.0 redistribution requirements. Created scripts/check_dataset_provenance.py verifying local fork mirror role, network default-deny, and explicit performance claim disclaimers.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all six Track 17 assertions (T17-A001..T17-A006) from partial mappings (5/6 empty symbols) to complete symbol_and_gate_mapped with concrete implementation symbols across scripts/check_benchmark_governance.py, scripts/check_calibration_harness.py, scripts/check_dataset_provenance.py, scripts/check_hf_dataset_eval_contracts.py, scripts/check_methodology_benchmarks.py, and crates/searchright-bench/src/lib.rs in both conductor/tracks/17-benchmarks-calibration/traceability.json and conductor/traceability-overrides.json (0/6 empty symbols).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved remaining maturity blockers without premature completion: executing versioned benchmark suites against independently mounted labels, completing prospective multi-model and human information-specialist calibration, and assessing subgroup/topic performance before any ranking claims remain open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Implemented SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling (WSS@95%), expected_calibration_error (ECE), and brier_score in searchright-bench with zero unwrap/expect and passing Rust unit tests.",
+    "Created scripts/check_benchmark_governance.py to validate sealed test manifest integrity, task coverage, and anti-leakage code scanning.",
+    "Created scripts/check_calibration_harness.py to validate evaluation protocol strata and mathematical calibration invariants.",
+    "Created scripts/check_dataset_provenance.py to enforce SYNERGY canonical upstream identity, mirror role, and CC0-1.0 licence firewall.",
+    "Created scripts/check_hf_dataset_eval_contracts.py to enforce partition isolation (train/validation/sealed_test) and benchmark report schema constraints.",
+    "Created tests/test_benchmark_calibration_governance.py exercising all 4 new governance and calibration check scripts.",
+    "Upgraded assertions T17-A001 through T17-A006 to symbol_and_gate_mapped with concrete implementation symbols, deterministic tests, and native test commands in both conductor/tracks/17-benchmarks-calibration/traceability.json and conductor/traceability-overrides.json (0/6 empty symbol mappings).",
+    "Preserved open maturity gates for external benchmark execution and prospective information-specialist calibration without false promotion."
+  ],
+  "validation": [
+    {
+      "command": "cargo test --locked -p searchright-bench",
+      "status": "passed",
+      "tests_passed": 13
+    },
+    {
+      "command": "python3 -B scripts/check_benchmark_governance.py",
+      "status": "passed",
+      "tasks_checked": 6,
+      "sealed_cases_checked": 4
+    },
+    {
+      "command": "python3 -B scripts/check_calibration_harness.py",
+      "status": "passed",
+      "strata_verified": 7,
+      "math_checks_passed": 5
+    },
+    {
+      "command": "python3 -B scripts/check_dataset_provenance.py",
+      "status": "passed",
+      "passports_checked": 1,
+      "upstreams_checked": 1
+    },
+    {
+      "command": "python3 -B scripts/check_hf_dataset_eval_contracts.py",
+      "status": "passed",
+      "contracts_checked": 2,
+      "partitions_checked": 3
+    },
+    {
+      "command": "python3 -B scripts/check_methodology_benchmarks.py",
+      "status": "passed",
+      "tasks_checked": 6,
+      "sealed_cases_checked": 4
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_benchmark_calibration_governance.py",
+      "status": "passed",
+      "tests_passed": 7
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T17-G-EXTERNAL-BENCHMARK-RUNS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Execute versioned benchmark suites and publish raw receipts."
+    },
+    {
+      "gate_id": "T17-G-PROSPECTIVE-HUMAN-CALIBRATION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Complete the prospective multi-model and information-specialist calibration pilot."
+    },
+    {
+      "gate_id": "T17-G-SUBGROUP-TOPIC-EVALUATION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Assess subgroup, topic and source-specific performance before any ranking claim."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Execute versioned benchmark suites and publish raw receipts.",
+    "Complete the prospective multi-model and information-specialist calibration pilot.",
+    "Assess subgroup, topic and source-specific performance before any ranking claim."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

@@ -406,9 +406,7 @@
         "T17-A001",
         "T17-A002",
         "T17-A003",
-        "T17-A004",
-        "T17-A005",
-        "T17-A006"
+        "T17-A004"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -1143,6 +1141,36 @@
     {
       "category": "repository_policy",
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_benchmark_governance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A001"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-BENCHMARK-GOVERNANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_benchmark_governance.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_calibration_harness.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A005"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CALIBRATION-HARNESS",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_calibration_harness.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_cargo_vet_governance.py",
       "compiler_required": false,
       "covered_assertions": [
@@ -1189,6 +1217,36 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/check_coverage_policy.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_dataset_provenance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-DATASET-PROVENANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_dataset_provenance.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_hf_dataset_eval_contracts.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-HF-DATASET-EVAL-CONTRACTS",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_hf_dataset_eval_contracts.py"
     },
     {
       "category": "search_method",

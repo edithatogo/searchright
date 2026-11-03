@@ -12,7 +12,7 @@ Evaluate translation, retrieval, deduplication and prioritisation with leakage c
 ## Contract
 
 - Horizon: `alpha`
-- Status: `scaffolded`
+- Status: `partially_implemented`
 - Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `02, 06, 07, 08, 16`
