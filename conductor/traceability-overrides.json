@@ -1229,6 +1229,10 @@
           "deterministic_tests": [
             "python scripts/check_agent_skill.py"
           ],
+          "evidence_receipts": [
+            "conductor/tracks/11-agentic-skill/evidence.json",
+            "verification/receipts/track-11-conductor-review-2026-11-03.json"
+          ],
           "implementation_paths": [
             "skills/systematic-search/SKILL.md",
             "scripts/check_agent_skill.py"
@@ -1238,6 +1242,9 @@
             "scripts/check_agent_skill.py::validate"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-agent"
+          ],
           "open_gates": [],
           "permitted_claim": "The local skill entrypoint has deterministic trigger, non-trigger, authority and failure-routing checks; host discovery and model behaviour are not claimed.",
           "state": "source_implemented"
@@ -1245,6 +1252,10 @@
         "T11-A002": {
           "deterministic_tests": [
             "python scripts/check_agent_skill.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/11-agentic-skill/evidence.json",
+            "verification/receipts/track-11-conductor-review-2026-11-03.json"
           ],
           "implementation_paths": [
             "skills/systematic-search/workflows/systematic-review.yaml",
@@ -1259,6 +1270,9 @@
             "searchright_agent::AgentWorkflow::validate"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-agent"
+          ],
           "open_gates": [
             "Run scenario-based agent evaluations across supported hosts and models.",
             "Calibrate authority and failure modes with human information specialists."
@@ -1269,6 +1283,10 @@
         "T11-A003": {
           "deterministic_tests": [
             "python scripts/check_agent_skill.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/11-agentic-skill/evidence.json",
+            "verification/receipts/track-11-conductor-review-2026-11-03.json"
           ],
           "implementation_paths": [
             "skills/systematic-search/agents",
@@ -1283,6 +1301,9 @@
             "searchright_agent::AgentHandoff::validate"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-agent"
+          ],
           "open_gates": [],
           "permitted_claim": "Seven bounded role cards and a compiler-checked, digest-bound least-context handoff contract exist locally; handoffs do not confer operational authority.",
           "state": "source_implemented"
@@ -1290,6 +1311,10 @@
         "T11-A004": {
           "deterministic_tests": [
             "python scripts/check_agent_skill.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/11-agentic-skill/evidence.json",
+            "verification/receipts/track-11-conductor-review-2026-11-03.json"
           ],
           "implementation_paths": [
             "skills/systematic-search/evaluations/authority-scenarios.json",
@@ -1301,6 +1326,9 @@
             "skill_scenarios::deterministic_authority_scenarios_match_the_real_evaluator"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-agent"
+          ],
           "open_gates": [
             "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
           ],
@@ -1310,6 +1338,12 @@
         "T11-A005": {
           "deterministic_tests": [
             "python scripts/check_agent_skill.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-11-sibling-route.json",
+            "verification/receipts/systematic-search-skill.json",
+            "verification/receipts/track-11-local-admission.json",
+            "verification/receipts/track-11-conductor-review-2026-11-03.json"
           ],
           "implementation_paths": [
             "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
@@ -1323,12 +1357,10 @@
             "searchright_agent::sibling::admit_sibling_handoff",
             "sibling_admission::full_advisory_role_pipeline_preserves_bytes_and_transition_approval_scopes"
           ],
-          "evidence_receipts": [
-            "verification/receipts/track-11-sibling-route.json",
-            "verification/receipts/systematic-search-skill.json",
-            "verification/receipts/track-11-local-admission.json"
-          ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-agent"
+          ],
           "open_gates": [
             "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
           ],
@@ -1338,6 +1370,10 @@
         "T11-A006": {
           "deterministic_tests": [
             "python scripts/check_agent_skill.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/systematic-search-skill.json",
+            "verification/receipts/track-11-conductor-review-2026-11-03.json"
           ],
           "implementation_paths": [
             "registry/skills/systematic-search/manifest.json",
@@ -1349,8 +1385,8 @@
             "scripts/check_agent_skill.py::validate"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
-          "evidence_receipts": [
-            "verification/receipts/systematic-search-skill.json"
+          "native_test_commands": [
+            "cargo test --locked -p searchright-agent"
           ],
           "open_gates": [
             "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."

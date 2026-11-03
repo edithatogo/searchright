@@ -34,6 +34,8 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `crates/searchright-agent/tests/skill_scenarios.rs`
   - [x] Present source path: `scripts/check_agent_skill.py`
   - [x] Present source path: `verification/receipts/systematic-search-skill.json`
+  - [x] Present source path: `crates/searchright-agent/src/sibling.rs`
+  - [x] Present source path: `crates/searchright-agent/tests/sibling_admission.rs`
   - [x] Assertion ledger: `conductor/tracks/11-agentic-skill/traceability.json`
 
 ## Phase 2: Source-level verification

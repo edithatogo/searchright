@@ -31,7 +31,9 @@
     "crates/searchright-agent/src/lib.rs",
     "crates/searchright-agent/tests/skill_scenarios.rs",
     "scripts/check_agent_skill.py",
-    "verification/receipts/systematic-search-skill.json"
+    "verification/receipts/systematic-search-skill.json",
+    "crates/searchright-agent/src/sibling.rs",
+    "crates/searchright-agent/tests/sibling_admission.rs"
   ],
   "traceability": "conductor/tracks/11-agentic-skill/traceability.json",
   "static_checks": [
@@ -81,7 +83,8 @@
   "runtime_evidence": [
     "verification/receipts/track-11-agent-authority-review.json",
     "verification/receipts/track-11-host-model-codex-cli-runtime-admission.json",
-    "verification/receipts/track-11-local-admission.json"
+    "verification/receipts/track-11-local-admission.json",
+    "verification/receipts/track-11-conductor-review-2026-11-03.json"
   ],
   "external_evidence": [
     "verification/receipts/track-11-sibling-route.json",

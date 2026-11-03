@@ -233,7 +233,7 @@ fa9e218f6a6b6c8686a79f3c6b3cfb6a47f53ce1b7a7a680622d89f303502273  ./conductor/gi
 4ee1891c3fa181378fb7da8c4d694ffac154b3efedc387787b3ea08e1e876157  ./conductor/github/issues/track-10-phase-4-task-04.md
 5934bcd77642893f60cdace6de7099953086198ef9078a867778a09fccf66aae  ./conductor/github/issues/track-10-phase-4.md
 8472e6c0ce797cb3933de97da06770eb4cb5436187ff7c2e2ea15fca8cccf389  ./conductor/github/issues/track-10.md
-f05d0bcd5111b3288eec4c2c9e3c8b32e45f76e4acafd8955885ccc9ad55b798  ./conductor/github/issues/track-11-phase-1-task-01.md
+dd04b6c89138e7503febdd443d19ef2633906a9a3461b7d49f959d9c4ae72d1c  ./conductor/github/issues/track-11-phase-1-task-01.md
 a63d61a14d7e700c7d8e08f0834c9e422054f11ebb9fb01999cfc29743540863  ./conductor/github/issues/track-11-phase-1.md
 1e8bcfd25fa7a389f18e13e8130b0fc3c19c051628b8291dae29a8656005b300  ./conductor/github/issues/track-11-phase-2-task-01.md
 6e455560fe6e9aa1c684d55bfefc2435f39a7bb309a5f56dae9584771e0826e8  ./conductor/github/issues/track-11-phase-2-task-02.md
@@ -679,9 +679,9 @@ e5b61482643552c7323c90cd948a669c7f0b10bada1dfbaf9ef5b419fd0b4e9b  ./conductor/in
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
-88467004d53983440ba14b22b8949e20d9121e155175784162978c9307caeb0e  ./conductor/roadmap-coverage.json
+e26fb6e6a12eace1bc5283eab8e1ff7a200fbbdb6d0670d8135d629460d8e491  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
-fc7911b0da5b5a5d4c8a6748463bfbe0b66cf514a8d66ab751df4c3a750fa7ce  ./conductor/traceability-overrides.json
+ad16575e57726ae0c9f24efe9adfa6c91d9ea7d6920989b428d7b1bce4ad8176  ./conductor/traceability-overrides.json
 532cfa4a3aa053ceeebf132dcb2f7ef93023697ee4de6a35be38680270b335dc  ./conductor/tracks.md
 64312d5df4069f63ea9088a03b6b661e5676a66bc72331cec43a4c6f222f88bc  ./conductor/tracks/00-foundation-conductor-toolchain/evidence.json
 e4d137dcba01b59d848ecbd8719f78cbd2cc7c5493a5beecd3306fb50fdbc23a  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
@@ -739,11 +739,11 @@ f11870ca57ed7e8e08a23ba8875df0333c6a7dad6efb2001b7f4f5605918f43b  ./conductor/tr
 a5313f3aded054d2933ba09b1f23078ba1ba8290966a61f92ae5919c955a8d16  ./conductor/tracks/10-mcp-mvp/scope-exception.md
 10665d2f602bf9bc4f243993187071feef3366924c2486a1b5243a823ef092c2  ./conductor/tracks/10-mcp-mvp/spec.md
 16c6a506b92f6298ef5414da47b9634f3487410c4582602cc4388c156ad9a3bb  ./conductor/tracks/10-mcp-mvp/traceability.json
-54dd4d1e6f0418bc6b4a19f21fb7ebd30ce7a08db462ef144a0d6cdbafa0dcfb  ./conductor/tracks/11-agentic-skill/evidence.json
-b5917705276e51c5398957eee638fb8458edc1023444662905c136d35e20dd39  ./conductor/tracks/11-agentic-skill/metadata.json
-ae8b55078b9f1697e35035a69e3d09b190dcfbf89a1d532058e95c9960126bab  ./conductor/tracks/11-agentic-skill/plan.md
+3bd46a7d892a160d4bb6438ff192e186cc238de4e35adc9c8191d3a2da2b0768  ./conductor/tracks/11-agentic-skill/evidence.json
+9153c49183a013c55aed1737a6c04ec92e0f8bcfa424df07f901b0401ab6ade2  ./conductor/tracks/11-agentic-skill/metadata.json
+71e24ab79b7300c4c0ccfd804ac658fd338af10bb4e9b21a86dd6a2b06ee2cfd  ./conductor/tracks/11-agentic-skill/plan.md
 8109587422f5bdb87862866471b8189cc1ce40b99e7dea80dcd5f9b9fa28c137  ./conductor/tracks/11-agentic-skill/spec.md
-40da4137d2ae13d51ac81528f0ef5ef90a93c59a229d3fd507903f277053c82f  ./conductor/tracks/11-agentic-skill/traceability.json
+d7cc600aeaa527e7c67e1b95c763fd0d7c0c4485620c7c4c2e6d7a6972181747  ./conductor/tracks/11-agentic-skill/traceability.json
 2a3d45f076855079e7fb2a300b45f301aaaa8834f5ae491905e95f7b63f753bf  ./conductor/tracks/12-citeweft-document-evidence/evidence.json
 76cec87d44f4af239bf429e1ac484a64f3223e2e720480ed9fa1b2a5ff1fd5e0  ./conductor/tracks/12-citeweft-document-evidence/metadata.json
 207cffce24df605dcdaca14266106fd093f5d28cac6f9e138924d35642dbfebc  ./conductor/tracks/12-citeweft-document-evidence/plan.md
@@ -879,7 +879,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 003644dc05cba2d5b1ca6e4b4e6e04807d0b73d25949fa151ed81b7ea194f75d  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-f0431a2af0e1632551618f09306f0fc577b71d4b78af83c6f12729902aa6a7a2  ./context/context-lock.json
+8e9ad2e6ff14f4a016a09f628de9a737d6e1864a3f1fa446fee9b0f370cd0d47  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1482,8 +1482,8 @@ f0c1ebccf0a2a64077907883de2fcd63b34890993726df9970a3f2fde2d50e03  ./scripts/sync
 c98303e175880e35759902815680ae997b26da48612af925accc28609907666e  ./scripts/sync_schema_surface.py
 b71fbe8bfbb33f4d45bbfd9255689c07d0e517278623fc744ea7c077599328b8  ./scripts/sync_traceability.py
 2d9e48d18a855c7917a848a06e87ee9ccf8d8bcb95aa801a19465555d4267143  ./scripts/sync_track_evidence.py
-a450ca91b7f8b021f0961d3fb44fdeaf9f9bbafd86679c3ddf93d321dacf521b  ./scripts/test_agent_host_eval.py
-7098213a33ef74dc32f9c3d4bb66884d0ee2789a03fe34baa4edfd783fac94d2  ./scripts/test_agent_skill_policy.py
+c456a4dc7c63f0aa7f7a1018c1eb74b84030bbf85bdf2f49d7aec5b9d71c690a  ./scripts/test_agent_host_eval.py
+f8297215b884816c62e74ca6570dbc1c85de34a94495c3bd8ded7e5052920472  ./scripts/test_agent_skill_policy.py
 4b8020b46be12560973ce6c5abac6feeee8da4c36faaa10a230c9f9797c1c12e  ./scripts/test_cargo_vet_governance.py
 ac1141b2d445578049f4399323a093d7b7d7997eabe336ac2545a77096b554bf  ./scripts/validate_repository.py
 14b9b524ca6f1e70d19cd3febdb67e6e7813b923d053fad2016f2a79fc59c555  ./scripts/verify.sh
