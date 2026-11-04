@@ -1,0 +1,88 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "23",
+  "reviewed_revision": "38de543",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "screening-ranking-and-calibration-contract-compliance",
+      "mode": "isolated_first_pass",
+      "finding": "Audited contracts/examples/ranking-calibration.yaml and contracts/json-schema/ranking-calibration.v1.schema.json. Verified threshold bounds, minimum sensitivity requirements, confusion-matrix counts, and strict enforcement of auto_exclusion_prohibited: true.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "advisory-prioritisation-and-stopping-rule-safeguard",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-contracts/src/ranking.rs, crates/searchright-ranking/src/lib.rs, and tests/test_active_learning_ranking_governance.py. Confirmed that autonomous screening exclusion is strictly prohibited by schema and contract invariants, and stopping rules remain disabled without external evidence and governance approval.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "deterministic-lexical-ranker-and-calibration-curve-engine",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-ranking/src/lib.rs. Verified LexicalRanker title/abstract/subject token overlap scoring, bounded deterministic non-sycophantic scoring, calibrate curve computation (sensitivity/recall, precision, FNR, FPR, and WSS), and division-by-zero protection across all empty/edge-case strata.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all six Track 23 assertions (T23-A001..T23-A006) from track_level_only (6/6 empty symbols) to symbol_and_gate_mapped with concrete implementation symbols across crates/searchright-contracts, crates/searchright-ranking, failure-modes.md, and tests/test_active_learning_ranking_governance.py in both conductor/tracks/23-active-learning-agents/traceability.json and conductor/traceability-overrides.json (0/6 empty symbols).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved active learning gating state without premature completion: implementation_state remains scaffolded; SYNERGY and topic-held-out calibration benchmarks, prospective human calibration with subgroup error analysis, and stopping/exclusion authority remain explicitly open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards prohibiting automated exclusion, failure mode countermeasures, and Track 23 traceability invariants.",
+    "Hardened unit tests in crates/searchright-ranking/src/lib.rs and crates/searchright-contracts/src/ranking.rs without forbidden fragments, verifying LexicalRanker title/abstract weighting, non-negative scores, deterministic scoring, calibrate recall/precision/WSS/FNR/FPR curve calculations, zero division protection, and strict advisory-only claim boundaries.",
+    "Implemented Validate and helper ratio/total methods for CalibrationCounts in searchright-contracts, and implemented calibrate, CalibrationPoint, and CalibrationCurve in searchright-ranking.",
+    "Upgraded assertions T23-A001 through T23-A006 to symbol_and_gate_mapped with concrete implementation symbols, deterministic tests, and native test commands in both conductor/tracks/23-active-learning-agents/traceability.json and conductor/traceability-overrides.json (0/6 empty symbol mappings).",
+    "Preserved open maturity blockers: running SYNERGY and topic-held-out calibration benchmarks, completing prospective human calibration and subgroup error analysis, and keeping stopping/exclusion authority disabled until external evidence and governance approve it."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
+      "status": "passed",
+      "tests_passed": 5
+    },
+    {
+      "command": "cargo test --locked -p searchright-ranking -p searchright-contracts",
+      "status": "passed",
+      "tests_passed": 77
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T23-G-SYNERGY-CALIBRATION-BENCHMARKS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Run SYNERGY and topic-held-out calibration benchmarks."
+    },
+    {
+      "gate_id": "T23-G-PROSPECTIVE-HUMAN-CALIBRATION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Complete prospective human calibration and subgroup error analysis."
+    },
+    {
+      "gate_id": "T23-G-STOPPING-EXCLUSION-AUTHORITY",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Run SYNERGY and topic-held-out calibration benchmarks.",
+    "Complete prospective human calibration and subgroup error analysis.",
+    "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

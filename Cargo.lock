@@ -2124,6 +2124,7 @@ name = "searchright-ranking"
 version = "0.1.0-alpha.1"
 dependencies = [
  "searchright-contracts",
+ "serde_json",
  "thiserror",
 ]
 

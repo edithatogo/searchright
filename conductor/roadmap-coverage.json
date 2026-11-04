@@ -1848,7 +1848,15 @@
       "slug": "active-learning-agents",
       "status": "scaffolded",
       "title": "Active-learning prioritisation and calibrated agents",
-      "track_id": "23"
+      "track_id": "23",
+      "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+      ],
+      "review_fixes": [
+        "Upgrade all six Track 23 assertions (T23-A001..T23-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-ranking, failure-modes.md, and test_active_learning_ranking_governance.py; create unit test suite in tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards, failure-mode countermeasures, and Track 23 traceability invariants; harden unit tests in crates/searchright-ranking and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open SYNERGY benchmark, human calibration, and stopping rule blockers without false promotion."
+      ],
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
