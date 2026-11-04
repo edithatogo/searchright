@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "27",
   "title": "Accessibility, internationalisation and usability",
-  "implementation_state": "scaffolded",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/27-accessibility-internationalisation-usability/spec.md#scope",
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
@@ -10,132 +10,158 @@
     {
       "assertion_id": "T27-A001",
       "statement": "Stable diagnostic codes and severity/action fields.",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-diagnostics/src/lib.rs",
         "crates/searchright-contracts/src/diagnostic.rs",
         "contracts/examples/diagnostic.yaml",
+        "contracts/json-schema/diagnostic.v1.schema.json",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/evaluation/external-methodological-evaluation.md"
+        "docs/evaluation/external-methodological-evaluation.md",
+        "tests/test_accessibility_internationalisation_usability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_contracts::Diagnostic",
+        "searchright_contracts::DiagnosticSeverity",
+        "searchright_contracts::Diagnostic::validate"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+        "verification/receipts/track-27-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
         "Create message catalogues and execute locale-fallback tests.",
         "Complete keyboard, screen-reader and information-specialist usability evaluation."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Stable namespaced diagnostic codes and severity models are enforced in source and test contracts; live snapshot suites remain open."
     },
     {
       "assertion_id": "T27-A002",
       "statement": "Plain text, JSON and JSONL rendering.",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-diagnostics/src/lib.rs",
         "crates/searchright-contracts/src/diagnostic.rs",
         "contracts/examples/diagnostic.yaml",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/evaluation/external-methodological-evaluation.md"
+        "tests/test_accessibility_internationalisation_usability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_diagnostics::render",
+        "searchright_diagnostics::DiagnosticOutput",
+        "searchright_diagnostics::render_plain"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+        "verification/receipts/track-27-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
         "Create message catalogues and execute locale-fallback tests.",
         "Complete keyboard, screen-reader and information-specialist usability evaluation."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Plain text, JSON and JSONL rendering formats are deterministic and colour-free in source tests; golden snapshots remain open."
     },
     {
       "assertion_id": "T27-A003",
       "statement": "Locale-neutral identifiers and separable messages.",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-diagnostics/src/lib.rs",
         "crates/searchright-contracts/src/diagnostic.rs",
         "contracts/examples/diagnostic.yaml",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/evaluation/external-methodological-evaluation.md"
+        "tests/test_accessibility_internationalisation_usability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_diagnostics::localize",
+        "searchright_diagnostics::DiagnosticMessageCatalog",
+        "searchright_diagnostics::MissingMessagePolicy",
+        "searchright_contracts::DiagnosticLocale"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+        "verification/receipts/track-27-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
         "Create message catalogues and execute locale-fallback tests.",
         "Complete keyboard, screen-reader and information-specialist usability evaluation."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Separable message catalogues and fallback policies preserve machine code identity in source and tests; translated catalogue coverage remains open."
     },
     {
       "assertion_id": "T27-A004",
       "statement": "Keyboard, screen-reader and terminal-width design contracts.",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-diagnostics/src/lib.rs",
-        "crates/searchright-contracts/src/diagnostic.rs",
-        "contracts/examples/diagnostic.yaml",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/evaluation/external-methodological-evaluation.md"
+        "tests/test_accessibility_internationalisation_usability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_diagnostics::render_plain",
+        "searchright_diagnostics::DiagnosticOutput::PlainText"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+        "verification/receipts/track-27-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
         "Create message catalogues and execute locale-fallback tests.",
         "Complete keyboard, screen-reader and information-specialist usability evaluation."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Terminal diagnostics eliminate escape codes and line wrapping dependencies in source policy; formal assistive-technology testing remains open."
     },
     {
       "assertion_id": "T27-A005",
       "statement": "Information-specialist usability protocol and issue taxonomy.",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "partially_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "crates/searchright-diagnostics/src/lib.rs",
-        "crates/searchright-contracts/src/diagnostic.rs",
-        "contracts/examples/diagnostic.yaml",
-        "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/evaluation/external-methodological-evaluation.md"
+        "evaluation/external-evaluation.json",
+        "docs/evaluation/external-methodological-evaluation.md",
+        "tests/test_accessibility_internationalisation_usability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "tests/test_accessibility_internationalisation_usability_governance.py::TestAccessibilityInternationalisationUsabilityGovernance.test_information_specialist_usability_protocol"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json"
+        "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+        "verification/receipts/track-27-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
         "Create message catalogues and execute locale-fallback tests.",
         "Complete keyboard, screen-reader and information-specialist usability evaluation."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Independent information-specialist usability protocols and sealed label structures are contractually specified; live participant execution remains open."
     }
   ]
 }

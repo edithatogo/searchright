@@ -2040,15 +2040,19 @@
         "Complete keyboard, screen-reader and information-specialist usability evaluation."
       ],
       "checks": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "crates/searchright-diagnostics/src/lib.rs",
         "crates/searchright-contracts/src/diagnostic.rs",
         "contracts/examples/diagnostic.yaml",
+        "contracts/json-schema/diagnostic.v1.schema.json",
         "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-        "docs/evaluation/external-methodological-evaluation.md"
+        "docs/evaluation/external-methodological-evaluation.md",
+        "tests/test_accessibility_internationalisation_usability_governance.py",
+        "verification/receipts/track-27-conductor-review-2026-11-04.json"
       ],
       "dependencies": [
         "09",
@@ -2058,16 +2062,21 @@
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "mature",
-      "implementation_state": "scaffolded",
+      "implementation_state": "partially_implemented",
       "outcome": "Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology.",
       "requirements": [
         "SR-055",
         "SR-056"
       ],
       "slug": "accessibility-internationalisation-usability",
-      "status": "scaffolded",
+      "status": "partially_implemented",
       "title": "Accessibility, internationalisation and usability",
-      "track_id": "27"
+      "track_id": "27",
+      "updated": "2026-11-04",
+      "source_verified_on": "2026-11-04",
+      "review_fixes": [
+        "Upgrade all five Track 27 assertions (T27-A001..T27-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-diagnostics, searchright-contracts, and test_accessibility_internationalisation_usability_governance.py; create unit test suite in tests/test_accessibility_internationalisation_usability_governance.py validating diagnostic schema conformance, namespaced code rules, blocking remediation invariants, colour-free and glyph-free plain text rendering, locale-neutral machine identifier preservation across message catalogues, and external evaluation independence and design protocols; record conductor review receipt and preserve open plain/JSON/JSONL snapshot and no-colour tests, message catalogue fallback tests, and keyboard/screen-reader/information-specialist usability evaluations without false promotion."
+      ]
     },
     {
       "blockers": [

@@ -1,0 +1,103 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "27",
+  "reviewed_revision": "62e66d2",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "stable-diagnostic-codes-and-severity-action-fields",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-contracts/src/diagnostic.rs, contracts/examples/diagnostic.yaml, and contracts/json-schema/diagnostic.v1.schema.json. Verified lower-case namespaced code validation (code.contains('.')), four-level severity enum (Information, Warning, Error, Blocking), mandatory actionable remediation for blocking conditions, and rejection of ASCII control characters.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "colour-free-and-format-deterministic-rendering",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-diagnostics/src/lib.rs. Verified plain text, pretty JSON, and JSONL rendering (DiagnosticOutput), deterministic sorting by severity, code, path, line, and column, zero ANSI escape sequences in plain text, explicit word prefixes without relying on terminal width or standalone unicode glyphs, and bidirectional machine format serialization round-tripping.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "locale-neutral-identifiers-and-message-catalogues",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-diagnostics/src/lib.rs and test_accessibility_internationalisation_usability_governance.py. Verified explicit message catalogue application (DiagnosticMessageCatalog, localize), translation of human-facing message/remediation/locale fields while preserving stable machine identifiers (code, severity, blocking, evidence_ids), and configurable missing message policies (PreserveSource, Reject).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "keyboard-screen-reader-and-terminal-contracts",
+      "mode": "isolated_first_pass",
+      "finding": "Audited docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md and crates/searchright-diagnostics/src/lib.rs. Verified that terminal rendering contracts avoid terminal-width dependencies, line wrapping constraints, and color-coded information loss, supporting screen readers with structured textual information.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "information-specialist-usability-protocol",
+      "mode": "isolated_first_pass",
+      "finding": "Audited evaluation/external-evaluation.json and docs/evaluation/external-methodological-evaluation.md. Verified preregistered crossover evaluation protocol contracts with at least two independent information specialists, blinded adjudication, topic strata, and preservation of open human evaluation blockers.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all five Track 27 assertions (T27-A001..T27-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-diagnostics, searchright-contracts, and test_accessibility_internationalisation_usability_governance.py in both conductor/tracks/27-accessibility-internationalisation-usability/traceability.json and conductor/traceability-overrides.json (0/5 empty symbols).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved accessibility and usability gating state without premature completion: implementation_state remains partially_implemented; compiling and running plain/JSON/JSONL snapshots and no-colour tests, creating message catalogues and executing locale-fallback tests, and completing keyboard, screen-reader and information-specialist usability evaluations remain explicitly open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_accessibility_internationalisation_usability_governance.py validating diagnostic schema conformance, namespaced code rules, blocking remediation invariants, colour-free and glyph-free plain text rendering, locale-neutral machine identifier preservation across message catalogues, and external evaluation independence and design protocols.",
+    "Verified crates/searchright-diagnostics/src/lib.rs and tests without forbidden fragments, verifying deterministic multi-format diagnostic rendering, severity sorting, and fail-closed vs fallback catalogue localization policies.",
+    "Upgraded assertions T27-A001 through T27-A005 to symbol_and_gate_mapped with concrete implementation symbols, deterministic tests, and native test commands in both conductor/tracks/27-accessibility-internationalisation-usability/traceability.json and conductor/traceability-overrides.json (0/5 empty symbol mappings).",
+    "Preserved open maturity blockers: compiling and running plain/JSON/JSONL snapshots and no-colour tests, creating message catalogues with locale-fallback tests, and completing keyboard, screen-reader, and information-specialist usability evaluations."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py",
+      "status": "passed",
+      "tests_passed": 5
+    },
+    {
+      "command": "cargo test --locked -p searchright-diagnostics",
+      "status": "passed",
+      "tests_passed": 5
+    },
+    {
+      "command": "cargo clippy -p searchright-diagnostics --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T27-G-SNAPSHOTS-AND-NO-COLOUR",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Compile and run plain/JSON/JSONL snapshots and no-colour tests."
+    },
+    {
+      "gate_id": "T27-G-MESSAGE-CATALOGUES-FALLBACK",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Create message catalogues and execute locale-fallback tests."
+    },
+    {
+      "gate_id": "T27-G-USABILITY-EVALUATION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Complete keyboard, screen-reader and information-specialist usability evaluation."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+    "Create message catalogues and execute locale-fallback tests.",
+    "Complete keyboard, screen-reader and information-specialist usability evaluation."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}
