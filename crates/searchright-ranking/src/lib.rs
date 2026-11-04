@@ -522,6 +522,10 @@ mod tests {
     }
 
     #[test]
+    #[allow(
+        clippy::float_cmp,
+        reason = "analytical test cases yield exact binary floating point values"
+    )]
     fn calibrate_computes_curve_metrics_and_wss() {
         let records = sample_records();
         let query = vec!["machine".to_owned(), "learning".to_owned()];
@@ -571,6 +575,10 @@ mod tests {
     }
 
     #[test]
+    #[allow(
+        clippy::float_cmp,
+        reason = "zero division protection explicitly asserts exact 0.0 float proportions"
+    )]
     fn calibrate_zero_division_protection() {
         let empty_scores: Vec<RankingScore> = Vec::new();
         let relevant = BTreeSet::new();
