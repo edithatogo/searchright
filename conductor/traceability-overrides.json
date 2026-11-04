@@ -4269,6 +4269,156 @@
         }
       }
     },
+    "27": {
+      "assertions": {
+        "T27-A001": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+            "verification/receipts/track-27-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-diagnostics/src/lib.rs",
+            "crates/searchright-contracts/src/diagnostic.rs",
+            "contracts/examples/diagnostic.yaml",
+            "contracts/json-schema/diagnostic.v1.schema.json",
+            "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+            "docs/evaluation/external-methodological-evaluation.md",
+            "tests/test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "implementation_symbols": [
+            "searchright_contracts::Diagnostic",
+            "searchright_contracts::DiagnosticSeverity",
+            "searchright_contracts::Diagnostic::validate"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+            "Create message catalogues and execute locale-fallback tests.",
+            "Complete keyboard, screen-reader and information-specialist usability evaluation."
+          ],
+          "permitted_claim": "Stable namespaced diagnostic codes and severity models are enforced in source and test contracts; live snapshot suites remain open.",
+          "state": "partially_implemented"
+        },
+        "T27-A002": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+            "verification/receipts/track-27-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-diagnostics/src/lib.rs",
+            "crates/searchright-contracts/src/diagnostic.rs",
+            "contracts/examples/diagnostic.yaml",
+            "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+            "tests/test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "implementation_symbols": [
+            "searchright_diagnostics::render",
+            "searchright_diagnostics::DiagnosticOutput",
+            "searchright_diagnostics::render_plain"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+            "Create message catalogues and execute locale-fallback tests.",
+            "Complete keyboard, screen-reader and information-specialist usability evaluation."
+          ],
+          "permitted_claim": "Plain text, JSON and JSONL rendering formats are deterministic and colour-free in source tests; golden snapshots remain open.",
+          "state": "partially_implemented"
+        },
+        "T27-A003": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+            "verification/receipts/track-27-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-diagnostics/src/lib.rs",
+            "crates/searchright-contracts/src/diagnostic.rs",
+            "contracts/examples/diagnostic.yaml",
+            "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+            "tests/test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "implementation_symbols": [
+            "searchright_diagnostics::localize",
+            "searchright_diagnostics::DiagnosticMessageCatalog",
+            "searchright_diagnostics::MissingMessagePolicy",
+            "searchright_contracts::DiagnosticLocale"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+            "Create message catalogues and execute locale-fallback tests.",
+            "Complete keyboard, screen-reader and information-specialist usability evaluation."
+          ],
+          "permitted_claim": "Separable message catalogues and fallback policies preserve machine code identity in source and tests; translated catalogue coverage remains open.",
+          "state": "partially_implemented"
+        },
+        "T27-A004": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+            "verification/receipts/track-27-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-diagnostics/src/lib.rs",
+            "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+            "tests/test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "implementation_symbols": [
+            "searchright_diagnostics::render_plain",
+            "searchright_diagnostics::DiagnosticOutput::PlainText"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+            "Create message catalogues and execute locale-fallback tests.",
+            "Complete keyboard, screen-reader and information-specialist usability evaluation."
+          ],
+          "permitted_claim": "Terminal diagnostics eliminate escape codes and line wrapping dependencies in source policy; formal assistive-technology testing remains open.",
+          "state": "partially_implemented"
+        },
+        "T27-A005": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/27-accessibility-internationalisation-usability/evidence.json",
+            "verification/receipts/track-27-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "evaluation/external-evaluation.json",
+            "docs/evaluation/external-methodological-evaluation.md",
+            "tests/test_accessibility_internationalisation_usability_governance.py"
+          ],
+          "implementation_symbols": [
+            "tests/test_accessibility_internationalisation_usability_governance.py::TestAccessibilityInternationalisationUsabilityGovernance.test_information_specialist_usability_protocol"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+            "Create message catalogues and execute locale-fallback tests.",
+            "Complete keyboard, screen-reader and information-specialist usability evaluation."
+          ],
+          "permitted_claim": "Independent information-specialist usability protocols and sealed label structures are contractually specified; live participant execution remains open.",
+          "state": "partially_implemented"
+        }
+      }
+    },
     "28": {
       "assertions": {
         "T28-A001": {
