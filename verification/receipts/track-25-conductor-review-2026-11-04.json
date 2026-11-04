@@ -1,0 +1,101 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "25",
+  "reviewed_revision": "71f5786",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "ro-crate-1-3-and-json-ld-export-compliance",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-provenance/src/lib.rs, docs/standards-and-provenance.md, and test_provenance_research_objects_governance.py. Verified RO-Crate 1.3 schema context (https://w3id.org/ro/crate/1.3/context), root CreativeWork descriptor conforming to https://w3id.org/ro/crate/1.3, root Dataset entity with hasPart/mainEntity/identifier metadata, receipt and audit entities with stable URN namespaces, and graph deduplication.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "w3c-prov-lineage-and-hash-chain-derivation",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-provenance/src/lib.rs. Verified W3C PROV vocabulary mapping (entity, activity, agent, wasAssociatedWith, wasDerivedFrom), hash-chained predecessor derivation tracking across previous_hash links, and strict input validation failing closed on cross-review mismatches, duplicate identifiers/hashes, and unresolved predecessors.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "review-bundle-packaging-and-deterministic-policy",
+      "mode": "isolated_first_pass",
+      "finding": "Audited scripts/review_bundle.py, contracts/json-schema/review-bundle-manifest.v1.schema.json, and examples/review-bundle/example.srpack. Verified self-describing ZIP-based .srpack bundle packaging, deterministic fixed zip timestamps, canonical manifest serialization, Merkle root of entry descriptor digests, SHA-256 payload verification, and default-deny policies (no symlinks, no network, no external writes, mandatory secret scanning).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "repository-handoff-and-default-deny-deposit-safeguards",
+      "mode": "isolated_first_pass",
+      "finding": "Audited contracts/json-schema/research-object-handoff-plan.v1.schema.json and contracts/examples/research-object-handoff-plan.json. Confirmed default-deny handoff packet definitions for OSF and Zenodo targets without automatic write authority: execution_mode remains dry_run, deposit_authorized is false, ro_crate_conformance_claimed is false, and osf_acceptance_claimed is false.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, research-object-handoff contracts, and tests/test_provenance_research_objects_governance.py in both conductor/tracks/25-provenance-research-objects/traceability.json and conductor/traceability-overrides.json (0/6 empty symbols).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved provenance research-object gating state without premature completion: implementation_state remains partially_implemented; compiling and running golden provenance export tests, independent RO-Crate 1.3 validation tooling, and piloting OSF/Zenodo repository handoffs without automatic deposit authority remain explicitly open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants.",
+    "Verified crates/searchright-provenance/src/lib.rs, tests, and scripts/review_bundle.py without forbidden fragments, verifying deterministic RO-Crate and W3C PROV exports, SHA-256 and Merkle descriptor digests, secret rejection, and safe destination traversal guards.",
+    "Upgraded assertions T25-A001 through T25-A006 to symbol_and_gate_mapped with concrete implementation symbols, deterministic tests, and native test commands in both conductor/tracks/25-provenance-research-objects/traceability.json and conductor/traceability-overrides.json (0/6 empty symbol mappings).",
+    "Preserved open maturity blockers: compiling and running golden provenance export tests, validating produced RO-Crates with independent tooling, and piloting OSF/Zenodo/repository deposit without automatic write authority."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    },
+    {
+      "command": "python3 -B scripts/review_bundle.py self-test",
+      "status": "passed"
+    },
+    {
+      "command": "cargo test --locked -p searchright-provenance",
+      "status": "passed",
+      "tests_passed": 4
+    },
+    {
+      "command": "cargo clippy -p searchright-provenance --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T25-G-GOLDEN-PROVENANCE-EXPORTS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Compile and run golden provenance export tests."
+    },
+    {
+      "gate_id": "T25-G-RO-CRATE-INDEPENDENT-VALIDATION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Validate produced RO-Crates with independent tooling."
+    },
+    {
+      "gate_id": "T25-G-REPOSITORY-HANDOFF-PILOT",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Pilot OSF/Zenodo/repository deposit without automatic write authority."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Compile and run golden provenance export tests.",
+    "Validate produced RO-Crates with independent tooling.",
+    "Pilot OSF/Zenodo/repository deposit without automatic write authority."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

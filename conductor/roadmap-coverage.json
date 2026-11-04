@@ -1931,7 +1931,8 @@
       ],
       "checks": [
         "python scripts/review_bundle.py self-test",
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
@@ -1941,7 +1942,8 @@
         "contracts/examples/review-bundle-manifest.json",
         "examples/review-bundle/example.srpack",
         "docs/standards-and-provenance.md",
-        "docs/vertical-slice-definition-of-done.md"
+        "docs/vertical-slice-definition-of-done.md",
+        "tests/test_provenance_research_objects_governance.py"
       ],
       "dependencies": [
         "05",
@@ -1956,10 +1958,18 @@
         "SR-051",
         "SR-052"
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-25-conductor-review-2026-11-04.json"
+      ],
       "slug": "provenance-research-objects",
       "status": "partially_implemented",
       "title": "Provenance and research-object interoperability",
-      "track_id": "25"
+      "track_id": "25",
+      "updated": "2026-11-04",
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, RO-Crate and W3C PROV boundaries, review-bundle-manifest and handoff-plan schemas, and test_provenance_research_objects_governance.py; create unit test suite in tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema and context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants; record conductor review receipt and preserve open golden provenance export tests, independent RO-Crate validation tooling, and OSF/Zenodo repository handoff pilot blockers without false promotion."
+      ]
     },
     {
       "blockers": [
