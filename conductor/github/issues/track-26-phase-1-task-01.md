@@ -13,6 +13,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `contracts/examples/workflow-trace.yaml`
   - [x] Present source path: `docs/adrs/0011-assurance-and-evidence-ladder.md`
   - [x] Present source path: `crates/searchright-assurance/tests/loom_authority.rs`
+  - [x] Present source path: `crates/searchright-assurance/tests/workflow_model.rs`
   - [x] Present source path: `.github/workflows/formal.yml`
   - [x] Present source path: `fuzz/Cargo.toml`
   - [x] Present source path: `verification/harness-matrix.json`
@@ -20,6 +21,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `contracts/migrations/github-issue-hierarchy-v1-to-v2.json`
   - [x] Present source path: `scripts/check_schema_migrations.py`
   - [x] Present source path: `docs/contracts/schema-evolution.md`
+  - [x] Present source path: `tests/test_formal_assurance_contract_evolution.py`
+  - [x] Present source path: `tests/test_mcp_authority_state_machine.py`
+  - [x] Present source path: `verification/receipts/track-26-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/26-formal-assurance-contract-evolution/traceability.json`
 
 ## Completion and evidence contract

@@ -19,6 +19,10 @@
   ],
   "tracks": [
     {
+      "additional_closeout_tasks": [
+        "Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.",
+        "Reconcile historical aggregate-verification failures with exact-tree full verification and separate frozen cargo-vet policy evidence (`f372c67`); verification/receipts/track-00-verification-reconciliation.json preserves exemption limits and the unresolved upstream registration gate."
+      ],
       "blockers": [
         "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
       ],
@@ -48,11 +52,11 @@
       "horizon": "foundation",
       "implementation_state": "external_evidence_required",
       "outcome": "Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap.",
-      "requirements": [],
-      "review_completed": true,
       "remote_github_evidence": [
         "verification/receipts/github-control-plane-audit.json"
       ],
+      "requirements": [],
+      "review_completed": true,
       "review_fixes": [
         "Upgrade all six Track 00 assertions (T00-A001..T00-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; record conductor review receipt and preserve the open upstream repository-standards estate conformance gate."
       ],
@@ -62,18 +66,15 @@
         "verification/receipts/track-00-verification-reconciliation.json",
         "verification/receipts/track-00-conductor-review-2026-11-04.json"
       ],
-      "source_verified_on": "2026-08-12",
       "slug": "foundation-conductor-toolchain",
+      "source_verified_on": "2026-08-12",
       "status": "external_evidence_required",
       "title": "Foundation, Conductor and toolchain",
       "track_id": "00",
-      "additional_closeout_tasks": [
-        "Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.",
-        "Reconcile historical aggregate-verification failures with exact-tree full verification and separate frozen cargo-vet policy evidence (`f372c67`); verification/receipts/track-00-verification-reconciliation.json preserves exemption limits and the unresolved upstream registration gate."
-      ],
       "updated": "2026-11-04"
     },
     {
+      "archived_on": "2026-08-29",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -84,6 +85,7 @@
         "python scripts/check_public_package_policy.py"
       ],
       "claim_boundary": "All 72 canonical schemas/examples and exact digests are checked; contract-only Python and TypeScript types are deterministically generated, statically type-checked and import-checked. Ten Rust-owned roots are compared with schema-aware normalization, content-bound digests and recorded differences. Canonical JSON Schema retains validation authority; exact semantic parity, installable clients, publication and downstream Track 35 conformance are not claimed.",
+      "closeout_completed": true,
       "completed_higher_evidence_gates": [
         "Resolve generated/canonical constraint losses by recording every validation-shape difference and retaining canonical JSON Schema authority rather than claiming exact semantic parity.",
         "Generate and compiler-import-check thin TypeScript and Python contract packages from the canonical catalogue.",
@@ -121,8 +123,10 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": false,
+      "higher_evidence_completed": true,
       "horizon": "foundation",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Maintain versioned schemas, examples, standards packs and Rust wire types from one catalogue.",
       "phase_3_task_count": 3,
       "requirements": [
@@ -133,18 +137,7 @@
         "SR-017",
         "SR-049"
       ],
-      "runtime_evidence": [
-        "verification/receipts/track-01-integration-verification.json",
-        "verification/receipts/track-01-contract-generation-2026-08-29.json",
-        "verification/receipts/track-01-conductor-review-2026-08-29.json",
-        "verification/receipts/track-01-compiler-verification.json",
-        "verification/receipts/track-01-review-verification.json"
-      ],
       "review_completed": true,
-      "higher_evidence_completed": true,
-      "closeout_completed": true,
-      "lifecycle": "archived",
-      "archived_on": "2026-08-29",
       "review_fixes": [
         {
           "commit": "c393134",
@@ -154,6 +147,13 @@
           "commit": "67c0161",
           "summary": "Eliminate duplicate exported binding names, preserve cross-schema references and fail closed on unresolved references."
         }
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-01-integration-verification.json",
+        "verification/receipts/track-01-contract-generation-2026-08-29.json",
+        "verification/receipts/track-01-conductor-review-2026-08-29.json",
+        "verification/receipts/track-01-compiler-verification.json",
+        "verification/receipts/track-01-review-verification.json"
       ],
       "slug": "contract-catalog",
       "source_verified_on": "2026-08-29",
@@ -172,6 +172,7 @@
         "python scripts/check_native_query_corpus.py"
       ],
       "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.",
+      "closeout_gate_label": "Close only after required evidence is present and the accountable owner records the agent-panel decisions.",
       "completed_higher_evidence_gates": [
         "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets."
       ],
@@ -195,52 +196,6 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": true,
-      "horizon": "foundation",
-      "implementation_state": "source_implemented",
-      "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
-      "requirements": [
-        "SR-005",
-        "SR-006",
-        "SR-007"
-      ],
-      "runtime_evidence": [
-        "verification/receipts/track-02-compiler-review.json",
-        "verification/receipts/query-dialect-conformance.json",
-        "verification/receipts/track-02-conductor-review.json",
-        "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
-        "verification/receipts/track-02-final-review-2026-08-29.json",
-        "verification/receipts/track-02-integration-panel.json",
-        "verification/receipts/track-02-conductor-review-2026-11-03.json"
-      ],
-      "phase_3_task_count": 3,
-      "review_completed": true,
-      "review_fixes": [
-        {
-          "commit": "6f86326",
-          "summary": "Expose the current semantic-conformance receipt through canonical Track 02 evidence."
-        },
-        {
-          "commit": "b98fc59",
-          "summary": "Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions."
-        },
-        {
-          "commit": "0e2fff8",
-          "summary": "Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt."
-        }
-      ],
-      "higher_evidence_completed": true,
-      "source_verified_on": "2026-08-31",
-      "slug": "query-ast-dialects",
-      "status": "external_evidence_required",
-      "title": "Portable query AST and dialect compilers",
-      "track_id": "02",
-      "updated": "2026-08-31",
-      "higher_evidence_task_order": [
-        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.",
-        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
-        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
-      ],
-      "closeout_gate_label": "Close only after required evidence is present and the accountable owner records the agent-panel decisions.",
       "gates": [
         {
           "id": "T02-G-NAMED-FILTERS",
@@ -258,7 +213,52 @@
             "verification/receipts/track-02-integration-panel.json"
           ]
         }
-      ]
+      ],
+      "higher_evidence_completed": true,
+      "higher_evidence_task_order": [
+        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.",
+        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
+        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
+      ],
+      "horizon": "foundation",
+      "implementation_state": "source_implemented",
+      "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
+      "phase_3_task_count": 3,
+      "requirements": [
+        "SR-005",
+        "SR-006",
+        "SR-007"
+      ],
+      "review_completed": true,
+      "review_fixes": [
+        {
+          "commit": "6f86326",
+          "summary": "Expose the current semantic-conformance receipt through canonical Track 02 evidence."
+        },
+        {
+          "commit": "b98fc59",
+          "summary": "Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions."
+        },
+        {
+          "commit": "0e2fff8",
+          "summary": "Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt."
+        }
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-02-compiler-review.json",
+        "verification/receipts/query-dialect-conformance.json",
+        "verification/receipts/track-02-conductor-review.json",
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
+        "verification/receipts/track-02-final-review-2026-08-29.json",
+        "verification/receipts/track-02-integration-panel.json",
+        "verification/receipts/track-02-conductor-review-2026-11-03.json"
+      ],
+      "slug": "query-ast-dialects",
+      "source_verified_on": "2026-08-31",
+      "status": "external_evidence_required",
+      "title": "Portable query AST and dialect compilers",
+      "track_id": "02",
+      "updated": "2026-08-31"
     },
     {
       "blockers": [
@@ -303,22 +303,18 @@
       "external_approval_required": false,
       "horizon": "foundation",
       "implementation_state": "partially_implemented",
+      "native_test_commands": [
+        "cargo test -p evidence-search-core --test subrequest_context --locked",
+        "cargo test -p evidence-search-core --lib --locked",
+        "cargo test -p searchright-sourceright-compat --test parity_matrix --locked",
+        "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
+      ],
       "outcome": "Centralise bounded provider execution, caching, receipts and policy while preparing reversible Sourceright adoption.",
       "requirements": [
         "SR-008",
         "SR-009",
         "SR-010",
         "SR-011"
-      ],
-      "runtime_evidence": [
-        "verification/receipts/track-03-provider-runtime-review.json",
-        "verification/receipts/track-03-sourceright-inventory.json",
-        "verification/receipts/track-03-consumer-baseline-2026-08-31.json",
-        "verification/receipts/track-03-integration-panel.json",
-        "verification/receipts/track-03-reconciled-validation.json",
-        "verification/receipts/track-03-budget-warning.json",
-        "verification/receipts/track-03-subrequest-context.json",
-        "verification/receipts/track-03-conductor-review-2026-11-03.json"
       ],
       "review_completed": true,
       "review_fixes": [
@@ -363,19 +359,23 @@
           "summary": "Reconcile Track 03 traceability, deliverables, and assertion mappings with commits 3f52b4d and 9b4a4a4, resolve searchright-contracts PressReview test compilation error and searchright-connectors clippy assertions, add parity matrix decision reference regressions, add candidate policy drift tests, and record conductor review receipt."
         }
       ],
-      "source_verified_on": "2026-08-29",
+      "review_scope": "Bounded source/fixture review of the implemented runtime and subrequest context only; open track evidence and adoption gates are not closed.",
+      "runtime_evidence": [
+        "verification/receipts/track-03-provider-runtime-review.json",
+        "verification/receipts/track-03-sourceright-inventory.json",
+        "verification/receipts/track-03-consumer-baseline-2026-08-31.json",
+        "verification/receipts/track-03-integration-panel.json",
+        "verification/receipts/track-03-reconciled-validation.json",
+        "verification/receipts/track-03-budget-warning.json",
+        "verification/receipts/track-03-subrequest-context.json",
+        "verification/receipts/track-03-conductor-review-2026-11-03.json"
+      ],
       "slug": "shared-provider-runtime",
+      "source_verified_on": "2026-08-29",
       "status": "integration_prepared",
       "title": "Shared provider runtime and Sourceright extraction",
       "track_id": "03",
-      "updated": "2026-11-03",
-      "native_test_commands": [
-        "cargo test -p evidence-search-core --test subrequest_context --locked",
-        "cargo test -p evidence-search-core --lib --locked",
-        "cargo test -p searchright-sourceright-compat --test parity_matrix --locked",
-        "cargo clippy -p evidence-search-core --all-targets --all-features --locked -- -D warnings"
-      ],
-      "review_scope": "Bounded source/fixture review of the implemented runtime and subrequest context only; open track evidence and adoption gates are not closed."
+      "updated": "2026-11-03"
     },
     {
       "blockers": [
@@ -430,21 +430,6 @@
       "external_approval_required": false,
       "horizon": "mvp",
       "implementation_state": "partially_implemented",
-      "outcome": "Provide deterministic open-source adapters and opt-in live execution for major discovery sources.",
-      "requirements": [
-        "SR-014",
-        "SR-015",
-        "SR-016"
-      ],
-      "runtime_evidence": [
-        "verification/receipts/track-04-fixture-compiler.json",
-        "verification/receipts/track-04-parser-panel.json",
-        "verification/receipts/track-04-efetch-panel.json",
-        "verification/receipts/track-04-runtime-fixture-panel.json",
-        "verification/receipts/track-04-full-validation.json",
-        "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
-      ],
       "native_test_commands": [
         "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
         "cargo test -p searchright-connectors --test efetch_orchestration --all-features --locked",
@@ -458,10 +443,17 @@
         "Authorised live retrieval and current provider-policy review remain required; synthetic fixtures do not establish current upstream compatibility or rights approval.",
         "Preserve historical Europe PMC/OpenAlex records and screening decisions; any necessary identity migration requires provenance-bound mapping and separate owner authority, and ambiguous collisions remain unresolved."
       ],
+      "outcome": "Provide deterministic open-source adapters and opt-in live execution for major discovery sources.",
       "python_test_commands": [
         "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py",
         "python3 -m unittest discover -s tests -p test_connector_redaction_source.py"
       ],
+      "requirements": [
+        "SR-014",
+        "SR-015",
+        "SR-016"
+      ],
+      "review_completed": true,
       "review_fixes": [
         {
           "commit": "3343d6a86b500e993f34ebe5e6518172ad7876b5",
@@ -484,15 +476,24 @@
           "summary": "Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt."
         }
       ],
-      "updated": "2026-11-03",
+      "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache, cache-version and opt-in bounded EFetch orchestration review; live network execution, authorized canaries and open track gates remain incomplete.",
+      "runtime_evidence": [
+        "verification/receipts/track-04-fixture-compiler.json",
+        "verification/receipts/track-04-parser-panel.json",
+        "verification/receipts/track-04-efetch-panel.json",
+        "verification/receipts/track-04-runtime-fixture-panel.json",
+        "verification/receipts/track-04-full-validation.json",
+        "verification/receipts/track-04-cache-version-panel.json",
+        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+      ],
       "slug": "open-connectors-mvp",
       "status": "partially_implemented",
       "title": "Open provider connectors MVP",
       "track_id": "04",
-      "review_completed": true,
-      "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache, cache-version and opt-in bounded EFetch orchestration review; live network execution, authorized canaries and open track gates remain incomplete."
+      "updated": "2026-11-03"
     },
     {
+      "archived_on": "2026-08-13",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -501,11 +502,11 @@
         "python scripts/check_research_object_handoff.py"
       ],
       "claim_boundary": "Compiler-verified local persistence and policy behavior with exact-revision hosted Linux, Windows and macOS evidence and a sealed advisory panel disposition. Power-loss directory durability on Windows, secure erasure from backups, external repository acceptance and RO-Crate conformance are not claimed.",
+      "closeout_completed": true,
       "completed_higher_evidence_gates": [
         "Run the exact Track 05 head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
         "Bind the sealed privacy and adversarial panel disposition to the exact reviewed PR head before semantic archival."
       ],
-      "phase_3_task_count": 2,
       "deliverables": [
         "crates/evidence-search-core/src/audit.rs",
         "crates/searchright-store/src/lib.rs",
@@ -524,52 +525,48 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": false,
+      "higher_evidence_completed": true,
       "horizon": "mvp",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Create replayable runs, content-addressed receipts, tamper-evident events and crash-conscious local state.",
+      "phase_3_task_count": 2,
+      "remote_github_evidence": [
+        "verification/receipts/track-05-hosted-closeout.json"
+      ],
       "requirements": [
         "SR-012",
         "SR-013",
         "SR-014",
         "SR-048"
       ],
+      "review_completed": true,
       "runtime_evidence": [
         "verification/receipts/track-05-store-review.json",
         "verification/receipts/track-05-local-review.json",
         "verification/receipts/track-05-hosted-closeout.json",
         "verification/receipts/track-05-sealed-panel-closeout.json"
       ],
-      "review_completed": true,
-      "higher_evidence_completed": true,
-      "closeout_completed": true,
-      "lifecycle": "archived",
-      "archived_on": "2026-08-13",
-      "remote_github_evidence": [
-        "verification/receipts/track-05-hosted-closeout.json"
-      ],
-      "source_verified_on": "2026-08-13",
-      "updated": "2026-08-13",
       "slug": "execution-audit-store",
+      "source_verified_on": "2026-08-13",
       "status": "source_implemented",
       "title": "Execution, audit and local storage",
-      "track_id": "05"
+      "track_id": "05",
+      "updated": "2026-08-13"
     },
     {
-      "blockers": [],
-      "completed_higher_evidence_gates": [
-        "Compile and run golden import/export round-trip tests across every supported format.",
-        "Run a digest-bound multi-agent panel evaluation of linkage and deduplication, then obtain the repository owner's recorded decision."
-      ],
-      "phase_3_task_count": 2,
-      "higher_evidence_completed": true,
-      "closeout_completed": true,
-      "lifecycle": "archived",
       "archived_on": "2026-08-30",
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py"
       ],
       "claim_boundary": "Compiler-backed deterministic interchange round trips and source-level deduplication/linkage behaviour are evidenced. A digest-bound multi-agent panel may recommend disposition, but only the repository owner's recorded decision may close the evaluation gate.",
+      "closeout_completed": true,
       "closeout_gate_label": "Close the track only after the agent-panel packet is evidenced and the repository owner records an approve, revise or reject decision.",
+      "completed_higher_evidence_gates": [
+        "Compile and run golden import/export round-trip tests across every supported format.",
+        "Run a digest-bound multi-agent panel evaluation of linkage and deduplication, then obtain the repository owner's recorded decision."
+      ],
       "deliverables": [
         "crates/searchright-dedup/src/lib.rs",
         "crates/searchright-interchange/src/lib.rs",
@@ -587,24 +584,16 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": false,
+      "higher_evidence_completed": true,
       "horizon": "mvp",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Import/export common bibliographic formats, propose conservative duplicate clusters and distinguish records, reports and studies.",
+      "phase_3_task_count": 2,
       "requirements": [
         "SR-017",
         "SR-018",
         "SR-019"
-      ],
-      "runtime_evidence": [
-        "verification/receipts/track-06-dedup-linkage-review.json",
-        "verification/receipts/track-06-interchange-golden.json",
-        "verification/receipts/track-06-study-linkage-validation.json",
-        "verification/receipts/track-06-agent-panel-decision-packet.json",
-        "verification/receipts/track-06-agent-panel-decision-packet-r2.json",
-        "verification/receipts/track-06-owner-decision.json",
-        "verification/receipts/track-06-integration-panel-round-1.json",
-        "verification/receipts/track-06-integration-panel-round-2.json",
-        "verification/receipts/track-06-xml-remediation-review.json"
       ],
       "review_completed": true,
       "review_fixes": [
@@ -624,6 +613,17 @@
         "Execute six archival-renderer regressions in the required static harness without changing unrelated track task identities.",
         "Enforce the separately approved CVX-0259 dependency exception with exact checksum, resolved-feature and expiry checks; preserve baseline decisions and risk-acceptance boundaries."
       ],
+      "runtime_evidence": [
+        "verification/receipts/track-06-dedup-linkage-review.json",
+        "verification/receipts/track-06-interchange-golden.json",
+        "verification/receipts/track-06-study-linkage-validation.json",
+        "verification/receipts/track-06-agent-panel-decision-packet.json",
+        "verification/receipts/track-06-agent-panel-decision-packet-r2.json",
+        "verification/receipts/track-06-owner-decision.json",
+        "verification/receipts/track-06-integration-panel-round-1.json",
+        "verification/receipts/track-06-integration-panel-round-2.json",
+        "verification/receipts/track-06-xml-remediation-review.json"
+      ],
       "slug": "imports-dedup-linkage",
       "status": "source_implemented",
       "title": "Imports, deduplication and study linkage",
@@ -631,22 +631,16 @@
       "updated": "2026-08-30"
     },
     {
+      "archived_on": "2026-08-31",
       "blockers": [],
-      "panel_findings": {
-        "remediation_required": true,
-        "critical_count": 4,
-        "major_count": 6,
-        "top_findings": [
-          "P07-C001: Systemic authorization bypass in role-gate logic",
-          "P07-C002: Canonical decisions mutable/deletable",
-          "P07-C003: EPPI-Reviewer export schema mismatch",
-          "P07-C004: Import strips evidence excerpts"
-        ]
-      },
       "checks": [
         "python scripts/validate_repository.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles."
+      ],
       "deliverables": [
         "crates/searchright-screening/src/lib.rs",
         "crates/searchright-agent/src/lib.rs",
@@ -660,15 +654,30 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-08-29",
+      "higher_evidence_completed": true,
       "horizon": "mvp",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
+      "panel_findings": {
+        "remediation_required": true,
+        "critical_count": 4,
+        "major_count": 6,
+        "top_findings": [
+          "P07-C001: Systemic authorization bypass in role-gate logic",
+          "P07-C002: Canonical decisions mutable/deletable",
+          "P07-C003: EPPI-Reviewer export schema mismatch",
+          "P07-C004: Import strips evidence excerpts"
+        ]
+      },
       "requirements": [
         "SR-020",
         "SR-021",
         "SR-022",
         "SR-058"
       ],
+      "review_completed": true,
       "runtime_evidence": [
         "verification/receipts/track-07-screening-review.json",
         "verification/receipts/track-07-agent-panel-evaluation.json",
@@ -676,21 +685,16 @@
         "verification/receipts/panel-track-07-information-specialist.json",
         "verification/receipts/panel-track-07-methodologist.json"
       ],
-      "review_completed": true,
-      "fixture_proven_on": "2026-08-29",
       "slug": "screening-workflow",
       "status": "source_implemented",
       "title": "Governed screening workflow",
-      "track_id": "07",
-      "lifecycle": "archived",
-      "archived_on": "2026-08-31",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles."
-      ]
+      "track_id": "07"
     },
     {
+      "additional_closeout_tasks": [
+        "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Subsequent local visual/import evidence is recorded separately; complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.",
+        "Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after fixing wrapped HTML labels. No Microsoft Word, external parity or methodological acceptance is claimed."
+      ],
       "blockers": [
         "Obtain an accountable independent PRESS review of representative generated strategies and appendices.",
         "Obtain a hosted compiler-verified receipt for the exact committed revision."
@@ -703,6 +707,9 @@
         "python scripts/check_integration_drift.py"
       ],
       "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.",
+      "completed_higher_evidence_gates": [
+        "Complete wider render-format coverage and record bounded PRISMA.jl parity with explicit ownership and loss evidence."
+      ],
       "deliverables": [
         "crates/searchright-prisma/src/lib.rs",
         "crates/searchright-prisma/src/render.rs",
@@ -739,19 +746,20 @@
       "external_approval_required": true,
       "horizon": "mvp",
       "implementation_state": "source_implemented",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-prisma --all-features",
+        "cargo test --locked -p searchright-validation --all-features",
+        "cargo test --locked -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-features",
+        "cargo clippy --locked -p searchright-prisma -p searchright-validation -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-targets --all-features -- -D warnings"
+      ],
       "outcome": "Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct.",
+      "phase_3_task_count": 2,
       "requirements": [
         "SR-023",
         "SR-024",
         "SR-025",
         "SR-026",
         "SR-027"
-      ],
-      "runtime_evidence": [
-        "verification/receipts/track-08-reporting-review.json",
-        "verification/receipts/track-08-render-formats.json",
-        "verification/receipts/track-08-reporting-evidence-followup.json",
-        "verification/receipts/track-08-conductor-review-2026-11-03.json"
       ],
       "review_completed": true,
       "review_fixes": [
@@ -764,28 +772,21 @@
           "commit": "b48dff0"
         }
       ],
-      "completed_higher_evidence_gates": [
-        "Complete wider render-format coverage and record bounded PRISMA.jl parity with explicit ownership and loss evidence."
+      "runtime_evidence": [
+        "verification/receipts/track-08-reporting-review.json",
+        "verification/receipts/track-08-render-formats.json",
+        "verification/receipts/track-08-reporting-evidence-followup.json",
+        "verification/receipts/track-08-conductor-review-2026-11-03.json"
       ],
-      "phase_3_task_count": 2,
       "slug": "prisma-press-reporting",
-      "additional_closeout_tasks": [
-        "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Subsequent local visual/import evidence is recorded separately; complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.",
-        "Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after fixing wrapped HTML labels. No Microsoft Word, external parity or methodological acceptance is claimed."
-      ],
+      "source_verified_on": "2026-08-29",
       "status": "source_implemented",
       "title": "PRISMA, PRESS and reporting",
       "track_id": "08",
-      "updated": "2026-11-03",
-      "source_verified_on": "2026-08-29",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-prisma --all-features",
-        "cargo test --locked -p searchright-validation --all-features",
-        "cargo test --locked -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-features",
-        "cargo clippy --locked -p searchright-prisma -p searchright-validation -p searchright-contracts -p searchright -p searchright-cli -p searchright-mcp --all-targets --all-features -- -D warnings"
-      ]
+      "updated": "2026-11-03"
     },
     {
+      "archived_on": "2026-08-29",
       "blockers": [],
       "checks": [
         "cargo test -p searchright-cli --locked",
@@ -795,6 +796,7 @@
         "python scripts/check_cli_distribution.py target/debug/searchright"
       ],
       "claim_boundary": "The grouped CLI hierarchy, canonical facade dispatch, safe stage/category errors, sanitized endpoint outputs, no-clobber apply guard, static completion assets and man-page generation are compiler-verified with exact-revision hosted Linux, macOS and Windows evidence and a sealed advisory panel disposition. This is not methodological certification, live-provider support, package publication or release promotion.",
+      "closeout_completed": true,
       "completed_higher_evidence_gates": [
         "Run the exact Track 09 implementation head on hosted Linux, Windows and macOS and preserve successful PR check evidence before semantic archival.",
         "Bind the sealed correctness, security, testing, methodology and adversarial panel disposition to the exact reviewed implementation head before semantic archival."
@@ -826,9 +828,14 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": false,
+      "higher_evidence_completed": true,
       "horizon": "mvp",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Expose stable scriptable operations through the shared application facade.",
+      "remote_github_evidence": [
+        "verification/receipts/track-09-hosted-closeout.json"
+      ],
       "requirements": [
         "SR-028"
       ],
@@ -866,13 +873,6 @@
         "verification/receipts/track-09-hosted-closeout.json",
         "verification/receipts/track-09-sealed-panel-closeout.json"
       ],
-      "higher_evidence_completed": true,
-      "closeout_completed": true,
-      "lifecycle": "archived",
-      "archived_on": "2026-08-29",
-      "remote_github_evidence": [
-        "verification/receipts/track-09-hosted-closeout.json"
-      ],
       "slug": "cli-mvp",
       "source_verified_on": "2026-08-29",
       "status": "source_implemented",
@@ -881,6 +881,7 @@
       "updated": "2026-08-29"
     },
     {
+      "archived_on": "2026-08-30",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -889,6 +890,11 @@
         "python scripts/record_mcp_live_client_conformance.py --receipt-dir verification/receipts"
       ],
       "claim_boundary": "The local stdio MCP surface is compiler-verified with 35 typed tools on the current protocol, 31 backwards-compatible tools on the previous era, full structured result contracts, bounded contract resources/prompts and a default-deny trusted-host authority boundary that binds consequential effects to exact canonical local-store bytes. Fixture execution is network-disabled; live providers, remote hosted MCP, methodological certification, final screening automation, publication and release are not claimed.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Complete the contracted planning, fixture-execution and screening authority paths through an opaque trusted-host verifier while default MCP and CLI adapters fail closed.",
+        "Extend bounded local resources and prompts to plan, run, queue, report and update-workflow contract metadata with no canonical authority claim."
+      ],
       "deliverables": [
         "crates/searchright-mcp/src/main.rs",
         "crates/searchright-mcp/src/effect_policy.rs",
@@ -913,21 +919,15 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": false,
+      "higher_evidence_completed": true,
       "horizon": "mvp",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Expose typed, authority-annotated MCP tools over the same facade with stable structured outputs.",
       "requirements": [
         "SR-029"
       ],
-      "completed_higher_evidence_gates": [
-        "Complete the contracted planning, fixture-execution and screening authority paths through an opaque trusted-host verifier while default MCP and CLI adapters fail closed.",
-        "Extend bounded local resources and prompts to plan, run, queue, report and update-workflow contract metadata with no canonical authority claim."
-      ],
-      "higher_evidence_completed": true,
       "review_completed": true,
-      "closeout_completed": true,
-      "lifecycle": "archived",
-      "archived_on": "2026-08-30",
       "review_fixes": [
         {
           "commit": "232003620e3a087f4025ca7a8e957f92cb169b51",
@@ -980,6 +980,10 @@
       "updated": "2026-08-30"
     },
     {
+      "additional_closeout_tasks": [
+        "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.",
+        "Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending."
+      ],
       "blockers": [
         "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
         "Run scenario-based agent evaluations across supported hosts and models.",
@@ -1027,6 +1031,15 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": true,
+      "external_evidence": [
+        "verification/receipts/track-11-sibling-route.json",
+        "verification/receipts/track-11-downstream-readiness.json",
+        "https://github.com/Imbad0202/academic-research-skills/issues/806",
+        "https://github.com/Imbad0202/academic-research-skills/pull/807",
+        "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json",
+        "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json",
+        "verification/receipts/track-11-registry-target-assessment.json"
+      ],
       "gates": [
         {
           "id": "T11-G001",
@@ -1076,6 +1089,10 @@
       ],
       "horizon": "mvp",
       "implementation_state": "partially_implemented",
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent --all-features",
+        "cargo clippy --locked -p searchright-agent --all-targets --all-features -- -D warnings"
+      ],
       "outcome": "Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints.",
       "requirements": [
         "SR-022",
@@ -1103,29 +1120,12 @@
         "verification/receipts/track-11-local-admission.json",
         "verification/receipts/track-11-conductor-review-2026-11-03.json"
       ],
-      "external_evidence": [
-        "verification/receipts/track-11-sibling-route.json",
-        "verification/receipts/track-11-downstream-readiness.json",
-        "https://github.com/Imbad0202/academic-research-skills/issues/806",
-        "https://github.com/Imbad0202/academic-research-skills/pull/807",
-        "verification/receipts/track-11-host-model-codex-cli-gpt-5.6-sol.json",
-        "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json",
-        "verification/receipts/track-11-registry-target-assessment.json"
-      ],
       "slug": "agentic-skill",
       "source_verified_on": "2026-08-30",
       "status": "partially_implemented",
       "title": "Systematic-search agent skill and workflows",
       "track_id": "11",
-      "additional_closeout_tasks": [
-        "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.",
-        "Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending."
-      ],
-      "updated": "2026-11-03",
-      "native_test_commands": [
-        "cargo test --locked -p searchright-agent --all-features",
-        "cargo clippy --locked -p searchright-agent --all-targets --all-features -- -D warnings"
-      ]
+      "updated": "2026-11-03"
     },
     {
       "blockers": [
@@ -1163,21 +1163,21 @@
         "SR-063",
         "SR-064"
       ],
-      "slug": "citeweft-document-evidence",
-      "status": "integration_prepared",
-      "title": "CiteWeft scholarly extraction and document evidence",
-      "track_id": "12",
       "review_completed": true,
-      "updated": "2026-11-04",
-      "runtime_evidence": [
-        "verification/receipts/track-12-conductor-review-2026-11-04.json"
-      ],
       "review_fixes": [
         {
           "commit": "0ea3f2d",
           "summary": "Upgrade Track 12 assertions to symbol_and_gate_mapped with native tests, add unit tests for from_scholarly_document and adversarial contract validation, and record conductor review receipt."
         }
-      ]
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-12-conductor-review-2026-11-04.json"
+      ],
+      "slug": "citeweft-document-evidence",
+      "status": "integration_prepared",
+      "title": "CiteWeft scholarly extraction and document evidence",
+      "track_id": "12",
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
@@ -1248,34 +1248,34 @@
       ],
       "evidence_level": "source_verified",
       "external_approval_required": true,
+      "horizon": "alpha",
+      "implementation_state": "source_implemented",
+      "outcome": "Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked.",
       "remote_github_evidence": [
         "verification/receipts/github-control-plane-audit.json",
         "verification/receipts/track-13-github-evidence-reconciliation.json"
       ],
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-13-conductor-review-2026-11-04.json"
-      ],
-      "horizon": "alpha",
-      "implementation_state": "source_implemented",
-      "outcome": "Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked.",
       "requirements": [
         "SR-065",
         "SR-066",
         "SR-067",
         "SR-070"
       ],
-      "slug": "integration-passports-github-context",
-      "status": "source_implemented",
-      "title": "Integration passports, GitHub issue hierarchy and context spine",
-      "track_id": "13",
-      "updated": "2026-11-04",
+      "review_completed": true,
       "review_fixes": [
         {
           "commit": "7eb4ea7",
           "summary": "Upgrade Track 13 assertions to symbol_and_gate_mapped with native test commands, add unit tests for IntegrationPassport, GitHubIssueHierarchy, and GitHubProjectManifest validation in searchright-contracts, and record conductor review receipt."
         }
-      ]
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-13-conductor-review-2026-11-04.json"
+      ],
+      "slug": "integration-passports-github-context",
+      "status": "source_implemented",
+      "title": "Integration passports, GitHub issue hierarchy and context spine",
+      "track_id": "13",
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
@@ -1313,21 +1313,21 @@
       "requirements": [
         "SR-009"
       ],
-      "slug": "sourceright-migration",
-      "status": "integration_prepared",
-      "title": "Sourceright migration and shared releases",
-      "track_id": "14",
       "review_completed": true,
-      "updated": "2026-11-04",
-      "runtime_evidence": [
-        "verification/receipts/track-14-conductor-review-2026-11-04.json"
-      ],
       "review_fixes": [
         {
           "commit": "97c36d0",
           "summary": "Upgrade Track 14 assertions to symbol_and_gate_mapped with native tests, add unit tests for LegacyRuntimeConfig execution_policy and provider_mode in searchright-sourceright-compat, refactor check_sourceright_migration main entry point, and record conductor review receipt."
         }
-      ]
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-14-conductor-review-2026-11-04.json"
+      ],
+      "slug": "sourceright-migration",
+      "status": "integration_prepared",
+      "title": "Sourceright migration and shared releases",
+      "track_id": "14",
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
@@ -1362,21 +1362,21 @@
       "requirements": [
         "SR-032"
       ],
-      "slug": "estate-migration",
-      "status": "partially_implemented",
-      "title": "GitHub estate audit and custom-code replacement",
-      "track_id": "15",
       "review_completed": true,
-      "updated": "2026-11-04",
-      "runtime_evidence": [
-        "verification/receipts/track-15-conductor-review-2026-11-04.json"
-      ],
       "review_fixes": [
         {
           "commit": "33dd012",
           "summary": "Upgrade Track 15 assertions to symbol_and_gate_mapped with concrete implementation symbols, enhance check_companion_change_packets to validate estate registers, add unit and adversarial test suite in tests/test_estate_migration.py, and record conductor review receipt."
         }
-      ]
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-15-conductor-review-2026-11-04.json"
+      ],
+      "slug": "estate-migration",
+      "status": "partially_implemented",
+      "title": "GitHub estate audit and custom-code replacement",
+      "track_id": "15",
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
@@ -1479,17 +1479,17 @@
         "SR-068",
         "SR-069"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 16 assertions (T16-A001..T16-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; refactor tests/test_coverage_policy.py to define CoveragePolicyTests; record green hosted PR #718 (a2e7a5d) and merged PRs #719-#723 verification across all 27 hosted jobs; record conductor review receipt and preserve remaining maturity blockers."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-16-conductor-review-2026-11-04.json"
+      ],
       "slug": "quality-security-harness",
       "status": "partially_implemented",
       "title": "Maximal quality, context and security harness",
       "track_id": "16",
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-16-conductor-review-2026-11-04.json"
-      ],
-      "review_fixes": [
-        "Upgrade all six Track 16 assertions (T16-A001..T16-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; refactor tests/test_coverage_policy.py to define CoveragePolicyTests; record green hosted PR #718 (a2e7a5d) and merged PRs #719-#723 verification across all 27 hosted jobs; record conductor review receipt and preserve remaining maturity blockers."
-      ],
       "updated": "2026-11-04"
     },
     {
@@ -1538,17 +1538,17 @@
         "SR-037",
         "SR-038"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+      ],
       "slug": "benchmarks-calibration",
       "status": "partially_implemented",
       "title": "Benchmarks, search validation and human calibration",
       "track_id": "17",
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
-      ],
-      "review_fixes": [
-        "Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers."
-      ],
       "updated": "2026-11-04"
     },
     {
@@ -1593,17 +1593,17 @@
         "SR-039",
         "SR-068"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-18-conductor-review-2026-11-04.json"
+      ],
       "slug": "alpha-release",
       "status": "release_prepared",
       "title": "Alpha release and distribution",
       "track_id": "18",
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-18-conductor-review-2026-11-04.json"
-      ],
-      "review_fixes": [
-        "Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion."
-      ],
       "updated": "2026-11-04"
     },
     {
@@ -1641,26 +1641,26 @@
         "SR-040",
         "SR-041"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-19-conductor-review-2026-11-04.json"
+      ],
       "slug": "registries-publication",
       "status": "submission_prepared",
       "title": "Registries and scholarly publication",
       "track_id": "19",
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-19-conductor-review-2026-11-04.json"
-      ],
-      "review_fixes": [
-        "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion."
-      ],
       "updated": "2026-11-04"
     },
     {
-      "blockers": [],
-      "completed_higher_evidence_gates": [
-        "Compile and run citation-chaining and supplementary-discovery scenarios.",
-        "Add authorised source-specific live adapters or documented manual methods.",
-        "Run a structured simulated information-specialist and grey-literature methodology panel while retaining its non-human limitation."
+      "additional_closeout_tasks": [
+        "Replace delimiter-ambiguous non-cryptographic citation edge IDs with length-framed BLAKE3 identifiers and reject padded, control-bearing or oversized fixture identifiers (`d0e73ea`).",
+        "Reconcile the final review receipt, metadata dates, closeout fields and semantic archive lifecycle while retaining canonical paths and stable GitHub keys."
       ],
+      "archived_on": "2026-08-29",
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_broader_discovery.py",
@@ -1668,6 +1668,12 @@
         "cargo clippy -p searchright-contracts -p searchright-discovery --all-targets -- -D warnings"
       ],
       "claim_boundary": "Compiler-verified bounded source methods and deterministic fixtures only. No live-provider support, exhaustive discovery, legal approval, topic-specific adequacy, or human-methodology endorsement is claimed.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile and run citation-chaining and supplementary-discovery scenarios.",
+        "Add authorised source-specific live adapters or documented manual methods.",
+        "Run a structured simulated information-specialist and grey-literature methodology panel while retaining its non-human limitation."
+      ],
       "deliverables": [
         "crates/searchright-discovery/src/lib.rs",
         "crates/searchright-contracts/src/discovery.rs",
@@ -1684,24 +1690,15 @@
       ],
       "evidence_level": "compiler_verified",
       "external_approval_required": false,
+      "higher_evidence_completed": true,
       "horizon": "beta",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Represent bounded trial-register, repository, website, citation-chaining and contact-search methods with explicit limits.",
+      "phase_3_task_count": 3,
       "requirements": [
         "SR-042",
         "SR-043"
-      ],
-      "slug": "broader-discovery",
-      "runtime_evidence": [
-        "verification/receipts/track-20-broader-discovery.json",
-        "verification/receipts/track-20-methodology-panel.json",
-        "verification/receipts/track-20-conductor-review.json",
-        "verification/receipts/track-20-integration-panel.json"
-      ],
-      "phase_3_task_count": 3,
-      "additional_closeout_tasks": [
-        "Replace delimiter-ambiguous non-cryptographic citation edge IDs with length-framed BLAKE3 identifiers and reject padded, control-bearing or oversized fixture identifiers (`d0e73ea`).",
-        "Reconcile the final review receipt, metadata dates, closeout fields and semantic archive lifecycle while retaining canonical paths and stable GitHub keys."
       ],
       "review_completed": true,
       "review_fixes": [
@@ -1712,15 +1709,18 @@
         "Screen manual log identifiers, candidate identifiers and coverage rationales, and map assertions to exact runtime tests.",
         "Retain historical Track 20 closeout task IDs explicitly without growing other tracks when review fixes are added."
       ],
-      "higher_evidence_completed": true,
-      "closeout_completed": true,
-      "lifecycle": "archived",
-      "archived_on": "2026-08-29",
+      "runtime_evidence": [
+        "verification/receipts/track-20-broader-discovery.json",
+        "verification/receipts/track-20-methodology-panel.json",
+        "verification/receipts/track-20-conductor-review.json",
+        "verification/receipts/track-20-integration-panel.json"
+      ],
+      "slug": "broader-discovery",
       "source_verified_on": "2026-08-29",
-      "updated": "2026-08-30",
       "status": "source_implemented",
       "title": "Grey literature, registers and supplementary discovery",
-      "track_id": "20"
+      "track_id": "20",
+      "updated": "2026-08-30"
     },
     {
       "blockers": [
@@ -1756,17 +1756,17 @@
       "requirements": [
         "SR-044"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+      ],
       "slug": "licensed-adapters",
       "status": "scaffolded",
       "title": "Licensed BYO-access adapters",
       "track_id": "21",
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-21-conductor-review-2026-11-04.json"
-      ],
-      "review_fixes": [
-        "Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion."
-      ],
       "updated": "2026-11-04"
     },
     {
@@ -1803,17 +1803,17 @@
         "SR-049",
         "SR-052"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 22 assertions (T22-A001..T22-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-living, and test_living_updates_governance.py; create unit test suite in tests/test_living_updates_governance.py validating living update schema, protocol amendment schema, human release safeguards forbidding automated inclusion, PRISMA-LSR reporting constraints, and run lineage invariants; harden unit tests in crates/searchright-living and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open multi-cycle scenario and change attribution gates without false promotion."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-22-conductor-review-2026-11-04.json"
+      ],
       "slug": "living-updates",
       "status": "partially_implemented",
       "title": "Living reviews, amendments and update lineage",
       "track_id": "22",
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-22-conductor-review-2026-11-04.json"
-      ],
-      "review_fixes": [
-        "Upgrade all six Track 22 assertions (T22-A001..T22-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-living, and test_living_updates_governance.py; create unit test suite in tests/test_living_updates_governance.py validating living update schema, protocol amendment schema, human release safeguards forbidding automated inclusion, PRISMA-LSR reporting constraints, and run lineage invariants; harden unit tests in crates/searchright-living and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open multi-cycle scenario and change attribution gates without false promotion."
-      ],
       "updated": "2026-11-04"
     },
     {
@@ -1845,17 +1845,17 @@
       "requirements": [
         "SR-046"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 23 assertions (T23-A001..T23-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-ranking, failure-modes.md, and test_active_learning_ranking_governance.py; create unit test suite in tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards, failure-mode countermeasures, and Track 23 traceability invariants; harden unit tests in crates/searchright-ranking and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open SYNERGY benchmark, human calibration, and stopping rule blockers without false promotion."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+      ],
       "slug": "active-learning-agents",
       "status": "scaffolded",
       "title": "Active-learning prioritisation and calibrated agents",
       "track_id": "23",
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/track-23-conductor-review-2026-11-04.json"
-      ],
-      "review_fixes": [
-        "Upgrade all six Track 23 assertions (T23-A001..T23-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-ranking, failure-modes.md, and test_active_learning_ranking_governance.py; create unit test suite in tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards, failure-mode countermeasures, and Track 23 traceability invariants; harden unit tests in crates/searchright-ranking and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open SYNERGY benchmark, human calibration, and stopping rule blockers without false promotion."
-      ],
       "updated": "2026-11-04"
     },
     {
@@ -1899,13 +1899,6 @@
         "16"
       ],
       "evidence_level": "source_verified",
-      "runtime_evidence": [
-        "verification/receipts/track-24-advanced-mcp.json",
-        "verification/receipts/track-24-component-trust.json",
-        "verification/receipts/track-24-conductor-review-2026-11-04.json"
-      ],
-      "updated": "2026-11-04",
-      "source_verified_on": "2026-08-14",
       "external_approval_required": true,
       "horizon": "beta",
       "implementation_state": "partially_implemented",
@@ -1914,14 +1907,21 @@
         "SR-030",
         "SR-047"
       ],
-      "slug": "wasi-http-scale",
-      "status": "partially_implemented",
-      "title": "WASI components, HTTP MCP and scalable execution",
-      "track_id": "24",
       "review_completed": true,
       "review_fixes": [
         "Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion."
-      ]
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-24-advanced-mcp.json",
+        "verification/receipts/track-24-component-trust.json",
+        "verification/receipts/track-24-conductor-review-2026-11-04.json"
+      ],
+      "slug": "wasi-http-scale",
+      "source_verified_on": "2026-08-14",
+      "status": "partially_implemented",
+      "title": "WASI components, HTTP MCP and scalable execution",
+      "track_id": "24",
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
@@ -1958,6 +1958,10 @@
         "SR-051",
         "SR-052"
       ],
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, RO-Crate and W3C PROV boundaries, review-bundle-manifest and handoff-plan schemas, and test_provenance_research_objects_governance.py; create unit test suite in tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema and context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants; record conductor review receipt and preserve open golden provenance export tests, independent RO-Crate validation tooling, and OSF/Zenodo repository handoff pilot blockers without false promotion."
+      ],
       "runtime_evidence": [
         "verification/receipts/track-25-conductor-review-2026-11-04.json"
       ],
@@ -1965,11 +1969,7 @@
       "status": "partially_implemented",
       "title": "Provenance and research-object interoperability",
       "track_id": "25",
-      "updated": "2026-11-04",
-      "review_completed": true,
-      "review_fixes": [
-        "Upgrade all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, RO-Crate and W3C PROV boundaries, review-bundle-manifest and handoff-plan schemas, and test_provenance_research_objects_governance.py; create unit test suite in tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema and context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants; record conductor review receipt and preserve open golden provenance export tests, independent RO-Crate validation tooling, and OSF/Zenodo repository handoff pilot blockers without false promotion."
-      ]
+      "updated": "2026-11-04"
     },
     {
       "blockers": [
@@ -1983,7 +1983,9 @@
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
         "python scripts/check_workflow_hardening.py",
-        "python scripts/check_schema_migrations.py"
+        "python scripts/check_schema_migrations.py",
+        "python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py",
+        "python3 -B -m unittest discover -s tests -p test_mcp_authority_state_machine.py"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
@@ -1992,13 +1994,17 @@
         "contracts/examples/workflow-trace.yaml",
         "docs/adrs/0011-assurance-and-evidence-ladder.md",
         "crates/searchright-assurance/tests/loom_authority.rs",
+        "crates/searchright-assurance/tests/workflow_model.rs",
         ".github/workflows/formal.yml",
         "fuzz/Cargo.toml",
         "verification/harness-matrix.json",
         "contracts/migrations/registry.json",
         "contracts/migrations/github-issue-hierarchy-v1-to-v2.json",
         "scripts/check_schema_migrations.py",
-        "docs/contracts/schema-evolution.md"
+        "docs/contracts/schema-evolution.md",
+        "tests/test_formal_assurance_contract_evolution.py",
+        "tests/test_mcp_authority_state_machine.py",
+        "verification/receipts/track-26-conductor-review-2026-11-04.json"
       ],
       "dependencies": [
         "01",
@@ -2020,7 +2026,12 @@
       "slug": "formal-assurance-contract-evolution",
       "status": "partially_implemented",
       "title": "Formal assurance and contract evolution",
-      "track_id": "26"
+      "track_id": "26",
+      "updated": "2026-11-04",
+      "source_verified_on": "2026-11-04",
+      "review_fixes": [
+        "Upgrade all five Track 26 assertions (T26-A001..T26-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-assurance, check_schema_migrations.py, workflow trace schemas, and tests/test_formal_assurance_contract_evolution.py and tests/test_mcp_authority_state_machine.py; create unit test suite in tests/test_formal_assurance_contract_evolution.py validating workflow-trace schemas, fail-closed schema migration registry policies, non-destructive forward migrations with rollback support, and check_schema_migrations.py execution; integrate Hypothesis stateful property testing over the searchright-mcp stdio binary verifying screening authority boundaries; record conductor review receipt and preserve open Kani/Loom/Miri proofs, model-check traces, contract compatibility fixtures, semver cross-version contract tests, and persisted-data migration drill blockers without false promotion."
+      ]
     },
     {
       "blockers": [
@@ -2210,14 +2221,15 @@
       "runtime_evidence": [
         "verification/receipts/track-24-advanced-mcp.json"
       ],
-      "source_verified_on": "2026-08-13",
       "slug": "maturity-gap-closure",
+      "source_verified_on": "2026-08-13",
       "status": "partially_implemented",
       "title": "Maturity gate and gap closure",
       "track_id": "30",
       "updated": "2026-08-13"
     },
     {
+      "archived_on": "2026-08-12",
       "blockers": [],
       "checks": [
         "python scripts/render_github_issues.py --check",
@@ -2226,6 +2238,7 @@
         "python scripts/check_workflow_hardening.py"
       ],
       "claim_boundary": "Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity.",
+      "closeout_completed": true,
       "completed_higher_evidence_gates": [
         "Create or verify the public remote and push the committed main branch.",
         "Supply an authenticated GitHub token with repository, Issues and Projects permission through an environment-scoped secret.",
@@ -2258,11 +2271,18 @@
       "external_evidence": [
         "verification/receipts/track-31-control-plane-apply.json"
       ],
-      "horizon": "mature",
       "higher_evidence_completed": true,
+      "horizon": "mature",
       "implementation_state": "source_implemented",
-      "phase_3_task_count": 3,
+      "lifecycle": "archived",
       "outcome": "Create and synchronise the remote repository, epic, tracks, phases, tasks, Project fields/views and repository protections from declarative source.",
+      "phase_3_task_count": 3,
+      "remote_github_evidence": [
+        "verification/receipts/github-control-plane-audit.json",
+        "verification/receipts/track-31-control-plane-apply.json",
+        "verification/receipts/track-31-bootstrap-exact-main.json",
+        "verification/receipts/track-31-audit-exact-main.json"
+      ],
       "requirements": [
         "SR-066",
         "SR-071",
@@ -2272,14 +2292,11 @@
         "SR-075"
       ],
       "review_completed": true,
-      "closeout_completed": true,
-      "lifecycle": "archived",
-      "archived_on": "2026-08-12",
-      "remote_github_evidence": [
-        "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-31-control-plane-apply.json",
-        "verification/receipts/track-31-bootstrap-exact-main.json",
-        "verification/receipts/track-31-audit-exact-main.json"
+      "review_fixes": [
+        {
+          "commit": "6425b89",
+          "summary": "Post-archive maintenance: preserve paginated and renamed PR paths, reject malformed metadata, and run prior scope tests under unittest discovery."
+        }
       ],
       "runtime_evidence": [
         "verification/receipts/track-31-control-plane-apply.json",
@@ -2287,14 +2304,8 @@
         "verification/receipts/track-31-conductor-review.json",
         "verification/receipts/track-31-scope-parser-maintenance.json"
       ],
-      "review_fixes": [
-        {
-          "commit": "6425b89",
-          "summary": "Post-archive maintenance: preserve paginated and renamed PR paths, reject malformed metadata, and run prior scope tests under unittest discovery."
-        }
-      ],
-      "source_verified_on": "2026-08-12",
       "slug": "github-control-plane",
+      "source_verified_on": "2026-08-12",
       "status": "source_implemented",
       "title": "GitHub remote, nested issues and Project v2 control plane",
       "track_id": "31",
@@ -2438,15 +2449,8 @@
       "external_approval_required": true,
       "horizon": "mature",
       "implementation_state": "partially_implemented",
-      "phase_3_task_count": 3,
-      "review_completed": true,
-      "runtime_evidence": [
-        "verification/receipts/remote-mcp-auth-conformance.json",
-        "verification/receipts/remote-mcp-tenancy-adversarial.json"
-      ],
-      "source_verified_on": "2026-08-13",
-      "updated": "2026-08-13",
       "outcome": "Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment.",
+      "phase_3_task_count": 3,
       "requirements": [
         "SR-047",
         "SR-082",
@@ -2454,10 +2458,17 @@
         "SR-084",
         "SR-085"
       ],
+      "review_completed": true,
+      "runtime_evidence": [
+        "verification/receipts/remote-mcp-auth-conformance.json",
+        "verification/receipts/remote-mcp-tenancy-adversarial.json"
+      ],
       "slug": "authenticated-remote-mcp",
+      "source_verified_on": "2026-08-13",
       "status": "integration_prepared",
       "title": "Authenticated remote MCP, tenancy and data residency",
-      "track_id": "34"
+      "track_id": "34",
+      "updated": "2026-08-13"
     },
     {
       "blockers": [
