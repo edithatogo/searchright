@@ -13,6 +13,10 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `docs/governance/sustainability.md`
   - [x] Present source path: `registry/joss/paper.md`
   - [x] Present source path: `GOVERNANCE.md`
+  - [x] Present source path: `evaluation/external-evaluation.json`
+  - [x] Present source path: `scripts/check_external_evaluation.py`
+  - [x] Present source path: `tests/test_external_evaluation_sustainability_governance.py`
+  - [x] Present source path: `verification/receipts/track-29-conductor-review-2026-11-05.json`
   - [x] Assertion ledger: `conductor/tracks/29-external-evaluation-sustainability/traceability.json`
 
 ## Completion and evidence contract
