@@ -11,25 +11,34 @@
       "assertion_id": "T26-A001",
       "statement": "Finite-state workflow traces and forbidden transitions.",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-assurance/src/lib.rs",
         "crates/searchright-contracts/src/assurance.rs",
         "contracts/examples/workflow-trace.yaml",
         "docs/adrs/0011-assurance-and-evidence-ladder.md",
         "crates/searchright-assurance/tests/loom_authority.rs",
+        "crates/searchright-assurance/tests/workflow_model.rs",
+        "tests/test_formal_assurance_contract_evolution.py",
         ".github/workflows/formal.yml",
         "fuzz/Cargo.toml",
         "verification/harness-matrix.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_assurance::verify_trace",
+        "searchright_assurance::allowed_transition",
+        "searchright_assurance::AssuranceError::Discontinuous",
+        "searchright_assurance::AssuranceError::TransitionDenied"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json",
+        "verification/receipts/track-26-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
@@ -37,31 +46,42 @@
         "Add compatibility fixtures for each public contract version.",
         "Run semver and cross-version MCP/CLI contract tests."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Finite-state lifecycle transitions and forbidden transitions are enforced by source policy; formal compiler proofs and model-check traces remain open."
     },
     {
       "assertion_id": "T26-A002",
       "statement": "Authority invariants for amendment, execution and screening actions.",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-assurance/src/lib.rs",
         "crates/searchright-contracts/src/assurance.rs",
         "contracts/examples/workflow-trace.yaml",
         "docs/adrs/0011-assurance-and-evidence-ladder.md",
         "crates/searchright-assurance/tests/loom_authority.rs",
+        "crates/searchright-assurance/tests/workflow_model.rs",
+        "tests/test_mcp_authority_state_machine.py",
+        "tests/test_formal_assurance_contract_evolution.py",
         ".github/workflows/formal.yml",
         "fuzz/Cargo.toml",
         "verification/harness-matrix.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_assurance::requires_human_approval",
+        "searchright_assurance::verify_transition",
+        "searchright_assurance::AssuranceError::HumanApprovalRequired",
+        "searchright_assurance::AssuranceError::AgentAuthorityDenied"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python3 -B -m unittest discover -s tests -p test_mcp_authority_state_machine.py",
+        "python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json",
+        "verification/receipts/track-26-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
@@ -69,7 +89,7 @@
         "Add compatibility fixtures for each public contract version.",
         "Run semver and cross-version MCP/CLI contract tests."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Human-authority gates and agent screening restrictions fail closed in source and stdio MCP tests; compiled multi-reviewer arbitration remains open."
     },
     {
       "assertion_id": "T26-A003",
@@ -88,7 +108,8 @@
         "contracts/migrations/registry.json",
         "contracts/migrations/github-issue-hierarchy-v1-to-v2.json",
         "scripts/check_schema_migrations.py",
-        "docs/contracts/schema-evolution.md"
+        "docs/contracts/schema-evolution.md",
+        "tests/test_formal_assurance_contract_evolution.py"
       ],
       "implementation_symbols": [
         "scripts/check_schema_migrations.py::main"
@@ -97,10 +118,12 @@
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
         "python scripts/check_workflow_hardening.py",
-        "python scripts/check_schema_migrations.py"
+        "python scripts/check_schema_migrations.py",
+        "python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json",
+        "verification/receipts/track-26-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
@@ -126,7 +149,8 @@
         "verification/harness-matrix.json",
         "contracts/migrations/registry.json",
         "contracts/migrations/github-issue-hierarchy-v1-to-v2.json",
-        "scripts/check_schema_migrations.py"
+        "scripts/check_schema_migrations.py",
+        "tests/test_formal_assurance_contract_evolution.py"
       ],
       "implementation_symbols": [
         "scripts/check_schema_migrations.py::main"
@@ -135,10 +159,12 @@
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
         "python scripts/check_workflow_hardening.py",
-        "python scripts/check_schema_migrations.py"
+        "python scripts/check_schema_migrations.py",
+        "python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json",
+        "verification/receipts/track-26-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
@@ -152,25 +178,33 @@
       "assertion_id": "T26-A005",
       "statement": "Metamorphic, property and model-check scenario catalogues.",
       "state": "partially_implemented",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-assurance/src/lib.rs",
         "crates/searchright-contracts/src/assurance.rs",
         "contracts/examples/workflow-trace.yaml",
         "docs/adrs/0011-assurance-and-evidence-ladder.md",
         "crates/searchright-assurance/tests/loom_authority.rs",
+        "crates/searchright-assurance/tests/workflow_model.rs",
+        "tests/test_mcp_authority_state_machine.py",
         ".github/workflows/formal.yml",
         "fuzz/Cargo.toml",
         "verification/harness-matrix.json"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_assurance::verify_trace",
+        "searchright_assurance::verify_transition",
+        "searchright_assurance::AssuranceReport"
+      ],
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
-        "python scripts/check_workflow_hardening.py"
+        "python scripts/check_workflow_hardening.py",
+        "python3 -B -m unittest discover -s tests -p test_mcp_authority_state_machine.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json"
+        "conductor/tracks/26-formal-assurance-contract-evolution/evidence.json",
+        "verification/receipts/track-26-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
@@ -178,7 +212,7 @@
         "Add compatibility fixtures for each public contract version.",
         "Run semver and cross-version MCP/CLI contract tests."
       ],
-      "permitted_claim": "Some source paths implement the assertion; completeness is not claimed."
+      "permitted_claim": "Hypothesis stateful property tests and exhaustive model checks cover authority and transition catalogues; Kani mathematical proofs remain open."
     }
   ]
 }

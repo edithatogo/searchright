@@ -63,6 +63,7 @@ SKIP_PARTS = {
     ".pytest_cache",
     ".mypy_cache",
     ".ruff_cache",
+    ".hypothesis",
 }
 SCHEMA_CATALOG = ROOT / "contracts" / "schema-catalog.json"
 EXPECTED_SCHEMA_VERSIONS = {

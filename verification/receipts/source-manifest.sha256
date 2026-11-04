@@ -23,7 +23,7 @@ e94ca8c59f7fe3660c064069b579167e5923e754160b8a2c6648f2ff7dac54a0  ./.github/work
 0c784c5a44198e1a8953b17ef434010a0740c8c1da0e2232923660b34aaca9cd  ./.github/workflows/release.yml
 0c53e108c6b7d1231cf2b744fc2520544674564e7beeb169fa092773f875d3c4  ./.github/workflows/resilience.yml
 19a5a8287fd0c3b8a9295911a499949f8cd633afcf4343da2096441009a92e27  ./.github/workflows/security.yml
-74af65fe074a11e56cbc60c14e466b6f1883597171d0eb17393454804244e390  ./.gitignore
+8a6c385c390a2316e0aeaf69a300e2656a05e6247881f12e6201a4bd114a7318  ./.gitignore
 ed5f8c3a259fbdfb99d06d519b5dd72f7838bcc0fb0e810545683725d6b6b0b7  ./.gitleaks.toml
 6594d7d20dad9cb44f9393d5da8163a12170b357a9a77bbfa3ec131b1bd0bdb1  ./.markdownlint-cli2.jsonc
 9ed9cb84a6594f41b50938a3fccfa8e6b0c470927a8143978443e564393f8ba6  ./.vale.ini
@@ -468,9 +468,9 @@ d1bfed48eee19a05abb7cc11039e4e93558f3910010b97665ed56c435f18f600  ./conductor/gi
 1febcb48f6260827dc661919308b648a4c6342997104c461ca550e83f3fee2d5  ./conductor/github/issues/track-25-phase-4-task-04.md
 59e652d3bc9b702de1e8b0e6f72f8d0bfaf594c3adf6248a8251ada918d76c96  ./conductor/github/issues/track-25-phase-4.md
 50e62117c35e1c667efd4b48bd258fd0bba3694037a14faa9eab2a93be71f882  ./conductor/github/issues/track-25.md
-7a234d02cc2477f06e94c72b0f68a493406a025585434e166f3f7562325d7598  ./conductor/github/issues/track-26-phase-1-task-01.md
+cbad5ef5da9ad8419b8534470c2caaa7b4c1cbc88048168d6e4093700c2087bf  ./conductor/github/issues/track-26-phase-1-task-01.md
 d16bf414bf3d9a0d8d63b2c849af2f0443d1d724d4827c0df191d49ea5cecc9e  ./conductor/github/issues/track-26-phase-1.md
-93e910c907bc515817ec1e8a3c8ddddbebe5bd34a90e149e500d955a341c0ac3  ./conductor/github/issues/track-26-phase-2-task-01.md
+a4cc1a04b28cfebf7bf49d6635f5944ded98b98832e0c279ad3c6552049d2b91  ./conductor/github/issues/track-26-phase-2-task-01.md
 a2874fc275e69560fb33dcefeb0c554ef2a02ec73cae90f8e61ad236f8546eb9  ./conductor/github/issues/track-26-phase-2-task-02.md
 db2d93b8b61c4e2f066d3a2d95ad163a8158065d4daa8e979863c7523402ef8b  ./conductor/github/issues/track-26-phase-2.md
 6a3cee617836d9db208410462519efda961e5a688508c00d0b391ff2f07c4384  ./conductor/github/issues/track-26-phase-3-task-01.md
@@ -481,7 +481,7 @@ ee2df44af2b94cee6c1171a47b7a21c3d320871763910c6cf04399e8e3ddc812  ./conductor/gi
 08b6583c133d88aba698309a93cebe87e43f9b96a6e83884096d63d5ccc80415  ./conductor/github/issues/track-26-phase-3.md
 e02e0db63b6ad61e5caa813f6edcde0c447aca868b2e7ed8e7f1ae43d10c46e0  ./conductor/github/issues/track-26-phase-4-task-01.md
 016c1d0ffe1996145d0de62836be5da631e0961703daf3aa74f45bfebd9d31d6  ./conductor/github/issues/track-26-phase-4-task-02.md
-13e6b688c6ecb2d4cb5aa670ff20504b7dffad8efd4c8e4e25e5a149747d5d26  ./conductor/github/issues/track-26-phase-4-task-03.md
+70a4e6978c816ac8d3f8fc0acf2fface1d06db14d48e7d98bf02be7fac20bc52  ./conductor/github/issues/track-26-phase-4-task-03.md
 7d110f672ef44db74497606fe77816488e0174c2c3d9c7d5bf03308f08e303ba  ./conductor/github/issues/track-26-phase-4-task-04.md
 03621139220f69eb0ec7edabda3799bdb004405622e9250396928a18e7a720cd  ./conductor/github/issues/track-26-phase-4.md
 d7431aa7968f446c4704cf66306df6281a00bf0bcd9abfc8ee68054735b71e8b  ./conductor/github/issues/track-26.md
@@ -679,9 +679,9 @@ e5b61482643552c7323c90cd948a669c7f0b10bada1dfbaf9ef5b419fd0b4e9b  ./conductor/in
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
-941a97e373dc7464cfe92e1ab9f4561b324f9e42ac356b5f851dcbeb10e2340e  ./conductor/roadmap-coverage.json
+4c46f3a9fff86279129d8b1728b10c9652a5972261fe8d7598c3ae60fb5c8930  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
-1dc3ddb206e330b61e1ed018400c10f025d5888a840948f475f5dbda4e2f2267  ./conductor/traceability-overrides.json
+48ff3501263c9d43e8a1b5b33292f619a856a743aed0fe0024457bd71e7bcc89  ./conductor/traceability-overrides.json
 4c5b8f0d1d995200d916b4b8a1342312ec59dd541c7a0e92630efc84999da9e5  ./conductor/tracks.md
 6be1112433f2862b938bdd43304d59ad38d9a20c9fe96c33ca2532e33615918b  ./conductor/tracks/00-foundation-conductor-toolchain/evidence.json
 a84681e6819d0fd48aae7c0f5640d79720cd71ca9804fdce7e6dc1fe0cfa12f7  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
@@ -814,11 +814,11 @@ b51d616fea358ed8b66f6d5d4d89defbfe0b28ccd08b39e5366031e7bafbbb10  ./conductor/tr
 37a04bd8519a2679151823639c25f11a94e8040f9cfdda7f3e68162aadb11599  ./conductor/tracks/25-provenance-research-objects/plan.md
 8c6f829beaa11572741929abc1d9771bb0831c526db200523e5d8d2017b5bda0  ./conductor/tracks/25-provenance-research-objects/spec.md
 d0f6f204c17e5b293219d3354e2f32694d0170e84777fed4d6cb5b040e8cdb77  ./conductor/tracks/25-provenance-research-objects/traceability.json
-bcc6f8bc997e65c8d96eb333da2ed7f7a2531c47391913d49541a165dde46785  ./conductor/tracks/26-formal-assurance-contract-evolution/evidence.json
-4b2e65e98473b6908025faba59c5f50978461dc022c858bca786ce53bad0e642  ./conductor/tracks/26-formal-assurance-contract-evolution/metadata.json
-5ea6d1fe24cc755d37dde3443f879225c1f189f94bb6f0299c6a49a305d8fbef  ./conductor/tracks/26-formal-assurance-contract-evolution/plan.md
+5672430b422a71edb2261576d32e7af35ba944b22c5dc18317e798963031aafd  ./conductor/tracks/26-formal-assurance-contract-evolution/evidence.json
+ba827a0b80f05f15dee6984ffe658609e199f2aebde010b79b245340bb5c2674  ./conductor/tracks/26-formal-assurance-contract-evolution/metadata.json
+9d9562b6c4e10a2acafece54ea9c8d31c96d5c795d353a6b68241c39c841ca2d  ./conductor/tracks/26-formal-assurance-contract-evolution/plan.md
 0817ba0a3cd10c9f0a1da09891c877a761b0be3ab7101a09a68c75dd5bce0af6  ./conductor/tracks/26-formal-assurance-contract-evolution/spec.md
-d62e0f3128b682f8f04ae4f63cdbeca14aa056d1d4baaa39034fca7ecd97a4c0  ./conductor/tracks/26-formal-assurance-contract-evolution/traceability.json
+70160a2c68ffecef70174780c57bd16c85df18472d3ab8aa82e9a059edc4d578  ./conductor/tracks/26-formal-assurance-contract-evolution/traceability.json
 7808c3132e4e7fc691e4870767d6b89076c40d1d551fe5ab8ca65c3b979975be  ./conductor/tracks/27-accessibility-internationalisation-usability/evidence.json
 e4e20088d12f3b300bbfa2118c724b6bb6d7c0175334422d7cfbfa752a660397  ./conductor/tracks/27-accessibility-internationalisation-usability/metadata.json
 ab2f12d92d144b4ae18a4279a9ab737594f94e1e48b51e18cccffa7011f5cb51  ./conductor/tracks/27-accessibility-internationalisation-usability/plan.md
@@ -879,7 +879,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 003644dc05cba2d5b1ca6e4b4e6e04807d0b73d25949fa151ed81b7ea194f75d  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-44a06c083ad2b105e55d0923e8d36c09dfaa8ed0f7f112c371792a2604c975b8  ./context/context-lock.json
+3297a580f75cdf1d31732dc560936a23da74b506690d2daf257904b04f5a6600  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1489,7 +1489,7 @@ b71fbe8bfbb33f4d45bbfd9255689c07d0e517278623fc744ea7c077599328b8  ./scripts/sync
 c456a4dc7c63f0aa7f7a1018c1eb74b84030bbf85bdf2f49d7aec5b9d71c690a  ./scripts/test_agent_host_eval.py
 f8297215b884816c62e74ca6570dbc1c85de34a94495c3bd8ded7e5052920472  ./scripts/test_agent_skill_policy.py
 4b8020b46be12560973ce6c5abac6feeee8da4c36faaa10a230c9f9797c1c12e  ./scripts/test_cargo_vet_governance.py
-ac1141b2d445578049f4399323a093d7b7d7997eabe336ac2545a77096b554bf  ./scripts/validate_repository.py
+4d9a48d44a433929c33481e239240e77aec59a6c5788c0e679d6a6d701d5401d  ./scripts/validate_repository.py
 14b9b524ca6f1e70d19cd3febdb67e6e7813b923d053fad2016f2a79fc59c555  ./scripts/verify.sh
 82e9b852330442e9a620b0eb05304785582a74b3a941ba45916af7651fcbea12  ./sdk/generated-contract-bindings.json
 52c2b5a3c152cc906fa29b6ac6ff3be64542478c5ef8ea5e9891a971e6d1bea2  ./sdk/manifest.json
@@ -1543,6 +1543,7 @@ d280a1602571ed1e979dc486a0ec5a850e9b86c2a747988f6811599f12270177  ./tests/test_a
 7a95375717ea396f351adffeb5986fa893277d974b5ace0d7556f6db74143a93  ./tests/test_coverage_policy.py
 82882d33f590a894c5494cd8b5953e2207391354bbd0c9a9902e48d05249ddfe  ./tests/test_estate_migration.py
 10a88d5317807d3be70e27593b3b1dd991db6c6c7d8f223048e51679b4da09e1  ./tests/test_external_evaluation_check.py
+a437842db17c537ac154f1fc1b82d550b84a285cf98a3c2aaa67d38a6b11edcb  ./tests/test_formal_assurance_contract_evolution.py
 6c0503151fef1fd09bbbb2970a16271cd0df2fbb99cd7793b2a97acc9bdd072d  ./tests/test_github_audit_ruleset.py
 c39e72709b6e98f119f95b2210f8d2fe44dd3dbd53d7f0c26fb3144cd1ff060b  ./tests/test_github_audit_source.py
 1a05b85015083f8e12ecaf7f4404709d171d0022edecd4ca2c4b258cd24b4617  ./tests/test_github_bootstrap_secret.py
@@ -1554,6 +1555,7 @@ cc662a6e394db0b8f3f4176226bb64fdce7a448ace7c73d0dfaaf8fdc6291022  ./tests/test_l
 a26e966930d7d783ad9de1c48d774cf6758abb24f361b06b0c538c52bc0b2b8d  ./tests/test_living_updates_governance.py
 026e4431c4c8ef0acebf31a253ee06402cc2ab729c417ce323484f457b5a31cc  ./tests/test_local_api_evidence.py
 ccdfdd2712ef70876be4f3d82a90d95fdd43fd6ded22eb2760dbcebee721cde9  ./tests/test_maturity_dossier_check.py
+da3f42064f69d01a7dc490566226251ff96797e89302b7b06cf16a1a8a49c41e  ./tests/test_mcp_authority_state_machine.py
 6bb46cb1821288da9f9e25e76385d450312e3de282191cab902f4c20e5e7040e  ./tests/test_native_query_corpus.py
 6bae09eec9a51f47ae55cfb23eac8fec76b07165e9f3f8aa67e4fa4da1d41f6b  ./tests/test_pr_track_scope.py
 dda3f9fde64a5bf1dfa9fdd0554f3d376ffc785107d51bc6d4fca971feec2105  ./tests/test_provenance_research_objects_governance.py
@@ -2452,7 +2454,7 @@ f9249d2dc382b8cac90a34daf9bc583818e1da7ba2e226c943e98e38fdfd296d  ./third_party/
 c15a358f77b924e2b1eba4bc27539e6b7ae5fd452c29ee5a6b04ff9bb0e39d8c  ./typos.toml
 85704ee898a02fc2ac0be5b6bc0e8891a207e35d529bb71fe19dc813f85d6d15  ./verification/architecture-policy.json
 b714d90dc7ab979fdaac0a8a1e6b71f980201cdf37bba53bd203f466bd09ebf8  ./verification/coverage-policy.json
-8dfa48f772588c9b0afe47b373fca67dd78e00da7b6667a69fc392e3b49fa3c3  ./verification/evidence-debt.json
+535a2ab240f767347bbd60f4a8e81fba4f75101159ae90402f80114be0380fb2  ./verification/evidence-debt.json
 29900da330acfda39c17add9ef7a72d491ccb7bd736fb54b82326fba7cbde7e5  ./verification/fixtures/track-08/press-workflow-complete.yaml
 f4da3de56da0ee41fd58d669abf870c7c3a5da1c3a116725d5d1477f1befb7b5  ./verification/gate-catalog.json
 7b21436d10731345bc5447f7157a236bda45a224177f737c505f9c27baafe943  ./verification/harness-matrix.json
