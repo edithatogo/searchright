@@ -9,6 +9,8 @@ Canonical task state: **source task complete**.
 
 - [x] Run deterministic, network-free contract and policy checks.
   - [x] `python scripts/validate_repository.py`
+  - [x] `python scripts/check_external_evaluation.py`
+  - [x] `python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py`
 
 ## Completion and evidence contract
 

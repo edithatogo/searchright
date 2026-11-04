@@ -2142,7 +2142,9 @@
         "Demonstrate observed maintenance, standards surveillance and succession practice."
       ],
       "checks": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_external_evaluation.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
@@ -2150,7 +2152,11 @@
         "docs/evaluation/benchmark-and-calibration-protocol.md",
         "docs/governance/sustainability.md",
         "registry/joss/paper.md",
-        "GOVERNANCE.md"
+        "GOVERNANCE.md",
+        "evaluation/external-evaluation.json",
+        "scripts/check_external_evaluation.py",
+        "tests/test_external_evaluation_sustainability_governance.py",
+        "verification/receipts/track-29-conductor-review-2026-11-05.json"
       ],
       "dependencies": [
         "13",
@@ -2175,7 +2181,12 @@
       "slug": "external-evaluation-sustainability",
       "status": "external_evidence_required",
       "title": "External methodological evaluation and sustainability",
-      "track_id": "29"
+      "track_id": "29",
+      "updated": "2026-11-05",
+      "source_verified_on": "2026-11-05",
+      "review_fixes": [
+        "Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required."
+      ]
     },
     {
       "blockers": [
