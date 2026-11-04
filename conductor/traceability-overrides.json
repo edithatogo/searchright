@@ -4424,42 +4424,12 @@
         "T28-A001": {
           "deterministic_tests": [
             "python scripts/validate_repository.py",
-            "python scripts/check_redaction_policy.py --self-test"
+            "python scripts/check_redaction_policy.py --self-test",
+            "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
           ],
           "evidence_receipts": [
-            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json"
-          ],
-          "implementation_paths": [
-            "crates/searchright-governance/src/lib.rs",
-            "crates/searchright-contracts/src/governance.rs",
-            "contracts/examples/institutional-policy.yaml",
-            "contracts/examples/data-handling-request.yaml",
-            "contracts/examples/data-handling-decision.yaml",
-            "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-            "docs/security/threat-model.md",
-            "policy/redaction-profile.json",
-            "scripts/redaction.py",
-            "scripts/check_redaction_policy.py"
-          ],
-          "implementation_symbols": [
-            "scripts/redaction.py::redact_value"
-          ],
-          "mapping_confidence": "track_level_only",
-          "open_gates": [
-            "Compile and run governance/authority negative scenarios.",
-            "Obtain institutional privacy, records and security review for a deployment profile.",
-            "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
-          ],
-          "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
-          "state": "partially_implemented"
-        },
-        "T28-A002": {
-          "deterministic_tests": [
-            "python scripts/validate_repository.py",
-            "python scripts/check_redaction_policy.py --self-test"
-          ],
-          "evidence_receipts": [
-            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json"
+            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json",
+            "verification/receipts/track-28-conductor-review-2026-11-04.json"
           ],
           "implementation_paths": [
             "crates/searchright-governance/src/lib.rs",
@@ -4472,11 +4442,14 @@
             "policy/redaction-profile.json",
             "scripts/redaction.py",
             "scripts/check_redaction_policy.py",
-            "docs/security/redaction-and-data-minimisation.md"
+            "tests/test_institutional_governance_privacy_collaboration.py"
           ],
           "implementation_symbols": [
-            "scripts/redaction.py::redact_url",
-            "scripts/redaction.py::redact_value"
+            "searchright_contracts::InstitutionalPolicy",
+            "searchright_contracts::DataHandlingRequest",
+            "searchright_contracts::DataHandlingDecision",
+            "searchright_governance::evaluate",
+            "tests/test_institutional_governance_privacy_collaboration.py::InstitutionalGovernancePrivacyCollaborationTests.test_policy_request_decision_examples_are_consistent"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
@@ -4484,15 +4457,58 @@
             "Obtain institutional privacy, records and security review for a deployment profile.",
             "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
           ],
-          "permitted_claim": "Data classification and default receipt minimisation are explicit and adversarially exercised; de-identification and institutional approval are not claimed.",
+          "permitted_claim": "Institutional policy, request and decision contracts are consistent and evaluated deny-by-default in source; compiled negative scenarios and institutional approval remain open.",
+          "state": "partially_implemented"
+        },
+        "T28-A002": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python scripts/check_redaction_policy.py --self-test",
+            "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json",
+            "verification/receipts/track-28-conductor-review-2026-11-04.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-governance/src/lib.rs",
+            "crates/searchright-contracts/src/governance.rs",
+            "contracts/examples/institutional-policy.yaml",
+            "contracts/examples/data-handling-request.yaml",
+            "contracts/examples/data-handling-decision.yaml",
+            "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+            "docs/security/threat-model.md",
+            "policy/redaction-profile.json",
+            "scripts/redaction.py",
+            "scripts/check_redaction_policy.py",
+            "docs/security/redaction-and-data-minimisation.md",
+            "tests/test_institutional_governance_privacy_collaboration.py"
+          ],
+          "implementation_symbols": [
+            "searchright_contracts::DataClassification",
+            "searchright_governance::evaluate",
+            "scripts/redaction.py::redact_url",
+            "scripts/redaction.py::redact_value",
+            "tests/test_institutional_governance_privacy_collaboration.py::InstitutionalGovernancePrivacyCollaborationTests.test_governance_source_denies_by_default_with_stable_codes",
+            "tests/test_institutional_governance_privacy_collaboration.py::InstitutionalGovernancePrivacyCollaborationTests.test_receipt_minimisation_is_deterministic_and_removes_secrets"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "open_gates": [
+            "Compile and run governance/authority negative scenarios.",
+            "Obtain institutional privacy, records and security review for a deployment profile.",
+            "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+          ],
+          "permitted_claim": "Data classification, retention, region and receipt-minimisation rules are explicit and adversarially exercised; de-identification and institutional approval are not claimed.",
           "state": "partially_implemented"
         },
         "T28-A003": {
           "deterministic_tests": [
-            "python scripts/validate_repository.py"
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
           ],
           "evidence_receipts": [
-            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json"
+            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json",
+            "verification/receipts/track-28-conductor-review-2026-11-04.json"
           ],
           "implementation_paths": [
             "crates/searchright-governance/src/lib.rs",
@@ -4501,24 +4517,36 @@
             "contracts/examples/data-handling-request.yaml",
             "contracts/examples/data-handling-decision.yaml",
             "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-            "docs/security/threat-model.md"
+            "docs/security/threat-model.md",
+            "tests/test_institutional_governance_privacy_collaboration.py",
+            "crates/searchright-governance/src/approval.rs"
           ],
-          "implementation_symbols": [],
-          "mapping_confidence": "track_level_only",
+          "implementation_symbols": [
+            "searchright_governance::evaluate_lifecycle_with_verifier",
+            "searchright_governance::authorize_lifecycle",
+            "searchright_governance::LifecycleApprovalVerifier",
+            "searchright_governance::BoundedLifecycleApprovalRegistry",
+            "searchright_governance::LifecycleAuthorization",
+            "tests/test_institutional_governance_privacy_collaboration.py::InstitutionalGovernancePrivacyCollaborationTests.test_human_approval_required_for_high_risk_classifications",
+            "tests/test_institutional_governance_privacy_collaboration.py::InstitutionalGovernancePrivacyCollaborationTests.test_lifecycle_authority_is_scoped_and_audit_deletion_denied"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Compile and run governance/authority negative scenarios.",
             "Obtain institutional privacy, records and security review for a deployment profile.",
             "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
           ],
-          "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+          "permitted_claim": "Human approval and exact-scope lifecycle authority are enforced in source and covered by Rust unit tests; institutional role provisioning and external review remain open.",
           "state": "partially_implemented"
         },
         "T28-A004": {
           "deterministic_tests": [
-            "python scripts/validate_repository.py"
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
           ],
           "evidence_receipts": [
-            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json"
+            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json",
+            "verification/receipts/track-28-conductor-review-2026-11-04.json"
           ],
           "implementation_paths": [
             "crates/searchright-governance/src/lib.rs",
@@ -4527,24 +4555,34 @@
             "contracts/examples/data-handling-request.yaml",
             "contracts/examples/data-handling-decision.yaml",
             "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-            "docs/security/threat-model.md"
+            "docs/security/threat-model.md",
+            "tests/test_institutional_governance_privacy_collaboration.py",
+            "crates/searchright-screening/src/lib.rs"
           ],
-          "implementation_symbols": [],
-          "mapping_confidence": "track_level_only",
+          "implementation_symbols": [
+            "searchright_screening::ScreeningBoard::resolve",
+            "searchright_screening::ScreeningBoard::confirm_agent_exclusion",
+            "searchright_screening::ReviewerRole",
+            "searchright_screening::ScreeningError::AdjudicatorNotIndependent",
+            "tests/test_institutional_governance_privacy_collaboration.py::InstitutionalGovernancePrivacyCollaborationTests.test_multi_reviewer_adjudication_independence_in_source"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Compile and run governance/authority negative scenarios.",
             "Obtain institutional privacy, records and security review for a deployment profile.",
             "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
           ],
-          "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+          "permitted_claim": "Independent human adjudication and role-gated conflict resolution are enforced in source and Rust unit tests; multi-reviewer pilots remain open.",
           "state": "partially_implemented"
         },
         "T28-A005": {
           "deterministic_tests": [
-            "python scripts/validate_repository.py"
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
           ],
           "evidence_receipts": [
-            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json"
+            "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json",
+            "verification/receipts/track-28-conductor-review-2026-11-04.json"
           ],
           "implementation_paths": [
             "crates/searchright-governance/src/lib.rs",
@@ -4553,16 +4591,20 @@
             "contracts/examples/data-handling-request.yaml",
             "contracts/examples/data-handling-decision.yaml",
             "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
-            "docs/security/threat-model.md"
+            "docs/security/threat-model.md",
+            "tests/test_institutional_governance_privacy_collaboration.py"
           ],
-          "implementation_symbols": [],
-          "mapping_confidence": "track_level_only",
+          "implementation_symbols": [
+            "docs/security/threat-model.md",
+            "tests/test_institutional_governance_privacy_collaboration.py::InstitutionalGovernancePrivacyCollaborationTests.test_federated_threat_model_keeps_gates_open"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
           "open_gates": [
             "Compile and run governance/authority negative scenarios.",
             "Obtain institutional privacy, records and security review for a deployment profile.",
             "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
           ],
-          "permitted_claim": "Some source paths implement the assertion; completeness is not claimed.",
+          "permitted_claim": "A threat model exists and the track keeps its evidence level at source_verified; the federated exchange pilot and external security review remain open.",
           "state": "partially_implemented"
         }
       }

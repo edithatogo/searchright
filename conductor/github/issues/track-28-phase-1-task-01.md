@@ -19,6 +19,10 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `scripts/redaction.py`
   - [x] Present source path: `scripts/check_redaction_policy.py`
   - [x] Present source path: `docs/security/redaction-and-data-minimisation.md`
+  - [x] Present source path: `tests/test_institutional_governance_privacy_collaboration.py`
+  - [x] Present source path: `crates/searchright-screening/src/lib.rs`
+  - [x] Present source path: `crates/searchright-governance/src/approval.rs`
+  - [x] Present source path: `verification/receipts/track-28-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/28-institutional-governance-privacy-collaboration/traceability.json`
 
 ## Completion and evidence contract
