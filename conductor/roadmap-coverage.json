@@ -1871,7 +1871,8 @@
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
         "python scripts/sync_schema_surface.py --check",
-        "python scripts/sync_contract_conformance_matrix.py --check"
+        "python scripts/sync_contract_conformance_matrix.py --check",
+        "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
       ],
       "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
@@ -1888,7 +1889,8 @@
         "contracts/json-schema/provider-component-release-signature.v1.schema.json",
         "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
         "contracts/compatibility/track-24-provider-component-trust.md",
-        "verification/receipts/track-24-component-trust.json"
+        "verification/receipts/track-24-component-trust.json",
+        "tests/test_wasi_http_scale_governance.py"
       ],
       "dependencies": [
         "03",
@@ -1899,9 +1901,10 @@
       "evidence_level": "source_verified",
       "runtime_evidence": [
         "verification/receipts/track-24-advanced-mcp.json",
-        "verification/receipts/track-24-component-trust.json"
+        "verification/receipts/track-24-component-trust.json",
+        "verification/receipts/track-24-conductor-review-2026-11-04.json"
       ],
-      "updated": "2026-08-14",
+      "updated": "2026-11-04",
       "source_verified_on": "2026-08-14",
       "external_approval_required": true,
       "horizon": "beta",
@@ -1914,7 +1917,11 @@
       "slug": "wasi-http-scale",
       "status": "partially_implemented",
       "title": "WASI components, HTTP MCP and scalable execution",
-      "track_id": "24"
+      "track_id": "24",
+      "review_completed": true,
+      "review_fixes": [
+        "Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion."
+      ]
     },
     {
       "blockers": [

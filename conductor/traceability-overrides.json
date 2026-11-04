@@ -3667,7 +3667,8 @@
           "deterministic_tests": [
             "python scripts/validate_repository.py",
             "python scripts/sync_schema_surface.py --check",
-            "python scripts/sync_contract_conformance_matrix.py --check"
+            "python scripts/sync_contract_conformance_matrix.py --check",
+            "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
           ],
           "evidence_receipts": [
             "verification/receipts/track-24-component-trust.json"
@@ -3689,6 +3690,10 @@
             "searchright_contracts::ProviderComponentReleaseSignature::validate"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-plugin-sdk",
+            "cargo test --locked -p searchright-contracts"
+          ],
           "open_gates": [
             "Compile the WIT host/guest boundary and run a component conformance suite under the reviewed runtime sandbox.",
             "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation evidence."
@@ -3696,10 +3701,77 @@
           "permitted_claim": "Exact provider-component bytes, manifest identity, bounded Ed25519 key authority, validity windows and reviewed revocations are compiler-tested locally; publisher identity, distribution, runtime sandboxing and live provider support remain unproven.",
           "state": "partially_implemented"
         },
+        "T24-A002": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-24-component-trust.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-policy/src/lib.rs",
+            "crates/searchright-plugin-sdk/src/lib.rs",
+            "contracts/wit/search-provider.wit",
+            "contracts/examples/provider-component.yaml",
+            "docs/adrs/0004-provider-plugin-sandbox.md"
+          ],
+          "implementation_symbols": [
+            "searchright_policy::PolicyDecision",
+            "searchright_policy::validate_request",
+            "searchright_policy::authorise_endpoint",
+            "searchright_plugin_sdk::verify_component",
+            "searchright_plugin_sdk::authorise_capability"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-policy",
+            "cargo test --locked -p searchright-plugin-sdk"
+          ],
+          "open_gates": [
+            "Compile WASI components and run the component conformance suite.",
+            "Implement and compile the WIT host/guest boundary with Wasmtime resource controls."
+          ],
+          "permitted_claim": "Execution envelopes, host network allowlisting, and component capability authorization are compiler-tested; live Wasmtime runtime fuel limits, memory limits, and guest capability enforcement remain uncompiled.",
+          "state": "partially_implemented"
+        },
+        "T24-A003": {
+          "deterministic_tests": [
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
+          ],
+          "evidence_receipts": [
+            "conductor/tracks/24-wasi-http-scale/evidence.json"
+          ],
+          "implementation_paths": [
+            "crates/searchright-contracts/src/study.rs",
+            "crates/searchright-store/src/lib.rs",
+            "contracts/json-schema/study-graph.v1.schema.json",
+            "contracts/examples/study-graph.yaml"
+          ],
+          "implementation_symbols": [
+            "searchright_contracts::Study",
+            "searchright_contracts::StudyGraph",
+            "searchright_contracts::StudyGraph::validate",
+            "searchright_store::FileReviewStore"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-contracts",
+            "cargo test --locked -p searchright-store"
+          ],
+          "open_gates": [
+            "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
+            "Execute large corpus performance and memory benchmarks on >1M study reviews."
+          ],
+          "permitted_claim": "StudyGraph and review store contracts validate corpus structures; columnar Arrow, Parquet and DuckDB query engines remain unintegrated pending scalable execution benchmarks.",
+          "state": "partially_implemented"
+        },
         "T24-A004": {
           "deterministic_tests": [
             "python scripts/check_cli_mcp_parity.py",
-            "python scripts/validate_repository.py"
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
           ],
           "evidence_receipts": [
             "verification/receipts/track-24-advanced-mcp.json"
@@ -3722,6 +3794,9 @@
             "searchright_mcp::acknowledgement_is_accepted"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-mcp --test advanced_mcp"
+          ],
           "open_gates": [
             "Implement authenticated Streamable HTTP advanced capabilities only after Track 34 binds principal, tenant, region, scope, approval, quotas and audit state.",
             "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests before scalable execution claims."
@@ -3729,9 +3804,43 @@
           "permitted_claim": "Official rmcp clients verify bounded local-stdio prompt completion, current-only non-authoritative form elicitation, pagination, task completion and cancellation, four-slot admission recovery, and genuine aggregate task-activity notifications; approval authority, durable Tasks, production caching, stress/load performance, remote and scalable execution are denied.",
           "state": "partially_implemented"
         },
+        "T24-A005": {
+          "deterministic_tests": [
+            "python scripts/check_cli_mcp_parity.py",
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
+          ],
+          "evidence_receipts": [
+            "verification/receipts/track-24-advanced-mcp.json"
+          ],
+          "implementation_paths": [
+            "contracts/openapi/searchright-http.openapi.yaml",
+            "crates/searchright-mcp/src/lib.rs",
+            "crates/searchright-mcp/tests/advanced_mcp.rs",
+            "docs/mcp-compatibility.md",
+            "docs/adrs/0004-provider-plugin-sandbox.md"
+          ],
+          "implementation_symbols": [
+            "searchright_mcp::SearchrightServer::listen",
+            "searchright_mcp::SearchrightServer::initialize",
+            "contracts/openapi/searchright-http.openapi.yaml"
+          ],
+          "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-mcp --test advanced_mcp"
+          ],
+          "open_gates": [
+            "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+            "Implement authenticated Streamable HTTP advanced capabilities only after Track 34 binds principal, tenant, region, scope, approval, quotas and audit state."
+          ],
+          "permitted_claim": "Candidate HTTP OpenAPI routes and local MCP listener bindings are defined; authenticated Streamable HTTP, OAuth 2.0 proxy tokens, multi-tenant isolation, and deployment threat models remain unproven.",
+          "state": "partially_implemented"
+        },
         "T24-A006": {
           "deterministic_tests": [
-            "python scripts/check_cli_mcp_parity.py"
+            "python scripts/check_cli_mcp_parity.py",
+            "python scripts/validate_repository.py",
+            "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
           ],
           "evidence_receipts": [
             "verification/receipts/track-24-advanced-mcp.json"
@@ -3747,6 +3856,9 @@
             "searchright_mcp::SearchrightServer::listen"
           ],
           "mapping_confidence": "symbol_and_gate_mapped",
+          "native_test_commands": [
+            "cargo test --locked -p searchright-mcp --test advanced_mcp"
+          ],
           "open_gates": [
             "Compile and exercise WASI cancellation and compatibility paths.",
             "Execute remote overload, disconnect and cancellation recovery after Track 34 authority controls."

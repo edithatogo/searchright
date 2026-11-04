@@ -23,6 +23,7 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `contracts/json-schema/provider-component-trust-policy.v1.schema.json`
   - [x] Present source path: `contracts/compatibility/track-24-provider-component-trust.md`
   - [x] Present source path: `verification/receipts/track-24-component-trust.json`
+  - [x] Present source path: `tests/test_wasi_http_scale_governance.py`
   - [x] Assertion ledger: `conductor/tracks/24-wasi-http-scale/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -34,6 +35,7 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/check_cli_mcp_parity.py`
   - [x] `python scripts/sync_schema_surface.py --check`
   - [x] `python scripts/sync_contract_conformance_matrix.py --check`
+  - [x] `python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
@@ -53,5 +55,6 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
