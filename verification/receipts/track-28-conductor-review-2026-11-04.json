@@ -1,0 +1,103 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "28",
+  "reviewed_revision": "7101008",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "policy-request-decision-contracts",
+      "mode": "isolated_first_pass",
+      "finding": "Audited contracts/examples/institutional-policy.yaml, data-handling-request.yaml and data-handling-decision.yaml against crates/searchright-governance/src/lib.rs::evaluate. Verified policy, request and decision identifiers agree, deployment mode, classification, retention and region sit inside policy limits, and a dry-run on restricted full text is permitted but still flags human_approval_required.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "data-classification-retention-and-region-rules",
+      "mode": "isolated_first_pass",
+      "finding": "Verified evaluate() records a stable governance.* blocker for each denied deployment mode, classification, retention overrun, telemetry, full-text persistence, external model, cross-border transfer, region, multi-tenant isolation and non-public export condition, and permits a request only when no blocker was recorded.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "human-approval-and-least-privilege",
+      "mode": "isolated_first_pass",
+      "finding": "Verified Confidential, RestrictedFullText and SensitivePersonalData requests require recorded human approval, lifecycle apply requires an approval bound to the exact principal, policy and request digest, expiry is enforced, the approval registry is bounded, and LifecycleAuthorization keeps its fields private so authority cannot be forged outside the verifier path.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "multi-reviewer-adjudication-boundaries",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-screening/src/lib.rs. ScreeningBoard::resolve requires the Adjudicator role, a live conflict, a complete set of human decision identifiers, an adjudicator who is not one of the original reviewers and a round that is not already finalised; agent decisions are excluded from the human decision set.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "receipt-minimisation-and-redaction",
+      "mode": "isolated_first_pass",
+      "finding": "Exercised scripts/redaction.py with an adversarial payload. Secrets, URL user information, query text and contact addresses are removed deterministically while safe endpoint controls (db, retmax) are retained. De-identification of arbitrary free text is not claimed.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded T28-A001 through T28-A005 to symbol_and_gate_mapped with concrete symbols in conductor/traceability-overrides.json and the track traceability.json.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "implementation_state remains partially_implemented and evidence_level remains source_verified. The new Python tests are source-level checks and do not execute the Rust governance engine. Institutional privacy, records and security review and the cross-institution pilot remain open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_institutional_governance_privacy_collaboration.py with seven source-level tests covering example consistency, deny-by-default blocker codes, human approval, scoped lifecycle authority, receipt minimisation, adjudication independence and threat-model gates.",
+    "Replaced assert!(..is_empty()) with assert_eq! in the searchright-governance unit tests to clear the clippy assert_is_empty lint (no behaviour change).",
+    "Upgraded assertions T28-A001 through T28-A005 to symbol_and_gate_mapped with concrete symbols, tests and receipts.",
+    "Preserved open gates: compiled governance and authority negative scenarios under the full CI matrix, institutional privacy, records and security review, and cross-institution pilot."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py",
+      "status": "passed",
+      "tests_passed": 7
+    },
+    {
+      "command": "cargo test --locked -p searchright-governance -p searchright-screening",
+      "status": "passed",
+      "tests_passed": 44
+    },
+    {
+      "command": "cargo clippy -p searchright-governance -p searchright-screening --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    },
+    {
+      "command": "cargo fmt -p searchright-governance --check",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T28-G-NEGATIVE-SCENARIOS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Compile and run governance/authority negative scenarios."
+    },
+    {
+      "gate_id": "T28-G-INSTITUTIONAL-REVIEW",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Obtain institutional privacy, records and security review for a deployment profile."
+    },
+    {
+      "gate_id": "T28-G-CROSS-INSTITUTION-PILOT",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Compile and run governance/authority negative scenarios.",
+    "Obtain institutional privacy, records and security review for a deployment profile.",
+    "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

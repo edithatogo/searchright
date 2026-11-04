@@ -811,7 +811,7 @@ mod tests {
             assert!(decision.permitted);
             assert!(decision.effects_authorized);
             assert!(decision.receipt_required);
-            assert!(decision.tombstone_target_ids.is_empty());
+            assert_eq!(decision.tombstone_target_ids, Vec::<String>::new());
         }
         Ok(())
     }
