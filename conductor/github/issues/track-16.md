@@ -28,6 +28,6 @@ Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz
 
 ## Claim boundary
 
-Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open.
+Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open. PRs #749 and #752 have revision-bound delivery and merged verification receipts. Integration 1ac5a326c345c25206719b59c28a073f009e05ee passed local verification only. The 87.89 percent local measurement is not a promoted baseline. Eleven obsolete exemptions were retired, not audited; 247 review gaps remain recorded with the 2026-11-10 deadline unchanged. openssl-probe 0.2.1 is owner-deferred and rustls-native-certs 0.8.4 remains advisory-deferred; neither review certifies an audit.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.local-worktree-merge-verification.v1",
+  "revision": "1ac5a326c345c25206719b59c28a073f009e05ee",
+  "branch": "integration/all-worktrees-2026-11-06",
+  "worktree": "/tmp/searchright-all-worktrees",
+  "command": "bash scripts/verify.sh",
+  "exit_code": 0,
+  "test_summary": [
+    "Ran 220 tests in 6.318s",
+    "      \"stderr\": \".........\\n----------------------------------------------------------------------\\nRan 9 tests in 0.000s\\n\\nOK\",",
+    "     Summary [   4.010s] 840 tests run: 840 passed, 0 skipped"
+  ],
+  "log_path": "/tmp/searchright-all-worktrees-merged-verify.log",
+  "log_sha256": "3edc959429712b629bb79b6538cbd1d9dfb05ee2a25c454dc76e9c6338e267d0",
+  "all_original_heads_are_ancestors": true,
+  "integration_tree_clean": true,
+  "original_snapshot_files_unchanged": 66,
+  "original_tracked_diff_unchanged": true,
+  "review_packet_digests_checked": true,
+  "original_review_report_strings_preserved": true,
+  "remote_mutations": false,
+  "claim_boundary": "Local merged integration revision only; remote main unchanged and no hosted checks or release/audit promotion claimed."
+}

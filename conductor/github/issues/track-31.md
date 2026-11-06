@@ -28,6 +28,6 @@ Create and synchronise the remote repository, epic, tracks, phases, tasks, Proje
 
 ## Claim boundary
 
-Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity.
+Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity. November 6 bounded reconciliation and its read-only audit are linked as historical evidence for e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb. They do not establish parity for the integrated or reconciled candidate; archived lifecycle and completion states are unchanged.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

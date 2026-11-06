@@ -1380,8 +1380,8 @@
     },
     {
       "blockers": [
-        "Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits.",
-        "Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.",
+        "Obtain green hosted required checks on the exact remaining integrated Track 16 candidate; PRs #749 and #752 prove only their recorded heads, not local integration 1ac5a326c345c25206719b59c28a073f009e05ee or later revisions.",
+        "Reach the 91 percent maturity line-coverage target with meaningful tests and candidate-bound measurement; the recorded 87.89 percent local tranche is not a governed baseline promotion.",
         "Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.",
         "Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion."
       ],
@@ -1403,7 +1403,7 @@
         "python scripts/check_coverage_policy.py",
         "python scripts/check_cargo_vet_governance.py"
       ],
-      "claim_boundary": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open.",
+      "claim_boundary": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open. PRs #749 and #752 have revision-bound delivery and merged verification receipts. Integration 1ac5a326c345c25206719b59c28a073f009e05ee passed local verification only. The 87.89 percent local measurement is not a promoted baseline. Eleven obsolete exemptions were retired, not audited; 247 review gaps remain recorded with the 2026-11-10 deadline unchanged. openssl-probe 0.2.1 is owner-deferred and rustls-native-certs 0.8.4 remains advisory-deferred; neither review certifies an audit.",
       "deliverables": [
         ".github/workflows/ci.yml",
         ".github/workflows/coverage.yml",
@@ -1486,13 +1486,21 @@
       "runtime_evidence": [
         "verification/receipts/track-16-conductor-review-2026-11-04.json",
         "verification/receipts/track-16-coverage-tranche-2026-11-06.json",
-        "verification/receipts/track-16-obsolete-exemptions-2026-11-06.json"
+        "verification/receipts/track-16-obsolete-exemptions-2026-11-06.json",
+        "verification/receipts/track-16-pr749-delivery-2026-11-06.json",
+        "verification/receipts/track-16-pr752-delivery-2026-11-06.json",
+        "verification/receipts/track-16-native-certs-review-2026-11-06.json",
+        "verification/receipts/worktree-consolidation-verified-2026-11-06.json"
+      ],
+      "remote_github_evidence": [
+        "verification/receipts/track-16-pr749-delivery-2026-11-06.json",
+        "verification/receipts/track-16-pr752-delivery-2026-11-06.json"
       ],
       "slug": "quality-security-harness",
       "status": "partially_implemented",
       "title": "Maximal quality, context and security harness",
       "track_id": "16",
-      "updated": "2026-11-04"
+      "updated": "2026-11-06"
     },
     {
       "blockers": [
@@ -2269,7 +2277,7 @@
         "python scripts/check_github_project.py",
         "python scripts/check_workflow_hardening.py"
       ],
-      "claim_boundary": "Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity.",
+      "claim_boundary": "Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity. November 6 bounded reconciliation and its read-only audit are linked as historical evidence for e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb. They do not establish parity for the integrated or reconciled candidate; archived lifecycle and completion states are unchanged.",
       "closeout_completed": true,
       "completed_higher_evidence_gates": [
         "Create or verify the public remote and push the committed main branch.",
@@ -2313,7 +2321,8 @@
         "verification/receipts/github-control-plane-audit.json",
         "verification/receipts/track-31-control-plane-apply.json",
         "verification/receipts/track-31-bootstrap-exact-main.json",
-        "verification/receipts/track-31-audit-exact-main.json"
+        "verification/receipts/track-31-audit-exact-main.json",
+        "verification/receipts/track-31-reconciliation-postapply-audit-2026-11-06.json"
       ],
       "requirements": [
         "SR-066",
@@ -2334,7 +2343,9 @@
         "verification/receipts/track-31-control-plane-apply.json",
         "verification/receipts/track-31-bootstrap-exact-main.json",
         "verification/receipts/track-31-conductor-review.json",
-        "verification/receipts/track-31-scope-parser-maintenance.json"
+        "verification/receipts/track-31-scope-parser-maintenance.json",
+        "verification/receipts/track-31-reconciliation-apply-2026-11-06.json",
+        "verification/receipts/track-31-reconciliation-partial-2026-11-06.json"
       ],
       "slug": "github-control-plane",
       "source_verified_on": "2026-08-12",

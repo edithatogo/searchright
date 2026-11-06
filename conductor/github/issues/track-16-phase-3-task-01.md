@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits.
+- [ ] Obtain green hosted required checks on the exact remaining integrated Track 16 candidate; PRs #749 and #752 prove only their recorded heads, not local integration 1ac5a326c345c25206719b59c28a073f009e05ee or later revisions.
 
 ## Completion and evidence contract
 
