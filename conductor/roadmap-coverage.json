@@ -1484,7 +1484,8 @@
         "Upgrade all six Track 16 assertions (T16-A001..T16-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; refactor tests/test_coverage_policy.py to define CoveragePolicyTests; record green hosted PR #718 (a2e7a5d) and merged PRs #719-#723 verification across all 27 hosted jobs; record conductor review receipt and preserve remaining maturity blockers."
       ],
       "runtime_evidence": [
-        "verification/receipts/track-16-conductor-review-2026-11-04.json"
+        "verification/receipts/track-16-conductor-review-2026-11-04.json",
+        "verification/receipts/track-16-coverage-tranche-2026-11-06.json"
       ],
       "slug": "quality-security-harness",
       "status": "partially_implemented",
