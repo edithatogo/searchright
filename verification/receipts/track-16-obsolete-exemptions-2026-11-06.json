@@ -1,0 +1,30 @@
+{
+  "schema_version": "org.searchright.cargo-vet-retirement-evidence.v1",
+  "track_id": "16",
+  "base_revision": "e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb",
+  "decision": "retire_obsolete_exact_version_exemptions_not_audit_certification",
+  "retired_on": "2026-11-06",
+  "method": "cargo metadata --locked --offline --all-features --format-version 1; compare exact package identities against cargo-vet prune --locked --frozen --no-imports --no-audits in a temporary supply-chain store. All eleven removed exact versions are absent from the resolved all-features graph.",
+  "retired_versions": [
+    {"crate": "lru-slab", "version": "0.1.2"},
+    {"crate": "quinn", "version": "0.11.11"},
+    {"crate": "quinn-proto", "version": "0.11.16"},
+    {"crate": "quinn-udp", "version": "0.5.15"},
+    {"crate": "rand_pcg", "version": "0.10.2"},
+    {"crate": "ryu", "version": "1.0.23"},
+    {"crate": "serde_yaml", "version": "0.9.34+deprecated"},
+    {"crate": "tinyvec", "version": "1.12.0"},
+    {"crate": "unsafe-libyaml", "version": "0.2.11"},
+    {"crate": "web-time", "version": "1.1.0"},
+    {"crate": "webpki-root-certs", "version": "1.0.9"}
+  ],
+  "before_effective_exemptions": 258,
+  "after_effective_exemptions": 247,
+  "active_review_gaps_before": 247,
+  "active_review_gaps_after": 247,
+  "peer_refresh": "Refreshed the four allowlisted registries in an isolated temporary store; no additional exact-version gaps became fully vetted. Refreshed imports are not promoted by this change.",
+  "history": "All 259 proposal IDs, original decisions, expiry dates and decision evidence retained. Eleven obsolete entries marked retired; no expiry extended and no new risk accepted.",
+  "source_inspection": "Preliminary inspection of openssl-probe 0.2.1 identified public unsafe environment mutation with documented caller obligations. No qualifying sealed-panel audit was completed, no safe-to-deploy audit entry was added, and its exemption remains unchanged.",
+  "checks_required": ["python3 scripts/test_cargo_vet_governance.py", "python3 scripts/check_cargo_vet_governance.py", "cargo vet --locked --frozen --no-minimize-exemptions", "scripts/verify.sh", "exact-head hosted checks"],
+  "claim_boundary": "Pruning obsolete exemptions is not a dependency audit or reduction in active source-review gaps. The remaining 247 exemptions retain the 2026-11-10 deadline."
+}
