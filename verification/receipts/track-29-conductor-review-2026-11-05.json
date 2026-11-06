@@ -1,0 +1,105 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "29",
+  "reviewed_revision": "b6f14a5",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "evaluation-protocol-and-contract",
+      "mode": "isolated_first_pass",
+      "finding": "Audited docs/evaluation/external-methodological-evaluation.md against evaluation/external-evaluation.json and scripts/check_external_evaluation.py. The protocol text and the machine contract agree on topic strata, primary outcomes, at least two independent information specialists, blinded adjudication, a living-review update and adversarial provider data. The checker rejects self-attested preregistration and observed-sustainability promotion.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "benchmark-leakage-and-claim-bounds",
+      "mode": "isolated_first_pass",
+      "finding": "Audited docs/evaluation/benchmark-and-calibration-protocol.md. Leakage controls (separate hidden reviews, hashed splits, null-run reporting, no test labels in prompts) and the statement that internal benchmark success never substitutes for independent specialist review or live database evidence are present and now asserted by tests.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "publication-evidence-package",
+      "mode": "isolated_first_pass",
+      "finding": "registry/joss/paper.md is an unsubmitted skeleton with placeholder sections and no empirical claims. The tests guard against over-claiming vocabulary and require the not-submitted marker. JOSS submission readiness is not claimed.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "sustainability-and-governance",
+      "mode": "isolated_first_pass",
+      "finding": "Audited docs/governance/sustainability.md and GOVERNANCE.md. Maintenance, deprecation, standards surveillance and succession controls are documented, and the contract keeps sustainability at prepared_not_observed with no receipts. GOVERNANCE.md defines five decision classes and bars external claims inferred from repository metadata.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "funding-and-conflict-disclosure",
+      "mode": "isolated_first_pass",
+      "finding": "Funding, conflict and provider-relationship disclosures are mandatory, non-empty and bound to roadmap priority and benchmark independence. No external funding or provider relationship is declared.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Mapped T29-A001 through T29-A006 to symbols and tests in conductor/traceability-overrides.json. State remains external_evidence_required for every assertion.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "No external evidence was created or implied. Preregistration, recruitment, blinded execution, published results, a response-to-findings matrix and observed maintenance practice all remain open and cannot be satisfied from inside the repository.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_external_evaluation_sustainability_governance.py with eight source-level tests covering protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures.",
+    "Mapped T29-A001 through T29-A006 to symbol_and_gate_mapped while keeping state external_evidence_required.",
+    "Preserved all open external gates without promotion."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py",
+      "status": "passed",
+      "tests_passed": 8
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_external_evaluation_check.py",
+      "status": "passed",
+      "tests_passed": 4
+    },
+    {
+      "command": "python3 scripts/check_external_evaluation.py",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T29-G-PREREGISTRATION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Preregister the independent evaluation protocol."
+    },
+    {
+      "gate_id": "T29-G-BLINDED-EVALUATION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Recruit external information specialists and execute blinded evaluation."
+    },
+    {
+      "gate_id": "T29-G-PUBLISHED-RESULTS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Publish results, limitations and response-to-findings matrix."
+    },
+    {
+      "gate_id": "T29-G-OBSERVED-SUSTAINABILITY",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Demonstrate observed maintenance, standards surveillance and succession practice."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Preregister the independent evaluation protocol.",
+    "Recruit external information specialists and execute blinded evaluation.",
+    "Publish results, limitations and response-to-findings matrix.",
+    "Demonstrate observed maintenance, standards surveillance and succession practice."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

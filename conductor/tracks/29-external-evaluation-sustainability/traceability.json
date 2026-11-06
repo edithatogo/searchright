@@ -11,20 +11,27 @@
       "assertion_id": "T29-A001",
       "statement": "Preregistered external evaluation protocol.",
       "state": "external_evidence_required",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/evaluation/external-methodological-evaluation.md",
-        "docs/evaluation/benchmark-and-calibration-protocol.md",
-        "docs/governance/sustainability.md",
-        "registry/joss/paper.md",
-        "GOVERNANCE.md"
+        "evaluation/external-evaluation.json",
+        "scripts/check_external_evaluation.py",
+        "tests/test_external_evaluation_sustainability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_external_evaluation.py::validate",
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_protocol_document_matches_machine_contract",
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_evaluation_document_denies_preregistration_and_validation"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_external_evaluation.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_check.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+        "verification/receipts/track-29-conductor-review-2026-11-05.json"
       ],
       "open_gates": [
         "Preregister the independent evaluation protocol.",
@@ -32,26 +39,34 @@
         "Publish results, limitations and response-to-findings matrix.",
         "Demonstrate observed maintenance, standards surveillance and succession practice."
       ],
-      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+      "permitted_claim": "A preregistration-ready protocol and a fail-closed preparation contract exist; the protocol is not preregistered and no external evidence is claimed."
     },
     {
       "assertion_id": "T29-A002",
       "statement": "Information-specialist, multi-topic and living-review evaluation.",
       "state": "external_evidence_required",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/evaluation/external-methodological-evaluation.md",
         "docs/evaluation/benchmark-and-calibration-protocol.md",
-        "docs/governance/sustainability.md",
-        "registry/joss/paper.md",
-        "GOVERNANCE.md"
+        "evaluation/external-evaluation.json",
+        "scripts/check_external_evaluation.py",
+        "tests/test_external_evaluation_sustainability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_external_evaluation.py::validate",
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_protocol_document_matches_machine_contract",
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_benchmark_protocol_controls_leakage_and_keeps_internal_claim_bounded"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_external_evaluation.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_check.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+        "verification/receipts/track-29-conductor-review-2026-11-05.json"
       ],
       "open_gates": [
         "Preregister the independent evaluation protocol.",
@@ -59,26 +74,32 @@
         "Publish results, limitations and response-to-findings matrix.",
         "Demonstrate observed maintenance, standards surveillance and succession practice."
       ],
-      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+      "permitted_claim": "Multi-topic, living-review and information-specialist evaluation requirements are specified and enforced in the contract; no evaluation has been recruited or run."
     },
     {
       "assertion_id": "T29-A003",
       "statement": "Blinded adjudication and response-to-findings matrix.",
       "state": "external_evidence_required",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/evaluation/external-methodological-evaluation.md",
-        "docs/evaluation/benchmark-and-calibration-protocol.md",
-        "docs/governance/sustainability.md",
-        "registry/joss/paper.md",
-        "GOVERNANCE.md"
+        "evaluation/external-evaluation.json",
+        "scripts/check_external_evaluation.py",
+        "tests/test_external_evaluation_sustainability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_external_evaluation.py::validate",
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_adjudication_is_blinded_and_independent_of_developers"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_external_evaluation.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_check.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+        "verification/receipts/track-29-conductor-review-2026-11-05.json"
       ],
       "open_gates": [
         "Preregister the independent evaluation protocol.",
@@ -86,26 +107,29 @@
         "Publish results, limitations and response-to-findings matrix.",
         "Demonstrate observed maintenance, standards surveillance and succession practice."
       ],
-      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+      "permitted_claim": "Blinded, developer-independent adjudication and a response-to-findings slot are contractually required; the matrix itself is empty because no evaluation has occurred."
     },
     {
       "assertion_id": "T29-A004",
       "statement": "JOSS/software-paper evidence package.",
       "state": "external_evidence_required",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "docs/evaluation/external-methodological-evaluation.md",
-        "docs/evaluation/benchmark-and-calibration-protocol.md",
-        "docs/governance/sustainability.md",
         "registry/joss/paper.md",
-        "GOVERNANCE.md"
+        "tests/test_external_evaluation_sustainability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_joss_paper_is_an_unsubmitted_draft_with_no_empirical_claims"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_external_evaluation.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_check.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+        "verification/receipts/track-29-conductor-review-2026-11-05.json"
       ],
       "open_gates": [
         "Preregister the independent evaluation protocol.",
@@ -113,26 +137,32 @@
         "Publish results, limitations and response-to-findings matrix.",
         "Demonstrate observed maintenance, standards surveillance and succession practice."
       ],
-      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+      "permitted_claim": "A JOSS paper skeleton exists and is guarded against empirical over-claiming; it is a draft and must not be submitted before the software is compiled, benchmarked, archived and used externally."
     },
     {
       "assertion_id": "T29-A005",
       "statement": "Standards surveillance, deprecation and succession governance.",
       "state": "external_evidence_required",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "docs/evaluation/external-methodological-evaluation.md",
-        "docs/evaluation/benchmark-and-calibration-protocol.md",
         "docs/governance/sustainability.md",
-        "registry/joss/paper.md",
-        "GOVERNANCE.md"
+        "GOVERNANCE.md",
+        "evaluation/external-evaluation.json",
+        "tests/test_external_evaluation_sustainability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_sustainability_requires_observation_not_documentation",
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_governance_classifies_decisions_and_blocks_inferred_external_claims"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_external_evaluation.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_check.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+        "verification/receipts/track-29-conductor-review-2026-11-05.json"
       ],
       "open_gates": [
         "Preregister the independent evaluation protocol.",
@@ -140,26 +170,32 @@
         "Publish results, limitations and response-to-findings matrix.",
         "Demonstrate observed maintenance, standards surveillance and succession practice."
       ],
-      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+      "permitted_claim": "Maintenance, standards-surveillance, deprecation and succession practices are documented and the contract requires observed receipts; none are observed yet."
     },
     {
       "assertion_id": "T29-A006",
       "statement": "Funding and conflict-of-interest disclosure.",
       "state": "external_evidence_required",
-      "mapping_confidence": "track_level_only",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "docs/evaluation/external-methodological-evaluation.md",
-        "docs/evaluation/benchmark-and-calibration-protocol.md",
         "docs/governance/sustainability.md",
-        "registry/joss/paper.md",
-        "GOVERNANCE.md"
+        "evaluation/external-evaluation.json",
+        "scripts/check_external_evaluation.py",
+        "tests/test_external_evaluation_sustainability_governance.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_external_evaluation.py::validate",
+        "tests/test_external_evaluation_sustainability_governance.py::ExternalEvaluationSustainabilityGovernanceTests.test_funding_and_conflict_disclosure_is_mandatory_and_explicit"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python scripts/check_external_evaluation.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_check.py",
+        "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/29-external-evaluation-sustainability/evidence.json"
+        "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
+        "verification/receipts/track-29-conductor-review-2026-11-05.json"
       ],
       "open_gates": [
         "Preregister the independent evaluation protocol.",
@@ -167,7 +203,7 @@
         "Publish results, limitations and response-to-findings matrix.",
         "Demonstrate observed maintenance, standards surveillance and succession practice."
       ],
-      "permitted_claim": "Repository preparation exists; completion depends on external evidence."
+      "permitted_claim": "Funding, conflict and provider-relationship disclosures are mandatory and checked as non-empty; no external funding or relationship is declared."
     }
   ]
 }

@@ -5,17 +5,23 @@
   "status": "external_evidence_required",
   "implementation_state": "external_evidence_required",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-11-05",
   "source_evidence": [
     "docs/evaluation/external-methodological-evaluation.md",
     "docs/evaluation/benchmark-and-calibration-protocol.md",
     "docs/governance/sustainability.md",
     "registry/joss/paper.md",
-    "GOVERNANCE.md"
+    "GOVERNANCE.md",
+    "evaluation/external-evaluation.json",
+    "scripts/check_external_evaluation.py",
+    "tests/test_external_evaluation_sustainability_governance.py",
+    "verification/receipts/track-29-conductor-review-2026-11-05.json"
   ],
   "traceability": "conductor/tracks/29-external-evaluation-sustainability/traceability.json",
   "static_checks": [
-    "python scripts/validate_repository.py"
+    "python scripts/validate_repository.py",
+    "python scripts/check_external_evaluation.py",
+    "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
   ],
   "requirements": [
     "SR-041",
@@ -55,5 +61,8 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [],
-  "external_evidence": []
+  "external_evidence": [],
+  "review_fixes": [
+    "Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required."
+  ]
 }
