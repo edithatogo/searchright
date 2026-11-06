@@ -8,6 +8,8 @@ from unittest.mock import patch
 SPEC = importlib.util.spec_from_file_location(
     "coverage_sprint", Path(__file__).resolve().parents[1] / "scripts/coverage_sprint.py"
 )
+if SPEC is None or SPEC.loader is None:
+    raise RuntimeError("Cannot load scripts/coverage_sprint.py; check repository layout")
 coverage_sprint = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(coverage_sprint)
 
