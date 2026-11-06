@@ -1,0 +1,8 @@
+[package]
+name = "searchright-native-certs-review-probe"
+version = "0.0.0"
+edition = "2021"
+publish = false
+[dependencies]
+rustls-native-certs = { path = "../source/rustls-native-certs-0.8.4" }
+[workspace]

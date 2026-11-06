@@ -1,0 +1,33 @@
+{
+  "schema_version": "org.searchright.local-status-verification.v1",
+  "observed_at": "2026-11-06T09:59:05Z",
+  "revision": "7a727f59af464bb3fcecdc319249adb4d379da10",
+  "branch": "track/16-coverage-sprint",
+  "worktree": "dirty; 12 pre-existing modified tracked files; results are not exact committed-revision evidence",
+  "native_status": "passed",
+  "roadmap_coverage": "passed",
+  "native_status_tests": {"passed": 12},
+  "verification": {
+    "invocation": "bash scripts/verify.sh",
+    "note": "Direct scripts/verify.sh invocation failed with permission denied; retried via bash without changing file permissions.",
+    "status": "failed",
+    "python_tests_passed": 210,
+    "static_gates_passed": 55,
+    "static_gates_failed": 2,
+    "failures": [
+      {"gate": "python3 scripts/generate_source_hash_manifest.py --check", "reason": "stale verification/receipts/source-manifest.sha256"},
+      {"gate": "python3 scripts/check_packaging_reproducibility.py", "reason": "Source packaging requires no staged or unstaged changes to tracked files."}
+    ],
+    "not_run_after_fail_fast": [
+      "cargo fmt --all -- --check",
+      "cargo clippy --workspace --all-targets --all-features --locked -- -D warnings",
+      "python3 scripts/check_rust_schema_parity.py --check",
+      "cargo nextest run --workspace --all-features --locked (or cargo test --workspace --all-features --locked fallback)",
+      "cargo test --workspace --all-features --doc --locked",
+      "cargo doc --workspace --all-features --no-deps --locked",
+      "cargo deny check",
+      "cargo machete (conditional on availability)"
+    ]
+  },
+  "claim_boundary": "Local status and source-level checks only. No current compiler, coverage, live-provider, remote, release or publication claim; canonical track state is unchanged."
+}

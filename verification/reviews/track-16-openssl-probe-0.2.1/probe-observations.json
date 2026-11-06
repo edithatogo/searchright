@@ -1,0 +1,68 @@
+{
+  "schema_version": "org.searchright.dependency-probe-observations.v1",
+  "crate": "openssl-probe",
+  "version": "0.2.1",
+  "rustc": "1.97.1",
+  "platform": "aarch64-apple-darwin",
+  "safe_api_only": true,
+  "parent_environment_unchanged": true,
+  "cases": [
+    {
+      "name": "colon_directory_list",
+      "observed": {
+        "ENV_RECOGNISED": [
+          "false"
+        ],
+        "DIR": [
+          "/etc/ssl/certs"
+        ],
+        "CANDIDATE": [
+          "/etc/ssl/certs"
+        ]
+      },
+      "result": "Both existing configured directories discarded; environment not recognised."
+    },
+    {
+      "name": "single_directory_override",
+      "observed": {
+        "ENV_RECOGNISED": [
+          "true"
+        ],
+        "DIR": [
+          "/var/folders/m9/_g3wndrn04d80ys2382r700r0000gn/T/sr-probe-fixtures-zj08obw6/private-ca",
+          "/etc/ssl/certs"
+        ],
+        "CANDIDATE": [
+          "/etc/ssl/certs"
+        ]
+      },
+      "system_directories_appended": [
+        "/etc/ssl/certs"
+      ],
+      "result": "Configured directory retained; additional system directories appended."
+    },
+    {
+      "name": "directory_as_certificate_file",
+      "observed": {
+        "ENV_RECOGNISED": [
+          "true"
+        ],
+        "FILE": [
+          "/var/folders/m9/_g3wndrn04d80ys2382r700r0000gn/T/sr-probe-fixtures-zj08obw6/private-ca"
+        ],
+        "DIR": [
+          "/etc/ssl/certs"
+        ],
+        "CANDIDATE": [
+          "/etc/ssl/certs"
+        ]
+      },
+      "result": "Directory accepted as SSL_CERT_FILE; positive recognition is not certificate validation."
+    }
+  ],
+  "limits": [
+    "No TLS handshake or certificate acceptance was tested.",
+    "Unsafe initializer was not called.",
+    "Safe probe tests do not certify package deployment safety."
+  ]
+}

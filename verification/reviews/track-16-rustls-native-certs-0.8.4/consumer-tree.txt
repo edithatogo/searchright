@@ -1,0 +1,7 @@
+rustls-native-certs v0.8.4
+└── rustls-platform-verifier v0.7.0
+    └── reqwest v0.13.4
+        └── searchright-connectors v0.1.0-alpha.1 (/private/tmp/searchright-track16-dependency-audits/crates/searchright-connectors)
+            └── searchright v0.1.0-alpha.1 (/private/tmp/searchright-track16-dependency-audits/crates/searchright)
+                ├── searchright-cli v0.1.0-alpha.1 (/private/tmp/searchright-track16-dependency-audits/crates/searchright-cli)
+                └── searchright-mcp v0.1.0-alpha.1 (/private/tmp/searchright-track16-dependency-audits/crates/searchright-mcp)

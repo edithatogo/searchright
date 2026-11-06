@@ -1072,7 +1072,7 @@ mod tests {
             store.append_screening_decision(&policy, &agent_exclusion),
             Err(StoreError::InvalidScreeningDecision(_))
         ));
-        assert!(store.read_screening_decisions()?.is_empty());
+        assert_eq!(store.read_screening_decisions()?.len(), 0);
 
         let first =
             screening_decision("decision-1", "reviewer-1", ReviewerKind::Human, Dv::Include);

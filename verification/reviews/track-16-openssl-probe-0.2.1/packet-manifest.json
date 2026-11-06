@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.dependency-review-packet-manifest.v1",
+  "crate": "openssl-probe",
+  "version": "0.2.1",
+  "base_revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+  "files": {
+    "README.md": "e6d02ad80581b07a3eb1623a0fa5a0877c0cb9a37d80b5ce6a4c1ee1ba9c85ea",
+    "adversarial.md": "28439d0c324bf9d25e105208d8fa79e462e6b7a6de1e25941d72c1f0c65900fc",
+    "consumer-tree.txt": "c3022b52c228a5af254507d193e6c5eb8d15f892042e619b6155fe6f4a8b7f58",
+    "disposition.json": "b1dd24ab864b5903004eecb0613fdd98bae5fd3b09b79fa154aff979d0d04b03",
+    "implementation.md": "1db63732e50654cc06ff2c9d430147e2fd7b73d4a00ee0edc1584f6065138974",
+    "methodology.md": "def366251882939d9abd1621e280e51d3e2c430de25a1b456a2109399e6ac1de",
+    "probe-observations.json": "61f05c41444d454392fe49772a82a866603aedb2164f4697ec6bbcfad31797fb",
+    "probe_harness.rs": "5c68234fb76b6734dd9677fb5d08909878835d81870f1502f8194a81f3fad58c",
+    "raw-first-passes.json": "cfe8e2c1d088aa3f8a02f4146d358c5ac8480d01eb2f6506abadacb08db81c85",
+    "request.json": "d7823d140980785540c88750d083d43ff9c94aa31b94868b959be8c675bdeb25",
+    "security_safety.md": "afa8d18ed35a916e27f8cec73981e35112a6c617b933d87c6f0c537031cbc560",
+    "source-manifest.json": "ff22ba8cb71e0804bc1302af453eb4c7ed3c468dbc23c16d6dca0f012c2c77d0",
+    "testing.md": "8da7bfb9bb956f299c81a9d604e83f754e029672e9b4ee6b8eb7a0e12fd4451b",
+    "upstream-report-draft.md": "cc997e0146ac521b2d9c72161172050154760f45a9df9b4a2621fed60289c0cd"
+  },
+  "claim_boundary": "Digests bind the collected packet bytes; not a trusted timestamp, publisher authentication, audit certification or owner disposition."
+}

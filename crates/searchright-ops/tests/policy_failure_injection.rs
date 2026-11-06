@@ -97,8 +97,8 @@ fn readiness_all_healthy_is_ready() {
     ];
     let result = readiness(&components).unwrap_or_else(|_| panic!("expected readiness"));
     assert!(result.ready);
-    assert!(result.unhealthy.is_empty());
-    assert!(result.degraded.is_empty());
+    assert_eq!(result.unhealthy.len(), 0);
+    assert_eq!(result.degraded.len(), 0);
 }
 
 #[test]
@@ -110,7 +110,7 @@ fn readiness_degraded_ready_component_stays_ready_but_is_listed() {
     let result = readiness(&components).unwrap_or_else(|_| panic!("expected readiness"));
     assert!(result.ready);
     assert_eq!(result.degraded, vec!["store"]);
-    assert!(result.unhealthy.is_empty());
+    assert_eq!(result.unhealthy.len(), 0);
 }
 
 #[test]

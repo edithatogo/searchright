@@ -1,0 +1,45 @@
+{
+  "schema_version": "org.searchright.track-delivery-receipt.v1",
+  "track_id": "16",
+  "observed_at": "2026-11-06T10:54:14Z",
+  "pull_request": "https://github.com/edithatogo/searchright/pull/749",
+  "state": "merged_verified_and_control_plane_reconciled",
+  "tested_pr_head": "87d7e6798799e86293c987a7040d188530d87587",
+  "merged_main_revision": "e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb",
+  "merged_at": "2026-11-06T10:50:07Z",
+  "merge_method": "squash",
+  "merge_rationale": "Rebase auto-merge was enabled after single-track scope admission, but GitHub rejected rebase merge because the branch contained a merge commit. Used repository-permitted squash merging on the same green PR without force-pushing or rewriting history.",
+  "hosted_pr_checks": {"passed": 26, "skipped": 2, "failed": 0, "pending": 0, "skipped_names": ["Apply issues and Project", "OpenSSF Scorecard"]},
+  "review": "Resolved the sole observed unresolved thread with an explicit Python import-spec/loader guard. Fresh read observed zero unresolved threads before merge. No sealed independent panel claim.",
+  "initial_macos_failure": "Rustdoc concurrent output I/O failure under target/doc/searchright; passed on final head without disabling or modifying documentation checks. Underlying intermittent collision risk is not claimed fixed.",
+  "merged_revision_verification": {
+    "command": "bash scripts/verify.sh",
+    "result": "passed",
+    "python_tests": 220,
+    "rust_tests": 840,
+    "rust_skipped": 0,
+    "environment": "Rust 1.97.1; CARGO_NET_OFFLINE=true; preinstalled binding dependencies temporarily linked; shared local Cargo target cache",
+    "working_tree_after": "clean",
+    "log": "/tmp/searchright-pr749-merged-main-verify.log"
+  },
+  "control_plane_audit": {
+    "command": "python3 scripts/audit_github_control_plane.py --receipt-path /tmp/searchright-pr749-merged-main-control-plane.json",
+    "result": "passed_after_explicitly_approved_track31_reconciliation",
+    "exit_code": 0,
+    "initial_permission_blocker": "Token initially lacked read:project; owner-authorised device flow subsequently completed successfully.",
+    "diagnostic": "Initial audit found drift. Owner-approved Track 31 bounded reconciliation resolved it; post-apply audit passed with no errors or warnings.",
+    "log": "/tmp/searchright-pr749-merged-main-audit.log",
+    "receipt": "verification/receipts/track-31-reconciliation-postapply-audit-2026-11-06.json",
+    "convergence_claim": true,
+    "requested_receipt_written": true,
+    "mutation_operations": 0,
+    "next_step": "Control-plane closeout complete for the recorded revision; proceed separately with Track 16 dependency-review work."
+  },
+  "original_worktree": {
+    "branch": "track/16-coverage-sprint",
+    "tracked_diff_preserved": true,
+    "before_and_after_diff_sha256": "0e6f93a5a329c57848e1127351dd48fd978e3f9fd31a4844b8ba95e1583939a8",
+    "note": "Original tracked edits and untracked tranche files were not reset, removed, committed or stashed. This delivery receipt is a new untracked handoff artifact, not part of the already merged revision."
+  },
+  "claim_boundary": "PR delivery and exact merged-revision local verification are observed. Revision-bound control-plane convergence was subsequently observed after approved Track 31 reconciliation. The 91 percent maturity coverage target, current supply-chain review acceptance, publication and product maturity remain unproven."
+}

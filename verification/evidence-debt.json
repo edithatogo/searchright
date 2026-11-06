@@ -2,8 +2,8 @@
   "assertions": {
     "by_mapping_confidence": {
       "assertion_level": 6,
-      "symbol_and_gate_mapped": 176,
-      "track_level_only": 18
+      "symbol_and_gate_mapped": 182,
+      "track_level_only": 12
     },
     "by_state": {
       "external_evidence_required": 10,
@@ -13,8 +13,8 @@
     },
     "open_gate_entries": 303,
     "total": 200,
-    "track_level_only": 18,
-    "without_symbol_mapping": 20
+    "track_level_only": 12,
+    "without_symbol_mapping": 14
   },
   "claim_boundary": "The register exposes unresolved proof and implementation work. Counts are not a quality score and cannot be used to promote claims without the named evidence.",
   "evidence_ceiling": "source_verified",
@@ -57,7 +57,7 @@
       ],
       "debt": "assertion_specific_proof",
       "priority": 1,
-      "reason": "18 assertions retain track-level-only mappings."
+      "reason": "12 assertions retain track-level-only mappings."
     },
     {
       "closure_evidence": [
@@ -112,7 +112,7 @@
   },
   "schema_version": "org.searchright.evidence-debt.v1",
   "static_gates": {
-    "catalogued": 72,
+    "catalogued": 73,
     "harness": 57,
     "unregistered_assertion_commands": []
   },

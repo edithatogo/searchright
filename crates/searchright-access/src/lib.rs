@@ -336,7 +336,7 @@ mod tests {
     fn fully_compliant_request_is_permitted() {
         let decision = decision_for(&request());
         assert!(decision.permitted);
-        assert!(decision.blockers.is_empty());
+        assert_eq!(decision.blockers.len(), 0);
         assert!(!decision.human_approval_required);
     }
 }

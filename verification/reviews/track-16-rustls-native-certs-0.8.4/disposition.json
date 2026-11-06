@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.dependency-review-disposition.v1",
+  "track_id": "16",
+  "base_revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+  "crate": "rustls-native-certs",
+  "version": "0.8.4",
+  "registry_archive_sha256": "dab5152771c58876a2146916e53e35057e1a4dfa2b9df0f0305b07f611fdea4d",
+  "status": "advisory_defer_pending_owner_disposition",
+  "owner_decision": "not_recorded",
+  "criterion": "safe-to-deploy",
+  "audit_certified": false,
+  "exemption_changed": false,
+  "expiry_extended": false,
+  "upstream_report_sent": false,
+  "backlog_recorded_not_recomputed": 247,
+  "approved_exemption_deadline": "2026-11-10",
+  "first_pass_dispositions": {
+    "implementation": "defer",
+    "security_safety": "defer",
+    "testing": "defer",
+    "methodology": "defer",
+    "adversarial": "defer"
+  },
+  "review_method": "Separate ephemeral read-only Codex CLI processes, common request plus role focus, no peer findings supplied. Not external institutional review or proof of model diversity.",
+  "coordinator_recommendation": "Defer without exemption/history/deadline changes. Obtain missing fixture provenance and native error-path evidence. Separately review rustls-platform-verifier consumer behavior.",
+  "claim_boundary": "No TLS handshake, exploit, all-target runtime validation, dependency certification or maturity promotion. Supplemental probes and source review only; raw reviewer assumptions and corrections preserved."
+}

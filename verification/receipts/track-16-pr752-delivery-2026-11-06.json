@@ -1,0 +1,40 @@
+{
+  "schema_version": "org.searchright.track-delivery-receipt.v1",
+  "track_id": "16",
+  "observed_at": "2026-11-06T12:12:14Z",
+  "pull_request": "https://github.com/edithatogo/searchright/pull/752",
+  "state": "merged_verified_and_control_plane_audit_passed",
+  "tested_pr_head": "d136735775a4648fd3ac44d131f445476cd2309e",
+  "merged_main_revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+  "merged_at": "2026-11-06T12:00:52Z",
+  "merge_method": "rebase_auto_merge",
+  "hosted_checks": {"passed": 19, "skipped": 2, "pending": 0, "failed": 0, "skipped_names": ["Apply issues and Project", "OpenSSF Scorecard"]},
+  "review": "Fresh read observed no unresolved review threads before merged-main verification. No sealed independent panel claim.",
+  "changes": "Retire eleven exact-version exemptions for dependencies absent from the all-features resolved graph. Preserve original proposal IDs, approvals, dates and decision evidence as retired history. Add three governance regressions and documentation. No audit certifications, publisher trust, dependency upgrades, peer-import promotion or expiry extensions.",
+  "effective_exemptions_before": 258,
+  "effective_exemptions_after": 247,
+  "active_source_review_gaps_before": 247,
+  "active_source_review_gaps_after": 247,
+  "remaining_deadline": "2026-11-10",
+  "verification": {
+    "focused_governance_tests": 26,
+    "cargo_vet_locked_frozen_no_minimize": "passed with remaining exemptions",
+    "merged_main_full_verify": "passed",
+    "python_tests": 220,
+    "rust_tests": 840,
+    "rust_skipped": 0,
+    "log": "/tmp/searchright-pr752-merged-main-verify.log",
+    "environment": "Rust 1.97.1; offline Cargo; preinstalled binding dependencies temporarily linked; shared local Cargo target cache. Isolated worktree clean after verification."
+  },
+  "postmerge_audit": {
+    "command": "python3 scripts/audit_github_control_plane.py --receipt-path /tmp/searchright-pr752-merged-main-control-plane.json",
+    "status": "passed",
+    "errors": [],
+    "warnings": [],
+    "receipt": "verification/receipts/track-16-pr752-control-plane-audit-2026-11-06.json"
+  },
+  "original_tracked_diff_sha256": "0e6f93a5a329c57848e1127351dd48fd978e3f9fd31a4844b8ba95e1583939a8",
+  "original_worktree_preserved": true,
+  "retention": "This local delivery receipt is an untracked handoff artifact, not part of the already merged revision.",
+  "claim_boundary": "Merged exemption-retirement maintenance and revision-bound verification are observed. Active source-review gaps remain unchanged; passing cargo-vet with exemptions is not complete dependency audit coverage or product maturity."
+}

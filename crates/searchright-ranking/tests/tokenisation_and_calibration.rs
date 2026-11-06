@@ -92,7 +92,7 @@ fn empty_records_returns_empty_scores() {
     let scores = ranker
         .score(&[], &["cancer".to_string()])
         .unwrap_or_else(|_| panic!("expected scoring"));
-    assert!(scores.is_empty());
+    assert_eq!(scores.len(), 0);
 }
 
 #[test]

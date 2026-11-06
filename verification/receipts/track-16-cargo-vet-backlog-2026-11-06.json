@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.cargo-vet-backlog-observation.v1",
+  "track_id": "16",
+  "source_revision": "e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb",
+  "cargo_vet_version": "0.10.2",
+  "method": "Copied supply-chain store to a temporary directory; ran pinned Rust 1.97.1 Cargo metadata with CARGO_NET_OFFLINE=true, --locked --frozen --no-minimize-exemptions --no-registry-suggestions. No source, exemption, import or audit changes.",
+  "check": {
+    "command": "cargo vet --locked --frozen --no-minimize-exemptions --no-registry-suggestions --store-path <temporary-copy> --output-format json",
+    "exit_code": 0,
+    "conclusion": "success",
+    "vetted_fully": 45,
+    "vetted_partially": 3,
+    "vetted_with_exemptions": 244,
+    "interpretation": "Passing with exemptions is not complete source-review evidence."
+  },
+  "backlog": {
+    "command": "cargo vet suggest --locked --frozen --no-minimize-exemptions --no-registry-suggestions --store-path <temporary-copy> --output-format json",
+    "exit_code": 0,
+    "json_conclusion": "fail (vetting)",
+    "dependency_versions_missing_criteria_without_exemptions": 247,
+    "limitation": "Exit zero does not mean the backlog is audited. Frozen mode logged missing source-cache fetch requirements; suggestion sizing/ranking is incomplete."
+  },
+  "governance_inventory": {"proposals": 259, "approved": 258, "approved_expiry": "2026-11-10", "historically_expired": 1},
+  "local_artifacts": ["/tmp/searchright-vet-check.json", "/tmp/searchright-vet-backlog.json", "/tmp/searchright-vet-backlog.log", "/tmp/searchright-vet-review-store-path"],
+  "next_action": "Review the 247 exact-version gaps, prioritise security-sensitive dependencies, reuse qualifying peer audit paths with attribution where available, and perform actual residual source reviews. Do not renew exemptions or certify audit criteria solely from tests or scans.",
+  "claim_boundary": "Offline backlog inspection only. No audits certified, exemptions extended, imports refreshed, release promoted or remote writes performed for this Track 16 observation."
+}

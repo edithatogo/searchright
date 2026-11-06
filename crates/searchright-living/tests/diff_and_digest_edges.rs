@@ -39,7 +39,7 @@ fn digest_changes_with_publication_year() {
 #[test]
 fn diff_empty_to_empty_has_no_changes() {
     let changes = diff_record_sets(&[], &[]).unwrap_or_else(|_| panic!("expected diff"));
-    assert!(changes.is_empty());
+    assert_eq!(changes.len(), 0);
 }
 
 #[test]
@@ -67,7 +67,7 @@ fn diff_populated_to_empty_reports_all_missing() {
 fn diff_identical_sets_has_no_changes() {
     let set = vec![record("r1", "Title", None), record("r2", "Other", None)];
     let changes = diff_record_sets(&set, &set).unwrap_or_else(|_| panic!("expected diff"));
-    assert!(changes.is_empty());
+    assert_eq!(changes.len(), 0);
 }
 
 #[test]

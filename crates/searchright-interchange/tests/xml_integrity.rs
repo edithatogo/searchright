@@ -10,7 +10,7 @@ fn attributed_elements_preserve_pubmed_identity() -> Result<(), Box<dyn std::err
     assert_eq!(record.native_id, "12345");
     assert_eq!(record.identifiers.pmid.as_deref(), Some("12345"));
     assert_eq!(record.subjects, ["Alpha"]);
-    assert!(result.quarantined.is_empty());
+    assert_eq!(result.quarantined.len(), 0);
     Ok(())
 }
 
@@ -46,7 +46,7 @@ fn unclosed_record_cannot_swallow_a_following_record() -> Result<(), Box<dyn std
 fn comments_and_cdata_do_not_create_record_boundaries() -> Result<(), Box<dyn std::error::Error>> {
     let input = "<PubmedArticle><PMID>1</PMID><!-- <PubmedArticle> --><ArticleTitle><![CDATA[A <PubmedArticle> B]]></ArticleTitle></PubmedArticle>";
     let result = import_pubmed_xml(input, "receipt")?;
-    assert!(result.quarantined.is_empty());
+    assert_eq!(result.quarantined.len(), 0);
     assert_eq!(
         result.records.first().ok_or("missing record")?.title,
         "A <PubmedArticle> B"

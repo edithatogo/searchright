@@ -2,14 +2,13 @@
 """Track 16 coverage sprint helper.
 
 Counts #[test] items across both inline #[cfg(test)] modules under src/
-and integration tests under tests/, fixing the earlier tests/-only
-undercount that misreported searchright-mcp as 0 tests.
+and integration tests under tests/, including nested Rust files and mixed
+synchronous/asynchronous tests. This lexical inventory is not a coverage metric.
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,15 +16,17 @@ CRATES = ROOT / "crates"
 
 
 def count_tests(crate: str) -> tuple[int, int]:
-    inline = 0
-    integ = 0
-    src_dir = CRATES / crate / "src"
-    if src_dir.is_dir():
-        inline = sum(f.read_text(errors="ignore").count("#[test]") or f.read_text(errors="ignore").count("#[tokio::test]") for f in src_dir.glob("*.rs"))
-    test_dir = CRATES / crate / "tests"
-    if test_dir.is_dir():
-        integ = sum(f.read_text(errors="ignore").count("#[test]") or f.read_text(errors="ignore").count("#[tokio::test]") for f in test_dir.glob("*.rs"))
-    return inline, integ
+    def count_directory(directory: Path) -> int:
+        total = 0
+        for path in directory.rglob("*.rs"):
+            source = path.read_text(errors="ignore")
+            total += source.count("#[test]") + source.count("#[tokio::test]")
+        return total
+
+    return (
+        count_directory(CRATES / crate / "src"),
+        count_directory(CRATES / crate / "tests"),
+    )
 
 
 def main() -> int:

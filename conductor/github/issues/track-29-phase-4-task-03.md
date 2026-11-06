@@ -8,6 +8,7 @@ Canonical task state: **open evidence or implementation task**.
 ## Canonical task
 
 - [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required.
 
 ## Completion and evidence contract
 

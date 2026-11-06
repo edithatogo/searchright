@@ -66,8 +66,8 @@ fn scholarly_empty_document_validates() {
         },
     };
     let evidence = from_scholarly_document("doc-empty", &doc);
-    assert!(evidence.references.is_empty());
-    assert!(evidence.diagnostics.is_empty());
+    assert_eq!(evidence.references.len(), 0);
+    assert_eq!(evidence.diagnostics.len(), 0);
     assert!(!evidence.canonical_write_permitted);
     assert!(!evidence.retained_full_text);
 }
@@ -227,7 +227,7 @@ fn reference_model_review_status_requires_review() {
     let evidence = from_reference_model_report("doc-1", input, &report);
     for callout in &evidence.citation_callouts {
         // Upstream review status must propagate as review_required.
-        assert!(!callout.surface.is_empty());
+        assert_ne!(callout.surface, "");
     }
     assert!(evidence.provenance.input_sha256.is_some());
     assert_eq!(

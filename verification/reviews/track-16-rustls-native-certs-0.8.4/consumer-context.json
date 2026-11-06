@@ -1,0 +1,13 @@
+{
+  "base_revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+  "source_file_sha256": {
+    "schannel-0.1.29/src/cert_context.rs": "1a8f104990313b514a67c3f97d1c4d954b5fa18d15b2a54a40a8e7f8a7789848",
+    "rustls-platform-verifier-0.7.0/src/verification/others.rs": "a6531a1b725607af1b20ab1a33446e61c1135b508c3b361963d62a53bb436a44"
+  },
+  "review_scope": "Coordinator follow-up only, not additional full dependency certifications.",
+  "corrections": [
+    "schannel 0.1.29 is_time_valid always returns Ok; its unwrap is not an established Err-triggered panic in the locked version. valid_uses has real Err branches.",
+    "Platform verifier native-certs use is target-gated to non-Apple, non-Android Unix; Windows/macOS native-certs branches are not implicated through this path."
+  ],
+  "runtime_platform_error_injection": false
+}

@@ -135,8 +135,8 @@ fn cluster_empty_records_yields_empty_result() {
     let result = dedup
         .cluster(&[])
         .unwrap_or_else(|_| panic!("expected result"));
-    assert!(result.clusters.is_empty());
-    assert!(result.retained_record_ids.is_empty());
+    assert_eq!(result.clusters.len(), 0);
+    assert_eq!(result.retained_record_ids.len(), 0);
     assert_eq!(result.comparisons, 0);
 }
 
@@ -147,7 +147,7 @@ fn cluster_single_record_is_retained() {
     let result = dedup
         .cluster(&[record("r1", "A unique title")])
         .unwrap_or_else(|_| panic!("expected result"));
-    assert!(result.clusters.is_empty());
+    assert_eq!(result.clusters.len(), 0);
     assert_eq!(result.retained_record_ids, vec!["r1"]);
     assert_eq!(result.comparisons, 0);
 }
