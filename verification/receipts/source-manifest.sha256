@@ -679,7 +679,7 @@ e5b61482643552c7323c90cd948a669c7f0b10bada1dfbaf9ef5b419fd0b4e9b  ./conductor/in
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 aa48fd3e00aa968a0e9b58b9c3e6fea01ef0df53c8dbfba1b376c05bff47a3ea  ./conductor/product.md
 c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8  ./conductor/requirements.md
-5d6d2356d630b451e4f264338b95dbe5e9feb6f3f5407c17d18914b0ddf875d6  ./conductor/roadmap-coverage.json
+91bc1a39198b1e022ebe1305f22a2f0b948d227dab7f5b35a16ca4b951d2e3ea  ./conductor/roadmap-coverage.json
 defb9c30d8078da7623ccb09aa3f2f3d4881c47624ece082b33229e77fb7a345  ./conductor/tech-stack.md
 1ab999cd968afa8145a542106fbc86b1725c4e4645e6873320869fc6d1312fe9  ./conductor/traceability-overrides.json
 00bd6ac49113cf7eb141a6e0a9faddf28028d5c1b5607bb9127c431fd2f4b629  ./conductor/tracks.md
@@ -764,7 +764,7 @@ c4213b470d776175677c2b105bff3e9deea1afe1eebc94e26601af14dce089a7  ./conductor/tr
 e15be38946a2e9301b53a16d4c9b9068bf0a56d0eb7c929cffb6e3c1fe02db63  ./conductor/tracks/15-estate-migration/plan.md
 9a486c3105b6bd73f804604bad1271d29a0fb950543e3fb4bb823e78271d9e87  ./conductor/tracks/15-estate-migration/spec.md
 d24a22e855d6e2ce0c292ae01b8aa8bb9609267b617e89b9e99798f7807bd1e8  ./conductor/tracks/15-estate-migration/traceability.json
-8f8239ddd461b0fc0080a038c693415e0b6c440b5f7a3d3c68e68850af5aa188  ./conductor/tracks/16-quality-security-harness/evidence.json
+d5bb3a812cbc01c01bd11070e3c8da50a0e245bb42d07e5a621207d85e503e58  ./conductor/tracks/16-quality-security-harness/evidence.json
 6ca88e0c88200431ca234feb0c60bcade00023f27a7af6963126d4f9764f20ae  ./conductor/tracks/16-quality-security-harness/metadata.json
 0c85b50d56cf0ef7da33c88a7b85b8005e4b2b1644f39c5f6d36a437434c7fe8  ./conductor/tracks/16-quality-security-harness/plan.md
 6d7700d8f2da36e675eefb742bf03f7a4bad6bd2d85c2d7eb6c0c2f57292a5c7  ./conductor/tracks/16-quality-security-harness/spec.md
@@ -879,7 +879,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 003644dc05cba2d5b1ca6e4b4e6e04807d0b73d25949fa151ed81b7ea194f75d  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-d639a1a64c04b6a74200aae6a99ee8a57e8d47707623544b6ef16e60aee0b5de  ./context/context-lock.json
+57dcd67958fabe5c36dc7bcf97fda27ebc499c3095aa1a98b19875a6768d1819  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1325,7 +1325,7 @@ e5e932c2aa0d6465e16cd4b6155b9eceef923731ca9895d8352f186b4bfd31d1  ./docs/safety/
 acceca4ad9d544627ae0200c0e522ee1611a67973fb5a55e6ffc2e2ee273498e  ./docs/screening-model.md
 3bfb8cbd626bdf9159a8653b9f7194824a0fec854356c8b331aeced407fd1796  ./docs/sdk-and-adoption.md
 7afc7161ebec67ec4c8b1dc8c92cd61d3bb5cb32a3e96c523b41c7fdfec190a3  ./docs/security/authenticated-remote-mcp.md
-dc8009e2507059b754823d6d74414b0f72d3c6fa06e37d94df4d57114c04e6ba  ./docs/security/cargo-vet-governance.md
+56f96909a47d0cebf439c0ee8f058730466278214f74c374e102c1116424fc5b  ./docs/security/cargo-vet-governance.md
 a1e8fd4d94e76048d8dbbdd90396512562c8ecca67812e2ee23ae2246d68d8ac  ./docs/security/egress-policy.md
 c59bc292d8b8d896738a7a75517d281b85c91fdad33ace0a29f422f24fc03e48  ./docs/security/redaction-and-data-minimisation.md
 2dd364a23999902f3fe1b32ca6e54dc7b2e2eea4de54959f8efd3e03982892bf  ./docs/security/supply-chain.md
@@ -1508,7 +1508,7 @@ b71fbe8bfbb33f4d45bbfd9255689c07d0e517278623fc744ea7c077599328b8  ./scripts/sync
 2d9e48d18a855c7917a848a06e87ee9ccf8d8bcb95aa801a19465555d4267143  ./scripts/sync_track_evidence.py
 c456a4dc7c63f0aa7f7a1018c1eb74b84030bbf85bdf2f49d7aec5b9d71c690a  ./scripts/test_agent_host_eval.py
 f8297215b884816c62e74ca6570dbc1c85de34a94495c3bd8ded7e5052920472  ./scripts/test_agent_skill_policy.py
-4b8020b46be12560973ce6c5abac6feeee8da4c36faaa10a230c9f9797c1c12e  ./scripts/test_cargo_vet_governance.py
+36a1056d0d4a52d5aa762d251069a710de4b68cddb699f503066a50eed7c4193  ./scripts/test_cargo_vet_governance.py
 4d9a48d44a433929c33481e239240e77aec59a6c5788c0e679d6a6d701d5401d  ./scripts/validate_repository.py
 14b9b524ca6f1e70d19cd3febdb67e6e7813b923d053fad2016f2a79fc59c555  ./scripts/verify.sh
 82e9b852330442e9a620b0eb05304785582a74b3a941ba45916af7651fcbea12  ./sdk/generated-contract-bindings.json
@@ -1542,9 +1542,9 @@ fce023a851c56dc92750237fcf5631d112a4a92bc87aa151ff6e128804761ee9  ./skills/syste
 ffa3116397f555294b1773519c24be879318001a0e50ddd5f0f16813fc7864fb  ./skills/systematic-search/workflows/systematic-review.yaml
 b7c5338dd5e4e7b610c66f1d1172a0890e5f75de24e8ae199edb12b4802d636d  ./supply-chain/README.md
 2db15c22ee7ee72cbf114cc32faa30c1997bef96cbc125f4306d42e693c0ed3a  ./supply-chain/audits.toml
-3e456562d56b2af2c4b4c860e4d0530b2cfe5aab84909a4d02fac0b7959d181b  ./supply-chain/config.toml
+d90d42f021d4739a191c25191dd2e673137c253b29d7e51eda4ee4384e063a87  ./supply-chain/config.toml
 98fbcc844c8d456c8d48fff348a6a4e60d2263888321ba1c49d171a076c9ccdb  ./supply-chain/exemption-proposal.schema.json
-061855375f65be4209f7f5c1ab39349e6586b5d23a2e049ed4eda3d5b3a3c797  ./supply-chain/exemption-proposals.json
+b4ba40b7a33d130bb22e950ea72b3f91454dcca11ef384eb03705624fa160c5b  ./supply-chain/exemption-proposals.json
 9bf0b85e894a24b7f1044e72fef19dc7cfe55eca88a7b2ab61c199ec4acc1f58  ./supply-chain/imports.lock
 0488ff964b842bafbcf36b561b8ec46e00651d3bc89797a3464fb07b875ca900  ./taplo.toml
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./tests/__init__.py

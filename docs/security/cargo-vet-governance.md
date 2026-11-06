@@ -45,6 +45,20 @@ trust is prohibited. Every current exemption is linked to issue #241 and expires
 on 2026-11-10; the dependency-review backlog remains open until audits replace
 the exemptions.
 
+## Obsolete exemption retirement (2026-11-06)
+
+The all-features locked dependency graph no longer contains eleven exact versions
+covered by historical exemptions. Those exemptions were removed, and their
+original proposal IDs, approvals and expiry dates remain in the ledger with
+`status: retired` and a linked retirement receipt. A retired proposal cannot
+authorise a reintroduced exemption.
+
+This reduces effective exemptions from 258 to 247; it does **not** reduce the
+247 active source-review gaps. The remaining deadline is still 2026-11-10.
+Refreshing the four approved peer registries in a temporary store did not close
+additional exact-version gaps. No refreshed imports, publisher trust, new audit
+certifications or expiry extensions are part of this retirement.
+
 The governance checker rejects effective cargo-vet exemptions without matching,
 unexpired approvals. Even an approved exemption must be added separately to
 `config.toml`; a proposal alone has no effect on CI.
