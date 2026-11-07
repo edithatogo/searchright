@@ -740,7 +740,7 @@ features = ["derive"]
 optional = true
 
 [dev-dependencies.criterion]
-version = "0.8"
+version = "0.8.2"
 
 [dev-dependencies.jsonschema]
 version = "0.58"
