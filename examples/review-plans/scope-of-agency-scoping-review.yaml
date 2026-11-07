@@ -1,0 +1,54 @@
+schema_version: "0.1.0"
+profile_id: "scope-of-agency-scoping-review"
+status: "example_unvalidated_against_runtime_schema"
+review_type: "systematic_scoping_review"
+review_question: "How are capability evidence, credentialing, local scope, runtime authority, review and embodied actuation governed for mutable human-agent-device configurations?"
+concept_families:
+  - clinical credentialing and privileging
+  - scope of practice and facility capability
+  - artificial-agent identity, delegation and lifecycle
+  - robotic actuation and medical-device assurance
+  - institutional legitimacy, review, appeal and emergency authority
+population_and_context:
+  population: "human, artificial and composite role occupants"
+  contexts:
+    - health services
+    - professional and organisational credentialing
+    - clinical governance
+    - medical robotics and embodied actuation
+concepts:
+  - capability evidence
+  - scope and privileges
+  - role appointment
+  - runtime authorisation
+  - monitoring and recredentialing
+  - suspension, revocation, review and appeal
+  - material configuration change
+source_families:
+  - bibliographic databases
+  - standards and technical specifications
+  - government and regulator guidance
+  - legal and administrative decisions
+  - relevant grey literature
+required_outputs:
+  - versioned review plan
+  - source-specific query translations
+  - translation-loss report
+  - search-run receipts
+  - amendment ledger
+  - deduplication and record-study linkage
+  - dual-phase screening contract
+  - PRISMA-ScR compatible flow data
+  - PRISMA-S compatible search reporting
+  - claim-level novelty-collision links
+human_authority:
+  - protocol amendments
+  - final inclusion and exclusion
+  - legal and clinical interpretation
+  - novelty adjudication
+  - public readiness claims
+prohibitions:
+  - "Do not infer residual novelty from search rank or absence in one source."
+  - "Do not convert a prepared plan into a completed-review claim."
+  - "Do not treat translated queries as lossless without a translation report."
+claim_boundary: "This example is a research-plan handoff. It does not establish runtime-schema conformance, completed searching, comprehensive retrieval, independent screening, residual novelty or publication readiness."
