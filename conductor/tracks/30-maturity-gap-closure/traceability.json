@@ -108,7 +108,7 @@
     },
     {
       "assertion_id": "T30-A004",
-      "statement": "Autonomous-review non-goal preservation",
+      "statement": "Staged autonomous, solo and team modes with explicit actor provenance and truthful current-capability boundaries",
       "state": "partially_implemented",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [

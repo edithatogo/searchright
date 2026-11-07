@@ -12,6 +12,12 @@
 
 ## Experimental edge, feature-gated
 
+The [active dependency decisions](frontier-plan.md#dependency-choices-and-replacement-order)
+prioritise maintained CSV handling, an optional ASReview worker, independent
+RO-Crate/PROV validation and reuse of existing Hugging Face publication tools.
+Candidate integrations are adopted with version/licence checks and comparative
+tests; this plan does not imply that every listed dependency is installed.
+
 - WASI component providers through the checked-in WIT contract and Wasmtime.
 - Arrow/Parquet plus DuckDB/Polars for large review corpora.
 - LanceDB or equivalent local hybrid retrieval for optional prioritisation.
@@ -19,8 +25,9 @@
   workflow invariants.
 - MCP tasks, subscriptions, response caching, discovery negotiation and
   Streamable HTTP after stdio conformance.
-- active-learning and agent-team features only after human calibration and
-  leakage-safe benchmarks.
+- active-learning and agent-team features evaluated on leakage-safe benchmarks;
+  human calibration is required for claims about human workload or expert
+  judgement, not for every experiment or clearly labelled technical preview.
 
 Experimental dependencies must remain behind features, be pinned or range-bounded,
 have an ADR and exit strategy, and never become required for the deterministic

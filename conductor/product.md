@@ -34,8 +34,10 @@ project reimplements provider and provenance code.
 
 ## Product promise
 
-One review contract, one shared provider kernel, one product facade, multiple
-interfaces, complete receipts and explicit human authority.
+One review contract, one shared provider kernel, one product facade and multiple
+interfaces, with reproducible outputs and explicit decision authority. The
+[active programme](frontier-plan.md) plans autonomous, solo and team operation;
+machine-assessed and human-confirmed outputs remain distinguishable.
 
 ## Boundary
 
@@ -44,8 +46,10 @@ interfaces, complete receipts and explicit human authority.
 - `evidence-search-core` owns reusable query/provider/receipt/audit behaviour.
 - Sourceright owns citation extraction, CSL normalisation and reference
   verification.
-- Searchright is not a comprehensiveness certificate, truth engine, licensed
-  scraper, autonomous final reviewer or hosted multi-tenant product.
+- Searchright is not a comprehensiveness certificate, truth engine or licensed
+  scraper. The current runtime does not implement an unrestricted autonomous
+  final reviewer or hosted multi-tenant product. Explicit autonomous machine
+  decision policies are a planned capability, not a claim about current output.
 
 ## Strategic capabilities
 
@@ -54,7 +58,8 @@ interfaces, complete receipts and explicit human authority.
 3. Bounded fixture/replay/live provider execution.
 4. Source receipts, audit chains and research-object lineage.
 5. Conservative deduplication and record–report–study modelling.
-6. Human-governed screening and agent assistance.
+6. Configurable autonomous, solo and team screening with actor provenance and
+   explicit policy; current protected defaults remain until implemented/tested.
 7. PRISMA/PRISMA-S/PRESS and versioned standards packs.
 8. CLI, MCP, Rust and skill surfaces over one facade.
 9. Institutional diagnostics, privacy and data-handling policy.
@@ -68,6 +73,6 @@ interfaces, complete receipts and explicit human authority.
 4. CLI, MCP and Rust behaviour remain in parity.
 5. Sourceright adopts the shared kernel after dual-run evidence.
 6. Information specialists can reproduce and critique outputs.
-7. Coverage, mutation, security, usability and external-evaluation gates support
-   a credible 1.0 dossier.
+7. Relevant tests and independent comparisons support the features and claims
+   actually shipped; unused deployment profiles do not delay the local product.
 8. No public claim exceeds its evidence level.

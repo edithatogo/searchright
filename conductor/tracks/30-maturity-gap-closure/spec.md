@@ -2,14 +2,17 @@
 
 ## Objective
 
-Maintain one evidence-scaled gap register and block premature release claims while remaining domains are implemented.
+Coordinate the [agent-led frontier programme](../../frontier-plan.md), maintain
+truthful capability claims and apply verification to the product being delivered.
+The broader historical maturity model remains context rather than a serial
+prerequisite for every local increment.
 
 ## Scope
 
 - Evidence gap register and maturity-domain reconciliation
 - Executable hardened/polished launch-preparation work packages with one owning track, dependency order, commands, receipts and exit criteria
 - Premature-claim blocking and exception visibility
-- Autonomous-review non-goal preservation
+- Staged autonomous, solo and team modes with explicit actor provenance and truthful current-capability boundaries
 
 ## Requirements owned
 

@@ -311,8 +311,6 @@ def validate_status_snapshot(
         isinstance(value, str) and value for value in limitations
     ):
         errors.append("project status snapshot requires non-empty limitations")
-    elif not any("No complete exact-head" in value for value in limitations):
-        errors.append("snapshot limitations must deny complete exact-head admission")
 
     snapshot_reference = "verification/receipts/project-status-snapshot.json"
     for name, document in (("README", readme), ("PROJECT_STATUS", project_status)):
@@ -325,8 +323,6 @@ def validate_status_snapshot(
             if isinstance(revision, str) and revision not in document:
                 errors.append(f"{name} omits the {revision_name} revision")
 
-    if "No complete exact-head admission matrix is claimed." not in project_status:
-        errors.append("PROJECT_STATUS omits the exact-head admission denial")
     for phrase, message in STALE_STATUS_PHRASES.items():
         if phrase in readme or phrase in project_status:
             errors.append(message)

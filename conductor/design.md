@@ -1,5 +1,22 @@
 # Design
 
+## Active extension plan
+
+The [agent-led frontier programme](frontier-plan.md) extends the current protected
+workflow with explicit autonomous, solo and team modes. The diagrams below
+describe the baseline architecture, not a requirement that every future mode
+repeat its human checkpoints. Actor identity, decision status, mode transitions
+and publication scope must remain explicit. Existing runtime protections remain
+until the new mode contracts and behaviour are implemented and tested.
+
+Build on the existing neutral core, `.srpack` and provenance exporters. The
+[evidence-package design](../docs/research/evidence-packages.md) specifies a
+standards-based release with optional per-review GitHub repositories and pinned
+Hugging Face data. Acquisition stays in the existing archive owners; Searchright
+owns review transformations and decisions. The
+[research programme](../docs/research/programme.md) supplies the comparative
+questions and datasets for each increment.
+
 ## Context
 
 ```mermaid
