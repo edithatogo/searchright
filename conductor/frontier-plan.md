@@ -54,18 +54,20 @@ their existing documents. Do not restart completed work.
   [PR 755](https://github.com/edithatogo/searchright/pull/755), including multiline
   screening fixes, sixteen regressions and exact-version source reviews. See the
   [dependency decision](../docs/csv-dependency-decision.md).
-- [ ] Reuse pinned security-tool installations in CI (Track 16, in progress).
-  Preserve every substantive security command and required check. Cache only
-  dedicated tool binaries, with an exact environment/tool/workflow key; rebuild
-  on a miss and verify versions on both paths. Only successful main runs populate
-  the cache. Check cold installation and warm reuse in hosted logs; measure any
-  timing improvement from those runs rather than predict a percentage.
-- [ ] Repair benchmark population and label-digest binding (Track 17, in
-  progress). Reject duplicate, extra or missing label/prediction identities;
-  define complete predictions or explicit abstention accounting; verify the
-  digest against a documented canonical representation. A different population
-  or label set must not retain the original evaluation identity. This precedes
-  any new scored comparison.
+- [x] Reuse pinned security-tool installations in CI (Track 16): merged
+  [PR 757](https://github.com/edithatogo/searchright/pull/757). Only dedicated,
+  exact-version binaries are reusable; every substantive check runs afresh.
+  Successful main runs populate the cache and PRs only restore. The cold hosted
+  path passed. Keep warm-path and timing evidence in the hosted run logs; no
+  speed-up percentage is inferred from the implementation alone.
+- [x] Repair benchmark population and label-digest binding (Track 17):
+  [PR 758](https://github.com/edithatogo/searchright/pull/758). Require exactly one
+  label and prediction for every manifest ID, and recompute both supplied and
+  optional manifest commitments using the existing SHA-256 dependency. Eleven
+  synthetic regressions cover population substitution, omissions, duplicates,
+  tampering and canonical reference vectors. The [documented contract](../docs/evaluation/benchmark-and-calibration-protocol.md)
+  separates integrity from independent label custody and methodological validity.
+  An abstention or partially judged collection needs an explicit scoring protocol.
 
 | Next work unit and existing owners | Prerequisites | Observable completion | Coding-agent effort |
 | --- | --- | --- | --- |
@@ -132,9 +134,9 @@ The next process changes each have a concrete completion condition:
 | Coarser future issue projection | Forward-plan work creates actionable track/issues and PRs without automatic phase/task mirrors. Existing remote identities, history and additive/idempotent synchronisation remain intact. |
 | Release profiles | A local package, an enabled integration and a hosted deployment each run checks for the capabilities they actually expose. Unsupported capabilities remain unavailable; papers and registry listings do not become local-package prerequisites. |
 
-Start with tool caching before changing CI applicability. Use one implementation
-PR per coherent change, and retire a process only when its useful responsibility
-has an identified owner. These rows are planned work, not completed migration.
+With tool caching delivered, change CI applicability in a separate coherent PR.
+Retire a process only when its useful responsibility has an identified owner.
+The rows above remain planned work, not completed migration.
 
 ## Coding-agent delivery estimate
 
@@ -146,7 +148,7 @@ increment; already merged work above is not included again. They are not deadlin
 
 | Window, with overlapping work | Agent deliverables | Human/external elapsed time |
 | --- | --- | --- |
-| Days 1–3 | Resolve the immediate dependency-review disposition; reuse CI tools; repair benchmark identity checks; begin bounded live-runtime wiring | Decide any concrete residual dependency risk; confirm unavailable provider access and initial review topics |
+| Days 1–3 | Resolve the immediate dependency-review disposition; begin bounded live-runtime wiring and the first existing-data baseline | Decide any concrete residual dependency risk; confirm unavailable provider access and initial review topics |
 | Days 3–10 | Two-source run/resume/export; reproduced existing-data/ASReview baseline; difficult native-query corpus; independently inspected small package | A specialist checks the first query pairs; allow approximately 4–8 hours initially |
 | Weeks 2–3 | Autonomous/solo/team policy and decision provenance; package/repository exporter; regression and adversarial tasks | Owner tests the full workflow; specialist resolves material semantic disagreements |
 | Weeks 3–6 | Candidate translation improvements, selective-update prototype, one scoped frozen comparison and installable release | Approximately 10–30 specialist hours for feasibility/annotation is a planning allowance; revise from the pilot |
@@ -158,6 +160,17 @@ local candidate in roughly 3–6 weeks. Re-estimate after the first complete liv
 run. More agents do not linearly shorten integration, CI, adjudication or data
 access. Journal review is outside the delivery estimate. An unsuccessful
 experiment should narrow the next increment, not trigger more framework building.
+
+Separate active agent effort from hosted CI queue time when revising these
+estimates. Track 16 should trial `prConcurrentLimit: 2` and
+`commitHourlyLimit: 2` after checking the deployed Renovate version and resolved
+configuration. The existing branch limit can inherit the PR limit. The
+[commit limit](https://docs.renovatebot.com/configuration-options/#commithourlylimit)
+covers automatic rebases as well as new branches; a new-PR limit alone does not
+bound that load. Preserve vulnerability-alert bypasses and existing PRs. Compare
+CI waiting time and routine-update age over one week using existing logs, then
+adjust. This planned change trades slower routine updates for less competing CI
+work; it does not cancel today's jobs or replace the direct urgent-fix path.
 
 ## Dependency choices and replacement order
 

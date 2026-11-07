@@ -4,7 +4,7 @@ use std::collections::BTreeSet;
 
 use searchright_bench::{
     BenchmarkError, SealedSplitManifest, binary_metrics, brier_score, check_split_contamination,
-    evaluate_sealed_benchmark, expected_calibration_error, regression_gate,
+    evaluate_sealed_benchmark, expected_calibration_error, regression_gate, sealed_label_digest,
     work_saved_over_sampling,
 };
 
@@ -156,37 +156,30 @@ fn contamination_check_detects_literal_id() {
 }
 
 #[test]
-fn sealed_evaluation_rejects_bad_digest_and_unknown_prediction() {
+fn sealed_evaluation_rejects_bad_digest_and_unknown_prediction() -> Result<(), BenchmarkError> {
     let m = manifest();
+    let labels = vec![("case-1".to_string(), true), ("case-2".to_string(), false)];
+    let digest = sealed_label_digest(&labels)?;
     assert!(matches!(
-        evaluate_sealed_benchmark(
-            &m,
-            "short",
-            &[("case-1".to_string(), true)],
-            &[("case-1".to_string(), true)]
-        ),
+        evaluate_sealed_benchmark(&m, "short", &[("case-1".to_string(), true)], &labels),
         Err(BenchmarkError::InvalidLabelDigest(_))
     ));
     assert!(matches!(
-        evaluate_sealed_benchmark(
-            &m,
-            &"a".repeat(64),
-            &[("ghost".to_string(), true)],
-            &[("case-1".to_string(), true)]
-        ),
+        evaluate_sealed_benchmark(&m, &digest, &[("ghost".to_string(), true)], &labels),
         Err(BenchmarkError::UnknownPredictionRecord(_))
     ));
+    Ok(())
 }
 
 #[test]
-fn sealed_evaluation_computes_positive_metrics() {
+fn sealed_evaluation_computes_positive_metrics() -> Result<(), BenchmarkError> {
     let m = manifest();
-    let digest = "a".repeat(64);
     let labels = vec![("case-1".to_string(), true), ("case-2".to_string(), false)];
+    let digest = sealed_label_digest(&labels)?;
     let predictions = vec![("case-1".to_string(), true), ("case-2".to_string(), true)];
-    let metrics = evaluate_sealed_benchmark(&m, &digest, &predictions, &labels)
-        .unwrap_or_else(|_| panic!("expected metrics"));
+    let metrics = evaluate_sealed_benchmark(&m, &digest, &predictions, &labels)?;
     assert_eq!(metrics.true_positive, 1);
     assert_eq!(metrics.false_positive, 1);
     assert_eq!(metrics.recall, Some(1.0));
+    Ok(())
 }
