@@ -1,5 +1,11 @@
 # Tracks
 
+The [agent-led frontier programme](frontier-plan.md) is the active forward plan.
+It links existing ownership to four milestones, operating modes, reusable
+dependencies, research studies and versioned outputs. Historical evidence and
+archived acceptance below remain historical; new planned modes are not current
+runtime claims. Do not generate a second phase/task hierarchy for this programme.
+
 Track status, implementation completeness and evidence level are separate.
 `scaffolded` and `partially_implemented` prevent path presence from being
 misrepresented as completed behaviour; `traceability.json` owns assertion-level claims.

@@ -1,23 +1,38 @@
 # Workflow
 
+## Active delivery programme
+
+Use [frontier-plan.md](frontier-plan.md) for current sequencing, dependency reuse,
+three operating modes and the coding-agent timetable. Existing track IDs locate
+work; do not create a second hierarchy of frontier tracks or mirrored status
+documents. The legacy launch roadmap covers broader deployment/research scope
+than the initial local release.
+
+Routine work uses a short outcome, implementation, relevant tests and ordinary
+review. CI records verification. Specialist assessment belongs where it answers
+a concrete methodological question; no standing multi-agent panel is needed.
+Research comparisons establish the associated claims, not permission to code.
+
 ## Spec-driven sequence
 
 1. Read product context, requirements, architecture, ADRs and active track.
-2. Confirm the change is owned by a requirement and track; create an ADR for a
-   material boundary change.
-3. Write or amend contracts and examples before implementation.
-4. Add failing unit, contract, property or fixture tests.
+2. Locate the existing requirement/track when useful; record a material design
+   choice once in the plan or PR.
+3. Amend contracts and examples when the public behaviour changes.
+4. Add regression tests for meaningful failures; do not test paperwork presence.
 5. Implement the smallest inward-facing domain change.
 6. Add adapter, CLI and MCP surfaces by delegation to the facade.
-7. Run deterministic gates; run live tests only with explicit opt-in.
-8. Update evidence ledger, claim wording, migration manifest and track plan.
+7. Run affected checks; use configured opt-in live tests within authorised scope.
+8. Link observed results from the owning plan; update migration notes only when
+   persisted data or interfaces change. Avoid duplicate evidence ledgers.
 9. Review against requirements, threat model and public documentation.
 10. Commit one coherent delivery unit with a primary track/task identifier and
     explicitly declared additional affected tracks where needed.
 
 Use [proportionate governance](../docs/quality/proportionate-governance.md) for
-bounded approval, review depth, local verification profiles and evidence reuse.
-Required hosted checks and methodological/security/release authority are unchanged.
+bounded approval and verification. Implement the programme's CI simplification
+by changing obsolete checks and workflows together; never silently bypass a
+required hosted check. Product authority and publication permissions still apply.
 
 ## Testing order
 

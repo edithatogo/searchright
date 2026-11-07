@@ -258,7 +258,8 @@
       "status": "external_evidence_required",
       "title": "Portable query AST and dialect compilers",
       "track_id": "02",
-      "updated": "2026-08-31"
+      "updated": "2026-08-31",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -375,7 +376,8 @@
       "status": "integration_prepared",
       "title": "Shared provider runtime and Sourceright extraction",
       "track_id": "03",
-      "updated": "2026-11-03"
+      "updated": "2026-11-03",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -490,7 +492,8 @@
       "status": "partially_implemented",
       "title": "Open provider connectors MVP",
       "track_id": "04",
-      "updated": "2026-11-03"
+      "updated": "2026-11-03",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "archived_on": "2026-08-13",
@@ -1125,7 +1128,8 @@
       "status": "partially_implemented",
       "title": "Systematic-search agent skill and workflows",
       "track_id": "11",
-      "updated": "2026-11-03"
+      "updated": "2026-11-03",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -1492,7 +1496,8 @@
       "status": "partially_implemented",
       "title": "Maximal quality, context and security harness",
       "track_id": "16",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -1551,7 +1556,8 @@
       "status": "partially_implemented",
       "title": "Benchmarks, search validation and human calibration",
       "track_id": "17",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -1816,7 +1822,8 @@
       "status": "partially_implemented",
       "title": "Living reviews, amendments and update lineage",
       "track_id": "22",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -1858,7 +1865,8 @@
       "status": "scaffolded",
       "title": "Active-learning prioritisation and calibrated agents",
       "track_id": "23",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -1971,7 +1979,8 @@
       "status": "partially_implemented",
       "title": "Provenance and research-object interoperability",
       "track_id": "25",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -2188,13 +2197,14 @@
       "source_verified_on": "2026-11-05",
       "review_fixes": [
         "Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required."
-      ]
+      ],
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
         "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
         "Review and approve any explicit release-risk exception without hiding the open gap.",
-        "Keep autonomous end-to-end review and final agent exclusions outside the release claim.",
+        "Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.",
         "LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.",
         "LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.",
         "LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.",
@@ -2232,7 +2242,11 @@
         "docs/quality/evidence-debt.md",
         "conductor/launch-preparation-roadmap.json",
         "scripts/check_launch_preparation_roadmap.py",
-        "tests/test_launch_preparation_roadmap.py"
+        "tests/test_launch_preparation_roadmap.py",
+        "conductor/frontier-plan.md",
+        "docs/research/programme.md",
+        "docs/research/evidence-packages.md",
+        "docs/research/portfolio-reuse.md"
       ],
       "dependencies": [
         "25",
@@ -2258,7 +2272,8 @@
       "status": "partially_implemented",
       "title": "Maturity gate and gap closure",
       "track_id": "30",
-      "updated": "2026-08-13"
+      "updated": "2026-11-07",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "archived_on": "2026-08-12",
@@ -2543,7 +2558,8 @@
       "slug": "sdk-docs-adoption",
       "status": "scaffolded",
       "title": "Generated SDKs, fixture-backed documentation and adoption operations",
-      "track_id": "35"
+      "track_id": "35",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -2593,7 +2609,8 @@
       "slug": "release-candidate-pilots",
       "status": "release_prepared",
       "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
-      "track_id": "36"
+      "track_id": "36",
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "blockers": [
@@ -2637,8 +2654,9 @@
       "slug": "maturity-1-0",
       "status": "external_evidence_required",
       "title": "Final mature 1.0 release and long-term operations",
-      "track_id": "37"
+      "track_id": "37",
+      "active_plan": "conductor/frontier-plan.md"
     }
   ],
-  "updated": "2026-08-29"
+  "updated": "2026-11-07"
 }

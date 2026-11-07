@@ -710,10 +710,14 @@ def validate_conductor() -> None:
             error(f"track lacks review/closeout phase: {relative(track / 'plan.md')}")
 
     requirements = read_text(conductor / "requirements.md")
-    priorities = set(re.findall(r"\|\s*(Must|Should|Could|Won[’']t now)\s*\|", requirements))
-    required_priorities = {"Must", "Should", "Could"}
-    if not required_priorities.issubset(priorities) or not any(item.startswith("Won") for item in priorities):
-        error(f"MoSCoW matrix is incomplete: found {sorted(priorities)}")
+    priorities = {
+        value.strip() for value in re.findall(
+            r"^\|\s*SR-\d+\s*\|\s*([^|]+)\|", requirements, flags=re.MULTILINE
+        )
+    }
+    allowed_priorities = {"Must", "Should", "Could", "Won’t now", "Won't now"}
+    if not priorities or not priorities.issubset(allowed_priorities):
+        error(f"MoSCoW matrix has missing or invalid priorities: {sorted(priorities)}")
     design = read_text(conductor / "design.md")
     mermaid_blocks = re.findall(r"```mermaid\s*\n(.*?)```", design, flags=re.DOTALL)
     if not mermaid_blocks or any(not block.strip() for block in mermaid_blocks):

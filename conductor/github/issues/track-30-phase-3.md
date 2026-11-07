@@ -8,7 +8,7 @@ Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
 
 - [ ] T01: Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain. (`track-30-phase-3-task-01`)
 - [ ] T02: Review and approve any explicit release-risk exception without hiding the open gap. (`track-30-phase-3-task-02`)
-- [ ] T03: Keep autonomous end-to-end review and final agent exclusions outside the release claim. (`track-30-phase-3-task-03`)
+- [ ] T03: Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested. (`track-30-phase-3-task-03`)
 - [ ] T04: LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts. (`track-30-phase-3-task-04`)
 - [ ] T05: LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence. (`track-30-phase-3-task-05`)
 - [ ] T06: LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts. (`track-30-phase-3-task-06`)

@@ -37,8 +37,8 @@ def validate(
         return ["launch roadmap must be an object"]
     if data.get("schema_version") != "org.searchright.launch-preparation-roadmap.v1":
         errors.append("unsupported launch roadmap schema_version")
-    if data.get("status") != "not_ready":
-        errors.append("launch roadmap must remain not_ready until a separate maturity decision")
+    if data.get("status") not in ("not_ready", "ready"):
+        errors.append("launch roadmap status must be not_ready or ready")
     packages = data.get("work_packages")
     if not isinstance(packages, list) or not packages:
         return errors + ["work_packages must be a non-empty array"]
@@ -140,6 +140,10 @@ def validate(
             for dependency in dependencies:
                 if progress_by_id.get(dependency) != "completed":
                     errors.append(f"{key} cannot complete before dependency {dependency}")
+    if data.get("status") == "ready" and any(
+        progress_by_id.get(str(row.get("id"))) != "completed" for row in rows
+    ):
+        errors.append("ready roadmap requires completed work packages and their evidence")
     return errors
 
 

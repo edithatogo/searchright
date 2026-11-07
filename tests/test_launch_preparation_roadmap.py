@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,7 +57,19 @@ def test_cycle_fails_closed() -> None:
 def test_ready_flag_cannot_promote_plan() -> None:
     payload = valid_payload()
     payload["status"] = "ready"
-    assert any("must remain not_ready" in error for error in MODULE.validate(payload, {"30"}))
+    assert any("requires completed work packages" in error for error in MODULE.validate(payload, {"30"}))
+
+
+def test_complete_roadmap_can_report_ready_without_prescribed_prose() -> None:
+    payload = valid_payload()
+    payload["status"] = "ready"
+    package = payload["work_packages"][0]
+    package["progress"] = {
+        "status": "completed",
+        "evidence_receipts": package["required_receipts"],
+        "remaining_gates": [],
+    }
+    assert MODULE.validate(payload, {"30"}, set(package["required_receipts"])) == []
 
 
 def test_receipt_path_cannot_escape_repository_receipt_area() -> None:
@@ -121,3 +134,12 @@ def test_not_started_package_cannot_claim_evidence() -> None:
         {"verification/receipts/example.json"},
     )
     assert any("cannot attach evidence while not_started" in error for error in errors)
+
+
+def load_tests(loader: unittest.TestLoader, suite: unittest.TestSuite, pattern: str | None) -> unittest.TestSuite:
+    """Include these function tests in the repository's unittest discovery."""
+    del loader, pattern
+    for name, candidate in sorted(globals().items()):
+        if name.startswith("test_") and callable(candidate):
+            suite.addTest(unittest.FunctionTestCase(candidate))
+    return suite
