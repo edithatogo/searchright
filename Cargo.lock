@@ -594,7 +594,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
- "sha2 0.11.0",
+ "sha2 0.11.1",
  "thiserror",
 ]
 
@@ -1887,7 +1887,7 @@ dependencies = [
  "searchright-validation",
  "serde",
  "serde_json",
- "sha2 0.11.0",
+ "sha2 0.11.1",
  "thiserror",
  "time",
  "tokio",
@@ -1910,7 +1910,7 @@ dependencies = [
  "searchright-contracts",
  "serde",
  "serde_json",
- "sha2 0.11.0",
+ "sha2 0.11.1",
 ]
 
 [[package]]
@@ -1941,7 +1941,7 @@ version = "0.1.0-alpha.1"
 dependencies = [
  "citeweft",
  "searchright-contracts",
- "sha2 0.11.0",
+ "sha2 0.11.1",
 ]
 
 [[package]]
@@ -1983,7 +1983,7 @@ dependencies = [
  "schemars",
  "serde",
  "serde_json",
- "sha2 0.11.0",
+ "sha2 0.11.1",
  "time",
 ]
 
@@ -2027,7 +2027,7 @@ version = "0.1.0-alpha.1"
 dependencies = [
  "searchright-contracts",
  "serde_json",
- "sha2 0.11.0",
+ "sha2 0.11.1",
  "thiserror",
  "time",
 ]
@@ -2087,7 +2087,7 @@ dependencies = [
  "searchright-contracts",
  "serde",
  "serde_json",
- "sha2 0.11.0",
+ "sha2 0.11.1",
  "thiserror",
  "time",
  "tokio",
@@ -2193,7 +2193,7 @@ dependencies = [
  "searchright-screening",
  "serde",
  "serde_json",
- "sha2 0.11.0",
+ "sha2 0.11.1",
  "thiserror",
  "uuid",
 ]
@@ -2326,9 +2326,9 @@ dependencies = [
 
 [[package]]
 name = "sha2"
-version = "0.11.0"
+version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "446ba717509524cb3f22f17ecc096f10f4822d76ab5c0b9822c5f9c284e825f4"
+checksum = "47d7069beb7d6ac7b9acd1039986e73443f24234f41074da099d6f994ac9ad19"
 dependencies = [
  "cfg-if",
  "cpufeatures 0.3.0",
