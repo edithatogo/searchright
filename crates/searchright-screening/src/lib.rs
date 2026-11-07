@@ -1485,7 +1485,10 @@ mod tests {
         board.submit(original.clone())?;
 
         for (input, importer) in [
-            (export_covidence_csv(&board), import_covidence_csv as CsvImporter),
+            (
+                export_covidence_csv(&board),
+                import_covidence_csv as CsvImporter,
+            ),
             (export_rayyan_csv(&board), import_rayyan_csv as CsvImporter),
         ] {
             let imported = importer(&input, "r1", ScreeningRound::TitleAbstract, "1")?;
@@ -1495,8 +1498,14 @@ mod tests {
             })?;
             assert_eq!(restored.rationale, original.rationale);
             assert_eq!(
-                restored.exclusion_reason.as_ref().map(|reason| &reason.label),
-                original.exclusion_reason.as_ref().map(|reason| &reason.label)
+                restored
+                    .exclusion_reason
+                    .as_ref()
+                    .map(|reason| &reason.label),
+                original
+                    .exclusion_reason
+                    .as_ref()
+                    .map(|reason| &reason.label)
             );
             assert_eq!(restored.subject_id, original.subject_id);
             assert_eq!(restored.reviewer_id, original.reviewer_id);

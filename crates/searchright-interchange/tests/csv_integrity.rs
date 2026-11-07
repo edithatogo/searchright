@@ -17,7 +17,10 @@ fn csv_preserves_multiline_fields_quotes_unicode_and_line_endings()
         assert!(result.warnings.is_empty());
         assert!(result.quarantined.is_empty());
         let first = result.records.first().ok_or("missing first record")?;
-        assert_eq!(first.title, format!("A \"quoted\", title{newline}second line"));
+        assert_eq!(
+            first.title,
+            format!("A \"quoted\", title{newline}second line")
+        );
         assert_eq!(first.authors, ["Müller", "Smith"]);
         assert_eq!(
             first.abstract_text,
@@ -25,7 +28,10 @@ fn csv_preserves_multiline_fields_quotes_unicode_and_line_endings()
         );
         assert_eq!(first.native_id, "id-1");
         assert_eq!(
-            result.records.get(1).map(|record| record.native_id.as_str()),
+            result
+                .records
+                .get(1)
+                .map(|record| record.native_id.as_str()),
             Some("id-2")
         );
     }
@@ -34,7 +40,10 @@ fn csv_preserves_multiline_fields_quotes_unicode_and_line_endings()
 
 #[test]
 fn csv_accepts_utf8_bom_and_preserves_header_mapping() -> Result<(), Box<dyn std::error::Error>> {
-    let result = import_csv("\u{feff}title,native_id\r\nBOM title,source-1\r\n", "receipt")?;
+    let result = import_csv(
+        "\u{feff}title,native_id\r\nBOM title,source-1\r\n",
+        "receipt",
+    )?;
     let record = result.records.first().ok_or("missing BOM record")?;
     assert_eq!(record.title, "BOM title");
     assert_eq!(record.native_id, "source-1");
@@ -43,8 +52,8 @@ fn csv_accepts_utf8_bom_and_preserves_header_mapping() -> Result<(), Box<dyn std
 }
 
 #[test]
-fn csv_preserves_variable_rows_and_ignores_blank_records()
--> Result<(), Box<dyn std::error::Error>> {
+fn csv_preserves_variable_rows_and_ignores_blank_records() -> Result<(), Box<dyn std::error::Error>>
+{
     let input =
         "\n \n,,\nnative_id,title,authors,year\nid-1,Short\nid-2,Long,Alice,2024,extra\n,,,\n";
     let result = import_csv(input, "receipt")?;
@@ -120,7 +129,10 @@ fn csv_export_preserves_exact_bytes_and_round_trips() -> Result<(), Box<dyn std:
     );
     assert_eq!(exported, expected);
     let round_trip = import_csv(&exported, "receipt")?;
-    let restored = round_trip.records.first().ok_or("missing round-trip record")?;
+    let restored = round_trip
+        .records
+        .first()
+        .ok_or("missing round-trip record")?;
     assert_eq!(restored.record_id, record.record_id);
     assert_eq!(restored.title, record.title);
     assert_eq!(restored.authors, record.authors);
