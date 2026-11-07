@@ -12,7 +12,12 @@
 7. Run deterministic gates; run live tests only with explicit opt-in.
 8. Update evidence ledger, claim wording, migration manifest and track plan.
 9. Review against requirements, threat model and public documentation.
-10. Commit one coherent Conductor task with the track/task identifier.
+10. Commit one coherent delivery unit with a primary track/task identifier and
+    explicitly declared additional affected tracks where needed.
+
+Use [proportionate governance](../docs/quality/proportionate-governance.md) for
+bounded approval, review depth, local verification profiles and evidence reuse.
+Required hosted checks and methodological/security/release authority are unchanged.
 
 ## Testing order
 
@@ -42,8 +47,9 @@ marked as runtime-proven.
 
 ## Native status protocol
 
-For status, run `python3 -B scripts/conductor_status.py` and the full
-`scripts/verify.sh` suite; report their outcomes separately. The status command
+For routine status, run `python3 -B scripts/conductor_status.py`. Run relevant
+generated-evidence checks for reconciliation; run the full `scripts/verify.sh`
+for candidate admission and releases. Report status and verification separately. The status command
 is read-only and reconciles the actual table registry, top-level plan tasks,
 metadata, evidence, roadmap and in-place archive lifecycle. It never executes
 code from the inspected checkout, including when `--root` names another tree.

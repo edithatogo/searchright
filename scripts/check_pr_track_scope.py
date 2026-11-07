@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail closed unless a pull request is one track or a justified exception."""
+"""Enforce explicit track ownership and coherent cross-track declarations."""
 
 from __future__ import annotations
 
@@ -16,6 +16,8 @@ EXCEPTION_TRACKS_LINE = re.compile(
 RATIONALE_LINE = re.compile(
     r"(?im)^-\s*Why the work cannot be split \(required for an exception\):\s*`?([^`\r\n]+)`?\s*$"
 )
+AFFECTED_LINE = re.compile(r"(?im)^-\s*Affected tracks:\s*`?([^`\r\n]+)`?\s*$")
+OUTCOME_LINE = re.compile(r"(?im)^-\s*Shared outcome rationale:\s*`?([^`\r\n]+)`?\s*$")
 TRACK_PATH = re.compile(r"^conductor/tracks/(\d{2})-")
 TRACK_ID = re.compile(r"^(?:0\d|[12]\d|3[0-7])$")
 EXCEPTION_LABEL = "scope:multi-track-exception"
@@ -66,6 +68,8 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
     declared = value(TRACK_LINE, body)
     exception_text = value(EXCEPTION_TRACKS_LINE, body)
     rationale = value(RATIONALE_LINE, body)
+    affected_text = value(AFFECTED_LINE, body)
+    outcome = value(OUTCOME_LINE, body)
     path_tracks = {
         match.group(1)
         for path in files
@@ -76,6 +80,22 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
 
     if declared and TRACK_ID.fullmatch(declared):
         admitted_tracks = {declared}
+        if affected_text not in {None, "none"}:
+            parts = [item.strip() for item in affected_text.split(",")]
+            candidates = set(parts)
+            if (
+                any(not TRACK_ID.fullmatch(item) for item in parts)
+                or len(candidates) != len(parts)
+                or declared not in candidates
+                or len(candidates) < 2
+            ):
+                errors.append("Affected tracks requires distinct IDs 00-37 including the primary and another track")
+            else:
+                admitted_tracks = candidates
+            if not outcome or outcome == "none" or len(outcome) < 30:
+                errors.append("cross-track work requires a concrete shared-outcome rationale of at least 30 characters")
+        elif outcome not in {None, "none"}:
+            errors.append("shared-outcome rationale requires an affected-tracks declaration")
         if EXCEPTION_LABEL in labels:
             errors.append(f"{EXCEPTION_LABEL} is not permitted on a single-track PR")
         if exception_text not in {None, "none"}:
@@ -83,6 +103,8 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
         if rationale not in {None, "none"}:
             errors.append("single-track PR must leave the exception rationale as `none`")
     elif declared == "MULTI":
+        if affected_text not in {None, "none"} or outcome not in {None, "none"}:
+            errors.append("legacy MULTI must not mix affected-tracks declarations with exception metadata")
         candidates = {
             item.strip()
             for item in (exception_text or "").split(",")
@@ -103,7 +125,7 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
     undeclared = sorted(path_tracks - admitted_tracks)
     if undeclared:
         errors.append(f"changed Conductor track paths are undeclared: {undeclared}")
-    if len(path_tracks) > 1 and declared != "MULTI":
+    if len(path_tracks) > 1 and len(admitted_tracks) < 2:
         errors.append(f"PR changes multiple Conductor track paths: {sorted(path_tracks)}")
 
     return {
@@ -115,7 +137,7 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
         "exception_label_present": EXCEPTION_LABEL in labels,
         "errors": errors,
         "claim_boundary": (
-            "This check enforces declared PR scope. It does not establish implementation, "
+            "This check enforces declared ownership and rationale presence, not semantic coherence. It does not establish implementation, "
             "evidence, review or merge success."
         ),
     }

@@ -25,7 +25,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SEARCHRIGHT_FILES_URL: ${{ github.event.pull_request.url }}/files?per_page=100
         run: gh api --paginate --slurp "$SEARCHRIGHT_FILES_URL" > "$RUNNER_TEMP/pr-files.json"
-      - name: Enforce one-track PR scope
+      - name: Enforce declared PR ownership and scope
         run: python scripts/check_pr_track_scope.py --event "$GITHUB_EVENT_PATH" --files-json "$RUNNER_TEMP/pr-files.json"
 
   auto-merge:

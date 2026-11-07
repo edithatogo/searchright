@@ -47,10 +47,10 @@ Load `CONTEXT.md` and `context/manifest.json` first.
 - Keep `unsafe` forbidden except in a separately reviewed sandbox/runtime adapter.
 - Do not promote a release train, pilot, registry packet or version 1.0 decision
   from source completeness alone.
-- Keep every pull request scoped to exactly one Conductor track. A multi-track
-  PR is permitted only when the tracks are technically inseparable and the PR
-  records the affected tracks, the concrete reason it cannot be split, and the
-  `scope:multi-track-exception` label.
+- Keep every pull request scoped to one coherent delivery unit. Declare one
+  primary Conductor track; when other tracks are affected, declare all affected
+  IDs and a concrete shared-outcome rationale. Split unrelated work, not merely
+  files owned by different tracks. Legacy `MULTI` declarations remain supported.
 - Treat pull requests as merge-bound delivery units, not parking branches.
   Enable rebase auto-merge after scope admission, repair failed required checks
   on the same PR, and finish by verifying the exact merged `main` revision.
@@ -59,9 +59,23 @@ Load `CONTEXT.md` and `context/manifest.json` first.
 
 ## Verification
 
-Run `scripts/verify.sh`; when unavailable, record exactly which gates were not run
-in `verification/receipts/` rather than implying success. Before any remote
-bootstrap, require a clean Git tree, read `CODEX_HANDOFF.md`, and run
-`scripts/run_static_harness.py`. Remote publication work must finish with
-`scripts/audit_github_control_plane.py`; a successful mutation command is not
-proof of converged remote state.
+Use the risk-based local verification profiles in `docs/quality/proportionate-governance.md`.
+Run `scripts/verify.sh` for final candidate admission and releases; do not rerun
+unchanged checks after every bookkeeping commit. Required hosted checks remain
+mandatory. Record commands, outcomes and unrun gates in one candidate record or
+CI run, linked from Conductor rather than copied into parallel receipts.
+Before remote bootstrap, require a clean Git tree, read `CODEX_HANDOFF.md`, and
+run `scripts/run_static_harness.py`. Run the GitHub convergence audit after
+control-plane changes or delivery that changes its canonical inputs; an ordinary
+code/docs PR does not require a new Project audit. Mutation success alone never
+proves remote parity.
+
+## Bounded authorisation
+
+An approved plan authorises its ordinary edits, tests, commits, scoped PRs and
+agreed merge actions without repeated confirmation. Ask again only for a material
+scope change, new privilege, destructive operation, sensitive-data exposure,
+methodological decision or release/publication promotion. Dry-run-first external
+writes and human-only final research authority remain unchanged. Repository
+policy governs repository work; global skill defaults are guidance, not grounds
+for additional approval loops. Never override host safety or tool permissions.

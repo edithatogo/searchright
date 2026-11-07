@@ -81,6 +81,39 @@ def single_track_rejects_exception_label() -> None:
 
 
 class TrackScopeTests(unittest.TestCase):
+    def test_coherent_cross_track_declaration_passes_without_exception_label(self) -> None:
+        declaration = body("16") + (
+            "- Affected tracks: `16, 31`\n"
+            "- Shared outcome rationale: `Align delivery policy with its executable ownership checker.`\n"
+        )
+        receipt = check(event(declaration), ["conductor/tracks/31-control/plan.md"])
+        self.assertEqual(receipt["status"], "passed")
+        self.assertEqual(receipt["admitted_tracks"], ["16", "31"])
+
+    def test_cross_track_declaration_fails_closed_for_invalid_ownership(self) -> None:
+        for affected in ["31, 13", "16", "16, 16", "16, 38", "16,", "16, MULTI"]:
+            declaration = body("16") + (
+                f"- Affected tracks: `{affected}`\n"
+                "- Shared outcome rationale: `Align delivery policy with its executable ownership checker.`\n"
+            )
+            with self.subTest(affected=affected):
+                self.assertEqual(check(event(declaration), [])["status"], "failed")
+
+    def test_cross_track_requires_rationale_and_covers_all_changed_tracks(self) -> None:
+        declaration = body("16") + "- Affected tracks: `16, 31`\n"
+        self.assertEqual(check(event(declaration), [])["status"], "failed")
+        declaration += "- Shared outcome rationale: `Align delivery policy with its executable ownership checker.`\n"
+        self.assertEqual(check(event(declaration), ["conductor/tracks/13-context/plan.md"])["status"], "failed")
+
+    def test_new_and_legacy_multi_metadata_cannot_be_mixed(self) -> None:
+        declaration = body("MULTI", "16, 31", "Align delivery policy with its executable ownership checker.")
+        declaration += "- Affected tracks: `16, 31`\n"
+        self.assertEqual(check(event(declaration, (EXCEPTION_LABEL,)), [])["status"], "failed")
+
+    def test_single_track_template_defaults_still_pass(self) -> None:
+        declaration = body("16") + "- Affected tracks: `none`\n- Shared outcome rationale: `none`\n"
+        self.assertEqual(check(event(declaration), ["conductor/tracks/16-quality/plan.md"])["status"], "passed")
+
     def test_single_track_passes(self) -> None:
         single_track_passes()
 
