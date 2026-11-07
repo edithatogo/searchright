@@ -109,7 +109,7 @@ jobs:
           cargo fetch --locked
           python scripts/check_cargo_vet_governance.py
       - name: Enforce trusted dependency audit policy
-        run: '"$SEARCHRIGHT_TOOL_ROOT/bin/cargo-vet" vet --locked --no-minimize-exemptions'
+        run: CARGO="$(command -v cargo)" "$SEARCHRIGHT_TOOL_ROOT/bin/cargo-vet" vet --locked --no-minimize-exemptions
       - name: Save verified security tools from main
         if: >-
           success() && github.ref == 'refs/heads/main' &&
