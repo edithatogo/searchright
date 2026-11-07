@@ -1188,7 +1188,7 @@ f6db78be86ae1b301d9160a919e186e1c2e11cbf9b5290c3b35bbd70d1dc9c0f  ./crates/searc
 0a5b9926feccdd8fec2add8246f35931eca10d61f3caee58ff45fdac43008fa1  ./crates/searchright-governance/src/approval.rs
 ddd77a85d1af83aaf060b8f0f479d03dcd0cdc684887be3bdefdb6659e2594f3  ./crates/searchright-governance/src/lib.rs
 dc08697cbba5a225793267093734068fe2e4a247c3b94e85c61669aa8104c026  ./crates/searchright-interchange/Cargo.toml
-68791938b054c00f230e8d01bc06aebdbc0cb6f1ee32ffabdbfc7505fd367cd3  ./crates/searchright-interchange/src/lib.rs
+aa536629c63ec8a827801526b8d4544cfb11bc7a720f28b103723b6e4306f0dd  ./crates/searchright-interchange/src/lib.rs
 2b19d862c41d7640b98ba04b9337bd25d4ac69b05922be49205df28eb82914e0  ./crates/searchright-interchange/src/xml.rs
 2c9a1f1f6332104a1295e97d22dfa8b13ce1cd89c9015318765dcd5c7fbeb525  ./crates/searchright-interchange/tests/csv_integrity.rs
 576131d63c0a14485c5c9b4666a7064352b8b4629000cf8c7b4da41e2b90ce14  ./crates/searchright-interchange/tests/xml_integrity.rs
@@ -1285,7 +1285,7 @@ c04fec2360cf30c288a8ee3568eb43578aecaf66fb1e46f55a394852f21ad45f  ./docs/citewef
 bb7ffba6d77f0c08d895026a20800b7c5c7f903c7c0647273ffc6ea69d883ed0  ./docs/cli-compatibility.md
 ddb66e132fc3e30574df2083df00ea0636c04e729af0b0c65f50af4d6bad1b28  ./docs/contracts.md
 fd7d4170d5077bf4168884c7932044687050e6d4d8e2e61f654f2ae91bac03c4  ./docs/contracts/schema-evolution.md
-011f072e3dba5bd5d3d47e6460b3a3c6c1421cdb08e7f2002d9b42d1946968e9  ./docs/csv-dependency-decision.md
+8d0dbfca5c69eb1c05674b9d5d25a13fb6e02bfc965d8a885abb3a6ed091ad78  ./docs/csv-dependency-decision.md
 8df42ca40e886d3218efdac0470cb5e0533d404a40ee9299b2d9cf41579ce566  ./docs/data-lifecycle-policy.md
 ccc5172549f76b0da1b3535f8890460f9d0ce5abb37defb6003c10dca5144c53  ./docs/efetch-orchestration-design.md
 1d9c26ed2a9750878408b05652ebd62c2d09b1d248f68ee8163fe4d09be4bbe4  ./docs/estate-integration.md
@@ -1548,7 +1548,7 @@ fce023a851c56dc92750237fcf5631d112a4a92bc87aa151ff6e128804761ee9  ./skills/syste
 05dfa9b9e0364eeee96f3ca32d1f93540ddcb8796c981699e4105e758b5d0480  ./skills/systematic-search/references/tool-map.md
 ffa3116397f555294b1773519c24be879318001a0e50ddd5f0f16813fc7864fb  ./skills/systematic-search/workflows/systematic-review.yaml
 b7c5338dd5e4e7b610c66f1d1172a0890e5f75de24e8ae199edb12b4802d636d  ./supply-chain/README.md
-2db15c22ee7ee72cbf114cc32faa30c1997bef96cbc125f4306d42e693c0ed3a  ./supply-chain/audits.toml
+9658a90e19ba4da00e38c16038899bd4612b2d7db23fc4d0aea70dd306d6095f  ./supply-chain/audits.toml
 d90d42f021d4739a191c25191dd2e673137c253b29d7e51eda4ee4384e063a87  ./supply-chain/config.toml
 98fbcc844c8d456c8d48fff348a6a4e60d2263888321ba1c49d171a076c9ccdb  ./supply-chain/exemption-proposal.schema.json
 b4ba40b7a33d130bb22e950ea72b3f91454dcca11ef384eb03705624fa160c5b  ./supply-chain/exemption-proposals.json
