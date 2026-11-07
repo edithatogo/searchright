@@ -70,7 +70,7 @@ jsonwebtoken = { version = "11", features = ["aws_lc_rs"] }
 loom = "0.7.2"
 proptest = "1.8"
 quick-xml = "=0.42.0"
-rustls = { version = "0.23", default-features = false, features = ["aws_lc_rs"] }
+rustls = { version = "0.23.46", default-features = false, features = ["aws_lc_rs"] }
 reqwest = { version = "0.13.2", default-features = false, features = ["json", "rustls-no-provider", "http2", "charset"] }
 rmcp = { version = "=3.1.2", features = ["server", "client", "elicitation", "macros", "transport-io", "schemars"] }
 schemars = "1.0"
