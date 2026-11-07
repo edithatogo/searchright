@@ -1352,6 +1352,7 @@ fn export_csv(records: &[BibliographicRecord]) -> Result<String, InterchangeErro
     // Preserve the historical unquoted header, always-quoted fields and LF bytes.
     let output = b"record_id,native_id,title,authors,year,doi,pmid,container_title\n".to_vec();
     let mut writer = csv::WriterBuilder::new()
+        .buffer_capacity(csv_buffer_capacity(records)?)
         .has_headers(false)
         .quote_style(csv::QuoteStyle::Always)
         .terminator(csv::Terminator::Any(b'\n'))
@@ -1379,6 +1380,52 @@ fn export_csv(records: &[BibliographicRecord]) -> Result<String, InterchangeErro
         csv::Error::from(std::io::Error::new(std::io::ErrorKind::InvalidData, error))
     })?;
     Ok(output)
+}
+
+fn csv_buffer_capacity(records: &[BibliographicRecord]) -> Result<usize, InterchangeError> {
+    let invalid_size = || {
+        csv::Error::from(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "CSV field exceeds addressable buffer capacity",
+        ))
+    };
+    // Eleven bytes cover every possible i32 publication year, including its sign.
+    let mut largest_field = 11_usize;
+    for record in records {
+        let separator_bytes = record
+            .authors
+            .len()
+            .saturating_sub(1)
+            .checked_mul(2)
+            .ok_or_else(invalid_size)?;
+        let author_bytes = record
+            .authors
+            .iter()
+            .try_fold(separator_bytes, |length, author| {
+                length.checked_add(author.len())
+            })
+            .ok_or_else(invalid_size)?;
+        for field_length in [
+            record.record_id.len(),
+            record.native_id.len(),
+            record.title.len(),
+            author_bytes,
+            record.identifiers.doi.as_deref().map_or(0, str::len),
+            record.identifiers.pmid.as_deref().map_or(0, str::len),
+            record.container_title.as_deref().map_or(0, str::len),
+        ] {
+            largest_field = largest_field.max(field_length);
+        }
+    }
+    // Doubled quotes plus the two enclosing quotes fit a fresh buffer. A field
+    // can then require at most one suffix retry after a partly filled buffer,
+    // avoiding repeated full-suffix scans by csv-core's quoting routine.
+    let capacity = largest_field
+        .checked_mul(2)
+        .and_then(|length| length.checked_add(2))
+        .filter(|&length| length <= isize::MAX.unsigned_abs())
+        .ok_or_else(invalid_size)?;
+    Ok(capacity.max(8 * 1024))
 }
 
 fn export_bibtex(records: &[BibliographicRecord]) -> String {
@@ -1747,6 +1794,46 @@ mod tests {
 
         let exported = export_records(&res.records, InterchangeFormat::Csv)?;
         assert!(exported.contains("A Study on Search"));
+        Ok(())
+    }
+
+    #[test]
+    fn csv_buffer_covers_large_quoted_fields_and_preserves_bytes() -> Result<(), InterchangeError> {
+        let mut record = golden_record();
+        record.title = format!("{}\r\n{}", "x".repeat(12_000), "\"".repeat(4_000));
+        let encoded_length = record.title.len()
+            + record.title.bytes().filter(|&byte| byte == b'"').count()
+            + 2;
+        let records = std::slice::from_ref(&record);
+        assert!(encoded_length > 8 * 1024);
+        assert!(csv_buffer_capacity(records)? >= encoded_length);
+        let exported = export_records(records, InterchangeFormat::Csv)?;
+        let imported = import_csv(&exported, "receipt-large-title")?;
+        assert_eq!(imported.records.len(), 1);
+        assert_eq!(
+            imported.records.first().map(|value| value.title.as_str()),
+            Some(record.title.as_str())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn csv_buffer_sizes_joined_authors_as_one_field() -> Result<(), InterchangeError> {
+        let mut record = golden_record();
+        record.authors = vec!["A\"".repeat(2_000), "B\"".repeat(2_000), "C\"".repeat(2_000)];
+        let joined = record.authors.join("; ");
+        let encoded_length = joined.len() + joined.bytes().filter(|&byte| byte == b'"').count() + 2;
+        let records = std::slice::from_ref(&record);
+        assert!(record.authors.iter().all(|author| author.len() < 8 * 1024));
+        assert!(encoded_length > 8 * 1024);
+        assert!(csv_buffer_capacity(records)? >= encoded_length);
+        let exported = export_records(records, InterchangeFormat::Csv)?;
+        let imported = import_csv(&exported, "receipt-large-authors")?;
+        assert_eq!(imported.records.len(), 1);
+        assert_eq!(
+            imported.records.first().map(|value| value.authors.as_slice()),
+            Some(record.authors.as_slice())
+        );
         Ok(())
     }
 

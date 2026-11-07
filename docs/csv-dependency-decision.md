@@ -30,8 +30,50 @@ the locked workspace graph; the table lists the three added registry packages.
 The exact checksums in `Cargo.lock` come from their official crates.io index
 entries. Cargo must confirm resolution before a compiler-backed claim.
 
-Existing licence, advisory, dependency review and `cargo vet` admission gates
-apply to these versions. This decision adds no audit assertion or exemption.
+Existing licence, advisory and dependency review checks apply. The three new
+exact versions have agent-authored source reviews recorded in `cargo vet` after
+checking the published source identity. No exemption or publisher trust is added.
+
+## Exact-source review
+
+Reviewed on 2026-11-07 by OpenAI ChatGPT coding agents. The existing approved peer
+registries did not supply exact-version audit coverage for these additions; the
+reviews here are locally authored and retain that attribution.
+
+The temporary [source-identity job](https://github.com/edithatogo/searchright/actions/runs/42357467565/job/128358607285)
+downloaded the official published archives, verified all three SHA256 values
+against `Cargo.lock`, and reported their source-file hashes and manifests without
+executing package code. Every published `src/` file and original Cargo manifest
+matched the reviewed upstream files; no additional source file was present.
+All three normalized manifests set `build = false`. The temporary workflow was
+removed after this comparison.
+
+| Package | Reviewed source identity | Substantive checks |
+| --- | --- | --- |
+| `csv` 1.4.0 | [Release commit](https://github.com/BurntSushi/rust-csv/tree/4a3997e91d668ea1d8595bdef15625a77cf2308a); 12 source/manifest files matched | Four unchecked UTF-8 conversions and the private `StringRecord` validation/clearing invariants; reader/writer progress and caller-selected I/O |
+| `csv-core` 0.1.13 | Four source/manifest files matched that release tree; archive VCS commit is `a0a3c9e4b493c216fb6d8284c9ac918444ba67f3` | No unsafe code or allocation; state-machine and caller-buffer bounds; builder creates the DFA used by the higher-level reader |
+| `ryu` 1.0.23 | [Release commit](https://github.com/dtolnay/ryu/tree/f0b52bb194befe6fd242154f2182fafd43a819b8); 17 source files, original manifest and both licences matched | Sealed float API, initialized 24-byte output, pointer/index bounds; full power-table constants and all exponent-derived indices independently checked |
+
+No unexpected network, process execution or ambient filesystem access was found
+in the deployed paths. CSV's explicit file-opening APIs remain caller-directed;
+Searchright passes in-memory readers and writers. Parser permissiveness and
+input-dependent memory use remain documented limitations. Direct cloning or
+default construction of a low-level core reader does not preserve/build its DFA
+like the builder does; Searchright uses the higher-level builder path and does
+not expose or clone core readers.
+
+The review also identified repeated scans of a large quoted field when the core
+writer exhausts its fixed-size output buffer. Searchright sizes the writer buffer
+to at least the largest fully encoded field, using checked arithmetic. A field
+therefore fits a fresh buffer, limiting continuation to one retry and keeping
+scanning linear in field bytes without imposing a new size cap. Memory remains
+proportional to the largest field and the materialized output.
+
+These reviews support the recorded criterion for the deployed configurations;
+they are not formal proofs, upstream attestations or exhaustive tests. No local
+Rust/Miri/fuzz execution is claimed. Changes to enabled features or direct core
+API use require reassessing these boundaries. Native integration tests and
+advisory checks run separately in CI.
 
 ## Compatibility and corrected behaviour
 
@@ -40,6 +82,9 @@ apply to these versions. This decision adds no audit assertion or exemption.
   header-only. Public function signatures stay unchanged. Writer errors propagate
   through the new `InterchangeError::Csv` variant; downstream exhaustive matches
   on this enum may need updating.
+- The writer buffer adapts to the largest output field, including joined authors
+  and quote expansion, avoiding repeated scans through large fields. Checked
+  length overflow becomes an input error rather than wrapping.
 - Both readers use `has_headers(false)` so Searchright retains its field mapping,
   and `flexible(true)` so existing short rows and extra columns remain accepted.
   Bibliographic imports retain their filtering of records with only empty fields.
