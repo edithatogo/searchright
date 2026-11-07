@@ -133,6 +133,19 @@ def render_plan(entry: dict) -> str:
         "",
         f"GitHub issue key: `track-{track_id}`. Each numbered phase maps to the same-numbered native subissue.",
         "",
+        *(
+            [
+                "## Active forward plan",
+                "",
+                f"[Agent-led frontier programme](../../../{entry['active_plan']}) "
+                "defines current milestones and optional operating/release profiles. "
+                "The legacy phases below retain their evidence history; no new "
+                "phase/task hierarchy is required for the programme.",
+                "",
+            ]
+            if entry.get("active_plan")
+            else []
+        ),
         "## Phase 1: Source implementation",
         "",
         f"<!-- github-subissue-key: track-{track_id}-phase-1 -->",
@@ -237,6 +250,12 @@ def render_plan(entry: dict) -> str:
 def render_tracks(entries: list[dict]) -> str:
     lines = [
         "# Tracks",
+        "",
+        "The [agent-led frontier programme](frontier-plan.md) is the active forward plan.",
+        "It links existing ownership to four milestones, operating modes, reusable",
+        "dependencies, research studies and versioned outputs. Historical evidence and",
+        "archived acceptance below remain historical; new planned modes are not current",
+        "runtime claims. Do not generate a second phase/task hierarchy for this programme.",
         "",
         "Track status, implementation completeness and evidence level are separate.",
         "`scaffolded` and `partially_implemented` prevent path presence from being",

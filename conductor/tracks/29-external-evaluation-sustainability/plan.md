@@ -4,6 +4,10 @@ Current status: **external_evidence_required**. Implementation state: **external
 
 GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered native subissue.
 
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
+
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-29-phase-1 -->

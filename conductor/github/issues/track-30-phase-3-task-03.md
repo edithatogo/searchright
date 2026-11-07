@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Keep autonomous end-to-end review and final agent exclusions outside the release claim.
+- [ ] Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.
 
 ## Completion and evidence contract
 

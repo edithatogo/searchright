@@ -22,6 +22,7 @@
       "integration/provider-policies/index.json"
     ],
     "planning": [
+      "conductor/frontier-plan.md",
       "conductor/requirements.md",
       "conductor/traceability-overrides.json",
       "conductor/roadmap-coverage.json",
