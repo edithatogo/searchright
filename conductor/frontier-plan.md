@@ -24,6 +24,7 @@ Supporting plans:
 - [Research studies, datasets and journals](../docs/research/programme.md).
 - [Versioned evidence packages and repository outputs](../docs/research/evidence-packages.md).
 - [Existing GitHub and Hugging Face reuse](../docs/research/portfolio-reuse.md).
+- [Optional local-model comparisons](../docs/research/local-model-comparison-20261108.md) — small, task-scoped tests within existing owners; no extra track hierarchy.
 
 ## Four milestones
 
