@@ -7,6 +7,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use searchright_contracts::{BenchmarkMetric, BenchmarkReport, RankingScore, Validate};
 use searchright_dedup::DedupResult;
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 
 /// Binary classification or retrieval metrics.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -359,7 +360,7 @@ pub struct SealedSplitManifest {
     pub labels_present: bool,
     /// Location of external evaluation labels.
     pub labels_location: String,
-    /// Optional content digest of external labels when mounted.
+    /// Optional canonical SHA-256 digest from [`sealed_label_digest`] when labels are mounted.
     pub label_digest: Option<String>,
     /// Release conditions governing the sealed split.
     pub release_condition: String,
@@ -405,6 +406,9 @@ impl SealedSplitManifest {
                 "sealed manifest labels_present must be false in repository".to_owned(),
             ));
         }
+        if let Some(digest) = &self.label_digest {
+            validate_label_digest(digest)?;
+        }
         if self.release_condition.trim().is_empty() {
             return Err(BenchmarkError::InvalidManifest(
                 "release condition must not be blank".to_owned(),
@@ -430,11 +434,79 @@ pub fn check_split_contamination(manifest: &SealedSplitManifest, content: &str) 
         .collect()
 }
 
-/// Evaluate candidate predictions against external ground-truth labels for a sealed split.
+/// Digest external binary labels using the sealed-labels v1 encoding.
 ///
-/// Ensures anti-leakage controls: validates the manifest, verifies the label digest
-/// format (canonical 64-char hexadecimal), ensures all candidate predictions exist in labels,
-/// and computes binary metrics for the positive class.
+/// SHA-256 covers the bytes `org.searchright.sealed-labels.v1\0`, followed by the
+/// label count as an unsigned 64-bit big-endian integer. Labels are sorted by the
+/// exact UTF-8 bytes of their identifiers. Each entry contributes its identifier's
+/// byte length as an unsigned 64-bit big-endian integer, the identifier bytes,
+/// and one byte (`0` for false, `1` for true). The result is lowercase hexadecimal.
+/// Identifiers are not trimmed or Unicode-normalised. Empty collections, blank
+/// identifiers and duplicate identifiers are rejected.
+///
+/// Compute and retain this commitment in the separate evaluation environment
+/// before candidate scoring. A digest supplied by the same party as mutable
+/// labels cannot establish that the labels were frozen or kept from a model.
+pub fn sealed_label_digest(labels: &[(String, bool)]) -> Result<String, BenchmarkError> {
+    digest_label_map(&checked_label_map(labels)?)
+}
+
+fn checked_label_map(labels: &[(String, bool)]) -> Result<BTreeMap<&str, bool>, BenchmarkError> {
+    if labels.is_empty() {
+        return Err(BenchmarkError::EmptyLabels);
+    }
+    let mut label_map = BTreeMap::new();
+    for (identifier, positive) in labels {
+        if identifier.trim().is_empty() {
+            return Err(BenchmarkError::EmptyLabelRecordId);
+        }
+        if label_map.insert(identifier.as_str(), *positive).is_some() {
+            return Err(BenchmarkError::DuplicateLabelRecord(identifier.clone()));
+        }
+    }
+    Ok(label_map)
+}
+
+fn digest_label_map(labels: &BTreeMap<&str, bool>) -> Result<String, BenchmarkError> {
+    let mut digest = Sha256::new();
+    digest.update(b"org.searchright.sealed-labels.v1\0");
+    let count = u64::try_from(labels.len()).map_err(|_| BenchmarkError::LabelEncodingTooLarge)?;
+    digest.update(count.to_be_bytes());
+    for (identifier, positive) in labels {
+        let length =
+            u64::try_from(identifier.len()).map_err(|_| BenchmarkError::LabelEncodingTooLarge)?;
+        digest.update(length.to_be_bytes());
+        digest.update(identifier.as_bytes());
+        digest.update([u8::from(*positive)]);
+    }
+    Ok(digest
+        .finalize()
+        .iter()
+        .map(|byte| format!("{byte:02x}"))
+        .collect())
+}
+
+fn validate_label_digest(digest: &str) -> Result<(), BenchmarkError> {
+    if digest.len() != 64
+        || !digest
+            .bytes()
+            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+    {
+        return Err(BenchmarkError::InvalidLabelDigest(digest.to_owned()));
+    }
+    Ok(())
+}
+
+/// Evaluate complete binary predictions against external labels for one sealed population.
+///
+/// Every manifest identifier must occur exactly once in both labels and predictions;
+/// unknown, missing and duplicate identifiers are errors. Missing predictions are
+/// never interpreted as negative decisions or uncounted abstentions. Workflows
+/// with abstentions need an explicit evaluation protocol rather than this API.
+///
+/// The supplied digest must equal [`sealed_label_digest`] for the actual labels,
+/// as must the manifest digest when present. These checks bind the scored population
+/// and values; they do not prove independent label custody or absence of leakage.
 pub fn evaluate_sealed_benchmark(
     manifest: &SealedSplitManifest,
     label_digest: &str,
@@ -442,32 +514,63 @@ pub fn evaluate_sealed_benchmark(
     labels: &[(String, bool)],
 ) -> Result<BinaryMetrics, BenchmarkError> {
     manifest.validate()?;
-    if label_digest.len() != 64
-        || !label_digest
-            .bytes()
-            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+    validate_label_digest(label_digest)?;
+    let label_map = checked_label_map(labels)?;
+    let cases = manifest
+        .case_ids
+        .iter()
+        .map(String::as_str)
+        .collect::<BTreeSet<_>>();
+    for identifier in label_map.keys() {
+        if !cases.contains(identifier) {
+            return Err(BenchmarkError::UnknownLabelRecord((*identifier).to_owned()));
+        }
+    }
+    for identifier in &cases {
+        if !label_map.contains_key(identifier) {
+            return Err(BenchmarkError::MissingLabelRecord((*identifier).to_owned()));
+        }
+    }
+    let computed_digest = digest_label_map(&label_map)?;
+    if computed_digest != label_digest {
+        return Err(BenchmarkError::LabelDigestMismatch);
+    }
+    if manifest
+        .label_digest
+        .as_ref()
+        .is_some_and(|declared| declared != &computed_digest)
     {
-        return Err(BenchmarkError::InvalidLabelDigest(label_digest.to_owned()));
+        return Err(BenchmarkError::ManifestLabelDigestMismatch);
     }
-    let label_map = labels.iter().cloned().collect::<BTreeMap<String, bool>>();
-    if label_map.is_empty() {
-        return Err(BenchmarkError::EmptyLabels);
-    }
-    let mut expected_positives = BTreeSet::new();
-    let mut observed_positives = BTreeSet::new();
-    for (id, is_positive) in &label_map {
-        if *is_positive {
-            expected_positives.insert(id.clone());
+    let mut prediction_map = BTreeMap::new();
+    for (identifier, positive) in predictions {
+        if !cases.contains(identifier.as_str()) {
+            return Err(BenchmarkError::UnknownPredictionRecord(identifier.clone()));
+        }
+        if prediction_map
+            .insert(identifier.as_str(), *positive)
+            .is_some()
+        {
+            return Err(BenchmarkError::DuplicatePredictionRecord(identifier.clone()));
         }
     }
-    for (id, is_positive) in predictions {
-        if !label_map.contains_key(id) {
-            return Err(BenchmarkError::UnknownPredictionRecord(id.clone()));
-        }
-        if *is_positive {
-            observed_positives.insert(id.clone());
+    for identifier in &cases {
+        if !prediction_map.contains_key(identifier) {
+            return Err(BenchmarkError::MissingPredictionRecord(
+                (*identifier).to_owned(),
+            ));
         }
     }
+    let expected_positives = label_map
+        .iter()
+        .filter(|(_, positive)| **positive)
+        .map(|(&identifier, _)| identifier)
+        .collect();
+    let observed_positives = prediction_map
+        .iter()
+        .filter(|(_, positive)| **positive)
+        .map(|(&identifier, _)| identifier)
+        .collect();
     Ok(binary_metrics(&expected_positives, &observed_positives))
 }
 
@@ -636,14 +739,41 @@ pub enum BenchmarkError {
     #[error("invalid sealed benchmark manifest: {0}")]
     InvalidManifest(String),
     /// Invalid label digest format.
-    #[error("invalid label digest `{0}`; must be 64 hexadecimal characters")]
+    #[error("invalid label digest `{0}`; must be 64 lowercase hexadecimal characters")]
     InvalidLabelDigest(String),
+    /// The supplied digest did not match the canonical external label bytes.
+    #[error("label digest does not match the canonical sealed-labels v1 encoding")]
+    LabelDigestMismatch,
+    /// The manifest commitment did not match the actual external labels.
+    #[error("manifest label digest does not match the evaluated labels")]
+    ManifestLabelDigestMismatch,
     /// Labels collection was empty.
     #[error("sealed benchmark labels must not be empty")]
     EmptyLabels,
+    /// A label had a blank record identifier.
+    #[error("sealed benchmark label identifier must not be blank")]
+    EmptyLabelRecordId,
+    /// A label identifier appeared more than once, even with the same value.
+    #[error("label identifier `{0}` appears more than once")]
+    DuplicateLabelRecord(String),
+    /// A label identifier was absent from the sealed population.
+    #[error("label references record `{0}` outside the sealed manifest")]
+    UnknownLabelRecord(String),
+    /// A sealed-population identifier had no label.
+    #[error("sealed manifest record `{0}` has no label")]
+    MissingLabelRecord(String),
+    /// A collection or identifier cannot fit the encoding's unsigned 64-bit length.
+    #[error("sealed labels exceed the canonical encoding's 64-bit length limit")]
+    LabelEncodingTooLarge,
     /// Prediction record ID was absent from ground truth labels.
     #[error("prediction references unknown record `{0}`")]
     UnknownPredictionRecord(String),
+    /// A prediction identifier appeared more than once, even with the same value.
+    #[error("prediction identifier `{0}` appears more than once")]
+    DuplicatePredictionRecord(String),
+    /// A sealed-population identifier had no explicit binary prediction.
+    #[error("sealed manifest record `{0}` has no prediction; implicit abstentions are unsupported")]
+    MissingPredictionRecord(String),
     /// Contract validation error.
     #[error("benchmark contract error: {0}")]
     ContractValidation(String),
@@ -1000,13 +1130,12 @@ mod tests {
             release_condition: "panel review required".to_owned(),
             claim_boundary: "no unverified performance claims".to_owned(),
         };
-        let label_digest = "a".repeat(64);
-
         let labels = vec![
             ("r1".to_owned(), true),
             ("r2".to_owned(), false),
             ("r3".to_owned(), true),
         ];
+        let label_digest = sealed_label_digest(&labels)?;
         let predictions = vec![
             ("r1".to_owned(), true),
             ("r2".to_owned(), true),

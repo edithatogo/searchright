@@ -17,23 +17,27 @@
         "benchmarks/methodology/fixtures/sealed/manifest.json",
         "scripts/check_methodology_benchmarks.py",
         "scripts/check_benchmark_governance.py",
-        "crates/searchright-bench/src/lib.rs"
+        "crates/searchright-bench/src/lib.rs",
+        "crates/searchright-bench/tests/sealed_identity.rs"
       ],
       "implementation_symbols": [
         "scripts/check_benchmark_governance.py::main",
         "scripts/check_methodology_benchmarks.py::main",
         "searchright_bench::SealedSplitManifest",
         "searchright_bench::evaluate_sealed_benchmark",
-        "searchright_bench::validate_public_benchmark_report"
+        "searchright_bench::validate_public_benchmark_report",
+        "searchright_bench::sealed_label_digest"
       ],
       "deterministic_tests": [
         "python scripts/check_benchmark_governance.py",
-        "python scripts/check_methodology_benchmarks.py"
+        "python scripts/check_methodology_benchmarks.py",
+        "cargo test --locked -p searchright-bench --test sealed_identity"
       ],
       "native_test_commands": [
         "cargo test --locked -p searchright-bench",
         "python3 -B scripts/check_benchmark_governance.py",
-        "python3 -B scripts/check_methodology_benchmarks.py"
+        "python3 -B scripts/check_methodology_benchmarks.py",
+        "cargo test --locked -p searchright-bench --test sealed_identity"
       ],
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json",
