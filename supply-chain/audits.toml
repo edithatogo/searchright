@@ -1,6 +1,12 @@
 
 # cargo-vet audits file
 
+[[audits.clap_mangen]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+version = "0.2.33"
+notes = "Track 09 source review: forbids unsafe code and renders clap metadata to caller-provided writers or paths; no network or process execution paths found."
+
 [[audits.csv]]
 who = "OpenAI ChatGPT coding agent"
 criteria = "safe-to-deploy"
@@ -12,12 +18,6 @@ who = "OpenAI ChatGPT coding agent"
 criteria = "safe-to-deploy"
 version = "0.1.13"
 notes = "Source review of the exact published library and original manifest; all source hashes match the reviewed csv 1.4.0 release tree. No unsafe code, allocation, build script, network or process execution. Reviewed state-machine progress and caller-buffer bounds. Current use is through csv ReaderBuilder, which constructs the DFA, and a writer buffer sized to avoid repeated suffix scans; direct core Reader::default/clone behaviour is outside the deployed path. See docs/csv-dependency-decision.md for identity evidence and limits. Agent review, not an upstream audit or formal proof."
-
-[[audits.clap_mangen]]
-who = "OpenAI Codex <noreply@openai.com>"
-criteria = "safe-to-deploy"
-version = "0.2.33"
-notes = "Track 09 source review: forbids unsafe code and renders clap metadata to caller-provided writers or paths; no network or process execution paths found."
 
 [[audits.noyalib]]
 who = "OpenAI Codex <noreply@openai.com>"
@@ -37,17 +37,17 @@ criteria = "safe-to-deploy"
 version = "1.1.1"
 notes = "Track 09 source review: pure ROFF document construction and escaped writer output; no unsafe, network, process, or filesystem access paths found."
 
-[[audits.ryu]]
-who = "OpenAI ChatGPT coding agent"
-criteria = "safe-to-deploy"
-version = "1.0.23"
-notes = "Source review of the exact published library and original manifest, matched to upstream f0b52bb194befe6fd242154f2182fafd43a819b8. Reviewed sealed f32/f64 APIs, initialized fixed-size ASCII output, pointer bounds and lookup-table indexing; checked all full table constants and exponent-derived indices independently. Runtime has no allocation or ambient I/O; published manifest disables build scripts. See docs/csv-dependency-decision.md for identity evidence and review limits. Agent review, not an upstream attestation, formal proof or exhaustive native test."
-
 [[audits.rustls]]
 who = "OpenAI Codex <noreply@openai.com>"
 criteria = "safe-to-deploy"
 delta = "0.23.43 -> 0.23.46"
 notes = "Track 16 security advisory patch review: TLS protocol and handshake security fixes from 0.23.43 to 0.23.46 paired with audited rustls-webpki 0.103.16."
+
+[[audits.ryu]]
+who = "OpenAI ChatGPT coding agent"
+criteria = "safe-to-deploy"
+version = "1.0.23"
+notes = "Source review of the exact published library and original manifest, matched to upstream f0b52bb194befe6fd242154f2182fafd43a819b8. Reviewed sealed f32/f64 APIs, initialized fixed-size ASCII output, pointer bounds and lookup-table indexing; checked all full table constants and exponent-derived indices independently. Runtime has no allocation or ambient I/O; published manifest disables build scripts. See docs/csv-dependency-decision.md for identity evidence and review limits. Agent review, not an upstream attestation, formal proof or exhaustive native test."
 
 [[audits.tokio]]
 who = "OpenAI Codex <noreply@openai.com>"
