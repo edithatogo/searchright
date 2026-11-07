@@ -753,7 +753,7 @@ a7a0c7e49ecfbd0825152ffe82df080f8c1076a2552d4977d81f3d66ea5a3fd1  ./conductor/tr
 7cd207c88236f1732cf9831578764b45d40ede473c0c23a47e15cada462e6639  ./conductor/tracks/13-integration-passports-github-context/evidence.json
 100117d22ed8353d1eeadba135fc2a988cdbde96455abcc5d19f8b0ab4d36215  ./conductor/tracks/13-integration-passports-github-context/metadata.json
 91da6190d555d20859c6fbcf2d22ae7c2493635d72d5f89262cac0f5b7e57035  ./conductor/tracks/13-integration-passports-github-context/plan.md
-d0aa1f8ee4cf4f560dc5296968b9894a67c9018f42b6676177f269205aec9ffd  ./conductor/tracks/13-integration-passports-github-context/spec.md
+d18892caafb7c6c148963c3bcac982944ad188fcc3e7193cc4ff5d397539e02f  ./conductor/tracks/13-integration-passports-github-context/spec.md
 45360179c29d497b68cda081dce3d7a00bafe831c76dd32891360d4995277d83  ./conductor/tracks/13-integration-passports-github-context/traceability.json
 a2b89defbde7454bf82aea4b8e62f248d4ea3f64d918be2575bf9c3c79edde4b  ./conductor/tracks/14-sourceright-migration/evidence.json
 7f850347d31d6cbef7ea2f242264d01d11e7969ec297ffb7447d737b4c69aa52  ./conductor/tracks/14-sourceright-migration/metadata.json
@@ -1295,6 +1295,7 @@ ccc5172549f76b0da1b3535f8890460f9d0ce5abb37defb6003c10dca5144c53  ./docs/efetch-
 dcde714b28f518b1f53edcdb10b9068335c14287ee2e982f5637a7fd912c4638  ./docs/github-operating-system.md
 80a8c024cd0e412943c6ddf26e72b71a526a21b272eff511a5a85c7c53271e7a  ./docs/governance/sustainability.md
 82acf4dac3d774f504cba9637b362e0dcbdba04de40fbbc14a3d5a773ec76b73  ./docs/integration-architecture.md
+e75bcf863c005d08173c30c4eeb29f387f9d1432b857be79cbfbd4f31fb4d322  ./docs/integration/rcagent-evidence-view.md
 f50dd68ac5a51ce8ec1a34a252868bf0a8b64dd423936b970ce6a7439053232f  ./docs/local-api-evidence.md
 4265b654e2a2715ead731d0036eb22813f64148b80437d89aabfb2e44f05bc02  ./docs/maturity/1.0-gate.md
 3bbd415432f4349470ce6c07cfc4275196f565c1b2605dabe6ab3a0d170dee86  ./docs/maturity/gap-register.md
@@ -1327,7 +1328,7 @@ e0377ea1763643cf2935686f431f35851b92ff3fd71a39ee2a1da32b0ae9e105  ./docs/reporti
 bdcbca4d57f09b35a9824ea831373e0f8262e3d03a574cfd1cb0feac6ddaa28f  ./docs/repository-standards-alignment.md
 b7795ede3d1bd7bd434def717f6d789c6bf0e82834517fb01bc23809457004c1  ./docs/research/evidence-packages.md
 862615d3510d15dcc6c2598b3665dd75085296e1d84ccf51caf522c29950a8ba  ./docs/research/local-model-comparison-20261108.md
-a013e7ffaf20054085613443624bad1617c87c7334868d45ccf19e22d334c67d  ./docs/research/portfolio-reuse.md
+92c9f4b0149df752fc61331cef5ab1f7ffa504d1ecbd5b9767f87a76b847a26c  ./docs/research/portfolio-reuse.md
 e64676609d6dbc723cf387a5c2c78688c9cd3b24588768bb5df008963219d69e  ./docs/research/programme.md
 fceab224971908268698c5d18ba123074496573202ae29d9d5c75701165283e5  ./docs/safety/abuse-cases.md
 e5e932c2aa0d6465e16cd4b6155b9eceef923731ca9895d8352f186b4bfd31d1  ./docs/safety/safety-case.md
