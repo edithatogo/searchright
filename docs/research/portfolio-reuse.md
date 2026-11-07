@@ -25,6 +25,16 @@ All named GitHub repositories and HF datasets below are in the `edithatogo` name
 | [synergy-dataset fork](https://github.com/edithatogo/synergy-dataset/blob/dc2dadfdbb98eb1b4259604789abd640aa3b693e/README.md), [canonical upstream](https://github.com/asreview/synergy-dataset) | Existing fork of ASReview's systematic-review study-selection benchmark; local revision `dc2dadf`. | Pin an upstream release/DOI for screening/ranking evaluation; use review-level held-out splits, leakage checks and external sealed labels. Keep the local fork as a mirror/patch carrier. | CC0 dataset. This is a study-selection benchmark, not evidence that retrieval is comprehensive or final exclusion may be automated. |
 | [standards_check / StandardFlow foundation](https://github.com/edithatogo/standards_check/pull/59), [Searchright PR #688](https://github.com/edithatogo/searchright/pull/688) | PR #688 was open and unmerged at inspection. It prepares contracts against `standards_check@f248d7c4dd40dd34cb45b5b6150b4750a5b28864`. | Reuse Canonical Standard Pack/artefact recipes and neutral evidence envelopes; test consumer parity before cutover. Searchright retains review state and PRISMA counts; native rendering remains fallback. | Source-prepared integration only; standards-content rights and cross-repository runtime parity are unresolved. Neither PR status nor contract presence establishes operational integration. |
 
+## Scoped RCA consumer — 8 November 2026
+
+The [rcagent cognitive-autopsy programme](https://github.com/edithatogo/rcagent/pull/117)
+is an additional downstream consumer, with the [planned integration boundary](../integration/rcagent-evidence-view.md)
+owned by Track 13. Reuse Searchright for admitted public literature discovery
+and neutral receipts. Its sensitive case evidence, decision-time interpretation,
+local retrieval and semantic verification stay in rcagent. This is a planning
+handoff, not an admitted integration or a new dataset; it does not alter any
+existing passport, pin, release train or publication authority.
+
 ## Route future datasets through the existing systems
 
 1. **Identify ownership in GitHub and the estate registry.** Put Searchright schemas, transforms, evaluation definitions, small synthetic fixtures and receipt manifests in this repository. Route new archival source families to their existing producer repository. Reuse a canonical HF dataset where its scope fits; otherwise register a distinct derivative or benchmark linked to its parents.
