@@ -1801,9 +1801,8 @@ mod tests {
     fn csv_buffer_covers_large_quoted_fields_and_preserves_bytes() -> Result<(), InterchangeError> {
         let mut record = golden_record();
         record.title = format!("{}\r\n{}", "x".repeat(12_000), "\"".repeat(4_000));
-        let encoded_length = record.title.len()
-            + record.title.bytes().filter(|&byte| byte == b'"').count()
-            + 2;
+        let encoded_length =
+            record.title.len() + record.title.bytes().filter(|&byte| byte == b'"').count() + 2;
         let records = std::slice::from_ref(&record);
         assert!(encoded_length > 8 * 1024);
         assert!(csv_buffer_capacity(records)? >= encoded_length);
@@ -1820,7 +1819,11 @@ mod tests {
     #[test]
     fn csv_buffer_sizes_joined_authors_as_one_field() -> Result<(), InterchangeError> {
         let mut record = golden_record();
-        record.authors = vec!["A\"".repeat(2_000), "B\"".repeat(2_000), "C\"".repeat(2_000)];
+        record.authors = vec![
+            "A\"".repeat(2_000),
+            "B\"".repeat(2_000),
+            "C\"".repeat(2_000),
+        ];
         let joined = record.authors.join("; ");
         let encoded_length = joined.len() + joined.bytes().filter(|&byte| byte == b'"').count() + 2;
         let records = std::slice::from_ref(&record);
@@ -1831,7 +1834,10 @@ mod tests {
         let imported = import_csv(&exported, "receipt-large-authors")?;
         assert_eq!(imported.records.len(), 1);
         assert_eq!(
-            imported.records.first().map(|value| value.authors.as_slice()),
+            imported
+                .records
+                .first()
+                .map(|value| value.authors.as_slice()),
             Some(record.authors.as_slice())
         );
         Ok(())
