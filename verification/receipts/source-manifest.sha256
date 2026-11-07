@@ -39,8 +39,8 @@ f899d720ed6467bafb457cff0eb078383dbc7d3ef74b054ad4c11e0b19ccc4fc  ./CODEX_HANDOF
 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
 a4c85be1e44f9b9ce9e3c9d0dec7fb8b80910779adddcd63df504d576f183867  ./CONTEXT.md
 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
-3dd97378854ab7c6b30fb7e30656bd38db8ea2c7526fbbe310c5bbc6a135bb1a  ./Cargo.lock
-5f46882c61e9b768bd686960f43661d9b30a6f26a4f864398a4c2f8a229deb55  ./Cargo.toml
+060c051671564950fee69987be8a725fe42d0a4b040175b5ea52963fa03c2d4b  ./Cargo.lock
+4d6584c0940b8d5cc301cc7ad3c509ba04ba530955ec554a3eb73b4861574bc4  ./Cargo.toml
 c01619a340bc72f11fd220edfadc87227e481748dcb30dc01dce93dddc809780  ./Dockerfile
 578a4b18c4f2cb587a64af04b36d81ca8fdb30eb63de45233728adf4cd2c7bdf  ./GEMINI.md
 e80ed3e27f0f4e6c140a76d8e77192856f0d9906a1af13e53f0fe01c63d3277b  ./GOVERNANCE.md
@@ -1187,9 +1187,10 @@ f6db78be86ae1b301d9160a919e186e1c2e11cbf9b5290c3b35bbd70d1dc9c0f  ./crates/searc
 288d974a6c0c5973e3d7cf2a0215617420c03f8580fef58aed0fd71b3a101e50  ./crates/searchright-governance/Cargo.toml
 0a5b9926feccdd8fec2add8246f35931eca10d61f3caee58ff45fdac43008fa1  ./crates/searchright-governance/src/approval.rs
 ddd77a85d1af83aaf060b8f0f479d03dcd0cdc684887be3bdefdb6659e2594f3  ./crates/searchright-governance/src/lib.rs
-5069699ce6476de2edd50ce66c5ef7eb31ee71fb47a93b8fabb2d8c7936acde7  ./crates/searchright-interchange/Cargo.toml
-86b7792275fa4294b9fae849f86ee42609ccf66c6d76f86b857d481e5ec22769  ./crates/searchright-interchange/src/lib.rs
+dc08697cbba5a225793267093734068fe2e4a247c3b94e85c61669aa8104c026  ./crates/searchright-interchange/Cargo.toml
+68791938b054c00f230e8d01bc06aebdbc0cb6f1ee32ffabdbfc7505fd367cd3  ./crates/searchright-interchange/src/lib.rs
 2b19d862c41d7640b98ba04b9337bd25d4ac69b05922be49205df28eb82914e0  ./crates/searchright-interchange/src/xml.rs
+4711939ea944e94786d28787ba806448203e92979ec840dddb2081595daf1dc3  ./crates/searchright-interchange/tests/csv_integrity.rs
 576131d63c0a14485c5c9b4666a7064352b8b4629000cf8c7b4da41e2b90ce14  ./crates/searchright-interchange/tests/xml_integrity.rs
 8afcdeca85e100838c56290285642691947fc74b299f8b7bd798f1365e0e8b32  ./crates/searchright-licensed/Cargo.toml
 515300d7796c83b95aa10d46f649f273cc70f4ea628bf9fbb26381be8859d45f  ./crates/searchright-licensed/src/lib.rs
@@ -1236,8 +1237,8 @@ a6b88b4626a6a0d262ff18b2aa7b028eeb0920f1a1f80d07a096d865756539ff  ./crates/searc
 23007def65ce7245e791c5c682096ca8976acb0897bc6222e99b6982344ac628  ./crates/searchright-ranking/Cargo.toml
 d1afe69eb3567521e945c1d00c70edfc23c6ba4d28724274471880f624437c9f  ./crates/searchright-ranking/src/lib.rs
 28d0080e5ccd1971114fb7ecaace269ee6d9331f261b30390789c65dc83bf320  ./crates/searchright-ranking/tests/tokenisation_and_calibration.rs
-f646980ff9e30280a35aaaef8c1596e193df7a175f929319242f5dc12e590ca8  ./crates/searchright-screening/Cargo.toml
-f7512fa495f3e79af00dc2a8597205e9acf222ff21a23b0a509c0e54907ee136  ./crates/searchright-screening/src/lib.rs
+eb5058fd68c8e4f05fd9e31e74a75706d8aee2b5fe706d18c99c46a1de35e181  ./crates/searchright-screening/Cargo.toml
+6d30060d0196a34c20274bae437ff674ed42ca9e43b30ccd8ae6fc6840fea2c3  ./crates/searchright-screening/src/lib.rs
 131b60e7126785e37373c380350abf0c83ac0b35e5062d757648476f96e5d7f1  ./crates/searchright-screening/tests/board_edges.rs
 30d5bb37f3d05a485355c625a47bb9b3b8b6bdc8b7c154ec0bc1c4649b51a3c1  ./crates/searchright-sourceright-compat/Cargo.toml
 4bea511915569717891bca8197948a57b8ec9ebfa9c394b2aaaf4623dfbf4637  ./crates/searchright-sourceright-compat/examples/parity_matrix_synthetic.rs
@@ -1284,6 +1285,7 @@ c04fec2360cf30c288a8ee3568eb43578aecaf66fb1e46f55a394852f21ad45f  ./docs/citewef
 bb7ffba6d77f0c08d895026a20800b7c5c7f903c7c0647273ffc6ea69d883ed0  ./docs/cli-compatibility.md
 ddb66e132fc3e30574df2083df00ea0636c04e729af0b0c65f50af4d6bad1b28  ./docs/contracts.md
 fd7d4170d5077bf4168884c7932044687050e6d4d8e2e61f654f2ae91bac03c4  ./docs/contracts/schema-evolution.md
+011f072e3dba5bd5d3d47e6460b3a3c6c1421cdb08e7f2002d9b42d1946968e9  ./docs/csv-dependency-decision.md
 8df42ca40e886d3218efdac0470cb5e0533d404a40ee9299b2d9cf41579ce566  ./docs/data-lifecycle-policy.md
 ccc5172549f76b0da1b3535f8890460f9d0ce5abb37defb6003c10dca5144c53  ./docs/efetch-orchestration-design.md
 1d9c26ed2a9750878408b05652ebd62c2d09b1d248f68ee8163fe4d09be4bbe4  ./docs/estate-integration.md
@@ -2507,7 +2509,7 @@ fd5840092032dc5325069c2afaa76bb028dd425522d8b94ae73de4aa635be313  ./verification
 ccda49067298ba91fd3c4b71fb8366b9bf0ff3fcdad78c4328d3fcbcf26f30ac  ./verification/reviews/track-09-sealed-request.json
 8c08e50b50752beb780e1ee5e8cb3754d19fe364833f119e795c8cfed3ab2cee  ./verification/reviews/track-09-security-safety.json
 ff07c0d76256e5611126e20ea506bb526482c5ac5f31652549678e5572f8eebc  ./verification/reviews/track-09-testing-ci.json
-e88d9bf3e5b165bee637c1c5e5e5b9b0fc36320c67782b627f083a22dbe9f9b0  ./verification/sbom/source-components.cdx.json
+0b04eca6893d2950d2351d41d2f10b6d161ca4a2e0109305713004c9873fe12b  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json

@@ -128,6 +128,20 @@
       "version": "0.2"
     },
     {
+      "bom-ref": "cargo-requirement:csv@=1.4.0",
+      "name": "csv",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/csv@=1.4.0",
+      "scope": "required",
+      "type": "library",
+      "version": "=1.4.0"
+    },
+    {
       "bom-ref": "cargo-requirement:futures@0.3",
       "name": "futures",
       "properties": [
@@ -1493,6 +1507,7 @@
     {
       "dependsOn": [
         "cargo-requirement:blake3@1.8",
+        "cargo-requirement:csv@=1.4.0",
         "cargo-requirement:proptest@1.8",
         "cargo-requirement:quick-xml@=0.42.0",
         "cargo-requirement:schemars@1.0",
@@ -1605,6 +1620,7 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:csv@=1.4.0",
         "cargo-requirement:proptest@1.8",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
@@ -1726,7 +1742,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:6f9ae204-4ba5-5d7b-a090-b6819e446a81",
+  "serialNumber": "urn:uuid:9fcf1b49-5bf7-54f0-900e-3c78ce8fa750",
   "specVersion": "1.6",
   "version": 1
 }

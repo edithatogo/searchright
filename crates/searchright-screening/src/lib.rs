@@ -696,63 +696,62 @@ pub fn import_covidence_csv(
     round: ScreeningRound,
     eligibility_version: &str,
 ) -> Result<Vec<ScreeningDecision>, ScreeningError> {
-    let mut lines = csv_content.lines();
-    let header = lines
+    let mut rows = csv_records(csv_content);
+    let header = rows
         .next()
+        .transpose()
+        .map_err(csv_import_error)?
         .ok_or_else(|| ScreeningError::InvalidImportData {
             reason: "empty CSV file".to_owned(),
         })?;
-    if !header.contains("Study ID") && !header.contains("Decision") {
+    if !header
+        .iter()
+        .any(|field| field.contains("Study ID") || field.contains("Decision"))
+    {
         return Err(ScreeningError::InvalidImportData {
             reason: "invalid Covidence CSV header".to_owned(),
         });
     }
 
     let mut decisions = Vec::new();
-    for (line_num, line) in lines.enumerate() {
-        let trimmed = line.trim();
-        if trimmed.is_empty() {
+    for row in rows {
+        let cols = row.map_err(csv_import_error)?;
+        if cols.len() == 1 && cols.get(0).is_some_and(|field| field.trim().is_empty()) {
             continue;
         }
-        let cols = parse_csv_line(trimmed);
         if cols.len() < 4 {
+            let line_num = csv_start_line(csv_content, &cols);
             return Err(ScreeningError::InvalidImportData {
-                reason: format!("insufficient columns on line {}", line_num + 2),
+                reason: format!("insufficient columns on line {line_num}"),
             });
         }
-        let subject_id = cols.first().map_or("", String::as_str).trim().to_owned();
+        let subject_id = cols.get(0).unwrap_or_default().trim().to_owned();
         let reviewer_id = cols
             .get(2)
-            .map(String::as_str)
             .map(str::trim)
             .filter(|s| !s.is_empty())
             .unwrap_or("imported-reviewer")
             .to_owned();
-        let dec_str = cols
-            .get(3)
-            .map(String::as_str)
-            .map_or("", str::trim)
-            .to_lowercase();
+        let dec_str = cols.get(3).map_or("", str::trim).to_lowercase();
         let decision_val = match dec_str.as_str() {
             "include" | "included" => DecisionValue::Include,
             "exclude" | "excluded" => DecisionValue::Exclude,
             "unclear" | "maybe" => DecisionValue::Unclear,
             other => {
+                let line_num = csv_start_line(csv_content, &cols);
                 return Err(ScreeningError::InvalidImportData {
-                    reason: format!("unrecognized decision `{other}` on line {}", line_num + 2),
+                    reason: format!("unrecognized decision `{other}` on line {line_num}"),
                 });
             }
         };
-        let reason_str = cols.get(4).map(String::as_str).map_or("", str::trim);
+        let reason_str = cols.get(4).map_or("", str::trim);
         let rationale = cols
             .get(5)
-            .map(String::as_str)
             .map(str::trim)
             .filter(|s| !s.is_empty())
             .unwrap_or("Imported from Covidence");
         let decided_at = cols
             .get(7)
-            .map(String::as_str)
             .map(str::trim)
             .filter(|s| !s.is_empty())
             .unwrap_or("2026-08-01T00:00:00Z")
@@ -803,63 +802,62 @@ pub fn import_rayyan_csv(
     round: ScreeningRound,
     eligibility_version: &str,
 ) -> Result<Vec<ScreeningDecision>, ScreeningError> {
-    let mut lines = csv_content.lines();
-    let header = lines
+    let mut rows = csv_records(csv_content);
+    let header = rows
         .next()
+        .transpose()
+        .map_err(csv_import_error)?
         .ok_or_else(|| ScreeningError::InvalidImportData {
             reason: "empty CSV file".to_owned(),
         })?;
-    if !header.contains("key") && !header.contains("rayyan_decision") {
+    if !header
+        .iter()
+        .any(|field| field.contains("key") || field.contains("rayyan_decision"))
+    {
         return Err(ScreeningError::InvalidImportData {
             reason: "invalid Rayyan CSV header".to_owned(),
         });
     }
 
     let mut decisions = Vec::new();
-    for (line_num, line) in lines.enumerate() {
-        let trimmed = line.trim();
-        if trimmed.is_empty() {
+    for row in rows {
+        let cols = row.map_err(csv_import_error)?;
+        if cols.len() == 1 && cols.get(0).is_some_and(|field| field.trim().is_empty()) {
             continue;
         }
-        let cols = parse_csv_line(trimmed);
         if cols.len() < 4 {
+            let line_num = csv_start_line(csv_content, &cols);
             return Err(ScreeningError::InvalidImportData {
-                reason: format!("insufficient columns on line {}", line_num + 2),
+                reason: format!("insufficient columns on line {line_num}"),
             });
         }
-        let subject_id = cols.first().map_or("", String::as_str).trim().to_owned();
+        let subject_id = cols.get(0).unwrap_or_default().trim().to_owned();
         let reviewer_id = cols
             .get(2)
-            .map(String::as_str)
             .map(str::trim)
             .filter(|s| !s.is_empty())
             .unwrap_or("imported-reviewer")
             .to_owned();
-        let dec_str = cols
-            .get(3)
-            .map(String::as_str)
-            .map_or("", str::trim)
-            .to_lowercase();
+        let dec_str = cols.get(3).map_or("", str::trim).to_lowercase();
         let decision_val = match dec_str.as_str() {
             "included" | "include" => DecisionValue::Include,
             "excluded" | "exclude" => DecisionValue::Exclude,
             "maybe" | "unclear" => DecisionValue::Unclear,
             other => {
+                let line_num = csv_start_line(csv_content, &cols);
                 return Err(ScreeningError::InvalidImportData {
-                    reason: format!("unrecognized decision `{other}` on line {}", line_num + 2),
+                    reason: format!("unrecognized decision `{other}` on line {line_num}"),
                 });
             }
         };
-        let reason_str = cols.get(4).map(String::as_str).map_or("", str::trim);
+        let reason_str = cols.get(4).map_or("", str::trim);
         let notes = cols
             .get(5)
-            .map(String::as_str)
             .map(str::trim)
             .filter(|s| !s.is_empty())
             .unwrap_or("Imported from Rayyan");
         let decided_at = cols
             .get(7)
-            .map(String::as_str)
             .map(str::trim)
             .filter(|s| !s.is_empty())
             .unwrap_or("2026-08-01T00:00:00Z")
@@ -912,34 +910,46 @@ fn escape_csv(val: &str) -> String {
     }
 }
 
-fn parse_csv_line(line: &str) -> Vec<String> {
-    let mut fields = Vec::new();
-    let mut in_quotes = false;
-    let mut current = String::new();
-    let mut chars = line.chars().peekable();
-    while let Some(ch) = chars.next() {
-        if in_quotes {
-            if ch == '"' {
-                if chars.peek() == Some(&'"') {
-                    current.push('"');
-                    chars.next();
-                } else {
-                    in_quotes = false;
-                }
-            } else {
-                current.push(ch);
-            }
-        } else if ch == '"' {
-            in_quotes = true;
-        } else if ch == ',' {
-            fields.push(current.trim().to_owned());
-            current.clear();
-        } else {
-            current.push(ch);
-        }
+fn csv_records(input: &str) -> impl Iterator<Item = csv::Result<csv::StringRecord>> + '_ {
+    csv::ReaderBuilder::new()
+        .has_headers(false)
+        .flexible(true)
+        .from_reader(input.as_bytes())
+        .into_records()
+}
+
+fn csv_import_error(error: csv::Error) -> ScreeningError {
+    ScreeningError::InvalidImportData {
+        reason: error.to_string(),
     }
-    fields.push(current.trim().to_owned());
-    fields
+}
+
+fn csv_start_line(input: &str, record: &csv::StringRecord) -> usize {
+    // Reader positions can precede skipped blank lines or the LF of CRLF.
+    // Count original line endings only on error paths, without re-parsing CSV.
+    let offset = record
+        .position()
+        .and_then(|position| usize::try_from(position.byte()).ok())
+        .unwrap_or_default();
+    let bytes = input.as_bytes();
+    let skipped = bytes
+        .get(offset..)
+        .unwrap_or_default()
+        .iter()
+        .take_while(|&&byte| matches!(byte, b'\r' | b'\n'))
+        .count();
+    let prefix = bytes
+        .get(..offset.saturating_add(skipped))
+        .unwrap_or_default();
+    let mut line = 1_usize;
+    let mut after_cr = false;
+    for &byte in prefix {
+        if byte == b'\r' || (byte == b'\n' && !after_cr) {
+            line = line.saturating_add(1);
+        }
+        after_cr = byte == b'\r';
+    }
+    line
 }
 
 fn slugify(s: &str) -> String {
@@ -1443,6 +1453,152 @@ mod tests {
 
         let eppi_json = export_eppi_reviewer_json(&board)?;
         assert!(eppi_json.contains("wrong-population"));
+        Ok(())
+    }
+
+    type CsvImporter =
+        fn(&str, &str, ScreeningRound, &str) -> Result<Vec<ScreeningDecision>, ScreeningError>;
+
+    fn csv_importers() -> [(&'static str, CsvImporter); 2] {
+        [
+            (
+                "Study ID,Round,Reviewer ID,Decision,Exclusion Reason,Rationale,Eligibility Version,Decided At",
+                import_covidence_csv,
+            ),
+            (
+                "key,rayyan_round,user,rayyan_decision,rayyan_reason,rayyan_notes,eligibility_version,decided_at",
+                import_rayyan_csv,
+            ),
+        ]
+    }
+
+    #[test]
+    fn csv_exports_round_trip_multiline_rationale_and_reason() -> Result<(), ScreeningError> {
+        let mut board = ScreeningBoard::new(policy())?;
+        let mut original = decision("reviewer", ReviewerKind::Human, DecisionValue::Exclude);
+        original.rationale = "First, line\r\nSecond \"quoted\" line".to_owned();
+        let reason = original
+            .exclusion_reason
+            .as_mut()
+            .ok_or(ScreeningError::MissingExclusionReason)?;
+        reason.label = "Wrong, population\nand \"setting\"".to_owned();
+        board.submit(original.clone())?;
+
+        for (input, importer) in [
+            (export_covidence_csv(&board), import_covidence_csv as CsvImporter),
+            (export_rayyan_csv(&board), import_rayyan_csv as CsvImporter),
+        ] {
+            let imported = importer(&input, "r1", ScreeningRound::TitleAbstract, "1")?;
+            assert_eq!(imported.len(), 1);
+            let restored = imported.first().ok_or(ScreeningError::EmptyField {
+                field: "imported_csv",
+            })?;
+            assert_eq!(restored.rationale, original.rationale);
+            assert_eq!(
+                restored.exclusion_reason.as_ref().map(|reason| &reason.label),
+                original.exclusion_reason.as_ref().map(|reason| &reason.label)
+            );
+            assert_eq!(restored.subject_id, original.subject_id);
+            assert_eq!(restored.reviewer_id, original.reviewer_id);
+            assert_eq!(restored.decision, original.decision);
+            assert_eq!(restored.decided_at, original.decided_at);
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn csv_imports_accept_bom_crlf_blank_lines_and_variable_width() -> Result<(), ScreeningError> {
+        for (header, importer) in csv_importers() {
+            let input = format!(
+                "\u{feff}{header}\r\n\r\n \r\n\
+                 record-1,round,reviewer,Include\r\n\
+                 record-2,round,reviewer,Include,,\"First line\r\nSecond, \"\"quoted\"\" line\",1,2026-08-01T00:00:00Z,extra\r\n"
+            );
+            let imported = importer(&input, "r1", ScreeningRound::TitleAbstract, "1")?;
+            assert_eq!(imported.len(), 2);
+            let second = imported.get(1).ok_or(ScreeningError::EmptyField {
+                field: "second_imported_csv",
+            })?;
+            assert_eq!(second.subject_id, "record-2");
+            assert_eq!(second.rationale, "First line\r\nSecond, \"quoted\" line");
+            assert_eq!(second.eligibility_version, "1");
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn csv_errors_after_multiline_records_report_physical_start_lines() {
+        for (header, importer) in csv_importers() {
+            for newline in ["\n", "\r\n", "\r"] {
+                let prefix = format!(
+                    "{header}{newline}record-1,round,reviewer,Include,,\"First line{newline}Second line\"{newline}"
+                );
+                let input = format!("{prefix}record-2,round,reviewer,unknown{newline}");
+                assert!(matches!(
+                    importer(&input, "r1", ScreeningRound::TitleAbstract, "1"),
+                    Err(ScreeningError::InvalidImportData { reason })
+                        if reason == "unrecognized decision `unknown` on line 4"
+                ));
+                let input = format!("{prefix}too,short{newline}");
+                assert!(matches!(
+                    importer(&input, "r1", ScreeningRound::TitleAbstract, "1"),
+                    Err(ScreeningError::InvalidImportData { reason })
+                        if reason == "insufficient columns on line 4"
+                ));
+            }
+        }
+    }
+
+    #[test]
+    fn csv_error_lines_handle_blank_records_and_all_line_endings() {
+        for (header, importer) in csv_importers() {
+            for newline in ["\n", "\r\n", "\r"] {
+                for (padding, expected_line) in [(String::new(), 2), (newline.repeat(2), 4)] {
+                    let input = format!(
+                        "{header}{newline}{padding}record-1,round,reviewer,unknown{newline}"
+                    );
+                    assert!(matches!(
+                        importer(&input, "r1", ScreeningRound::TitleAbstract, "1"),
+                        Err(ScreeningError::InvalidImportData { reason })
+                            if reason == format!("unrecognized decision `unknown` on line {expected_line}")
+                    ));
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn csv_imports_reject_empty_invalid_headers_and_empty_decisions() {
+        for (header, importer) in csv_importers() {
+            for input in ["", "\n\r\n", "\u{feff}", "unrecognized,header\n"] {
+                assert!(matches!(
+                    importer(input, "r1", ScreeningRound::TitleAbstract, "1"),
+                    Err(ScreeningError::InvalidImportData { .. })
+                ));
+            }
+            let input = format!("{header}\n,,,\n");
+            assert!(matches!(
+                importer(&input, "r1", ScreeningRound::TitleAbstract, "1"),
+                Err(ScreeningError::InvalidImportData { reason })
+                    if reason == "unrecognized decision `` on line 2"
+            ));
+        }
+    }
+
+    #[test]
+    fn csv_unclosed_quotes_follow_the_upstream_permissive_boundary() -> Result<(), ScreeningError> {
+        for (header, importer) in csv_importers() {
+            let input = format!(
+                "{header}\nrecord-1,round,reviewer,Include,,\"Unclosed rationale\nrecord-2,round,reviewer,Exclude\n"
+            );
+            let imported = importer(&input, "r1", ScreeningRound::TitleAbstract, "1")?;
+            assert_eq!(imported.len(), 1);
+            let first = imported.first().ok_or(ScreeningError::EmptyField {
+                field: "imported_csv",
+            })?;
+            assert_eq!(first.subject_id, "record-1");
+            assert!(first.rationale.contains("record-2,round,reviewer,Exclude"));
+        }
         Ok(())
     }
 
