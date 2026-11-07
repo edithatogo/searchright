@@ -1,16 +1,19 @@
 ## Contract and track
 
 - Conductor track: `NN`
+- Affected tracks: `none`
+- Shared outcome rationale: `none`
 - Multi-track exception: `none`
 - Exception tracks (only when absolutely inseparable): `none`
 - Why the work cannot be split (required for an exception): `none`
 - Contracts changed:
 - Evidence level reached:
 
-One PR carries one Conductor track. Use `MULTI` for the Conductor track only
-when splitting the change would make either PR uncompilable, unsafe or
-unverifiable. A multi-track PR also requires the
-`scope:multi-track-exception` label and a concrete inseparability explanation.
+One PR carries one coherent outcome with one primary Conductor track. If other
+tracks are affected, list all IDs (including the primary) under Affected tracks
+and explain the shared outcome. Split unrelated work. No exception label is
+needed for this declaration. Legacy `MULTI` declarations still require the
+exception tracks, rationale and `scope:multi-track-exception` label.
 
 This PR is intended to be merged, not parked. Rebase auto-merge is enabled
 after the scope policy passes; keep repairing the same PR until all required
