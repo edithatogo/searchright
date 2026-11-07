@@ -551,7 +551,9 @@ pub fn evaluate_sealed_benchmark(
             .insert(identifier.as_str(), *positive)
             .is_some()
         {
-            return Err(BenchmarkError::DuplicatePredictionRecord(identifier.clone()));
+            return Err(BenchmarkError::DuplicatePredictionRecord(
+                identifier.clone(),
+            ));
         }
     }
     for identifier in &cases {

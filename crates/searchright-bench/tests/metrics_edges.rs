@@ -161,21 +161,11 @@ fn sealed_evaluation_rejects_bad_digest_and_unknown_prediction() -> Result<(), B
     let labels = vec![("case-1".to_string(), true), ("case-2".to_string(), false)];
     let digest = sealed_label_digest(&labels)?;
     assert!(matches!(
-        evaluate_sealed_benchmark(
-            &m,
-            "short",
-            &[("case-1".to_string(), true)],
-            &labels
-        ),
+        evaluate_sealed_benchmark(&m, "short", &[("case-1".to_string(), true)], &labels),
         Err(BenchmarkError::InvalidLabelDigest(_))
     ));
     assert!(matches!(
-        evaluate_sealed_benchmark(
-            &m,
-            &digest,
-            &[("ghost".to_string(), true)],
-            &labels
-        ),
+        evaluate_sealed_benchmark(&m, &digest, &[("ghost".to_string(), true)], &labels),
         Err(BenchmarkError::UnknownPredictionRecord(_))
     ));
     Ok(())

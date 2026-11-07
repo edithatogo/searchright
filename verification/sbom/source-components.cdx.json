@@ -1182,6 +1182,30 @@
       "version": "1e69f48acb82d1966a394da916b4c1698aa569d6"
     },
     {
+      "bom-ref": "github-action:actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
+      "name": "actions/cache/restore",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "55cc8345863c7cc4c66a329aec7e433d2d1c52a9"
+    },
+    {
+      "bom-ref": "github-action:actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
+      "name": "actions/cache/save",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "55cc8345863c7cc4c66a329aec7e433d2d1c52a9"
+    },
+    {
       "bom-ref": "github-action:actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
       "name": "actions/checkout",
       "properties": [
@@ -1743,7 +1767,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:9fcf1b49-5bf7-54f0-900e-3c78ce8fa750",
+  "serialNumber": "urn:uuid:20714965-2cc5-5210-9c5f-ae1b85810bb4",
   "specVersion": "1.6",
   "version": 1
 }

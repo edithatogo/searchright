@@ -22,7 +22,7 @@ e94ca8c59f7fe3660c064069b579167e5923e754160b8a2c6648f2ff7dac54a0  ./.github/work
 1e48bc62ad1aba1910929f477815dd9793c201f17645177f99e8f30b77bab26b  ./.github/workflows/release-candidate.yml
 0c784c5a44198e1a8953b17ef434010a0740c8c1da0e2232923660b34aaca9cd  ./.github/workflows/release.yml
 0c53e108c6b7d1231cf2b744fc2520544674564e7beeb169fa092773f875d3c4  ./.github/workflows/resilience.yml
-19a5a8287fd0c3b8a9295911a499949f8cd633afcf4343da2096441009a92e27  ./.github/workflows/security.yml
+f04f75f6adfd640d488da15059fea93305f312cc41f333a8253eaad7f323b40d  ./.github/workflows/security.yml
 8a6c385c390a2316e0aeaf69a300e2656a05e6247881f12e6201a4bd114a7318  ./.gitignore
 ed5f8c3a259fbdfb99d06d519b5dd72f7838bcc0fb0e810545683725d6b6b0b7  ./.gitleaks.toml
 6594d7d20dad9cb44f9393d5da8163a12170b357a9a77bbfa3ec131b1bd0bdb1  ./.markdownlint-cli2.jsonc
@@ -70,9 +70,9 @@ db6e5881a3fca95b3d239f6a455de4223a75542acc716acec8c54432eb6548ef  ./benchmarks/s
 daada8d2ffd7cf4154a04e29db29ce457410d01750bbd24528df73fdec82d7eb  ./compose.yaml
 1cf888df82b42dc75a048d2bcec654c9226c038b2f82ea9d0d9e9d14de426897  ./conductor/code_styleguides/rust.md
 cfd257985d77b8ef86d4e1c5890a92d22c376b8e6f1fa6f75bdae6b111250c4f  ./conductor/design.md
-83609056983602024aa28dd3b0ec163417cf5d701f0dd0ab409c78ab82200e77  ./conductor/frontier-plan.md
+3eb7a5baff37cc340f22d8338571c711aac65d4441d1945e2a658a4578b97c12  ./conductor/frontier-plan.md
 0735e60ae7509844102d89832e43f76241aca28c80f308887f64246ad5ae4633  ./conductor/github/README.md
-fbcc834c42130955985fb4972fee1f7962174f552f6c9faf50084db4d6fb19af  ./conductor/github/issue-hierarchy.json
+18b5425f77e1ca3058c683ad7b16f6a3721205f029d4cdf2b24b9f03a67ab0e9  ./conductor/github/issue-hierarchy.json
 9dede9de69f08960e59429c499a9bb5b098ab93d124d0b20cbaeedbe001382cd  ./conductor/github/issues/roadmap-epic.md
 5fb44ee062d12e12cd057daee326f5377920b39f6ef25f28af3710d1e306a47b  ./conductor/github/issues/track-00-phase-1-task-01.md
 75951fa3b36719a882aff9b75a556fa9da1cb71236e9674248349fa159cedc59  ./conductor/github/issues/track-00-phase-1.md
@@ -318,11 +318,11 @@ af4cb79d0b03dd22f2d53ff53849bfdca1b55974953aeff60ac6e4bac4554520  ./conductor/gi
 ed01a6d4abceccbddac9bc302c04279cf43cebcb833bf4cadd4f772a6911279f  ./conductor/github/issues/track-16-phase-2-task-01.md
 66c340448cb41198272e20f5d3bbd77a921d5d8ca68f15abde246229df3b0a2d  ./conductor/github/issues/track-16-phase-2-task-02.md
 5293100cda24253c890f2cba9df04b096c9c34123f9e1f7966790a020a223b9b  ./conductor/github/issues/track-16-phase-2.md
-6513a74a2e70d7a4ce0cce0e6211fa295121a24ac63dbea93105f45d2a9df3eb  ./conductor/github/issues/track-16-phase-3-task-01.md
+da962b5b0ff13cc70982fcf3821a600c490d9c3b343dd6578b95a07ec1572ceb  ./conductor/github/issues/track-16-phase-3-task-01.md
 363e03b199c0e32bdaa6100b8ff79adb515328959db6409899b1c655f770082c  ./conductor/github/issues/track-16-phase-3-task-02.md
 1a5354b95f35065c137d6a61b02b53da1a9c563aaf5c6de08f30958ee472a615  ./conductor/github/issues/track-16-phase-3-task-03.md
 05dcbe754ea2f9282e3f5e92547f2412e80021cee084fdb8a3224d40113394ce  ./conductor/github/issues/track-16-phase-3-task-04.md
-feabed30d28c9f7b76198a95781d4778d771f56b9cabc09540e8aaffb1680e18  ./conductor/github/issues/track-16-phase-3.md
+f9d8f5140261e394a729d728fba31fc9307cab0368454a8d6fd0580710358c56  ./conductor/github/issues/track-16-phase-3.md
 2ff77855c1d6c7c1afbb53d87568b9d88c4b434d5bb74079d11c501522d8fbe5  ./conductor/github/issues/track-16-phase-4-task-01.md
 acfb3d2e50da3c04f9eef22478c2e140b7ffd8c8e0a3a613f352565c333259aa  ./conductor/github/issues/track-16-phase-4-task-02.md
 0d5ea2d67412901b688c43a6ca6100c103d4c923e20575629ff3e140bc979acc  ./conductor/github/issues/track-16-phase-4-task-03.md
@@ -680,7 +680,7 @@ cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d  ./conductor/gi
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 9bb1098bf673718efe2973b06fe0c76e4a161ea479b51b7ded5bad45ecb646d3  ./conductor/product.md
 431f1581f3a6d02c22b38d3d6d6c7285e43fcbfb3d2acef22372170f2dc0fbea  ./conductor/requirements.md
-eeb240eb83f0d07a0035dfc840759b77c038fc28a615ec65cc1c3cfce644043b  ./conductor/roadmap-coverage.json
+85219ff63d16fca99307dc4d70e45750304a36e70b00f5f8baffbcb3dee5e617  ./conductor/roadmap-coverage.json
 d953556ce2830956bc4d36be262919e8c921327bc1eef7ef043b872de5a7f5dc  ./conductor/tech-stack.md
 34c93867db7755cfbf2ab0a5fd0956abeb4467c9823ef15efada68cd61c7fcf4  ./conductor/traceability-overrides.json
 ba580b57df09aeb9fe912d65807dd3de471b1c2712a6e6b77e91042c6827bdb5  ./conductor/tracks.md
@@ -765,9 +765,9 @@ c4213b470d776175677c2b105bff3e9deea1afe1eebc94e26601af14dce089a7  ./conductor/tr
 e15be38946a2e9301b53a16d4c9b9068bf0a56d0eb7c929cffb6e3c1fe02db63  ./conductor/tracks/15-estate-migration/plan.md
 9a486c3105b6bd73f804604bad1271d29a0fb950543e3fb4bb823e78271d9e87  ./conductor/tracks/15-estate-migration/spec.md
 d24a22e855d6e2ce0c292ae01b8aa8bb9609267b617e89b9e99798f7807bd1e8  ./conductor/tracks/15-estate-migration/traceability.json
-d5bb3a812cbc01c01bd11070e3c8da50a0e245bb42d07e5a621207d85e503e58  ./conductor/tracks/16-quality-security-harness/evidence.json
-6ca88e0c88200431ca234feb0c60bcade00023f27a7af6963126d4f9764f20ae  ./conductor/tracks/16-quality-security-harness/metadata.json
-14d9643234d1edb96863158223919277086b02dee89a03ed921f631f6a4ca2ab  ./conductor/tracks/16-quality-security-harness/plan.md
+09689987a0fc8022195da88f153976e2165c288a625a51ef19e4320bccfa536d  ./conductor/tracks/16-quality-security-harness/evidence.json
+cda49b47fe9b6b3c14582543f2614d7f10a6624d6f72e211b7a632b885202d75  ./conductor/tracks/16-quality-security-harness/metadata.json
+51c1a9d4a898021b291963329b57f60238e74363e0114ababa2c156771f125b4  ./conductor/tracks/16-quality-security-harness/plan.md
 6d7700d8f2da36e675eefb742bf03f7a4bad6bd2d85c2d7eb6c0c2f57292a5c7  ./conductor/tracks/16-quality-security-harness/spec.md
 d50c71c32667a7a7ebedb066f17d989cb03129b887008ec91eda8370b581e28b  ./conductor/tracks/16-quality-security-harness/traceability.json
 82b8455ae4eaf172d692b921f6f56b15fc5fe7cb1fd08ca4cfaf724548d3ad67  ./conductor/tracks/17-benchmarks-calibration/evidence.json
@@ -880,7 +880,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 49a1c1e7898c99cf28469b17e73aca05c551dc07d93e6b26df727130b53e917f  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 5647c00994c97e4a1aec04f4752d5d32ec3a63f8fc3fb223a63895aff513dd82  ./context/claim-boundaries.json
-64d304e02a67b3daf8f9dd640e907c7f5448d2c705c2c4c06bbce5adc425a0ac  ./context/context-lock.json
+3e0ae7528bb5a907bf4edbd0f7e2df15ac64cfe87829f38c15024a5417a2c7e1  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1113,8 +1113,8 @@ bdc99842d381b1ccdd7a248529382d4fa6e5dd763f8e131bbf62bcad77da3205  ./crates/searc
 c807a6ad11a5181c72a9dc8e07a7a8aa1e1557213a1fbae2d47583090f2833d1  ./crates/searchright-assurance/tests/loom_authority.rs
 72d25cbd1d06215890ac0e37c42c9d994497869d7c97cf485d53cdf4b6b5696f  ./crates/searchright-assurance/tests/workflow_model.rs
 bbf4533997b9f1e47552e478ff1bf34b9e6ea5b078304b52aea6825d07aae642  ./crates/searchright-bench/Cargo.toml
-7749210d0b9c559ab22c71c2fb0e8d25f8a3aa676c887894f3e38113fdae5275  ./crates/searchright-bench/src/lib.rs
-5163a5aa6defe8c55d4316f0a12618b4e19cdd671749076ace820fefe5d6b2c6  ./crates/searchright-bench/tests/metrics_edges.rs
+8ef86f3fd10b0c59a41a120426e05fd1d3526a1e185d23e5d6e890f39c7c77c9  ./crates/searchright-bench/src/lib.rs
+8fdb818f73182b46f4944277f6b083554062e349aa2bc9b85cab6e5d79ae4261  ./crates/searchright-bench/tests/metrics_edges.rs
 4b940a5dfdfcadae80969a20e4152159bc3676ec2402a5d2bec920053b6686bd  ./crates/searchright-bench/tests/sealed_identity.rs
 05e31b77575c98705d49cb06f567ece6a8cf07c50494268e0ad4475b8022f256  ./crates/searchright-citeweft/Cargo.toml
 3d38ce16d352697ada3374726fc67ef08ed7a2f18aa46a9660cb388cc075214d  ./crates/searchright-citeweft/src/lib.rs
@@ -1334,7 +1334,7 @@ e5e932c2aa0d6465e16cd4b6155b9eceef923731ca9895d8352f186b4bfd31d1  ./docs/safety/
 acceca4ad9d544627ae0200c0e522ee1611a67973fb5a55e6ffc2e2ee273498e  ./docs/screening-model.md
 3bfb8cbd626bdf9159a8653b9f7194824a0fec854356c8b331aeced407fd1796  ./docs/sdk-and-adoption.md
 7afc7161ebec67ec4c8b1dc8c92cd61d3bb5cb32a3e96c523b41c7fdfec190a3  ./docs/security/authenticated-remote-mcp.md
-56f96909a47d0cebf439c0ee8f058730466278214f74c374e102c1116424fc5b  ./docs/security/cargo-vet-governance.md
+2c9ee7440c52f80b55f60d8cd455be9ae9170b2c515bc5481b21448123c4ef68  ./docs/security/cargo-vet-governance.md
 a1e8fd4d94e76048d8dbbdd90396512562c8ecca67812e2ee23ae2246d68d8ac  ./docs/security/egress-policy.md
 c59bc292d8b8d896738a7a75517d281b85c91fdad33ace0a29f422f24fc03e48  ./docs/security/redaction-and-data-minimisation.md
 2dd364a23999902f3fe1b32ca6e54dc7b2e2eea4de54959f8efd3e03982892bf  ./docs/security/supply-chain.md
@@ -2511,7 +2511,7 @@ fd5840092032dc5325069c2afaa76bb028dd425522d8b94ae73de4aa635be313  ./verification
 ccda49067298ba91fd3c4b71fb8366b9bf0ff3fcdad78c4328d3fcbcf26f30ac  ./verification/reviews/track-09-sealed-request.json
 8c08e50b50752beb780e1ee5e8cb3754d19fe364833f119e795c8cfed3ab2cee  ./verification/reviews/track-09-security-safety.json
 ff07c0d76256e5611126e20ea506bb526482c5ac5f31652549678e5572f8eebc  ./verification/reviews/track-09-testing-ci.json
-6a332ad6a75ea3de66257edd3f3db5c4097ece1ce53dab1ecb6e8e9f4eb48a89  ./verification/sbom/source-components.cdx.json
+9866223156d124c38c63f5d6d784715e9ad5100e4a64e3ec0c5b738b9e993d72  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json

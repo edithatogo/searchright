@@ -41,6 +41,57 @@ is already used in [draft PR 679](https://github.com/edithatogo/searchright/pull
 the institutional monitor can become an operational pilot, but is not a recall
 validation study.
 
+## Immediate execution queue
+
+This is the next work sequence within the existing tracks, not another release
+checklist or issue hierarchy. Link the implementation PR and its observed results
+to the relevant item; keep the supporting research and package specifications in
+their existing documents. Do not restart completed work.
+
+- [x] Remove artificial gate counts and mandatory readiness wording: merged
+  [PR 754](https://github.com/edithatogo/searchright/pull/754).
+- [x] Replace handwritten bibliographic/screening CSV with `csv` 1.4.0: merged
+  [PR 755](https://github.com/edithatogo/searchright/pull/755), including multiline
+  screening fixes, sixteen regressions and exact-version source reviews. See the
+  [dependency decision](../docs/csv-dependency-decision.md).
+- [x] Reuse pinned security-tool installations in CI (Track 16): merged
+  [PR 757](https://github.com/edithatogo/searchright/pull/757). Only dedicated,
+  exact-version binaries are reusable; every substantive check runs afresh.
+  Successful main runs populate the cache and PRs only restore. The cold hosted
+  path passed. Keep warm-path and timing evidence in the hosted run logs; no
+  speed-up percentage is inferred from the implementation alone.
+- [x] Repair benchmark population and label-digest binding (Track 17):
+  [PR 758](https://github.com/edithatogo/searchright/pull/758). Require exactly one
+  label and prediction for every manifest ID, and recompute both supplied and
+  optional manifest commitments using the existing SHA-256 dependency. Eleven
+  synthetic regressions cover population substitution, omissions, duplicates,
+  tampering and canonical reference vectors. The [documented contract](../docs/evaluation/benchmark-and-calibration-protocol.md)
+  separates integrity from independent label custody and methodological validity.
+  An abstention or partially judged collection needs an explicit scoring protocol.
+
+| Next work unit and existing owners | Prerequisites | Observable completion | Coding-agent effort |
+| --- | --- | --- | --- |
+| Resolve the dependency-review deadline — 16 | Existing lockfile, approved audit sources and exact-version acceptance records | Follow the [bounded remediation sequence](../docs/security/cargo-vet-governance.md#deadline-remediation-sequence). Retire only genuinely unused audit roots, replace exemptions with qualifying audits, and show the exact residual set before 10 November. No automatic extension or certification from a passing build. | Initial triage 0.5–1 day; source-review effort depends on the remaining code and cannot honestly be fixed at 247 versions in three days |
+| Deliver the first bounded two-source review — 03/04, with 05/06/07/09/10 | Shared transport controls; explicit local principal, policy, budget and provider access | CLI and MCP execute the same protocol through the shared live runtime; persist observations, records and decisions; interrupt/resume without duplicate effects or lost decisions; conserve counts through deduplication/export. Cover pagination, retry/429, cancellation, partial failure and budget exhaustion. Record separate authorised redacted live results for the selected pair. | 3–7 days; re-estimate after the first complete run |
+| Reproduce one existing-data baseline — 17, with 23/29 | Benchmark identity repair and a rights-clear pinned input | Use the existing SYNERGY upstream/fork route first; group splits by review/topic family and check shared publications. Reproduce random, lexical and pinned ASReview baselines through a small optional worker. Save per-review predictions, failures, seeds, costs and analysis. The worker receives observed training labels only. | 2–4 days for the first narrow experiment; informs [R3](../docs/research/programme.md#r3-can-ranking-reduce-screening-workload-without-concealing-missed-studies) |
+| Export one independently consumable evidence package — 25 | A small complete review output, which may initially use fixtures, and declared package metadata | Fix RO-Crate date/licence metadata, byte-size versus record-count semantics and PROV entity/activity relations. An independent consumer resolves identifiers, inspects decisions and detects altered/missing assets. Demonstrate deterministic replay where supported and disclose inspection-only/restricted inputs. | 2–4 days, parallel with the baseline; follows the [package specification](../docs/research/evidence-packages.md) |
+| Implement autonomous, solo and team policies — 07/11/28, with 10 | Bounded execution and durable decisions | Preserve actor, mode and policy version; keep machine decisions identifiable; link human confirmation to original decisions; preserve real team independence/conflicts/adjudication. Test mode transitions, interrupted work and contested writes. No fictional human reviewers. | 4–7 days; supplies the workflow for [R4](../docs/research/programme.md#r4-do-agents-solo-reviewers-and-teams-produce-reproducible-review-workflows) |
+| Run the first frontier experiment — 02/17/22/29 | Working slice, valid evaluator and reproduced baseline | Select the R1 translation or R3 ranking endpoint from development results, freeze its comparison before confirmation, and retain failures and no-gain results. Prototype selective updates in parallel and compare deterministic incremental results with complete replay. | 1–3 weeks after the prerequisites, plus the explicitly budgeted specialist time |
+
+The current search facade is fixture-only, the CLI rejects live apply, and the
+default MCP verifier denies consequential effects. The two-source task therefore
+includes live-runtime and authority wiring; removing a denial or recording a
+smoke test alone is insufficient. Select the first pair from providers whose
+transport and access conditions can actually be met; PubMed and Europe PMC are
+candidates, not new live-support claims.
+
+The baseline and local package can proceed in parallel. Neither waits for a
+hosted service, all companion migrations, a manuscript, a new public repository
+or all historical Track 30 maturity gates. After local export works, add the
+optional GitHub release/repository destination and pinned Hugging Face dataset
+references through the [existing estate](../docs/research/portfolio-reuse.md).
+Publishing remains within the configured destination/content authority.
+
 ## Lean delivery rules
 
 One useful change, one PR, relevant tests and ordinary review. CI records results.
@@ -74,17 +125,31 @@ requirements. Assess the cleanup using existing Git/CI history: useful changes
 delivered, process-only edits, waiting time, repeated prompts and escaped defects.
 Do not create a new reporting subsystem to measure the cleanup.
 
+The next process changes each have a concrete completion condition:
+
+| Follow-on change | Completion condition |
+| --- | --- |
+| Change-sensitive CI | Stable required jobs report applicability explicitly; unclassified changes take the broader path; parser, authority, persistence, dependency and workflow changes still run their relevant checks. Scheduled expensive checks continue. Validate changed-path cases before altering branch requirements. |
+| Generated capability/status view | Select existing Conductor inputs once, generate the public view, and remove duplicate manual update obligations. Preserve historical evidence and show unavailable evidence honestly. |
+| Coarser future issue projection | Forward-plan work creates actionable track/issues and PRs without automatic phase/task mirrors. Existing remote identities, history and additive/idempotent synchronisation remain intact. |
+| Release profiles | A local package, an enabled integration and a hosted deployment each run checks for the capabilities they actually expose. Unsupported capabilities remain unavailable; papers and registry listings do not become local-package prerequisites. |
+
+With tool caching delivered, change CI applicability in a separate coherent PR.
+Retire a process only when its useful responsibility has an identified owner.
+The rows above remain planned work, not completed migration.
+
 ## Coding-agent delivery estimate
 
 Assumptions: one coordinating coding agent, up to two parallel implementation or
 test agents in isolated worktrees, working CI, and the owner available for short
 decisions. These estimates concern a scoped local product, not all historical
-roadmap features. They start when implementation begins and are not deadlines.
+roadmap features. Remaining estimates start with the next implementation
+increment; already merged work above is not included again. They are not deadlines.
 
 | Window, with overlapping work | Agent deliverables | Human/external elapsed time |
 | --- | --- | --- |
-| Days 1–3 | Remove artificial checks; replace handwritten CSV; repair benchmark identity checks; expose first bounded live path | Confirm any unavailable provider access; select initial review topics |
-| Days 3–10 | Two-source run/resume/export; ASReview baseline adapter; difficult native-query corpus; initial package validation | A specialist checks the first query pairs; allow approximately 4–8 hours initially |
+| Days 1–3 | Resolve the immediate dependency-review disposition; begin bounded live-runtime wiring and the first existing-data baseline | Decide any concrete residual dependency risk; confirm unavailable provider access and initial review topics |
+| Days 3–10 | Two-source run/resume/export; reproduced existing-data/ASReview baseline; difficult native-query corpus; independently inspected small package | A specialist checks the first query pairs; allow approximately 4–8 hours initially |
 | Weeks 2–3 | Autonomous/solo/team policy and decision provenance; package/repository exporter; regression and adversarial tasks | Owner tests the full workflow; specialist resolves material semantic disagreements |
 | Weeks 3–6 | Candidate translation improvements, selective-update prototype, one scoped frozen comparison and installable release | Approximately 10–30 specialist hours for feasibility/annotation is a planning allowance; revise from the pilot |
 | Weeks 6–10 | Follow-up fixes, independent rerun, research analysis and a first methods manuscript if results support it | Recruitment, blinded assessment, authorship and journal preparation determine the calendar |
@@ -96,6 +161,17 @@ run. More agents do not linearly shorten integration, CI, adjudication or data
 access. Journal review is outside the delivery estimate. An unsuccessful
 experiment should narrow the next increment, not trigger more framework building.
 
+Separate active agent effort from hosted CI queue time when revising these
+estimates. Track 16 should trial `prConcurrentLimit: 2` and
+`commitHourlyLimit: 2` after checking the deployed Renovate version and resolved
+configuration. The existing branch limit can inherit the PR limit. The
+[commit limit](https://docs.renovatebot.com/configuration-options/#commithourlylimit)
+covers automatic rebases as well as new branches; a new-PR limit alone does not
+bound that load. Preserve vulnerability-alert bypasses and existing PRs. Compare
+CI waiting time and routine-update age over one week using existing logs, then
+adjust. This planned change trades slower routine updates for less competing CI
+work; it does not cancel today's jobs or replace the direct urgent-fix path.
+
 ## Dependency choices and replacement order
 
 Keep Rust ownership of state and contracts. Reuse specialised implementations
@@ -103,7 +179,7 @@ through small adapters; do not rewrite the product around a research dependency.
 
 | Custom code or scaffold | Reuse decision | Replacement test and boundary |
 | --- | --- | --- |
-| Handwritten CSV parsing/writing | Adopt the maintained Rust `csv` crate; first concrete replacement | Existing import/export fixtures plus multiline fields, quotes, CRLF, empty fields, variable rows and errors; retain public API and intended output bytes |
+| Handwritten CSV parsing/writing | Delivered with `csv` 1.4.0 in [PR 755](https://github.com/edithatogo/searchright/pull/755) | Multiline fields, quotes, CRLF/CR, blank lines, variable rows and large fields covered; intended output bytes preserved. The new error variant and upstream permissive quoting are documented in the [dependency decision](../docs/csv-dependency-decision.md) |
 | Token-overlap-only prioritisation | Add an optional local ASReview worker; retain the simple ranker as baseline | Topic-held-out effort/recall comparison, deterministic seeds where supported, model/configuration provenance; worker cannot impersonate human decisions |
 | Repeated screening simulations | Reuse ASReview Makita where compatible | Pin the ASReview/Makita pair; verify baseline reproduction before adding parallel simulations |
 | Handcrafted MCP/schema machinery | Retain official `rmcp` already used; evaluate a maintained JSON Schema implementation for remaining manual validator code | Same canonical schemas, local resolution only, hostile schemas/resource limits, output/error parity; remove custom code after comparison |
