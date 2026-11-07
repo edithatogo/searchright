@@ -93,7 +93,7 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-16-phase-3 -->
 
-- [ ] Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits.
+- [x] Deliver the admission-policy work through merged PRs #754 and #755 with green required checks on their final heads; subsequent candidates still require their own checks.
 - [ ] Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.
 - [ ] Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.
 - [ ] Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion.

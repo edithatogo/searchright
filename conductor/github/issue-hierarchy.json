@@ -7982,7 +7982,7 @@
     },
     {
       "key": "track-16-phase-3-task-01",
-      "title": "Track 16 / P3 / T01: Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits",
+      "title": "Track 16 / P3 / T01: Deliver the admission-policy work through merged PRs #754 and #755 with green required checks on their final heads; subsequent candidates still require their own checks",
       "kind": "task",
       "parent_key": "track-16-phase-3",
       "body_path": "conductor/github/issues/track-16-phase-3-task-01.md",
@@ -7991,15 +7991,15 @@
         "conductor",
         "track:16",
         "phase:3",
-        "state:evidence-open"
+        "state:source-complete"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "16",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Evidence blocked",
+        "Delivery status": "Source complete",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Source Verified",

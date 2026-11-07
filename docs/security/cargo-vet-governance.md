@@ -62,3 +62,84 @@ certifications or expiry extensions are part of this retirement.
 The governance checker rejects effective cargo-vet exemptions without matching,
 unexpired approvals. Even an approved exemption must be added separately to
 `config.toml`; a proposal alone has no effect on CI.
+
+## Deadline remediation sequence
+
+As of 7 November 2026, the active set is 230 `safe-to-deploy` and 17
+`safe-to-run` exemptions. The existing checker accepts their 10 November expiry
+through that runner calendar date and rejects them from 11 November. This plan
+does not renew an exemption or certify a dependency. Keep work in Track 16 and
+issue [241](https://github.com/edithatogo/searchright/issues/241), using the
+existing Cargo Vet store and proposal history.
+
+Budget 2–4 agent hours for the first triage, plus native execution/download time.
+Estimate actual source-review work after the first measured batch; there is no
+evidence supporting completion of all 247 reviews within three days.
+
+1. Reproduce the locked graph and Cargo Vet result, then use a temporary copy of
+   the store for suggestions, one refresh of the four approved registries and
+   pruning analysis. Preserve command failures separately from audit gaps.
+2. Compare the refreshed suggestions with the committed snapshot. Inspect any
+   imported change before promoting it and preserve peer attribution. The
+   6 November refresh found no additional complete paths; do not assume a new
+   refresh will resolve the backlog.
+3. Assign at most two review batches in parallel, prioritising security exposure
+   and then the actual full/delta review size. Retire an exemption only after the
+   resolver proves it unnecessary or qualifying audit evidence replaces it.
+4. Record the measured residual set and revised estimate by 9 November, using the
+   existing issue/PR and CI artifacts. Where gaps cannot be resolved by the
+   deadline, present the exact versions, exposure, proposed duration and next
+   remediation to the owner for a concrete decision. Existing expiry enforcement
+   continues until such a decision actually exists.
+
+| Review batch | Starting scope |
+| --- | --- |
+| Network, authentication and cryptography | TLS/runtime audit roots below; `aws-lc-rs`, `aws-lc-sys`, `ring`, `jsonwebtoken`, `reqwest`, `rmcp` and certificate verification/discovery |
+| Build execution and generated code | `cc`, `cmake`, `jobserver`, `pkg-config`, `proc-macro2`, `quote`, `syn`, `serde_derive` and `rmcp-macros` |
+| Short residual reviews | Select from actual Cargo Vet suggestions; small utility crates are candidates, not automatically safe |
+| Remaining data/platform and development dependencies | Preserve all 17 development-only gaps; build/test dependencies execute code too |
+
+Do not equate absence from `Cargo.lock` with an obsolete exemption. Three current
+exempted versions support delta-audit chains to locked versions:
+
+| Exempted root | Existing audit path to the locked version |
+| --- | --- |
+| `rustls 0.23.43` | Local delta to `0.23.46` |
+| `rustls-webpki 0.103.13` | Bytecode Alliance deltas through `0.103.15` to `0.103.16` |
+| `tokio 1.53.1` | Local delta to `1.54.1` |
+
+A qualifying full review of the root, another complete qualifying audit path,
+or a full review of the locked version is needed before removing those roots.
+
+### Use existing Cargo Vet commands
+
+Run from the repository root with the pinned native tools. The temporary store
+keeps exploratory refresh/pruning away from accepted records:
+
+```bash
+vet_review_dir="$(mktemp -d)"
+mkdir "$vet_review_dir/supply-chain"
+cp supply-chain/config.toml supply-chain/audits.toml supply-chain/imports.lock "$vet_review_dir/supply-chain/"
+cargo fetch --locked
+cargo metadata --locked --offline --all-features --format-version 1 > "$vet_review_dir/metadata.json"
+cargo vet --store-path "$vet_review_dir/supply-chain" --locked --frozen --no-minimize-exemptions
+cargo vet --store-path "$vet_review_dir/supply-chain" --locked --no-registry-suggestions --output-format=json suggest > "$vet_review_dir/suggestions-before.json"
+cargo vet --store-path "$vet_review_dir/supply-chain" --no-minimize-exemptions --no-registry-suggestions
+cargo vet --store-path "$vet_review_dir/supply-chain" --locked --no-registry-suggestions --output-format=json suggest > "$vet_review_dir/suggestions-after.json"
+cargo vet --store-path "$vet_review_dir/supply-chain" --locked --frozen prune --no-imports --no-audits
+```
+
+Inspect each command's result before proceeding; the unlocked check performs the
+single configured-registry refresh. Review selected packages with `cargo vet
+inspect --mode local` or `cargo vet diff --mode local`, preserving exact versions
+and published source identity. See the official [command reference](https://mozilla.github.io/cargo-vet/commands.html).
+These are execution instructions, not a claim that the new triage was run.
+
+Each completed batch must bind reviewed source to its published crate/checksum,
+attribute the actual reviewer, identify any qualifying delta base, and retire
+only resolved proposal entries without changing historical decisions. Run the
+existing governance regressions/checker and `cargo vet --locked --frozen
+--no-minimize-exemptions`; dependency/feature changes also need native behaviour
+checks. Report remaining review gaps separately from obsolete exemptions removed.
+Do not use publisher trust, automatic renewal or regenerated exemptions to turn
+an unresolved review into a passing claim.

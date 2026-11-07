@@ -34,6 +34,8 @@ jobs:
     name: Rust supply-chain policy
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    env:
+      RUSTUP_TOOLCHAIN: 1.97.1
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -41,27 +43,88 @@ jobs:
           persist-credentials: false
       - name: Install Rust
         run: rustup toolchain install 1.97.1 --profile minimal
+      - name: Identify security-tool cache environment
+        id: security-tools-environment
+        run: |
+          printf 'image=%s-%s\n' "${ImageOS:?}" "${ImageVersion:?}" >> "$GITHUB_OUTPUT"
+          printf 'SEARCHRIGHT_TOOL_ROOT=%s/searchright-security-tools\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+      - name: Restore pinned security tools
+        id: security-tools-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        continue-on-error: true
+        with:
+          # Only binaries are reusable. Never cache credentials, advisory data,
+          # dependency audits, workspace artefacts or successful gate results.
+          path: |
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-deny
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-audit
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-machete
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-vet
+          key: security-tools-v1-${{ runner.os }}-${{ runner.arch }}-${{ steps.security-tools-environment.outputs.image }}-${{ hashFiles('rust-toolchain.toml', 'requirements/rust-tools.json', '.github/workflows/security.yml') }}
       - name: Install cargo-deny
-        run: cargo install cargo-deny --version 0.19.9 --locked
+        if: steps.security-tools-cache.outputs.cache-hit != 'true'
+        run: cargo install cargo-deny --version 0.19.9 --locked --force --root "$SEARCHRIGHT_TOOL_ROOT"
       - name: Install cargo-audit
-        run: cargo install cargo-audit --version 0.22.2 --locked
+        if: steps.security-tools-cache.outputs.cache-hit != 'true'
+        run: cargo install cargo-audit --version 0.22.2 --locked --force --root "$SEARCHRIGHT_TOOL_ROOT"
       - name: Install cargo-machete
-        run: cargo install cargo-machete --version 0.9.2 --locked
+        if: steps.security-tools-cache.outputs.cache-hit != 'true'
+        run: cargo install cargo-machete --version 0.9.2 --locked --force --root "$SEARCHRIGHT_TOOL_ROOT"
       - name: Install cargo-vet
-        run: cargo install cargo-vet --version 0.10.2 --locked
+        if: steps.security-tools-cache.outputs.cache-hit != 'true'
+        run: cargo install cargo-vet --version 0.10.2 --locked --force --root "$SEARCHRIGHT_TOOL_ROOT"
+      - name: Verify installed security-tool versions
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+
+          manifest = json.loads(Path("requirements/rust-tools.json").read_text())
+          versions = {tool["crate"]: tool["version"] for tool in manifest["tools"]}
+          root = Path(os.environ["SEARCHRIGHT_TOOL_ROOT"]) / "bin"
+          for crate in ("cargo-deny", "cargo-audit", "cargo-machete", "cargo-vet"):
+              executable = root / crate
+              if not executable.is_file():
+                  raise SystemExit(f"{crate} is missing from the dedicated tool directory")
+              command = [str(executable), crate.removeprefix("cargo-"), "--version"]
+              if crate == "cargo-machete":
+                  # Machete selects Cargo-style arguments from the environment.
+                  command = ["env", "-u", "CARGO", "-u", "CARGO_PKG_NAME", str(executable), "--version"]
+              output = subprocess.check_output(command, text=True).strip()
+              if not output or output.split()[-1] != versions[crate]:
+                  raise SystemExit(f"{crate}: expected {versions[crate]}, observed {output!r}")
+              print(f"{crate}: {output}")
+          PY
       - name: Enforce dependency policy
-        run: cargo deny check
+        run: '"$SEARCHRIGHT_TOOL_ROOT/bin/cargo-deny" deny check'
       - name: Audit advisories
-        run: cargo audit --deny warnings
+        run: '"$SEARCHRIGHT_TOOL_ROOT/bin/cargo-audit" audit --deny warnings'
       - name: Detect unused dependencies
-        run: cargo machete
+        run: 'env -u CARGO -u CARGO_PKG_NAME "$SEARCHRIGHT_TOOL_ROOT/bin/cargo-machete"'
       - name: Validate cargo-vet trust governance
         run: |
           python scripts/test_cargo_vet_governance.py
           cargo fetch --locked
           python scripts/check_cargo_vet_governance.py
       - name: Enforce trusted dependency audit policy
-        run: cargo vet --locked --no-minimize-exemptions
+        run: CARGO="$(command -v cargo)" "$SEARCHRIGHT_TOOL_ROOT/bin/cargo-vet" vet --locked --no-minimize-exemptions
+      - name: Save verified security tools from main
+        if: >-
+          success() && github.ref == 'refs/heads/main' &&
+          (github.event_name == 'push' || github.event_name == 'schedule') &&
+          steps.security-tools-cache.outputs.cache-primary-key != '' &&
+          steps.security-tools-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        continue-on-error: true
+        with:
+          path: |
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-deny
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-audit
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-machete
+            ${{ env.SEARCHRIGHT_TOOL_ROOT }}/bin/cargo-vet
+          key: ${{ steps.security-tools-cache.outputs.cache-primary-key }}
 
   dependency-review:
     name: Dependency review
