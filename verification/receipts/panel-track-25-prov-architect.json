@@ -1,0 +1,58 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "25",
+  "panelist_role": "prov-lineage-architect",
+  "evaluated_at": "2026-11-08T23:42:00Z",
+  "evaluated_on": "2026-11-08",
+  "overall_assessment": "The W3C PROV-O representation in searchright-provenance establishes a tamper-evident, stepwise-derivable lineage model for systematic search reviews. Entities (sr:SourceReceipt, sr:Review), activities (prov:startedAtTime, prov:type), and agents (prov:type, sr:provenance) map cleanly into W3C PROV namespaces. Predecessor relationships are modeled via 'wasDerivedFrom' derivations (prov:generatedEntity, prov:usedEntity), constructed by resolving the hash chain of audit events against their previous_hash links. Input validation in validate_inputs operates strictly fail-closed: unresolved predecessors trigger ProvenanceError::UnresolvedPredecessor, cross-review receipts or events trigger ProvenanceError::ReviewMismatch, and colliding IDs or hashes trigger ProvenanceError::DuplicateIdentifier. Sorting of receipts and events prior to document generation ensures byte-level determinism regardless of input slice ordering.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "wasDerivedFrom chains strictly resolve predecessors within the provided audit event slice; long-lived multi-session reviews requiring pagination of historical audit logs must ensure full ancestor batches are supplied to avoid UnresolvedPredecessor errors.",
+      "reference": "crates/searchright-provenance/src/lib.rs:195-214, 272-279",
+      "recommendation": "Document slice completeness requirements in searchright-provenance API docs and living review update pipelines."
+    },
+    {
+      "severity": "observation",
+      "description": "Stepwise derivation indexing maps each audit event to its immediate prior event hash, converting linear hash chains into explicit prov:usedEntity dependencies with zero split-brain ambiguity.",
+      "reference": "crates/searchright-provenance/src/lib.rs:195-214; tests/export_edges.rs:260-280; tests/provenance_interop_scenarios.rs:280-310",
+      "recommendation": "Preserve the GENESIS sentinel root convention across all audit event initializers."
+    },
+    {
+      "severity": "observation",
+      "description": "Input sorting in build_prov and build_ro_crate guarantees bitwise reproducible JSON output across all permutations of input receipts and audit events.",
+      "reference": "crates/searchright-provenance/src/lib.rs:39-42, 137-140; tests/provenance_interop_scenarios.rs:407-431",
+      "recommendation": "Maintain explicit key and identifier ordering in all downstream serialization steps."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T25-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Immutable identifiers, SHA-256 event hashes, and fail-closed predecessor relationships verified by unit tests, export_edges.rs, and provenance_interop_scenarios.rs."
+    },
+    {
+      "id": "T25-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Review, run, receipt, audit event, and actor entities mapped into W3C PROV entity/activity/agent vocabulary."
+    },
+    {
+      "id": "T25-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "W3C PROV entity, activity, agent, wasAssociatedWith, and wasDerivedFrom export verified; external semantic validator remains an open gate."
+    },
+    {
+      "id": "T25-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Bitwise deterministic reproducibility across permutations, 3-event chain derivation, and predecessor resolution verified."
+    }
+  ],
+  "calibration_notes": "PROV lineage architects confirm that W3C PROV vocabulary mapping, hash-chain predecessor derivation, and fail-closed validation are completely implemented and verified by 20 Rust tests.",
+  "claim_boundary": "Source-verified implementation only. W3C PROV-compatible JSON serialization, entity-activity-agent mappings, and fail-closed predecessor checks are verified; external W3C PROV-O ontology validation and institutional PIDs remain open gates.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

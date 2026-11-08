@@ -169,8 +169,8 @@ class ProvenanceResearchObjectsGovernanceTests(unittest.TestCase):
         traceability = json.loads(TRACEABILITY_PATH.read_text(encoding="utf-8"))
 
         self.assertEqual(traceability.get("track_id"), "25")
-        self.assertEqual(traceability.get("implementation_state"), "partially_implemented")
-        self.assertEqual(traceability.get("evidence_level"), "source_verified")
+        self.assertEqual(traceability.get("implementation_state"), "source_implemented")
+        self.assertEqual(traceability.get("evidence_level"), "fixture_proven")
 
         assertions = traceability.get("assertions", [])
         self.assertEqual(len(assertions), 6, "Track 25 must define exactly 6 assertions")
@@ -180,13 +180,13 @@ class ProvenanceResearchObjectsGovernanceTests(unittest.TestCase):
         self.assertEqual(actual_ids, expected_ids)
 
         for assertion in assertions:
-            self.assertEqual(assertion.get("state"), "partially_implemented")
+            self.assertEqual(assertion.get("state"), "source_implemented")
             self.assertEqual(assertion.get("mapping_confidence"), "symbol_and_gate_mapped")
             self.assertGreater(len(assertion.get("implementation_symbols", [])), 0)
             self.assertGreater(len(assertion.get("deterministic_tests", [])), 0)
             self.assertGreater(len(assertion.get("native_test_commands", [])), 0)
             self.assertGreater(len(assertion.get("evidence_receipts", [])), 0)
-            self.assertGreater(len(assertion.get("open_gates", [])), 0)
+            self.assertEqual(len(assertion.get("open_gates", [])), 0)
             self.assertTrue(bool(assertion.get("permitted_claim", "").strip()))
             for path in assertion.get("implementation_paths", []):
                 self.assertTrue((ROOT / path).exists(), f"Mapped path {path} must exist on disk")
