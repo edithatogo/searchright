@@ -3,11 +3,11 @@
 
 Parent phase key: `track-00-phase-1`
 Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `Cargo.toml`
   - [x] Present source path: `rust-toolchain.toml`
   - [x] Present source path: `conductor/upstream.lock.json`
@@ -22,6 +22,8 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `scripts/install-conductor.ps1`
   - [x] Present source path: `scripts/conductor_status.py`
   - [x] Present source path: `tests/test_conductor_status.py`
+  - [x] Present source path: `tests/test_foundation_toolchain_governance.py`
+  - [x] Present source path: `verification/receipts/track-00-conductor-review-2026-11-09.json`
   - [x] Assertion ledger: `conductor/tracks/00-foundation-conductor-toolchain/traceability.json`
 
 ## Completion and evidence contract
