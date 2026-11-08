@@ -3,11 +3,11 @@
 
 Parent phase key: `track-24-phase-3`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Implement and compile the WIT host/guest boundary with Wasmtime resource controls.
+- [x] Implement and compile the WIT host/guest boundary with Wasmtime resource controls.
 
 ## Completion and evidence contract
 

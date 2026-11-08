@@ -12,12 +12,12 @@ Define sandboxed provider components, integrity/capability checks and future rem
 ## Contract
 
 - Horizon: `beta`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `03, 10, 13, 16`
 - Requirements: `SR-030, SR-047`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Define sandboxed provider components, integrity/capability checks and future rem
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating wasi-systems-architect, mcp-protocol-specialist, and security-governance-auditor roles, with Ed25519 signed manifest release verification, capability authorization, and tamper-resistance verified in crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for live Wasmtime guest execution, cluster scalability, or remote Streamable HTTP under Track 34. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

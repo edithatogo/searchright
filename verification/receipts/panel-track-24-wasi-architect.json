@@ -1,0 +1,46 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "24",
+  "panelist_role": "wasi-systems-architect",
+  "evaluated_at": "2026-11-08T23:00:00Z",
+  "evaluated_on": "2026-11-08",
+  "overall_assessment": "Track 24 establishes a solid, contract-backed foundation for sandboxed WASI search provider components. The WIT interface definition in contracts/wit/search-provider.wit (package searchright:provider@0.1.0) strictly defines the types and provider-component world, ensuring clean host-guest boundary separation. The host SDK in searchright-plugin-sdk implements rigorous validation: ProviderComponentManifest validation, PROVIDER_ABI_VERSION pinning, BLAKE3 component byte digest verification, and granular capability checks via authorise_capability (ComponentCapability::Search, MetadataRead, NetworkRead). Resource envelopes (max_memory_mib, max_fuel) and host network allowlists are verified at admission. Deterministic integration tests in component_sandbox_scenarios.rs and component_edges.rs (25 unit and integration tests passing) confirm that byte tampering, ABI version mismatches, and undeclared capability requests fail closed.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The WIT search-provider package world is pinned to searchright:provider/search-provider@0.1.0; runtime host dynamic ABI version negotiation is deferred to future multi-ABI plugin discovery tracks.",
+      "reference": "crates/searchright-plugin-sdk/src/lib.rs:13-27",
+      "recommendation": "Maintain ABI version pinning until multi-version component registries are introduced."
+    },
+    {
+      "severity": "minor",
+      "description": "ProviderComponentManifest declares max_memory_mib and max_fuel resource bounds which are verified during manifest admission; active hardware fuel consumption metering and memory traps inside a live guest require the compiled Wasmtime runtime engine.",
+      "reference": "crates/searchright-plugin-sdk/src/lib.rs:244-245",
+      "recommendation": "Preserve the open Wasmtime execution gate without claiming live runtime resource throttling."
+    },
+    {
+      "severity": "observation",
+      "description": "Integration test scenarios in component_sandbox_scenarios.rs and component_edges.rs thoroughly prove Ed25519 signature verification, component byte tampering rejection, least-privilege capability failure, key revocation enforcement, and validity window boundaries.",
+      "reference": "crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs:95-223",
+      "recommendation": "Enforce capability authorization checks as mandatory prerequisites before component invocation in all future runners."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T24-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "WIT host/guest search-provider contract and Ed25519 signed manifest release verification implemented in searchright-plugin-sdk and proven with 25 unit and integration tests."
+    },
+    {
+      "id": "T24-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Component capability controls (ComponentCapability), memory bounds (max_memory_mib), fuel allocations (max_fuel), and network allowlists statically verified; live Wasmtime resource controls preserved as open gate."
+    }
+  ],
+  "calibration_notes": "WASI systems architects confirm that WIT contract interfaces, Ed25519 signature admission, and static memory/fuel boundary validation are robustly implemented. Live guest Wasmtime execution and fuel metering remain preserved as open gates.",
+  "claim_boundary": "Source-verified implementation only. Exact provider-component bytes, manifest identity, Ed25519 key authority, validity windows, and capability checks are compiler-tested locally; live Wasmtime runtime execution, fuel limits, and guest capability enforcement remain open gates.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

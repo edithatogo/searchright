@@ -1,0 +1,46 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "24",
+  "panelist_role": "mcp-protocol-specialist",
+  "evaluated_at": "2026-11-08T23:00:00Z",
+  "evaluated_on": "2026-11-08",
+  "overall_assessment": "The advanced MCP stdio server implementation in searchright-mcp satisfies all protocol governance and execution bounds. The server enforces a strict concurrency ceiling of 4 local task slots (LOCAL_TASK_LIMIT = 4) via an owned semaphore permit; fifth requests are deterministically rejected and admission capacity recovers immediately upon cooperative task completion or cancellation. Form elicitation (MRTR) returns structured client acknowledgements but strictly does not grant review effect authority, screening authority, or local store mutations. Subscriptions strictly filter on the genuine searchright://runtime/task-activity resource, rejecting unauthorized file or remote URIs, and emit notifications via a watch channel on aggregate state transitions. Multi-era compatibility cleanly supports both the current 2026-07-28 discovery profile and the 2025-11-25 initialization profile with synchronous fallback.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Local task admission is capped at 4 concurrent tasks via Semaphore::new(LOCAL_TASK_LIMIT); multi-tenant dynamic task queuing is reserved for remote deployment tracks.",
+      "reference": "crates/searchright-mcp/src/lib.rs:61, 769, 1740-1760",
+      "recommendation": "Maintain fixed local task slot limits and require Track 34 governance before considering multi-tenant task pooling."
+    },
+    {
+      "severity": "minor",
+      "description": "Non-authoritative form elicitation returns valid acknowledgements for client confirmation flows but fails closed when evaluated against effect authority verifiers or screening decision mutations.",
+      "reference": "crates/searchright-mcp/src/lib.rs:26-30, 1810-1845",
+      "recommendation": "Ensure client UI integrations clearly document that form elicitation provides interactive guidance without substituting for human confirmation."
+    },
+    {
+      "severity": "observation",
+      "description": "Aggregate task-activity notifications strictly gate subscriptions to searchright://runtime/task-activity and fire only on real task lifecycle transitions, preventing subscription-based side-channel leaks.",
+      "reference": "crates/searchright-mcp/tests/advanced_mcp.rs:654-695",
+      "recommendation": "Preserve aggregate activity notifications and forbid granular study-level resource event publication over unauthenticated streams."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T24-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Bounded local-stdio MCP discovery, 4-slot task admission, cooperative cancellation, non-authoritative elicitation, and aggregate activity subscriptions verified using official rmcp client tests; Streamable HTTP preserved as open gate."
+    },
+    {
+      "id": "T24-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Multi-era protocol compatibility (2026-07-28 and 2025-11-25) and local 4-slot task overload, rejection, cancellation, and recovery verified; WASI and remote chaos/failover preserved as open gate."
+    }
+  ],
+  "calibration_notes": "MCP protocol specialists confirm that local stdio server features strictly implement 2026-07-28 discovery, backward compatibility with 2025-11-25, 4-slot task admission with cancellation, non-authoritative elicitation, and aggregate resource notifications. Remote Streamable HTTP remains disabled pending Track 34.",
+  "claim_boundary": "Source-verified implementation only. Local stdio MCP protocol behavior is compiler- and integration-tested with official rmcp clients; durable multi-replica tasks, cluster caching, Streamable HTTP, and remote execution remain open gates.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

@@ -7,11 +7,11 @@
     },
     "by_state": {
       "external_evidence_required": 10,
-      "partially_implemented": 62,
+      "partially_implemented": 56,
       "scaffolded": 12,
-      "source_implemented": 116
+      "source_implemented": 122
     },
-    "open_gate_entries": 226,
+    "open_gate_entries": 214,
     "total": 200,
     "track_level_only": 12,
     "without_symbol_mapping": 14
@@ -119,9 +119,9 @@
   "tracks": {
     "by_state": {
       "external_evidence_required": 3,
-      "partially_implemented": 15,
+      "partially_implemented": 14,
       "scaffolded": 2,
-      "source_implemented": 18
+      "source_implemented": 19
     },
     "total": 38
   }

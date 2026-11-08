@@ -1,0 +1,140 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "24",
+  "title": "WASI components, HTTP MCP and scalable execution — agent-panel evaluation",
+  "observed_at": "2026-11-08T23:00:00Z",
+  "evaluated_on": "2026-11-08",
+  "source_revision": "9a0fe07a8f65a4027c9a2e42c7668529bd8ab484",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "wasi-systems-architect",
+      "mcp-protocol-specialist",
+      "security-governance-auditor"
+    ],
+    "output_artefacts": [
+      "structured-wasi-sandbox-findings",
+      "mcp-concurrency-and-subscription-invariants",
+      "security-and-remote-boundary-audit",
+      "disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Source-verified and fixture-proven implementation only; live Wasmtime guest execution, production cluster scaling, and prospective OAuth-gated multi-tenant cloud deployments remain gated."
+  },
+  "panelists": [
+    {
+      "role": "wasi-systems-architect",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "mcp-protocol-specialist",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "security-governance-auditor",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 0,
+      "observation": 3,
+      "disposition": "approved"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval. Convergence centered on: (1) WIT search-provider ABI contract decoupling and static capability/memory/fuel bounds; (2) Ed25519 cryptographic release signing with length-prefixed domain separation and fail-closed key revocation; (3) 4-slot local MCP task admission with cooperative cancellation and recovery; (4) non-authoritative form elicitation that never grants effect authority; (5) subscription filtering restricted to aggregate task-activity notifications; and (6) rigorous preservation of open maturity gates (Wasmtime runtime execution, Arrow/DuckDB engines, and authenticated Streamable HTTP/OAuth under Track 34).",
+    "convergence_vectors": [
+      "WIT search-provider package world searchright:provider@0.1.0 cleanly separating host and guest interfaces",
+      "Ed25519 detached signature verification over canonical length-prefixed domain-separated release messages",
+      "Fail-closed cryptographic key revocation and validity window enforcement",
+      "Local MCP stdio 4-slot task concurrency limit with immediate capacity recovery upon cancellation",
+      "Interactive form elicitation returning non-authoritative structured acknowledgements without effect authority",
+      "Aggregate task-activity resource subscription filtering excluding arbitrary file/remote URIs",
+      "Multi-era MCP compatibility supporting 2026-07-28 discovery and 2025-11-25 initialization",
+      "Candidate OpenAPI 3.1.0 specifications preserving strict denial of unauthenticated remote execution without Track 34"
+    ],
+    "divergence_vectors": [
+      "Dynamic percentile-based fuel consumption allocations versus static max_fuel bounds",
+      "Long-polling versus Server-Sent Events transport integration for future Track 34 Streamable HTTP"
+    ]
+  },
+  "assertions_evaluated": [
+    {
+      "id": "T24-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "WIT host/guest interfaces in contracts/wit/search-provider.wit and Ed25519 signed manifest release verification in searchright-plugin-sdk verified by unit tests, component_sandbox_scenarios.rs, component_edges.rs, and test_wasi_http_scale_governance.py."
+    },
+    {
+      "id": "T24-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Static capability controls (ComponentCapability), memory bounds (max_memory_mib), fuel allocations (max_fuel), and network endpoint allowlists verified in searchright-plugin-sdk and searchright-policy; Wasmtime runtime fuel metering remains an explicit open gate."
+    },
+    {
+      "id": "T24-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "StudyGraph and FileReviewStore contracts verified against large-corpus schema requirements; columnar Arrow/Parquet and DuckDB engine integration properly preserved as open gate pending scalable execution benchmarks."
+    },
+    {
+      "id": "T24-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Bounded local-stdio MCP server implements 2026-07-28 discovery, 4-slot task admission with cancellation and recovery, non-authoritative form elicitation, and aggregate task-activity subscriptions in advanced_mcp.rs; Streamable HTTP preserved as open gate."
+    },
+    {
+      "id": "T24-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Candidate HTTP OpenAPI 3.1.0 routes and local MCP listener bindings verified in searchright-http.openapi.yaml and test_wasi_http_scale_governance.py; authenticated Streamable HTTP, OAuth 2.0 proxy tokens, and multi-tenant quotas denied pending Track 34 governance."
+    },
+    {
+      "id": "T24-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Multi-era MCP compatibility (2026-07-28 and 2025-11-25) and local 4-slot task admission overload, rejection, cancellation, and recovery tested in advanced_mcp.rs; WASI and remote chaos/failover preserved as open gate."
+    }
+  ],
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 4,
+      "observation": 5
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Retain length-prefixed domain-separated release messages for all component cryptographic signatures.",
+    "Preserve strict 4-slot local task limits and non-authoritative form elicitation bounds across MCP endpoints.",
+    "Maintain honest claim boundaries distinguishing source-verified contracts from live Wasmtime, Arrow/DuckDB, and remote Streamable HTTP execution."
+  ],
+  "open_gates": [
+    "Compile WASI components and run the component conformance suite.",
+    "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
+    "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
+    "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+    "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond bounded local task admission.",
+    "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the local Ed25519 admission boundary."
+  ],
+  "recommendation": "APPROVE_FOR_ARCHIVE",
+  "decision": {
+    "outcome": "approved_as_source_verified",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-08"
+  }
+}

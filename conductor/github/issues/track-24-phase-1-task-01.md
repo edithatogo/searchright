@@ -3,11 +3,11 @@
 
 Parent phase key: `track-24-phase-1`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-plugin-sdk/src/lib.rs`
   - [x] Present source path: `crates/searchright-policy/src/lib.rs`
   - [x] Present source path: `contracts/wit/search-provider.wit`
@@ -23,6 +23,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `contracts/compatibility/track-24-provider-component-trust.md`
   - [x] Present source path: `verification/receipts/track-24-component-trust.json`
   - [x] Present source path: `tests/test_wasi_http_scale_governance.py`
+  - [x] Present source path: `crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs`
   - [x] Assertion ledger: `conductor/tracks/24-wasi-http-scale/traceability.json`
 
 ## Completion and evidence contract
