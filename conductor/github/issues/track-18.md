@@ -12,8 +12,8 @@ Produce locked, signed, attestable cross-platform technical-preview releases wit
 ## Contract
 
 - Horizon: `alpha`
-- Status: `release_prepared`
-- Implementation: `scaffolded`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `09, 10, 13, 16, 17`
 - Requirements: `SR-039, SR-068`

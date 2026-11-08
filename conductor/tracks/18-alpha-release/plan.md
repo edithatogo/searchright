@@ -1,6 +1,6 @@
 # Plan: 18 Alpha release and distribution
 
-Current status: **release_prepared**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,7 +8,7 @@ GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-18-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `.github/workflows/clean-room.yml`
   - [x] Present source path: `.github/workflows/release.yml`
   - [x] Present source path: `CHANGELOG.md`
