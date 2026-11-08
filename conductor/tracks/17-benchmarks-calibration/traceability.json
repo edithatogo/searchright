@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "17",
   "title": "Benchmarks, search validation and human calibration",
-  "implementation_state": "partially_implemented",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/17-benchmarks-calibration/spec.md#scope",
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
@@ -10,7 +10,7 @@
     {
       "assertion_id": "T17-A001",
       "statement": "Define benchmark report and anti-leakage contracts",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/manifest.json",
@@ -51,7 +51,7 @@
     {
       "assertion_id": "T17-A002",
       "statement": "Integrate SYNERGY with dataset provenance and splits",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/manifest.json",
@@ -86,7 +86,7 @@
     {
       "assertion_id": "T17-A003",
       "statement": "Create search-strategy gold sets and known-item recall tests",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/manifest.json",
@@ -120,7 +120,7 @@
     {
       "assertion_id": "T17-A004",
       "statement": "Measure dedup precision/recall and cluster review burden",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/fixtures/validation/dedup-cases.json",
@@ -152,7 +152,7 @@
     {
       "assertion_id": "T17-A005",
       "statement": "Run prospective multi-model pilot and human calibration",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/evaluation/benchmark-and-calibration-protocol.md",
@@ -184,7 +184,7 @@
     {
       "assertion_id": "T17-A006",
       "statement": "Publish limitations and reproducible benchmark artefacts",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/manifest.json",
