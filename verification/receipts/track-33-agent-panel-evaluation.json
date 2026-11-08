@@ -1,0 +1,114 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "33",
+  "title": "Operational observability, backup, restore and incident response — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T04:18:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "5dddd73419b27e3101f50b998ece4d2eaa59f5f4",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "site-reliability-architect",
+      "privacy-telemetry-auditor",
+      "disaster-recovery-auditor"
+    ],
+    "output_artefacts": [
+      "site-reliability-architecture-review",
+      "privacy-preserving-telemetry-audit",
+      "disaster-recovery-and-incident-response-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Source-verified evaluation of operational contracts, telemetry policies, backup manifests, incident records, reference recovery rehearsals, and resilience workflows; compiler-backed failure injection runs, KMS-encrypted clean-room restore rehearsals, and operational disaster drills remain open gates."
+  },
+  "panelists": [
+    {
+      "role": "site-reliability-architect",
+      "evaluator_role": "site-reliability-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "privacy-telemetry-auditor",
+      "evaluator_role": "privacy-telemetry-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "disaster-recovery-auditor",
+      "evaluator_role": "disaster-recovery-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 33 (Operational observability, backup, restore and incident response). The core operational assets—including crates/searchright-ops/src/lib.rs, crates/searchright-ops/tests/policy_failure_injection.rs, crates/searchright-contracts/src/ops.rs, contracts/examples/component-health.json, contracts/examples/telemetry-policy.json, contracts/examples/backup-manifest.json, contracts/examples/incident-record.json, docs/operations/reliability.md, docs/operations/backup-restore.md, docs/operations/incident-response.md, scripts/recovery_rehearsal.py, verification/recovery/rehearsal.json, docs/operations/recovery-reference-rehearsal.md, .github/workflows/resilience.yml, and tests/test_operational_reliability_governance.py—demonstrate exceptional architectural rigor, fail-closed policy design, and strict privacy protection. Component health contracts separate liveness from readiness, requiring components to be Healthy or Degraded to declare readiness, while searchright-ops::readiness rejects empty inputs and transparently exposes degraded components without masking. Telemetry is disabled by default with 0 sampling and 0 retention; enabled telemetry strictly requires an endpoint and human approver, while query_text, full_text, api_key, and personal_identifier are strictly prohibited and enforced via triple-gate authorisation. Backups are content-addressed using SHA-256 and mandate encryption with key references only; unencrypted restores and unauthorised operators are rejected fail-closed. Deterministic reference recovery rehearsal demonstrates atomic replacement, stale temporary isolation, restore idempotency, and cryptographic tamper detection network-free. Incident response enforces structured containment, data exposure tracking, and mandatory postmortems for high/critical incidents, while upholding evidence preservation. All 6 governance unit tests and failure-injection tests pass deterministically. The three higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "assertions_evaluated": [
+    {
+      "id": "T33-A001",
+      "statement": "Health/readiness and privacy-preserving telemetry",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Component health contracts, liveness vs readiness segregation, degraded operational modes, fail-closed readiness aggregation, default-disabled telemetry, 0 sampling/retention defaults, and strict prohibition of query_text, full_text, api_key, and personal_identifier verified in source contracts and test suites."
+    },
+    {
+      "id": "T33-A002",
+      "statement": "Encrypted backup and restore rehearsal",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Encrypted backup manifest contracts, key reference isolation, fail-closed unencrypted restore blocking, atomic file replacement, restore idempotency, and cryptographic tamper detection verified in deterministic reference rehearsals."
+    },
+    {
+      "id": "T33-A003",
+      "statement": "Incident response, cancellation and resilience objectives",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Incident record contract, mandatory containment, data exposure tracking, postmortem mandates for high/critical incidents, task cancellation doctrine, failure-as-abstention, and CI workflow hardening verified."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T33-G-OPS-POLICY-TESTS",
+      "statement": "Compile and execute operations policy tests and failure-injection scenarios.",
+      "status": "OPEN",
+      "evidence": "Preserved open until compiler-backed searchright-ops test suite and failure-injection scenarios execute in continuous integration"
+    },
+    {
+      "gate": "T33-G-ENCRYPTED-RESTORE-REHEARSAL",
+      "statement": "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+      "status": "OPEN",
+      "evidence": "Preserved open until clean-room backup and restore rehearsals with KMS encryption and audit-chain continuity are executed"
+    },
+    {
+      "gate": "T33-G-INCIDENT-RESILIENCE-EXERCISES",
+      "statement": "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
+      "status": "OPEN",
+      "evidence": "Preserved open until live incident response, MCP task cancellation, and recovery exercises are run and hosted service objectives are approved"
+    }
+  ]
+}

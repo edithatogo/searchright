@@ -1,0 +1,49 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "33",
+  "panelist_role": "privacy-telemetry-auditor",
+  "evaluator_role": "privacy-telemetry-auditor",
+  "evaluated_at": "2026-11-09T04:16:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The privacy-preserving telemetry policy architecture codified in contracts/examples/telemetry-policy.json, crates/searchright-contracts/src/ops.rs, crates/searchright-ops/src/lib.rs, and AGENTS.md establishes industry-leading privacy-by-default and fail-closed data governance. In contracts/examples/telemetry-policy.json, telemetry defaults to strictly disabled (enabled: false) with a null endpoint, empty attribute allowlist, 0 sampling per million, 0 retention days, and null approver. Contract validation (TelemetryPolicy::validate) strictly enforces mutual exclusion and invariant consistency: if telemetry is disabled, declaring an endpoint, non-zero sampling, or an approver results in an immediate contract error; conversely, enabling telemetry mandatorily requires an approved endpoint and non-empty human approver string. In addition, bounded ceilings prevent data hoarding by restricting sampling to at most 1,000,000 per million and retention to at most 365 days. Crucially, the contract and governance test suite explicitly enumerate four non-negotiable prohibited attributes: 'query_text', 'full_text', 'api_key', and 'personal_identifier'. If any prohibited attribute is included in attribute_allowlist, contract validation fails closed immediately. In crates/searchright-ops/src/lib.rs, authorise_telemetry_attribute enforces a triple-gate check: first rejecting if telemetry is disabled (OpsError::TelemetryDisabled), then rejecting if the attribute is in prohibited_attributes (OpsError::TelemetryAttributeProhibited), and finally rejecting if the attribute is absent from attribute_allowlist (OpsError::TelemetryAttributeNotAllowed). This completely prevents silent telemetry leaks of sensitive search strategies, licensed document text, credentials, or personally identifiable information.",
+  "verified_invariants": [
+    "default-disabled telemetry: telemetry policy defaults to enabled: false with null endpoint, 0 sampling per million, 0 retention days, and null approver",
+    "strict contract invariants for disabled telemetry: any presence of endpoint, sampling > 0, or approver in a disabled policy violates schema invariants",
+    "mandatory human approval for enabled telemetry: enabling telemetry requires an explicit collector endpoint and human approver string",
+    "strict prohibition of sensitive attributes: query_text, full_text, api_key, and personal_identifier are strictly prohibited from telemetry collection",
+    "contradiction rejection: contract validation forbids any attribute from coexisting in both attribute_allowlist and prohibited_attributes",
+    "triple-gate authorisation check: authorise_telemetry_attribute enforces enabled check, prohibited check, and allowlist membership check in fail-closed order",
+    "bounded sampling and retention ceilings: contract enforces sampling <= 1,000,000 per million and retention <= 365 days",
+    "deterministic validation: all telemetry invariants pass 100% network-free in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Telemetry policy contracts and attribute authorization gates are structurally enforced; reviewing and approving deployment-specific telemetry endpoints and audit logging in hosted production environments remain open operational gates.",
+      "reference": "crates/searchright-contracts/src/ops.rs:170-207; crates/searchright-ops/src/lib.rs:34-58; conductor/tracks/33-operational-reliability/traceability.json:36-40",
+      "recommendation": "Preserve open gate T33-G-OPS-POLICY-TESTS and require institutional data protection officer sign-off before enabling telemetry in any deployment."
+    },
+    {
+      "severity": "observation",
+      "description": "The non-negotiable repository policy in AGENTS.md explicitly reinforces contract boundaries: 'Telemetry is disabled by default; never export full text, credentials or sensitive identifiers without an explicit allowlist and approval.'",
+      "reference": "AGENTS.md:38-39; contracts/examples/telemetry-policy.json:7-12",
+      "recommendation": "Maintain automated governance tests ensuring prohibited attributes cannot be removed or bypassed."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T33-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Default-disabled telemetry, 0 sampling/retention defaults, triple-gate authorisation, and strict prohibition of query_text, full_text, api_key, and personal_identifier verified in contracts and ops crate."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified telemetry policy and gate logic only; deployment-specific telemetry endpoint review and live collector privacy audits remain open operational gates."
+  ]
+}

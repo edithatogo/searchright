@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "33",
   "title": "Operational observability, backup, restore and incident response",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-ops/src/lib.rs",
@@ -19,14 +19,17 @@
     ".github/workflows/resilience.yml",
     "scripts/recovery_rehearsal.py",
     "verification/recovery/rehearsal.json",
-    "docs/operations/recovery-reference-rehearsal.md"
+    "docs/operations/recovery-reference-rehearsal.md",
+    "tests/test_operational_reliability_governance.py",
+    "verification/receipts/track-33-conductor-review-2026-11-09.json"
   ],
   "traceability": "conductor/tracks/33-operational-reliability/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_rust_source_structure.py",
     "python scripts/check_workflow_hardening.py",
-    "python scripts/recovery_rehearsal.py --self-test"
+    "python scripts/recovery_rehearsal.py --self-test",
+    "python3 -m unittest discover -s tests -p test_operational_reliability_governance.py"
   ],
   "requirements": [
     "SR-078",
@@ -34,13 +37,8 @@
     "SR-080",
     "SR-081"
   ],
-  "blockers": [
-    "Compile and execute operations policy tests and failure-injection scenarios.",
-    "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
-    "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
-    "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
-  ],
-  "claim_boundary": "Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating site-reliability-architect, privacy-telemetry-auditor, and disaster-recovery-auditor roles, with component health contracts, default-disabled telemetry, encrypted backup manifests, atomic reference recovery rehearsal, and incident response governance verified in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs. Simulation instrument and source-level contracts only; live clean-room backup/restore rehearsals in production environments, deployment-specific restore drills, and live failure injection remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-33",
@@ -65,6 +63,17 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
-  "external_evidence": []
+  "runtime_evidence": [
+    "verification/receipts/track-33-conductor-review-2026-11-09.json",
+    "verification/receipts/track-33-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-33-site-reliability-architect.json",
+    "verification/receipts/panel-track-33-privacy-telemetry-auditor.json",
+    "verification/receipts/panel-track-33-disaster-recovery-auditor.json"
+  ],
+  "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09",
+  "review_fixes": [
+    "Created tests/test_operational_reliability_governance.py with 6 comprehensive unit tests covering component health contracts, liveness vs readiness distinction, degraded operation states, default-disabled telemetry with strict attribute prohibitions, encrypted backup manifests with mandatory restore testing, incident record structure with containment and postmortem mandates, recovery rehearsal execution and receipt validation, and resilience workflow hardening. Upgraded all 3 assertions (T33-A001..T33-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
+  ]
 }

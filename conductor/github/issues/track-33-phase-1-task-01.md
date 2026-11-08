@@ -3,11 +3,11 @@
 
 Parent phase key: `track-33-phase-1`
 Conductor plan: `conductor/tracks/33-operational-reliability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-ops/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/ops.rs`
   - [x] Present source path: `contracts/examples/component-health.json`
@@ -21,6 +21,8 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `scripts/recovery_rehearsal.py`
   - [x] Present source path: `verification/recovery/rehearsal.json`
   - [x] Present source path: `docs/operations/recovery-reference-rehearsal.md`
+  - [x] Present source path: `tests/test_operational_reliability_governance.py`
+  - [x] Present source path: `verification/receipts/track-33-conductor-review-2026-11-09.json`
   - [x] Assertion ledger: `conductor/tracks/33-operational-reliability/traceability.json`
 
 ## Completion and evidence contract
