@@ -77,7 +77,7 @@ schemars = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
 noyalib = { version = "=0.0.58", default-features = false, features = ["std"] }
-sha2 = "0.11"
+sha2 = "0.11.1"
 thiserror = "2.0"
 time = { version = "0.3.55", features = ["formatting", "parsing", "serde", "macros"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "sync", "time", "io-std", "fs", "net", "process", "test-util"] }
