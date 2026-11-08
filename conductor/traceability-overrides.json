@@ -3008,7 +3008,7 @@
             "Record redacted user-run smoke receipts; no bundled access is permitted."
           ],
           "permitted_claim": "Legal/licence/terms review boundaries, zero-credential storage policies, and explicit BYO adapter profiles are verified in source; live transport execution remains gated on user-supplied credentials.",
-          "state": "scaffolded",
+          "state": "source_implemented",
           "statement": "Legal/licence/terms review and adapter boundary"
         },
         "T21-A002": {
@@ -3042,7 +3042,7 @@
             "Record redacted user-run smoke receipts; no bundled access is permitted."
           ],
           "permitted_claim": "Credential redaction and local-only secret injection are verified by request planning unit tests; credentials are never stored, logged, or reflected in endpoints.",
-          "state": "scaffolded",
+          "state": "source_implemented",
           "statement": "Credential redaction and local-only secret injection"
         },
         "T21-A003": {
@@ -3078,7 +3078,7 @@
             "Record redacted user-run smoke receipts; no bundled access is permitted."
           ],
           "permitted_claim": "Provider-specific dialect, host allowlist, and export format contracts are defined for Scopus, Embase, and Web of Science; rate and live transport caching remain gated on live adapter verification.",
-          "state": "scaffolded",
+          "state": "source_implemented",
           "statement": "Provider-specific pagination/rate/cache contracts"
         },
         "T21-A004": {
@@ -3113,7 +3113,7 @@
             "Record redacted user-run smoke receipts; no bundled access is permitted."
           ],
           "permitted_claim": "Synthetic fixture conformance and request planning validation pass on canonical fixtures; user-supplied live payload conformance remains gated.",
-          "state": "scaffolded",
+          "state": "source_implemented",
           "statement": "Synthetic and user-supplied fixture conformance"
         },
         "T21-A005": {
@@ -3147,7 +3147,7 @@
             "Record redacted user-run smoke receipts; no bundled access is permitted."
           ],
           "permitted_claim": "Opt-in smoke tooling guards and zero-raw-payload persistence defaults are enforced in contract invariants; live smoke execution requires user credentials.",
-          "state": "scaffolded",
+          "state": "source_implemented",
           "statement": "Opt-in smoke tooling that stores no licensed payload by default"
         },
         "T21-A006": {
@@ -3181,7 +3181,7 @@
             "Record redacted user-run smoke receipts; no bundled access is permitted."
           ],
           "permitted_claim": "Embase, Scopus, and Web of Science adapter profiles are partitioned into discrete manifests with independent terms reviews, env vars, and host allowlists.",
-          "state": "scaffolded",
+          "state": "source_implemented",
           "statement": "Separate support claims per provider/platform"
         }
       }

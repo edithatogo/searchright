@@ -1794,7 +1794,7 @@
       "evidence_level": "source_verified",
       "external_approval_required": true,
       "horizon": "beta",
-      "implementation_state": "scaffolded",
+      "implementation_state": "source_implemented",
       "outcome": "Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science.",
       "requirements": [
         "SR-044"
@@ -1807,7 +1807,7 @@
         "verification/receipts/track-21-conductor-review-2026-11-04.json"
       ],
       "slug": "licensed-adapters",
-      "status": "scaffolded",
+      "status": "source_implemented",
       "title": "Licensed BYO-access adapters",
       "track_id": "21",
       "updated": "2026-11-04"
