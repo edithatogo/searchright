@@ -1671,7 +1671,7 @@
       "evidence_level": "source_verified",
       "external_approval_required": true,
       "horizon": "alpha",
-      "implementation_state": "scaffolded",
+      "implementation_state": "source_implemented",
       "outcome": "Prepare and submit truthful registry packets and a software paper only after a verified release.",
       "requirements": [
         "SR-040",
@@ -1685,7 +1685,7 @@
         "verification/receipts/track-19-conductor-review-2026-11-04.json"
       ],
       "slug": "registries-publication",
-      "status": "submission_prepared",
+      "status": "source_implemented",
       "title": "Registries and scholarly publication",
       "track_id": "19",
       "updated": "2026-11-04"

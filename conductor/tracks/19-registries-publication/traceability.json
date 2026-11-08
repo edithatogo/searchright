@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "19",
   "title": "Registries and scholarly publication",
-  "implementation_state": "scaffolded",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/19-registries-publication/spec.md#scope",
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
@@ -10,7 +10,7 @@
     {
       "assertion_id": "T19-A001",
       "statement": "Validate server.json against official MCP Registry schema",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "server.json",
@@ -43,7 +43,7 @@
     {
       "assertion_id": "T19-A002",
       "statement": "Publish Glama and Smithery/MCPB metadata",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "glama.json",
@@ -79,7 +79,7 @@
     {
       "assertion_id": "T19-A003",
       "statement": "Publish crates.io and GitHub release artefacts",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "release/public-packages.json",
@@ -115,7 +115,7 @@
     {
       "assertion_id": "T19-A004",
       "statement": "Submit official MCP Registry after package availability",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "registry/official-mcp/README.md",
@@ -149,7 +149,7 @@
     {
       "assertion_id": "T19-A005",
       "statement": "Record public acceptance URLs/version/dates",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "registry/status.json",
@@ -180,7 +180,7 @@
     {
       "assertion_id": "T19-A006",
       "statement": "Prepare JOSS/Zenodo/OSF artefacts and citation metadata",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "registry/joss/paper.md",

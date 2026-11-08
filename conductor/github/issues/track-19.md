@@ -12,8 +12,8 @@ Prepare and submit truthful registry packets and a software paper only after a v
 ## Contract
 
 - Horizon: `alpha`
-- Status: `submission_prepared`
-- Implementation: `scaffolded`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `13, 18`
 - Requirements: `SR-040, SR-041`
