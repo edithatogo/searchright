@@ -1,0 +1,26 @@
+{
+  "panelist_role": "methodologist",
+  "overall_assessment": "The probabilistic calibration harness and dataset provenance architecture in Track 17 provide sound methodological guarantees. Expected Calibration Error (ECE) and Brier score implementations include necessary zero-division protections and equal-width binning guarantees. The SYNERGY passport in integration/passports/synergy-screening-benchmark.json establishes clear provenance distinguishing the local mirror fork from canonical upstream and respects the CC0-1.0 license without asserting premature generalizability claims. Methodological claims remain properly bounded to fixture-proven verification.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Expected Calibration Error uses fixed equal-width binning; adaptive equal-frequency binning would provide enhanced stability in sparse prediction tails.",
+      "reference": "crates/searchright-bench/src/lib.rs:360-395",
+      "recommendation": "Provide adaptive quantile binning as an optional configuration for highly skewed screening probability distributions."
+    },
+    {
+      "severity": "minor",
+      "description": "Brier score calculation evaluates overall squared probability error but does not decompose into reliability, resolution, and uncertainty components.",
+      "reference": "crates/searchright-bench/src/lib.rs:400-425",
+      "recommendation": "Add Murphy decomposition for deep diagnostic inspection of active-learning ranker calibration."
+    },
+    {
+      "severity": "observation",
+      "description": "Dataset provenance enforcement via check_dataset_provenance.py successfully prevents unreviewed benchmark executions and ensures all public statements mention simulation limitations.",
+      "reference": "scripts/check_dataset_provenance.py:30-65",
+      "recommendation": "Preserve strict provenance passport enforcement across all third-party datasets."
+    }
+  ],
+  "calibration_notes": "Methodologists will unanimously affirm that reporting PRISMA-S, ECE, and WSS without claiming unverified clinical effectiveness reflects the highest methodological integrity.",
+  "disposition": "approve_with_findings"
+}

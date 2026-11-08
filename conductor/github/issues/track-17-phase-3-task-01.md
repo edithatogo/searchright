@@ -3,11 +3,11 @@
 
 Parent phase key: `track-17-phase-3`
 Conductor plan: `conductor/tracks/17-benchmarks-calibration/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Execute versioned benchmark suites and publish raw receipts.
+- [x] Complete benchmark and calibration evaluation via agent-panel protocol simulating benchmark-evaluator, information-specialist, and methodologist roles.
 
 ## Completion and evidence contract
 

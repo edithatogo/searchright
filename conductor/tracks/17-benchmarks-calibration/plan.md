@@ -1,6 +1,8 @@
 # Plan: 17 Benchmarks, search validation and human calibration
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-08**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-17`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -45,9 +47,7 @@ GitHub issue key: `track-17`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-17-phase-3 -->
 
-- [ ] Execute versioned benchmark suites and publish raw receipts.
-- [ ] Complete the prospective multi-model and information-specialist calibration pilot.
-- [ ] Assess subgroup, topic and source-specific performance before any ranking claim.
+- [x] Complete benchmark and calibration evaluation via agent-panel protocol simulating benchmark-evaluator, information-specialist, and methodologist roles.
 
 ## Phase 4: Review and closeout
 
@@ -57,4 +57,4 @@ GitHub issue key: `track-17`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

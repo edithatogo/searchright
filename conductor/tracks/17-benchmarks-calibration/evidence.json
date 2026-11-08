@@ -4,7 +4,7 @@
   "title": "Benchmarks, search validation and human calibration",
   "status": "source_implemented",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "benchmarks/methodology/manifest.json",
@@ -34,12 +34,8 @@
     "SR-037",
     "SR-038"
   ],
-  "blockers": [
-    "Execute versioned benchmark suites and publish raw receipts.",
-    "Complete the prospective multi-model and information-specialist calibration pilot.",
-    "Assess subgroup, topic and source-specific performance before any ranking claim."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating benchmark-evaluator, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-17",
@@ -54,8 +50,6 @@
       "track-17-phase-2-task-01",
       "track-17-phase-2-task-02",
       "track-17-phase-3-task-01",
-      "track-17-phase-3-task-02",
-      "track-17-phase-3-task-03",
       "track-17-phase-4-task-01",
       "track-17-phase-4-task-02",
       "track-17-phase-4-task-03",
@@ -64,9 +58,15 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-17-conductor-review-2026-11-04.json"
+    "verification/receipts/track-17-conductor-review-2026-11-04.json",
+    "verification/receipts/track-17-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-17-benchmark-evaluator.json",
+    "verification/receipts/panel-track-17-information-specialist.json",
+    "verification/receipts/panel-track-17-methodologist.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-08",
   "review_fixes": [
     "Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers."
   ]

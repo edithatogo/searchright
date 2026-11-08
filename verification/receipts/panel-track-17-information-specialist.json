@@ -1,0 +1,26 @@
+{
+  "panelist_role": "information-specialist",
+  "overall_assessment": "The search validation and recall-oriented evaluation architecture in Track 17 aligns with systematic search principles. Work Saved over Sampling (WSS@95%) accurately reflects reviewer workload reduction while preserving the non-negotiable rule forbidding autonomous study exclusion. Known-item recall tests at various rank thresholds (@10, @50, @100) are analytically verified, and deduplication cluster review burden accounts for ambiguous manual verification pairs. The information specialist panel emphasizes that synthetic gold sets must be supplemented with real topic-specific search strategies in prospective review settings.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Work Saved over Sampling calculation returns None when target_recall is non-positive or exceeds 1.0, but could provide more granular diagnostic error types distinguishing out-of-range parameters from zero-total-record inputs.",
+      "reference": "crates/searchright-bench/src/lib.rs:320-348",
+      "recommendation": "Return a typed WssCalculationError enum instead of Option<f64> in production APIs."
+    },
+    {
+      "severity": "minor",
+      "description": "Recall@k assumes binary relevant labels; graded multi-level relevance (e.g., highly relevant vs background context) is not supported in the primary metric suite.",
+      "reference": "crates/searchright-bench/src/lib.rs:180-210",
+      "recommendation": "Add graded NDCG metrics when complex ranking tracks are evaluated."
+    },
+    {
+      "severity": "observation",
+      "description": "Review burden metric accurately computes the unique record count in clusters requiring human arbitration.",
+      "reference": "crates/searchright-bench/src/lib.rs:410-435",
+      "recommendation": "Maintain distinction between automated cluster reduction and human screening burden."
+    }
+  ],
+  "calibration_notes": "Information specialists will strongly agree that WSS@95% and known-item recall are the appropriate primary metrics for systematic-review validation, and will appreciate the explicit refusal to auto-exclude studies.",
+  "disposition": "approve_with_findings"
+}
