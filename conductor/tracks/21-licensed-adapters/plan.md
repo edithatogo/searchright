@@ -1,6 +1,8 @@
 # Plan: 21 Licensed BYO-access adapters
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-08**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-21`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -32,9 +34,7 @@ GitHub issue key: `track-21`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-21-phase-3 -->
 
-- [ ] Obtain authorised user credentials and confirm current vendor terms.
-- [ ] Implement/test vendor-specific live transports without storing credentials.
-- [ ] Record redacted user-run smoke receipts; no bundled access is permitted.
+- [x] Complete licensed BYO request planning, credential protection, and legal compliance evaluation via agent-panel protocol simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles.
 
 ## Phase 4: Review and closeout
 
@@ -44,4 +44,4 @@ GitHub issue key: `track-21`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

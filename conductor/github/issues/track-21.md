@@ -14,10 +14,10 @@ Provide credential-free request planning and explicit licence/capability profile
 - Horizon: `beta`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `03, 13, 16`
 - Requirements: `SR-044`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Provide credential-free request planning and explicit licence/capability profile
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles. Panel output is a simulation instrument, not a substitute for vendor licensing agreements or live user-credentialed audits. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

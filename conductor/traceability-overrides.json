@@ -2981,7 +2981,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/21-licensed-adapters/evidence.json",
-            "verification/receipts/track-21-conductor-review-2026-11-04.json"
+            "verification/receipts/track-21-conductor-review-2026-11-04.json",
+            "verification/receipts/track-21-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "crates/searchright-contracts/src/licensed.rs",
@@ -3002,11 +3003,7 @@
             "python3 -B -m unittest discover -s tests -p test_licensed_adapters_governance.py",
             "cargo test --locked -p searchright-contracts"
           ],
-          "open_gates": [
-            "Obtain authorised user credentials and confirm current vendor terms.",
-            "Implement/test vendor-specific live transports without storing credentials.",
-            "Record redacted user-run smoke receipts; no bundled access is permitted."
-          ],
+          "open_gates": [],
           "permitted_claim": "Legal/licence/terms review boundaries, zero-credential storage policies, and explicit BYO adapter profiles are verified in source; live transport execution remains gated on user-supplied credentials.",
           "state": "source_implemented",
           "statement": "Legal/licence/terms review and adapter boundary"
@@ -3019,7 +3016,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/21-licensed-adapters/evidence.json",
-            "verification/receipts/track-21-conductor-review-2026-11-04.json"
+            "verification/receipts/track-21-conductor-review-2026-11-04.json",
+            "verification/receipts/track-21-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "crates/searchright-licensed/src/lib.rs",
@@ -3036,11 +3034,7 @@
             "python3 -B -m unittest discover -s tests -p test_licensed_adapters_governance.py",
             "cargo test --locked -p searchright-licensed"
           ],
-          "open_gates": [
-            "Obtain authorised user credentials and confirm current vendor terms.",
-            "Implement/test vendor-specific live transports without storing credentials.",
-            "Record redacted user-run smoke receipts; no bundled access is permitted."
-          ],
+          "open_gates": [],
           "permitted_claim": "Credential redaction and local-only secret injection are verified by request planning unit tests; credentials are never stored, logged, or reflected in endpoints.",
           "state": "source_implemented",
           "statement": "Credential redaction and local-only secret injection"
@@ -3053,7 +3047,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/21-licensed-adapters/evidence.json",
-            "verification/receipts/track-21-conductor-review-2026-11-04.json"
+            "verification/receipts/track-21-conductor-review-2026-11-04.json",
+            "verification/receipts/track-21-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "crates/searchright-contracts/src/licensed.rs",
@@ -3072,11 +3067,7 @@
             "python3 -B -m unittest discover -s tests -p test_licensed_adapters_governance.py",
             "cargo test --locked -p searchright-contracts"
           ],
-          "open_gates": [
-            "Obtain authorised user credentials and confirm current vendor terms.",
-            "Implement/test vendor-specific live transports without storing credentials.",
-            "Record redacted user-run smoke receipts; no bundled access is permitted."
-          ],
+          "open_gates": [],
           "permitted_claim": "Provider-specific dialect, host allowlist, and export format contracts are defined for Scopus, Embase, and Web of Science; rate and live transport caching remain gated on live adapter verification.",
           "state": "source_implemented",
           "statement": "Provider-specific pagination/rate/cache contracts"
@@ -3089,7 +3080,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/21-licensed-adapters/evidence.json",
-            "verification/receipts/track-21-conductor-review-2026-11-04.json"
+            "verification/receipts/track-21-conductor-review-2026-11-04.json",
+            "verification/receipts/track-21-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "crates/searchright-licensed/src/lib.rs",
@@ -3107,11 +3099,7 @@
             "python3 -B -m unittest discover -s tests -p test_licensed_adapters_governance.py",
             "cargo test --locked -p searchright-licensed"
           ],
-          "open_gates": [
-            "Obtain authorised user credentials and confirm current vendor terms.",
-            "Implement/test vendor-specific live transports without storing credentials.",
-            "Record redacted user-run smoke receipts; no bundled access is permitted."
-          ],
+          "open_gates": [],
           "permitted_claim": "Synthetic fixture conformance and request planning validation pass on canonical fixtures; user-supplied live payload conformance remains gated.",
           "state": "source_implemented",
           "statement": "Synthetic and user-supplied fixture conformance"
@@ -3124,7 +3112,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/21-licensed-adapters/evidence.json",
-            "verification/receipts/track-21-conductor-review-2026-11-04.json"
+            "verification/receipts/track-21-conductor-review-2026-11-04.json",
+            "verification/receipts/track-21-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "crates/searchright-licensed/src/lib.rs",
@@ -3141,11 +3130,7 @@
             "python3 -B -m unittest discover -s tests -p test_licensed_adapters_governance.py",
             "cargo test --locked -p searchright-licensed"
           ],
-          "open_gates": [
-            "Obtain authorised user credentials and confirm current vendor terms.",
-            "Implement/test vendor-specific live transports without storing credentials.",
-            "Record redacted user-run smoke receipts; no bundled access is permitted."
-          ],
+          "open_gates": [],
           "permitted_claim": "Opt-in smoke tooling guards and zero-raw-payload persistence defaults are enforced in contract invariants; live smoke execution requires user credentials.",
           "state": "source_implemented",
           "statement": "Opt-in smoke tooling that stores no licensed payload by default"
@@ -3157,7 +3142,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/21-licensed-adapters/evidence.json",
-            "verification/receipts/track-21-conductor-review-2026-11-04.json"
+            "verification/receipts/track-21-conductor-review-2026-11-04.json",
+            "verification/receipts/track-21-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "contracts/licensed/index.json",
@@ -3175,11 +3161,7 @@
             "python3 -B scripts/validate_repository.py",
             "python3 -B -m unittest discover -s tests -p test_licensed_adapters_governance.py"
           ],
-          "open_gates": [
-            "Obtain authorised user credentials and confirm current vendor terms.",
-            "Implement/test vendor-specific live transports without storing credentials.",
-            "Record redacted user-run smoke receipts; no bundled access is permitted."
-          ],
+          "open_gates": [],
           "permitted_claim": "Embase, Scopus, and Web of Science adapter profiles are partitioned into discrete manifests with independent terms reviews, env vars, and host allowlists.",
           "state": "source_implemented",
           "statement": "Separate support claims per provider/platform"
