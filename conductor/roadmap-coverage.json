@@ -1468,7 +1468,7 @@
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "alpha",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates.",
       "requirements": [
         "SR-010",
@@ -1492,10 +1492,10 @@
         "verification/receipts/track-16-obsolete-exemptions-2026-11-06.json"
       ],
       "slug": "quality-security-harness",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Maximal quality, context and security harness",
       "track_id": "16",
-      "updated": "2026-11-07",
+      "updated": "2026-11-08",
       "active_plan": "conductor/frontier-plan.md",
       "phase_3_task_count": 4,
       "higher_evidence_completed": true,

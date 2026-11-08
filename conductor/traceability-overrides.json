@@ -2205,7 +2205,7 @@
             "Scheduled mutation and push-context OpenSSF Scorecard suites remain open on candidate heads."
           ],
           "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main; scheduled mutation and push-context OpenSSF Scorecard remain open.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T16-A002": {
           "deterministic_tests": [
@@ -2240,7 +2240,7 @@
             "Raise measured line coverage above 90 percent with meaningful tests; the 61 percent admission ratchet is not the maturity target."
           ],
           "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust, clean-room, formal (Kani, Loom, Miri, cargo-careful) and bounded fuzz targets on main; scheduled mutation and >90% coverage maturity target remain open.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T16-A003": {
           "deterministic_tests": [
@@ -2271,7 +2271,7 @@
             "Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity."
           ],
           "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 ran and passed hosted LLVM coverage with the non-regression admission ratchet on main; >90% line coverage remains the open maturity target.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T16-A004": {
           "deterministic_tests": [
@@ -2315,7 +2315,7 @@
             "Run OpenSSF Scorecard in a push context for the exact candidate."
           ],
           "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed CodeQL, cargo-vet governance, dependency review, and public API/SemVer on main; replacing temporary exemptions before 2026-11-10 and push-context Scorecard remain open.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T16-A005": {
           "deterministic_tests": [
@@ -2348,7 +2348,7 @@
             "Compile and run SSRF, parser bomb and resource-exhaustion adversarial tests."
           ],
           "permitted_claim": "Static authority, secret, redaction and hazard controls pass deterministic adversarial cases; complete runtime abuse and resource-exhaustion testing remains open.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         },
         "T16-A006": {
           "deterministic_tests": [
@@ -2385,7 +2385,7 @@
             "Generate compiler, coverage, live, external and release receipts at the corresponding evidence levels."
           ],
           "permitted_claim": "Machine-readable static and exact-head hosted receipts are produced with failed, skipped and unhosted gates preserved; release receipts are produced only as gates execute.",
-          "state": "partially_implemented"
+          "state": "source_implemented"
         }
       }
     },

@@ -1,6 +1,6 @@
 # Plan: 16 Maximal quality, context and security harness
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -12,7 +12,7 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-16-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `.github/workflows/ci.yml`
   - [x] Present source path: `.github/workflows/coverage.yml`
   - [x] Present source path: `.github/workflows/nightly.yml`

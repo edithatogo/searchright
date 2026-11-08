@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "16",
   "title": "Maximal quality, context and security harness",
-  "implementation_state": "partially_implemented",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/16-quality-security-harness/spec.md#scope",
   "claim_boundary": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open. PRs #749 and #752 have revision-bound delivery and merged verification receipts. Integration 1ac5a326c345c25206719b59c28a073f009e05ee passed local verification only. The 87.89 percent local measurement is not a promoted baseline. Eleven obsolete exemptions were retired, not audited; 247 review gaps remain recorded with the 2026-11-10 deadline unchanged. openssl-probe 0.2.1 is owner-deferred and rustls-native-certs 0.8.4 remains advisory-deferred; neither review certifies an audit.",
@@ -10,7 +10,7 @@
     {
       "assertion_id": "T16-A001",
       "statement": "Verify the committed lockfile and make deterministic CI green",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "rust-toolchain.toml",
@@ -45,7 +45,7 @@
     {
       "assertion_id": "T16-A002",
       "statement": "Unit/integration/e2e/property/metamorphic/DST/CDC/fuzz/mutation tests",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "tests",
@@ -82,7 +82,7 @@
     {
       "assertion_id": "T16-A003",
       "statement": "Configure llvm-cov >90% and Codecov",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "codecov.yml",
@@ -117,7 +117,7 @@
     {
       "assertion_id": "T16-A004",
       "statement": "Run cargo-deny/audit/semver/machete, CodeQL, Scorecard, zizmor, actionlint",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "deny.toml",
@@ -165,7 +165,7 @@
     {
       "assertion_id": "T16-A005",
       "statement": "Add SSRF, secret leakage, parser bomb and resource exhaustion tests",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "scripts/check_default_deny.py",
@@ -200,7 +200,7 @@
     {
       "assertion_id": "T16-A006",
       "statement": "Produce machine-readable verification receipt on every release",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "verification/receipts",
