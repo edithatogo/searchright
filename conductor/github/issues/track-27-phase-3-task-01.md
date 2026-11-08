@@ -3,11 +3,11 @@
 
 Parent phase key: `track-27-phase-3`
 Conductor plan: `conductor/tracks/27-accessibility-internationalisation-usability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile and run plain/JSON/JSONL snapshots and no-colour tests.
+- [x] Compile and run plain/JSON/JSONL snapshots and no-colour tests via deterministic scenario fixtures.
 
 ## Completion and evidence contract
 

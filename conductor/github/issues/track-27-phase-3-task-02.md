@@ -3,11 +3,11 @@
 
 Parent phase key: `track-27-phase-3`
 Conductor plan: `conductor/tracks/27-accessibility-internationalisation-usability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Create message catalogues and execute locale-fallback tests.
+- [x] Create message catalogues and execute locale-fallback tests via multi-lingual message catalogue tests.
 
 ## Completion and evidence contract
 

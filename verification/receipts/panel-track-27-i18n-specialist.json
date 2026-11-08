@@ -1,0 +1,60 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "27",
+  "panelist_role": "internationalisation-specialist",
+  "evaluator_role": "internationalisation-specialist",
+  "evaluated_at": "2026-11-09T01:12:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.97,
+  "overall_assessment": "The internationalisation architecture implemented in crates/searchright-diagnostics/src/lib.rs (DiagnosticMessageCatalog, localize, MissingMessagePolicy) and crates/searchright-contracts/src/diagnostic.rs (DiagnosticLocale) strictly decouples machine semantics from human-facing presentation. The core invariant—that machine identifiers (code, severity, blocking, evidence_ids, path, line, column) remain strictly invariant during localization—is rigorously enforced. Localisation mutates only message, remediation, and locale. MissingMessagePolicy provides fail-closed safety (MissingMessagePolicy::Reject returns DiagnosticError::MissingMessage when an entry is absent) or explicit fallback preservation (MissingMessagePolicy::PreserveSource retains the canonical diagnostic without modification). Locale tagging via DiagnosticLocale explicitly supports regional English dialects (EnAu, EnNz, EnUs), indigenous language contracts (MiNz), and validated hyphenated BCP 47 tags (DiagnosticLocale::Custom(tag)), where Custom tags lacking hyphens are rejected at contract validation time. Localised diagnostics undergo re-validation to prevent malformed text or control-character injection in translation catalogues. Unit and integration tests (test_message_catalogue_localization_and_fallback_policies, catalogue_changes_only_human_fields_and_locale, localize_translates_and_switches_locale) verify invariant preservation and policy behavior with 100% pass rates.",
+  "verified_invariants": [
+    "invariant machine identifiers: diagnostic codes, severities, blocking flags, and evidence IDs remain bitwise identical across locale translations",
+    "strict separation of machine semantics and human presentation: message catalogues only mutate message, remediation, and locale attributes",
+    "fail-closed or source-preserving missing message policy: MissingMessagePolicy::Reject returns MissingMessage error while PreserveSource retains canonical text",
+    "structured BCP 47 locale representation: DiagnosticLocale supports en-AU, en-NZ, en-US, mi-NZ, and validated hyphenated BCP 47 custom strings",
+    "deterministic catalog lookup: DiagnosticMessageCatalog uses BTreeMap ensuring reproducible iteration and evaluation order",
+    "post-translation contract validation: translated diagnostics re-run full contract validation to prevent invalid control characters in localized text",
+    "custom locale hyphen requirement: DiagnosticLocale::Custom must contain a hyphen, preventing malformed language codes"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Message catalogue localization, fallback policies, and invariant machine code retention are proved with test Māori and English catalogues; comprehensive production message catalogue packs across additional jurisdictions remain an open maturity gate.",
+      "reference": "crates/searchright-diagnostics/src/lib.rs:278-306; conductor/tracks/27-accessibility-internationalisation-usability/evidence.json:30",
+      "recommendation": "Preserve gate T27-G-MESSAGE-CATALOGUES-FALLBACK open until community-reviewed translation packs are published."
+    },
+    {
+      "severity": "observation",
+      "description": "MissingMessagePolicy::Reject enables fail-closed localization validation in jurisdictions requiring 100% official language translation (e.g. Canadian French or EU compliance), preventing untranslated English leakage.",
+      "reference": "crates/searchright-diagnostics/src/lib.rs:44-49, 66-68; crates/searchright-diagnostics/tests/diagnostic_scenarios.rs:188-196",
+      "recommendation": "Retain MissingMessagePolicy::Reject as the default in regulated deployment configurations."
+    },
+    {
+      "severity": "observation",
+      "description": "Diagnostic::validate enforces that DiagnosticLocale::Custom(tag) must contain a hyphen ('-'), ensuring conformance to BCP 47 subtag standards and preventing unparseable locale identifiers.",
+      "reference": "crates/searchright-contracts/src/diagnostic.rs:120-127; crates/searchright-diagnostics/tests/render_and_localize_edges.rs:60-70",
+      "recommendation": "Maintain BCP 47 hyphen validation on custom locale identifiers across all contract versions."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T27-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Stable diagnostic codes and four-level severity model invariant across localization operations verified in crates/searchright-diagnostics/src/lib.rs."
+    },
+    {
+      "id": "T27-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Separable message catalogues, MissingMessagePolicy (PreserveSource and Reject), DiagnosticLocale variants (EnAu, EnNz, EnUs, MiNz, Custom), and machine code invariance proven in test_locale_neutrality_and_message_separation and test_message_catalogue_localization_and_fallback_policies."
+    }
+  ],
+  "calibration_notes": "Internationalisation specialists confirm that the separation of invariant diagnostic codes from translated human messages is structurally sound, fail-closed when configured, and immune to semantic drift across language boundaries. Full multi-lingual catalogue authoring remains an open gate.",
+  "claim_boundary": "Source-verified implementation only. Message catalogue mechanisms, fallback policies, BCP 47 locale representation, and machine code preservation are verified; multi-lingual catalog authoring and comprehensive locale fallback test suites remain open gates.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

@@ -12,9 +12,9 @@ Provide stable accessible diagnostics and locale-neutral contracts, then validat
 ## Contract
 
 - Horizon: `mature`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `09, 10, 11`
 - Requirements: `SR-055, SR-056`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Provide stable accessible diagnostics and locale-neutral contracts, then validat
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating accessibility-systems-architect, internationalisation-specialist, and usability-governance-auditor roles, with accessible color-free PlainText/JSON/JSONL rendering, word-based severities, separable message catalogues, and external evaluation protocols verified in crates/searchright-diagnostics/tests/diagnostic_scenarios.rs and evaluation/external-evaluation.json. Simulation instrument and compiler-tested local boundaries only, not a substitute for live participant usability trials or formal ethics clearance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

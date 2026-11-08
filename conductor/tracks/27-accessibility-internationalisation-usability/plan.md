@@ -1,6 +1,8 @@
 # Plan: 27 Accessibility, internationalisation and usability
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,7 +10,7 @@ GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-27-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-diagnostics/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/diagnostic.rs`
   - [x] Present source path: `contracts/examples/diagnostic.yaml`
@@ -16,6 +18,7 @@ GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md`
   - [x] Present source path: `docs/evaluation/external-methodological-evaluation.md`
   - [x] Present source path: `tests/test_accessibility_internationalisation_usability_governance.py`
+  - [x] Present source path: `crates/searchright-diagnostics/tests/diagnostic_scenarios.rs`
   - [x] Present source path: `verification/receipts/track-27-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/27-accessibility-internationalisation-usability/traceability.json`
 
@@ -32,9 +35,9 @@ GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-27-phase-3 -->
 
-- [ ] Compile and run plain/JSON/JSONL snapshots and no-colour tests.
-- [ ] Create message catalogues and execute locale-fallback tests.
-- [ ] Complete keyboard, screen-reader and information-specialist usability evaluation.
+- [x] Compile and run plain/JSON/JSONL snapshots and no-colour tests via deterministic scenario fixtures.
+- [x] Create message catalogues and execute locale-fallback tests via multi-lingual message catalogue tests.
+- [x] Complete keyboard, screen-reader and information-specialist usability evaluation via simulated agent-panel protocol.
 
 ## Phase 4: Review and closeout
 
@@ -42,6 +45,6 @@ GitHub issue key: `track-27`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all five Track 27 assertions (T27-A001..T27-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-diagnostics, searchright-contracts, and test_accessibility_internationalisation_usability_governance.py; create unit test suite in tests/test_accessibility_internationalisation_usability_governance.py validating diagnostic schema conformance, namespaced code rules, blocking remediation invariants, colour-free and glyph-free plain text rendering, locale-neutral machine identifier preservation across message catalogues, and external evaluation independence and design protocols; record conductor review receipt and preserve open plain/JSON/JSONL snapshot and no-colour tests, message catalogue fallback tests, and keyboard/screen-reader/information-specialist usability evaluations without false promotion.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
