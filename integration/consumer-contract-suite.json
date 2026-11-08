@@ -1,6 +1,6 @@
 {
   "schema_version": "org.searchright.consumer-contract-suite.v1",
-  "generated_at": "2026-08-06",
+  "generated_at": "2026-09-08",
   "interactions": [
     {
       "id": "citeweft-to-searchright-document-evidence",
@@ -170,9 +170,10 @@
       "integration_id": "standards-check-reporting-packs",
       "producer": "edithatogo/standards_check",
       "consumer": "edithatogo/searchright",
-      "contract_version": "org.searchright.standard-pack.v1",
+      "contract_version": "dev.standardflow.standard-pack.v1",
       "producer_contracts": [
-        "external://edithatogo/standards_check/schemas/sidecar.schema.json@f54b25aec7e206881e2d5542e42cfda43c96921c"
+        "external://edithatogo/standards_check/schemas/standard-pack.v1.schema.json@f1e7b6c6e283865c1b7dbb34dbe33d8bf6f6c799",
+        "external://edithatogo/standards_check/schemas/artifact-recipe.v1.schema.json@f1e7b6c6e283865c1b7dbb34dbe33d8bf6f6c799"
       ],
       "consumer_contracts": [
         "contracts/json-schema/standard-pack.v1.schema.json",
@@ -183,12 +184,41 @@
         "integration/passports/standards-check-reporting-packs.json"
       ],
       "producer_gates": [
-        "external: bash scripts/validate_repo.sh"
+        "external: StandardFlow foundation contracts and Rust gates"
       ],
       "consumer_gates": [
+        "python scripts/check_integration_passports.py",
         "python scripts/validate_repository.py"
       ],
-      "failure_semantics": "Quarantine the affected standard pack and preserve the previously verified version.",
+      "failure_semantics": "Quarantine the affected pack, preserve the previously verified SearchRight pack, and do not promote rights or semantic changes automatically.",
+      "automatic_promotion": false,
+      "status": "prepared_not_executed"
+    },
+    {
+      "id": "searchright-to-standardflow-review-flow",
+      "integration_id": "standards-check-reporting-packs",
+      "producer": "edithatogo/searchright",
+      "consumer": "edithatogo/standards_check",
+      "contract_version": "dev.standardflow.ecosystem-evidence.v1",
+      "producer_contracts": [
+        "contracts/json-schema/prisma-flow.v1.schema.json",
+        "integration/fixtures/standardflow-review-flow-evidence.json"
+      ],
+      "consumer_contracts": [
+        "external://edithatogo/standards_check/schemas/ecosystem-evidence.v1.schema.json@f1e7b6c6e283865c1b7dbb34dbe33d8bf6f6c799"
+      ],
+      "fixture_paths": [
+        "integration/fixtures/standardflow-review-flow-evidence.json",
+        "integration/passports/standards-check-reporting-packs.json"
+      ],
+      "producer_gates": [
+        "python scripts/check_integration_passports.py",
+        "python scripts/validate_repository.py"
+      ],
+      "consumer_gates": [
+        "external: StandardFlow consumer-driven fixture validation"
+      ],
+      "failure_semantics": "Keep SearchRight as the PRISMA count system of record, disable the optional StandardFlow render handoff, and preserve the failed envelope for review.",
       "automatic_promotion": false,
       "status": "prepared_not_executed"
     },
