@@ -66,7 +66,7 @@
 | SR-047 | Could | WASI provider ecosystem | 24,34 | Signed components obey WIT capabilities, resource budgets and sandbox policy. | Component conformance suite. | Third-party plugins are not endorsed by listing. |
 | SR-048 | Must | Data minimisation and retention | 05,16 | Audit and screening stores avoid unnecessary full text/PII and enforce declared retention/export/deletion policy. | Privacy tests and policy. | Do not promise legal compliance without deployment review. |
 | SR-049 | Must | Protocol amendments and deviations | 01,22 | Changes are versioned, explained, dated and linked to affected runs/decisions. | Amendment scenarios. | Never rewrite historical contracts in place. |
-| SR-050 | Won’t now | One-click autonomous systematic review | 30,37 | Explicitly excluded before mature external validation and governance. | Non-goal tests/docs. | Never market end-to-end autonomy as current capability. |
+| SR-050 | Should | Autonomous, solo and team review modes | 30,37 | Implement explicit mode policies, attributable machine decisions, human confirmation where selected, team conflicts and reversible transitions; follow conductor/frontier-plan.md. | Mode/authority, replay and task-completion tests; comparative evaluation for performance claims. | Planned autonomy is not current capability or independently human-reviewed evidence. |
 
 
 | SR-051 | Must | Research-object provenance exports | 25 | RO-Crate and W3C PROV exports preserve identifiers, entities, activities, agents and source-receipt links deterministically. | Golden export fixtures and schema checks. | Provenance records process lineage; it does not establish scientific truth. |

@@ -12,6 +12,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_cli_mcp_parity.py`
   - [x] `python scripts/sync_schema_surface.py --check`
   - [x] `python scripts/sync_contract_conformance_matrix.py --check`
+  - [x] `python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py`
 
 ## Completion and evidence contract
 

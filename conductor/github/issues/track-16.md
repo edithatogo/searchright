@@ -28,6 +28,6 @@ Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz
 
 ## Claim boundary
 
-Hosted PR #569 evidence is bound to exact head 560c78c: cross-platform compiler/test/Clippy, selected formal/fuzz/security, clean-room and static jobs passed, while coverage and cargo-vet failed. Coverage-ratchet commit e91352c and cargo-vet governance commits dc02719/324baf4 are locally source-verified only until a new hosted head runs. The greater-than-90-percent coverage target, mutation, Scorecard, complete dependency audits and aggregate release gates remain open.
+Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

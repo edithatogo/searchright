@@ -9,16 +9,18 @@ GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-18-phase-1 -->
 
 - [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `.github/workflows/release.yml`
-  - [x] Present source path: `scripts/package_source.py`
-  - [x] Present source path: `Dockerfile`
-  - [x] Present source path: `CITATION.cff`
-  - [x] Present source path: `CHANGELOG.md`
-  - [x] Present source path: `SECURITY.md`
   - [x] Present source path: `.github/workflows/clean-room.yml`
+  - [x] Present source path: `.github/workflows/release.yml`
+  - [x] Present source path: `CHANGELOG.md`
+  - [x] Present source path: `CITATION.cff`
+  - [x] Present source path: `Dockerfile`
+  - [x] Present source path: `SECURITY.md`
   - [x] Present source path: `scripts/check_packaging_reproducibility.py`
   - [x] Present source path: `scripts/mcp_smoke.py`
+  - [x] Present source path: `scripts/package_source.py`
+  - [x] Present source path: `tests/test_alpha_release_packaging.py`
   - [x] Present source path: `verification/harness-matrix.json`
+  - [x] Present source path: `verification/receipts/track-18-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/18-alpha-release/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -45,5 +47,6 @@ GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

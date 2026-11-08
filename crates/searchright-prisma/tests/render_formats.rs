@@ -76,6 +76,12 @@ fn presentation_escapes_untrusted_labels() -> Result<(), Box<dyn std::error::Err
         let rendered = render_flow(&flow, PrismaFlowVariant::NewReview, None, format)?;
         assert!(!rendered.contains("<script>"));
         assert!(rendered.contains("&lt;script&gt;"));
+        if format == FlowFormat::DocxFriendlyHtml {
+            assert!(rendered.contains("<table width=\"100%\""));
+            assert!(
+                rendered.contains("<colgroup><col width=\"60%\"><col width=\"40%\"></colgroup>")
+            );
+        }
     }
     let markdown = render_flow(
         &flow,

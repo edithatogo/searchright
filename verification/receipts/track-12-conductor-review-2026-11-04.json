@@ -1,0 +1,79 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "12",
+  "reviewed_revision": "0ea3f2d",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "citeweft-adapter-and-contract-evidence",
+      "mode": "isolated_first_pass",
+      "finding": "Added comprehensive unit tests covering searchright_citeweft::from_scholarly_document (preserving references, identifiers, source spans, diagnostic severities info/warning/error, provenance, canonical_write_permitted=false, retained_full_text=false, and review_required=true) and adversarial span/diagnostic fail-closed validation under strict clippy::indexing_slicing and repository hygiene rules without unwrap/expect.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all four Track 12 assertions (T12-A001..T12-A004) from track_level_only to symbol_and_gate_mapped with concrete Rust/Python implementation symbols, deterministic tests, and native test commands in both conductor/tracks/12-citeweft-document-evidence/traceability.json and conductor/traceability-overrides.json.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "methodology-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Higher-evidence gates remain open without false promotion: golden CiteWeft/GROBID extraction fixtures and downstream Sourceright consumer-driven compatibility and rollback tests must be executed before closure.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Upgraded assertions T12-A001..T12-A004 to symbol_and_gate_mapped with concrete implementation symbols and native test commands in conductor/tracks/12-citeweft-document-evidence/traceability.json and conductor/traceability-overrides.json.",
+    "Added unit tests scholarly_document_adapter_preserves_fields_spans_diagnostics_and_provenance and adversarial_spans_diagnostics_and_write_permission_fail_closed in searchright-citeweft with strict indexing safety and no unwrap/expect.",
+    "Verified clean compilation and zero warnings under cargo test --locked -p searchright-citeweft -p searchright-contracts and cargo clippy --locked -p searchright-citeweft -p searchright-contracts --all-targets -- -D warnings."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/check_citeweft_integration.py",
+      "status": "passed",
+      "checks": 7
+    },
+    {
+      "command": "python3 -B scripts/check_rust_dependency_graph.py",
+      "status": "passed"
+    },
+    {
+      "command": "cargo test --locked -p searchright-citeweft -p searchright-contracts",
+      "status": "passed",
+      "tests_passed": 37
+    },
+    {
+      "command": "cargo clippy --locked -p searchright-citeweft -p searchright-contracts --all-targets -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+      "status": "passed",
+      "disposition": "compiler_verified"
+    },
+    {
+      "gate_id": "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    },
+    {
+      "gate_id": "Run downstream Sourceright consumer-driven compatibility and rollback tests.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+    "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+  ],
+  "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented and compiler-tested; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

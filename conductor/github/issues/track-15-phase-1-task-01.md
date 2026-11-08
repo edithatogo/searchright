@@ -15,6 +15,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `scripts/audit_search_code.py`
   - [x] Present source path: `scripts/check_companion_change_packets.py`
   - [x] Present source path: `docs/estate-integration.md`
+  - [x] Present source path: `tests/test_estate_migration.py`
   - [x] Assertion ledger: `conductor/tracks/15-estate-migration/traceability.json`
 
 ## Completion and evidence contract

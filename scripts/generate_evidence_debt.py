@@ -18,7 +18,7 @@ PROVIDERS = ROOT / "integration" / "provider-policies" / "index.json"
 LAUNCH = ROOT / "conductor" / "launch-preparation-roadmap.json"
 
 
-def load_gate_catalog() -> dict[str, Any]:
+def load_gate_catalog() -> tuple[dict[str, Any], Any]:
     spec = importlib.util.spec_from_file_location(
         "searchright_gate_catalog", ROOT / "scripts" / "check_gate_catalog.py"
     )
@@ -26,7 +26,7 @@ def load_gate_catalog() -> dict[str, Any]:
         raise RuntimeError("could not load gate catalogue generator")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    return module.render()
+    return module.render(), module
 
 
 def render() -> dict[str, Any]:
@@ -39,12 +39,13 @@ def render() -> dict[str, Any]:
             copy = dict(row)
             copy["track_id"] = value.get("track_id")
             assertions.append(copy)
-    gate_catalog = load_gate_catalog()
+    gate_catalog, module = load_gate_catalog()
     registered_commands = {gate["command"] for gate in gate_catalog["gates"]}
     assertion_commands = {
-        command
+        module.normalise_command(command)
         for row in assertions
         for command in row.get("deterministic_tests", [])
+        if any(part.startswith("scripts/") for part in command.split())
     }
     maturity = json.loads(MATURITY.read_text(encoding="utf-8"))
     packages = json.loads(PACKAGES.read_text(encoding="utf-8"))

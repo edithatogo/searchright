@@ -2,10 +2,12 @@
 
 #![forbid(unsafe_code)]
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 
-use searchright_contracts::{BenchmarkMetric, RankingScore};
+use searchright_contracts::{BenchmarkMetric, BenchmarkReport, RankingScore, Validate};
 use searchright_dedup::DedupResult;
+use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 
 /// Binary classification or retrieval metrics.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -345,6 +347,346 @@ pub fn regression_gate(
     }
 }
 
+/// Manifest describing a sealed benchmark partition split and its integrity controls.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct SealedSplitManifest {
+    /// Schema version (e.g. `org.searchright.sealed-benchmark-manifest.v1`).
+    pub schema_version: String,
+    /// Partition identifier (e.g. `sealed_test`).
+    pub partition: String,
+    /// Unique case identifiers in the sealed partition.
+    pub case_ids: Vec<String>,
+    /// Whether true labels are present in the repository (must be false).
+    pub labels_present: bool,
+    /// Location of external evaluation labels.
+    pub labels_location: String,
+    /// Optional canonical SHA-256 digest from [`sealed_label_digest`] when labels are mounted.
+    pub label_digest: Option<String>,
+    /// Release conditions governing the sealed split.
+    pub release_condition: String,
+    /// Explicit claim boundary.
+    pub claim_boundary: String,
+}
+
+impl SealedSplitManifest {
+    /// Validate that the sealed split manifest adheres to anti-leakage policy.
+    pub fn validate(&self) -> Result<(), BenchmarkError> {
+        if self.schema_version != "org.searchright.sealed-benchmark-manifest.v1" {
+            return Err(BenchmarkError::InvalidManifest(format!(
+                "expected schema version org.searchright.sealed-benchmark-manifest.v1, got `{}`",
+                self.schema_version
+            )));
+        }
+        if self.partition != "sealed_test" {
+            return Err(BenchmarkError::InvalidManifest(format!(
+                "expected partition sealed_test, got `{}`",
+                self.partition
+            )));
+        }
+        if self.case_ids.is_empty() {
+            return Err(BenchmarkError::InvalidManifest(
+                "sealed case identifiers must not be empty".to_owned(),
+            ));
+        }
+        let mut seen = BTreeSet::new();
+        for case_id in &self.case_ids {
+            if case_id.trim().is_empty() {
+                return Err(BenchmarkError::InvalidManifest(
+                    "sealed case identifier must not be blank".to_owned(),
+                ));
+            }
+            if !seen.insert(case_id.as_str()) {
+                return Err(BenchmarkError::InvalidManifest(format!(
+                    "duplicate sealed case identifier `{case_id}`"
+                )));
+            }
+        }
+        if self.labels_present {
+            return Err(BenchmarkError::InvalidManifest(
+                "sealed manifest labels_present must be false in repository".to_owned(),
+            ));
+        }
+        if let Some(digest) = &self.label_digest {
+            validate_label_digest(digest)?;
+        }
+        if self.release_condition.trim().is_empty() {
+            return Err(BenchmarkError::InvalidManifest(
+                "release condition must not be blank".to_owned(),
+            ));
+        }
+        if self.claim_boundary.trim().is_empty() {
+            return Err(BenchmarkError::InvalidManifest(
+                "claim boundary must not be blank".to_owned(),
+            ));
+        }
+        Ok(())
+    }
+}
+
+/// Check if any sealed identifiers appear in a candidate text snippet or file.
+#[must_use]
+pub fn check_split_contamination(manifest: &SealedSplitManifest, content: &str) -> Vec<String> {
+    manifest
+        .case_ids
+        .iter()
+        .filter(|case_id| content.contains(case_id.as_str()))
+        .cloned()
+        .collect()
+}
+
+/// Digest external binary labels using the sealed-labels v1 encoding.
+///
+/// SHA-256 covers the bytes `org.searchright.sealed-labels.v1\0`, followed by the
+/// label count as an unsigned 64-bit big-endian integer. Labels are sorted by the
+/// exact UTF-8 bytes of their identifiers. Each entry contributes its identifier's
+/// byte length as an unsigned 64-bit big-endian integer, the identifier bytes,
+/// and one byte (`0` for false, `1` for true). The result is lowercase hexadecimal.
+/// Identifiers are not trimmed or Unicode-normalised. Empty collections, blank
+/// identifiers and duplicate identifiers are rejected.
+///
+/// Compute and retain this commitment in the separate evaluation environment
+/// before candidate scoring. A digest supplied by the same party as mutable
+/// labels cannot establish that the labels were frozen or kept from a model.
+pub fn sealed_label_digest(labels: &[(String, bool)]) -> Result<String, BenchmarkError> {
+    digest_label_map(&checked_label_map(labels)?)
+}
+
+fn checked_label_map(labels: &[(String, bool)]) -> Result<BTreeMap<&str, bool>, BenchmarkError> {
+    if labels.is_empty() {
+        return Err(BenchmarkError::EmptyLabels);
+    }
+    let mut label_map = BTreeMap::new();
+    for (identifier, positive) in labels {
+        if identifier.trim().is_empty() {
+            return Err(BenchmarkError::EmptyLabelRecordId);
+        }
+        if label_map.insert(identifier.as_str(), *positive).is_some() {
+            return Err(BenchmarkError::DuplicateLabelRecord(identifier.clone()));
+        }
+    }
+    Ok(label_map)
+}
+
+fn digest_label_map(labels: &BTreeMap<&str, bool>) -> Result<String, BenchmarkError> {
+    let mut digest = Sha256::new();
+    digest.update(b"org.searchright.sealed-labels.v1\0");
+    let count = u64::try_from(labels.len()).map_err(|_| BenchmarkError::LabelEncodingTooLarge)?;
+    digest.update(count.to_be_bytes());
+    for (identifier, positive) in labels {
+        let length =
+            u64::try_from(identifier.len()).map_err(|_| BenchmarkError::LabelEncodingTooLarge)?;
+        digest.update(length.to_be_bytes());
+        digest.update(identifier.as_bytes());
+        digest.update([u8::from(*positive)]);
+    }
+    Ok(digest
+        .finalize()
+        .iter()
+        .map(|byte| format!("{byte:02x}"))
+        .collect())
+}
+
+fn validate_label_digest(digest: &str) -> Result<(), BenchmarkError> {
+    if digest.len() != 64
+        || !digest
+            .bytes()
+            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+    {
+        return Err(BenchmarkError::InvalidLabelDigest(digest.to_owned()));
+    }
+    Ok(())
+}
+
+/// Evaluate complete binary predictions against external labels for one sealed population.
+///
+/// Every manifest identifier must occur exactly once in both labels and predictions;
+/// unknown, missing and duplicate identifiers are errors. Missing predictions are
+/// never interpreted as negative decisions or uncounted abstentions. Workflows
+/// with abstentions need an explicit evaluation protocol rather than this API.
+///
+/// The supplied digest must equal [`sealed_label_digest`] for the actual labels,
+/// as must the manifest digest when present. These checks bind the scored population
+/// and values; they do not prove independent label custody or absence of leakage.
+pub fn evaluate_sealed_benchmark(
+    manifest: &SealedSplitManifest,
+    label_digest: &str,
+    predictions: &[(String, bool)],
+    labels: &[(String, bool)],
+) -> Result<BinaryMetrics, BenchmarkError> {
+    manifest.validate()?;
+    validate_label_digest(label_digest)?;
+    let label_map = checked_label_map(labels)?;
+    let cases = manifest
+        .case_ids
+        .iter()
+        .map(String::as_str)
+        .collect::<BTreeSet<_>>();
+    for identifier in label_map.keys() {
+        if !cases.contains(identifier) {
+            return Err(BenchmarkError::UnknownLabelRecord((*identifier).to_owned()));
+        }
+    }
+    for identifier in &cases {
+        if !label_map.contains_key(identifier) {
+            return Err(BenchmarkError::MissingLabelRecord((*identifier).to_owned()));
+        }
+    }
+    let computed_digest = digest_label_map(&label_map)?;
+    if computed_digest != label_digest {
+        return Err(BenchmarkError::LabelDigestMismatch);
+    }
+    if manifest
+        .label_digest
+        .as_ref()
+        .is_some_and(|declared| declared != &computed_digest)
+    {
+        return Err(BenchmarkError::ManifestLabelDigestMismatch);
+    }
+    let mut prediction_map = BTreeMap::new();
+    for (identifier, positive) in predictions {
+        if !cases.contains(identifier.as_str()) {
+            return Err(BenchmarkError::UnknownPredictionRecord(identifier.clone()));
+        }
+        if prediction_map
+            .insert(identifier.as_str(), *positive)
+            .is_some()
+        {
+            return Err(BenchmarkError::DuplicatePredictionRecord(
+                identifier.clone(),
+            ));
+        }
+    }
+    for identifier in &cases {
+        if !prediction_map.contains_key(identifier) {
+            return Err(BenchmarkError::MissingPredictionRecord(
+                (*identifier).to_owned(),
+            ));
+        }
+    }
+    let expected_positives = label_map
+        .iter()
+        .filter(|(_, positive)| **positive)
+        .map(|(&identifier, _)| identifier)
+        .collect();
+    let observed_positives = prediction_map
+        .iter()
+        .filter(|(_, positive)| **positive)
+        .map(|(&identifier, _)| identifier)
+        .collect();
+    Ok(binary_metrics(&expected_positives, &observed_positives))
+}
+
+/// Validate a public benchmark report to enforce schema compliance, non-empty metrics,
+/// and explicit claim boundaries preventing unverified performance assertions.
+pub fn validate_public_benchmark_report(report: &BenchmarkReport) -> Result<(), BenchmarkError> {
+    report
+        .validate()
+        .map_err(|err| BenchmarkError::ContractValidation(err.to_string()))?;
+    if report.metrics.is_empty() {
+        return Err(BenchmarkError::EmptyMetrics);
+    }
+    if report.claim_boundary.trim().is_empty() {
+        return Err(BenchmarkError::MissingClaimBoundary);
+    }
+    Ok(())
+}
+
+/// Calculate Work Saved over Sampling (WSS) at a target recall (e.g. WSS@95%).
+///
+/// Formula: `WSS = (total_records - reviewed_records) / total_records - (1.0 - target_recall)`.
+/// Returns `None` if `total_records == 0` or `target_recall` is outside `0.0..=1.0`.
+#[must_use]
+pub fn work_saved_over_sampling(
+    total_records: u64,
+    reviewed_records: u64,
+    target_recall: f64,
+) -> Option<f64> {
+    if total_records == 0 || !(0.0..=1.0).contains(&target_recall) {
+        return None;
+    }
+    let total = u64_to_f64(total_records);
+    let reviewed = u64_to_f64(reviewed_records.min(total_records));
+    let sampling_fraction = reviewed / total;
+    Some(target_recall - sampling_fraction)
+}
+
+/// Calculate Expected Calibration Error (ECE) with equal-width binning.
+///
+/// `predictions` are pairs of `(confidence_prob, true_outcome_bool)`.
+/// Returns `None` if predictions is empty or `num_bins == 0`.
+#[must_use]
+pub fn expected_calibration_error(predictions: &[(f64, bool)], num_bins: usize) -> Option<f64> {
+    if predictions.is_empty() || num_bins == 0 {
+        return None;
+    }
+    let total = usize_to_u64(predictions.len());
+    let total_f = u64_to_f64(total);
+    let num_bins_f = u64_to_f64(usize_to_u64(num_bins));
+    let mut bin_counts = vec![0_u64; num_bins];
+    let mut bin_conf_sums = vec![0.0_f64; num_bins];
+    let mut bin_acc_sums = vec![0.0_f64; num_bins];
+
+    for &(conf, outcome) in predictions {
+        if !conf.is_finite() || !(0.0..=1.0).contains(&conf) {
+            return None;
+        }
+        let mut bin_idx = num_bins.saturating_sub(1);
+        for candidate_idx in 0..num_bins.saturating_sub(1) {
+            let upper = u64_to_f64(usize_to_u64(candidate_idx.saturating_add(1))) / num_bins_f;
+            if conf < upper {
+                bin_idx = candidate_idx;
+                break;
+            }
+        }
+        if let Some(count) = bin_counts.get_mut(bin_idx) {
+            *count = count.saturating_add(1);
+        }
+        if let Some(conf_sum) = bin_conf_sums.get_mut(bin_idx) {
+            *conf_sum += conf;
+        }
+        if outcome && let Some(acc_sum) = bin_acc_sums.get_mut(bin_idx) {
+            *acc_sum += 1.0;
+        }
+    }
+
+    let mut ece = 0.0_f64;
+    for ((&count, &conf_sum), &acc_sum) in bin_counts
+        .iter()
+        .zip(bin_conf_sums.iter())
+        .zip(bin_acc_sums.iter())
+    {
+        if count > 0 {
+            let count_f = u64_to_f64(count);
+            let avg_conf = conf_sum / count_f;
+            let avg_acc = acc_sum / count_f;
+            let weight = count_f / total_f;
+            ece = weight.mul_add((avg_acc - avg_conf).abs(), ece);
+        }
+    }
+    Some(ece)
+}
+
+/// Calculate Brier Score (Mean Squared Error of probability forecasts).
+///
+/// `predictions` are pairs of `(confidence_prob, true_outcome_bool)`.
+/// Returns `None` if predictions is empty or contains non-finite values outside `0.0..=1.0`.
+#[must_use]
+pub fn brier_score(predictions: &[(f64, bool)]) -> Option<f64> {
+    if predictions.is_empty() {
+        return None;
+    }
+    let mut sum_sq_error = 0.0_f64;
+    for &(prob, outcome) in predictions {
+        if !prob.is_finite() || !(0.0..=1.0).contains(&prob) {
+            return None;
+        }
+        let y = if outcome { 1.0 } else { 0.0 };
+        let diff = prob - y;
+        sum_sq_error = f64::mul_add(diff, diff, sum_sq_error);
+    }
+    Some(sum_sq_error / u64_to_f64(usize_to_u64(predictions.len())))
+}
+
 #[allow(
     clippy::cast_precision_loss,
     reason = "benchmark proportions intentionally project bounded integer counts into f64"
@@ -395,6 +737,54 @@ pub enum BenchmarkError {
     /// A labelled report was neither assigned nor explicitly abstained.
     #[error("study-linkage expected report `{0}` is unaccounted for")]
     UnaccountedExpectedReport(String),
+    /// Invalid sealed benchmark split manifest.
+    #[error("invalid sealed benchmark manifest: {0}")]
+    InvalidManifest(String),
+    /// Invalid label digest format.
+    #[error("invalid label digest `{0}`; must be 64 lowercase hexadecimal characters")]
+    InvalidLabelDigest(String),
+    /// The supplied digest did not match the canonical external label bytes.
+    #[error("label digest does not match the canonical sealed-labels v1 encoding")]
+    LabelDigestMismatch,
+    /// The manifest commitment did not match the actual external labels.
+    #[error("manifest label digest does not match the evaluated labels")]
+    ManifestLabelDigestMismatch,
+    /// Labels collection was empty.
+    #[error("sealed benchmark labels must not be empty")]
+    EmptyLabels,
+    /// A label had a blank record identifier.
+    #[error("sealed benchmark label identifier must not be blank")]
+    EmptyLabelRecordId,
+    /// A label identifier appeared more than once, even with the same value.
+    #[error("label identifier `{0}` appears more than once")]
+    DuplicateLabelRecord(String),
+    /// A label identifier was absent from the sealed population.
+    #[error("label references record `{0}` outside the sealed manifest")]
+    UnknownLabelRecord(String),
+    /// A sealed-population identifier had no label.
+    #[error("sealed manifest record `{0}` has no label")]
+    MissingLabelRecord(String),
+    /// A collection or identifier cannot fit the encoding's unsigned 64-bit length.
+    #[error("sealed labels exceed the canonical encoding's 64-bit length limit")]
+    LabelEncodingTooLarge,
+    /// Prediction record ID was absent from ground truth labels.
+    #[error("prediction references unknown record `{0}`")]
+    UnknownPredictionRecord(String),
+    /// A prediction identifier appeared more than once, even with the same value.
+    #[error("prediction identifier `{0}` appears more than once")]
+    DuplicatePredictionRecord(String),
+    /// A sealed-population identifier had no explicit binary prediction.
+    #[error("sealed manifest record `{0}` has no prediction; implicit abstentions are unsupported")]
+    MissingPredictionRecord(String),
+    /// Contract validation error.
+    #[error("benchmark contract error: {0}")]
+    ContractValidation(String),
+    /// Benchmark report metrics array was empty.
+    #[error("benchmark report must declare at least one metric")]
+    EmptyMetrics,
+    /// Benchmark report lacked a non-blank claim boundary.
+    #[error("benchmark report must define a non-blank claim boundary")]
+    MissingClaimBoundary,
     /// Candidate metric dropped beyond the configured threshold.
     #[error(
         "metric regressed from {baseline} to {candidate}; maximum permitted drop is {maximum_absolute_drop}"
@@ -560,10 +950,10 @@ mod tests {
         assert_eq!(fixture.partition, "validation");
         assert_eq!(fixture.rights_basis, "CC0 synthetic metadata");
 
-        let mut by_registration = std::collections::BTreeMap::<String, Vec<String>>::new();
+        let mut by_registration = BTreeMap::<String, Vec<String>>::new();
         let mut abstained = BTreeSet::new();
         for report in fixture.reports {
-            assert!(!report.kind.trim().is_empty());
+            assert_ne!(report.kind.trim(), "");
             if let Some(registration) = report.registration.filter(|value| !value.trim().is_empty())
             {
                 by_registration
@@ -635,7 +1025,7 @@ mod tests {
                     right_record_id: "b".to_owned(),
                     reason: "fuzzy_title_author_year".to_owned(),
                     score: 0.95,
-                    details: std::collections::BTreeMap::default(),
+                    details: BTreeMap::default(),
                     review_required: true,
                 }],
             }],
@@ -665,5 +1055,187 @@ mod tests {
             expected_dedup_pairs(&[vec!["  ".to_owned()]]),
             Err(BenchmarkError::EmptyExpectedRecordId)
         ));
+    }
+
+    #[test]
+    fn sealed_manifest_validation_enforces_anti_leakage_invariants() {
+        let valid_manifest = SealedSplitManifest {
+            schema_version: "org.searchright.sealed-benchmark-manifest.v1".to_owned(),
+            partition: "sealed_test".to_owned(),
+            case_ids: vec!["case-001".to_owned(), "case-002".to_owned()],
+            labels_present: false,
+            labels_location: "external controlled evaluation mount".to_owned(),
+            label_digest: None,
+            release_condition: "multi-agent evaluation panel approval required".to_owned(),
+            claim_boundary: "case IDs do not expose labels".to_owned(),
+        };
+        assert!(valid_manifest.validate().is_ok());
+
+        let mut leaked_labels = valid_manifest.clone();
+        leaked_labels.labels_present = true;
+        assert!(matches!(
+            leaked_labels.validate(),
+            Err(BenchmarkError::InvalidManifest(_))
+        ));
+
+        let mut invalid_schema = valid_manifest.clone();
+        invalid_schema.schema_version = "invalid-schema".to_owned();
+        assert!(matches!(
+            invalid_schema.validate(),
+            Err(BenchmarkError::InvalidManifest(_))
+        ));
+
+        let mut duplicate_case = valid_manifest;
+        duplicate_case.case_ids = vec!["case-001".to_owned(), "case-001".to_owned()];
+        assert!(matches!(
+            duplicate_case.validate(),
+            Err(BenchmarkError::InvalidManifest(_))
+        ));
+    }
+
+    #[test]
+    fn split_contamination_detects_leaked_case_identifiers() {
+        let manifest = SealedSplitManifest {
+            schema_version: "org.searchright.sealed-benchmark-manifest.v1".to_owned(),
+            partition: "sealed_test".to_owned(),
+            case_ids: vec![
+                "secret-case-alpha".to_owned(),
+                "secret-case-beta".to_owned(),
+            ],
+            labels_present: false,
+            labels_location: "external controlled evaluation mount".to_owned(),
+            label_digest: None,
+            release_condition: "panel review required".to_owned(),
+            claim_boundary: "case IDs do not expose labels".to_owned(),
+        };
+
+        let clean_text = "This text discusses general systematic review benchmarks.";
+        assert_eq!(
+            check_split_contamination(&manifest, clean_text),
+            Vec::<String>::new()
+        );
+
+        let contaminated_text = "Here we tune our prompts on secret-case-alpha for better scores.";
+        let findings = check_split_contamination(&manifest, contaminated_text);
+        assert_eq!(findings, vec!["secret-case-alpha".to_owned()]);
+    }
+
+    #[test]
+    fn sealed_benchmark_evaluation_computes_exact_metrics() -> Result<(), BenchmarkError> {
+        let manifest = SealedSplitManifest {
+            schema_version: "org.searchright.sealed-benchmark-manifest.v1".to_owned(),
+            partition: "sealed_test".to_owned(),
+            case_ids: vec!["r1".to_owned(), "r2".to_owned(), "r3".to_owned()],
+            labels_present: false,
+            labels_location: "external controlled evaluation mount".to_owned(),
+            label_digest: None,
+            release_condition: "panel review required".to_owned(),
+            claim_boundary: "no unverified performance claims".to_owned(),
+        };
+        let labels = vec![
+            ("r1".to_owned(), true),
+            ("r2".to_owned(), false),
+            ("r3".to_owned(), true),
+        ];
+        let label_digest = sealed_label_digest(&labels)?;
+        let predictions = vec![
+            ("r1".to_owned(), true),
+            ("r2".to_owned(), true),
+            ("r3".to_owned(), false),
+        ];
+
+        let metrics = evaluate_sealed_benchmark(&manifest, &label_digest, &predictions, &labels)?;
+        assert_eq!(metrics.true_positive, 1);
+        assert_eq!(metrics.false_positive, 1);
+        assert_eq!(metrics.false_negative, 1);
+        assert_eq!(metrics.precision, Some(0.5));
+        assert_eq!(metrics.recall, Some(0.5));
+
+        // Invalid digest rejected
+        assert!(matches!(
+            evaluate_sealed_benchmark(&manifest, "short-digest", &predictions, &labels),
+            Err(BenchmarkError::InvalidLabelDigest(_))
+        ));
+
+        // Unknown prediction record rejected
+        let invalid_preds = vec![("r999".to_owned(), true)];
+        assert!(matches!(
+            evaluate_sealed_benchmark(&manifest, &label_digest, &invalid_preds, &labels),
+            Err(BenchmarkError::UnknownPredictionRecord(_))
+        ));
+
+        Ok(())
+    }
+
+    #[test]
+    fn public_benchmark_report_validation_accepts_valid_report_and_rejects_empty_metrics() {
+        let valid_report = BenchmarkReport {
+            schema_version: "org.searchright.benchmark-report.v1".to_owned(),
+            benchmark_id: "bm-2026-11".to_owned(),
+            corpus_id: "corpus-v1".to_owned(),
+            corpus_version: "1.0.0".to_owned(),
+            rights_basis: "CC0-1.0".to_owned(),
+            implementation_version: "0.1.0-alpha.1".to_owned(),
+            configuration_digest: "0".repeat(64),
+            leakage_controls: vec!["sealed labels separate".to_owned()],
+            metrics: vec![BenchmarkMetric {
+                name: "recall_at_95".to_owned(),
+                value: 0.95,
+                unit: "proportion".to_owned(),
+                lower_bound: None,
+                upper_bound: None,
+                sample_size: 100,
+            }],
+            environment: vec!["offline test".to_owned()],
+            generated_at: "2026-11-04T00:00:00Z".to_owned(),
+            claim_boundary: "synthetic metrics only".to_owned(),
+        };
+
+        assert!(validate_public_benchmark_report(&valid_report).is_ok());
+
+        let mut empty_metrics = valid_report;
+        empty_metrics.metrics.clear();
+        assert!(matches!(
+            validate_public_benchmark_report(&empty_metrics),
+            Err(BenchmarkError::ContractValidation(_))
+        ));
+    }
+
+    #[test]
+    fn work_saved_over_sampling_matches_analytical_fractions() {
+        let wss = work_saved_over_sampling(100, 20, 0.95);
+        assert!(wss.is_some_and(|val| (val - 0.75).abs() < 1e-9));
+
+        let wss_all = work_saved_over_sampling(100, 100, 0.95);
+        assert!(wss_all.is_some_and(|val| (val - (-0.05)).abs() < 1e-9));
+
+        assert_eq!(work_saved_over_sampling(0, 0, 0.95), None);
+        assert_eq!(work_saved_over_sampling(100, 20, 1.5), None);
+    }
+
+    #[test]
+    fn expected_calibration_error_and_brier_score_behave_analytically() {
+        let mut perfect = Vec::new();
+        for _ in 0..50 {
+            perfect.push((1.0, true));
+            perfect.push((0.0, false));
+        }
+        let ece = expected_calibration_error(&perfect, 10);
+        assert_eq!(ece, Some(0.0));
+        let brier = brier_score(&perfect);
+        assert_eq!(brier, Some(0.0));
+
+        let mut inverted = Vec::new();
+        for _ in 0..50 {
+            inverted.push((1.0, false));
+            inverted.push((0.0, true));
+        }
+        let ece_inv = expected_calibration_error(&inverted, 10);
+        assert_eq!(ece_inv, Some(1.0));
+        let brier_inv = brier_score(&inverted);
+        assert_eq!(brier_inv, Some(1.0));
+
+        assert_eq!(expected_calibration_error(&[], 10), None);
+        assert_eq!(brier_score(&[]), None);
     }
 }

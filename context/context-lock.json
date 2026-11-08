@@ -3,13 +3,13 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "sha256": "c37df303303b9a1acb72d8830c8535422f5d8503cb686707610309406a208692",
-      "size": 4070
+      "sha256": "325ee22e36ee05504e9dcadc0af9090b7e0702a8d7e4c63fde43b667a4512d2a",
+      "size": 5025
     },
     {
       "path": "CODEX_HANDOFF.md",
-      "sha256": "25b55ce8c1d1d9a30f39176ee929383c674995072c3668536d5f862b42d7c7cf",
-      "size": 4089
+      "sha256": "f899d720ed6467bafb457cff0eb078383dbc7d3ef74b054ad4c11e0b19ccc4fc",
+      "size": 4879
     },
     {
       "path": "CONTEXT.md",
@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "85036511e9d0314a119b2a220c887762d6410cd969c3fb03baccae409c9a1f22",
-      "size": 621646
+      "sha256": "18b5425f77e1ca3058c683ad7b16f6a3721205f029d4cdf2b24b9f03a67ab0e9",
+      "size": 624479
     },
     {
       "path": "conductor/github/project.json",
@@ -48,18 +48,18 @@
     },
     {
       "path": "conductor/requirements.md",
-      "sha256": "c684656a069501adf2ae40c3a37b390cb381e3b30231ec6caf428469a0b481e8",
-      "size": 26753
+      "sha256": "431f1581f3a6d02c22b38d3d6d6c7285e43fcbfb3d2acef22372170f2dc0fbea",
+      "size": 26962
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "615e4d2953bb39d566244af47a9434c9719e6ed56ee104703fe3ecdb5c68a903",
-      "size": 117162
+      "sha256": "85219ff63d16fca99307dc4d70e45750304a36e70b00f5f8baffbcb3dee5e617",
+      "size": 143809
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "e611f291fc402087be0c5f564e8f2af3b5a46e404cf3fe5e4b36d4c72756381e",
-      "size": 101174
+      "sha256": "34c93867db7755cfbf2ab0a5fd0956abeb4467c9823ef15efada68cd61c7fcf4",
+      "size": 264571
     },
     {
       "path": "context/capability-matrix.json",
@@ -88,8 +88,8 @@
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "367ebb8f6cae04b926c1a0bb8e4ce6f62bef5eddfa142129d2afca33b73e06e3",
-      "size": 25947
+      "sha256": "ce89e254edbacc54622cdd860daf48c7b622fee5c20a6bfcd2b001ee97560968",
+      "size": 26696
     },
     {
       "path": "contracts/migrations/registry.json",
@@ -98,8 +98,8 @@
     },
     {
       "path": "contracts/schema-catalog.json",
-      "sha256": "e7bbccb5cbb4dc8e86c64b79163e648400e869a32453d89e6e16447f023de1e8",
-      "size": 29512
+      "sha256": "705ef4733e5f87ccbd3219cbbe8f0c5dcde43cdce2fa062bc2ac657cdd605da0",
+      "size": 30426
     },
     {
       "path": "docs/safety/safety-case.md",
@@ -118,12 +118,12 @@
     },
     {
       "path": "integration/consumer-contract-suite.json",
-      "sha256": "c98ad6e69629b77749ba293f6d4a1f90b63491a4a212984936f0fe491e8a7608",
-      "size": 9354
+      "sha256": "a2a655d966ac9b237793c837d9f0f97ea012db7219e4434513e7c6299d440050",
+      "size": 10926
     },
     {
       "path": "integration/ecosystem-lock.json",
-      "sha256": "1fc4674bfc5a291bb8c3d0f610ec253ad99a43c67583dbb105f804163e6e53e8",
+      "sha256": "4224d2301b96c372ec396e46d98505a4b6f5d683679cb9b1bde1463008c886d7",
       "size": 2784
     },
     {
@@ -133,7 +133,7 @@
     },
     {
       "path": "integration/passports/index.json",
-      "sha256": "3b6c3416f44bc987f7797ac84a4758acedf16e486ab3b70f4a6f40d1d6446008",
+      "sha256": "419515de13c4f58f0e8dc90fc7ac64ef90a7c170de0924b9bad273f28762993e",
       "size": 4049
     },
     {
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "a738e3fd01a643d8ef215700f26ec17b6a158a50543e1f80aad6519c5ea78f28",
-      "size": 3521
+      "sha256": "45f0c7cedf1d13da321fcb8dc6ebaeea2d32a9b7e6f7ff85d31fa7f153214d35",
+      "size": 3488
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "0acd6f75b4595407a1fb1cf41caf9403b20929861d2b6c39443402f66cdebd36",
-      "size": 50405
+      "sha256": "e49990a9e5c411b5a1f257f622eb3ae79762af83cadc4912461777233f18a7be",
+      "size": 54597
     },
     {
       "path": "verification/harness-matrix.json",

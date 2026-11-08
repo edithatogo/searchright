@@ -1,12 +1,15 @@
 # Derived reporting formats
 
 `searchright_prisma::render_flow` validates the same `PrismaFlow` arithmetic
-before producing Markdown, JSON, Mermaid, accessible SVG text tables, Typst
+before producing Markdown, JSON, Mermaid, SVG text tables with title/description, Typst
 table source or semantic HTML tables suitable for word-processor import.
 HTML output is **not a DOCX archive**; no Microsoft Word import is claimed.
 Typst 0.15.1 compiled the normal and hostile synthetic fixtures to PDFs, as
 recorded in `verification/receipts/track-08-render-formats.json`. This proves
-compilation for those exact sources, not visual layout, browser rendering,
+compilation for those exact sources. The follow-up receipt
+`verification/receipts/track-08-reporting-evidence-followup.json` records local
+normal/hostile visual checks and LibreOffice HTML-to-DOCX import, including
+wrapped hostile labels. This is not Microsoft Word, browser rendering,
 accessibility conformance or external template parity. SVG is an
 original text-table presentation, not a reproduction of an official template.
 
@@ -16,6 +19,12 @@ and exclusion reason in stable input order. Text metacharacters are escaped;
 control characters are replaced in presentations but retained in JSON.
 Mermaid includes a text-equivalent comment table; SVG includes title/description.
 These transformations never modify canonical state, submit or certify anything.
+
+PRISMA-S collection evidence is Missing when empty or entirely whitespace,
+Partial when populated links are mixed with blank entries, and Complete only
+when every supplied entry is populated. Original evidence bytes are retained.
+Complete means populated reporting links, not verified source truth, evidence
+quality, source adoption or methodological acceptance.
 
 Reproduce the local Typst smoke by running
 `cargo run -p searchright-prisma --example render_typst_fixture --locked`, saving

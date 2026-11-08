@@ -18,6 +18,8 @@ mod licensed;
 mod living;
 mod migration;
 mod ops;
+/// Additive v2 parity evidence contracts; no runtime cutover authority.
+pub mod parity_matrix;
 mod plan;
 mod plugin;
 mod policy;
@@ -79,7 +81,9 @@ pub use integration::{
 };
 pub use interchange::{InterchangeFormat, InterchangeReceipt};
 pub use licensed::LicensedAdapterProfile;
-pub use living::{LivingUpdateRun, RecordChange, RecordChangeKind, UpdateCursor, UpdateRunStatus};
+pub use living::{
+    LivingUpdateRun, RecordChange, RecordChangeKind, UpdateCursor, UpdateRunStatus, UpdateStrategy,
+};
 pub use migration::{
     ParityDimensionResult, SOURCERIGHT_PARITY_CASE_IDS, SOURCERIGHT_PARITY_DIMENSIONS,
     SourcerightParityReport,
@@ -117,8 +121,8 @@ pub use study::{
     StudyGraph,
 };
 pub use validation::{
-    FindingSeverity, PressElement, PressFinding, PressReview, SearchValidationReport, SeedRecord,
-    TranslationLossAssessment,
+    FindingSeverity, PressElement, PressFinding, PressReview, PressReviewDecision,
+    SearchValidationReport, SeedRecord, TranslationLossAssessment,
 };
 
 /// Canonical screening-policy contract version.

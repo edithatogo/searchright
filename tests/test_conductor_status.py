@@ -34,7 +34,7 @@ class StatusTests(unittest.TestCase):
         report = audit(self.root)
         self.assertEqual(report["errors"], [])
         self.assertEqual(report["counts"]["tracks"], 38)
-        self.assertEqual(report["counts"]["archived"], 7)
+        self.assertEqual(report["counts"]["archived"], 8)
         self.assertEqual(report["isolation"]["state"], "unconfigured")
         self.assertEqual(before, {str(p): p.read_bytes() for p in self.root.rglob("*") if p.is_file()})
 

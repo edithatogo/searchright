@@ -96,3 +96,128 @@ impl Validate for LicensedAdapterProfile {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn valid_profile() -> LicensedAdapterProfile {
+        LicensedAdapterProfile {
+            schema_version: LICENSED_ADAPTER_SCHEMA_VERSION.to_owned(),
+            provider_id: "scopus-byo".to_owned(),
+            database: "Scopus".to_owned(),
+            platform: "Elsevier APIs".to_owned(),
+            dialect: SearchDialect::Scopus,
+            credential_environment_variable: "SEARCHRIGHT_SCOPUS_API_KEY".to_owned(),
+            live_opt_in_environment_variable: "SEARCHRIGHT_SCOPUS_LIVE".to_owned(),
+            allowed_hosts: vec!["api.elsevier.com".to_owned()],
+            export_formats: vec!["ris".to_owned(), "csv".to_owned()],
+            terms_review: "Caller must hold an applicable API entitlement.".to_owned(),
+            persist_raw_responses: false,
+        }
+    }
+
+    #[test]
+    fn valid_profile_passes_validation() {
+        let profile = valid_profile();
+        let Ok(()) = profile.validate() else {
+            panic!("valid profile must pass validation");
+        };
+    }
+
+    #[test]
+    fn invalid_schema_version_fails() {
+        let mut profile = valid_profile();
+        profile.schema_version = "org.searchright.invalid.v1".to_owned();
+        let Err(err) = profile.validate() else {
+            panic!("invalid schema version must fail");
+        };
+        assert!(
+            matches!(err, ContractError::Invariant(msg) if msg.contains("licensed_adapter.schema_version"))
+        );
+    }
+
+    #[test]
+    fn empty_provider_id_fails() {
+        let mut profile = valid_profile();
+        profile.provider_id = "   ".to_owned();
+        let Err(err) = profile.validate() else {
+            panic!("blank provider id must fail");
+        };
+        assert!(matches!(
+            err,
+            ContractError::EmptyField("licensed_adapter.provider_id")
+        ));
+    }
+
+    #[test]
+    fn empty_allowed_hosts_fails() {
+        let mut profile = valid_profile();
+        profile.allowed_hosts = vec![];
+        let Err(err) = profile.validate() else {
+            panic!("empty allowed hosts must fail");
+        };
+        assert!(matches!(err, ContractError::Invariant(_)));
+    }
+
+    #[test]
+    fn empty_export_formats_fails() {
+        let mut profile = valid_profile();
+        profile.export_formats = vec![];
+        let Err(err) = profile.validate() else {
+            panic!("empty export formats must fail");
+        };
+        assert!(matches!(err, ContractError::Invariant(_)));
+    }
+
+    #[test]
+    fn disallowed_host_formats_fail() {
+        let mut profile = valid_profile();
+        profile.allowed_hosts = vec!["api.elsevier.com/v1".to_owned()];
+        let Err(err) = profile.validate() else {
+            panic!("host with path must fail");
+        };
+        assert!(matches!(err, ContractError::Invariant(_)));
+
+        let mut profile_ip = valid_profile();
+        profile_ip.allowed_hosts = vec!["127.0.0.1".to_owned()];
+        let Err(err_ip) = profile_ip.validate() else {
+            panic!("IP host must fail");
+        };
+        assert!(matches!(err_ip, ContractError::Invariant(_)));
+
+        let mut profile_user = valid_profile();
+        profile_user.allowed_hosts = vec!["user@api.elsevier.com".to_owned()];
+        let Err(err_user) = profile_user.validate() else {
+            panic!("host with userinfo must fail");
+        };
+        assert!(matches!(err_user, ContractError::Invariant(_)));
+    }
+
+    #[test]
+    fn lowercase_env_vars_fail() {
+        let mut profile = valid_profile();
+        profile.credential_environment_variable = "searchright_scopus_api_key".to_owned();
+        let Err(err) = profile.validate() else {
+            panic!("lowercase env var must fail");
+        };
+        assert!(matches!(err, ContractError::Invariant(_)));
+
+        let mut profile_opt = valid_profile();
+        profile_opt.live_opt_in_environment_variable = "searchright_scopus_live".to_owned();
+        let Err(err_opt) = profile_opt.validate() else {
+            panic!("lowercase opt-in env var must fail");
+        };
+        assert!(matches!(err_opt, ContractError::Invariant(_)));
+    }
+
+    #[test]
+    fn persisting_raw_responses_fails() {
+        let mut profile = valid_profile();
+        profile.persist_raw_responses = true;
+        let Err(err) = profile.validate() else {
+            panic!("persisting raw responses must fail closed");
+        };
+        assert!(matches!(err, ContractError::Invariant(_)));
+    }
+}

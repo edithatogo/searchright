@@ -873,4 +873,234 @@ mod tests {
             Err(ContractError::Invariant(_))
         ));
     }
+
+    fn valid_passport() -> IntegrationPassport {
+        IntegrationPassport {
+            schema_version: INTEGRATION_PASSPORT_SCHEMA_VERSION.to_owned(),
+            integration_id: "citeweft-document-evidence".to_owned(),
+            repository: "edithatogo/citeweft".to_owned(),
+            revision: "8c8932976250f9ca91c2bbda28ed68eeb191fa42".to_owned(),
+            default_branch: "main".to_owned(),
+            canonical_upstream: None,
+            local_fork_role: LocalForkRole::Original,
+            code_license: "MIT OR Apache-2.0".to_owned(),
+            content_license: "MIT OR Apache-2.0".to_owned(),
+            model_license: None,
+            redistribution: "Permitted under the repository licence while preserving notices."
+                .to_owned(),
+            licence_review_status: LicenceReviewStatus::Cleared,
+            drift_policy: "Report revision and contract drift.".to_owned(),
+            mode: IntegrationMode::RustDependency,
+            dependency_direction: DependencyDirection::SearchrightConsumesUpstream,
+            feature_flag: Some("citeweft".to_owned()),
+            inputs: vec![IntegrationContractReference {
+                name: "CiteWeft ScholarlyDocument".to_owned(),
+                version: "citeweft.scholarly-document.v1".to_owned(),
+                path: "citeweft::citeweft::ScholarlyDocument".to_owned(),
+                required: true,
+            }],
+            outputs: vec![IntegrationContractReference {
+                name: "Searchright DocumentEvidence".to_owned(),
+                version: "org.searchright.document-evidence.v1".to_owned(),
+                path: "contracts/json-schema/document-evidence.v1.schema.json".to_owned(),
+                required: true,
+            }],
+            default_network: false,
+            default_external_writes: false,
+            default_telemetry: false,
+            automatic_revision_updates: false,
+            allowed_capabilities: vec!["input_file_read".to_owned()],
+            verification: vec![IntegrationVerificationGate {
+                id: "static-boundary".to_owned(),
+                command: "python scripts/check_citeweft_integration.py".to_owned(),
+                evidence_level: "source_verified".to_owned(),
+                required: true,
+            }],
+            rollback: vec!["Disable the citeweft Cargo feature.".to_owned()],
+            claim_boundary: "CiteWeft is an optional extraction evidence source.".to_owned(),
+        }
+    }
+
+    #[test]
+    fn valid_integration_passport_passes_validation() {
+        assert_eq!(valid_passport().validate(), Ok(()));
+    }
+
+    #[test]
+    fn automatic_revision_updates_in_passport_is_rejected() {
+        let mut passport = valid_passport();
+        passport.automatic_revision_updates = true;
+        assert!(matches!(
+            passport.validate(),
+            Err(ContractError::Invariant(_))
+        ));
+    }
+
+    #[test]
+    fn network_defaults_in_passport_are_rejected() {
+        let mut passport = valid_passport();
+        passport.default_network = true;
+        assert!(matches!(
+            passport.validate(),
+            Err(ContractError::Invariant(_))
+        ));
+    }
+
+    #[test]
+    fn invalid_hex_revision_in_passport_is_rejected() {
+        let mut passport = valid_passport();
+        passport.revision = "not-a-valid-40-char-hex-revision".to_owned();
+        assert!(matches!(
+            passport.validate(),
+            Err(ContractError::Invariant(_))
+        ));
+    }
+
+    fn valid_hierarchy() -> GitHubIssueHierarchy {
+        GitHubIssueHierarchy {
+            schema_version: GITHUB_ISSUE_HIERARCHY_SCHEMA_VERSION.to_owned(),
+            repository: "edithatogo/searchright".to_owned(),
+            epic_key: "roadmap-epic".to_owned(),
+            nodes: vec![
+                GitHubIssueNode {
+                    key: "roadmap-epic".to_owned(),
+                    title: "Roadmap Epic".to_owned(),
+                    kind: GitHubIssueKind::Epic,
+                    parent_key: None,
+                    body_path: "conductor/github/issues/roadmap-epic.md".to_owned(),
+                    labels: vec!["kind:epic".to_owned()],
+                    status: "prepared_not_synced".to_owned(),
+                    desired_state: "open".to_owned(),
+                    track_id: None,
+                    phase_number: None,
+                    task_number: None,
+                    project_fields: BTreeMap::new(),
+                },
+                GitHubIssueNode {
+                    key: "track-13".to_owned(),
+                    title: "Track 13".to_owned(),
+                    kind: GitHubIssueKind::Track,
+                    parent_key: Some("roadmap-epic".to_owned()),
+                    body_path: "conductor/github/issues/track-13.md".to_owned(),
+                    labels: vec!["kind:track".to_owned()],
+                    status: "prepared_not_synced".to_owned(),
+                    desired_state: "open".to_owned(),
+                    track_id: Some("13".to_owned()),
+                    phase_number: None,
+                    task_number: None,
+                    project_fields: BTreeMap::new(),
+                },
+                GitHubIssueNode {
+                    key: "track-13-phase-1".to_owned(),
+                    title: "Phase 1".to_owned(),
+                    kind: GitHubIssueKind::Phase,
+                    parent_key: Some("track-13".to_owned()),
+                    body_path: "conductor/github/issues/track-13-phase-1.md".to_owned(),
+                    labels: vec!["kind:phase".to_owned()],
+                    status: "prepared_not_synced".to_owned(),
+                    desired_state: "open".to_owned(),
+                    track_id: Some("13".to_owned()),
+                    phase_number: Some(1),
+                    task_number: None,
+                    project_fields: BTreeMap::new(),
+                },
+                GitHubIssueNode {
+                    key: "track-13-phase-1-task-01".to_owned(),
+                    title: "Task 1".to_owned(),
+                    kind: GitHubIssueKind::Task,
+                    parent_key: Some("track-13-phase-1".to_owned()),
+                    body_path: "conductor/github/issues/track-13-phase-1-task-01.md".to_owned(),
+                    labels: vec!["kind:task".to_owned()],
+                    status: "prepared_not_synced".to_owned(),
+                    desired_state: "open".to_owned(),
+                    track_id: Some("13".to_owned()),
+                    phase_number: Some(1),
+                    task_number: Some(1),
+                    project_fields: BTreeMap::new(),
+                },
+            ],
+            generated_at: "2026-11-04".to_owned(),
+            apply_permitted: false,
+            state_sync_policy: "task_issues_only".to_owned(),
+            project_manifest: "conductor/github/project.json".to_owned(),
+        }
+    }
+
+    #[test]
+    fn valid_github_issue_hierarchy_passes_validation() {
+        assert_eq!(valid_hierarchy().validate(), Ok(()));
+    }
+
+    #[test]
+    fn hierarchy_authorising_apply_is_rejected() {
+        let mut hierarchy = valid_hierarchy();
+        hierarchy.apply_permitted = true;
+        assert!(matches!(
+            hierarchy.validate(),
+            Err(ContractError::Invariant(_))
+        ));
+    }
+
+    #[test]
+    fn hierarchy_with_orphaned_task_is_rejected() {
+        let mut hierarchy = valid_hierarchy();
+        if let Some(task) = hierarchy.nodes.get_mut(3) {
+            task.parent_key = Some("nonexistent-phase".to_owned());
+        }
+        assert!(matches!(
+            hierarchy.validate(),
+            Err(ContractError::Invariant(_))
+        ));
+    }
+
+    fn valid_project_manifest() -> GitHubProjectManifest {
+        GitHubProjectManifest {
+            schema_version: GITHUB_PROJECT_SCHEMA_VERSION.to_owned(),
+            owner: "edithatogo".to_owned(),
+            owner_type: GitHubProjectOwnerType::User,
+            repository: "edithatogo/searchright".to_owned(),
+            title: "Searchright Roadmap".to_owned(),
+            short_description: "Deterministic roadmap tracking".to_owned(),
+            readme_path: "conductor/github/README.md".to_owned(),
+            visibility: "public".to_owned(),
+            project_number: None,
+            link_repository: true,
+            apply_permitted: false,
+            fields: vec![GitHubProjectField {
+                name: "Delivery status".to_owned(),
+                data_type: GitHubProjectFieldDataType::SingleSelect,
+                options: vec!["In progress".to_owned(), "Done".to_owned()],
+            }],
+            views: vec![GitHubProjectView {
+                name: "All tracks".to_owned(),
+                layout: GitHubProjectViewLayout::Table,
+                filter: "is:open".to_owned(),
+            }],
+            sync: GitHubProjectSyncPolicy {
+                hierarchy_path: "conductor/github/issue-hierarchy.json".to_owned(),
+                labels_path: "conductor/github/labels.json".to_owned(),
+                identity_field: "Conductor key".to_owned(),
+                state_policy: "task_issues_only".to_owned(),
+                delete_policy: "never".to_owned(),
+                archive_policy: "never_automatic".to_owned(),
+                field_policy: "manifest_owned".to_owned(),
+                promotion_policy: "remote_state_cannot_promote_evidence".to_owned(),
+            },
+        }
+    }
+
+    #[test]
+    fn valid_github_project_manifest_passes_validation() {
+        assert_eq!(valid_project_manifest().validate(), Ok(()));
+    }
+
+    #[test]
+    fn project_manifest_authorising_apply_is_rejected() {
+        let mut manifest = valid_project_manifest();
+        manifest.apply_permitted = true;
+        assert!(matches!(
+            manifest.validate(),
+            Err(ContractError::Invariant(_))
+        ));
+    }
 }

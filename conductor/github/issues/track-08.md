@@ -12,12 +12,12 @@ Render PRISMA flow/appendix outputs and PRESS/standards assessments directly fro
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `01, 05, 07`
 - Requirements: `SR-023, SR-024, SR-025, SR-026, SR-027`
-- External approval required: `false`
+- External approval required: `true`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Render PRISMA flow/appendix outputs and PRESS/standards assessments directly fro
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

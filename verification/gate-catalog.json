@@ -11,6 +11,10 @@
       "command": "python scripts/validate_repository.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T00-A001",
+        "T00-A003",
+        "T00-A004",
+        "T00-A006",
         "T01-A001",
         "T01-A004",
         "T02-A001",
@@ -54,12 +58,9 @@
         "T14-A004",
         "T14-A005",
         "T14-A006",
+        "T16-A001",
         "T18-A001",
-        "T18-A002",
-        "T18-A003",
-        "T18-A004",
         "T18-A005",
-        "T18-A006",
         "T19-A001",
         "T19-A002",
         "T19-A003",
@@ -89,6 +90,7 @@
         "T24-A003",
         "T24-A004",
         "T24-A005",
+        "T24-A006",
         "T25-A002",
         "T25-A003",
         "T25-A004",
@@ -184,6 +186,9 @@
       "covered_assertions": [
         "T01-A005",
         "T03-A005",
+        "T14-A005",
+        "T18-A001",
+        "T19-A003",
         "T32-A003"
       ],
       "evidence_ceiling": "source_verified",
@@ -215,10 +220,9 @@
       "compiler_required": false,
       "covered_assertions": [
         "T01-A003",
+        "T08-A004",
+        "T08-A005",
         "T24-A001",
-        "T24-A002",
-        "T24-A003",
-        "T24-A005",
         "T32-A003"
       ],
       "evidence_ceiling": "source_verified",
@@ -238,10 +242,7 @@
         "T01-A002",
         "T01-A005",
         "T01-A006",
-        "T24-A001",
-        "T24-A002",
-        "T24-A003",
-        "T24-A005"
+        "T24-A001"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -348,6 +349,7 @@
       "command": "python scripts/check_vertical_slice.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T08-A002",
         "T16-A002",
         "T16-A006"
       ],
@@ -397,9 +399,7 @@
         "T17-A001",
         "T17-A002",
         "T17-A003",
-        "T17-A004",
-        "T17-A005",
-        "T17-A006"
+        "T17-A004"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -434,6 +434,7 @@
       "command": "python scripts/check_licence_firewall.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T13-A001",
         "T17-A002"
       ],
       "evidence_ceiling": "source_verified",
@@ -450,6 +451,8 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A005",
+        "T14-A003",
+        "T14-A004",
         "T14-A007",
         "T15-A002",
         "T15-A003",
@@ -468,6 +471,7 @@
       "command": "python scripts/check_portfolio_project.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T13-A001",
         "T15-A003",
         "T15-A006"
       ],
@@ -519,6 +523,7 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A005",
+        "T08-A006",
         "T13-A001",
         "T15-A004"
       ],
@@ -553,6 +558,7 @@
       "compiler_required": false,
       "covered_assertions": [
         "T00-A005",
+        "T08-A006",
         "T13-A001"
       ],
       "evidence_ceiling": "source_verified",
@@ -729,11 +735,8 @@
         "T09-A005",
         "T16-A003",
         "T16-A004",
-        "T18-A001",
         "T18-A002",
-        "T18-A003",
         "T18-A004",
-        "T18-A005",
         "T18-A006",
         "T26-A001",
         "T26-A002",
@@ -774,13 +777,12 @@
       "command": "python scripts/check_cli_mcp_parity.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T08-A005",
         "T09-A001",
         "T10-A001",
         "T10-A003",
         "T10-A004",
         "T10-A006",
-        "T24-A002",
-        "T24-A003",
         "T24-A004",
         "T24-A005",
         "T24-A006",
@@ -865,6 +867,7 @@
       "compiler_required": false,
       "covered_assertions": [
         "T03-A006",
+        "T14-A005",
         "T32-A001",
         "T32-A002",
         "T32-A003"
@@ -914,6 +917,7 @@
       "command": "python scripts/check_release_rehearsal.py",
       "compiler_required": false,
       "covered_assertions": [
+        "T18-A006",
         "T36-A001",
         "T36-A002",
         "T36-A003"
@@ -998,9 +1002,7 @@
       "covered_assertions": [
         "T00-A004",
         "T12-A001",
-        "T12-A002",
-        "T12-A003",
-        "T12-A004"
+        "T16-A001"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -1066,7 +1068,9 @@
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/generate_source_sbom.py --check",
       "compiler_required": false,
-      "covered_assertions": [],
+      "covered_assertions": [
+        "T18-A003"
+      ],
       "evidence_ceiling": "source_reproducible",
       "external_writes": false,
       "gate_id": "SR-GATE-GENERATE-SOURCE-SBOM-CHECK",
@@ -1079,7 +1083,9 @@
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/generate_source_hash_manifest.py --check",
       "compiler_required": false,
-      "covered_assertions": [],
+      "covered_assertions": [
+        "T18-A003"
+      ],
       "evidence_ceiling": "source_reproducible",
       "external_writes": false,
       "gate_id": "SR-GATE-GENERATE-SOURCE-HASH-MANIFEST-CHECK",
@@ -1093,11 +1099,9 @@
       "command": "python scripts/check_packaging_reproducibility.py",
       "compiler_required": false,
       "covered_assertions": [
-        "T18-A001",
         "T18-A002",
         "T18-A003",
         "T18-A004",
-        "T18-A005",
         "T18-A006",
         "T36-A001",
         "T36-A002",
@@ -1128,10 +1132,41 @@
     {
       "category": "repository_policy",
       "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_benchmark_governance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A001"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-BENCHMARK-GOVERNANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_benchmark_governance.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_calibration_harness.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A005"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-CALIBRATION-HARNESS",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_calibration_harness.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
       "command": "python scripts/check_cargo_vet_governance.py",
       "compiler_required": false,
       "covered_assertions": [
-        "T16-A004"
+        "T16-A004",
+        "T18-A001"
       ],
       "evidence_ceiling": "source_verified",
       "external_writes": false,
@@ -1174,6 +1209,56 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/check_coverage_policy.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_dataset_provenance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A002"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-DATASET-PROVENANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_dataset_provenance.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_external_evaluation.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T29-A001",
+        "T29-A002",
+        "T29-A003",
+        "T29-A004",
+        "T29-A005",
+        "T29-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-EXTERNAL-EVALUATION",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_external_evaluation.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/check_hf_dataset_eval_contracts.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T17-A006"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-CHECK-HF-DATASET-EVAL-CONTRACTS",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/check_hf_dataset_eval_contracts.py"
     },
     {
       "category": "search_method",
@@ -1279,6 +1364,21 @@
       "harness_gate": false,
       "network": false,
       "script": "scripts/run_static_harness.py"
+    },
+    {
+      "category": "repository_policy",
+      "claim_boundary": "Passing this gate establishes only the declared source-level property; it does not establish compilation, live-provider behaviour, remote state, methodological adequacy or external acceptance.",
+      "command": "python scripts/test_cargo_vet_governance.py",
+      "compiler_required": false,
+      "covered_assertions": [
+        "T16-A004"
+      ],
+      "evidence_ceiling": "source_verified",
+      "external_writes": false,
+      "gate_id": "SR-GATE-TEST-CARGO-VET-GOVERNANCE",
+      "harness_gate": false,
+      "network": false,
+      "script": "scripts/test_cargo_vet_governance.py"
     }
   ],
   "generated_from": [

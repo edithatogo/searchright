@@ -128,6 +128,20 @@
       "version": "0.2"
     },
     {
+      "bom-ref": "cargo-requirement:csv@=1.4.0",
+      "name": "csv",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/csv@=1.4.0",
+      "scope": "required",
+      "type": "library",
+      "version": "=1.4.0"
+    },
+    {
       "bom-ref": "cargo-requirement:futures@0.3",
       "name": "futures",
       "properties": [
@@ -184,6 +198,20 @@
       "version": "0.7.2"
     },
     {
+      "bom-ref": "cargo-requirement:noyalib@=0.0.58",
+      "name": "noyalib",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/noyalib@=0.0.58",
+      "scope": "required",
+      "type": "library",
+      "version": "=0.0.58"
+    },
+    {
       "bom-ref": "cargo-requirement:proptest@1.8",
       "name": "proptest",
       "properties": [
@@ -198,7 +226,7 @@
       "version": "1.8"
     },
     {
-      "bom-ref": "cargo-requirement:quick-xml@=0.41.0",
+      "bom-ref": "cargo-requirement:quick-xml@=0.42.0",
       "name": "quick-xml",
       "properties": [
         {
@@ -206,10 +234,10 @@
           "value": "version-requirement-not-resolved"
         }
       ],
-      "purl": "pkg:cargo/quick-xml@=0.41.0",
+      "purl": "pkg:cargo/quick-xml@=0.42.0",
       "scope": "required",
       "type": "library",
-      "version": "=0.41.0"
+      "version": "=0.42.0"
     },
     {
       "bom-ref": "cargo-requirement:reqwest@0.13.2",
@@ -238,6 +266,20 @@
       "scope": "required",
       "type": "library",
       "version": "=3.1.2"
+    },
+    {
+      "bom-ref": "cargo-requirement:rustls@0.23",
+      "name": "rustls",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/rustls@0.23",
+      "scope": "required",
+      "type": "library",
+      "version": "0.23"
     },
     {
       "bom-ref": "cargo-requirement:schemars@1.0",
@@ -280,20 +322,6 @@
       "scope": "required",
       "type": "library",
       "version": "1.0"
-    },
-    {
-      "bom-ref": "cargo-requirement:serde_yaml@0.9",
-      "name": "serde_yaml",
-      "properties": [
-        {
-          "name": "searchright:resolution",
-          "value": "version-requirement-not-resolved"
-        }
-      ],
-      "purl": "pkg:cargo/serde_yaml@0.9",
-      "scope": "required",
-      "type": "library",
-      "version": "0.9"
     },
     {
       "bom-ref": "cargo-requirement:sha2@0.11",
@@ -1154,6 +1182,30 @@
       "version": "1e69f48acb82d1966a394da916b4c1698aa569d6"
     },
     {
+      "bom-ref": "github-action:actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
+      "name": "actions/cache/restore",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "55cc8345863c7cc4c66a329aec7e433d2d1c52a9"
+    },
+    {
+      "bom-ref": "github-action:actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9",
+      "name": "actions/cache/save",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "55cc8345863c7cc4c66a329aec7e433d2d1c52a9"
+    },
+    {
       "bom-ref": "github-action:actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
       "name": "actions/checkout",
       "properties": [
@@ -1381,6 +1433,7 @@
       "dependsOn": [
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
+        "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1",
         "cargo:searchright-dedup@0.1.0-alpha.1"
@@ -1400,9 +1453,9 @@
         "cargo-requirement:anyhow@1.0",
         "cargo-requirement:clap@4.5",
         "cargo-requirement:clap_mangen@0.2",
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:tokio@1",
         "cargo:searchright@0.1.0-alpha.1"
       ],
@@ -1412,8 +1465,9 @@
       "dependsOn": [
         "cargo-requirement:async-trait@0.1.89",
         "cargo-requirement:blake3@1.8",
-        "cargo-requirement:quick-xml@=0.41.0",
+        "cargo-requirement:quick-xml@=0.42.0",
         "cargo-requirement:reqwest@0.13.2",
+        "cargo-requirement:rustls@0.23",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:tokio@1",
@@ -1478,8 +1532,9 @@
     {
       "dependsOn": [
         "cargo-requirement:blake3@1.8",
+        "cargo-requirement:csv@=1.4.0",
         "cargo-requirement:proptest@1.8",
-        "cargo-requirement:quick-xml@=0.41.0",
+        "cargo-requirement:quick-xml@=0.42.0",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
@@ -1491,10 +1546,10 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:url@2.5",
         "cargo:searchright-contracts@0.1.0-alpha.1"
@@ -1517,10 +1572,10 @@
         "cargo-requirement:base64@0.23",
         "cargo-requirement:blake3@1.8",
         "cargo-requirement:jsonwebtoken@11",
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:rmcp@=3.1.2",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:time@0.3",
@@ -1562,8 +1617,8 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1571,10 +1626,10 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1582,6 +1637,7 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1589,6 +1645,11 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:csv@=1.4.0",
+        "cargo-requirement:proptest@1.8",
+        "cargo-requirement:schemars@1.0",
+        "cargo-requirement:serde@1.0",
+        "cargo-requirement:serde_json@1.0",
         "cargo-requirement:thiserror@2.0",
         "cargo:searchright-contracts@0.1.0-alpha.1"
       ],
@@ -1631,6 +1692,7 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:thiserror@2.0",
@@ -1640,10 +1702,10 @@
     },
     {
       "dependsOn": [
+        "cargo-requirement:noyalib@=0.0.58",
         "cargo-requirement:schemars@1.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
-        "cargo-requirement:serde_yaml@0.9",
         "cargo-requirement:sha2@0.11",
         "cargo-requirement:thiserror@2.0",
         "cargo-requirement:time@0.3",
@@ -1693,7 +1755,7 @@
       },
       {
         "name": "searchright:schema-count",
-        "value": "72"
+        "value": "74"
       },
       {
         "name": "searchright:standard-pack-count",
@@ -1705,7 +1767,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:8b06eccd-b7ec-5c35-af87-c3324befe7ff",
+  "serialNumber": "urn:uuid:20714965-2cc5-5210-9c5f-ae1b85810bb4",
   "specVersion": "1.6",
   "version": 1
 }

@@ -65,7 +65,8 @@
     "verification/receipts/track-02-conductor-review.json",
     "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
     "verification/receipts/track-02-final-review-2026-08-29.json",
-    "verification/receipts/track-02-integration-panel.json"
+    "verification/receipts/track-02-integration-panel.json",
+    "verification/receipts/track-02-conductor-review-2026-11-03.json"
   ],
   "external_evidence": [],
   "gates": [
@@ -94,6 +95,10 @@
     {
       "commit": "b98fc59",
       "summary": "Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions."
+    },
+    {
+      "commit": "0e2fff8",
+      "summary": "Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt."
     }
   ]
 }

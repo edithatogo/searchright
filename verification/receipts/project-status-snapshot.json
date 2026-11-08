@@ -1,0 +1,58 @@
+{
+  "schema_version": "org.searchright.project-status-snapshot.v1",
+  "status_date": "2026-09-10",
+  "observed_default_branch": "main",
+  "observed_main_revision": "9b4a4a4dba818d75f9dbb9ee6be458871b09a878",
+  "last_fully_admitted_revision": "10f983d44e67c08be44131ea6e2b7cf75dc147f6",
+  "maturity_decision": "not_ready",
+  "evidence_ceiling": "source-verified technical alpha with historical hosted admission and bounded exact-head clean-room evidence",
+  "source_bound_counts": {
+    "tracks": 38,
+    "active_tracks": 31,
+    "archived_tracks": 7,
+    "total_tasks": 404,
+    "completed_tasks": 209,
+    "open_evidence_tasks": 195,
+    "requirements_checked": 93
+  },
+  "exact_head_observations": [
+    {
+      "kind": "github_actions_run",
+      "workflow": "Clean-room reproducibility",
+      "run_id": 34338222604,
+      "head_sha": "9b4a4a4dba818d75f9dbb9ee6be458871b09a878",
+      "event": "schedule",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-09-09T10:04:18Z",
+      "completed_at": "2026-09-09T10:10:18Z",
+      "claim_scope": "clean_room_reproducibility_only",
+      "full_admission_matrix": false,
+      "claim_boundary": "This observation establishes clean-room reproducibility evidence only; it is not a complete exact-head admission matrix."
+    }
+  ],
+  "historical_admission": {
+    "revision": "10f983d44e67c08be44131ea6e2b7cf75dc147f6",
+    "checks_passed": 17,
+    "failures": 0,
+    "pending": 0,
+    "exact_revision_only": true,
+    "transfers_to_observed_head": false,
+    "claim_boundary": "Historical compiler and repository-admission evidence is bound to this exact revision and does not transfer automatically to the observed main revision."
+  },
+  "remote_state_policy": {
+    "static_remote_state_claims_allowed": false,
+    "dynamic_assertions_prohibited": [
+      "local_main_equals_origin_main",
+      "working_tree_clean",
+      "no_open_pull_requests",
+      "no_delivery_branches"
+    ],
+    "reason": "Dynamic GitHub and local working-copy state cannot remain authoritative in a committed static document without an exact-time receipt."
+  },
+  "limitations": [
+    "No complete exact-head CI, security, formal, release or admission matrix is claimed.",
+    "No live-provider, downstream-cutover, registry-acceptance or external-methodological evidence is claimed.",
+    "The snapshot records bounded observations made on 10 September 2026 and does not promote later commits or remote state."
+  ]
+}

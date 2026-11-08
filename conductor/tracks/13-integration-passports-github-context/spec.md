@@ -25,3 +25,12 @@ See `conductor/requirements.md` rows whose Track owner includes `13`.
 ## Out of scope
 
 Remote writes, downstream merges and compatibility claims without explicit evidence.
+
+## Planned scoped-evidence consumer
+
+The [rcagent consumer note](../../../docs/integration/rcagent-evidence-view.md)
+adds a bounded use case for existing neutral query/provider/receipt contracts.
+It keeps public literature discovery separate from local case retrieval and
+requires consumer-supplied permitted-view binding before any optional adapter.
+This is pending integration work, not another review engine, an admitted
+passport, a new executable contract or a promotion of this track's evidence.

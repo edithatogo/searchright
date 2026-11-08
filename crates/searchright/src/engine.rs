@@ -164,6 +164,14 @@ pub enum PrismaArtifact {
     Flow(PrismaFlow),
     /// Mermaid source for a flow diagram.
     Mermaid(String),
+    /// Accessible Markdown table.
+    Markdown(String),
+    /// Self-contained accessible SVG document.
+    Svg(String),
+    /// Typst table source.
+    Typst(String),
+    /// HTML table suitable for import or paste into DOCX editors.
+    DocxTable(String),
     /// PRISMA-S reporting ledgers.
     PrismaSLedger(Vec<PrismaSLedger>),
 }
@@ -175,6 +183,14 @@ pub enum PrismaOutput {
     Json,
     /// Return Mermaid source.
     Mermaid,
+    /// Return an accessible Markdown table.
+    Markdown,
+    /// Return a self-contained accessible SVG document.
+    Svg,
+    /// Return Typst table source.
+    Typst,
+    /// Return a DOCX-friendly HTML table.
+    DocxTable,
     /// Return the PRISMA-S ledger.
     PrismaSLedger,
 }
@@ -414,6 +430,16 @@ impl SearchrightEngine {
             PrismaOutput::Mermaid => Ok(PrismaArtifact::Mermaid(
                 searchright_prisma::render_mermaid(flow)?,
             )),
+            PrismaOutput::Markdown => Ok(PrismaArtifact::Markdown(
+                searchright_prisma::render_markdown(flow)?,
+            )),
+            PrismaOutput::Svg => Ok(PrismaArtifact::Svg(searchright_prisma::render_svg(flow)?)),
+            PrismaOutput::Typst => Ok(PrismaArtifact::Typst(searchright_prisma::render_typst(
+                flow,
+            )?)),
+            PrismaOutput::DocxTable => Ok(PrismaArtifact::DocxTable(
+                searchright_prisma::render_docx_table(flow)?,
+            )),
             PrismaOutput::PrismaSLedger => Ok(PrismaArtifact::PrismaSLedger(
                 searchright_prisma::build_prisma_s_ledger(flow)?,
             )),
@@ -499,6 +525,15 @@ impl SearchrightEngine {
     ) -> Result<InterchangeExport, EngineError> {
         let input = serde_json::to_vec(records)?;
         let document = searchright_interchange::export_records(records, output_format.clone())?;
+        let lossless = matches!(
+            output_format,
+            InterchangeFormat::SearchrightJson | InterchangeFormat::JsonLines
+        );
+        let warnings = if lossless {
+            Vec::new()
+        } else {
+            vec!["This format projects bibliographic fields. Retain canonical records to preserve full provenance and metadata.".to_owned()]
+        };
         let receipt = searchright_interchange::conversion_receipt(
             review_id,
             input_format,
@@ -507,8 +542,8 @@ impl SearchrightEngine {
             document.as_bytes(),
             records.len(),
             records.len(),
-            Vec::new(),
-            true,
+            warnings,
+            lossless,
         )?;
         Ok(InterchangeExport { document, receipt })
     }
@@ -805,7 +840,7 @@ fn persist_confirmed_artifact<T: Serialize + DeserializeOwned + PartialEq>(
     }
     let reparsed: T = match document_format {
         "json" => serde_json::from_str(submitted_document)?,
-        "yaml" | "yml" => serde_yaml::from_str(submitted_document)
+        "yaml" | "yml" => crate::parse_yaml(submitted_document)
             .map_err(|error| EngineError::InvalidSubmittedDocument(error.to_string()))?,
         _ => return Err(EngineError::UnsupportedDocumentFormat),
     };
@@ -922,6 +957,31 @@ mod tests {
 
     static TEMPORARY_DIRECTORY_SEQUENCE: AtomicU64 = AtomicU64::new(0);
 
+    #[test]
+    fn export_receipts_distinguish_canonical_records_from_citation_projections()
+    -> Result<(), Box<dyn std::error::Error>> {
+        let record: BibliographicRecord = crate::parse_yaml(include_str!(
+            "../../../contracts/examples/bibliographic-record.yaml"
+        ))?;
+        for (format, lossless) in [
+            (InterchangeFormat::Ris, false),
+            (InterchangeFormat::SearchrightJson, true),
+            (InterchangeFormat::JsonLines, true),
+        ] {
+            let export = SearchrightEngine::export_records(
+                "fixture",
+                std::slice::from_ref(&record),
+                InterchangeFormat::SearchrightJson,
+                format.clone(),
+            )?;
+            let imported = SearchrightEngine::import_records(&export.document, format, "reimport")?;
+            assert_eq!(imported.records == std::slice::from_ref(&record), lossless);
+            assert_eq!(export.receipt.lossless, lossless);
+            assert_eq!(export.receipt.warnings.is_empty(), lossless);
+        }
+        Ok(())
+    }
+
     struct TestVerifier;
 
     impl crate::EffectAuthorityVerifier for TestVerifier {
@@ -985,8 +1045,8 @@ mod tests {
         }
     }
 
-    fn valid_plan() -> Result<ReviewPlan, serde_yaml::Error> {
-        serde_yaml::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
+    fn valid_plan() -> Result<ReviewPlan, noyalib::Error> {
+        noyalib::from_str(include_str!("../../../contracts/examples/review-plan.yaml"))
     }
 
     fn valid_press_review() -> Result<PressReview, serde_json::Error> {
@@ -995,14 +1055,14 @@ mod tests {
         ))
     }
 
-    fn valid_screening_policy() -> Result<ScreeningPolicy, serde_yaml::Error> {
-        serde_yaml::from_str(include_str!(
+    fn valid_screening_policy() -> Result<ScreeningPolicy, noyalib::Error> {
+        noyalib::from_str(include_str!(
             "../../../contracts/examples/screening-policy.yaml"
         ))
     }
 
-    fn valid_screening_decision() -> Result<ScreeningDecision, serde_yaml::Error> {
-        serde_yaml::from_str(include_str!(
+    fn valid_screening_decision() -> Result<ScreeningDecision, noyalib::Error> {
+        noyalib::from_str(include_str!(
             "../../../contracts/examples/screening-decision.yaml"
         ))
     }
@@ -1015,11 +1075,11 @@ mod tests {
         }
     }
 
-    fn fixture_request() -> Result<SearchRequest, serde_yaml::Error> {
+    fn fixture_request() -> Result<SearchRequest, noyalib::Error> {
         Ok(SearchRequest {
             review_id: "fixture-review".to_owned(),
             run_id: "fixture-run".to_owned(),
-            strategy: serde_yaml::from_str(include_str!(
+            strategy: noyalib::from_str(include_str!(
                 "../../../contracts/examples/compiled-strategy.yaml"
             ))?,
             cursor: None,
@@ -1069,7 +1129,7 @@ mod tests {
             SearchExecutionOperation::Preview,
         )
         .await?;
-        assert!(preview.receipts.is_empty());
+        assert_eq!(preview.receipts, []);
 
         let directory = TemporaryDirectory::new("fixture-execution")?;
         let store = FileReviewStore::open(&directory.0)?;

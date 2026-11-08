@@ -15,23 +15,36 @@
       "implementation_paths": [
         "integration/passports/index.json",
         "integration/consumer-contract-suite.json",
+        "integration/github/portfolio-project.json",
+        "crates/searchright-contracts/src/integration.rs",
         "scripts/check_integration_passports.py",
         "scripts/check_consumer_contracts.py",
-        "scripts/check_integration_drift.py"
+        "scripts/check_integration_drift.py",
+        "scripts/check_portfolio_project.py",
+        "scripts/check_licence_firewall.py"
       ],
       "implementation_symbols": [
+        "searchright_contracts::integration::IntegrationPassport::validate",
         "scripts/check_integration_passports.py::main",
         "scripts/check_consumer_contracts.py::main",
-        "scripts/check_integration_drift.py::main"
+        "scripts/check_integration_drift.py::main",
+        "scripts/check_portfolio_project.py::main",
+        "scripts/check_licence_firewall.py::main"
       ],
       "deterministic_tests": [
         "python scripts/check_integration_passports.py",
         "python scripts/check_consumer_contracts.py",
-        "python scripts/check_integration_drift.py"
+        "python scripts/check_integration_drift.py",
+        "python scripts/check_portfolio_project.py",
+        "python scripts/check_licence_firewall.py"
+      ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-contracts"
       ],
       "evidence_receipts": [
         "conductor/tracks/13-integration-passports-github-context/evidence.json",
-        "verification/receipts/track-13-github-evidence-reconciliation.json"
+        "verification/receipts/track-13-github-evidence-reconciliation.json",
+        "verification/receipts/track-13-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Execute consumer-driven contract tests in each pinned downstream repository.",
@@ -46,10 +59,12 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "conductor/github/issue-hierarchy.json",
+        "crates/searchright-contracts/src/integration.rs",
         "scripts/render_github_issues.py",
         "scripts/check_github_issue_hierarchy.py"
       ],
       "implementation_symbols": [
+        "searchright_contracts::integration::GithubIssueHierarchy::validate",
         "scripts/render_github_issues.py::main",
         "scripts/check_github_issue_hierarchy.py::main"
       ],
@@ -57,10 +72,14 @@
         "python scripts/render_github_issues.py --check",
         "python scripts/check_github_issue_hierarchy.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-contracts"
+      ],
       "evidence_receipts": [
         "conductor/tracks/13-integration-passports-github-context/evidence.json",
         "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-13-github-evidence-reconciliation.json"
+        "verification/receipts/track-13-github-evidence-reconciliation.json",
+        "verification/receipts/track-13-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision."
@@ -73,6 +92,7 @@
       "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
+        "crates/searchright-contracts/src/integration.rs",
         "scripts/sync_github_issues.py",
         "scripts/sync_github_project.py",
         "scripts/bootstrap_github.py"
@@ -87,10 +107,14 @@
         "python scripts/sync_github_project.py",
         "python scripts/bootstrap_github.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-contracts"
+      ],
       "evidence_receipts": [
         "conductor/tracks/13-integration-passports-github-context/evidence.json",
         "verification/receipts/github-control-plane-audit.json",
-        "verification/receipts/track-13-github-evidence-reconciliation.json"
+        "verification/receipts/track-13-github-evidence-reconciliation.json",
+        "verification/receipts/track-13-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision."
@@ -106,7 +130,8 @@
         "CONTEXT.md",
         "context/manifest.json",
         "context/context-lock.json",
-        "scripts/check_context_integrity.py"
+        "scripts/check_context_integrity.py",
+        "scripts/sync_context_lock.py"
       ],
       "implementation_symbols": [
         "scripts/check_context_integrity.py::main",
@@ -116,9 +141,13 @@
         "python scripts/check_context_integrity.py",
         "python scripts/sync_context_lock.py --check"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-contracts"
+      ],
       "evidence_receipts": [
         "conductor/tracks/13-integration-passports-github-context/evidence.json",
-        "verification/receipts/track-13-github-evidence-reconciliation.json"
+        "verification/receipts/track-13-github-evidence-reconciliation.json",
+        "verification/receipts/track-13-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Re-run context integrity and context-lock checks after the final merged revision is known."

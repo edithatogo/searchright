@@ -1498,6 +1498,52 @@
       "downstream_consumer_conformance": "not_evidenced"
     },
     {
+      "id": "sourceright-parity-catalogue-v2",
+      "owner_track": "03",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/sourceright-parity-catalogue.v2.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/sourceright-parity-catalogue.v2.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/sourceright-parity-catalogue.v2.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ParityExpectedCatalogueV2",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
+      "id": "sourceright-parity-matrix-v2",
+      "owner_track": "03",
+      "stability": "alpha",
+      "schema": {
+        "path": "contracts/json-schema/sourceright-parity-matrix.v2.schema.json",
+        "present": true,
+        "catalogued_id": "https://schemas.searchright.dev/sourceright-parity-matrix.v2.schema.json",
+        "canonical_digest_matches": true
+      },
+      "example": {
+        "path": "contracts/examples/sourceright-parity-matrix.v2.json",
+        "present": true,
+        "static_validation": true
+      },
+      "rust": {
+        "declared_type": "ParityExecutionMatrixV2",
+        "registry_status": "not_registered",
+        "compiler_conformance": "not_evidenced",
+        "round_trip_conformance": "not_evidenced"
+      },
+      "downstream_consumer_conformance": "not_evidenced"
+    },
+    {
       "id": "sourceright-parity-report",
       "owner_track": "14",
       "stability": "alpha",

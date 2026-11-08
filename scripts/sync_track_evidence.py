@@ -107,6 +107,10 @@ def render_evidence(entry: dict) -> str:
     }
     if entry.get("gates"):
         value["gates"] = entry["gates"]
+    if entry.get("panel_findings"):
+        value["panel_findings"] = entry["panel_findings"]
+    if entry.get("panel_protocol"):
+        value["panel_protocol"] = entry["panel_protocol"]
     if entry.get("lifecycle") == "archived":
         value["lifecycle"] = "archived"
         value["archived_on"] = entry["archived_on"]
@@ -129,6 +133,19 @@ def render_plan(entry: dict) -> str:
         "",
         f"GitHub issue key: `track-{track_id}`. Each numbered phase maps to the same-numbered native subissue.",
         "",
+        *(
+            [
+                "## Active forward plan",
+                "",
+                f"[Agent-led frontier programme](../../../{entry['active_plan']}) "
+                "defines current milestones and optional operating/release profiles. "
+                "The legacy phases below retain their evidence history; no new "
+                "phase/task hierarchy is required for the programme.",
+                "",
+            ]
+            if entry.get("active_plan")
+            else []
+        ),
         "## Phase 1: Source implementation",
         "",
         f"<!-- github-subissue-key: track-{track_id}-phase-1 -->",
@@ -209,7 +226,8 @@ def render_plan(entry: dict) -> str:
         if isinstance(fix, str):
             lines.append(f"  - [x] Review fix: {fix}")
         else:
-            lines.append(f"  - Review fix `{fix['commit']}`: {fix['summary']}")
+            commit_id = fix.get("commit") or fix.get("sha")
+            lines.append(f"  - Review fix `{commit_id}`: {fix['summary']}")
     lines.extend(
         [
             (
@@ -232,6 +250,12 @@ def render_plan(entry: dict) -> str:
 def render_tracks(entries: list[dict]) -> str:
     lines = [
         "# Tracks",
+        "",
+        "The [agent-led frontier programme](frontier-plan.md) is the active forward plan.",
+        "It links existing ownership to four milestones, operating modes, reusable",
+        "dependencies, research studies and versioned outputs. Historical evidence and",
+        "archived acceptance below remain historical; new planned modes are not current",
+        "runtime claims. Do not generate a second phase/task hierarchy for this programme.",
         "",
         "Track status, implementation completeness and evidence level are separate.",
         "`scaffolded` and `partially_implemented` prevent path presence from being",

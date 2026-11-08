@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="732" viewBox="0 0 720 732" role="img" aria-labelledby="prisma-title prisma-desc">
+  <title id="prisma-title">PRISMA 2020 flow for demo-paediatric-metabolic-search</title>
+  <desc id="prisma-desc">Validated counts rendered as a linear reporting flow. This output is not methodological certification.</desc>
+  <style>text { font-family: sans-serif; fill: #111827; } .box { fill: #f8fafc; stroke: #334155; stroke-width: 1.5; } .count { font-weight: 700; }</style>
+  <rect class="box" x="20" y="54" width="680" height="30" rx="4"/>
+  <text x="32" y="74">Records identified from databases</text>
+  <text class="count" text-anchor="end" x="688" y="74">n = 1200</text>
+  <rect class="box" x="20" y="92" width="680" height="30" rx="4"/>
+  <text x="32" y="112">Records identified from registers</text>
+  <text class="count" text-anchor="end" x="688" y="112">n = 80</text>
+  <rect class="box" x="20" y="130" width="680" height="30" rx="4"/>
+  <text x="32" y="150">Records identified from other sources</text>
+  <text class="count" text-anchor="end" x="688" y="150">n = 20</text>
+  <rect class="box" x="20" y="168" width="680" height="30" rx="4"/>
+  <text x="32" y="188">Total records identified</text>
+  <text class="count" text-anchor="end" x="688" y="188">n = 1300</text>
+  <rect class="box" x="20" y="206" width="680" height="30" rx="4"/>
+  <text x="32" y="226">Duplicates removed</text>
+  <text class="count" text-anchor="end" x="688" y="226">n = 250</text>
+  <rect class="box" x="20" y="244" width="680" height="30" rx="4"/>
+  <text x="32" y="264">Records removed by automation</text>
+  <text class="count" text-anchor="end" x="688" y="264">n = 0</text>
+  <rect class="box" x="20" y="282" width="680" height="30" rx="4"/>
+  <text x="32" y="302">Other records removed</text>
+  <text class="count" text-anchor="end" x="688" y="302">n = 0</text>
+  <rect class="box" x="20" y="320" width="680" height="30" rx="4"/>
+  <text x="32" y="340">Records screened</text>
+  <text class="count" text-anchor="end" x="688" y="340">n = 1050</text>
+  <rect class="box" x="20" y="358" width="680" height="30" rx="4"/>
+  <text x="32" y="378">Records excluded</text>
+  <text class="count" text-anchor="end" x="688" y="378">n = 850</text>
+  <rect class="box" x="20" y="396" width="680" height="30" rx="4"/>
+  <text x="32" y="416">Reports sought for retrieval</text>
+  <text class="count" text-anchor="end" x="688" y="416">n = 200</text>
+  <rect class="box" x="20" y="434" width="680" height="30" rx="4"/>
+  <text x="32" y="454">Reports not retrieved</text>
+  <text class="count" text-anchor="end" x="688" y="454">n = 5</text>
+  <rect class="box" x="20" y="472" width="680" height="30" rx="4"/>
+  <text x="32" y="492">Reports assessed for eligibility</text>
+  <text class="count" text-anchor="end" x="688" y="492">n = 195</text>
+  <rect class="box" x="20" y="510" width="680" height="30" rx="4"/>
+  <text x="32" y="530">Reports excluded: Wrong population</text>
+  <text class="count" text-anchor="end" x="688" y="530">n = 45</text>
+  <rect class="box" x="20" y="548" width="680" height="30" rx="4"/>
+  <text x="32" y="568">Reports excluded: Wrong intervention</text>
+  <text class="count" text-anchor="end" x="688" y="568">n = 50</text>
+  <rect class="box" x="20" y="586" width="680" height="30" rx="4"/>
+  <text x="32" y="606">Reports excluded: No primary data</text>
+  <text class="count" text-anchor="end" x="688" y="606">n = 30</text>
+  <rect class="box" x="20" y="624" width="680" height="30" rx="4"/>
+  <text x="32" y="644">Reports of included studies</text>
+  <text class="count" text-anchor="end" x="688" y="644">n = 70</text>
+  <rect class="box" x="20" y="662" width="680" height="30" rx="4"/>
+  <text x="32" y="682">Studies included in review</text>
+  <text class="count" text-anchor="end" x="688" y="682">n = 55</text>
+</svg>

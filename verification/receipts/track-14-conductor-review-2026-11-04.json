@@ -1,0 +1,86 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "14",
+  "reviewed_revision": "97c36d0",
+  "status": "review_fixes_applied_external_gates_open",
+  "review_panel": [
+    {
+      "role": "sourceright-compat-and-parity-matrix",
+      "mode": "isolated_first_pass",
+      "finding": "Inspected crates/searchright-sourceright-compat and scripts/check_sourceright_migration.py; added unit tests in searchright_sourceright_compat covering LegacyRuntimeConfig::execution_policy saturating timeout calculation and live_enabled requiring both enabled and smoke_enabled, and provider_mode mapping without unwrap or expect under #![forbid(unsafe_code)]. Refactored check_sourceright_migration.py to expose a standard main() entry point.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all seven Track 14 assertions (T14-A001..T14-A007) from track_level_only/contract_mapped to symbol_and_gate_mapped with concrete Rust/Python implementation symbols, deterministic tests, and native test commands in both conductor/tracks/14-sourceright-migration/traceability.json and conductor/traceability-overrides.json.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "methodology-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved open Phase 3 higher-evidence blockers without false promotion: downstream Sourceright integration PR after dual-run parity, compiled parity receipts and rollback drill, deletion gate passing before removal of superseded code, and advisory-only scholarly-integrity evaluation remain open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Refactored scripts/check_sourceright_migration.py to define a standard main() -> int entry point with error reporting and receipt generation.",
+    "Added unit tests legacy_runtime_config_execution_policy_translates_controls_and_saturates_cleanly, legacy_runtime_config_cache_disabled_clears_cache_and_replay_flags, and provider_mode_maps_expected_legacy_execution_variants_without_panic in crates/searchright-sourceright-compat/src/lib.rs.",
+    "Upgraded assertions T14-A001..T14-A007 to symbol_and_gate_mapped with concrete Rust/Python implementation symbols and native test commands in conductor/tracks/14-sourceright-migration/traceability.json and conductor/traceability-overrides.json.",
+    "Fixed clippy assert-is-empty diagnostic in crates/searchright-screening/src/lib.rs.",
+    "Verified clean compilation and zero warnings under cargo test --locked -p searchright-sourceright-compat -p searchright-contracts -p searchright-screening and cargo clippy --locked -p searchright-sourceright-compat -p searchright-contracts -p searchright-screening --all-targets -- -D warnings."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 -B scripts/check_sourceright_migration.py",
+      "status": "passed",
+      "symbols_mapped": 24,
+      "cases_checked": 7,
+      "declared_dimensions": 10
+    },
+    {
+      "command": "cargo test --locked -p searchright-sourceright-compat -p searchright-contracts -p searchright-screening",
+      "status": "passed",
+      "tests_passed": 80
+    },
+    {
+      "command": "cargo clippy --locked -p searchright-sourceright-compat -p searchright-contracts -p searchright-screening --all-targets -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "Open and merge the downstream Sourceright integration after dual-run parity.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    },
+    {
+      "gate_id": "Generate compiled parity receipts and exercise rollback.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    },
+    {
+      "gate_id": "Remove superseded downstream code only after the deletion gate passes.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    },
+    {
+      "gate_id": "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review.",
+      "status": "pending",
+      "disposition": "preserved_open"
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Open and merge the downstream Sourceright integration after dual-run parity.",
+    "Generate compiled parity receipts and exercise rollback.",
+    "Remove superseded downstream code only after the deletion gate passes.",
+    "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

@@ -1,0 +1,1322 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Copyright (c) 2026 Noyalib. All rights reserved.
+
+//! YAML Deserialization.
+//!
+//! # Examples
+//!
+//! ```
+//! use noyalib::from_str;
+//! use std::collections::BTreeMap;
+//! let m: BTreeMap<String, i32> = from_str("a: 1\nb: 2\n").unwrap();
+//! assert_eq!(m.get("a"), Some(&1));
+//! ```
+
+use crate::error::{Error, Result};
+use crate::parser::{self};
+use crate::prelude::*;
+#[cfg(feature = "std")]
+use crate::span_context;
+use crate::value::Value;
+#[cfg(feature = "std")]
+use std::io;
+
+mod config;
+mod deserializer;
+pub use config::{
+    DuplicateKeyPolicy, MergeKeyPolicy, NonScalarKeyPolicy, ParserConfig, ParserLimits,
+    ParserProfile, RequireIndent, YamlVersion,
+};
+pub use deserializer::Deserializer;
+pub(crate) use deserializer::{EmptyMapAccess, SpannedMapAccess, is_binary_tag};
+
+/// Deserialize YAML from a `&str` into a typed `T`.
+///
+/// Default entry point for typed deserialisation. Drives the
+/// streaming fast-path when the input matches its eligibility
+/// rules (no custom merge-key policy, no ignore-binary-tag mode,
+/// no registered policies); otherwise routes through the
+/// `Value`-AST loader. The choice is transparent — both paths
+/// produce identical results.
+///
+/// # Errors
+///
+/// Returns [`Error`](crate::Error) when:
+///
+/// - `Error::Parse` / `Error::ParseWithLocation` — `s` is not
+///   well-formed YAML 1.2 (missing closing bracket, indentation
+///   mismatch, invalid escape, …).
+/// - `Error::Deserialize` — the document parses but does not
+///   match `T`'s shape (wrong scalar type, missing required field
+///   on a struct without `#[serde(default)]`, unknown enum
+///   variant, …). A rejection inside a nested value names the
+///   field it is about — `server.port: invalid type: string "x",
+///   expected u16` — alongside the source location (#353).
+/// - `Error::DepthLimit` / `Error::DocumentTooLong` /
+///   `Error::AliasLimit` — input exceeds the default
+///   [`ParserConfig`] safety budgets. Use
+///   [`from_str_with_config`] with [`ParserConfig::strict()`] for
+///   tighter limits or with relaxed limits if the defaults
+///   reject a known-good document.
+/// - `Error::DuplicateKey` — only when `duplicate_key_policy`
+///   has been switched to `Error`. The default policy is `Last`,
+///   which deduplicates without erroring.
+/// - `Error::Custom` — surface for upstream `serde_core::de::Error`
+///   conversions; ordinarily the more specific variants above are
+///   produced first.
+///
+/// # Examples
+///
+/// ```
+/// let n: i32 = noyalib::from_str("42").unwrap();
+/// assert_eq!(n, 42);
+/// ```
+pub fn from_str<T>(s: &str) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    from_str_with_config(s, &ParserConfig::default())
+}
+
+/// Deserialise a YAML document into a target type that may borrow
+/// from the input slice (e.g. `&'a str`, `Cow<'a, str>`, structs
+/// containing those).
+///
+/// Where [`from_str`] requires `T: DeserializeOwned + 'static` and
+/// therefore can never satisfy `Deserialize<'de> for &'de str`, this
+/// function pins the deserialiser's lifetime to the input buffer's
+/// lifetime. Plain (unquoted) and unescaped quoted scalars are
+/// surfaced via `visit_borrowed_str`, allowing zero-copy borrows.
+/// Scalars that required transformation (escape decoding, line
+/// folding, alias replay, tag resolution) fall back to owned
+/// allocations — see [`crate::borrowed::TransformReason`] for the
+/// catalogue of transform causes.
+///
+/// # Errors
+///
+/// Returns an error if `s` is not valid YAML, exceeds the default
+/// security limits, or cannot be deserialised into `T`. When `T`
+/// targets `&'a str` and the YAML scalar required transformation,
+/// serde's `&str` visitor surfaces an `invalid type: string,
+/// expected a borrowed string` error — switch the target to
+/// `Cow<'a, str>` or `String` to accept either form.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::from_str_borrowing;
+///
+/// #[derive(serde::Deserialize)]
+/// struct Person<'a> {
+///     name: &'a str,
+///     role: &'a str,
+/// }
+///
+/// let yaml = "name: noyalib\nrole: parser\n";
+/// let p: Person<'_> = from_str_borrowing(yaml).unwrap();
+/// assert_eq!(p.name, "noyalib");
+/// assert_eq!(p.role, "parser");
+/// ```
+pub fn from_str_borrowing<'de, T>(s: &'de str) -> Result<T>
+where
+    T: serde_core::Deserialize<'de>,
+{
+    from_str_borrowing_with_config(s, &ParserConfig::default())
+}
+
+/// [`from_str_borrowing`] with a custom [`ParserConfig`] — typically
+/// to tighten security limits for untrusted input.
+///
+/// # Errors
+///
+/// Returns an error if `s` is not valid YAML under the supplied
+/// config or cannot be deserialised into `T`.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::{from_str_borrowing_with_config, ParserConfig};
+/// let cfg = ParserConfig::strict();
+/// let s: &str = from_str_borrowing_with_config("hello\n", &cfg).unwrap();
+/// assert_eq!(s, "hello");
+/// ```
+pub fn from_str_borrowing_with_config<'de, T>(s: &'de str, config: &ParserConfig) -> Result<T>
+where
+    T: serde_core::Deserialize<'de>,
+{
+    let parse_config = parser::ParseConfig::from(config);
+    if s.len() > parse_config.max_document_length {
+        return Err(Error::Parse(format!(
+            "document exceeds maximum length of {} bytes",
+            parse_config.max_document_length
+        )));
+    }
+    // Event policies run inside the streaming deserializer's meter; the
+    // whole-document checks need the document, so build it first when a
+    // policy is registered.
+    if !config.policies.is_empty() {
+        let document = parser::parse_exactly_one_value(s, &parse_config)?;
+        crate::policy::check_document(&config.policies, &document)?;
+    }
+    let mut de = crate::streaming::StreamingDeserializer::with_config(s, parse_config);
+    if let Some(registry) = config.tag_registry.as_ref() {
+        de = de.with_tag_registry(Arc::clone(registry));
+    }
+    let value = T::deserialize(&mut de)?;
+    // Same end-of-stream rule as `from_str`: a second document or a
+    // trailing syntax error is refused, not silently ignored.
+    de.end()?;
+    Ok(value)
+}
+
+/// Compile-time-ish check: is the deserialise target `T` exactly
+/// [`Value`]? Used by [`from_str_with_config`] / [`from_value`]
+/// to enable the tag-preserving fast-path on
+/// [`Deserializer::deserialize_any`] only when the caller wants a
+/// `Value`. For typed targets (`#[derive(serde::Deserialize)] struct`,
+/// scalars, enums, …) the standard transparent-tag behaviour
+/// stays in place.
+///
+/// `Value` is `'static`, so [`std::any::TypeId::of`] is well-formed
+/// here. The check returns `false` for any other `T`, including
+/// `Spanned<Value>` and `Vec<Value>` (where the outer wrapper has
+/// a distinct `TypeId`).
+fn is_value_target<T: 'static + ?Sized>() -> bool {
+    use core::any::TypeId;
+    TypeId::of::<T>() == TypeId::of::<Value>()
+}
+
+/// Internal typed-deserialise entry that does **not** require
+/// `T: 'static` and never engages the tag-preserving fast-path.
+///
+/// Used by integrations whose external trait signatures expose
+/// `T: for<'de> serde_core::Deserialize<'de>` without a `'static` bound (e.g.
+/// the [`figment`] crate's [`figment::Format::from_str`]
+/// signature). In those contexts the caller has already
+/// type-erased through `T = ProfileFigure` etc., and a tag-
+/// preserving Value reconstitution would never apply anyway.
+///
+/// Mirrors [`from_str_with_config`] in every other respect:
+/// streaming fast-path → AST loader fallback → policy walk →
+/// `T::deserialize`.
+#[cfg(all(feature = "std", feature = "figment"))]
+pub(crate) fn from_str_typed_no_tag_preserve<T>(s: &str, config: &ParserConfig) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de>,
+{
+    // Checked up front: the streaming walker's length error carries no
+    // location, so it would otherwise fall through to the AST path
+    // below, which does not check the length again.
+    if s.len() > config.max_document_length {
+        return Err(Error::Parse(format!(
+            "document exceeds maximum length of {} bytes",
+            config.max_document_length
+        )));
+    }
+    let stream_eligible = config.merge_key_policy == MergeKeyPolicy::Auto
+        && !config.ignore_binary_tag_for_string
+        && config.policies.is_empty()
+        && properties_inactive(config)
+        && includes_inactive(config);
+    let mut streaming_err = None;
+    if stream_eligible && let Some(res) = crate::streaming::from_str_streaming(s, config) {
+        match res {
+            // A typed rejection the streaming walker cannot locate --
+            // serde's own visitor errors (`invalid type: ...`) and the
+            // typed `TypeMismatch` arms carry no position on this path.
+            // Keep it and fall through to the span-aware AST path
+            // below, which finds where the same failure is;
+            // `locate_streaming_error` joins the two. Success, and parse
+            // errors that already carry a location, return as they are;
+            // the second parse is paid only on the error path.
+            Err(err) if err.location().is_none() => streaming_err = Some(err),
+            other => return other,
+        }
+    }
+    let parse_config = parser::ParseConfig::from(config);
+    let (mut value, span_tree) = parser::parse_exactly_one(s, &parse_config)?;
+    post_process_document(&mut value, config)?;
+    deserialize_spanned(s, &value, &span_tree, config, streaming_err)
+}
+
+/// Strict deserialise: like [`from_str`] but errors if `s`
+/// contains any keys that the target type `T` does not declare.
+///
+/// Solves the typo-in-config-key problem — by default, both
+/// `serde_yaml` and noyalib silently ignore keys the struct
+/// does not know about, so a misspelled `replicass: 3` (with
+/// the typo) deserialises into a struct whose `replicas` field
+/// stays at its `Default`. `from_str_strict` surfaces those
+/// extra keys as a typed `Error::UnknownField` listing every
+/// offending path.
+///
+/// # Errors
+///
+/// - Any key in the YAML document is not declared on `T`.
+/// - Any of the regular [`from_str`] error paths.
+///
+/// # Examples
+///
+/// ```
+/// #[derive(Debug, serde::Deserialize)]
+/// struct Config {
+///     port: u16,
+/// }
+///
+/// // The typo "porrt" is silently ignored by `from_str`. With
+/// // `from_str_strict` it surfaces as a typed error.
+/// let yaml = "port: 8080\nporrt: 9090\n";
+/// assert!(noyalib::from_str::<Config>(yaml).is_ok());
+/// assert!(noyalib::from_str_strict::<Config>(yaml).is_err());
+/// ```
+#[cfg(all(feature = "std", feature = "strict-deserialise"))]
+pub fn from_str_strict<T>(s: &str) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    let unknown = std::sync::Mutex::new(Vec::<String>::new());
+    let value: Value = from_str_with_config(s, &ParserConfig::default())?;
+    let result: Result<T> = serde_ignored::deserialize(&value, |path| {
+        unknown
+            .lock()
+            .expect("from_str_strict: ignored-paths lock poisoned")
+            .push(path.to_string());
+    });
+    let extras = unknown
+        .into_inner()
+        .expect("from_str_strict: ignored-paths lock poisoned");
+    let typed = result?;
+    if !extras.is_empty() {
+        let msg = if extras.len() == 1 {
+            format!("unknown field at `{}`", extras[0])
+        } else {
+            let joined = extras
+                .iter()
+                .map(|p| format!("`{p}`"))
+                .collect::<Vec<_>>()
+                .join(", ");
+            format!("unknown fields: {joined}")
+        };
+        return Err(Error::UnknownField(msg));
+    }
+    Ok(typed)
+}
+
+/// Strict deserialise from a byte slice — like [`from_slice`] but
+/// errors if the input contains keys the target type `T` does not
+/// declare.
+///
+/// Same semantics as [`from_str_strict`]. Use this when the caller
+/// already holds a `&[u8]` (e.g. data read from a buffer or returned
+/// by a `bytes` framework) and would otherwise pay the UTF-8
+/// validation cost of converting to `&str` twice.
+///
+/// # Errors
+///
+/// - The byte slice is not valid UTF-8.
+/// - Any key in the YAML document is not declared on `T`.
+/// - Any of the regular [`from_slice`] error paths.
+///
+/// # Examples
+///
+/// ```
+/// #[derive(Debug, serde::Deserialize)]
+/// struct Config {
+///     port: u16,
+/// }
+///
+/// let yaml: &[u8] = b"port: 8080\nporrt: 9090\n";
+/// assert!(noyalib::from_slice::<Config>(yaml).is_ok());
+/// assert!(noyalib::from_slice_strict::<Config>(yaml).is_err());
+/// ```
+#[cfg(all(feature = "std", feature = "strict-deserialise"))]
+pub fn from_slice_strict<T>(b: &[u8]) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    let s = core::str::from_utf8(b).map_err(|e| Error::Deserialize(e.to_string()))?;
+    from_str_strict(s)
+}
+
+/// Strict deserialise from an IO reader — like [`from_reader`] but
+/// errors if the input contains keys the target type `T` does not
+/// declare.
+///
+/// Same semantics as [`from_str_strict`]. Reads the entire stream
+/// into memory before parsing, mirroring [`from_reader`].
+///
+/// # Errors
+///
+/// - The reader returns an I/O error or the data is not valid UTF-8.
+/// - Any key in the YAML document is not declared on `T`.
+/// - Any of the regular [`from_reader`] error paths.
+///
+/// # Examples
+///
+/// ```
+/// #[derive(Debug, serde::Deserialize)]
+/// struct Config {
+///     port: u16,
+/// }
+///
+/// let yaml = b"port: 8080\nporrt: 9090\n".to_vec();
+/// assert!(noyalib::from_reader::<_, Config>(&yaml[..]).is_ok());
+/// assert!(noyalib::from_reader_strict::<_, Config>(&yaml[..]).is_err());
+/// ```
+#[cfg(all(feature = "std", feature = "strict-deserialise"))]
+pub fn from_reader_strict<R, T>(reader: R) -> Result<T>
+where
+    R: io::Read,
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    let s = read_to_string_bounded(reader, &ParserConfig::default())?;
+    from_str_strict(&s)
+}
+
+/// Read a `std::io::Read` source into a `String`, stopping one byte past
+/// the configured `max_document_length` so an unbounded or hostile
+/// reader cannot fill memory before the length budget is checked.
+///
+/// Returns the same `Error::Parse` message as the `&str` entry points
+/// when the limit is exceeded, and `Error::Io` (`InvalidData`) when the
+/// bytes are not valid UTF-8, matching `read_to_string`.
+#[cfg(feature = "std")]
+pub(crate) fn read_to_string_bounded<R>(mut reader: R, config: &ParserConfig) -> Result<String>
+where
+    R: io::Read,
+{
+    use io::Read as _;
+    let max_len = parser::ParseConfig::from(config).max_document_length;
+    let limit = u64::try_from(max_len).unwrap_or(u64::MAX).saturating_add(1);
+    let mut buf = Vec::new();
+    let _ = reader
+        .by_ref()
+        .take(limit)
+        .read_to_end(&mut buf)
+        .map_err(Error::Io)?;
+    if buf.len() > max_len {
+        return Err(Error::Parse(format!(
+            "document exceeds maximum length of {max_len} bytes"
+        )));
+    }
+    String::from_utf8(buf).map_err(|_| {
+        Error::Io(io::Error::new(
+            io::ErrorKind::InvalidData,
+            "stream did not contain valid UTF-8",
+        ))
+    })
+}
+
+/// Deserialize YAML from a `&str` with a custom [`ParserConfig`].
+///
+/// Use this when the defaults need overriding — common reasons:
+/// untrusted input ([`ParserConfig::strict()`]), pipeline-specific
+/// limits ([`ParserConfig::max_depth`]), YAML 1.1 compatibility
+/// ([`ParserConfig::version`]), or custom safe-YAML
+/// [`policy::Policy`](crate::policy::Policy) enforcement.
+///
+/// # Errors
+///
+/// Same variant set as [`from_str`]. The active `config` controls
+/// which limit-related errors can fire:
+///
+/// - When `config.duplicate_key_policy == DuplicateKeyPolicy::Error`,
+///   any duplicate mapping key returns `Error::DuplicateKey`.
+/// - When the input exceeds the configured `max_depth`,
+///   `max_document_length`, `max_alias_expansions`,
+///   `max_mapping_keys`, or `max_sequence_length`, the matching
+///   `Error::*Limit` variant is returned.
+/// - When `config.policies` contains a policy that rejects the
+///   document, `Error::Deserialize` is returned with the policy's
+///   diagnostic.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::{from_str_with_config, ParserConfig};
+/// let cfg = ParserConfig::strict();
+/// let n: i32 = from_str_with_config("7", &cfg).unwrap();
+/// assert_eq!(n, 7);
+/// ```
+pub fn from_str_with_config<T>(s: &str, config: &ParserConfig) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    // Try streaming path first (faster, no intermediate Value AST).
+    // The streaming path bakes in YAML 1.2 semantics:
+    // - `<<: *alias` merges natively;
+    // - `!!binary` is propagated as a typed tag.
+    // When the caller asked for a non-default behaviour on either
+    // axis, route through the AST loader so the relevant toggle
+    // takes effect. Active `properties` interpolation also disables
+    // the streaming path so the post-parse substitution walk runs.
+    //
+    // The `Value` target is *always* excluded from the streaming path.
+    // Rationale: serde asks the streaming deserializer for `String`
+    // keys, which stringifies typed scalars *before*
+    // `ValueVisitor::visit_map` can tell `1` and `"1"` apart — the
+    // distinct-typed `KeyCollision` guard is unreachable there. The
+    // `Value`-target fast path a few lines down runs the span-free
+    // loader, which owns the collision check and the DoS budgets — and
+    // strips registry-registered tags itself (loader `resolve_untagged_scalar`),
+    // so an active tag registry no longer forces `Value` back onto the
+    // streaming path where the collision guard cannot run.
+    let value_target_bypass = is_value_target::<T>();
+    let stream_eligible = config.merge_key_policy == MergeKeyPolicy::Auto
+        && !config.ignore_binary_tag_for_string
+        && config.policies.is_empty()
+        && properties_inactive(config)
+        && includes_inactive(config)
+        && !value_target_bypass;
+    let mut streaming_err = None;
+    if stream_eligible && let Some(res) = crate::streaming::from_str_streaming(s, config) {
+        match res {
+            // A typed rejection the streaming walker cannot locate --
+            // serde's own visitor errors (`invalid type: ...`) and the
+            // typed `TypeMismatch` arms carry no position on this path.
+            // Keep it and fall through to the span-aware AST path
+            // below, which finds where the same failure is;
+            // `locate_streaming_error` joins the two. Success, and parse
+            // errors that already carry a location, return as they are;
+            // the second parse is paid only on the error path.
+            Err(err) if err.location().is_none() => streaming_err = Some(err),
+            other => return other,
+        }
+    }
+
+    let parse_config = parser::ParseConfig::from(config);
+
+    // The streaming path enforces `max_document_length` inline
+    // (`streaming::from_str_streaming` at head-of-fn). When the
+    // streaming path is skipped — either because the caller opted
+    // into a non-default policy or because T is `Value` — the check
+    // must fire here so the AST loader can't be walked over an
+    // oversized document.
+    if s.len() > parse_config.max_document_length {
+        return Err(Error::Parse(format!(
+            "document exceeds maximum length of {} bytes",
+            parse_config.max_document_length
+        )));
+    }
+
+    // Skip-span + zero-rewalk fast path: when T == Value, the AST
+    // we just parsed *is* the answer. The default path would
+    // (a) build a `SpanTree` that `Value::deserialize` never
+    // consults, then (b) hand the parsed `Value` back to serde,
+    // which walks it a second time and rebuilds an identical
+    // `Value` via `ValueVisitor::visit_seq` / `visit_map` — pure
+    // waste. Instead, parse via `parse_one_value` (no SpanTree)
+    // and downcast the `Value` directly into `T`. The downcast
+    // is the safe stdlib `Box<dyn Any>::downcast::<T>()` and is
+    // provably correct because `is_value_target::<T>()` already
+    // verified `TypeId::of::<T>() == TypeId::of::<Value>()`.
+    if is_value_target::<T>() {
+        let mut value = parser::parse_exactly_one_value(s, &parse_config)?;
+        post_process_document(&mut value, config)?;
+        let boxed: Box<dyn core::any::Any> = Box::new(value);
+        // SAFETY-by-construction: `is_value_target::<T>()` already
+        // verified `TypeId::of::<T>() == TypeId::of::<Value>()`, so
+        // the boxed `Value` downcasts to `T` infallibly. `.expect()`
+        // documents the invariant; the path is provably unreachable.
+        let downcast: Box<T> = boxed
+            .downcast::<T>()
+            .expect("is_value_target proved T == Value");
+        return Ok(*downcast);
+    }
+
+    #[cfg(feature = "std")]
+    {
+        let (mut value, span_tree) = parser::parse_exactly_one(s, &parse_config)?;
+        post_process_document(&mut value, config)?;
+        deserialize_spanned(s, &value, &span_tree, config, streaming_err)
+    }
+
+    #[cfg(not(feature = "std"))]
+    {
+        let mut value = parser::parse_exactly_one_value(s, &parse_config)?;
+        post_process_document(&mut value, config)?;
+        let de = Deserializer::with_options(
+            &value,
+            None,
+            config.ignore_binary_tag_for_string,
+            config.plain_scalar_strings,
+        );
+        locate_streaming_error(T::deserialize(de), streaming_err)
+    }
+}
+
+/// Deserialize `T` from a loaded `value` with the span context for
+/// `s` installed: errors carry locations and field paths, and keys the
+/// loader canonicalised read as written. `streaming_err` is the
+/// streaming path's unlocated error, joined to the result.
+#[cfg(feature = "std")]
+fn deserialize_spanned<T>(
+    s: &str,
+    value: &Value,
+    span_tree: &span_context::SpanTree,
+    config: &ParserConfig,
+    streaming_err: Option<Error>,
+) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de>,
+{
+    let spans = span_context::build_span_map(value, span_tree);
+    let ctx = span_context::SpanContext::new(spans, s.into()).with_key_texts(value, span_tree);
+    let _guard = span_context::set_span_context(ctx);
+    let de = Deserializer::with_options(
+        value,
+        Some(_guard.as_ref()),
+        config.ignore_binary_tag_for_string,
+        config.plain_scalar_strings,
+    );
+    attach_field_path(
+        locate_streaming_error(T::deserialize(de), streaming_err),
+        value,
+    )
+}
+
+/// Resolves a typed parse whose streaming attempt failed without a
+/// position.
+///
+/// The streaming walker raises serde's own wording (`invalid type:
+/// string "x", expected u16`) but cannot say where; the span-aware AST
+/// path finds the position but describes the same failure in its own
+/// words (`type mismatch: expected unsigned integer, found string`). A
+/// caller must see one wording whichever path ran, so the result keeps
+/// the streaming message and takes only the location from the AST
+/// attempt. An AST attempt that succeeds is returned as it is; one that
+/// fails without a location yields the streaming error unchanged.
+fn locate_streaming_error<T>(ast_result: Result<T>, streaming_err: Option<Error>) -> Result<T> {
+    match (ast_result, streaming_err) {
+        // A refusal the AST loader can place and name -- a duplicate key
+        // or a key collision carrying its path and position -- is the
+        // better report of the fact the streaming walker refused without
+        // one; it is kept whole so `kind()` stays what it was (#378).
+        (Err(ast_err), Some(_))
+            if matches!(
+                ast_err.kind(),
+                crate::error::ErrorKind::DuplicateKey | crate::error::ErrorKind::KeyCollision
+            ) && ast_err.location().is_some() =>
+        {
+            Err(ast_err)
+        }
+        (Err(ast_err), Some(streaming_err)) => Err(match ast_err.location() {
+            Some(location) => {
+                let message = match streaming_err {
+                    Error::Custom(message) | Error::Deserialize(message) => message,
+                    other => other.to_string(),
+                };
+                Error::DeserializeWithLocation { message, location }
+            }
+            None => streaming_err,
+        }),
+        (result, _) => result,
+    }
+}
+
+/// Prefix a typed rejection's message with the path of the field it is
+/// about — `server.port: invalid type: …` — so an operator can search
+/// the config for the name, not just the line number (#353).
+///
+/// `wrap_err` records the failing node's address when it attaches a
+/// location; this resolves that address to a `a.b[2].c` path by walking
+/// `root` once, on the error path only. The happy path records and
+/// walks nothing. A failure at the document root keeps its message
+/// unprefixed (there is no path to name), as does any error shape that
+/// never went through `wrap_err`. `location()` is unaffected.
+#[cfg(feature = "std")]
+fn attach_field_path<T>(result: Result<T>, root: &Value) -> Result<T> {
+    // Always consume the slot: a rejection created and then swallowed
+    // (untagged-enum probing that ultimately succeeded) must not leak
+    // into a later error.
+    let recorded = span_context::take_error_node();
+    let err = match result {
+        Ok(v) => return Ok(v),
+        Err(err) => err,
+    };
+    let Some(addr) = recorded else {
+        return Err(err);
+    };
+    let mut segments = Vec::new();
+    if !find_value_path(root, addr, &mut segments) || segments.is_empty() {
+        return Err(err);
+    }
+    let path = format_value_path(&segments);
+    Err(match err {
+        Error::DeserializeWithLocation { message, location } => Error::DeserializeWithLocation {
+            message: format!("{path}: {message}"),
+            location,
+        },
+        Error::Deserialize(message) => Error::Deserialize(format!("{path}: {message}")),
+        Error::Custom(message) => Error::Custom(format!("{path}: {message}")),
+        other => other,
+    })
+}
+
+/// One step of a field path: a mapping key or a sequence index.
+#[cfg(feature = "std")]
+enum PathSegment<'a> {
+    Key(&'a str),
+    Index(usize),
+}
+
+/// Depth-first search for the node at address `addr`, pushing the
+/// mapping keys and sequence indices leading to it. Returns `true`
+/// when found, with `segments` holding the full path; on `false` the
+/// vector is back to its starting state. Tags are transparent — the
+/// path names the field, not the tag.
+#[cfg(feature = "std")]
+fn find_value_path<'a>(value: &'a Value, addr: usize, segments: &mut Vec<PathSegment<'a>>) -> bool {
+    if core::ptr::from_ref(value) as usize == addr {
+        return true;
+    }
+    match value {
+        Value::Mapping(map) => {
+            for (key, child) in map {
+                segments.push(PathSegment::Key(key));
+                if find_value_path(child, addr, segments) {
+                    return true;
+                }
+                let _ = segments.pop();
+            }
+        }
+        Value::Sequence(seq) => {
+            for (index, child) in seq.iter().enumerate() {
+                segments.push(PathSegment::Index(index));
+                if find_value_path(child, addr, segments) {
+                    return true;
+                }
+                let _ = segments.pop();
+            }
+        }
+        Value::Tagged(tagged) => return find_value_path(tagged.value(), addr, segments),
+        _ => {}
+    }
+    false
+}
+
+/// Render segments as `a.b[2].c`: keys joined with `.`, indices in
+/// brackets attached to the preceding segment (or leading, for a root
+/// sequence: `[2].name`).
+#[cfg(feature = "std")]
+fn format_value_path(segments: &[PathSegment<'_>]) -> String {
+    use core::fmt::Write as _;
+    let mut out = String::new();
+    for segment in segments {
+        match segment {
+            PathSegment::Key(key) => {
+                if !out.is_empty() {
+                    out.push('.');
+                }
+                out.push_str(key);
+            }
+            PathSegment::Index(index) => {
+                let _ = write!(out, "[{index}]");
+            }
+        }
+    }
+    out
+}
+
+/// Returns `true` when no `${KEY}` substitution table is active —
+/// keeps the streaming fast-path eligible. Always `true` under
+/// `no_std` (the field doesn't exist).
+#[cfg(feature = "std")]
+#[inline]
+fn properties_inactive(config: &ParserConfig) -> bool {
+    config.properties.is_none()
+}
+
+#[cfg(not(feature = "std"))]
+#[inline]
+fn properties_inactive(_config: &ParserConfig) -> bool {
+    true
+}
+
+/// Walk the `Value` tree and substitute every `${name}` placeholder
+/// against `config.properties`. No-op when no map is installed; in
+/// `no_std` builds the function is also a no-op (the field doesn't
+/// exist). Honours `strict_properties` for the missing-key
+/// behaviour, but always propagates *syntax* errors from the
+/// substitution walk (invalid characters, unterminated `${...}`,
+/// malformed `:-default`) regardless of mode.
+/// Run the post-parse document pipeline (`!include` substitution, `${...}`
+/// property interpolation, and AST [`Policy::check_value`] hooks) in one
+/// canonical order across all loader entry points.
+pub(crate) fn post_process_document(value: &mut Value, config: &ParserConfig) -> Result<()> {
+    apply_includes(value, config)?;
+    apply_properties(value, config)?;
+    crate::policy::check_document(&config.policies, value)
+}
+
+#[cfg(feature = "std")]
+fn apply_properties(value: &mut Value, config: &ParserConfig) -> Result<()> {
+    if let Some(props) = config.properties.as_ref() {
+        let action = if config.strict_properties {
+            crate::value::MissingAction::Error(false)
+        } else {
+            crate::value::MissingAction::Empty
+        };
+        value.interpolate_inner_bounded(
+            &|name| match props.get(name) {
+                Some(v) => crate::value::ResolveOutcome::Found(v.clone()),
+                None => crate::value::ResolveOutcome::Missing,
+            },
+            action,
+            Some(config.max_total_scalar_bytes),
+        )?;
+    }
+    Ok(())
+}
+
+#[cfg(not(feature = "std"))]
+#[inline]
+fn apply_properties(_value: &mut Value, _config: &ParserConfig) -> Result<()> {
+    Ok(())
+}
+
+/// Returns `true` when no `!include` resolver is installed —
+/// keeps the streaming fast-path eligible.
+#[cfg(feature = "include")]
+#[inline]
+fn includes_inactive(config: &ParserConfig) -> bool {
+    config.include_resolver.is_none()
+}
+
+#[cfg(not(feature = "include"))]
+#[inline]
+fn includes_inactive(_config: &ParserConfig) -> bool {
+    true
+}
+
+#[cfg(all(feature = "include", feature = "std"))]
+type IncludeVisited = std::collections::HashSet<String>;
+#[cfg(all(feature = "include", not(feature = "std")))]
+type IncludeVisited = FxHashSet<String>;
+
+/// Walk the `Value` tree, find every `Value::Tagged(!include, _)`
+/// node, and replace it with the resolver's output. Cyclic
+/// includes are detected via a per-walk visited set; depth is
+/// bounded by `config.max_include_depth`. No-op when no resolver
+/// is installed.
+#[cfg(feature = "include")]
+fn apply_includes(value: &mut Value, config: &ParserConfig) -> Result<()> {
+    if let Some(resolver) = config.include_resolver.as_ref() {
+        let mut walk = IncludeWalk {
+            resolver,
+            parse_config: parser::ParseConfig::from(config),
+            max_include_depth: config.max_include_depth,
+            max_include_sources: config.max_include_sources,
+            max_total_include_bytes: config.max_total_include_bytes,
+            // Prelude set, not `std::collections`: `include` without
+            // `std` is a valid combination (the resolver trait is
+            // `no_std`; only `include_fs` implies `std`).
+            visited: IncludeVisited::default(),
+            next_id: 1,
+            sources: 0,
+            bytes: 0,
+            nodes: charge_expanded_nodes(value, 0, config.max_nodes)?,
+            scalar_bytes: parser::meter::AliasCost::of_value(value).text,
+        };
+        walk.walk(value, IncludeAt::default())?;
+        if walk.scalar_bytes > config.max_total_scalar_bytes {
+            return Err(Error::Budget(crate::BudgetBreach::MaxTotalScalarBytes {
+                limit: config.max_total_scalar_bytes,
+                observed: walk.scalar_bytes,
+            }));
+        }
+    }
+    Ok(())
+}
+
+/// Include tags decorate their operand. Mapping keys are scalar nodes.
+#[cfg(feature = "include")]
+fn charge_expanded_nodes(value: &Value, mut observed: usize, limit: usize) -> Result<usize> {
+    let mut charge = |count: usize| {
+        if count > limit.saturating_sub(observed) {
+            return Err(Error::Budget(crate::BudgetBreach::MaxNodes {
+                limit,
+                observed: limit.saturating_add(1),
+            }));
+        }
+        observed += count;
+        Ok(())
+    };
+    charge(1)?;
+    let mut pending = vec![value];
+    while let Some(value) = pending.pop() {
+        match value {
+            Value::Tagged(tagged) => pending.push(tagged.value()),
+            Value::Sequence(seq) => {
+                charge(seq.len())?;
+                pending.extend(seq);
+            }
+            Value::Mapping(map) => {
+                charge(map.len())?;
+                charge(map.len())?;
+                pending.extend(map.values());
+            }
+            _ => {}
+        }
+    }
+    Ok(observed)
+}
+
+#[cfg(not(feature = "include"))]
+#[inline]
+fn apply_includes(_value: &mut Value, _config: &ParserConfig) -> Result<()> {
+    Ok(())
+}
+
+/// Where the include walk is: how many includes deep, which source,
+/// and how many collections enclose the current node in the final,
+/// substituted tree.
+#[cfg(feature = "include")]
+#[derive(Debug, Clone, Copy, Default)]
+struct IncludeAt {
+    include_depth: usize,
+    from_id: usize,
+    tree_depth: usize,
+}
+
+/// State of one `!include` resolution pass. Every budget is charged
+/// here, once per source, so no path through the walk can skip one.
+#[cfg(feature = "include")]
+struct IncludeWalk<'a> {
+    resolver: &'a crate::include::IncludeResolver,
+    parse_config: parser::ParseConfig,
+    max_include_depth: usize,
+    max_include_sources: usize,
+    max_total_include_bytes: usize,
+    visited: IncludeVisited,
+    next_id: usize,
+    sources: usize,
+    bytes: usize,
+    nodes: usize,
+    scalar_bytes: usize,
+}
+
+#[cfg(feature = "include")]
+impl IncludeWalk<'_> {
+    /// Replace every `!include` node under `value`. Recursion follows
+    /// the final tree's nesting, which `load` keeps within the parser's
+    /// `max_depth`, so the walk's own stack use is bounded too.
+    fn walk(&mut self, value: &mut Value, at: IncludeAt) -> Result<()> {
+        if let Value::Tagged(tagged) = value
+            && tagged.tag().as_str() == "!include"
+        {
+            let spec = tagged.value().as_str().map(str::to_owned).ok_or_else(|| {
+                Error::Custom("!include directive expects a scalar string spec".into())
+            })?;
+            self.scalar_bytes = self.scalar_bytes.saturating_sub(spec.len());
+            *value = self.load(&spec, at)?;
+            return Ok(());
+        }
+        let inner = IncludeAt {
+            tree_depth: at.tree_depth + 1,
+            ..at
+        };
+        match value {
+            Value::Tagged(tagged) => self.walk(tagged.value_mut(), at),
+            Value::Sequence(seq) => seq.iter_mut().try_for_each(|v| self.walk(v, inner)),
+            Value::Mapping(map) => map.values_mut().try_for_each(|v| self.walk(v, inner)),
+            Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => Ok(()),
+        }
+    }
+
+    /// Resolve, charge and parse one include, then resolve the
+    /// includes inside it.
+    fn load(&mut self, spec: &str, at: IncludeAt) -> Result<Value> {
+        let include_depth = at.include_depth + 1;
+        if include_depth > self.max_include_depth {
+            return Err(Error::RecursionLimitExceeded {
+                depth: include_depth,
+            });
+        }
+        let remaining = self.max_total_include_bytes.saturating_sub(self.bytes);
+        let req = crate::include::IncludeRequest {
+            spec,
+            from_id: at.from_id,
+            depth: at.include_depth,
+            max_bytes: remaining.min(self.parse_config.max_document_length),
+        };
+        let source = self.resolver.resolve(req)?;
+        self.charge(&source)?;
+        let identity = source.name;
+        if !self.visited.insert(identity.clone()) {
+            return Err(Error::Custom(format!(
+                "!include cycle detected: canonical source `{identity}` is already in the resolution chain"
+            )));
+        }
+        let id = self.next_id;
+        self.next_id += 1;
+        // The included root takes the place of the `!include` node, so
+        // only the nesting left under the including document's position
+        // is available to it. `parse_exactly_one_value` rejects a
+        // multi-document include instead of truncating it (#351).
+        let mut source_config = self.parse_config.clone();
+        source_config.max_depth = source_config.max_depth.saturating_sub(at.tree_depth);
+        let mut included = parser::parse_exactly_one_value(&source.bytes, &source_config)?;
+        // The parsed child replaces one already-counted directive. A fragment
+        // is expanded as a separate document until its selected value is known.
+        let retained = self.nodes - 1;
+        let fragment = crate::include::split_fragment(spec).1.is_some();
+        let base = if fragment { 0 } else { retained };
+        self.nodes = charge_expanded_nodes(&included, base, self.parse_config.max_nodes)?;
+        self.scalar_bytes = self
+            .scalar_bytes
+            .saturating_add(parser::meter::AliasCost::of_value(&included).text);
+        if self.scalar_bytes > self.parse_config.max_total_scalar_bytes {
+            return Err(Error::Budget(crate::BudgetBreach::MaxTotalScalarBytes {
+                limit: self.parse_config.max_total_scalar_bytes,
+                observed: self.scalar_bytes,
+            }));
+        }
+        let nested = IncludeAt {
+            include_depth,
+            from_id: id,
+            tree_depth: at.tree_depth,
+        };
+        self.walk(&mut included, nested)?;
+        let _ = self.visited.remove(&identity);
+        let selected = select_include_fragment(included, spec)?;
+        if fragment {
+            self.nodes = charge_expanded_nodes(&selected, retained, self.parse_config.max_nodes)?;
+        }
+        Ok(selected)
+    }
+
+    /// Charge one resolved source against the source-count, total-byte
+    /// and per-document length budgets.
+    fn charge(&mut self, source: &crate::include::InputSource) -> Result<()> {
+        self.sources = self.sources.saturating_add(1);
+        if self.sources > self.max_include_sources {
+            return Err(Error::Budget(crate::BudgetBreach::MaxIncludeSources {
+                limit: self.max_include_sources,
+                observed: self.sources,
+            }));
+        }
+        self.bytes = self.bytes.saturating_add(source.bytes.len());
+        if self.bytes > self.max_total_include_bytes {
+            return Err(Error::Budget(crate::BudgetBreach::MaxIncludeBytes {
+                limit: self.max_total_include_bytes,
+                observed: self.bytes,
+            }));
+        }
+        let max_len = self.parse_config.max_document_length;
+        if source.bytes.len() > max_len {
+            return Err(Error::Parse(format!(
+                "included document `{}` exceeds maximum length of {max_len} bytes",
+                source.name
+            )));
+        }
+        Ok(())
+    }
+}
+
+/// Narrow an included document to its `#fragment` key, when the spec
+/// names one. Fragments resolve against mapping keys (the conventional
+/// YAML "anchor-as-key" pattern); see `examples/include_directive.rs`.
+#[cfg(feature = "include")]
+fn select_include_fragment(included: Value, spec: &str) -> Result<Value> {
+    let (path, fragment) = crate::include::split_fragment(spec);
+    let Some(frag) = fragment else {
+        return Ok(included);
+    };
+    let Some(map) = included.as_mapping() else {
+        return Err(Error::Custom(format!(
+            "!include fragment `#{frag}` requires a mapping-shaped \
+             included document; `{path}` is not a mapping"
+        )));
+    };
+    map.get(frag)
+        .cloned()
+        .ok_or_else(|| Error::Custom(format!("!include fragment `#{frag}` not found in `{path}`")))
+}
+
+/// Deserialize YAML from a byte slice.
+///
+/// Convenience wrapper that validates `b` is UTF-8 then forwards
+/// to [`from_str`]. Use when the caller already holds a `&[u8]`
+/// (a buffer, a network frame, a `bytes::Bytes`) and would
+/// otherwise have to round-trip through `String`.
+///
+/// # Errors
+///
+/// - `Error::Deserialize` — `b` is not valid UTF-8.
+/// - All variants documented on [`from_str`].
+///
+/// # Examples
+///
+/// ```
+/// let n: i32 = noyalib::from_slice(b"42").unwrap();
+/// assert_eq!(n, 42);
+/// ```
+pub fn from_slice<T>(b: &[u8]) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    let s = core::str::from_utf8(b).map_err(|e| Error::Deserialize(e.to_string()))?;
+    from_str(s)
+}
+
+/// Deserialize YAML from a byte slice with a custom [`ParserConfig`].
+///
+/// # Errors
+///
+/// - `Error::Deserialize` — `b` is not valid UTF-8.
+/// - All variants documented on [`from_str_with_config`].
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::{from_slice_with_config, ParserConfig};
+/// let cfg = ParserConfig::new();
+/// let n: i32 = from_slice_with_config(b"7", &cfg).unwrap();
+/// assert_eq!(n, 7);
+/// ```
+pub fn from_slice_with_config<T>(b: &[u8], config: &ParserConfig) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    let s = core::str::from_utf8(b).map_err(|e| Error::Deserialize(e.to_string()))?;
+    from_str_with_config(s, config)
+}
+
+/// Deserialize YAML from an [`std::io::Read`] source.
+///
+/// Reads the entire stream into memory before parsing — YAML's
+/// data model is not streamable past document boundaries, so this
+/// function trades incremental I/O for a single, simple `Result`.
+/// For very large multi-document streams prefer
+/// [`crate::parallel::parse`] (with the `parallel` feature) which
+/// scans document boundaries on the input thread and parses each
+/// document in parallel.
+///
+/// # Errors
+///
+/// - `Error::Io` — the underlying reader returns an I/O error
+///   while filling the buffer.
+/// - All variants documented on [`from_str`].
+///
+/// # Examples
+///
+/// ```
+/// let yaml = b"42".to_vec();
+/// let n: i32 = noyalib::from_reader(&yaml[..]).unwrap();
+/// assert_eq!(n, 42);
+/// ```
+#[cfg(feature = "std")]
+#[cfg_attr(docsrs, doc(cfg(feature = "std")))]
+pub fn from_reader<R, T>(reader: R) -> Result<T>
+where
+    R: io::Read,
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    from_reader_with_config(reader, &ParserConfig::default())
+}
+
+/// Deserialize YAML from an [`std::io::Read`] source with a custom
+/// [`ParserConfig`].
+///
+/// # Errors
+///
+/// - `Error::Io` — the underlying reader returns an I/O error.
+/// - All variants documented on [`from_str_with_config`]. The reader
+///   is read at most one byte past `max_document_length`, so an
+///   oversized or unbounded source fails the length budget without
+///   being buffered first.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::{from_reader_with_config, ParserConfig};
+/// let cfg = ParserConfig::new();
+/// let bytes = b"7".to_vec();
+/// let n: i32 = from_reader_with_config(&bytes[..], &cfg).unwrap();
+/// assert_eq!(n, 7);
+/// ```
+#[cfg(feature = "std")]
+#[cfg_attr(docsrs, doc(cfg(feature = "std")))]
+pub fn from_reader_with_config<R, T>(reader: R, config: &ParserConfig) -> Result<T>
+where
+    R: io::Read,
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    let s = read_to_string_bounded(reader, config)?;
+    from_str_with_config(&s, config)
+}
+
+/// Deserialize a [`Value`] into a typed `T` via Serde's data model.
+///
+/// Useful for second-pass conversion when the first pass parsed
+/// into the dynamic [`Value`] tree and a typed view is now needed
+/// for a sub-tree.
+///
+/// # Errors
+///
+/// - `Error::Deserialize` — `value` does not match `T`'s shape.
+/// - `Error::Custom` — surfaces upstream `serde_core::de::Error`
+///   conversions that don't fit the structured variants.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::{from_value, Value};
+/// let v = Value::from(42_i64);
+/// let n: i32 = from_value(&v).unwrap();
+/// assert_eq!(n, 42);
+/// ```
+pub fn from_value<T>(value: &Value) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    from_value_with_options(value, false, false)
+}
+
+/// Deserialize `T` from a [`Value`] while honouring [`ParserConfig`]
+/// deserialiser toggles (`ignore_binary_tag_for_string` and
+/// `plain_scalar_strings`).
+pub(crate) fn from_value_with_options<T>(
+    value: &Value,
+    ignore_binary_tag_for_string: bool,
+    plain_scalar_strings: bool,
+) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    // Zero-rewalk fast path: when T == Value, the answer is just
+    // `value.clone()`. The default `T::deserialize(de)` route
+    // walks `value` and reconstructs an identical Value via
+    // `ValueVisitor::visit_seq`/`visit_map` — pure waste.
+    if is_value_target::<T>() {
+        let cloned = value.clone();
+        let boxed: Box<dyn core::any::Any> = Box::new(cloned);
+        let downcast: Box<T> = boxed
+            .downcast::<T>()
+            .expect("is_value_target proved T == Value");
+        return Ok(*downcast);
+    }
+    let de = Deserializer::with_options(
+        value,
+        None,
+        ignore_binary_tag_for_string,
+        plain_scalar_strings,
+    );
+    T::deserialize(de)
+}
+
+/// Deserialize `T` from a [`Value`] with an active [`span_context::SpanContext`]
+/// and [`ParserConfig`] deserialiser toggles installed.
+#[cfg(feature = "std")]
+pub(crate) fn from_value_spanned_with_options<T>(
+    value: &Value,
+    ctx: span_context::SpanContext,
+    ignore_binary_tag_for_string: bool,
+    plain_scalar_strings: bool,
+) -> Result<T>
+where
+    T: for<'de> serde_core::Deserialize<'de> + 'static,
+{
+    if is_value_target::<T>() {
+        let cloned = value.clone();
+        let boxed: Box<dyn core::any::Any> = Box::new(cloned);
+        let downcast: Box<T> = boxed
+            .downcast::<T>()
+            .expect("is_value_target proved T == Value");
+        return Ok(*downcast);
+    }
+    let _guard = span_context::set_span_context(ctx);
+    let de = Deserializer::with_options(
+        value,
+        Some(_guard.as_ref()),
+        ignore_binary_tag_for_string,
+        plain_scalar_strings,
+    );
+    attach_field_path(T::deserialize(de), value)
+}
+
+// The figment integration entry `from_str_typed_no_tag_preserve` is
+// `pub(crate)`, reachable only from within this crate (figment's
+// `Format::from_str` calls it). These unit tests drive it directly so
+// both of its arms are exercised: the streaming fast-path
+// (`return res`) and the AST fallback taken when the streaming layer
+// defers (e.g. on a merge key). Integration tests can't reach a
+// `pub(crate)` fn, so this is the only home for the coverage.
+#[cfg(all(test, feature = "std", feature = "figment"))]
+mod figment_entry_tests {
+    use super::*;
+
+    #[derive(Debug, serde::Deserialize, PartialEq)]
+    struct Endpoint {
+        name: String,
+        port: u16,
+    }
+
+    #[test]
+    fn no_tag_preserve_takes_streaming_fast_path() {
+        // A plain mapping is handled entirely by the streaming layer,
+        // so `from_str_streaming` returns `Some(..)` and the function
+        // returns through the fast-path arm.
+        let cfg = ParserConfig::default();
+        let got: Endpoint = from_str_typed_no_tag_preserve("name: alpha\nport: 7\n", &cfg).unwrap();
+        assert_eq!(
+            got,
+            Endpoint {
+                name: "alpha".into(),
+                port: 7
+            }
+        );
+    }
+
+    #[test]
+    fn no_tag_preserve_falls_back_to_ast_on_merge_key() {
+        // A merge key makes the streaming layer defer, so
+        // `from_str_streaming` yields `None` and the function takes the
+        // AST loader + policy-walk fallback arm. The merged result must
+        // still deserialise identically.
+        let cfg = ParserConfig::default();
+        let yaml = "\
+_defaults: &d\n  name: beta\n  port: 9\n<<: *d\n";
+        let got: Endpoint = from_str_typed_no_tag_preserve(yaml, &cfg).unwrap();
+        assert_eq!(
+            got,
+            Endpoint {
+                name: "beta".into(),
+                port: 9
+            }
+        );
+    }
+
+    #[test]
+    fn no_tag_preserve_surfaces_parse_error() {
+        // Over-long input trips the document-length guard before either
+        // path — exercises the error return the figment provider maps
+        // into a `FigmentError`.
+        let cfg = ParserConfig::default().max_document_length(4);
+        let res: Result<Endpoint> = from_str_typed_no_tag_preserve("name: alpha\n", &cfg);
+        assert!(matches!(res, Err(Error::Parse(_))), "got {res:?}");
+    }
+
+    #[test]
+    fn no_tag_preserve_runs_value_policies() {
+        // A non-empty policy set makes the streaming path ineligible
+        // (it requires `policies.is_empty()`), forcing the AST branch
+        // and exercising the post-load policy walk
+        // (`for p in &config.policies { p.check_value(..)? }`) plus its
+        // error-propagation edge.
+        #[derive(Debug)]
+        struct RejectAll;
+        impl crate::policy::Policy for RejectAll {
+            fn check_value(&self, _v: &Value) -> Result<()> {
+                Err(Error::Deserialize("rejected by policy".into()))
+            }
+        }
+        let cfg = ParserConfig::default().with_policy(RejectAll);
+        let res: Result<Endpoint> = from_str_typed_no_tag_preserve("name: alpha\nport: 7\n", &cfg);
+        assert!(
+            matches!(res, Err(Error::Deserialize(_))),
+            "policy rejection must surface: {res:?}"
+        );
+    }
+}

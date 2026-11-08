@@ -23,8 +23,12 @@
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent"
+      ],
       "evidence_receipts": [
-        "conductor/tracks/11-agentic-skill/evidence.json"
+        "conductor/tracks/11-agentic-skill/evidence.json",
+        "verification/receipts/track-11-conductor-review-2026-11-03.json"
       ],
       "open_gates": [],
       "permitted_claim": "The local skill entrypoint has deterministic trigger, non-trigger, authority and failure-routing checks; host discovery and model behaviour are not claimed."
@@ -49,8 +53,12 @@
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent"
+      ],
       "evidence_receipts": [
-        "conductor/tracks/11-agentic-skill/evidence.json"
+        "conductor/tracks/11-agentic-skill/evidence.json",
+        "verification/receipts/track-11-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Run scenario-based agent evaluations across supported hosts and models.",
@@ -78,8 +86,12 @@
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent"
+      ],
       "evidence_receipts": [
-        "conductor/tracks/11-agentic-skill/evidence.json"
+        "conductor/tracks/11-agentic-skill/evidence.json",
+        "verification/receipts/track-11-conductor-review-2026-11-03.json"
       ],
       "open_gates": [],
       "permitted_claim": "Seven bounded role cards and a compiler-checked, digest-bound least-context handoff contract exist locally; handoffs do not confer operational authority."
@@ -101,8 +113,12 @@
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent"
+      ],
       "evidence_receipts": [
-        "conductor/tracks/11-agentic-skill/evidence.json"
+        "conductor/tracks/11-agentic-skill/evidence.json",
+        "verification/receipts/track-11-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
@@ -129,10 +145,14 @@
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent"
+      ],
       "evidence_receipts": [
         "verification/receipts/track-11-sibling-route.json",
         "verification/receipts/systematic-search-skill.json",
-        "verification/receipts/track-11-local-admission.json"
+        "verification/receipts/track-11-local-admission.json",
+        "verification/receipts/track-11-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
@@ -156,8 +176,12 @@
       "deterministic_tests": [
         "python scripts/check_agent_skill.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-agent"
+      ],
       "evidence_receipts": [
-        "verification/receipts/systematic-search-skill.json"
+        "verification/receipts/systematic-search-skill.json",
+        "verification/receipts/track-11-conductor-review-2026-11-03.json"
       ],
       "open_gates": [
         "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."

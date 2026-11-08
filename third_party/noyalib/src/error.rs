@@ -1,0 +1,2278 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+// Copyright (c) 2026 Noyalib. All rights reserved.
+
+//! Error handling types.
+
+use crate::diagnostic::{
+    Diagnostic, DiagnosticCode, DiagnosticLabel, DiagnosticSeverity, SourceSpan,
+};
+use crate::prelude::*;
+use core::fmt;
+
+/// A `(line, column, byte index)` location in a YAML document.
+///
+/// `line` and `column` are **1-based** for any [`Location`]
+/// produced by parsing or by [`Location::from_index`] /
+/// [`Location::new`]. The single exception is
+/// [`Location::default()`] (and the `Spanned::new` constructor it
+/// powers), which yields `0/0/0` as a sentinel for "not yet
+/// populated by a parser pass." User code that only ever sees a
+/// [`Location`] returned from a parser may treat both axes as
+/// strictly ≥ 1.
+///
+/// `index` is always **0-based** and counts UTF-8 bytes from the
+/// start of the document.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::Location;
+/// let loc = Location::from_index("a: 1\nb: 2\n", 5);
+/// assert_eq!(loc.line(), 2);
+/// assert_eq!(loc.column(), 1);
+/// ```
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Hash)]
+pub struct Location {
+    index: usize,
+    line: usize,
+    column: usize,
+}
+
+impl Location {
+    /// Create a new location from a byte index.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Location;
+    /// let loc = Location::from_index("hello\nworld", 6);
+    /// assert_eq!(loc.line(), 2);
+    /// ```
+    #[must_use]
+    pub fn from_index(input: &str, index: usize) -> Self {
+        let mut line = 1;
+        let mut column = 1;
+        for (i, c) in input.char_indices() {
+            if i >= index {
+                break;
+            }
+            if c == '\n' {
+                line += 1;
+                column = 1;
+            } else {
+                column += 1;
+            }
+        }
+        Self {
+            index,
+            line,
+            column,
+        }
+    }
+
+    /// Create a new location from line, column, and byte index.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Location;
+    /// let loc = Location::new(1, 1, 0);
+    /// assert_eq!(loc.line(), 1);
+    /// ```
+    #[must_use]
+    pub fn new(line: usize, col: usize, index: usize) -> Self {
+        Self {
+            index,
+            line,
+            column: col,
+        }
+    }
+
+    /// The 0-based byte index.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Location;
+    /// let loc = Location::from_index("abc", 2);
+    /// assert_eq!(loc.index(), 2);
+    /// ```
+    #[must_use]
+    pub fn index(&self) -> usize {
+        self.index
+    }
+
+    /// The 1-based line number.
+    ///
+    /// Returns `0` only for a [`Location::default()`] that has not
+    /// been populated by a parser pass; any [`Location`] produced
+    /// by [`Location::from_index`], [`Location::new`], or returned
+    /// from a parser is `≥ 1`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Location;
+    /// let loc = Location::from_index("a\nb", 2);
+    /// assert_eq!(loc.line(), 2);
+    /// ```
+    #[must_use]
+    pub fn line(&self) -> usize {
+        self.line
+    }
+
+    /// The 1-based column number.
+    ///
+    /// Returns `0` only for a [`Location::default()`] that has not
+    /// been populated by a parser pass; any [`Location`] produced
+    /// by [`Location::from_index`], [`Location::new`], or returned
+    /// from a parser is `≥ 1`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::Location;
+    /// let loc = Location::from_index("abcd", 3);
+    /// assert_eq!(loc.column(), 4);
+    /// ```
+    #[must_use]
+    pub fn column(&self) -> usize {
+        self.column
+    }
+}
+
+impl fmt::Display for Location {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "line {}, column {}", self.line, self.column)
+    }
+}
+
+/// Errors that can occur during YAML serialization or deserialization.
+///
+/// Identifies which configurable parser budget was breached
+/// when an [`Error::Budget`] is raised.
+///
+/// Each variant carries the configured `limit` and (where
+/// meaningful) the `observed` value at the moment the cap
+/// tripped. Pattern-match on this enum to surface the specific
+/// budget in CLI / LSP / MCP diagnostics.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::{BudgetBreach, Error};
+/// let breach = BudgetBreach::MaxNodes { limit: 250_000, observed: 250_001 };
+/// let _e = Error::Budget(breach);
+/// ```
+#[derive(Debug, Clone, PartialEq)]
+#[non_exhaustive]
+pub enum BudgetBreach {
+    /// Total parser events exceeded `ParserConfig::max_events`.
+    MaxEvents {
+        /// The configured cap.
+        limit: usize,
+        /// The observed event count when the cap tripped.
+        observed: usize,
+    },
+    /// Total `Value` nodes in the AST exceeded
+    /// `ParserConfig::max_nodes`.
+    MaxNodes {
+        /// The configured cap.
+        limit: usize,
+        /// The observed node count when the cap tripped.
+        observed: usize,
+    },
+    /// Cumulative scalar byte count exceeded
+    /// `ParserConfig::max_total_scalar_bytes`.
+    MaxTotalScalarBytes {
+        /// The configured cap, in bytes.
+        limit: usize,
+        /// The observed cumulative scalar bytes when the cap tripped.
+        observed: usize,
+    },
+    /// Multi-document stream exceeded
+    /// `ParserConfig::max_documents`.
+    MaxDocuments {
+        /// The configured cap.
+        limit: usize,
+        /// The observed document count when the cap tripped.
+        observed: usize,
+    },
+    /// Include resolution exceeded the configured source-count budget.
+    MaxIncludeSources {
+        /// The configured cap.
+        limit: usize,
+        /// The observed source count when the cap tripped.
+        observed: usize,
+    },
+    /// Include resolution exceeded the configured cumulative byte budget.
+    MaxIncludeBytes {
+        /// The configured cap, in bytes.
+        limit: usize,
+        /// The observed cumulative bytes when the cap tripped.
+        observed: usize,
+    },
+    /// Merge-key (`<<`) count exceeded
+    /// `ParserConfig::max_merge_keys`.
+    MaxMergeKeys {
+        /// The configured cap.
+        limit: usize,
+        /// The observed merge-key count when the cap tripped.
+        observed: usize,
+    },
+    /// Alias-to-anchor ratio exceeded
+    /// `ParserConfig::alias_anchor_ratio` — heuristic for
+    /// billion-laughs-style amplification.
+    AliasAnchorRatio {
+        /// The configured ratio cap.
+        ratio: f64,
+        /// Number of anchors observed at the moment the cap tripped.
+        anchors: usize,
+        /// Number of aliases observed at the moment the cap tripped.
+        aliases: usize,
+    },
+    /// A single sequence exceeded `ParserConfig::max_sequence_length`.
+    MaxSequenceLength {
+        /// The configured cap.
+        limit: usize,
+        /// The item count that would have overflowed the cap.
+        observed: usize,
+    },
+    /// A single mapping exceeded `ParserConfig::max_mapping_keys`.
+    MaxMappingKeys {
+        /// The configured cap.
+        limit: usize,
+        /// The key count that would have overflowed the cap.
+        observed: usize,
+    },
+}
+
+impl fmt::Display for BudgetBreach {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::MaxEvents { limit, observed } => write!(
+                f,
+                "max_events budget exceeded: observed {observed} > limit {limit}"
+            ),
+            Self::MaxNodes { limit, observed } => write!(
+                f,
+                "max_nodes budget exceeded: observed {observed} > limit {limit}"
+            ),
+            Self::MaxTotalScalarBytes { limit, observed } => write!(
+                f,
+                "max_total_scalar_bytes budget exceeded: observed {observed} > limit {limit}"
+            ),
+            Self::MaxDocuments { limit, observed } => write!(
+                f,
+                "max_documents budget exceeded: observed {observed} > limit {limit}"
+            ),
+            Self::MaxIncludeSources { limit, observed } => write!(
+                f,
+                "max_include_sources budget exceeded: observed {observed} > limit {limit}"
+            ),
+            Self::MaxIncludeBytes { limit, observed } => write!(
+                f,
+                "max_total_include_bytes budget exceeded: observed {observed} > limit {limit}"
+            ),
+            Self::MaxMergeKeys { limit, observed } => write!(
+                f,
+                "max_merge_keys budget exceeded: observed {observed} > limit {limit}"
+            ),
+            Self::AliasAnchorRatio {
+                ratio,
+                anchors,
+                aliases,
+            } => write!(
+                f,
+                "alias_anchor_ratio heuristic tripped: {aliases} aliases / {anchors} anchors > {ratio}"
+            ),
+            Self::MaxSequenceLength { limit, observed } => write!(
+                f,
+                "max_sequence_length budget exceeded: sequence length limit {limit}, observed {observed}"
+            ),
+            Self::MaxMappingKeys { limit, observed } => write!(
+                f,
+                "max_mapping_keys budget exceeded: mapping key limit {limit}, observed {observed}"
+            ),
+        }
+    }
+}
+
+/// Coarse-grained classification of an [`Error`], exposed for
+/// callers that need to route errors without pattern-matching
+/// every variant. Prefer this over inventing per-variant boolean
+/// accessors (`is_syntax()`, `is_io()`, …): one classifier scales
+/// as new variants land under [`Error`]'s `#[non_exhaustive]`
+/// attribute.
+///
+/// This enum is itself `#[non_exhaustive]` so future variants
+/// (e.g. a dedicated Timeout kind) can be added without a semver
+/// break.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::{from_str, ErrorKind, Value};
+/// let err = from_str::<Value>("1: a\n\"1\": b\n").unwrap_err();
+/// assert_eq!(err.kind(), ErrorKind::KeyCollision);
+/// ```
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[non_exhaustive]
+pub enum ErrorKind {
+    /// The document was malformed: unterminated flow collection,
+    /// bad indentation, invalid escape, unexpected token, etc.
+    Syntax,
+    /// An I/O operation failed while reading the input.
+    Io,
+    /// A configurable DoS budget or hard security limit was
+    /// exceeded (recursion depth, alias expansion, mapping size,
+    /// merge-key count, …). Covers every `Error::Budget` breach
+    /// as well as [`Error::RecursionLimitExceeded`] and
+    /// [`Error::RepetitionLimitExceeded`].
+    Budget,
+    /// A user-supplied [`crate::policy::Policy`] rejected the
+    /// document, or a policy-only structural rule (merge-value
+    /// shape, scalar-in-merge) tripped.
+    Policy,
+    /// Two distinct-typed YAML keys collapsed to the same string
+    /// key — see [`Error::KeyCollision`].
+    KeyCollision,
+    /// A plain decimal integer beyond `u64::MAX` was refused under
+    /// [`crate::ParserConfig::integer_overflow_errors`] — see
+    /// [`Error::IntegerOverflow`].
+    IntegerOverflow,
+    /// A non-scalar mapping key was refused under
+    /// [`crate::NonScalarKeyPolicy::Error`] — see
+    /// [`Error::NonScalarKey`].
+    NonScalarKey,
+    /// A genuine duplicate key was refused under
+    /// [`crate::DuplicateKeyPolicy::Error`].
+    DuplicateKey,
+    /// The parser reached end-of-stream where more input was
+    /// required.
+    EndOfStream,
+    /// The document parsed but the requested target type could
+    /// not be built (missing field, unknown field, type mismatch,
+    /// bad tag, unknown anchor, …). Covers the whole
+    /// serde-facing "shape doesn't match" family.
+    Data,
+    /// The error came in via [`Error::Custom`] or [`Error::Message`]
+    /// (usually from a `serde_core::de::Error` bridge) and doesn't map
+    /// cleanly to any of the other kinds.
+    Other,
+}
+
+/// # Examples
+///
+/// ```
+/// use noyalib::{from_str, Error, Value};
+/// let err = from_str::<Value>("a: [unclosed").unwrap_err();
+/// assert!(matches!(err, Error::Parse(_) | Error::ParseWithLocation { .. }));
+/// ```
+#[derive(Debug)]
+#[non_exhaustive]
+pub enum Error {
+    /// Error during YAML parsing.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::Parse("unexpected token".into());
+    /// ```
+    Parse(String),
+
+    /// Error during YAML parsing with location information.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{Error, Location};
+    /// let _e = Error::ParseWithLocation {
+    ///     message: "bad token".into(),
+    ///     location: Location::from_index("a: [", 3),
+    /// };
+    /// ```
+    ParseWithLocation {
+        /// The error message.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::{Error, Location};
+        /// let e = Error::ParseWithLocation {
+        ///     message: "bad".into(),
+        ///     location: Location::default(),
+        /// };
+        /// if let Error::ParseWithLocation { message, .. } = e {
+        ///     assert_eq!(message, "bad");
+        /// }
+        /// ```
+        message: String,
+        /// The location in the source where the error occurred.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::{Error, Location};
+        /// let e = Error::ParseWithLocation {
+        ///     message: "x".into(),
+        ///     location: Location::from_index("abc", 1),
+        /// };
+        /// if let Error::ParseWithLocation { location, .. } = e {
+        ///     assert_eq!(location.column(), 2);
+        /// }
+        /// ```
+        location: Location,
+    },
+
+    /// Error during serialization.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::Serialize("bad value".into());
+    /// ```
+    Serialize(String),
+
+    /// Error during deserialization.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::Deserialize("type mismatch".into());
+    /// ```
+    Deserialize(String),
+
+    /// Error during deserialization with location information.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{Error, Location};
+    /// let _e = Error::DeserializeWithLocation {
+    ///     message: "expected int".into(),
+    ///     location: Location::default(),
+    /// };
+    /// ```
+    DeserializeWithLocation {
+        /// The error message.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::{Error, Location};
+        /// let e = Error::DeserializeWithLocation {
+        ///     message: "m".into(),
+        ///     location: Location::default(),
+        /// };
+        /// if let Error::DeserializeWithLocation { message, .. } = e {
+        ///     assert_eq!(message, "m");
+        /// }
+        /// ```
+        message: String,
+        /// The location in the source where the error occurred.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::{Error, Location};
+        /// let e = Error::DeserializeWithLocation {
+        ///     message: "m".into(),
+        ///     location: Location::from_index("ab", 1),
+        /// };
+        /// if let Error::DeserializeWithLocation { location, .. } = e {
+        ///     assert_eq!(location.column(), 2);
+        /// }
+        /// ```
+        location: Location,
+    },
+
+    /// I/O error (requires std feature).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let ioe = std::io::Error::new(std::io::ErrorKind::Other, "nope");
+    /// let _e = noyalib::Error::Io(ioe);
+    /// ```
+    #[cfg(feature = "std")]
+    Io(std::io::Error),
+
+    /// Custom error message.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::Custom("whatever".into());
+    /// ```
+    Custom(String),
+
+    /// Error when recursion depth limit is exceeded.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::RecursionLimitExceeded { depth: 64 };
+    /// ```
+    RecursionLimitExceeded {
+        /// The current depth.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::Error;
+        /// if let Error::RecursionLimitExceeded { depth } =
+        ///     (Error::RecursionLimitExceeded { depth: 10 })
+        /// {
+        ///     assert_eq!(depth, 10);
+        /// }
+        /// ```
+        depth: usize,
+    },
+
+    /// Error when a duplicate key is encountered.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::DuplicateKey("name".into());
+    /// ```
+    DuplicateKey(String),
+
+    /// A duplicate mapping key, with where it is.
+    ///
+    /// The located form of [`Self::DuplicateKey`], raised under
+    /// [`crate::DuplicateKeyPolicy::Error`] by the parsers that know the
+    /// key's position -- every `from_str` entry point and the CST parser.
+    /// `path` is the dotted path of the entry (`site.name`; a sequence
+    /// index counts as a segment, `items.0.name`), `location` where the
+    /// second occurrence begins. [`Self::kind`] reports
+    /// [`ErrorKind::DuplicateKey`] for both forms and [`Self::location`]
+    /// returns the position.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{DuplicateKeyPolicy, Error, ParserConfig, Value, from_str_with_config};
+    /// let cfg = ParserConfig::new().duplicate_key_policy(DuplicateKeyPolicy::Error);
+    /// let err = from_str_with_config::<Value>("site:\n  name: a\n  name: b\n", &cfg).unwrap_err();
+    /// assert!(matches!(err, Error::DuplicateKeyAt { .. }));
+    /// assert_eq!(
+    ///     err.to_string(),
+    ///     "site.name: duplicate key \"name\" at line 3, column 3"
+    /// );
+    /// ```
+    DuplicateKeyAt {
+        /// The key that appears twice.
+        key: String,
+        /// The dotted path of the entry, the key included.
+        path: String,
+        /// Where the second occurrence begins.
+        location: Location,
+    },
+
+    /// Two distinct-typed keys collapsed to the same string key.
+    ///
+    /// The mapping key model is `Mapping<String, Value>`, so keys are
+    /// stringified. Distinct YAML keys that share a spelling — e.g. the
+    /// integer `1` and the string `"1"`, or `true` and `"true"` — would
+    /// silently overwrite each other, losing an entry. This is raised
+    /// instead, carrying the collapsed string key. Unlike
+    /// [`Self::DuplicateKey`], it fires regardless of `DuplicateKeyPolicy`
+    /// because it is data loss, not an authored duplicate.
+    ///
+    /// # Examples
+    ///
+    /// The construction shape:
+    ///
+    /// ```
+    /// let _e = noyalib::Error::KeyCollision("1".into());
+    /// ```
+    ///
+    /// Reproduces from real YAML. The integer key `1` and the
+    /// string key `"1"` both stringify to `"1"`, so parsing must
+    /// refuse rather than silently drop the first entry:
+    ///
+    /// ```
+    /// use noyalib::{Error, Value, from_str};
+    /// let err = from_str::<Value>("1: a\n\"1\": b\n").unwrap_err();
+    /// assert!(matches!(err, Error::KeyCollision(_) | Error::KeyCollisionAt { .. }));
+    /// ```
+    KeyCollision(String),
+
+    /// Two distinct-typed keys collapsed to the same string key, with
+    /// where the second one is.
+    ///
+    /// The located form of [`Self::KeyCollision`], raised by the parsers
+    /// that know the key's position. `path` is the dotted path of the
+    /// entry, `location` where the colliding key begins. [`Self::kind`]
+    /// reports [`ErrorKind::KeyCollision`] for both forms.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{Error, Value, from_str};
+    /// let err = from_str::<Value>("m:\n  1: a\n  \"1\": b\n").unwrap_err();
+    /// assert_eq!(err.kind(), noyalib::ErrorKind::KeyCollision);
+    /// assert_eq!(err.location().map(|l| (l.line(), l.column())), Some((3, 3)));
+    /// assert!(err.to_string().starts_with("m.1: distinct mapping keys collide"));
+    /// ```
+    KeyCollisionAt {
+        /// The collapsed string key.
+        key: String,
+        /// The dotted path of the entry, the key included.
+        path: String,
+        /// Where the colliding key begins.
+        location: Location,
+    },
+
+    /// Repetition limit exceeded (security limit against billion-laughs).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::RepetitionLimitExceeded;
+    /// ```
+    RepetitionLimitExceeded,
+
+    /// A plain decimal integer beyond `u64::MAX` was refused under
+    /// [`crate::ParserConfig::integer_overflow_errors`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{ParserConfig, Value, from_str_with_config};
+    /// let mut cfg = ParserConfig::new();
+    /// cfg.integer_overflow_errors = true;
+    /// let err = from_str_with_config::<Value>("18446744073709551616", &cfg).unwrap_err();
+    /// assert!(matches!(err, noyalib::Error::IntegerOverflow { .. }));
+    /// ```
+    IntegerOverflow {
+        /// Location of the overflowing literal's first byte.
+        location: Option<Location>,
+        /// Dotted path of the field holding the literal, when the
+        /// enclosing frames knew it (`server.port`, `items.3`).
+        path: Option<String>,
+    },
+
+    /// A non-scalar mapping key was refused under
+    /// [`crate::NonScalarKeyPolicy::Error`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{NonScalarKeyPolicy, ParserConfig, Value, from_str_with_config};
+    /// let mut cfg = ParserConfig::new();
+    /// cfg.non_scalar_key_policy = NonScalarKeyPolicy::Error;
+    /// let err = from_str_with_config::<Value>("[a]: v", &cfg).unwrap_err();
+    /// assert!(matches!(err, noyalib::Error::NonScalarKey { .. }));
+    /// ```
+    NonScalarKey {
+        /// `"sequence"` or `"mapping"` — the key's YAML kind.
+        kind: &'static str,
+        /// Location of the key's first byte.
+        location: Option<Location>,
+    },
+
+    /// A configurable parser budget was exceeded.
+    ///
+    /// Carries a [`BudgetBreach`] identifying which limit fired,
+    /// the configured cap, and (where meaningful) the observed
+    /// value at the moment the cap tripped. Distinct from the
+    /// older [`Error::RecursionLimitExceeded`] /
+    /// [`Error::RepetitionLimitExceeded`] variants — those stay
+    /// for backwards compatibility on the depth / alias-expansion
+    /// limits; new budgets in the v0.0.2 expansion (`max_events`,
+    /// `max_nodes`, `max_total_scalar_bytes`, `max_documents`,
+    /// `max_merge_keys`, `alias_anchor_ratio`) all flow through
+    /// `Error::Budget`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{BudgetBreach, Error};
+    /// let _e = Error::Budget(BudgetBreach::MaxDocuments {
+    ///     limit: 1_000,
+    ///     observed: 1_001,
+    /// });
+    /// ```
+    Budget(BudgetBreach),
+
+    /// Unknown anchor encountered.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::UnknownAnchor("missing".into());
+    /// ```
+    UnknownAnchor(String),
+
+    /// Unknown anchor encountered at a specific location.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{Error, Location};
+    /// let _e = Error::UnknownAnchorAt {
+    ///     name: "x".into(),
+    ///     location: Location::default(),
+    ///     suggestion: None,
+    /// };
+    /// ```
+    UnknownAnchorAt {
+        /// The anchor name.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::{Error, Location};
+        /// let e = Error::UnknownAnchorAt {
+        ///     name: "x".into(),
+        ///     location: Location::default(),
+        ///     suggestion: None,
+        /// };
+        /// if let Error::UnknownAnchorAt { name, .. } = e {
+        ///     assert_eq!(name, "x");
+        /// }
+        /// ```
+        name: String,
+        /// The location where it was used.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::{Error, Location};
+        /// let e = Error::UnknownAnchorAt {
+        ///     name: "x".into(),
+        ///     location: Location::from_index("ab", 1),
+        ///     suggestion: None,
+        /// };
+        /// if let Error::UnknownAnchorAt { location, .. } = e {
+        ///     assert_eq!(location.column(), 2);
+        /// }
+        /// ```
+        location: Location,
+        /// Optional suggestion for a similar anchor.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::{Error, Location};
+        /// let e = Error::UnknownAnchorAt {
+        ///     name: "x".into(),
+        ///     location: Location::default(),
+        ///     suggestion: Some(("y".into(), Location::default())),
+        /// };
+        /// if let Error::UnknownAnchorAt { suggestion: Some((s, _)), .. } = e {
+        ///     assert_eq!(s, "y");
+        /// }
+        /// ```
+        suggestion: Option<(String, Location)>,
+    },
+
+    /// Missing field in a mapping.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::MissingField("name".into());
+    /// ```
+    MissingField(String),
+
+    /// Unknown field in a mapping (with `deny_unknown_fields`).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::UnknownField("extra".into());
+    /// ```
+    UnknownField(String),
+
+    /// Scalar encountered where a mapping was expected during merge.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::ScalarInMergeElement;
+    /// ```
+    ScalarInMergeElement,
+
+    /// Sequence encountered where a mapping was expected during merge.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::SequenceInMergeElement;
+    /// ```
+    SequenceInMergeElement,
+
+    /// Tagged value encountered during merge.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::TaggedInMerge;
+    /// ```
+    TaggedInMerge,
+
+    /// Generic invalid construct error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::Invalid("bad construct".into());
+    /// ```
+    Invalid(String),
+
+    /// A type mismatch error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::TypeMismatch {
+    ///     expected: "integer",
+    ///     found: "string".into(),
+    /// };
+    /// ```
+    TypeMismatch {
+        /// The expected type.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::Error;
+        /// let e = Error::TypeMismatch { expected: "int", found: "str".into() };
+        /// if let Error::TypeMismatch { expected, .. } = e {
+        ///     assert_eq!(expected, "int");
+        /// }
+        /// ```
+        expected: &'static str,
+        /// The type that was actually found.
+        ///
+        /// # Examples
+        ///
+        /// ```
+        /// use noyalib::Error;
+        /// let e = Error::TypeMismatch { expected: "int", found: "str".into() };
+        /// if let Error::TypeMismatch { found, .. } = e {
+        ///     assert_eq!(found, "str");
+        /// }
+        /// ```
+        found: String,
+    },
+
+    /// Shared error instance (Arc-wrapped for cloning).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::sync::Arc;
+    /// let _e = noyalib::Error::Shared(Arc::new(noyalib::Error::EndOfStream));
+    /// ```
+    Shared(Arc<Self>),
+
+    /// End of stream reached unexpectedly.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::EndOfStream;
+    /// ```
+    EndOfStream,
+
+    /// More than one document found where one was expected.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::MoreThanOneDocument;
+    /// ```
+    MoreThanOneDocument,
+
+    /// Scalar in merge (legacy variant).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::ScalarInMerge;
+    /// ```
+    ScalarInMerge,
+
+    /// Empty tag encountered.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::EmptyTag;
+    /// ```
+    EmptyTag,
+
+    /// Failed to parse a number.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::FailedToParseNumber("not-a-number".into());
+    /// ```
+    FailedToParseNumber(String),
+
+    /// A message error from Serde (compat variant).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let _e = noyalib::Error::Message("oops".into(), Some(42));
+    /// ```
+    Message(String, Option<usize>),
+}
+
+// ── Manual `Display` + `Error` impls ───────────────────────────────────
+//
+// noyalib does not depend on `thiserror` so the proc-macro
+// expansion cost stays out of every downstream crate's compile.
+// These impls reproduce the exact format strings the previous
+// `#[error("...")]` attributes generated, so the user-visible
+// `Display` output is byte-stable across the migration.
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Parse(msg) => write!(f, "YAML parse error: {msg}"),
+            Self::ParseWithLocation { message, location } => {
+                write!(f, "YAML parse error at {location}: {message}")
+            }
+            Self::Serialize(msg) => write!(f, "serialization error: {msg}"),
+            Self::Deserialize(msg) => write!(f, "deserialization error: {msg}"),
+            Self::DeserializeWithLocation { message, location } => {
+                write!(f, "deserialization error at {location}: {message}")
+            }
+            #[cfg(feature = "std")]
+            Self::Io(e) => write!(f, "I/O error: {e}"),
+            Self::Custom(msg) => f.write_str(msg),
+            Self::RecursionLimitExceeded { depth } => {
+                write!(f, "recursion depth limit exceeded: {depth}")
+            }
+            Self::DuplicateKey(name) => write!(f, "duplicate key: {name}"),
+            Self::DuplicateKeyAt {
+                key,
+                path,
+                location,
+            } => write!(f, "{path}: duplicate key \"{key}\" at {location}"),
+            Self::KeyCollision(name) => write!(
+                f,
+                "distinct mapping keys collide after string conversion: {name} \
+                 (e.g. `1` and `\"1\"`, or `true` and `\"true\"`)"
+            ),
+            Self::KeyCollisionAt {
+                key,
+                path,
+                location,
+            } => write!(
+                f,
+                "{path}: distinct mapping keys collide after string conversion: {key} \
+                 (e.g. `1` and `\"1\"`, or `true` and `\"true\"`) at {location}"
+            ),
+            Self::RepetitionLimitExceeded => f.write_str("alias expansion limit exceeded"),
+            Self::IntegerOverflow { .. } => {
+                f.write_str("integer does not fit in 64 bits (JSON number out of range)")
+            }
+            Self::NonScalarKey { kind, .. } => {
+                write!(f, "invalid type: {kind}, expected a string key")
+            }
+            Self::Budget(breach) => write!(f, "{breach}"),
+            Self::UnknownAnchor(name) => write!(f, "unknown anchor: {name}"),
+            Self::UnknownAnchorAt {
+                name,
+                location,
+                suggestion,
+            } => {
+                write!(f, "unknown anchor: {name} at {location}")?;
+                match suggestion {
+                    // The same name anchored earlier in the stream: the
+                    // alias reaches across a document boundary. An alias
+                    // to an anchor still being defined never reaches
+                    // here; the loader reports that as its own parse
+                    // error, because it is a cycle, not a lookup miss.
+                    Some((s, at)) if s == name => write!(
+                        f,
+                        " (`&{name}` is defined at {at}, in an earlier document; \
+                         anchors do not cross `---`)"
+                    ),
+                    Some((s, _)) => write!(f, " (did you mean `{s}`?)"),
+                    None => Ok(()),
+                }
+            }
+            Self::MissingField(name) => write!(f, "missing field: {name}"),
+            Self::UnknownField(name) => write!(f, "unknown field: {name}"),
+            Self::ScalarInMergeElement => f.write_str("scalar in merge element"),
+            Self::SequenceInMergeElement => f.write_str("sequence in merge element"),
+            Self::TaggedInMerge => f.write_str("tagged value in merge"),
+            Self::Invalid(msg) => write!(f, "invalid YAML: {msg}"),
+            Self::TypeMismatch { expected, found } => {
+                write!(f, "type mismatch: expected {expected}, found {found}")
+            }
+            Self::Shared(arc) => fmt::Display::fmt(arc.as_ref(), f),
+            Self::EndOfStream => f.write_str("unexpected end of stream"),
+            Self::MoreThanOneDocument => f.write_str(
+                "deserializing from YAML containing more than one document is not supported",
+            ),
+            Self::ScalarInMerge => f.write_str("scalar in merge"),
+            Self::EmptyTag => f.write_str("empty tag"),
+            Self::FailedToParseNumber(msg) => write!(f, "failed to parse number: {msg}"),
+            Self::Message(msg, _) => write!(f, "serde error: {msg}"),
+        }
+    }
+}
+
+// `core::error::Error` stabilised in Rust 1.81 — the crate MSRV
+// is 1.89, so the trait implementation is unconditional. Only
+// the `Io(std::io::Error)` arm needs an in-line `cfg` gate,
+// because `Error::Io` itself is `#[cfg(feature = "std")]`. Under
+// `no_std` callers keep full access to the trait for routing via
+// `core::error::Error`-consuming ecosystems (`snafu-nostd`,
+// `miette` no-std shim, embedded HAL error stacks).
+impl core::error::Error for Error {
+    fn source(&self) -> Option<&(dyn core::error::Error + 'static)> {
+        match self {
+            #[cfg(feature = "std")]
+            Self::Io(e) => Some(e),
+            Self::Shared(arc) => Some(arc.as_ref()),
+            _ => None,
+        }
+    }
+}
+
+#[cfg(feature = "std")]
+impl From<std::io::Error> for Error {
+    fn from(e: std::io::Error) -> Self {
+        Self::Io(e)
+    }
+}
+
+impl Error {
+    /// Get the location of the error, if any.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let err = from_str::<Value>("a: [unclosed").unwrap_err();
+    /// let _ = err.location();
+    /// ```
+    #[must_use]
+    pub fn location(&self) -> Option<Location> {
+        match self {
+            Self::ParseWithLocation { location, .. } => Some(*location),
+            Self::DeserializeWithLocation { location, .. } => Some(*location),
+            Self::UnknownAnchorAt { location, .. } => Some(*location),
+            Self::DuplicateKeyAt { location, .. } | Self::KeyCollisionAt { location, .. } => {
+                Some(*location)
+            }
+            Self::IntegerOverflow { location, .. } | Self::NonScalarKey { location, .. } => {
+                *location
+            }
+            Self::Shared(arc) => arc.location(),
+            _ => None,
+        }
+    }
+
+    /// Move every location on this error from the slice of `source`
+    /// that starts at byte `base` to `source` itself.
+    ///
+    /// The stream parsers parse each document from its own slice, so
+    /// the locations they get back count from that slice. This
+    /// re-anchors them on the whole input: the byte index shifts by
+    /// `base`, and line and column are recomputed from `source` the
+    /// way every located error computes them. A `base` of zero is the
+    /// identity. Variants without a location, and a shared error, are
+    /// returned unchanged.
+    ///
+    /// Gated like its only caller, the `cst` module: without `std` it
+    /// would be dead code, which the crate denies.
+    #[cfg(feature = "std")]
+    pub(crate) fn relocate(self, source: &str, base: usize) -> Self {
+        if base == 0 {
+            return self;
+        }
+        let shift = |loc: Location| Location::from_index(source, base + loc.index());
+        match self {
+            Self::ParseWithLocation { message, location } => Self::ParseWithLocation {
+                message,
+                location: shift(location),
+            },
+            Self::DeserializeWithLocation { message, location } => Self::DeserializeWithLocation {
+                message,
+                location: shift(location),
+            },
+            Self::UnknownAnchorAt {
+                name,
+                location,
+                suggestion,
+            } => Self::UnknownAnchorAt {
+                name,
+                location: shift(location),
+                suggestion: suggestion.map(|(name, loc)| (name, shift(loc))),
+            },
+            Self::DuplicateKeyAt {
+                key,
+                path,
+                location,
+            } => Self::DuplicateKeyAt {
+                key,
+                path,
+                location: shift(location),
+            },
+            Self::KeyCollisionAt {
+                key,
+                path,
+                location,
+            } => Self::KeyCollisionAt {
+                key,
+                path,
+                location: shift(location),
+            },
+            Self::IntegerOverflow { location, path } => Self::IntegerOverflow {
+                location: location.map(shift),
+                path,
+            },
+            Self::NonScalarKey { kind, location } => Self::NonScalarKey {
+                kind,
+                location: location.map(shift),
+            },
+            other => other,
+        }
+    }
+
+    /// Coarse-grained classification for routing without matching
+    /// every variant of the `#[non_exhaustive]` [`Error`] enum.
+    ///
+    /// The mapping is stable across variant additions: new
+    /// variants land under an existing [`ErrorKind`] whenever
+    /// possible, so downstream `match err.kind()` sites keep
+    /// compiling. When a new *category* is needed the enum grows
+    /// (also `#[non_exhaustive]`).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, ErrorKind, Value};
+    ///
+    /// let syntax = from_str::<Value>("a: [unclosed").unwrap_err();
+    /// assert_eq!(syntax.kind(), ErrorKind::Syntax);
+    ///
+    /// let collision = from_str::<Value>("1: a\n\"1\": b\n").unwrap_err();
+    /// assert_eq!(collision.kind(), ErrorKind::KeyCollision);
+    /// ```
+    #[must_use]
+    pub fn kind(&self) -> ErrorKind {
+        match self {
+            Self::Parse(_) | Self::ParseWithLocation { .. } => ErrorKind::Syntax,
+            Self::Serialize(_) => ErrorKind::Data,
+            Self::Deserialize(_) | Self::DeserializeWithLocation { .. } => ErrorKind::Data,
+            #[cfg(feature = "std")]
+            Self::Io(_) => ErrorKind::Io,
+            Self::Custom(_) => ErrorKind::Other,
+            Self::RecursionLimitExceeded { .. } => ErrorKind::Budget,
+            Self::DuplicateKey(_) | Self::DuplicateKeyAt { .. } => ErrorKind::DuplicateKey,
+            Self::KeyCollision(_) | Self::KeyCollisionAt { .. } => ErrorKind::KeyCollision,
+            Self::RepetitionLimitExceeded => ErrorKind::Budget,
+            Self::IntegerOverflow { .. } => ErrorKind::IntegerOverflow,
+            Self::NonScalarKey { .. } => ErrorKind::NonScalarKey,
+            Self::Budget(_) => ErrorKind::Budget,
+            Self::UnknownAnchor(_) | Self::UnknownAnchorAt { .. } => ErrorKind::Data,
+            Self::MissingField(_) | Self::UnknownField(_) => ErrorKind::Data,
+            Self::ScalarInMergeElement
+            | Self::SequenceInMergeElement
+            | Self::TaggedInMerge
+            | Self::ScalarInMerge => ErrorKind::Policy,
+            Self::Invalid(_) => ErrorKind::Data,
+            Self::TypeMismatch { .. } => ErrorKind::Data,
+            Self::Shared(arc) => arc.kind(),
+            Self::EndOfStream => ErrorKind::EndOfStream,
+            Self::MoreThanOneDocument => ErrorKind::Data,
+            Self::EmptyTag => ErrorKind::Syntax,
+            Self::FailedToParseNumber(_) => ErrorKind::Syntax,
+            Self::Message(_, _) => ErrorKind::Other,
+        }
+    }
+
+    /// Convert this error into the canonical framework-neutral diagnostic.
+    ///
+    /// The returned payload carries a stable code, severity, rendered
+    /// message, optional help, and ordered source labels. Terminal, editor,
+    /// and service adapters should consume this method instead of maintaining
+    /// their own error-variant mappings.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{DiagnosticCode, Value, from_str};
+    /// let err = from_str::<Value>("key: [unclosed").unwrap_err();
+    /// let diagnostic = err.diagnostic();
+    /// assert_eq!(diagnostic.code(), DiagnosticCode::Parse);
+    /// assert!(diagnostic.primary_label().is_some());
+    /// ```
+    #[must_use]
+    pub fn diagnostic(&self) -> Diagnostic {
+        if let Self::Shared(error) = self {
+            return error.diagnostic();
+        }
+
+        let mut diagnostic = Diagnostic::new(
+            self.diagnostic_code(),
+            DiagnosticSeverity::Error,
+            self.to_string(),
+        );
+        if let Some(help) = self.diagnostic_help() {
+            diagnostic = diagnostic.with_help(help);
+        }
+
+        match self {
+            Self::ParseWithLocation { message, location }
+            | Self::DeserializeWithLocation { message, location } => diagnostic.with_label(
+                DiagnosticLabel::primary(SourceSpan::new(location.index(), 1), message.clone()),
+            ),
+            Self::UnknownAnchorAt {
+                name,
+                location,
+                suggestion,
+            } => {
+                let mut diagnostic = diagnostic.with_label(DiagnosticLabel::primary(
+                    SourceSpan::new(location.index(), 1),
+                    format!("unknown anchor '{name}'"),
+                ));
+                if let Some((suggestion, suggestion_location)) = suggestion {
+                    diagnostic = diagnostic.with_label(DiagnosticLabel::secondary(
+                        SourceSpan::new(suggestion_location.index(), 1),
+                        format!("did you mean '&{suggestion}'?"),
+                    ));
+                }
+                diagnostic
+            }
+            Self::DuplicateKeyAt { key, location, .. } => {
+                diagnostic.with_label(DiagnosticLabel::primary(
+                    SourceSpan::new(location.index(), 1),
+                    format!("duplicate key '{key}'"),
+                ))
+            }
+            Self::KeyCollisionAt { key, location, .. } => {
+                diagnostic.with_label(DiagnosticLabel::primary(
+                    SourceSpan::new(location.index(), 1),
+                    format!("key collision for '{key}'"),
+                ))
+            }
+            Self::IntegerOverflow {
+                location: Some(location),
+                ..
+            } => diagnostic.with_label(DiagnosticLabel::primary(
+                SourceSpan::new(location.index(), 1),
+                "integer is out of range",
+            )),
+            Self::NonScalarKey {
+                kind,
+                location: Some(location),
+            } => diagnostic.with_label(DiagnosticLabel::primary(
+                SourceSpan::new(location.index(), 1),
+                format!("{kind} key is not scalar"),
+            )),
+            Self::Message(message, Some(offset)) => diagnostic.with_label(
+                DiagnosticLabel::primary(SourceSpan::new(*offset, 1), message.clone()),
+            ),
+            _ => diagnostic,
+        }
+    }
+
+    /// Return the stable machine-readable diagnostic code.
+    #[must_use]
+    pub fn diagnostic_code(&self) -> DiagnosticCode {
+        match self {
+            Self::Parse(_) | Self::ParseWithLocation { .. } => DiagnosticCode::Parse,
+            Self::Serialize(_) => DiagnosticCode::Serialize,
+            Self::Deserialize(_) | Self::DeserializeWithLocation { .. } => {
+                DiagnosticCode::Deserialize
+            }
+            Self::TypeMismatch { .. } => DiagnosticCode::TypeMismatch,
+            Self::MissingField(_) => DiagnosticCode::MissingField,
+            Self::UnknownField(_) => DiagnosticCode::UnknownField,
+            Self::RecursionLimitExceeded { .. } => DiagnosticCode::RecursionLimit,
+            Self::RepetitionLimitExceeded => DiagnosticCode::RepetitionLimit,
+            Self::Budget(_) => DiagnosticCode::Budget,
+            Self::UnknownAnchor(_) | Self::UnknownAnchorAt { .. } => DiagnosticCode::UnknownAnchor,
+            Self::DuplicateKey(_) | Self::DuplicateKeyAt { .. } => DiagnosticCode::DuplicateKey,
+            Self::KeyCollision(_) | Self::KeyCollisionAt { .. } => DiagnosticCode::KeyCollision,
+            Self::IntegerOverflow { .. } => DiagnosticCode::IntegerOverflow,
+            Self::NonScalarKey { .. } => DiagnosticCode::NonScalarKey,
+            Self::EndOfStream => DiagnosticCode::EndOfStream,
+            Self::MoreThanOneDocument => DiagnosticCode::MoreThanOneDocument,
+            #[cfg(feature = "std")]
+            Self::Io(_) => DiagnosticCode::Io,
+            Self::Shared(error) => error.diagnostic_code(),
+            Self::ScalarInMergeElement
+            | Self::SequenceInMergeElement
+            | Self::TaggedInMerge
+            | Self::ScalarInMerge
+            | Self::Invalid(_)
+            | Self::EmptyTag
+            | Self::FailedToParseNumber(_)
+            | Self::Custom(_)
+            | Self::Message(_, _) => DiagnosticCode::Other,
+        }
+    }
+
+    fn diagnostic_help(&self) -> Option<String> {
+        match self {
+            Self::UnknownAnchorAt {
+                suggestion: Some((name, _)),
+                ..
+            } => Some(format!("did you mean '&{name}'?")),
+            Self::UnknownAnchor(_) => {
+                Some("define the anchor (&name) before referencing it".into())
+            }
+            Self::RecursionLimitExceeded { .. } => {
+                Some("increase ParserConfig::max_depth or simplify nesting".into())
+            }
+            Self::RepetitionLimitExceeded => {
+                Some("increase ParserConfig::max_alias_expansions or reduce alias usage".into())
+            }
+            Self::Budget(_) => {
+                Some("raise the matching ParserConfig::max_* limit or simplify the input".into())
+            }
+            Self::DuplicateKey(_) | Self::DuplicateKeyAt { .. } => {
+                Some("use DuplicateKeyPolicy::Last or ::Error to control behaviour".into())
+            }
+            Self::KeyCollision(_) | Self::KeyCollisionAt { .. } => Some(
+                "give the colliding keys distinct spellings, or quote them consistently".into(),
+            ),
+            Self::MoreThanOneDocument => {
+                Some("use noyalib::load_all() to parse multi-document streams".into())
+            }
+            Self::Shared(error) => error.diagnostic_help(),
+            _ => None,
+        }
+    }
+
+    /// Format the error with source context. If the error carries a source
+    /// location and the line is in range, the output includes a
+    /// `line <n>:<col>` prefix, the offending line, and a caret (`^`)
+    /// pointing at the column. Out-of-range lines fall back to plain
+    /// `Display`.
+    ///
+    /// For rustc-style multi-line context with surrounding lines, use
+    /// [`Self::format_with_source_radius`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let source = "a: [unclosed";
+    /// let err = from_str::<Value>(source).unwrap_err();
+    /// let formatted = err.format_with_source(source);
+    /// assert!(formatted.contains("error"));
+    /// ```
+    #[must_use]
+    pub fn format_with_source(&self, source: &str) -> String {
+        let loc = match self.location() {
+            Some(l) => l,
+            None => return format!("{self}"),
+        };
+        let line_no = loc.line();
+        let col = loc.column();
+        let line_idx = line_no.saturating_sub(1);
+        let line = match source.lines().nth(line_idx) {
+            Some(l) => l,
+            None if line_no == 0 => source.lines().next().unwrap_or(""),
+            None => return format!("{self}"),
+        };
+        let caret_col = col.saturating_sub(1);
+        let caret: String = core::iter::repeat_n(' ', caret_col)
+            .chain(core::iter::once('^'))
+            .collect();
+        format!("error: {self}\n  --> line {line_no}:{col}\n  {line}\n  {caret}")
+    }
+
+    /// Format the error with `radius` lines of context above and
+    /// below the offending line — rustc-style. Each line gets a line
+    /// number on the left; the caret line under the offending column
+    /// is unnumbered. The output is byte-for-byte stable across
+    /// minor releases (no terminal escape codes, no
+    /// platform-conditional whitespace).
+    ///
+    /// Out-of-range locations fall back to plain `Display` (no
+    /// snippet) — same contract as [`Self::format_with_source`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// // Indentation-mismatch error — carries a concrete `(line,
+    /// // column)` location, so the snippet renderer engages.
+    /// let source = "\
+    /// header: ok
+    /// service:
+    ///    nested: x
+    ///   bad: y
+    /// trailer: ok
+    /// ";
+    /// let e = from_str::<Value>(source).unwrap_err();
+    /// let formatted = e.format_with_source_radius(source, 1);
+    /// // Output includes the offending line plus a single line
+    /// // of context above and below.
+    /// assert!(formatted.contains("|"));
+    /// assert!(formatted.contains("bad: y"));
+    /// ```
+    #[must_use]
+    pub fn format_with_source_radius(&self, source: &str, radius: usize) -> String {
+        let loc = match self.location() {
+            Some(l) => l,
+            None => return format!("{self}"),
+        };
+        let line_no = loc.line();
+        let col = loc.column();
+        let line_idx = line_no.saturating_sub(1);
+
+        let lines: Vec<&str> = source.lines().collect();
+        if lines.is_empty() {
+            return format!("{self}");
+        }
+        let target = match lines.get(line_idx) {
+            Some(_) => line_idx,
+            None if line_no == 0 => 0,
+            None => return format!("{self}"),
+        };
+
+        let lo = target.saturating_sub(radius);
+        let hi = (target + radius).min(lines.len().saturating_sub(1));
+        // Width of the highest line number we'll print, for column
+        // alignment of the gutter.
+        let gutter_w = (hi + 1).to_string().len();
+        let caret_col = col.saturating_sub(1);
+
+        let mut out = format!("error: {self}\n");
+        out.push_str(&format!("  --> line {line_no}:{col}\n"));
+
+        // Top spacer
+        out.push_str(&format!("{:>w$} |\n", "", w = gutter_w));
+        for (i, idx) in (lo..=hi).enumerate() {
+            let n = idx + 1;
+            let line_text = lines[idx];
+            out.push_str(&format!("{n:>gutter_w$} | {line_text}\n"));
+            if idx == target {
+                // Caret line — gutter is blank, then `|`, then
+                // spaces up to the column, then `^`.
+                let pad = " ".repeat(caret_col);
+                out.push_str(&format!("{:>w$} | {pad}^\n", "", w = gutter_w, pad = pad));
+            }
+            let _ = i;
+        }
+        // Bottom spacer
+        out.push_str(&format!("{:>w$} |\n", "", w = gutter_w));
+        out
+    }
+
+    /// Format the error with source context, capped at `max_chars`
+    /// **ASCII characters** — the bridged-channel-friendly variant
+    /// of [`Self::format_with_source`]. Use when the diagnostic is
+    /// destined for a Slack message, a Sentry tag, a structured
+    /// log field, or any sink with a hard length budget.
+    ///
+    /// # Truncation contract
+    ///
+    /// 1. The output is plain ASCII (the renderer already emits no
+    ///    ANSI escapes, so this is a no-op for that axis).
+    /// 2. If the rendered string is `<= max_chars`, returns it
+    ///    unchanged.
+    /// 3. Otherwise truncates at a UTF-8 character boundary
+    ///    `<= max_chars - 3` and appends an `...` ellipsis so the
+    ///    final length is at most `max_chars`.
+    /// 4. `max_chars` smaller than 3 keeps as much of the prefix
+    ///    as fits and drops the ellipsis (so a `max_chars = 2`
+    ///    yields exactly two characters of the message).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let source = "a: [unclosed";
+    /// let err = from_str::<Value>(source).unwrap_err();
+    /// let short = err.format_with_source_truncated(source, 60);
+    /// assert!(short.len() <= 60);
+    /// // Untrimmed output is the same as `format_with_source`:
+    /// let full = err.format_with_source(source);
+    /// let unbounded = err.format_with_source_truncated(source, full.len() + 100);
+    /// assert_eq!(unbounded, full);
+    /// ```
+    #[must_use]
+    pub fn format_with_source_truncated(&self, source: &str, max_chars: usize) -> String {
+        let full = self.format_with_source(source);
+        truncate_with_ellipsis(full, max_chars)
+    }
+
+    /// Format the error with multi-line `radius` context, capped
+    /// at `max_chars`. Same truncation contract as
+    /// [`Self::format_with_source_truncated`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let source = "a:\n  b:\n    c: [unclosed";
+    /// let err = from_str::<Value>(source).unwrap_err();
+    /// let s = err.format_with_source_radius_truncated(source, 1, 80);
+    /// assert!(s.len() <= 80);
+    /// ```
+    #[must_use]
+    pub fn format_with_source_radius_truncated(
+        &self,
+        source: &str,
+        radius: usize,
+        max_chars: usize,
+    ) -> String {
+        let full = self.format_with_source_radius(source, radius);
+        truncate_with_ellipsis(full, max_chars)
+    }
+
+    /// Convert the error into a shared Arc pointer. If the error is
+    /// already `Error::Shared`, the inner `Arc` is reused without
+    /// double-wrapping.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let shared = noyalib::Error::EndOfStream.into_shared();
+    /// assert!(matches!(&*shared, noyalib::Error::EndOfStream));
+    /// ```
+    #[must_use]
+    pub fn into_shared(self) -> Arc<Self> {
+        match self {
+            Self::Shared(arc) => arc,
+            other => Arc::new(other),
+        }
+    }
+
+    /// Check if the error is a shared error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::sync::Arc;
+    /// let e = noyalib::Error::Shared(Arc::new(noyalib::Error::EndOfStream));
+    /// assert!(e.is_shared());
+    /// ```
+    #[must_use]
+    pub fn is_shared(&self) -> bool {
+        matches!(self, Self::Shared(_))
+    }
+
+    /// Access the inner error if this is a shared error.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::sync::Arc;
+    /// let e = noyalib::Error::Shared(Arc::new(noyalib::Error::EndOfStream));
+    /// assert!(e.as_inner().is_some());
+    /// ```
+    #[must_use]
+    pub fn as_inner(&self) -> Option<&Self> {
+        match self {
+            Self::Shared(arc) => Some(&**arc),
+            _ => None,
+        }
+    }
+
+    /// Create a new parse error at the given index.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let e = noyalib::Error::parse_at("bad", "a: x", 3);
+    /// assert!(matches!(e, noyalib::Error::ParseWithLocation { .. }));
+    /// ```
+    pub fn parse_at(message: impl Into<String>, source: &str, index: usize) -> Self {
+        Self::ParseWithLocation {
+            message: message.into(),
+            location: Location::from_index(source, index),
+        }
+    }
+
+    /// Create a new deserialization error at the given index.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// let e = noyalib::Error::deserialize_at("bad", "a: x", 3);
+    /// assert!(matches!(e, noyalib::Error::DeserializeWithLocation { .. }));
+    /// ```
+    pub fn deserialize_at(message: impl Into<String>, source: &str, index: usize) -> Self {
+        Self::DeserializeWithLocation {
+            message: message.into(),
+            location: Location::from_index(source, index),
+        }
+    }
+
+    /// Create a new error from a shared error pointer.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::sync::Arc;
+    /// let e = noyalib::Error::from_shared(Arc::new(noyalib::Error::EndOfStream));
+    /// assert!(e.is_shared());
+    /// ```
+    #[must_use]
+    pub fn from_shared(arc: Arc<Self>) -> Self {
+        Self::Shared(arc)
+    }
+
+    /// Render the error in rustc-style with default options.
+    ///
+    /// Equivalent to
+    /// `self.render_with_options(source, &RenderOptions::default())`.
+    ///
+    /// Issue #2 entry point — supersedes [`Self::format_with_source`]
+    /// for new code; that method is preserved for backwards
+    /// compatibility.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, Value};
+    /// let source = "a:\n  b: 1\n   c: 2\n";  // misaligned indent
+    /// let err = from_str::<Value>(source).unwrap_err();
+    /// let rendered = err.render(source);
+    /// assert!(rendered.contains("error"));
+    /// ```
+    #[must_use]
+    pub fn render(&self, source: &str) -> String {
+        self.render_with_options(source, &RenderOptions::default())
+    }
+
+    /// Render the error with caller-controlled options.
+    ///
+    /// `RenderOptions::crop_radius` sets how many lines of context
+    /// surround the offending line; `RenderOptions::color` enables
+    /// terminal ANSI colour codes. The default
+    /// (`RenderOptions::default()`) is `crop_radius = 2`,
+    /// `color = false`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::{from_str, RenderOptions, Value};
+    /// let source = "a: [unclosed";
+    /// let err = from_str::<Value>(source).unwrap_err();
+    /// let opts = RenderOptions { crop_radius: 1, color: false };
+    /// let rendered = err.render_with_options(source, &opts);
+    /// assert!(rendered.contains("error"));
+    /// ```
+    #[must_use]
+    pub fn render_with_options(&self, source: &str, opts: &RenderOptions) -> String {
+        let plain = if opts.crop_radius == 0 {
+            self.format_with_source(source)
+        } else {
+            self.format_with_source_radius(source, opts.crop_radius)
+        };
+        if opts.color {
+            colorize_render(&plain)
+        } else {
+            plain
+        }
+    }
+}
+
+/// Caller-controlled rendering options for [`Error::render_with_options`].
+///
+/// Defaults to `crop_radius = 2` and `color = false` so the
+/// stable byte-for-byte CI-friendly output stays the default.
+/// Set `color = true` for interactive terminal use.
+///
+/// Construct directly with a struct literal — both fields are
+/// public. Future field additions are tracked as a minor-version
+/// event per the [SemVer policy](https://github.com/sebastienrousseau/noyalib/blob/main/docs/POLICIES.md#2-semver--api-stability).
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::RenderOptions;
+/// let default = RenderOptions::default();
+/// assert_eq!(default.crop_radius, 2);
+/// assert!(!default.color);
+///
+/// // Custom — single-line, coloured.
+/// let custom = RenderOptions { crop_radius: 0, color: true };
+/// assert_eq!(custom.crop_radius, 0);
+/// ```
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct RenderOptions {
+    /// Number of source lines to include above and below the
+    /// offending line. `0` collapses to a single-line render.
+    /// Default `2` (rustc-style window).
+    pub crop_radius: usize,
+    /// When `true`, the rendered output includes terminal ANSI
+    /// colour escapes (red `error:`, blue gutter, yellow caret).
+    /// Default `false` so CI logs and golden tests stay stable.
+    pub color: bool,
+}
+
+impl Default for RenderOptions {
+    fn default() -> Self {
+        Self {
+            crop_radius: 2,
+            color: false,
+        }
+    }
+}
+
+impl RenderOptions {
+    /// Construct with all defaults (`crop_radius = 2`,
+    /// `color = false`). Equivalent to [`RenderOptions::default()`].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::RenderOptions;
+    /// let opts = RenderOptions::new();
+    /// assert_eq!(opts.crop_radius, 2);
+    /// assert!(!opts.color);
+    /// ```
+    #[must_use]
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// Set the crop radius (lines of context on each side of
+    /// the offending line). `0` collapses to a single-line render.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::RenderOptions;
+    /// let opts = RenderOptions::new().crop_radius(4);
+    /// assert_eq!(opts.crop_radius, 4);
+    /// ```
+    #[must_use]
+    pub fn crop_radius(mut self, radius: usize) -> Self {
+        self.crop_radius = radius;
+        self
+    }
+
+    /// Toggle ANSI colour escape codes on rendered output.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::RenderOptions;
+    /// let opts = RenderOptions::new().color(true);
+    /// assert!(opts.color);
+    /// ```
+    #[must_use]
+    pub fn color(mut self, on: bool) -> Self {
+        self.color = on;
+        self
+    }
+}
+
+/// A windowed slice of source text around an error location.
+///
+/// Used internally by [`Error::render_with_options`] and exposed
+/// for callers that want to extract the snippet without
+/// formatting it themselves.
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::CroppedRegion;
+/// let src = "line 1\nline 2 — error here\nline 3\nline 4\n";
+/// let region = CroppedRegion::extract(src, 2, 1);
+/// assert_eq!(region.lines.len(), 3);
+/// assert!(region.lines[1].contains("error"));
+/// ```
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct CroppedRegion<'a> {
+    /// The lines extracted from the source — indices `low_line..=high_line`.
+    pub lines: Vec<&'a str>,
+    /// 0-based index in `lines` of the offending line (i.e., the
+    /// line corresponding to the original `target_line` parameter).
+    pub focus_index: usize,
+    /// The 1-based line number of the first line in `lines`.
+    pub low_line: usize,
+    /// The 1-based line number of the offending (focus) line.
+    pub focus_line: usize,
+}
+
+impl<'a> CroppedRegion<'a> {
+    /// Extract a `radius`-line window around `target_line` (1-based)
+    /// from `source`. Out-of-range targets clamp to the available
+    /// lines; an empty source yields an empty region with
+    /// `focus_line = 0`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use noyalib::CroppedRegion;
+    /// let src = "a\nb\nc\nd\ne\n";
+    /// let r = CroppedRegion::extract(src, 3, 1);
+    /// assert_eq!(r.lines, vec!["b", "c", "d"]);
+    /// assert_eq!(r.focus_index, 1);
+    /// assert_eq!(r.focus_line, 3);
+    /// ```
+    #[must_use]
+    pub fn extract(source: &'a str, target_line: usize, radius: usize) -> Self {
+        let all: Vec<&str> = source.lines().collect();
+        if all.is_empty() {
+            return CroppedRegion {
+                lines: Vec::new(),
+                focus_index: 0,
+                low_line: 0,
+                focus_line: 0,
+            };
+        }
+        let target_idx = target_line.saturating_sub(1).min(all.len() - 1);
+        let lo = target_idx.saturating_sub(radius);
+        let hi = (target_idx + radius).min(all.len() - 1);
+        let lines: Vec<&str> = all[lo..=hi].to_vec();
+        CroppedRegion {
+            lines,
+            focus_index: target_idx - lo,
+            low_line: lo + 1,
+            focus_line: target_idx + 1,
+        }
+    }
+}
+
+/// Wrap the rendered `plain` output with ANSI colour escapes —
+/// red for the `error:` header, blue for the gutter, yellow for
+/// the `^` caret. Implementation detail of
+/// [`Error::render_with_options`] when `color = true`.
+fn colorize_render(plain: &str) -> String {
+    const RED: &str = "\x1b[31;1m";
+    const BLUE: &str = "\x1b[34;1m";
+    const YELLOW: &str = "\x1b[33;1m";
+    const RESET: &str = "\x1b[0m";
+
+    let mut out = String::with_capacity(plain.len() + 64);
+    for line in plain.split_inclusive('\n') {
+        let trimmed = line.trim_end_matches('\n');
+        if let Some(rest) = trimmed.strip_prefix("error:") {
+            out.push_str(RED);
+            out.push_str("error:");
+            out.push_str(RESET);
+            out.push_str(rest);
+        } else if trimmed.trim_start().starts_with('|')
+            || trimmed.starts_with("  --> ")
+            || trimmed.contains(" | ")
+        {
+            out.push_str(BLUE);
+            out.push_str(trimmed);
+            out.push_str(RESET);
+        } else if trimmed.trim_start().starts_with('^') {
+            out.push_str(YELLOW);
+            out.push_str(trimmed);
+            out.push_str(RESET);
+        } else {
+            out.push_str(trimmed);
+        }
+        if line.ends_with('\n') {
+            out.push('\n');
+        }
+    }
+    out
+}
+
+impl serde_core::ser::Error for Error {
+    fn custom<T: fmt::Display>(msg: T) -> Self {
+        Self::Custom(msg.to_string())
+    }
+}
+
+impl serde_core::de::Error for Error {
+    fn custom<T: fmt::Display>(msg: T) -> Self {
+        Self::Custom(msg.to_string())
+    }
+
+    fn missing_field(field: &'static str) -> Self {
+        Self::MissingField(field.to_string())
+    }
+
+    fn unknown_field(field: &str, _expected: &'static [&'static str]) -> Self {
+        Self::UnknownField(field.to_string())
+    }
+}
+
+/// Truncate `s` to at most `max_chars` characters, replacing the
+/// dropped suffix with an ASCII `...` ellipsis. Used by the
+/// `*_truncated` formatters to fit error reports into bounded
+/// log / message-bus channels.
+///
+/// Truncation always lands on a UTF-8 character boundary so the
+/// output is a valid `String`. When `max_chars < 3` the ellipsis
+/// is dropped and the function returns whatever prefix fits.
+fn truncate_with_ellipsis(s: String, max_chars: usize) -> String {
+    let len = s.chars().count();
+    if len <= max_chars {
+        return s;
+    }
+    if max_chars < 3 {
+        // No room for `...` — return the longest character-aligned
+        // prefix that fits.
+        let end = s.char_indices().nth(max_chars).map_or(s.len(), |(i, _)| i);
+        return s[..end].to_owned();
+    }
+    let keep_chars = max_chars - 3;
+    let end = s.char_indices().nth(keep_chars).map_or(s.len(), |(i, _)| i);
+    let mut out = String::with_capacity(end + 3);
+    out.push_str(&s[..end]);
+    out.push_str("...");
+    out
+}
+
+/// A result type where the error is [`Error`].
+///
+/// # Examples
+///
+/// ```
+/// use noyalib::Result;
+/// fn parse() -> Result<noyalib::Value> {
+///     noyalib::from_str("k: 1")
+/// }
+/// assert!(parse().is_ok());
+/// ```
+pub type Result<T> = core::result::Result<T, Error>;
+
+#[cfg(feature = "miette")]
+impl miette::Diagnostic for Error {
+    fn code<'a>(&'a self) -> Option<Box<dyn fmt::Display + 'a>> {
+        Some(Box::new(self.diagnostic_code()))
+    }
+
+    fn help<'a>(&'a self) -> Option<Box<dyn fmt::Display + 'a>> {
+        self.diagnostic_help()
+            .map(|help| -> Box<dyn fmt::Display + 'a> { Box::new(help) })
+    }
+
+    fn source_code(&self) -> Option<&dyn miette::SourceCode> {
+        if let Self::Shared(arc) = self {
+            return arc.source_code();
+        }
+        None
+    }
+
+    fn labels(&self) -> Option<Box<dyn Iterator<Item = miette::LabeledSpan> + '_>> {
+        let diagnostic = self.diagnostic();
+        if diagnostic.labels().is_empty() {
+            return None;
+        }
+        let labels: Vec<_> = diagnostic
+            .labels()
+            .iter()
+            .map(|label| {
+                let span = label.span();
+                miette::LabeledSpan::new(
+                    Some(label.message().to_owned()),
+                    span.offset(),
+                    span.length(),
+                )
+            })
+            .collect();
+        Some(Box::new(labels.into_iter()))
+    }
+}
+
+/// Longest anchor name, in characters, that the "did you mean"
+/// suggestion compares. Typos worth suggesting a fix for are in short
+/// names; comparing long ones costs the product of their lengths.
+const MAX_SUGGESTION_NAME_CHARS: usize = 64;
+
+/// Most anchor names the suggestion search examines.
+const MAX_SUGGESTION_CANDIDATES: usize = 4096;
+
+/// Largest edit distance still offered as a suggestion.
+const MAX_SUGGESTION_DISTANCE: usize = 2;
+
+/// The known name closest to `name` within two edits, if any.
+///
+/// Bounded so that an unknown alias in a document with many long
+/// anchors costs little: names longer than
+/// [`MAX_SUGGESTION_NAME_CHARS`] are not compared, candidates whose
+/// length differs by more than two cannot be within two edits and are
+/// skipped, and at most [`MAX_SUGGESTION_CANDIDATES`] are examined.
+pub(crate) fn closest_name<'a>(
+    name: &str,
+    names: impl Iterator<Item = &'a str>,
+) -> Option<&'a str> {
+    let target_len = bounded_char_count(name)?;
+    let mut best_dist = usize::MAX;
+    let mut best_name = None;
+    for n in names.take(MAX_SUGGESTION_CANDIDATES) {
+        let Some(len) = bounded_char_count(n) else {
+            continue;
+        };
+        if len.abs_diff(target_len) > MAX_SUGGESTION_DISTANCE {
+            continue;
+        }
+        let dist = edit_distance(name, n);
+        if dist < best_dist && dist <= MAX_SUGGESTION_DISTANCE {
+            best_dist = dist;
+            best_name = Some(n);
+        }
+    }
+    best_name
+}
+
+/// `s`'s length in characters, or `None` past
+/// [`MAX_SUGGESTION_NAME_CHARS`]; never walks further than that.
+fn bounded_char_count(s: &str) -> Option<usize> {
+    let mut count = 0;
+    for _ in s.chars() {
+        count += 1;
+        if count > MAX_SUGGESTION_NAME_CHARS {
+            return None;
+        }
+    }
+    Some(count)
+}
+
+fn edit_distance(a: &str, b: &str) -> usize {
+    let a_len = a.chars().count();
+    let b_len = b.chars().count();
+    if a_len == 0 {
+        return b_len;
+    }
+    if b_len == 0 {
+        return a_len;
+    }
+    let mut row: Vec<usize> = (0..=b_len).collect();
+    for (i, ca) in a.chars().enumerate() {
+        let mut prev = i + 1;
+        for (j, cb) in b.chars().enumerate() {
+            let mut next = row[j] + usize::from(ca != cb);
+            if i + 1 < row[j + 1] + 1 && i + 1 < next {
+                next = i + 1;
+            }
+            if prev + 1 < next {
+                next = prev + 1;
+            }
+            row[j] = prev;
+            prev = next;
+        }
+        row[b_len] = prev;
+    }
+    row[b_len]
+}
+
+/// Panic helper for invariants the type system cannot express but
+/// which the implementation has proved hold. Intended to replace
+/// inline `unreachable!()` arms so the panic site is a single
+/// `coverage(off)`-annotated function rather than an
+/// arm-by-arm region in the coverage report.
+///
+/// `msg` is the human-readable invariant statement — quoted
+/// verbatim into the panic message when the impossible happens
+/// (e.g. when a future refactor accidentally breaks the
+/// invariant). The tail-call shape lets call sites use it in any
+/// position that expects a divergent expression.
+#[track_caller]
+#[cold]
+#[inline(never)]
+#[cfg_attr(noyalib_coverage, coverage(off))]
+// `cargo kani` swaps the panic macros for its own assertion
+// intrinsics, which drop the message formatting — under that
+// compiler `msg` counts as unused and the deny-level `unused`
+// lint would fail the proof build.
+#[cfg_attr(kani, allow(unused_variables))]
+pub(crate) fn invariant_violated(msg: &'static str) -> ! {
+    unreachable!("invariant violated: {msg}")
+}
+
+#[cfg(test)]
+mod truncate_tests {
+    use super::truncate_with_ellipsis;
+
+    #[test]
+    fn under_budget_passthrough() {
+        assert_eq!(truncate_with_ellipsis("hello".into(), 10), "hello");
+        assert_eq!(truncate_with_ellipsis("hello".into(), 5), "hello");
+    }
+
+    #[test]
+    fn over_budget_truncates_with_ellipsis() {
+        assert_eq!(truncate_with_ellipsis("hello world".into(), 8), "hello...");
+        assert_eq!(truncate_with_ellipsis("0123456789".into(), 5), "01...");
+    }
+
+    #[test]
+    fn tiny_budget_drops_ellipsis() {
+        assert_eq!(truncate_with_ellipsis("hello".into(), 0), "");
+        assert_eq!(truncate_with_ellipsis("hello".into(), 1), "h");
+        assert_eq!(truncate_with_ellipsis("hello".into(), 2), "he");
+    }
+
+    #[test]
+    fn utf8_aligned_at_char_boundary() {
+        // Multi-byte chars — truncation must not split codepoints.
+        let s = "café au lait — décaféiné".to_string();
+        let t = truncate_with_ellipsis(s, 10);
+        assert!(t.is_char_boundary(t.len()));
+        assert_eq!(t.chars().count(), 10);
+    }
+}
+
+#[cfg(all(test, feature = "std"))]
+mod relocate_tests {
+    //! `relocate` re-anchors a located error onto the whole input.
+    //!
+    //! The stream readers parse each document from its own slice, so an
+    //! error they raise counts its bytes from that slice. `relocate`
+    //! shifts it onto the full source, and every located variant has to
+    //! be shifted — a variant that falls through unshifted reports a
+    //! position in the wrong document, which is worse than no position
+    //! at all.
+    //!
+    //! It is `pub(crate)` and reached only from the `cst` module, so
+    //! this exercises it directly rather than hoping a CST test happens
+    //! to produce each variant.
+
+    use super::{Error, Location};
+
+    /// `source` is laid out so a shift of `base` lands on line 3.
+    const SOURCE: &str = "first\nsecond\nthird line here\n";
+    const BASE: usize = 13; // start of "third line here"
+
+    /// Build one of each located variant, all pointing at byte 0 of
+    /// their own slice.
+    fn located_variants() -> Vec<(&'static str, Error)> {
+        let at0 = Location::from_index("third line here\n", 0);
+        vec![
+            (
+                "ParseWithLocation",
+                Error::ParseWithLocation {
+                    message: "m".into(),
+                    location: at0,
+                },
+            ),
+            (
+                "DeserializeWithLocation",
+                Error::DeserializeWithLocation {
+                    message: "m".into(),
+                    location: at0,
+                },
+            ),
+            (
+                "UnknownAnchorAt",
+                Error::UnknownAnchorAt {
+                    name: "a".into(),
+                    location: at0,
+                    suggestion: Some(("b".into(), at0)),
+                },
+            ),
+            (
+                "DuplicateKeyAt",
+                Error::DuplicateKeyAt {
+                    key: "k".into(),
+                    path: "p".into(),
+                    location: at0,
+                },
+            ),
+            (
+                "KeyCollisionAt",
+                Error::KeyCollisionAt {
+                    key: "k".into(),
+                    path: "p".into(),
+                    location: at0,
+                },
+            ),
+            (
+                "IntegerOverflow",
+                Error::IntegerOverflow {
+                    location: Some(at0),
+                    path: Some("p".into()),
+                },
+            ),
+            (
+                "NonScalarKey",
+                Error::NonScalarKey {
+                    kind: "sequence",
+                    location: Some(at0),
+                },
+            ),
+        ]
+    }
+
+    #[test]
+    fn every_located_variant_is_shifted_onto_the_whole_source() {
+        for (name, err) in located_variants() {
+            let before = err.location().expect("the fixture variant is located");
+            assert_eq!(before.index(), 0, "{name}: fixture is not at byte 0");
+
+            let after = err
+                .relocate(SOURCE, BASE)
+                .location()
+                .unwrap_or_else(|| panic!("{name}: relocate dropped the location"));
+
+            assert_eq!(after.index(), BASE, "{name}: byte index not shifted");
+            assert_eq!(
+                after.line(),
+                3,
+                "{name}: line not recomputed from the whole source"
+            );
+            assert_eq!(after.column(), 1, "{name}: column not recomputed");
+        }
+    }
+
+    #[test]
+    fn a_base_of_zero_is_the_identity() {
+        for (name, err) in located_variants() {
+            let before = err.to_string();
+            let after = err.relocate(SOURCE, 0);
+            assert_eq!(
+                after.to_string(),
+                before,
+                "{name}: base 0 changed the error"
+            );
+        }
+    }
+
+    #[test]
+    fn an_unlocated_variant_survives_relocation_unchanged() {
+        for (name, err) in [
+            ("Parse", Error::Parse("m".into())),
+            ("Serialize", Error::Serialize("m".into())),
+            ("Custom", Error::Custom("m".into())),
+            ("EndOfStream", Error::EndOfStream),
+            ("RepetitionLimitExceeded", Error::RepetitionLimitExceeded),
+            ("DuplicateKey", Error::DuplicateKey("k".into())),
+            ("UnknownAnchor", Error::UnknownAnchor("a".into())),
+        ] {
+            let before = err.to_string();
+            let kind = err.kind();
+            let after = err.relocate(SOURCE, BASE);
+            assert_eq!(after.to_string(), before, "{name}: message changed");
+            assert_eq!(after.kind(), kind, "{name}: kind changed");
+            assert!(after.location().is_none(), "{name}: gained a location");
+        }
+    }
+
+    /// The suggestion inside `UnknownAnchorAt` carries its own location
+    /// and has to move too — it is the one nested location in the enum,
+    /// and a shift that misses it points at the wrong anchor.
+    #[test]
+    fn the_nested_suggestion_location_is_shifted_too() {
+        let at0 = Location::from_index("third line here\n", 0);
+        let err = Error::UnknownAnchorAt {
+            name: "a".into(),
+            location: at0,
+            suggestion: Some(("b".into(), at0)),
+        };
+        let Error::UnknownAnchorAt { suggestion, .. } = err.relocate(SOURCE, BASE) else {
+            panic!("relocate changed the variant");
+        };
+        let (_, loc) = suggestion.expect("the suggestion was dropped");
+        assert_eq!(
+            loc.index(),
+            BASE,
+            "the suggestion's location was not shifted"
+        );
+        assert_eq!(loc.line(), 3, "the suggestion's line was not recomputed");
+    }
+}

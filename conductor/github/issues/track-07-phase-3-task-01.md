@@ -3,11 +3,11 @@
 
 Parent phase key: `track-07-phase-3`
 Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete reviewer usability and inter-rater calibration evaluation.
+- [x] Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles.
 
 ## Completion and evidence contract
 

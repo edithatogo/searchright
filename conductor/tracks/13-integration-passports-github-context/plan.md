@@ -80,4 +80,5 @@ GitHub issue key: `track-13`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `7eb4ea7`: Upgrade Track 13 assertions to symbol_and_gate_mapped with native test commands, add unit tests for IntegrationPassport, GitHubIssueHierarchy, and GitHubProjectManifest validation in searchright-contracts, and record conductor review receipt.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

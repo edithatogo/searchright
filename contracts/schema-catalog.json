@@ -662,6 +662,26 @@
       "evidence_level": "static_verified"
     },
     {
+      "id": "sourceright-parity-catalogue-v2",
+      "schema": "contracts/json-schema/sourceright-parity-catalogue.v2.schema.json",
+      "example": "contracts/examples/sourceright-parity-catalogue.v2.json",
+      "schema_id": "https://schemas.searchright.dev/sourceright-parity-catalogue.v2.schema.json",
+      "rust_type": "ParityExpectedCatalogueV2",
+      "owner_track": "03",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
+      "id": "sourceright-parity-matrix-v2",
+      "schema": "contracts/json-schema/sourceright-parity-matrix.v2.schema.json",
+      "example": "contracts/examples/sourceright-parity-matrix.v2.json",
+      "schema_id": "https://schemas.searchright.dev/sourceright-parity-matrix.v2.schema.json",
+      "rust_type": "ParityExecutionMatrixV2",
+      "owner_track": "03",
+      "stability": "alpha",
+      "evidence_level": "static_verified"
+    },
+    {
       "id": "standard-assessment",
       "schema": "contracts/json-schema/standard-assessment.v1.schema.json",
       "example": "contracts/examples/standard-assessment.yaml",

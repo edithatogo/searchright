@@ -12,6 +12,8 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_rust_source_structure.py`
   - [x] `python scripts/check_workflow_hardening.py`
   - [x] `python scripts/check_schema_migrations.py`
+  - [x] `python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py`
+  - [x] `python3 -B -m unittest discover -s tests -p test_mcp_authority_state_machine.py`
 
 ## Completion and evidence contract
 

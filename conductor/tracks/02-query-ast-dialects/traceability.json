@@ -71,7 +71,7 @@
       "assertion_id": "T02-A003",
       "statement": "Build PubMed/Ovid MEDLINE/Embase/CINAHL/PsycINFO/Scopus/Web of Science corpus",
       "state": "source_implemented",
-      "mapping_confidence": "path_and_gate_mapped",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "contracts/query-corpus/index.json",
         "contracts/query-corpus/pubmed.txt",
@@ -85,7 +85,8 @@
         "scripts/check_native_query_corpus.py"
       ],
       "implementation_symbols": [
-        "scripts/check_native_query_corpus.py::main"
+        "scripts/check_native_query_corpus.py::main",
+        "evidence_search_core::native::tests::checked_in_native_corpus_is_source_preserving"
       ],
       "deterministic_tests": [
         "python scripts/check_native_query_corpus.py"
@@ -97,7 +98,10 @@
       "open_gates": [
         "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
       ],
-      "permitted_claim": "A seven-dialect source-preservation corpus exists and is statically validated; it is not an external conformance benchmark."
+      "permitted_claim": "A seven-dialect source-preservation corpus exists and is statically validated; it is not an external conformance benchmark.",
+      "native_test_commands": [
+        "cargo test --locked -p evidence-search-core native::tests::checked_in_native_corpus_is_source_preserving -- --exact"
+      ]
     },
     {
       "assertion_id": "T02-A004",

@@ -4,6 +4,10 @@ Current status: **partially_implemented**. Implementation state: **partially_imp
 
 GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered native subissue.
 
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
+
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-30-phase-1 -->
@@ -21,6 +25,10 @@ GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `conductor/launch-preparation-roadmap.json`
   - [x] Present source path: `scripts/check_launch_preparation_roadmap.py`
   - [x] Present source path: `tests/test_launch_preparation_roadmap.py`
+  - [x] Present source path: `conductor/frontier-plan.md`
+  - [x] Present source path: `docs/research/programme.md`
+  - [x] Present source path: `docs/research/evidence-packages.md`
+  - [x] Present source path: `docs/research/portfolio-reuse.md`
   - [x] Assertion ledger: `conductor/tracks/30-maturity-gap-closure/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -41,7 +49,7 @@ GitHub issue key: `track-30`. Each numbered phase maps to the same-numbered nati
 
 - [ ] Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.
 - [ ] Review and approve any explicit release-risk exception without hiding the open gap.
-- [ ] Keep autonomous end-to-end review and final agent exclusions outside the release claim.
+- [ ] Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.
 - [ ] LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.
 - [ ] LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.
 - [ ] LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.

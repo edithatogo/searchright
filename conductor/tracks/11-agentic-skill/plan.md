@@ -4,6 +4,10 @@ Current status: **partially_implemented**. Implementation state: **partially_imp
 
 GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered native subissue.
 
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
+
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-11-phase-1 -->
@@ -34,6 +38,8 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `crates/searchright-agent/tests/skill_scenarios.rs`
   - [x] Present source path: `scripts/check_agent_skill.py`
   - [x] Present source path: `verification/receipts/systematic-search-skill.json`
+  - [x] Present source path: `crates/searchright-agent/src/sibling.rs`
+  - [x] Present source path: `crates/searchright-agent/tests/sibling_admission.rs`
   - [x] Assertion ledger: `conductor/tracks/11-agentic-skill/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -65,6 +71,7 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c`: Separate approval verification from untrusted proposals; deny generic final exclusions and amendments; enforce bounded, adjacent, purpose-bound and byte-verified handoffs; validate methodology, deduplication, telemetry and receipt freshness boundaries.
   - Review fix `b7f42271ca25860acc83ef16414b514e96f39c2b`: Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates.
+  - Review fix `6b046f1`: Reconcile Track 11 traceability, deliverables, and assertion mappings across all six assertions with native test commands; bootstrap unit test script module discovery.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 - [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.

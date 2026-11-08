@@ -4,6 +4,10 @@ Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence l
 
 GitHub issue key: `track-23`. Each numbered phase maps to the same-numbered native subissue.
 
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
+
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-23-phase-1 -->
@@ -37,5 +41,6 @@ GitHub issue key: `track-23`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 23 assertions (T23-A001..T23-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-ranking, failure-modes.md, and test_active_learning_ranking_governance.py; create unit test suite in tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards, failure-mode countermeasures, and Track 23 traceability invariants; harden unit tests in crates/searchright-ranking and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open SYNERGY benchmark, human calibration, and stopping rule blockers without false promotion.
 - [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

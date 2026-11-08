@@ -1,0 +1,572 @@
+[package]
+name = "noyalib"
+version = "0.0.58"
+edition = "2024"
+rust-version = "1.89.0"
+license = "MIT OR Apache-2.0"
+description = "A pure Rust YAML library with zero unsafe code and full serde integration"
+repository = "https://github.com/sebastienrousseau/noyalib"
+homepage = "https://github.com/sebastienrousseau/noyalib"
+documentation = "https://docs.rs/noyalib"
+readme = "README.md"
+keywords = ["yaml", "serde", "serialization", "parser", "safe"]
+categories = ["encoding", "parser-implementations", "config"]
+authors = ["Sebastien Rousseau <sebastian.rousseau@gmail.com>"]
+include = [
+    "/benches/**",
+    "/build.rs",
+    "/Cargo.toml",
+    "/examples/**",
+    "/LICENSE-APACHE",
+    "/LICENSE-MIT",
+    "/README.md",
+    "/src/**",
+    "/tests/**",
+]
+
+[lib]
+name = "noyalib"
+path = "src/lib.rs"
+
+## ── Core ──
+[[example]]
+name = "lossless_u64"
+path = "examples/lossless_u64.rs"
+required-features = ["lossless-u64"]
+
+[[example]]
+name = "schema_validation"
+path = "examples/schema_validation.rs"
+required-features = ["validate-schema"]
+
+[[example]]
+name = "schema_compiled"
+path = "examples/schema_compiled.rs"
+required-features = ["validate-schema"]
+
+[[example]]
+name = "strict_deserialise"
+path = "examples/strict_deserialise.rs"
+required-features = ["strict-deserialise"]
+
+## ── Ecosystem Citizen ──
+[[example]]
+name = "figment"
+path = "examples/figment.rs"
+required-features = ["figment"]
+
+[[example]]
+name = "validation_garde"
+path = "examples/validation_garde.rs"
+required-features = ["garde"]
+
+[[example]]
+name = "validation_validator"
+path = "examples/validation_validator.rs"
+required-features = ["validator"]
+
+[[example]]
+name = "ariadne_diagnostic"
+path = "examples/ariadne_diagnostic.rs"
+required-features = ["ariadne"]
+
+[[example]]
+name = "validated_miette"
+path = "examples/validated_miette.rs"
+required-features = ["miette", "garde"]
+
+[[example]]
+name = "include_directive"
+path = "examples/include_directive.rs"
+required-features = ["include_fs"]
+
+[[example]]
+name = "recovery_lenient"
+path = "examples/recovery_lenient.rs"
+required-features = ["recovery"]
+
+[[example]]
+name = "sval_streaming"
+path = "examples/sval_streaming.rs"
+required-features = ["sval"]
+
+[[example]]
+name = "tokio_async_reader"
+path = "examples/tokio_async_reader.rs"
+required-features = ["tokio"]
+
+## ── Coverage-gap examples added in v0.0.14 ──
+[[example]]
+name = "parallel"
+path = "examples/parallel.rs"
+required-features = ["parallel"]
+
+[[example]]
+name = "simd"
+path = "examples/simd.rs"
+required-features = ["simd"]
+
+[dependencies]
+serde_core = { version = "1.0", default-features = false, features = ["alloc"] }
+indexmap = { version = ">=2, <3", default-features = false, features = ["serde"] }
+rustc-hash = { version = ">=2, <3", default-features = false }
+# `rustc_hash::FxHashMap`/`FxHashSet` are std-only aliases. On
+# bare-metal targets the maps come from hashbrown instead, keyed by
+# the same FxBuildHasher, so hashing behaviour is identical. See #210.
+hashbrown = { version = "0.17", default-features = false }
+# `core` has no float math: `f64::fract` and `f64::mul_add` are std
+# inherent methods. libm supplies them for bare-metal targets;
+# hosted builds use the inherent ones and never call into it.
+# See #210.
+libm = { version = "0.2", default-features = false }
+itoa = { version = "1", optional = true }
+ryu = { version = "1", optional = true }
+memchr = { version = "2.7", default-features = false }
+smallvec = { version = "1.13", default-features = false }
+miette = { version = "7", optional = true }
+ariadne = { version = "0.6", optional = true, default-features = false }
+garde = { version = "0.23", optional = true, default-features = false, features = ["derive"] }
+validator = { version = "0.21", optional = true, features = ["derive"] }
+# NOTE: `serde_yaml` 0.9 is intentionally NOT a noyalib dependency.
+# The upstream crate is unmaintained; the `compat-serde-yaml` shim
+# exposes a name-for-name surface backed entirely by noyalib's own
+# types so downstream `cargo audit` / `cargo deny` runs do not pick
+# up the archived advisory chain. Migrating an in-flight
+# `::serde_yaml::Value` from an un-migrated module flows through
+# the Serde data model — `noyalib::to_value(&upstream_value)?` —
+# the same universal-translator path Serde provides for every
+# JSON-shaped library pair.
+# JSON Schema codegen — derive `JsonSchema` for a Rust type and emit
+# the schema as YAML for sharing / contract enforcement. Pulled in
+# only when the `schema` feature is on so users who don't need
+# codegen don't pay for the dep.
+schemars = { version = "1.2", optional = true, default-features = false, features = ["derive", "std"] }
+serde_json = { version = "1.0", optional = true }
+# JSON Schema *validation* engine — pulled in only when the
+# `validate-schema` feature is on. Default features are disabled so
+# we don't drag in `reqwest` for HTTP `$ref` resolution; users who
+# need that can re-enable it via their own dep.
+jsonschema = { version = "0.58", optional = true, default-features = false }
+# `figment` integration — drop-in `Provider` for the popular
+# layered-configuration crate. Pulled in only when the `figment`
+# feature is on so non-figment users don't pay for it.
+figment = { version = "0.10", optional = true, features = ["env"] }
+# NOTE: `serde-saphyr` lives under `[dependencies]` (not
+# `[dev-dependencies]`) because Cargo doesn't allow optional
+# dev-deps. It's gated behind the `compare-saphyr` feature and
+# only used inside `#[cfg(feature = "compare-saphyr")]` bench
+# arms; nothing in the runtime crate references it. Off by default
+# so an `--all-features` build doesn't pull in the saphyr crate
+# (which builds on the 1.89 MSRV but is still extra deps the rest of
+# the workspace doesn't need).
+serde-saphyr = { version = "1.1", optional = true }
+# Parallel multi-document parsing — pulled in only when the
+# `parallel` feature is on. Rayon is the de-facto safe data-parallel
+# Rust crate and itself uses well-vetted unsafe internally; the
+# `noyalib` runtime call sites stay `#![forbid(unsafe_code)]`.
+rayon = { version = "1.10", optional = true }
+# `serde_ignored` powers `from_str_strict<T>` — surfaces any keys
+# in the input that `T` does not declare. Tiny (no transitive deps),
+# but feature-gated behind `strict-deserialise` so the `minimal`
+# profile (and FIPS / embedded users with strict dep policies) can
+# turn it off.
+serde_ignored = { version = "0.1", optional = true }
+# Zero-allocation streaming serialization framework — alternative
+# to serde for the `sval` feature. Pulled in only when the
+# `sval` feature is enabled.
+sval = { version = "2", optional = true, default-features = false }
+# `Arbitrary` for Value, Number, Tag, TaggedValue, Mapping (feature `arbitrary`).
+arbitrary = { version = "1", optional = true }
+# `tokio` async runtime — required by the `tokio` feature for
+# native `AsyncRead` parsing, `AsyncYamlStream`, and the decoder. Default
+# features off; we only need the I/O bits.
+tokio = { version = "1", optional = true, default-features = false, features = ["io-util"] }
+tokio-util = { version = "0.7", optional = true, default-features = false, features = ["codec"] }
+bytes = { version = "1", optional = true, default-features = false }
+
+[target.'cfg(unix)'.dependencies]
+# Safe directory-relative opens for `SafeFileResolver`. rustix is already in
+# the audited workspace graph; keeping it target-specific preserves Windows
+# builds and the alloc-only dependency surface.
+rustix = { version = "1.1.4", optional = true, features = ["fs"] }
+
+[dev-dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_bytes = "0.11"
+criterion = "0.8"
+proptest = "1.11"
+yaml-rust2 = "0.13"
+rust-yaml = "1.0.1"
+# Bench-only competitor surface. None of these ship transitively
+# in any release artefact — they are dev-deps used exclusively by
+# `crates/noyalib/benches/comparison.rs` for head-to-head Rust
+# YAML benchmarks. See `docs/BENCHMARKS.md` for measured numbers.
+#
+# `yaml-spanned` is the closest other span-tracking parser
+# in the ecosystem. (`serde_yml` — the maintainer's prior crate
+# — was previously benched here; it was retired in v0.0.6 after
+# RUSTSEC-2025-0068 flagged it unsound + unmaintained so the
+# OpenSSF Scorecard Vulnerabilities check stays clean.
+# `serde_yaml_ng` followed in v0.0.58: it depends on
+# `unsafe-libyaml`, which RUSTSEC-2024-0449 marks unmaintained, and
+# cargo-deny fails on it.)
+yaml-spanned = "0.0"
+# Ecosystem interop verification — proves noyalib's
+# `Deserializer<'de>` works with the standard serde wrappers
+# without any custom integration code.
+serde_path_to_error = "0.1"
+# `serde_ignored` is feature-gated as a runtime dep (powers
+# `strict-deserialise`); duplicating it as a dev-dep keeps the
+# `serde_ecosystem` interop test compiling under
+# `--no-default-features` builds.
+serde_ignored = "0.1"
+# Test-only tokio runtime — the `tokio` feature in `[features]`
+# only enables `io-util`; tests need `macros` and the
+# `current-thread` runtime to execute `#[tokio::test]` cases.
+tokio = { version = "1", features = ["macros", "rt", "io-util"] }
+# Reproduces a consumer build that unifies `jsonschema`'s file
+# resolver in, so `tests/schema/schema_hardening.rs` proves external
+# `$ref` stays refused regardless of the features another crate
+# enables. Adds no crates: `resolve-file` has no dependencies.
+jsonschema = { version = "0.58", default-features = false, features = ["resolve-file"] }
+
+[[bench]]
+name = "benchmarks"
+harness = false
+
+[[bench]]
+name = "comparison"
+harness = false
+
+[[bench]]
+name = "architecture"
+harness = false
+
+[[bench]]
+name = "validation_overhead"
+harness = false
+
+[[bench]]
+name = "incremental_repair"
+harness = false
+
+[[bench]]
+name = "simd"
+harness = false
+required-features = ["simd"]
+
+[[bench]]
+name = "streaming_vs_value"
+harness = false
+
+[[bench]]
+name = "mapping_key_clone"
+harness = false
+
+[[bench]]
+name = "interner"
+harness = false
+
+[[bench]]
+name = "parallel"
+harness = false
+required-features = ["parallel"]
+
+[[bench]]
+name = "borrowed_vs_value"
+harness = false
+
+[[bench]]
+name = "large_doc_soak"
+harness = false
+
+[[bench]]
+name = "structural_bitmask"
+harness = false
+
+[[bench]]
+name = "numeric_parse"
+harness = false
+
+[[bench]]
+name = "lossless_u64"
+harness = false
+required-features = ["lossless-u64"]
+
+[[bench]]
+name = "v006_features"
+harness = false
+required-features = ["recovery", "sval", "tokio"]
+
+[features]
+default = ["std", "fast-int", "fast-float", "strict-deserialise"]
+# Branchless integer formatting via `itoa` (~10× faster than
+# `Display::fmt` on integer scalars). Disabling drops the dep and
+# falls back to `core::fmt`; output is identical, only the
+# serializer hot path slows down.
+fast-int = ["dep:itoa"]
+# Branchless float formatting via `ryu` (Grisu-style algorithm).
+# Disabling drops the dep and falls back to Rust's `{:?}` Debug
+# format, which preserves float-ness (`1.0` stays `1.0`) but emits
+# expanded decimal form for very large magnitudes (`{:?}` does not
+# auto-switch to scientific notation the way ryu does).
+fast-float = ["dep:ryu"]
+# `from_str_strict` / `from_slice_strict` / `from_reader_strict`
+# — surface YAML keys that the target struct does not declare as
+# typed `Error::UnknownField`. Backed by `serde_ignored`. Off in
+# the `minimal` profile for FIPS / embedded users with strict
+# dep-budget policies; the regular `from_str` path is unaffected.
+strict-deserialise = ["dep:serde_ignored"]
+# Meta-feature: alias for "std-only, no formatting accelerators,
+# no strict-deserialise helper" — for users with strict dep
+# budgets (FIPS, embedded, audit-heavy environments) who want one
+# explicit opt-in. Equivalent to
+# `default-features = false, features = ["std"]`.
+minimal = ["std"]
+# Synchronise serde's std mode with ours so the `serde_core::de::Error`
+# trait's `StdError` super-trait resolves consistently. With this
+# wired, `cargo build --no-default-features` truly compiles in
+# no_std and serde's de::Error does not require `std::error::Error`.
+std = [
+    "serde_core/std",
+    # These three are declared `default-features = false` so bare-metal
+    # targets can build (#210). Hosted builds turn their std back on
+    # here, which keeps `rustc_hash::FxHashMap`/`FxHashSet` available
+    # and `IndexMap`'s default `RandomState` hasher in place — without
+    # this the public signatures that spell `IndexMap<K, V>` would need
+    # a third parameter.
+    "indexmap/std",
+    "rustc-hash/std",
+    "memchr/std",
+]
+# `miette` 7 requires `std` (its `Diagnostic` supertrait is
+# `std::error::Error`), so the feature implies it — the combination
+# `--no-default-features --features miette` never compiled without
+# this, caught by the feature-powerset sweep.
+miette = ["dep:miette", "std"]
+ariadne = ["dep:ariadne"]
+# Opt-in `LosslessFloat` — deserialization rejects infinities, NaN,
+# and any value that loses precision as f64; the floating-point
+# sibling of `lossless-u64`. Needs nothing beyond the mandatory
+# `serde_core`.
+lossless-float = []
+# `!include` directive — post-parse walk that consults a
+# user-supplied `crate::include::IncludeResolver` for every
+# `Value::Tagged(!include, _)` node and substitutes the
+# resolved content in-place. Pairs with `max_include_depth`
+# for cycle bounding. Off by default so callers who never see
+# `!include` scalars pay zero compile cost.
+include = []
+# Filesystem-backed `crate::include::SafeFileResolver` (root
+# sandbox, symlink policy). Implies `include` + `std`.
+include_fs = ["include", "std", "dep:rustix"]
+garde = ["dep:garde"]
+validator = ["dep:validator"]
+wasm-opt = []
+noyavalidate = ["std", "miette", "miette/fancy", "validate-schema"]
+# Drop-in surface compatible with `serde_yaml` 0.9. Adds the
+# `noyalib::compat::serde_yaml` module with name-for-name re-exports
+# and the `Error` parity needed for logic-transparent migration —
+# every type the shim exposes is a noyalib-native type, not a
+# re-export of the archived upstream crate. Off by default so users
+# who do not need migration help do not see the extra surface.
+# The shim needs `lossless-u64` for its integer-precision contract
+# (`u64::MAX` survives the serde_json path exactly, as upstream).
+compat-serde-yaml = ["lossless-u64"]
+# Opt-in unsigned integer model for YAML `!!int` scalars in the
+# `i64::MAX + 1..=u64::MAX` range. Dependency-free; off by default
+# because it exposes an additional public `Number` variant.
+lossless-u64 = []
+# JSON Schema codegen via `schemars`. With this on you can
+# `#[derive(noyalib::JsonSchema)]` for a Rust type and call
+# `noyalib::schema_for::<T>()` / `schema_for_yaml::<T>()` to obtain
+# the schema as a `Value` or as YAML text. Schema *validation* of
+# YAML against the schema is covered by Phase 3.2 (CLI surface).
+schema = ["dep:schemars", "dep:serde_json"]
+# JSON Schema validation engine. With this on you can call
+# `noyalib::validate_against_schema(value, schema)` to enforce a
+# JSON Schema 2020-12 contract against parsed YAML data. Implies
+# `schema` so the codegen and validation halves of Phase 3 can be
+# enabled together with one flag.
+validate-schema = ["schema", "dep:jsonschema"]
+# `figment` provider integration. With this on, `noyalib::figment`
+# exposes a `Yaml` provider that drops into `figment::Figment`
+# layering chains the same way `figment::providers::Toml` /
+# `figment::providers::Json` do.
+figment = ["dep:figment", "std"]
+# SIMD-friendly multi-byte search primitives for parser hot paths.
+# Ships a feature-gated `noyalib::simd` module containing
+# `find_any_of` and friends — vectorised via memchr's SSE2 / NEON
+# arity-1/2/3 primitives where applicable, SWAR (8-byte-stride
+# u64 packing) for needle sets of 4+ bytes, and a scalar fallback.
+# Pure-safe Rust (no `unsafe`) — preserves the workspace
+# `unsafe_code = "forbid"` invariant. Off by default so the most
+# conservative environments stay on the byte-by-byte baseline; on
+# by callers who want the throughput uplift on supported targets.
+simd = []
+# Opt-in cross-library benchmark comparison against `serde-saphyr`.
+# Off by default because the saphyr crate's manifest requires Rust
+# 2024 edition (Cargo 1.85+). Enabling this feature pulls saphyr in
+# as a dev-dep and gates the comparison bench arms on its presence.
+compare-saphyr = ["dep:serde-saphyr"]
+# Native async stream parsing on top of `tokio::io::AsyncRead`.
+# Adds `noyalib::tokio_async` with bounded reader helpers,
+# `AsyncYamlStream`, and a `YamlDecoder` codec for custom framed pipelines.
+# Off by default to keep the dep list lean for sync-only callers.
+tokio = ["dep:tokio", "dep:tokio-util", "dep:bytes", "std"]
+# `sval` zero-allocation streaming serialization framework
+# adapter. Adds `impl sval::Value for Value` (and the other
+# in-tree value types) plus a `noyalib::sval_adapter::to_sval_writer`
+# entry point. serde remains the default; this is opt-in for
+# callers that want to skip serde monomorphisation overhead.
+sval = ["dep:sval"]
+# Structure-aware fuzzing and property testing: `arbitrary::Arbitrary`
+# for every public value type. The arbitrary crate needs std.
+arbitrary = ["dep:arbitrary", "std"]
+# Error-recovering parser for LSP / IDE partial parsing. Adds
+# the `noyalib::recovery` module with `parse_lenient` /
+# `parse_lenient_with` entry points returning a `ParseResult`
+# carrying the best-effort tree plus the collected error list.
+# Pure Rust, no extra deps — turns existing strict-parse retries
+# into a recovery pipeline. Off by default because the strict
+# path is what most callers want.
+recovery = ["std"]
+# Parallel multi-document deserialisation via Rayon. Adds the
+# `noyalib::parallel` module:
+#   - `parallel::parse<T>(&str) -> Result<Vec<T>>` — typed deserialise.
+#   - `parallel::parse_with_config_in_pool<T>(...)` — bounded caller pool.
+#   - `parallel::values(&str) -> Result<Vec<Value>>` — dynamic-tree variant.
+#   - `parallel::split(&str) -> Vec<&str>` — exposed boundary scanner
+#     for callers driving their own concurrency primitives.
+# Parsing validates the document budget without retaining offsets,
+# then discovers `---` boundaries on demand. Rayon's worker count
+# bounds in-flight deserialisation, and the pool-aware entry point lets
+# services own their concurrency limit and thread lifecycle. Off by
+# default to keep the runtime dep list lean for users that only parse
+# single-document inputs.
+parallel = ["dep:rayon", "std"]
+# Portable-SIMD (`std::simd`) structural scanner. Builds a 16/32/
+# 64-byte-wide `SimdScanner` that finds any byte in a needle set
+# in a single SIMD pass. Requires the nightly toolchain because
+# `core::simd` is unstable (`#![feature(portable_simd)]`). On by
+# default for nightly users who want maximum throughput; the
+# stable `simd` feature still ships the memchr / SWAR fall-back so
+# stable builds are not regressed.
+nightly-simd = ["simd"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+# Linting config
+[lints.rust]
+# Two custom cfg flags are emitted by `build.rs`: `noyalib_nightly`
+# (set when rustc is a nightly toolchain so `nightly-simd` can opt
+# in) and `noyalib_coverage` (set when `NOYALIB_COVERAGE=1` is
+# exported so coverage-instrumentation hot paths can opt out via
+# `#[cfg_attr(noyalib_coverage, coverage(off))]`). Declare them
+# here as well as in `build.rs` so `cargo publish`'s verification
+# pass — which runs without `build.rs` cfg propagation in some
+# topologies — does not surface `unexpected_cfgs` warnings.
+unexpected_cfgs = { level = "warn", check-cfg = [
+    'cfg(noyalib_nightly)',
+    'cfg(noyalib_coverage)',
+    'cfg(docsrs)',
+    # `cargo kani` compiles with `--cfg kani`; the proof harnesses in
+    # `simd.rs` live behind it and are invisible to ordinary builds.
+    'cfg(kani)',
+] }
+missing_copy_implementations = "warn"
+missing_docs = "warn"
+unstable_features = "warn"
+unused_extern_crates = "warn"
+unused_results = "warn"
+
+bare_trait_objects = "allow"
+elided_lifetimes_in_paths = "allow"
+
+missing_debug_implementations = "forbid"
+non_ascii_idents = "forbid"
+unreachable_pub = "forbid"
+unsafe_code = "forbid"
+
+dead_code = "deny"
+deprecated_in_future = "deny"
+ellipsis_inclusive_range_patterns = "deny"
+explicit_outlives_requirements = "deny"
+future_incompatible = { level = "deny", priority = -1 }
+keyword_idents = { level = "deny", priority = -1 }
+macro_use_extern_crate = "deny"
+meta_variable_misuse = "deny"
+noop_method_call = "deny"
+rust_2018_idioms = { level = "deny", priority = -1 }
+rust_2021_compatibility = { level = "deny", priority = -1 }
+single_use_lifetimes = "deny"
+trivial_casts = "deny"
+trivial_numeric_casts = "deny"
+unused = { level = "deny", priority = -1 }
+unused_features = "deny"
+unused_import_braces = "deny"
+unused_labels = "deny"
+unused_lifetimes = "deny"
+unused_macro_rules = "deny"
+unused_qualifications = "deny"
+variant_size_differences = "deny"
+
+[lints.clippy]
+cargo = { level = "warn", priority = -1 }
+multiple_crate_versions = "allow"
+
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+unused_trait_names = "warn"
+
+# TODO fix or expect pedantic
+cast_possible_truncation = "allow"
+cast_possible_wrap = "allow"
+cast_precision_loss = "allow"
+cast_sign_loss = "allow"
+default_trait_access = "allow"
+doc_markdown = "allow"
+float_cmp = "allow"
+fn_params_excessive_bools = "allow"
+format_collect = "allow"
+format_push_string = "allow"
+items_after_statements = "allow"
+manual_let_else = "allow"
+many_single_char_names = "allow"
+match_same_arms = "allow"
+match_wildcard_for_single_variants = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+naive_bytecount = "allow"
+needless_continue = "allow"
+needless_pass_by_value = "allow"
+redundant_closure_for_method_calls = "allow"
+redundant_else = "allow"
+return_self_not_must_use = "allow"
+similar_names = "allow"
+struct_excessive_bools = "allow"
+struct_field_names = "allow"
+too_many_lines = "allow"
+unnecessary_wraps = "allow"
+unreadable_literal = "allow"
+unused_self = "allow"
+used_underscore_binding = "allow"
+zero_sized_map_values = "allow"
+
+# TODO fix or expect nursery
+branches_sharing_code = "allow"
+doc_link_code = "allow"
+literal_string_with_formatting_args = "allow"
+missing_const_for_fn = "allow"
+needless_collect = "allow"
+needless_pass_by_ref_mut = "allow"
+option_if_let_else = "allow"
+or_fun_call = "allow"
+redundant_pub_crate = "allow"
+significant_drop_tightening = "allow"
+single_option_map = "allow"
+too_long_first_doc_paragraph = "allow"
+useless_let_if_seq = "allow"

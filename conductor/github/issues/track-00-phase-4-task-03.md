@@ -8,6 +8,7 @@ Canonical task state: **source task complete**.
 ## Canonical task
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - [x] Review fix: Upgrade all six Track 00 assertions (T00-A001..T00-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; record conductor review receipt and preserve the open upstream repository-standards estate conformance gate.
 
 ## Completion and evidence contract
 

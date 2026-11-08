@@ -2,6 +2,9 @@
 
 #![forbid(unsafe_code)]
 
+/// Bounded additive v2 matrix validation, not execution or cutover authorization.
+pub mod parity_matrix;
+
 use evidence_search_core::ProviderMode;
 use schemars::JsonSchema;
 use searchright_contracts::{
@@ -381,5 +384,82 @@ mod tests {
             "source-epoch:1785984000",
         );
         assert!(duplicate_dimensions.is_err());
+    }
+
+    #[test]
+    fn legacy_runtime_config_execution_policy_translates_controls_and_saturates_cleanly() {
+        let base_config = LegacyRuntimeConfig {
+            enabled: true,
+            smoke_enabled: false,
+            timeout_secs: 30,
+            min_interval_ms: 50,
+            max_retries: 3,
+            cache_enabled: true,
+        };
+
+        // live_enabled requires BOTH enabled AND smoke_enabled
+        let policy_smoke_off = base_config.execution_policy(100, 5);
+        assert!(!policy_smoke_off.live_enabled);
+        assert_eq!(policy_smoke_off.max_records, 100);
+        assert_eq!(policy_smoke_off.max_pages, 5);
+        assert_eq!(policy_smoke_off.timeout_seconds, 30);
+        assert_eq!(policy_smoke_off.total_timeout_seconds, Some(150));
+        assert_eq!(policy_smoke_off.max_retries, 3);
+        assert_eq!(policy_smoke_off.min_interval_ms, 50);
+        assert_eq!(policy_smoke_off.retry_base_delay_ms, Some(100));
+        assert_eq!(policy_smoke_off.retry_max_delay_ms, Some(1600));
+        assert_eq!(policy_smoke_off.max_response_bytes, Some(16 * 1024 * 1024));
+        assert!(policy_smoke_off.replay_enabled);
+        assert!(policy_smoke_off.cache_write_enabled);
+
+        let mut live_config = base_config.clone();
+        live_config.smoke_enabled = true;
+        let policy_live = live_config.execution_policy(200, 2);
+        assert!(policy_live.live_enabled);
+
+        let mut disabled_live = base_config.clone();
+        disabled_live.enabled = false;
+        disabled_live.smoke_enabled = true;
+        let policy_disabled = disabled_live.execution_policy(200, 2);
+        assert!(!policy_disabled.live_enabled);
+
+        // Saturating multiplication for total_timeout_seconds and max_pages floor of 1
+        let mut saturating_config = base_config;
+        saturating_config.timeout_secs = u64::MAX;
+        let policy_zero_pages = saturating_config.execution_policy(10, 0);
+        assert_eq!(policy_zero_pages.total_timeout_seconds, Some(u64::MAX));
+
+        let policy_overflow = saturating_config.execution_policy(10, 10);
+        assert_eq!(policy_overflow.total_timeout_seconds, Some(u64::MAX));
+    }
+
+    #[test]
+    fn legacy_runtime_config_cache_disabled_clears_cache_and_replay_flags() {
+        let no_cache_config = LegacyRuntimeConfig {
+            enabled: false,
+            smoke_enabled: false,
+            timeout_secs: 10,
+            min_interval_ms: 200,
+            max_retries: 1,
+            cache_enabled: false,
+        };
+        let policy = no_cache_config.execution_policy(50, 1);
+        assert!(!policy.replay_enabled);
+        assert!(!policy.cache_write_enabled);
+        assert_eq!(policy.retry_base_delay_ms, Some(200));
+        assert_eq!(policy.retry_max_delay_ms, Some(3200));
+    }
+
+    #[test]
+    fn provider_mode_maps_expected_legacy_execution_variants_without_panic() {
+        assert_eq!(
+            provider_mode(LegacyExecution::Fixture),
+            Some(ProviderMode::Fixture)
+        );
+        assert_eq!(
+            provider_mode(LegacyExecution::Live),
+            Some(ProviderMode::Live)
+        );
+        assert_eq!(provider_mode(LegacyExecution::Skipped), None);
     }
 }

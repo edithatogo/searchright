@@ -1554,7 +1554,7 @@ mod tests {
         for (index, (dialect, text)) in fixtures.into_iter().enumerate() {
             let parsed = parse_native_strategy(format!("fixture-{index}"), dialect.clone(), text);
             assert_eq!(parsed.raw_text, text);
-            assert!(!parsed.lines.is_empty());
+            assert_ne!(parsed.lines, [] as [NativeQueryLine; 0]);
             assert!(parsed.validate().is_ok());
             assert!(
                 !parsed
@@ -1668,7 +1668,7 @@ mod tests {
             SearchDialect::OvidMedline,
             "1. exp Genomics/\n2. genome*.ti,ab.\n",
         );
-        assert!(!parsed.lines.is_empty());
+        assert_ne!(parsed.lines, [] as [NativeQueryLine; 0]);
         if let Some(line) = parsed.lines.first_mut() {
             line.text = "1. exp Other/".to_owned();
         }
@@ -1703,7 +1703,7 @@ mod tests {
         if let Some(strategy) = semantic {
             assert_eq!(strategy.dialect, SearchDialect::OvidMedline);
             assert!(strategy.limits.languages.contains(&"English".to_owned()));
-            assert!(!strategy.limits.rationale.is_empty());
+            assert_ne!(strategy.limits.rationale, [] as [String; 0]);
             if let QueryExpr::Or { children } = &strategy.query {
                 assert_eq!(children.len(), 2);
             } else {

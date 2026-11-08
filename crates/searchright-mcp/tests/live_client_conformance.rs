@@ -263,8 +263,8 @@ async fn assert_every_success_path(
     let cases = live_client_success_cases().map_err(anyhow::Error::msg)?;
     assert_eq!(
         cases.len(),
-        36,
-        "35 tools plus the second PRISMA union branch"
+        41,
+        "35 tools plus six additional PRISMA rendering branches"
     );
     let advertised_names = advertised.keys().cloned().collect::<BTreeSet<_>>();
     let case_names = cases
@@ -371,7 +371,7 @@ async fn official_rmcp_current_client_consumes_structured_results_and_governed_e
     assert_complete_advertised_catalogue(&tools, 35);
 
     let successes = assert_every_success_path(&client, &[]).await?;
-    assert_eq!(successes, 35);
+    assert_eq!(successes, 40);
     report_observed_conformance("2026-07-28", &tools, successes);
 
     let governed_error = client
@@ -412,7 +412,7 @@ async fn official_rmcp_previous_era_client_consumes_structured_results_and_gover
         ],
     )
     .await?;
-    assert_eq!(successes, 32);
+    assert_eq!(successes, 37);
     report_observed_conformance("2025-11-25", &tools, successes);
 
     let governed_error = client

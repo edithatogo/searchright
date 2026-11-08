@@ -10,34 +10,46 @@
     {
       "assertion_id": "T03-A001",
       "statement": "Inventory Sourceright live_providers and provider modules",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/replacement-map.yaml",
-        "migration/sourceright/parity-cases.json"
+        "migration/sourceright/parity-cases.json",
+        "crates/searchright-contracts/src/migration.rs",
+        "scripts/check_sourceright_migration.py",
+        "tests/test_sourceright_migration.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_sourceright_migration.py::rust_catalogue",
+        "searchright_contracts::migration::SOURCERIGHT_PARITY_CASE_IDS",
+        "searchright_contracts::migration::SOURCERIGHT_PARITY_DIMENSIONS"
+      ],
       "deterministic_tests": [
-        "python scripts/check_sourceright_migration.py"
+        "python scripts/check_sourceright_migration.py",
+        "python3 -m unittest tests/test_sourceright_migration.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/03-shared-provider-runtime/evidence.json",
         "verification/receipts/track-03-sourceright-inventory.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "The current Sourceright provider surface is inventoried at a pinned revision and its provider blobs are unchanged from the original inventory."
+      "open_gates": [
+        "Refresh against the current Sourceright revision before cutover."
+      ],
+      "permitted_claim": "The observed Sourceright provider surface is inventoried at a pinned revision."
     },
     {
       "assertion_id": "T03-A002",
       "statement": "Define compatibility adapter and feature flag",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-sourceright-compat/src/lib.rs",
         "release/public-packages.json"
       ],
       "implementation_symbols": [
-        "searchright_sourceright_compat::legacy_runtime_controls"
+        "searchright_sourceright_compat::LegacyRuntimeConfig::execution_policy",
+        "searchright_sourceright_compat::provider_mode",
+        "searchright_sourceright_compat::build_report"
       ],
       "deterministic_tests": [
         "python scripts/check_sourceright_migration.py"
@@ -96,13 +108,23 @@
     {
       "assertion_id": "T03-A004",
       "statement": "Run old/new fixture parity and snapshot differences",
-      "state": "scaffolded",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/sourceright/parity-cases.json",
-        "integration/consumer-contract-suite.json"
+        "integration/consumer-contract-suite.json",
+        "crates/searchright-contracts/src/parity_matrix.rs",
+        "crates/searchright-sourceright-compat/src/parity_matrix.rs",
+        "crates/searchright-sourceright-compat/tests/parity_matrix.rs",
+        "contracts/json-schema/sourceright-parity-catalogue.v2.schema.json",
+        "contracts/json-schema/sourceright-parity-matrix.v2.schema.json",
+        "docs/parity-execution-matrix-v2.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_sourceright_compat::parity_matrix::expected_catalogue_digest",
+        "searchright_sourceright_compat::parity_matrix::observation_digest",
+        "searchright_sourceright_compat::parity_matrix::validate_execution_matrix"
+      ],
       "deterministic_tests": [
         "python scripts/check_sourceright_migration.py"
       ],
@@ -110,9 +132,12 @@
         "conductor/tracks/03-shared-provider-runtime/evidence.json"
       ],
       "open_gates": [
-        "Validate a complete provider/fixture/case/dimension execution matrix and run old/new fixtures; v1 summary readiness alone is not execution proof."
+        "Execute old/new Sourceright fixtures downstream against the v2 parity matrix; local v2 matrix validation covers synthetic/caller-supplied observations only and does not authenticate downstream execution."
       ],
-      "permitted_claim": "Parity cases are defined; dual-run results do not yet exist."
+      "permitted_claim": "Schema-bound v2 parity execution matrix and digest-verified cell comparator are compiler-tested in Searchright; downstream old/new Sourceright dual-run execution remains pending.",
+      "native_test_commands": [
+        "cargo test -p searchright-sourceright-compat --test parity_matrix --locked"
+      ]
     },
     {
       "assertion_id": "T03-A005",
@@ -122,11 +147,19 @@
       "implementation_paths": [
         "release/public-packages.json",
         "public-api/README.md",
-        ".github/workflows/public-api.yml"
+        ".github/workflows/public-api.yml",
+        "scripts/check_public_package_policy.py",
+        "scripts/run_local_api_evidence.py",
+        "tests/test_local_api_evidence.py",
+        "docs/local-api-evidence.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_public_package_policy.py::main",
+        "scripts/run_local_api_evidence.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/check_public_package_policy.py"
+        "python scripts/check_public_package_policy.py",
+        "python3 -m unittest tests/test_local_api_evidence.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/03-shared-provider-runtime/evidence.json"
@@ -143,9 +176,12 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "migration/companion-repositories/sourceright.json",
-        "integration/release-train.json"
+        "integration/release-train.json",
+        "scripts/check_release_train.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_release_train.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_release_train.py"
       ],
@@ -159,11 +195,15 @@
       "permitted_claim": "No Sourceright code has been removed or switched by this repository."
     }
   ],
-  "updated": "2026-08-31",
+  "updated": "2026-11-03",
   "review_fixes": [
     {
       "commit": "935d725877f6a6ca82bacefd8982e613981f068c",
       "summary": "Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover."
+    },
+    {
+      "commit": "d43a11a",
+      "summary": "Reconcile Track 03 traceability, deliverables, and assertion mappings with commits 3f52b4d and 9b4a4a4, resolve searchright-contracts PressReview test compilation error and searchright-connectors clippy assertions, add parity matrix decision reference regressions, add candidate policy drift tests, and record conductor review receipt."
     }
   ]
 }

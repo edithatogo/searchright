@@ -12,8 +12,8 @@ Provide stable accessible diagnostics and locale-neutral contracts, then validat
 ## Contract
 
 - Horizon: `mature`
-- Status: `scaffolded`
-- Implementation: `scaffolded`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
 - Dependencies: `09, 10, 11`
 - Requirements: `SR-055, SR-056`

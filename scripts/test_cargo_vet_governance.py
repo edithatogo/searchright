@@ -29,6 +29,16 @@ class CargoVetGovernanceTests(unittest.TestCase):
         self.real_load_json = checker.load_json
         self.lock = checker.load_toml(checker.ROOT / "Cargo.lock")
         self.approval = checker.load_json(checker.ROOT / checker.TRACK06_RECEIPT)
+        # Replay the former decision at its original date using its exact scope.
+        self.proposal()["status"] = "approved"
+        self.config["exemptions"]["quick-xml"] = [{
+            "version": "0.41.0", "criteria": "safe-to-deploy",
+            "notes": (f"accountable_owner={checker.REQUIRED_OWNER}; issue={checker.TRACK06_ISSUE}; "
+                      f"approved_on={checker.TRACK06_DECIDED_AT}; review_by={checker.TRACK06_EXPIRY}; "
+                      f"rationale={checker.TRACK06_RATIONALE}"),
+        }]
+        package = next(p for p in self.lock["package"] if p["name"] == "quick-xml")
+        package.update(version="0.41.0", checksum=checker.TRACK06_CHECKSUM)
         self.missing_approval = False
         self.metadata_error = None
         self.all_features_metadata = None
@@ -110,7 +120,7 @@ class CargoVetGovernanceTests(unittest.TestCase):
     def test_exact_approved_exception_and_baseline_pass(self):
         result, receipt = self.run_check()
         self.assertEqual(result, 0, receipt)
-        self.assertEqual(receipt["effective_exemption_count"], 259)
+        self.assertEqual(receipt["effective_exemption_count"], 248)
         self.assertEqual(receipt["errors"], [])
 
     def test_baseline_without_track06_still_passes(self):
@@ -118,8 +128,32 @@ class CargoVetGovernanceTests(unittest.TestCase):
         del self.config["exemptions"]["quick-xml"]
         result, receipt = self.run_check()
         self.assertEqual(result, 0, receipt)
-        self.assertEqual(receipt["effective_exemption_count"], 258)
+        self.assertEqual(receipt["effective_exemption_count"], 247)
         self.assertEqual(self.metadata_calls, [])
+
+    def test_retired_entries_preserve_history_without_effective_approval(self):
+        retired = [p for p in self.ledger["proposals"] if p["status"] == "retired"]
+        self.assertEqual(len(retired), 11)
+        for proposal in retired:
+            self.assertEqual(proposal["expires_at"], "2026-11-10")
+            self.assertEqual(proposal["retired_on"], "2026-11-06")
+            self.assertTrue(proposal["decision_evidence"])
+            self.assertNotIn(proposal["crate"], self.config["exemptions"])
+        result, receipt = self.run_check()
+        self.assertEqual(result, 0, receipt)
+
+    def test_retired_proposal_cannot_authorise_reintroduced_exemption(self):
+        proposal = next(p for p in self.ledger["proposals"] if p["status"] == "retired")
+        self.config["exemptions"][proposal["crate"]] = [{
+            "version": proposal["version"], "criteria": proposal["criteria"],
+            "notes": self.config["exemptions"]["aho-corasick"][0]["notes"],
+        }]
+        self.assert_rejected("lack exact approvals")
+
+    def test_retired_approval_cannot_be_reactivated_without_effective_entry(self):
+        proposal = next(p for p in self.ledger["proposals"] if p["status"] == "retired")
+        proposal["status"] = "approved"
+        self.assert_rejected("lack exact effective exemptions")
 
     def test_expired_exception_fails(self):
         class AfterExpiry(ApprovalDay):

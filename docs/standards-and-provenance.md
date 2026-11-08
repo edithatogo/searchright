@@ -17,6 +17,22 @@
 PRISMA-S is represented as reporting completeness, not proof that the underlying
 search was methodologically adequate.
 
+Validated PRISMA flow counts can be rendered as canonical JSON, Mermaid,
+accessible Markdown, self-contained accessible SVG, Typst, or a semantic HTML
+table suitable for DOCX editors. The same formats are exposed through the Rust
+facade, CLI and local MCP server. A full source appendix preserves the exact
+compiled query with its source/platform, search timestamp, compiler identity and
+recorded limits; generation does not validate term choice.
+
+PRESS readiness fails closed unless findings cover all six domains, material
+findings are resolved, and the execution approver is identified separately from
+the PRESS reviewer. The checked-in six-domain record is a workflow fixture, not
+an independent methodological review. External PRESS review therefore remains
+a distinct evidence gate.
+
+The bounded PRISMA.jl comparison and canonical-ownership decision are documented
+in [PRISMA.jl interoperability boundary](prisma-jl-interop.md).
+
 ## Technical standards
 
 - JSON Schema 2020-12 for canonical data contracts.

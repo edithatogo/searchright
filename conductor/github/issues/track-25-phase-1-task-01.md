@@ -15,6 +15,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `examples/review-bundle/example.srpack`
   - [x] Present source path: `docs/standards-and-provenance.md`
   - [x] Present source path: `docs/vertical-slice-definition-of-done.md`
+  - [x] Present source path: `tests/test_provenance_research_objects_governance.py`
   - [x] Assertion ledger: `conductor/tracks/25-provenance-research-objects/traceability.json`
 
 ## Completion and evidence contract

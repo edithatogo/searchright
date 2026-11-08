@@ -38,7 +38,8 @@ use serde::Deserialize;
 #[command(
     name = "searchright",
     version,
-    about = "Contract-first systematic-search infrastructure"
+    about = "Contract-first systematic-search infrastructure",
+    term_width = 100
 )]
 struct Cli {
     #[command(subcommand)]
@@ -256,6 +257,12 @@ enum Command {
     },
     /// Validate a benchmark report and its explicit claim boundary.
     ValidateBenchmarkReport { input: PathBuf },
+    /// Read a bounded publisher JSON response and emit a regulatory record with provenance.
+    RegulatoryRecord {
+        provider: String,
+        id: String,
+        input: PathBuf,
+    },
     /// List provider manifests available in the default no-network build.
     Providers,
     /// Print the conservative agent workflow policy.
@@ -286,6 +293,13 @@ enum PlanCommand {
 
 #[derive(Debug, Subcommand)]
 enum SourceCommand {
+    /// Read a bounded publisher JSON response and emit a regulatory record with provenance.
+    RegulatoryRecord {
+        provider: String,
+        id: String,
+        input: PathBuf,
+    },
+
     /// List fixture-backed providers available without network access.
     List,
     /// Check endpoint authority without executing a request.
@@ -485,6 +499,10 @@ enum PrismaFormat {
     #[default]
     Json,
     Mermaid,
+    Markdown,
+    Svg,
+    Typst,
+    DocxTable,
     Ledger,
 }
 
@@ -493,6 +511,10 @@ impl From<PrismaFormat> for PrismaOutput {
         match value {
             PrismaFormat::Json => Self::Json,
             PrismaFormat::Mermaid => Self::Mermaid,
+            PrismaFormat::Markdown => Self::Markdown,
+            PrismaFormat::Svg => Self::Svg,
+            PrismaFormat::Typst => Self::Typst,
+            PrismaFormat::DocxTable => Self::DocxTable,
             PrismaFormat::Ledger => Self::PrismaSLedger,
         }
     }
@@ -632,6 +654,7 @@ const fn command_stage(command: &Command) -> &'static str {
         Command::VerifyProviderComponent { .. } => "verify-provider-component",
         Command::PlanLicensedRequest { .. } => "plan-licensed-request",
         Command::ValidateBenchmarkReport { .. } => "validate-benchmark-report",
+        Command::RegulatoryRecord { .. } => "regulatory-record",
         Command::Providers => "providers",
         Command::Workflow => "workflow",
         Command::Completions { .. } => "completions",
@@ -668,6 +691,15 @@ fn canonical_command(command: Command) -> Command {
             PlanCommand::Workflow => Command::Workflow,
         },
         Command::Source { command } => match command {
+            SourceCommand::RegulatoryRecord {
+                provider,
+                id,
+                input,
+            } => Command::RegulatoryRecord {
+                provider,
+                id,
+                input,
+            },
             SourceCommand::List => Command::Providers,
             SourceCommand::AuthoriseEndpoint { input, endpoint } => {
                 Command::AuthoriseEndpoint { input, endpoint }
@@ -967,7 +999,11 @@ fn execute(command: Command) -> Result<()> {
         Command::Prisma { input, format } => {
             let flow: PrismaFlow = read_document(&input)?;
             match SearchrightEngine::prisma(&flow, format.into())? {
-                PrismaArtifact::Mermaid(document) => println!("{document}"),
+                PrismaArtifact::Mermaid(document)
+                | PrismaArtifact::Markdown(document)
+                | PrismaArtifact::Svg(document)
+                | PrismaArtifact::Typst(document)
+                | PrismaArtifact::DocxTable(document) => println!("{document}"),
                 artifact => print_json(&artifact)?,
             }
         }
@@ -1124,6 +1160,20 @@ fn execute(command: Command) -> Result<()> {
             SearchrightEngine::validate_benchmark_report(&report)?;
             valid_receipt("benchmark_report")?;
         }
+        Command::RegulatoryRecord {
+            provider,
+            id,
+            input,
+        } => {
+            use searchright::connectors::regulatory::{MAX_RESPONSE_BYTES, regulatory_record};
+            use std::io::Read;
+            let mut bytes = Vec::new();
+            fs::File::open(input)?
+                .take(MAX_RESPONSE_BYTES as u64 + 1)
+                .read_to_end(&mut bytes)?;
+            let record = regulatory_record(&provider, &id, &bytes).map_err(anyhow::Error::msg)?;
+            print_json(&record)?;
+        }
         Command::Providers => {
             print_json(&SearchrightEngine::default_provider_manifests()?)?;
         }
@@ -1192,7 +1242,7 @@ fn emit_operation_error(stage: &str, error: &anyhow::Error) -> ExitCode {
         Some(serde_json::error::Category::Syntax | serde_json::error::Category::Eof)
     ) || error
         .chain()
-        .any(<dyn std::error::Error + 'static>::is::<serde_yaml::Error>);
+        .any(<dyn std::error::Error + 'static>::is::<noyalib::Error>);
     let is_document_contract = matches!(json_category, Some(serde_json::error::Category::Data));
     let (category, message, corrective_action) = if is_io {
         (
@@ -1236,7 +1286,7 @@ fn read_document<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
     let content =
         fs::read_to_string(path).with_context(|| format!("could not read {}", path.display()))?;
     match path.extension().and_then(|extension| extension.to_str()) {
-        Some("yaml" | "yml") => serde_yaml::from_str(&content)
+        Some("yaml" | "yml") => searchright::parse_yaml(&content)
             .with_context(|| format!("invalid YAML in {}", path.display())),
         _ => serde_json::from_str(&content)
             .with_context(|| format!("invalid JSON in {}", path.display())),

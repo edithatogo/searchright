@@ -3,11 +3,12 @@
 
 Parent phase key: `track-12-phase-4`
 Conductor plan: `conductor/tracks/12-citeweft-document-evidence/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+  - Review fix `0ea3f2d`: Upgrade Track 12 assertions to symbol_and_gate_mapped with native tests, add unit tests for from_scholarly_document and adversarial contract validation, and record conductor review receipt.
 
 ## Completion and evidence contract
 

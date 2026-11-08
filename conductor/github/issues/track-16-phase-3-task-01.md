@@ -3,11 +3,11 @@
 
 Parent phase key: `track-16-phase-3`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Push the local admission-policy commits and obtain green required checks on the exact new PR head; results at 560c78c do not prove later commits.
+- [x] Deliver the admission-policy work through merged PRs #754 and #755 with green required checks on their final heads; subsequent candidates still require their own checks.
 
 ## Completion and evidence contract
 

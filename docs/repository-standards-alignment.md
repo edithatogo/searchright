@@ -19,6 +19,15 @@ Searchright inherits estate policy from
 
 ## Upstream registration state
 
+The 2026-08-31 verification reconciliation is recorded in
+`verification/receipts/track-00-verification-reconciliation.json`. The exact
+merged `8de03a0` tree equals the pinned full-verified `c358e68` tree: 87 Python
+tests, 57 static gates and 392 native tests passed. A separate frozen
+`cargo-vet 0.10.2` check on clean `8de03a0` passed existing policy with 43 fully
+vetted dependencies and 259 existing exemptions. This neither audits those
+259 dependencies nor changes the upstream registration boundary. Earlier
+failed receipts remain historical evidence, not current aggregate status.
+
 Read-only GitHub API checks on 2026-08-12 found no
 `edithatogo/searchright` entry in either `registry/repositories.json` or
 `audits/latest/estate-conformance.json` at the pinned revision or current

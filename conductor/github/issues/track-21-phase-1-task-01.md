@@ -15,6 +15,8 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `contracts/licensed/scopus.yaml`
   - [x] Present source path: `contracts/licensed/web-of-science.yaml`
   - [x] Present source path: `contracts/examples/licensed-adapter.yaml`
+  - [x] Present source path: `tests/test_licensed_adapters_governance.py`
+  - [x] Present source path: `verification/receipts/track-21-conductor-review-2026-11-04.json`
   - [x] Assertion ledger: `conductor/tracks/21-licensed-adapters/traceability.json`
 
 ## Completion and evidence contract

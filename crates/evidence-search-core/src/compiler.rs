@@ -591,7 +591,7 @@ mod tests {
             assert!(left.query.contains("[MeSH Terms]"));
             assert_eq!(left.fidelity, TranslationFidelity::Exact);
             assert!(!left.review_required);
-            assert!(left.loss_codes.is_empty());
+            assert_eq!(left.loss_codes, [] as [String; 0]);
         }
     }
 
@@ -602,7 +602,7 @@ mod tests {
         if let Ok(result) = result {
             assert_eq!(result.fidelity, TranslationFidelity::Degraded);
             assert!(result.review_required);
-            assert!(!result.loss_codes.is_empty());
+            assert_ne!(result.loss_codes, [] as [String; 0]);
         }
     }
 

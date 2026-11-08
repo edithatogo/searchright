@@ -8,6 +8,7 @@ external review. It aggregates failures so one run produces a useful repair list
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -62,6 +63,7 @@ SKIP_PARTS = {
     ".pytest_cache",
     ".mypy_cache",
     ".ruff_cache",
+    ".hypothesis",
 }
 SCHEMA_CATALOG = ROOT / "contracts" / "schema-catalog.json"
 EXPECTED_SCHEMA_VERSIONS = {
@@ -153,9 +155,23 @@ def load_data(path: Path) -> Any:
     return None
 
 
+# Parser test vectors include malformed YAML and significant whitespace.
+NOYALIB_VECTORS = {
+    name: digest
+    for line in (ROOT / "verification/noyalib-fork/fixture-hashes.sha256").read_text().splitlines()
+    for digest, name in [line.split("  ", 1)]
+}
+
+
 def validate_serialised_documents() -> None:
     """Parse every JSON, TOML and YAML document in the repository."""
+    for name, digest in NOYALIB_VECTORS.items():
+        vector = ROOT / name
+        if not vector.is_file() or hashlib.sha256(vector.read_bytes()).hexdigest() != digest:
+            error(f"parser test vector changed: {name}")
     for path in repository_files():
+        if relative(path) in NOYALIB_VECTORS:
+            continue
         if path.suffix == ".json":
             load_json(path)
         elif path.suffix == ".toml":
@@ -694,10 +710,14 @@ def validate_conductor() -> None:
             error(f"track lacks review/closeout phase: {relative(track / 'plan.md')}")
 
     requirements = read_text(conductor / "requirements.md")
-    priorities = set(re.findall(r"\|\s*(Must|Should|Could|Won[’']t now)\s*\|", requirements))
-    required_priorities = {"Must", "Should", "Could"}
-    if not required_priorities.issubset(priorities) or not any(item.startswith("Won") for item in priorities):
-        error(f"MoSCoW matrix is incomplete: found {sorted(priorities)}")
+    priorities = {
+        value.strip() for value in re.findall(
+            r"^\|\s*SR-\d+\s*\|\s*([^|]+)\|", requirements, flags=re.MULTILINE
+        )
+    }
+    allowed_priorities = {"Must", "Should", "Could", "Won’t now", "Won't now"}
+    if not priorities or not priorities.issubset(allowed_priorities):
+        error(f"MoSCoW matrix has missing or invalid priorities: {sorted(priorities)}")
     design = read_text(conductor / "design.md")
     mermaid_blocks = re.findall(r"```mermaid\s*\n(.*?)```", design, flags=re.DOTALL)
     if not mermaid_blocks or any(not block.strip() for block in mermaid_blocks):
@@ -976,6 +996,8 @@ def validate_text_hygiene() -> None:
     pattern = re.compile(r"\b(?:" + "|".join(re.escape(item) for item in forbidden_words) + r")\b")
     checked = 0
     for path in repository_files():
+        if relative(path) in NOYALIB_VECTORS:
+            continue
         if path.suffix not in TEXT_SUFFIXES and path.name not in {"Dockerfile", "Makefile", "NOTICE"}:
             continue
         text = read_text(path)

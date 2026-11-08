@@ -14,21 +14,39 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/manifest.json",
-        "scripts/check_methodology_benchmarks.py"
+        "benchmarks/methodology/fixtures/sealed/manifest.json",
+        "scripts/check_methodology_benchmarks.py",
+        "scripts/check_benchmark_governance.py",
+        "crates/searchright-bench/src/lib.rs",
+        "crates/searchright-bench/tests/sealed_identity.rs"
       ],
       "implementation_symbols": [
-        "scripts/check_methodology_benchmarks.py::main"
+        "scripts/check_benchmark_governance.py::main",
+        "scripts/check_methodology_benchmarks.py::main",
+        "searchright_bench::SealedSplitManifest",
+        "searchright_bench::evaluate_sealed_benchmark",
+        "searchright_bench::validate_public_benchmark_report",
+        "searchright_bench::sealed_label_digest"
       ],
       "deterministic_tests": [
-        "python scripts/check_methodology_benchmarks.py"
+        "python scripts/check_benchmark_governance.py",
+        "python scripts/check_methodology_benchmarks.py",
+        "cargo test --locked -p searchright-bench --test sealed_identity"
+      ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-bench",
+        "python3 -B scripts/check_benchmark_governance.py",
+        "python3 -B scripts/check_methodology_benchmarks.py",
+        "cargo test --locked -p searchright-bench --test sealed_identity"
       ],
       "evidence_receipts": [
-        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+        "conductor/tracks/17-benchmarks-calibration/evidence.json",
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
-        "Add compiled benchmark runners and independently controlled labels."
+        "Execute sealed benchmark suites against independently mounted labels and publish reproducible report receipts."
       ],
-      "permitted_claim": "Benchmark tasks, rights and anti-leakage policy are machine-readable and statically checked."
+      "permitted_claim": "Benchmark tasks, report schema, rights basis, and anti-leakage policy are machine-readable and statically checked; no external benchmark has been executed."
     },
     {
       "assertion_id": "T17-A002",
@@ -37,103 +55,162 @@
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/manifest.json",
-        "integration/passports/synergy-screening-benchmark.json"
+        "integration/passports/synergy-screening-benchmark.json",
+        "scripts/check_dataset_provenance.py",
+        "scripts/check_licence_firewall.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_dataset_provenance.py::main",
+        "scripts/check_licence_firewall.py::main",
+        "scripts/check_methodology_benchmarks.py::main"
+      ],
       "deterministic_tests": [
-        "python scripts/check_methodology_benchmarks.py",
-        "python scripts/check_licence_firewall.py"
+        "python scripts/check_dataset_provenance.py",
+        "python scripts/check_licence_firewall.py",
+        "python scripts/check_methodology_benchmarks.py"
+      ],
+      "native_test_commands": [
+        "python3 -B scripts/check_dataset_provenance.py",
+        "python3 -B scripts/check_licence_firewall.py",
+        "python3 -B scripts/check_methodology_benchmarks.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+        "conductor/tracks/17-benchmarks-calibration/evidence.json",
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Pin a canonical upstream data release/DOI per executed benchmark and create train/validation/test split receipts."
       ],
-      "permitted_claim": "SYNERGY provenance distinguishes canonical upstream from the local fork; no benchmark data were executed."
+      "permitted_claim": "SYNERGY provenance distinguishes canonical upstream asreview/synergy-dataset from the local fork; no external benchmark data were executed."
     },
     {
       "assertion_id": "T17-A003",
       "statement": "Create search-strategy gold sets and known-item recall tests",
-      "state": "scaffolded",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/manifest.json",
-        "contracts/query-corpus/index.json"
+        "contracts/query-corpus/index.json",
+        "crates/searchright-bench/src/lib.rs",
+        "scripts/check_native_query_corpus.py"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_bench::recall_at_k",
+        "scripts/check_native_query_corpus.py::main",
+        "scripts/check_methodology_benchmarks.py::main"
+      ],
       "deterministic_tests": [
         "python scripts/check_methodology_benchmarks.py",
         "python scripts/check_native_query_corpus.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-bench",
+        "python3 -B scripts/check_native_query_corpus.py",
+        "python3 -B scripts/check_methodology_benchmarks.py"
+      ],
       "evidence_receipts": [
-        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+        "conductor/tracks/17-benchmarks-calibration/evidence.json",
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Create rights-cleared, independently reviewed search-strategy gold labels and known-item recall runs."
       ],
-      "permitted_claim": "Corpus and task definitions exist; gold recall results do not."
+      "permitted_claim": "Corpus and task definitions exist with deterministic recall@k contracts; gold recall results against live external databases do not."
     },
     {
       "assertion_id": "T17-A004",
       "statement": "Measure dedup precision/recall and cluster review burden",
-      "state": "scaffolded",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "benchmarks/methodology/fixtures/validation/dedup-cases.json",
-        "benchmarks/methodology/manifest.json"
+        "benchmarks/methodology/manifest.json",
+        "crates/searchright-bench/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_bench::evaluate_dedup",
+        "searchright_bench::dedup_metric_contracts",
+        "searchright_bench::expected_dedup_pairs",
+        "searchright_bench::dedup_pairs"
+      ],
       "deterministic_tests": [
         "python scripts/check_methodology_benchmarks.py"
       ],
+      "native_test_commands": [
+        "cargo test --locked -p searchright-bench",
+        "python3 -B scripts/check_methodology_benchmarks.py"
+      ],
       "evidence_receipts": [
-        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+        "conductor/tracks/17-benchmarks-calibration/evidence.json",
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
-        "Run deduplication precision, recall and review-burden evaluation against sealed labels."
+        "Run deduplication precision, recall and review-burden evaluation against sealed external labels."
       ],
-      "permitted_claim": "Synthetic validation fixtures exist; performance is not claimed."
+      "permitted_claim": "Synthetic validation fixtures and compiled cluster evaluation functions exist; external benchmark deduplication performance is not claimed."
     },
     {
       "assertion_id": "T17-A005",
       "statement": "Run prospective multi-model pilot and human calibration",
-      "state": "scaffolded",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "docs/evaluation/benchmark-and-calibration-protocol.md"
+        "docs/evaluation/benchmark-and-calibration-protocol.md",
+        "scripts/check_calibration_harness.py",
+        "crates/searchright-bench/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_calibration_harness.py::main",
+        "searchright_bench::work_saved_over_sampling",
+        "searchright_bench::expected_calibration_error",
+        "searchright_bench::brier_score"
+      ],
       "deterministic_tests": [
-        "python scripts/check_methodology_benchmarks.py"
+        "python scripts/check_calibration_harness.py"
+      ],
+      "native_test_commands": [
+        "python3 -B scripts/check_calibration_harness.py",
+        "cargo test --locked -p searchright-bench"
       ],
       "evidence_receipts": [
-        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+        "conductor/tracks/17-benchmarks-calibration/evidence.json",
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
-        "Conduct prospective multi-model and human calibration under an approved protocol."
+        "Conduct prospective multi-model and human information-specialist calibration under an approved protocol."
       ],
-      "permitted_claim": "No prospective model or human calibration has been run."
+      "permitted_claim": "Calibration protocols, WSS, Brier score, and expected calibration error metric contracts exist; prospective human calibration is pending."
     },
     {
       "assertion_id": "T17-A006",
       "statement": "Publish limitations and reproducible benchmark artefacts",
-      "state": "scaffolded",
+      "state": "partially_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
-        "benchmarks/methodology/manifest.json"
+        "benchmarks/methodology/manifest.json",
+        "scripts/check_hf_dataset_eval_contracts.py",
+        "crates/searchright-bench/src/lib.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "scripts/check_hf_dataset_eval_contracts.py::main",
+        "searchright_bench::validate_public_benchmark_report",
+        "searchright_bench::check_split_contamination"
+      ],
       "deterministic_tests": [
-        "python scripts/check_methodology_benchmarks.py"
+        "python scripts/check_hf_dataset_eval_contracts.py"
+      ],
+      "native_test_commands": [
+        "python3 -B scripts/check_hf_dataset_eval_contracts.py",
+        "cargo test --locked -p searchright-bench"
       ],
       "evidence_receipts": [
-        "conductor/tracks/17-benchmarks-calibration/evidence.json"
+        "conductor/tracks/17-benchmarks-calibration/evidence.json",
+        "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "open_gates": [
         "Publish rights-cleared benchmark artifacts and limitations with an immutable release receipt."
       ],
-      "permitted_claim": "No external benchmark artifact or performance claim has been published."
+      "permitted_claim": "Benchmark artifact validation and anti-leakage contracts exist; no external benchmark artifact or performance claim has been published."
     }
   ]
 }

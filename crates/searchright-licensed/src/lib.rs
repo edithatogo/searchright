@@ -85,6 +85,9 @@ pub fn plan_request(
     })
 }
 
+/// Alias for `plan_request` conforming to licensed adapter naming conventions.
+pub use plan_request as plan_licensed_request;
+
 /// Licensed-adapter planning failure.
 #[derive(Debug, thiserror::Error)]
 pub enum LicensedError {
@@ -116,14 +119,16 @@ mod tests {
     use super::*;
 
     fn inputs() -> (LicensedAdapterProfile, CompiledStrategy) {
-        let profile: LicensedAdapterProfile = serde_yaml::from_str(include_str!(
+        let Ok(profile) = noyalib::from_str::<LicensedAdapterProfile>(include_str!(
             "../../../contracts/examples/licensed-adapter.yaml"
-        ))
-        .unwrap_or_else(|error| panic!("licensed adapter fixture must parse: {error}"));
-        let mut strategy: CompiledStrategy = serde_yaml::from_str(include_str!(
+        )) else {
+            panic!("licensed adapter fixture must parse");
+        };
+        let Ok(mut strategy) = noyalib::from_str::<CompiledStrategy>(include_str!(
             "../../../contracts/examples/compiled-strategy.yaml"
-        ))
-        .unwrap_or_else(|error| panic!("compiled strategy fixture must parse: {error}"));
+        )) else {
+            panic!("compiled strategy fixture must parse");
+        };
         strategy.dialect = profile.dialect.clone();
         (profile, strategy)
     }
@@ -132,18 +137,18 @@ mod tests {
     fn request_plan_exposes_only_the_endpoint_origin() {
         let (profile, strategy) = inputs();
         let secret = "TRACK09_SENTINEL_SECRET";
-        let plan = plan_request(
+        let Ok(plan) = plan_request(
             &profile,
             &strategy,
             &format!("https://embase.com/search?api_key={secret}#private"),
-        )
-        .unwrap_or_else(|error| panic!("request plan must be generated: {error}"));
+        ) else {
+            panic!("request plan must be generated");
+        };
         assert_eq!(plan.endpoint, "https://embase.com");
-        assert!(
-            !serde_json::to_string(&plan)
-                .unwrap_or_else(|error| panic!("request plan must serialize: {error}"))
-                .contains(secret)
-        );
+        let Ok(serialized) = serde_json::to_string(&plan) else {
+            panic!("request plan must serialize");
+        };
+        assert!(!serialized.contains(secret));
     }
 
     #[test]
@@ -160,5 +165,65 @@ mod tests {
         };
         assert!(matches!(error, LicensedError::CredentialBearingEndpoint));
         assert!(!error.to_string().contains(secret));
+    }
+
+    #[test]
+    fn insecure_endpoint_is_rejected() {
+        let (profile, strategy) = inputs();
+        let result = plan_request(&profile, &strategy, "http://embase.com/search");
+        let Err(error) = result else {
+            panic!("insecure endpoint must fail closed");
+        };
+        assert!(matches!(error, LicensedError::InsecureEndpoint));
+    }
+
+    #[test]
+    fn unallowlisted_host_is_rejected() {
+        let (profile, strategy) = inputs();
+        let result = plan_request(
+            &profile,
+            &strategy,
+            "https://unauthorized-domain.com/search",
+        );
+        let Err(error) = result else {
+            panic!("unallowlisted host must fail closed");
+        };
+        assert!(matches!(error, LicensedError::HostNotAllowed(_)));
+    }
+
+    #[test]
+    fn dialect_mismatch_is_rejected() {
+        let (profile, mut strategy) = inputs();
+        strategy.dialect = searchright_contracts::SearchDialect::PubMed;
+        let result = plan_request(&profile, &strategy, "https://embase.com/search");
+        let Err(error) = result else {
+            panic!("dialect mismatch must fail closed");
+        };
+        assert!(matches!(error, LicensedError::DialectMismatch));
+    }
+
+    #[test]
+    fn strategy_review_required_adds_blocker() {
+        let (profile, mut strategy) = inputs();
+        strategy.review_required = true;
+        let Ok(plan) = plan_request(&profile, &strategy, "https://embase.com/search") else {
+            panic!("request plan must succeed with review blocker");
+        };
+        assert!(
+            plan.blockers
+                .iter()
+                .any(|b| b.contains("human translation review"))
+        );
+    }
+
+    #[test]
+    fn plan_licensed_request_alias_functions_identically() {
+        let (profile, strategy) = inputs();
+        let Ok(plan) = plan_licensed_request(&profile, &strategy, "https://embase.com/search")
+        else {
+            panic!("plan_licensed_request alias must succeed");
+        };
+        assert_eq!(plan.provider_id, "embase-byo");
+        assert_eq!(plan.endpoint, "https://embase.com");
     }
 }

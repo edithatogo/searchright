@@ -1,5 +1,11 @@
 # Tracks
 
+The [agent-led frontier programme](frontier-plan.md) is the active forward plan.
+It links existing ownership to four milestones, operating modes, reusable
+dependencies, research studies and versioned outputs. Historical evidence and
+archived acceptance below remain historical; new planned modes are not current
+runtime claims. Do not generate a second phase/task hierarchy for this programme.
+
 Track status, implementation completeness and evidence level are separate.
 `scaffolded` and `partially_implemented` prevent path presence from being
 misrepresented as completed behaviour; `traceability.json` owns assertion-level claims.
@@ -15,15 +21,14 @@ an explicit, approval-gated apply receipt exists.
 | 02 | [Portable query AST and dialect compilers](tracks/02-query-ast-dialects/spec.md) | foundation | external_evidence_required | source_implemented | compiler_verified | Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings. |
 | 03 | [Shared provider runtime and Sourceright extraction](tracks/03-shared-provider-runtime/spec.md) | foundation | integration_prepared | partially_implemented | source_verified | Centralise bounded provider execution, caching, receipts and policy while preparing reversible Sourceright adoption. |
 | 04 | [Open provider connectors MVP](tracks/04-open-connectors-mvp/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Provide deterministic open-source adapters and opt-in live execution for major discovery sources. |
-| 07 | [Governed screening workflow](tracks/07-screening-workflow/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority. |
-| 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | mvp | partially_implemented | partially_implemented | source_verified | Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct. |
+| 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | mvp | source_implemented | source_implemented | source_verified | Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct. |
 | 11 | [Systematic-search agent skill and workflows](tracks/11-agentic-skill/spec.md) | mvp | partially_implemented | partially_implemented | compiler_verified | Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints. |
 | 12 | [CiteWeft scholarly extraction and document evidence](tracks/12-citeweft-document-evidence/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary. |
 | 13 | [Integration passports, GitHub issue hierarchy and context spine](tracks/13-integration-passports-github-context/spec.md) | alpha | source_implemented | source_implemented | source_verified | Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked. |
 | 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
 | 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
 | 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
-| 17 | [Benchmarks, search validation and human calibration](tracks/17-benchmarks-calibration/spec.md) | alpha | scaffolded | partially_implemented | source_verified | Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration. |
+| 17 | [Benchmarks, search validation and human calibration](tracks/17-benchmarks-calibration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration. |
 | 18 | [Alpha release and distribution](tracks/18-alpha-release/spec.md) | alpha | release_prepared | scaffolded | source_verified | Produce locked, signed, attestable cross-platform technical-preview releases with reproducible source archives. |
 | 19 | [Registries and scholarly publication](tracks/19-registries-publication/spec.md) | alpha | submission_prepared | scaffolded | source_verified | Prepare and submit truthful registry packets and a software paper only after a verified release. |
 | 21 | [Licensed BYO-access adapters](tracks/21-licensed-adapters/spec.md) | beta | scaffolded | scaffolded | source_verified | Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science. |
@@ -32,7 +37,7 @@ an explicit, approval-gated apply receipt exists.
 | 24 | [WASI components, HTTP MCP and scalable execution](tracks/24-wasi-http-scale/spec.md) | beta | partially_implemented | partially_implemented | source_verified | Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries. |
 | 25 | [Provenance and research-object interoperability](tracks/25-provenance-research-objects/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects. |
 | 26 | [Formal assurance and contract evolution](tracks/26-formal-assurance-contract-evolution/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback. |
-| 27 | [Accessibility, internationalisation and usability](tracks/27-accessibility-internationalisation-usability/spec.md) | mature | scaffolded | scaffolded | source_verified | Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology. |
+| 27 | [Accessibility, internationalisation and usability](tracks/27-accessibility-internationalisation-usability/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology. |
 | 28 | [Institutional governance, privacy and collaboration](tracks/28-institutional-governance-privacy-collaboration/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations. |
 | 29 | [External methodological evaluation and sustainability](tracks/29-external-evaluation-sustainability/spec.md) | mature | external_evidence_required | external_evidence_required | source_verified | Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence. |
 | 30 | [Maturity gate and gap closure](tracks/30-maturity-gap-closure/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Maintain one evidence-scaled gap register and an executable hardened/polished launch-preparation dependency graph while blocking premature release claims. |
@@ -53,6 +58,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 01 | [Contract catalogue and code generation](tracks/01-contract-catalog/spec.md) | 2026-08-29 | compiler_verified |
 | 05 | [Execution, audit and local storage](tracks/05-execution-audit-store/spec.md) | 2026-08-13 | compiler_verified |
 | 06 | [Imports, deduplication and study linkage](tracks/06-imports-dedup-linkage/spec.md) | 2026-08-30 | compiler_verified |
+| 07 | [Governed screening workflow](tracks/07-screening-workflow/spec.md) | 2026-08-31 | fixture_proven |
 | 09 | [CLI MVP](tracks/09-cli-mvp/spec.md) | 2026-08-29 | compiler_verified |
 | 10 | [MCP stdio server MVP](tracks/10-mcp-mvp/spec.md) | 2026-08-30 | compiler_verified |
 | 20 | [Grey literature, registers and supplementary discovery](tracks/20-broader-discovery/spec.md) | 2026-08-29 | compiler_verified |

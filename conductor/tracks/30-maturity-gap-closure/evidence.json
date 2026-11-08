@@ -18,7 +18,11 @@
     "docs/quality/evidence-debt.md",
     "conductor/launch-preparation-roadmap.json",
     "scripts/check_launch_preparation_roadmap.py",
-    "tests/test_launch_preparation_roadmap.py"
+    "tests/test_launch_preparation_roadmap.py",
+    "conductor/frontier-plan.md",
+    "docs/research/programme.md",
+    "docs/research/evidence-packages.md",
+    "docs/research/portfolio-reuse.md"
   ],
   "traceability": "conductor/tracks/30-maturity-gap-closure/traceability.json",
   "static_checks": [
@@ -35,7 +39,7 @@
   "blockers": [
     "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
     "Review and approve any explicit release-risk exception without hiding the open gap.",
-    "Keep autonomous end-to-end review and final agent exclusions outside the release claim.",
+    "Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.",
     "LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.",
     "LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.",
     "LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.",

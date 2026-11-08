@@ -74,7 +74,7 @@ pub fn export_records(
         InterchangeFormat::Ris => Ok(export_ris(records)),
         InterchangeFormat::Nbib => Ok(export_nbib(records)),
         InterchangeFormat::PubmedXml => Ok(export_pubmed_xml(records)),
-        InterchangeFormat::Csv => Ok(export_csv(records)),
+        InterchangeFormat::Csv => export_csv(records),
         InterchangeFormat::Bibtex => Ok(export_bibtex(records)),
         InterchangeFormat::EndnoteXml => Ok(export_endnote_xml(records)),
         other => Err(InterchangeError::UnsupportedExport(other)),
@@ -441,7 +441,7 @@ fn import_tagged(
 
 /// Import bibliographic records from CSV text.
 pub fn import_csv(input: &str, source_receipt_id: &str) -> Result<ImportResult, InterchangeError> {
-    let rows = parse_csv_rows(input);
+    let rows = parse_csv_rows(input)?;
     if rows.is_empty() {
         return Ok(ImportResult {
             records: Vec::new(),
@@ -598,61 +598,19 @@ pub fn import_csv(input: &str, source_receipt_id: &str) -> Result<ImportResult, 
     })
 }
 
-fn parse_csv_rows(input: &str) -> Vec<Vec<String>> {
+fn parse_csv_rows(input: &str) -> Result<Vec<Vec<String>>, InterchangeError> {
+    let mut reader = csv::ReaderBuilder::new()
+        .has_headers(false)
+        .flexible(true)
+        .from_reader(input.as_bytes());
     let mut rows = Vec::new();
-    let mut current_row = Vec::new();
-    let mut current_field = String::new();
-    let mut in_quotes = false;
-    let mut chars = input.chars().peekable();
-
-    while let Some(ch) = chars.next() {
-        if in_quotes {
-            if ch == '"' {
-                if chars.peek() == Some(&'"') {
-                    chars.next();
-                    current_field.push('"');
-                } else {
-                    in_quotes = false;
-                }
-            } else {
-                current_field.push(ch);
-            }
-        } else {
-            match ch {
-                '"' => in_quotes = true,
-                ',' => {
-                    current_row.push(std::mem::take(&mut current_field));
-                }
-                '\n' => {
-                    current_row.push(std::mem::take(&mut current_field));
-                    if current_row.iter().all(|f: &String| f.trim().is_empty()) {
-                        current_row.clear();
-                    } else {
-                        rows.push(std::mem::take(&mut current_row));
-                    }
-                }
-                '\r' => {
-                    if chars.peek() == Some(&'\n') {
-                        chars.next();
-                    }
-                    current_row.push(std::mem::take(&mut current_field));
-                    if current_row.iter().all(|f: &String| f.trim().is_empty()) {
-                        current_row.clear();
-                    } else {
-                        rows.push(std::mem::take(&mut current_row));
-                    }
-                }
-                _ => current_field.push(ch),
-            }
+    for row in reader.records() {
+        let row = row?;
+        if !row.iter().all(|field| field.trim().is_empty()) {
+            rows.push(row.iter().map(str::to_owned).collect());
         }
     }
-    if in_quotes || !current_field.is_empty() || !current_row.is_empty() {
-        current_row.push(current_field);
-        if !current_row.iter().all(|f: &String| f.trim().is_empty()) {
-            rows.push(current_row);
-        }
-    }
-    rows
+    Ok(rows)
 }
 
 /// Import bibliographic records from `BibTeX` text.
@@ -1390,8 +1348,15 @@ fn export_pubmed_xml(records: &[BibliographicRecord]) -> String {
     output
 }
 
-fn export_csv(records: &[BibliographicRecord]) -> String {
-    let mut output = "record_id,native_id,title,authors,year,doi,pmid,container_title\n".to_owned();
+fn export_csv(records: &[BibliographicRecord]) -> Result<String, InterchangeError> {
+    // Preserve the historical unquoted header, always-quoted fields and LF bytes.
+    let output = b"record_id,native_id,title,authors,year,doi,pmid,container_title\n".to_vec();
+    let mut writer = csv::WriterBuilder::new()
+        .buffer_capacity(csv_buffer_capacity(records)?)
+        .has_headers(false)
+        .quote_style(csv::QuoteStyle::Always)
+        .terminator(csv::Terminator::Any(b'\n'))
+        .from_writer(output);
     for record in records {
         let fields = [
             record.record_id.clone(),
@@ -1406,16 +1371,61 @@ fn export_csv(records: &[BibliographicRecord]) -> String {
             record.identifiers.pmid.clone().unwrap_or_default(),
             record.container_title.clone().unwrap_or_default(),
         ];
-        output.push_str(
-            &fields
-                .iter()
-                .map(|field| csv_escape(field))
-                .collect::<Vec<_>>()
-                .join(","),
-        );
-        output.push('\n');
+        writer.write_record(fields)?;
     }
-    output
+    let output = writer
+        .into_inner()
+        .map_err(|error| csv::Error::from(error.into_error()))?;
+    let output = String::from_utf8(output).map_err(|error| {
+        csv::Error::from(std::io::Error::new(std::io::ErrorKind::InvalidData, error))
+    })?;
+    Ok(output)
+}
+
+fn csv_buffer_capacity(records: &[BibliographicRecord]) -> Result<usize, InterchangeError> {
+    let invalid_size = || {
+        csv::Error::from(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "CSV field exceeds addressable buffer capacity",
+        ))
+    };
+    // Eleven bytes cover every possible i32 publication year, including its sign.
+    let mut largest_field = 11_usize;
+    for record in records {
+        let separator_bytes = record
+            .authors
+            .len()
+            .saturating_sub(1)
+            .checked_mul(2)
+            .ok_or_else(invalid_size)?;
+        let author_bytes = record
+            .authors
+            .iter()
+            .try_fold(separator_bytes, |length, author| {
+                length.checked_add(author.len())
+            })
+            .ok_or_else(invalid_size)?;
+        for field_length in [
+            record.record_id.len(),
+            record.native_id.len(),
+            record.title.len(),
+            author_bytes,
+            record.identifiers.doi.as_deref().map_or(0, str::len),
+            record.identifiers.pmid.as_deref().map_or(0, str::len),
+            record.container_title.as_deref().map_or(0, str::len),
+        ] {
+            largest_field = largest_field.max(field_length);
+        }
+    }
+    // Doubled quotes plus the two enclosing quotes fit a fresh buffer. A field
+    // can then require at most one suffix retry after a partly filled buffer,
+    // avoiding repeated full-suffix scans by csv-core's quoting routine.
+    let capacity = largest_field
+        .checked_mul(2)
+        .and_then(|length| length.checked_add(2))
+        .filter(|&length| length <= isize::MAX.unsigned_abs())
+        .ok_or_else(invalid_size)?;
+    Ok(capacity.max(8 * 1024))
 }
 
 fn export_bibtex(records: &[BibliographicRecord]) -> String {
@@ -1602,11 +1612,6 @@ fn push_nbib(output: &mut String, tag: &str, value: &str) {
     output.push('\n');
 }
 
-fn csv_escape(value: &str) -> String {
-    let escaped = value.replace('"', "\"\"");
-    format!("\"{escaped}\"")
-}
-
 fn stable_record_id(namespace: &str, native_id: &str) -> String {
     let hash = blake3::hash(format!("{namespace}:{native_id}").as_bytes());
     let suffix: String = hash.to_hex().chars().take(16).collect();
@@ -1620,6 +1625,9 @@ fn usize_to_u64(value: usize) -> u64 {
 /// Interchange operation error.
 #[derive(Debug, thiserror::Error)]
 pub enum InterchangeError {
+    /// CSV parsing or serialisation failed.
+    #[error(transparent)]
+    Csv(#[from] csv::Error),
     /// JSON parsing or serialisation failed.
     #[error(transparent)]
     Json(#[from] serde_json::Error),
@@ -1786,6 +1794,52 @@ mod tests {
 
         let exported = export_records(&res.records, InterchangeFormat::Csv)?;
         assert!(exported.contains("A Study on Search"));
+        Ok(())
+    }
+
+    #[test]
+    fn csv_buffer_covers_large_quoted_fields_and_preserves_bytes() -> Result<(), InterchangeError> {
+        let mut record = golden_record();
+        record.title = format!("{}\r\n{}", "x".repeat(12_000), "\"".repeat(4_000));
+        let encoded_length =
+            record.title.len() + record.title.bytes().filter(|&byte| byte == b'"').count() + 2;
+        let records = std::slice::from_ref(&record);
+        assert!(encoded_length > 8 * 1024);
+        assert!(csv_buffer_capacity(records)? >= encoded_length);
+        let exported = export_records(records, InterchangeFormat::Csv)?;
+        let imported = import_csv(&exported, "receipt-large-title")?;
+        assert_eq!(imported.records.len(), 1);
+        assert_eq!(
+            imported.records.first().map(|value| value.title.as_str()),
+            Some(record.title.as_str())
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn csv_buffer_sizes_joined_authors_as_one_field() -> Result<(), InterchangeError> {
+        let mut record = golden_record();
+        record.authors = vec![
+            "A\"".repeat(2_000),
+            "B\"".repeat(2_000),
+            "C\"".repeat(2_000),
+        ];
+        let joined = record.authors.join("; ");
+        let encoded_length = joined.len() + joined.bytes().filter(|&byte| byte == b'"').count() + 2;
+        let records = std::slice::from_ref(&record);
+        assert!(record.authors.iter().all(|author| author.len() < 8 * 1024));
+        assert!(encoded_length > 8 * 1024);
+        assert!(csv_buffer_capacity(records)? >= encoded_length);
+        let exported = export_records(records, InterchangeFormat::Csv)?;
+        let imported = import_csv(&exported, "receipt-large-authors")?;
+        assert_eq!(imported.records.len(), 1);
+        assert_eq!(
+            imported
+                .records
+                .first()
+                .map(|value| value.authors.as_slice()),
+            Some(record.authors.as_slice())
+        );
         Ok(())
     }
 

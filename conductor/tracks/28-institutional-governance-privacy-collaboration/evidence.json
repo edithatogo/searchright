@@ -5,7 +5,7 @@
   "status": "partially_implemented",
   "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-11-04",
   "source_evidence": [
     "crates/searchright-governance/src/lib.rs",
     "crates/searchright-contracts/src/governance.rs",
@@ -17,12 +17,17 @@
     "policy/redaction-profile.json",
     "scripts/redaction.py",
     "scripts/check_redaction_policy.py",
-    "docs/security/redaction-and-data-minimisation.md"
+    "docs/security/redaction-and-data-minimisation.md",
+    "tests/test_institutional_governance_privacy_collaboration.py",
+    "crates/searchright-screening/src/lib.rs",
+    "crates/searchright-governance/src/approval.rs",
+    "verification/receipts/track-28-conductor-review-2026-11-04.json"
   ],
   "traceability": "conductor/tracks/28-institutional-governance-privacy-collaboration/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
-    "python scripts/check_redaction_policy.py --self-test"
+    "python scripts/check_redaction_policy.py --self-test",
+    "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
   ],
   "requirements": [
     "SR-057",
@@ -59,5 +64,8 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [],
-  "external_evidence": []
+  "external_evidence": [],
+  "review_fixes": [
+    "Upgrade all five Track 28 assertions (T28-A001..T28-A005) to symbol_and_gate_mapped with concrete symbols across searchright-governance, searchright-contracts, searchright-screening and scripts/redaction.py; add tests/test_institutional_governance_privacy_collaboration.py covering policy/request/decision consistency, deny-by-default blocker codes, human-approval and scoped lifecycle authority, receipt minimisation, adjudication independence and threat-model gates; fix the clippy assert_is_empty lint in the searchright-governance unit tests; record the conductor review receipt and preserve the open compiled negative-scenario, institutional review and cross-institution pilot gates without false promotion."
+  ]
 }

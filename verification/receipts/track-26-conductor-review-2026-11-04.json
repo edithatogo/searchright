@@ -1,0 +1,120 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "26",
+  "reviewed_revision": "bbc0ac7",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "finite-state-workflow-traces-and-forbidden-transitions",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-assurance/src/lib.rs, crates/searchright-contracts/src/assurance.rs, and contracts/examples/workflow-trace.yaml. Verified finite-state lifecycle trace checking (verify_trace, verify_transition, allowed_transition), detection of discontinuous transitions, and fail-closed rejection of undeclared lifecycle edge skips.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "authority-invariants-and-agent-screening-boundaries",
+      "mode": "isolated_first_pass",
+      "finding": "Audited crates/searchright-assurance/src/lib.rs and tests/test_mcp_authority_state_machine.py. Verified that consequential transitions require human approval (requires_human_approval), that agents are unconditionally rejected from closing full-text screening or publishing reports without human approval, and that Hypothesis stateful property fuzzing over searchright-mcp stdio confirms agents cannot record screening decisions without an effect protocol authority token.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "schema-compatibility-and-migration-classification",
+      "mode": "isolated_first_pass",
+      "finding": "Audited contracts/migrations/registry.json, contracts/migrations/github-issue-hierarchy-v1-to-v2.json, and scripts/check_schema_migrations.py. Verified that all multi-version catalog families define explicit non-destructive forward migration plans and rollback contracts, preserving minimum read version and highest write version.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "deprecation-and-rollback-policy",
+      "mode": "isolated_first_pass",
+      "finding": "Audited registry default policy in contracts/migrations/registry.json and tests/test_formal_assurance_contract_evolution.py. Verified default_policy mandates unknown_version: reject, destructive_migration: deny, implicit_write_upgrade: deny, backup_required: true, and receipt_required: true.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "traceability-and-symbol-mapping",
+      "mode": "isolated_first_pass",
+      "finding": "Upgraded all five Track 26 assertions (T26-A001..T26-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-assurance, scripts/check_schema_migrations.py, tests/test_formal_assurance_contract_evolution.py, and tests/test_mcp_authority_state_machine.py in both conductor/tracks/26-formal-assurance-contract-evolution/traceability.json and conductor/traceability-overrides.json (0/5 empty symbols).",
+      "disposition": "fixed"
+    },
+    {
+      "role": "maturity-gate-and-claim-boundary",
+      "mode": "sealed_read_only_first_pass",
+      "finding": "Preserved formal assurance gating state without premature completion: implementation_state remains partially_implemented; compiling and running Kani proofs, Loom permutations, Miri/cargo-careful checks, compatibility fixtures, semver/cross-version contract tests, and representative persisted-data migrations remain explicitly open.",
+      "disposition": "gates_preserved_pending"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_formal_assurance_contract_evolution.py validating workflow-trace schema compliance, schema migration registry default fail-closed policies, non-destructive migration plans with rollback support, and scripts/check_schema_migrations.py execution.",
+    "Integrated tests/test_mcp_authority_state_machine.py providing Hypothesis stateful property testing over the searchright-mcp stdio binary to verify fail-closed screening authority invariants and resilient fuzzing handling.",
+    "Upgraded assertions T26-A001 through T26-A005 to symbol_and_gate_mapped with concrete implementation symbols, deterministic tests, and native test commands in both conductor/tracks/26-formal-assurance-contract-evolution/traceability.json and conductor/traceability-overrides.json (0/5 empty symbol mappings).",
+    "Preserved open maturity blockers: compiling and running Kani proofs, Loom permutations, Miri and cargo-careful checks, model-check traces, public contract compatibility fixtures, semver/cross-version MCP/CLI contract tests, and persisted-data migration drills."
+  ],
+  "validation": [
+    {
+      "command": "python3 -B scripts/validate_repository.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py",
+      "status": "passed",
+      "tests_passed": 4
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_mcp_authority_state_machine.py",
+      "status": "passed",
+      "tests_passed": 1
+    },
+    {
+      "command": "python3 -B scripts/check_schema_migrations.py",
+      "status": "passed"
+    },
+    {
+      "command": "cargo test --locked -p searchright-assurance",
+      "status": "passed",
+      "tests_passed": 10
+    },
+    {
+      "command": "cargo clippy -p searchright-assurance --all-targets --all-features --locked -- -D warnings",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T26-G-KANI-LOOM-MIRI-PROOFS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks."
+    },
+    {
+      "gate_id": "T26-G-MODEL-CHECK-TRACES",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Compile and execute model-check traces and forbidden-transition tests."
+    },
+    {
+      "gate_id": "T26-G-COMPATIBILITY-FIXTURES",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Add compatibility fixtures for each public contract version."
+    },
+    {
+      "gate_id": "T26-G-SEMVER-CROSS-VERSION",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Run semver and cross-version MCP/CLI contract tests."
+    },
+    {
+      "gate_id": "T26-G-DATA-MIGRATION-DRILLS",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
+    }
+  ],
+  "archive_decision": "not_archive_eligible",
+  "archive_blockers": [
+    "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+    "Compile and execute model-check traces and forbidden-transition tests.",
+    "Add compatibility fixtures for each public contract version.",
+    "Run semver and cross-version MCP/CLI contract tests.",
+    "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

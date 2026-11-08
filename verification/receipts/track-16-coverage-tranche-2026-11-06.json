@@ -1,0 +1,52 @@
+{
+  "schema_version": "org.searchright.local-coverage-tranche.v1",
+  "track_id": "16",
+  "observed_at": "2026-11-06T10:12:36Z",
+  "base_revision": "7a727f59af464bb3fcecdc319249adb4d379da10",
+  "worktree": "dirty; includes 12 pre-existing modified files, preserved unchanged by this tranche",
+  "status": "local_tests_passed_full_verification_blocked",
+  "toolchain": {
+    "rustc": "1.97.1 (8bab26f4f 2026-07-14)",
+    "llvm": "22.1.6",
+    "cargo_llvm_cov": "0.9.1",
+    "environment": "Pinned rustup toolchain bin directory prepended to PATH; CARGO_NET_OFFLINE=true",
+    "initial_failure": "Homebrew Rust 1.99.1 ran workspace tests but coverage export failed because its llvm-profdata path was absent. That run is not coverage evidence.",
+    "ci_difference": "Checked-in coverage workflow pins cargo-llvm-cov 0.8.7; this is local 0.9.1 evidence, not equivalent hosted evidence."
+  },
+  "changes": [
+    "Five delivery-validation tests independently exercise canonical round trips, forbidden remote-write authority, repository control invariants, release ordering and uniqueness, evidence stages, required text/schema versions, explicit release/registry promotion and mandatory rollback.",
+    "Fix test inventory to sum synchronous and asynchronous markers and recursively inspect Rust files; add two Python regressions. The mixed/nested test failed before the fix with (1, 1) instead of (3, 3).",
+    "No public contract, eligibility, provider strategy, publication authority or production behavior changed."
+  ],
+  "coverage": {
+    "command": "cargo llvm-cov --workspace --all-features --locked --lcov --output-path /tmp/searchright-coverage-{before,after}.info",
+    "before": {"covered_lines": 26740, "instrumented_lines": 30551, "line_percent": 87.52577657032504, "lcov_sha256": "3bb9906205aebd4c327c95772b15e98a1224fde6113fca200fa8a7a5abe316eb"},
+    "after": {"covered_lines": 26850, "instrumented_lines": 30551, "line_percent": 87.88583025105561, "lcov_sha256": "2dfec9a5632b057192068379afce1471f81e0ab8474dd6245a33d79e41953a01"},
+    "delivery_rs": {"before_covered": 0, "after_covered": 118, "instrumented_lines": 118},
+    "interpretation": "Workspace net gain is 110 covered lines, not 118: other execution-path hit counts vary across runs. No branch-coverage or full-correctness claim.",
+    "raw_artifact_retention": "LCOV reports and command logs remain in /tmp on this machine, not a durable hosted artifact store. Digests and observed counts are preserved here.",
+    "policy_check": "passed at 87.89 percent; governed floor remains unchanged; 91 percent maturity gate remains open"
+  },
+  "checks": [
+    {"command": "python3 -B -m unittest discover -s tests -p test_coverage_sprint.py", "status": "passed", "tests": 2},
+    {"command": "cargo fmt --all -- --check", "status": "passed", "note": "Stable rustfmt warns about existing nightly-only configuration options."},
+    {"command": "cargo clippy --workspace --all-targets --all-features --locked -- -D warnings", "status": "passed", "note": "Initial indexing warning in new tests fixed using checked access."},
+    {"command": "cargo nextest run --workspace --all-features --locked", "status": "passed", "tests": 840, "skipped": 0},
+    {"command": "python3 scripts/check_rust_schema_parity.py --check", "status": "passed_with_recorded_differences"},
+    {"command": "cargo test --workspace --all-features --doc --locked", "status": "passed"},
+    {"command": "cargo doc --workspace --all-features --no-deps --locked", "status": "passed"},
+    {"command": "cargo deny --offline check", "status": "passed", "note": "Cached advisory data only; no claim of current network-fetched advisories."},
+    {"command": "cargo machete", "status": "passed"}
+  ],
+  "full_verification": {
+    "command": "bash scripts/verify.sh",
+    "python_tests_passed": 212,
+    "static_gates_passed": 55,
+    "static_gates_failed": 2,
+    "native_conductor_status": "passed; 226/405 tasks, no status promotion",
+    "status": "blocked_by_static_gates",
+    "remaining_failures": ["stale verification/receipts/source-manifest.sha256", "packaging requires a clean tracked working tree"],
+    "note": "A temporary manual plan annotation caused generated plan/issue-body drift; removed it and registered this receipt through the canonical roadmap instead. Regenerated the canonical context lock after roadmap registration; final full verification ran 212 Python tests and 57 static gates, with only the two listed failures. Compiler gates were not reached by verify.sh, but were run separately as listed above."
+  },
+  "claim_boundary": "Local dirty-worktree evidence only. Track 16 remains partially implemented/source_verified. No hosted baseline promotion, remote mutation, package publication, live-provider support or maturity decision."
+}

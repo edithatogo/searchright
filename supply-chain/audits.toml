@@ -7,8 +7,50 @@ criteria = "safe-to-deploy"
 version = "0.2.33"
 notes = "Track 09 source review: forbids unsafe code and renders clap metadata to caller-provided writers or paths; no network or process execution paths found."
 
+[[audits.csv]]
+who = "OpenAI ChatGPT coding agent"
+criteria = "safe-to-deploy"
+version = "1.4.0"
+notes = "Source review of the exact published library and original manifest, matched to upstream 4a3997e91d668ea1d8595bdef15625a77cf2308a. UTF-8 unchecked conversions and StringRecord validation invariants reviewed; no build script, network or process execution. Searchright uses memory-backed Builder APIs and sizes the writer buffer for the largest encoded field to prevent repeated suffix scans. Parsing remains permissive and memory use depends on input size. See docs/csv-dependency-decision.md for source identity evidence and review limits; this is an agent source review, not an upstream attestation or formal proof."
+
+[[audits.csv-core]]
+who = "OpenAI ChatGPT coding agent"
+criteria = "safe-to-deploy"
+version = "0.1.13"
+notes = "Source review of the exact published library and original manifest; all source hashes match the reviewed csv 1.4.0 release tree. No unsafe code, allocation, build script, network or process execution. Reviewed state-machine progress and caller-buffer bounds. Current use is through csv ReaderBuilder, which constructs the DFA, and a writer buffer sized to avoid repeated suffix scans; direct core Reader::default/clone behaviour is outside the deployed path. See docs/csv-dependency-decision.md for identity evidence and limits. Agent review, not an upstream audit or formal proof."
+
+[[audits.noyalib]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+version = "0.0.58"
+notes = "Track 16 source review of maintained parser fork (third_party/noyalib): #![forbid(unsafe_code)] enforced at crate root; alias expansion, mapping width, and included-node budgets verified against upstream fixture hashes; no network or process execution paths enabled."
+
+[[audits.quick-xml]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+version = "0.42.0"
+notes = "Track 16 source review: XML parser 0.42.0 with default feature set only; no unsafe blocks, network, or process execution paths in enabled Searchright XML parsing path."
+
 [[audits.roff]]
 who = "OpenAI Codex <noreply@openai.com>"
 criteria = "safe-to-deploy"
 version = "1.1.1"
 notes = "Track 09 source review: pure ROFF document construction and escaped writer output; no unsafe, network, process, or filesystem access paths found."
+
+[[audits.rustls]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+delta = "0.23.43 -> 0.23.46"
+notes = "Track 16 security advisory patch review: TLS protocol and handshake security fixes from 0.23.43 to 0.23.46 paired with audited rustls-webpki 0.103.16."
+
+[[audits.ryu]]
+who = "OpenAI ChatGPT coding agent"
+criteria = "safe-to-deploy"
+version = "1.0.23"
+notes = "Source review of the exact published library and original manifest, matched to upstream f0b52bb194befe6fd242154f2182fafd43a819b8. Reviewed sealed f32/f64 APIs, initialized fixed-size ASCII output, pointer bounds and lookup-table indexing; checked all full table constants and exponent-derived indices independently. Runtime has no allocation or ambient I/O; published manifest disables build scripts. See docs/csv-dependency-decision.md for identity evidence and review limits. Agent review, not an upstream attestation, formal proof or exhaustive native test."
+
+[[audits.tokio]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+delta = "1.53.1 -> 1.54.1"
+notes = "Track 16 security advisory patch review: runtime maintenance and advisory remediation update from 1.53.1 to 1.54.1."

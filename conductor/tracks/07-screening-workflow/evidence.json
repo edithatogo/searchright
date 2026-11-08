@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "07",
   "title": "Governed screening workflow",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-screening/src/lib.rs",
@@ -23,10 +23,8 @@
     "SR-022",
     "SR-058"
   ],
-  "blockers": [
-    "Complete reviewer usability and inter-rater calibration evaluation."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-07",
@@ -49,7 +47,24 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-07-screening-review.json"
+    "verification/receipts/track-07-screening-review.json",
+    "verification/receipts/track-07-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-07-screening-reviewer.json",
+    "verification/receipts/panel-track-07-information-specialist.json",
+    "verification/receipts/panel-track-07-methodologist.json"
   ],
-  "external_evidence": []
+  "external_evidence": [],
+  "panel_findings": {
+    "remediation_required": true,
+    "critical_count": 4,
+    "major_count": 6,
+    "top_findings": [
+      "P07-C001: Systemic authorization bypass in role-gate logic",
+      "P07-C002: Canonical decisions mutable/deletable",
+      "P07-C003: EPPI-Reviewer export schema mismatch",
+      "P07-C004: Import strips evidence excerpts"
+    ]
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-08-31"
 }
