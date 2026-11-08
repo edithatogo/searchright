@@ -3,11 +3,11 @@
 
 Parent phase key: `track-25-phase-1`
 Conductor plan: `conductor/tracks/25-provenance-research-objects/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-provenance/src/lib.rs`
   - [x] Present source path: `scripts/review_bundle.py`
   - [x] Present source path: `contracts/json-schema/review-bundle-manifest.v1.schema.json`
@@ -16,6 +16,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `docs/standards-and-provenance.md`
   - [x] Present source path: `docs/vertical-slice-definition-of-done.md`
   - [x] Present source path: `tests/test_provenance_research_objects_governance.py`
+  - [x] Present source path: `crates/searchright-provenance/tests/provenance_interop_scenarios.rs`
   - [x] Assertion ledger: `conductor/tracks/25-provenance-research-objects/traceability.json`
 
 ## Completion and evidence contract

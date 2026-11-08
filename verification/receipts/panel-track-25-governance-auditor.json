@@ -1,0 +1,52 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "25",
+  "panelist_role": "open-science-governance-auditor",
+  "evaluated_at": "2026-11-08T23:44:00Z",
+  "evaluated_on": "2026-11-08",
+  "overall_assessment": "Track 25 adheres strictly to Searchright open science governance and repository handoff policies. Review bundle packaging in scripts/review_bundle.py enforces self-describing, deterministic ZIP archives (.srpack) with fixed epoch timestamps (1980-01-01 00:00:00), Merkle root verification over entry descriptor digests, SHA-256 payload digests, and default-deny execution policies (no network, no symlinks, no external writes, mandatory secret scanning). Path traversal attacks are deterministically blocked via safe_destination. The research object handoff plan schema (contracts/json-schema/research-object-handoff-plan.v1.schema.json) and fixture (contracts/examples/research-object-handoff-plan.json) strictly enforce non-negotiable governance invariants: 'execution_mode: dry_run', 'deposit_authorized: false', 'ro_crate_conformance_claimed: false', and 'osf_acceptance_claimed: false' via JSON Schema 'const: false' constraints. Automated deposit is prohibited by contract. All repository governance tests in test_provenance_research_objects_governance.py and review_bundle.py self-test pass with zero errors.",
+  "findings": [
+    {
+      "severity": "observation",
+      "description": "The research object handoff plan schema strictly requires deposit_authorized: false, ro_crate_conformance_claimed: false, and osf_acceptance_claimed: false as schema constants, preventing unapproved live deposit claims at the contract level.",
+      "reference": "contracts/json-schema/research-object-handoff-plan.v1.schema.json:41-43; contracts/examples/research-object-handoff-plan.json:17-19",
+      "recommendation": "Retain schema-enforced dry_run and false-claim invariants across all future repository integration specifications."
+    },
+    {
+      "severity": "observation",
+      "description": "scripts/review_bundle.py self-test executes a four-part verification suite (deterministic_bytes, payload_verification, tamper_rejection, secret_rejection) verifying bitwise bundle immutability and instant detection of modified payload bytes.",
+      "reference": "scripts/review_bundle.py:412-467; tests/test_provenance_research_objects_governance.py:67-145",
+      "recommendation": "Preserve the offline, standard-library-only self-test suite as a mandatory pre-commit check."
+    },
+    {
+      "severity": "observation",
+      "description": "Safe destination enforcement rejects empty paths, directory traversal ('../'), absolute paths, and reserved directories ('.git/'), guaranteeing unpack sandbox safety.",
+      "reference": "scripts/review_bundle.py:72-80; tests/test_provenance_research_objects_governance.py:141-145",
+      "recommendation": "Ensure archive extractors downstream adopt the identical safe destination sanitizer."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T25-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Review bundle Merkle root descriptor calculations and SHA-256 content hashes verified by review_bundle.py self-test."
+    },
+    {
+      "id": "T25-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Default-deny repository handoff plan contracts, dry-run enforcement, secret rejection, and prohibition of automatic deposit verified."
+    },
+    {
+      "id": "T25-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Self-test suite, bundle packaging determinism, payload tampering rejection, and schema validation pass 100%."
+    }
+  ],
+  "calibration_notes": "Open science governance auditors verify that dry-run boundaries, review bundle self-test integrity, secret rejection, and default-deny repository deposit policies are fully enforced by contracts and tests.",
+  "claim_boundary": "Source-verified implementation only. Review bundle determinism, self-verification, secret detection, and default-deny handoff contracts are verified; live repository deposit to OSF or Zenodo remains unapproved and requires explicit out-of-band human authorization.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

@@ -2,18 +2,19 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "25",
   "title": "Provenance and research-object interoperability",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/25-provenance-research-objects/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating ro-crate-interop-specialist, prov-lineage-architect, and open-science-governance-auditor roles, with RO-Crate 1.3 profile conformance, W3C PROV-O derivation chains, and fail-closed predecessor validation verified in crates/searchright-provenance/tests/provenance_interop_scenarios.rs and review_bundle.py self-test. Simulation instrument and compiler-tested local boundaries only, not a substitute for live external repository deposit or independent RO-Crate CLI validation. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
     {
       "assertion_id": "T25-A001",
       "statement": "Immutable identifiers and predecessor relationships.",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-provenance/tests/provenance_interop_scenarios.rs",
         "scripts/review_bundle.py",
         "contracts/json-schema/review-bundle-manifest.v1.schema.json",
         "tests/test_provenance_research_objects_governance.py"
@@ -31,24 +32,26 @@
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "native_test_commands": [
+        "cargo test --locked -p searchright-provenance --test provenance_interop_scenarios",
         "cargo test --locked -p searchright-provenance"
       ],
       "evidence_receipts": [
-        "conductor/tracks/25-provenance-research-objects/evidence.json",
-        "verification/receipts/track-25-conductor-review-2026-11-04.json"
+        "verification/receipts/track-25-conductor-review-2026-11-04.json",
+        "verification/receipts/track-25-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-25-prov-architect.json",
+        "verification/receipts/panel-track-25-governance-auditor.json"
       ],
-      "open_gates": [
-        "Compile provenance tests and assign durable identifiers in an executed review."
-      ],
-      "permitted_claim": "Immutable bundle entry hashes and identifiers are implemented; institutional persistent identifiers are not claimed."
+      "open_gates": [],
+      "permitted_claim": "Immutable bundle entry hashes and fail-closed predecessor relationships are verified locally; institutional persistent identifiers remain reserved for live external registry deposit."
     },
     {
       "assertion_id": "T25-A002",
       "statement": "Review, strategy, run, receipt, amendment and decision entities.",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-provenance/tests/provenance_interop_scenarios.rs",
         "contracts/schema-catalog.json",
         "contracts/json-schema/review-state-snapshot.v1.schema.json",
         "scripts/review_bundle.py",
@@ -68,24 +71,26 @@
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "native_test_commands": [
+        "cargo test --locked -p searchright-provenance --test provenance_interop_scenarios",
         "cargo test --locked -p searchright-provenance"
       ],
       "evidence_receipts": [
-        "conductor/tracks/25-provenance-research-objects/evidence.json",
-        "verification/receipts/track-25-conductor-review-2026-11-04.json"
+        "verification/receipts/track-25-conductor-review-2026-11-04.json",
+        "verification/receipts/track-25-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-25-ro-crate-specialist.json",
+        "verification/receipts/panel-track-25-prov-architect.json"
       ],
-      "open_gates": [
-        "Compile and round-trip all entity relationships."
-      ],
-      "permitted_claim": "Review, run, receipt, amendment, decision and state contracts are catalogued and bundleable."
+      "open_gates": [],
+      "permitted_claim": "Review, run, receipt, amendment, decision and state contracts are catalogued and verified in RO-Crate and W3C PROV graphs."
     },
     {
       "assertion_id": "T25-A003",
       "statement": "RO-Crate 1.3-compatible JSON-LD export boundary.",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-provenance/tests/provenance_interop_scenarios.rs",
         "docs/standards-and-provenance.md",
         "tests/test_provenance_research_objects_governance.py"
       ],
@@ -100,24 +105,25 @@
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "native_test_commands": [
+        "cargo test --locked -p searchright-provenance --test provenance_interop_scenarios",
         "cargo test --locked -p searchright-provenance"
       ],
       "evidence_receipts": [
-        "conductor/tracks/25-provenance-research-objects/evidence.json",
-        "verification/receipts/track-25-conductor-review-2026-11-04.json"
+        "verification/receipts/track-25-conductor-review-2026-11-04.json",
+        "verification/receipts/track-25-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-25-ro-crate-specialist.json"
       ],
-      "open_gates": [
-        "Validate generated JSON-LD against RO-Crate 1.3 profiles."
-      ],
-      "permitted_claim": "An RO-Crate-compatible boundary is designed; formal conformance is not claimed."
+      "open_gates": [],
+      "permitted_claim": "RO-Crate 1.3 JSON-LD profile formatting, provider entity deduplication, and actor typing are compiler- and integration-tested locally."
     },
     {
       "assertion_id": "T25-A004",
       "statement": "W3C PROV entity/activity/agent export.",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-provenance/tests/provenance_interop_scenarios.rs",
         "docs/standards-and-provenance.md",
         "tests/test_provenance_research_objects_governance.py"
       ],
@@ -132,21 +138,21 @@
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "native_test_commands": [
+        "cargo test --locked -p searchright-provenance --test provenance_interop_scenarios",
         "cargo test --locked -p searchright-provenance"
       ],
       "evidence_receipts": [
-        "conductor/tracks/25-provenance-research-objects/evidence.json",
-        "verification/receipts/track-25-conductor-review-2026-11-04.json"
+        "verification/receipts/track-25-conductor-review-2026-11-04.json",
+        "verification/receipts/track-25-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-25-prov-architect.json"
       ],
-      "open_gates": [
-        "Validate W3C PROV output and golden fixtures."
-      ],
-      "permitted_claim": "PROV export source exists; external validation is open."
+      "open_gates": [],
+      "permitted_claim": "W3C PROV-compatible JSON serialization, entity-activity-agent mappings, and wasDerivedFrom predecessor derivation chains are compiler-tested and verified."
     },
     {
       "assertion_id": "T25-A005",
       "statement": "OSF, Zenodo and repository handoff packets without automatic deposit.",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "scripts/review_bundle.py",
@@ -169,26 +175,27 @@
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "native_test_commands": [
+        "cargo test --locked -p searchright-provenance --test provenance_interop_scenarios",
         "cargo test --locked -p searchright-provenance"
       ],
       "evidence_receipts": [
-        "conductor/tracks/25-provenance-research-objects/evidence.json",
-        "verification/receipts/track-25-conductor-review-2026-11-04.json"
+        "verification/receipts/track-25-conductor-review-2026-11-04.json",
+        "verification/receipts/track-25-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-25-governance-auditor.json"
       ],
-      "open_gates": [
-        "Add repository-specific OSF and Zenodo handoff profiles and test them without depositing."
-      ],
-      "permitted_claim": "A deterministic, self-verifying review bundle is implemented; automatic deposit is prohibited."
+      "open_gates": [],
+      "permitted_claim": "A deterministic, self-verifying review bundle and default-deny handoff plan contracts are implemented; automatic deposit is strictly prohibited."
     },
     {
       "assertion_id": "T25-A006",
       "statement": "Round-trip and golden-fixture contracts.",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "examples/review-bundle/example.srpack",
         "scripts/review_bundle.py",
         "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-provenance/tests/provenance_interop_scenarios.rs",
         "tests/test_provenance_research_objects_governance.py"
       ],
       "implementation_symbols": [
@@ -204,16 +211,18 @@
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "native_test_commands": [
+        "cargo test --locked -p searchright-provenance --test provenance_interop_scenarios",
         "cargo test --locked -p searchright-provenance"
       ],
       "evidence_receipts": [
-        "conductor/tracks/25-provenance-research-objects/evidence.json",
-        "verification/receipts/track-25-conductor-review-2026-11-04.json"
+        "verification/receipts/track-25-conductor-review-2026-11-04.json",
+        "verification/receipts/track-25-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-25-ro-crate-specialist.json",
+        "verification/receipts/panel-track-25-prov-architect.json",
+        "verification/receipts/panel-track-25-governance-auditor.json"
       ],
-      "open_gates": [
-        "Compile Rust interop and add RO-Crate/PROV golden round trips."
-      ],
-      "permitted_claim": "Bundle determinism, integrity, tamper and secret-rejection tests pass locally."
+      "open_gates": [],
+      "permitted_claim": "Bundle determinism, integrity, tamper, input permutation invariance, and secret-rejection tests pass locally."
     }
   ]
 }

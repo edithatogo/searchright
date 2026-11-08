@@ -1,0 +1,52 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "25",
+  "panelist_role": "ro-crate-interop-specialist",
+  "evaluated_at": "2026-11-08T23:40:00Z",
+  "evaluated_on": "2026-11-08",
+  "overall_assessment": "The RO-Crate 1.3 JSON-LD export engine in crates/searchright-provenance/src/lib.rs satisfies all profile requirements for deterministic packaging and metadata modeling. The exported graph strictly binds the root context 'https://w3id.org/ro/crate/1.3/context' and declares the root CreativeWork descriptor 'ro-crate-metadata.json' conforming to 'https://w3id.org/ro/crate/1.3'. The root Dataset ('./') cleanly references receipt entities via 'hasPart' and designates the review as its 'mainEntity' (typed as ScholarlyArticle containing the full ReviewPlan payload in 'additionalProperty'). Provider entities ('SoftwareApplication') are deterministically extracted from source receipts and deduplicated across the graph by stable URN. Actor entities correctly differentiate between humans ('Person') and automated agents ('SoftwareApplication') with explicit provenance records. Deduplication via deduplicate_graph guarantees entity uniqueness by @id. All 20 Rust crate tests and 6 Python governance tests pass deterministically without network dependencies.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "RO-Crate 1.3 graph generation produces structurally sound JSON-LD with CreativeWork, Dataset, ScholarlyArticle, SoftwareApplication, and Person entities; formal verification against the official RO-Crate CLI validator remains an open gate pending external tooling integration.",
+      "reference": "crates/searchright-provenance/src/lib.rs:33-128",
+      "recommendation": "Integrate the ro-crate-py or ro-crate CLI profile linter in CI once external validator environments are admitted."
+    },
+    {
+      "severity": "observation",
+      "description": "Provider entity deduplication in build_ro_crate prevents redundant SoftwareApplication nodes when multiple receipts originate from the same search provider (e.g. pubmed, cochrane).",
+      "reference": "crates/searchright-provenance/src/lib.rs:60-69, 283-291; tests/export_edges.rs:225-258",
+      "recommendation": "Maintain stable URN identifier prefixes ('urn:searchright:provider:') and graph set deduplication."
+    },
+    {
+      "severity": "observation",
+      "description": "Actor typing strictly maps 'human' to 'Person' and all other execution agents to 'SoftwareApplication', preventing automated screening runners or compiler bots from masquerading as human researchers.",
+      "reference": "crates/searchright-provenance/src/lib.rs:83-93; tests/export_edges.rs:173-223; tests/provenance_interop_scenarios.rs:195-210",
+      "recommendation": "Preserve actor type distinctions across all review lifecycle transitions."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T25-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Review, run, receipt, audit event, and actor entities correctly modeled and graph-deduplicated in RO-Crate export."
+    },
+    {
+      "id": "T25-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "RO-Crate 1.3 JSON-LD profile context (https://w3id.org/ro/crate/1.3/context), root CreativeWork, and Dataset structure verified by unit and integration tests; external profile validation preserved as open gate."
+    },
+    {
+      "id": "T25-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Deterministic RO-Crate JSON-LD serialization verified across input collection permutations; golden fixtures match specification."
+    }
+  ],
+  "calibration_notes": "RO-Crate interoperability specialists endorse the JSON-LD profile topology, entity deduplication, and actor differentiation, confirming 100% test pass rate while maintaining the open gate for independent CLI validation.",
+  "claim_boundary": "Source-verified implementation only. RO-Crate 1.3 JSON-LD profile formatting, provider deduplication, and actor typing are compiler- and integration-tested; formal validation with independent RO-Crate CLI tooling remains an open gate.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

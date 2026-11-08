@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/25-provenance-research-objects/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-25-phase-1-task-01`)
+- [x] T01: Implement and document every acceptance assertion with symbol- and test-level mappings. (`track-25-phase-1-task-01`)
 
 ## Evidence rule
 

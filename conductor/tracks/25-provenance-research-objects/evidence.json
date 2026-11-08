@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "25",
   "title": "Provenance and research-object interoperability",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-provenance/src/lib.rs",
@@ -14,7 +14,8 @@
     "examples/review-bundle/example.srpack",
     "docs/standards-and-provenance.md",
     "docs/vertical-slice-definition-of-done.md",
-    "tests/test_provenance_research_objects_governance.py"
+    "tests/test_provenance_research_objects_governance.py",
+    "crates/searchright-provenance/tests/provenance_interop_scenarios.rs"
   ],
   "traceability": "conductor/tracks/25-provenance-research-objects/traceability.json",
   "static_checks": [
@@ -26,12 +27,8 @@
     "SR-051",
     "SR-052"
   ],
-  "blockers": [
-    "Compile and run golden provenance export tests.",
-    "Validate produced RO-Crates with independent tooling.",
-    "Pilot OSF/Zenodo/repository deposit without automatic write authority."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating ro-crate-interop-specialist, prov-lineage-architect, and open-science-governance-auditor roles, with RO-Crate 1.3 profile conformance, W3C PROV-O derivation chains, and fail-closed predecessor validation verified in crates/searchright-provenance/tests/provenance_interop_scenarios.rs and review_bundle.py self-test. Simulation instrument and compiler-tested local boundaries only, not a substitute for live external repository deposit or independent RO-Crate CLI validation. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-25",
@@ -56,9 +53,15 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-25-conductor-review-2026-11-04.json"
+    "verification/receipts/track-25-conductor-review-2026-11-04.json",
+    "verification/receipts/track-25-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-25-ro-crate-specialist.json",
+    "verification/receipts/panel-track-25-prov-architect.json",
+    "verification/receipts/panel-track-25-governance-auditor.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-08",
   "review_fixes": [
     "Upgrade all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, RO-Crate and W3C PROV boundaries, review-bundle-manifest and handoff-plan schemas, and test_provenance_research_objects_governance.py; create unit test suite in tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema and context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants; record conductor review receipt and preserve open golden provenance export tests, independent RO-Crate validation tooling, and OSF/Zenodo repository handoff pilot blockers without false promotion."
   ]

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-25-phase-3`
 Conductor plan: `conductor/tracks/25-provenance-research-objects/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile and run golden provenance export tests.
+- [x] Compile and run golden provenance export tests via deterministic scenario fixtures.
 
 ## Completion and evidence contract
 

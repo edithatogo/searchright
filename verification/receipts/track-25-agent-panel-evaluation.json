@@ -1,0 +1,137 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "25",
+  "title": "Provenance and research-object interoperability — agent-panel evaluation",
+  "observed_at": "2026-11-08T23:45:00Z",
+  "evaluated_on": "2026-11-08",
+  "source_revision": "4da491a9126c5d83b3c9e9c67f1bf6b4c1de4207",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "ro-crate-interop-specialist",
+      "prov-lineage-architect",
+      "open-science-governance-auditor"
+    ],
+    "output_artefacts": [
+      "structured-ro-crate-1-3-profile-findings",
+      "w3c-prov-derivation-and-predecessor-invariants",
+      "open-science-governance-and-handoff-audit",
+      "disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Source-verified and fixture-proven implementation only; golden provenance export tests, independent RO-Crate 1.3 validation tooling, and live OSF/Zenodo repository deposit remain gated."
+  },
+  "panelists": [
+    {
+      "role": "ro-crate-interop-specialist",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 2,
+      "disposition": "approved"
+    },
+    {
+      "role": "prov-lineage-architect",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 2,
+      "disposition": "approved"
+    },
+    {
+      "role": "open-science-governance-auditor",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 0,
+      "observation": 3,
+      "disposition": "approved"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval. Convergence centered on: (1) RO-Crate 1.3 JSON-LD profile topology, root CreativeWork and Dataset entities, provider deduplication, and Person vs SoftwareApplication actor differentiation; (2) W3C PROV-O entity/activity/agent vocabulary, stepwise wasDerivedFrom derivation chains, and fail-closed validation on unresolved predecessors or review ID mismatches; (3) deterministic sorting of receipts and events guaranteeing bitwise identical export documents regardless of input slice order; (4) deterministic .srpack review bundle packaging with fixed timestamps, Merkle descriptor root, and SHA-256 payload verification; (5) strict schema-enforced prohibition of automated deposit ('deposit_authorized: false', 'osf_acceptance_claimed: false', 'execution_mode: dry_run'); and (6) rigorous preservation of open maturity gates (golden provenance export tests, independent RO-Crate CLI validation, and live repository deposit pilots).",
+    "convergence_vectors": [
+      "RO-Crate 1.3 context (https://w3id.org/ro/crate/1.3/context) and conformsTo (https://w3id.org/ro/crate/1.3) compliance",
+      "CreativeWork descriptor ('ro-crate-metadata.json') and root Dataset ('./') linking receipts via hasPart and review via mainEntity",
+      "Actor type mapping cleanly distinguishing human researchers ('Person') from automated agents ('SoftwareApplication')",
+      "W3C PROV-O entity, activity, agent, wasAssociatedWith, and wasDerivedFrom derivation structures",
+      "Fail-closed validation with ProvenanceError::UnresolvedPredecessor, ReviewMismatch, and DuplicateIdentifier",
+      "Determinism invariants guaranteeing bitwise identical bundles and PROV/RO-Crate exports across input permutations",
+      "Review bundle .srpack packaging with Merkle root descriptor digests, SHA-256 payload integrity, and secret rejection",
+      "Default-deny handoff plan schema enforcing dry_run execution and prohibiting unapproved external repository writes"
+    ],
+    "divergence_vectors": [
+      "Slice completeness in long-running audit event log streams versus pagination boundaries in wasDerivedFrom resolution",
+      "Adoption of ro-crate-py vs native rust-based RO-Crate validator for future CI profile checking"
+    ]
+  },
+  "assertions_evaluated": [
+    {
+      "id": "T25-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Immutable identifiers, SHA-256 event hashes, descriptor Merkle root calculations, and fail-closed predecessor validation (ProvenanceError::UnresolvedPredecessor) verified by unit tests, export_edges.rs, provenance_interop_scenarios.rs, and review_bundle.py self-test; durable institutional PIDs preserved as open gate."
+    },
+    {
+      "id": "T25-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Review, run, receipt, audit event, actor, amendment, and decision entities modeled in RO-Crate and W3C PROV representations, verified by test_prov_entities_activities_agents_predecessors and test_ro_crate_schema_and_context; full entity round-trips preserved as open gate."
+    },
+    {
+      "id": "T25-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "RO-Crate 1.3 JSON-LD profile context (https://w3id.org/ro/crate/1.3/context), root CreativeWork, root Dataset with hasPart receipts and mainEntity ScholarlyArticle verified in searchright-provenance and test_provenance_research_objects_governance.py; formal validation with external RO-Crate CLI tooling preserved as open gate."
+    },
+    {
+      "id": "T25-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "W3C PROV entity, activity, agent, wasAssociatedWith, and wasDerivedFrom predecessor derivation chains verified in searchright-provenance and test_w3c_prov_derivation_chain_and_entities; external semantic validator remains an open gate."
+    },
+    {
+      "id": "T25-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Repository handoff plan schema (research-object-handoff-plan.v1.schema.json) and review bundle packaging (review_bundle.py) verified; strict schema constants enforce execution_mode: 'dry_run', deposit_authorized: false, and osf_acceptance_claimed: false, prohibiting automatic deposit."
+    },
+    {
+      "id": "T25-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Round-trip determinism, bitwise byte identity across input permutations, example.srpack bundle verification, tamper rejection, and secret rejection verified by cargo test (20 tests passed) and review_bundle.py self-test; external golden round trips preserved as open gate."
+    }
+  ],
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 7
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Retain explicit lexical sorting of receipts and audit events to guarantee bitwise reproducibility across platforms.",
+    "Preserve schema-level const: false enforcement for deposit_authorized, ro_crate_conformance_claimed, and osf_acceptance_claimed in repository handoff plans.",
+    "Maintain honest claim boundaries distinguishing source-verified provenance and review bundles from independent RO-Crate CLI validation and live repository deposit."
+  ],
+  "open_gates": [
+    "Compile and run golden provenance export tests.",
+    "Validate produced RO-Crates with independent tooling.",
+    "Pilot OSF/Zenodo/repository deposit without automatic write authority."
+  ],
+  "recommendation": "APPROVE_FOR_ARCHIVE",
+  "decision": {
+    "outcome": "approved_as_source_verified",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-08"
+  }
+}

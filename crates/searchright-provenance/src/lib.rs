@@ -134,6 +134,10 @@ pub fn build_prov(
     events: &[AuditEvent],
 ) -> Result<Value, ProvenanceError> {
     validate_inputs(plan, receipts, events)?;
+    let mut receipts = receipts.iter().collect::<Vec<_>>();
+    receipts.sort_by(|left, right| left.receipt_id.cmp(&right.receipt_id));
+    let mut events = events.iter().collect::<Vec<_>>();
+    events.sort_by(|left, right| left.event_id.cmp(&right.event_id));
     let entities = receipts
         .iter()
         .map(|receipt| {

@@ -28,7 +28,6 @@ an explicit, approval-gated apply receipt exists.
 | 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
 | 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
 | 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | source_implemented | source_implemented | source_verified | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
-| 25 | [Provenance and research-object interoperability](tracks/25-provenance-research-objects/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects. |
 | 26 | [Formal assurance and contract evolution](tracks/26-formal-assurance-contract-evolution/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback. |
 | 27 | [Accessibility, internationalisation and usability](tracks/27-accessibility-internationalisation-usability/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology. |
 | 28 | [Institutional governance, privacy and collaboration](tracks/28-institutional-governance-privacy-collaboration/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations. |
@@ -62,6 +61,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 22 | [Living reviews, amendments and update lineage](tracks/22-living-updates/spec.md) | 2026-11-08 | fixture_proven |
 | 23 | [Active-learning prioritisation and calibrated agents](tracks/23-active-learning-agents/spec.md) | 2026-11-08 | fixture_proven |
 | 24 | [WASI components, HTTP MCP and scalable execution](tracks/24-wasi-http-scale/spec.md) | 2026-11-08 | fixture_proven |
+| 25 | [Provenance and research-object interoperability](tracks/25-provenance-research-objects/spec.md) | 2026-11-08 | fixture_proven |
 | 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
 
 ## Evidence ladder
