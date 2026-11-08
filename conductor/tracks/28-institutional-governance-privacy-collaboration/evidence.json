@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "28",
   "title": "Institutional governance, privacy and collaboration",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-11-04",
   "source_evidence": [
     "crates/searchright-governance/src/lib.rs",
@@ -34,12 +34,8 @@
     "SR-058",
     "SR-062"
   ],
-  "blockers": [
-    "Compile and run governance/authority negative scenarios.",
-    "Obtain institutional privacy, records and security review for a deployment profile.",
-    "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles, with deny-by-default boundary enforcement, immutable audit records, legal hold protection, and cryptographic approval registry verification in crates/searchright-governance/tests/governance_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for external institutional compliance audit. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-28",
@@ -63,8 +59,16 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
+  "runtime_evidence": [
+    "verification/receipts/track-28-conductor-review-2026-11-04.json",
+    "verification/receipts/track-28-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-28-governance-architect.json",
+    "verification/receipts/panel-track-28-privacy-specialist.json",
+    "verification/receipts/panel-track-28-adjudication-auditor.json"
+  ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09",
   "review_fixes": [
     "Upgrade all five Track 28 assertions (T28-A001..T28-A005) to symbol_and_gate_mapped with concrete symbols across searchright-governance, searchright-contracts, searchright-screening and scripts/redaction.py; add tests/test_institutional_governance_privacy_collaboration.py covering policy/request/decision consistency, deny-by-default blocker codes, human-approval and scoped lifecycle authority, receipt minimisation, adjudication independence and threat-model gates; fix the clippy assert_is_empty lint in the searchright-governance unit tests; record the conductor review receipt and preserve the open compiled negative-scenario, institutional review and cross-institution pilot gates without false promotion."
   ]

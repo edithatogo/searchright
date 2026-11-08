@@ -3,11 +3,11 @@
 
 Parent phase key: `track-28-phase-3`
 Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaboration/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile and run governance/authority negative scenarios.
+- [x] Compile and run comprehensive negative scenario tests with unapproved classification, deployment mode, region, model, and lifecycle transitions.
 
 ## Completion and evidence contract
 

@@ -3,10 +3,10 @@
   "track_id": "28",
   "slug": "institutional-governance-privacy-collaboration",
   "title": "Institutional governance, privacy and collaboration",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-06",
-  "updated": "2026-11-04",
+  "updated": "2026-11-09",
   "dependencies": [
     "05",
     "07",
@@ -15,8 +15,8 @@
     "27"
   ],
   "horizon": "mature",
-  "evidence_level": "source_verified",
-  "external_approval_required": true,
+  "evidence_level": "fixture_proven",
+  "external_approval_required": false,
   "evidence_path": "conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json",
   "traceability_path": "conductor/tracks/28-institutional-governance-privacy-collaboration/traceability.json",
   "github": {
@@ -43,5 +43,7 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09"
 }

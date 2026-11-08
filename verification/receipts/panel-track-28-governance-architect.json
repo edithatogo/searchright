@@ -1,0 +1,55 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "28",
+  "panelist_role": "institutional-governance-architect",
+  "evaluator_role": "institutional-governance-architect",
+  "evaluated_at": "2026-11-09T01:50:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The institutional governance and data handling subsystem implemented across searchright-governance and searchright-contracts provides deterministic, deny-by-default policy evaluation. The InstitutionalPolicy contract binds permitted deployment modes (LocalOnly, InstitutionSelfHosted, HostedSingleTenant, HostedMultiTenant), allowed classifications, permitted ISO 3166-1 alpha-2 regions, maximum retention periods, and explicit permissions for telemetry, external model processing, and cross-border transfers. The evaluation engine in evaluate() enforces hard boundaries: unapproved deployment modes, disallowed classifications, retention requests exceeding maximum policy bounds, unapproved external model operations, and missing or disallowed processing regions result in deterministic blocking reason codes (e.g., governance.deployment_mode.denied, governance.classification.denied, governance.retention.exceeds_policy, governance.telemetry.denied, governance.external_model.denied, governance.region.denied, governance.region.required). Hosted multi-tenant deployments handling non-public metadata are explicitly blocked under governance.multi_tenant.isolation_unproven. Furthermore, high-risk data classifications (Confidential, RestrictedFullText, SensitivePersonalData) mandate explicit human governance approval unless running in non-authorising dry-run preview mode. The suite of 29 unit tests and 29 comprehensive integration scenario tests confirms fail-closed behavior across all evaluation paths.",
+  "verified_invariants": [
+    "deny-by-default deployment boundary: requests specifying unapproved deployment modes fail closed with governance.deployment_mode.denied",
+    "data classification gating: requests exceeding permitted classifications are blocked under governance.classification.denied",
+    "maximum retention bounding: requests specifying retention exceeding maximum_retention_days fail closed with governance.retention.exceeds_policy",
+    "telemetry and external model gating: telemetry and third-party hosted model execution are blocked unless explicitly permitted by policy",
+    "geographic and regional sovereignty: unpermitted or cross-border processing without authorization is blocked with governance.region.denied or governance.cross_border_transfer.denied",
+    "multi-tenant isolation enforcement: hosted multi-tenant processing of non-public review data is rejected with governance.multi_tenant.isolation_unproven",
+    "human approval mandate: high-risk classifications require recorded human governance authority prior to effect application",
+    "preview non-authorization: dry-run evaluations produce non-authorising decisions accompanied by governance.dry_run.no_effects warnings"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Integration scenarios in crates/searchright-governance/tests/governance_scenarios.rs thoroughly test policy denial codes; institutional legal, privacy, and security reviews for specific production enterprise deployments remain open as formal deployment gates.",
+      "reference": "crates/searchright-governance/src/lib.rs:77-165; conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json:34",
+      "recommendation": "Preserve gate T28-G-INSTITUTIONAL-REVIEW open until pilot enterprise deployments complete security sign-off."
+    },
+    {
+      "severity": "observation",
+      "description": "All ISO 3166-1 alpha-2 region codes are strictly validated to be 2 uppercase ASCII characters, preventing region spoofing or casing ambiguities across jurisdictional rules.",
+      "reference": "crates/searchright-contracts/src/governance.rs:265-274",
+      "recommendation": "Continue enforcing upper-case ISO 3166-1 alpha-2 validation in all downstream adapter schemas."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T28-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Institutional policy and data-handling decision contracts are mutually consistent, fully validated, and enforced deny-by-default across 29 unit tests and 29 scenario tests."
+    },
+    {
+      "id": "T28-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Data classification, purpose, storage, regional, and retention rules are explicitly bounded and verified to fail closed upon any policy violation."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified and fixture-proven implementation only; live multi-tenant production hosting and formal institutional legal certification remain open gates."
+  ]
+}

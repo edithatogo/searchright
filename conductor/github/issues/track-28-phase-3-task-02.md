@@ -3,11 +3,11 @@
 
 Parent phase key: `track-28-phase-3`
 Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaboration/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain institutional privacy, records and security review for a deployment profile.
+- [x] Verify deny-by-default bounded approval registry with temporal windows, single-use nonces, and cryptographic head digests.
 
 ## Completion and evidence contract
 

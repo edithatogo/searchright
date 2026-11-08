@@ -1,0 +1,55 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "28",
+  "panelist_role": "privacy-security-specialist",
+  "evaluator_role": "privacy-security-specialist",
+  "evaluated_at": "2026-11-09T01:51:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The privacy and information security mechanisms implemented in searchright-governance, searchright-contracts, and scripts/redaction.py establish rigorous data minimisation, cryptographic effect binding, and immutable audit guarantees. The data lifecycle subsystem (evaluate_lifecycle, authorize_lifecycle, and execute_lifecycle) strictly enforces the separation between non-authorising preview and effect application. Deletion requests that include audit log components are permanently and irrevocably blocked (lifecycle.delete.immutable_audit_denied), preserving evidentiary integrity under all circumstances. Active legal holds (legal_hold: true) completely freeze deletion operations even when accompanied by valid approvals (lifecycle.delete.legal_hold). Content deletion requires durable tombstones and verifiable receipts. The BoundedLifecycleApprovalRegistry enforces cryptographic request bindings, preventing effect broadening, policy reuse, or replay across different reviews or actions. The registry verifies canonical UTC timestamps, active time windows, positive authority evidence verification, and single-use nonces, rejecting inverted, expired, or future timestamps. At the ingestion boundary, redact_url and redact_value in scripts/redaction.py reliably scrub embedded credentials, authorization tokens, bearer keys, and query parameters before receipts or audit logs are persisted.",
+  "verified_invariants": [
+    "audit ledger immutability: deletion requests attempting to purge audit records fail closed under lifecycle.delete.immutable_audit_denied",
+    "legal hold precedence: active legal holds block deletion actions regardless of approval authority (lifecycle.delete.legal_hold)",
+    "cryptographic authority binding: approvals bind exact request_digest, review_id, action, and policy_id, failing closed upon any scope divergence",
+    "tombstone and receipt generation: authorized deletions require target tombstones and durable, SHA-256 content-addressed receipts",
+    "bounded registry validation: BoundedLifecycleApprovalRegistry rejects unverified evidence, empty references, inverted expiry, and capacity overflows",
+    "temporal window enforcement: approval verification rejects expired approvals and future-dated approvals outside the active clock window",
+    "single-use nonces and replay defense: approval records cannot be replayed or broadened across distinct lifecycle requests",
+    "deterministic secret redaction: URL credentials, authorization headers, bearer tokens, and sensitive query parameters are stripped before receipt emission"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Deterministic secret redaction and cryptographic authority binding are proven in unit and integration suites; multi-reviewer and cross-institution artefact exchange pilots with minimised data remain an open deployment gate.",
+      "reference": "scripts/redaction.py:1-120; crates/searchright-governance/tests/governance_scenarios.rs:660-785; conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json:35",
+      "recommendation": "Preserve gate T28-G-CROSS-INSTITUTION-PILOT open until multi-site pilots are conducted."
+    },
+    {
+      "severity": "observation",
+      "description": "LifecycleEffectSink verifies optimistic concurrency via store head matching, preventing torn writes or concurrent modification hazards during deletion application.",
+      "reference": "crates/searchright-governance/src/lib.rs:65-74, 216-252; crates/searchright-governance/tests/governance_scenarios.rs:565-600",
+      "recommendation": "Maintain strict optimistic store head validation across all persistent storage adapters."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T28-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Data minimisation, secret redaction, and retention bounds fail closed and are adversarially exercised in both Python and Rust scenario suites."
+    },
+    {
+      "id": "T28-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Human approval and least-privilege scoped authority are cryptographically bound to exact request digests, policy IDs, and review scopes."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified and fixture-proven implementation only; live cross-institution federated data exchanges and external penetration tests remain separate evidence."
+  ]
+}

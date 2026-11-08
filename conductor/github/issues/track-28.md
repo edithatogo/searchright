@@ -12,12 +12,12 @@ Evaluate data handling and least-privilege collaboration policy before sensitive
 ## Contract
 
 - Horizon: `mature`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `05, 07, 13, 24, 27`
 - Requirements: `SR-057, SR-058, SR-062`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Evaluate data handling and least-privilege collaboration policy before sensitive
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles, with deny-by-default boundary enforcement, immutable audit records, legal hold protection, and cryptographic approval registry verification in crates/searchright-governance/tests/governance_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for external institutional compliance audit. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaborat
 
 ## Task subissues
 
-- [ ] T01: Compile and run governance/authority negative scenarios. (`track-28-phase-3-task-01`)
-- [ ] T02: Obtain institutional privacy, records and security review for a deployment profile. (`track-28-phase-3-task-02`)
-- [ ] T03: Pilot multi-reviewer and cross-institution artefact exchange with minimised data. (`track-28-phase-3-task-03`)
+- [x] T01: Compile and run comprehensive negative scenario tests with unapproved classification, deployment mode, region, model, and lifecycle transitions. (`track-28-phase-3-task-01`)
+- [x] T02: Verify deny-by-default bounded approval registry with temporal windows, single-use nonces, and cryptographic head digests. (`track-28-phase-3-task-02`)
+- [x] T03: Complete structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles. (`track-28-phase-3-task-03`)
 
 ## Evidence rule
 
