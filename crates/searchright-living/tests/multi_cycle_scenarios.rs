@@ -157,9 +157,8 @@ fn test_change_attribution_reproduction_and_human_release() {
         test_record("rec-003", "Novel randomized trial of drug C", Some(2026)),
     ];
 
-    let changes = match diff_record_sets(&initial_set, &updated_set) {
-        Ok(c) => c,
-        Err(e) => panic!("diffing record sets should succeed: {e}"),
+    let Ok(changes) = diff_record_sets(&initial_set, &updated_set) else {
+        panic!("diffing record sets should succeed");
     };
 
     assert_eq!(
@@ -168,25 +167,25 @@ fn test_change_attribution_reproduction_and_human_release() {
         "Expected exactly 2 changes (1 update, 1 addition)"
     );
 
-    let rec_002_change = match changes.iter().find(|c| c.record_id == "rec-002") {
-        Some(c) => c,
-        None => panic!("rec-002 change must be found"),
+    let Some(rec_002_change) = changes.iter().find(|c| c.record_id == "rec-002") else {
+        panic!("rec-002 change must be found");
     };
     assert_eq!(rec_002_change.kind, RecordChangeKind::Updated);
     assert!(rec_002_change.before_digest.is_some());
     assert!(rec_002_change.after_digest.is_some());
     assert_ne!(rec_002_change.before_digest, rec_002_change.after_digest);
 
-    let rec_003_change = match changes.iter().find(|c| c.record_id == "rec-003") {
-        Some(c) => c,
-        None => panic!("rec-003 change must be found"),
+    let Some(rec_003_change) = changes.iter().find(|c| c.record_id == "rec-003") else {
+        panic!("rec-003 change must be found");
     };
     assert_eq!(rec_003_change.kind, RecordChangeKind::Added);
     assert!(rec_003_change.before_digest.is_none());
 
-    let rec_003_digest = match record_digest(&updated_set[2]) {
-        Ok(d) => d,
-        Err(e) => panic!("rec-003 digest calculation must succeed: {e}"),
+    let Some(rec_003_record) = updated_set.get(2) else {
+        panic!("rec-003 record must exist");
+    };
+    let Ok(rec_003_digest) = record_digest(rec_003_record) else {
+        panic!("rec-003 digest calculation must succeed");
     };
     assert_eq!(
         rec_003_change.after_digest.as_deref(),
