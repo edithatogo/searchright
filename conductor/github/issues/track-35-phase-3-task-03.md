@@ -3,11 +3,11 @@
 
 Parent phase key: `track-35-phase-3`
 Conductor plan: `conductor/tracks/35-sdk-docs-adoption/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Observe support, deprecation and compatibility operations across at least one release cycle.
+- [x] Observe support, deprecation and compatibility operations across at least one release cycle.
 
 ## Completion and evidence contract
 

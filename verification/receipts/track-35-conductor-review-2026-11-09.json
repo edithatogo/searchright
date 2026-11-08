@@ -1,0 +1,31 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "35",
+  "observed_at": "2026-11-09T05:19:00Z",
+  "observed_on": "2026-11-09",
+  "source_revision": "HEAD",
+  "toolchain": "1.97.1-aarch64-apple-darwin",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "python scripts/check_sdk_examples.py",
+      "status": "passed",
+      "targets": 3
+    },
+    {
+      "command": "python scripts/check_cli_mcp_parity.py",
+      "status": "passed",
+      "operations_checked": 35
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    }
+  ],
+  "limits": [
+    "No external Python or TypeScript package was published to npm or PyPI.",
+    "No downstream external live adoption pilot was exercised.",
+    "Contract-only bindings are generated and compiler-checked; runtime client generation requires explicit approval."
+  ]
+}

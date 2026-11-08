@@ -1,0 +1,114 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "35",
+  "title": "Generated SDKs, fixture-backed documentation and adoption operations — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T05:23:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "b4eadd8798698ef5822745069ac42e20a0a72cd0",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "sdk-api-architect",
+      "developer-experience-auditor",
+      "adoption-governance-auditor"
+    ],
+    "output_artefacts": [
+      "sdk-api-architecture-review",
+      "developer-experience-and-parity-audit",
+      "adoption-governance-and-operations-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "Fixture-proven evaluation of thin generated SDK contracts, compiler-checked bindings across 74 contracts, fixture-backed offline tutorials, CLI/MCP/facade operation parity across 35 operations, and adoption governance; live client publication to npm/PyPI, external information specialist walkthroughs, and multi-cycle deprecation tracking remain open gates."
+  },
+  "panelists": [
+    {
+      "role": "sdk-api-architect",
+      "evaluator_role": "sdk-api-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "developer-experience-auditor",
+      "evaluator_role": "developer-experience-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "adoption-governance-auditor",
+      "evaluator_role": "adoption-governance-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 35 (Generated SDKs, fixture-backed documentation and adoption operations). The core SDK, documentation, interface parity, and adoption governance assets—including sdk/manifest.json, sdk/generated-contract-bindings.json, contracts/schema-catalog.json, contracts/interface-catalog.json, release/public-packages.json, docs/sdk-and-adoption.md, examples/quickstart/README.md, GOVERNANCE.md, README.md, AGENTS.md, scripts/check_sdk_examples.py, scripts/check_cli_mcp_parity.py, scripts/check_contract_bindings.py, and tests/test_sdk_docs_adoption_governance.py—demonstrate exceptional architectural discipline, strict boundary enforcement, and uncompromising methodological integrity. The native Rust facade (crates/searchright) is established as the sole canonical product engine; SDK client targets (planned Python searchright-client and TypeScript @searchright/client) are governed by generated_clients_must_not_reimplement_domain_logic, ensuring that clients remain strictly thin transport and schema validation wrappers without duplicating query, screening, or evidence logic. Contract bindings in sdk/generated-contract-bindings.json cover all 74 canonical schemas from contracts/schema-catalog.json, generating compiler-checked types for Python (searchright-contracts) and TypeScript (@searchright/contracts) verified network-free with tsc and pyright. Automatic publication is disabled fail-closed across SDK metadata, while release/public-packages.json enforces deny_unlisted_and_require_compiler_semver_supply_chain_evidence with all workspace candidate packages blocked from accidental publication. Documentation and developer onboarding are network-off by default: examples/quickstart/README.md guides users through local CLI, test, and MCP workflows using checked-in JSON fixtures under contracts/examples/, explicitly stating evidence ceilings and data boundaries. Interface parity is guaranteed across 35 canonical operations in contracts/interface-catalog.json with 1:1:1 mapping across CLI variants, MCP tools, and Rust facade methods. Governance policies in GOVERNANCE.md and non-negotiable rules in AGENTS.md uphold PRISMA-S strictly as a reporting contract rather than a conduct standard, categorically bar non-human agents from autonomous study exclusion or final screening determinations, and keep telemetry disabled by default. All 6 deterministic governance unit tests pass network-free. The three higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "assertions_evaluated": [
+    {
+      "id": "T35-A001",
+      "statement": "Thin generated clients over canonical contracts",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Thin generated SDK boundaries, canonical contracts in sdk/manifest.json, compiler-checked bindings across 74 contracts in sdk/generated-contract-bindings.json, domain logic duplication prohibition, and fail-closed public package release policies verified."
+    },
+    {
+      "id": "T35-A002",
+      "statement": "Fixture-backed CLI/MCP/Rust tutorials",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Fixture-backed offline tutorials in examples/quickstart/README.md and docs/sdk-and-adoption.md, 35 canonical operations verified with cross-surface parity across CLI, MCP, and Rust facade, and strict agent-vs-human authority demarcation verified."
+    },
+    {
+      "id": "T35-A003",
+      "statement": "Support, compatibility and deprecation operations",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Adoption operations, compatibility and deprecation policies in GOVERNANCE.md and README.md, non-negotiable PRISMA-S reporting contract adherence, and human-only study screening authority in AGENTS.md verified."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T35-G-CLIENT-PACKAGES-PUBLISH",
+      "statement": "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+      "status": "OPEN",
+      "evidence": "Preserved open until full runtime clients are generated, packaged, smoke-tested, and published to external registries (PyPI, npm) under explicit approval"
+    },
+    {
+      "gate": "T35-G-INFORMATION-SPECIALIST-WALKTHROUGHS",
+      "statement": "Run documentation tests and information-specialist tutorial walkthroughs.",
+      "status": "OPEN",
+      "evidence": "Preserved open until interactive tutorials and workflows are validated with external expert information specialists and methodologists"
+    },
+    {
+      "gate": "T35-G-DEPRECATION-LIFECYCLE-OBSERVATION",
+      "statement": "Observe support, deprecation and compatibility operations across at least one release cycle.",
+      "status": "OPEN",
+      "evidence": "Preserved open until real-world SemVer deprecation notice periods, breaking change policies, and compatibility operations are observed over a full release train cycle"
+    }
+  ]
+}

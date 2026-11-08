@@ -11,6 +11,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_sdk_examples.py`
   - [x] `python scripts/check_cli_mcp_parity.py`
   - [x] `python scripts/validate_repository.py`
+  - [x] `python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py`
 
 ## Completion and evidence contract
 
