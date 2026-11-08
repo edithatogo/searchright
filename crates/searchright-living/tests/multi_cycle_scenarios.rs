@@ -133,14 +133,26 @@ fn test_multi_cycle_living_review_lineage_and_supersession() {
 #[test]
 fn test_change_attribution_reproduction_and_human_release() {
     let initial_set = vec![
-        test_record("rec-001", "Effect of intervention A on outcomes", Some(2025)),
+        test_record(
+            "rec-001",
+            "Effect of intervention A on outcomes",
+            Some(2025),
+        ),
         test_record("rec-002", "Long-term follow-up of cohort B", Some(2024)),
     ];
     let updated_set = vec![
         // rec-001 unchanged
-        test_record("rec-001", "Effect of intervention A on outcomes", Some(2025)),
+        test_record(
+            "rec-001",
+            "Effect of intervention A on outcomes",
+            Some(2025),
+        ),
         // rec-002 updated title
-        test_record("rec-002", "Long-term follow-up of cohort B: Revised", Some(2024)),
+        test_record(
+            "rec-002",
+            "Long-term follow-up of cohort B: Revised",
+            Some(2024),
+        ),
         // rec-003 added
         test_record("rec-003", "Novel randomized trial of drug C", Some(2026)),
     ];
@@ -150,7 +162,11 @@ fn test_change_attribution_reproduction_and_human_release() {
         Err(e) => panic!("diffing record sets should succeed: {e}"),
     };
 
-    assert_eq!(changes.len(), 2, "Expected exactly 2 changes (1 update, 1 addition)");
+    assert_eq!(
+        changes.len(),
+        2,
+        "Expected exactly 2 changes (1 update, 1 addition)"
+    );
 
     let rec_002_change = match changes.iter().find(|c| c.record_id == "rec-002") {
         Some(c) => c,
@@ -172,7 +188,10 @@ fn test_change_attribution_reproduction_and_human_release() {
         Ok(d) => d,
         Err(e) => panic!("rec-003 digest calculation must succeed: {e}"),
     };
-    assert_eq!(rec_003_change.after_digest.as_deref(), Some(rec_003_digest.as_str()));
+    assert_eq!(
+        rec_003_change.after_digest.as_deref(),
+        Some(rec_003_digest.as_str())
+    );
 
     // Safeguard verification: When changes exist, requires_human_release must be true
     let run_with_changes_safe = LivingUpdateRun {
