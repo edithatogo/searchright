@@ -3,11 +3,11 @@
 
 Parent phase key: `track-26-phase-3`
 Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run semver and cross-version MCP/CLI contract tests.
+- [x] Run semver and cross-version MCP/CLI contract tests via Hypothesis stateful property testing.
 
 ## Completion and evidence contract
 

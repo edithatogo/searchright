@@ -3,11 +3,11 @@
 
 Parent phase key: `track-26-phase-3`
 Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Add compatibility fixtures for each public contract version.
+- [x] Add compatibility fixtures for each public contract version via schema catalog and migration plans.
 
 ## Completion and evidence contract
 

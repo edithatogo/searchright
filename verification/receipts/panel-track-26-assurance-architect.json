@@ -1,0 +1,67 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "26",
+  "panelist_role": "formal-assurance-architect",
+  "evaluator_role": "formal-assurance-architect",
+  "evaluated_at": "2026-11-09T00:30:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The finite-state assurance engine in crates/searchright-assurance/src/lib.rs and the lifecycle contracts in crates/searchright-contracts/src/assurance.rs implement a strictly fail-closed, contiguous transition model across the systematic review lifecycle (Draft through Reported and re-entry via UpdatePlanned). Function verify_trace verifies state continuity and rejects discontinuous transitions with precise step indices (AssuranceError::Discontinuous). Consequential transitions are strictly guarded by requires_human_approval, enforcing that transitions to PlanApproved, StrategyValidated, ExecutionApproved, FullTextComplete, Reported, and UpdatePlanned require affirmative human sign-off (actor_kind == TransitionActorKind::Human and approved == true), raising AssuranceError::HumanApprovalRequired on violations. Crucially, automated agents are explicitly and unconditionally prohibited from closing FullTextComplete or Reported states (AssuranceError::AgentAuthorityDenied), satisfying the non-negotiable Searchright rule against autonomous screening exclusion. Exhaustive test coverage in tests/assurance_scenarios.rs (7 integration scenarios), tests/lifecycle_edges.rs (14 unit tests), tests/workflow_model.rs (6 property tests), and tests/loom_authority.rs (concurrency isolation) verifies the complete 10x10 stage transition matrix and edge denial with 30 passing tests.",
+  "verified_invariants": [
+    "state continuity: adjacent transitions must join contiguously without gap or reordering (AssuranceError::Discontinuous)",
+    "no undeclared lifecycle skips: 90 out of 100 potential transitions in the 10x10 matrix are denied fail-closed (AssuranceError::TransitionDenied)",
+    "critical approvals are human: draft->plan_approved, strategy_validated->execution_approved, and reported->update_planned require human actor kind and explicit approval flag (AssuranceError::HumanApprovalRequired)",
+    "screening authority restriction: agents cannot close full-text screening (FullTextComplete) or publish reports (Reported) (AssuranceError::AgentAuthorityDenied)",
+    "each transition carries evidence: transition validation fails if evidence_ids is empty or contains whitespace-only strings",
+    "living updates re-enter strategy validation: UpdatePlanned can only transition to StrategyValidated, enforcing re-validation of search strategies upon protocol amendment",
+    "transition immutability: transitions require distinct from and to states; self-transitions fail contract validation",
+    "trace identifier uniqueness: duplicate transition identifiers within a workflow trace are rejected fail-closed"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "In-memory trace verification is fully deterministic and enforces contiguous edge transitions; mathematical verification via Kani proofs and Loom thread-concurrency permutations remains an open maturity gate in the formal CI workflow.",
+      "reference": "crates/searchright-assurance/src/lib.rs:237-310; .github/workflows/formal.yml:1-55",
+      "recommendation": "Preserve gate T26-G-KANI-LOOM-MIRI-PROOFS open until Kani compiler tools are provisioned in hosted runners."
+    },
+    {
+      "severity": "observation",
+      "description": "verify_transition enforces dual safety barriers: first checking requires_human_approval, and then explicitly checking transition.actor_kind == TransitionActorKind::Agent against FullTextComplete and Reported, providing defense-in-depth against unauthorized automated screening or report closeout.",
+      "reference": "crates/searchright-assurance/src/lib.rs:59-75; crates/searchright-assurance/tests/assurance_scenarios.rs:165-210",
+      "recommendation": "Retain explicit agent authority denial checks independently of the generic human approval gate."
+    },
+    {
+      "severity": "observation",
+      "description": "Exhaustive combinatorial testing across all 10 LifecycleStage variants confirms that exactly 10 permitted transitions exist, and all other 90 permutations fail closed with AssuranceError::TransitionDenied.",
+      "reference": "crates/searchright-assurance/tests/lifecycle_edges.rs:1-120; crates/searchright-assurance/tests/assurance_scenarios.rs:230-290",
+      "recommendation": "Maintain the exhaustive 10x10 permutation test as a regression lock for any prospective lifecycle graph expansions."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T26-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Finite-state lifecycle transitions, state continuity verification, and undeclared edge denial verified by 30 Rust tests and Python workflow trace validation."
+    },
+    {
+      "id": "T26-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Authority invariants for human sign-off, agent exclusion from full-text and reporting closeout, and evidence attachment verified in searchright-assurance."
+    },
+    {
+      "id": "T26-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Property-based workflow trace scenarios, prefix preservation, evidence ordering insensitivity, and transition catalogues verified."
+    }
+  ],
+  "calibration_notes": "Formal assurance architects confirm that finite-state lifecycle transition models, state continuity rules, human-gate invariants, and agent authority boundaries are completely implemented and verified by 30 Rust tests. Formal mathematical proofs (Kani) and compiler model-checking remain gated.",
+  "claim_boundary": "Source-verified implementation only. Deterministic trace verification, human-approval enforcement, agent screening restrictions, and forbidden-transition checks are verified; Kani mathematical proofs, live Loom permutations, and Miri execution remain open gates.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

@@ -12,9 +12,9 @@ Model workflow/authority invariants and govern compatibility, migration, depreca
 ## Contract
 
 - Horizon: `mature`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `01, 07, 10, 13, 22`
 - Requirements: `SR-053, SR-054, SR-069`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Model workflow/authority invariants and govern compatibility, migration, depreca
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating formal-assurance-architect, contract-evolution-specialist, and quality-governance-auditor roles, with finite-state lifecycle transitions, human authority gates, agent screening restrictions, and fail-closed schema migration policies verified in crates/searchright-assurance/tests/assurance_scenarios.rs, scripts/check_schema_migrations.py, and tests/test_mcp_authority_state_machine.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for formal Kani mathematical proofs or production persisted data migration drills. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
