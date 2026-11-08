@@ -1292,6 +1292,7 @@ ccc5172549f76b0da1b3535f8890460f9d0ce5abb37defb6003c10dca5144c53  ./docs/efetch-
 1d9c26ed2a9750878408b05652ebd62c2d09b1d248f68ee8163fe4d09be4bbe4  ./docs/estate-integration.md
 9d5b2afcda6599546b277f7e0a19d6894f52147d320ee0a93cf232457fd5248c  ./docs/evaluation/benchmark-and-calibration-protocol.md
 523b264d3eaf3a79255ac691a1512ef3b3ba9069095db93014891adae5ef2ce5  ./docs/evaluation/external-methodological-evaluation.md
+7bbdbb396e6081c751c5ffb8c911917109783a431e8c4227e2dbc4aacddaa04b  ./docs/examples/scope-of-agency-scoping-review.md
 dcde714b28f518b1f53edcdb10b9068335c14287ee2e982f5637a7fd912c4638  ./docs/github-operating-system.md
 80a8c024cd0e412943c6ddf26e72b71a526a21b272eff511a5a85c7c53271e7a  ./docs/governance/sustainability.md
 82acf4dac3d774f504cba9637b362e0dcbdba04de40fbbc14a3d5a773ec76b73  ./docs/integration-architecture.md
@@ -1351,6 +1352,8 @@ db770d53d87a060936a2b9f8853925fd1957ed312708e4fa13ea49dbc29669c7  ./examples/qui
 bb7d280f9f726eb21516080a80fca7b84735b8d4e5b003a10c3f47ad76bd2e2e  ./examples/review-bundle/example.srpack
 55aa7657fac42b276a68ddb1981f7c305684547b3dda0f8b34f8cb9f99629cea  ./examples/review-bundle/input/execution/source-receipts.jsonl
 5b680dd98715a04ecf4ec71947e134f40d7ab7c6f610eaf829188233e0542eeb  ./examples/review-bundle/input/protocol/review-plan.json
+4a4f2991262059cd8c70dc8d8a5601662fc8b919ffdb5fe244fef297cae6bed0  ./examples/review-plans/README.md
+35cc87a5ee52a76afc5a52fa43b73e2fb59b6d1b0ef03692595c244dc09ae4a0  ./examples/review-plans/scope-of-agency-scoping-review.yaml
 91f3d049bd85f85e7790c3f1ffb699b05ac4ee9658487350ccf1dd2324ec077c  ./fuzz/Cargo.toml
 5ee871a1ce2d94843f7ababb64d9d1e3f061426144cc514929d1a22a835ecd20  ./fuzz/corpus/audit_event/valid.json
 808f8a56f7e160ca2ff4f70bce2bbabbd7bc9eeb84b921d04ae72fa59c87006e  ./fuzz/corpus/document_evidence/valid.json
