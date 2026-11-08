@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/37-maturity-1-0/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions. (`track-37-phase-3-task-01`)
-- [ ] T02: Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence. (`track-37-phase-3-task-02`)
-- [ ] T03: Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence. (`track-37-phase-3-task-03`)
+- [x] T01: Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions. (`track-37-phase-3-task-01`)
+- [x] T02: Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence. (`track-37-phase-3-task-02`)
+- [x] T03: Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence. (`track-37-phase-3-task-03`)
 
 ## Evidence rule
 

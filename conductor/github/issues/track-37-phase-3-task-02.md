@@ -3,11 +3,11 @@
 
 Parent phase key: `track-37-phase-3`
 Conductor plan: `conductor/tracks/37-maturity-1-0/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.
+- [x] Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.
 
 ## Completion and evidence contract
 

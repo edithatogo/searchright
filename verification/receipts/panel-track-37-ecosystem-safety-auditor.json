@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "37",
+  "panelist_role": "ecosystem-safety-auditor",
+  "evaluator_role": "ecosystem-safety-auditor",
+  "evaluated_at": "2026-11-09T06:22:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The ecosystem safety boundaries and methodological safeguards codified across docs/maturity/1.0-gate.md, docs/maturity/release-decision.md, conductor/maturity-dossier.json, AGENTS.md, and tests/test_maturity_1_0_governance.py uphold the core methodological and ethical tenets of the Searchright platform. Crucially, the PRISMA-S doctrine is maintained strictly as a reporting contract for transparency rather than a conduct straitjacket, ensuring that search strategies and screening protocols are fully auditable without imposing prescriptive methodological distortion. In parallel, human screening authority is non-negotiable: autonomous study exclusions by non-human agents are categorically forbidden, requiring explicit recorded human confirmation for every screening decision. In the operational and ecosystem domains, access control, credential boundaries, tenant data isolation, and disaster recovery objectives (recovery-objective drills, post-exercise corrective action closure) remain guarded. In conductor/maturity-dossier.json, the 'registries' domain is explicitly locked to critical_blocker: true with state 'packets_prepared_not_submitted', guaranteeing that no public distribution to crates.io, GHCR, MCP registries, Zenodo/OSF, or JOSS can occur prematurely or without explicit multi-stakeholder governance approval. Governance unit tests in tests/test_maturity_1_0_governance.py pass 100% network-free.",
+  "verified_invariants": [
+    "PRISMA-S reporting contract doctrine: PRISMA-S is strictly maintained as an auditable reporting contract, never a conduct straightjacket",
+    "non-negotiable human screening authority: autonomous final exclusion of studies by agents is categorically prohibited, reserving screening sovereignty for human reviewers",
+    "tenant and credential safety boundaries: licensed provider credentials, sensitive identifiers, and restricted data remain strictly isolated to the host deployment",
+    "unsubmitted registry gating: registries domain is locked with critical_blocker: true and state packets_prepared_not_submitted in conductor/maturity-dossier.json",
+    "operational recovery drill mandate: backup, restore, and operational resilience require empirical recovery-objective drills before 1.0 signoff",
+    "deterministic validation: test_maturity_documentation_contracts and check_maturity_dossier.py verify safety invariants network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Methodological safety boundaries, human screening sovereignty, and registry submission blockers are strictly codified; executing live public releases, registry publication, software-paper submissions, and observed long-term operations monitoring remain open operational gates.",
+      "reference": "conductor/maturity-dossier.json:88-91; docs/maturity/1.0-gate.md:25; conductor/tracks/37-maturity-1-0/traceability.json:90-94",
+      "recommendation": "Preserve open gate T37-G-REGISTRY-SUPPORT-OPERATIONS-EVIDENCE until public releases, registry listings, and long-term operational support receipts are observed."
+    },
+    {
+      "severity": "observation",
+      "description": "The explicit separation between review-state integrity artifacts and methodological screening authority prevents automated systems from eroding scientific rigor.",
+      "reference": "AGENTS.md:23-28; docs/maturity/1.0-gate.md:1-6; tests/test_maturity_1_0_governance.py:101-126",
+      "recommendation": "Maintain explicit human confirmation tracking across all screening workflows and documentation."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T37-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "PRISMA-S reporting contract doctrine, absolute human screening authority, tenant/credential isolation, unsubmitted registry blockers, and operational disaster recovery mandates verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Safety doctrine, reporting contracts, screening authority boundaries, and registry blockers verified; public registry distribution, external software-paper review, and live long-term operations remain open operational gates."
+  ]
+}

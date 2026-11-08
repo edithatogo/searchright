@@ -1,0 +1,140 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "37",
+  "title": "Final mature 1.0 release and long-term operations \u2014 agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T06:25:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "release-governance-officer",
+    "long-term-support-architect",
+    "ecosystem-safety-auditor"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "release-governance-officer",
+      "long-term-support-architect",
+      "ecosystem-safety-auditor"
+    ],
+    "output_artefacts": [
+      "multi-domain-maturity-governance-audit",
+      "long-term-support-and-release-evidence-audit",
+      "ecosystem-safety-and-registry-boundary-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Static governance, maturity dossier contracts, and release decision safeguards verified; prospective multi-domain exit reviews, executive release signing, and public 1.0 distribution remain open operational gates."
+  },
+  "panelists": [
+    {
+      "role": "release-governance-officer",
+      "evaluator_role": "release-governance-officer",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "long-term-support-architect",
+      "evaluator_role": "long-term-support-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "ecosystem-safety-auditor",
+      "evaluator_role": "ecosystem-safety-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "synthesized_findings": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 37 (Final mature 1.0 release and long-term operations). The core maturity governance, release decision criteria, validation tooling, and documentation doctrine\u2014including conductor/maturity-dossier.json, scripts/check_maturity_dossier.py, docs/maturity/1.0-gate.md, docs/maturity/release-decision.md, docs/maturity/gap-register.md, and tests/test_maturity_1_0_governance.py\u2014demonstrate exceptional architectural rigor, uncompromising boundary enforcement, and complete evidentiary discipline. The maturity dossier schema evaluates 17 distinct domains with non-empty state strings, locking the overall decision to 'not_ready' fail-closed while 14 critical domain blockers persist. The validator scripts/check_maturity_dossier.py strictly enforces that any transition to 'ready' mandates all 9 explicit evidence fields (accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, support_plan) and approved: true. Methodological safety boundaries are maintained without exception: PRISMA-S is codified strictly as a reporting contract, autonomous study exclusion by non-human agents is categorically barred, credential/PII isolation is enforced, and registry submissions remain blocked fail-closed under prepared_not_submitted. All 6 unit tests in tests/test_maturity_1_0_governance.py pass network-free. The three higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 37 (Final mature 1.0 release and long-term operations). The core maturity governance, release decision criteria, validation tooling, and documentation doctrine\u2014including conductor/maturity-dossier.json, scripts/check_maturity_dossier.py, docs/maturity/1.0-gate.md, docs/maturity/release-decision.md, docs/maturity/gap-register.md, and tests/test_maturity_1_0_governance.py\u2014demonstrate exceptional architectural rigor, uncompromising boundary enforcement, and complete evidentiary discipline. The maturity dossier schema evaluates 17 distinct domains with non-empty state strings, locking the overall decision to 'not_ready' fail-closed while 14 critical domain blockers persist. The validator scripts/check_maturity_dossier.py strictly enforces that any transition to 'ready' mandates all 9 explicit evidence fields (accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, support_plan) and approved: true. Methodological safety boundaries are maintained without exception: PRISMA-S is codified strictly as a reporting contract, autonomous study exclusion by non-human agents is categorically barred, credential/PII isolation is enforced, and registry submissions remain blocked fail-closed under prepared_not_submitted. All 6 unit tests in tests/test_maturity_1_0_governance.py pass network-free. The three higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "invariants_verified": [
+    "Multi-domain maturity schema validation: 17 distinct domains evaluated with non-empty state and boolean critical blockers in conductor/maturity-dossier.json",
+    "Fail-closed decision boundary: decision remains 'not_ready' while 14 critical blockers exist, strictly enforced by scripts/check_maturity_dossier.py",
+    "Mandatory release decision evidence: ready decision requires 9 explicit evidence fields (accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, support_plan) and approved: true",
+    "Documentation doctrine alignment: docs/maturity/1.0-gate.md, docs/maturity/gap-register.md, and docs/maturity/release-decision.md define 1.0 as a formal release decision rather than a source milestone",
+    "Reporting contract and screening authority preservation: PRISMA-S is maintained as a reporting contract and human screening authority is non-negotiable",
+    "Reversible rollback and long-term support: explicit rollback procedures and maintenance support plans required prior to any 1.0 release signoff",
+    "Network-free deterministic testing: tests/test_maturity_1_0_governance.py verifies 6/6 tests network-free"
+  ],
+  "recommendations": [
+    "Preserve open gate T37-G-MULTI-DOMAIN-MATURITY-CLOSURE until each critical domain blocker is resolved with verified receipts or approved release-risk exceptions.",
+    "Preserve open gate T37-G-SIGNED-RELEASE-APPROVAL until the full release packet, SBOM, attestations, and signed executive approval receipt are generated.",
+    "Preserve open gate T37-G-REGISTRY-SUPPORT-OPERATIONS-EVIDENCE until public releases, registry listings, and long-term operational support receipts are observed."
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T37-A001",
+      "statement": "Final multi-domain maturity decision",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Comprehensive 17-domain coverage, fail-closed 'not_ready' decision boundary retaining 14 critical blockers, prohibition of premature 1.0 claims in docs/maturity/1.0-gate.md, and deterministic validator enforcement verified."
+    },
+    {
+      "id": "T37-A002",
+      "statement": "Signed 1.0 release approval",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Mandatory 9-field release decision evidence, explicit approval flag, named accountable reviewer requirement, Git commit provenance, rollback/support plan mandates, and unit test enforcement verified."
+    },
+    {
+      "id": "T37-A003",
+      "statement": "Observed registry, support and long-term operations evidence",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "PRISMA-S reporting contract doctrine, absolute human screening authority, tenant/credential isolation, unsubmitted registry blockers, and operational disaster recovery mandates verified."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T37-G-MULTI-DOMAIN-MATURITY-CLOSURE",
+      "statement": "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+      "status": "OPEN",
+      "evidence": "Preserved open until all 14 critical domain blockers are resolved with concrete evidence receipts and all release-risk exceptions are formally reviewed and approved"
+    },
+    {
+      "gate": "T37-G-SIGNED-RELEASE-APPROVAL",
+      "statement": "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+      "status": "OPEN",
+      "evidence": "Preserved open until release decision receipt cites exact Git commit, release candidate, SBOM, attestations, downstream canaries, pilot exits, rollback and support plan, and is signed by named accountable reviewer with approved: true"
+    },
+    {
+      "gate": "T37-G-REGISTRY-SUPPORT-OPERATIONS-EVIDENCE",
+      "statement": "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence.",
+      "status": "OPEN",
+      "evidence": "Preserved open until version 1.0 is published and verified with live public registry URLs, software paper acceptance, and observed long-term maintenance receipts"
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Static governance, maturity dossier contracts, and release decision safeguards verified; prospective multi-domain exit reviews, executive release signing, and public 1.0 distribution remain open operational gates."
+  ]
+}

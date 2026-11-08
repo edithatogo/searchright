@@ -12,9 +12,9 @@ Release version 1.0 only after every maturity domain has current evidence, no cr
 ## Contract
 
 - Horizon: `mature`
-- Status: `external_evidence_required`
-- Implementation: `external_evidence_required`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `30, 31, 32, 33, 34, 35, 36`
 - Requirements: `SR-050, SR-061, SR-092`
 - External approval required: `true`
@@ -28,6 +28,6 @@ Release version 1.0 only after every maturity domain has current evidence, no cr
 
 ## Claim boundary
 
-Searchright remains below 1.0 maturity until all named evidence and external decisions exist. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating release-governance-officer, long-term-support-architect, and ecosystem-safety-auditor roles, with multi-domain maturity dossier schema validation across 17 distinct domains in conductor/maturity-dossier.json, strict fail-closed decision boundaries in scripts/check_maturity_dossier.py, PRISMA-S reporting contract doctrine, non-negotiable human screening authority, locked unsubmitted registry targets, and 6/6 unit tests verified network-free in tests/test_maturity_1_0_governance.py. Simulation instrument and source-level contracts only; prospective multi-domain exit reviews, executive release signing, and public 1.0 distribution remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

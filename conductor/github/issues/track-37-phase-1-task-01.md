@@ -3,17 +3,20 @@
 
 Parent phase key: `track-37-phase-1`
 Conductor plan: `conductor/tracks/37-maturity-1-0/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `docs/maturity/1.0-gate.md`
   - [x] Present source path: `docs/maturity/release-decision.md`
+  - [x] Present source path: `docs/maturity/gap-register.md`
   - [x] Present source path: `conductor/maturity-dossier.json`
   - [x] Present source path: `scripts/check_maturity_dossier.py`
   - [x] Present source path: `ROADMAP.md`
   - [x] Present source path: `PROJECT_STATUS.md`
+  - [x] Present source path: `tests/test_maturity_1_0_governance.py`
+  - [x] Present source path: `verification/receipts/track-37-conductor-review-2026-11-09.json`
   - [x] Assertion ledger: `conductor/tracks/37-maturity-1-0/traceability.json`
 
 ## Completion and evidence contract
