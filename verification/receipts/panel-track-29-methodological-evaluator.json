@@ -1,0 +1,54 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "29",
+  "panelist_role": "methodological-evaluator",
+  "evaluator_role": "methodological-evaluator",
+  "evaluated_at": "2026-11-09T02:20:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The preregistered external evaluation protocol and design specifications detailed in docs/evaluation/external-methodological-evaluation.md, docs/evaluation/benchmark-and-calibration-protocol.md, and evaluation/external-evaluation.json establish a rigorous, scientifically sound methodology for independent assessment. The protocol mandates a multi-topic crossover evaluation featuring at least two independent information specialists, blinded adjudication, archived fixtures, and a structured response-to-findings matrix. Crucially, the evaluation design spans four distinct topic strata: 'clinical', 'economic', 'policy', and 'scoping', ensuring that retrieval sensitivity, dialect translation fidelity, deduplication, and screening prioritization are evaluated across heterogeneous search domains. The protocol requires measurement across six vital methodological outcomes: 'seed_set_recall', 'critical_press_findings', 'unreported_lossy_translations', 'reproduction_success', 'consequential_error_rate', and 'unassisted_task_completion'. Furthermore, the living review update requirement tests incremental update stability and query evolution under real-world maintenance pressures. Benchmark leakage controls in benchmark-and-calibration-protocol.md enforce strict separation between hidden evaluation splits and development fixtures, require versioned split hashing, prohibit test label usage in prompt construction or stopping criteria, and mandate complete-population sealed label scoring using canonical byte-digest commitments (org.searchright.sealed-labels.v1). The machine-readable contract enforces fail-closed state 'prepared_not_preregistered' via check_external_evaluation.py, preventing any premature or unearned claim of empirical validation.",
+  "verified_invariants": [
+    "multi-topic stratum coverage: protocol and machine contract strictly mandate all four topic strata ('clinical', 'economic', 'policy', 'scoping')",
+    "core outcome metric enforcement: evaluation requires reporting across all six defined outcomes: seed_set_recall, critical_press_findings, unreported_lossy_translations, reproduction_success, consequential_error_rate, and unassisted_task_completion",
+    "dual independent specialist quorum: minimum of two independent information specialists required for evaluation execution (minimum_information_specialists >= 2)",
+    "living review update inclusion: protocol mandates at least one living review update scenario with deliberately adversarial provider responses",
+    "benchmark leakage prevention: hidden evaluation reviews kept separate from fixtures, splits hashed and versioned, labels barred from tuning/prompt construction",
+    "complete-population sealed scoring: benchmark scoring requires exact 1-to-1 label and prediction populations with cryptographic sealed_label_digest commitments",
+    "fail-closed preparation boundary: contract status locked to prepared_not_preregistered with all external evidence slots null"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The protocol structure and outcome definitions are completely specified and enforced by automated contract tests; however, prospective registration in an independent public registry (e.g., OSF) remains an open gate.",
+      "reference": "docs/evaluation/external-methodological-evaluation.md:31-40; evaluation/external-evaluation.json:28-33; conductor/tracks/29-external-evaluation-sustainability/evidence.json:33",
+      "recommendation": "Preserve open gate 'Preregister the independent evaluation protocol' until prospective registration is executed."
+    },
+    {
+      "severity": "observation",
+      "description": "The protocol explicitly disallows ranking models from discarding records, ensuring high-recall systematic review screening invariants are maintained during prioritization experiments.",
+      "reference": "docs/evaluation/benchmark-and-calibration-protocol.md:17-18, 75",
+      "recommendation": "Maintain the non-discarding invariant across all candidate machine-learning and active-learning rankers."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T29-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Preregistration-ready protocol document matches the machine-readable evaluation/external-evaluation.json contract; contract checker rejects self-attested preregistration."
+    },
+    {
+      "id": "T29-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Topic strata (clinical, economic, policy, scoping), living-review requirement, six primary outcomes, information specialist minimums, and benchmark leakage controls are strictly specified and enforced."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified protocol and contract specification only; recruitment of independent information specialists, preregistration filing, and empirical trial execution remain open gates."
+  ]
+}

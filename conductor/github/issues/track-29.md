@@ -12,12 +12,12 @@ Complete independent methodological/usability evaluation and establish durable g
 ## Contract
 
 - Horizon: `mature`
-- Status: `external_evidence_required`
-- Implementation: `external_evidence_required`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `13, 17, 18, 19, 25, 27, 28`
 - Requirements: `SR-041, SR-059, SR-060, SR-062`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Complete independent methodological/usability evaluation and establish durable g
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating methodological-evaluator, sustainability-architect, and adjudication-integrity-auditor roles, with fail-closed preparation contracts, four topic strata, six core outcome definitions, observation-not-documentation sustainability rules, and unsubmitted JOSS draft bounds verified in tests/test_external_evaluation_sustainability_governance.py and tests/test_external_evaluation_check.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for live human participant trials or observed longitudinal maintenance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

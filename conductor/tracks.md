@@ -28,7 +28,6 @@ an explicit, approval-gated apply receipt exists.
 | 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
 | 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
 | 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | source_implemented | source_implemented | source_verified | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
-| 29 | [External methodological evaluation and sustainability](tracks/29-external-evaluation-sustainability/spec.md) | mature | external_evidence_required | external_evidence_required | source_verified | Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence. |
 | 30 | [Maturity gate and gap closure](tracks/30-maturity-gap-closure/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Maintain one evidence-scaled gap register and an executable hardened/polished launch-preparation dependency graph while blocking premature release claims. |
 | 32 | [Cross-repository contract release train and downstream canaries](tracks/32-cross-repository-release-train/spec.md) | mature | integration_prepared | partially_implemented | source_verified | Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions. |
 | 33 | [Operational observability, backup, restore and incident response](tracks/33-operational-reliability/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments. |
@@ -62,6 +61,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 26 | [Formal assurance and contract evolution](tracks/26-formal-assurance-contract-evolution/spec.md) | 2026-11-09 | fixture_proven |
 | 27 | [Accessibility, internationalisation and usability](tracks/27-accessibility-internationalisation-usability/spec.md) | 2026-11-09 | fixture_proven |
 | 28 | [Institutional governance, privacy and collaboration](tracks/28-institutional-governance-privacy-collaboration/spec.md) | 2026-11-09 | fixture_proven |
+| 29 | [External methodological evaluation and sustainability](tracks/29-external-evaluation-sustainability/spec.md) | 2026-11-09 | fixture_proven |
 | 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
 
 ## Evidence ladder

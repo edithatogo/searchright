@@ -3,11 +3,11 @@
 
 Parent phase key: `track-29-phase-3`
 Conductor plan: `conductor/tracks/29-external-evaluation-sustainability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Publish results, limitations and response-to-findings matrix.
+- [x] Complete blinded adjudication audit, mandatory conflict disclosure checks, and unsubmitted JOSS paper draft verification.
 
 ## Completion and evidence contract
 

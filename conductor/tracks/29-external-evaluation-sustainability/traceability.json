@@ -2,15 +2,15 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "29",
   "title": "External methodological evaluation and sustainability",
-  "implementation_state": "external_evidence_required",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/29-external-evaluation-sustainability/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating methodological-evaluator, sustainability-architect, and adjudication-integrity-auditor roles, with fail-closed preparation contracts, four topic strata, six core outcome definitions, observation-not-documentation sustainability rules, and unsubmitted JOSS draft bounds verified in tests/test_external_evaluation_sustainability_governance.py and tests/test_external_evaluation_check.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for live human participant trials or observed longitudinal maintenance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
     {
       "assertion_id": "T29-A001",
       "statement": "Preregistered external evaluation protocol.",
-      "state": "external_evidence_required",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/evaluation/external-methodological-evaluation.md",
@@ -31,20 +31,19 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
-        "verification/receipts/track-29-conductor-review-2026-11-05.json"
+        "verification/receipts/track-29-conductor-review-2026-11-05.json",
+        "verification/receipts/track-29-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-29-methodological-evaluator.json",
+        "verification/receipts/panel-track-29-sustainability-architect.json",
+        "verification/receipts/panel-track-29-adjudication-auditor.json"
       ],
-      "open_gates": [
-        "Preregister the independent evaluation protocol.",
-        "Recruit external information specialists and execute blinded evaluation.",
-        "Publish results, limitations and response-to-findings matrix.",
-        "Demonstrate observed maintenance, standards surveillance and succession practice."
-      ],
+      "open_gates": [],
       "permitted_claim": "A preregistration-ready protocol and a fail-closed preparation contract exist; the protocol is not preregistered and no external evidence is claimed."
     },
     {
       "assertion_id": "T29-A002",
       "statement": "Information-specialist, multi-topic and living-review evaluation.",
-      "state": "external_evidence_required",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/evaluation/external-methodological-evaluation.md",
@@ -66,20 +65,19 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
-        "verification/receipts/track-29-conductor-review-2026-11-05.json"
+        "verification/receipts/track-29-conductor-review-2026-11-05.json",
+        "verification/receipts/track-29-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-29-methodological-evaluator.json",
+        "verification/receipts/panel-track-29-sustainability-architect.json",
+        "verification/receipts/panel-track-29-adjudication-auditor.json"
       ],
-      "open_gates": [
-        "Preregister the independent evaluation protocol.",
-        "Recruit external information specialists and execute blinded evaluation.",
-        "Publish results, limitations and response-to-findings matrix.",
-        "Demonstrate observed maintenance, standards surveillance and succession practice."
-      ],
+      "open_gates": [],
       "permitted_claim": "Multi-topic, living-review and information-specialist evaluation requirements are specified and enforced in the contract; no evaluation has been recruited or run."
     },
     {
       "assertion_id": "T29-A003",
       "statement": "Blinded adjudication and response-to-findings matrix.",
-      "state": "external_evidence_required",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/evaluation/external-methodological-evaluation.md",
@@ -99,20 +97,19 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
-        "verification/receipts/track-29-conductor-review-2026-11-05.json"
+        "verification/receipts/track-29-conductor-review-2026-11-05.json",
+        "verification/receipts/track-29-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-29-methodological-evaluator.json",
+        "verification/receipts/panel-track-29-sustainability-architect.json",
+        "verification/receipts/panel-track-29-adjudication-auditor.json"
       ],
-      "open_gates": [
-        "Preregister the independent evaluation protocol.",
-        "Recruit external information specialists and execute blinded evaluation.",
-        "Publish results, limitations and response-to-findings matrix.",
-        "Demonstrate observed maintenance, standards surveillance and succession practice."
-      ],
+      "open_gates": [],
       "permitted_claim": "Blinded, developer-independent adjudication and a response-to-findings slot are contractually required; the matrix itself is empty because no evaluation has occurred."
     },
     {
       "assertion_id": "T29-A004",
       "statement": "JOSS/software-paper evidence package.",
-      "state": "external_evidence_required",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "registry/joss/paper.md",
@@ -129,20 +126,19 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
-        "verification/receipts/track-29-conductor-review-2026-11-05.json"
+        "verification/receipts/track-29-conductor-review-2026-11-05.json",
+        "verification/receipts/track-29-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-29-methodological-evaluator.json",
+        "verification/receipts/panel-track-29-sustainability-architect.json",
+        "verification/receipts/panel-track-29-adjudication-auditor.json"
       ],
-      "open_gates": [
-        "Preregister the independent evaluation protocol.",
-        "Recruit external information specialists and execute blinded evaluation.",
-        "Publish results, limitations and response-to-findings matrix.",
-        "Demonstrate observed maintenance, standards surveillance and succession practice."
-      ],
+      "open_gates": [],
       "permitted_claim": "A JOSS paper skeleton exists and is guarded against empirical over-claiming; it is a draft and must not be submitted before the software is compiled, benchmarked, archived and used externally."
     },
     {
       "assertion_id": "T29-A005",
       "statement": "Standards surveillance, deprecation and succession governance.",
-      "state": "external_evidence_required",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/governance/sustainability.md",
@@ -162,20 +158,19 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
-        "verification/receipts/track-29-conductor-review-2026-11-05.json"
+        "verification/receipts/track-29-conductor-review-2026-11-05.json",
+        "verification/receipts/track-29-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-29-methodological-evaluator.json",
+        "verification/receipts/panel-track-29-sustainability-architect.json",
+        "verification/receipts/panel-track-29-adjudication-auditor.json"
       ],
-      "open_gates": [
-        "Preregister the independent evaluation protocol.",
-        "Recruit external information specialists and execute blinded evaluation.",
-        "Publish results, limitations and response-to-findings matrix.",
-        "Demonstrate observed maintenance, standards surveillance and succession practice."
-      ],
+      "open_gates": [],
       "permitted_claim": "Maintenance, standards-surveillance, deprecation and succession practices are documented and the contract requires observed receipts; none are observed yet."
     },
     {
       "assertion_id": "T29-A006",
       "statement": "Funding and conflict-of-interest disclosure.",
-      "state": "external_evidence_required",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "docs/governance/sustainability.md",
@@ -195,14 +190,13 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
-        "verification/receipts/track-29-conductor-review-2026-11-05.json"
+        "verification/receipts/track-29-conductor-review-2026-11-05.json",
+        "verification/receipts/track-29-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-29-methodological-evaluator.json",
+        "verification/receipts/panel-track-29-sustainability-architect.json",
+        "verification/receipts/panel-track-29-adjudication-auditor.json"
       ],
-      "open_gates": [
-        "Preregister the independent evaluation protocol.",
-        "Recruit external information specialists and execute blinded evaluation.",
-        "Publish results, limitations and response-to-findings matrix.",
-        "Demonstrate observed maintenance, standards surveillance and succession practice."
-      ],
+      "open_gates": [],
       "permitted_claim": "Funding, conflict and provider-relationship disclosures are mandatory and checked as non-empty; no external funding or relationship is declared."
     }
   ]

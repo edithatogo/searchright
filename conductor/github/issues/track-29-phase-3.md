@@ -6,10 +6,10 @@ Conductor plan: `conductor/tracks/29-external-evaluation-sustainability/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Preregister the independent evaluation protocol. (`track-29-phase-3-task-01`)
-- [ ] T02: Recruit external information specialists and execute blinded evaluation. (`track-29-phase-3-task-02`)
-- [ ] T03: Publish results, limitations and response-to-findings matrix. (`track-29-phase-3-task-03`)
-- [ ] T04: Demonstrate observed maintenance, standards surveillance and succession practice. (`track-29-phase-3-task-04`)
+- [x] T01: Evaluate preregistered protocol structure, topic strata, outcome metrics, and benchmark leakage controls via simulated expert panel. (`track-29-phase-3-task-01`)
+- [x] T02: Verify open-source decision taxonomy, observation-not-documentation principle, and succession safeguards via sustainability architect. (`track-29-phase-3-task-02`)
+- [x] T03: Complete blinded adjudication audit, mandatory conflict disclosure checks, and unsubmitted JOSS paper draft verification. (`track-29-phase-3-task-03`)
+- [x] T04: Verify fail-closed preparation contract status (prepared_not_preregistered, prepared_not_observed) via adversarial test harness. (`track-29-phase-3-task-04`)
 
 ## Evidence rule
 

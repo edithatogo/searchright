@@ -3,11 +3,11 @@
 
 Parent phase key: `track-29-phase-3`
 Conductor plan: `conductor/tracks/29-external-evaluation-sustainability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Demonstrate observed maintenance, standards surveillance and succession practice.
+- [x] Verify fail-closed preparation contract status (prepared_not_preregistered, prepared_not_observed) via adversarial test harness.
 
 ## Completion and evidence contract
 

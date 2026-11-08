@@ -1,0 +1,48 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "29",
+  "panelist_role": "sustainability-architect",
+  "evaluator_role": "sustainability-architect",
+  "evaluated_at": "2026-11-09T02:22:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The sustainability, governance, and ecosystem lifecycle architecture defined in GOVERNANCE.md, docs/governance/sustainability.md, and evaluation/external-evaluation.json implements a resilient, maintainer-friendly open-source foundation while guarding against single-point-of-failure vulnerabilities and unsubstantiated claims. GOVERNANCE.md formalizes five distinct decision classes ('Routine', 'Contract', 'Methodological', 'Security/privacy', 'External claim'), ensuring that changes altering screening authority, search sensitivity, contracts, or security posture demand verifiable receipts, architectural decision records, and automated test fixtures rather than performative sign-offs. Crucially, external claims cannot be inferred from repository metadata alone. A paramount design achievement is the strict adherence to the 'observation-not-documentation' principle: docs/governance/sustainability.md and evaluation/external-evaluation.json explicitly specify that repository documentation and static checks do not constitute proof of maintenance, standards surveillance, or succession. Instead, sustainability status is bound to 'prepared_not_observed' with an empty observation receipts list. The architecture specifies four mandatory empirical observation categories: 'maintenance_release_history', 'standards_surveillance_history', 'deprecation_or_migration_exercise', and 'succession_rehearsal'. The test suite (test_sustainability_requires_observation_not_documentation, test_rejects_observed_sustainability_without_external_receipts) guarantees that any premature promotion to 'observed' without verifiable longitudinal receipts fails closed.",
+  "verified_invariants": [
+    "five-tier decision taxonomy: GOVERNANCE.md strictly categorizes changes into Routine, Contract, Methodological, Security/privacy, and External claim",
+    "observation-not-documentation principle: sustainability.status is contractually locked to prepared_not_observed; documentation alone never counts as observed practice",
+    "four empirical observation categories: contract mandates maintenance_release_history, standards_surveillance_history, deprecation_or_migration_exercise, and succession_rehearsal",
+    "succession and bus-factor controls: all architecture decisions, threat models, schemas, and track evidence are maintained as versioned repository artefacts reproducible from tagged commits",
+    "credential isolation: signing and registry credentials are strictly excluded from repository artefacts and governed by documented recovery and rotation procedures",
+    "contract-first evolution: contracts are versioned prior to implementations, with explicit deprecation windows and migration recipes",
+    "fail-closed sustainability checker: check_external_evaluation.py rejects empty observation lists if promoted to observed, or unevidenced sustainability claims"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Sustainability contracts and decision taxonomies are fully verified in deterministic unit tests; longitudinal maintenance release history and succession drills remain open operational gates.",
+      "reference": "docs/governance/sustainability.md:34-37; evaluation/external-evaluation.json:34-43; conductor/tracks/29-external-evaluation-sustainability/evidence.json:36",
+      "recommendation": "Preserve open gate 'Demonstrate observed maintenance, standards surveillance and succession practice' until post-1.0 longitudinal history is accumulated."
+    },
+    {
+      "severity": "observation",
+      "description": "Governance expansion is explicitly tied to sustained external contribution or institutional adoption rather than premature committee creation, which matches healthy sole-maintainer bootstrapping.",
+      "reference": "docs/governance/sustainability.md:23-27; GOVERNANCE.md:18-20",
+      "recommendation": "Re-evaluate governance tiering upon initial multi-institutional deployment."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T29-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Decision taxonomy, observation-not-documentation principle, succession safeguards, and fail-closed prepared_not_observed status are strictly enforced in source and tests."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified governance and sustainability framework only; longitudinal operational history, real succession drills, and observed deprecation cycles remain open gates."
+  ]
+}

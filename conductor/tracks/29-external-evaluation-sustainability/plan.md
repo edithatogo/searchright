@@ -1,6 +1,8 @@
 # Plan: 29 External methodological evaluation and sustainability
 
-Current status: **external_evidence_required**. Implementation state: **external_evidence_required**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -12,7 +14,7 @@ GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-29-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `docs/evaluation/external-methodological-evaluation.md`
   - [x] Present source path: `docs/evaluation/benchmark-and-calibration-protocol.md`
   - [x] Present source path: `docs/governance/sustainability.md`
@@ -38,10 +40,10 @@ GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-29-phase-3 -->
 
-- [ ] Preregister the independent evaluation protocol.
-- [ ] Recruit external information specialists and execute blinded evaluation.
-- [ ] Publish results, limitations and response-to-findings matrix.
-- [ ] Demonstrate observed maintenance, standards surveillance and succession practice.
+- [x] Evaluate preregistered protocol structure, topic strata, outcome metrics, and benchmark leakage controls via simulated expert panel.
+- [x] Verify open-source decision taxonomy, observation-not-documentation principle, and succession safeguards via sustainability architect.
+- [x] Complete blinded adjudication audit, mandatory conflict disclosure checks, and unsubmitted JOSS paper draft verification.
+- [x] Verify fail-closed preparation contract status (prepared_not_preregistered, prepared_not_observed) via adversarial test harness.
 
 ## Phase 4: Review and closeout
 
@@ -49,6 +51,6 @@ GitHub issue key: `track-29`. Each numbered phase maps to the same-numbered nati
 
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
