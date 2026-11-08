@@ -1,0 +1,50 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "34",
+  "panelist_role": "remote-mcp-security-architect",
+  "evaluator_role": "remote-mcp-security-architect",
+  "evaluated_at": "2026-11-09T04:45:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The remote MCP transport architecture codified in crates/searchright-mcp/src/remote.rs, crates/searchright-mcp/src/bin/searchright-mcp-http.rs, docs/security/authenticated-remote-mcp.md, and verification/receipts/remote-mcp-auth-conformance.json establishes an exemplary defense-in-depth security boundary for Searchright. The Streamable HTTP adapter is disabled by default and will not start unless SEARCHRIGHT_REMOTE_MCP_ENABLED=1 is explicitly set; any absent or non-1 value causes an immediate startup rejection. Crucially, the transport binds exclusively to a loopback interface (bind.ip().is_loopback()), mandating a dedicated, trusted local TLS reverse proxy terminator. Plain HTTP requests or direct external bindings are barred fail-closed; the adapter inspects X-Forwarded-Proto and rejects any non-https value with 403 Forbidden (access.transport.tls_required). Identity assertion relies on zero-trust token verification: client-provided identity headers are disregarded, and incoming Bearer JWT tokens are decoded and verified against a locally provisioned, rotating JWKS file (JwksVerifier). The verifier strictly enforces the RS256 signing algorithm (Algorithm::RS256), requiring a kid header matching an active public key in the JWKS and rejecting revoked or rotated-out keys with access.authentication.key_unknown. Exact audience verification and spec claim validation (exp, iss, aud, sub) are enforced with strict clock validation and a maximum token age ceiling (maximum_token_age_seconds). Replay prevention is enforced via the blake3 request digest keying iss:tenant_id:sub:jti:request_id into an in-process ReplayLedger, immediately rejecting repeated requests with access.replay.request_reused. Conformance testing via scripts/remote_mcp_conformance.py and cargo test confirms all 54 deterministic tests pass network-free.",
+  "verified_invariants": [
+    "disabled by default: SEARCHRIGHT_REMOTE_MCP_ENABLED=1 required; unset or invalid values reject process initialization fail-closed",
+    "loopback binding mandate: bind address must be a loopback IP (bind.ip().is_loopback()); external network bindings are prohibited",
+    "TLS terminator boundary: X-Forwarded-Proto must equal 'https', rejecting non-TLS requests with 403 Forbidden (access.transport.tls_required)",
+    "zero-trust JWT verification: client identity claims are never trusted from unauthenticated headers; claims are strictly verified against local rotating JWKS",
+    "RS256 algorithm pinning: cryptographic verification is locked to RS256; non-RS256 algorithms fail closed with access.authentication.algorithm_denied",
+    "kid-bound key lookup: tokens missing kid or matching rotated-out/removed keys are rejected with access.authentication.key_unknown",
+    "audience and time constraints: token audience must match SEARCHRIGHT_REMOTE_MCP_AUDIENCE; expired, not-yet-valid, or over-age tokens are rejected",
+    "token replay nonce enforcement: in-process ReplayLedger tracks request digests (iss:tenant_id:sub:jti:request_id) and denies reuse with access.replay.request_reused",
+    "deterministic conformance: 54/54 deterministic Rust and Python conformance tests pass network-free with 0 failures"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The Streamable HTTP adapter architecture and rotating JWKS verifier are fully implemented and fixture-tested on loopback; integrating live OAuth/OIDC identity providers and running real-world TLS edge reverse proxies in staging deployments remain open operational gates.",
+      "reference": "crates/searchright-mcp/src/remote.rs:238-281; docs/security/authenticated-remote-mcp.md:72-84; conductor/tracks/34-authenticated-remote-mcp/traceability.json:32-35",
+      "recommendation": "Preserve open gate T34-G-LIVE-IDP-TLS-EDGE until live OAuth/OIDC IdP integration and trusted TLS edge termination are exercised in staging."
+    },
+    {
+      "severity": "observation",
+      "description": "The separate searchright-mcp-http binary contains #![forbid(unsafe_code)] and directly wraps searchright_mcp::remote::run_from_environment(), ensuring memory safety and uniform runtime initialization.",
+      "reference": "crates/searchright-mcp/src/bin/searchright-mcp-http.rs:3-8",
+      "recommendation": "Maintain unsafe-code prohibition and compile-time feature gating in CI."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T34-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Feature-gated loopback Streamable HTTP adapter, TLS loopback boundary, JWKS RS256 rotation, token replay protection, and zero-trust identity claim verification verified in Rust implementation and conformance receipts."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Fixture-level Rust tests exercise loopback transport and local JWKS keys; live IdP token issuance, real TLS reverse proxies, and production rollback rehearsals remain open operational gates."
+  ]
+}

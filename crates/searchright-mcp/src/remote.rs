@@ -770,13 +770,17 @@ mod tests {
         encoded
     }
 
+    static JWKS_COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+    static AUDIT_COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+
     fn temporary_jwks() -> PathBuf {
         let Ok(duration) = SystemTime::now().duration_since(UNIX_EPOCH) else {
             panic!("test clock must be available");
         };
         let suffix = duration.as_nanos();
+        let counter = JWKS_COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
         let path = std::env::temp_dir().join(format!(
-            "searchright-track34-jwks-{}-{suffix}.json",
+            "searchright-track34-jwks-{}-{suffix}-{counter}.json",
             std::process::id()
         ));
         assert!(std::fs::write(&path, TEST_JWKS).is_ok());
@@ -788,8 +792,9 @@ mod tests {
             panic!("test clock must be available");
         };
         let suffix = duration.as_nanos();
+        let counter = AUDIT_COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
         std::env::temp_dir().join(format!(
-            "searchright-track34-audit-{}-{suffix}.jsonl",
+            "searchright-track34-audit-{}-{suffix}-{counter}.jsonl",
             std::process::id()
         ))
     }

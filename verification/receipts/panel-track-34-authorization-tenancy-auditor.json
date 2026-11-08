@@ -1,0 +1,55 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "34",
+  "panelist_role": "authorization-tenancy-auditor",
+  "evaluator_role": "authorization-tenancy-auditor",
+  "evaluated_at": "2026-11-09T04:46:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The authorization, tenancy, and data residency controls codified across crates/searchright-access/src/lib.rs, crates/searchright-contracts/src/access.rs, contracts/examples/tenant-policy.json, contracts/examples/access-request.json, contracts/examples/access-decision.json, and verification/receipts/remote-mcp-tenancy-adversarial.json demonstrate impeccable default-deny governance and strict methodological safeguards. In crates/searchright-access/src/lib.rs, the authorise and authorise_with_replay engines evaluate incoming AccessRequests against validated TenantPolicies. Tenant isolation is strictly enforced: any request where request.tenant_id != policy.tenant_id is denied fail-closed with access.tenant.mismatch. Regional data residency boundaries are locked to the policy's allowed_regions (e.g., 'AU'); requests originating from or targeting unauthorized regions are denied with access.region.denied. Capability authorization is strictly default-deny: requested scopes must be explicitly present in policy.allowed_scopes; unrequested or unapproved scopes trigger access.scope.denied.<scope>. Critically, non-human agents are strictly barred from autonomous study exclusions or final eligibility determinations: when request.final_eligibility_decision is true, the engine mandates that principal_kind == PrincipalKind::Human, scopes include AccessScope::ScreeningDecide, and human_approval == true; non-human principals fail closed with access.final_decision.human_only. Similarly, external_write operations demand both the external_write scope and explicit human approval. Furthermore, the policy evaluator accumulates all encountered control violations into decision.blockers, ensuring comprehensive auditability rather than masking secondary infractions behind the first failure.",
+  "verified_invariants": [
+    "fail-closed tenant isolation: cross-tenant access requests (request.tenant_id != policy.tenant_id) are blocked with access.tenant.mismatch",
+    "regional data residency boundary: requests targeting regions outside policy.allowed_regions are rejected with access.region.denied",
+    "default-deny capability scoping: scopes not explicitly granted in policy.allowed_scopes are rejected with access.scope.denied.<scope>",
+    "strict human-only final screening decisions: non-human agent principals are categorically forbidden from autonomous study exclusion or final eligibility decisions (access.final_decision.human_only)",
+    "mandatory human approval for external writes: external write operations require both external_write scope and explicit human approval",
+    "multiple violation accumulation: adversarial test multiple_control_violations_accumulate_blockers proves multiple control violations accumulate completely in blockers list",
+    "read-only remote surface boundary: the 31 exposed MCP tools are strictly read-only and require review_read scope, preventing remote mutation authority",
+    "deterministic verification: all access governance unit tests in tests/test_authenticated_remote_mcp_governance.py and adversarial tenancy tests pass 100% network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Tenant policy and access request contracts enforce strict in-process tenancy and region residency; validating cloud infrastructure storage, database replication, and audit log residency at the physical host level remains an open operational gate.",
+      "reference": "crates/searchright-contracts/src/access.rs:44-66; crates/searchright-access/src/lib.rs:133-139; conductor/tracks/34-authenticated-remote-mcp/traceability.json:86-90",
+      "recommendation": "Preserve open gate T34-G-DATA-RESIDENCY-VERIFICATION until physical and logical cloud storage replication boundaries are verified in production."
+    },
+    {
+      "severity": "observation",
+      "description": "The authenticated_read_request constructor in crates/searchright-access/src/lib.rs hardcodes external_write: false, final_eligibility_decision: false, and human_approval: false, ensuring the HTTP adapter cannot be tricked into granting write or screening decision authority.",
+      "reference": "crates/searchright-access/src/lib.rs:74-95",
+      "recommendation": "Preserve the architectural separation between the read-only remote adapter and state-changing review workflows."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T34-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Default-deny capability authorization, scope enforcement, and strict prohibition of non-human agent autonomous study exclusion/final decisions verified in Rust and Python suites."
+    },
+    {
+      "id": "T34-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Tenant isolation, regional data residency boundaries, and accumulation of multiple control violations verified in adversarial test suites."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source and fixture-proven in-process tenant and region validation only; distributed multi-replica tenancy and physical cloud data residency remain open operational gates."
+  ]
+}
