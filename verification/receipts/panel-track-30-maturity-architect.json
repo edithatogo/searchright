@@ -1,0 +1,55 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "30",
+  "panelist_role": "maturity-architect",
+  "evaluator_role": "maturity-architect",
+  "evaluated_at": "2026-11-09T02:35:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The maturity architecture, evidence-debt accounting, and gate-cataloguing frameworks defined in conductor/maturity-dossier.json, verification/evidence-debt.json, verification/gate-catalog.json, docs/maturity/gap-register.md, and docs/quality/evidence-debt.md establish an uncompromising, fail-closed maturity governance model for Searchright. The maturity dossier strictly enumerates all 17 expected domains ('contracts', 'compiler', 'determinism', 'providers', 'methodology', 'security', 'interfaces', 'migration', 'usability', 'operations', 'github_control_plane', 'downstream_compatibility', 'access_and_tenancy', 'backup_restore_incidents', 'sdk_and_adoption', 'pilots', 'registries') and maintains an explicit fail-closed decision of 'not_ready'. Exactly 14 domains are actively classified as critical blockers ('access_and_tenancy', 'backup_restore_incidents', 'determinism', 'downstream_compatibility', 'interfaces', 'methodology', 'migration', 'operations', 'pilots', 'providers', 'registries', 'sdk_and_adoption', 'security', 'usability'), legally and procedurally barring any premature claim to version 1.0 readiness. Scripts check_maturity_dossier.py and check_gate_catalog.py enforce that 'ready' cannot be attained while critical blockers exist or without explicit release decision evidence. The evidence-debt register provides full accounting across all 200 roadmap assertions, explicitly distinguishing symbol-and-gate-mapped assertions (182), assertion-level mappings (6), and track-level-only mappings (12), while enumerating 134 open gate entries and prioritizing remediation across a 5-tier queue. The gate catalogue documents 73 static gates with strict default capabilities (no network, no external write), bounding static validation to source-level evidence. Crucially, release risk exceptions are strictly monitored: the dossier currently records zero exceptions (release_risk_exceptions: []), and the validator enforces that any future exception must explicitly specify id, domain, risk, disposition, and approved_by.",
+  "verified_invariants": [
+    "17-domain completeness: all 17 expected maturity domains are specified in conductor/maturity-dossier.json without omission or drift",
+    "fail-closed readiness decision: dossier decision is locked to 'not_ready'; check_maturity_dossier.py enforces that critical blockers mandate 'not_ready'",
+    "14 active critical blockers: exactly 14 domains are designated as critical blockers, preventing unevidenced capability promotion",
+    "complete assertion-level debt ledger: verification/evidence-debt.json accounts for all 200 assertions across 38 tracks and exposes 134 open gate entries",
+    "5-tier debt remediation queue: structured priority queue (assertion_specific_proof, provider_runtime_and_policy, methodological_validation, downstream_migration, operations_and_adoption) directs systematic closure",
+    "gate catalogue bounding: verification/gate-catalog.json maps 73 gates and 57 harness gates with default_capabilities.network: false",
+    "zero unadjudicated release exceptions: release_risk_exceptions is empty, and schema mandates human approval, risk statement, and disposition for any entry",
+    "deterministic static checkers: scripts/check_maturity_dossier.py, scripts/generate_evidence_debt.py --check, and scripts/check_gate_catalog.py --check pass network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The maturity dossier and evidence-debt registers provide complete source-level visibility and fail-closed validation; the 14 critical blocker domains and 134 open gate entries remain open operational gates requiring compiled, live, and external receipts.",
+      "reference": "conductor/maturity-dossier.json:6-92; verification/evidence-debt.json:33-50; docs/maturity/gap-register.md:7-21",
+      "recommendation": "Preserve open gate 'Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain' until operational receipts exist."
+    },
+    {
+      "severity": "observation",
+      "description": "Automated regression tests in tests/test_maturity_gap_closure_governance.py verify that the dossier, evidence debt, and gate catalogue cannot be relaxed or silently stripped of critical blockers.",
+      "reference": "tests/test_maturity_gap_closure_governance.py:35-60",
+      "recommendation": "Retain test_maturity_dossier_fails_closed_with_not_ready and test_evidence_debt_reconciles_complete_assertion_inventory in the mandatory pre-commit harness."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T30-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Evidence gap register, maturity dossier, and evidence-debt ledger reconcile all 17 domains, 200 assertions, and 14 critical blockers; checks pass deterministically."
+    },
+    {
+      "id": "T30-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Fail-closed 'not_ready' readiness decision, gate catalogue capability limits, and release-risk exception visibility prevent premature claims without evidence."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified maturity dossier, gate catalogue, and evidence-debt ledger only; live provider canaries, external methodological trials, multi-tenant security verification, and operational recovery rehearsals remain open gates."
+  ]
+}

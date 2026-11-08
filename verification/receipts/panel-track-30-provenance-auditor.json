@@ -1,0 +1,55 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "30",
+  "panelist_role": "provenance-auditor",
+  "evaluator_role": "provenance-auditor",
+  "evaluated_at": "2026-11-09T02:42:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The actor provenance architecture, staged mode taxonomy, and claim boundary governance implemented across context/claim-boundaries.json, PROJECT_STATUS.md, conductor/frontier-plan.md, conductor/requirements.md (SR-050, SR-093), and docs/maturity/gap-register.md demonstrate outstanding methodological integrity and anti-anthropomorphic discipline. Requirement SR-050 and the frontier plan formalize three distinct operational review modes: Autonomous (initial policy/budget authorization with machine-assessed decisions and draft conclusions; never described as independently human-reviewed), Solo (one human reviewer with configurable uncertainty/conflict queues; machine, human-confirmed, and unresolved decisions remain distinguishable, with fictitious second reviewers strictly barred), and Team (two or more actual people with real reviewer identities, independent/blinded assignments, conflict recording, and explicit adjudication history). Crucially, the non-negotiable rule 'Planned autonomy is not current capability or independently human-reviewed evidence' is upheld: the current runtime enforces human-only final screening exclusions and default-deny external writes, keeping autonomous decision authority explicitly staged. Furthermore, the architecture mandates that multi-agent ensembles cannot count as two independent human reviewers, preserving PRISMA-S and systematic review methodological standards. In PROJECT_STATUS.md, the remote-state reporting policy strictly forbids static documentation from asserting volatile local or GitHub state (such as working tree cleanliness, local/remote branch identity, or open PR counts), requiring these to be evidenced via timestamped receipts. Release risk exceptions are guaranteed full visibility, with documentation-based waivers explicitly denied in docs/maturity/gap-register.md. Deterministic test test_autonomous_solo_and_team_modes_require_actor_provenance confirms that mode provenance rules are locked in governance tests.",
+  "verified_invariants": [
+    "three-mode governance taxonomy: Autonomous, Solo, and Team modes specify distinct authority, human contribution, and required output labeling",
+    "anti-anthropomorphic actor provenance: machine decisions must remain clearly attributed to specific models/workers; fictitious human reviewers are strictly barred",
+    "ensemble non-equivalence rule: multi-agent ensembles are contractually barred from substituting for independent human reviewer quorums",
+    "human-protected runtime default: autonomous final exclusions remain disabled by default, requiring explicit policy and confirmation mechanisms before enablement",
+    "reversible mode transitions: transitions between modes preserve historical decision attribution without rewriting history; contested writes use optimistic concurrency",
+    "claim boundary enforcement: context/claim-boundaries.json and PROJECT_STATUS.md restrict current status to source-verified technical alpha",
+    "volatile remote state exclusion: static prose is barred from asserting volatile branch equality, working-tree cleanliness, or PR state without live receipts",
+    "unwaivable exception visibility: release risk exceptions must be recorded with human approval and remain visible in the maturity dossier; documentation waivers are denied"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Mode definitions, actor provenance policies, and claim boundaries are fully specified and tested in source fixtures; operational deployment of autonomous screening policies and multi-site team trials remain open gates.",
+      "reference": "conductor/frontier-plan.md:212-233; conductor/requirements.md:69; context/claim-boundaries.json:51-53",
+      "recommendation": "Preserve open gate 'Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested' until live trial evidence exists."
+    },
+    {
+      "severity": "observation",
+      "description": "The remote-state reporting policy in PROJECT_STATUS.md eliminates documentation drift by delegating volatile Git and CI status to timestamped snapshot receipts.",
+      "reference": "PROJECT_STATUS.md:48-58; scripts/check_maturity_dossier.py:40-51",
+      "recommendation": "Maintain enforcement of STALE_STATUS_PHRASES in check_maturity_dossier.py during all future documentation updates."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T30-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Staged autonomous, solo, and team modes, actor provenance invariants, anti-anthropomorphism rules, and truthful capability boundaries are verified across specifications and tests."
+    },
+    {
+      "id": "T30-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Premature-claim blocking, volatile state exclusion policy, and exception visibility are strictly enforced by claim boundaries and governance checkers."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified mode governance, claim boundaries, and actor provenance framework only; live deployment of autonomous decision policies and multi-site team trials remain open gates."
+  ]
+}

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.
+- [x] Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.
 
 ## Completion and evidence contract
 
