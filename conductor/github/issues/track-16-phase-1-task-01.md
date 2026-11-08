@@ -3,11 +3,11 @@
 
 Parent phase key: `track-16-phase-1`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `.github/workflows/ci.yml`
   - [x] Present source path: `.github/workflows/coverage.yml`
   - [x] Present source path: `.github/workflows/nightly.yml`
