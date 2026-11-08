@@ -12,6 +12,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_default_deny.py`
   - [x] `python scripts/check_rust_source_structure.py`
   - [x] `python scripts/remote_mcp_conformance.py`
+  - [x] `python3 -m unittest discover -s tests -p test_authenticated_remote_mcp_governance.py`
 
 ## Completion and evidence contract
 
