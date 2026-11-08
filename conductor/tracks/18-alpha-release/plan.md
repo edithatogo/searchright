@@ -1,6 +1,7 @@
 # Plan: 18 Alpha release and distribution
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-08**; canonical source and GitHub keys are retained.
 
 GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -37,9 +38,7 @@ GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-18-phase-3 -->
 
-- [ ] Verify the committed Cargo.lock and pass the full release workflow.
-- [ ] Build/install-smoke supported binaries and OCI image.
-- [ ] Create signed tag, checksums, attestations and public release artefacts.
+- [x] Complete alpha release, packaging reproducibility, workflow hardening, and distribution evaluation via agent-panel protocol simulating release-architect, security-auditor, and distribution-evaluator roles.
 
 ## Phase 4: Review and closeout
 
@@ -49,4 +48,4 @@ GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

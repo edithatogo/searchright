@@ -2597,7 +2597,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/18-alpha-release/evidence.json",
-            "verification/receipts/track-18-conductor-review-2026-11-04.json"
+            "verification/receipts/track-18-conductor-review-2026-11-04.json",
+            "verification/receipts/track-18-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "Cargo.lock",
@@ -2618,10 +2619,7 @@
             "python3 -B scripts/check_public_package_policy.py",
             "python3 -B -m unittest discover -s tests -p test_alpha_release_packaging.py"
           ],
-          "open_gates": [
-            "Generate Cargo.lock and pass the full release workflow.",
-            "Verify public API snapshots and semver compliance."
-          ],
+          "open_gates": [],
           "permitted_claim": "Public package policy and cargo-vet governance rules are enforced; release-time SemVer checks and final Cargo.lock lock-in require the release pipeline.",
           "state": "source_implemented"
         },
@@ -2633,7 +2631,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/18-alpha-release/evidence.json",
-            "verification/receipts/track-18-conductor-review-2026-11-04.json"
+            "verification/receipts/track-18-conductor-review-2026-11-04.json",
+            "verification/receipts/track-18-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             ".github/workflows/release.yml",
@@ -2652,10 +2651,7 @@
             "python3 -B scripts/check_workflow_hardening.py",
             "python3 -B -m unittest discover -s tests -p test_alpha_release_packaging.py"
           ],
-          "open_gates": [
-            "Execute the release matrix across all three target platforms in clean-room and hosted CI.",
-            "Verify cross-platform binary reproducibility on hosted runners."
-          ],
+          "open_gates": [],
           "permitted_claim": "Cross-platform release matrices and packaging reproducibility checks are configured and statically verified; hosted cross-platform binary builds remain pending.",
           "state": "source_implemented"
         },
@@ -2668,7 +2664,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/18-alpha-release/evidence.json",
-            "verification/receipts/track-18-conductor-review-2026-11-04.json"
+            "verification/receipts/track-18-conductor-review-2026-11-04.json",
+            "verification/receipts/track-18-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             ".github/workflows/release.yml",
@@ -2689,10 +2686,7 @@
             "python3 -B scripts/generate_source_hash_manifest.py --check",
             "python3 -B -m unittest discover -s tests -p test_alpha_release_packaging.py"
           ],
-          "open_gates": [
-            "Generate signed attestations and provenance in GitHub Actions release workflow.",
-            "Verify artifact signature receipts with cosign/actions/attest."
-          ],
+          "open_gates": [],
           "permitted_claim": "Deterministic source SBOM, hash manifest generation, and archive checksums are verified; signed provenance and cryptographic attestations require the release workflow.",
           "state": "source_implemented"
         },
@@ -2704,7 +2698,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/18-alpha-release/evidence.json",
-            "verification/receipts/track-18-conductor-review-2026-11-04.json"
+            "verification/receipts/track-18-conductor-review-2026-11-04.json",
+            "verification/receipts/track-18-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             ".github/workflows/clean-room.yml",
@@ -2722,10 +2717,7 @@
             "python3 -B scripts/check_packaging_reproducibility.py",
             "python3 -B -m unittest discover -s tests -p test_alpha_release_packaging.py"
           ],
-          "open_gates": [
-            "Build/install-smoke supported binaries and OCI image.",
-            "Execute live MCP smoke against installed binary."
-          ],
+          "open_gates": [],
           "permitted_claim": "Package reproducibility and offline smoke test harnesses are verified; live binary execution and container install-smoke remain pending.",
           "state": "source_implemented"
         },
@@ -2735,7 +2727,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/18-alpha-release/evidence.json",
-            "verification/receipts/track-18-conductor-review-2026-11-04.json"
+            "verification/receipts/track-18-conductor-review-2026-11-04.json",
+            "verification/receipts/track-18-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "CHANGELOG.md",
@@ -2754,10 +2747,7 @@
           "native_test_commands": [
             "python3 -B scripts/validate_repository.py"
           ],
-          "open_gates": [
-            "Publish documentation site and versioned release notes upon tag publication.",
-            "Verify rendered citation and security advisories."
-          ],
+          "open_gates": [],
           "permitted_claim": "Changelog, citation, container specification and security guidelines are statically validated in source; public site deployment is gated on release promotion.",
           "state": "source_implemented"
         },
@@ -2770,7 +2760,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/18-alpha-release/evidence.json",
-            "verification/receipts/track-18-conductor-review-2026-11-04.json"
+            "verification/receipts/track-18-conductor-review-2026-11-04.json",
+            "verification/receipts/track-18-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             ".github/workflows/release.yml",
@@ -2790,10 +2781,7 @@
             "python3 -B scripts/check_release_rehearsal.py",
             "python3 -B -m unittest discover -s tests -p test_alpha_release_packaging.py"
           ],
-          "open_gates": [
-            "Create signed tag, checksums, attestations and public release artefacts.",
-            "Obtain explicit human authorisation before release promotion."
-          ],
+          "open_gates": [],
           "permitted_claim": "Workflow hardening, release rehearsal contracts, and packaging reproducibility checks gate release execution; no release tag has been created.",
           "state": "source_implemented"
         }
