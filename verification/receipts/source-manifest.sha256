@@ -1190,7 +1190,7 @@ d6f7d6ff9f5c0a533875aea45de50d0b974faf8044d0e7c0253a507a3194bd6c  ./crates/searc
 1d1629cb5c2467807539ead9ad08b05be6190a755b33f3f3f99759aab0ff0730  ./crates/searchright-living/Cargo.toml
 1178b2c5b1b96254df1f825e898770e6e1e54bbe614c9b160552c544066868a8  ./crates/searchright-living/src/lib.rs
 9c0d7da4b523344b853f3e8264a5135c7ea307fc4c4fd63991fbf43b2bd089e2  ./crates/searchright-living/tests/diff_and_digest_edges.rs
-c872aed206f8397ec1fa49edde7c37bae24d4dc89968fe9a74e7613b13029357  ./crates/searchright-living/tests/multi_cycle_scenarios.rs
+b3fdc977ce9a4317d8c810dac0f77902127b69c7b00d31ccabf8ab1d4d782135  ./crates/searchright-living/tests/multi_cycle_scenarios.rs
 f492b560eb4132d643d8eefa32c694bf4ca0500932cd6cf25a5ed8507353b5e6  ./crates/searchright-mcp/Cargo.toml
 fbc8228717db086f4d7b07fb97fb2d2597ec331e956c5d284cdfc9752f620686  ./crates/searchright-mcp/src/bin/searchright-mcp-http.rs
 0bb9c244ad8479f626119793a2979b503ab161fd246d831337b246e3220b3b59  ./crates/searchright-mcp/src/effect_policy.rs
