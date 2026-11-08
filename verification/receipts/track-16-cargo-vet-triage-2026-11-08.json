@@ -1,0 +1,75 @@
+{
+  "schema_version": "org.searchright.cargo-vet-triage-evidence.v1",
+  "track_id": "16",
+  "date": "2026-11-08",
+  "base_revision": "24c8128cc069b1aa495f79594324383af96fd76c",
+  "objective": "Triage the 247 active cargo-vet exemptions ahead of the 2026-11-10 review deadline in accordance with docs/security/cargo-vet-governance.md.",
+  "accountable_owner": "edithatogo",
+  "linked_issue": "https://github.com/edithatogo/searchright/issues/241",
+  "review_deadline": "2026-11-10",
+  "baseline_vetting": {
+    "command": "cargo vet --store-path supply-chain --locked --frozen --no-minimize-exemptions",
+    "status": "passed",
+    "fully_audited": 48,
+    "partially_audited": 3,
+    "exempted": 244,
+    "effective_exemptions": 247,
+    "safe_to_deploy": 230,
+    "safe_to_run": 17
+  },
+  "exploratory_peer_refresh": {
+    "method": "Refreshed the four allowlisted peer audit registries in an isolated scratch supply-chain directory without changing repository records.",
+    "allowlisted_registries": [
+      "bytecode-alliance",
+      "embark-studios",
+      "mozilla",
+      "zcash"
+    ],
+    "qualifying_peer_audit_chains_found": [
+      {"crate": "futures", "version": "0.3.34", "criteria": "safe-to-deploy", "registry": "bytecode-alliance", "auditor": "Pat Hickey <p.hickey@f5.com>"},
+      {"crate": "futures-channel", "version": "0.3.34", "criteria": "safe-to-deploy", "registry": "bytecode-alliance", "auditor": "Pat Hickey <p.hickey@f5.com>"},
+      {"crate": "futures-core", "version": "0.3.34", "criteria": "safe-to-deploy", "registry": "bytecode-alliance / mozilla", "auditor": "Pat Hickey / Alex Franchuk"},
+      {"crate": "futures-executor", "version": "0.3.34", "criteria": "safe-to-deploy", "registry": "bytecode-alliance", "auditor": "Pat Hickey <p.hickey@f5.com>"},
+      {"crate": "futures-io", "version": "0.3.34", "criteria": "safe-to-deploy", "registry": "bytecode-alliance", "auditor": "Pat Hickey <p.hickey@f5.com>"},
+      {"crate": "futures-macro", "version": "0.3.34", "criteria": "safe-to-deploy", "registry": "bytecode-alliance", "auditor": "Pat Hickey <p.hickey@f5.com>"},
+      {"crate": "openssl-probe", "version": "0.2.1", "criteria": "safe-to-deploy", "registry": "bytecode-alliance", "auditor": "Alex Crichton <alex@alexcrichton.com>"},
+      {"crate": "shlex", "version": "2.0.1", "criteria": "safe-to-deploy", "registry": "bytecode-alliance / mozilla", "auditor": "Alex Crichton / Emilio Cobos Álvarez"},
+      {"crate": "signature", "version": "2.2.0", "criteria": "safe-to-deploy", "registry": "zcash", "auditor": "Jack Grigg <jack@electriccoin.co>"},
+      {"crate": "simdutf8", "version": "0.1.5", "criteria": "safe-to-deploy", "registry": "mozilla", "auditor": "Henri Sivonen <hsivonen@hsivonen.fi>"},
+      {"crate": "sync_wrapper", "version": "1.0.2", "criteria": "safe-to-deploy", "registry": "mozilla", "auditor": "Alex Franchuk <afranchuk@mozilla.com>"},
+      {"crate": "tracing-core", "version": "0.1.36", "criteria": "safe-to-deploy", "registry": "bytecode-alliance / mozilla", "auditor": "Alex Crichton / Alex Franchuk"},
+      {"crate": "untrusted", "version": "0.9.0", "criteria": "safe-to-deploy", "registry": "mozilla", "auditor": "Alex Franchuk <afranchuk@mozilla.com>"}
+    ],
+    "projected_fully_audited": 61,
+    "projected_exemptions_remaining": 230
+  },
+  "backlog_sizing": {
+    "total_unreviewed_suggestions": 219,
+    "total_lines_of_code": 5996841,
+    "short_reviews_under_1000_loc": 40,
+    "review_batches": {
+      "batch_1_network_crypto": [
+        "aws-lc-rs", "aws-lc-sys", "ring", "jsonwebtoken", "reqwest", "rmcp",
+        "rustls 0.23.46 (delta to 0.23.43)", "rustls-webpki 0.103.16 (delta to 0.103.13)", "tokio 1.54.1 (delta to 1.53.1)"
+      ],
+      "batch_2_build_macros": [
+        "cc", "cmake", "jobserver", "pkg-config", "proc-macro2", "quote", "syn", "serde_derive", "rmcp-macros"
+      ],
+      "batch_3_short_reviews_candidates": [
+        "darling_macro (125 loc)", "rustls-platform-verifier-android (155 loc)", "jni-sys-macros (261 loc)",
+        "windows-targets (278-409 loc)", "wasm-bindgen-futures (407 loc)", "android_system_properties (423 loc)",
+        "wasm-bindgen-macro (435 loc)", "equivalent (460 loc)", "stable_deref_trait (511 loc)",
+        "zerofrom (533 loc)", "is_terminal_polyfill (557 loc)"
+      ],
+      "batch_4_development_only": [
+        "proptest", "loom", "tempfile", "fastrand", "quick-error", "ppv-lite86",
+        "getrandom", "r-efi", "rand", "rand_chacha", "rand_core", "zerocopy", "zerocopy-derive"
+      ]
+    }
+  },
+  "remediation_findings": {
+    "feasibility_assessment": "Complete source review of 247 crates (~6M lines) within 2 days by a single maintainer is infeasible without compromising review rigor.",
+    "recommended_owner_action": "1. Review and promote the 13 qualifying peer audit chains from Bytecode Alliance, Mozilla, and Zcash. 2. Focus Searchright audits on high-priority Batch 1 (crypto/network roots) and Batch 3 (low-diff candidates). 3. Authorize bounded residual backlog extension before the 11 November expiry gate."
+  },
+  "claim_boundary": "Triage and sizing evidence only. No peer imports have been promoted into the tracked repository, no unreviewed exemption has been extended, and the 2026-11-10 deadline remains strictly enforced by CI."
+}
