@@ -283,36 +283,6 @@ version = "1.3.0"
 criteria = "safe-to-deploy"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 
-[[exemptions.futures]]
-version = "0.3.34"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.futures-channel]]
-version = "0.3.34"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.futures-core]]
-version = "0.3.34"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.futures-executor]]
-version = "0.3.34"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.futures-io]]
-version = "0.3.34"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.futures-macro]]
-version = "0.3.34"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
 [[exemptions.futures-sink]]
 version = "0.3.34"
 criteria = "safe-to-deploy"
@@ -838,28 +808,13 @@ version = "0.11.0"
 criteria = "safe-to-deploy"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 
-[[exemptions.shlex]]
-version = "2.0.1"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
 [[exemptions.signal-hook-registry]]
 version = "1.4.8"
 criteria = "safe-to-deploy"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 
-[[exemptions.signature]]
-version = "2.2.0"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
 [[exemptions.simd_cesu8]]
 version = "1.2.0"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.simdutf8]]
-version = "0.1.5"
 criteria = "safe-to-deploy"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 
@@ -910,11 +865,6 @@ notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searc
 
 [[exemptions.syn]]
 version = "3.0.3"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.sync_wrapper]]
-version = "1.0.2"
 criteria = "safe-to-deploy"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 
@@ -1013,11 +963,6 @@ version = "0.1.31"
 criteria = "safe-to-deploy"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 
-[[exemptions.tracing-core]]
-version = "0.1.36"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
 [[exemptions.tracing-serde]]
 version = "0.2.0"
 criteria = "safe-to-deploy"
@@ -1045,11 +990,6 @@ notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searc
 
 [[exemptions.untrusted]]
 version = "0.7.1"
-criteria = "safe-to-deploy"
-notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
-
-[[exemptions.untrusted]]
-version = "0.9.0"
 criteria = "safe-to-deploy"
 notes = "accountable_owner=edithatogo; issue=https://github.com/edithatogo/searchright/issues/241; approved_on=2026-08-12T00:00:00+10:00; review_by=2026-11-10; rationale=locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification"
 

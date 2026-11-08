@@ -20,7 +20,9 @@
       "linked_issue": "https://github.com/edithatogo/searchright/issues/89",
       "proposed_at": "2026-08-30T09:01:04Z",
       "decided_at": "2026-08-30T09:01:04Z",
-      "decision_evidence": ["verification/receipts/track-06-dependency-risk-approval.json"],
+      "decision_evidence": [
+        "verification/receipts/track-06-dependency-risk-approval.json"
+      ],
       "expires_at": "2026-09-29"
     },
     {
@@ -946,7 +948,7 @@
       "crate": "futures",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -957,14 +959,17 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0053",
       "crate": "futures-channel",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -975,14 +980,17 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0054",
       "crate": "futures-core",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -993,14 +1001,17 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0055",
       "crate": "futures-executor",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -1011,14 +1022,17 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0056",
       "crate": "futures-io",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -1029,14 +1043,17 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0057",
       "crate": "futures-macro",
       "version": "0.3.34",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -1047,7 +1064,10 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0058",
@@ -3091,7 +3111,7 @@
       "crate": "shlex",
       "version": "2.0.1",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -3102,7 +3122,10 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0171",
@@ -3127,7 +3150,7 @@
       "crate": "signature",
       "version": "2.2.0",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -3138,7 +3161,10 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0173",
@@ -3163,7 +3189,7 @@
       "crate": "simdutf8",
       "version": "0.1.5",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -3174,7 +3200,10 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0175",
@@ -3361,7 +3390,7 @@
       "crate": "sync_wrapper",
       "version": "1.0.2",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -3372,7 +3401,10 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0186",
@@ -3742,7 +3774,7 @@
       "crate": "tracing-core",
       "version": "0.1.36",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -3753,7 +3785,10 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0207",
@@ -3889,7 +3924,7 @@
       "crate": "untrusted",
       "version": "0.9.0",
       "criteria": "safe-to-deploy",
-      "status": "approved",
+      "status": "retired",
       "owner": "edithatogo",
       "rationale": "locked baseline dependency required by current workspace; no qualifying imported audit yet; temporary backlog exception, not an audit or safety certification",
       "risk_summary": "The exact dependency version lacks qualifying safe-to-run or safe-to-deploy audit evidence.",
@@ -3900,7 +3935,10 @@
       "decision_evidence": [
         "https://github.com/edithatogo/searchright/issues/241"
       ],
-      "expires_at": "2026-11-10"
+      "expires_at": "2026-11-10",
+      "retired_on": "2026-11-08",
+      "retirement_reason": "Promoted qualifying peer audit from allowlisted registry; exact version verified safe-to-deploy by cargo-vet.",
+      "retirement_evidence": "verification/receipts/track-16-peer-audit-promotion-2026-11-08.json"
     },
     {
       "id": "CVX-0215",

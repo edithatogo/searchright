@@ -63,6 +63,38 @@ The governance checker rejects effective cargo-vet exemptions without matching,
 unexpired approvals. Even an approved exemption must be added separately to
 `config.toml`; a proposal alone has no effect on CI.
 
+## Peer audit promotion and exemption retirement (2026-11-08)
+
+Twelve exact versions covered by temporary backlog exemptions were proved fully
+audited by authoritative upstream peer maintainers in the allowlisted Bytecode
+Alliance, Mozilla, and Zcash registries:
+
+- `futures 0.3.34` (Bytecode Alliance: Pat Hickey)
+- `futures-channel 0.3.34` (Bytecode Alliance: Pat Hickey)
+- `futures-core 0.3.34` (Bytecode Alliance: Pat Hickey; Mozilla: Alex Franchuk)
+- `futures-executor 0.3.34` (Bytecode Alliance: Pat Hickey)
+- `futures-io 0.3.34` (Bytecode Alliance: Pat Hickey)
+- `futures-macro 0.3.34` (Bytecode Alliance: Pat Hickey)
+- `shlex 2.0.1` (Bytecode Alliance: Alex Crichton; Mozilla: Emilio Cobos Álvarez)
+- `signature 2.2.0` (Zcash: Jack Grigg)
+- `simdutf8 0.1.5` (Mozilla: Henri Sivonen)
+- `sync_wrapper 1.0.2` (Mozilla: Alex Franchuk)
+- `tracing-core 0.1.36` (Bytecode Alliance: Alex Crichton; Mozilla: Alex Franchuk)
+- `untrusted 0.9.0` (Mozilla: Alex Franchuk)
+
+Refreshing `supply-chain/imports.lock` from the four allowlisted registries
+and verifying with `cargo vet --store-path supply-chain --locked --frozen --no-minimize-exemptions`
+confirmed these twelve crates satisfy `safe-to-deploy` via qualifying peer
+audit chains. Their temporary exemptions were removed from `supply-chain/config.toml`,
+and their ledger proposals were updated to `status: retired` with linked
+receipt `verification/receipts/track-16-peer-audit-promotion-2026-11-08.json`.
+
+This increases fully audited dependencies from 48 to 61 (+13) and reduces
+effective exemptions from 247 to 235 (-12). Note that `openssl-probe 0.2.1` was
+inspected but retains its unreviewed exemption as it lacks a complete peer
+`safe-to-deploy` chain, and `untrusted 0.7.1` retains its unreviewed exemption.
+The remaining 235 exemptions retain the 2026-11-10 deadline.
+
 ## Deadline remediation sequence
 
 As of 7 November 2026, the active set is 230 `safe-to-deploy` and 17

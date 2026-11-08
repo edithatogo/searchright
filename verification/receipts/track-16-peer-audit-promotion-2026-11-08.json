@@ -1,0 +1,122 @@
+{
+  "schema_version": "org.searchright.cargo-vet-retirement-evidence.v1",
+  "track_id": "16",
+  "base_revision": "98211be174cf3a2862bcbe692297ebce329f60cb",
+  "decision": "promote_qualifying_peer_audits_and_retire_exemptions",
+  "retired_on": "2026-11-08",
+  "method": "Refreshed the four allowlisted peer audit registries (bytecode-alliance, embark-studios, mozilla, zcash) into supply-chain/imports.lock. Verified that twelve exact dependency versions are fully covered by authoritative upstream peer audits with safe-to-deploy criteria. Removed the twelve covered exemption blocks from supply-chain/config.toml and marked their proposals retired in supply-chain/exemption-proposals.json. Fully verified with cargo vet --store-path supply-chain --locked --frozen --no-minimize-exemptions.",
+  "retired_versions": [
+    {
+      "crate": "futures",
+      "version": "0.3.34",
+      "proposal_id": "CVX-0052",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance",
+      "auditor": "Pat Hickey <p.hickey@f5.com>"
+    },
+    {
+      "crate": "futures-channel",
+      "version": "0.3.34",
+      "proposal_id": "CVX-0053",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance",
+      "auditor": "Pat Hickey <p.hickey@f5.com>"
+    },
+    {
+      "crate": "futures-core",
+      "version": "0.3.34",
+      "proposal_id": "CVX-0054",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance / mozilla",
+      "auditor": "Pat Hickey / Alex Franchuk"
+    },
+    {
+      "crate": "futures-executor",
+      "version": "0.3.34",
+      "proposal_id": "CVX-0055",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance",
+      "auditor": "Pat Hickey <p.hickey@f5.com>"
+    },
+    {
+      "crate": "futures-io",
+      "version": "0.3.34",
+      "proposal_id": "CVX-0056",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance",
+      "auditor": "Pat Hickey <p.hickey@f5.com>"
+    },
+    {
+      "crate": "futures-macro",
+      "version": "0.3.34",
+      "proposal_id": "CVX-0057",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance",
+      "auditor": "Pat Hickey <p.hickey@f5.com>"
+    },
+    {
+      "crate": "shlex",
+      "version": "2.0.1",
+      "proposal_id": "CVX-0170",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance / mozilla",
+      "auditor": "Alex Crichton / Emilio Cobos Álvarez"
+    },
+    {
+      "crate": "signature",
+      "version": "2.2.0",
+      "proposal_id": "CVX-0172",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "zcash",
+      "auditor": "Jack Grigg <jack@electriccoin.co>"
+    },
+    {
+      "crate": "simdutf8",
+      "version": "0.1.5",
+      "proposal_id": "CVX-0174",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "mozilla",
+      "auditor": "Henri Sivonen <hsivonen@hsivonen.fi>"
+    },
+    {
+      "crate": "sync_wrapper",
+      "version": "1.0.2",
+      "proposal_id": "CVX-0185",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "mozilla",
+      "auditor": "Alex Franchuk <afranchuk@mozilla.com>"
+    },
+    {
+      "crate": "tracing-core",
+      "version": "0.1.36",
+      "proposal_id": "CVX-0206",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "bytecode-alliance / mozilla",
+      "auditor": "Alex Crichton / Alex Franchuk"
+    },
+    {
+      "crate": "untrusted",
+      "version": "0.9.0",
+      "proposal_id": "CVX-0214",
+      "criteria": "safe-to-deploy",
+      "peer_registry": "mozilla",
+      "auditor": "Alex Franchuk <afranchuk@mozilla.com>"
+    }
+  ],
+  "before_effective_exemptions": 247,
+  "after_effective_exemptions": 235,
+  "before_fully_audited": 48,
+  "after_fully_audited": 61,
+  "before_partially_audited": 3,
+  "after_partially_audited": 4,
+  "residual_active_review_gaps": 235,
+  "unreviewed_retention": "openssl-probe 0.2.1 retains its approved exemption (CVX-0112) because it lacks a complete peer safe-to-deploy chain; untrusted 0.7.1 also retains its exemption (CVX-0213).",
+  "checks_required": [
+    "python3 scripts/test_cargo_vet_governance.py",
+    "python3 scripts/check_cargo_vet_governance.py",
+    "cargo vet --store-path supply-chain --locked --frozen --no-minimize-exemptions",
+    "scripts/verify.sh",
+    "exact-head hosted checks"
+  ],
+  "claim_boundary": "Promoted peer audits carry preserved upstream maintainer attribution from Bytecode Alliance, Mozilla, and Zcash registries; they are not Searchright-authored audits. The remaining 235 exemptions retain the 2026-11-10 deadline."
+}
