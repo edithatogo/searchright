@@ -1,0 +1,53 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "32",
+  "panelist_role": "rollback-authority-auditor",
+  "evaluator_role": "rollback-authority-auditor",
+  "evaluated_at": "2026-11-09T03:50:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The rollback procedures, promotion authority, and public-package bounds codified across integration/release-train.json, release/public-packages.json, and docs/release-train.md embody the highest standards of safety, reversibility, and fail-closed governance. The rollback contract specifies four non-negotiable operational steps: 1) restore the prior exact revision in the affected integration passport; 2) disable the adapter feature or compatibility path; 3) re-run consumer fixtures and preserve the failed receipt; and 4) do not delete prior schemas, fixtures, tags, or migration evidence. This directly prevents catastrophic evidence destruction and ensures auditable forensic tracking during regressions. Promotion authority is strictly human-gated: automatic promotion is barred across the release train and all six stages, while automated jobs (.github/workflows/integration-release-train.yml and scripts/check_integration_drift.py) are strictly read-only and prohibited from altering pins, merging code, or updating public claims. Furthermore, public package policy in release/public-packages.json enforces deny_unlisted_and_require_compiler_semver_supply_chain_evidence: all three candidate public packages (evidence-search-contracts, evidence-search-core, searchright-plugin-sdk) are locked to publication_status: blocked and publish_ready: false, each bound to explicit compiler, MSRV, SemVer, cargo-vet, and consumer contract checklists. Deterministic checks scripts/check_release_train.py and scripts/check_public_package_policy.py verify that publication cannot proceed without explicit compiler and human release evidence.",
+  "verified_invariants": [
+    "explicit four-step rollback procedure: restore prior exact revision in passport, disable adapter feature flag, re-run fixtures, preserve failure receipt",
+    "strict evidence preservation mandate: absolute prohibition against deleting prior schemas, fixtures, tags, or migration evidence during rollback",
+    "fail-closed public package policy: all workspace packages default to non-publishable; candidate packages blocked pending compiler, SemVer, and supply-chain evidence",
+    "uncompromised human promotion authority: release train, ecosystem lock, and promotion stage reject automated promotion and require explicit human sign-off",
+    "read-only surveillance boundaries: integration drift surveillance checks compare pins and emit read-only receipts without mutating source pins or remote repositories",
+    "automated policy enforcement: scripts/check_release_train.py, scripts/check_public_package_policy.py, and tests/test_cross_repository_release_train_governance.py pass 100% network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Rollback steps and human promotion authorities are formally specified and test-verified; exercising rollback during an active release-candidate rehearsal and recording a human promotion receipt remain open operational gates.",
+      "reference": "integration/release-train.json:61-66; conductor/tracks/32-cross-repository-release-train/traceability.json:77-81",
+      "recommendation": "Preserve open gate T32-G-PROMOTION-APPROVAL until rollback is rehearsed and explicit human promotion approval is documented."
+    },
+    {
+      "severity": "observation",
+      "description": "Public package policy in release/public-packages.json strictly enforces MSRV 1.88 for the shared layer and requires cargo semver-checks and cargo-vet audits prior to any promotion.",
+      "reference": "release/public-packages.json:9-45; scripts/check_public_package_policy.py:15-30",
+      "recommendation": "Retain check_public_package_policy.py as a required gate in CI pull request validation."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T32-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Rollback procedures, human promotion authority, and default-deny public package bounds verified in source contracts and governance tests."
+    },
+    {
+      "id": "T32-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Promotion order and passport rollback linkage ensure changes can be cleanly unwound to prior exact pinned revisions."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified rollback contract and publication policy only; operational execution of release-candidate rehearsals and human promotion approval remain open gates."
+  ]
+}

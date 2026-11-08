@@ -14,6 +14,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_integration_passports.py`
   - [x] `python scripts/check_consumer_contracts.py`
   - [x] `python scripts/check_integration_drift.py`
+  - [x] `python3 -m unittest discover -s tests -p test_cross_repository_release_train_governance.py`
 
 ## Completion and evidence contract
 

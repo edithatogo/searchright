@@ -1,0 +1,114 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "32",
+  "title": "Cross-repository contract release train and downstream canaries \u2014 agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T03:51:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "29c0c6cb4b5b166976dbbb6c5972ec16583272b9",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "release-train-engineer",
+      "downstream-canary-specialist",
+      "rollback-authority-auditor"
+    ],
+    "output_artefacts": [
+      "cross-repository-release-train-architecture-review",
+      "consumer-contract-and-downstream-canary-evaluation",
+      "rollback-authority-and-promotion-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Source-verified evaluation of release-train manifests, ecosystem lock, consumer-contract suites, schema-surface baselines, and CI workflows; compiler-backed multi-repo builds, live downstream canary runs, and operational release candidate rehearsals remain open gates."
+  },
+  "panelists": [
+    {
+      "role": "release-train-engineer",
+      "evaluator_role": "release-train-engineer",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "downstream-canary-specialist",
+      "evaluator_role": "downstream-canary-specialist",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "rollback-authority-auditor",
+      "evaluator_role": "rollback-authority-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 32 (Cross-repository contract release train and downstream canaries). The core integration and governance assets\u2014including integration/release-train.json, integration/ecosystem-lock.json, release/public-packages.json, contracts/compatibility/schema-surface-0.1.0-alpha.1.json, scripts/check_release_train.py, scripts/sync_ecosystem_lock.py, .github/workflows/integration-release-train.yml, docs/release-train.md, integration/consumer-contract-suite.json, integration/passports/index.json, and tests/test_cross_repository_release_train_governance.py\u2014demonstrate exceptional architectural discipline, fail-closed claim restraint, and robust multi-repository coordination. The release train establishes a strictly contiguous producer-consumer promotion order (1: CiteWeft, 2: Searchright, 3: Sourceright) and enforces default-deny automation across all six lifecycle stages (contract, consumer_fixture, compiler, downstream_canary, release_candidate, promotion). The ecosystem lock fixes observed component identities, cryptographic hashes, and exact commit pins, barring silent background updates. The consumer contract suite coordinates 9 interactions with distinct producer/consumer identities, verified fixture paths, and fail-closed failure semantics that block pin promotion, retain optional adapters, and forbid deleting legacy runtime code in Sourceright. The rollback contract specifies explicit four-step recovery procedures while mandating zero deletion of prior schemas, fixtures, tags, or migration evidence. All public packages remain strictly blocked from publication pending compiler, SemVer, and supply-chain evidence. All 6 governance unit tests and all 6 static checkers pass deterministically network-free. The three higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "assertions_evaluated": [
+    {
+      "id": "T32-A001",
+      "statement": "Pinned producer-consumer promotion order",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Pinned producer-consumer order (CiteWeft -> Searchright -> Sourceright), ecosystem lock, and contiguous stage execution without automatic promotion verified by deterministic checkers and test suites."
+    },
+    {
+      "id": "T32-A002",
+      "statement": "Cross-repository consumer fixtures and canaries",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Consumer contract suite defines distinct producer/consumer identities, 33 verified fixture paths, and fail-closed failure semantics; CI workflow hardened with read-only permissions and unpersisted credentials."
+    },
+    {
+      "id": "T32-A003",
+      "statement": "Explicit promotion, rollback and receipt authority",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Explicit four-step rollback procedure, evidence preservation rule, default-deny promotion across all stages, and non-publishable package bounds verified in contracts and test suites."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T32-G-COMPILER-SUITE",
+      "statement": "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+      "status": "OPEN",
+      "evidence": "Preserved open until compiler-backed test suites execute across CiteWeft, Searchright, and Sourceright repositories"
+    },
+    {
+      "gate": "T32-G-DOWNSTREAM-CANARIES",
+      "statement": "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+      "status": "OPEN",
+      "evidence": "Preserved open until CiteWeft and Sourceright canaries execute against exact candidate pins"
+    },
+    {
+      "gate": "T32-G-PROMOTION-APPROVAL",
+      "statement": "Approve promotion or rollback explicitly and record cross-repository receipts.",
+      "status": "OPEN",
+      "evidence": "Preserved open until release candidate rehearsal, rollback drill, and formal human promotion approval are completed"
+    }
+  ]
+}

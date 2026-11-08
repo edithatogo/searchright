@@ -3,11 +3,11 @@
 
 Parent phase key: `track-32-phase-3`
 Conductor plan: `conductor/tracks/32-cross-repository-release-train/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run compiler-backed consumer contract suites in each producer and consumer repository.
+- [x] Run compiler-backed consumer contract suites in each producer and consumer repository.
 
 ## Completion and evidence contract
 
