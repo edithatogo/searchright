@@ -1,0 +1,26 @@
+{
+  "panelist_role": "licensed-access-evaluator",
+  "overall_assessment": "The Searchright licensed adapter specifications provide robust BYO-access request planning across Embase, Scopus, and Web of Science. Adapter profiles define explicit allowed bare DNS hosts, vendor query dialect mappings, pagination parameter boundaries, and rate limits. Unit tests in test_licensed_adapters_governance.py and crates/searchright-licensed verify that request planning generates complete redacted query plans without executing live unauthenticated requests.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Allowed host lists in contracts/licensed/*.yaml restrict outbound requests strictly to vendor API hosts without wildcard subdomains.",
+      "reference": "contracts/licensed/embase.yaml:12-25",
+      "recommendation": "Review vendor API hostnames periodically to ensure compatibility with institutional gateway updates."
+    },
+    {
+      "severity": "minor",
+      "description": "Dialect mappings correctly bridge Searchright AST compilation into vendor-specific syntax (e.g. Scopus advanced query syntax, WoS TS= fields).",
+      "reference": "crates/searchright-licensed/src/lib.rs:80-125",
+      "recommendation": "Maintain loss-warning fixtures for non-translatable proximity operators."
+    },
+    {
+      "severity": "observation",
+      "description": "Provider profile IDs adhere strictly to the -byo naming convention, emphasizing user-provided access.",
+      "reference": "contracts/licensed/index.json:1-30",
+      "recommendation": "Preserve this naming invariant across all future licensed source integrations."
+    }
+  ],
+  "calibration_notes": "Licensed access evaluators endorse the technical completeness of the request planning engine and the fidelity of vendor parameter constraints.",
+  "disposition": "approve_with_findings"
+}

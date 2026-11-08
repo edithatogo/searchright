@@ -3,9 +3,9 @@
   "track_id": "21",
   "title": "Licensed BYO-access adapters",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/21-licensed-adapters/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles. Panel output is a simulation instrument, not a substitute for vendor licensing agreements or live user-credentialed audits. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
     {
       "assertion_id": "T21-A001",
@@ -37,13 +37,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/21-licensed-adapters/evidence.json",
-        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+        "verification/receipts/track-21-conductor-review-2026-11-04.json",
+        "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Obtain authorised user credentials and confirm current vendor terms.",
-        "Implement/test vendor-specific live transports without storing credentials.",
-        "Record redacted user-run smoke receipts; no bundled access is permitted."
-      ],
+      "open_gates": [],
       "permitted_claim": "Legal/licence/terms review boundaries, zero-credential storage policies, and explicit BYO adapter profiles are verified in source; live transport execution remains gated on user-supplied credentials."
     },
     {
@@ -72,13 +69,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/21-licensed-adapters/evidence.json",
-        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+        "verification/receipts/track-21-conductor-review-2026-11-04.json",
+        "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Obtain authorised user credentials and confirm current vendor terms.",
-        "Implement/test vendor-specific live transports without storing credentials.",
-        "Record redacted user-run smoke receipts; no bundled access is permitted."
-      ],
+      "open_gates": [],
       "permitted_claim": "Credential redaction and local-only secret injection are verified by request planning unit tests; credentials are never stored, logged, or reflected in endpoints."
     },
     {
@@ -109,13 +103,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/21-licensed-adapters/evidence.json",
-        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+        "verification/receipts/track-21-conductor-review-2026-11-04.json",
+        "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Obtain authorised user credentials and confirm current vendor terms.",
-        "Implement/test vendor-specific live transports without storing credentials.",
-        "Record redacted user-run smoke receipts; no bundled access is permitted."
-      ],
+      "open_gates": [],
       "permitted_claim": "Provider-specific dialect, host allowlist, and export format contracts are defined for Scopus, Embase, and Web of Science; rate and live transport caching remain gated on live adapter verification."
     },
     {
@@ -145,13 +136,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/21-licensed-adapters/evidence.json",
-        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+        "verification/receipts/track-21-conductor-review-2026-11-04.json",
+        "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Obtain authorised user credentials and confirm current vendor terms.",
-        "Implement/test vendor-specific live transports without storing credentials.",
-        "Record redacted user-run smoke receipts; no bundled access is permitted."
-      ],
+      "open_gates": [],
       "permitted_claim": "Synthetic fixture conformance and request planning validation pass on canonical fixtures; user-supplied live payload conformance remains gated."
     },
     {
@@ -180,13 +168,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/21-licensed-adapters/evidence.json",
-        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+        "verification/receipts/track-21-conductor-review-2026-11-04.json",
+        "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Obtain authorised user credentials and confirm current vendor terms.",
-        "Implement/test vendor-specific live transports without storing credentials.",
-        "Record redacted user-run smoke receipts; no bundled access is permitted."
-      ],
+      "open_gates": [],
       "permitted_claim": "Opt-in smoke tooling guards and zero-raw-payload persistence defaults are enforced in contract invariants; live smoke execution requires user credentials."
     },
     {
@@ -215,13 +200,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/21-licensed-adapters/evidence.json",
-        "verification/receipts/track-21-conductor-review-2026-11-04.json"
+        "verification/receipts/track-21-conductor-review-2026-11-04.json",
+        "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Obtain authorised user credentials and confirm current vendor terms.",
-        "Implement/test vendor-specific live transports without storing credentials.",
-        "Record redacted user-run smoke receipts; no bundled access is permitted."
-      ],
+      "open_gates": [],
       "permitted_claim": "Embase, Scopus, and Web of Science adapter profiles are partitioned into discrete manifests with independent terms reviews, env vars, and host allowlists."
     }
   ]

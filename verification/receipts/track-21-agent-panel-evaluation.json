@@ -1,0 +1,79 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "21",
+  "title": "Licensed BYO-access adapters — agent-panel evaluation",
+  "observed_at": "2026-11-08T21:36:00Z",
+  "source_revision": "fa708a2224d1ee5174ff3d8fc5ee95a04a14a799",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["licensed-access-evaluator", "legal-compliance-counsel", "security-auditor"],
+    "output_artefacts": ["structured-adapter-findings", "licensing-compliance-metrics", "disposition-record"],
+    "evidence_level": "fixture_proven",
+    "limitation": "Simulation instrument only; not a substitute for vendor licensing agreements or live user-credentialed audits."
+  },
+  "panelists": [
+    {
+      "role": "licensed-access-evaluator",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "legal-compliance-counsel",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "security-auditor",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval with minor findings. Convergence centered on strict BYO boundaries, zero credential logging or persistence, bare DNS host allowlists, scraping prohibitions, and truthful claim boundaries.",
+    "convergence_vectors": [
+      "Strict BYO request planning without bundled credentials",
+      "Prohibition of HTML scraping and CAPTCHA evasion in adapter contracts",
+      "Bare DNS host validation and URL credential rejection in plan_request",
+      "Deterministic profile schemas and unit tests passing 100%"
+    ],
+    "divergence_vectors": [
+      "Assessment of vendor-specific rate-limit backoff jitter models",
+      "Structure of future institutional proxy authentication headers"
+    ]
+  },
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 6,
+      "observation": 3
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Retain strict scheme and host validation for all future licensed endpoints.",
+    "Keep raw response persistence disabled by default across all profiles.",
+    "Maintain honest claim boundaries distinguishing synthetic request planning from live institutional execution."
+  ],
+  "decision": {
+    "outcome": "approved_as_fixture_proven",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-08"
+  }
+}

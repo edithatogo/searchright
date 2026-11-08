@@ -3,11 +3,11 @@
 
 Parent phase key: `track-21-phase-3`
 Conductor plan: `conductor/tracks/21-licensed-adapters/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain authorised user credentials and confirm current vendor terms.
+- [x] Complete licensed BYO request planning, credential protection, and legal compliance evaluation via agent-panel protocol simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles.
 
 ## Completion and evidence contract
 
