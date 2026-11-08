@@ -680,7 +680,7 @@ cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d  ./conductor/gi
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 9bb1098bf673718efe2973b06fe0c76e4a161ea479b51b7ded5bad45ecb646d3  ./conductor/product.md
 431f1581f3a6d02c22b38d3d6d6c7285e43fcbfb3d2acef22372170f2dc0fbea  ./conductor/requirements.md
-196c9bfc32af1542a18d57b17f75b2d49ba9e19850fd243d4472b546edd3c9d2  ./conductor/roadmap-coverage.json
+6918e8101747ab77be8ccc98eba8f11a9e1e89535cf239c585ec4669e6ec403d  ./conductor/roadmap-coverage.json
 d953556ce2830956bc4d36be262919e8c921327bc1eef7ef043b872de5a7f5dc  ./conductor/tech-stack.md
 2a711145c76881fa582ad4e7a4aa607c9513f99ddad75fedaeba34d1bfe63ac2  ./conductor/traceability-overrides.json
 996a080df11b1c5966494e96af25fe7842ac4e6544f5c090f7af9b64e2363de2  ./conductor/tracks.md
@@ -765,7 +765,7 @@ c4213b470d776175677c2b105bff3e9deea1afe1eebc94e26601af14dce089a7  ./conductor/tr
 e15be38946a2e9301b53a16d4c9b9068bf0a56d0eb7c929cffb6e3c1fe02db63  ./conductor/tracks/15-estate-migration/plan.md
 9a486c3105b6bd73f804604bad1271d29a0fb950543e3fb4bb823e78271d9e87  ./conductor/tracks/15-estate-migration/spec.md
 d24a22e855d6e2ce0c292ae01b8aa8bb9609267b617e89b9e99798f7807bd1e8  ./conductor/tracks/15-estate-migration/traceability.json
-3503207666ed8a686d0d4e351e35a766b09433998ada1ac2f23b60efc6e00bce  ./conductor/tracks/16-quality-security-harness/evidence.json
+d9355c2f701cd51589d0475816bbc8d3c34239b44bbc8706c39cfebf4bbff8a8  ./conductor/tracks/16-quality-security-harness/evidence.json
 cf79a835ab3ea2e1c6bff7c6937cfa2bad160647f6583b13b6d15542c1e4026c  ./conductor/tracks/16-quality-security-harness/metadata.json
 82c6dcc304443015045f1445dab414de07352834aa011bf48d809d4a5af42749  ./conductor/tracks/16-quality-security-harness/plan.md
 6d7700d8f2da36e675eefb742bf03f7a4bad6bd2d85c2d7eb6c0c2f57292a5c7  ./conductor/tracks/16-quality-security-harness/spec.md
@@ -880,7 +880,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 49a1c1e7898c99cf28469b17e73aca05c551dc07d93e6b26df727130b53e917f  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 b0fd92a7f979cffa6f82d4a1cf77119fe088a5926632e1eedc142bf0e63f129e  ./context/claim-boundaries.json
-cb2dd4f1bb806e7b295456938dcc9eb18b0693fb4b6b8777307892e7a8a3a2b5  ./context/context-lock.json
+39e7fed9f12dc47256f5ecc0220bb34487851989a9a93728225f81098eaec17c  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
