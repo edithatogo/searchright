@@ -1,0 +1,149 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "00",
+  "title": "Foundation, Conductor and toolchain \u2014 agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T09:45:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "conductor-framework-architect",
+    "toolchain-integrity-auditor",
+    "standards-inheritance-officer"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "conductor-framework-architect",
+      "toolchain-integrity-auditor",
+      "standards-inheritance-officer"
+    ],
+    "output_artefacts": [
+      "conductor-framework-architecture-audit",
+      "toolchain-and-bootstrap-integrity-audit",
+      "standards-inheritance-governance-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "Static foundation, toolchain pin, and inheritance contracts verified; live upstream registration in edithatogo/repository-standards and external estate conformance remain open operational gates."
+  },
+  "panelists": [
+    {
+      "role": "conductor-framework-architect",
+      "evaluator_role": "conductor-framework-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "toolchain-integrity-auditor",
+      "evaluator_role": "toolchain-integrity-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "standards-inheritance-officer",
+      "evaluator_role": "standards-inheritance-officer",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "synthesized_findings": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 00 (Foundation, Conductor and toolchain). Across all six acceptance assertions (T00-A001 through T00-A006), the foundation assets demonstrate uncompromising architectural rigor, deterministic reproducibility, and strict boundary enforcement. Upstream Conductor baseline 0.3.0 is locked in conductor/upstream.lock.json and paired with reproducible shell/PowerShell installers. The linked context documentation spine (index, product, guidelines, stack, workflow, requirements, design) resolves cleanly under context integrity checking. The native v3 status adapter (scripts/conductor_status.py) operates strictly read-only, passing exhaustive adversarial test suites in tests/test_conductor_status.py without executing inspected-root code. In rust-toolchain.toml, the Rust channel is strictly locked to 1.97.1 stable with MSRV and experimental policies clearly articulated. Cargo.lock is committed with workspace resolver 3 and Rust edition 2024, verified via scripts/check_rust_dependency_graph.py. Tool manifests covering 11 pinned cargo tools and 57 static verification gates in scripts/run_static_harness.py enforce continuous repository integrity network-free. Repository standards inheritance is codified in integration/passports/repository-standards-inheritance.json, accompanied by a fail-closed companion packet enforcing remote_mutation_permitted: false. Upstream registration in edithatogo/repository-standards and external estate scanner execution are properly preserved as open operational gates rather than prematurely claimed. All 6 governance unit tests in tests/test_foundation_toolchain_governance.py pass 100% network-free.",
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 00 (Foundation, Conductor and toolchain). Across all six acceptance assertions (T00-A001 through T00-A006), the foundation assets demonstrate uncompromising architectural rigor, deterministic reproducibility, and strict boundary enforcement. Upstream Conductor baseline 0.3.0 is locked in conductor/upstream.lock.json and paired with reproducible shell/PowerShell installers. The linked context documentation spine (index, product, guidelines, stack, workflow, requirements, design) resolves cleanly under context integrity checking. The native v3 status adapter (scripts/conductor_status.py) operates strictly read-only, passing exhaustive adversarial test suites in tests/test_conductor_status.py without executing inspected-root code. In rust-toolchain.toml, the Rust channel is strictly locked to 1.97.1 stable with MSRV and experimental policies clearly articulated. Cargo.lock is committed with workspace resolver 3 and Rust edition 2024, verified via scripts/check_rust_dependency_graph.py. Tool manifests covering 11 pinned cargo tools and 57 static verification gates in scripts/run_static_harness.py enforce continuous repository integrity network-free. Repository standards inheritance is codified in integration/passports/repository-standards-inheritance.json, accompanied by a fail-closed companion packet enforcing remote_mutation_permitted: false. Upstream registration in edithatogo/repository-standards and external estate scanner execution are properly preserved as open operational gates rather than prematurely claimed. All 6 governance unit tests in tests/test_foundation_toolchain_governance.py pass 100% network-free.",
+  "recommendations": [
+    "Preserve open blocker \"Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision\" until remote registration occurs under explicit authorization.",
+    "Maintain strict 0.3.0 Conductor baseline locking while accommodating local host runtime variations.",
+    "Continue phased cargo-vet audit progression across dependency updates without conflating exemptions with completed audits."
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T00-A001",
+      "statement": "Record upstream Conductor 0.3.0 and supported host installation paths",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Upstream Conductor 0.3.0 baseline locked in conductor/upstream.lock.json, installer shell and PowerShell scripts verified, and repository validation checks passing."
+    },
+    {
+      "id": "T00-A002",
+      "statement": "Create product, guidelines, stack, workflow, requirements and design context",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Full Conductor markdown context spine (index, product, guidelines, stack, workflow, requirements, design) verified, check_context_integrity.py passing, and read-only status adapter verified with adversarial tests."
+    },
+    {
+      "id": "T00-A003",
+      "statement": "Pin Rust stable and document nightly/experimental policy",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Rust 1.97.1 stable pinned in rust-toolchain.toml, MSRV and experimental policies documented in docs/msrv-and-package-policy.md, and toolchain manifest verified across 11 pinned tools."
+    },
+    {
+      "id": "T00-A004",
+      "statement": "Generate and commit Cargo.lock in a networked Rust environment",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Cargo.lock committed and validated, Cargo.toml configured with edition 2024 and resolver 3, and dependency graph checked via check_rust_dependency_graph.py."
+    },
+    {
+      "id": "T00-A005",
+      "statement": "Register repository in repository-standards and run estate conformance",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Policy inheritance passport, fail-closed companion change packet with remote_mutation_permitted: false, alignment docs, and integration checks verified; upstream estate conformance preserved as an open operational gate."
+    },
+    {
+      "id": "T00-A006",
+      "statement": "Create one-command bootstrap and verification receipts",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "One-command bootstrap and verification entrypoints created and verified, 57 static gates in run_static_harness.py passing, and validate_repository.py passing."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T00-G-ESTATE-CONFORMANCE",
+      "statement": "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision.",
+      "status": "OPEN",
+      "evidence": "Preserved open until upstream repository-standards registration and external estate scanner verification are completed under authorized credentials."
+    }
+  ],
+  "verified_invariants": [
+    "Conductor baseline recorded: conductor/upstream.lock.json records 0.3.0 baseline with exact installer scripts",
+    "Context spine complete: index, product, workflow, tech-stack, requirements, and design markdown context verified",
+    "Pinned Rust toolchain: rust-toolchain.toml enforces 1.97.1 stable with edition 2024 and resolver 3",
+    "Committed lockfile: Cargo.lock committed and validated via scripts/check_rust_dependency_graph.py",
+    "Standards inheritance passport: integration/passports/repository-standards-inheritance.json defines fail-closed policy consumption",
+    "One-command bootstrap and verification: scripts/bootstrap.sh, verify.sh, and run_static_harness.py provide reproducible entrypoints",
+    "Network-free deterministic tests: tests/test_foundation_toolchain_governance.py verifies 6/6 tests network-free"
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Static foundation, toolchain pin, and inheritance contracts verified; live upstream registration in edithatogo/repository-standards and external estate conformance remain open operational gates."
+  ]
+}

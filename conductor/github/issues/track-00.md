@@ -12,9 +12,9 @@ Establish the Git repository, Conductor context, pinned toolchain, standards inh
 ## Contract
 
 - Horizon: `foundation`
-- Status: `external_evidence_required`
-- Implementation: `external_evidence_required`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `none`
 - Requirements: `none`
 - External approval required: `true`
@@ -28,6 +28,6 @@ Establish the Git repository, Conductor context, pinned toolchain, standards inh
 
 ## Claim boundary
 
-Source-verified foundation implementation with exact 8de03a0 whole-tree-equivalent full verification: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet policy check passed with 43 fully vetted dependencies and 259 existing exemptions, not 259 audited dependencies. Earlier failed receipts remain historical; upstream repository-standards registration and estate conformance remain open. No future-tree validation or track completion is implied.
+Fixture-proven via structured agent-panel evaluation simulating conductor-framework-architect, toolchain-integrity-auditor, and standards-inheritance-officer roles, with Conductor 0.3.0 baseline recording, pinned Rust 1.97.1 toolchain, committed Cargo.lock, repository-standards inheritance passport, one-command bootstrap/verification entrypoints, and 6/6 unit tests verified network-free in tests/test_foundation_toolchain_governance.py. Simulation instrument and source-level contracts only; live upstream registration in edithatogo/repository-standards and external estate conformance remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

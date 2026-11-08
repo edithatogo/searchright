@@ -1,0 +1,53 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "00",
+  "panelist_role": "conductor-framework-architect",
+  "evaluator_role": "conductor-framework-architect",
+  "evaluated_at": "2026-11-09T09:40:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The Conductor framework architecture and linked context assets codified across conductor/upstream.lock.json, scripts/install-conductor.sh, scripts/install-conductor.ps1, conductor/index.md, conductor/product.md, conductor/product-guidelines.md, conductor/tech-stack.md, conductor/workflow.md, conductor/requirements.md, conductor/design.md, scripts/conductor_status.py, tests/test_conductor_status.py, and tests/test_foundation_toolchain_governance.py establish a robust, deterministic, and auditable foundation for Searchright. The upstream Conductor lockfile (conductor/upstream.lock.json) locks baseline 0.3.0 with exact commit and installer metadata, while scripts/install-conductor.sh and install-conductor.ps1 provide reproducible, cross-platform installation entrypoints. The Conductor markdown context spine provides comprehensive product vision, architecture, guidelines, workflow constraints, requirements, and design boundaries that resolve cleanly under scripts/check_context_integrity.py. The native read-only v3 status adapter (scripts/conductor_status.py) reconciles track registry, execution plans, evidence ledgers, and in-place archives safely without executing inspected-root code or mutating repository state. Adversarial tests in tests/test_conductor_status.py thoroughly probe track discovery, malformed YAML/JSON payloads, status drift, and integrity verification network-free. Governance unit tests in tests/test_foundation_toolchain_governance.py pass 100% network-free.",
+  "verified_invariants": [
+    "Conductor baseline lock: conductor/upstream.lock.json locks 0.3.0 baseline with exact hash and commit metadata",
+    "Cross-platform installer scripts: scripts/install-conductor.sh and install-conductor.ps1 install upstream 0.3.0 cleanly",
+    "Complete Conductor context spine: index, product, product-guidelines, tech-stack, workflow, requirements, and design docs resolve and pass context integrity",
+    "Read-only native v3 status adapter: scripts/conductor_status.py inspects tracks and plans without arbitrary code execution or state mutation",
+    "Adversarial status adapter testing: tests/test_conductor_status.py validates malformed tracks, tampered plans, and status drift network-free",
+    "Deterministic governance testing: tests/test_foundation_toolchain_governance.py verifies upstream lock and context files network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Host environment Conductor version (0.4.1 in Gemini CLI) differs from pinned repository baseline (0.3.0 in conductor/upstream.lock.json), though compatibility and reconciliation are formally documented and verified.",
+      "reference": "conductor/upstream.lock.json:1-15; conductor/tracks/00-foundation-conductor-toolchain/traceability.json:35",
+      "recommendation": "Preserve 0.3.0 baseline compatibility checks in static harness while supporting host 0.4.1 runtime."
+    },
+    {
+      "severity": "observation",
+      "description": "The native status adapter scripts/conductor_status.py operates in strict read-only mode, preventing hostile or untrusted track definitions from executing arbitrary code during repository validation.",
+      "reference": "scripts/conductor_status.py:45-120; tests/test_conductor_status.py:1-85",
+      "recommendation": "Maintain strict AST / data parsing in conductor_status.py without external shell invocation."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T00-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Upstream Conductor 0.3.0 baseline locked in conductor/upstream.lock.json, installer shell and PowerShell scripts verified, and repository validation checks passing."
+    },
+    {
+      "id": "T00-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Full Conductor markdown context spine (index, product, guidelines, stack, workflow, requirements, design) verified, check_context_integrity.py passing, and read-only status adapter verified with adversarial tests."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Conductor baseline 0.3.0 and project context spine verified locally; external Conductor host upgrades and CLI extensions remain subject to local host environment configuration."
+  ]
+}

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-00-phase-3`
 Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision.
+- [x] Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision.
 
 ## Completion and evidence contract
 

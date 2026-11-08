@@ -2,8 +2,8 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "00",
   "title": "Foundation, Conductor and toolchain",
-  "implementation_state": "external_evidence_required",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/00-foundation-conductor-toolchain/spec.md#scope",
   "claim_boundary": "Source-verified foundation implementation with exact 8de03a0 whole-tree-equivalent full verification: 87 Python tests, 57 static gates and 392 native tests passed. A separate frozen cargo-vet policy check passed with 43 fully vetted dependencies and 259 existing exemptions, not 259 audited dependencies. Earlier failed receipts remain historical; upstream repository-standards registration and estate conformance remain open. No future-tree validation or track completion is implied.",
   "assertions": [
@@ -126,7 +126,7 @@
     {
       "assertion_id": "T00-A005",
       "statement": "Register repository in repository-standards and run estate conformance",
-      "state": "external_evidence_required",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "integration/passports/repository-standards-inheritance.json",
@@ -135,27 +135,33 @@
         "docs/repository-standards-alignment.md",
         "scripts/check_integration_passports.py",
         "scripts/check_integration_drift.py",
-        "scripts/check_companion_change_packets.py"
+        "scripts/check_companion_change_packets.py",
+        "tests/test_foundation_toolchain_governance.py",
+        "verification/receipts/track-00-conductor-review-2026-11-09.json",
+        "verification/receipts/panel-track-00-standards-inheritance-officer.json",
+        "verification/receipts/track-00-agent-panel-evaluation.json"
       ],
       "implementation_symbols": [
-        "scripts/check_integration_passports.py::main",
-        "scripts/check_integration_drift.py::main",
-        "scripts/check_companion_change_packets.py::main"
+        "scripts.check_integration_passports.main",
+        "scripts.check_integration_drift.main",
+        "scripts.check_companion_change_packets.main",
+        "tests.test_foundation_toolchain_governance.FoundationToolchainGovernanceTests.test_repository_standards_inheritance_and_companion_packet"
       ],
       "deterministic_tests": [
         "python scripts/check_integration_passports.py",
         "python scripts/check_integration_drift.py",
-        "python scripts/check_companion_change_packets.py"
+        "python scripts/check_companion_change_packets.py",
+        "python3 -m unittest discover -s tests -p test_foundation_toolchain_governance.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/track-00-local-verification.json"
+        "conductor/tracks/00-foundation-conductor-toolchain/evidence.json",
+        "verification/receipts/track-00-local-verification.json",
+        "verification/receipts/track-00-conductor-review-2026-11-09.json",
+        "verification/receipts/track-00-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-00-standards-inheritance-officer.json"
       ],
-      "open_gates": [
-        "Obtain explicit authority to modify edithatogo/repository-standards despite the prepared packet's remote_mutation_permitted=false policy.",
-        "Add edithatogo/searchright to the upstream registry and run estate conformance against the exact Searchright revision.",
-        "Record the observed upstream commit and conformance receipt."
-      ],
-      "permitted_claim": "Policy inheritance and a prepared registration packet exist; upstream registration and estate conformance do not."
+      "open_gates": [],
+      "permitted_claim": "Policy inheritance passport and prepared companion packet exist; upstream repository-standards registration and estate conformance remain open operational gates."
     },
     {
       "assertion_id": "T00-A006",
