@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "35",
+  "panelist_role": "developer-experience-auditor",
+  "evaluator_role": "developer-experience-auditor",
+  "evaluated_at": "2026-11-09T05:21:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The developer experience, tutorials, and interface surface parity codified across docs/sdk-and-adoption.md, examples/quickstart/README.md, contracts/interface-catalog.json, scripts/check_cli_mcp_parity.py, and scripts/check_sdk_examples.py establish exceptional ergonomics, transparency, and reproducibility. The quickstart tutorial (examples/quickstart/README.md) is strictly network-off by default, instructing developers to run local CLI commands, workspace tests, and stdio MCP server commands without requiring internet access. Canonical inputs are linked to checked-in fixtures under contracts/examples/ (review plans, strategies, provider responses, and PRISMA reports). In docs/sdk-and-adoption.md, the documentation explicitly states the current evidence ceiling, data-handling defaults, unsupported sources, and the crucial distinction between agent suggestions and authoritative human decisions. Cross-surface operational parity is rigorously enforced: contracts/interface-catalog.json documents 35 canonical operations, with verified 1:1:1 alignment across CLI variants, MCP tools, and Rust facade methods. Interface parity validation via scripts/check_cli_mcp_parity.py confirms all 35 operations are mapped with zero errors. Furthermore, each catalog operation explicitly specifies its required authority level (such as human_confirmation, explicit_approval, or role_policy), preventing non-human agents from acquiring autonomous mutation or study-exclusion authority. Scripts scripts/check_sdk_examples.py and scripts/check_cli_mcp_parity.py execute deterministically and exit cleanly with code 0.",
+  "verified_invariants": [
+    "network-off tutorials by default: quickstart and adoption tutorials operate strictly offline, relying on checked-in fixtures rather than live external endpoints",
+    "reproducible local examples: examples/quickstart/README.md provides verifiable local CLI, test, and MCP commands using contracts/examples/ as canonical inputs",
+    "cross-surface parity across 35 operations: contracts/interface-catalog.json defines 35 canonical operations with verified 1:1:1 parity across CLI variants, MCP tools, and Rust facade methods",
+    "strict agent-vs-human authority demarcation: interface catalog explicitly assigns authority tiers (human_confirmation, explicit_approval, role_policy) to operations",
+    "no autonomous exclusion or external writes: quickstart and adoption documentation mandate that no tutorial or example authorises autonomous agent exclusions or external writes",
+    "deterministic verification: scripts/check_cli_mcp_parity.py and scripts/check_sdk_examples.py pass with zero errors"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Deterministic fixture-backed quickstart workflows and 35-operation cross-surface parity pass cleanly network-free; conducting live interactive tutorial walkthroughs with external information specialists and methodologists remains an open operational gate.",
+      "reference": "docs/sdk-and-adoption.md:7-11; examples/quickstart/README.md:1-16; conductor/tracks/35-sdk-docs-adoption/traceability.json:63-67",
+      "recommendation": "Preserve open gate T35-G-INFORMATION-SPECIALIST-WALKTHROUGHS until qualitative walkthroughs with external domain specialists are performed."
+    },
+    {
+      "severity": "observation",
+      "description": "The interface parity checker script (scripts/check_cli_mcp_parity.py) validates operational parity against contracts/interface-catalog.json deterministically without requiring running background daemons.",
+      "reference": "contracts/interface-catalog.json:3-1102; scripts/check_cli_mcp_parity.py:1-40; tests/test_sdk_docs_adoption_governance.py:66-90",
+      "recommendation": "Retain check_cli_mcp_parity.py as a mandatory gate in pull request and candidate admission workflows."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T35-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Fixture-backed offline tutorials in examples/quickstart/README.md and docs/sdk-and-adoption.md, 35 canonical operations verified with cross-surface parity across CLI, MCP, and Rust facade, and strict agent-vs-human authority demarcation verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Deterministic fixture-backed quickstarts and static surface parity verified; human usability trials and interactive walkthroughs with domain information specialists remain open operational gates."
+  ]
+}

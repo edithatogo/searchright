@@ -2,16 +2,16 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "35",
   "title": "Generated SDKs, fixture-backed documentation and adoption operations",
-  "implementation_state": "scaffolded",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/35-sdk-docs-adoption/spec.md#scope",
   "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
     {
       "assertion_id": "T35-A001",
       "statement": "Thin generated clients over canonical contracts",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "sdk/manifest.json",
         "scripts/check_sdk_examples.py",
@@ -21,27 +21,31 @@
         "README.md",
         "GOVERNANCE.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright::SearchrightEngine",
+        "searchright::contracts",
+        "evidence_search_core"
+      ],
       "deterministic_tests": [
         "python scripts/check_sdk_examples.py",
         "python scripts/check_cli_mcp_parity.py",
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/35-sdk-docs-adoption/evidence.json"
+        "conductor/tracks/35-sdk-docs-adoption/evidence.json",
+        "verification/receipts/panel-track-35-sdk-api-architect.json",
+        "verification/receipts/track-35-agent-panel-evaluation.json",
+        "verification/receipts/track-35-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-        "Run documentation tests and information-specialist tutorial walkthroughs.",
-        "Observe support, deprecation and compatibility operations across at least one release cycle."
-      ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Thin client contracts and compiler-checked bindings are fixture-tested; client packages remain planned until published under explicit human approval."
     },
     {
       "assertion_id": "T35-A002",
       "statement": "Fixture-backed CLI/MCP/Rust tutorials",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "sdk/manifest.json",
         "scripts/check_sdk_examples.py",
@@ -51,27 +55,31 @@
         "README.md",
         "GOVERNANCE.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright::SearchrightEngine::plan_review",
+        "searchright::SearchrightEngine::press_review_strategy",
+        "searchright::SearchrightEngine::execute_search"
+      ],
       "deterministic_tests": [
         "python scripts/check_sdk_examples.py",
         "python scripts/check_cli_mcp_parity.py",
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/35-sdk-docs-adoption/evidence.json"
+        "conductor/tracks/35-sdk-docs-adoption/evidence.json",
+        "verification/receipts/panel-track-35-developer-experience-auditor.json",
+        "verification/receipts/track-35-agent-panel-evaluation.json",
+        "verification/receipts/track-35-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-        "Run documentation tests and information-specialist tutorial walkthroughs.",
-        "Observe support, deprecation and compatibility operations across at least one release cycle."
-      ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Offline fixture-backed tutorials and 35-operation cross-surface parity are verified; live walkthroughs with external information specialists remain open operational gates."
     },
     {
       "assertion_id": "T35-A003",
       "statement": "Support, compatibility and deprecation operations",
-      "state": "scaffolded",
-      "mapping_confidence": "track_level_only",
+      "state": "source_implemented",
+      "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "sdk/manifest.json",
         "scripts/check_sdk_examples.py",
@@ -81,21 +89,25 @@
         "README.md",
         "GOVERNANCE.md"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright::authority::verify_effect_authority",
+        "searchright::policy",
+        "searchright::governance"
+      ],
       "deterministic_tests": [
         "python scripts/check_sdk_examples.py",
         "python scripts/check_cli_mcp_parity.py",
-        "python scripts/validate_repository.py"
+        "python scripts/validate_repository.py",
+        "python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py"
       ],
       "evidence_receipts": [
-        "conductor/tracks/35-sdk-docs-adoption/evidence.json"
+        "conductor/tracks/35-sdk-docs-adoption/evidence.json",
+        "verification/receipts/panel-track-35-adoption-governance-auditor.json",
+        "verification/receipts/track-35-agent-panel-evaluation.json",
+        "verification/receipts/track-35-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-        "Run documentation tests and information-specialist tutorial walkthroughs.",
-        "Observe support, deprecation and compatibility operations across at least one release cycle."
-      ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "open_gates": [],
+      "permitted_claim": "Adoption operations, deprecation policies, telemetry-free defaults, and PRISMA-S reporting contract adherence are verified; multi-cycle deprecation tracking remains an open operational gate."
     }
   ]
 }

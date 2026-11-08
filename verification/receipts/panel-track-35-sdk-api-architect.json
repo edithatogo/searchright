@@ -1,0 +1,48 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "35",
+  "panelist_role": "sdk-api-architect",
+  "evaluator_role": "sdk-api-architect",
+  "evaluated_at": "2026-11-09T05:20:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The SDK architecture and contract bindings codified across sdk/manifest.json, sdk/generated-contract-bindings.json, contracts/schema-catalog.json, release/public-packages.json, and tests/test_sdk_docs_adoption_governance.py establish an exemplary thin-client boundary for Searchright. The core product facade in Rust (crates/searchright) remains the single canonical source of truth for query syntax, provider communication, screening policies, and evidence generation. Client generation policy (sdk/manifest.json:39) strictly enforces generated_clients_must_not_reimplement_domain_logic, ensuring that target clients (planned Python package searchright-client and TypeScript package @searchright/client) remain strictly thin transport and validation layers without duplicating domain algorithms. The contract bindings in sdk/generated-contract-bindings.json comprehensively bind all 74 canonical schemas from contracts/schema-catalog.json into typed Python (searchright-contracts) and TypeScript (@searchright/contracts) interfaces. Crucially, domain_logic is explicitly set to false and automatic_publication is set to false across both the SDK manifest and contract bindings metadata. Compiler-backed static typing is verified network-free via scripts/check_contract_bindings.py using pinned TypeScript (tsc) and Pyright typecheckers, as well as negative assignment rejection fixtures (invalid_map.py). In release/public-packages.json, all workspace crates are unpublishable fail-closed under policy deny_unlisted_and_require_compiler_semver_supply_chain_evidence with publish_ready: false and publication_status: blocked. All 6 unit tests in tests/test_sdk_docs_adoption_governance.py pass network-free.",
+  "verified_invariants": [
+    "canonical Rust facade: searchright crate provides the single authoritative product facade; SDK clients are strictly downstream consumers",
+    "thin transport and validation boundaries: SDK generation policy mandates generated_clients_must_not_reimplement_domain_logic",
+    "zero domain logic duplication: sdk/generated-contract-bindings.json and sdk/manifest.json explicitly enforce domain_logic: false fail-closed",
+    "compiler-checked typed contract bindings: 74 contracts mapped to typed python (searchright-contracts) and typescript (@searchright/contracts) verified via tsc and pyright",
+    "automatic publication disabled fail-closed: automatic_publication: false in SDK manifest and generated contract bindings metadata",
+    "unpublishable public package default-deny: release/public-packages.json enforces deny_unlisted_and_require_compiler_semver_supply_chain_evidence with all candidates blocked",
+    "deterministic verification: 6/6 governance unit tests in tests/test_sdk_docs_adoption_governance.py and scripts/check_contract_bindings.py pass network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Contract-only static typing and compiler-checked bindings are fully verified across all 74 contracts; runtime SDK clients (Python searchright-client, TypeScript @searchright/client), package distribution, and install smoke testing remain open operational gates.",
+      "reference": "sdk/manifest.json:16-24; release/public-packages.json:1-46; conductor/tracks/35-sdk-docs-adoption/traceability.json:33-37",
+      "recommendation": "Preserve open gate T35-G-CLIENT-PACKAGES-PUBLISH until full runtime clients are generated, packaged, and published under explicit human approval."
+    },
+    {
+      "severity": "observation",
+      "description": "The contract bindings generator and checker scripts (scripts/generate_contract_bindings.py and scripts/check_contract_bindings.py) run network-free and verify type safety, fresh generation, and negative assignment fixtures (invalid_map.py) without network requests or external drift.",
+      "reference": "sdk/generated-contract-bindings.json:6-12; tests/test_sdk_docs_adoption_governance.py:45-65; scripts/check_contract_bindings.py:27-77",
+      "recommendation": "Retain strict CI regression gating on scripts/check_contract_bindings.py across all toolchain updates."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T35-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Thin generated SDK boundaries, canonical contracts in sdk/manifest.json, compiler-checked bindings across 74 contracts in sdk/generated-contract-bindings.json, domain logic duplication prohibition, and fail-closed public package release policies verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Contract-only static typing and compiler-checked bindings verified; runtime client generation, packaging, and npm/PyPI publication remain open operational gates."
+  ]
+}

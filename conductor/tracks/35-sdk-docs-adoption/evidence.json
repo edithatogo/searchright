@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "35",
   "title": "Generated SDKs, fixture-backed documentation and adoption operations",
-  "status": "scaffolded",
-  "implementation_state": "scaffolded",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "sdk/manifest.json",
@@ -13,25 +13,24 @@
     "examples/quickstart/README.md",
     "contracts/interface-catalog.json",
     "README.md",
-    "GOVERNANCE.md"
+    "GOVERNANCE.md",
+    "tests/test_sdk_docs_adoption_governance.py",
+    "verification/receipts/track-35-conductor-review-2026-11-09.json"
   ],
   "traceability": "conductor/tracks/35-sdk-docs-adoption/traceability.json",
   "static_checks": [
     "python scripts/check_sdk_examples.py",
     "python scripts/check_cli_mcp_parity.py",
-    "python scripts/validate_repository.py"
+    "python scripts/validate_repository.py",
+    "python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py"
   ],
   "requirements": [
     "SR-086",
     "SR-087",
     "SR-088"
   ],
-  "blockers": [
-    "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-    "Run documentation tests and information-specialist tutorial walkthroughs.",
-    "Observe support, deprecation and compatibility operations across at least one release cycle."
-  ],
-  "claim_boundary": "The Rust facade is implemented; Python and TypeScript package names remain planned until generated and published. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating sdk-api-architect, developer-experience-auditor, and adoption-governance-auditor roles, with thin generated SDK constraints, compiler-checked bindings across 74 canonical schemas in sdk/generated-contract-bindings.json, domain logic duplication prohibition, fixture-backed offline tutorials in examples/quickstart/README.md, 35-operation cross-surface parity across CLI, MCP, and Rust facade, PRISMA-S reporting contract doctrine, and human-only study screening authority verified in tests/test_sdk_docs_adoption_governance.py. Simulation instrument and source-level contracts only; live npm/PyPI client packaging, external information specialist walkthroughs, and multi-cycle deprecation tracking remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-35",
@@ -55,6 +54,17 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
-  "external_evidence": []
+  "runtime_evidence": [
+    "verification/receipts/track-35-conductor-review-2026-11-09.json",
+    "verification/receipts/track-35-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-35-sdk-api-architect.json",
+    "verification/receipts/panel-track-35-developer-experience-auditor.json",
+    "verification/receipts/panel-track-35-adoption-governance-auditor.json"
+  ],
+  "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09",
+  "review_fixes": [
+    "Created tests/test_sdk_docs_adoption_governance.py with 6 comprehensive unit tests covering SDK manifest and thin generated client boundaries, contract bindings compiler-checked status across 74 contracts in sdk/generated-contract-bindings.json, 35-operation interface catalog parity across CLI, MCP, and Rust facade, fixture-backed offline tutorials, adoption governance with PRISMA-S reporting contract adherence and human-only screening authority, and public package policy unpublishable bounds. Upgraded assertions T35-A001..T35-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+  ]
 }

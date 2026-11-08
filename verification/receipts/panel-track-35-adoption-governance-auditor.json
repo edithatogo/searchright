@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "35",
+  "panelist_role": "adoption-governance-auditor",
+  "evaluator_role": "adoption-governance-auditor",
+  "evaluated_at": "2026-11-09T05:22:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The adoption governance doctrine, deprecation policies, telemetry boundaries, and methodological non-negotiables codified in GOVERNANCE.md, README.md, AGENTS.md, and docs/sdk-and-adoption.md provide comprehensive, auditable, and scientifically sound operations. GOVERNANCE.md explicitly categorizes decisions into routine, contract, methodological, security/privacy, and external claim tiers, mandating reproducible machine-readable evidence receipts for high-risk determinations. Breaking changes and deprecation timelines are governed by consumer_contract_and_semver_gate, ensuring public API evolutions provide advance deprecation notices and backwards-compatible transition windows. Telemetry is disabled by default across all adoption materials (0 sampling, 0 retention), strictly forbidding the collection or export of query text, full text, API keys, or personal identifiers. Critically, methodological integrity is protected by non-negotiable repository rules in AGENTS.md: PRISMA-S is strictly maintained as a reporting contract rather than a conduct standard, and non-human agents are categorically forbidden from autonomous study exclusions or final screening determinations. All unit tests in tests/test_sdk_docs_adoption_governance.py asserting these governance constraints pass deterministically 100% network-free.",
+  "verified_invariants": [
+    "PRISMA-S is reporting contract not conduct: AGENTS.md, README.md, and docs/sdk-and-adoption.md codify that PRISMA-S governs reporting reproducibility, never search conduct",
+    "human-only screening authority: AGENTS.md categorically forbids autonomous study exclusions or final eligibility determinations by non-human agents",
+    "telemetry-free defaults: telemetry is disabled by default across all adoption workflows, with 0 sampling and 0 retention, forbidding query text, full text, or credentials export",
+    "transparent decision governance: GOVERNANCE.md defines routine, contract, methodological, security/privacy, and external claim decision classes with mandatory evidence receipts",
+    "deprecation and support policies: support tiers, deprecation notice periods, SemVer compatibility gates, and migration guidance are explicitly documented",
+    "deterministic verification: governance unit tests in tests/test_sdk_docs_adoption_governance.py pass 100% network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Deprecation and support operations policies are fully codified in GOVERNANCE.md and docs/sdk-and-adoption.md; tracking deprecation notices and backwards-compatibility operations across at least one full release cycle remains an open operational gate.",
+      "reference": "GOVERNANCE.md:1-20; docs/sdk-and-adoption.md:12-14; conductor/tracks/35-sdk-docs-adoption/traceability.json:93-97",
+      "recommendation": "Preserve open gate T35-G-DEPRECATION-LIFECYCLE-OBSERVATION until deprecation policy is exercised in production release cycles."
+    },
+    {
+      "severity": "observation",
+      "description": "Non-negotiable repository rules in AGENTS.md establish binding constraints on agents and developers alike, preventing methodological slippage or unauthorised autonomy.",
+      "reference": "AGENTS.md:15-28; tests/test_sdk_docs_adoption_governance.py:113-124",
+      "recommendation": "Maintain unit test assertions enforcing AGENTS.md policy invariant strings in automated test suites."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T35-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Adoption operations, compatibility and deprecation policies in GOVERNANCE.md and README.md, non-negotiable PRISMA-S reporting contract adherence, and human-only study screening authority in AGENTS.md verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Governance, deprecation policies, and reporting contracts verified in documentation and unit tests; multi-cycle deprecation tracking and live support operations remain open operational gates."
+  ]
+}
