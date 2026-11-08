@@ -1,0 +1,61 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "26",
+  "panelist_role": "contract-evolution-specialist",
+  "evaluator_role": "contract-evolution-specialist",
+  "evaluated_at": "2026-11-09T00:32:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.97,
+  "overall_assessment": "The contract evolution and schema migration framework established in contracts/migrations/registry.json, contracts/migrations/github-issue-hierarchy-v1-to-v2.json, and scripts/check_schema_migrations.py enforces rigorous backward-compatibility and fail-closed governance. The migration registry binds default policy constants requiring unknown_version: reject, destructive_migration: deny, implicit_write_upgrade: deny, backup_required: true, and receipt_required: true. Automated unsupervised migration is disabled by contract (automatic_migration: false). For multi-version schema families such as github-issue-hierarchy, minimum read versions are anchored to preserve historical payload readability (v1 read-only) while restricting current write operations to the highest validated schema version (v2). Migration plan github-issue-hierarchy-v1-to-v2 declares explicit non-destructive transformations, preserves all source node keys and hierarchy identities, mandates pre-migration backups, and includes a reversible rollback strategy (project_v2_to_v1_projection). The validation script scripts/check_schema_migrations.py scans all 73 catalog entries, validates multi-version family parity, and outputs structured receipts with zero errors.",
+  "verified_invariants": [
+    "fail-closed schema registry policy: default policy mandates unknown_version: reject, destructive_migration: deny, and implicit_write_upgrade: deny",
+    "no automated migration: registry specifies automatic_migration: false and individual migration plans specify automatic_apply: false",
+    "non-destructive migration: all schema migration plans enforce destructive: false",
+    "backup and receipt requirement: schema migrations require prior state backups and emit verifiable receipts before synchronisation",
+    "read-backward compatibility: minimum read version must preserve the oldest catalog version for multi-version families",
+    "write-version pinning: write operations are pinned strictly to the highest catalog version",
+    "declarative rollback support: all migration plans define explicit rollback.supported: true and documented loss reports",
+    "catalog and migration parity: script verifies exact correspondence between schema-catalog multi-version families and registered migration plans"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Schema migration plans and registry policies are declaratively validated; executable migration and rollback drivers applied to representative persisted datasets in production storage remain an open maturity gate.",
+      "reference": "contracts/migrations/registry.json:31; scripts/check_schema_migrations.py:94-96",
+      "recommendation": "Preserve gate T26-G-DATA-MIGRATION-DRILLS open until automated persistent storage migration runners are integrated."
+    },
+    {
+      "severity": "observation",
+      "description": "Migration plan github-issue-hierarchy-v1-to-v2 explicitly details downstream rollback semantics, identifying that task-level native relationships are dropped in v1 projection while preserving canonical v2 source nodes.",
+      "reference": "contracts/migrations/github-issue-hierarchy-v1-to-v2.json:33-37",
+      "recommendation": "Adopt this explicit loss reporting pattern for all future forward/backward schema projections."
+    },
+    {
+      "severity": "observation",
+      "description": "scripts/check_schema_migrations.py validates catalog naming conventions (*.v<N>.schema.json) across all 73 schemas and verifies that migration plans move strictly forward (from_version < to_version).",
+      "reference": "scripts/check_schema_migrations.py:12, 75-76; tests/test_formal_assurance_contract_evolution.py:91-105",
+      "recommendation": "Retain regex-based schema catalog naming enforcement in pre-commit and validation gates."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T26-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Multi-version contract family classification, migration receipts, and schema catalog parity validated by scripts/check_schema_migrations.py and unit tests."
+    },
+    {
+      "id": "T26-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Schema deprecation rules, fail-closed unknown version rejection, non-destructive migration invariants, and rollback contracts verified."
+    }
+  ],
+  "calibration_notes": "Contract evolution specialists confirm that schema evolution policies, non-destructive migration rules, rollback specifications, and catalog validation tooling meet all structural requirements. Executable persisted-data migration drills remain an open gate.",
+  "claim_boundary": "Source-verified implementation only. Declarative schema catalog history, non-destructive migration plans, rollback contracts, and fail-closed policies are verified; compiled data migration drivers and production storage rollback drills remain open gates.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

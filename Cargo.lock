@@ -1921,6 +1921,7 @@ dependencies = [
  "schemars",
  "searchright-contracts",
  "serde",
+ "serde_json",
  "thiserror",
 ]
 

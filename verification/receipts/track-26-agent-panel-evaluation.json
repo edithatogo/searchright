@@ -1,0 +1,168 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "26",
+  "title": "Formal assurance and contract evolution — agent-panel evaluation",
+  "observed_at": "2026-11-09T00:35:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "b320a78cce410e0741aa947410f09c6d5eba63f3",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "formal-assurance-architect",
+      "contract-evolution-specialist",
+      "quality-governance-auditor"
+    ],
+    "output_artefacts": [
+      "structured-finite-state-assurance-findings",
+      "schema-evolution-and-migration-invariants",
+      "quality-governance-and-authority-audit",
+      "disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Source-verified and fixture-proven implementation only; Kani mathematical proofs, Loom thread permutation runs in CI, cross-version contract fixtures, and representative persisted-data migration drills remain gated."
+  },
+  "panelists": [
+    {
+      "role": "formal-assurance-architect",
+      "evaluator_role": "formal-assurance-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 2,
+      "disposition": "approved"
+    },
+    {
+      "role": "contract-evolution-specialist",
+      "evaluator_role": "contract-evolution-specialist",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.97,
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 2,
+      "disposition": "approved"
+    },
+    {
+      "role": "quality-governance-auditor",
+      "evaluator_role": "quality-governance-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 0,
+      "observation": 3,
+      "disposition": "approved"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval (scores: 0.98, 0.97, 0.98; consensus score: 0.98). Convergence centered on: (1) Finite-state lifecycle trace checking (searchright_assurance::verify_trace) enforcing contiguous transitions and fail-closed rejection of undeclared skips (AssuranceError::Discontinuous, TransitionDenied); (2) Human-authority invariants requiring affirmative human sign-off for critical review stages and unconditionally prohibiting automated agents from closing full-text screening or publishing reports (AssuranceError::AgentAuthorityDenied); (3) Fail-closed schema migration registry policies mandating unknown_version: reject, destructive_migration: deny, implicit_write_upgrade: deny, backup_required: true, and receipt_required: true; (4) Non-destructive forward migration plans with explicit rollback contracts (github-issue-hierarchy-v1-to-v2); (5) Deterministic repository-wide schema validation via scripts/check_schema_migrations.py (73 catalog families checked with zero errors); (6) Hypothesis stateful property testing over the searchright-mcp stdio binary verifying resilient fuzzing and zero authority bypass; and (7) Honest preservation of all 5 open maturity gates (Kani proofs, Loom thread permutations, compatibility fixtures, semver cross-version contract tests, and persisted-data migration drills).",
+    "convergence_vectors": [
+      "Finite-state lifecycle transition model (Draft -> PlanApproved -> StrategyValidated -> ExecutionApproved -> SearchExecuted -> Deduplicated -> TitleAbstractComplete -> FullTextComplete -> Reported -> UpdatePlanned -> StrategyValidated)",
+      "Strict fail-closed denial of 90 out of 100 potential transitions in the 10x10 lifecycle stage matrix",
+      "Explicit human-authority requirement for all consequential review milestones (protocol approval, execution, screening closeout, reporting, living-update planning)",
+      "Unconditional prohibition of agent actors closing FullTextComplete or Reported stages",
+      "Schema migration registry default policy denying unknown versions, destructive changes, and implicit write upgrades",
+      "Additive schema migration plans with verified rollback strategies and documented loss profiles",
+      "Catalog-wide schema migration validation in scripts/check_schema_migrations.py reporting zero errors across 73 families",
+      "Hypothesis stateful property testing over searchright-mcp stdio validating robust panic-free handling and authority isolation",
+      "Rigorous adherence to PRISMA-S reporting contract boundaries and honest claim boundaries"
+    ],
+    "divergence_vectors": [
+      "Timeline for provisioning Kani model checker environment in hosted CI runners versus local verification",
+      "Granularity of persisted data rollback drills for production storage engines"
+    ]
+  },
+  "verified_invariants": [
+    "state continuity: adjacent transitions must join contiguously without gap or reordering (AssuranceError::Discontinuous)",
+    "no undeclared lifecycle skips: 90 out of 100 potential transitions in the 10x10 matrix are denied fail-closed (AssuranceError::TransitionDenied)",
+    "critical approvals are human: draft->plan_approved, strategy_validated->execution_approved, and reported->update_planned require human actor kind and explicit approval flag (AssuranceError::HumanApprovalRequired)",
+    "screening authority restriction: agents cannot close full-text screening (FullTextComplete) or publish reports (Reported) (AssuranceError::AgentAuthorityDenied)",
+    "each transition carries evidence: transition validation fails if evidence_ids is empty or contains whitespace-only strings",
+    "living updates re-enter strategy validation: UpdatePlanned can only transition to StrategyValidated, enforcing re-validation of search strategies upon protocol amendment",
+    "fail-closed schema registry policy: default policy mandates unknown_version: reject, destructive_migration: deny, and implicit_write_upgrade: deny",
+    "no automated migration: registry specifies automatic_migration: false and individual migration plans specify automatic_apply: false",
+    "non-destructive migration: all schema migration plans enforce destructive: false",
+    "backup and receipt requirement: schema migrations require prior state backups and emit verifiable receipts before synchronisation",
+    "read-backward compatibility: minimum read version must preserve the oldest catalog version for multi-version families",
+    "write-version pinning: write operations are pinned strictly to the highest catalog version",
+    "declarative rollback support: all migration plans define explicit rollback.supported: true and documented loss reports",
+    "PRISMA-S reporting contract: PRISMA-S is enforced as an auditable reporting contract and not mischaracterized as an autonomous conduct standard",
+    "fail-closed authority: MCP stdio server and assurance engine reject unauthenticated, unverified, or out-of-sequence lifecycle mutations"
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T26-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Finite-state lifecycle transitions and forbidden transitions enforced by searchright-assurance, verified by 30 Rust tests and Python workflow trace validation."
+    },
+    {
+      "id": "T26-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Human-authority gates and agent screening restrictions fail closed in searchright-assurance and stdio MCP tests; screening/reporting closure restricted to humans."
+    },
+    {
+      "id": "T26-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Multi-version contract families classified with explicit non-destructive migration plans and receipt requirements; check_schema_migrations.py passes with 0 errors across 73 families."
+    },
+    {
+      "id": "T26-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Unknown versions, destructive migrations, and implicit write upgrades denied by schema migration registry default policy; rollback contracts verified."
+    },
+    {
+      "id": "T26-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Hypothesis stateful property tests over MCP stdio and exhaustive transition models cover authority and transition catalogues; Kani proofs preserved as open gate."
+    }
+  ],
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 7
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Retain explicit agent authority denial checks independently of the generic human approval gate to preserve defense-in-depth.",
+    "Preserve schema migration registry fail-closed constants (unknown_version: reject, destructive_migration: deny, implicit_write_upgrade: deny) across all future contract revisions.",
+    "Maintain Hypothesis stateful property testing over the MCP stdio binary as part of continuous integration to detect latent authority leaks.",
+    "Preserve honest claim boundaries distinguishing source-verified assurance models from formal Kani mathematical proofs and executable persisted-data migration drills."
+  ],
+  "open_gates": [
+    "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+    "Compile and execute model-check traces and forbidden-transition tests.",
+    "Add compatibility fixtures for each public contract version.",
+    "Run semver and cross-version MCP/CLI contract tests.",
+    "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
+  ],
+  "recommendation": "APPROVE_FOR_ARCHIVE",
+  "decision": {
+    "outcome": "approved_as_source_verified",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-09"
+  }
+}

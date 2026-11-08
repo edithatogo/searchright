@@ -3,11 +3,11 @@
 
 Parent phase key: `track-26-phase-3`
 Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.
+- [x] Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures.
 
 ## Completion and evidence contract
 

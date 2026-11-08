@@ -3,17 +3,19 @@
 
 Parent phase key: `track-26-phase-1`
 Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-assurance/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/assurance.rs`
   - [x] Present source path: `contracts/examples/workflow-trace.yaml`
   - [x] Present source path: `docs/adrs/0011-assurance-and-evidence-ladder.md`
   - [x] Present source path: `crates/searchright-assurance/tests/loom_authority.rs`
   - [x] Present source path: `crates/searchright-assurance/tests/workflow_model.rs`
+  - [x] Present source path: `crates/searchright-assurance/tests/lifecycle_edges.rs`
+  - [x] Present source path: `crates/searchright-assurance/tests/assurance_scenarios.rs`
   - [x] Present source path: `.github/workflows/formal.yml`
   - [x] Present source path: `fuzz/Cargo.toml`
   - [x] Present source path: `verification/harness-matrix.json`

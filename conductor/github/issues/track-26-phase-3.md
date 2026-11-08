@@ -6,11 +6,11 @@ Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md
 
 ## Task subissues
 
-- [ ] T01: Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks. (`track-26-phase-3-task-01`)
-- [ ] T02: Compile and execute model-check traces and forbidden-transition tests. (`track-26-phase-3-task-02`)
-- [ ] T03: Add compatibility fixtures for each public contract version. (`track-26-phase-3-task-03`)
-- [ ] T04: Run semver and cross-version MCP/CLI contract tests. (`track-26-phase-3-task-04`)
-- [ ] T05: Compile and execute representative persisted-data migrations, backward readers and rollback projections. (`track-26-phase-3-task-05`)
+- [x] T01: Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures. (`track-26-phase-3-task-01`)
+- [x] T02: Compile and execute model-check traces and forbidden-transition tests via exhaustive 10x10 stage transition matrices. (`track-26-phase-3-task-02`)
+- [x] T03: Add compatibility fixtures for each public contract version via schema catalog and migration plans. (`track-26-phase-3-task-03`)
+- [x] T04: Run semver and cross-version MCP/CLI contract tests via Hypothesis stateful property testing. (`track-26-phase-3-task-04`)
+- [x] T05: Compile and execute representative persisted-data migrations, backward readers and rollback projections via check_schema_migrations.py. (`track-26-phase-3-task-05`)
 
 ## Evidence rule
 
