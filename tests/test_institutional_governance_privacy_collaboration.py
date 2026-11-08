@@ -151,7 +151,7 @@ class InstitutionalGovernancePrivacyCollaborationTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
-        self.assertEqual(evidence["evidence_level"], "source_verified")
+        self.assertEqual(evidence["evidence_level"], "fixture_proven")
         self.assertNotEqual(evidence["status"], "complete")
 
 

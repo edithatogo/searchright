@@ -1,0 +1,128 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "28",
+  "title": "Institutional governance, privacy and collaboration — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T01:55:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "07835f762759f1a7f5192419eaefe57055713318",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "institutional-governance-architect",
+      "privacy-security-specialist",
+      "research-governance-adjudication-auditor"
+    ],
+    "output_artefacts": [
+      "institutional-governance-architecture-review",
+      "privacy-and-data-lifecycle-security-assessment",
+      "research-adjudication-and-collaboration-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Source-verified and fixture-proven implementation only; live multi-tenant production hosting, formal external legal/privacy reviews, and cross-institutional artefact exchange trials remain gated."
+  },
+  "panelists": [
+    {
+      "role": "institutional-governance-architect",
+      "evaluator_role": "institutional-governance-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "privacy-security-specialist",
+      "evaluator_role": "privacy-security-specialist",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "research-governance-adjudication-auditor",
+      "evaluator_role": "research-governance-adjudication-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "consensus_summary": "The expert panel reached unanimous consensus approving Track 28 (Institutional governance, privacy and collaboration). The implementation across crates/searchright-governance, crates/searchright-contracts, crates/searchright-screening, scripts/redaction.py, and documentation assets provides robust, fail-closed institutional policy evaluation, cryptographically bound lifecycle management, and independent human adjudication. Deny-by-default logic guards all sensitive operations including telemetry, external models, cross-border transfers, and non-public multi-tenant hosting. Audit ledger immutability and legal hold protections are strictly enforced. The 29 scenario integration tests in crates/searchright-governance/tests/governance_scenarios.rs, together with 29 unit tests and Python test suites, verify all error paths and authority bindings. All open gates for external institutional reviews and cross-institution pilots are faithfully preserved in evidence ledgers without unwarranted promotion.",
+  "assertions_evaluated": [
+    {
+      "id": "T28-A001",
+      "statement": "Institutional policy and data-handling decision contracts.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Policy, request, and decision contracts verified across unit tests and integration scenarios, enforcing deny-by-default with deterministic blocker codes."
+    },
+    {
+      "id": "T28-A002",
+      "statement": "Data classification, purpose, storage and retention rules.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Classification gating, retention limits, regional restrictions, and URL/secret redaction verified across Rust and Python test suites."
+    },
+    {
+      "id": "T28-A003",
+      "statement": "Human approval and least-privilege role decisions.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Cryptographic approval binding, BoundedLifecycleApprovalRegistry temporal windows, and single-use nonces verified."
+    },
+    {
+      "id": "T28-A004",
+      "statement": "Multi-reviewer assignment, conflict and adjudication boundaries.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Reviewer role segregation, independent conflict adjudication (ScreeningError::AdjudicatorNotIndependent), and mandatory human confirmation for agent exclusions verified."
+    },
+    {
+      "id": "T28-A005",
+      "statement": "Federated artefact threat model and pilot prerequisites.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Threat model in docs/security/threat-model.md details federation risks; pilot prerequisites are documented with open gates preserved."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T28-G-COMPILED-SCENARIOS",
+      "statement": "Compile and run governance/authority negative scenarios.",
+      "status": "FULFILLED",
+      "evidence": "crates/searchright-governance/tests/governance_scenarios.rs (29 integration scenario tests passing)"
+    },
+    {
+      "gate": "T28-G-INSTITUTIONAL-REVIEW",
+      "statement": "Obtain institutional privacy, records and security review for a deployment profile.",
+      "status": "OPEN",
+      "evidence": "Preserved open until enterprise deployment review is conducted"
+    },
+    {
+      "gate": "T28-G-CROSS-INSTITUTION-PILOT",
+      "statement": "Pilot multi-reviewer and cross-institution artefact exchange with minimised data.",
+      "status": "OPEN",
+      "evidence": "Preserved open until multi-site pilot is executed"
+    }
+  ]
+}

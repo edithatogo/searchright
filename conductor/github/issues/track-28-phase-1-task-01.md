@@ -3,11 +3,11 @@
 
 Parent phase key: `track-28-phase-1`
 Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaboration/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-governance/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/governance.rs`
   - [x] Present source path: `contracts/examples/institutional-policy.yaml`

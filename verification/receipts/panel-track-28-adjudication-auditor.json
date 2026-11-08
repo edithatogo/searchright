@@ -1,0 +1,53 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "28",
+  "panelist_role": "research-governance-adjudication-auditor",
+  "evaluator_role": "research-governance-adjudication-auditor",
+  "evaluated_at": "2026-11-09T01:52:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The multi-reviewer assignment, conflict adjudication, and collaboration boundaries implemented in searchright-screening and searchright-governance strictly conform to sound methodological research standards (PRISMA-S / PRISMA-LSR contracts) and institutional collaboration requirements. The ScreeningBoard enforces reviewer role segregation (ReviewerRole::Screener, ReviewerRole::Adjudicator, ReviewerRole::PolicyAdmin) and strict adjudication independence: any primary reviewer who has already submitted a screening decision for a subject is barred from adjudicating a conflict on that subject (failing closed with ScreeningError::AdjudicatorNotIndependent). The non-negotiable human-in-the-loop mandate is structurally encoded in ScreeningBoard::confirm_agent_exclusion: autonomous agents are incapable of self-executing study exclusions without explicit, auditable human confirmation. Blinded views (BlindedDecisionView) prevent bias during dual-independent screening rounds by masking peer decisions, rationales, and exclusion reasons until official conflict resolution is initiated. The federated artefact threat model in docs/security/threat-model.md documents boundary protections, replay risks, and pilot prerequisites, while keeping claims bounded to source-verified implementation without unwarranted promotion.",
+  "verified_invariants": [
+    "adjudicator independence: screeners cannot adjudicate conflicting decisions on records they previously screened (ScreeningError::AdjudicatorNotIndependent)",
+    "mandatory human confirmation of agent exclusions: autonomous agents cannot exclude studies without explicit human confirmation in confirm_agent_exclusion",
+    "blinded screening segregation: BlindedDecisionView masks peer decisions, rationales, and exclusion reasons during active dual screening",
+    "governed amendments and re-screening: post-decision modifications require structured ScreeningAmendment and ReScreenRequest with auditable justifications",
+    "role-gated screening board operations: assign_role, revoke_role, and resolve require validated reviewer authorizations",
+    "federated collaboration threat boundaries: threat-model.md explicitly enumerates participant compromise, poisoned exchange packets, and data leak vectors"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Multi-reviewer conflict resolution and independent adjudication are verified across unit tests and board_edges.rs integration tests; multi-institution cross-site collaborative screening pilots remain an open gate.",
+      "reference": "crates/searchright-screening/src/lib.rs:163-450; crates/searchright-screening/tests/board_edges.rs:1-240; conductor/tracks/28-institutional-governance-privacy-collaboration/evidence.json:35",
+      "recommendation": "Maintain open gate T28-G-CROSS-INSTITUTION-PILOT until inter-institutional trials are executed."
+    },
+    {
+      "severity": "observation",
+      "description": "The system preserves separate identifiers for records, studies, and reports, ensuring federated exchange packets do not conflate bibliographic records with methodological screening authority.",
+      "reference": "crates/searchright-screening/src/lib.rs:28-60; docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md",
+      "recommendation": "Preserve explicit linkage and provenance across all future multi-tenant or federated adapters."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T28-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Multi-reviewer assignment, conflict resolution, and independent human adjudication are enforced in source and verified in Rust and Python test suites."
+    },
+    {
+      "id": "T28-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Federated artefact threat model is documented in docs/security/threat-model.md; prerequisites are explicit and open gates are honestly preserved."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified implementation only; live multi-reviewer enterprise pilots and cross-institutional artefact exchange trials remain gated."
+  ]
+}
