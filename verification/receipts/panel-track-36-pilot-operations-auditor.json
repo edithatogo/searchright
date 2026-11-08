@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "36",
+  "panelist_role": "pilot-operations-auditor",
+  "evaluator_role": "pilot-operations-auditor",
+  "evaluated_at": "2026-11-09T05:41:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The staged pilot deployment protocol codified in docs/pilots/pilot-protocol.md, release/rehearsal.json, AGENTS.md, and tests/test_release_candidate_pilots_governance.py provides an uncompromising, methodologically grounded operational doctrine for Searchright deployments. Pilots are staged across three strictly defined profiles: local_researcher (fixture-only offline exploration), institution_self_hosted (on-premises organizational deployment), and remote_single_tenant (isolated cloud hosting subject to prior threat modelling). Critical methodological boundaries are enforced fail-closed: PRISMA-S is maintained as a transparent reporting contract rather than a search conduct straightjacket, and autonomous final exclusions by non-human agents are categorically forbidden (human screening authority remains sovereign). Data and security isolation are rigorously defined: restricted full text, licensed provider credentials, and personal data remain deployment-controlled, with telemetry disabled by default (0 sampling, 0 retention). Every pilot deployment mandates named users, data classification, supported sources, explicit success measures, incident contacts, rollback criteria, and an auditable exit decision. Crucially, findings and failures must be preserved in machine-readable records even when a pilot is terminated or rolled back, ensuring complete evaluation integrity. All unit tests asserting pilot protocol conformance in tests/test_release_candidate_pilots_governance.py pass network-free.",
+  "verified_invariants": [
+    "three-stage pilot hierarchy: pilot protocol enforces strict progression from local_researcher to institution_self_hosted to remote_single_tenant",
+    "absolute prohibition of autonomous final exclusion: non-negotiable rule ensures only authorized human reviewers make final study screening exclusions",
+    "PRISMA-S reporting contract boundary: pilot workflows maintain PRISMA-S as a reporting contract for transparency, never a conduct straitjacket",
+    "deployment-controlled credential and PII isolation: licensed API credentials, restricted full-text, and personal data are strictly isolated to the host deployment",
+    "auditable incident and exit framework: each pilot mandates explicit incident contacts, rollback triggers, exit criteria, and preserved failure logs",
+    "deterministic governance verification: tests/test_release_candidate_pilots_governance.py validates protocol texts and pilot profile constraints network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The pilot deployment protocol, staging hierarchy, and safety invariants are fully codified; conducting live institutional and remote single-tenant pilots with real research teams and documenting operational exit decisions remain open operational gates.",
+      "reference": "docs/pilots/pilot-protocol.md:1-10; release/rehearsal.json:19; conductor/tracks/36-release-candidate-pilots/traceability.json:63-67",
+      "recommendation": "Preserve open gate T36-G-PILOT-EXIT-ROLLBACK-DECISIONS until real-world pilot deployments complete their formal exit reviews and rollback rehearsals."
+    },
+    {
+      "severity": "observation",
+      "description": "The mandatory requirement to preserve findings and failure logs upon pilot termination prevents survivorship bias in pilot evaluations and maintains an auditable record of negative results.",
+      "reference": "docs/pilots/pilot-protocol.md:8-10; tests/test_release_candidate_pilots_governance.py:70-88",
+      "recommendation": "Ensure pilot exit templates include standard failure classification taxonomies."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T36-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Staged pilot progression (local -> institutional -> remote single-tenant), categorical ban on autonomous screening exclusions, deployment-controlled credential/PII isolation, rollback criteria, and exit governance in docs/pilots/pilot-protocol.md verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Pilot protocol, staging architecture, and authority constraints verified at source contract level; live institutional deployment, field execution, and stakeholder exit reviews remain open operational gates."
+  ]
+}

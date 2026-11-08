@@ -1,0 +1,48 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "36",
+  "panelist_role": "release-integrity-architect",
+  "evaluator_role": "release-integrity-architect",
+  "evaluated_at": "2026-11-09T05:40:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The release candidate rehearsal architecture codified across release/rehearsal.json, scripts/check_release_rehearsal.py, .github/workflows/release-candidate.yml, docs/releases/release-candidate.md, scripts/package_source.py, scripts/check_packaging_reproducibility.py, and tests/test_release_candidate_pilots_governance.py establishes an exemplary clean-room integrity framework for Searchright. The release rehearsal contract (release/rehearsal.json) mandates that candidate builds proceed only from a verified clean clone and locked dependencies, requiring 11 non-negotiable gates: clean_clone, locked_cross_platform_build, msrv_and_nightly_forward_compatibility, unit_integration_property_metamorphic_tests, coverage_mutation_fuzz_formal_harness, fixture_and_authorised_live_provider_receipts, mcp_cli_facade_interoperability, sourceright_citeweft_downstream_canaries, sbom_checksums_attestation_reproducibility, accessibility_usability_security_privacy_review, and pilot_exit_and_rollback_rehearsal. Deterministic source packaging is guaranteed by scripts/package_source.py and verified by scripts/check_packaging_reproducibility.py, confirming bit-for-bit identical archives and manifests across searchright-source.zip, searchright-source.tar.gz, searchright-source-manifest.json, and searchright-source-packaging-receipt.json without VCS leakage or timestamp nondeterminism. Release and registry submission actions are strictly gated fail-closed: automatic_release is set to false, automatic_registry_submission is set to false, and rollback_required is enforced as mandatory true. In .github/workflows/release-candidate.yml, workflow dispatch is required with execute_compiler_gates defaulting to false; the contract job runs check_release_rehearsal.py, check_roadmap_coverage.py, check_maturity_dossier.py, and run_static_harness.py, uploading the static receipt before any compiler work commences. Unit tests in tests/test_release_candidate_pilots_governance.py pass 100% network-free.",
+  "verified_invariants": [
+    "clean-room clone requirement: candidate promotion is restricted to pristine git clones and locked dependencies",
+    "11 mandatory gating checks: release rehearsal enforces 11 unique, non-negotiable gates covering build, test, fuzzing, provider receipts, canaries, and rollback",
+    "deterministic source packaging: scripts/check_packaging_reproducibility.py verifies byte-for-byte identical source zip and tar.gz archives and manifests",
+    "automatic release prohibited: automatic_release: false and automatic_registry_submission: false enforce fail-closed human authorization",
+    "mandatory rollback rehearsal: rollback_required: true ensures every candidate package possesses a verified, rehearsed reversal procedure",
+    "two-stage workflow isolation: .github/workflows/release-candidate.yml isolates static harness verification from opt-in compiler matrix execution",
+    "deterministic test verification: release rehearsal script conformance and packaging reproducibility unit tests pass network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Clean-room build contracts, static harness gating, and reproducible source packaging are fully verified; executing the full 90-minute compiler matrix (cross-platform, MSRV, nightly, fuzzing, SBOM generation, and artifact signing) on a committed lockfile remains an open operational gate.",
+      "reference": "release/rehearsal.json:6-18; .github/workflows/release-candidate.yml:44-67; conductor/tracks/36-release-candidate-pilots/traceability.json:33-37",
+      "recommendation": "Preserve open gate T36-G-COMPILER-MATRIX-EXECUTION until compiler matrix, packaging dry-run, and attestation receipts are produced under explicit authorization."
+    },
+    {
+      "severity": "observation",
+      "description": "Source packaging script (scripts/package_source.py) enforces normalized zip timestamps (1980-01-01) and tar headers to eliminate filesystem-dependent variations across builder environments.",
+      "reference": "scripts/package_source.py:10-50; scripts/check_packaging_reproducibility.py:55-67",
+      "recommendation": "Retain bit-for-bit packaging reproducibility verification in all pre-release candidate checks."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T36-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Clean-room build constraints, deterministic source packaging, 11 mandatory rehearsal gates in release/rehearsal.json, static harness gating in .github/workflows/release-candidate.yml, fail-closed automatic release prohibition, and rollback requirements verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Static rehearsal contracts, deterministic packaging, and workflow gating verified; execution of full compiler/test/fuzz/attestation matrix on live infrastructure remains an open operational gate."
+  ]
+}

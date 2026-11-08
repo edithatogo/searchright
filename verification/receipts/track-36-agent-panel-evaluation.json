@@ -1,0 +1,130 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "36",
+  "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal \u2014 agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T05:45:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "release-integrity-architect",
+    "pilot-operations-auditor",
+    "ecosystem-registry-auditor"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "release-integrity-architect",
+      "pilot-operations-auditor",
+      "ecosystem-registry-auditor"
+    ],
+    "output_artefacts": [
+      "release-candidate-integrity-audit",
+      "staged-pilot-operations-and-safety-audit",
+      "ecosystem-and-registry-rehearsal-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "Static rehearsal contracts, reproducible packaging validation, staged pilot deployment protocols, non-negotiable PRISMA-S / human screening authority bounds, and registry submission blockers across 9 ecosystem targets verified; live release candidate compilation, cross-platform matrix testing, field pilot deployments, and external registry publications remain open operational gates."
+  },
+  "panelists": [
+    {
+      "role": "release-integrity-architect",
+      "evaluator_role": "release-integrity-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "pilot-operations-auditor",
+      "evaluator_role": "pilot-operations-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "ecosystem-registry-auditor",
+      "evaluator_role": "ecosystem-registry-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "synthesized_findings": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 36 (Release-candidate rehearsal, staged pilots and ecosystem rehearsal). The core release rehearsal, staged pilot protocol, packaging reproducibility, and ecosystem registry assets\u2014including release/rehearsal.json, scripts/check_release_rehearsal.py, .github/workflows/release-candidate.yml, docs/releases/release-candidate.md, docs/pilots/pilot-protocol.md, registry/status.json, scripts/package_source.py, scripts/check_packaging_reproducibility.py, and tests/test_release_candidate_pilots_governance.py\u2014demonstrate exceptional operational discipline, verifiable boundary enforcement, and uncompromising methodological rigor. Clean-room release candidate requirements in release/rehearsal.json enforce 11 mandatory gating checks across compilation, testing, fuzzing, provider receipts, canaries, and rollback, with automatic release and registry submission disabled fail-closed. Deterministic source packaging verified via scripts/check_packaging_reproducibility.py ensures bit-for-bit reproducible source archives and manifests without VCS leakage. The pilot deployment protocol in docs/pilots/pilot-protocol.md establishes a three-stage hierarchy (local_researcher, institution_self_hosted, remote_single_tenant) with strict methodological safeguards: PRISMA-S is maintained as a reporting contract rather than a conduct standard, autonomous study exclusion by non-human agents is categorically barred, and restricted full-text, credentials, and personal data remain deployment-controlled. In registry/status.json, all 9 ecosystem targets (github, crates.io, GHCR, official-mcp-registry, glama, smithery, github-releases, zenodo-osf, joss) are locked to prepared_not_submitted with null evidence URLs and explicit technical and governance blockers. All 6 unit tests in tests/test_release_candidate_pilots_governance.py pass network-free. The three higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 36 (Release-candidate rehearsal, staged pilots and ecosystem rehearsal). The core release rehearsal, staged pilot protocol, packaging reproducibility, and ecosystem registry assets\u2014including release/rehearsal.json, scripts/check_release_rehearsal.py, .github/workflows/release-candidate.yml, docs/releases/release-candidate.md, docs/pilots/pilot-protocol.md, registry/status.json, scripts/package_source.py, scripts/check_packaging_reproducibility.py, and tests/test_release_candidate_pilots_governance.py\u2014demonstrate exceptional operational discipline, verifiable boundary enforcement, and uncompromising methodological rigor. Clean-room release candidate requirements in release/rehearsal.json enforce 11 mandatory gating checks across compilation, testing, fuzzing, provider receipts, canaries, and rollback, with automatic release and registry submission disabled fail-closed. Deterministic source packaging verified via scripts/check_packaging_reproducibility.py ensures bit-for-bit reproducible source archives and manifests without VCS leakage. The pilot deployment protocol in docs/pilots/pilot-protocol.md establishes a three-stage hierarchy (local_researcher, institution_self_hosted, remote_single_tenant) with strict methodological safeguards: PRISMA-S is maintained as a reporting contract rather than a conduct standard, autonomous study exclusion by non-human agents is categorically barred, and restricted full-text, credentials, and personal data remain deployment-controlled. In registry/status.json, all 9 ecosystem targets (github, crates.io, GHCR, official-mcp-registry, glama, smithery, github-releases, zenodo-osf, joss) are locked to prepared_not_submitted with null evidence URLs and explicit technical and governance blockers. All 6 unit tests in tests/test_release_candidate_pilots_governance.py pass network-free. The three higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "recommendations": [
+    "Preserve open gate T36-G-COMPILER-MATRIX-EXECUTION until compiler matrix, packaging dry-run, and attestation receipts are produced under explicit authorization.",
+    "Preserve open gate T36-G-PILOT-EXIT-ROLLBACK-DECISIONS until real-world pilot deployments complete their formal exit reviews and rollback rehearsals.",
+    "Preserve open gate T36-G-REGISTRY-SUBMISSION-APPROVAL until candidate packages and registry submissions are explicitly authorized and evidenced."
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T36-A001",
+      "statement": "Clean-room release-candidate rehearsal",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Clean-room build constraints, deterministic source packaging, 11 mandatory rehearsal gates in release/rehearsal.json, static harness gating in .github/workflows/release-candidate.yml, fail-closed automatic release prohibition, and rollback requirements verified."
+    },
+    {
+      "id": "T36-A002",
+      "statement": "Staged local, institutional and remote pilots",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Staged pilot progression (local -> institutional -> remote single-tenant), categorical ban on autonomous screening exclusions, deployment-controlled credential/PII isolation, rollback criteria, and exit governance in docs/pilots/pilot-protocol.md verified."
+    },
+    {
+      "id": "T36-A003",
+      "statement": "Rollback and registry/ecosystem rehearsal",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Rollback requirements, automatic registry submission prohibition, and exhaustive explicit blockers across all 9 submission targets in registry/status.json verified."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T36-G-COMPILER-MATRIX-EXECUTION",
+      "statement": "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+      "status": "OPEN",
+      "evidence": "Preserved open until full compiler matrix, locked packaging, security scanning, and attestation receipts are generated under explicit approval"
+    },
+    {
+      "gate": "T36-G-PILOT-EXIT-ROLLBACK-DECISIONS",
+      "statement": "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+      "status": "OPEN",
+      "evidence": "Preserved open until staged field pilots across local, institutional, and remote environments complete with formal exit decisions and rollback rehearsals"
+    },
+    {
+      "gate": "T36-G-REGISTRY-SUBMISSION-APPROVAL",
+      "statement": "Validate exact release candidate packets and obtain explicit approval before any release or registry submission.",
+      "status": "OPEN",
+      "evidence": "Preserved open until release candidate artifacts are validated and explicit human approval is granted for public registry submissions"
+    }
+  ],
+  "limitations": [
+    "Static rehearsal contracts and protocols verified; live pilot execution, compiler matrix runs, and public registry submissions remain open operational gates."
+  ]
+}
