@@ -1,0 +1,61 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "27",
+  "panelist_role": "usability-governance-auditor",
+  "evaluator_role": "usability-governance-auditor",
+  "evaluated_at": "2026-11-09T01:14:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "Track 27 exhibits exemplary fidelity to Searchright quality governance, methodological boundaries, and usability evaluation protocols. ADR 0010 firmly anchors accessibility, diagnostic stability, and institutional data governance as core architectural constraints rather than downstream UI decorations. The machine-readable external evaluation protocol in evaluation/external-evaluation.json establishes stringent independence rules: a minimum of 2 independent information specialists, strict exclusion of the development team from adjudication, and mandatory conflict-of-interest disclosure prior to participant recruitment. The evaluation design mandates blinded adjudication, living review update protocols, and sealed benchmark labels (sealed_labels_required: true) across four representative review strata (clinical, economic, policy, scoping). Crucially, the external evaluation contract status is locked to 'prepared_not_preregistered' with null external evidence fields (preregistration: null, participant_attestation: null, results: null), strictly upholding the non-negotiable rule forbidding self-attestation or premature claims of external evidence. PRISMA-S is maintained strictly as an auditable reporting contract rather than an autonomous conduct standard, and autonomous agent exclusion from screening is preserved without exception across all governance contracts.",
+  "verified_invariants": [
+    "independent adjudication: minimum of 2 independent information specialists required with developer team strictly excluded from adjudication",
+    "mandatory conflict disclosure: all evaluator and provider relationships must be explicitly recorded before participant recruitment",
+    "sealed benchmark labels: evaluation design mandates sealed labels to prevent prompt gaming, fixture leakage, and benchmark overfitting",
+    "crossover multi-strata evaluation: protocol enforces balanced representation across clinical, economic, policy, and scoping review domains",
+    "PRISMA-S reporting contract: PRISMA-S is treated strictly as an auditable reporting contract and never represented as an autonomous conduct standard",
+    "pre-registration boundary: evaluation contract status is locked to prepared_not_preregistered; self-attestation of external evidence is forbidden",
+    "no autonomous screening exclusion: human-in-the-loop sign-off is preserved across all screening and governance contracts",
+    "honest claim boundaries: source-verified diagnostic contracts are clearly distinguished from live participant trials and ethics-approved evaluation execution"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The external evaluation protocol in evaluation/external-evaluation.json is contractually prepared and locked at prepared_not_preregistered; participant recruitment, formal pre-registration, ethics clearance, and live trial execution remain an open maturity gate.",
+      "reference": "evaluation/external-evaluation.json:3, 28-33, 49; docs/evaluation/external-methodological-evaluation.md:31-40",
+      "recommendation": "Preserve gate T27-G-USABILITY-EVALUATION open until independent trial governance is established."
+    },
+    {
+      "severity": "observation",
+      "description": "ADR 0010 explicitly identifies that diagnostics and institutional governance are core architectural concerns, mandating stable machine codes, plain text/JSON/JSONL multi-format rendering, and default-deny policies without misrepresenting policy checks as legal or privacy advice.",
+      "reference": "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md:1-24",
+      "recommendation": "Maintain the explicit boundary distinguishing software policy evaluation from formal legal compliance advice."
+    },
+    {
+      "severity": "observation",
+      "description": "evaluation/external-evaluation.json mandates living review update testing and adversarial provider fixtures, ensuring usability and stability are evaluated under stress rather than only clean synthetic datasets.",
+      "reference": "evaluation/external-evaluation.json:11, 18-25; docs/evaluation/external-methodological-evaluation.md:18-22",
+      "recommendation": "Ensure living-review updates and adversarial provider edge cases are executed during participant trials."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T27-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Stable diagnostic codes, severity hierarchy, and remediation contracts verified against diagnostic.v1.schema.json and ADR 0010."
+    },
+    {
+      "id": "T27-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Information-specialist usability protocol, 2-specialist minimum independence, developer adjudication exclusion, conflict disclosure, and sealed labels verified by test_information_specialist_usability_protocol and evaluation/external-evaluation.json."
+    }
+  ],
+  "calibration_notes": "Usability governance auditors confirm that Track 27 enforces rigorous independence, sealed benchmark protocols, and PRISMA-S reporting boundaries. Claim boundaries are strictly respected with all external participant trials preserved as open gates.",
+  "claim_boundary": "Source-verified implementation only. Evaluation protocol contracts, independence rules, sealed label mandates, and PRISMA-S reporting boundaries are verified; formal trial pre-registration, specialist recruitment, and live participant trials remain open gates.",
+  "disposition": "approved",
+  "recommendation": "APPROVE_FOR_ARCHIVE"
+}

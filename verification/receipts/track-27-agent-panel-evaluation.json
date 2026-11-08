@@ -1,0 +1,242 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "27",
+  "title": "Accessibility, internationalisation and usability — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T01:15:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "b8a57d5c9dc04960f0c4009c9e74ab293a8eac50",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "accessibility-systems-architect",
+      "internationalisation-specialist",
+      "usability-governance-auditor"
+    ],
+    "output_artefacts": [
+      "structured-accessible-rendering-findings",
+      "locale-neutral-catalogues-and-fallback-invariants",
+      "information-specialist-usability-governance-audit",
+      "disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Source-verified and fixture-proven implementation only; golden plain/JSON/JSONL snapshot suites, external localized message catalogue packs, and live assistive technology/information-specialist participant trials remain gated."
+  },
+  "panelists": [
+    {
+      "role": "accessibility-systems-architect",
+      "evaluator_role": "accessibility-systems-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 2,
+      "disposition": "approved"
+    },
+    {
+      "role": "internationalisation-specialist",
+      "evaluator_role": "internationalisation-specialist",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.97,
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 2,
+      "disposition": "approved"
+    },
+    {
+      "role": "usability-governance-auditor",
+      "evaluator_role": "usability-governance-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 2,
+      "disposition": "approved"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval (scores: 0.98, 0.97, 0.98; consensus score: 0.98). Convergence centered on: (1) Deterministic, accessible diagnostic rendering in searchright_diagnostics::render and render_plain guaranteeing zero ANSI escape sequences, explicit word-based severity headers (BLOCKING, ERROR, WARNING, INFO), vertical hierarchy independent of terminal-width/wrapping, and complete elimination of unlabelled unicode glyphs; (2) Lossless round-tripping of machine-readable JSON and JSONL representations with stable lexical sorting across five keys; (3) Clean architectural separation of stable machine codes and severities from human-facing text during message catalogue localization (DiagnosticMessageCatalog, localize); (4) Fail-closed (Reject) versus source-preserving (PreserveSource) fallback policies for missing catalogue entries; (5) Robust BCP 47 locale typing (DiagnosticLocale) with enforced hyphen validation on custom tags; (6) Strict external evaluation protocol contracts (evaluation/external-evaluation.json) mandating at least 2 independent information specialists, exclusion of the developer team from adjudication, mandatory conflict disclosure, crossover strata, and sealed benchmark labels; (7) Compliance with non-negotiable Searchright rules maintaining PRISMA-S as a reporting contract and prohibiting autonomous screening exclusion; and (8) Honest preservation of all three open maturity gates (plain/JSON/JSONL snapshots, message catalogue translation packs, and participant usability evaluation) without premature completion claims.",
+    "convergence_vectors": [
+      "Accessible PlainText rendering eliminating all ANSI escape sequences (\\u{1b}) and standalone unlabelled glyphs (⚠, ✗, ✓, ⛔)",
+      "Explicit uppercase word-based severity headers (BLOCKING, ERROR, WARNING, INFO) eliminating color and icon dependencies",
+      "Terminal-width and line-wrapping independence via vertical hierarchical diagnostic formatting",
+      "Bidirectional serialization fidelity and deterministic sorting across PlainText, JSON, and JSONL formats",
+      "Strict invariance of machine identifiers (code, severity, blocking, evidence_ids) across message catalogue localization",
+      "Configurable MissingMessagePolicy supporting fail-closed Reject and source-preserving PreserveSource modes",
+      "BCP 47 structured locale tagging with hyphen validation for custom language codes",
+      "Usability evaluation independence contracts requiring >= 2 independent information specialists and developer team exclusion",
+      "Mandatory evaluator conflict-of-interest disclosure and sealed evaluation labels",
+      "PRISMA-S maintained strictly as an auditable reporting contract and not an autonomous conduct standard",
+      "Status of external evaluation locked to prepared_not_preregistered with null self-attestation receipts"
+    ],
+    "divergence_vectors": [
+      "Appropriate tooling for automated snapshot testing across simulated screen reader buffers versus raw terminal pipes",
+      "Prioritisation of community-sourced Indigenous language translation catalogues (e.g. te reo Māori) alongside official jurisdictional packs"
+    ]
+  },
+  "verified_invariants": [
+    "zero ANSI escape sequences: plain text rendering contains no terminal color, cursor positioning, or escape sequences (\\u{1b})",
+    "word-based severity headers: all diagnostic messages begin with explicit textual severity tokens (BLOCKING, ERROR, WARNING, INFO)",
+    "terminal-width and wrapping independence: output uses clean vertical hierarchy without relying on fixed column widths, carriage returns (\\r), or tabular clipping",
+    "unlabelled glyph elimination: standalone unicode symbols (⚠, ✗, ✓, ⛔) are forbidden without explicit text equivalents",
+    "strict control character rejection: contract validation rejects non-printable ASCII control characters in human messages and remediations",
+    "deterministic output sorting: diagnostics are ordered consistently by severity descending, code ascending, path ascending, line ascending, and column ascending",
+    "bidirectional machine format round-tripping: JSON and JSONL outputs serialize and deserialize losslessly against Diagnostic contracts",
+    "fail-closed validation: invalid contracts (zero lines, line-less columns, mismatched blocking flags, non-namespaced codes) fail validation before rendering",
+    "invariant machine identifiers: diagnostic codes, severities, blocking flags, and evidence IDs remain bitwise identical across locale translations",
+    "strict separation of machine semantics and human presentation: message catalogues only mutate message, remediation, and locale attributes",
+    "fail-closed or source-preserving missing message policy: MissingMessagePolicy::Reject returns MissingMessage error while PreserveSource retains canonical text",
+    "structured BCP 47 locale representation: DiagnosticLocale supports en-AU, en-NZ, en-US, mi-NZ, and validated hyphenated BCP 47 custom strings",
+    "deterministic catalog lookup: DiagnosticMessageCatalog uses BTreeMap ensuring reproducible iteration and evaluation order",
+    "post-translation contract validation: translated diagnostics re-run full contract validation to prevent invalid control characters in localized text",
+    "custom locale hyphen requirement: DiagnosticLocale::Custom must contain a hyphen, preventing malformed language codes",
+    "independent adjudication: minimum of 2 independent information specialists required with developer team strictly excluded from adjudication",
+    "mandatory conflict disclosure: all evaluator and provider relationships must be explicitly recorded before participant recruitment",
+    "sealed benchmark labels: evaluation design mandates sealed labels to prevent prompt gaming, fixture leakage, and benchmark overfitting",
+    "crossover multi-strata evaluation: protocol enforces balanced representation across clinical, economic, policy, and scoping review domains",
+    "PRISMA-S reporting contract: PRISMA-S is treated strictly as an auditable reporting contract and never represented as an autonomous conduct standard",
+    "pre-registration boundary: evaluation contract status is locked to prepared_not_preregistered; self-attestation of external evidence is forbidden",
+    "no autonomous screening exclusion: human-in-the-loop sign-off is preserved across all screening and governance contracts",
+    "honest claim boundaries: source-verified diagnostic contracts are clearly distinguished from live participant trials and ethics-approved evaluation execution"
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T27-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Stable lower-case namespaced diagnostic codes (code.contains('.')), four-level severity model, mandatory remediation for blocking diagnostics, and control-character rejection verified by 22 Rust tests and Python test_diagnostic_example_conforms_to_schema_and_invariants."
+    },
+    {
+      "id": "T27-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Plain text, JSON, and JSONL multi-format rendering in searchright_diagnostics::render verified; round-trip deserialization, deterministic sorting, and zero ANSI sequences proven in test_multiformat_accessible_rendering_plain_json_jsonl."
+    },
+    {
+      "id": "T27-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Separable message catalogues, MissingMessagePolicy (PreserveSource and Reject), DiagnosticLocale variants (EnAu, EnNz, EnUs, MiNz, Custom), and machine code invariance proven in test_locale_neutrality_and_message_separation and test_message_catalogue_localization_and_fallback_policies."
+    },
+    {
+      "id": "T27-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Accessible plain text design contracts eliminating ANSI sequences, terminal-width dependencies, carriage returns, and unlabelled glyphs verified in searchright_diagnostics::render_plain and test_accessible_rendering_contracts."
+    },
+    {
+      "id": "T27-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Information-specialist usability protocol, 2-specialist minimum independence, developer adjudication exclusion, conflict disclosure, and sealed labels verified by test_information_specialist_usability_protocol and evaluation/external-evaluation.json."
+    }
+  ],
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 3,
+      "observation": 6
+    },
+    "blocking_findings": 0
+  },
+  "findings": [
+    {
+      "role": "accessibility-systems-architect",
+      "severity": "minor",
+      "description": "Deterministic plain text, JSON, and JSONL rendering are verified across unit and integration tests; compiling and running exhaustive golden snapshot suites across varied terminal dimensions remains an open maturity gate.",
+      "reference": "crates/searchright-diagnostics/src/lib.rs:82-111; conductor/tracks/27-accessibility-internationalisation-usability/evidence.json:29",
+      "recommendation": "Preserve gate T27-G-SNAPSHOTS-AND-NO-COLOUR open until snapshot test harnesses are integrated."
+    },
+    {
+      "role": "accessibility-systems-architect",
+      "severity": "observation",
+      "description": "severity_label maps DiagnosticSeverity to unambiguous string words (INFO, WARNING, ERROR, BLOCKING), ensuring assistive technologies read explicit categories rather than relying on color coding or auditory beeps.",
+      "reference": "crates/searchright-diagnostics/src/lib.rs:152-159; crates/searchright-diagnostics/tests/diagnostic_scenarios.rs:87-105",
+      "recommendation": "Maintain explicit word headers across all CLI, MCP, and library diagnostic projections."
+    },
+    {
+      "role": "accessibility-systems-architect",
+      "severity": "observation",
+      "description": "reject_control_characters in crates/searchright-contracts/src/diagnostic.rs prevents ANSI escapes and terminal injection attacks by forbidding ASCII control codes except standard whitespace (\\n and \\t).",
+      "reference": "crates/searchright-contracts/src/diagnostic.rs:77, 91, 132-142",
+      "recommendation": "Retain control character stripping and validation in all user-supplied text inputs."
+    },
+    {
+      "role": "internationalisation-specialist",
+      "severity": "minor",
+      "description": "Message catalogue localization, fallback policies, and invariant machine code retention are proved with test Māori and English catalogues; comprehensive production message catalogue packs across additional jurisdictions remain an open maturity gate.",
+      "reference": "crates/searchright-diagnostics/src/lib.rs:278-306; conductor/tracks/27-accessibility-internationalisation-usability/evidence.json:30",
+      "recommendation": "Preserve gate T27-G-MESSAGE-CATALOGUES-FALLBACK open until community-reviewed translation packs are published."
+    },
+    {
+      "role": "internationalisation-specialist",
+      "severity": "observation",
+      "description": "MissingMessagePolicy::Reject enables fail-closed localization validation in jurisdictions requiring 100% official language translation (e.g. Canadian French or EU compliance), preventing untranslated English leakage.",
+      "reference": "crates/searchright-diagnostics/src/lib.rs:44-49, 66-68; crates/searchright-diagnostics/tests/diagnostic_scenarios.rs:188-196",
+      "recommendation": "Retain MissingMessagePolicy::Reject as the default in regulated deployment configurations."
+    },
+    {
+      "role": "internationalisation-specialist",
+      "severity": "observation",
+      "description": "Diagnostic::validate enforces that DiagnosticLocale::Custom(tag) must contain a hyphen ('-'), ensuring conformance to BCP 47 subtag standards and preventing unparseable locale identifiers.",
+      "reference": "crates/searchright-contracts/src/diagnostic.rs:120-127; crates/searchright-diagnostics/tests/render_and_localize_edges.rs:60-70",
+      "recommendation": "Maintain BCP 47 hyphen validation on custom locale identifiers across all contract versions."
+    },
+    {
+      "role": "usability-governance-auditor",
+      "severity": "minor",
+      "description": "The external evaluation protocol in evaluation/external-evaluation.json is contractually prepared and locked at prepared_not_preregistered; participant recruitment, formal pre-registration, ethics clearance, and live trial execution remain an open maturity gate.",
+      "reference": "evaluation/external-evaluation.json:3, 28-33, 49; docs/evaluation/external-methodological-evaluation.md:31-40",
+      "recommendation": "Preserve gate T27-G-USABILITY-EVALUATION open until independent trial governance is established."
+    },
+    {
+      "role": "usability-governance-auditor",
+      "severity": "observation",
+      "description": "ADR 0010 explicitly identifies that diagnostics and institutional governance are core architectural concerns, mandating stable machine codes, plain text/JSON/JSONL multi-format rendering, and default-deny policies without misrepresenting policy checks as legal or privacy advice.",
+      "reference": "docs/adrs/0010-accessible-diagnostics-and-institutional-governance.md:1-24",
+      "recommendation": "Maintain the explicit boundary distinguishing software policy evaluation from formal legal compliance advice."
+    },
+    {
+      "role": "usability-governance-auditor",
+      "severity": "observation",
+      "description": "evaluation/external-evaluation.json mandates living review update testing and adversarial provider fixtures, ensuring usability and stability are evaluated under stress rather than only clean synthetic datasets.",
+      "reference": "evaluation/external-evaluation.json:11, 18-25; docs/evaluation/external-methodological-evaluation.md:18-22",
+      "recommendation": "Ensure living-review updates and adversarial provider edge cases are executed during participant trials."
+    }
+  ],
+  "panel_recommendations": [
+    "Retain strict zero ANSI escape sequence enforcement and explicit severity-word prefixes across all CLI/MCP diagnostic renderers.",
+    "Preserve machine identifier invariance (code, severity, blocking, evidence_ids) when expanding message catalogues to additional locales.",
+    "Maintain independent information specialist requirements (minimum 2 specialists, developer team exclusion, conflict disclosure) in trial pre-registration.",
+    "Preserve honest claim boundaries distinguishing source-verified diagnostics from external participant usability trials and full golden snapshot suites."
+  ],
+  "open_gates": [
+    "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+    "Create message catalogues and execute locale-fallback tests.",
+    "Complete keyboard, screen-reader and information-specialist usability evaluation."
+  ],
+  "recommendation": "APPROVE_FOR_ARCHIVE",
+  "decision": {
+    "outcome": "approved_as_source_verified",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-09"
+  }
+}

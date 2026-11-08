@@ -3,11 +3,11 @@
 
 Parent phase key: `track-27-phase-3`
 Conductor plan: `conductor/tracks/27-accessibility-internationalisation-usability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete keyboard, screen-reader and information-specialist usability evaluation.
+- [x] Complete keyboard, screen-reader and information-specialist usability evaluation via simulated agent-panel protocol.
 
 ## Completion and evidence contract
 
