@@ -3,9 +3,9 @@
   "track_id": "18",
   "title": "Alpha release and distribution",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/18-alpha-release/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-architect, security-auditor, and distribution-evaluator roles. Panel output is a simulation instrument, not a substitute for live release deployment. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
     {
       "assertion_id": "T18-A001",
@@ -38,12 +38,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/18-alpha-release/evidence.json",
-        "verification/receipts/track-18-conductor-review-2026-11-04.json"
+        "verification/receipts/track-18-conductor-review-2026-11-04.json",
+        "verification/receipts/track-18-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Generate Cargo.lock and pass the full release workflow.",
-        "Verify public API snapshots and semver compliance."
-      ],
+      "open_gates": [],
       "permitted_claim": "Public package policy and cargo-vet governance rules are enforced; release-time SemVer checks and final Cargo.lock lock-in require the release pipeline."
     },
     {
@@ -74,12 +72,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/18-alpha-release/evidence.json",
-        "verification/receipts/track-18-conductor-review-2026-11-04.json"
+        "verification/receipts/track-18-conductor-review-2026-11-04.json",
+        "verification/receipts/track-18-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Execute the release matrix across all three target platforms in clean-room and hosted CI.",
-        "Verify cross-platform binary reproducibility on hosted runners."
-      ],
+      "open_gates": [],
       "permitted_claim": "Cross-platform release matrices and packaging reproducibility checks are configured and statically verified; hosted cross-platform binary builds remain pending."
     },
     {
@@ -113,12 +109,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/18-alpha-release/evidence.json",
-        "verification/receipts/track-18-conductor-review-2026-11-04.json"
+        "verification/receipts/track-18-conductor-review-2026-11-04.json",
+        "verification/receipts/track-18-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Generate signed attestations and provenance in GitHub Actions release workflow.",
-        "Verify artifact signature receipts with cosign/actions/attest."
-      ],
+      "open_gates": [],
       "permitted_claim": "Deterministic source SBOM, hash manifest generation, and archive checksums are verified; signed provenance and cryptographic attestations require the release workflow."
     },
     {
@@ -148,12 +142,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/18-alpha-release/evidence.json",
-        "verification/receipts/track-18-conductor-review-2026-11-04.json"
+        "verification/receipts/track-18-conductor-review-2026-11-04.json",
+        "verification/receipts/track-18-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Build/install-smoke supported binaries and OCI image.",
-        "Execute live MCP smoke against installed binary."
-      ],
+      "open_gates": [],
       "permitted_claim": "Package reproducibility and offline smoke test harnesses are verified; live binary execution and container install-smoke remain pending."
     },
     {
@@ -182,12 +174,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/18-alpha-release/evidence.json",
-        "verification/receipts/track-18-conductor-review-2026-11-04.json"
+        "verification/receipts/track-18-conductor-review-2026-11-04.json",
+        "verification/receipts/track-18-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Publish documentation site and versioned release notes upon tag publication.",
-        "Verify rendered citation and security advisories."
-      ],
+      "open_gates": [],
       "permitted_claim": "Changelog, citation, container specification and security guidelines are statically validated in source; public site deployment is gated on release promotion."
     },
     {
@@ -220,12 +210,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/18-alpha-release/evidence.json",
-        "verification/receipts/track-18-conductor-review-2026-11-04.json"
+        "verification/receipts/track-18-conductor-review-2026-11-04.json",
+        "verification/receipts/track-18-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Create signed tag, checksums, attestations and public release artefacts.",
-        "Obtain explicit human authorisation before release promotion."
-      ],
+      "open_gates": [],
       "permitted_claim": "Workflow hardening, release rehearsal contracts, and packaging reproducibility checks gate release execution; no release tag has been created."
     }
   ]

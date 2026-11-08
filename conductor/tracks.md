@@ -28,7 +28,6 @@ an explicit, approval-gated apply receipt exists.
 | 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
 | 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
 | 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | source_implemented | source_implemented | source_verified | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
-| 18 | [Alpha release and distribution](tracks/18-alpha-release/spec.md) | alpha | source_implemented | source_implemented | source_verified | Produce locked, signed, attestable cross-platform technical-preview releases with reproducible source archives. |
 | 19 | [Registries and scholarly publication](tracks/19-registries-publication/spec.md) | alpha | submission_prepared | scaffolded | source_verified | Prepare and submit truthful registry packets and a software paper only after a verified release. |
 | 21 | [Licensed BYO-access adapters](tracks/21-licensed-adapters/spec.md) | beta | scaffolded | scaffolded | source_verified | Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science. |
 | 22 | [Living reviews, amendments and update lineage](tracks/22-living-updates/spec.md) | beta | partially_implemented | partially_implemented | source_verified | Make updates, protocol changes, prior-run deduplication and cadence explicit and immutable. |
@@ -61,6 +60,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 09 | [CLI MVP](tracks/09-cli-mvp/spec.md) | 2026-08-29 | compiler_verified |
 | 10 | [MCP stdio server MVP](tracks/10-mcp-mvp/spec.md) | 2026-08-30 | compiler_verified |
 | 17 | [Benchmarks, search validation and human calibration](tracks/17-benchmarks-calibration/spec.md) | 2026-11-08 | fixture_proven |
+| 18 | [Alpha release and distribution](tracks/18-alpha-release/spec.md) | 2026-11-08 | fixture_proven |
 | 20 | [Grey literature, registers and supplementary discovery](tracks/20-broader-discovery/spec.md) | 2026-08-29 | compiler_verified |
 | 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
 

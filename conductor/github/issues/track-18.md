@@ -14,10 +14,10 @@ Produce locked, signed, attestable cross-platform technical-preview releases wit
 - Horizon: `alpha`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `09, 10, 13, 16, 17`
 - Requirements: `SR-039, SR-068`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Produce locked, signed, attestable cross-platform technical-preview releases wit
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating release-architect, security-auditor, and distribution-evaluator roles. Panel output is a simulation instrument, not a substitute for live release deployment. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

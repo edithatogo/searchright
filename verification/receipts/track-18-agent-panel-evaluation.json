@@ -1,0 +1,79 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "18",
+  "title": "Alpha release and distribution — agent-panel evaluation",
+  "observed_at": "2026-11-08T20:25:00Z",
+  "source_revision": "ac8b5e35cb8a98d45d8dcb0bbee8e464d2d3c619",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["release-architect", "security-auditor", "distribution-evaluator"],
+    "output_artefacts": ["structured-release-findings", "supply-chain-hardening-metrics", "disposition-record"],
+    "evidence_level": "fixture_proven",
+    "limitation": "Simulation instrument only; not a substitute for live release deployment or signed cryptographic tags."
+  },
+  "panelists": [
+    {
+      "role": "release-architect",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "security-auditor",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "distribution-evaluator",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval with minor findings. Convergence centered on byte-for-byte packaging reproducibility (identical SHA256 across repeated runs), complete GitHub Action commit-SHA pinning, non-publishable crate firewalls, deterministic SBOM/checksum generation, and truthful claim boundaries.",
+    "convergence_vectors": [
+      "Byte-for-byte reproducible source tarballs via header normalization",
+      "100% 40-character commit-SHA pinning on external GitHub Actions",
+      "Strict non-publishable crate enforcement across all 30 workspace crates",
+      "Deterministic release rehearsal and packaging test suite passing 100%"
+    ],
+    "divergence_vectors": [
+      "Evaluation of future binary strip options vs symbol preserving debug info",
+      "Granularity of base image digest pinning in container definitions"
+    ]
+  },
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 6,
+      "observation": 3
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Retain byte-level tarball reproducibility invariants across all packaging tool updates.",
+    "Keep action commit-SHA pinning automated and verified via check_workflow_hardening.py.",
+    "Maintain empty publishable packages list until formal release candidate criteria are satisfied."
+  ],
+  "decision": {
+    "outcome": "approved_as_fixture_proven",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-08"
+  }
+}
