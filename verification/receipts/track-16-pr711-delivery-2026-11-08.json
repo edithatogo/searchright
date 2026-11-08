@@ -1,0 +1,11 @@
+{
+  "schema_version": "org.searchright.track-delivery-receipt.v1",
+  "track_id": "16",
+  "pull_request": "https://github.com/edithatogo/searchright/pull/711",
+  "reviewed_head": "dd0e538c97d450e7453c44d79b5e4bee77c459a0",
+  "merged_revision": "1fae93c443535a0ab08faa72052c32a65aa320ad",
+  "verification": "scripts/verify.sh passed on the exact merged revision; 235 Python and 867 Rust tests passed.",
+  "hosted_checks": "Required hosted checks passed; OpenSSF Scorecard skipped.",
+  "control_plane_audit": "Failed after merge: 5 canonical issue content differences, 1 label difference, 1 task state difference, and 1 Project field difference. Receipt: /tmp/sr-pr711-merged-audit.json. No reconciliation mutation applied.",
+  "claim_boundary": "Delivery verification does not establish control-plane parity or close Track 16 evidence blockers."
+}

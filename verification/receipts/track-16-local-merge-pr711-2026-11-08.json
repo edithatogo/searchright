@@ -1,0 +1,9 @@
+{
+  "schema_version": "org.searchright.local-integration-receipt.v1",
+  "merged_revision": "7906de3",
+  "upstream_main_parent": "1fae93c443535a0ab08faa72052c32a65aa320ad",
+  "scope": "Reconcile locally integrated main with the already merged PR 711 Kani action update; regenerate derived SBOM and source manifest.",
+  "verification": "scripts/verify.sh passed: 238 Python tests and 867 Rust tests.",
+  "control_plane_audit": "Failed: 6 canonical issue content differences, 1 label difference, 1 task state difference, and 1 Project field difference. Receipt: /tmp/sr-integrated-main-audit.json. No remote changes applied.",
+  "claim_boundary": "Local integration is not evidence of merged open PRs, dependency audits, or current remote control-plane convergence."
+}

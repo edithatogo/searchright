@@ -1,0 +1,11 @@
+{
+  "schema_version": "org.searchright.track-delivery-receipt.v1",
+  "track_id": "13",
+  "pull_request": "https://github.com/edithatogo/searchright/pull/688",
+  "merged_revision": "9d3cd197b9441a7bb13310c5448ec05cea8d80b6",
+  "local_verify": "passed; 235 Python and 867 Rust tests",
+  "local_verify_log_sha256": "7deb9f259b62ddaf97a95b7acfbe8456d34b712f5677ca3568be230e8c86f940",
+  "control_plane_audit": "failed; 5 issue content, 1 label, 1 task state and 1 Project field drift",
+  "audit_receipt": "/tmp/sr-pr688-merged-control-plane.json",
+  "claim_boundary": "Historical exact merged revision audit only; no current revision parity claim. No remote state applied."
+}
