@@ -42,20 +42,20 @@
   },
   "gates": [
     {
+      "evidence": [],
       "id": "T02-G-NAMED-FILTERS",
       "kind": "external",
-      "status": "pending",
       "required_evidence": "Rights-clear real filter expressions and versions, platform currentness, isolated panel findings and owner disposition.",
-      "evidence": []
+      "status": "pending"
     },
     {
-      "id": "T02-G-CORPUS-OWNER",
-      "kind": "human",
-      "status": "pending",
-      "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
       "evidence": [
         "verification/receipts/track-02-integration-panel.json"
-      ]
+      ],
+      "id": "T02-G-CORPUS-OWNER",
+      "kind": "human",
+      "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
+      "status": "pending"
     }
   ]
 }

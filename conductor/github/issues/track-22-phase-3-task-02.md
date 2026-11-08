@@ -3,11 +3,11 @@
 
 Parent phase key: `track-22-phase-3`
 Conductor plan: `conductor/tracks/22-living-updates/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Pilot a real update and independently reproduce change attribution.
+- [x] Pilot a real update and independently reproduce change attribution.
 
 ## Completion and evidence contract
 

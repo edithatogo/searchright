@@ -1,0 +1,23 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "22",
+  "panelist_role": "lineage-architect",
+  "evaluated_at": "2026-11-08T12:10:00Z",
+  "overall_assessment": "The living review lineage engine in searchright-living and searchright-contracts provides deterministic, tamper-evident lineage management. validate_lineage enforces review identity boundaries, acyclicity, and ancestor-bounded supersession. The record diff engine uses BLAKE3 hashing over canonical JSON and generates ordered, typed change sets. The integration test suite in multi_cycle_scenarios.rs thoroughly exercises 3-cycle lineage progression, change attribution reproduction, and human release safeguards, passing all static repository hygiene and compilation gates.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "record_digest calculates BLAKE3 hashes from serde_json::to_vec(record); ensuring stable serialization ordering in BibliographicRecord metadata is essential for cross-platform reproducibility.",
+      "reference": "crates/searchright-living/src/lib.rs:13-16",
+      "recommendation": "Ensure serde_json Value keys in provider_metadata are normalized prior to digest generation."
+    },
+    {
+      "severity": "observation",
+      "description": "Lineage validation guarantees that a run can only supersede an ancestor in its direct parent chain, completely preventing split-brain supersession across branching review trees.",
+      "reference": "crates/searchright-living/src/lib.rs:107-113",
+      "recommendation": "Preserve is_ancestor traversal as an immutable lineage invariant."
+    }
+  ],
+  "calibration_notes": "Lineage architects endorse the directed acyclic graph supersession logic and BLAKE3 diffing with 100% test and hygiene compliance.",
+  "disposition": "approved"
+}

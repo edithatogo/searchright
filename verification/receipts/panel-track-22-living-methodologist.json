@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "22",
+  "panelist_role": "living-methodologist",
+  "evaluated_at": "2026-11-08T12:10:00Z",
+  "overall_assessment": "Track 22 establishes rigorous methodological governance for living systematic reviews in accordance with PRISMA-LSR (2024) and Cochrane living review guidance. The reporting pack prisma-lsr-2024 is strictly bounded to reporting considerations (cadence and version lineage) without masquerading as conduct rules. The protocol amendment schema mandates explicit rationales, before/after diffs, retrospective impact assessments, and designated decision-makers. Crucially, the living update contract enforces a mandatory human release gate whenever record changes occur, forbidding automated inclusion into screening pipelines.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "PRISMA-LSR pack items currently address update frequency and version lineage; future extensions should define crosswalks for ongoing trial registry status transitions (e.g. recruiting to completed).",
+      "reference": "contracts/standards/packs/prisma-lsr-2024.yaml:8-20",
+      "recommendation": "Expand standard pack crosswalks when Track 23 (Trial registries and ongoing studies) contracts are integrated."
+    },
+    {
+      "severity": "minor",
+      "description": "Protocol amendments support retrospective impact narrative, but structured impact metrics (e.g. number of previously screened records requiring reassessment) are currently captured as text.",
+      "reference": "crates/searchright-contracts/src/amendment.rs:88-91",
+      "recommendation": "Consider adding optional structured record re-screening count tallies in amendment contracts."
+    },
+    {
+      "severity": "observation",
+      "description": "LivingUpdateRun validation strictly fails closed if changes exist and requires_human_release is false, providing guaranteed human-in-the-loop protection against unverified screening drift.",
+      "reference": "crates/searchright-contracts/src/living.rs:243-248",
+      "recommendation": "Preserve this invariant across all downstream execution harnesses and MCP endpoints."
+    }
+  ],
+  "calibration_notes": "Methodologists will unanimously commend the separation of reporting requirements from conduct rules and the strict human release mandate preventing silent review drift.",
+  "disposition": "approved"
+}

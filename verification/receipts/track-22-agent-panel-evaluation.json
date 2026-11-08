@@ -1,0 +1,79 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "22",
+  "title": "Living reviews, amendments and update lineage — agent-panel evaluation",
+  "observed_at": "2026-11-08T22:10:00Z",
+  "source_revision": "a19e34976c9c5cbe2841eab1f3e84faefaa63b53",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["living-methodologist", "lineage-architect", "governance-auditor"],
+    "output_artefacts": ["structured-living-review-findings", "lineage-invariants-record", "disposition-record"],
+    "evidence_level": "fixture_proven",
+    "limitation": "Simulation instrument only; not a substitute for live clinical review surveillance or human protocol amendment committee decisions."
+  },
+  "panelists": [
+    {
+      "role": "living-methodologist",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "lineage-architect",
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "governance-auditor",
+      "findings_count": 1,
+      "critical": 0,
+      "major": 0,
+      "minor": 0,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval. Convergence centered on strict human release requirements whenever record changes occur, PRISMA-LSR declared strictly as reporting scope, acyclic ancestor-bounded supersession lineage, BLAKE3 change detection, and protocol amendment version advance accountability.",
+    "convergence_vectors": [
+      "Strict human release requirement forbidding automated inclusion into screening",
+      "PRISMA-LSR standard pack scoped strictly to reporting considerations",
+      "Acyclic DAG living update lineage validation with ancestor supersession",
+      "Deterministic BLAKE3 record digest calculation and change attribution"
+    ],
+    "divergence_vectors": [
+      "Timeline for extending PRISMA-LSR crosswalks to ongoing clinical trials",
+      "Addition of structured re-screening count tallies in amendment contracts"
+    ]
+  },
+  "findings_summary": {
+    "total_unique_findings": 6,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 3,
+      "observation": 3
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Retain mandatory human release invariant on all living update runs with record changes.",
+    "Preserve PRISMA-LSR scope as reporting rather than conduct across all documentation.",
+    "Maintain honest claim boundaries distinguishing synthetic multi-cycle scenario fixtures from live external review surveillance."
+  ],
+  "decision": {
+    "outcome": "approved_as_fixture_proven",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-08"
+  }
+}

@@ -12,9 +12,9 @@ Make updates, protocol changes, prior-run deduplication and cadence explicit and
 ## Contract
 
 - Horizon: `beta`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `05, 06, 07, 08`
 - Requirements: `SR-025, SR-045, SR-049, SR-052`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Make updates, protocol changes, prior-run deduplication and cadence explicit and
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating living-methodologist, lineage-architect, and governance-auditor roles, with multi-cycle scenarios verified in crates/searchright-living/tests/multi_cycle_scenarios.rs. Panel output is a simulation instrument, not a substitute for live clinical review surveillance or human protocol amendment committee decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-22-phase-1`
 Conductor plan: `conductor/tracks/22-living-updates/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
   - [x] Present source path: `crates/searchright-living/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/living.rs`
   - [x] Present source path: `crates/searchright-contracts/src/amendment.rs`
