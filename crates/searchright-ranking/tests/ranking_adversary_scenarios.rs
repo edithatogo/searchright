@@ -84,9 +84,8 @@ fn test_outcome_gradable_screening_benchmark_and_wss95() {
     ];
 
     let ranker = LexicalRanker::default();
-    let scores = match ranker.score(&dataset, &query_terms) {
-        Ok(s) => s,
-        Err(_) => panic!("scoring must succeed"),
+    let Ok(scores) = ranker.score(&dataset, &query_terms) else {
+        panic!("scoring must succeed");
     };
 
     assert_eq!(scores.len(), 10);
@@ -121,15 +120,14 @@ fn test_outcome_gradable_screening_benchmark_and_wss95() {
     assert!(operating_point.work_saved_over_sampling > 0.60);
 
     // Export valid ranking calibration
-    let calibration = match curve.to_ranking_calibration(
+    let Ok(calibration) = curve.to_ranking_calibration(
         "review-heart-sglt2",
         "lexical-v1",
         0.1,
         0.95,
         Some("senior-information-specialist"),
-    ) {
-        Ok(c) => c,
-        Err(_) => panic!("calibration conversion must succeed"),
+    ) else {
+        panic!("calibration conversion must succeed");
     };
 
     assert!(calibration.approved_for_prioritisation);
@@ -176,14 +174,12 @@ fn test_comparative_ranking_models_and_determinism() {
         subject_weight: 0.05,
     };
 
-    let title_scores = match title_focused.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("title scoring must succeed"),
+    let Ok(title_scores) = title_focused.score(&records, &query) else {
+        panic!("title scoring must succeed");
     };
 
-    let abstract_scores = match abstract_focused.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("abstract scoring must succeed"),
+    let Ok(abstract_scores) = abstract_focused.score(&records, &query) else {
+        panic!("abstract scoring must succeed");
     };
 
     let Some(first_title) = title_scores.first() else {
@@ -197,9 +193,8 @@ fn test_comparative_ranking_models_and_determinism() {
     assert_eq!(first_abstract.record_id, "doc-abstract-match");
 
     // Determinism test: repeated runs on identical records yield bitwise identical output
-    let repeat_scores = match title_focused.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("repeat scoring must succeed"),
+    let Ok(repeat_scores) = title_focused.score(&records, &query) else {
+        panic!("repeat scoring must succeed");
     };
     assert_eq!(title_scores, repeat_scores);
 }
@@ -231,9 +226,8 @@ fn test_adversarial_prompt_injection_countermeasure() {
     ];
 
     let ranker = LexicalRanker::default();
-    let scores = match ranker.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("scoring must succeed"),
+    let Ok(scores) = ranker.score(&records, &query) else {
+        panic!("scoring must succeed");
     };
 
     let Some(top_score) = scores.first() else {
@@ -278,21 +272,18 @@ fn test_context_isolation_and_anti_sycophancy() {
         subject_weight: 0.20,
     };
 
-    let primary_run_1 = match agent_primary.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("primary run 1 must succeed"),
+    let Ok(primary_run_1) = agent_primary.score(&records, &query) else {
+        panic!("primary run 1 must succeed");
     };
 
     // Adversary runs independently
-    let adversary_run = match agent_adversary.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("adversary run must succeed"),
+    let Ok(adversary_run) = agent_adversary.score(&records, &query) else {
+        panic!("adversary run must succeed");
     };
 
     // Primary agent runs again; its evaluation must remain completely unaffected by adversary
-    let primary_run_2 = match agent_primary.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("primary run 2 must succeed"),
+    let Ok(primary_run_2) = agent_primary.score(&records, &query) else {
+        panic!("primary run 2 must succeed");
     };
 
     assert_eq!(
@@ -316,9 +307,8 @@ fn test_strict_stopping_rules_and_auto_exclusion_blocked() {
     let query = vec!["pediatric".to_string(), "asthma".to_string()];
 
     let ranker = LexicalRanker::default();
-    let scores = match ranker.score(&records, &query) {
-        Ok(s) => s,
-        Err(_) => panic!("scoring must succeed"),
+    let Ok(scores) = ranker.score(&records, &query) else {
+        panic!("scoring must succeed");
     };
 
     let mut relevant = BTreeSet::new();
@@ -327,15 +317,14 @@ fn test_strict_stopping_rules_and_auto_exclusion_blocked() {
     let curve = calibrate(&scores, &relevant, &[0.5]);
 
     // 1. Valid calibration mandates auto_exclusion_prohibited = true
-    let mut calibration = match curve.to_ranking_calibration(
+    let Ok(mut calibration) = curve.to_ranking_calibration(
         "review-stopping-rule-check",
         "lexical-v1",
         0.5,
         0.90,
         Some("qualified-methodologist"),
-    ) {
-        Ok(c) => c,
-        Err(_) => panic!("valid calibration must succeed"),
+    ) else {
+        panic!("valid calibration must succeed");
     };
     assert!(calibration.auto_exclusion_prohibited);
 
