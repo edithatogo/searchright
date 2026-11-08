@@ -3,6 +3,7 @@
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
 Lifecycle: **archived** on **2026-11-08**; canonical source and GitHub keys are retained.
 
+
 GitHub issue key: `track-18`. Each numbered phase maps to the same-numbered native subissue.
 
 ## Phase 1: Source implementation

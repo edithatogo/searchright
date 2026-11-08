@@ -771,9 +771,9 @@ ee6d60cb034e3631e44958233ffd43be5abe4dc8661b74504d2bf3c4d9682a71  ./conductor/tr
 7abb45027f668a6d60a1d9c91f01a17254d96437ace2e77724490c0604e0e0d9  ./conductor/tracks/17-benchmarks-calibration/plan.md
 1051e8a030213d03e8160f419bcc82736e6f9de07fb57eeb82d4358b377a1662  ./conductor/tracks/17-benchmarks-calibration/spec.md
 9d6de5c5ffb77683b62489c1b4e46373a2d47e2edee39c024d8dca44010e6ae9  ./conductor/tracks/17-benchmarks-calibration/traceability.json
-b6f1b73022b461d3be0df69dc44901e298ecd87a35513a8019301a1857bfc81a  ./conductor/tracks/18-alpha-release/evidence.json
+5e9d8eb9df52d2d21a0be14cd3b93c4cc66e02b68d8d14b84d4385a52d92c459  ./conductor/tracks/18-alpha-release/evidence.json
 939f5d4b9d028b63a2709ef5c0518502b99d0ca7cfea409cb86dac2488209d75  ./conductor/tracks/18-alpha-release/metadata.json
-21cac84d6008613bcb93ad908287abe8273801dc620db36fd79e1b96e76cee62  ./conductor/tracks/18-alpha-release/plan.md
+65a7d6446b693457b17bdc7dae63bd62ca12fbc3947c4618e697f51d6fbe6cab  ./conductor/tracks/18-alpha-release/plan.md
 6d77ff5064017e577509070322982503191211469057c5e2d539babc9fc6539c  ./conductor/tracks/18-alpha-release/spec.md
 ce54b8e9cf387d136a9229056431de0a7086a35d353cafc615908631f5e8112f  ./conductor/tracks/18-alpha-release/traceability.json
 b645fc479714e67f9934df50d270095ef078a13824ddea9843db88e333299192  ./conductor/tracks/19-registries-publication/evidence.json
@@ -876,7 +876,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 49a1c1e7898c99cf28469b17e73aca05c551dc07d93e6b26df727130b53e917f  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 b0fd92a7f979cffa6f82d4a1cf77119fe088a5926632e1eedc142bf0e63f129e  ./context/claim-boundaries.json
-903cf5bf5f3631c61069ce069eb6305737735b1239b8e2d42220c40c321d15f1  ./context/context-lock.json
+4a1d30b0666d023583eda572bc26e39f4cf0f098983cb66c2c06fda04a75d1a3  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
