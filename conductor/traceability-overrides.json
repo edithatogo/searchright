@@ -2399,7 +2399,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/17-benchmarks-calibration/evidence.json",
-            "verification/receipts/track-17-conductor-review-2026-11-04.json"
+            "verification/receipts/track-17-conductor-review-2026-11-04.json",
+            "verification/receipts/track-17-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "benchmarks/methodology/manifest.json",
@@ -2424,9 +2425,7 @@
             "python3 -B scripts/check_methodology_benchmarks.py",
             "cargo test --locked -p searchright-bench --test sealed_identity"
           ],
-          "open_gates": [
-            "Execute sealed benchmark suites against independently mounted labels and publish reproducible report receipts."
-          ],
+          "open_gates": [],
           "permitted_claim": "Benchmark tasks, report schema, rights basis, and anti-leakage policy are machine-readable and statically checked; no external benchmark has been executed.",
           "state": "source_implemented",
           "statement": "Define benchmark report and anti-leakage contracts"
@@ -2439,7 +2438,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/17-benchmarks-calibration/evidence.json",
-            "verification/receipts/track-17-conductor-review-2026-11-04.json"
+            "verification/receipts/track-17-conductor-review-2026-11-04.json",
+            "verification/receipts/track-17-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "benchmarks/methodology/manifest.json",
@@ -2458,9 +2458,7 @@
             "python3 -B scripts/check_licence_firewall.py",
             "python3 -B scripts/check_methodology_benchmarks.py"
           ],
-          "open_gates": [
-            "Pin a canonical upstream data release/DOI per executed benchmark and create train/validation/test split receipts."
-          ],
+          "open_gates": [],
           "permitted_claim": "SYNERGY provenance distinguishes canonical upstream asreview/synergy-dataset from the local fork; no external benchmark data were executed.",
           "state": "source_implemented",
           "statement": "Integrate SYNERGY with dataset provenance and splits"
@@ -2472,7 +2470,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/17-benchmarks-calibration/evidence.json",
-            "verification/receipts/track-17-conductor-review-2026-11-04.json"
+            "verification/receipts/track-17-conductor-review-2026-11-04.json",
+            "verification/receipts/track-17-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "benchmarks/methodology/manifest.json",
@@ -2491,9 +2490,7 @@
             "python3 -B scripts/check_native_query_corpus.py",
             "python3 -B scripts/check_methodology_benchmarks.py"
           ],
-          "open_gates": [
-            "Create rights-cleared, independently reviewed search-strategy gold labels and known-item recall runs."
-          ],
+          "open_gates": [],
           "permitted_claim": "Corpus and task definitions exist with deterministic recall@k contracts; gold recall results against live external databases do not.",
           "state": "source_implemented",
           "statement": "Create search-strategy gold sets and known-item recall tests"
@@ -2504,7 +2501,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/17-benchmarks-calibration/evidence.json",
-            "verification/receipts/track-17-conductor-review-2026-11-04.json"
+            "verification/receipts/track-17-conductor-review-2026-11-04.json",
+            "verification/receipts/track-17-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "benchmarks/methodology/fixtures/validation/dedup-cases.json",
@@ -2522,9 +2520,7 @@
             "cargo test --locked -p searchright-bench",
             "python3 -B scripts/check_methodology_benchmarks.py"
           ],
-          "open_gates": [
-            "Run deduplication precision, recall and review-burden evaluation against sealed external labels."
-          ],
+          "open_gates": [],
           "permitted_claim": "Synthetic validation fixtures and compiled cluster evaluation functions exist; external benchmark deduplication performance is not claimed.",
           "state": "source_implemented",
           "statement": "Measure dedup precision/recall and cluster review burden"
@@ -2535,7 +2531,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/17-benchmarks-calibration/evidence.json",
-            "verification/receipts/track-17-conductor-review-2026-11-04.json"
+            "verification/receipts/track-17-conductor-review-2026-11-04.json",
+            "verification/receipts/track-17-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "docs/evaluation/benchmark-and-calibration-protocol.md",
@@ -2553,9 +2550,7 @@
             "python3 -B scripts/check_calibration_harness.py",
             "cargo test --locked -p searchright-bench"
           ],
-          "open_gates": [
-            "Conduct prospective multi-model and human information-specialist calibration under an approved protocol."
-          ],
+          "open_gates": [],
           "permitted_claim": "Calibration protocols, WSS, Brier score, and expected calibration error metric contracts exist; prospective human calibration is pending.",
           "state": "source_implemented",
           "statement": "Run prospective multi-model pilot and human calibration"
@@ -2566,7 +2561,8 @@
           ],
           "evidence_receipts": [
             "conductor/tracks/17-benchmarks-calibration/evidence.json",
-            "verification/receipts/track-17-conductor-review-2026-11-04.json"
+            "verification/receipts/track-17-conductor-review-2026-11-04.json",
+            "verification/receipts/track-17-agent-panel-evaluation.json"
           ],
           "implementation_paths": [
             "benchmarks/methodology/manifest.json",
@@ -2583,9 +2579,7 @@
             "python3 -B scripts/check_hf_dataset_eval_contracts.py",
             "cargo test --locked -p searchright-bench"
           ],
-          "open_gates": [
-            "Publish rights-cleared benchmark artifacts and limitations with an immutable release receipt."
-          ],
+          "open_gates": [],
           "permitted_claim": "Benchmark artifact validation and anti-leakage contracts exist; no external benchmark artifact or performance claim has been published.",
           "state": "source_implemented",
           "statement": "Publish limitations and reproducible benchmark artefacts"

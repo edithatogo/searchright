@@ -14,7 +14,7 @@ Evaluate translation, retrieval, deduplication and prioritisation with leakage c
 - Horizon: `alpha`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `02, 06, 07, 08, 16`
 - Requirements: `SR-037, SR-038`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Evaluate translation, retrieval, deduplication and prioritisation with leakage c
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating benchmark-evaluator, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

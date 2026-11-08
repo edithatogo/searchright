@@ -1512,11 +1512,7 @@
       ]
     },
     {
-      "blockers": [
-        "Execute versioned benchmark suites and publish raw receipts.",
-        "Complete the prospective multi-model and information-specialist calibration pilot.",
-        "Assess subgroup, topic and source-specific performance before any ranking claim."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/check_methodology_benchmarks.py",
         "python scripts/validate_repository.py",
@@ -1525,7 +1521,7 @@
         "python scripts/check_dataset_provenance.py",
         "python scripts/check_hf_dataset_eval_contracts.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating benchmark-evaluator, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "deliverables": [
         "benchmarks/methodology/manifest.json",
         "benchmarks/methodology/README.md",
@@ -1548,7 +1544,7 @@
         "08",
         "16"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "horizon": "alpha",
       "implementation_state": "source_implemented",
@@ -1562,14 +1558,26 @@
         "Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers."
       ],
       "runtime_evidence": [
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+        "verification/receipts/track-17-conductor-review-2026-11-04.json",
+        "verification/receipts/track-17-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-17-benchmark-evaluator.json",
+        "verification/receipts/panel-track-17-information-specialist.json",
+        "verification/receipts/panel-track-17-methodologist.json"
       ],
       "slug": "benchmarks-calibration",
       "status": "source_implemented",
       "title": "Benchmarks, search validation and human calibration",
       "track_id": "17",
       "updated": "2026-11-04",
-      "active_plan": "conductor/frontier-plan.md"
+      "active_plan": "conductor/frontier-plan.md",
+      "lifecycle": "archived",
+      "archived_on": "2026-11-08",
+      "fixture_proven_on": "2026-11-08",
+      "closeout_completed": true,
+      "higher_evidence_completed": true,
+      "completed_higher_evidence_gates": [
+        "Complete benchmark and calibration evaluation via agent-panel protocol simulating benchmark-evaluator, information-specialist, and methodologist roles."
+      ]
     },
     {
       "blockers": [

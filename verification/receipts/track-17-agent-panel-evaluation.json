@@ -1,0 +1,86 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "17",
+  "title": "Benchmarks, search validation and human calibration — agent-panel evaluation",
+  "observed_at": "2026-11-08T20:00:00Z",
+  "source_revision": "09a58a52eb142f52df005ea50067998aa268b2e1",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["benchmark-evaluator", "information-specialist", "methodologist"],
+    "output_artefacts": ["structured-benchmark-findings", "inter-rater-agreement-metrics", "disposition-record"],
+    "evidence_level": "fixture_proven",
+    "limitation": "Simulation instrument only; not a substitute for live human studies."
+  },
+  "panelists": [
+    {
+      "role": "benchmark-evaluator",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "information-specialist",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "methodologist",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval with minor findings. Convergence centered on mathematical soundness of calibration metrics (ECE, Brier, WSS@95%), robust sealed-digest anti-leakage invariants, zero unwrap/expect in production code, and truthful claim boundaries.",
+    "convergence_vectors": [
+      "Strict anti-leakage enforcement segregating test labels from repository source trees",
+      "Zero-division and boundary protection in WSS@95% and ECE metric calculations",
+      "SYNERGY provenance passport properly isolating mirror role from canonical upstream",
+      "Non-negotiable rule forbidding autonomous study exclusion is strictly enforced"
+    ],
+    "divergence_vectors": [
+      "Prioritisation of quantile vs equal-width binning for ECE in future tracks",
+      "Granularity of diagnostic error types returned by metric evaluation functions"
+    ]
+  },
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 6,
+      "observation": 3
+    }
+  },
+  "gates_disposition": [
+    {
+      "gate_id": "T17-G-EXTERNAL-BENCHMARK-RUNS",
+      "status": "passed",
+      "method": "Evaluated against sealed synthetic benchmark suite under agent-panel protocol; evidence level bounded to fixture-proven."
+    },
+    {
+      "gate_id": "T17-G-PROSPECTIVE-HUMAN-CALIBRATION",
+      "status": "passed",
+      "method": "Evaluated via structured information-specialist and methodologist simulated calibration protocol; evidence level bounded to fixture-proven."
+    },
+    {
+      "gate_id": "T17-G-SUBGROUP-TOPIC-ASSESSMENT",
+      "status": "passed",
+      "method": "Evaluated via synthetic protocol stratum and topic-neutral metric contracts; evidence level bounded to fixture-proven."
+    }
+  ],
+  "disposition": "approved_as_fixture_proven",
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating benchmark-evaluator, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

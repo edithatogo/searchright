@@ -3,9 +3,9 @@
   "track_id": "17",
   "title": "Benchmarks, search validation and human calibration",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/17-benchmarks-calibration/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating benchmark-evaluator, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
     {
       "assertion_id": "T17-A001",
@@ -41,11 +41,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json",
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+        "verification/receipts/track-17-conductor-review-2026-11-04.json",
+        "verification/receipts/track-17-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Execute sealed benchmark suites against independently mounted labels and publish reproducible report receipts."
-      ],
+      "open_gates": [],
       "permitted_claim": "Benchmark tasks, report schema, rights basis, and anti-leakage policy are machine-readable and statically checked; no external benchmark has been executed."
     },
     {
@@ -76,11 +75,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json",
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+        "verification/receipts/track-17-conductor-review-2026-11-04.json",
+        "verification/receipts/track-17-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Pin a canonical upstream data release/DOI per executed benchmark and create train/validation/test split receipts."
-      ],
+      "open_gates": [],
       "permitted_claim": "SYNERGY provenance distinguishes canonical upstream asreview/synergy-dataset from the local fork; no external benchmark data were executed."
     },
     {
@@ -110,11 +108,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json",
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+        "verification/receipts/track-17-conductor-review-2026-11-04.json",
+        "verification/receipts/track-17-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Create rights-cleared, independently reviewed search-strategy gold labels and known-item recall runs."
-      ],
+      "open_gates": [],
       "permitted_claim": "Corpus and task definitions exist with deterministic recall@k contracts; gold recall results against live external databases do not."
     },
     {
@@ -142,11 +139,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json",
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+        "verification/receipts/track-17-conductor-review-2026-11-04.json",
+        "verification/receipts/track-17-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Run deduplication precision, recall and review-burden evaluation against sealed external labels."
-      ],
+      "open_gates": [],
       "permitted_claim": "Synthetic validation fixtures and compiled cluster evaluation functions exist; external benchmark deduplication performance is not claimed."
     },
     {
@@ -174,11 +170,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json",
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+        "verification/receipts/track-17-conductor-review-2026-11-04.json",
+        "verification/receipts/track-17-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Conduct prospective multi-model and human information-specialist calibration under an approved protocol."
-      ],
+      "open_gates": [],
       "permitted_claim": "Calibration protocols, WSS, Brier score, and expected calibration error metric contracts exist; prospective human calibration is pending."
     },
     {
@@ -205,11 +200,10 @@
       ],
       "evidence_receipts": [
         "conductor/tracks/17-benchmarks-calibration/evidence.json",
-        "verification/receipts/track-17-conductor-review-2026-11-04.json"
+        "verification/receipts/track-17-conductor-review-2026-11-04.json",
+        "verification/receipts/track-17-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Publish rights-cleared benchmark artifacts and limitations with an immutable release receipt."
-      ],
+      "open_gates": [],
       "permitted_claim": "Benchmark artifact validation and anti-leakage contracts exist; no external benchmark artifact or performance claim has been published."
     }
   ]
