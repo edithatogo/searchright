@@ -319,7 +319,7 @@ ed01a6d4abceccbddac9bc302c04279cf43cebcb833bf4cadd4f772a6911279f  ./conductor/gi
 66c340448cb41198272e20f5d3bbd77a921d5d8ca68f15abde246229df3b0a2d  ./conductor/github/issues/track-16-phase-2-task-02.md
 5293100cda24253c890f2cba9df04b096c9c34123f9e1f7966790a020a223b9b  ./conductor/github/issues/track-16-phase-2.md
 da962b5b0ff13cc70982fcf3821a600c490d9c3b343dd6578b95a07ec1572ceb  ./conductor/github/issues/track-16-phase-3-task-01.md
-23b35e6648b697337ecf75e918557f5c55818da98d03397f32dcc6b291cc0772  ./conductor/github/issues/track-16-phase-3-task-02.md
+363e03b199c0e32bdaa6100b8ff79adb515328959db6409899b1c655f770082c  ./conductor/github/issues/track-16-phase-3-task-02.md
 1a5354b95f35065c137d6a61b02b53da1a9c563aaf5c6de08f30958ee472a615  ./conductor/github/issues/track-16-phase-3-task-03.md
 05dcbe754ea2f9282e3f5e92547f2412e80021cee084fdb8a3224d40113394ce  ./conductor/github/issues/track-16-phase-3-task-04.md
 f9d8f5140261e394a729d728fba31fc9307cab0368454a8d6fd0580710358c56  ./conductor/github/issues/track-16-phase-3.md
@@ -328,7 +328,7 @@ acfb3d2e50da3c04f9eef22478c2e140b7ffd8c8e0a3a613f352565c333259aa  ./conductor/gi
 0d5ea2d67412901b688c43a6ca6100c103d4c923e20575629ff3e140bc979acc  ./conductor/github/issues/track-16-phase-4-task-03.md
 5a2e19a07d8ce79aa7ae7d1049d92f21e29a7c53de8871dc9f5c6969aa1793d3  ./conductor/github/issues/track-16-phase-4-task-04.md
 6d02bb9153369c9499e76f995270d5036c599823dfd6237d2151ca8ff2461d37  ./conductor/github/issues/track-16-phase-4.md
-a84cbe3d590bde85f4e34e5144a624e05234026661813f47225de174ed32f531  ./conductor/github/issues/track-16.md
+68200b729f5eb022de769d047665629cc000f344037685d0ec6655725b56b8ea  ./conductor/github/issues/track-16.md
 75bdfef04e1107b798ed84707b0ea82390a4623356f43e5ab5b758403510da10  ./conductor/github/issues/track-17-phase-1-task-01.md
 33bc2f712ea0e1f821e6f0c2493556c73c36991bfc62d6b1f0249ee4da4a7062  ./conductor/github/issues/track-17-phase-1.md
 ae515c7bc54d96d5ed665c5b83ed17cfd7576fef1d415fd8de1ef239ee864bb7  ./conductor/github/issues/track-17-phase-2-task-01.md
@@ -680,7 +680,7 @@ cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d  ./conductor/gi
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 9bb1098bf673718efe2973b06fe0c76e4a161ea479b51b7ded5bad45ecb646d3  ./conductor/product.md
 431f1581f3a6d02c22b38d3d6d6c7285e43fcbfb3d2acef22372170f2dc0fbea  ./conductor/requirements.md
-85219ff63d16fca99307dc4d70e45750304a36e70b00f5f8baffbcb3dee5e617  ./conductor/roadmap-coverage.json
+2f01b7608dbe79105969caf831a56911b39ca2e27de5ea53b146490fc26c0092  ./conductor/roadmap-coverage.json
 d953556ce2830956bc4d36be262919e8c921327bc1eef7ef043b872de5a7f5dc  ./conductor/tech-stack.md
 34c93867db7755cfbf2ab0a5fd0956abeb4467c9823ef15efada68cd61c7fcf4  ./conductor/traceability-overrides.json
 ba580b57df09aeb9fe912d65807dd3de471b1c2712a6e6b77e91042c6827bdb5  ./conductor/tracks.md
@@ -880,7 +880,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 49a1c1e7898c99cf28469b17e73aca05c551dc07d93e6b26df727130b53e917f  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 b0fd92a7f979cffa6f82d4a1cf77119fe088a5926632e1eedc142bf0e63f129e  ./context/claim-boundaries.json
-487a534bc87551a6594f2b1865903032433d5f8d754c24c62d64ae4b3888821d  ./context/context-lock.json
+823aa9f739751b22eb38149d52c359c56f0ccf7bcf9b927cc81f1c347922793d  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
