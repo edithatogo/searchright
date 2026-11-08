@@ -135,6 +135,8 @@ struct_excessive_bools = "allow"
 struct_field_names = "allow"
 # Invariant validators stay linear so every fail-closed check remains auditable.
 too_many_lines = "allow"
+# Test suites and assertions check emptiness idiomatically across Rust editions.
+assert_is_empty = "allow"
 print_stderr = "deny"
 print_stdout = "deny"
 todo = "deny"
