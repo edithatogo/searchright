@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Reach the 91 percent maturity line-coverage target with meaningful tests and candidate-bound measurement; the recorded 87.89 percent local tranche is not a governed baseline promotion.
+- [ ] Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.
 
 ## Completion and evidence contract
 

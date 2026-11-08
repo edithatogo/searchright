@@ -2294,7 +2294,7 @@
         "python scripts/check_github_project.py",
         "python scripts/check_workflow_hardening.py"
       ],
-      "claim_boundary": "Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity.",
+      "claim_boundary": "Historical bootstrap and audit receipts prove convergence only for their recorded merged revisions. Track31 archival and remote identities are retained. PR-scope parser maintenance has its own revision-bound validation and delivery record; historical receipts do not validate new parsing behavior. GitHub cannot promote product, methodology or release maturity. November 6 bounded reconciliation and its read-only audit are linked as historical evidence for e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb. They do not establish parity for the integrated or reconciled candidate; archived lifecycle and completion states are unchanged.",
       "closeout_completed": true,
       "completed_higher_evidence_gates": [
         "Create or verify the public remote and push the committed main branch.",
@@ -2338,7 +2338,8 @@
         "verification/receipts/github-control-plane-audit.json",
         "verification/receipts/track-31-control-plane-apply.json",
         "verification/receipts/track-31-bootstrap-exact-main.json",
-        "verification/receipts/track-31-audit-exact-main.json"
+        "verification/receipts/track-31-audit-exact-main.json",
+        "verification/receipts/track-31-reconciliation-postapply-audit-2026-11-06.json"
       ],
       "requirements": [
         "SR-066",
@@ -2359,7 +2360,9 @@
         "verification/receipts/track-31-control-plane-apply.json",
         "verification/receipts/track-31-bootstrap-exact-main.json",
         "verification/receipts/track-31-conductor-review.json",
-        "verification/receipts/track-31-scope-parser-maintenance.json"
+        "verification/receipts/track-31-scope-parser-maintenance.json",
+        "verification/receipts/track-31-reconciliation-apply-2026-11-06.json",
+        "verification/receipts/track-31-reconciliation-partial-2026-11-06.json"
       ],
       "slug": "github-control-plane",
       "source_verified_on": "2026-08-12",
