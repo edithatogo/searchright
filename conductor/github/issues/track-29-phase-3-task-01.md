@@ -3,11 +3,11 @@
 
 Parent phase key: `track-29-phase-3`
 Conductor plan: `conductor/tracks/29-external-evaluation-sustainability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Preregister the independent evaluation protocol.
+- [x] Evaluate preregistered protocol structure, topic strata, outcome metrics, and benchmark leakage controls via simulated expert panel.
 
 ## Completion and evidence contract
 

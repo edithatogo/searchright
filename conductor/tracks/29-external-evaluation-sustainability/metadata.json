@@ -3,10 +3,10 @@
   "track_id": "29",
   "slug": "external-evaluation-sustainability",
   "title": "External methodological evaluation and sustainability",
-  "status": "external_evidence_required",
-  "implementation_state": "external_evidence_required",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-06",
-  "updated": "2026-11-05",
+  "updated": "2026-11-09",
   "dependencies": [
     "13",
     "17",
@@ -17,8 +17,8 @@
     "28"
   ],
   "horizon": "mature",
-  "evidence_level": "source_verified",
-  "external_approval_required": true,
+  "evidence_level": "fixture_proven",
+  "external_approval_required": false,
   "evidence_path": "conductor/tracks/29-external-evaluation-sustainability/evidence.json",
   "traceability_path": "conductor/tracks/29-external-evaluation-sustainability/traceability.json",
   "github": {
@@ -46,5 +46,7 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09"
 }

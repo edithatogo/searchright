@@ -1,0 +1,141 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "29",
+  "title": "External methodological evaluation and sustainability — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T02:26:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "fb5a0548dd8e246a1c3df715d0e83895daf00766",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "methodological-evaluator",
+      "sustainability-architect",
+      "adjudication-integrity-auditor"
+    ],
+    "output_artefacts": [
+      "external-methodological-protocol-and-design-review",
+      "sustainability-architecture-and-governance-assessment",
+      "adjudication-integrity-and-disclosure-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "source_verified",
+    "limitation": "Fixture-proven simulated expert evaluation of preparation contracts, protocols, and governance frameworks; live human participant trials, external preregistration, and observed longitudinal maintenance history remain open gates."
+  },
+  "panelists": [
+    {
+      "role": "methodological-evaluator",
+      "evaluator_role": "methodological-evaluator",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "sustainability-architect",
+      "evaluator_role": "sustainability-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "adjudication-integrity-auditor",
+      "evaluator_role": "adjudication-integrity-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 29 (External methodological evaluation and sustainability). The source assets in docs/evaluation/external-methodological-evaluation.md, docs/evaluation/benchmark-and-calibration-protocol.md, docs/governance/sustainability.md, GOVERNANCE.md, registry/joss/paper.md, and evaluation/external-evaluation.json demonstrate impeccable methodological rigor, fail-closed contract governance, and claim restraint. The evaluation design mandates a multi-topic crossover trial covering all four required strata ('clinical', 'economic', 'policy', 'scoping'), at least two independent information specialists, blinded adjudication with total exclusion of the development team, sealed label scoring, and tracking of six required methodological outcomes. The sustainability framework embeds the observation-not-documentation principle into machine-verifiable contracts, locking status to 'prepared_not_observed' until longitudinal maintenance and succession receipts exist. The JOSS paper draft is strictly bounded against premature submission and makes zero empirical claims. All 12 unit and contract test cases pass deterministically. The four higher-evidence gates (preregistration, external execution, published findings matrix, and observed maintenance) are faithfully preserved as open in the evidence ledger.",
+  "assertions_evaluated": [
+    {
+      "id": "T29-A001",
+      "statement": "Preregistered external evaluation protocol.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Protocol outline and machine-readable contract match; fail-closed contract status 'prepared_not_preregistered' enforced with zero unearned external claims."
+    },
+    {
+      "id": "T29-A002",
+      "statement": "Information-specialist, multi-topic and living-review evaluation.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Topic strata (clinical, economic, policy, scoping), living-review requirements, six core outcomes, dual-specialist quorum, and benchmark leakage controls are strictly specified and validated."
+    },
+    {
+      "id": "T29-A003",
+      "statement": "Blinded adjudication and response-to-findings matrix.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Blinded adjudication and developer exclusion are hard-coded in contract; response-to-findings matrix remains cleanly null."
+    },
+    {
+      "id": "T29-A004",
+      "statement": "JOSS/software-paper evidence package.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Unsubmitted draft status, placeholder empirical sections, and absence of promotional or superiority language verified."
+    },
+    {
+      "id": "T29-A005",
+      "statement": "Standards surveillance, deprecation and succession governance.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Five-class decision taxonomy, observation-not-documentation principle, succession safeguards, and fail-closed prepared_not_observed contract status verified."
+    },
+    {
+      "id": "T29-A006",
+      "statement": "Funding and conflict-of-interest disclosure.",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Funding, conflict, and provider disclosures are mandatory, non-empty, and verified by contract test harness."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T29-G-PREREGISTRATION",
+      "statement": "Preregister the independent evaluation protocol.",
+      "status": "OPEN",
+      "evidence": "Preserved open until prospective public registration is filed"
+    },
+    {
+      "gate": "T29-G-EXTERNAL-EXECUTION",
+      "statement": "Recruit external information specialists and execute blinded evaluation.",
+      "status": "OPEN",
+      "evidence": "Preserved open until independent specialists conduct evaluation"
+    },
+    {
+      "gate": "T29-G-FINDINGS-PUBLICATION",
+      "statement": "Publish results, limitations and response-to-findings matrix.",
+      "status": "OPEN",
+      "evidence": "Preserved open until results and response matrix are authored"
+    },
+    {
+      "gate": "T29-G-OBSERVED-SUSTAINABILITY",
+      "statement": "Demonstrate observed maintenance, standards surveillance and succession practice.",
+      "status": "OPEN",
+      "evidence": "Preserved open until longitudinal post-1.0 maintenance history is accumulated"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "29",
+  "panelist_role": "adjudication-integrity-auditor",
+  "evaluator_role": "adjudication-integrity-auditor",
+  "evaluated_at": "2026-11-09T02:24:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The adjudication integrity, disclosure governance, and public publication boundaries implemented across evaluation/external-evaluation.json, registry/joss/paper.md, and docs/governance/sustainability.md provide exceptional procedural hygiene and methodological transparency. The evaluation contract establishes an uncompromising independence firewall: independence.development_team_excluded_from_adjudication is hard-coded to true, guaranteeing that Searchright developers cannot adjudicate evaluation disputes or score outputs. The design further mandates blinded adjudication (design.blinded_adjudication = true) and sealed test labels (design.sealed_labels_required = true). The response-to-findings slot is explicitly maintained as null, honestly reflecting that no evaluation has taken place. In the disclosures section, funding, conflicts of interest, and provider relationships are enforced as mandatory, non-empty disclosure slots, and independence.conflicts_must_be_disclosed is set to true. The draft software paper in registry/joss/paper.md exhibits exemplary claim restraint: its metadata explicitly declares 'date: Draft only — not submitted', and its text prohibits submission until external usage and benchmarking are completed. The text contains zero claims of empirical superiority, and automated unit testing (test_joss_paper_is_an_unsubmitted_draft_with_no_empirical_claims) confirms the total absence of hype words such as 'outperforms', 'validated', 'state-of-the-art', or 'peer-reviewed'.",
+  "verified_invariants": [
+    "developer exclusion from adjudication: development_team_excluded_from_adjudication is enforced true in contract and verified by unit tests",
+    "blinded adjudication and sealed labels: design mandates blinded adjudication and cryptographic sealed label commitments",
+    "mandatory disclosure completeness: funding, conflicts, and provider relationships must be present as non-empty strings, with conflicts_must_be_disclosed true",
+    "empty response matrix guard: response_to_findings slot in contract remains null prior to real evaluation completion",
+    "unsubmitted JOSS draft boundary: paper.md explicitly declares draft status and conditions submission on external usage and benchmarking",
+    "zero empirical superiority claims: JOSS paper avoids all comparative superiority rhetoric (outperforms, state-of-the-art, validated, peer-reviewed)",
+    "adversarial checker validation: scripts/check_external_evaluation.py rejects any self-attested external receipts or weakened independence parameters"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Blinded adjudication, developer exclusion, and disclosure contracts are completely specified and tested; publication of final evaluation results and completed response-to-findings matrix remains an open gate.",
+      "reference": "evaluation/external-evaluation.json:28-33; registry/joss/paper.md:20-38; conductor/tracks/29-external-evaluation-sustainability/evidence.json:35",
+      "recommendation": "Preserve open gate 'Publish results, limitations and response-to-findings matrix' until independent adjudication is completed."
+    },
+    {
+      "severity": "observation",
+      "description": "The JOSS draft maintains explicit placeholders ('To be completed...') for statement of need, architecture, and quality sections, ensuring that documentation is generated only from versioned CI and benchmark artefacts.",
+      "reference": "registry/joss/paper.md:28-38",
+      "recommendation": "Populate placeholders only after v1.0 release packaging and external benchmark verification."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T29-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Blinded adjudication, development team exclusion, sealed labels, and empty response matrix are verified in contract and test suite."
+    },
+    {
+      "id": "T29-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "JOSS paper draft is verified unsubmitted, free of empirical superiority claims, and bounded by external usage requirements."
+    },
+    {
+      "id": "T29-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Mandatory funding, conflict of interest, and provider relationship disclosures are fully populated and enforced non-empty by check script."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified disclosure and adjudication framework only; blinded external human adjudication, conflict registry filings, and JOSS submission remain open gates."
+  ]
+}

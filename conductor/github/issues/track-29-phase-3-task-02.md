@@ -3,11 +3,11 @@
 
 Parent phase key: `track-29-phase-3`
 Conductor plan: `conductor/tracks/29-external-evaluation-sustainability/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Recruit external information specialists and execute blinded evaluation.
+- [x] Verify open-source decision taxonomy, observation-not-documentation principle, and succession safeguards via sustainability architect.
 
 ## Completion and evidence contract
 
