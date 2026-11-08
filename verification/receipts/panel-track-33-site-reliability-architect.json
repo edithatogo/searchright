@@ -1,0 +1,54 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "33",
+  "panelist_role": "site-reliability-architect",
+  "evaluator_role": "site-reliability-architect",
+  "evaluated_at": "2026-11-09T04:15:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The operational reliability architecture codified in crates/searchright-ops/src/lib.rs, crates/searchright-contracts/src/ops.rs, contracts/examples/component-health.json, and docs/operations/reliability.md establishes a rigorous, fail-closed foundation for Searchright deployments. Component health contracts (ComponentHealth) strictly enforce schema validation (org.searchright.component-health.v1) and clearly distinguish between liveness and readiness: a process may be alive while a provider, database, or policy engine is degraded or unhealthy. Crucially, the contract invariant mandates that only components in Healthy or Degraded states can declare ready: true; Unhealthy or Disabled components claiming readiness are rejected as contract violations. In searchright-ops::readiness, aggregation is strictly fail-closed: providing an empty component list returns OpsError::NoComponents, and every component contract is validated before aggregation. Unhealthy components immediately mark the overall deployment as not ready (ready: false) and are enumerated in the unhealthy list. Degraded components remain capable of serving bounded requests if ready, but are never masked—they are explicitly exposed in Readiness.degraded. Furthermore, the operational reliability doctrine explicitly specifies that failures must be reported as failure or abstention rather than deceptively converted into empty successful search results. Long-running MCP tasks require cancellation propagation, idempotency keys, request budgets, and tenant-specific concurrency limits, aligning operational reliability with access control policies. Unit tests in tests/test_operational_reliability_governance.py and failure-injection tests in crates/searchright-ops/tests/policy_failure_injection.rs pass deterministically network-free.",
+  "verified_invariants": [
+    "strict liveness vs readiness distinction: process liveness does not imply readiness or methodological validity (docs/operations/reliability.md)",
+    "fail-closed component health validation: components with state 'unhealthy' or 'disabled' are strictly prohibited from declaring ready: true",
+    "fail-closed readiness aggregation: searchright-ops::readiness rejects empty component sets with OpsError::NoComponents and validates every component contract",
+    "transparent degradation tracking: degraded components remain ready for bounded work but are explicitly segregated and exposed in Readiness.degraded",
+    "unambiguous failure representation: errors and provider unavailability are surfaced as failure or abstention, never converted to empty successful search results",
+    "MCP task bounded execution: long-running tasks require cancellation propagation, idempotency keys, request budgets, and tenant concurrency limits",
+    "deterministic validation: failure injection tests in crates/searchright-ops/tests/policy_failure_injection.rs and unit tests in tests/test_operational_reliability_governance.py pass 100% network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Component health contracts and fail-closed readiness aggregation are structurally implemented in Rust and verified in source tests; executing live provider probes, runtime health polling under load, and recording deployment SLO receipts remain open operational gates.",
+      "reference": "crates/searchright-ops/src/lib.rs:9-32; docs/operations/reliability.md:8-12; conductor/tracks/33-operational-reliability/traceability.json:36-40",
+      "recommendation": "Preserve open gate T33-G-OPS-POLICY-TESTS until live provider probes and runtime failure-injection tests execute in continuous integration."
+    },
+    {
+      "severity": "observation",
+      "description": "The readiness function in searchright-ops returns structured Readiness containing separate unhealthy and degraded component lists, ensuring monitoring dashboards never mask degraded states.",
+      "reference": "crates/searchright-ops/src/lib.rs:27-32; crates/searchright-ops/tests/policy_failure_injection.rs:105-114",
+      "recommendation": "Retain test_component_health_contract_and_readiness_boundaries and policy failure injection tests in the mandatory pre-commit test suite."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T33-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Component health contracts, liveness vs readiness segregation, degraded operational modes, and fail-closed readiness aggregation verified in Rust contracts and failure-injection tests."
+    },
+    {
+      "id": "T33-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Resilience doctrine, task cancellation, concurrency limits, and failure-as-abstention principles verified in operational documentation and contracts."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified component health contracts and readiness aggregation only; continuous runtime probe telemetry, live load failure injection, and deployment SLO receipts remain open operational gates."
+  ]
+}

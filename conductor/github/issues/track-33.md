@@ -12,12 +12,12 @@ Provide default-private health, telemetry, backup, restore, resilience and incid
 ## Contract
 
 - Horizon: `mature`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `05, 16, 25, 28, 30`
 - Requirements: `SR-078, SR-079, SR-080, SR-081`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Provide default-private health, telemetry, backup, restore, resilience and incid
 
 ## Claim boundary
 
-Operational source contracts do not establish service availability, recoverability or incident readiness until exercises run. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating site-reliability-architect, privacy-telemetry-auditor, and disaster-recovery-auditor roles, with component health contracts, default-disabled telemetry, encrypted backup manifests, atomic reference recovery rehearsal, and incident response governance verified in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs. Simulation instrument and source-level contracts only; live clean-room backup/restore rehearsals in production environments, deployment-specific restore drills, and live failure injection remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

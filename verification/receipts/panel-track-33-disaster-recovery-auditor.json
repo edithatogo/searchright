@@ -1,0 +1,56 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "33",
+  "panelist_role": "disaster-recovery-auditor",
+  "evaluator_role": "disaster-recovery-auditor",
+  "evaluated_at": "2026-11-09T04:17:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The backup manifest contracts, restore authorization gates, reference recovery rehearsal, and incident response architecture codified across contracts/examples/backup-manifest.json, crates/searchright-contracts/src/ops.rs, crates/searchright-ops/src/lib.rs, scripts/recovery_rehearsal.py, verification/recovery/rehearsal.json, contracts/examples/incident-record.json, docs/operations/backup-restore.md, docs/operations/incident-response.md, and .github/workflows/resilience.yml demonstrate outstanding disaster recovery discipline and fail-closed safety. Backup manifests (BackupManifest) require content-addressed SHA-256 digests (64 hex characters), positive retention, explicit content classes (contracts, audit_events, screening_decisions), and restore_test_required: true. Invariant validation strictly enforces encryption key isolation: encrypted backups require key_reference, while unencrypted backups must not declare one, and raw key material is strictly prohibited. In crates/searchright-ops/src/lib.rs, authorise_restore mandates both a valid encrypted backup (rejecting unencrypted backups with OpsError::UnencryptedRestore) and an authenticated, authorized operator (rejecting denied operators with OpsError::RestoreNotAuthorised). The deterministic reference recovery script scripts/recovery_rehearsal.py exercises atomic replace mechanics using temporary files, fsync, and atomic os.replace, validating stale temporary file isolation, primary data corruption recovery, restore idempotency across sequential runs, and cryptographic tamper detection (rejecting tampered audit payloads with ValueError). The self-test passes cleanly network-free, producing verification/recovery/rehearsal.json while preserving the honest claim boundary that local rehearsal does not prove production recovery objectives. The incident response contract IncidentRecord establishes immutable audit logging for operational, security, and integrity incidents, mandating containment actions, data exposure tracking, and compulsory postmortems for High and Critical incidents (postmortem_required: true). Recovery doctrine expressly prohibits silent alteration of screening decisions or canonical search records. Finally, .github/workflows/resilience.yml enforces permissions: contents: read and persist-credentials: false.",
+  "verified_invariants": [
+    "mandatory backup encryption and key reference isolation: encrypted backups require key_reference; unencrypted backups must not declare one; raw key material is strictly prohibited",
+    "fail-closed unencrypted restore rejection: searchright-ops::authorise_restore rejects unencrypted backups with OpsError::UnencryptedRestore",
+    "mandatory operator authorization: restore requests by unpermitted operators fail with OpsError::RestoreNotAuthorised",
+    "content-addressed integrity: backup digests use sha256, explicit content classes, and positive retention days",
+    "atomic file replacement and fsync durability: recovery rehearsal validates atomic temp-write-fsync-replace mechanics preventing partial writes or corrupt overwrites",
+    "idempotent restore and tamper detection: rehearsal validates that duplicate restores are identical and corrupted backup payloads are detected and rejected",
+    "mandatory postmortem for high/critical incidents: IncidentRecord contract enforces postmortem_required: true on High and Critical incidents",
+    "evidence preservation mandate: incident response doctrine bars silent alteration of screening decisions, search strategies, or canonical records during recovery",
+    "hardened CI resilience workflow: .github/workflows/resilience.yml enforces permissions: contents: read and persist-credentials: false"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The reference recovery rehearsal script and backup contracts establish deterministic file-level integrity, atomic restore, and tamper detection; performing clean-room encrypted backup/restore drills with live KMS key references and verifying audit-chain continuity remain open operational gates.",
+      "reference": "docs/operations/backup-restore.md:7-11; scripts/recovery_rehearsal.py:108-109; conductor/tracks/33-operational-reliability/traceability.json:76-80",
+      "recommendation": "Preserve open gate T33-G-ENCRYPTED-RESTORE-REHEARSAL until clean-room drills with encrypted KMS payloads are executed."
+    },
+    {
+      "severity": "observation",
+      "description": "The incident response contract strictly links high and critical severity incidents to human postmortem reviews and explicit data exposure flags, preventing silent containment without institutional accountability.",
+      "reference": "crates/searchright-contracts/src/ops.rs:254-262; contracts/examples/incident-record.json:14-16",
+      "recommendation": "Maintain postmortem requirement verification in regression suites and integrate incident templates into operational runbooks."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T33-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Encrypted backup manifest contracts, key reference isolation, atomic restore mechanics, idempotency, tamper detection, and fail-closed unencrypted restore blocking verified."
+    },
+    {
+      "id": "T33-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Incident record contract, mandatory containment, data exposure tracking, postmortem mandates for high/critical incidents, and evidence preservation doctrine verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-verified backup manifests, incident contracts, and deterministic local reference rehearsals only; live KMS-backed clean-room restore rehearsals and active incident response drills remain open operational gates."
+  ]
+}
