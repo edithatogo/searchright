@@ -3,11 +3,11 @@
 
 Parent phase key: `track-22-phase-3`
 Conductor plan: `conductor/tracks/22-living-updates/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile and run multi-cycle living-review and amendment scenarios.
+- [x] Compile and run multi-cycle living-review and amendment scenarios.
 
 ## Completion and evidence contract
 

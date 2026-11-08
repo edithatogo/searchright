@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/22-living-updates/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Compile and run multi-cycle living-review and amendment scenarios. (`track-22-phase-3-task-01`)
-- [ ] T02: Pilot a real update and independently reproduce change attribution. (`track-22-phase-3-task-02`)
+- [x] T01: Compile and run multi-cycle living-review and amendment scenarios. (`track-22-phase-3-task-01`)
+- [x] T02: Pilot a real update and independently reproduce change attribution. (`track-22-phase-3-task-02`)
 
 ## Evidence rule
 

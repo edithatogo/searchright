@@ -55,9 +55,9 @@
   ],
   "external_evidence": [],
   "panel_findings": {
-    "remediation_required": true,
     "critical_count": 4,
     "major_count": 6,
+    "remediation_required": true,
     "top_findings": [
       "P07-C001: Systemic authorization bypass in role-gate logic",
       "P07-C002: Canonical decisions mutable/deletable",

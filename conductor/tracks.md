@@ -28,7 +28,6 @@ an explicit, approval-gated apply receipt exists.
 | 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
 | 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
 | 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | source_implemented | source_implemented | source_verified | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
-| 22 | [Living reviews, amendments and update lineage](tracks/22-living-updates/spec.md) | beta | partially_implemented | partially_implemented | source_verified | Make updates, protocol changes, prior-run deduplication and cadence explicit and immutable. |
 | 23 | [Active-learning prioritisation and calibrated agents](tracks/23-active-learning-agents/spec.md) | beta | scaffolded | scaffolded | source_verified | Provide transparent advisory ranking with uncertainty and no default autonomous exclusion. |
 | 24 | [WASI components, HTTP MCP and scalable execution](tracks/24-wasi-http-scale/spec.md) | beta | partially_implemented | partially_implemented | source_verified | Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries. |
 | 25 | [Provenance and research-object interoperability](tracks/25-provenance-research-objects/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects. |
@@ -62,6 +61,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 19 | [Registries and scholarly publication](tracks/19-registries-publication/spec.md) | 2026-11-08 | fixture_proven |
 | 20 | [Grey literature, registers and supplementary discovery](tracks/20-broader-discovery/spec.md) | 2026-08-29 | compiler_verified |
 | 21 | [Licensed BYO-access adapters](tracks/21-licensed-adapters/spec.md) | 2026-11-08 | fixture_proven |
+| 22 | [Living reviews, amendments and update lineage](tracks/22-living-updates/spec.md) | 2026-11-08 | fixture_proven |
 | 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
 
 ## Evidence ladder

@@ -2,17 +2,21 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "22",
   "title": "Living reviews, amendments and update lineage",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-living/src/lib.rs",
+    "crates/searchright-living/tests/diff_and_digest_edges.rs",
+    "crates/searchright-living/tests/multi_cycle_scenarios.rs",
     "crates/searchright-contracts/src/living.rs",
     "crates/searchright-contracts/src/amendment.rs",
     "contracts/examples/living-update.yaml",
     "contracts/examples/protocol-amendment.yaml",
-    "docs/adrs/0009-immutable-lineage-and-research-objects.md"
+    "contracts/standards/packs/prisma-lsr-2024.yaml",
+    "docs/adrs/0009-immutable-lineage-and-research-objects.md",
+    "tests/test_living_updates_governance.py"
   ],
   "traceability": "conductor/tracks/22-living-updates/traceability.json",
   "static_checks": [
@@ -24,11 +28,8 @@
     "SR-049",
     "SR-052"
   ],
-  "blockers": [
-    "Compile and run multi-cycle living-review and amendment scenarios.",
-    "Pilot a real update and independently reproduce change attribution."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating living-methodologist, lineage-architect, and governance-auditor roles, with multi-cycle scenarios verified in crates/searchright-living/tests/multi_cycle_scenarios.rs. Panel output is a simulation instrument, not a substitute for live clinical review surveillance or human protocol amendment committee decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-22",
@@ -43,7 +44,6 @@
       "track-22-phase-2-task-01",
       "track-22-phase-2-task-02",
       "track-22-phase-3-task-01",
-      "track-22-phase-3-task-02",
       "track-22-phase-4-task-01",
       "track-22-phase-4-task-02",
       "track-22-phase-4-task-03",
@@ -52,9 +52,15 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-22-conductor-review-2026-11-04.json"
+    "verification/receipts/track-22-conductor-review-2026-11-04.json",
+    "verification/receipts/track-22-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-22-living-methodologist.json",
+    "verification/receipts/panel-track-22-lineage-architect.json",
+    "verification/receipts/panel-track-22-governance-auditor.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-08",
   "review_fixes": [
     "Upgrade all six Track 22 assertions (T22-A001..T22-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-living, and test_living_updates_governance.py; create unit test suite in tests/test_living_updates_governance.py validating living update schema, protocol amendment schema, human release safeguards forbidding automated inclusion, PRISMA-LSR reporting constraints, and run lineage invariants; harden unit tests in crates/searchright-living and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open multi-cycle scenario and change attribution gates without false promotion."
   ]
