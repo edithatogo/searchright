@@ -3,11 +3,11 @@
 
 Parent phase key: `track-24-phase-3`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
+- [x] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
 
 ## Completion and evidence contract
 

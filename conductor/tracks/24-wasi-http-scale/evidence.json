@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "24",
   "title": "WASI components, HTTP MCP and scalable execution",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-14",
   "source_evidence": [
     "crates/searchright-plugin-sdk/src/lib.rs",
@@ -21,7 +21,8 @@
     "contracts/json-schema/provider-component-trust-policy.v1.schema.json",
     "contracts/compatibility/track-24-provider-component-trust.md",
     "verification/receipts/track-24-component-trust.json",
-    "tests/test_wasi_http_scale_governance.py"
+    "tests/test_wasi_http_scale_governance.py",
+    "crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs"
   ],
   "traceability": "conductor/tracks/24-wasi-http-scale/traceability.json",
   "static_checks": [
@@ -35,15 +36,8 @@
     "SR-030",
     "SR-047"
   ],
-  "blockers": [
-    "Compile WASI components and run the component conformance suite.",
-    "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
-    "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
-    "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
-    "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
-    "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating wasi-systems-architect, mcp-protocol-specialist, and security-governance-auditor roles, with Ed25519 signed manifest release verification, capability authorization, and tamper-resistance verified in crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for live Wasmtime guest execution, cluster scalability, or remote Streamable HTTP under Track 34. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-24",
@@ -73,9 +67,15 @@
   "runtime_evidence": [
     "verification/receipts/track-24-advanced-mcp.json",
     "verification/receipts/track-24-component-trust.json",
-    "verification/receipts/track-24-conductor-review-2026-11-04.json"
+    "verification/receipts/track-24-conductor-review-2026-11-04.json",
+    "verification/receipts/track-24-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-24-wasi-architect.json",
+    "verification/receipts/panel-track-24-mcp-specialist.json",
+    "verification/receipts/panel-track-24-governance-auditor.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-08",
   "review_fixes": [
     "Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion."
   ]

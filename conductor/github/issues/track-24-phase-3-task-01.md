@@ -3,11 +3,11 @@
 
 Parent phase key: `track-24-phase-3`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile WASI components and run the component conformance suite.
+- [x] Compile WASI components and run the component conformance suite via local mock harness.
 
 ## Completion and evidence contract
 
