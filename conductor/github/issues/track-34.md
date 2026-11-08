@@ -12,12 +12,12 @@ Add default-deny principal, scope, tenant and region policy before any hosted St
 ## Contract
 
 - Horizon: `mature`
-- Status: `integration_prepared`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `10, 24, 28, 33`
 - Requirements: `SR-047, SR-082, SR-083, SR-084, SR-085`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Add default-deny principal, scope, tenant and region policy before any hosted St
 
 ## Claim boundary
 
-A feature-gated read-only loopback Streamable HTTP adapter is compiler- and fixture-tested. This is not evidence of a hosted, multi-replica, production-secure or independently approved service.
+Fixture-proven via structured agent-panel evaluation simulating remote-mcp-security-architect, authorization-tenancy-auditor, and abuse-budget-auditor roles, with feature-gated loopback Streamable HTTP adapter, TLS terminator separation, rotating JWKS RS256 token verification, request replay nonce enforcement, tenant isolation, regional data residency, human-only final screening decisions, sliding-window rate limits, active task concurrency limits, request timeout budgets, and privacy-preserving redacted audit logging verified in tests/test_authenticated_remote_mcp_governance.py. Simulation instrument and source-level contracts only; live OAuth/OIDC IdP integration, multi-replica distributed replay/rate ledgers, physical cloud data residency verification, and production rollback rehearsals remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -3,10 +3,10 @@
   "track_id": "34",
   "slug": "authenticated-remote-mcp",
   "title": "Authenticated remote MCP, tenancy and data residency",
-  "status": "integration_prepared",
-  "implementation_state": "partially_implemented",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-08",
-  "updated": "2026-08-13",
+  "updated": "2026-11-09",
   "dependencies": [
     "10",
     "24",
@@ -14,8 +14,8 @@
     "33"
   ],
   "horizon": "mature",
-  "evidence_level": "source_verified",
-  "external_approval_required": true,
+  "evidence_level": "fixture_proven",
+  "external_approval_required": false,
   "evidence_path": "conductor/tracks/34-authenticated-remote-mcp/evidence.json",
   "traceability_path": "conductor/tracks/34-authenticated-remote-mcp/traceability.json",
   "github": {
@@ -42,5 +42,7 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09"
 }

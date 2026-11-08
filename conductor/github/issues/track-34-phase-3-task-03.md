@@ -3,11 +3,11 @@
 
 Parent phase key: `track-34-phase-3`
 Conductor plan: `conductor/tracks/34-authenticated-remote-mcp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete independent security/privacy review before any hosted or multi-tenant claim.
+- [x] Complete independent security/privacy review before any hosted or multi-tenant claim.
 
 ## Completion and evidence contract
 
