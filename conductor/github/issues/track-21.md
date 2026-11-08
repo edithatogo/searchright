@@ -12,8 +12,8 @@ Provide credential-free request planning and explicit licence/capability profile
 ## Contract
 
 - Horizon: `beta`
-- Status: `scaffolded`
-- Implementation: `scaffolded`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
 - Evidence: `source_verified`
 - Dependencies: `03, 13, 16`
 - Requirements: `SR-044`
