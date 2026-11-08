@@ -500,7 +500,7 @@ mod tests {
     fn valid_graph_has_no_unlinked_reports() {
         let graph = graph();
         assert!(validate_graph(&graph).is_ok());
-        assert!(unlinked_reports(&graph).is_empty());
+        assert_eq!(unlinked_reports(&graph).len(), 0);
     }
 
     #[test]

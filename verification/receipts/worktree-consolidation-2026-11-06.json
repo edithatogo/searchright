@@ -1,0 +1,302 @@
+{
+  "schema_version": "org.searchright.worktree-consolidation.v1",
+  "scope": "Local integration only; not an omnibus PR or release promotion.",
+  "source_heads": [
+    "7a727f59af464bb3fcecdc319249adb4d379da10",
+    "e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb",
+    "4ddfbdbc54c500719889e09942783bdc04ee832b"
+  ],
+  "original_worktrees_retained": true,
+  "original_dirty_snapshot": "/tmp/searchright-worktree-snapshot-2026-11-06",
+  "snapshot_manifest_sha256": "0a62bec3e4ecc5d708b83f73e50ce18efe712b9c20840b196390a7ffb824a27f",
+  "files_preserved": [
+    {
+      "path": "conductor/roadmap-coverage.json",
+      "sha256": "396561fbcf8e52ed4feabaed54cbe9ac90cc2fb49f12a8170c31ea0bf2f404c0"
+    },
+    {
+      "path": "conductor/tracks/16-quality-security-harness/evidence.json",
+      "sha256": "8f8239ddd461b0fc0080a038c693415e0b6c440b5f7a3d3c68e68850af5aa188"
+    },
+    {
+      "path": "context/context-lock.json",
+      "sha256": "ad231088e0932e62766f0ff505ff215f390485084d9bb0b6e8fbe3a0f580aa09"
+    },
+    {
+      "path": "crates/searchright-access/src/lib.rs",
+      "sha256": "4ee7cdeee534ed5bc278b8d29a96c8cf2d60c605b4bb49842b1c7dedab06bd25"
+    },
+    {
+      "path": "crates/searchright-citeweft/tests/adapter_edges.rs",
+      "sha256": "4ff37980fb848338d4610e58bf66a92f4408cbb908c9dabbd40059aca9c37b67"
+    },
+    {
+      "path": "crates/searchright-contracts/tests/delivery_validation.rs",
+      "sha256": "30c74e599a335860c1ee013689d78287994002964db3535e2543f786b3874138"
+    },
+    {
+      "path": "crates/searchright-dedup/src/lib.rs",
+      "sha256": "b3a6563613eebe35b4e22805bca33f4c34718e622ef4514395745d53aadb9e50"
+    },
+    {
+      "path": "crates/searchright-dedup/tests/normalisation_and_config.rs",
+      "sha256": "54fb8f8c9bd1fafff692444743a384ea048abdb19f18cafa0213dd2afb0d8c7e"
+    },
+    {
+      "path": "crates/searchright-interchange/src/lib.rs",
+      "sha256": "faea1ff16f49ee12d65d1963b9d54f91dc6d1de9eb9beaeb370f3840c2f039d4"
+    },
+    {
+      "path": "crates/searchright-interchange/tests/xml_integrity.rs",
+      "sha256": "b4617a1dc7282039f312e395ad5619ebf9332e59de9c17feb697e7b12d6942a1"
+    },
+    {
+      "path": "crates/searchright-living/tests/diff_and_digest_edges.rs",
+      "sha256": "9c0d7da4b523344b853f3e8264a5135c7ea307fc4c4fd63991fbf43b2bd089e2"
+    },
+    {
+      "path": "crates/searchright-ops/tests/policy_failure_injection.rs",
+      "sha256": "27a95cc701c33bb3191cfad06c4e5900242688b3532b0ba426ed3e53eba531e0"
+    },
+    {
+      "path": "crates/searchright-ranking/tests/tokenisation_and_calibration.rs",
+      "sha256": "593c66f6be56a7f607646c12751cdeaf0eb8cb368ee7e55fea0229a967b8a67f"
+    },
+    {
+      "path": "crates/searchright-store/src/lib.rs",
+      "sha256": "4ca9d1c463714f8c542c29cc925be3696c822d4cf95f49c7cbe48712d3e81fb8"
+    },
+    {
+      "path": "crates/searchright-study/src/lib.rs",
+      "sha256": "2ae129e1f6e2bd11806e1506ce5822856218f7f76be6f1646b397d8d5552173c"
+    },
+    {
+      "path": "crates/searchright-study/tests/graph_operations.rs",
+      "sha256": "aa934eed28084a829bdcd12d17158c0d31cd4ef3963821cd42bfbf140cf577ed"
+    },
+    {
+      "path": "scripts/coverage_sprint.py",
+      "sha256": "92b46ed898e4fa735df9c17670deee7bd62751c4be7b49748bf434b7d53425fc"
+    },
+    {
+      "path": "tests/test_coverage_sprint.py",
+      "sha256": "03cb350e6c1e3418b6e4950651f0107b8d9711db528ebf8c05329ebfecf790e1"
+    },
+    {
+      "path": "verification/receipts/conductor-status-2026-11-06-local.json",
+      "sha256": "0ada96dafba2944c44468a14fbea47979c82536fe81cf66fe8ae006b6ab0a4ee"
+    },
+    {
+      "path": "verification/receipts/track-16-cargo-vet-backlog-2026-11-06.json",
+      "sha256": "3b48392bf417f36cb4cae91b7df9509d0b7bfdd740492b9296abe56092fdaf3b"
+    },
+    {
+      "path": "verification/receipts/track-16-coverage-tranche-2026-11-06.json",
+      "sha256": "1dc8c414256d7397a22a0b1ed910035c1412f527bfeedfd09ae92f1bb180a964"
+    },
+    {
+      "path": "verification/receipts/track-16-native-certs-review-2026-11-06.json",
+      "sha256": "ae6da569c05e6f1cc82c52e2caaf37171d971d6eb31b353739b994df29f5c085"
+    },
+    {
+      "path": "verification/receipts/track-16-pr749-control-plane-audit-2026-11-06.json",
+      "sha256": "ac86faa9d0b2bf6867404c1678a7dd6833e007c2f135d7eb876141fd638a54e3"
+    },
+    {
+      "path": "verification/receipts/track-16-pr749-delivery-2026-11-06.json",
+      "sha256": "f9ca4c5948151564b9adbebebbe425c102bdcd7a0a01130a0214913ee64d80e5"
+    },
+    {
+      "path": "verification/receipts/track-16-pr752-control-plane-audit-2026-11-06.json",
+      "sha256": "94143b22f96c4299dc151f112cf272396f554d40fb747c884cb7174ca340bc69"
+    },
+    {
+      "path": "verification/receipts/track-16-pr752-delivery-2026-11-06.json",
+      "sha256": "b86d81d0e3ac08919f2d8b912bcb712ee83d1477b57317c1feebbf0bbd308d3f"
+    },
+    {
+      "path": "verification/receipts/track-31-bootstrap-dry-run-2026-11-06.json",
+      "sha256": "21c9f614e5f62a9a4a79ae1ed2941c8a872fb658cb511e31c47fb7195272a4f0"
+    },
+    {
+      "path": "verification/receipts/track-31-issues-dry-run-2026-11-06.json",
+      "sha256": "9f2597bfbddb3808158805be27eaedf2142ac72688646fd04a94912024fb5811"
+    },
+    {
+      "path": "verification/receipts/track-31-project-dry-run-2026-11-06.json",
+      "sha256": "326389a9264e714fb969c2808a614bd84e6d88e7d0b4a039d0fd47d607a02e59"
+    },
+    {
+      "path": "verification/receipts/track-31-reconciliation-apply-2026-11-06.json",
+      "sha256": "3e18b9fa247cb86bcb0ce375a2da52e64bf64d450cb7a2e133ccf163831e232d"
+    },
+    {
+      "path": "verification/receipts/track-31-reconciliation-partial-2026-11-06.json",
+      "sha256": "14e9eb758809a0db5ca00a9a34c16488271db891ee18ca8f8786b94190a0e355"
+    },
+    {
+      "path": "verification/receipts/track-31-reconciliation-postapply-audit-2026-11-06.json",
+      "sha256": "53248f68f7814c624602e40aef2c4ffe639e5559f54be3cd50ccf4bed7d1fa3b"
+    },
+    {
+      "path": "verification/receipts/track-31-reconciliation-preview-2026-11-06.json",
+      "sha256": "6752237f98ed3bd885dcb2c8ee4ceeedf38b20609826fd0091f8c7896fbf7b83"
+    },
+    {
+      "path": "verification/receipts/track-31-reconciliation-preview-audit-2026-11-06.json",
+      "sha256": "ac86faa9d0b2bf6867404c1678a7dd6833e007c2f135d7eb876141fd638a54e3"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/README.md",
+      "sha256": "b1ffedf5d47fc8c9c3db9a25ad802684302ac26e88f86dee3fe5c036cabec77c"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/adversarial.md",
+      "sha256": "bc5cfc2fe565d787756646fe7e553667b460b3a1b8ee0555387ec5e169518842"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/consumer-tree.txt",
+      "sha256": "c3022b52c228a5af254507d193e6c5eb8d15f892042e619b6155fe6f4a8b7f58"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/disposition.json",
+      "sha256": "b1dd24ab864b5903004eecb0613fdd98bae5fd3b09b79fa154aff979d0d04b03"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/implementation.md",
+      "sha256": "f4f5e506d67c3c9366b9f0fb0316a15622a1f6d6777e984d27245ccae7d9cfc5"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/methodology.md",
+      "sha256": "6abb6462277e0b84df44d66b114cf4154c7b31ad4826943c244aac28c7835ec6"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/packet-manifest.json",
+      "sha256": "301647d62187450e6050d30bb7d9ca82fede6876c3394826592249131d05ee84"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/probe-observations.json",
+      "sha256": "61f05c41444d454392fe49772a82a866603aedb2164f4697ec6bbcfad31797fb"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/probe_harness.rs",
+      "sha256": "5c68234fb76b6734dd9677fb5d08909878835d81870f1502f8194a81f3fad58c"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/request.json",
+      "sha256": "d7823d140980785540c88750d083d43ff9c94aa31b94868b959be8c675bdeb25"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/security_safety.md",
+      "sha256": "1857a3cb21f3a465edd695f4ce6bf1862a12c4f145e7af008a88454fab022293"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/source-manifest.json",
+      "sha256": "ff22ba8cb71e0804bc1302af453eb4c7ed3c468dbc23c16d6dca0f012c2c77d0"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/testing.md",
+      "sha256": "e08ed69a22d48da277ae69a8fa7f69f42e8649b55516b42cfff2dcdbaf3c3b62"
+    },
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1/upstream-report-draft.md",
+      "sha256": "cc997e0146ac521b2d9c72161172050154760f45a9df9b4a2621fed60289c0cd"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/README.md",
+      "sha256": "c762d76f35f1855367c8726e1633b0dae783162ee33ebb29bfc1d3803936a051"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/adversarial.md",
+      "sha256": "f12c562e892b51dc3359c6425771ecf7072e3684bd0574b394fffe178e149fe9"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/consumer-context.json",
+      "sha256": "b058a6e1a6e96fef76ee310c07258f60e382074fd0d781e6830f9e80ca4153f3"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/consumer-tree.txt",
+      "sha256": "e13db57fbbc7e5092c950e42291f2e5b1b4f80613f252d7cf1da867530087315"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/disposition.json",
+      "sha256": "48ecbcb56a5953dd2464329141c17381d01cad492037c322613aa3a8b81402c5"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/fixture-check.json",
+      "sha256": "5815acf4de06df7777d3b42258b4f2ec8363e2415a6b6749ccc602c4a7d81565"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/harness-Cargo.lock",
+      "sha256": "649e08a0a697015b868cf8f37c9a3932ad64d6b0a40337c2d468c53a36310e6c"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/harness-Cargo.toml",
+      "sha256": "fe3781a264e78860aff4fb30fd92636177415147bfd58d41ee6febf42e3aead4"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/harness-build.log",
+      "sha256": "58a3c17baa90d0a9619c1985ebd1a00b8782f945931ff8416f4a6562cd5f45f6"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/implementation.md",
+      "sha256": "888ae6e2795eac42fd13e91271462a6c0069668e92871b13834ca15377074d1a"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/methodology.md",
+      "sha256": "378275b835abdff6ba693135a340e07159e21239d365dff750ed4961598c43cc"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/packet-manifest.json",
+      "sha256": "aadc968bd7e3bfe004897916e48e269168d62dfec1efd56739b47763eac8e75e"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/probe-observations.json",
+      "sha256": "ad1e69a3963ec1157a634c242d1c7beee4b685fb24e53ccdf4a9ef33a87490a5"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/probe_harness.rs",
+      "sha256": "8eafa038bf21bf11c08c0823e1d1c0d45509fd4109b535232bf017f2fca0e37f"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/request.json",
+      "sha256": "b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/security_safety.md",
+      "sha256": "97ea83f8c62c7fe8b084c079dc7ecfacd8fe9c6182a6d5f928ee2b6a4c22e2b7"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/source-manifest.json",
+      "sha256": "0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22"
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4/testing.md",
+      "sha256": "8d8b1d475d4f80c2e4df6d7c67519f13a9a4e868be34acfee97d13d6fdd6ff13"
+    }
+  ],
+  "colliding_untracked_files": [
+    {
+      "path": "tests/test_coverage_sprint.py",
+      "preserved_as": "verification/worktree-snapshots/2026-11-06/tests/test_coverage_sprint.py"
+    }
+  ],
+  "resolution": "Merge coverage helper using identical original working-tree/main content; regenerate context/source hashes; retain merged roadmap/evidence and all runtime evidence links. Preserve differing local coverage regression test separately. Raw review text preserved exactly in JSON; Markdown copies whitespace-normalized.",
+  "verification": {
+    "precommit_static": "passed; all 57 commands, packaging with explicit --allow-dirty",
+    "precommit_python_and_native": "passed",
+    "logs": {
+      "searchright-all-worktrees-precommit-static.log": "6dbfeb1e7b95e06ddae82f9fe7a513fa50f23a8a730d5f386eee86c982a6f977",
+      "searchright-all-worktrees-precommit-native.log": "4bd70ec515ad899aa75868dddf791995102dfead15d4f3c607a52a446447ed49"
+    },
+    "postcommit_full_verifier": "pending; outcome recorded separately outside commit to avoid self-reference",
+    "earlier_failed_attempts": [
+      "Raw review Markdown hygiene violations: corrected while retaining exact report strings in JSON.",
+      "Packaging clean-tree requirement: explicit pre-commit --allow-dirty check passed; post-commit unmodified check still required."
+    ],
+    "not_run": [
+      "Hosted CI and remote delivery; local integration only."
+    ]
+  },
+  "remote_mutations": false
+}

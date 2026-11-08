@@ -1,0 +1,34 @@
+{
+  "schema_version": "org.searchright.conductor-reconciliation.v1",
+  "base_revision": "1ac5a326c345c25206719b59c28a073f009e05ee",
+  "counts": {
+    "active": 30,
+    "archived": 8,
+    "completed_tasks": 226,
+    "total_tasks": 405,
+    "tracks": 38
+  },
+  "phases": 152,
+  "individually_mapped_assertions": 188,
+  "acceptance_assertions": 200,
+  "all_track_state_and_completion_counts_unchanged": true,
+  "all_projection_keys_unchanged": true,
+  "changes": [
+    "Link Track 16 delivered-head and deferred-review receipts; preserve open exact-candidate hosted CI, 91 percent coverage, qualifying audits, mutation and push-context Scorecard gates.",
+    "Link historical Track 31 bounded reconciliation/audit without current-candidate parity or lifecycle promotion.",
+    "Correct stale claim inventory from 115 to validator-confirmed 188 mappings without assertion promotion.",
+    "Regenerate canonical projections and integrity artifacts; add three reconciliation regressions."
+  ],
+  "remote_mutations": false,
+  "dependency_audits_certified": 0,
+  "exemption_deadline_unchanged": "2026-11-10",
+  "review_gaps_recorded_not_recomputed": 247,
+  "validation": "Three focused regression tests, complete Python suite, native status, traceability and all 57 static commands passed; pre-commit packaging used explicit --allow-dirty. Unmodified full verifier must run on the committed revision; result is recorded separately to avoid self-reference.",
+  "unrun": [
+    "Hosted CI, current-candidate remote convergence and remote apply.",
+    "Dependency certification, live-provider, mutation, Scorecard and release/maturity gates."
+  ],
+  "test_correction": "Initial local-only link assertion rejected legitimate historical Track 11 HTTPS references; corrected to validate URL syntax without claiming live availability.",
+  "generic_skill_compatibility": "Native v3 numeric IDs and in-place lifecycle retained; generic dialect/archive migration not applied.",
+  "claim_boundary": "Evidence linkage and projection maintenance only; no task completion or evidence-level promotion."
+}

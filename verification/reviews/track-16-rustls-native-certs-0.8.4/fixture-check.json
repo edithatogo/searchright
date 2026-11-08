@@ -1,0 +1,8 @@
+{
+  "method": "Static check of include_str! inputs in exact extracted registry package; no compiler claim.",
+  "missing_files": [
+    "tests/badssl-com-chain.pem",
+    "integration-tests/one-existing-ca.pem"
+  ],
+  "unit_tests_run": false
+}

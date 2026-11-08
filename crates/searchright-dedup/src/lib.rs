@@ -787,7 +787,7 @@ mod tests {
         results.identifiers.isbn = Some("9781402894626".to_owned());
 
         let result = Deduplicator::new(DedupConfig::default())?.cluster(&[protocol, results])?;
-        assert!(result.clusters.is_empty());
+        assert_eq!(result.clusters.len(), 0);
         assert_eq!(result.proposed_duplicate_count, 0);
         Ok(())
     }
@@ -864,8 +864,8 @@ mod tests {
 
         let at_64 = deduplicator.cluster(&records[..64])?;
         let at_65 = deduplicator.cluster(&records)?;
-        assert!(at_64.clusters.is_empty());
-        assert!(at_65.clusters.is_empty());
+        assert_eq!(at_64.clusters.len(), 0);
+        assert_eq!(at_65.clusters.len(), 0);
         assert_eq!(at_64.retained_record_ids.len(), 64);
         assert_eq!(at_65.retained_record_ids.len(), 65);
         Ok(())

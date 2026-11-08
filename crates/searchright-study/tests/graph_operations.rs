@@ -201,7 +201,7 @@ fn attach_report_happy_path_appends_membership() {
         link("link-9", "report-2", "study-1"),
     )
     .unwrap_or_else(|_| panic!("expected attach"));
-    assert!(unlinked_reports(&g).is_empty());
+    assert_eq!(unlinked_reports(&g).len(), 0);
     assert_eq!(reports_per_study(&g).get("study-1"), Some(&2));
 }
 

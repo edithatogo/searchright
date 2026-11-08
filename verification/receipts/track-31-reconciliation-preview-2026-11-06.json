@@ -1,0 +1,2167 @@
+{
+  "schema_version": "org.searchright.control-plane-reconciliation-preview.v1",
+  "track_id": "31",
+  "mode": "dry_run",
+  "observed_at": "2026-11-06T11:15:07.323987+00:00",
+  "source_revision": "e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb",
+  "repository": "edithatogo/searchright",
+  "project_number": 40,
+  "summary": {
+    "repository_settings": 2,
+    "issues_to_create": 2,
+    "issue_content_updates": 80,
+    "issue_label_updates": 18,
+    "task_state_transitions": 17,
+    "task_closures_requiring_explicit_approval": 17,
+    "task_reopens": 0,
+    "project_items_to_add_after_issue_creation": 2,
+    "project_items_with_field_changes": 56,
+    "project_field_value_changes": 83
+  },
+  "repository_settings": [
+    {
+      "field": "has_discussions",
+      "before": false,
+      "after": true
+    },
+    {
+      "field": "allow_merge_commit",
+      "before": true,
+      "after": false
+    }
+  ],
+  "issue_creations": [
+    {
+      "key": "track-00-phase-4-task-06",
+      "title": "Track 00 / P4 / T06: Reconcile historical aggregate-verification failures with exact-tree full verification and separate frozen cargo-vet policy evidence (f372c67); verification/receipts/tra\u2026",
+      "parent_key": "track-00-phase-4",
+      "desired_state": "closed",
+      "body_path": "conductor/github/issues/track-00-phase-4-task-06.md",
+      "body_sha256": "13662f0c7aa157f4e0121902c4a178a8d39dc0ca97aba44b442a06cd23a511fb",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:00",
+        "phase:4",
+        "state:source-complete"
+      ]
+    },
+    {
+      "key": "track-08-phase-4-task-06",
+      "title": "Track 08 / P4 / T06: Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after f\u2026",
+      "parent_key": "track-08-phase-4",
+      "desired_state": "closed",
+      "body_path": "conductor/github/issues/track-08-phase-4-task-06.md",
+      "body_sha256": "2fde606921a094fc592e70142dfdfbae5b80cda2c8d9e59d806b575840f5749c",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:08",
+        "phase:4",
+        "state:source-complete"
+      ]
+    }
+  ],
+  "issue_content_updates": [
+    {
+      "key": "track-00",
+      "number": 2,
+      "url": "https://github.com/edithatogo/searchright/issues/2",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-00.md",
+      "before_body_sha256": "0cfb4d8cf1fddbed7e1a6999e7173d4932f41b3586f74ff1aa07a7413b74d4f9",
+      "after_body_sha256": "891db5d9119e104dd1aee6c328098139451385ccbfe67c65187063b95ff3b948"
+    },
+    {
+      "key": "track-00-phase-4",
+      "number": 10,
+      "url": "https://github.com/edithatogo/searchright/issues/10",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-00-phase-4.md",
+      "before_body_sha256": "391608a1d9fa9246a7cf39741b9f98cba57c069b987eaf6ba47198b69eecbe14",
+      "after_body_sha256": "a7e669a0d67afc567eaaa8aafa983ea1d5c84f7806127dbe722f212547d45f24"
+    },
+    {
+      "key": "track-00-phase-4-task-03",
+      "number": 13,
+      "url": "https://github.com/edithatogo/searchright/issues/13",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-00-phase-4-task-03.md",
+      "before_body_sha256": "6e6ad4de0a6e580b809a68707e9c5001771a0d8f4130d4576899b9086e1777c0",
+      "after_body_sha256": "7af4f371da322fb3018f4fe2b701e0ed15a690d34dac4ead260ba488fbbf1435"
+    },
+    {
+      "key": "track-02-phase-4-task-03",
+      "number": 41,
+      "url": "https://github.com/edithatogo/searchright/issues/41",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-02-phase-4-task-03.md",
+      "before_body_sha256": "fa068823ef116c793172418a1ffadd2e0d59bf896f466dda49fed2b665596700",
+      "after_body_sha256": "1b175cca18c08d85217a11d598b8b6046dc330073508be63b80e802774e0a86c"
+    },
+    {
+      "key": "track-03-phase-1-task-01",
+      "number": 45,
+      "url": "https://github.com/edithatogo/searchright/issues/45",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-03-phase-1-task-01.md",
+      "before_body_sha256": "40dccb451781f7c0e1bf21b27abda509e2407486552b94920a3a40aa4c900b3c",
+      "after_body_sha256": "82fb0fc66a3061e1d158e88feaada9a222940ca570d3f3d8bf7e83e9b3933673"
+    },
+    {
+      "key": "track-03-phase-4-task-03",
+      "number": 57,
+      "url": "https://github.com/edithatogo/searchright/issues/57",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-03-phase-4-task-03.md",
+      "before_body_sha256": "3137e4228772a7e0a3a2a5bbbbe5df67c2042d343a69f4420f8add9d313381ef",
+      "after_body_sha256": "6339d04fda8925206d702c7fcb6d16a15ef33a1f2d72a5bb6ef03f3cc905c047"
+    },
+    {
+      "key": "track-04",
+      "number": 59,
+      "url": "https://github.com/edithatogo/searchright/issues/59",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-04.md",
+      "before_body_sha256": "e93f873ba29c000a947de1d5ab9ed7644d8c6408217158df042e2b6b01442b18",
+      "after_body_sha256": "516da63d1bbd23b1fee7751b5cf82621e97ef61aad3bf2eb6d035c0379e3c6a8"
+    },
+    {
+      "key": "track-04-phase-1-task-01",
+      "number": 61,
+      "url": "https://github.com/edithatogo/searchright/issues/61",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-04-phase-1-task-01.md",
+      "before_body_sha256": "8c82066480f6e183cd03a7e5dc0a41b148dcb3eeb7aa315f2dcf9d6f83084181",
+      "after_body_sha256": "cd0ed6a34faf4f480de67b31b5c0b8157b383f0b5ca1302b0ec6717127d84820"
+    },
+    {
+      "key": "track-04-phase-2-task-01",
+      "number": 63,
+      "url": "https://github.com/edithatogo/searchright/issues/63",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-04-phase-2-task-01.md",
+      "before_body_sha256": "442d71af426524af473f3530571e7a155b887a363531b3aad33fd75b02bb4d5f",
+      "after_body_sha256": "33c238495bd745de0678f06867ee78e6535f21ae35c320905927da820936a1a7"
+    },
+    {
+      "key": "track-04-phase-4",
+      "number": 70,
+      "url": "https://github.com/edithatogo/searchright/issues/70",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-04-phase-4.md",
+      "before_body_sha256": "c21834446c0a546dd5ff06ce16d69fbc26d7dbe6c12ce1e496457c548565d76f",
+      "after_body_sha256": "be8dcc1b9cc92cfaea4f9a1a3b2c3004647d5dca5e706422ac29a434b6069a7c"
+    },
+    {
+      "key": "track-04-phase-4-task-03",
+      "number": 73,
+      "url": "https://github.com/edithatogo/searchright/issues/73",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-04-phase-4-task-03.md",
+      "before_body_sha256": "6edac2ed9321f9ac416b86646924033055b0413617073638167417cf9fc57840",
+      "after_body_sha256": "c7f08b91381abd4c84c62d1ee39a9481926a812cbd93708a4e9f2bc8142b4db4"
+    },
+    {
+      "key": "track-07",
+      "number": 103,
+      "url": "https://github.com/edithatogo/searchright/issues/103",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-07.md",
+      "before_body_sha256": "81a0a358b2423805e83568a32ababf1b2bec1e412dbdb9df692e1f69d757f97e",
+      "after_body_sha256": "e89017e462ad0614903f8480699a081ef15faab0424386d6d34d7741a3bd1b7d"
+    },
+    {
+      "key": "track-07-phase-1",
+      "number": 104,
+      "url": "https://github.com/edithatogo/searchright/issues/104",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-07-phase-1.md",
+      "before_body_sha256": "16766ce6c68ebdfc759698513a3740e554e442c2959355db77d1447c33d1d47e",
+      "after_body_sha256": "44e122a852b4c8042567fcc8211146b127388ce4c6d749a47a28aa3985179649"
+    },
+    {
+      "key": "track-07-phase-1-task-01",
+      "number": 105,
+      "url": "https://github.com/edithatogo/searchright/issues/105",
+      "title_changed": true,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-07-phase-1-task-01.md",
+      "before_body_sha256": "53b5c83f69ec43ba45bce1f86c07e07cd30f89b680960468ed02580a5d40b0f2",
+      "after_body_sha256": "aa3fbfde859df8ce301342ae5211b7b5f1b215bd581b627b4fa56900138688b4"
+    },
+    {
+      "key": "track-07-phase-3",
+      "number": 109,
+      "url": "https://github.com/edithatogo/searchright/issues/109",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-07-phase-3.md",
+      "before_body_sha256": "4afad991f11bd537ef37455b6173e41567e31f2d2d4cabc1f9d011aa484a32fc",
+      "after_body_sha256": "376e21f94d4a4102ebcf757efca89579bff6731f31daa437a7160e1456948ffd"
+    },
+    {
+      "key": "track-07-phase-3-task-01",
+      "number": 110,
+      "url": "https://github.com/edithatogo/searchright/issues/110",
+      "title_changed": true,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-07-phase-3-task-01.md",
+      "before_body_sha256": "bf6cb1dfe95e9ff31c9f65a7eb93500c50a48983a08fb55a9823d5d95fce88c5",
+      "after_body_sha256": "30387b214f58ec29a745c5af2bff295455bcefdb7391c051f36b76bad0ccd27d"
+    },
+    {
+      "key": "track-07-phase-4",
+      "number": 112,
+      "url": "https://github.com/edithatogo/searchright/issues/112",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-07-phase-4.md",
+      "before_body_sha256": "039cd7490645df4b58c4197ac0b30062afc0f698a55c139a9739ce1819109e25",
+      "after_body_sha256": "729d8caef55fa2923d59669a5460910651530ba436a1d6cf5a38d38210dc476d"
+    },
+    {
+      "key": "track-07-phase-4-task-04",
+      "number": 116,
+      "url": "https://github.com/edithatogo/searchright/issues/116",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-07-phase-4-task-04.md",
+      "before_body_sha256": "dbb8e5d6e6809ba1b4b7bdafddc558f2dc057725e3ef5d9e93fb56500249876c",
+      "after_body_sha256": "74793579dbab4d7ddb42544275afd138fa9849ededb62d8f04e4a37eba79d00e"
+    },
+    {
+      "key": "track-08",
+      "number": 117,
+      "url": "https://github.com/edithatogo/searchright/issues/117",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08.md",
+      "before_body_sha256": "d1597d0765ecf681414e7331b46dda9e59b15e0e8de002f84b99c970c69a576d",
+      "after_body_sha256": "def17e02957987da4ee82d1110cb28d4278d71d3d75123cf8ff6351fecf1f504"
+    },
+    {
+      "key": "track-08-phase-1",
+      "number": 118,
+      "url": "https://github.com/edithatogo/searchright/issues/118",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-1.md",
+      "before_body_sha256": "c8458da6e00570f9dd4cbc0e3d02c8940e01bfd559ddfd5b80646ebf6951e865",
+      "after_body_sha256": "c3f7b2b96a1b9e1c010f4e3bae6be01a9af919003b26af16567a8cf052da2640"
+    },
+    {
+      "key": "track-08-phase-1-task-01",
+      "number": 119,
+      "url": "https://github.com/edithatogo/searchright/issues/119",
+      "title_changed": true,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-1-task-01.md",
+      "before_body_sha256": "aa31b3abc8a57ef19cdc84c90393989fe30807ea5c9c4a0a9ed1cf3709327ade",
+      "after_body_sha256": "93804c107d889a0a4e070b9d9dcdc459c8a403adf852fc831a878c9d62356216"
+    },
+    {
+      "key": "track-08-phase-2-task-01",
+      "number": 121,
+      "url": "https://github.com/edithatogo/searchright/issues/121",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-2-task-01.md",
+      "before_body_sha256": "ad59dd77c885119c524541afb0871432318817bc33ded886c6ed2ee10acb51b2",
+      "after_body_sha256": "9be169e8664c5e7292b0451ece0c8b5b598602f072ee6c77416e3109b7e13f6b"
+    },
+    {
+      "key": "track-08-phase-3",
+      "number": 123,
+      "url": "https://github.com/edithatogo/searchright/issues/123",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-3.md",
+      "before_body_sha256": "b31fc6667ba00b28a564a6dea6a21851a8b6b3c4c685aeb7c8d3449544c10fb5",
+      "after_body_sha256": "50935d0bb7dafbcba2a56b198508793eb227baced1bcac4c29d4dab3faf6756d"
+    },
+    {
+      "key": "track-08-phase-3-task-01",
+      "number": 124,
+      "url": "https://github.com/edithatogo/searchright/issues/124",
+      "title_changed": true,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-3-task-01.md",
+      "before_body_sha256": "b98a879841362ffc38ef847d31d966dd7b83b5bb0eb0171975d7d618f9e2efe7",
+      "after_body_sha256": "b2c93f600fd50cb94673458af9dfcf83999a139f51c5dfd60d90f0b73d78de06"
+    },
+    {
+      "key": "track-08-phase-3-task-02",
+      "number": 125,
+      "url": "https://github.com/edithatogo/searchright/issues/125",
+      "title_changed": true,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-3-task-02.md",
+      "before_body_sha256": "3bd3fedc2d6090fdec038414d7acec080395d7405c1cdb8526abd2aba54ece56",
+      "after_body_sha256": "41cf39441b167749fb1e4705df1b21af34f376bf953399375ebdda5497df1f5d"
+    },
+    {
+      "key": "track-08-phase-4",
+      "number": 126,
+      "url": "https://github.com/edithatogo/searchright/issues/126",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-4.md",
+      "before_body_sha256": "5850b4b0d9a4565df28a720bd4dfce711902f8fed979084d5193a5d056ef717e",
+      "after_body_sha256": "cc109f913b84e9e6c32a450ce23389a3a2b5743bb2e8e652450ad967c6c0bbe0"
+    },
+    {
+      "key": "track-08-phase-4-task-03",
+      "number": 129,
+      "url": "https://github.com/edithatogo/searchright/issues/129",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-4-task-03.md",
+      "before_body_sha256": "ed9d675833c5634474d080891e77761113d8ec2376f19fbf58d888a5b84a5730",
+      "after_body_sha256": "5fbff25dea9b756d08617d14add07625dca09878a27f4bf1a2522f739dac54b8"
+    },
+    {
+      "key": "track-08-phase-4-task-05",
+      "number": 673,
+      "url": "https://github.com/edithatogo/searchright/issues/673",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-08-phase-4-task-05.md",
+      "before_body_sha256": "c1862bc5812c1cbcc61d2cefc9799f1c3c4caa6b40f120871a12561e20494997",
+      "after_body_sha256": "3b381f876b5c5c3b4a788e1f88709c8a115270912050e4f6ac32b9d7d167cee4"
+    },
+    {
+      "key": "track-11-phase-1-task-01",
+      "number": 160,
+      "url": "https://github.com/edithatogo/searchright/issues/160",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-11-phase-1-task-01.md",
+      "before_body_sha256": "f05d0bcd5111b3288eec4c2c9e3c8b32e45f76e4acafd8955885ccc9ad55b798",
+      "after_body_sha256": "dd04b6c89138e7503febdd443d19ef2633906a9a3461b7d49f959d9c4ae72d1c"
+    },
+    {
+      "key": "track-11-phase-4-task-03",
+      "number": 170,
+      "url": "https://github.com/edithatogo/searchright/issues/170",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-11-phase-4-task-03.md",
+      "before_body_sha256": "027bbde9ceec7d93d50649e7cc43df14285d0fc814f2f9f4e31a6906044c53bf",
+      "after_body_sha256": "64c6d94387f5c6e02137aeb5bcecdc4a4e2bc47fb0f0020898130cdef94aae44"
+    },
+    {
+      "key": "track-12-phase-4",
+      "number": 182,
+      "url": "https://github.com/edithatogo/searchright/issues/182",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-12-phase-4.md",
+      "before_body_sha256": "9b12c6dc10d0b5fb4b89a9689a59428ffd90bf95b50877c07ba802567bf2cb34",
+      "after_body_sha256": "e724aa0ba6ef009c6b260918b6cf9b5369657f8002b3c32595d5f0d610331a07"
+    },
+    {
+      "key": "track-12-phase-4-task-03",
+      "number": 185,
+      "url": "https://github.com/edithatogo/searchright/issues/185",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-12-phase-4-task-03.md",
+      "before_body_sha256": "8108a18a361f3b85a4ef97ee4d7411672714a622593eed9b21a231cf3c31cf72",
+      "after_body_sha256": "a03d34376b4e197e63f3abdc5caebc86116b7b1075df26f4484bed3164a49223"
+    },
+    {
+      "key": "track-13-phase-4-task-03",
+      "number": 200,
+      "url": "https://github.com/edithatogo/searchright/issues/200",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-13-phase-4-task-03.md",
+      "before_body_sha256": "3c39db2ff48c4bd52301a311893eee311d23cc30add0c68b57fea265f282dabb",
+      "after_body_sha256": "174bfa53a618cfb23f630bcf844711db8af79100cc4c96ba350f15b29bb0bd62"
+    },
+    {
+      "key": "track-14-phase-4",
+      "number": 213,
+      "url": "https://github.com/edithatogo/searchright/issues/213",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-14-phase-4.md",
+      "before_body_sha256": "21be4eabdc0a372839556f54783d52df51aba9ada67d5d3a88f205debd8c922f",
+      "after_body_sha256": "bacba3bee0adf5ec557b5e5e9663660a79fec6f54b16be8125d02abc54a09d08"
+    },
+    {
+      "key": "track-14-phase-4-task-03",
+      "number": 216,
+      "url": "https://github.com/edithatogo/searchright/issues/216",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-14-phase-4-task-03.md",
+      "before_body_sha256": "e4852b24b2c57276778474434a4168ce092910712537c47c40ddcdb6b32d6438",
+      "after_body_sha256": "04f6259feb4c2192ac17ca33658f6919532e3d01864a21ec4b93c168cf700215"
+    },
+    {
+      "key": "track-15-phase-1-task-01",
+      "number": 220,
+      "url": "https://github.com/edithatogo/searchright/issues/220",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-15-phase-1-task-01.md",
+      "before_body_sha256": "ec03ac8fccf62df1e15adf20c4c7ee2683adc00f37ed1dd6ff6bcddb094a2a7e",
+      "after_body_sha256": "8741b1776e7f19232b0cac1c07ad71da4282608cfcb2bae8646c389d7361c184"
+    },
+    {
+      "key": "track-15-phase-4",
+      "number": 228,
+      "url": "https://github.com/edithatogo/searchright/issues/228",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-15-phase-4.md",
+      "before_body_sha256": "12c8a921e7091f63a11757890c10dbefa12674435c3e372f3ca3abc581f5fc17",
+      "after_body_sha256": "fed0ebe9bd7e92bc69f6a513af246f5046b40274192e7139f3ef78f1cac41411"
+    },
+    {
+      "key": "track-15-phase-4-task-03",
+      "number": 231,
+      "url": "https://github.com/edithatogo/searchright/issues/231",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-15-phase-4-task-03.md",
+      "before_body_sha256": "d5c1a12ef3fa59bee0d2918d6f398516ae559c243d54fcd74d20cf13c53335d5",
+      "after_body_sha256": "a63e5435fd41c7dd03d6f1df19be389be875203502881e3f069077080e992857"
+    },
+    {
+      "key": "track-16",
+      "number": 233,
+      "url": "https://github.com/edithatogo/searchright/issues/233",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-16.md",
+      "before_body_sha256": "1f914dd1e4c66f1bd9b95527c03a32d25b81a93e72c2b90859a86f8342057a9e",
+      "after_body_sha256": "68200b729f5eb022de769d047665629cc000f344037685d0ec6655725b56b8ea"
+    },
+    {
+      "key": "track-16-phase-4",
+      "number": 244,
+      "url": "https://github.com/edithatogo/searchright/issues/244",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-16-phase-4.md",
+      "before_body_sha256": "1edab710ae2b817aa62dcd7a3b91922bbc5278d4917d79d8e17a30e76e2f1543",
+      "after_body_sha256": "6d02bb9153369c9499e76f995270d5036c599823dfd6237d2151ca8ff2461d37"
+    },
+    {
+      "key": "track-16-phase-4-task-03",
+      "number": 247,
+      "url": "https://github.com/edithatogo/searchright/issues/247",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-16-phase-4-task-03.md",
+      "before_body_sha256": "1ba529d53bcc902e0f3b7a8daabf91c9405553738199342540cb1194fe64c3ca",
+      "after_body_sha256": "0d5ea2d67412901b688c43a6ca6100c103d4c923e20575629ff3e140bc979acc"
+    },
+    {
+      "key": "track-17",
+      "number": 249,
+      "url": "https://github.com/edithatogo/searchright/issues/249",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-17.md",
+      "before_body_sha256": "2f047e35df8f5bd250343a855c0182dc108a4588f3372296caa76df01608b644",
+      "after_body_sha256": "dfe5d3ea9a039b483c2a59a79f4c0dba76a153980d42ef092f13235fd352fa26"
+    },
+    {
+      "key": "track-17-phase-1-task-01",
+      "number": 251,
+      "url": "https://github.com/edithatogo/searchright/issues/251",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-17-phase-1-task-01.md",
+      "before_body_sha256": "2a3b630b38a6bf743b50c0d5f4d2593dd5d681d72f204ff73b83f0813bd5b5cb",
+      "after_body_sha256": "75bdfef04e1107b798ed84707b0ea82390a4623356f43e5ab5b758403510da10"
+    },
+    {
+      "key": "track-17-phase-2-task-01",
+      "number": 253,
+      "url": "https://github.com/edithatogo/searchright/issues/253",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-17-phase-2-task-01.md",
+      "before_body_sha256": "1c67420598c08180591a57e5680a169aba9e46e796b7b4e3512349f27bceffd3",
+      "after_body_sha256": "ae515c7bc54d96d5ed665c5b83ed17cfd7576fef1d415fd8de1ef239ee864bb7"
+    },
+    {
+      "key": "track-17-phase-4",
+      "number": 259,
+      "url": "https://github.com/edithatogo/searchright/issues/259",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-17-phase-4.md",
+      "before_body_sha256": "a4c4069f2245710e58a9944e75745f86d7f01a3a37c97f49c77f07dad8d92c09",
+      "after_body_sha256": "1650e2dbdf1d870675d07a63dcee2d54c2920a6a58025ae5bcdc549160fcb6c6"
+    },
+    {
+      "key": "track-17-phase-4-task-03",
+      "number": 262,
+      "url": "https://github.com/edithatogo/searchright/issues/262",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-17-phase-4-task-03.md",
+      "before_body_sha256": "f072ac2e32ecb081067beb32913f0c7f2ff03e1f157115e18daf682ffdea80e7",
+      "after_body_sha256": "608f6132733163eeabe5e9c063a03f7e58d0b7ccf6d6e601fb71dfbefd80c9ce"
+    },
+    {
+      "key": "track-18-phase-1-task-01",
+      "number": 266,
+      "url": "https://github.com/edithatogo/searchright/issues/266",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-18-phase-1-task-01.md",
+      "before_body_sha256": "8e7825df584e183d5d6512c6ef5450e6986d266ff568f9f564abb12be254b293",
+      "after_body_sha256": "2c76d3cb32a79ccd2bb3459d91919d15087e470c89eabc77d6bd5e03641dc543"
+    },
+    {
+      "key": "track-18-phase-4",
+      "number": 274,
+      "url": "https://github.com/edithatogo/searchright/issues/274",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-18-phase-4.md",
+      "before_body_sha256": "1f5f8a93e85d61e4aa23df731635a97229dfa0572f46ca69c6abf03465782e4d",
+      "after_body_sha256": "6ebcecd9ca8584f686c2bd2a95cd6ca7b7f19bcca5951cb21aaea85f3307415a"
+    },
+    {
+      "key": "track-18-phase-4-task-03",
+      "number": 277,
+      "url": "https://github.com/edithatogo/searchright/issues/277",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-18-phase-4-task-03.md",
+      "before_body_sha256": "f820e6a05a5dfd64cb12794db8c010185f0d0a362673237d9d90b45dcc5e7186",
+      "after_body_sha256": "945385ac56ceccce262ab89dae8e94364ada20da4a1c5e7b218ff23358b55cc5"
+    },
+    {
+      "key": "track-19-phase-1-task-01",
+      "number": 281,
+      "url": "https://github.com/edithatogo/searchright/issues/281",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-19-phase-1-task-01.md",
+      "before_body_sha256": "b1e0de762bcedb7155f04a7f50e36067d81b5cbdcf5c16b9fbe80c09bb6cb4e2",
+      "after_body_sha256": "fee896d0b5527e1fafbf18253a3739427ad97fa26ebf7e789b3a416db76a0060"
+    },
+    {
+      "key": "track-19-phase-4",
+      "number": 290,
+      "url": "https://github.com/edithatogo/searchright/issues/290",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-19-phase-4.md",
+      "before_body_sha256": "e7b20ac6c9972433096d28b01333eaefb12e0b81f6aaf03dd55077d73cebbbb2",
+      "after_body_sha256": "8330c0e3570e819ac8e0b01b32474cd9fc82929abeb26ab36e1a3d6803b8b234"
+    },
+    {
+      "key": "track-19-phase-4-task-03",
+      "number": 293,
+      "url": "https://github.com/edithatogo/searchright/issues/293",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-19-phase-4-task-03.md",
+      "before_body_sha256": "bef4f093ba035fb7a9757656dd33d72d6027fd653868d4d393602c423f88d6d3",
+      "after_body_sha256": "c7d2101abfbc051b6eba63d78777625ca12601f6d18bf5140bc63e2e7afb6696"
+    },
+    {
+      "key": "track-21-phase-1-task-01",
+      "number": 312,
+      "url": "https://github.com/edithatogo/searchright/issues/312",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-21-phase-1-task-01.md",
+      "before_body_sha256": "97a91feff1f42d6e99506437609976673864ac9e619014b13e5a1b3182192f02",
+      "after_body_sha256": "52b3d42d1ff58d5ffb1114f673b92611a616384acbb59536d4342869538e8481"
+    },
+    {
+      "key": "track-21-phase-4",
+      "number": 320,
+      "url": "https://github.com/edithatogo/searchright/issues/320",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-21-phase-4.md",
+      "before_body_sha256": "b379df66f48445c5d29c25acc0272d469aa7c361a1b1260954539ec5d2cee938",
+      "after_body_sha256": "b53ff88687b695d87dacce0fa874d0c1e3cafcfc92d99bbefe0b0dba1e0883b6"
+    },
+    {
+      "key": "track-21-phase-4-task-03",
+      "number": 323,
+      "url": "https://github.com/edithatogo/searchright/issues/323",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-21-phase-4-task-03.md",
+      "before_body_sha256": "89cdfa1fe5463d1f77a96b3f74839a09ad2aac5a635ce4f548e1b380788572d3",
+      "after_body_sha256": "f6b943ded2c067ffd3a1f95f202bb7fb73c4102d1efe7e00651bfd62128ab40c"
+    },
+    {
+      "key": "track-22-phase-4",
+      "number": 334,
+      "url": "https://github.com/edithatogo/searchright/issues/334",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-22-phase-4.md",
+      "before_body_sha256": "f238b7ac9faedd66ac245c1a489c84e0940f483edb50552905bb8e04580e935c",
+      "after_body_sha256": "9df0a31c615cbd5399ff15b7294665d27cc6a9478bf56be8772857cdc1a5e704"
+    },
+    {
+      "key": "track-22-phase-4-task-03",
+      "number": 337,
+      "url": "https://github.com/edithatogo/searchright/issues/337",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-22-phase-4-task-03.md",
+      "before_body_sha256": "d4b1f956a0d7216274d05fe68b469d90261929d4853c18ed0997e081ccff5310",
+      "after_body_sha256": "49983b1e65581f288de36248322592889465dd38d560bba631e63a8607ddd715"
+    },
+    {
+      "key": "track-23-phase-4",
+      "number": 349,
+      "url": "https://github.com/edithatogo/searchright/issues/349",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-23-phase-4.md",
+      "before_body_sha256": "8aa8bd95bbd91eabc0d8190a92cfd4d74f46e706735801729400fc5acfc00f65",
+      "after_body_sha256": "ccd84c8be74b60f3012111e4133b738e3ba8b8687496140890b54fa6d69df8fa"
+    },
+    {
+      "key": "track-23-phase-4-task-03",
+      "number": 352,
+      "url": "https://github.com/edithatogo/searchright/issues/352",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-23-phase-4-task-03.md",
+      "before_body_sha256": "c464519552fe045793120cc483abee5e88aaafbedc64dbd341b208d12934debe",
+      "after_body_sha256": "2dec103c18a190c2a312e55eb3dff49d2bdfe2a33549b7c56a44a2d7a4b8aaf5"
+    },
+    {
+      "key": "track-24-phase-1-task-01",
+      "number": 356,
+      "url": "https://github.com/edithatogo/searchright/issues/356",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-24-phase-1-task-01.md",
+      "before_body_sha256": "bca90f206c680b2b6e8857266e81ce586be96b4c050e840d69f93646fc94b91c",
+      "after_body_sha256": "aa7f6e6e34ce0231184f87e2336fa18a904f0a9cdf14bcbb621d9b60c0572b92"
+    },
+    {
+      "key": "track-24-phase-2-task-01",
+      "number": 358,
+      "url": "https://github.com/edithatogo/searchright/issues/358",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-24-phase-2-task-01.md",
+      "before_body_sha256": "8a76bfcd10959a5cd41055458fad8c679e8c336e75651c343ae5a498930c4405",
+      "after_body_sha256": "074796dcc6c9df1a2a8288a92d6000f59b7f01f3d8ad607119fb9a778fd942b6"
+    },
+    {
+      "key": "track-24-phase-4",
+      "number": 365,
+      "url": "https://github.com/edithatogo/searchright/issues/365",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-24-phase-4.md",
+      "before_body_sha256": "6099463f7c515aef5f5098651ef3faf3d5825744b14f901df9c98f088e6b1956",
+      "after_body_sha256": "24c425ddea2092ce035c0cbc773a1005d9d075ae22d5168b580e1da76a080646"
+    },
+    {
+      "key": "track-24-phase-4-task-03",
+      "number": 368,
+      "url": "https://github.com/edithatogo/searchright/issues/368",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-24-phase-4-task-03.md",
+      "before_body_sha256": "b1b6ad3ecb29ccc0c2d8cbfa9a0177f96897ebc01dcfa783ae59fea0b5e8a8a1",
+      "after_body_sha256": "0f72220ea138b26b054fe61ec19b0edc82947e227314bc242b9e16ef380fe7cc"
+    },
+    {
+      "key": "track-25-phase-1-task-01",
+      "number": 372,
+      "url": "https://github.com/edithatogo/searchright/issues/372",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-25-phase-1-task-01.md",
+      "before_body_sha256": "087f665130d1c7553fa255edd685c85d2a2cb4044a4d4b503134df53ee68353b",
+      "after_body_sha256": "5010e54f33c79fe799974bf938828ccf9ea5a8e153dc9847162c8803abb4f5f3"
+    },
+    {
+      "key": "track-25-phase-2-task-01",
+      "number": 374,
+      "url": "https://github.com/edithatogo/searchright/issues/374",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-25-phase-2-task-01.md",
+      "before_body_sha256": "1a41a88a52e661a4c3deb8c3e46e67a7375017ea2c5d4350d010e678c7203999",
+      "after_body_sha256": "7e3e6afa1190e0c9650063c21b0574526197f35a0e2bf5c0ad5cce37d125cb47"
+    },
+    {
+      "key": "track-25-phase-4",
+      "number": 380,
+      "url": "https://github.com/edithatogo/searchright/issues/380",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-25-phase-4.md",
+      "before_body_sha256": "2560778e667b289b40e0dcdf55e7094e6704c73472c9d9202047ef64c3a3457f",
+      "after_body_sha256": "59e652d3bc9b702de1e8b0e6f72f8d0bfaf594c3adf6248a8251ada918d76c96"
+    },
+    {
+      "key": "track-25-phase-4-task-03",
+      "number": 383,
+      "url": "https://github.com/edithatogo/searchright/issues/383",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-25-phase-4-task-03.md",
+      "before_body_sha256": "c12c27559a76021ca0dc149f1e9b9cd0f78af4cc055c5a4b513b8ade5efa4f2e",
+      "after_body_sha256": "02864fed621c9fc7fdd4f8b762628467a9b1565a3827589d2d6a76b591994d69"
+    },
+    {
+      "key": "track-26-phase-1-task-01",
+      "number": 387,
+      "url": "https://github.com/edithatogo/searchright/issues/387",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-26-phase-1-task-01.md",
+      "before_body_sha256": "7a234d02cc2477f06e94c72b0f68a493406a025585434e166f3f7562325d7598",
+      "after_body_sha256": "cbad5ef5da9ad8419b8534470c2caaa7b4c1cbc88048168d6e4093700c2087bf"
+    },
+    {
+      "key": "track-26-phase-2-task-01",
+      "number": 389,
+      "url": "https://github.com/edithatogo/searchright/issues/389",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-26-phase-2-task-01.md",
+      "before_body_sha256": "93e910c907bc515817ec1e8a3c8ddddbebe5bd34a90e149e500d955a341c0ac3",
+      "after_body_sha256": "a4cc1a04b28cfebf7bf49d6635f5944ded98b98832e0c279ad3c6552049d2b91"
+    },
+    {
+      "key": "track-26-phase-4-task-03",
+      "number": 400,
+      "url": "https://github.com/edithatogo/searchright/issues/400",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-26-phase-4-task-03.md",
+      "before_body_sha256": "13e6b688c6ecb2d4cb5aa670ff20504b7dffad8efd4c8e4e25e5a149747d5d26",
+      "after_body_sha256": "70a4e6978c816ac8d3f8fc0acf2fface1d06db14d48e7d98bf02be7fac20bc52"
+    },
+    {
+      "key": "track-27",
+      "number": 402,
+      "url": "https://github.com/edithatogo/searchright/issues/402",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-27.md",
+      "before_body_sha256": "37e9a1570a332f151dfb390aa1940b32008669d61e39081665d1755ee7bc9836",
+      "after_body_sha256": "3ae4af9bcf91e2b8d7b2bb893c815e7404539bfbb8e8d95a983fa88b96ae3ec8"
+    },
+    {
+      "key": "track-27-phase-1-task-01",
+      "number": 404,
+      "url": "https://github.com/edithatogo/searchright/issues/404",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-27-phase-1-task-01.md",
+      "before_body_sha256": "673021c30f6e8f752966a5020b614e671183664de675270e5156bdc37bc6c25d",
+      "after_body_sha256": "d93eff255ed88653dc815a100eb04ec2bc48a0204d2b434b70a2dbdb142d46fc"
+    },
+    {
+      "key": "track-27-phase-2-task-01",
+      "number": 406,
+      "url": "https://github.com/edithatogo/searchright/issues/406",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-27-phase-2-task-01.md",
+      "before_body_sha256": "b76e803294bca6896fd10c790395e1fa4b276ea4321f138c7c89ef4e21f75b50",
+      "after_body_sha256": "8298e9da7d80ccb892210dc53706c7263c4b8dc31ecd43a59e6c9e15bee3420e"
+    },
+    {
+      "key": "track-27-phase-4-task-03",
+      "number": 415,
+      "url": "https://github.com/edithatogo/searchright/issues/415",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-27-phase-4-task-03.md",
+      "before_body_sha256": "3eb9e9fcde1cefd95e12c5c95af29e917648a363762d92c184e1e625ab11d397",
+      "after_body_sha256": "1779f088d8059f31003cd6b619efc25fd21312e3b7436ac1f5ff61302c6e28c8"
+    },
+    {
+      "key": "track-28-phase-1-task-01",
+      "number": 419,
+      "url": "https://github.com/edithatogo/searchright/issues/419",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-28-phase-1-task-01.md",
+      "before_body_sha256": "24cd8a28e958e97977bc885fc5b34196f731b60eab9cb5ca2e862b0c61238af9",
+      "after_body_sha256": "ad44ac67fe1604326b6db4acca99a51a019eb0eb7536a22b8f6084e5d666e26a"
+    },
+    {
+      "key": "track-28-phase-2-task-01",
+      "number": 421,
+      "url": "https://github.com/edithatogo/searchright/issues/421",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-28-phase-2-task-01.md",
+      "before_body_sha256": "16a72867d51f4e370a4b811986a55363c03e6f539619ec69e92c3fafcf61b8d7",
+      "after_body_sha256": "c37924ef0f800b802761a65db1bd30290e49a26882e86fcbdfd5e8c5124cc85c"
+    },
+    {
+      "key": "track-28-phase-4-task-03",
+      "number": 430,
+      "url": "https://github.com/edithatogo/searchright/issues/430",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-28-phase-4-task-03.md",
+      "before_body_sha256": "36f5bbced2f0ee032fa89beac48aeed834850f07bcae2c89e3a618db5f1bcd0c",
+      "after_body_sha256": "2e76a55efa0c260c5f292d128ab94a112e0ea8465ab364811c5763b09facadd1"
+    },
+    {
+      "key": "track-29-phase-1-task-01",
+      "number": 434,
+      "url": "https://github.com/edithatogo/searchright/issues/434",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-29-phase-1-task-01.md",
+      "before_body_sha256": "1c4f5f36c45a56d8d41a0f7d07462380354c10b8cfe9f521b9b2b5deff592fd2",
+      "after_body_sha256": "f1d2a35f157f0dd4dd7a3f9fd72b04f356e51b0ea9e98cd83b256c9b491977ab"
+    },
+    {
+      "key": "track-29-phase-2-task-01",
+      "number": 436,
+      "url": "https://github.com/edithatogo/searchright/issues/436",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-29-phase-2-task-01.md",
+      "before_body_sha256": "ec031b73cd5c5743cfb421c415a442c10dc48a83c805425f722660071d4ba874",
+      "after_body_sha256": "ffe917d2d67287dcb0814821fd2fe89798e0b037de7de58fe1b321e9899ad4c3"
+    },
+    {
+      "key": "track-29-phase-4-task-03",
+      "number": 446,
+      "url": "https://github.com/edithatogo/searchright/issues/446",
+      "title_changed": false,
+      "body_changed": true,
+      "desired_body_path": "conductor/github/issues/track-29-phase-4-task-03.md",
+      "before_body_sha256": "2a52ce7a145d0dadb71467db492f20d2513fd35ef15ccd83372dae7bd63f0f8f",
+      "after_body_sha256": "e34e39e9fe4357e2c6971f976a2877e8cd57e9f0c50276836826d66dce162385"
+    }
+  ],
+  "issue_label_updates": [
+    {
+      "key": "track-04-phase-4-task-03",
+      "number": 73,
+      "url": "https://github.com/edithatogo/searchright/issues/73",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-07-phase-1-task-01",
+      "number": 105,
+      "url": "https://github.com/edithatogo/searchright/issues/105",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-07-phase-3-task-01",
+      "number": 110,
+      "url": "https://github.com/edithatogo/searchright/issues/110",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-07-phase-4-task-04",
+      "number": 116,
+      "url": "https://github.com/edithatogo/searchright/issues/116",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-08",
+      "number": 117,
+      "url": "https://github.com/edithatogo/searchright/issues/117",
+      "add": [
+        "evidence:external-required"
+      ],
+      "remove_if_explicitly_approved": [
+        "evidence:source-verified"
+      ]
+    },
+    {
+      "key": "track-08-phase-1-task-01",
+      "number": 119,
+      "url": "https://github.com/edithatogo/searchright/issues/119",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-12-phase-4-task-03",
+      "number": 185,
+      "url": "https://github.com/edithatogo/searchright/issues/185",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-14-phase-4-task-03",
+      "number": 216,
+      "url": "https://github.com/edithatogo/searchright/issues/216",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-15-phase-4-task-03",
+      "number": 231,
+      "url": "https://github.com/edithatogo/searchright/issues/231",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-16-phase-4-task-03",
+      "number": 247,
+      "url": "https://github.com/edithatogo/searchright/issues/247",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-17-phase-4-task-03",
+      "number": 262,
+      "url": "https://github.com/edithatogo/searchright/issues/262",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-18-phase-4-task-03",
+      "number": 277,
+      "url": "https://github.com/edithatogo/searchright/issues/277",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-19-phase-4-task-03",
+      "number": 293,
+      "url": "https://github.com/edithatogo/searchright/issues/293",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-21-phase-4-task-03",
+      "number": 323,
+      "url": "https://github.com/edithatogo/searchright/issues/323",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-22-phase-4-task-03",
+      "number": 337,
+      "url": "https://github.com/edithatogo/searchright/issues/337",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-23-phase-4-task-03",
+      "number": 352,
+      "url": "https://github.com/edithatogo/searchright/issues/352",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-24-phase-4-task-03",
+      "number": 368,
+      "url": "https://github.com/edithatogo/searchright/issues/368",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    },
+    {
+      "key": "track-25-phase-4-task-03",
+      "number": 383,
+      "url": "https://github.com/edithatogo/searchright/issues/383",
+      "add": [
+        "state:source-complete"
+      ],
+      "remove_if_explicitly_approved": [
+        "state:evidence-open"
+      ]
+    }
+  ],
+  "task_state_transitions": [
+    {
+      "key": "track-04-phase-4-task-03",
+      "number": 73,
+      "url": "https://github.com/edithatogo/searchright/issues/73",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-07-phase-1-task-01",
+      "number": 105,
+      "url": "https://github.com/edithatogo/searchright/issues/105",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-07-phase-3-task-01",
+      "number": 110,
+      "url": "https://github.com/edithatogo/searchright/issues/110",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-07-phase-4-task-04",
+      "number": 116,
+      "url": "https://github.com/edithatogo/searchright/issues/116",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-08-phase-1-task-01",
+      "number": 119,
+      "url": "https://github.com/edithatogo/searchright/issues/119",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-12-phase-4-task-03",
+      "number": 185,
+      "url": "https://github.com/edithatogo/searchright/issues/185",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-14-phase-4-task-03",
+      "number": 216,
+      "url": "https://github.com/edithatogo/searchright/issues/216",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-15-phase-4-task-03",
+      "number": 231,
+      "url": "https://github.com/edithatogo/searchright/issues/231",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-16-phase-4-task-03",
+      "number": 247,
+      "url": "https://github.com/edithatogo/searchright/issues/247",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-17-phase-4-task-03",
+      "number": 262,
+      "url": "https://github.com/edithatogo/searchright/issues/262",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-18-phase-4-task-03",
+      "number": 277,
+      "url": "https://github.com/edithatogo/searchright/issues/277",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-19-phase-4-task-03",
+      "number": 293,
+      "url": "https://github.com/edithatogo/searchright/issues/293",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-21-phase-4-task-03",
+      "number": 323,
+      "url": "https://github.com/edithatogo/searchright/issues/323",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-22-phase-4-task-03",
+      "number": 337,
+      "url": "https://github.com/edithatogo/searchright/issues/337",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-23-phase-4-task-03",
+      "number": 352,
+      "url": "https://github.com/edithatogo/searchright/issues/352",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-24-phase-4-task-03",
+      "number": 368,
+      "url": "https://github.com/edithatogo/searchright/issues/368",
+      "before": "open",
+      "after": "closed"
+    },
+    {
+      "key": "track-25-phase-4-task-03",
+      "number": 383,
+      "url": "https://github.com/edithatogo/searchright/issues/383",
+      "before": "open",
+      "after": "closed"
+    }
+  ],
+  "project_item_additions": [
+    {
+      "key": "track-00-phase-4-task-06",
+      "reason": "Create canonical issue before adding its Project item; remote identity not yet assigned"
+    },
+    {
+      "key": "track-08-phase-4-task-06",
+      "reason": "Create canonical issue before adding its Project item; remote identity not yet assigned"
+    }
+  ],
+  "project_field_updates": [
+    {
+      "key": "track-04-phase-4-task-03",
+      "number": 73,
+      "url": "https://github.com/edithatogo/searchright/issues/73",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IHog",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-07",
+      "number": 103,
+      "url": "https://github.com/edithatogo/searchright/issues/103",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEEg",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "In progress",
+          "after": "Source complete"
+        },
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-1",
+      "number": 104,
+      "url": "https://github.com/edithatogo/searchright/issues/104",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEH4",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "In progress",
+          "after": "Source complete"
+        },
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-1-task-01",
+      "number": 105,
+      "url": "https://github.com/edithatogo/searchright/issues/105",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEJU",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Backlog",
+          "after": "Source complete"
+        },
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-2",
+      "number": 106,
+      "url": "https://github.com/edithatogo/searchright/issues/106",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEPM",
+      "changes": [
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-2-task-01",
+      "number": 107,
+      "url": "https://github.com/edithatogo/searchright/issues/107",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IETc",
+      "changes": [
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-2-task-02",
+      "number": 108,
+      "url": "https://github.com/edithatogo/searchright/issues/108",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IETk",
+      "changes": [
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-3",
+      "number": 109,
+      "url": "https://github.com/edithatogo/searchright/issues/109",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEPk",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Evidence blocked",
+          "after": "Source complete"
+        },
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-3-task-01",
+      "number": 110,
+      "url": "https://github.com/edithatogo/searchright/issues/110",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IETY",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Evidence blocked",
+          "after": "Source complete"
+        },
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-4",
+      "number": 112,
+      "url": "https://github.com/edithatogo/searchright/issues/112",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEQ8",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        },
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-4-task-01",
+      "number": 113,
+      "url": "https://github.com/edithatogo/searchright/issues/113",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEXI",
+      "changes": [
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-4-task-02",
+      "number": 114,
+      "url": "https://github.com/edithatogo/searchright/issues/114",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEXM",
+      "changes": [
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-4-task-03",
+      "number": 115,
+      "url": "https://github.com/edithatogo/searchright/issues/115",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEXY",
+      "changes": [
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-07-phase-4-task-04",
+      "number": 116,
+      "url": "https://github.com/edithatogo/searchright/issues/116",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEXc",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        },
+        {
+          "field": "Evidence level",
+          "observed_shape_known": true,
+          "before": "Source Verified",
+          "after": "Fixture Proven"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08",
+      "number": 117,
+      "url": "https://github.com/edithatogo/searchright/issues/117",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEEo",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "In progress",
+          "after": "Source complete"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        },
+        {
+          "field": "External gate",
+          "observed_shape_known": true,
+          "before": "No",
+          "after": "Yes"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-1",
+      "number": 118,
+      "url": "https://github.com/edithatogo/searchright/issues/118",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEeY",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "In progress",
+          "after": "Source complete"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        },
+        {
+          "field": "External gate",
+          "observed_shape_known": true,
+          "before": "No",
+          "after": "Yes"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-1-task-01",
+      "number": 119,
+      "url": "https://github.com/edithatogo/searchright/issues/119",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEhQ",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Backlog",
+          "after": "Source complete"
+        },
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-2",
+      "number": 120,
+      "url": "https://github.com/edithatogo/searchright/issues/120",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEeg",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        },
+        {
+          "field": "External gate",
+          "observed_shape_known": true,
+          "before": "No",
+          "after": "Yes"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-2-task-01",
+      "number": 121,
+      "url": "https://github.com/edithatogo/searchright/issues/121",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEg0",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-2-task-02",
+      "number": 122,
+      "url": "https://github.com/edithatogo/searchright/issues/122",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEhY",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-3",
+      "number": 123,
+      "url": "https://github.com/edithatogo/searchright/issues/123",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEeo",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-3-task-01",
+      "number": 124,
+      "url": "https://github.com/edithatogo/searchright/issues/124",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEk4",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-3-task-02",
+      "number": 125,
+      "url": "https://github.com/edithatogo/searchright/issues/125",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IExY",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-4",
+      "number": 126,
+      "url": "https://github.com/edithatogo/searchright/issues/126",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEew",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        },
+        {
+          "field": "External gate",
+          "observed_shape_known": true,
+          "before": "No",
+          "after": "Yes"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-4-task-01",
+      "number": 127,
+      "url": "https://github.com/edithatogo/searchright/issues/127",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEgc",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-4-task-02",
+      "number": 128,
+      "url": "https://github.com/edithatogo/searchright/issues/128",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEhI",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-4-task-03",
+      "number": 129,
+      "url": "https://github.com/edithatogo/searchright/issues/129",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEhg",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-4-task-04",
+      "number": 130,
+      "url": "https://github.com/edithatogo/searchright/issues/130",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEhs",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-08-phase-4-task-05",
+      "number": 673,
+      "url": "https://github.com/edithatogo/searchright/issues/673",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg4rr5g",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Partially Implemented",
+          "after": "Source Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-12-phase-4-task-03",
+      "number": 185,
+      "url": "https://github.com/edithatogo/searchright/issues/185",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IHqI",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-14-phase-4-task-03",
+      "number": 216,
+      "url": "https://github.com/edithatogo/searchright/issues/216",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEks",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-15-phase-4-task-03",
+      "number": 231,
+      "url": "https://github.com/edithatogo/searchright/issues/231",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEUw",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-16-phase-4-task-03",
+      "number": 247,
+      "url": "https://github.com/edithatogo/searchright/issues/247",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IFbY",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-17-phase-4-task-03",
+      "number": 262,
+      "url": "https://github.com/edithatogo/searchright/issues/262",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEl0",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-18-phase-4-task-03",
+      "number": 277,
+      "url": "https://github.com/edithatogo/searchright/issues/277",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2INMw",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-19-phase-4-task-03",
+      "number": 293,
+      "url": "https://github.com/edithatogo/searchright/issues/293",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IFe4",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-21-phase-4-task-03",
+      "number": 323,
+      "url": "https://github.com/edithatogo/searchright/issues/323",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IFao",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-22-phase-4-task-03",
+      "number": 337,
+      "url": "https://github.com/edithatogo/searchright/issues/337",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IENk",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-23-phase-4-task-03",
+      "number": 352,
+      "url": "https://github.com/edithatogo/searchright/issues/352",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IFcA",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-24-phase-4-task-03",
+      "number": 368,
+      "url": "https://github.com/edithatogo/searchright/issues/368",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IHqQ",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-25-phase-4-task-03",
+      "number": 383,
+      "url": "https://github.com/edithatogo/searchright/issues/383",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IHq8",
+      "changes": [
+        {
+          "field": "Delivery status",
+          "observed_shape_known": true,
+          "before": "Review",
+          "after": "Source complete"
+        }
+      ]
+    },
+    {
+      "key": "track-27",
+      "number": 402,
+      "url": "https://github.com/edithatogo/searchright/issues/402",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEHY",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-1",
+      "number": 403,
+      "url": "https://github.com/edithatogo/searchright/issues/403",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEJo",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-1-task-01",
+      "number": 404,
+      "url": "https://github.com/edithatogo/searchright/issues/404",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEh0",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-2",
+      "number": 405,
+      "url": "https://github.com/edithatogo/searchright/issues/405",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEKI",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-2-task-01",
+      "number": 406,
+      "url": "https://github.com/edithatogo/searchright/issues/406",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEMA",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-2-task-02",
+      "number": 407,
+      "url": "https://github.com/edithatogo/searchright/issues/407",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEMQ",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-3",
+      "number": 408,
+      "url": "https://github.com/edithatogo/searchright/issues/408",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEKs",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-3-task-01",
+      "number": 409,
+      "url": "https://github.com/edithatogo/searchright/issues/409",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IENA",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-3-task-02",
+      "number": 410,
+      "url": "https://github.com/edithatogo/searchright/issues/410",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEUs",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-3-task-03",
+      "number": 411,
+      "url": "https://github.com/edithatogo/searchright/issues/411",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEU0",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-4",
+      "number": 412,
+      "url": "https://github.com/edithatogo/searchright/issues/412",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IELk",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-4-task-01",
+      "number": 413,
+      "url": "https://github.com/edithatogo/searchright/issues/413",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEVI",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-4-task-02",
+      "number": 414,
+      "url": "https://github.com/edithatogo/searchright/issues/414",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEVQ",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-4-task-03",
+      "number": 415,
+      "url": "https://github.com/edithatogo/searchright/issues/415",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEVY",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    },
+    {
+      "key": "track-27-phase-4-task-04",
+      "number": 416,
+      "url": "https://github.com/edithatogo/searchright/issues/416",
+      "item_id": "PVTI_lAHOAOYc4M4BgD2jzg2IEM0",
+      "changes": [
+        {
+          "field": "Implementation state",
+          "observed_shape_known": true,
+          "before": "Scaffolded",
+          "after": "Partially Implemented"
+        }
+      ]
+    }
+  ],
+  "safety": {
+    "remote_mutations_performed": 0,
+    "delete_operations": 0,
+    "archive_operations": 0,
+    "automatic_task_closure": false,
+    "apply_authorised": false,
+    "preserve_noncanonical_issues_items_fields_and_views": true,
+    "change_conductor_status": false
+  },
+  "apply_constraints": [
+    "Refresh observed snapshots and require unchanged source/remote preimages before apply.",
+    "Do not use full bootstrap: it also pushes local main and writes secrets/settings beyond these differences.",
+    "The stock issue synchronizer replaces complete label sets; inspect removals separately before authorising.",
+    "Task closure needs explicit task-state approval, not generic additive-sync authority.",
+    "The stock Project synchronizer stamps Last sync on every selected item; do not silently include this 596-item write amplification in an 83-field correction approval.",
+    "Relationships for the two newly created tasks must be added to their declared parents. Existing relationships were verified by the referenced audit; re-audit after apply.",
+    "Read:project permits observation only; Project writes need separately authorised project scope.",
+    "Preserve remote preimages for rollback and finish with scripts/audit_github_control_plane.py."
+  ],
+  "prior_relationship_audit": "/tmp/searchright-pr749-merged-main-control-plane.json",
+  "claim_boundary": "Point-in-time proposal, not an apply receipt or convergence claim."
+}

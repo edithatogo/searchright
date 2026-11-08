@@ -1739,7 +1739,7 @@ mod tests {
     -> Result<(), InterchangeError> {
         let input = "<PubmedArticleSet>\n<PubmedArticle>\n<MedlineCitation>";
         let result = import_records(input, InterchangeFormat::PubmedXml, "pubmed-fixture")?;
-        assert!(result.records.is_empty());
+        assert_eq!(result.records.len(), 0);
         assert_eq!(result.quarantined.len(), 1);
         if let Some(quarantined) = result.quarantined.first() {
             assert_eq!(quarantined.start_line, 2);
@@ -1864,7 +1864,7 @@ mod tests {
         let bib = "@article(smith2025,\n title = {Parenthesized entry},\n year = {2025}\n)\n";
         let result = import_bibtex(bib, "receipt-bib")?;
         assert_eq!(result.records.len(), 1);
-        assert!(result.quarantined.is_empty());
+        assert_eq!(result.quarantined.len(), 0);
         assert_eq!(result.records[0].title, "Parenthesized entry");
         Ok(())
     }
@@ -1874,7 +1874,7 @@ mod tests {
     -> Result<(), InterchangeError> {
         let bib = "@article(first, title = \"Open (question\", year = {2025}) @article{second, title = {Second entry}, year = {2026}}";
         let result = import_bibtex(bib, "receipt-bib")?;
-        assert!(result.quarantined.is_empty());
+        assert_eq!(result.quarantined.len(), 0);
         assert_eq!(result.records.len(), 2);
         assert_eq!(result.records[0].title, "Open (question");
         assert_eq!(result.records[1].title, "Second entry");
@@ -1887,7 +1887,7 @@ mod tests {
             "@article{broken,\n title = {Missing close}\n",
             "receipt-bib",
         )?;
-        assert!(result.records.is_empty());
+        assert_eq!(result.records.len(), 0);
         assert_eq!(result.quarantined.len(), 1);
         assert_eq!(result.quarantined[0].start_line, 1);
         assert_eq!(result.quarantined[0].end_line, 2);
@@ -1916,7 +1916,7 @@ mod tests {
             "<xml>\n<record>\n<title>Missing close</title>",
             "receipt-endnote",
         )?;
-        assert!(result.records.is_empty());
+        assert_eq!(result.records.len(), 0);
         assert_eq!(result.quarantined.len(), 1);
         assert_eq!(result.quarantined[0].start_line, 2);
         assert_eq!(result.quarantined[0].end_line, 3);
@@ -1927,7 +1927,7 @@ mod tests {
     fn compact_endnote_imports_every_same_line_record() -> Result<(), InterchangeError> {
         let input = "<xml><records><record><rec-number>1</rec-number><title>First</title></record><record><rec-number>2</rec-number><title>Second</title></record></records></xml>";
         let result = import_endnote_xml(input, "receipt-endnote")?;
-        assert!(result.quarantined.is_empty());
+        assert_eq!(result.quarantined.len(), 0);
         assert_eq!(result.records.len(), 2);
         assert_eq!(result.records[0].native_id, "1");
         assert_eq!(result.records[1].native_id, "2");

@@ -1,0 +1,40 @@
+{
+  "schema_version": "org.searchright.dependency-review-disposition.v1",
+  "track_id": "16",
+  "base_revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+  "crate": "openssl-probe",
+  "version": "0.2.1",
+  "registry_archive_sha256": "7c87def4c32ab89d880effc9e097653c8da5d6ef28e6b539d313baaacfbafcbe",
+  "status": "owner_directed_defer",
+  "criterion": "safe-to-deploy",
+  "audit_certified": false,
+  "exemption_changed": false,
+  "expiry_extended": false,
+  "active_review_gaps_remaining": 247,
+  "review_method": "Five separate ephemeral read-only Codex CLI processes, each receiving the same request and its own role prompt, with no peer findings supplied. These are isolated agent passes, not external institutional review or proof of diverse model independence.",
+  "first_pass_dispositions": {
+    "implementation": "defer",
+    "security_safety": "approve_with_limitations",
+    "testing": "defer",
+    "methodology": "defer",
+    "adversarial": "defer"
+  },
+  "dissent": "Security/safety found no blocking memory-safety or malicious-code defect and recommended approval with documented unsafe caller obligations. Other roles deferred for concrete trust-configuration behavior and missing evidence. No vote was silently discarded or converted into certification.",
+  "identity_evidence": "Coordinator independently matched registry archive SHA-256 to Cargo.lock and compared every extracted package file byte-for-byte with its archive member. Reviewers themselves did not independently verify archive authenticity; their limitations are preserved verbatim.",
+  "confirmed_findings": [
+    {"id": "OP-001", "location": "src/lib.rs:120-127", "finding": "A colon-separated list of two existing SSL_CERT_DIR directories is treated as one path and discarded.", "local_observation": "Both caller-selected directories absent from returned cert_dir; environment recognition false; system directory returned instead."},
+    {"id": "OP-002", "location": "src/lib.rs:82-86", "finding": "An existing caller-selected directory is supplemented with system directories despite documented override-preservation language.", "local_observation": "Returned cert_dir contained both private fixture directory and /etc/ssl/certs."},
+    {"id": "OP-003", "location": "src/lib.rs:121", "finding": "Path existence is not object-type or certificate validation.", "local_observation": "A directory passed as SSL_CERT_FILE was accepted and environment recognition returned true."}
+  ],
+  "observed_scope": "Rust 1.97.1 on aarch64-apple-darwin. Safe probe APIs only; environment values supplied when creating isolated child processes. Parent environment was not modified, unsafe initializer not called, no TLS verification or certificate acceptance tested. No cross-platform runtime claim.",
+  "consumer_context": {
+    "all_target_chain": "openssl-probe -> rustls-native-certs 0.8.4 -> rustls-platform-verifier 0.7.0 -> reqwest 0.13.4 -> searchright-connectors",
+    "important_limitation": "rustls-native-certs::load_native_certs first parses explicit environment paths itself with env::split_paths and loads them directly. The platform fallback calls openssl_probe::probe only if no explicit file or directory was selected. Therefore the isolated package defects are not proof that the normal Searchright consumer path broadens caller-configured trust stores.",
+    "source_locations": ["rustls-native-certs-0.8.4/src/lib.rs:118-125", "rustls-native-certs-0.8.4/src/lib.rs:198-212", "rustls-native-certs-0.8.4/src/unix.rs:3-9"],
+    "host_tree_limitation": "Host-only cargo tree on macOS did not include openssl-probe; the dependency path was obtained with --all-features --target all."
+  },
+  "coordinator_recommendation": "Keep the exact-version exemption and deadline unchanged; preserve this deferred review, prepare an upstream correctness report for owner review, and continue separate exact-version reviews of TLS/runtime/build dependencies. Do not certify based solely on consumer mitigation or passing tests.",
+  "owner_decision": "Owner selected the recommended deferral, unchanged exemption, unpublished upstream-report draft and continuation to the next dependency via the conversation instruction: Proceed with your recommendations.",
+  "verification_boundary": "This packet contains read-only package review and isolated reproductions, not a production-source change or new full-repository verification result. The merged base already has its own verification receipt.",
+  "claim_boundary": "Advisory exact-version findings only. No deployment exploit, complete trust-store validation, package audit promotion, source approval, publisher trust or maturity decision is claimed."
+}

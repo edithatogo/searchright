@@ -1,0 +1,13 @@
+     Locking 1 package to latest compatible version
+      Adding rustls-native-certs v0.8.4 (/tmp/searchright-native-certs-review/source/rustls-native-certs-0.8.4)
+   Compiling libc v0.2.189
+   Compiling core-foundation-sys v0.8.7
+   Compiling zeroize v1.9.0
+   Compiling bitflags v2.13.1
+   Compiling rustls-pki-types v1.15.1
+   Compiling security-framework-sys v2.17.0
+   Compiling core-foundation v0.10.1
+   Compiling security-framework v3.7.0
+   Compiling rustls-native-certs v0.8.4 (/tmp/searchright-native-certs-review/source/rustls-native-certs-0.8.4)
+   Compiling searchright-native-certs-review-probe v0.0.0 (/tmp/searchright-native-certs-review/harness)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.60s

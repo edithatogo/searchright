@@ -1,0 +1,910 @@
+{
+  "archive_operations": 0,
+  "claim_boundary": "Mutation observations only; final read-only audit required for convergence.",
+  "delete_operations": 0,
+  "error": "Unexpected Project membership appeared: track-00-phase-4-task-06",
+  "finished_at": "2026-11-06T11:26:58.618058+00:00",
+  "mode": "apply",
+  "operations": [
+    {
+      "action": "repository_settings",
+      "changes": [
+        {
+          "after": true,
+          "before": false,
+          "field": "has_discussions"
+        },
+        {
+          "after": false,
+          "before": true,
+          "field": "allow_merge_commit"
+        }
+      ]
+    },
+    {
+      "action": "create_issue",
+      "key": "track-00-phase-4-task-06",
+      "number": 750,
+      "url": "https://github.com/edithatogo/searchright/issues/750"
+    },
+    {
+      "action": "initialise_new_task_state",
+      "key": "track-00-phase-4-task-06",
+      "transition": "open->closed"
+    },
+    {
+      "action": "attach_parent",
+      "key": "track-00-phase-4-task-06",
+      "parent_key": "track-00-phase-4",
+      "result": "attached"
+    },
+    {
+      "action": "create_issue",
+      "key": "track-08-phase-4-task-06",
+      "number": 751,
+      "url": "https://github.com/edithatogo/searchright/issues/751"
+    },
+    {
+      "action": "initialise_new_task_state",
+      "key": "track-08-phase-4-task-06",
+      "transition": "open->closed"
+    },
+    {
+      "action": "attach_parent",
+      "key": "track-08-phase-4-task-06",
+      "parent_key": "track-08-phase-4",
+      "result": "attached"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-00",
+      "number": 2,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-00-phase-4",
+      "number": 10,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-00-phase-4-task-03",
+      "number": 13,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-02-phase-4-task-03",
+      "number": 41,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-03-phase-1-task-01",
+      "number": 45,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-03-phase-4-task-03",
+      "number": 57,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-04",
+      "number": 59,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-04-phase-1-task-01",
+      "number": 61,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-04-phase-2-task-01",
+      "number": 63,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-04-phase-4",
+      "number": 70,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-04-phase-4-task-03",
+      "number": 73,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-07",
+      "number": 103,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-07-phase-1",
+      "number": 104,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-07-phase-1-task-01",
+      "number": 105,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-07-phase-3",
+      "number": 109,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-07-phase-3-task-01",
+      "number": 110,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-07-phase-4",
+      "number": 112,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-07-phase-4-task-04",
+      "number": 116,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-08",
+      "number": 117,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-1",
+      "number": 118,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-08-phase-1-task-01",
+      "number": 119,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-2-task-01",
+      "number": 121,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-3",
+      "number": 123,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-3-task-01",
+      "number": 124,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-3-task-02",
+      "number": 125,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-4",
+      "number": 126,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-4-task-03",
+      "number": 129,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-08-phase-4-task-05",
+      "number": 673,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-11-phase-1-task-01",
+      "number": 160,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-11-phase-4-task-03",
+      "number": 170,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-12-phase-4",
+      "number": 182,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-12-phase-4-task-03",
+      "number": 185,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-13-phase-4-task-03",
+      "number": 200,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-14-phase-4",
+      "number": 213,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-14-phase-4-task-03",
+      "number": 216,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-15-phase-1-task-01",
+      "number": 220,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-15-phase-4",
+      "number": 228,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-15-phase-4-task-03",
+      "number": 231,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-16",
+      "number": 233,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-16-phase-4",
+      "number": 244,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-16-phase-4-task-03",
+      "number": 247,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-17",
+      "number": 249,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-17-phase-1-task-01",
+      "number": 251,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-17-phase-2-task-01",
+      "number": 253,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-17-phase-4",
+      "number": 259,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-17-phase-4-task-03",
+      "number": 262,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-18-phase-1-task-01",
+      "number": 266,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-18-phase-4",
+      "number": 274,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-18-phase-4-task-03",
+      "number": 277,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-19-phase-1-task-01",
+      "number": 281,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-19-phase-4",
+      "number": 290,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-19-phase-4-task-03",
+      "number": 293,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-21-phase-1-task-01",
+      "number": 312,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-21-phase-4",
+      "number": 320,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-21-phase-4-task-03",
+      "number": 323,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-22-phase-4",
+      "number": 334,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-22-phase-4-task-03",
+      "number": 337,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-23-phase-4",
+      "number": 349,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-23-phase-4-task-03",
+      "number": 352,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-24-phase-1-task-01",
+      "number": 356,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-24-phase-2-task-01",
+      "number": 358,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-24-phase-4",
+      "number": 365,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-24-phase-4-task-03",
+      "number": 368,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-25-phase-1-task-01",
+      "number": 372,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-25-phase-2-task-01",
+      "number": 374,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-25-phase-4",
+      "number": 380,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content",
+        "labels"
+      ],
+      "key": "track-25-phase-4-task-03",
+      "number": 383,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-26-phase-1-task-01",
+      "number": 387,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-26-phase-2-task-01",
+      "number": 389,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-26-phase-4-task-03",
+      "number": 400,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-27",
+      "number": 402,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-27-phase-1-task-01",
+      "number": 404,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-27-phase-2-task-01",
+      "number": 406,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-27-phase-4-task-03",
+      "number": 415,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-28-phase-1-task-01",
+      "number": 419,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-28-phase-2-task-01",
+      "number": 421,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-28-phase-4-task-03",
+      "number": 430,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-29-phase-1-task-01",
+      "number": 434,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-29-phase-2-task-01",
+      "number": 436,
+      "result": "updated"
+    },
+    {
+      "action": "update_issue",
+      "changes": [
+        "content"
+      ],
+      "key": "track-29-phase-4-task-03",
+      "number": 446,
+      "result": "updated"
+    },
+    {
+      "action": "task_state",
+      "key": "track-04-phase-4-task-03",
+      "number": 73,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-07-phase-1-task-01",
+      "number": 105,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-07-phase-3-task-01",
+      "number": 110,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-07-phase-4-task-04",
+      "number": 116,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-08-phase-1-task-01",
+      "number": 119,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-12-phase-4-task-03",
+      "number": 185,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-14-phase-4-task-03",
+      "number": 216,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-15-phase-4-task-03",
+      "number": 231,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-16-phase-4-task-03",
+      "number": 247,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-17-phase-4-task-03",
+      "number": 262,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-18-phase-4-task-03",
+      "number": 277,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-19-phase-4-task-03",
+      "number": 293,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-21-phase-4-task-03",
+      "number": 323,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-22-phase-4-task-03",
+      "number": 337,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-23-phase-4-task-03",
+      "number": 352,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-24-phase-4-task-03",
+      "number": 368,
+      "transition": "open->closed"
+    },
+    {
+      "action": "task_state",
+      "key": "track-25-phase-4-task-03",
+      "number": 383,
+      "transition": "open->closed"
+    }
+  ],
+  "owner_approval": "Conversation approval of bounded preview, including task closures and label replacements; project scope approved through device flow",
+  "preimages_path": "/tmp/searchright-track31-remote-preimages.json",
+  "principal": "edithatogo",
+  "project_id": "PVT_kwHOAOYc4M4BgD2j",
+  "project_number": 40,
+  "repository": "edithatogo/searchright",
+  "schema_version": "org.searchright.bounded-control-plane-apply.v1",
+  "source_revision": "e91e7a8bd58b7cb65d9da5b5e812d8ab20a63cdb",
+  "started_at": "2026-11-06T11:23:11.326903+00:00",
+  "status": "failed_partial_apply_requires_audit",
+  "track_id": "31"
+}

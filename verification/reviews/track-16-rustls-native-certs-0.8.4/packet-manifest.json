@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.dependency-review-packet-manifest.v1",
+  "crate": "rustls-native-certs",
+  "version": "0.8.4",
+  "base_revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+  "claim_boundary": "Digests bind collected bytes, not a trusted timestamp, certification or source authenticity.",
+  "files": {
+    "README.md": "bf4dd8187af18c569a124f54bda5c1c4824a579e999e0fe449ee3b06963446d8",
+    "adversarial.md": "435cf606f11fbda782f7bdb2358b0aa3efe3586c42c06074252b5f31e7678588",
+    "consumer-context.json": "b058a6e1a6e96fef76ee310c07258f60e382074fd0d781e6830f9e80ca4153f3",
+    "consumer-tree.txt": "e13db57fbbc7e5092c950e42291f2e5b1b4f80613f252d7cf1da867530087315",
+    "disposition.json": "48ecbcb56a5953dd2464329141c17381d01cad492037c322613aa3a8b81402c5",
+    "fixture-check.json": "5815acf4de06df7777d3b42258b4f2ec8363e2415a6b6749ccc602c4a7d81565",
+    "harness-Cargo.lock": "649e08a0a697015b868cf8f37c9a3932ad64d6b0a40337c2d468c53a36310e6c",
+    "harness-Cargo.toml": "fe3781a264e78860aff4fb30fd92636177415147bfd58d41ee6febf42e3aead4",
+    "harness-build.log": "58a3c17baa90d0a9619c1985ebd1a00b8782f945931ff8416f4a6562cd5f45f6",
+    "implementation.md": "a0599f61708b95959fefd3deec082e2aecdaffbba92cbd1806c337187d336b5b",
+    "methodology.md": "4fb4c2834c9103d7130dfd673ca8fc8ee1e9f73c135ed86c8bb93f93fd29d475",
+    "probe-observations.json": "ad1e69a3963ec1157a634c242d1c7beee4b685fb24e53ccdf4a9ef33a87490a5",
+    "probe_harness.rs": "8eafa038bf21bf11c08c0823e1d1c0d45509fd4109b535232bf017f2fca0e37f",
+    "raw-first-passes.json": "19b9769600cb9879c60bc3c062b7578e9f44e06ad7244893b1de1a8f4cbe5982",
+    "request.json": "b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48",
+    "security_safety.md": "7602b331629a6d0f7e3352005c30b449b27358b76c42efa0281ef7bbc746ff06",
+    "source-manifest.json": "0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22",
+    "testing.md": "3c80d96641b9cb0c62ab8911e670058ccae332cf22a3231c180dd7bc26c45a9a"
+  }
+}

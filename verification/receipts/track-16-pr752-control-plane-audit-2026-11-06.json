@@ -1,0 +1,64 @@
+{
+  "claim_boundary": "This read-only audit establishes observed GitHub parity only; it does not establish product maturity.",
+  "errors": [],
+  "issue_hierarchy": {
+    "canonical": 596,
+    "content_drift": 0,
+    "label_drift": 0,
+    "observed": 596,
+    "relationships_expected": 595,
+    "relationships_observed": 595,
+    "task_state_drift": 0
+  },
+  "mutation_operations": 0,
+  "project": {
+    "canonical_items_observed": 596,
+    "fields_observed": 26,
+    "id": "PVT_kwHOAOYc4M4BgD2j",
+    "noncanonical_items_observed": 3,
+    "number": 40,
+    "observed": true,
+    "recognised_value_mismatches": 0,
+    "total_items_observed": 599,
+    "unrecognised_value_shapes": 0,
+    "url": "https://github.com/users/edithatogo/projects/40",
+    "views_observed": 7
+  },
+  "repository": "edithatogo/searchright",
+  "repository_observed": {
+    "default_branch": "main",
+    "environments": [
+      "copilot",
+      "github-issue-write",
+      "github-project-write",
+      "release"
+    ],
+    "ruleset_matches": 1,
+    "topics": [
+      "evidence-synthesis",
+      "literature-search",
+      "mcp",
+      "prisma",
+      "research-software",
+      "rust",
+      "systematic-review"
+    ],
+    "url": "https://github.com/edithatogo/searchright",
+    "visibility": "public"
+  },
+  "schema_version": "org.searchright.github-control-plane-audit.v1",
+  "source": {
+    "input_sha256": {
+      "conductor/github/issue-hierarchy.json": "0b5944f6ba86fe944f1dafa0628829115e8997eaffa685a9d5925dd1c8141bd4",
+      "conductor/github/project.json": "cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d",
+      "conductor/github/repository-settings.json": "37e91b873a14cfa9721508a1f3f000cb6f213fe14369a347c62e24db3d9b1fb7"
+    },
+    "revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+    "tracked_status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_worktree_clean": true,
+    "tree": "a6c3b6a1a245dca4c544ef370c2356e10d7f1515"
+  },
+  "source_revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+  "status": "passed",
+  "warnings": []
+}

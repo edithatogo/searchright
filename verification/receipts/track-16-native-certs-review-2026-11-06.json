@@ -1,0 +1,43 @@
+{
+  "schema_version": "org.searchright.local-review-verification.v1",
+  "track_id": "16",
+  "date": "2026-11-06",
+  "packets": [
+    {
+      "path": "verification/reviews/track-16-openssl-probe-0.2.1",
+      "manifest_sha256": "301647d62187450e6050d30bb7d9ca82fede6876c3394826592249131d05ee84",
+      "manifest_files_checked": 13
+    },
+    {
+      "path": "verification/reviews/track-16-rustls-native-certs-0.8.4",
+      "manifest_sha256": "aadc968bd7e3bfe004897916e48e269168d62dfec1efd56739b47763eac8e75e",
+      "manifest_files_checked": 17
+    }
+  ],
+  "supplemental_probe_cases_passed": 7,
+  "package_archive_files_compared": 13,
+  "base_verification": {
+    "revision": "4ddfbdbc54c500719889e09942783bdc04ee832b",
+    "worktree": "/tmp/searchright-track16-dependency-audits",
+    "clean_after_verification": true,
+    "command": "bash scripts/verify.sh",
+    "exit_code": 0,
+    "log_path": "/tmp/searchright-native-certs-review/base-verify.log",
+    "log_sha256": "647773cc60da1e965c8a720962a2654c4764fc55298494d977cab2580269b162",
+    "scope": "Clean merged base only, not these untracked review packets. Packet JSON/digests checked separately."
+  },
+  "not_run": [
+    "Published rustls-native-certs unit tests: missing packaged PEM fixtures; static check recorded, no compiler-failure result asserted.",
+    "Windows/Linux native runtime and native-store failure-injection tests.",
+    "TLS handshakes, end-to-end certificate acceptance and deployment exploit tests.",
+    "Hosted candidate checks, PR delivery and merged-candidate verification: packets are local/untracked, no PR opened.",
+    "GitHub control-plane audit: no remote mutation/publication performed."
+  ],
+  "authority_changes": {
+    "openssl_probe": "Owner-directed deferral recorded; upstream draft remains unpublished.",
+    "rustls_native_certs": "Advisory deferral; owner disposition not recorded.",
+    "audits_certified": 0,
+    "exemptions_changed": 0,
+    "expiry_extensions": 0
+  }
+}
