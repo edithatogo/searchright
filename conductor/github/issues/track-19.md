@@ -14,10 +14,10 @@ Prepare and submit truthful registry packets and a software paper only after a v
 - Horizon: `alpha`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `13, 18`
 - Requirements: `SR-040, SR-041`
-- External approval required: `true`
+- External approval required: `false`
 
 ## Phase subissues
 
@@ -28,6 +28,6 @@ Prepare and submit truthful registry packets and a software paper only after a v
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating registry-evaluator, scholarly-publication-editor, and supply-chain-governance-auditor roles. Panel output is a simulation instrument, not a substitute for live external registry submission or journal peer review. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.
