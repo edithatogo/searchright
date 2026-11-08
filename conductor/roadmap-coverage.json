@@ -1551,7 +1551,7 @@
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "alpha",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration.",
       "requirements": [
         "SR-037",
@@ -1565,7 +1565,7 @@
         "verification/receipts/track-17-conductor-review-2026-11-04.json"
       ],
       "slug": "benchmarks-calibration",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Benchmarks, search validation and human calibration",
       "track_id": "17",
       "updated": "2026-11-04",

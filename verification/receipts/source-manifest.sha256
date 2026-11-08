@@ -72,7 +72,7 @@ daada8d2ffd7cf4154a04e29db29ce457410d01750bbd24528df73fdec82d7eb  ./compose.yaml
 cfd257985d77b8ef86d4e1c5890a92d22c376b8e6f1fa6f75bdae6b111250c4f  ./conductor/design.md
 3eb7a5baff37cc340f22d8338571c711aac65d4441d1945e2a658a4578b97c12  ./conductor/frontier-plan.md
 0735e60ae7509844102d89832e43f76241aca28c80f308887f64246ad5ae4633  ./conductor/github/README.md
-c784539dff22b230abaede1093fac594b2b3f8a417e7aac956238e0abf7030a0  ./conductor/github/issue-hierarchy.json
+557b8d03b6ccbf0eb4c8ca2dd79637d58ccce6e67dbdee2f0c60a29cc78c4174  ./conductor/github/issue-hierarchy.json
 9dede9de69f08960e59429c499a9bb5b098ab93d124d0b20cbaeedbe001382cd  ./conductor/github/issues/roadmap-epic.md
 5fb44ee062d12e12cd057daee326f5377920b39f6ef25f28af3710d1e306a47b  ./conductor/github/issues/track-00-phase-1-task-01.md
 75951fa3b36719a882aff9b75a556fa9da1cb71236e9674248349fa159cedc59  ./conductor/github/issues/track-00-phase-1.md
@@ -329,8 +329,8 @@ acfb3d2e50da3c04f9eef22478c2e140b7ffd8c8e0a3a613f352565c333259aa  ./conductor/gi
 5a2e19a07d8ce79aa7ae7d1049d92f21e29a7c53de8871dc9f5c6969aa1793d3  ./conductor/github/issues/track-16-phase-4-task-04.md
 6d02bb9153369c9499e76f995270d5036c599823dfd6237d2151ca8ff2461d37  ./conductor/github/issues/track-16-phase-4.md
 656311223ed5addaa1ef163b139246897ca5987a0ce93d09790cfaad3d030353  ./conductor/github/issues/track-16.md
-75bdfef04e1107b798ed84707b0ea82390a4623356f43e5ab5b758403510da10  ./conductor/github/issues/track-17-phase-1-task-01.md
-33bc2f712ea0e1f821e6f0c2493556c73c36991bfc62d6b1f0249ee4da4a7062  ./conductor/github/issues/track-17-phase-1.md
+4e502af3aaabe670d3f565d587b32f576ca757745f5142cf2d29f49f8aae0cca  ./conductor/github/issues/track-17-phase-1-task-01.md
+dd4c8ec5eb4b80bfff8e5cc8b8bb8fd68f66f5b532eab4aad5664bf3a18558ab  ./conductor/github/issues/track-17-phase-1.md
 ae515c7bc54d96d5ed665c5b83ed17cfd7576fef1d415fd8de1ef239ee864bb7  ./conductor/github/issues/track-17-phase-2-task-01.md
 2a16ccc1974e797287d59be58ba3892329c1f5e35a2d1f2e3c9f3211b62e1ba1  ./conductor/github/issues/track-17-phase-2-task-02.md
 3762732bc5994b1c3620a8e263f5919cff16929eb22ddee418572f7bff22355f  ./conductor/github/issues/track-17-phase-2.md
@@ -343,7 +343,7 @@ c6bbeda6e6b6424434592214365295d7be075db8d3e0b5d42f0e5b0c733c939c  ./conductor/gi
 608f6132733163eeabe5e9c063a03f7e58d0b7ccf6d6e601fb71dfbefd80c9ce  ./conductor/github/issues/track-17-phase-4-task-03.md
 dae2a9d53604de0a70d4c90312ad7c7f20ff77ac0fe71d92feb4890569b154dd  ./conductor/github/issues/track-17-phase-4-task-04.md
 1650e2dbdf1d870675d07a63dcee2d54c2920a6a58025ae5bcdc549160fcb6c6  ./conductor/github/issues/track-17-phase-4.md
-dfe5d3ea9a039b483c2a59a79f4c0dba76a153980d42ef092f13235fd352fa26  ./conductor/github/issues/track-17.md
+202767f8a327280b3a2a8f438311cbe760ef96f2f49d5faf75983de566e380f2  ./conductor/github/issues/track-17.md
 2c76d3cb32a79ccd2bb3459d91919d15087e470c89eabc77d6bd5e03641dc543  ./conductor/github/issues/track-18-phase-1-task-01.md
 ae6998dc0fc9c267508f86e65a10c0ab7533904f8e7a53e9e461c337b6043a42  ./conductor/github/issues/track-18-phase-1.md
 090fca27e318de6a45f2d84cebb4ad73e761b8145fd11ca24b6e065730f48729  ./conductor/github/issues/track-18-phase-2-task-01.md
@@ -680,10 +680,10 @@ cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d  ./conductor/gi
 b017ae3d91431387f562f881d379d9789a02985f7d70e90d6a9fe7679e7b9411  ./conductor/product-guidelines.md
 9bb1098bf673718efe2973b06fe0c76e4a161ea479b51b7ded5bad45ecb646d3  ./conductor/product.md
 431f1581f3a6d02c22b38d3d6d6c7285e43fcbfb3d2acef22372170f2dc0fbea  ./conductor/requirements.md
-7f97a9120eab181eb3943b00a13d3aad7343b054df330d8f5d0bea15c4f02c6d  ./conductor/roadmap-coverage.json
+a439a3fa9772fbd23c4e1d656639c38dfa8258c777ec4dddc1afa54fb75ea224  ./conductor/roadmap-coverage.json
 d953556ce2830956bc4d36be262919e8c921327bc1eef7ef043b872de5a7f5dc  ./conductor/tech-stack.md
-2a711145c76881fa582ad4e7a4aa607c9513f99ddad75fedaeba34d1bfe63ac2  ./conductor/traceability-overrides.json
-996a080df11b1c5966494e96af25fe7842ac4e6544f5c090f7af9b64e2363de2  ./conductor/tracks.md
+0e5f16102b4a84f05d87081a72840e746262ff71fd0f19f346c73fc81f2ef23c  ./conductor/traceability-overrides.json
+39177837ca7b1937463a0c842c1b483ff4ab5c5ec66641062c3c00155a87fcd1  ./conductor/tracks.md
 6be1112433f2862b938bdd43304d59ad38d9a20c9fe96c33ca2532e33615918b  ./conductor/tracks/00-foundation-conductor-toolchain/evidence.json
 a84681e6819d0fd48aae7c0f5640d79720cd71ca9804fdce7e6dc1fe0cfa12f7  ./conductor/tracks/00-foundation-conductor-toolchain/metadata.json
 f2daad6627aaa47bdaac9bbcea4c4093347cda63c823f259a72c477a920fbc7f  ./conductor/tracks/00-foundation-conductor-toolchain/plan.md
@@ -770,11 +770,11 @@ cf79a835ab3ea2e1c6bff7c6937cfa2bad160647f6583b13b6d15542c1e4026c  ./conductor/tr
 82c6dcc304443015045f1445dab414de07352834aa011bf48d809d4a5af42749  ./conductor/tracks/16-quality-security-harness/plan.md
 6d7700d8f2da36e675eefb742bf03f7a4bad6bd2d85c2d7eb6c0c2f57292a5c7  ./conductor/tracks/16-quality-security-harness/spec.md
 ee6d60cb034e3631e44958233ffd43be5abe4dc8661b74504d2bf3c4d9682a71  ./conductor/tracks/16-quality-security-harness/traceability.json
-82b8455ae4eaf172d692b921f6f56b15fc5fe7cb1fd08ca4cfaf724548d3ad67  ./conductor/tracks/17-benchmarks-calibration/evidence.json
-c3da2d765b4d94fb591c159ab17dafbb0cb7aa369f9886d66adb7cedadc3f824  ./conductor/tracks/17-benchmarks-calibration/metadata.json
-5b64a38ebdbdb470ba2b49ff28511d5967815ba051fbe7647d5540b73674e887  ./conductor/tracks/17-benchmarks-calibration/plan.md
+47ad3141783b95d219d52e630d62a859e18d3aaa73800289cf091ea0ba479b95  ./conductor/tracks/17-benchmarks-calibration/evidence.json
+bad1a9fc3f9d33f28aa75b81f7379d49ae07d6c6960a4e19291dc7a4832df9ef  ./conductor/tracks/17-benchmarks-calibration/metadata.json
+e88532a3c4642597861bb6ad9439f42687074a89c78b441f0176667acc23e8f1  ./conductor/tracks/17-benchmarks-calibration/plan.md
 1051e8a030213d03e8160f419bcc82736e6f9de07fb57eeb82d4358b377a1662  ./conductor/tracks/17-benchmarks-calibration/spec.md
-e6b33363ec8a164da97cc5b4432432b4486355f9ff437df32b770d36b5303556  ./conductor/tracks/17-benchmarks-calibration/traceability.json
+90b0a103edb35ea78abef1e18ae4565af517497586ba13a22400ac319b75d014  ./conductor/tracks/17-benchmarks-calibration/traceability.json
 94d0a8d58d7a9eec56f3ab219f79aa2acb3fe2eb53695336bc338d6445863e66  ./conductor/tracks/18-alpha-release/evidence.json
 1aa7ed844cbe4612d1a8fa554ae182182f254e00c75934252905d44495adbd48  ./conductor/tracks/18-alpha-release/metadata.json
 7d0fd50ce649ad66e47e00e996c21dd24f25b650a388d410ebca587864c5d385  ./conductor/tracks/18-alpha-release/plan.md
@@ -880,7 +880,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 49a1c1e7898c99cf28469b17e73aca05c551dc07d93e6b26df727130b53e917f  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 b0fd92a7f979cffa6f82d4a1cf77119fe088a5926632e1eedc142bf0e63f129e  ./context/claim-boundaries.json
-af12c96bfe8dbc599f7dd283bd751720887253425e36f6416455a6f3840adc75  ./context/context-lock.json
+9d7099bc8ca62eddc192b9038767de738fa1079c668efae72dc54f5d3868c075  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -2494,7 +2494,7 @@ f9249d2dc382b8cac90a34daf9bc583818e1da7ba2e226c943e98e38fdfd296d  ./third_party/
 c15a358f77b924e2b1eba4bc27539e6b7ae5fd452c29ee5a6b04ff9bb0e39d8c  ./typos.toml
 85704ee898a02fc2ac0be5b6bc0e8891a207e35d529bb71fe19dc813f85d6d15  ./verification/architecture-policy.json
 b714d90dc7ab979fdaac0a8a1e6b71f980201cdf37bba53bd203f466bd09ebf8  ./verification/coverage-policy.json
-5fc4cabe1b2edd4dba935f89e4a502d2fc44f632c31f0d6c7caecef4ca01a66b  ./verification/evidence-debt.json
+f1e0bf010250d0d45abd44a65a97a7b9223f830e7f305d99b333287784d76155  ./verification/evidence-debt.json
 29900da330acfda39c17add9ef7a72d491ccb7bd736fb54b82326fba7cbde7e5  ./verification/fixtures/track-08/press-workflow-complete.yaml
 e49990a9e5c411b5a1f257f622eb3ae79762af83cadc4912461777233f18a7be  ./verification/gate-catalog.json
 7b21436d10731345bc5447f7157a236bda45a224177f737c505f9c27baafe943  ./verification/harness-matrix.json

@@ -2428,7 +2428,7 @@
             "Execute sealed benchmark suites against independently mounted labels and publish reproducible report receipts."
           ],
           "permitted_claim": "Benchmark tasks, report schema, rights basis, and anti-leakage policy are machine-readable and statically checked; no external benchmark has been executed.",
-          "state": "partially_implemented",
+          "state": "source_implemented",
           "statement": "Define benchmark report and anti-leakage contracts"
         },
         "T17-A002": {
@@ -2462,7 +2462,7 @@
             "Pin a canonical upstream data release/DOI per executed benchmark and create train/validation/test split receipts."
           ],
           "permitted_claim": "SYNERGY provenance distinguishes canonical upstream asreview/synergy-dataset from the local fork; no external benchmark data were executed.",
-          "state": "partially_implemented",
+          "state": "source_implemented",
           "statement": "Integrate SYNERGY with dataset provenance and splits"
         },
         "T17-A003": {
@@ -2495,7 +2495,7 @@
             "Create rights-cleared, independently reviewed search-strategy gold labels and known-item recall runs."
           ],
           "permitted_claim": "Corpus and task definitions exist with deterministic recall@k contracts; gold recall results against live external databases do not.",
-          "state": "partially_implemented",
+          "state": "source_implemented",
           "statement": "Create search-strategy gold sets and known-item recall tests"
         },
         "T17-A004": {
@@ -2526,7 +2526,7 @@
             "Run deduplication precision, recall and review-burden evaluation against sealed external labels."
           ],
           "permitted_claim": "Synthetic validation fixtures and compiled cluster evaluation functions exist; external benchmark deduplication performance is not claimed.",
-          "state": "partially_implemented",
+          "state": "source_implemented",
           "statement": "Measure dedup precision/recall and cluster review burden"
         },
         "T17-A005": {
@@ -2557,7 +2557,7 @@
             "Conduct prospective multi-model and human information-specialist calibration under an approved protocol."
           ],
           "permitted_claim": "Calibration protocols, WSS, Brier score, and expected calibration error metric contracts exist; prospective human calibration is pending.",
-          "state": "partially_implemented",
+          "state": "source_implemented",
           "statement": "Run prospective multi-model pilot and human calibration"
         },
         "T17-A006": {
@@ -2587,7 +2587,7 @@
             "Publish rights-cleared benchmark artifacts and limitations with an immutable release receipt."
           ],
           "permitted_claim": "Benchmark artifact validation and anti-leakage contracts exist; no external benchmark artifact or performance claim has been published.",
-          "state": "partially_implemented",
+          "state": "source_implemented",
           "statement": "Publish limitations and reproducible benchmark artefacts"
         }
       }
