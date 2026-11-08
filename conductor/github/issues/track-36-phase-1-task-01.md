@@ -3,11 +3,11 @@
 
 Parent phase key: `track-36-phase-1`
 Conductor plan: `conductor/tracks/36-release-candidate-pilots/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `release/rehearsal.json`
   - [x] Present source path: `scripts/check_release_rehearsal.py`
   - [x] Present source path: `.github/workflows/release-candidate.yml`
@@ -15,6 +15,9 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `docs/pilots/pilot-protocol.md`
   - [x] Present source path: `registry/status.json`
   - [x] Present source path: `scripts/package_source.py`
+  - [x] Present source path: `scripts/check_packaging_reproducibility.py`
+  - [x] Present source path: `tests/test_release_candidate_pilots_governance.py`
+  - [x] Present source path: `verification/receipts/track-36-conductor-review-2026-11-09.json`
   - [x] Assertion ledger: `conductor/tracks/36-release-candidate-pilots/traceability.json`
 
 ## Completion and evidence contract

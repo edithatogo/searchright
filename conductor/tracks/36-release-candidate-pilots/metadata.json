@@ -3,8 +3,8 @@
   "track_id": "36",
   "slug": "release-candidate-pilots",
   "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
-  "status": "release_prepared",
-  "implementation_state": "scaffolded",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-08",
   "updated": "2026-08-09",
   "dependencies": [
@@ -19,7 +19,7 @@
     "35"
   ],
   "horizon": "mature",
-  "evidence_level": "source_verified",
+  "evidence_level": "fixture_proven",
   "external_approval_required": true,
   "evidence_path": "conductor/tracks/36-release-candidate-pilots/evidence.json",
   "traceability_path": "conductor/tracks/36-release-candidate-pilots/traceability.json",
@@ -47,5 +47,7 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09"
 }

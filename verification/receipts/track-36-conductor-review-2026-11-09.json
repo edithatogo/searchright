@@ -1,0 +1,32 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "36",
+  "observed_at": "2026-11-09T05:48:00Z",
+  "observed_on": "2026-11-09",
+  "source_revision": "HEAD",
+  "toolchain": "1.97.1-aarch64-apple-darwin",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "python scripts/check_release_rehearsal.py",
+      "status": "passed",
+      "gates": 11,
+      "pilot_profiles": 3
+    },
+    {
+      "command": "python scripts/check_packaging_reproducibility.py",
+      "status": "passed",
+      "artifacts_compared": 4
+    },
+    {
+      "command": "python3 -m unittest tests/test_release_candidate_pilots_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    }
+  ],
+  "limits": [
+    "Clean-room rehearsal and pilot contracts are prepared, not executed or deployed to live environments.",
+    "No external release package was published to crates.io, GHCR, or official MCP registry.",
+    "Local, institutional self-hosted, and remote single-tenant pilots remain staged protocols awaiting authorized execution."
+  ]
+}

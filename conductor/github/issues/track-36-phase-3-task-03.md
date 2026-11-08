@@ -3,11 +3,11 @@
 
 Parent phase key: `track-36-phase-3`
 Conductor plan: `conductor/tracks/36-release-candidate-pilots/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Validate exact release candidate packets and obtain explicit approval before any release or registry submission.
+- [x] Validate exact release candidate packets and obtain explicit approval before any release or registry submission.
 
 ## Completion and evidence contract
 

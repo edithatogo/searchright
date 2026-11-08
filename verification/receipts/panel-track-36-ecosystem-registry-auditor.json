@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "36",
+  "panelist_role": "ecosystem-registry-auditor",
+  "evaluator_role": "ecosystem-registry-auditor",
+  "evaluated_at": "2026-11-09T05:42:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The registry and ecosystem rehearsal architecture codified in registry/status.json, release/rehearsal.json, and tests/test_release_candidate_pilots_governance.py enforces an exemplary fail-closed submission boundary across all target distribution channels. The registry status manifest tracks 9 distinct publication targets: github, crates.io, github-container-registry (GHCR), official-mcp-registry, glama, smithery, github-releases, zenodo-osf, and joss. Every target is constrained to status \"prepared\" or \"not_started\" with overall_status locked to \"prepared_not_submitted\". Crucially, evidence_url is strictly null across all targets, and each target defines explicit, unfulfilled technical and governance blockers that prevent accidental publication (e.g. crate name reservation, OCI image builds, mcp-publisher validation, signed binaries, archive decisions, and mature tested software documentation). In release/rehearsal.json, automatic_registry_submission is set to false fail-closed, and rollback_required is enforced as mandatory true, ensuring that registry submissions cannot occur silently or without a tested recovery plan. Governance unit tests in tests/test_release_candidate_pilots_governance.py assert that all 9 targets exist, lack evidence URLs, and declare non-empty blocker lists, passing 100% network-free.",
+  "verified_invariants": [
+    "all 9 ecosystem targets tracked: registry/status.json comprehensively inventories github, crates.io, ghcr, official-mcp-registry, glama, smithery, github-releases, zenodo-osf, and joss",
+    "fail-closed unsubmitted status: overall_status is locked to prepared_not_submitted with null evidence_url across all targets",
+    "explicit submission blockers: every target specifies concrete technical and governance prerequisites that prevent accidental promotion",
+    "automatic registry submission prohibited: release/rehearsal.json mandates automatic_registry_submission: false fail-closed",
+    "mandatory rollback rehearsal: rollback_required: true ensures every registry/ecosystem transition incorporates an executable recovery procedure",
+    "deterministic validation: test_registry_preparation_and_explicit_blockers in tests/test_release_candidate_pilots_governance.py passes 100% network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Registry preparation and blocker declarations are fully defined across all 9 targets; executing live dry-run packaging, namespace reservation, and registry index registration under explicit human approval remain open operational gates.",
+      "reference": "registry/status.json:4-83; release/rehearsal.json:21; conductor/tracks/36-release-candidate-pilots/traceability.json:93-97",
+      "recommendation": "Preserve open gate T36-G-REGISTRY-SUBMISSION-APPROVAL until candidate packages and registry submissions are explicitly authorized and evidenced."
+    },
+    {
+      "severity": "observation",
+      "description": "The inclusion of research registries (Zenodo/OSF) and software publication targets (JOSS) alongside developer registries (crates.io, GHCR, MCP) ensures comprehensive academic and open-source traceability.",
+      "reference": "registry/status.json:68-82; tests/test_release_candidate_pilots_governance.py:100-116",
+      "recommendation": "Maintain academic archive integration in release train documentation."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T36-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Rollback requirements, automatic registry submission prohibition, and exhaustive explicit blockers across all 9 submission targets in registry/status.json verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Static registry contracts, target blocking definitions, and rehearsal procedures verified; executing live submissions and package publication to public ecosystem registries remains an open operational gate."
+  ]
+}
