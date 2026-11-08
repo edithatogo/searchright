@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/32-cross-repository-release-train/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-32-phase-1-task-01`)
+- [x] T01: Implement and document every acceptance assertion with symbol- and test-level mappings. (`track-32-phase-1-task-01`)
 
 ## Evidence rule
 

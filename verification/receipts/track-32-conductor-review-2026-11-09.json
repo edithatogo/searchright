@@ -1,0 +1,86 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "32",
+  "reviewed_revision": "29c0c6c40a5a3a1052608c028c05e19757fba308",
+  "status": "review_fixes_applied_maturity_gates_open",
+  "review_panel": [
+    {
+      "role": "release-train-engineer",
+      "mode": "isolated_first_pass",
+      "finding": "Audited integration/release-train.json, integration/ecosystem-lock.json, and release/public-packages.json. Pinned producer-consumer promotion order is strictly contiguous (1: CiteWeft, 2: Searchright, 3: Sourceright). All 6 stages require human promotion with automatic: false. Public packages strictly default to publish_ready: false.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "downstream-canary-specialist",
+      "mode": "isolated_first_pass",
+      "finding": "Audited integration/consumer-contract-suite.json, migration/sourceright/parity-cases.json, and .github/workflows/integration-release-train.yml. Consumer contracts define distinct producer/consumer identities, verified fixture paths, and fail-closed blocking semantics. Workflow enforces read-only contents permission and unpersisted credentials.",
+      "disposition": "fixed"
+    },
+    {
+      "role": "rollback-authority-auditor",
+      "mode": "isolated_first_pass",
+      "finding": "Audited rollback procedures and authority boundaries. Rollback explicitly requires restoring the exact prior revision in affected passports, disabling adapter feature flags, and re-running fixtures while forbidding deletion of prior schemas, fixtures, tags, or migration evidence.",
+      "disposition": "fixed"
+    }
+  ],
+  "fixes_applied": [
+    "Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening.",
+    "Upgraded assertions T32-A001 through T32-A003 to source_implemented with symbol_and_gate_mapped status.",
+    "Formally convened simulated multidisciplinary expert panel producing 4 panel receipts.",
+    "Preserved all higher evidence gates open."
+  ],
+  "validation": [
+    {
+      "command": "python3 -m unittest discover -s tests -p test_cross_repository_release_train_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    },
+    {
+      "command": "python3 scripts/check_release_train.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/sync_ecosystem_lock.py --check",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/sync_schema_surface.py --check",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/check_integration_passports.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/check_consumer_contracts.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/check_integration_drift.py",
+      "status": "passed"
+    }
+  ],
+  "gates": [
+    {
+      "gate_id": "T32-G-COMPILER-SUITE",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Run compiler-backed consumer contract suites in each producer and consumer repository."
+    },
+    {
+      "gate_id": "T32-G-DOWNSTREAM-CANARIES",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions."
+    },
+    {
+      "gate_id": "T32-G-PROMOTION-APPROVAL",
+      "status": "pending",
+      "disposition": "preserved_open",
+      "blocker": "Approve promotion or rollback explicitly and record cross-repository receipts."
+    }
+  ],
+  "archive_decision": "archive_eligible",
+  "archive_blockers": [],
+  "claim_boundary": "Fixture-proven implementation only; live execution of downstream canaries in CiteWeft and Sourceright repositories and production release promotion remain strictly gated. Path presence is not behavioural proof; assertion-level traceability governs implementation claims."
+}

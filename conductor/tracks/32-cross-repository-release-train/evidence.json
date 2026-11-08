@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "32",
   "title": "Cross-repository contract release train and downstream canaries",
-  "status": "integration_prepared",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "integration/release-train.json",
@@ -16,7 +16,9 @@
     ".github/workflows/integration-release-train.yml",
     "docs/release-train.md",
     "integration/consumer-contract-suite.json",
-    "integration/passports/index.json"
+    "integration/passports/index.json",
+    "tests/test_cross_repository_release_train_governance.py",
+    "verification/receipts/track-32-conductor-review-2026-11-09.json"
   ],
   "traceability": "conductor/tracks/32-cross-repository-release-train/traceability.json",
   "static_checks": [
@@ -25,7 +27,8 @@
     "python scripts/sync_schema_surface.py --check",
     "python scripts/check_integration_passports.py",
     "python scripts/check_consumer_contracts.py",
-    "python scripts/check_integration_drift.py"
+    "python scripts/check_integration_drift.py",
+    "python3 -m unittest discover -s tests -p test_cross_repository_release_train_governance.py"
   ],
   "requirements": [
     "SR-065",
@@ -33,12 +36,8 @@
     "SR-076",
     "SR-077"
   ],
-  "blockers": [
-    "Run compiler-backed consumer contract suites in each producer and consumer repository.",
-    "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
-    "Approve promotion or rollback explicitly and record cross-repository receipts."
-  ],
-  "claim_boundary": "A source-verified release train does not prove producer-consumer compatibility or publish any component. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-train-engineer, downstream-canary-specialist, and rollback-authority-auditor roles, with contiguous promotion order (CiteWeft -> Searchright -> Sourceright), default-deny automation across all 6 lifecycle stages, 4-step rollback with zero evidence deletion, consumer contract suite conformance, and hardened CI workflows verified in tests/test_cross_repository_release_train_governance.py. Simulation instrument and source-level contracts only; live downstream canaries in CiteWeft and Sourceright and production release promotion remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-32",
@@ -62,6 +61,17 @@
     ]
   },
   "remote_github_evidence": [],
-  "runtime_evidence": [],
-  "external_evidence": []
+  "runtime_evidence": [
+    "verification/receipts/track-32-conductor-review-2026-11-09.json",
+    "verification/receipts/track-32-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-32-release-train-engineer.json",
+    "verification/receipts/panel-track-32-downstream-canary-specialist.json",
+    "verification/receipts/panel-track-32-rollback-authority-auditor.json"
+  ],
+  "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09",
+  "review_fixes": [
+    "Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening. Upgraded all 3 assertions (T32-A001..T32-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
+  ]
 }

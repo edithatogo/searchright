@@ -7,14 +7,14 @@
     },
     "by_state": {
       "external_evidence_required": 4,
-      "partially_implemented": 31,
-      "scaffolded": 12,
-      "source_implemented": 153
+      "partially_implemented": 29,
+      "scaffolded": 11,
+      "source_implemented": 156
     },
-    "open_gate_entries": 124,
+    "open_gate_entries": 121,
     "total": 200,
     "track_level_only": 11,
-    "without_symbol_mapping": 13
+    "without_symbol_mapping": 11
   },
   "claim_boundary": "The register exposes unresolved proof and implementation work. Counts are not a quality score and cannot be used to promote claims without the named evidence.",
   "evidence_ceiling": "source_verified",
@@ -119,9 +119,9 @@
   "tracks": {
     "by_state": {
       "external_evidence_required": 2,
-      "partially_implemented": 9,
+      "partially_implemented": 8,
       "scaffolded": 2,
-      "source_implemented": 25
+      "source_implemented": 26
     },
     "total": 38
   }

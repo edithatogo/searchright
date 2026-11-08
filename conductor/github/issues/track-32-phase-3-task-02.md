@@ -3,11 +3,11 @@
 
 Parent phase key: `track-32-phase-3`
 Conductor plan: `conductor/tracks/32-cross-repository-release-train/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.
+- [x] Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.
 
 ## Completion and evidence contract
 

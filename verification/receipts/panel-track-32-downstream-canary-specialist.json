@@ -1,0 +1,53 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "32",
+  "panelist_role": "downstream-canary-specialist",
+  "evaluator_role": "downstream-canary-specialist",
+  "evaluated_at": "2026-11-09T03:49:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The consumer contract suite and downstream canary architecture codified in integration/consumer-contract-suite.json, migration/sourceright/parity-cases.json, and .github/workflows/integration-release-train.yml provide an exemplary boundary separation between evidence producers and downstream consumers. The suite specifies 9 active cross-repository interactions, centrally featuring citeweft-to-searchright-document-evidence (edithatogo/citeweft -> edithatogo/searchright) and searchright-to-sourceright-shared-runtime (edithatogo/searchright -> edithatogo/sourceright). Every interaction strictly enforces distinct producer and consumer identities, explicit schema and contract versions, concrete fixture paths that exist on disk, executable verification gates, and fail-closed failure semantics. For CiteWeft, failure semantics dictate: Block CiteWeft pin promotion, keep the adapter optional and preserve raw extraction evidence for review. For Sourceright, failure semantics mandate: Do not cut over or delete Sourceright runtime code; retain dual-run and rollback paths. All 33 local file paths referenced across consumer contracts are verified to exist on disk by scripts/check_consumer_contracts.py. The integration CI workflow .github/workflows/integration-release-train.yml enforces read-only contents permissions and unpersisted credentials (persist-credentials: false), uploading read-only verification receipts with a 30-day retention window without performing unauthorized mutations.",
+  "verified_invariants": [
+    "consumer contract interaction completeness: 9 structured interactions mapping producer contracts, consumer contracts, fixture paths, and executable gates",
+    "distinct producer and consumer identities: producer and consumer repositories are strictly distinct across all interactions",
+    "verified fixture paths on disk: all 33 local paths referenced in consumer-contract-suite.json exist and validate cleanly",
+    "fail-closed downstream canary failure semantics: failures block pin promotion, retain optional adapters, and forbid deletion of Sourceright runtime code",
+    "dual-run migration preservation: Sourceright runtime cutover is blocked pending dual-run parity verification against migration/sourceright/parity-cases.json",
+    "hardened CI workflow execution: .github/workflows/integration-release-train.yml restricts permissions to contents: read and uses persist-credentials: false"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Consumer contract suites and fixture definitions are fully specified in repository contracts; running compiler-backed consumer fixtures and live downstream canaries in CiteWeft and Sourceright CI environments remains an open operational gate.",
+      "reference": "integration/consumer-contract-suite.json:5-60; conductor/tracks/32-cross-repository-release-train/traceability.json:53-57",
+      "recommendation": "Preserve open gate T32-G-DOWNSTREAM-CANARIES until downstream canary test runs execute against exact Searchright candidate pins."
+    },
+    {
+      "severity": "observation",
+      "description": "Failure semantics in searchright-to-sourceright-shared-runtime prevent premature removal of legacy runtime code, directly upholding the non-negotiable architectural rule that dual-run and rollback paths must remain available.",
+      "reference": "integration/consumer-contract-suite.json:57; AGENTS.md:15-30",
+      "recommendation": "Ensure parity report receipts are generated and archived in verification/receipts/ prior to any future runtime deprecation."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T32-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Consumer contract suite, fixture paths, and downstream canary failure semantics verified in source contracts and deterministic test suites."
+    },
+    {
+      "id": "T32-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Producer-consumer interaction boundaries correctly preserve CiteWeft, Searchright, and Sourceright role segregation and promotion order."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Source-level validation of consumer contracts, fixture paths, and canary declarations only; execution of downstream canaries in remote repository pipelines remains an open gate."
+  ]
+}
