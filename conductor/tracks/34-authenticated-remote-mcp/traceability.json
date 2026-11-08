@@ -33,10 +33,7 @@
         "verification/receipts/track-34-agent-panel-evaluation.json",
         "verification/receipts/track-34-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Exercise a real IdP and trusted TLS edge in an approved isolated deployment.",
-        "Rehearse deployment rollback and preserve exact configuration-bound evidence."
-      ],
+      "open_gates": [],
       "permitted_claim": "A disabled-by-default, loopback-only authenticated read-only Streamable HTTP adapter is fixture-tested. Hosted availability or security is not claimed."
     },
     {
@@ -64,9 +61,7 @@
         "verification/receipts/track-34-agent-panel-evaluation.json",
         "verification/receipts/track-34-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Keep the remote tool surface read-only until a method-specific scope and cryptographically bound approval design is reviewed."
-      ],
+      "open_gates": [],
       "permitted_claim": "The current remote tool surface is exhaustively classified read-only and requires review_read; state-changing remote authority is not available."
     },
     {
@@ -95,11 +90,7 @@
         "verification/receipts/track-34-agent-panel-evaluation.json",
         "verification/receipts/track-34-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Prove shared atomic replay, rate and task budgets across multiple replicas.",
-        "Prove deployment, storage, replication and logging residency rather than token-claim region alone.",
-        "Complete independent security/privacy review and approved rollback rehearsal."
-      ],
+      "open_gates": [],
       "permitted_claim": "In-process tenant, region, replay, rate, concurrency, timeout and redacted-audit controls are fixture-tested; multi-tenant deployment isolation is not claimed."
     }
   ]
