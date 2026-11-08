@@ -13,6 +13,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/generate_evidence_debt.py --check`
   - [x] `python scripts/check_gate_catalog.py --check`
   - [x] `python scripts/check_launch_preparation_roadmap.py`
+  - [x] `python3 -m unittest discover -s tests -p test_maturity_gap_closure_governance.py`
 
 ## Completion and evidence contract
 

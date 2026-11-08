@@ -3,11 +3,11 @@
 
 Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] LP-012 / Track 29: execute the preregistered sealed methodological evaluation and publish limitations, subgroup results and the accountable response matrix.
+- [x] LP-012 / Track 29: execute the preregistered sealed methodological evaluation and publish limitations, subgroup results and the accountable response matrix.
 
 ## Completion and evidence contract
 

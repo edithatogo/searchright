@@ -3,11 +3,11 @@
 
 Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Review and approve any explicit release-risk exception without hiding the open gap.
+- [x] Review and approve any explicit release-risk exception without hiding the open gap.
 
 ## Completion and evidence contract
 

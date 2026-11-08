@@ -3,11 +3,11 @@
 
 Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.
+- [x] LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.
 
 ## Completion and evidence contract
 

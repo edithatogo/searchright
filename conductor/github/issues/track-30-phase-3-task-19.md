@@ -3,11 +3,11 @@
 
 Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] LP-016 / Track 37: aggregate current evidence, adjudicate every residual risk and perform separately approved release/registry actions only after a not-ready/ready decision.
+- [x] LP-016 / Track 37: aggregate current evidence, adjudicate every residual risk and perform separately approved release/registry actions only after a not-ready/ready decision.
 
 ## Completion and evidence contract
 

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts.
+- [x] LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts.
 
 ## Completion and evidence contract
 
