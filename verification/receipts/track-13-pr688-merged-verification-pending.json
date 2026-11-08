@@ -1,0 +1,13 @@
+{
+  "schema_version": "org.searchright.local-verification-attempt.v1",
+  "track_id": "13",
+  "pull_request": "https://github.com/edithatogo/searchright/pull/688",
+  "tested_pr_head": "6fb81210147ed3e5b2cd631bdb982e5713f90992",
+  "merged_revision": "9d3cd197b9441a7bb13310c5448ec05cea8d80b6",
+  "status": "pending_exact_merged_revision_verification",
+  "premerge_local_verifier": "passed",
+  "hosted_checks": "passed except skipped OpenSSF Scorecard; no unresolved threads before merge",
+  "merged_verification_attempt": "Failed because the temporary worktree disappeared during execution; FileNotFoundError. No successful merged-revision verification or control-plane audit is claimed.",
+  "remaining_gates": ["Run scripts/verify.sh on exact merged revision", "Run scripts/audit_github_control_plane.py after remote publication", "Review and reconcile remaining open PRs"],
+  "claim_boundary": "Prepared integration only; downstream runtime parity and rights approval are not established."
+}
