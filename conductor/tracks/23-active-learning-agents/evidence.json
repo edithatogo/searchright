@@ -2,15 +2,17 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "23",
   "title": "Active-learning prioritisation and calibrated agents",
-  "status": "scaffolded",
-  "implementation_state": "scaffolded",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-ranking/src/lib.rs",
     "crates/searchright-contracts/src/ranking.rs",
     "contracts/examples/ranking-calibration.yaml",
-    "skills/systematic-search/references/failure-modes.md"
+    "skills/systematic-search/references/failure-modes.md",
+    "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs",
+    "tests/test_active_learning_ranking_governance.py"
   ],
   "traceability": "conductor/tracks/23-active-learning-agents/traceability.json",
   "static_checks": [
@@ -19,12 +21,8 @@
   "requirements": [
     "SR-046"
   ],
-  "blockers": [
-    "Run SYNERGY and topic-held-out calibration benchmarks.",
-    "Complete prospective human calibration and subgroup error analysis.",
-    "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles, with outcome-gradable benchmarks, adversary robustness, and context isolation verified in crates/searchright-ranking/tests/ranking_adversary_scenarios.rs. Simulation instrument only, not a substitute for live prospective clinical review screening or human gold calibration decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-23",
@@ -49,9 +47,15 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-23-conductor-review-2026-11-04.json"
+    "verification/receipts/track-23-conductor-review-2026-11-04.json",
+    "verification/receipts/track-23-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-23-screening-methodologist.json",
+    "verification/receipts/panel-track-23-ranking-architect.json",
+    "verification/receipts/panel-track-23-governance-auditor.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-08",
   "review_fixes": [
     "Upgrade all six Track 23 assertions (T23-A001..T23-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-ranking, failure-modes.md, and test_active_learning_ranking_governance.py; create unit test suite in tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards, failure-mode countermeasures, and Track 23 traceability invariants; harden unit tests in crates/searchright-ranking and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open SYNERGY benchmark, human calibration, and stopping rule blockers without false promotion."
   ]

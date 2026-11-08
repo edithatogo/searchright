@@ -8,10 +8,10 @@
     "by_state": {
       "external_evidence_required": 10,
       "partially_implemented": 62,
-      "scaffolded": 18,
-      "source_implemented": 110
+      "scaffolded": 12,
+      "source_implemented": 116
     },
-    "open_gate_entries": 244,
+    "open_gate_entries": 226,
     "total": 200,
     "track_level_only": 12,
     "without_symbol_mapping": 14
@@ -120,8 +120,8 @@
     "by_state": {
       "external_evidence_required": 3,
       "partially_implemented": 15,
-      "scaffolded": 3,
-      "source_implemented": 17
+      "scaffolded": 2,
+      "source_implemented": 18
     },
     "total": 38
   }

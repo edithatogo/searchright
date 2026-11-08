@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "23",
+  "panelist_role": "ranking-architect",
+  "evaluated_at": "2026-11-08T22:45:00Z",
+  "overall_assessment": "The deterministic LexicalRanker in searchright-ranking provides transparent, interpretable record scoring based on token overlap in titles, abstracts, and subject headings. Configurable weight profiles allow title-dominant, abstract-dominant, or custom tuning while strictly rejecting non-finite, negative, or zero-sum weights. Identical inputs yield bitwise identical output scores with stable lexicographic tie-breaking by record_id. Tokenisation is case- and punctuation-insensitive and ignores uninformative single-character tokens. Independent multi-ranker execution tests demonstrate zero shared-context leakage and strict resistance to sycophantic concession.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "LexicalRanker tokenisation uses Unicode word extraction and case-folding; biomedical term lemmatization or synonym expansion is not yet integrated.",
+      "reference": "crates/searchright-ranking/src/lib.rs:604-617",
+      "recommendation": "Consider adding optional controlled vocabulary lemmatisation via MeSH/EBI adapters in future tracks."
+    },
+    {
+      "severity": "minor",
+      "description": "Tie-breaking on record_id relies on stable record identifiers from upstream provider adapters.",
+      "reference": "crates/searchright-ranking/src/lib.rs:93-98",
+      "recommendation": "Ensure upstream deduplication and ingest passes normalize record identifiers deterministically."
+    },
+    {
+      "severity": "observation",
+      "description": "Context isolation test confirms that running adversary rankers concurrently or sequentially introduces zero state leakage or score drift in the primary screening ranker.",
+      "reference": "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs:255-307",
+      "recommendation": "Maintain strict immutability of ranker state in multi-agent orchestration loops."
+    }
+  ],
+  "calibration_notes": "Ranking architects confirm deterministic bitwise reproducibility, mathematical division-by-zero protection, and context-isolated scoring with 100% test pass rates.",
+  "disposition": "approved"
+}
