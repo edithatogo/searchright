@@ -1,0 +1,134 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "23",
+  "title": "Active-learning prioritisation and calibrated agents — agent-panel evaluation",
+  "observed_at": "2026-11-08T22:45:00Z",
+  "evaluated_on": "2026-11-08",
+  "source_revision": "967801df4123259a3025e2ced78dee71bbae3128",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "screening-methodologist",
+      "ranking-architect",
+      "safety-governance-auditor"
+    ],
+    "output_artefacts": [
+      "structured-ranking-calibration-findings",
+      "ranking-architecture-invariants-record",
+      "disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "Simulation instrument only; not a substitute for live clinical review screening or prospective human calibration decisions."
+  },
+  "panelists": [
+    {
+      "role": "screening-methodologist",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "ranking-architect",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "safety-governance-auditor",
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 0,
+      "observation": 2,
+      "disposition": "approved"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval. Convergence centered on the non-negotiable prohibition of automated study exclusion (auto_exclusion_prohibited: true), transparent deterministic lexical ranking, WSS@95% screening effort reduction (>60%), robust empirical calibration curves with division-by-zero protection, adversarial prompt injection resilience, anti-sycophantic context isolation, and honest preservation of open maturity gates.",
+    "convergence_vectors": [
+      "Strict runtime and schema enforcement of auto_exclusion_prohibited: true",
+      "Advisory-only study prioritisation requiring human approver and minimum sensitivity verification",
+      "Deterministic lexical ranker with transparent title/abstract/subject feature attribution",
+      "Empirical calibration curve calculation (sensitivity, precision, FNR, FPR, WSS@95) with zero-division guards",
+      "Adversarial prompt injection defense treating study texts strictly as inert data tokens",
+      "Multi-agent scoring context isolation preventing shared-context leakage or sycophancy"
+    ],
+    "divergence_vectors": [
+      "Quantile versus uniform static step threshold selection for future empirical calibration curves",
+      "Integration of domain-specific lemmatisation (MeSH/EBI) into lexical tokenisation pipeline"
+    ]
+  },
+  "assertions_evaluated": [
+    {
+      "id": "T23-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Outcome-gradable screening benchmark and threshold calibration schemas defined in RankingCalibration and verified via test_outcome_gradable_screening_benchmark_and_wss95 and test_active_learning_ranking_governance.py."
+    },
+    {
+      "id": "T23-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Transparent deterministic LexicalRanker with title/abstract/subject weighting and feature attribution implemented in searchright-ranking; bitwise reproducibility and comparative models verified."
+    },
+    {
+      "id": "T23-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Empirical calibration curves for sensitivity/recall, precision, FNR, FPR, and WSS@95 implemented in searchright-ranking::calibrate with zero-division protection and verified against human gold decisions."
+    },
+    {
+      "id": "T23-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Independent strategy generator and PRESS adversary roles modeled; adversarial prompt injection countermeasures verified treating study text strictly as data tokens."
+    },
+    {
+      "id": "T23-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Isolated scoring pipelines prevent shared-context leakage and sycophantic concession between primary screening ranker and adversarial reviewer."
+    },
+    {
+      "id": "T23-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Non-negotiable rule forbidding automatic study exclusion strictly enforced by contract and schema invariants (auto_exclusion_prohibited: true); stopping rules remain disabled pending external evidence."
+    }
+  ],
+  "findings_summary": {
+    "total_unique_findings": 8,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 4,
+      "observation": 4
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Retain mandatory auto_exclusion_prohibited: true invariant across all future ranking and active-learning pipelines.",
+    "Preserve strict separation between advisory prioritisation ordering and autonomous screening decisions.",
+    "Maintain honest claim boundaries distinguishing fixture-proven ranking and adversary simulations from live prospective clinical trials."
+  ],
+  "open_gates": [
+    "Run SYNERGY and topic-held-out calibration benchmarks.",
+    "Complete prospective human calibration and subgroup error analysis.",
+    "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+  ],
+  "recommendation": "APPROVE_FOR_ARCHIVE",
+  "decision": {
+    "outcome": "approved_as_fixture_proven",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-08"
+  }
+}

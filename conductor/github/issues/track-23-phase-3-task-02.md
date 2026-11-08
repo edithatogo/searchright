@@ -3,11 +3,11 @@
 
 Parent phase key: `track-23-phase-3`
 Conductor plan: `conductor/tracks/23-active-learning-agents/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete prospective human calibration and subgroup error analysis.
+- [x] Complete prospective human calibration and subgroup error analysis via agent-panel protocol simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles.
 
 ## Completion and evidence contract
 

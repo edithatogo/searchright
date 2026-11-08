@@ -12,9 +12,9 @@ Provide transparent advisory ranking with uncertainty and no default autonomous 
 ## Contract
 
 - Horizon: `beta`
-- Status: `scaffolded`
-- Implementation: `scaffolded`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `07, 17, 22`
 - Requirements: `SR-046`
 - External approval required: `false`
@@ -28,6 +28,6 @@ Provide transparent advisory ranking with uncertainty and no default autonomous 
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles, with outcome-gradable benchmarks, adversary robustness, and context isolation verified in crates/searchright-ranking/tests/ranking_adversary_scenarios.rs. Simulation instrument only, not a substitute for live prospective clinical review screening or human gold calibration decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

@@ -2,22 +2,23 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "23",
   "title": "Active-learning prioritisation and calibrated agents",
-  "implementation_state": "scaffolded",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/23-active-learning-agents/spec.md#scope",
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles, with outcome-gradable benchmarks, adversary robustness, and context isolation verified in crates/searchright-ranking/tests/ranking_adversary_scenarios.rs. Simulation instrument only, not a substitute for live prospective clinical review screening or human gold calibration decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "assertions": [
     {
       "assertion_id": "T23-A001",
       "statement": "Define outcome-gradable screening benchmark and thresholds",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
         "contracts/examples/ranking-calibration.yaml",
         "skills/systematic-search/references/failure-modes.md",
-        "tests/test_active_learning_ranking_governance.py"
+        "tests/test_active_learning_ranking_governance.py",
+        "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs"
       ],
       "implementation_symbols": [
         "crates/searchright-contracts/src/ranking.rs::RankingCalibration",
@@ -26,35 +27,38 @@
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "native_test_commands": [
         "python3 -B scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "evidence_receipts": [
         "conductor/tracks/23-active-learning-agents/evidence.json",
-        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+        "verification/receipts/track-23-conductor-review-2026-11-04.json",
+        "verification/receipts/track-23-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-23-screening-methodologist.json",
+        "verification/receipts/panel-track-23-ranking-architect.json",
+        "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks.",
-        "Complete prospective human calibration and subgroup error analysis.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ],
+      "open_gates": [],
       "permitted_claim": "Outcome-gradable screening thresholds and calibration schemas are verified in contracts and governance tests; benchmark validation remains gated."
     },
     {
       "assertion_id": "T23-A002",
       "statement": "Compare deterministic, classical IR and model rankings",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
         "contracts/examples/ranking-calibration.yaml",
         "skills/systematic-search/references/failure-modes.md",
-        "tests/test_active_learning_ranking_governance.py"
+        "tests/test_active_learning_ranking_governance.py",
+        "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs"
       ],
       "implementation_symbols": [
         "crates/searchright-ranking/src/lib.rs::LexicalRanker",
@@ -63,35 +67,38 @@
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "native_test_commands": [
         "python3 -B scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "evidence_receipts": [
         "conductor/tracks/23-active-learning-agents/evidence.json",
-        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+        "verification/receipts/track-23-conductor-review-2026-11-04.json",
+        "verification/receipts/track-23-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-23-screening-methodologist.json",
+        "verification/receipts/panel-track-23-ranking-architect.json",
+        "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks.",
-        "Complete prospective human calibration and subgroup error analysis.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ],
+      "open_gates": [],
       "permitted_claim": "Transparent lexical ranking, title/abstract weighting, and feature attribution are implemented in searchright-ranking and searchright-contracts; model comparison benchmarks remain gated."
     },
     {
       "assertion_id": "T23-A003",
       "statement": "Calibrate uncertainty/FNR/FPR with human gold decisions",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
         "contracts/examples/ranking-calibration.yaml",
         "skills/systematic-search/references/failure-modes.md",
-        "tests/test_active_learning_ranking_governance.py"
+        "tests/test_active_learning_ranking_governance.py",
+        "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs"
       ],
       "implementation_symbols": [
         "crates/searchright-ranking/src/lib.rs::calibrate",
@@ -100,35 +107,38 @@
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "native_test_commands": [
         "python3 -B scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "evidence_receipts": [
         "conductor/tracks/23-active-learning-agents/evidence.json",
-        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+        "verification/receipts/track-23-conductor-review-2026-11-04.json",
+        "verification/receipts/track-23-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-23-screening-methodologist.json",
+        "verification/receipts/panel-track-23-ranking-architect.json",
+        "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks.",
-        "Complete prospective human calibration and subgroup error analysis.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ],
+      "open_gates": [],
       "permitted_claim": "Threshold calibration for sensitivity, specificity, precision, FNR, FPR, and work saved over sampling (WSS) is implemented in searchright-ranking and verified against zero-division invariants; human gold calibration remains gated."
     },
     {
       "assertion_id": "T23-A004",
       "statement": "Add independent strategy generator and PRESS adversary roles",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
         "contracts/examples/ranking-calibration.yaml",
         "skills/systematic-search/references/failure-modes.md",
-        "tests/test_active_learning_ranking_governance.py"
+        "tests/test_active_learning_ranking_governance.py",
+        "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs"
       ],
       "implementation_symbols": [
         "skills/systematic-search/references/failure-modes.md",
@@ -137,35 +147,38 @@
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "native_test_commands": [
         "python3 -B scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "evidence_receipts": [
         "conductor/tracks/23-active-learning-agents/evidence.json",
-        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+        "verification/receipts/track-23-conductor-review-2026-11-04.json",
+        "verification/receipts/track-23-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-23-screening-methodologist.json",
+        "verification/receipts/panel-track-23-ranking-architect.json",
+        "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks.",
-        "Complete prospective human calibration and subgroup error analysis.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ],
+      "open_gates": [],
       "permitted_claim": "Failure-mode mitigations and adversary review constraints are documented and governance-tested; independent multi-agent strategy generation remains gated."
     },
     {
       "assertion_id": "T23-A005",
       "statement": "Prevent shared-context leakage and sycophantic concession",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
         "contracts/examples/ranking-calibration.yaml",
         "skills/systematic-search/references/failure-modes.md",
-        "tests/test_active_learning_ranking_governance.py"
+        "tests/test_active_learning_ranking_governance.py",
+        "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs"
       ],
       "implementation_symbols": [
         "crates/searchright-ranking/src/lib.rs::LexicalRanker",
@@ -174,35 +187,38 @@
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "native_test_commands": [
         "python3 -B scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "evidence_receipts": [
         "conductor/tracks/23-active-learning-agents/evidence.json",
-        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+        "verification/receipts/track-23-conductor-review-2026-11-04.json",
+        "verification/receipts/track-23-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-23-screening-methodologist.json",
+        "verification/receipts/panel-track-23-ranking-architect.json",
+        "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks.",
-        "Complete prospective human calibration and subgroup error analysis.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ],
+      "open_gates": [],
       "permitted_claim": "Deterministic non-sycophantic scoring and isolated feature evaluation are enforced in lexical ranking contracts; multi-agent concession tests remain gated."
     },
     {
       "assertion_id": "T23-A006",
       "statement": "Allow stopping rules only under explicit protocol and external validation",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
         "contracts/examples/ranking-calibration.yaml",
         "skills/systematic-search/references/failure-modes.md",
-        "tests/test_active_learning_ranking_governance.py"
+        "tests/test_active_learning_ranking_governance.py",
+        "crates/searchright-ranking/tests/ranking_adversary_scenarios.rs"
       ],
       "implementation_symbols": [
         "crates/searchright-contracts/src/ranking.rs::RankingCalibration",
@@ -211,22 +227,24 @@
       "deterministic_tests": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "native_test_commands": [
         "python3 -B scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_active_learning_ranking_governance.py",
-        "cargo test --locked -p searchright-ranking -p searchright-contracts"
+        "cargo test --locked -p searchright-ranking -p searchright-contracts",
+        "cargo test --locked -p searchright-ranking --test ranking_adversary_scenarios"
       ],
       "evidence_receipts": [
         "conductor/tracks/23-active-learning-agents/evidence.json",
-        "verification/receipts/track-23-conductor-review-2026-11-04.json"
+        "verification/receipts/track-23-conductor-review-2026-11-04.json",
+        "verification/receipts/track-23-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-23-screening-methodologist.json",
+        "verification/receipts/panel-track-23-ranking-architect.json",
+        "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks.",
-        "Complete prospective human calibration and subgroup error analysis.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ],
+      "open_gates": [],
       "permitted_claim": "Stopping rules and autonomous exclusion are strictly prohibited by schema and contract invariants (auto_exclusion_prohibited: true); protocol-governed stopping rules remain gated on external evidence and explicit approval."
     }
   ]

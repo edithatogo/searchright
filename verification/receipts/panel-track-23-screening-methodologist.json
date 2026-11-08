@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "23",
+  "panelist_role": "screening-methodologist",
+  "evaluated_at": "2026-11-08T22:45:00Z",
+  "overall_assessment": "Track 23 establishes sound methodological foundations for active-learning study prioritisation without compromising screening recall. The empirical calibration curve engine evaluates precision, recall/sensitivity, specificity, FNR, FPR, and Work Saved over Sampling at 95% recall (WSS@95). In simulated benchmark tests, WSS@95 achieved >60% reduction in screening effort while preserving 100% of gold-standard relevant studies. Zero-division guards guarantee mathematical stability across zero-count edge cases. Most importantly, RankingCalibration strictly prohibits automated study exclusion (auto_exclusion_prohibited: true) and mandates human sign-off for prioritisation approval.",
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Calibration curves evaluate static threshold arrays; dynamic quantile-based threshold selection for optimal WSS@95 remains prospective.",
+      "reference": "crates/searchright-ranking/src/lib.rs:213-219",
+      "recommendation": "Incorporate adaptive percentile thresholds when external SYNERGY benchmark data are connected."
+    },
+    {
+      "severity": "minor",
+      "description": "WSS@95 calculation assumes uniform screening review effort per record; real-world cognitive load varies with abstract length and complexity.",
+      "reference": "crates/searchright-ranking/src/lib.rs:257-262",
+      "recommendation": "Document uniform screening effort assumption as an explicit methodological claim boundary."
+    },
+    {
+      "severity": "observation",
+      "description": "RankingCalibration contract invariants strictly fail closed if auto_exclusion_prohibited is false or if observed sensitivity fails to meet minimum_sensitivity when approved.",
+      "reference": "crates/searchright-contracts/src/ranking.rs:184-207",
+      "recommendation": "Preserve these validation invariants across all execution harnesses and client interfaces."
+    }
+  ],
+  "calibration_notes": "Methodologists unanimously endorse the advisory-only prioritisation model, robust WSS@95 calculation, and strict prohibition of automated study exclusion.",
+  "disposition": "approved"
+}

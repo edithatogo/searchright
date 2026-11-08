@@ -3,11 +3,11 @@
 
 Parent phase key: `track-23-phase-3`
 Conductor plan: `conductor/tracks/23-active-learning-agents/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Keep stopping/exclusion authority disabled until external evidence and governance approve it.
+- [x] Keep stopping/exclusion authority disabled until external evidence and governance approve it.
 
 ## Completion and evidence contract
 
