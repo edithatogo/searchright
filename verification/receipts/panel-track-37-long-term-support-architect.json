@@ -1,0 +1,47 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "37",
+  "panelist_role": "long-term-support-architect",
+  "evaluator_role": "long-term-support-architect",
+  "evaluated_at": "2026-11-09T06:21:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The release decision evidence framework and long-term support architecture codified in conductor/maturity-dossier.json, scripts/check_maturity_dossier.py, docs/maturity/release-decision.md, docs/maturity/gap-register.md, and tests/test_maturity_1_0_governance.py establish an exhaustive evidentiary threshold for any future 1.0 release signoff. The validator scripts/check_maturity_dossier.py strictly enforces that transitioning the decision to 'ready' mandates all 9 explicit evidence fields in release_decision_evidence: accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, and support_plan, in addition to explicit approval (approved: true) and ready states across all domains. This guarantees that no release can occur without verifiable provenance (exact Git commit SHA), software bill of materials (SBOM), SLSA attestations, downstream canary validation (CiteWeft/Sourceright/Searchright exact-revision canaries), documented pilot exits, an executable rollback procedure, and an active long-term maintenance and support plan. Furthermore, any release risk exceptions must be recorded with unique identifiers, domain mapping, risk descriptions, accepted/rejected dispositions, and human approver signoffs. Deterministic unit tests in tests/test_maturity_1_0_governance.py (test_release_decision_evidence_requirements) verify that partial or unapproved evidence payloads fail immediately, passing 100% network-free.",
+  "verified_invariants": [
+    "mandatory 9-field release decision evidence: ready decision strictly requires accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, and support_plan",
+    "explicit approval requirement: release_decision_evidence must contain approved: true signed by a named accountable reviewer",
+    "complete exception enumeration: all release risk exceptions must be enumerated with unique id, domain, risk, disposition, and approved_by",
+    "exact revision provenance: release decision must bind to an exact 40-character Git commit hash rather than a branch head or tag reference",
+    "executable rollback and support readiness: release criteria require verified rollback plans and long-term operational support policies before signoff",
+    "deterministic validation: test_release_decision_evidence_requirements in tests/test_maturity_1_0_governance.py passes network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "The 9 required evidence fields, approval boolean, and release risk exception schema are fully codified and validated; binding a final 1.0 release to an exact Git commit, complete SBOM, signed attestations, and executive signoff remains an open operational gate.",
+      "reference": "scripts/check_maturity_dossier.py:23-27,111-122; docs/maturity/release-decision.md:5-14; conductor/tracks/37-maturity-1-0/traceability.json:61-65",
+      "recommendation": "Preserve open gate T37-G-SIGNED-RELEASE-APPROVAL until the full release packet, SBOM, attestations, and signed executive approval receipt are generated."
+    },
+    {
+      "severity": "observation",
+      "description": "The requirement for downstream canary verification (CiteWeft and Sourceright) ensures that 1.0 API stability is empirically validated against external consumers prior to tag creation.",
+      "reference": "docs/maturity/1.0-gate.md:20; docs/maturity/release-decision.md:8; scripts/check_maturity_dossier.py:25",
+      "recommendation": "Ensure downstream canary test receipts are embedded or linked in the final release decision dossier."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T37-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Mandatory 9-field release decision evidence, explicit approval flag, named accountable reviewer requirement, Git commit provenance, rollback/support plan mandates, and unit test enforcement verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Release decision evidence contracts, exception schemas, and validation logic verified; executing executive release signoff tied to exact Git commit, SBOM, and live canary receipts remains an open operational gate."
+  ]
+}

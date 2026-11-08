@@ -11,6 +11,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_maturity_dossier.py`
   - [x] `python scripts/check_roadmap_coverage.py`
   - [x] `python scripts/run_static_harness.py`
+  - [x] `python3 -m unittest discover -s tests -p test_maturity_1_0_governance.py`
 
 ## Completion and evidence contract
 

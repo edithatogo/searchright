@@ -28,7 +28,6 @@ an explicit, approval-gated apply receipt exists.
 | 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
 | 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
 | 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | source_implemented | source_implemented | source_verified | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
-| 37 | [Final mature 1.0 release and long-term operations](tracks/37-maturity-1-0/spec.md) | mature | external_evidence_required | external_evidence_required | source_verified | Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness. |
 
 ## Archived tracks
 
@@ -63,6 +62,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 34 | [Authenticated remote MCP, tenancy and data residency](tracks/34-authenticated-remote-mcp/spec.md) | 2026-11-09 | fixture_proven |
 | 35 | [Generated SDKs, fixture-backed documentation and adoption operations](tracks/35-sdk-docs-adoption/spec.md) | 2026-11-09 | fixture_proven |
 | 36 | [Release-candidate rehearsal, staged pilots and ecosystem rehearsal](tracks/36-release-candidate-pilots/spec.md) | 2026-11-09 | fixture_proven |
+| 37 | [Final mature 1.0 release and long-term operations](tracks/37-maturity-1-0/spec.md) | 2026-11-09 | fixture_proven |
 
 ## Evidence ladder
 

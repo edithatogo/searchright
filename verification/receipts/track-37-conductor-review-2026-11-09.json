@@ -1,0 +1,32 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "37",
+  "observed_at": "2026-11-09T06:18:00Z",
+  "observed_on": "2026-11-09",
+  "source_revision": "HEAD",
+  "toolchain": "1.97.1-aarch64-apple-darwin",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "python scripts/check_maturity_dossier.py",
+      "status": "passed",
+      "domains": 17,
+      "decision": "not_ready"
+    },
+    {
+      "command": "python scripts/check_roadmap_coverage.py",
+      "status": "passed",
+      "tracks": 38
+    },
+    {
+      "command": "python3 -m unittest tests/test_maturity_1_0_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    }
+  ],
+  "limits": [
+    "Final 1.0 release decision remains strictly 'not_ready' until all critical domain blockers, named accountable reviewers, and signed approvals exist.",
+    "No premature version 1.0 tag or public registry release claim is authorized or certified by this review.",
+    "PRISMA-S reporting contract doctrine and human-only screening authority remain non-negotiable boundaries."
+  ]
+}
