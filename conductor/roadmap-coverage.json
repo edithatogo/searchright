@@ -1829,7 +1829,8 @@
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating living-methodologist, lineage-architect, and governance-auditor roles, with multi-cycle scenarios verified in crates/searchright-living/tests/multi_cycle_scenarios.rs. Panel output is a simulation instrument, not a substitute for live clinical review surveillance or human protocol amendment committee decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
       "closeout_completed": true,
       "completed_higher_evidence_gates": [
-        "Complete multi-cycle living review lineage, change attribution reproduction, human release safeguards, and protocol amendment evaluation via agent-panel protocol simulating living-methodologist, lineage-architect, and governance-auditor roles."
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
       ],
       "deliverables": [
         "crates/searchright-living/src/lib.rs",

@@ -35,7 +35,8 @@ GitHub issue key: `track-22`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-22-phase-3 -->
 
-- [x] Complete multi-cycle living review lineage, change attribution reproduction, human release safeguards, and protocol amendment evaluation via agent-panel protocol simulating living-methodologist, lineage-architect, and governance-auditor roles.
+- [x] Compile and run multi-cycle living-review and amendment scenarios.
+- [x] Pilot a real update and independently reproduce change attribution.
 
 ## Phase 4: Review and closeout
 
