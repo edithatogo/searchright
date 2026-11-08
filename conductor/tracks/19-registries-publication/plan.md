@@ -1,6 +1,6 @@
 # Plan: 19 Registries and scholarly publication
 
-Current status: **submission_prepared**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
 
 GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,7 +8,7 @@ GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-19-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `glama.json`
   - [x] Present source path: `registry/glama/README.md`
   - [x] Present source path: `registry/joss/paper.md`
