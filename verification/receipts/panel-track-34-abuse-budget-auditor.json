@@ -1,0 +1,48 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "34",
+  "panelist_role": "abuse-budget-auditor",
+  "evaluator_role": "abuse-budget-auditor",
+  "evaluated_at": "2026-11-09T04:47:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.98,
+  "overall_assessment": "The abuse prevention, concurrency budgets, request timeout mechanisms, and privacy-preserving audit logging codified in crates/searchright-mcp/src/remote.rs, docs/security/threat-model.md, and tests/test_authenticated_remote_mcp_governance.py provide robust protection against denial-of-service, runaway tasks, and privacy leaks. Per-principal rate limiting tracks request timestamps over a sliding 60-second window (RATE_WINDOW) keyed by (tenant_id, sub); requests exceeding maximum_requests_per_minute are rejected fail-closed with 403 Forbidden (access.rate.exceeded). Tenant-level concurrency is strictly bounded: active concurrent requests are tracked in counters.active per tenant and compared against maximum_concurrent_tasks; requests at or exceeding capacity are rejected with access.concurrency.exceeded. Concurrency release is guaranteed via an RAII RuntimePermit whose Drop implementation decrements the active counter upon normal completion, error, or future cancellation. Authentication concurrency is protected at the edge by a tokio::sync::Semaphore bounded to SEARCHRIGHT_REMOTE_MCP_AUTH_CONCURRENCY (1..=256), shedding overload with 429 Too Many Requests (access.authentication.capacity_exceeded). In addition, every request is wrapped in bounded_request with a configurable timeout (1..=300 seconds), terminating runaway futures and returning 408 Request Timeout (access.request.timeout). Finally, AuditSink records append-only JSONL audit events using one-way blake3 digests of tenant_id, principal sub, and request_digest, recording admission and outcome (admitted, completed, completed_error, timed_out) without ever exposing raw tokens, full request bodies, or plaintext identifiers.",
+  "verified_invariants": [
+    "sliding-window rate limiting: requests exceeding maximum_requests_per_minute per (tenant, principal) are rejected fail-closed with access.rate.exceeded",
+    "tenant task concurrency budget: active concurrent tasks are tracked per tenant and capped at maximum_concurrent_tasks, rejecting excess load with access.concurrency.exceeded",
+    "RAII permit lifecycle and cancellation safety: RuntimePermit decrements active counters on drop, ensuring cancellation propagation safely releases concurrency slots",
+    "authentication concurrency load shedding: tokio semaphore bounds simultaneous signature validations (1-256), failing closed with 429 (access.authentication.capacity_exceeded)",
+    "wall-clock request timeout budget: bounded_request enforces tokio timeout (1-300s), cancelling slow requests and returning 408 (access.request.timeout)",
+    "redacted audit trail: AuditSink logs one-way blake3 digests of tenant and principal, policy version, and request digest; raw tokens and request bodies are strictly excluded",
+    "deterministic verification: rate, concurrency, timeout, and audit redaction controls pass deterministically in test suites"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Rate limiting, task concurrency, and replay tracking operate in-process within a single memory space; deploying multi-replica instances requires a shared distributed cache (e.g., Redis or DynamoDB) with atomic rate-increment and replay-check semantics.",
+      "reference": "crates/searchright-mcp/src/remote.rs:283-289, 395-415; docs/security/authenticated-remote-mcp.md:72-84; conductor/tracks/34-authenticated-remote-mcp/traceability.json:86-90",
+      "recommendation": "Preserve open gate T34-G-MULTI-REPLICA-LEDGER until distributed multi-replica rate and replay synchronization are implemented and tested."
+    },
+    {
+      "severity": "observation",
+      "description": "AuditSink logs both 'admitted' and final outcomes ('completed', 'completed_error', 'timed_out'), providing complete lifecycle visibility for security incident analysis while preserving zero-knowledge data privacy.",
+      "reference": "crates/searchright-mcp/src/remote.rs:305-355, 547-565",
+      "recommendation": "Retain audit event schema tests and integrate with enterprise SIEM pipelines in production deployments."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T34-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Task concurrency limits, sliding-window rate limits, request timeouts, cancellation propagation, and redacted audit logging verified in Rust adapter and test fixtures."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "In-process memory-bounded rate and concurrency limits only; multi-replica distributed abuse budgets and cross-datacenter synchronization remain open operational gates."
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "34",
+  "title": "Authenticated remote MCP, tenancy and data residency — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T04:48:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "adf0cfd57f9d4957bc85478c4faf60394975c878",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "remote-mcp-security-architect",
+      "authorization-tenancy-auditor",
+      "abuse-budget-auditor"
+    ],
+    "output_artefacts": [
+      "remote-mcp-security-architecture-review",
+      "authorization-tenancy-and-data-residency-audit",
+      "abuse-budget-and-cancellation-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "Fixture-proven evaluation of loopback Streamable HTTP adapter, in-process tenant isolation, rotating JWKS token verification, and default-deny access policies; live IdP integration, multi-replica replay/rate distributed ledgers, cloud data residency verification, and production rollback rehearsals remain open gates."
+  },
+  "panelists": [
+    {
+      "role": "remote-mcp-security-architect",
+      "evaluator_role": "remote-mcp-security-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "authorization-tenancy-auditor",
+      "evaluator_role": "authorization-tenancy-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "abuse-budget-auditor",
+      "evaluator_role": "abuse-budget-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.98,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 34 (Authenticated remote MCP, tenancy and data residency). The core security, authorization, and transport assets—including crates/searchright-mcp/src/remote.rs, crates/searchright-mcp/src/bin/searchright-mcp-http.rs, crates/searchright-access/src/lib.rs, crates/searchright-contracts/src/access.rs, contracts/examples/tenant-policy.json, contracts/examples/access-request.json, contracts/examples/access-decision.json, docs/security/authenticated-remote-mcp.md, docs/security/threat-model.md, tests/test_authenticated_remote_mcp_governance.py, verification/receipts/remote-mcp-auth-conformance.json, and verification/receipts/remote-mcp-tenancy-adversarial.json—demonstrate exceptional defense-in-depth design, rigorous default-deny enforcement, and strict adherence to systematic review governance. The Streamable HTTP adapter requires explicit activation via SEARCHRIGHT_REMOTE_MCP_ENABLED=1, binds strictly to a loopback interface, and mandates upstream TLS reverse-proxy termination with X-Forwarded-Proto: https validation. Identity verification operates on a zero-trust model: bearer JWTs are cryptographically validated against a rotating local JWKS with RS256 algorithm pinning, strict kid resolution, and audience matching. Replay attacks are prevented via a blake3 request digest ledger. Tenancy and regional residency controls strictly isolate tenants (blocking cross-tenant requests with access.tenant.mismatch) and confine operations to approved jurisdictions (blocking unauthorized regions with access.region.denied). Non-human agents are categorically barred from autonomous study exclusions or final eligibility determinations, upholding the core ethical invariant that human reviewers retain ultimate screening authority. Long-running abuse controls enforce sliding-window per-principal rate limits, tenant concurrency caps, authentication load shedding, and wall-clock request timeouts with reliable RAII cancellation propagation. Audit logging records one-way blake3 digests without exposing raw bearer tokens or sensitive identifiers. All 54 deterministic tests pass network-free. The six higher-evidence operational gates remain preserved as open in the evidence ledger.",
+  "assertions_evaluated": [
+    {
+      "id": "T34-A001",
+      "statement": "Authenticated remote MCP deployment boundary",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Feature-gated loopback Streamable HTTP adapter, TLS terminator loopback boundary, rotating JWKS RS256 verification, and request replay ledger verified in Rust implementation and conformance test suites."
+    },
+    {
+      "id": "T34-A002",
+      "statement": "Default-deny scopes and human-only final decisions",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Default-deny scope enforcement, read-only remote MCP surface classification, and strict prohibition of non-human agent autonomous study exclusion/final decisions verified in access crate and governance test suites."
+    },
+    {
+      "id": "T34-A003",
+      "statement": "Tenant isolation, residency, rate and cancellation budgets",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Tenant isolation, regional data residency enforcement, sliding-window rate limits, active task concurrency limits, request timeout budgets, cancellation propagation, and privacy-preserving redacted audit logging verified in adversarial test fixtures."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T34-G-LIVE-IDP-TLS-EDGE",
+      "statement": "Exercise a real IdP and trusted TLS edge in an approved isolated deployment.",
+      "status": "OPEN",
+      "evidence": "Preserved open until live OAuth/OIDC IdP integration, key rotation, and TLS-edge proxy termination are exercised in an approved isolated staging deployment"
+    },
+    {
+      "gate": "T34-G-DEPLOYMENT-ROLLBACK-REHEARSAL",
+      "statement": "Rehearse deployment rollback and preserve exact configuration-bound evidence.",
+      "status": "OPEN",
+      "evidence": "Preserved open until edge traffic freeze, binary shutdown, grant revocation, bounded task drain, policy rollback, and stdio fallback verification are rehearsed"
+    },
+    {
+      "gate": "T34-G-READONLY-SURFACE-SCOPE",
+      "statement": "Keep the remote tool surface read-only until a method-specific scope and cryptographically bound approval design is reviewed.",
+      "status": "OPEN",
+      "evidence": "Preserved open as invariant; remote MCP tool exposure is strictly bounded to the 31 read-only tools requiring review_read scope"
+    },
+    {
+      "gate": "T34-G-MULTI-REPLICA-LEDGER",
+      "statement": "Prove shared atomic replay, rate and task budgets across multiple replicas.",
+      "status": "OPEN",
+      "evidence": "Preserved open until distributed atomic replay cache, cluster-wide rate limiter, and cross-replica task concurrency controls are verified"
+    },
+    {
+      "gate": "T34-G-DATA-RESIDENCY-VERIFICATION",
+      "statement": "Prove deployment, storage, replication and logging residency rather than token-claim region alone.",
+      "status": "OPEN",
+      "evidence": "Preserved open until infrastructure-level cloud residency audits verify storage, replication, and audit log residency boundaries match policy"
+    },
+    {
+      "gate": "T34-G-INDEPENDENT-SECURITY-REVIEW",
+      "statement": "Complete independent security/privacy review and approved rollback rehearsal before hosted multi-tenant claims.",
+      "status": "OPEN",
+      "evidence": "Preserved open until formal external security and privacy audits of the authenticated remote MCP transport are completed"
+    }
+  ]
+}

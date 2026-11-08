@@ -2,15 +2,15 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "34",
   "title": "Authenticated remote MCP, tenancy and data residency",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_of_assertions": "conductor/tracks/34-authenticated-remote-mcp/spec.md#scope",
   "claim_boundary": "A feature-gated read-only loopback Streamable HTTP adapter is compiler- and fixture-tested. This is not evidence of a hosted, multi-replica, production-secure or independently approved service.",
   "assertions": [
     {
       "assertion_id": "T34-A001",
       "statement": "Authenticated remote MCP deployment boundary",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-mcp/src/remote.rs",
@@ -24,10 +24,14 @@
         "searchright_mcp::SearchrightServer::remote_http"
       ],
       "deterministic_tests": [
-        "python scripts/remote_mcp_conformance.py"
+        "python scripts/remote_mcp_conformance.py",
+        "python3 -m unittest discover -s tests -p test_authenticated_remote_mcp_governance.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/remote-mcp-auth-conformance.json"
+        "verification/receipts/remote-mcp-auth-conformance.json",
+        "verification/receipts/panel-track-34-remote-mcp-security-architect.json",
+        "verification/receipts/track-34-agent-panel-evaluation.json",
+        "verification/receipts/track-34-conductor-review-2026-11-09.json"
       ],
       "open_gates": [
         "Exercise a real IdP and trusted TLS edge in an approved isolated deployment.",
@@ -38,7 +42,7 @@
     {
       "assertion_id": "T34-A002",
       "statement": "Default-deny scopes and human-only final decisions",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-access/src/lib.rs",
@@ -51,10 +55,14 @@
         "searchright_mcp::remote::RemoteState::authorise"
       ],
       "deterministic_tests": [
-        "python scripts/remote_mcp_conformance.py"
+        "python scripts/remote_mcp_conformance.py",
+        "python3 -m unittest discover -s tests -p test_authenticated_remote_mcp_governance.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/remote-mcp-auth-conformance.json"
+        "verification/receipts/remote-mcp-auth-conformance.json",
+        "verification/receipts/panel-track-34-authorization-tenancy-auditor.json",
+        "verification/receipts/track-34-agent-panel-evaluation.json",
+        "verification/receipts/track-34-conductor-review-2026-11-09.json"
       ],
       "open_gates": [
         "Keep the remote tool surface read-only until a method-specific scope and cryptographically bound approval design is reviewed."
@@ -64,7 +72,7 @@
     {
       "assertion_id": "T34-A003",
       "statement": "Tenant isolation, residency, rate and cancellation budgets",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-mcp/src/remote.rs",
@@ -78,10 +86,14 @@
         "searchright_access::ReplayLedger"
       ],
       "deterministic_tests": [
-        "python scripts/remote_mcp_conformance.py"
+        "python scripts/remote_mcp_conformance.py",
+        "python3 -m unittest discover -s tests -p test_authenticated_remote_mcp_governance.py"
       ],
       "evidence_receipts": [
-        "verification/receipts/remote-mcp-tenancy-adversarial.json"
+        "verification/receipts/remote-mcp-tenancy-adversarial.json",
+        "verification/receipts/panel-track-34-abuse-budget-auditor.json",
+        "verification/receipts/track-34-agent-panel-evaluation.json",
+        "verification/receipts/track-34-conductor-review-2026-11-09.json"
       ],
       "open_gates": [
         "Prove shared atomic replay, rate and task budgets across multiple replicas.",

@@ -1,0 +1,32 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "34",
+  "observed_at": "2026-11-09T04:48:00Z",
+  "observed_on": "2026-11-09",
+  "source_revision": "HEAD",
+  "toolchain": "1.97.1-aarch64-apple-darwin",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "cargo test -p searchright-access -p searchright-mcp --all-targets --all-features --locked",
+      "status": "passed",
+      "tests_passed": 54
+    },
+    {
+      "command": "python scripts/remote_mcp_conformance.py",
+      "status": "passed",
+      "tests_passed": 54
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_authenticated_remote_mcp_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    }
+  ],
+  "limits": [
+    "No live OAuth/OIDC integration against a production identity provider was exercised.",
+    "No multi-replica distributed replay or cross-datacenter rate budget was exercised.",
+    "No production deployment or external security review was performed.",
+    "Streamable HTTP remote MCP remains feature-gated and loopback-only."
+  ]
+}

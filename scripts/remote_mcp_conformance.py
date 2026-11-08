@@ -15,20 +15,36 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_AUTH_RECEIPT = ROOT / "verification" / "receipts" / "remote-mcp-auth-conformance.json"
 DEFAULT_TENANCY_RECEIPT = ROOT / "verification" / "receipts" / "remote-mcp-tenancy-adversarial.json"
-CARGO_COMMAND = [
-    "rustup",
-    "run",
-    "1.97.1-x86_64-pc-windows-gnu",
-    "cargo",
-    "test",
-    "-p",
-    "searchright-access",
-    "-p",
-    "searchright-mcp",
-    "--all-targets",
-    "--all-features",
-    "--locked",
-]
+def resolve_cargo_command() -> list[str]:
+    base = [
+        "cargo",
+        "test",
+        "-p",
+        "searchright-access",
+        "-p",
+        "searchright-mcp",
+        "--all-targets",
+        "--all-features",
+        "--locked",
+    ]
+    toolchain = os.environ.get("RUSTUP_TOOLCHAIN")
+    if toolchain:
+        return ["rustup", "run", toolchain, *base]
+    try:
+        proc = subprocess.run(
+            ["rustup", "toolchain", "list"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if "1.97.1-x86_64-pc-windows-gnu" in proc.stdout:
+            return ["rustup", "run", "1.97.1-x86_64-pc-windows-gnu", *base]
+    except Exception:
+        pass
+    return base
+
+
+CARGO_COMMAND = resolve_cargo_command()
 JSON_TEST_ARGS = ["--", "--format", "json", "-Z", "unstable-options"]
 TEXT_TEST_ARGS: list[str] = []
 TEST_LINE = re.compile(r"^test (?P<name>\S+) \.\.\. (?P<status>ok|FAILED|ignored)$")

@@ -17,9 +17,6 @@
   },
   "command": {
     "command": [
-      "rustup",
-      "run",
-      "1.97.1-x86_64-pc-windows-gnu",
       "cargo",
       "test",
       "-p",
@@ -35,10 +32,10 @@
     "summary": {
       "failed": 0,
       "ignored": 0,
-      "passed": 10,
+      "passed": 22,
       "result": "ok"
     },
-    "tests_observed": 18
+    "tests_observed": 54
   },
   "controls": [
     {
@@ -121,8 +118,8 @@
   "roadmap_item": "LP-003",
   "schema_version": "org.searchright.remote-mcp-tenancy-adversarial-receipt.v1",
   "source": {
-    "revision": "5650d2c77faa78b3b69c86583da0160fbf19c356",
-    "tracked_tree_clean": true
+    "revision": "adf0cfd57f9d4957bc85478c4faf60394975c878",
+    "tracked_tree_clean": false
   },
   "status": "passed"
 }
