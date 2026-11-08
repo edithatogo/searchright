@@ -120,7 +120,7 @@ class CargoVetGovernanceTests(unittest.TestCase):
     def test_exact_approved_exception_and_baseline_pass(self):
         result, receipt = self.run_check()
         self.assertEqual(result, 0, receipt)
-        self.assertEqual(receipt["effective_exemption_count"], 248)
+        self.assertEqual(receipt["effective_exemption_count"], 236)
         self.assertEqual(receipt["errors"], [])
 
     def test_baseline_without_track06_still_passes(self):
@@ -128,17 +128,22 @@ class CargoVetGovernanceTests(unittest.TestCase):
         del self.config["exemptions"]["quick-xml"]
         result, receipt = self.run_check()
         self.assertEqual(result, 0, receipt)
-        self.assertEqual(receipt["effective_exemption_count"], 247)
+        self.assertEqual(receipt["effective_exemption_count"], 235)
         self.assertEqual(self.metadata_calls, [])
 
     def test_retired_entries_preserve_history_without_effective_approval(self):
         retired = [p for p in self.ledger["proposals"] if p["status"] == "retired"]
-        self.assertEqual(len(retired), 11)
+        self.assertEqual(len(retired), 23)
+        exempted_versions = {
+            (crate, entry.get("version"))
+            for crate, entries in self.config["exemptions"].items()
+            for entry in entries
+        }
         for proposal in retired:
             self.assertEqual(proposal["expires_at"], "2026-11-10")
-            self.assertEqual(proposal["retired_on"], "2026-11-06")
+            self.assertIn(proposal["retired_on"], ("2026-11-06", "2026-11-08"))
             self.assertTrue(proposal["decision_evidence"])
-            self.assertNotIn(proposal["crate"], self.config["exemptions"])
+            self.assertNotIn((proposal["crate"], proposal["version"]), exempted_versions)
         result, receipt = self.run_check()
         self.assertEqual(result, 0, receipt)
 
