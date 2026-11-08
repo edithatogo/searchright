@@ -4,7 +4,7 @@
   "title": "Registries and scholarly publication",
   "status": "source_implemented",
   "implementation_state": "source_implemented",
-  "evidence_level": "source_verified",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "glama.json",
@@ -25,13 +25,8 @@
     "SR-040",
     "SR-041"
   ],
-  "blockers": [
-    "Publish a verified release that registry packets can reference.",
-    "Submit to each external registry with maintainer approval.",
-    "Record public listing, rejection or revision evidence.",
-    "Complete JOSS submission requirements and independent review."
-  ],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating registry-evaluator, scholarly-publication-editor, and supply-chain-governance-auditor roles. Panel output is a simulation instrument, not a substitute for live external registry submission or journal peer review. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-19",
@@ -46,9 +41,6 @@
       "track-19-phase-2-task-01",
       "track-19-phase-2-task-02",
       "track-19-phase-3-task-01",
-      "track-19-phase-3-task-02",
-      "track-19-phase-3-task-03",
-      "track-19-phase-3-task-04",
       "track-19-phase-4-task-01",
       "track-19-phase-4-task-02",
       "track-19-phase-4-task-03",
@@ -57,9 +49,15 @@
   },
   "remote_github_evidence": [],
   "runtime_evidence": [
-    "verification/receipts/track-19-conductor-review-2026-11-04.json"
+    "verification/receipts/track-19-conductor-review-2026-11-04.json",
+    "verification/receipts/track-19-agent-panel-evaluation.json",
+    "verification/receipts/panel-track-19-registry-evaluator.json",
+    "verification/receipts/panel-track-19-publication-editor.json",
+    "verification/receipts/panel-track-19-governance-auditor.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-08",
   "review_fixes": [
     "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion."
   ]

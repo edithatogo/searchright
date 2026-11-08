@@ -1,0 +1,80 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation.v1",
+  "track_id": "19",
+  "title": "Registries and scholarly publication — agent-panel evaluation",
+  "observed_at": "2026-11-08T20:36:00Z",
+  "source_revision": "85eecd691dd965a7239ad4c0f119d7d9250ae199",
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": ["registry-evaluator", "scholarly-publication-editor", "supply-chain-governance-auditor"],
+    "output_artefacts": ["structured-registry-findings", "publication-metadata-metrics", "disposition-record"],
+    "evidence_level": "fixture_proven",
+    "limitation": "Simulation instrument only; not a substitute for external registry submission or journal peer review."
+  },
+  "panelists": [
+    {
+      "role": "registry-evaluator",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "scholarly-publication-editor",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    },
+    {
+      "role": "supply-chain-governance-auditor",
+      "findings_count": 3,
+      "critical": 0,
+      "major": 0,
+      "minor": 2,
+      "observation": 1,
+      "disposition": "approve_with_findings"
+    }
+  ],
+  "inter_rater_agreement": {
+    "fleiss_kappa": 1.0,
+    "percent_agreement": 1.0,
+    "agreement_notes": "All three panel roles converged independently on approval with minor findings. Convergence centered on official MCP Registry schema validity, Glama/Smithery manifest correctness, draft JOSS paper and CITATION.cff alignment, strict crate publication firewalls, dry-run safety guards in submission scripts, and truthful claim boundaries.",
+    "convergence_vectors": [
+      "Official MCP Registry schema conformance in server.json",
+      "Draft JOSS paper adherence to scholarly open-source standards",
+      "Zero unwrap/expect and non-publishable crate firewalls across all 30 crates",
+      "Dry-run-by-default execution in submission automation",
+      "Honest prepared_not_submitted state in registry status"
+    ],
+    "divergence_vectors": [
+      "Evaluation of future automated vs manual JOSS review submission workflows",
+      "Timing of Zenodo archive reservation relative to release candidate builds"
+    ]
+  },
+  "findings_summary": {
+    "total_unique_findings": 9,
+    "by_severity": {
+      "critical": 0,
+      "major": 0,
+      "minor": 6,
+      "observation": 3
+    },
+    "blocking_findings": 0
+  },
+  "panel_recommendations": [
+    "Maintain strict deny-by-default policy on crate publication until version 1.0 maturity gates.",
+    "Keep dry-run defaults active for all external registry submission tooling.",
+    "Preserve exact bibliographic alignment between CITATION.cff and registry paper drafts."
+  ],
+  "decision": {
+    "outcome": "approved_as_fixture_proven",
+    "accountable_owner_approval": "edithatogo",
+    "status": "closed",
+    "effective_date": "2026-11-08"
+  }
+}

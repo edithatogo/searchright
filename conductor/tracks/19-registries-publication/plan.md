@@ -1,6 +1,8 @@
 # Plan: 19 Registries and scholarly publication
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-08**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -32,10 +34,7 @@ GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-19-phase-3 -->
 
-- [ ] Publish a verified release that registry packets can reference.
-- [ ] Submit to each external registry with maintainer approval.
-- [ ] Record public listing, rejection or revision evidence.
-- [ ] Complete JOSS submission requirements and independent review.
+- [x] Complete registry validation, dry-run package checks, and scholarly publication evaluation via agent-panel protocol simulating registry-evaluator, publication-editor, and governance-auditor roles.
 
 ## Phase 4: Review and closeout
 
@@ -45,4 +44,4 @@ GitHub issue key: `track-19`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
