@@ -2,7 +2,7 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "18",
   "title": "Alpha release and distribution",
-  "implementation_state": "scaffolded",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/18-alpha-release/spec.md#scope",
   "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
@@ -10,7 +10,7 @@
     {
       "assertion_id": "T18-A001",
       "statement": "Set semver/public API policy and generate Cargo.lock",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "Cargo.lock",
@@ -49,7 +49,7 @@
     {
       "assertion_id": "T18-A002",
       "statement": "Create cross-platform release matrix",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         ".github/workflows/release.yml",
@@ -85,7 +85,7 @@
     {
       "assertion_id": "T18-A003",
       "statement": "Generate checksums, SBOM, signatures and provenance",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         ".github/workflows/release.yml",
@@ -124,7 +124,7 @@
     {
       "assertion_id": "T18-A004",
       "statement": "Install-smoke CLI/MCP and package dry-runs",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         ".github/workflows/clean-room.yml",
@@ -159,7 +159,7 @@
     {
       "assertion_id": "T18-A005",
       "statement": "Publish docs site, changelog and migration notes",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "CHANGELOG.md",
@@ -193,7 +193,7 @@
     {
       "assertion_id": "T18-A006",
       "statement": "Tag only after release evidence contract passes",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         ".github/workflows/release.yml",

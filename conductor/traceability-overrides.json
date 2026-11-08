@@ -2623,7 +2623,7 @@
             "Verify public API snapshots and semver compliance."
           ],
           "permitted_claim": "Public package policy and cargo-vet governance rules are enforced; release-time SemVer checks and final Cargo.lock lock-in require the release pipeline.",
-          "state": "scaffolded"
+          "state": "source_implemented"
         },
         "T18-A002": {
           "deterministic_tests": [
@@ -2657,7 +2657,7 @@
             "Verify cross-platform binary reproducibility on hosted runners."
           ],
           "permitted_claim": "Cross-platform release matrices and packaging reproducibility checks are configured and statically verified; hosted cross-platform binary builds remain pending.",
-          "state": "scaffolded"
+          "state": "source_implemented"
         },
         "T18-A003": {
           "deterministic_tests": [
@@ -2694,7 +2694,7 @@
             "Verify artifact signature receipts with cosign/actions/attest."
           ],
           "permitted_claim": "Deterministic source SBOM, hash manifest generation, and archive checksums are verified; signed provenance and cryptographic attestations require the release workflow.",
-          "state": "scaffolded"
+          "state": "source_implemented"
         },
         "T18-A004": {
           "deterministic_tests": [
@@ -2727,7 +2727,7 @@
             "Execute live MCP smoke against installed binary."
           ],
           "permitted_claim": "Package reproducibility and offline smoke test harnesses are verified; live binary execution and container install-smoke remain pending.",
-          "state": "scaffolded"
+          "state": "source_implemented"
         },
         "T18-A005": {
           "deterministic_tests": [
@@ -2759,7 +2759,7 @@
             "Verify rendered citation and security advisories."
           ],
           "permitted_claim": "Changelog, citation, container specification and security guidelines are statically validated in source; public site deployment is gated on release promotion.",
-          "state": "scaffolded"
+          "state": "source_implemented"
         },
         "T18-A006": {
           "deterministic_tests": [
@@ -2795,7 +2795,7 @@
             "Obtain explicit human authorisation before release promotion."
           ],
           "permitted_claim": "Workflow hardening, release rehearsal contracts, and packaging reproducibility checks gate release execution; no release tag has been created.",
-          "state": "scaffolded"
+          "state": "source_implemented"
         }
       }
     },
