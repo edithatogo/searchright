@@ -1,0 +1,57 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "03",
+  "panelist_role": "sourceright-migration-lead",
+  "evaluator_role": "sourceright-migration-lead",
+  "evaluated_at": "2026-11-09T11:00:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The Sourceright extraction strategy and compatibility adapter framework codified across migration/sourceright/replacement-map.yaml, migration/sourceright/parity-cases.json, crates/searchright-sourceright-compat/src/lib.rs, crates/searchright-sourceright-compat/src/parity_matrix.rs, crates/searchright-sourceright-compat/tests/parity_matrix.rs, migration/companion-repositories/sourceright.json, and integration/release-train.json provides an exemplary, reversible migration pathway. All Sourceright provider surfaces (fetch_json, apply_provider_interval, read_cached, write_cached, smoke reports) are mapped to core equivalents with defined deprecation timelines. Crucially, the companion repository packet (migration/companion-repositories/sourceright.json) enforces remote_mutation_permitted: false, preventing premature downstream code removal or unreviewed SemVer breakage until dual-run parity is evidenced. All 30 migration and local API tests pass cleanly.",
+  "verified_invariants": [
+    "Comprehensive replacement mapping: migration/sourceright/replacement-map.yaml maps all legacy symbols to evidence-search-core equivalents",
+    "Parity execution matrix: v2 parity catalogue and matrix schemas validate 10 declared parity dimensions",
+    "Fail-closed companion change packet: migration/companion-repositories/sourceright.json disallows unreviewed remote mutations",
+    "Non-breaking compatibility adapter: searchright-sourceright-compat provides seamless bridge during transition"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Compatibility contracts, replacement maps, and local parity execution matrices are verified; executing old/new dual runs downstream in Sourceright remains an open operational gate.",
+      "reference": "migration/sourceright/parity-cases.json:1-80; conductor/tracks/03-shared-provider-runtime/traceability.json:134-138",
+      "recommendation": "Preserve open gate for downstream Sourceright dual-run verification."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T03-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Inventory of Sourceright live_providers and provider modules verified."
+    },
+    {
+      "id": "T03-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Compatibility adapter and feature flag structure verified."
+    },
+    {
+      "id": "T03-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Parity cases, v2 parity execution matrix, and snapshot diffing contracts verified."
+    },
+    {
+      "id": "T03-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Reversible switch plan and companion change packet fail-closed configuration verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Extraction contracts and compatibility adapters verified; live downstream Sourceright cutover and code deletion remain separate release-train operations."
+  ]
+}

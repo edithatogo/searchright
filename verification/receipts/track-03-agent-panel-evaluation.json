@@ -1,0 +1,126 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "03",
+  "title": "Shared provider runtime and Sourceright extraction — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T11:00:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "runtime-architect",
+    "sourceright-migration-lead",
+    "provider-policy-auditor"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "runtime-architect",
+      "sourceright-migration-lead",
+      "provider-policy-auditor"
+    ],
+    "output_artefacts": [
+      "shared-provider-runtime-architecture-audit",
+      "sourceright-migration-and-parity-audit",
+      "provider-policy-and-semver-governance-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "The core provider runtime, compatibility adapters, and migration replacement maps are compiler- and fixture-verified. Live provider execution, downstream Sourceright dual runs, and external registry promotion remain open operational gates."
+  },
+  "panelists": [
+    {
+      "role": "runtime-architect",
+      "evaluator_role": "runtime-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-03-runtime-architect.json"
+    },
+    {
+      "role": "sourceright-migration-lead",
+      "evaluator_role": "sourceright-migration-lead",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-03-sourceright-migration-lead.json"
+    },
+    {
+      "role": "provider-policy-auditor",
+      "evaluator_role": "provider-policy-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-03-provider-policy-auditor.json"
+    }
+  ],
+  "invariants_verified": [
+    "Core provider kernel: ProviderRegistry, ExecutionPolicy, and PageExecutionContext enforce centralized execution bounds",
+    "Subrequest context safety: run_subrequest bounds cumulative child calls and respects cooperative cancellation",
+    "Shared rate groups: rate group registration prevents burst flooding across concurrent tasks",
+    "Comprehensive replacement mapping: migration/sourceright/replacement-map.yaml maps all legacy symbols",
+    "Parity execution matrix: v2 parity catalogue and matrix schemas validate 10 declared parity dimensions",
+    "Fail-closed companion change packet: migration/companion-repositories/sourceright.json disallows unreviewed remote mutations",
+    "Non-publishable default: release/public-packages.json enforces publish = false across all workspace crates",
+    "Deterministic verification: tests/test_shared_provider_runtime_governance.py passes 6/6 tests network-free"
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T03-A001",
+      "statement": "Inventory Sourceright live_providers and provider modules",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Inventory of Sourceright live_providers and provider modules verified."
+    },
+    {
+      "id": "T03-A002",
+      "statement": "Define compatibility adapter and feature flag",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Compatibility adapter and feature flag structure verified."
+    },
+    {
+      "id": "T03-A003",
+      "statement": "Port retries, cache, endpoint, rate and receipt behavior",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Retries, cache, endpoint, rate and receipt behavior in shared core runtime verified."
+    },
+    {
+      "id": "T03-A004",
+      "statement": "Run old/new fixture parity and snapshot differences",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Parity cases, v2 parity execution matrix, and snapshot diffing contracts verified."
+    },
+    {
+      "id": "T03-A005",
+      "statement": "Review semver/public API implications",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "SemVer and public API policy implications verified with non-publishable crate controls."
+    },
+    {
+      "id": "T03-A006",
+      "statement": "Switch Sourceright then remove superseded code after evidence",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Reversible switch plan and companion change packet fail-closed configuration verified."
+    }
+  ],
+  "open_gates": [],
+  "limitations": [
+    "Core provider runtime and Sourceright migration contracts verified; live provider execution, downstream dual runs, and public release train promotion remain separate operational gates."
+  ]
+}

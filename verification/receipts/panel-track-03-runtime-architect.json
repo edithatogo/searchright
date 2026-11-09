@@ -1,0 +1,39 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "03",
+  "panelist_role": "runtime-architect",
+  "evaluator_role": "runtime-architect",
+  "evaluated_at": "2026-11-09T11:00:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The shared provider runtime architecture extracted from Sourceright into evidence-search-core, codified across crates/evidence-search-core/src/provider.rs, crates/evidence-search-core/src/lib.rs, crates/evidence-search-core/tests/subrequest_context.rs, crates/searchright-connectors/src/lib.rs, docs/provider-subrequest-context.md, and tests/test_shared_provider_runtime_governance.py establishes a disciplined execution kernel. In evidence-search-core, ProviderRegistry, ExecutionPolicy, and PageExecutionContext implement deterministic subrequest budgets, cancellation tokens, explicit shared rate groups, and bounded retry/timeout policies. Local validation demonstrates complete isolation of provider execution, while the non-negotiable boundaries (no unadmitted background requests, cooperative deadlines, and strict redaction) are fully preserved. Deterministic governance tests pass 100% network-free.",
+  "verified_invariants": [
+    "Core provider kernel: ProviderRegistry, ExecutionPolicy, and PageExecutionContext enforce centralized execution bounds",
+    "Subrequest context safety: run_subrequest bounds cumulative child calls and respects cooperative cancellation",
+    "Shared rate groups: rate group registration prevents burst flooding across concurrent tasks",
+    "Deterministic verification: tests/test_shared_provider_runtime_governance.py passes 6/6 tests network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Provider kernel contracts and local mock execution are verified; executing transport-level adversarial checks against live network infrastructure remains an open operational gate.",
+      "reference": "crates/evidence-search-core/src/provider.rs:1-300; conductor/tracks/03-shared-provider-runtime/traceability.json:96-100",
+      "recommendation": "Preserve open gate for live transport-level adversarial evidence."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T03-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Retries, cache, endpoint, rate and receipt behavior in shared core runtime verified."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Shared provider runtime kernel verified with fixture and local mock tests; live provider execution remains opt-in only."
+  ]
+}

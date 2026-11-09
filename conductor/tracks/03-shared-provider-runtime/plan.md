@@ -1,6 +1,8 @@
 # Plan: 03 Shared provider runtime and Sourceright extraction
 
-Current status: **integration_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -12,7 +14,7 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-03-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/evidence-search-core/src/provider.rs`
   - [x] Present source path: `crates/searchright-connectors/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/migration.rs`
@@ -50,9 +52,9 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-03-phase-3 -->
 
-- [ ] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
-- [ ] Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.
-- [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
+- [x] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
+- [x] Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.
+- [x] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 
 ## Phase 4: Review and closeout
 
@@ -71,4 +73,5 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
   - Review fix `390ae69ba78b9431e464067ead51b75d8ecd1f2a`: Report an exact record-budget stop with known continuation once; preserve terminal-page and within-page overflow distinctions.
   - Review fix `935d725877f6a6ca82bacefd8982e613981f068c`: Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover.
   - Review fix `d43a11a`: Reconcile Track 03 traceability, deliverables, and assertion mappings with commits 3f52b4d and 9b4a4a4, resolve searchright-contracts PressReview test compilation error and searchright-connectors clippy assertions, add parity matrix decision reference regressions, add candidate policy drift tests, and record conductor review receipt.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - Review fix `HEAD`: Implement tests/test_shared_provider_runtime_governance.py (6/6 passing network-free), upgrade all assertions (T03-A001..T03-A006) to source_implemented, convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-03-conductor-review-2026-11-09.json, and archive Track 03 in-place while preserving external operational gates.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

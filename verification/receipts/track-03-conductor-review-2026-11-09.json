@@ -1,0 +1,41 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "03",
+  "observed_at": "2026-11-09T11:00:00Z",
+  "observed_on": "2026-11-09",
+  "source_revision": "HEAD",
+  "toolchain": "1.97.1-aarch64-apple-darwin",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "python scripts/validate_repository.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/check_sourceright_migration.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/check_provider_contract_baselines.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -m unittest tests/test_sourceright_migration.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -m unittest tests/test_local_api_evidence.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -m unittest tests/test_shared_provider_runtime_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    }
+  ],
+  "limits": [
+    "Shared provider runtime kernel, PageExecutionContext, and Sourceright replacement mappings verified.",
+    "Live provider execution, downstream Sourceright dual runs, and public release train promotion remain separate operational gates.",
+    "PRISMA-S reporting contract doctrine and human screening authority preserved fail-closed."
+  ]
+}

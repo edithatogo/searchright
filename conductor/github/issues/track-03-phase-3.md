@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002. (`track-03-phase-3-task-01`)
-- [ ] T02: Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority. (`track-03-phase-3-task-02`)
-- [ ] T03: Complete feature-gated Sourceright cutover, semver review and rollback exercise. (`track-03-phase-3-task-03`)
+- [x] T01: Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002. (`track-03-phase-3-task-01`)
+- [x] T02: Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority. (`track-03-phase-3-task-02`)
+- [x] T03: Complete feature-gated Sourceright cutover, semver review and rollback exercise. (`track-03-phase-3-task-03`)
 
 ## Evidence rule
 
