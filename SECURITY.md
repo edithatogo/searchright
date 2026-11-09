@@ -8,8 +8,8 @@ Only the latest tagged technical-preview release receives security fixes until
 ## Reporting
 
 Do not open public issues for vulnerabilities, leaked credentials, private review
-records or licensed full text. Use GitHub private vulnerability reporting on the
-canonical repository. Include impact, affected versions, reproduction steps and
+records or licensed full text. Please report security issues through [GitHub Private Vulnerability Reporting](https://github.com/edithatogo/searchright/security/advisories/new)
+or via email to security@searchright.org. Include impact, affected versions, reproduction steps and
 whether live provider credentials or review data were exposed.
 
 ## Security invariants

@@ -59,9 +59,15 @@ def main() -> int:
     }
     redacted = redact_value(payload, profile)
     rendered = json.dumps(redacted, sort_keys=True)
-    for forbidden in (secret, "rare+disease", "researcher@example.org", "session=", "user:"):
+    for forbidden, label in (
+        (secret, "canary_secret"),
+        ("rare+disease", "query_text"),
+        ("researcher@example.org", "contact_email"),
+        ("session=", "session_prefix"),
+        ("user:", "user_prefix"),
+    ):
         if forbidden in rendered:
-            errors.append(f"adversarial payload leaked {forbidden!r}")
+            errors.append(f"adversarial payload leaked {label}")
     endpoint = redacted.get("endpoint", "")
     if "db=pubmed" not in endpoint or "retmax=20" not in endpoint:
         errors.append("redaction removed safe, non-sensitive endpoint controls")

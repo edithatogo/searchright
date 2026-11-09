@@ -334,7 +334,7 @@ def main() -> int:
         "environments": environments,
         "ruleset": ruleset,
         "variables": variables,
-        "project_token_secret": secret_status,
+        "project_token_present": secret_status == "present_in_protected_environment" or secret_status == "configured_in_protected_environment",
         "issue_sync": {
             "issues": len(issue_receipt.get("issues", [])),
             "relationships": len(issue_receipt.get("relationships", [])),
