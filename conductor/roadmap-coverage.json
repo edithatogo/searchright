@@ -1148,11 +1148,7 @@
       "lifecycle": "archived"
     },
     {
-      "blockers": [
-        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
-        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
-        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_citeweft_integration.py",
@@ -1167,17 +1163,18 @@
         "integration/citeweft-compatibility.json",
         "docs/citeweft-integration.md",
         "docs/adrs/0013-citeweft-document-evidence-boundary.md",
-        "scripts/check_citeweft_integration.py"
+        "scripts/check_citeweft_integration.py",
+        "tests/test_citeweft_governance.py"
       ],
       "dependencies": [
         "01",
         "06",
         "07"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "horizon": "alpha",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary.",
       "requirements": [
         "SR-063",
@@ -1188,16 +1185,32 @@
         {
           "commit": "0ea3f2d",
           "summary": "Upgrade Track 12 assertions to symbol_and_gate_mapped with native tests, add unit tests for from_scholarly_document and adversarial contract validation, and record conductor review receipt."
+        },
+        {
+          "commit": "HEAD",
+          "summary": "Implemented tests/test_citeweft_governance.py, executed agent panel review, verified CiteWeft dependency pins and non-canonical write boundaries, and archived Track 12 with fixture-proven evidence."
         }
       ],
       "runtime_evidence": [
-        "verification/receipts/track-12-conductor-review-2026-11-04.json"
+        "verification/receipts/track-12-conductor-review-2026-11-04.json",
+        "verification/receipts/track-12-conductor-review-2026-11-09.json",
+        "verification/receipts/track-12-agent-panel-evaluation.json"
       ],
       "slug": "citeweft-document-evidence",
-      "status": "integration_prepared",
+      "status": "source_implemented",
       "title": "CiteWeft scholarly extraction and document evidence",
       "track_id": "12",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "lifecycle": "archived",
+      "archived_on": "2026-11-09",
+      "closeout_completed": true,
+      "higher_evidence_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
+      "gates": []
     },
     {
       "blockers": [

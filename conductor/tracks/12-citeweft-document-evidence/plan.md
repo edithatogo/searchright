@@ -1,6 +1,8 @@
 # Plan: 12 CiteWeft scholarly extraction and document evidence
 
-Current status: **integration_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,7 +10,7 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-12-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-citeweft/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/document.rs`
   - [x] Present source path: `contracts/json-schema/document-evidence.v1.schema.json`
@@ -17,6 +19,7 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `docs/citeweft-integration.md`
   - [x] Present source path: `docs/adrs/0013-citeweft-document-evidence-boundary.md`
   - [x] Present source path: `scripts/check_citeweft_integration.py`
+  - [x] Present source path: `tests/test_citeweft_governance.py`
   - [x] Assertion ledger: `conductor/tracks/12-citeweft-document-evidence/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -33,9 +36,9 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-12-phase-3 -->
 
-- [ ] Compile the pinned CiteWeft dependency and adapter on supported platforms.
-- [ ] Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.
-- [ ] Run downstream Sourceright consumer-driven compatibility and rollback tests.
+- [x] Compile the pinned CiteWeft dependency and adapter on supported platforms.
+- [x] Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.
+- [x] Run downstream Sourceright consumer-driven compatibility and rollback tests.
 
 ## Phase 4: Review and closeout
 
@@ -45,4 +48,5 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `0ea3f2d`: Upgrade Track 12 assertions to symbol_and_gate_mapped with native tests, add unit tests for from_scholarly_document and adversarial contract validation, and record conductor review receipt.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - Review fix `HEAD`: Implemented tests/test_citeweft_governance.py, executed agent panel review, verified CiteWeft dependency pins and non-canonical write boundaries, and archived Track 12 with fixture-proven evidence.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

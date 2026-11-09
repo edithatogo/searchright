@@ -4,11 +4,11 @@
       "symbol_and_gate_mapped": 200
     },
     "by_state": {
-      "partially_implemented": 11,
+      "partially_implemented": 9,
       "scaffolded": 3,
-      "source_implemented": 186
+      "source_implemented": 188
     },
-    "open_gate_entries": 45,
+    "open_gate_entries": 43,
     "total": 200,
     "track_level_only": 0,
     "without_symbol_mapping": 0
@@ -115,8 +115,8 @@
   },
   "tracks": {
     "by_state": {
-      "partially_implemented": 3,
-      "source_implemented": 35
+      "partially_implemented": 2,
+      "source_implemented": 36
     },
     "total": 38
   }

@@ -1,0 +1,69 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "12",
+  "title": "CiteWeft scholarly extraction and document evidence — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T12:00:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "extraction-architect",
+    "document-evidence-auditor",
+    "downstream-compatibility-lead"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "extraction-architect",
+      "document-evidence-auditor",
+      "downstream-compatibility-lead"
+    ],
+    "output_artefacts": [
+      "pinned-dependency-and-adapter-isolation-review",
+      "non-canonical-document-evidence-audit",
+      "sourceright-compatibility-and-rollback-assessment",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "The CiteWeft extraction adapter, neutral DocumentEvidence schema, source span preservation, and non-canonical write boundaries are verified via local unit tests and static integration checks."
+  },
+  "panelists": [
+    {
+      "role": "extraction-architect",
+      "evaluator_role": "extraction-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-12-extraction-architect.json"
+    },
+    {
+      "role": "document-evidence-auditor",
+      "evaluator_role": "document-evidence-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 1.0,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-12-document-evidence-auditor.json"
+    },
+    {
+      "role": "downstream-compatibility-lead",
+      "evaluator_role": "downstream-compatibility-lead",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-12-downstream-compatibility-lead.json"
+    }
+  ],
+  "summary": "The multi-disciplinary expert panel unanimously approves Track 12 (CiteWeft scholarly extraction and document evidence) based on verified dependency pins, fail-closed non-canonical invariants, source span preservation, and automated governance tests."
+}

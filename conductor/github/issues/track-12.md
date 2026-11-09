@@ -12,9 +12,9 @@ Integrate CiteWeft through a pinned optional adapter while preserving spans, unc
 ## Contract
 
 - Horizon: `alpha`
-- Status: `integration_prepared`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `01, 06, 07`
 - Requirements: `SR-063, SR-064`
 - External approval required: `false`

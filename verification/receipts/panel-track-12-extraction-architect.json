@@ -1,0 +1,30 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "12",
+  "evaluator_role": "extraction-architect",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "Cargo.toml",
+    "crates/searchright-citeweft/Cargo.toml",
+    "crates/searchright-citeweft/src/lib.rs",
+    "integration/citeweft-compatibility.json",
+    "scripts/check_citeweft_integration.py",
+    "tests/test_citeweft_governance.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T12-EA-01",
+      "severity": "LOW",
+      "summary": "CiteWeft workspace dependency is strictly pinned to git revision 8c8932976250f9ca91c2bbda28ed68eeb191fa42 and isolated to searchright-citeweft.",
+      "evidence": "Adapter functions from_scholarly_document and from_reference_model_report maintain unidirectional Searchright -> CiteWeft dependency flow.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Keep optional adapter behind the citeweft cargo feature gate."
+  ]
+}

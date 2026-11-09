@@ -3,8 +3,8 @@
   "track_id": "12",
   "slug": "citeweft-document-evidence",
   "title": "CiteWeft scholarly extraction and document evidence",
-  "status": "integration_prepared",
-  "implementation_state": "partially_implemented",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
   "created": "2026-08-06",
   "updated": "2026-11-04",
   "dependencies": [
@@ -13,7 +13,7 @@
     "07"
   ],
   "horizon": "alpha",
-  "evidence_level": "source_verified",
+  "evidence_level": "fixture_proven",
   "external_approval_required": false,
   "evidence_path": "conductor/tracks/12-citeweft-document-evidence/evidence.json",
   "traceability_path": "conductor/tracks/12-citeweft-document-evidence/traceability.json",
@@ -41,5 +41,7 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  }
+  },
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09"
 }

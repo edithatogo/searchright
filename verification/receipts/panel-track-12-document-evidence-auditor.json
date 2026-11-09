@@ -1,0 +1,28 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "12",
+  "evaluator_role": "document-evidence-auditor",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 1.0,
+  "verdict": "APPROVED",
+  "scope": [
+    "crates/searchright-contracts/src/document.rs",
+    "contracts/json-schema/document-evidence.v1.schema.json",
+    "contracts/examples/document-evidence.json",
+    "docs/adrs/0013-citeweft-document-evidence-boundary.md"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T12-DEA-01",
+      "severity": "LOW",
+      "summary": "Non-canonical write and no-retained-full-text invariants are strictly enforced by schema and Rust type validators.",
+      "evidence": "DocumentEvidence::validate rejects canonical_write_permitted=true and retained_full_text=true.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Preserve exact source byte spans across all extracted bibliographic fields."
+  ]
+}

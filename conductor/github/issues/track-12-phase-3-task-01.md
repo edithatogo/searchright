@@ -3,11 +3,11 @@
 
 Parent phase key: `track-12-phase-3`
 Conductor plan: `conductor/tracks/12-citeweft-document-evidence/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Compile the pinned CiteWeft dependency and adapter on supported platforms.
+- [x] Compile the pinned CiteWeft dependency and adapter on supported platforms.
 
 ## Completion and evidence contract
 

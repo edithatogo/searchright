@@ -3,11 +3,11 @@
 
 Parent phase key: `track-12-phase-1`
 Conductor plan: `conductor/tracks/12-citeweft-document-evidence/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-citeweft/src/lib.rs`
   - [x] Present source path: `crates/searchright-contracts/src/document.rs`
   - [x] Present source path: `contracts/json-schema/document-evidence.v1.schema.json`
@@ -16,6 +16,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `docs/citeweft-integration.md`
   - [x] Present source path: `docs/adrs/0013-citeweft-document-evidence-boundary.md`
   - [x] Present source path: `scripts/check_citeweft_integration.py`
+  - [x] Present source path: `tests/test_citeweft_governance.py`
   - [x] Assertion ledger: `conductor/tracks/12-citeweft-document-evidence/traceability.json`
 
 ## Completion and evidence contract
