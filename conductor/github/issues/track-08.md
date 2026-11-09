@@ -14,7 +14,7 @@ Render PRISMA flow/appendix outputs and PRESS/standards assessments directly fro
 - Horizon: `mvp`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `01, 05, 07`
 - Requirements: `SR-023, SR-024, SR-025, SR-026, SR-027`
 - External approval required: `true`

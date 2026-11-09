@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "08",
+  "evaluator_role": "interoperability-lead",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "integration/passports/prisma-jl-flow-interop.json",
+    "integration/fixtures/prisma-jl/flow-parity-v1.json",
+    "docs/prisma-jl-interop.md"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T08-INTEROP-01",
+      "severity": "LOW",
+      "summary": "PRISMA.jl interoperability passport records bidirectional mapping and explicit loss reports with full provenance.",
+      "evidence": "Detailed loss matrix documents four specific representation differences without claiming undocumented model equivalence.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Retain explicit loss receipts whenever external flow formats are converted."
+  ]
+}

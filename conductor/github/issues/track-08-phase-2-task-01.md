@@ -13,6 +13,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/sync_schema_surface.py --check`
   - [x] `python scripts/check_integration_passports.py`
   - [x] `python scripts/check_integration_drift.py`
+  - [x] `python3 -m unittest tests/test_prisma_press_reporting_governance.py`
 
 ## Completion and evidence contract
 

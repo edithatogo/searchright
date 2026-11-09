@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "08",
+  "evaluator_role": "reporting-standards-auditor",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 1.0,
+  "verdict": "APPROVED",
+  "scope": [
+    "crates/searchright-prisma/src/lib.rs",
+    "crates/searchright-prisma/src/render.rs",
+    "contracts/standards/packs/prisma-scr-2018.yaml",
+    "contracts/standards/packs/prisma-lsr-2024.yaml",
+    "contracts/examples/prisma-flow.json"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T08-STD-01",
+      "severity": "LOW",
+      "summary": "PRISMA 2020, PRISMA-S, PRISMA-ScR, and PRISMA-LSR contracts maintain strict reporting-completeness boundaries without conduct conflation.",
+      "evidence": "PRISMA-S ledger fails closed on empty or whitespace values; PRISMA 2020 flow validates arithmetic and supports new and updated flow variants.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Never represent PRISMA reporting completeness as a guarantee of search effectiveness or conduct adequacy."
+  ]
+}

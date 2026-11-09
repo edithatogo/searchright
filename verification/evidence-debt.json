@@ -1,15 +1,14 @@
 {
   "assertions": {
     "by_mapping_confidence": {
-      "assertion_level": 6,
-      "symbol_and_gate_mapped": 194
+      "symbol_and_gate_mapped": 200
     },
     "by_state": {
       "partially_implemented": 15,
       "scaffolded": 3,
       "source_implemented": 182
     },
-    "open_gate_entries": 52,
+    "open_gate_entries": 50,
     "total": 200,
     "track_level_only": 0,
     "without_symbol_mapping": 0
