@@ -13,7 +13,7 @@ use rmcp::{
     ClientHandler, ClientLifecycleMode, ClientServiceExt, ServiceExt,
     model::{
         CacheScope, CallToolRequestParams, CallToolResponse, CancelTaskParams, ClientCapabilities,
-        ClientInfo, ElicitRequestParams, ElicitResult, ElicitationAction, GetPromptRequestParams,
+        ClientConfig, ElicitRequestParams, ElicitResult, ElicitationAction, GetPromptRequestParams,
         GetTaskParams, Implementation, JsonObject, PaginatedRequestParams, ProtocolVersion,
         ReadResourceRequestParams, ResourceContents, ServerNotification, SubscriptionFilter,
         TaskPayload,
@@ -28,7 +28,7 @@ use searchright_mcp::{
 async fn current_client(
     tasks: bool,
 ) -> anyhow::Result<(
-    rmcp::service::RunningService<RoleClient, ClientInfo>,
+    rmcp::service::RunningService<RoleClient, ClientConfig>,
     tokio::task::JoinHandle<anyhow::Result<()>>,
 )> {
     let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
@@ -42,7 +42,7 @@ async fn current_client(
     } else {
         ClientCapabilities::default()
     };
-    let info = ClientInfo::new(capabilities, Implementation::new("track24-test", "1.0.0"));
+    let info = ClientConfig::new(capabilities, Implementation::new("track24-test", "1.0.0"));
     let client = info
         .serve_with_lifecycle(
             client_transport,
@@ -55,7 +55,7 @@ async fn current_client(
 }
 
 async fn previous_client() -> anyhow::Result<(
-    rmcp::service::RunningService<RoleClient, ClientInfo>,
+    rmcp::service::RunningService<RoleClient, ClientConfig>,
     tokio::task::JoinHandle<anyhow::Result<()>>,
 )> {
     let (server_transport, client_transport) = tokio::io::duplex(64 * 1024);
@@ -64,7 +64,7 @@ async fn previous_client() -> anyhow::Result<(
         service.waiting().await?;
         anyhow::Ok(())
     });
-    let info = ClientInfo::new(
+    let info = ClientConfig::new(
         ClientCapabilities::builder().enable_tasks().build(),
         Implementation::new("track24-previous-test", "1.0.0"),
     )
@@ -93,7 +93,7 @@ async fn preview_tools_do_not_create_the_local_store() -> anyhow::Result<()> {
         service.waiting().await?;
         anyhow::Ok(())
     });
-    let client = ClientInfo::new(
+    let client = ClientConfig::new(
         ClientCapabilities::default(),
         Implementation::new("track10-preview-test", "1.0.0"),
     )
@@ -296,8 +296,8 @@ struct AcknowledgingClient;
     reason = "rmcp ClientHandler trait specifies async functions"
 )]
 impl ClientHandler for AcknowledgingClient {
-    fn get_info(&self) -> ClientInfo {
-        ClientInfo::new(
+    fn get_info(&self) -> ClientConfig {
+        ClientConfig::new(
             ClientCapabilities::builder()
                 .enable_elicitation()
                 .enable_elicitation_schema_validation()
