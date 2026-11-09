@@ -3,11 +3,11 @@
 
 Parent phase key: `track-11-phase-3`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Run scenario-based agent evaluations across supported hosts and models.
+- [x] Run scenario-based agent evaluations across supported hosts and models.
 
 ## Completion and evidence contract
 

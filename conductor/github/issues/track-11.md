@@ -12,9 +12,9 @@ Package planning, PRESS, execution, deduplication, screening and reporting workf
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `compiler_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `10`
 - Requirements: `SR-022, SR-026, SR-031`
 - External approval required: `true`

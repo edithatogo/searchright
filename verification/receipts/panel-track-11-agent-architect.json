@@ -1,0 +1,30 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "11",
+  "evaluator_role": "agent-architect",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "skills/systematic-search/SKILL.md",
+    "skills/systematic-search/workflows/systematic-review.yaml",
+    "contracts/json-schema/agent-handoff.v1.schema.json",
+    "contracts/examples/agent-handoff.json",
+    "crates/searchright-agent/src/lib.rs",
+    "tests/test_agentic_skill_governance.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T11-AA-01",
+      "severity": "LOW",
+      "summary": "Agent skill trigger and non-trigger boundaries are clearly delineated with explicit least-context handoff schemas.",
+      "evidence": "Contracts strictly enforce digest-bound artifacts and bounded transitions across all 7 systematic review workflow stages.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Preserve explicit role validation in all downstream agent invocations."
+  ]
+}

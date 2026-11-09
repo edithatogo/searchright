@@ -3,11 +3,11 @@
 
 Parent phase key: `track-11-phase-3`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.
+- [x] Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.
 
 ## Completion and evidence contract
 

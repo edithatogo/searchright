@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "11",
+  "evaluator_role": "integration-lead",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "docs/adrs/0018-searchright-owned-sibling-caller.md",
+    "skills/systematic-search/integrations/academic-research-skills/SKILL.md",
+    "crates/searchright-agent/src/sibling.rs",
+    "crates/searchright-agent/tests/sibling_admission.rs",
+    "registry/skills/systematic-search/manifest.json"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T11-IL-01",
+      "severity": "LOW",
+      "summary": "Searchright-owned sibling caller correctly implements byte-retained local admission with disabled automated invocation.",
+      "evidence": "Sibling admission guarantees deterministic handoffs without uncontrolled external side effects.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Maintain isolated mock harnesses for upstream sibling integration tests."
+  ]
+}
