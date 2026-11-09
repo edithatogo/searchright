@@ -72,7 +72,7 @@ proptest = "1.8"
 quick-xml = "=0.42.0"
 rustls = { version = "0.23", default-features = false, features = ["aws_lc_rs"] }
 reqwest = { version = "0.13.2", default-features = false, features = ["json", "rustls-no-provider", "http2", "charset"] }
-rmcp = { version = "=3.8.0", features = ["server", "client", "elicitation", "macros", "transport-io", "schemars"] }
+rmcp = { version = "=3.9.0", features = ["server", "client", "elicitation", "macros", "transport-io", "schemars"] }
 schemars = "1.2.3"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
