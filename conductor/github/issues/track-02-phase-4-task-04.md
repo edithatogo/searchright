@@ -3,11 +3,11 @@
 
 Parent phase key: `track-02-phase-4`
 Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Close only after required evidence is present and the accountable owner records the agent-panel decisions.
+- [ ] Close only after required evidence is present and the accountable owner records the agent-panel decisions.
 
 ## Completion and evidence contract
 

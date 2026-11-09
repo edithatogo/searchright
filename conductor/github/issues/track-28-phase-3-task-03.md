@@ -3,11 +3,11 @@
 
 Parent phase key: `track-28-phase-3`
 Conductor plan: `conductor/tracks/28-institutional-governance-privacy-collaboration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Complete structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles.
+- [ ] Pilot multi-reviewer and cross-institution artefact exchange with minimised data.
 
 ## Completion and evidence contract
 

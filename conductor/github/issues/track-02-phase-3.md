@@ -7,8 +7,8 @@ Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
 ## Task subissues
 
 - [x] T01: Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets. (`track-02-phase-3-task-01`)
-- [x] T02: Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic. (`track-02-phase-3-task-02`)
-- [x] T03: Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence. (`track-02-phase-3-task-03`)
+- [ ] T02: Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic. (`track-02-phase-3-task-02`)
+- [ ] T03: Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence. (`track-02-phase-3-task-03`)
 
 ## Evidence rule
 

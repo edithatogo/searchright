@@ -21,13 +21,13 @@ Expose thin contract-generated clients and evidence-scaled tutorials without dup
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-35-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-35-phase-2`)
+- [x] Phase 1: Source implementation (`track-35-phase-1`)
+- [x] Phase 2: Source-level verification (`track-35-phase-2`)
 - [ ] Phase 3: Higher-evidence gates (`track-35-phase-3`)
 - [ ] Phase 4: Review and closeout (`track-35-phase-4`)
 
 ## Claim boundary
 
-Fixture-proven via structured agent-panel evaluation simulating sdk-api-architect, developer-experience-auditor, and adoption-governance-auditor roles, with thin generated SDK constraints, compiler-checked bindings across 74 canonical schemas in sdk/generated-contract-bindings.json, domain logic duplication prohibition, fixture-backed offline tutorials in examples/quickstart/README.md, 35-operation cross-surface parity across CLI, MCP, and Rust facade, PRISMA-S reporting contract doctrine, and human-only study screening authority verified in tests/test_sdk_docs_adoption_governance.py. Simulation instrument and source-level contracts only; live npm/PyPI client packaging, external information specialist walkthroughs, and multi-cycle deprecation tracking remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating sdk-api-architect, developer-experience-auditor, and adoption-governance-auditor roles, with thin generated SDK constraints, compiler-checked bindings across 74 canonical schemas in sdk/generated-contract-bindings.json, domain logic duplication prohibition, fixture-backed offline tutorials in examples/quickstart/README.md, 35-operation cross-surface parity across CLI, MCP, and Rust facade, PRISMA-S reporting contract doctrine, and human-only study screening authority verified in tests/test_sdk_docs_adoption_governance.py. Simulation instrument and source-level contracts only; live npm/PyPI client packaging, external information specialist walkthroughs, and multi-cycle deprecation tracking remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

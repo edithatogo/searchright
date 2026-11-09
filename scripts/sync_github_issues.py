@@ -2,10 +2,10 @@
 """Idempotently synchronise generated issues and native nested subissues.
 
 Conductor remains canonical. Dry-run is unconditional unless both ``--apply``
-and ``SEARCHRIGHT_GITHUB_APPLY=1`` are present. Task open/closed state is
-synchronised only when ``--sync-task-state`` and
-``SEARCHRIGHT_GITHUB_TASK_STATE_APPLY=1`` are also present. The script never
-deletes issues, labels, or hierarchy nodes.
+and ``SEARCHRIGHT_GITHUB_APPLY=1`` are present. ``--sync-task-state`` synchronises
+task states only; ``--sync-issue-state`` includes derived parent states. Both
+require the existing ``SEARCHRIGHT_GITHUB_TASK_STATE_APPLY=1`` opt-in. The script
+never deletes issues, labels, or hierarchy nodes.
 
 Large first-run projections can be resumed with ``--resume-after`` and bounded
 with ``--max-nodes``. Existing issue content, labels and relationships are read
@@ -161,7 +161,9 @@ def attach_child(
     return "attached"
 
 
-def sync_task_state(repository: str, issue: dict[str, Any], desired: str) -> str:
+def sync_issue_state(repository: str, issue: dict[str, Any], desired: str) -> str:
+    if desired not in {"open", "closed"}:
+        raise GitHubCommandError(f"invalid desired issue state {desired!r}")
     actual = str(issue.get("state") or "").lower()
     if actual == desired:
         return "unchanged"
@@ -171,11 +173,19 @@ def sync_task_state(repository: str, issue: dict[str, Any], desired: str) -> str
     return f"{actual or 'unknown'}->{desired}"
 
 
+# Preserve callers of the original task-only helper; selection remains in main.
+sync_task_state = sync_issue_state
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", default="edithatogo/searchright")
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--sync-task-state", action="store_true")
+    parser.add_argument(
+        "--sync-issue-state", action="store_true",
+        help="Synchronise canonical task and parent states with the existing state-apply opt-in",
+    )
     parser.add_argument("--resume-after", help="Continue after this canonical issue key")
     parser.add_argument("--max-nodes", type=int, help="Bound this run to a canonical node count")
     parser.add_argument("--verbose-plan", action="store_true")
@@ -184,6 +194,8 @@ def main() -> int:
     args = parser.parse_args()
 
     data = json.loads(HIERARCHY.read_text(encoding="utf-8"))
+    if args.sync_issue_state and data.get("state_sync_policy") != "explicit_issue_states":
+        raise GitHubCommandError("--sync-issue-state requires a regenerated explicit_issue_states hierarchy")
     nodes = data["nodes"]
     selected = select_after(
         nodes,
@@ -201,9 +213,10 @@ def main() -> int:
     apply = args.apply and os.environ.get("SEARCHRIGHT_GITHUB_APPLY") == "1"
     state_apply = (
         apply
-        and args.sync_task_state
+        and (args.sync_task_state or args.sync_issue_state)
         and os.environ.get("SEARCHRIGHT_GITHUB_TASK_STATE_APPLY") == "1"
     )
+    issue_state_apply = state_apply and args.sync_issue_state
     plan: dict[str, Any] = {
         "schema_version": "org.searchright.github-issue-sync-plan.v2",
         "repository": args.repo,
@@ -213,6 +226,8 @@ def main() -> int:
         "selected_relationships": sum(1 for node in selected if node.get("parent_key")),
         "selected_task_states": sum(1 for node in selected if node["kind"] == "task"),
         "task_state_apply": state_apply,
+        "issue_state_apply": issue_state_apply,
+        "state_scope": "all_issues" if args.sync_issue_state else "task_issues_only",
         "resume_after": args.resume_after,
         "next_resume_after": final_selected_key if remaining else None,
         "remaining_after_run": remaining,
@@ -225,7 +240,8 @@ def main() -> int:
                 "key": node["key"],
                 "kind": node["kind"],
                 "parent_key": node["parent_key"],
-                "desired_state": node["desired_state"] if node["kind"] == "task" else "open",
+                "desired_state": node["desired_state"],
+                "state_requested": args.sync_issue_state or (args.sync_task_state and node["kind"] == "task"),
             }
             for node in selected
         ]
@@ -256,8 +272,8 @@ def main() -> int:
         else:
             issue, action, changes = update_issue_if_needed(args.repo, previous, node)
         state_action = "not_requested"
-        if node["kind"] == "task" and state_apply:
-            state_action = sync_task_state(args.repo, issue, node["desired_state"])
+        if state_apply and (node["kind"] == "task" or issue_state_apply):
+            state_action = sync_issue_state(args.repo, issue, node["desired_state"])
             if state_action != "unchanged":
                 issue = run_json(["gh", "api", f"repos/{args.repo}/issues/{issue['number']}"])
         by_key[node["key"]] = issue
@@ -321,6 +337,8 @@ def main() -> int:
         "selected_issues": len(selected),
         "selected_keys": sorted(selected_keys),
         "task_state_apply": state_apply,
+        "issue_state_apply": issue_state_apply,
+        "state_scope": "all_issues" if args.sync_issue_state else "task_issues_only",
         "resume_after": args.resume_after,
         "next_resume_after": final_selected_key if remaining else None,
         "remaining_after_run": remaining,

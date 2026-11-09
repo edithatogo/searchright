@@ -1,10 +1,12 @@
 # Plan: 15 GitHub estate audit and custom-code replacement
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-15`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -34,9 +36,9 @@ GitHub issue key: `track-15`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-15-phase-3 -->
 
-- [x] Run repository-specific scans against current local checkouts or GitHub indexes.
-- [x] Open, test and merge replacement changes in each affected repository.
-- [x] Delete duplicate code only after repository-specific parity and rollback evidence.
+- [ ] Run repository-specific scans against current local checkouts or GitHub indexes.
+- [ ] Open, test and merge replacement changes in each affected repository.
+- [ ] Delete duplicate code only after repository-specific parity and rollback evidence.
 
 ## Phase 4: Review and closeout
 
@@ -47,4 +49,5 @@ GitHub issue key: `track-15`. Each numbered phase maps to the same-numbered nati
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `33dd012`: Upgrade Track 15 assertions to symbol_and_gate_mapped with concrete implementation symbols, enhance check_companion_change_packets to validate estate registers, add unit and adversarial test suite in tests/test_estate_migration.py, and record conductor review receipt.
   - Review fix `HEAD`: Verified automated governance tests in tests/test_estate_migration.py, executed agent panel review, verified estate patterns and companion packets, and archived Track 15 with fixture-proven evidence.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

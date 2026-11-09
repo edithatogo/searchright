@@ -3,11 +3,11 @@
 
 Parent phase key: `track-12-phase-3`
 Conductor plan: `conductor/tracks/12-citeweft-document-evidence/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run downstream Sourceright consumer-driven compatibility and rollback tests.
+- [ ] Run downstream Sourceright consumer-driven compatibility and rollback tests.
 
 ## Completion and evidence contract
 

@@ -46,7 +46,10 @@
         "verification/receipts/panel-track-24-wasi-architect.json",
         "verification/receipts/panel-track-24-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Compile the WIT host/guest boundary and run a component conformance suite under the reviewed runtime sandbox.",
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation evidence."
+      ],
       "permitted_claim": "Exact provider-component bytes, manifest identity, bounded Ed25519 key authority, validity windows, and reviewed revocations are compiler-tested locally with 25 unit and integration tests passing; publisher identity, distribution, runtime sandboxing and live provider support remain preserved without unearned claims."
     },
     {
@@ -83,7 +86,10 @@
         "verification/receipts/track-24-agent-panel-evaluation.json",
         "verification/receipts/panel-track-24-wasi-architect.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and compile the WIT host/guest boundary with Wasmtime resource controls."
+      ],
       "permitted_claim": "Execution envelopes, host network allowlisting, and component capability authorization are compiler-tested; live Wasmtime runtime fuel limits, memory limits, and guest capability enforcement remain preserved without unearned claims."
     },
     {
@@ -115,7 +121,10 @@
         "verification/receipts/track-24-agent-panel-evaluation.json",
         "verification/receipts/panel-track-24-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
+        "Execute large corpus performance and memory benchmarks on >1M study reviews."
+      ],
       "permitted_claim": "StudyGraph and review store contracts validate corpus structures; columnar Arrow, Parquet and DuckDB query engines remain unintegrated pending scalable execution benchmarks."
     },
     {
@@ -153,7 +162,10 @@
         "verification/receipts/track-24-agent-panel-evaluation.json",
         "verification/receipts/panel-track-24-mcp-specialist.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Implement authenticated Streamable HTTP advanced capabilities only after Track 34 binds principal, tenant, region, scope, approval, quotas and audit state.",
+        "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests before scalable execution claims."
+      ],
       "permitted_claim": "Official rmcp clients verify bounded local-stdio prompt completion, current-only non-authoritative form elicitation, pagination, task completion and cancellation, four-slot admission recovery, and genuine aggregate task-activity notifications; approval authority, durable Tasks, production caching, stress/load performance, remote and scalable execution remain properly bounded."
     },
     {
@@ -186,7 +198,10 @@
         "verification/receipts/track-24-agent-panel-evaluation.json",
         "verification/receipts/panel-track-24-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Implement authenticated Streamable HTTP advanced capabilities only after Track 34 binds principal, tenant, region, scope, approval, quotas and audit state."
+      ],
       "permitted_claim": "Candidate HTTP OpenAPI routes and local MCP listener bindings are defined; authenticated Streamable HTTP, OAuth 2.0 proxy tokens, multi-tenant isolation, and deployment threat models remain strictly gated under Track 34 governance."
     },
     {
@@ -217,7 +232,10 @@
         "verification/receipts/track-24-agent-panel-evaluation.json",
         "verification/receipts/panel-track-24-mcp-specialist.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Compile and exercise WASI cancellation and compatibility paths.",
+        "Execute remote overload, disconnect and cancellation recovery after Track 34 authority controls."
+      ],
       "permitted_claim": "Local current and previous MCP profiles are compiler-tested; current local Tasks prove deterministic four-slot admission, fifth-request rejection, completion, cancellation and post-cancellation recovery. WASI and remote cancellation, overload, chaos or failover recovery remain gated under Track 34."
     }
   ]

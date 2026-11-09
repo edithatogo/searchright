@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Create message catalogues and execute locale-fallback tests via multi-lingual message catalogue tests.
+- [x] Create message catalogues and execute locale-fallback tests.
 
 ## Completion and evidence contract
 

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-37-phase-3`
 Conductor plan: `conductor/tracks/37-maturity-1-0/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.
+- [ ] Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.
 
 ## Completion and evidence contract
 

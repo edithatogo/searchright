@@ -3,11 +3,11 @@
 
 Parent phase key: `track-37-phase-3`
 Conductor plan: `conductor/tracks/37-maturity-1-0/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence.
+- [ ] Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence.
 
 ## Completion and evidence contract
 

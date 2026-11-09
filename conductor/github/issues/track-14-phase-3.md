@@ -6,10 +6,10 @@ Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
 
 ## Task subissues
 
-- [x] T01: Open and merge the downstream Sourceright integration after dual-run parity. (`track-14-phase-3-task-01`)
-- [x] T02: Generate compiled parity receipts and exercise rollback. (`track-14-phase-3-task-02`)
-- [x] T03: Remove superseded downstream code only after the deletion gate passes. (`track-14-phase-3-task-03`)
-- [x] T04: Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review. (`track-14-phase-3-task-04`)
+- [ ] T01: Open and merge the downstream Sourceright integration after dual-run parity. (`track-14-phase-3-task-01`)
+- [ ] T02: Generate compiled parity receipts and exercise rollback. (`track-14-phase-3-task-02`)
+- [ ] T03: Remove superseded downstream code only after the deletion gate passes. (`track-14-phase-3-task-03`)
+- [ ] T04: Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review. (`track-14-phase-3-task-04`)
 
 ## Evidence rule
 

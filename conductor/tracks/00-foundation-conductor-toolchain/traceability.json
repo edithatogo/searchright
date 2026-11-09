@@ -160,7 +160,11 @@
         "verification/receipts/track-00-agent-panel-evaluation.json",
         "verification/receipts/panel-track-00-standards-inheritance-officer.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain explicit authority to modify edithatogo/repository-standards despite the prepared packet's remote_mutation_permitted=false policy.",
+        "Add edithatogo/searchright to the upstream registry and run estate conformance against the exact Searchright revision.",
+        "Record the observed upstream commit and conformance receipt."
+      ],
       "permitted_claim": "Policy inheritance passport and prepared companion packet exist; upstream repository-standards registration and estate conformance remain open operational gates."
     },
     {

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-08-phase-4`
 Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 ## Completion and evidence contract
 

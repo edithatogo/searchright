@@ -9,7 +9,7 @@ Conductor plan: `conductor/tracks/35-sdk-docs-adoption/plan.md`
 - [x] T01: Reconcile source paths, requirements, interface effects and claim boundaries. (`track-35-phase-4-task-01`)
 - [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-35-phase-4-task-02`)
 - [x] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-35-phase-4-task-03`)
-- [x] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-35-phase-4-task-04`)
+- [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-35-phase-4-task-04`)
 
 ## Evidence rule
 

@@ -24,8 +24,13 @@
   "requirements": [
     "SR-009"
   ],
-  "blockers": [],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Open and merge the downstream Sourceright integration after dual-run parity.",
+    "Generate compiled parity receipts and exercise rollback.",
+    "Remove superseded downstream code only after the deletion gate passes.",
+    "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-14",
@@ -56,8 +61,6 @@
     "verification/receipts/track-14-agent-panel-evaluation.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
     {
       "commit": "97c36d0",
@@ -66,6 +69,7 @@
     {
       "commit": "HEAD",
       "summary": "Implemented tests/test_sourceright_migration_governance.py, executed agent panel review, verified replacement maps and parity matrices, and archived Track 14 with fixture-proven evidence."
-    }
+    },
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

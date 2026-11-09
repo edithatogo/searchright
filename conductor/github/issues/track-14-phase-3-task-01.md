@@ -3,11 +3,11 @@
 
 Parent phase key: `track-14-phase-3`
 Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Open and merge the downstream Sourceright integration after dual-run parity.
+- [ ] Open and merge the downstream Sourceright integration after dual-run parity.
 
 ## Completion and evidence contract
 

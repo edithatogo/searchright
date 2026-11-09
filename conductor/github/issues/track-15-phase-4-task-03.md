@@ -10,6 +10,7 @@ Canonical task state: **source task complete**.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `33dd012`: Upgrade Track 15 assertions to symbol_and_gate_mapped with concrete implementation symbols, enhance check_companion_change_packets to validate estate registers, add unit and adversarial test suite in tests/test_estate_migration.py, and record conductor review receipt.
   - Review fix `HEAD`: Verified automated governance tests in tests/test_estate_migration.py, executed agent panel review, verified estate patterns and companion packets, and archived Track 15 with fixture-proven evidence.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md.
 
 ## Completion and evidence contract
 

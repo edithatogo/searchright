@@ -47,7 +47,11 @@
         "verification/receipts/panel-track-30-launch-coordinator.json",
         "verification/receipts/panel-track-30-provenance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
+        "Review and approve any explicit release-risk exception without hiding the open gap.",
+        "Keep autonomous end-to-end review and final agent exclusions outside the release claim."
+      ],
       "permitted_claim": "A deterministic evidence-debt register reconciles assertion, gate, provider-policy and maturity blockers; the register does not close the debt it exposes."
     },
     {
@@ -79,7 +83,9 @@
         "verification/receipts/panel-track-30-launch-coordinator.json",
         "verification/receipts/panel-track-30-provenance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Execute all 16 launch-preparation work packages and preserve their named receipts."
+      ],
       "permitted_claim": "The launch-preparation dependency graph is deterministic, executable and fail-closed. LP-002 and LP-006 are partially evidenced; no work package is represented as completed by the plan itself."
     },
     {
@@ -119,7 +125,11 @@
         "verification/receipts/panel-track-30-launch-coordinator.json",
         "verification/receipts/panel-track-30-provenance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
+        "Review and approve any explicit release-risk exception without hiding the open gap.",
+        "Keep autonomous end-to-end review and final agent exclusions outside the release claim."
+      ],
       "permitted_claim": "Every static command has an explicit source-level evidence ceiling and unresolved proof remains visible; no evidence promotion is inferred."
     },
     {
@@ -150,8 +160,12 @@
         "verification/receipts/panel-track-30-launch-coordinator.json",
         "verification/receipts/panel-track-30-provenance-auditor.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Operational modes are strictly bounded to require human confirmation and explicit machine attribution; autonomous exclusion is disallowed."
+      "open_gates": [
+        "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
+        "Review and approve any explicit release-risk exception without hiding the open gap.",
+        "Keep autonomous end-to-end review and final agent exclusions outside the release claim."
+      ],
+      "permitted_claim": "Current authority checks preserve human confirmation and distinguish machine attribution. Explicit autonomous, solo and team operating policies remain design targets; the existing defaults do not implement those modes."
     }
   ]
 }

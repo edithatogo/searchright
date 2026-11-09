@@ -29,8 +29,12 @@
     "SR-061",
     "SR-092"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-governance-officer, long-term-support-architect, and ecosystem-safety-auditor roles, with multi-domain maturity dossier schema validation across 17 distinct domains in conductor/maturity-dossier.json, strict fail-closed decision boundaries in scripts/check_maturity_dossier.py, PRISMA-S reporting contract doctrine, non-negotiable human screening authority, locked unsubmitted registry targets, and 6/6 unit tests verified network-free in tests/test_maturity_1_0_governance.py. Simulation instrument and source-level contracts only; prospective multi-domain exit reviews, executive release signing, and public 1.0 distribution remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+    "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+    "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-governance-officer, long-term-support-architect, and ecosystem-safety-auditor roles, with multi-domain maturity dossier schema validation across 17 distinct domains in conductor/maturity-dossier.json, strict fail-closed decision boundaries in scripts/check_maturity_dossier.py, PRISMA-S reporting contract doctrine, non-negotiable human screening authority, locked unsubmitted registry targets, and 6/6 unit tests verified network-free in tests/test_maturity_1_0_governance.py. Simulation instrument and source-level contracts only; prospective multi-domain exit reviews, executive release signing, and public 1.0 distribution remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-37",
@@ -62,9 +66,8 @@
     "verification/receipts/panel-track-37-ecosystem-safety-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
-    "Created tests/test_maturity_1_0_governance.py with 6 comprehensive unit tests covering maturity dossier schema conformance across 17 domains, fail-closed decision boundary (not_ready retaining 14 critical domain blockers), exhaustive ready release decision evidence contracts (9 mandatory fields: accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, support_plan plus approved: true), status snapshot validation against stale and volatile assertions, and network-free execution of scripts/check_maturity_dossier.py. Upgraded assertions T37-A001..T37-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+    "Created tests/test_maturity_1_0_governance.py with 6 comprehensive unit tests covering maturity dossier schema conformance across 17 domains, fail-closed decision boundary (not_ready retaining 14 critical domain blockers), exhaustive ready release decision evidence contracts (9 mandatory fields: accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, support_plan plus approved: true), status snapshot validation against stale and volatile assertions, and network-free execution of scripts/check_maturity_dossier.py. Upgraded assertions T37-A001..T37-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

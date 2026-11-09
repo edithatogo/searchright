@@ -3,11 +3,11 @@
 
 Parent phase key: `track-24-phase-3`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.
+- [ ] Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.
 
 ## Completion and evidence contract
 

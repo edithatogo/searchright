@@ -6,7 +6,10 @@ Conductor plan: `conductor/tracks/19-registries-publication/plan.md`
 
 ## Task subissues
 
-- [x] T01: Complete registry validation, dry-run package checks, and scholarly publication evaluation via agent-panel protocol simulating registry-evaluator, publication-editor, and governance-auditor roles. (`track-19-phase-3-task-01`)
+- [ ] T01: Publish a verified release that registry packets can reference. (`track-19-phase-3-task-01`)
+- [ ] T02: Submit to each external registry with maintainer approval. (`track-19-phase-3-task-02`)
+- [ ] T03: Record public listing, rejection or revision evidence. (`track-19-phase-3-task-03`)
+- [ ] T04: Complete JOSS submission requirements and independent review. (`track-19-phase-3-task-04`)
 
 ## Evidence rule
 

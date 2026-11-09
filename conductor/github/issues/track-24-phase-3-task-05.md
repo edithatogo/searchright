@@ -3,11 +3,11 @@
 
 Parent phase key: `track-24-phase-3`
 Conductor plan: `conductor/tracks/24-wasi-http-scale/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond bounded local task admission.
+- [ ] Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.
 
 ## Completion and evidence contract
 

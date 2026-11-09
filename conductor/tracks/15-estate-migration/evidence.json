@@ -24,8 +24,12 @@
   "requirements": [
     "SR-032"
   ],
-  "blockers": [],
-  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Run repository-specific scans against current local checkouts or GitHub indexes.",
+    "Open, test and merge replacement changes in each affected repository.",
+    "Delete duplicate code only after repository-specific parity and rollback evidence."
+  ],
+  "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-15",
@@ -55,8 +59,6 @@
     "verification/receipts/track-15-agent-panel-evaluation.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
     {
       "commit": "33dd012",
@@ -65,6 +67,7 @@
     {
       "commit": "HEAD",
       "summary": "Verified automated governance tests in tests/test_estate_migration.py, executed agent panel review, verified estate patterns and companion packets, and archived Track 15 with fixture-proven evidence."
-    }
+    },
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

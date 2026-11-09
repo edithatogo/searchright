@@ -29,8 +29,13 @@
     "SR-060",
     "SR-062"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating methodological-evaluator, sustainability-architect, and adjudication-integrity-auditor roles, with fail-closed preparation contracts, four topic strata, six core outcome definitions, observation-not-documentation sustainability rules, and unsubmitted JOSS draft bounds verified in tests/test_external_evaluation_sustainability_governance.py and tests/test_external_evaluation_check.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for live human participant trials or observed longitudinal maintenance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Preregister the independent evaluation protocol.",
+    "Recruit external information specialists and execute blinded evaluation.",
+    "Publish results, limitations and response-to-findings matrix.",
+    "Demonstrate observed maintenance, standards surveillance and succession practice."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating methodological-evaluator, sustainability-architect, and adjudication-integrity-auditor roles, with fail-closed preparation contracts, four topic strata, six core outcome definitions, observation-not-documentation sustainability rules, and unsubmitted JOSS draft bounds verified in tests/test_external_evaluation_sustainability_governance.py and tests/test_external_evaluation_check.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for live human participant trials or observed longitudinal maintenance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-29",
@@ -63,9 +68,8 @@
     "verification/receipts/panel-track-29-adjudication-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
-    "Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required."
+    "Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

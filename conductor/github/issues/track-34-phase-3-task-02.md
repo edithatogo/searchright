@@ -3,11 +3,11 @@
 
 Parent phase key: `track-34-phase-3`
 Conductor plan: `conductor/tracks/34-authenticated-remote-mcp/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.
+- [ ] Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.
 
 ## Completion and evidence contract
 

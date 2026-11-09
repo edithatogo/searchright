@@ -26,8 +26,10 @@
     "SR-055",
     "SR-056"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating accessibility-systems-architect, internationalisation-specialist, and usability-governance-auditor roles, with accessible color-free PlainText/JSON/JSONL rendering, word-based severities, separable message catalogues, and external evaluation protocols verified in crates/searchright-diagnostics/tests/diagnostic_scenarios.rs and evaluation/external-evaluation.json. Simulation instrument and compiler-tested local boundaries only, not a substitute for live participant usability trials or formal ethics clearance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Complete keyboard, screen-reader and information-specialist usability evaluation."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating accessibility-systems-architect, internationalisation-specialist, and usability-governance-auditor roles, with accessible color-free PlainText/JSON/JSONL rendering, word-based severities, separable message catalogues, and external evaluation protocols verified in crates/searchright-diagnostics/tests/diagnostic_scenarios.rs and evaluation/external-evaluation.json. Simulation instrument and compiler-tested local boundaries only, not a substitute for live participant usability trials or formal ethics clearance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-27",
@@ -59,9 +61,8 @@
     "verification/receipts/panel-track-27-governance-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
-    "Upgrade all five Track 27 assertions (T27-A001..T27-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-diagnostics, searchright-contracts, and test_accessibility_internationalisation_usability_governance.py; create unit test suite in tests/test_accessibility_internationalisation_usability_governance.py validating diagnostic schema conformance, namespaced code rules, blocking remediation invariants, colour-free and glyph-free plain text rendering, locale-neutral machine identifier preservation across message catalogues, and external evaluation independence and design protocols; record conductor review receipt and preserve open plain/JSON/JSONL snapshot and no-colour tests, message catalogue fallback tests, and keyboard/screen-reader/information-specialist usability evaluations without false promotion."
+    "Upgrade all five Track 27 assertions (T27-A001..T27-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-diagnostics, searchright-contracts, and test_accessibility_internationalisation_usability_governance.py; create unit test suite in tests/test_accessibility_internationalisation_usability_governance.py validating diagnostic schema conformance, namespaced code rules, blocking remediation invariants, colour-free and glyph-free plain text rendering, locale-neutral machine identifier preservation across message catalogues, and external evaluation independence and design protocols; record conductor review receipt and preserve open plain/JSON/JSONL snapshot and no-colour tests, message catalogue fallback tests, and keyboard/screen-reader/information-specialist usability evaluations without false promotion.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
   ]
 }

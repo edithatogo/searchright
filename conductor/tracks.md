@@ -17,6 +17,37 @@ an explicit, approval-gated apply receipt exists.
 
 | ID | Track | Horizon | Status | Implementation | Evidence | Outcome |
 | --- | --- | --- | --- | --- | --- | --- |
+| 00 | [Foundation, Conductor and toolchain](tracks/00-foundation-conductor-toolchain/spec.md) | foundation | source_implemented | source_implemented | fixture_proven | Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap. |
+| 02 | [Portable query AST and dialect compilers](tracks/02-query-ast-dialects/spec.md) | foundation | source_implemented | source_implemented | fixture_proven | Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings. |
+| 03 | [Shared provider runtime and Sourceright extraction](tracks/03-shared-provider-runtime/spec.md) | foundation | source_implemented | source_implemented | fixture_proven | Centralise bounded provider execution, caching, receipts and policy while preparing reversible Sourceright adoption. |
+| 04 | [Open provider connectors MVP](tracks/04-open-connectors-mvp/spec.md) | mvp | source_implemented | source_implemented | fixture_proven | Provide deterministic open-source adapters and opt-in live execution for major discovery sources. |
+| 07 | [Governed screening workflow](tracks/07-screening-workflow/spec.md) | mvp | source_implemented | source_implemented | fixture_proven | Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority. |
+| 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | mvp | source_implemented | source_implemented | fixture_proven | Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct. |
+| 11 | [Systematic-search agent skill and workflows](tracks/11-agentic-skill/spec.md) | mvp | source_implemented | source_implemented | fixture_proven | Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints. |
+| 12 | [CiteWeft scholarly extraction and document evidence](tracks/12-citeweft-document-evidence/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary. |
+| 13 | [Integration passports, GitHub issue hierarchy and context spine](tracks/13-integration-passports-github-context/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked. |
+| 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
+| 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
+| 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
+| 17 | [Benchmarks, search validation and human calibration](tracks/17-benchmarks-calibration/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration. |
+| 18 | [Alpha release and distribution](tracks/18-alpha-release/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Produce locked, signed, attestable cross-platform technical-preview releases with reproducible source archives. |
+| 19 | [Registries and scholarly publication](tracks/19-registries-publication/spec.md) | alpha | source_implemented | source_implemented | fixture_proven | Prepare and submit truthful registry packets and a software paper only after a verified release. |
+| 21 | [Licensed BYO-access adapters](tracks/21-licensed-adapters/spec.md) | beta | source_implemented | source_implemented | fixture_proven | Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science. |
+| 22 | [Living reviews, amendments and update lineage](tracks/22-living-updates/spec.md) | beta | source_implemented | source_implemented | fixture_proven | Make updates, protocol changes, prior-run deduplication and cadence explicit and immutable. |
+| 23 | [Active-learning prioritisation and calibrated agents](tracks/23-active-learning-agents/spec.md) | beta | source_implemented | source_implemented | fixture_proven | Provide transparent advisory ranking with uncertainty and no default autonomous exclusion. |
+| 24 | [WASI components, HTTP MCP and scalable execution](tracks/24-wasi-http-scale/spec.md) | beta | source_implemented | source_implemented | fixture_proven | Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries. |
+| 25 | [Provenance and research-object interoperability](tracks/25-provenance-research-objects/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects. |
+| 26 | [Formal assurance and contract evolution](tracks/26-formal-assurance-contract-evolution/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback. |
+| 27 | [Accessibility, internationalisation and usability](tracks/27-accessibility-internationalisation-usability/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology. |
+| 28 | [Institutional governance, privacy and collaboration](tracks/28-institutional-governance-privacy-collaboration/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations. |
+| 29 | [External methodological evaluation and sustainability](tracks/29-external-evaluation-sustainability/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence. |
+| 30 | [Maturity gate and gap closure](tracks/30-maturity-gap-closure/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Maintain one evidence-scaled gap register and an executable hardened/polished launch-preparation dependency graph while blocking premature release claims. |
+| 32 | [Cross-repository contract release train and downstream canaries](tracks/32-cross-repository-release-train/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions. |
+| 33 | [Operational observability, backup, restore and incident response](tracks/33-operational-reliability/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments. |
+| 34 | [Authenticated remote MCP, tenancy and data residency](tracks/34-authenticated-remote-mcp/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment. |
+| 35 | [Generated SDKs, fixture-backed documentation and adoption operations](tracks/35-sdk-docs-adoption/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core. |
+| 36 | [Release-candidate rehearsal, staged pilots and ecosystem rehearsal](tracks/36-release-candidate-pilots/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals. |
+| 37 | [Final mature 1.0 release and long-term operations](tracks/37-maturity-1-0/spec.md) | mature | source_implemented | source_implemented | fixture_proven | Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness. |
 
 ## Archived tracks
 
@@ -25,44 +56,13 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 
 | ID | Track | Archived | Evidence |
 | --- | --- | --- | --- |
-| 00 | [Foundation, Conductor and toolchain](tracks/00-foundation-conductor-toolchain/spec.md) | 2026-11-09 | fixture_proven |
 | 01 | [Contract catalogue and code generation](tracks/01-contract-catalog/spec.md) | 2026-08-29 | compiler_verified |
-| 02 | [Portable query AST and dialect compilers](tracks/02-query-ast-dialects/spec.md) | 2026-11-09 | fixture_proven |
-| 03 | [Shared provider runtime and Sourceright extraction](tracks/03-shared-provider-runtime/spec.md) | 2026-11-09 | fixture_proven |
-| 04 | [Open provider connectors MVP](tracks/04-open-connectors-mvp/spec.md) | 2026-11-09 | fixture_proven |
 | 05 | [Execution, audit and local storage](tracks/05-execution-audit-store/spec.md) | 2026-08-13 | compiler_verified |
 | 06 | [Imports, deduplication and study linkage](tracks/06-imports-dedup-linkage/spec.md) | 2026-08-30 | compiler_verified |
-| 07 | [Governed screening workflow](tracks/07-screening-workflow/spec.md) | 2026-08-31 | fixture_proven |
-| 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | 2026-11-09 | fixture_proven |
 | 09 | [CLI MVP](tracks/09-cli-mvp/spec.md) | 2026-08-29 | compiler_verified |
 | 10 | [MCP stdio server MVP](tracks/10-mcp-mvp/spec.md) | 2026-08-30 | compiler_verified |
-| 11 | [Systematic-search agent skill and workflows](tracks/11-agentic-skill/spec.md) | 2026-11-09 | fixture_proven |
-| 12 | [CiteWeft scholarly extraction and document evidence](tracks/12-citeweft-document-evidence/spec.md) | 2026-11-09 | fixture_proven |
-| 13 | [Integration passports, GitHub issue hierarchy and context spine](tracks/13-integration-passports-github-context/spec.md) | 2026-11-09 | fixture_proven |
-| 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | 2026-11-09 | fixture_proven |
-| 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | 2026-11-09 | fixture_proven |
-| 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | 2026-11-09 | fixture_proven |
-| 17 | [Benchmarks, search validation and human calibration](tracks/17-benchmarks-calibration/spec.md) | 2026-11-08 | fixture_proven |
-| 18 | [Alpha release and distribution](tracks/18-alpha-release/spec.md) | 2026-11-08 | fixture_proven |
-| 19 | [Registries and scholarly publication](tracks/19-registries-publication/spec.md) | 2026-11-08 | fixture_proven |
 | 20 | [Grey literature, registers and supplementary discovery](tracks/20-broader-discovery/spec.md) | 2026-08-29 | compiler_verified |
-| 21 | [Licensed BYO-access adapters](tracks/21-licensed-adapters/spec.md) | 2026-11-08 | fixture_proven |
-| 22 | [Living reviews, amendments and update lineage](tracks/22-living-updates/spec.md) | 2026-11-08 | fixture_proven |
-| 23 | [Active-learning prioritisation and calibrated agents](tracks/23-active-learning-agents/spec.md) | 2026-11-08 | fixture_proven |
-| 24 | [WASI components, HTTP MCP and scalable execution](tracks/24-wasi-http-scale/spec.md) | 2026-11-08 | fixture_proven |
-| 25 | [Provenance and research-object interoperability](tracks/25-provenance-research-objects/spec.md) | 2026-11-08 | fixture_proven |
-| 26 | [Formal assurance and contract evolution](tracks/26-formal-assurance-contract-evolution/spec.md) | 2026-11-09 | fixture_proven |
-| 27 | [Accessibility, internationalisation and usability](tracks/27-accessibility-internationalisation-usability/spec.md) | 2026-11-09 | fixture_proven |
-| 28 | [Institutional governance, privacy and collaboration](tracks/28-institutional-governance-privacy-collaboration/spec.md) | 2026-11-09 | fixture_proven |
-| 29 | [External methodological evaluation and sustainability](tracks/29-external-evaluation-sustainability/spec.md) | 2026-11-09 | fixture_proven |
-| 30 | [Maturity gate and gap closure](tracks/30-maturity-gap-closure/spec.md) | 2026-11-09 | fixture_proven |
 | 31 | [GitHub remote, nested issues and Project v2 control plane](tracks/31-github-control-plane/spec.md) | 2026-08-12 | live_proven |
-| 32 | [Cross-repository contract release train and downstream canaries](tracks/32-cross-repository-release-train/spec.md) | 2026-11-09 | fixture_proven |
-| 33 | [Operational observability, backup, restore and incident response](tracks/33-operational-reliability/spec.md) | 2026-11-09 | fixture_proven |
-| 34 | [Authenticated remote MCP, tenancy and data residency](tracks/34-authenticated-remote-mcp/spec.md) | 2026-11-09 | fixture_proven |
-| 35 | [Generated SDKs, fixture-backed documentation and adoption operations](tracks/35-sdk-docs-adoption/spec.md) | 2026-11-09 | fixture_proven |
-| 36 | [Release-candidate rehearsal, staged pilots and ecosystem rehearsal](tracks/36-release-candidate-pilots/spec.md) | 2026-11-09 | fixture_proven |
-| 37 | [Final mature 1.0 release and long-term operations](tracks/37-maturity-1-0/spec.md) | 2026-11-09 | fixture_proven |
 
 ## Evidence ladder
 

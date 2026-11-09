@@ -49,6 +49,11 @@ on:
         required: true
         type: boolean
         default: true
+      sync_issue_state:
+        description: 'Also mirror canonical phase and track open/closed state'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -103,11 +108,17 @@ jobs:
           SEARCHRIGHT_GITHUB_APPLY: '1'
           SEARCHRIGHT_GITHUB_TASK_STATE_APPLY: '1'
           SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
+          SEARCHRIGHT_SYNC_TASK_STATE: ${{ inputs.sync_task_state }}
+          SEARCHRIGHT_SYNC_ISSUE_STATE: ${{ inputs.sync_issue_state }}
         run: |
           args=(--repo edithatogo/searchright --apply
             --checkpoint-path .searchright/receipts/github-issue-sync-checkpoint.json
             --receipt-path .searchright/receipts/github-issue-sync.json)
-          if [[ '${{ inputs.sync_task_state }}' == 'true' ]]; then args+=(--sync-task-state); fi
+          if [[ "$SEARCHRIGHT_SYNC_ISSUE_STATE" == 'true' ]]; then
+            args+=(--sync-issue-state)
+          elif [[ "$SEARCHRIGHT_SYNC_TASK_STATE" == 'true' ]]; then
+            args+=(--sync-task-state)
+          fi
           python scripts/sync_github_issues.py "${args[@]}"
       - name: Create and synchronise Project
         env:
@@ -124,9 +135,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.SEARCHRIGHT_PROJECT_TOKEN }}
           SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
-        run: >-
-          python scripts/audit_github_control_plane.py
-          --receipt-path .searchright/receipts/github-control-plane-audit.json
+          SEARCHRIGHT_SYNC_ISSUE_STATE: ${{ inputs.sync_issue_state }}
+        run: |
+          args=(--receipt-path .searchright/receipts/github-control-plane-audit.json)
+          if [[ "$SEARCHRIGHT_SYNC_ISSUE_STATE" == 'true' ]]; then args+=(--check-issue-state); fi
+          python scripts/audit_github_control_plane.py "${args[@]}"
       - name: Upload control-plane receipts and checkpoints
         if: ${{ always() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

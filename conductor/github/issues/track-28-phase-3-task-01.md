@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Compile and run comprehensive negative scenario tests with unapproved classification, deployment mode, region, model, and lifecycle transitions.
+- [x] Compile and run governance/authority negative scenarios.
 
 ## Completion and evidence contract
 

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-32-phase-3`
 Conductor plan: `conductor/tracks/32-cross-repository-release-train/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Approve promotion or rollback explicitly and record cross-repository receipts.
+- [ ] Approve promotion or rollback explicitly and record cross-repository receipts.
 
 ## Completion and evidence contract
 

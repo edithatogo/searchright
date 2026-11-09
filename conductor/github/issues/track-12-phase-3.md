@@ -7,8 +7,8 @@ Conductor plan: `conductor/tracks/12-citeweft-document-evidence/plan.md`
 ## Task subissues
 
 - [x] T01: Compile the pinned CiteWeft dependency and adapter on supported platforms. (`track-12-phase-3-task-01`)
-- [x] T02: Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics. (`track-12-phase-3-task-02`)
-- [x] T03: Run downstream Sourceright consumer-driven compatibility and rollback tests. (`track-12-phase-3-task-03`)
+- [ ] T02: Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics. (`track-12-phase-3-task-02`)
+- [ ] T03: Run downstream Sourceright consumer-driven compatibility and rollback tests. (`track-12-phase-3-task-03`)
 
 ## Evidence rule
 

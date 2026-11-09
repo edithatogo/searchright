@@ -44,7 +44,10 @@
         "verification/receipts/panel-track-23-ranking-architect.json",
         "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis."
+      ],
       "permitted_claim": "Outcome-gradable screening thresholds and calibration schemas are verified in contracts and governance tests; benchmark validation remains gated."
     },
     {
@@ -84,7 +87,10 @@
         "verification/receipts/panel-track-23-ranking-architect.json",
         "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis."
+      ],
       "permitted_claim": "Transparent lexical ranking, title/abstract weighting, and feature attribution are implemented in searchright-ranking and searchright-contracts; model comparison benchmarks remain gated."
     },
     {
@@ -124,7 +130,10 @@
         "verification/receipts/panel-track-23-ranking-architect.json",
         "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis."
+      ],
       "permitted_claim": "Threshold calibration for sensitivity, specificity, precision, FNR, FPR, and work saved over sampling (WSS) is implemented in searchright-ranking and verified against zero-division invariants; human gold calibration remains gated."
     },
     {
@@ -164,7 +173,10 @@
         "verification/receipts/panel-track-23-ranking-architect.json",
         "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis."
+      ],
       "permitted_claim": "Failure-mode mitigations and adversary review constraints are documented and governance-tested; independent multi-agent strategy generation remains gated."
     },
     {
@@ -204,7 +216,10 @@
         "verification/receipts/panel-track-23-ranking-architect.json",
         "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis."
+      ],
       "permitted_claim": "Deterministic non-sycophantic scoring and isolated feature evaluation are enforced in lexical ranking contracts; multi-agent concession tests remain gated."
     },
     {
@@ -244,7 +259,10 @@
         "verification/receipts/panel-track-23-ranking-architect.json",
         "verification/receipts/panel-track-23-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis."
+      ],
       "permitted_claim": "Stopping rules and autonomous exclusion are strictly prohibited by schema and contract invariants (auto_exclusion_prohibited: true); protocol-governed stopping rules remain gated on external evidence and explicit approval."
     }
   ]

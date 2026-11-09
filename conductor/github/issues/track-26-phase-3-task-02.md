@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Compile and execute model-check traces and forbidden-transition tests via exhaustive 10x10 stage transition matrices.
+- [x] Compile and execute model-check traces and forbidden-transition tests.
 
 ## Completion and evidence contract
 

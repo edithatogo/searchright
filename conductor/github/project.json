@@ -150,7 +150,7 @@
     "hierarchy_path": "conductor/github/issue-hierarchy.json",
     "labels_path": "conductor/github/labels.json",
     "identity_field": "Conductor key",
-    "state_policy": "task_issues_only",
+    "state_policy": "explicit_issue_states",
     "delete_policy": "never",
     "archive_policy": "never_automatic",
     "field_policy": "manifest_owned_custom_fields_only",

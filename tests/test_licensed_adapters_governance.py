@@ -146,18 +146,29 @@ class LicensedAdaptersGovernanceTests(unittest.TestCase):
         self.assertEqual(traceability.get("evidence_level"), "fixture_proven")
 
         assertions = traceability.get("assertions", [])
-        self.assertEqual(len(assertions), 6, "Track 21 must define exactly 6 assertions")
-
         expected_ids = {f"T21-A{i:03d}" for i in range(1, 7)}
         actual_ids = {a["assertion_id"] for a in assertions}
         self.assertEqual(actual_ids, expected_ids)
+
+        review_path = "verification/receipts/track-21-conductor-review-2026-11-04.json"
+        review = json.loads((ROOT / review_path).read_text(encoding="utf-8"))
+        self.assertTrue(any(
+            result.get("status") == "passed"
+            and "cargo test" in result.get("command", "")
+            and "-p searchright-licensed" in result["command"]
+            for result in review["validation"]
+        ))
 
         for assertion in assertions:
             self.assertEqual(assertion.get("state"), "source_implemented")
             self.assertEqual(assertion.get("mapping_confidence"), "symbol_and_gate_mapped")
             self.assertGreater(len(assertion.get("implementation_symbols", [])), 0)
             self.assertGreater(len(assertion.get("deterministic_tests", [])), 0)
-            self.assertEqual(len(assertion.get("open_gates", [])), 0)
+            self.assertIn(review_path, assertion.get("evidence_receipts", []))
+            gates = " ".join(assertion.get("open_gates", [])).lower()
+            # Request-planning tests do not establish vendor access or live execution.
+            for boundary in ("vendor terms", "live transports", "smoke receipts"):
+                self.assertIn(boundary, gates, assertion["assertion_id"])
             for path in assertion.get("implementation_paths", []):
                 self.assertTrue((ROOT / path).exists(), f"Mapped path {path} must exist on disk")
 

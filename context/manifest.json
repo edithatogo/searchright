@@ -1,5 +1,5 @@
 {
-  "claim_boundary": "Context artefacts constrain work and claims but cannot promote their own evidence level.",
+  "claim_boundary": "Context artefacts constrain work and claims but cannot promote their own evidence level. The conservative source inventory ceiling coexists with stronger per-component, exact-revision receipts in the evidence ledger and dated project status snapshot.",
   "context_tiers": {
     "architecture": [
       "conductor/design.md",
@@ -262,5 +262,5 @@
     }
   ],
   "schema_version": "org.searchright.context-manifest.v1",
-  "updated_at": "2026-08-12"
+  "updated_at": "2026-11-09"
 }

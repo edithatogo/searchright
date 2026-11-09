@@ -21,10 +21,10 @@ Maintain versioned schemas, examples, standards packs and Rust wire types from o
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-01-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-01-phase-2`)
-- [ ] Phase 3: Higher-evidence gates (`track-01-phase-3`)
-- [ ] Phase 4: Review and closeout (`track-01-phase-4`)
+- [x] Phase 1: Source implementation (`track-01-phase-1`)
+- [x] Phase 2: Source-level verification (`track-01-phase-2`)
+- [x] Phase 3: Higher-evidence gates (`track-01-phase-3`)
+- [x] Phase 4: Review and closeout (`track-01-phase-4`)
 
 ## Claim boundary
 

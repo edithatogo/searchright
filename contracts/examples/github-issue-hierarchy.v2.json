@@ -62,6 +62,6 @@
   ],
   "generated_at": "source-epoch:2026-08-08",
   "apply_permitted": false,
-  "state_sync_policy": "task_issues_only",
+  "state_sync_policy": "explicit_issue_states",
   "project_manifest": "conductor/github/project.json"
 }

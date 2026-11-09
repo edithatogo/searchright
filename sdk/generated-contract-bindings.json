@@ -5,10 +5,10 @@
   "domain_logic": false,
   "files": {
     "sdk/python/pyproject.toml": "8d88e52b73a64596da09ef017cc463380b6395967d6d0533dec1ab63223a6d8f",
-    "sdk/python/searchright_contracts/__init__.py": "7409bb0d0c9d4680d38e74ba246d19caf862d3e8f9cd4373772a1c30050fd5e9",
+    "sdk/python/searchright_contracts/__init__.py": "f90a17f7718675239938c1777de354c2ccfd9cef6139e1e94108d1bd8f72d69d",
     "sdk/python/searchright_contracts/py.typed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "sdk/typescript/package.json": "3e58b0359431fd1109d9f43f8ec601de71198c747c3a551703b1118505f7d957",
-    "sdk/typescript/src/index.ts": "ff45777f8fde17035457a68006de9b41d2c29dd0d0f5958ea36b921b9e02fb91"
+    "sdk/typescript/src/index.ts": "290c55dd5b3ef6a605ebff576b4205e2b2411dc71a1bc31165f3f92e9ce41ebc"
   },
   "packages": {
     "python": "searchright-contracts",

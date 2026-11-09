@@ -3,11 +3,11 @@
 
 Parent phase key: `track-25-phase-3`
 Conductor plan: `conductor/tracks/25-provenance-research-objects/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Validate produced RO-Crates with independent tooling via simulated agent-panel protocol.
+- [ ] Validate produced RO-Crates with independent tooling.
 
 ## Completion and evidence contract
 

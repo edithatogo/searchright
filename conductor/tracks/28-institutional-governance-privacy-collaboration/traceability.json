@@ -50,7 +50,10 @@
         "verification/receipts/panel-track-28-privacy-specialist.json",
         "verification/receipts/panel-track-28-adjudication-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
       "permitted_claim": "Institutional policy, request and decision contracts are consistent and evaluated deny-by-default in source and test contracts; enterprise reviews remain open."
     },
     {
@@ -98,7 +101,10 @@
         "verification/receipts/panel-track-28-privacy-specialist.json",
         "verification/receipts/panel-track-28-adjudication-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
       "permitted_claim": "Data classification, retention, region and receipt-minimisation rules are explicit and adversarially exercised; de-identification and institutional approval are not claimed."
     },
     {
@@ -143,7 +149,10 @@
         "verification/receipts/panel-track-28-privacy-specialist.json",
         "verification/receipts/panel-track-28-adjudication-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
       "permitted_claim": "Human approval and exact-scope lifecycle authority are enforced in source and covered by Rust unit and scenario tests; institutional role provisioning remains open."
     },
     {
@@ -186,7 +195,10 @@
         "verification/receipts/panel-track-28-privacy-specialist.json",
         "verification/receipts/panel-track-28-adjudication-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
       "permitted_claim": "Independent human adjudication and role-gated conflict resolution are enforced in source and Rust integration tests; multi-reviewer pilots remain open."
     },
     {
@@ -223,8 +235,11 @@
         "verification/receipts/panel-track-28-privacy-specialist.json",
         "verification/receipts/panel-track-28-adjudication-auditor.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "A threat model exists and the track keeps its evidence level at fixture_proven via panel evaluation; federated exchange pilots remain open."
+      "open_gates": [
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
+      "permitted_claim": "A threat model and locally tested governance controls exist; institutional privacy/security review and federated-exchange pilots remain open."
     }
   ]
 }

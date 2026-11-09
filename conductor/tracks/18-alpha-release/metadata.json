@@ -6,7 +6,7 @@
   "status": "source_implemented",
   "implementation_state": "source_implemented",
   "created": "2026-08-06",
-  "updated": "2026-11-04",
+  "updated": "2026-11-09",
   "dependencies": [
     "09",
     "10",
@@ -33,6 +33,8 @@
       "track-18-phase-2-task-01",
       "track-18-phase-2-task-02",
       "track-18-phase-3-task-01",
+      "track-18-phase-3-task-02",
+      "track-18-phase-3-task-03",
       "track-18-phase-4-task-01",
       "track-18-phase-4-task-02",
       "track-18-phase-4-task-03",
@@ -41,7 +43,5 @@
     "remote_issue_number": null,
     "remote_phase_issue_numbers": [],
     "remote_task_issue_numbers": []
-  },
-  "lifecycle": "archived",
-  "archived_on": "2026-11-08"
+  }
 }

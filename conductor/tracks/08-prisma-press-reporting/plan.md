@@ -1,10 +1,12 @@
 # Plan: 08 PRISMA, PRESS and reporting
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -56,7 +58,7 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-08-phase-3 -->
 
-- [x] Obtain an accountable independent PRESS review of representative generated strategies and appendices.
+- [ ] Obtain an accountable independent PRESS review of representative generated strategies and appendices.
 - [x] Obtain a hosted compiler-verified receipt for the exact committed revision.
 
 ## Phase 4: Review and closeout
@@ -69,7 +71,9 @@ GitHub issue key: `track-08`. Each numbered phase maps to the same-numbered nati
   - Review fix `c234c41f940b37e153e9bf151458059e63c51b47`: Fail closed on PRESS decisions, bind appendix execution evidence to the compiler version and query fingerprint, and escape active Typst inline markup controls.
   - Review fix `b48dff0`: Reconcile Track 08 traceability, deliverables, and assertion mappings across all reporting renderers and PRESS workflows; resolve strict YAML ingestion and Clippy assert hygiene in shared facade and CLI/MCP test surfaces.
   - Review fix `HEAD`: Implement governance tests in tests/test_prisma_press_reporting_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 08.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+  - [x] Review fix: Preserve the earlier bounded render-format and PRISMA.jl projection-parity work in the existing completed Phase 4 reporting tasks and source receipts; restoring the two original Phase 3 keys does not reopen that completed component work or claim independent PRESS acceptance.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 - [x] Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Subsequent local visual/import evidence is recorded separately; complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.
 - [x] Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after fixing wrapped HTML labels. No Microsoft Word, external parity or methodological acceptance is claimed.

@@ -33,8 +33,12 @@
     "SR-090",
     "SR-091"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-integrity-architect, pilot-operations-auditor, and ecosystem-registry-auditor roles, with clean-room rehearsal validation in scripts/check_release_rehearsal.py, deterministic packaging reproducibility in scripts/check_packaging_reproducibility.py, staged pilot safety protocols in docs/pilots/pilot-protocol.md, no autonomous exclusions, deployment-controlled data boundaries, explicit registry blockers across 9 submission targets in registry/status.json, and 6/6 unit tests verified network-free in tests/test_release_candidate_pilots_governance.py. Simulation instrument and source-level contracts only; live pilot execution, compiler matrix runs, and public registry submissions remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+    "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+    "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-integrity-architect, pilot-operations-auditor, and ecosystem-registry-auditor roles, with clean-room rehearsal validation in scripts/check_release_rehearsal.py, deterministic packaging reproducibility in scripts/check_packaging_reproducibility.py, staged pilot safety protocols in docs/pilots/pilot-protocol.md, no autonomous exclusions, deployment-controlled data boundaries, explicit registry blockers across 9 submission targets in registry/status.json, and 6/6 unit tests verified network-free in tests/test_release_candidate_pilots_governance.py. Simulation instrument and source-level contracts only; live pilot execution, compiler matrix runs, and public registry submissions remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-36",
@@ -66,9 +70,8 @@
     "verification/receipts/panel-track-36-ecosystem-registry-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
-    "Created tests/test_release_candidate_pilots_governance.py with 6 comprehensive unit tests covering release rehearsal script conformance across 11 gates and 3 pilot profiles, mandatory rehearsal safeguards (unexecuted status, dry-run bounds, mandatory rollback), pilot deployment protocol staging (fixture-only local -> institution self-hosted -> remote single-tenant) with PRISMA-S non-negotiable human screening authority and data isolation, ecosystem and registry rehearsal explicit blockers across all 9 submission targets, release-candidate workflow manual dispatch invariants, and reproducible source packaging verification. Upgraded assertions T36-A001..T36-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+    "Created tests/test_release_candidate_pilots_governance.py with 6 comprehensive unit tests covering release rehearsal script conformance across 11 gates and 3 pilot profiles, mandatory rehearsal safeguards (unexecuted status, dry-run bounds, mandatory rollback), pilot deployment protocol staging (fixture-only local -> institution self-hosted -> remote single-tenant) with PRISMA-S non-negotiable human screening authority and data isolation, ecosystem and registry rehearsal explicit blockers across all 9 submission targets, release-candidate workflow manual dispatch invariants, and reproducible source packaging verification. Upgraded assertions T36-A001..T36-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

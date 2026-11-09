@@ -21,13 +21,13 @@ Identify and safely replace duplicate systematic-search code across the GitHub e
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-15-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-15-phase-2`)
+- [x] Phase 1: Source implementation (`track-15-phase-1`)
+- [x] Phase 2: Source-level verification (`track-15-phase-2`)
 - [ ] Phase 3: Higher-evidence gates (`track-15-phase-3`)
 - [ ] Phase 4: Review and closeout (`track-15-phase-4`)
 
 ## Claim boundary
 
-Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

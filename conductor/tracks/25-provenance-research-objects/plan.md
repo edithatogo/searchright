@@ -1,8 +1,6 @@
 # Plan: 25 Provenance and research-object interoperability
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-08**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-25`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -40,9 +38,9 @@ GitHub issue key: `track-25`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-25-phase-3 -->
 
-- [x] Compile and run golden provenance export tests via deterministic scenario fixtures.
-- [x] Validate produced RO-Crates with independent tooling via simulated agent-panel protocol.
-- [x] Pilot OSF/Zenodo/repository deposit without automatic write authority via dry-run contracts.
+- [x] Compile and run golden provenance export tests.
+- [ ] Validate produced RO-Crates with independent tooling.
+- [ ] Pilot OSF/Zenodo/repository deposit without automatic write authority.
 
 ## Phase 4: Review and closeout
 
@@ -52,4 +50,5 @@ GitHub issue key: `track-25`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, RO-Crate and W3C PROV boundaries, review-bundle-manifest and handoff-plan schemas, and test_provenance_research_objects_governance.py; create unit test suite in tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema and context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants; record conductor review receipt and preserve open golden provenance export tests, independent RO-Crate validation tooling, and OSF/Zenodo repository handoff pilot blockers without false promotion.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

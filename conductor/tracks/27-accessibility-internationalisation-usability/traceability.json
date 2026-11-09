@@ -43,8 +43,10 @@
         "verification/receipts/panel-track-27-i18n-specialist.json",
         "verification/receipts/panel-track-27-governance-auditor.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Stable namespaced diagnostic codes and severity models are enforced in source and test contracts; live snapshot suites remain open."
+      "open_gates": [
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Stable diagnostic codes and severity models are implemented; native invalid-contract and rendering scenarios passed at f502104a81c43ed0117886ce8cb21f00fdeb7588. Independent usability evaluation remains open."
     },
     {
       "assertion_id": "T27-A002",
@@ -79,8 +81,10 @@
         "verification/receipts/panel-track-27-accessibility-architect.json",
         "verification/receipts/panel-track-27-governance-auditor.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Plain text, JSON and JSONL rendering formats are deterministic and colour-free in source tests; golden snapshots remain open."
+      "open_gates": [
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Plain text, JSON and JSONL rendering, deterministic sorting and colour-free output passed native scenarios at f502104a81c43ed0117886ce8cb21f00fdeb7588. Assistive-technology user evaluation remains open."
     },
     {
       "assertion_id": "T27-A003",
@@ -116,8 +120,10 @@
         "verification/receipts/panel-track-27-i18n-specialist.json",
         "verification/receipts/panel-track-27-governance-auditor.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Separable message catalogues and fallback policies preserve machine code identity in source and tests; translated catalogue coverage remains open."
+      "open_gates": [
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "permitted_claim": "Message-catalogue localization and fallback behavior passed native scenarios at f502104a81c43ed0117886ce8cb21f00fdeb7588. Translation quality and broader locale coverage require separate evidence."
     },
     {
       "assertion_id": "T27-A004",
@@ -149,7 +155,9 @@
         "verification/receipts/panel-track-27-accessibility-architect.json",
         "verification/receipts/panel-track-27-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
       "permitted_claim": "Terminal diagnostics eliminate escape codes and line wrapping dependencies in source policy; formal assistive-technology testing remains open."
     },
     {
@@ -179,7 +187,9 @@
         "verification/receipts/track-27-agent-panel-evaluation.json",
         "verification/receipts/panel-track-27-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
       "permitted_claim": "Independent information-specialist usability protocols and sealed label structures are contractually specified; live participant execution remains open."
     }
   ]

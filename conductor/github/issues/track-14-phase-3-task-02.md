@@ -3,11 +3,11 @@
 
 Parent phase key: `track-14-phase-3`
 Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Generate compiled parity receipts and exercise rollback.
+- [ ] Generate compiled parity receipts and exercise rollback.
 
 ## Completion and evidence contract
 

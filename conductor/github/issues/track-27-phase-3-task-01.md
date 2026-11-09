@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Compile and run plain/JSON/JSONL snapshots and no-colour tests via deterministic scenario fixtures.
+- [x] Compile and run plain/JSON/JSONL snapshots and no-colour tests.
 
 ## Completion and evidence contract
 

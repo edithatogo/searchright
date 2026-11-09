@@ -6,7 +6,9 @@ Conductor plan: `conductor/tracks/21-licensed-adapters/plan.md`
 
 ## Task subissues
 
-- [x] T01: Complete licensed BYO request planning, credential protection, and legal compliance evaluation via agent-panel protocol simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles. (`track-21-phase-3-task-01`)
+- [ ] T01: Obtain authorised user credentials and confirm current vendor terms. (`track-21-phase-3-task-01`)
+- [ ] T02: Implement/test vendor-specific live transports without storing credentials. (`track-21-phase-3-task-02`)
+- [ ] T03: Record redacted user-run smoke receipts; no bundled access is permitted. (`track-21-phase-3-task-03`)
 
 ## Evidence rule
 

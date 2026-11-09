@@ -3,11 +3,11 @@
 
 Parent phase key: `track-30-phase-3`
 Conductor plan: `conductor/tracks/30-maturity-gap-closure/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] LP-015 / Track 36: run the reproducible signed/attested release-candidate, bounded pilots and rollback rehearsal without automatic publication.
+- [ ] LP-015 / Track 36: run the reproducible signed/attested release-candidate, bounded pilots and rollback rehearsal without automatic publication.
 
 ## Completion and evidence contract
 

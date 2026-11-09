@@ -1,8 +1,6 @@
 # Plan: 11 Systematic-search agent skill and workflows
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -60,10 +58,10 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-11-phase-3 -->
 
-- [x] Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.
-- [x] Run scenario-based agent evaluations across supported hosts and models.
-- [x] Calibrate authority and failure modes with human information specialists.
-- [x] Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication.
+- [ ] Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.
+- [ ] Run scenario-based agent evaluations across supported hosts and models.
+- [ ] Calibrate authority and failure modes with human information specialists.
+- [ ] Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication.
 
 ## Phase 4: Review and closeout
 
@@ -76,7 +74,8 @@ GitHub issue key: `track-11`. Each numbered phase maps to the same-numbered nati
   - Review fix `b7f42271ca25860acc83ef16414b514e96f39c2b`: Enforce the complete advisory workflow, exact artifact-bound transition approvals, fixture-versus-live execution, bounded retained artifact bytes, kebab-case wire compatibility, a governed handoff schema, and explicit external closeout gates.
   - Review fix `6b046f1`: Reconcile Track 11 traceability, deliverables, and assertion mappings across all six assertions with native test commands; bootstrap unit test script module discovery.
   - Review fix `HEAD`: Implemented tests/test_agentic_skill_governance.py, executed agent panel review, verified authority boundaries and sibling caller policy, and archived Track 11 with fixture-proven evidence.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 - [x] Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.
 - [x] Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending.

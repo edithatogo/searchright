@@ -1,8 +1,6 @@
 # Plan: 03 Shared provider runtime and Sourceright extraction
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -52,9 +50,10 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-03-phase-3 -->
 
-- [x] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
-- [x] Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.
-- [x] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
+- [x] Compile and run the shared provider runtime tests.
+- [ ] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
+- [ ] Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.
+- [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 
 ## Phase 4: Review and closeout
 
@@ -74,4 +73,5 @@ GitHub issue key: `track-03`. Each numbered phase maps to the same-numbered nati
   - Review fix `935d725877f6a6ca82bacefd8982e613981f068c`: Add nonserialized core PageExecutionContext, explicit shared rate groups and bounded cooperative per-subrequest admission. Correct admitted-only rate floors and factory-lock spacing; preserve legacy page default and document conservative timeout tightening. Full pinned local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257; no live-adapter adoption or downstream cutover.
   - Review fix `d43a11a`: Reconcile Track 03 traceability, deliverables, and assertion mappings with commits 3f52b4d and 9b4a4a4, resolve searchright-contracts PressReview test compilation error and searchright-connectors clippy assertions, add parity matrix decision reference regressions, add candidate policy drift tests, and record conductor review receipt.
   - Review fix `HEAD`: Implement tests/test_shared_provider_runtime_governance.py (6/6 passing network-free), upgrade all assertions (T03-A001..T03-A006) to source_implemented, convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-03-conductor-review-2026-11-09.json, and archive Track 03 in-place while preserving external operational gates.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

@@ -2,7 +2,7 @@
   "allowed_claims": [
     "The source repository contains versioned contracts, implementation scaffolds, assertion-level traceability and deterministic static checks.",
     "The roadmap contains 200 acceptance assertions, of which 200 have individual symbol/test/evidence mappings; unmapped or partial assertions remain visibly below source implemented.",
-    "Four MVP connector vertical slices and rights-clear response baselines are present in source, but compilation and authorised live execution are not proven.",
+    "Four MVP connector vertical slices and rights-clear response baselines have revision-bound native test evidence in verification/receipts/project-status-snapshot.json; authorised live execution remains open.",
     "Native strategy text, spans and translation-loss diagnostics are preserved for seven database dialect families; semantic parsing and equivalence remain deliberately partial.",
     "A deterministic review-bundle pack/verify self-test and a deterministic noncanonical review-state reducer pass locally.",
     "All workspace crates are non-publishable by default; three future public-package candidates are identified but none is publication-ready.",
@@ -15,7 +15,8 @@
     "A deterministic receipt-redaction profile passes adversarial local cases; it is a minimisation control rather than de-identification proof.",
     "Known multi-version schema families have explicit non-destructive migration, backup and rollback plans; migration execution remains unproven.",
     "A network-free reference recovery rehearsal passes atomic-replace, idempotent restore and tamper-rejection cases; production recoverability is not claimed.",
-    "A deterministic evidence-debt register exposes remaining compiler, provider, methodological, migration and external-review blockers."
+    "A deterministic evidence-debt register exposes remaining compiler, provider, methodological, migration and external-review blockers.",
+    "The 9 November status snapshot records 18 passing regular-suite jobs at f502104a81c43ed0117886ce8cb21f00fdeb7588 and later failures at dc3eabe66b99e26cf6320297b258efb060e68d19; neither source mappings nor simulated panels close unfinished external outcomes."
   ],
   "current_evidence_ceiling": "source_verified",
   "forbidden_without_additional_evidence": [
@@ -173,7 +174,8 @@
     "Describe redaction as receipt minimisation, not de-identification or proof of absence.",
     "Describe schema migrations as planned until representative compiled migrations and rollback tests execute.",
     "Describe the local recovery self-test as a reference rehearsal, not production recoverability.",
-    "Treat evidence-debt counts as a gap register, never a quality or completion score."
+    "Treat evidence-debt counts as a gap register, never a quality or completion score.",
+    "Attribute native/compiler/fixture evidence to the exact revision and component tested. The repository-wide source_verified inventory label does not erase stronger bounded evidence."
   ],
   "schema_version": "org.searchright.claim-boundaries.v1"
 }

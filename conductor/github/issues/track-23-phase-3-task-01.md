@@ -3,11 +3,11 @@
 
 Parent phase key: `track-23-phase-3`
 Conductor plan: `conductor/tracks/23-active-learning-agents/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run SYNERGY and topic-held-out calibration benchmarks via deterministic benchmark fixtures.
+- [ ] Run SYNERGY and topic-held-out calibration benchmarks.
 
 ## Completion and evidence contract
 

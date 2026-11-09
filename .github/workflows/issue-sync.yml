@@ -18,6 +18,11 @@ on:
         required: true
         type: boolean
         default: true
+      sync_issue_state:
+        description: 'Also mirror canonical phase and track open/closed state'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -66,11 +71,16 @@ jobs:
           SEARCHRIGHT_GITHUB_MIN_INTERVAL_MS: '100'
           SEARCHRIGHT_REPOSITORY: ${{ inputs.repository }}
           SEARCHRIGHT_SYNC_TASK_STATE: ${{ inputs.sync_task_state }}
+          SEARCHRIGHT_SYNC_ISSUE_STATE: ${{ inputs.sync_issue_state }}
         run: |
           args=(--repo "$SEARCHRIGHT_REPOSITORY" --apply
             --checkpoint-path .searchright/receipts/github-issue-sync-checkpoint.json
             --receipt-path .searchright/receipts/github-issue-sync.json)
-          if [[ "$SEARCHRIGHT_SYNC_TASK_STATE" == 'true' ]]; then args+=(--sync-task-state); fi
+          if [[ "$SEARCHRIGHT_SYNC_ISSUE_STATE" == 'true' ]]; then
+            args+=(--sync-issue-state)
+          elif [[ "$SEARCHRIGHT_SYNC_TASK_STATE" == 'true' ]]; then
+            args+=(--sync-task-state)
+          fi
           python scripts/sync_github_issues.py "${args[@]}"
       - name: Preserve apply receipt and checkpoint
         if: ${{ always() }}

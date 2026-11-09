@@ -3,11 +3,11 @@
 
 Parent phase key: `track-26-phase-3`
 Conductor plan: `conductor/tracks/26-formal-assurance-contract-evolution/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Compile and execute representative persisted-data migrations, backward readers and rollback projections via check_schema_migrations.py.
+- [ ] Compile and execute representative persisted-data migrations, backward readers and rollback projections.
 
 ## Completion and evidence contract
 

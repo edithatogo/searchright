@@ -21,13 +21,13 @@ Integrate CiteWeft through a pinned optional adapter while preserving spans, unc
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-12-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-12-phase-2`)
+- [x] Phase 1: Source implementation (`track-12-phase-1`)
+- [x] Phase 2: Source-level verification (`track-12-phase-2`)
 - [ ] Phase 3: Higher-evidence gates (`track-12-phase-3`)
 - [ ] Phase 4: Review and closeout (`track-12-phase-4`)
 
 ## Claim boundary
 
-CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

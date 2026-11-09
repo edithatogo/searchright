@@ -3,11 +3,11 @@
 
 Parent phase key: `track-25-phase-3`
 Conductor plan: `conductor/tracks/25-provenance-research-objects/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Pilot OSF/Zenodo/repository deposit without automatic write authority via dry-run contracts.
+- [ ] Pilot OSF/Zenodo/repository deposit without automatic write authority.
 
 ## Completion and evidence contract
 

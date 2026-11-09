@@ -1,193 +1,121 @@
 # Project status
 
-- **Status date:** 10 September 2026
-- **Observed default branch:** `main`
-- **Observed main revision:** `9b4a4a4dba818d75f9dbb9ee6be458871b09a878`
-- **Last fully admitted revision:** `10f983d44e67c08be44131ea6e2b7cf75dc147f6`
-- **Evidence ceiling:** source-verified technical alpha with historical hosted
-  admission and bounded exact-head clean-room evidence
-- **Maturity decision:** not ready
+**Assessment date: 9 November 2026. Searchright is a technical alpha with
+executed compiler and component-fixture evidence. Its live review workflow,
+independent performance evidence and public package release remain unfinished.**
 
-The machine-readable source for this bounded observation is
-`verification/receipts/project-status-snapshot.json`.
+The dated machine-readable observation is
+`verification/receipts/project-status-snapshot.json`. It records the initially
+observed `main` revision `dc3eabe66b99e26cf6320297b258efb060e68d19` and the
+last fully admitted regular-suite revision
+`f502104a81c43ed0117886ce8cb21f00fdeb7588`. These are historical observations,
+not a live dashboard or automatic admission of later commits.
 
-## Headline
+## What is implemented and tested
 
-Searchright is a substantial technical alpha. Its contract catalogue, shared
-execution core, product facade, CLI, MCP server, agent skill and review-domain
-services have working source implementations. A committed `Cargo.lock`,
-historical cross-platform compiler evidence and an exact-head clean-room run
-exist.
+The 30-crate Rust workspace contains the shared query/provider kernel, review
+facade, CLI, local MCP server, import/deduplication/linkage/screening components,
+reporting, living-update and provenance foundations. All 200 acceptance
+assertions have individual implementation/test/evidence mappings. Compiler and
+runtime results must still be attributed to the revision and scope actually run.
 
-The observed main revision has not completed a full exact-head admission matrix.
-**No complete exact-head admission matrix is claimed.** Historical workflow
-results remain bound to their exact revision and do not automatically promote
-later commits.
+At `f502104a81c43ed0117886ce8cb21f00fdeb7588`, 18 hosted jobs passed across
+seven workflows; two inapplicable jobs were skipped. The passing suite includes
+Ubuntu, macOS and Windows compilation/tests, the declared Rust version, static
+contracts, coverage admission, security policy, clean-room build/install,
+API/SemVer checks and bounded Kani/Miri/Loom/precondition suites. The exact run
+URLs are in the snapshot. Coverage was **88.28%**, below the greater-than-90%
+maturity target.
 
-Searchright is not yet a validated systematic-review product, authenticated
-hosted service, release candidate or published package. Live provider behaviour,
-methodological performance, downstream cutover, usability, operational recovery,
-release signing and registry acceptance remain separate evidence gates.
+Recent substantive improvements include the maintained `csv` dependency and
+multiline screening fixes ([PR 755](https://github.com/edithatogo/searchright/pull/755)),
+pinned CI tool reuse ([PR 757](https://github.com/edithatogo/searchright/pull/757)),
+and benchmark population/digest integrity
+([PR 758](https://github.com/edithatogo/searchright/pull/758)). Later scenario
+tests and deterministic provenance ordering are useful component improvements;
+simulated panels do not establish external acceptance.
 
-## Evidence boundary
+## What the reconciliation corrected
 
-The status model distinguishes three evidence surfaces:
+The initially observed source marked all 38 tracks archived and all 396 tasks
+complete. That state was inconsistent with the implementation, maturity dossier,
+release packets and execution results. Original live, human, downstream and
+publication requirements had been replaced by simulations or checked off without
+the corresponding outcome.
 
-1. **Observed source:** repository content and source-bound counts at
-   `9b4a4a4dba818d75f9dbb9ee6be458871b09a878`.
-2. **Bounded exact-head evidence:** clean-room reproducibility workflow run
-   `34338222604`, completed successfully for that exact revision.
-3. **Historical full admission:** 17 successful hosted checks for
-   `10f983d44e67c08be44131ea6e2b7cf75dc147f6`, with no failed or pending result
-   in the committed historical record.
+The canonical correction restores those original requirements and GitHub task
+identities, retains authentic component completions, and reactivates tracks with
+unfinished work. Historical receipts and source/tests are preserved. The seven
+bounded completed tracks remain archived. Read the current totals directly with:
 
-The exact-head clean-room observation does not establish the current state of
-CI, security, formal assurance, release readiness, live providers, downstream
-consumers or external methodological evaluation.
+```bash
+python scripts/conductor_status.py
+```
 
-## Remote-state reporting policy
+`conductor/roadmap-coverage.json` and the generated track plans own current
+status. The snapshot's 396/396 count describes the rejected pre-reconciliation
+observation, not the corrected state or a product completion score. GitHub task
+states follow those plans; phases close when their child tasks are complete, and
+tracks close only when their canonical archival and closeout conditions hold.
 
-Committed documentation does not assert volatile local or GitHub state such as:
+## Build and dependency findings
 
-- whether a local working tree is clean;
-- whether local and remote branches are identical;
-- whether pull requests or delivery branches are open;
-- whether a later workflow or registry operation has completed.
+At the initially observed `dc3eabe` revision, CI, coverage, clean-room, security
+and formal workflows failed. The vendored `noyalib` requirements had diverged
+from the committed lockfile. [PR 796](https://github.com/edithatogo/searchright/pull/796)
+repairs that mismatch, checks the locked graph before security tools run, and
+creates the output parent for the scheduled mutation job. Follow its exact
+workflow results for repair admission; the change itself is not a passing
+mutation result.
 
-Those facts must be read from GitHub or a timestamped, exact-revision receipt.
-This prevents static prose from becoming an unlabelled live dashboard.
+The subsequent concurrent revision `2e9ca30b26b3f3cbf83e7d3b9f7c5a7d57702c67`
+introduced `schemars` and `schemars_derive` 1.2.3 without qualifying Cargo Vet
+paths. Its [supply-chain job failed](https://github.com/edithatogo/searchright/actions/runs/42591410808/job/129073738912).
+This reconciliation restores the admitted 1.2.2 versions and published
+checksums, preserving the other dependency, Renovate and build repairs. It does
+not retarget or extend any exemption. PR 796's completed native suite passed;
+its [coverage result was 88.29%](https://github.com/edithatogo/searchright/actions/runs/42590358525/job/129070202860).
+Admission of the combined reconciliation requires its own hosted results.
 
-## Required environment and bootstrap disclosures
+The 8 November peer-audit promotion legitimately retired twelve exemptions.
+**235 active entries remain: 218 `safe-to-deploy` and 17 `safe-to-run`, expiring
+10 November 2026.** Their expiry is unchanged. The last observed mutation job
+failed during setup before running mutants. See the
+[dependency remediation sequence](docs/security/cargo-vet-governance.md#deadline-remediation-sequence)
+and [Track 16](https://github.com/edithatogo/searchright/issues/233).
 
-- **Rust compilation:** historical hosted compilation is evidenced for
-  `10f983d44e67c08be44131ea6e2b7cf75dc147f6`; a complete compiler and admission
-  matrix is not claimed for the observed main revision.
-- **Live provider calls:** none is claimed by this status snapshot. Provider
-  support remains bounded to fixtures and separately authorised, redacted
-  canaries.
-- **GitHub repository creation/push:** the public repository and its control-plane
-  artefacts exist. This static document does not claim the current state of
-  branches, pull requests, projects or later pushes.
-- **Conductor plugin installation:** prior host receipts reported an installed
-  Conductor version. This snapshot validates repository contracts only and does
-  not claim current host installation or general host-version compatibility.
+## Product work still to deliver
 
-## Current source surface
+| Outcome | Present boundary | Existing owner |
+| --- | --- | --- |
+| One complete two-source review | The public search facade is fixture-only; CLI live apply is rejected. Live transport and authority wiring, resume and actual provider results remain open. | Tracks 03/04 |
+| A reproduced external baseline | Benchmark identity checks work; a pinned SYNERGY/ASReview experiment with per-review results has not been delivered. | Tracks 17/23 |
+| An independently usable evidence package | Local packaging/provenance code exists; required RO-Crate metadata, PROV relationships and independent consumer validation remain open. | Track 25 |
+| Autonomous, solo and team operation | Policy concepts and protected screening components exist; explicit modes, machine decision identity and full transition/conflict workflows remain open. | Tracks 07/11/28 |
+| A deliverable research programme | The study/dataset/journal plan is recorded; preregistration, independent evaluation and prospective observations have not occurred. | Track 29 |
+| Distribution and adoption | Packages remain non-publishable; release rehearsal is prepared, maturity is `not_ready`, and signing/publication/downstream acceptance remain open. | Tracks 18/19/32/35–37 |
 
-At the observed revision, the repository contains:
+The [frontier plan](conductor/frontier-plan.md) supplies the ordered work units
+and coding-agent estimates. A useful local product does not need to wait for
+hosted tenancy, every estate migration or journal acceptance. Those obligations
+remain open only for the capabilities and claims that require them.
 
-- a 30-crate Rust 2024 workspace, with publication disabled by default;
-- 74 JSON Schema 2020-12 contracts and canonical examples;
-- 35 catalogue-backed product operations exposed through the shared interface
-  model;
-- neutral `evidence-search-contracts` and shared `evidence-search-core` layers;
-- review planning, eligibility, query compilation, provider execution, receipts,
-  audit, storage, import, deduplication, record/report/study linkage, screening,
-  PRISMA/PRESS reporting, living updates and provenance foundations;
-- deterministic open-provider fixtures and bounded connector implementations;
-- a shared Rust facade, CLI and local stdio MCP server;
-- default-deny external writes, human-only final screening authority, receipt
-  redaction, package-publication gates and release/maturity blockers;
-- CiteWeft and Sourceright integration passports, consumer contracts, migration
-  packets, parity machinery and rollback boundaries.
+## GitHub and evidence limits
 
-Recent source work includes PubMed EFetch orchestration and the Sourceright
-parity execution matrix v2. Their presence is source evidence, not proof of a
-completed downstream cutover or production live-provider operation.
+Environment disclosures:
 
-## Current source-bound Conductor position
+- **Rust compilation:** historical hosted execution is evidenced above; this assessment runtime has no Rust compiler.
+- **Live provider calls:** no completed authorised live review run is claimed.
+- **GitHub repository creation/push:** the existing repository and historical bootstrap are observed; current remote state requires a fresh read.
+- **Conductor plugin installation:** no current host installation was tested in this assessment runtime.
 
-The canonical source reports:
+The repository, remote issue hierarchy and delivery Project exist. Historical
+bootstrap receipts remain valid for their observed revisions. The current
+Project v2 fields, views and item parity were not verified by this assessment's
+available API; an issue reconciliation must not be called a Project audit.
 
-- 38 tracks: 31 active and 7 archived;
-- 404 top-level tasks: 209 completed and 195 open evidence tasks;
-- 93 requirements checked by the roadmap-coverage validator.
-
-These are source-bound planning and evidence-debt counts. They are not a quality
-score, release decision or claim that every completed checklist item has higher
-order compiler, live, human or external evidence.
-
-## Historical hosted admission
-
-The last fully admitted revision in the committed record is
-`10f983d44e67c08be44131ea6e2b7cf75dc147f6`. Its 17 successful hosted checks
-covered:
-
-- Rust 1.97.1 on Ubuntu, Windows and macOS;
-- the declared Rust-version gate;
-- formatting, Clippy, tests and documentation;
-- static contracts and roadmap evidence;
-- coverage admission;
-- CodeQL and full-history secret scanning;
-- Rust dependency, advisory, unused-dependency and cargo-vet policy;
-- clean-room vendored build and install smoke;
-- public API and SemVer checks;
-- Kani, Miri, Loom and standard-library precondition suites;
-- OpenSSF Scorecard and workflow policy.
-
-Those checks establish compiler and repository-admission evidence for that exact
-historical revision only. They do not establish current-head equivalence, live
-provider correctness, methodological validity, production security, usability,
-operational recovery or downstream adoption.
-
-## Exact-head observation
-
-GitHub Actions run `34338222604`, **Clean-room reproducibility**, completed
-successfully for `9b4a4a4dba818d75f9dbb9ee6be458871b09a878` on 9 September 2026.
-Its claim scope is limited to clean-room reproducibility. It does not substitute
-for a full exact-head admission matrix.
-
-## Open critical evidence domains
-
-### Providers and methodology
-
-- Authorised, redacted live canaries for each claimed provider.
-- Completed provider terms, licence and data-handling review.
-- DNS resolution and connection-pinning evidence for live endpoint security.
-- Reviewed PRESS strategies and rights-cleared gold corpora.
-- Sealed retrieval, translation, deduplication and prioritisation evaluation.
-- Methodology, usability and information-specialist calibration.
-
-### Interfaces, access and operations
-
-- Complete exact-head CI, security, formal and release-candidate admission.
-- Third-party MCP interoperability beyond the pinned official-client evidence.
-- Authenticated Streamable HTTP with issuer, principal, tenant, region, scope,
-  rate, replay, isolation and rollback evidence.
-- Durable, resumable and multi-replica task state with lossless subscription
-  delivery and production load/cache evidence.
-- Successful encrypted backup restore, incident and cancellation rehearsals.
-
-### Ecosystem and distribution
-
-- CiteWeft and Sourceright producer/consumer canaries, dual-run parity, cutover
-  and rollback rehearsal.
-- Removal of duplicated provider implementations from downstream repositories.
-- Representative persisted-data migration and backward-reader evidence.
-- Generated SDK compilation, install smoke and downstream adoption evidence.
-- Bounded institutional pilots and operational service-level evidence.
-- Release signing, attestations, package publication and registry acceptance.
-
-## Permitted description
-
-Searchright may be described as a **source-verified technical alpha whose last
-fully admitted revision has cross-platform compiler and repository-admission
-evidence, while the observed main revision has bounded exact-head clean-room
-evidence**.
-
-It must not be described as current-head fully admitted, fully roadmap-complete,
-live-provider-proven, methodologically validated, authenticated-hosted,
-production-ready, restore-proven, independently evaluated, published or
-registry-accepted.
-
-## Next evidence sequence
-
-1. Run and preserve the complete admission matrix for the exact current head.
-2. Execute authorised provider canaries and provider-policy review.
-3. Complete the Sourceright dual-run, parity, cutover and rollback path.
-4. Replace one downstream repository's direct provider clients and retain
-   regression fixtures.
-5. Reconcile methodology and agent-review governance, then run sealed external
-   evaluation and usability calibration.
-6. Complete recovery, pilot, release, publication and registry evidence before
-   reconsidering maturity.
+Current branch, PR, CI and remote issue states must be read from GitHub or a dated
+receipt. This document does not assert a clean worktree, branch equality, no open
+PRs or a completed later run. It also does not claim live-provider support,
+methodological superiority, authenticated hosting, independent package
+conformance, completed migration, public release or version 1.0 readiness.

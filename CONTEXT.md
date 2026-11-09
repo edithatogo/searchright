@@ -52,10 +52,19 @@ may be claimed. The vertical-slice completion rule is in
 
 ## Current evidence ceiling
 
-The repository is source-verified and assertion-rebaselined. It is not
-compiler-verified, end-to-end fixture-proven, live-provider-proven,
-downstream-compatible, operationally rehearsed, externally validated, remotely
-bootstrapped or registry-accepted until matching receipts exist.
+The repository-wide `source_verified` label describes the conservative inventory
+level. It does not erase stronger evidence for an individual component and
+revision. The dated observation in
+`verification/receipts/project-status-snapshot.json` records cross-platform
+compiler/tests, component fixtures and regular admission at an exact revision,
+alongside the later dependency regression. Do not transfer those results to an
+untested head or to live, downstream, operational, external or publication claims.
+
+The remote repository, issue hierarchy and Project have historical bootstrap
+receipts. Current issue convergence and Project fields/views/item parity require
+separate observations. The 9 November canonical reconciliation restores unmet
+requirements that simulated panels had incorrectly closed; keep authentic
+component evidence and original task identities.
 
 All packages are non-publishable and zero packages are marked publish-ready.
 Provider baselines are local drift controls, not live API evidence. The derived

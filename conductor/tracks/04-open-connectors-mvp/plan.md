@@ -1,8 +1,6 @@
 # Plan: 04 Open provider connectors MVP
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -65,9 +63,10 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-04-phase-3 -->
 
-- [x] Run authorised, redacted live smokes for each advertised provider.
-- [x] Verify upstream terms, rate limits and response changes at release time.
-- [x] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
+- [x] Compile and run connector fixtures.
+- [ ] Run authorised, redacted live smokes for each advertised provider.
+- [ ] Verify upstream terms, rate limits and response changes at release time.
+- [ ] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
 
 ## Phase 4: Review and closeout
 
@@ -82,4 +81,5 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
   - Review fix `d7854b0956eed7ec3730ab3219b358d5f1964e77`: Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; observed old-cache bypass, then 61 focused Homebrew tests/Clippy and full pinned 1.97.1 snapshot 6d995108106db62474e2746a2021f29e89603b95 passed.
   - Review fix `362c4bf`: Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt.
   - Review fix `HEAD`: Implement governance tests in tests/test_open_connectors_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 04.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

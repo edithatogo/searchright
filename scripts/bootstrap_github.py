@@ -245,6 +245,10 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--create-project", action="store_true")
     parser.add_argument("--sync-task-state", action="store_true")
+    parser.add_argument(
+        "--sync-issue-state", action="store_true",
+        help="Synchronise canonical task and parent states instead of task states alone",
+    )
     parser.add_argument("--receipt-path", type=Path)
     args = parser.parse_args()
 
@@ -261,6 +265,7 @@ def main() -> int:
         "environments": settings["environments"],
         "create_project": bool(args.create_project),
         "sync_task_state": bool(args.sync_task_state),
+        "sync_issue_state": bool(args.sync_issue_state),
         "operations": [
             "create_or_verify_remote",
             "push_main",
@@ -311,8 +316,11 @@ def main() -> int:
         "--checkpoint-path", str(local_receipts / "github-issue-sync-checkpoint.json"),
         "--receipt-path", str(local_receipts / "github-issue-sync.json"),
     ]
-    if args.sync_task_state:
+    if args.sync_issue_state:
+        issue_command.append("--sync-issue-state")
+    elif args.sync_task_state:
         issue_command.append("--sync-task-state")
+    if args.sync_task_state or args.sync_issue_state:
         issue_env["SEARCHRIGHT_GITHUB_TASK_STATE_APPLY"] = "1"
     issue_process = run(issue_command, env=issue_env)
     issue_receipt = json.loads(issue_process.stdout)
@@ -339,6 +347,8 @@ def main() -> int:
             "issues": len(issue_receipt.get("issues", [])),
             "relationships": len(issue_receipt.get("relationships", [])),
             "task_state_apply": issue_receipt.get("task_state_apply"),
+            "issue_state_apply": issue_receipt.get("issue_state_apply"),
+            "state_scope": issue_receipt.get("state_scope"),
         },
         "project_sync": {
             "project": project_receipt.get("project"),

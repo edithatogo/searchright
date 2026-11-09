@@ -31,8 +31,11 @@
     "SR-006",
     "SR-007"
   ],
-  "blockers": [],
-  "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.",
+  "blockers": [
+    "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
+    "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
+  ],
+  "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-02",
@@ -68,8 +71,6 @@
     "verification/receipts/track-02-agent-panel-evaluation.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
     {
       "commit": "6f86326",
@@ -86,6 +87,7 @@
     {
       "commit": "HEAD",
       "summary": "Implement tests/test_query_ast_dialects_governance.py (6/6 passing network-free), convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-02-conductor-review-2026-11-09.json, and archive Track 02 in-place while preserving external evidence gates."
-    }
+    },
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
   ]
 }

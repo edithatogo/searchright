@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/25-provenance-research-objects/plan.md`
 
 ## Task subissues
 
-- [x] T01: Compile and run golden provenance export tests via deterministic scenario fixtures. (`track-25-phase-3-task-01`)
-- [x] T02: Validate produced RO-Crates with independent tooling via simulated agent-panel protocol. (`track-25-phase-3-task-02`)
-- [x] T03: Pilot OSF/Zenodo/repository deposit without automatic write authority via dry-run contracts. (`track-25-phase-3-task-03`)
+- [x] T01: Compile and run golden provenance export tests. (`track-25-phase-3-task-01`)
+- [ ] T02: Validate produced RO-Crates with independent tooling. (`track-25-phase-3-task-02`)
+- [ ] T03: Pilot OSF/Zenodo/repository deposit without automatic write authority. (`track-25-phase-3-task-03`)
 
 ## Evidence rule
 

@@ -2,7 +2,7 @@
   "domains": [
     {
       "blockers": [
-        "Hosted dependency resolution passes; runtime sandbox evidence remains open"
+        "Dependency resolution is revision-bound; the later lock mismatch and runtime sandbox evidence remain separate from static architecture checks."
       ],
       "domain": "architecture_fitness",
       "level": "source_verified",
@@ -10,7 +10,7 @@
     },
     {
       "blockers": [
-        "133 assertions remain inherited, partial, scaffolded or external rather than individually source implemented"
+        "All 200 assertions have individual source mappings; restored live, human, downstream and publication gates remain independent of those mappings."
       ],
       "domain": "assertion_traceability",
       "level": "source_verified",
@@ -100,11 +100,11 @@
     },
     {
       "blockers": [
-        "Hosted Cargo tests pass; authorized live fixtures and methodological performance remain unevidenced"
+        "Bounded component fixtures passed at f502104a81c43ed0117886ce8cb21f00fdeb7588; this does not prove complete live review execution or methodological performance."
       ],
       "domain": "fixture_behavior",
-      "level": "contracted",
-      "receipt": null
+      "level": "fixture_proven",
+      "receipt": "verification/receipts/project-status-snapshot.json"
     },
     {
       "blockers": [
@@ -115,13 +115,17 @@
       "receipt": "verification/gate-catalog.json"
     },
     {
-      "blockers": [],
+      "blockers": [
+        "Historical bootstrap is evidenced; current Project fields, views and item parity are not verified by the 9 November assessment."
+      ],
       "domain": "github_control_plane",
       "level": "live_proven",
       "receipt": "verification/receipts/track-31-bootstrap-exact-main.json"
     },
     {
-      "blockers": [],
+      "blockers": [
+        "Historical apply/audit is evidenced; use a fresh remote comparison after restoring canonical requirements and derived parent states."
+      ],
       "domain": "github_issue_hierarchy",
       "level": "live_proven",
       "receipt": "verification/receipts/track-31-audit-exact-main.json"
@@ -183,8 +187,7 @@
     },
     {
       "blockers": [
-        "Rust parsers are compiler-tested",
-        "No authorised redacted live canary"
+        "Rust parser component tests passed at the exact revision named in the status snapshot; authorised redacted live canaries remain open."
       ],
       "domain": "provider_contract_baselines",
       "level": "source_verified",
@@ -202,7 +205,7 @@
     {
       "blockers": [
         "All packages remain publish=false",
-        "Compiler, API and SemVer admission pass; package release evidence remains absent"
+        "Compiler, API and SemVer have historical exact-revision evidence; package release evidence remains absent."
       ],
       "domain": "public_package_release",
       "level": "contracted",
@@ -244,12 +247,11 @@
     },
     {
       "blockers": [
-        "Hosted Rust 1.97.1 cross-platform admission passes",
-        "Cargo.lock is committed; broader maturity evidence remains open"
+        "Native admission passed at f502104a81c43ed0117886ce8cb21f00fdeb7588; the later dc3eabe66b99e26cf6320297b258efb060e68d19 lock mismatch requires a separately observed repair result."
       ],
       "domain": "rust_compilation",
-      "level": "contracted",
-      "receipt": null
+      "level": "compiler_verified",
+      "receipt": "verification/receipts/project-status-snapshot.json"
     },
     {
       "blockers": [
@@ -280,5 +282,6 @@
   ],
   "repository_level": "source_verified",
   "schema_version": "org.searchright.evidence-ledger.v1",
-  "updated_at": "2026-08-12"
+  "updated_at": "2026-11-09",
+  "inventory_level_scope": "repository_level describes the source inventory; per-domain levels and dated receipts record stronger bounded evidence without promoting unrelated claims."
 }

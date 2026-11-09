@@ -36,8 +36,15 @@
     "SR-030",
     "SR-047"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating wasi-systems-architect, mcp-protocol-specialist, and security-governance-auditor roles, with Ed25519 signed manifest release verification, capability authorization, and tamper-resistance verified in crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for live Wasmtime guest execution, cluster scalability, or remote Streamable HTTP under Track 34. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Compile WASI components and run the component conformance suite.",
+    "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
+    "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
+    "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+    "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
+    "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating wasi-systems-architect, mcp-protocol-specialist, and security-governance-auditor roles, with Ed25519 signed manifest release verification, capability authorization, and tamper-resistance verified in crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for live Wasmtime guest execution, cluster scalability, or remote Streamable HTTP under Track 34. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-24",
@@ -74,9 +81,8 @@
     "verification/receipts/panel-track-24-governance-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-08",
   "review_fixes": [
-    "Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion."
+    "Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

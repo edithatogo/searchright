@@ -24,8 +24,12 @@
   "requirements": [
     "SR-044"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles. Panel output is a simulation instrument, not a substitute for vendor licensing agreements or live user-credentialed audits. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Obtain authorised user credentials and confirm current vendor terms.",
+    "Implement/test vendor-specific live transports without storing credentials.",
+    "Record redacted user-run smoke receipts; no bundled access is permitted."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles. Panel output is a simulation instrument, not a substitute for vendor licensing agreements or live user-credentialed audits. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-21",
@@ -40,6 +44,8 @@
       "track-21-phase-2-task-01",
       "track-21-phase-2-task-02",
       "track-21-phase-3-task-01",
+      "track-21-phase-3-task-02",
+      "track-21-phase-3-task-03",
       "track-21-phase-4-task-01",
       "track-21-phase-4-task-02",
       "track-21-phase-4-task-03",
@@ -55,9 +61,8 @@
     "verification/receipts/panel-track-21-security-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-08",
   "review_fixes": [
-    "Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion."
+    "Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

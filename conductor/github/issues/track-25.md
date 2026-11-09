@@ -21,13 +21,13 @@ Export immutable review lineage as deterministic RO-Crate and W3C PROV research 
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-25-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-25-phase-2`)
+- [x] Phase 1: Source implementation (`track-25-phase-1`)
+- [x] Phase 2: Source-level verification (`track-25-phase-2`)
 - [ ] Phase 3: Higher-evidence gates (`track-25-phase-3`)
 - [ ] Phase 4: Review and closeout (`track-25-phase-4`)
 
 ## Claim boundary
 
-Fixture-proven via structured agent-panel evaluation simulating ro-crate-interop-specialist, prov-lineage-architect, and open-science-governance-auditor roles, with RO-Crate 1.3 profile conformance, W3C PROV-O derivation chains, and fail-closed predecessor validation verified in crates/searchright-provenance/tests/provenance_interop_scenarios.rs and review_bundle.py self-test. Simulation instrument and compiler-tested local boundaries only, not a substitute for live external repository deposit or independent RO-Crate CLI validation. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Local provenance and review-bundle fixtures passed at f502104a81c43ed0117886ce8cb21f00fdeb7588, including deterministic ordering, input permutation, duplicate-hash and missing-predecessor cases. These self-authored checks do not establish RO-Crate 1.3 or W3C PROV conformance: required root metadata, content-size semantics and entity/activity derivation typing still need correction and an independent consumer. Actual repository deposit remains open. Historical simulated-panel receipts are preparation reviews, not independent acceptance.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

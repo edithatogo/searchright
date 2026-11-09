@@ -3,11 +3,11 @@
 
 Parent phase key: `track-36-phase-3`
 Conductor plan: `conductor/tracks/36-release-candidate-pilots/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.
+- [ ] Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.
 
 ## Completion and evidence contract
 

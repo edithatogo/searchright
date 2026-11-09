@@ -3,11 +3,11 @@
 
 Parent phase key: `track-13-phase-3`
 Conductor plan: `conductor/tracks/13-integration-passports-github-context/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.
+- [ ] Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.
 
 ## Completion and evidence contract
 

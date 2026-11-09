@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/34-authenticated-remote-mcp/plan.md`
 
 ## Task subissues
 
-- [x] T01: Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance. (`track-34-phase-3-task-01`)
-- [x] T02: Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance. (`track-34-phase-3-task-02`)
-- [x] T03: Complete independent security/privacy review before any hosted or multi-tenant claim. (`track-34-phase-3-task-03`)
+- [ ] T01: Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance. (`track-34-phase-3-task-01`)
+- [ ] T02: Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance. (`track-34-phase-3-task-02`)
+- [ ] T03: Complete independent security/privacy review before any hosted or multi-tenant claim. (`track-34-phase-3-task-03`)
 
 ## Evidence rule
 

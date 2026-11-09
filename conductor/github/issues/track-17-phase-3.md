@@ -6,7 +6,9 @@ Conductor plan: `conductor/tracks/17-benchmarks-calibration/plan.md`
 
 ## Task subissues
 
-- [x] T01: Complete benchmark and calibration evaluation via agent-panel protocol simulating benchmark-evaluator, information-specialist, and methodologist roles. (`track-17-phase-3-task-01`)
+- [ ] T01: Execute versioned benchmark suites and publish raw receipts. (`track-17-phase-3-task-01`)
+- [ ] T02: Complete the prospective multi-model and information-specialist calibration pilot. (`track-17-phase-3-task-02`)
+- [ ] T03: Assess subgroup, topic and source-specific performance before any ranking claim. (`track-17-phase-3-task-03`)
 
 ## Evidence rule
 

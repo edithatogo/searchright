@@ -3,11 +3,11 @@
 
 Parent phase key: `track-19-phase-3`
 Conductor plan: `conductor/tracks/19-registries-publication/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Complete registry validation, dry-run package checks, and scholarly publication evaluation via agent-panel protocol simulating registry-evaluator, publication-editor, and governance-auditor roles.
+- [ ] Publish a verified release that registry packets can reference.
 
 ## Completion and evidence contract
 

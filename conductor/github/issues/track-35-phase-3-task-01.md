@@ -3,11 +3,11 @@
 
 Parent phase key: `track-35-phase-3`
 Conductor plan: `conductor/tracks/35-sdk-docs-adoption/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.
+- [ ] Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.
 
 ## Completion and evidence contract
 

@@ -40,8 +40,12 @@
     "SR-054",
     "SR-069"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating formal-assurance-architect, contract-evolution-specialist, and quality-governance-auditor roles, with finite-state lifecycle transitions, human authority gates, agent screening restrictions, and fail-closed schema migration policies verified in crates/searchright-assurance/tests/assurance_scenarios.rs, scripts/check_schema_migrations.py, and tests/test_mcp_authority_state_machine.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for formal Kani mathematical proofs or production persisted data migration drills. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Add compatibility fixtures for each public contract version.",
+    "Run semver and cross-version MCP/CLI contract tests.",
+    "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating formal-assurance-architect, contract-evolution-specialist, and quality-governance-auditor roles, with finite-state lifecycle transitions, human authority gates, agent screening restrictions, and fail-closed schema migration policies verified in crates/searchright-assurance/tests/assurance_scenarios.rs, scripts/check_schema_migrations.py, and tests/test_mcp_authority_state_machine.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for formal Kani mathematical proofs or production persisted data migration drills. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-26",
@@ -75,9 +79,8 @@
     "verification/receipts/panel-track-26-governance-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
-    "Upgrade all five Track 26 assertions (T26-A001..T26-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-assurance, check_schema_migrations.py, workflow trace schemas, and tests/test_formal_assurance_contract_evolution.py and tests/test_mcp_authority_state_machine.py; create unit test suite in tests/test_formal_assurance_contract_evolution.py validating workflow-trace schemas, fail-closed schema migration registry policies, non-destructive forward migrations with rollback support, and check_schema_migrations.py execution; integrate Hypothesis stateful property testing over the searchright-mcp stdio binary verifying screening authority boundaries; record conductor review receipt and preserve open Kani/Loom/Miri proofs, model-check traces, contract compatibility fixtures, semver cross-version contract tests, and persisted-data migration drill blockers without false promotion."
+    "Upgrade all five Track 26 assertions (T26-A001..T26-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-assurance, check_schema_migrations.py, workflow trace schemas, and tests/test_formal_assurance_contract_evolution.py and tests/test_mcp_authority_state_machine.py; create unit test suite in tests/test_formal_assurance_contract_evolution.py validating workflow-trace schemas, fail-closed schema migration registry policies, non-destructive forward migrations with rollback support, and check_schema_migrations.py execution; integrate Hypothesis stateful property testing over the searchright-mcp stdio binary verifying screening authority boundaries; record conductor review receipt and preserve open Kani/Loom/Miri proofs, model-check traces, contract compatibility fixtures, semver cross-version contract tests, and persisted-data migration drill blockers without false promotion.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission. Bounded formal execution: https://github.com/edithatogo/searchright/actions/runs/42566040236."
   ]
 }

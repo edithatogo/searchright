@@ -48,8 +48,13 @@
     "SR-026",
     "SR-031"
   ],
-  "blockers": [],
-  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+  "blockers": [
+    "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
+    "Run scenario-based agent evaluations across supported hosts and models.",
+    "Calibrate authority and failure modes with human information specialists.",
+    "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
+  ],
+  "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-11",
@@ -93,8 +98,6 @@
     "verification/receipts/track-11-host-model-claude-code-claude-sonnet-4-6.json",
     "verification/receipts/track-11-registry-target-assessment.json"
   ],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
     {
       "commit": "a170ff0ebc3226bb3fb390841eb7bb81e8fb1e2c",
@@ -111,6 +114,7 @@
     {
       "commit": "HEAD",
       "summary": "Implemented tests/test_agentic_skill_governance.py, executed agent panel review, verified authority boundaries and sibling caller policy, and archived Track 11 with fixture-proven evidence."
-    }
+    },
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

@@ -23,8 +23,10 @@
     "SR-022",
     "SR-058"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Complete reviewer usability and inter-rater calibration evaluation."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-07",
@@ -39,6 +41,7 @@
       "track-07-phase-2-task-01",
       "track-07-phase-2-task-02",
       "track-07-phase-3-task-01",
+      "track-07-phase-3-task-02",
       "track-07-phase-4-task-01",
       "track-07-phase-4-task-02",
       "track-07-phase-4-task-03",
@@ -65,6 +68,7 @@
       "P07-C004: Import strips evidence excerpts"
     ]
   },
-  "lifecycle": "archived",
-  "archived_on": "2026-08-31"
+  "review_fixes": [
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
+  ]
 }

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-16-phase-3`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion.
+- [ ] Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion.
 
 ## Completion and evidence contract
 

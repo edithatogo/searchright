@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles.
+- [x] Compile and execute state-machine and authority-negative tests.
 
 ## Completion and evidence contract
 

@@ -1,10 +1,12 @@
 # Plan: 26 Formal assurance and contract evolution
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -48,11 +50,11 @@ GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-26-phase-3 -->
 
-- [x] Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures.
-- [x] Compile and execute model-check traces and forbidden-transition tests via exhaustive 10x10 stage transition matrices.
-- [x] Add compatibility fixtures for each public contract version via schema catalog and migration plans.
-- [x] Run semver and cross-version MCP/CLI contract tests via Hypothesis stateful property testing.
-- [x] Compile and execute representative persisted-data migrations, backward readers and rollback projections via check_schema_migrations.py.
+- [x] Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.
+- [x] Compile and execute model-check traces and forbidden-transition tests.
+- [ ] Add compatibility fixtures for each public contract version.
+- [ ] Run semver and cross-version MCP/CLI contract tests.
+- [ ] Compile and execute representative persisted-data migrations, backward readers and rollback projections.
 
 ## Phase 4: Review and closeout
 
@@ -62,4 +64,5 @@ GitHub issue key: `track-26`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all five Track 26 assertions (T26-A001..T26-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-assurance, check_schema_migrations.py, workflow trace schemas, and tests/test_formal_assurance_contract_evolution.py and tests/test_mcp_authority_state_machine.py; create unit test suite in tests/test_formal_assurance_contract_evolution.py validating workflow-trace schemas, fail-closed schema migration registry policies, non-destructive forward migrations with rollback support, and check_schema_migrations.py execution; integrate Hypothesis stateful property testing over the searchright-mcp stdio binary verifying screening authority boundaries; record conductor review receipt and preserve open Kani/Loom/Miri proofs, model-check traces, contract compatibility fixtures, semver cross-version contract tests, and persisted-data migration drill blockers without false promotion.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission. Bounded formal execution: https://github.com/edithatogo/searchright/actions/runs/42566040236.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

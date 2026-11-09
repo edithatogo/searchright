@@ -3,11 +3,11 @@
 
 Parent phase key: `track-08-phase-3`
 Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Obtain an accountable independent PRESS review of representative generated strategies and appendices.
+- [ ] Obtain an accountable independent PRESS review of representative generated strategies and appendices.
 
 ## Completion and evidence contract
 

@@ -155,6 +155,8 @@ def compare_repository(settings: dict[str, Any], errors: list[str], warnings: li
 def compare_issues(
     hierarchy: dict[str, Any],
     errors: list[str],
+    *,
+    check_issue_state: bool = False,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
     repository = hierarchy["repository"]
     nodes = hierarchy["nodes"]
@@ -166,6 +168,7 @@ def compare_issues(
     content_drift = 0
     label_drift = 0
     state_drift = 0
+    parent_state_drift = 0
     for node in nodes:
         issue = observed.get(node["key"])
         if issue is None:
@@ -175,14 +178,19 @@ def compare_issues(
             content_drift += 1
         if remote_label_names(issue) != set(node["labels"]):
             label_drift += 1
-        if node["kind"] == "task" and str(issue.get("state", "")).lower() != node["desired_state"]:
-            state_drift += 1
+        if str(issue.get("state", "")).lower() != node["desired_state"]:
+            if node["kind"] == "task":
+                state_drift += 1
+            elif check_issue_state:
+                parent_state_drift += 1
     if content_drift:
         errors.append(f"{content_drift} canonical issues have content drift")
     if label_drift:
         errors.append(f"{label_drift} canonical issues have label drift")
     if state_drift:
         errors.append(f"{state_drift} canonical task issues have state drift")
+    if parent_state_drift:
+        errors.append(f"{parent_state_drift} canonical parent issues have state drift")
 
     expected_children: dict[str, list[str]] = defaultdict(list)
     for node in nodes:
@@ -213,6 +221,8 @@ def compare_issues(
         "content_drift": content_drift,
         "label_drift": label_drift,
         "task_state_drift": state_drift,
+        "parent_state_drift": parent_state_drift if check_issue_state else None,
+        "state_scope": "all_issues" if check_issue_state else "task_issues_only",
         "relationships_expected": len(nodes) - 1,
         "relationships_observed": relationships_observed,
     }
@@ -306,6 +316,10 @@ def compare_project(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--receipt-path", type=Path)
+    parser.add_argument(
+        "--check-issue-state", action="store_true",
+        help="Audit canonical parent states as well as task states after all-issue state sync",
+    )
     args = parser.parse_args()
     source = source_state()
     if args.receipt_path and not source["tracked_worktree_clean"]:
@@ -319,7 +333,7 @@ def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
     repository = compare_repository(settings, errors, warnings)
-    issues, issue_summary = compare_issues(hierarchy, errors)
+    issues, issue_summary = compare_issues(hierarchy, errors, check_issue_state=args.check_issue_state)
     project_summary = compare_project(project, hierarchy, issues, errors, warnings)
     receipt = {
         "schema_version": "org.searchright.github-control-plane-audit.v1",

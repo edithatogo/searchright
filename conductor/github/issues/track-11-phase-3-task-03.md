@@ -3,11 +3,11 @@
 
 Parent phase key: `track-11-phase-3`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Calibrate authority and failure modes with human information specialists.
+- [ ] Calibrate authority and failure modes with human information specialists.
 
 ## Completion and evidence contract
 

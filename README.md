@@ -8,16 +8,14 @@ living literature searches. One product facade exposes the same governed
 operations through a Rust API, CLI, Model Context Protocol (MCP) server and
 agent skill.
 
-> **Current evidence level: source-verified technical alpha with historical
-> hosted admission and bounded exact-head clean-room evidence.**
-> The repository contains a committed `Cargo.lock` and compiler-backed hosted
-> evidence. The observed `main` revision is
-> `9b4a4a4dba818d75f9dbb9ee6be458871b09a878`; exact-head clean-room workflow
-> run `34338222604` succeeded. The last fully admitted revision in the committed
-> evidence record is `10f983d44e67c08be44131ea6e2b7cf75dc147f6`.
-> No complete exact-head admission matrix, live-provider evidence, downstream
-> cutover, registry acceptance or external methodological validation is claimed.
-> See `PROJECT_STATUS.md` and
+> **Technical alpha with revision-bound native tests and component fixtures.**
+> The 9 November 2026 reconciliation initially observed
+> `dc3eabe66b99e26cf6320297b258efb060e68d19`, whose dependency mismatch caused
+> admission failures. The last fully admitted regular-suite revision in that
+> observation is `f502104a81c43ed0117886ce8cb21f00fdeb7588`.
+> Live review execution, independent evaluation and public package release
+> remain unfinished. See [project status](PROJECT_STATUS.md), the
+> [delivery plan](conductor/frontier-plan.md), and the dated observation in
 > `verification/receipts/project-status-snapshot.json`.
 
 ## Why Searchright
@@ -141,11 +139,11 @@ submodules, copied implementation code and automatic dependency promotion.
 
 ## Implementation truth model
 
-Every one of the 38 Conductor tracks now has assertion-level traceability. The
-current 200 acceptance assertions include 108 symbol-and-gate mappings, seven
-path-and-gate mappings, one contract mapping and 84 conservative track-level
-mappings. A track cannot be promoted merely because a named file exists, an
-issue is closed or a remote Project field changes.
+Every one of the 38 Conductor tracks has assertion-level traceability. All 200
+acceptance assertions have individual implementation/test/evidence mappings.
+Those mappings and executed component tests do not satisfy unfinished live,
+human, downstream or publication requirements. A track cannot be promoted merely
+because a named file exists, an issue is closed or a remote Project field changes.
 
 The repository distinguishes:
 
@@ -190,23 +188,19 @@ MoSCoW requirements and **38 ordered tracks** spanning foundation through a
 version 1.0 maturity dossier. Every track has `spec.md`, a four-phase `plan.md`,
 `metadata.json`, `evidence.json`, source work and higher-evidence blockers.
 
-The canonical roadmap deterministically renders **595 GitHub work items** in a four-level hierarchy:
+The existing issue projection preserves one epic, track and phase parents, and
+stable task identities. Obtain current counts from `scripts/conductor_status.py`
+and `conductor/github/issue-hierarchy.json`; issue counts are not a quality score.
+Completed phases and genuinely archived tracks have derived closed states, while
+unfinished tasks and their parents remain open. Future work should use the
+[coarser delivery plan](conductor/frontier-plan.md#lean-delivery-rules) rather than
+create another hierarchy.
 
-- one roadmap epic;
-- 38 track issues;
-- 152 phase subissues, four under each track;
-- 404 task subissues corresponding to every top-level Conductor task.
-
-Remote mutation is dry-run first and requires an explicit workflow input, a
-protected write environment, issue/project scopes, a clean Git tree and a
-second environment opt-in. A declarative GitHub Project v2 manifest owns 12
-custom fields and six views, including a separate implementation-gap view; an additive synchroniser creates or updates the
-Project and places all 595 issue nodes into it without deleting or archiving
-remote work. A one-command bootstrap controller can create the remote repository,
-apply settings and the main-branch ruleset, synchronise the issue hierarchy, and
-create/populate the Project. The public Searchright repository, issue hierarchy
-and Project exist; exact-current projection parity still requires the observed
-post-apply audit receipt named by the launch roadmap.
+The synchroniser previews changes before applying the authorised issue/project
+updates. It preserves remote identities and history and does not delete remote
+work. The public repository, issue hierarchy and Project exist. Current issue
+parity and current Project fields/views/item parity are separate observations;
+the 9 November reconciliation does not claim a current Project audit.
 
 The repository prepares host-aware Conductor installation scripts and records the
 observed upstream version. A compatible Gemini, Antigravity or Claude host was
@@ -250,7 +244,7 @@ Once Rust 1.97.1 and dependency access are available:
 
 ```bash
 ./scripts/bootstrap.sh
-cargo generate-lockfile
+cargo fetch --locked
 npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
 ./scripts/verify.sh
 

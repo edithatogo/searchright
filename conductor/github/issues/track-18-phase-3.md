@@ -6,7 +6,9 @@ Conductor plan: `conductor/tracks/18-alpha-release/plan.md`
 
 ## Task subissues
 
-- [x] T01: Complete alpha release, packaging reproducibility, workflow hardening, and distribution evaluation via agent-panel protocol simulating release-architect, security-auditor, and distribution-evaluator roles. (`track-18-phase-3-task-01`)
+- [ ] T01: Verify the committed Cargo.lock and pass the full release workflow. (`track-18-phase-3-task-01`)
+- [ ] T02: Build/install-smoke supported binaries and OCI image. (`track-18-phase-3-task-02`)
+- [ ] T03: Create signed tag, checksums, attestations and public release artefacts. (`track-18-phase-3-task-03`)
 
 ## Evidence rule
 

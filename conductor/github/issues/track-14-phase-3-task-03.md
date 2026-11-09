@@ -3,11 +3,11 @@
 
 Parent phase key: `track-14-phase-3`
 Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Remove superseded downstream code only after the deletion gate passes.
+- [ ] Remove superseded downstream code only after the deletion gate passes.
 
 ## Completion and evidence contract
 

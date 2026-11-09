@@ -40,8 +40,10 @@
         "verification/receipts/track-16-pr752-delivery-2026-11-06.json",
         "verification/receipts/worktree-consolidation-verified-2026-11-06.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust jobs on main; committed lockfiles and toolchains are deterministically verified."
+      "open_gates": [
+        "Run the scheduled mutation suite on the exact candidate and retain its hosted artifact."
+      ],
+      "permitted_claim": "Native and static jobs passed on f502104a81c43ed0117886ce8cb21f00fdeb7588; the current dc3eabe66b99e26cf6320297b258efb060e68d19 candidate stopped at locked dependency resolution. Prior green evidence does not admit later revisions."
     },
     {
       "assertion_id": "T16-A002",
@@ -77,8 +79,11 @@
         "verification/receipts/track-16-conductor-review-2026-11-09.json",
         "verification/receipts/track-16-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "All unit, vertical-slice, coverage policy and quality harness tests pass deterministically across the repository."
+      "open_gates": [
+        "Run the scheduled mutation suite on the exact candidate and retain its hosted artifact.",
+        "Raise measured line coverage above 90 percent with meaningful tests; the 61 percent admission ratchet is not the maturity target."
+      ],
+      "permitted_claim": "Native unit and scenario suites and coverage policy passed on f502104a81c43ed0117886ce8cb21f00fdeb7588. Measured line coverage was 88.28 percent; the greater-than-90-percent maturity target and an executed scheduled mutation result remain open."
     },
     {
       "assertion_id": "T16-A003",
@@ -113,8 +118,10 @@
         "verification/receipts/track-16-coverage-tranche-2026-11-06.json",
         "verification/receipts/track-16-pr749-delivery-2026-11-06.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Coverage policy configurations, non-regression ratchets, and workflow hardening are verified deterministically."
+      "open_gates": [
+        "Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity."
+      ],
+      "permitted_claim": "Coverage policy and workflow checks exist and the f502104a81c43ed0117886ce8cb21f00fdeb7588 coverage run measured 88.28 percent. Passing the admission ratchet does not meet the greater-than-90-percent maturity target."
     },
     {
       "assertion_id": "T16-A004",
@@ -161,8 +168,10 @@
         "verification/receipts/track-16-pr752-delivery-2026-11-06.json",
         "verification/receipts/track-16-native-certs-review-2026-11-06.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Supply chain configuration, cargo-vet governance, architecture fitness, and gate catalog consistency pass deterministically."
+      "open_gates": [
+        "Replace temporary exact-version exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline."
+      ],
+      "permitted_claim": "Supply-chain checks passed on f502104a81c43ed0117886ce8cb21f00fdeb7588 under the recorded exemption policy. The ledger retains 235 active entries; current dc3eabe66b99e26cf6320297b258efb060e68d19 has an unresolved libm 0.2.16 audit gap. Exemptions are not qualifying audits."
     },
     {
       "assertion_id": "T16-A005",
@@ -237,7 +246,9 @@
         "verification/receipts/track-16-conductor-review-2026-11-09.json",
         "verification/receipts/track-16-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate compiler, coverage, live, external and release receipts at the corresponding evidence levels."
+      ],
       "permitted_claim": "Machine-readable static and exact-head receipts are produced across all 57 harness gates and Conductor review workflows."
     }
   ]

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-15-phase-3`
 Conductor plan: `conductor/tracks/15-estate-migration/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Open, test and merge replacement changes in each affected repository.
+- [ ] Open, test and merge replacement changes in each affected repository.
 
 ## Completion and evidence contract
 

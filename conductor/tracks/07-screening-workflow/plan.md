@@ -1,10 +1,12 @@
 # Plan: 07 Governed screening workflow
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-08-31**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -30,7 +32,8 @@ GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-07-phase-3 -->
 
-- [x] Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles.
+- [x] Compile and execute state-machine and authority-negative tests.
+- [ ] Complete reviewer usability and inter-rater calibration evaluation.
 
 ## Phase 4: Review and closeout
 
@@ -39,4 +42,5 @@ GitHub issue key: `track-07`. Each numbered phase maps to the same-numbered nati
 - [x] Reconcile source paths, requirements, interface effects and claim boundaries.
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

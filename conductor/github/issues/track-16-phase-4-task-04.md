@@ -3,11 +3,11 @@
 
 Parent phase key: `track-16-phase-4`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
 
 ## Completion and evidence contract
 

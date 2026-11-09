@@ -911,7 +911,7 @@ GithubIssueHierarchyV2 = TypedDict(
     'project_manifest': Required["Literal['conductor/github/project.json']"],
     'repository': Required['str'],
     'schema_version': Required["Literal['org.searchright.github-issue-hierarchy.v2']"],
-    'state_sync_policy': Required["Literal['task_issues_only']"],
+    'state_sync_policy': Required["Literal['task_issues_only', 'explicit_issue_states']"],
     },
 )
 
@@ -977,7 +977,7 @@ GithubProjectSync = TypedDict(
     'promotion_policy': Required["Literal['remote_state_cannot_promote_evidence']"],
     'receipt_directory': Required["Literal['.searchright/receipts']"],
     'remote_audit_path': Required["Literal['scripts/audit_github_control_plane.py']"],
-    'state_policy': Required["Literal['task_issues_only']"],
+    'state_policy': Required["Literal['task_issues_only', 'explicit_issue_states']"],
     },
 )
 

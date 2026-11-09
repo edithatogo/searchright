@@ -63,6 +63,23 @@ def phase_tasks(section: str) -> list[Task]:
     return tasks
 
 
+def track_complete(entry: dict[str, Any], phases_complete: dict[int, bool]) -> bool:
+    """Close an archived work unit only when its canonical closeout is complete.
+
+    This projects recorded evidence; it cannot establish a missing external
+    review or release. Active tracks and absent/ambiguous blockers remain open.
+    """
+    return (
+        entry.get("lifecycle") == "archived"
+        and entry.get("closeout_completed") is True
+        and entry.get("status") == "source_implemented"
+        and entry.get("implementation_state") == "source_implemented"
+        and entry.get("blockers") == []
+        and set(phases_complete) == {1, 2, 3, 4}
+        and all(phases_complete.values())
+    )
+
+
 def marker(key: str) -> str:
     return f"<!-- searchright-issue-key: {key} -->"
 
@@ -89,6 +106,8 @@ def project_status(kind: str, *, completed: bool = False, phase: int | None = No
     if kind == "epic":
         return "In progress"
     if kind == "track":
+        if completed:
+            return "Done"
         if track_status == "source_implemented":
             return "Source complete"
         if track_status in {"external_evidence_required", "submission_prepared", "release_prepared"}:
@@ -96,7 +115,7 @@ def project_status(kind: str, *, completed: bool = False, phase: int | None = No
         return "In progress"
     if kind == "phase":
         if completed:
-            return "Source complete"
+            return "Done"
         if phase == 3:
             return "Evidence blocked"
         if phase == 4:
@@ -146,7 +165,8 @@ def project_fields(
     return fields
 
 
-def epic_body(entries: list[dict[str, Any]]) -> str:
+def epic_body(entries: list[dict[str, Any]], completed_tracks: set[str] | None = None) -> str:
+    completed_tracks = completed_tracks or set()
     lines = [
         marker("roadmap-epic"),
         "# Searchright roadmap epic",
@@ -157,7 +177,8 @@ def epic_body(entries: list[dict[str, Any]]) -> str:
         "",
     ]
     for entry in entries:
-        lines.append(f"- [ ] `{entry['track_id']}` — {entry['title']} (`track-{entry['track_id']}`)")
+        mark = "x" if entry["track_id"] in completed_tracks else " "
+        lines.append(f"- [{mark}] `{entry['track_id']}` — {entry['title']} (`track-{entry['track_id']}`)")
     lines += [
         "",
         "## Synchronisation contract",
@@ -174,7 +195,8 @@ def epic_body(entries: list[dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
-def track_body(entry: dict[str, Any]) -> str:
+def track_body(entry: dict[str, Any], completed_phases: dict[int, bool] | None = None) -> str:
+    completed_phases = completed_phases or {}
     track_id = entry["track_id"]
     lines = [
         marker(f"track-{track_id}"),
@@ -207,7 +229,8 @@ def track_body(entry: dict[str, Any]) -> str:
         (3, "Higher-evidence gates"),
         (4, "Review and closeout"),
     ):
-        lines.append(f"- [ ] Phase {number}: {title} (`track-{track_id}-phase-{number}`)")
+        mark = "x" if completed_phases.get(number) else " "
+        lines.append(f"- [{mark}] Phase {number}: {title} (`track-{track_id}-phase-{number}`)")
     lines += [
         "",
         "## Claim boundary",
@@ -310,6 +333,7 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
     priorities = requirement_priorities()
     outputs: dict[Path, str] = {}
     nodes: list[dict[str, Any]] = []
+    completed_tracks: set[str] = set()
     outputs[OUT / "roadmap-epic.md"] = epic_body(entries)
     nodes.append(
         {
@@ -344,7 +368,22 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
         track_id = entry["track_id"]
         track_key = f"track-{track_id}"
         track_path = OUT / f"{track_key}.md"
-        outputs[track_path] = track_body(entry)
+        plan_path = ROOT / f"conductor/tracks/{track_id}-{entry['slug']}/plan.md"
+        phases = phase_sections(plan_path.read_text(encoding="utf-8"))
+        if [phase[0] for phase in phases] != [1, 2, 3, 4]:
+            raise ValueError(f"track {track_id} must contain phases 1-4 exactly")
+        tasks_by_phase = {number: phase_tasks(section) for number, _, section in phases}
+        for number, tasks in tasks_by_phase.items():
+            if not tasks:
+                raise ValueError(f"track {track_id} phase {number} has no top-level task")
+        completed_phases = {
+            number: all(task.completed for task in tasks)
+            for number, tasks in tasks_by_phase.items()
+        }
+        completed = track_complete(entry, completed_phases)
+        if completed:
+            completed_tracks.add(track_id)
+        outputs[track_path] = track_body(entry, completed_phases)
         priority = track_priority(entry, priorities)
         labels = [
             "kind:track",
@@ -362,7 +401,7 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
                 "body_path": track_path.relative_to(ROOT).as_posix(),
                 "labels": labels,
                 "status": "prepared_not_synced",
-                "desired_state": "open",
+                "desired_state": "closed" if completed else "open",
                 "track_id": track_id,
                 "phase_number": None,
                 "task_number": None,
@@ -373,7 +412,7 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
                     evidence=entry["evidence_level"],
                     implementation=entry["implementation_state"],
                     priority=priority,
-                    status=project_status("track", track_status=entry["status"]),
+                    status=project_status("track", completed=completed, track_status=entry["status"]),
                     track_id=track_id,
                     phase=None,
                     task=None,
@@ -382,18 +421,12 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
                 ),
             }
         )
-        plan_path = ROOT / f"conductor/tracks/{track_id}-{entry['slug']}/plan.md"
-        phases = phase_sections(plan_path.read_text(encoding="utf-8"))
-        if [phase[0] for phase in phases] != [1, 2, 3, 4]:
-            raise ValueError(f"track {track_id} must contain phases 1-4 exactly")
-        for number, phase_title, section in phases:
-            tasks = phase_tasks(section)
-            if not tasks:
-                raise ValueError(f"track {track_id} phase {number} has no top-level task")
+        for number, phase_title, _ in phases:
+            tasks = tasks_by_phase[number]
             phase_key = f"{track_key}-phase-{number}"
             phase_path = OUT / f"{phase_key}.md"
             outputs[phase_path] = phase_body(entry, number, phase_title, tasks)
-            phase_complete = all(task.completed for task in tasks)
+            phase_complete = completed_phases[number]
             nodes.append(
                 {
                     "key": phase_key,
@@ -403,7 +436,7 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
                     "body_path": phase_path.relative_to(ROOT).as_posix(),
                     "labels": ["kind:phase", "conductor", f"track:{track_id}", f"phase:{number}"],
                     "status": "prepared_not_synced",
-                    "desired_state": "open",
+                    "desired_state": "closed" if phase_complete else "open",
                     "track_id": track_id,
                     "phase_number": number,
                     "task_number": None,
@@ -462,6 +495,7 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
                         ),
                     }
                 )
+    outputs[OUT / "roadmap-epic.md"] = epic_body(entries, completed_tracks)
     hierarchy = {
         "schema_version": "org.searchright.github-issue-hierarchy.v2",
         "repository": "edithatogo/searchright",
@@ -469,7 +503,7 @@ def build() -> tuple[dict[str, Any], dict[Path, str]]:
         "nodes": nodes,
         "generated_at": "source-epoch:2026-08-09",
         "apply_permitted": False,
-        "state_sync_policy": "task_issues_only",
+        "state_sync_policy": "explicit_issue_states",
         "project_manifest": "conductor/github/project.json",
     }
     outputs[HIERARCHY] = json.dumps(hierarchy, indent=2, sort_keys=False) + "\n"

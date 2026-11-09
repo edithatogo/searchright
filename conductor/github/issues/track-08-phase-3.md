@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
 
 ## Task subissues
 
-- [x] T01: Obtain an accountable independent PRESS review of representative generated strategies and appendices. (`track-08-phase-3-task-01`)
+- [ ] T01: Obtain an accountable independent PRESS review of representative generated strategies and appendices. (`track-08-phase-3-task-01`)
 - [x] T02: Obtain a hosted compiler-verified receipt for the exact committed revision. (`track-08-phase-3-task-02`)
 
 ## Evidence rule

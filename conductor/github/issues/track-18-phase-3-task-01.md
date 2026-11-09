@@ -3,11 +3,11 @@
 
 Parent phase key: `track-18-phase-3`
 Conductor plan: `conductor/tracks/18-alpha-release/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Complete alpha release, packaging reproducibility, workflow hardening, and distribution evaluation via agent-panel protocol simulating release-architect, security-auditor, and distribution-evaluator roles.
+- [ ] Verify the committed Cargo.lock and pass the full release workflow.
 
 ## Completion and evidence contract
 

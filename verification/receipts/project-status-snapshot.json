@@ -1,44 +1,177 @@
 {
   "schema_version": "org.searchright.project-status-snapshot.v1",
-  "status_date": "2026-09-10",
+  "status_date": "2026-11-09",
   "observed_default_branch": "main",
-  "observed_main_revision": "9b4a4a4dba818d75f9dbb9ee6be458871b09a878",
-  "last_fully_admitted_revision": "10f983d44e67c08be44131ea6e2b7cf75dc147f6",
+  "observed_main_revision": "dc3eabe66b99e26cf6320297b258efb060e68d19",
+  "last_fully_admitted_revision": "f502104a81c43ed0117886ce8cb21f00fdeb7588",
   "maturity_decision": "not_ready",
-  "evidence_ceiling": "source-verified technical alpha with historical hosted admission and bounded exact-head clean-room evidence",
+  "evidence_ceiling": "technical alpha with revision-bound cross-platform compiler and fixture evidence; live, external and publication evidence remains open",
   "source_bound_counts": {
     "tracks": 38,
-    "active_tracks": 31,
-    "archived_tracks": 7,
-    "total_tasks": 404,
-    "completed_tasks": 209,
-    "open_evidence_tasks": 195,
+    "active_tracks": 0,
+    "archived_tracks": 38,
+    "total_tasks": 396,
+    "completed_tasks": 396,
+    "open_evidence_tasks": 0,
     "requirements_checked": 93
   },
+  "source_bound_counts_interpretation": "These are the observed pre-reconciliation source counts, not accepted completion evidence. The 9 November reconciliation restores unmet requirements; use conductor_status.py on the reconciled revision for its current counts.",
   "exact_head_observations": [
     {
       "kind": "github_actions_run",
-      "workflow": "Clean-room reproducibility",
-      "run_id": 34338222604,
-      "head_sha": "9b4a4a4dba818d75f9dbb9ee6be458871b09a878",
-      "event": "schedule",
+      "workflow": "Security",
+      "run_id": 42569341164,
+      "head_sha": "dc3eabe66b99e26cf6320297b258efb060e68d19",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-09T05:47:55Z",
+      "completed_at": "2026-11-09T06:00:33Z",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/42569341164",
+      "claim_scope": "workflow_result_at_observed_revision",
+      "full_admission_matrix": false,
+      "claim_boundary": "This is one completed workflow at the observed revision. The observed set includes failures and does not establish full admission or broader product maturity."
+    },
+    {
+      "kind": "github_actions_run",
+      "workflow": "Public API and SemVer",
+      "run_id": 42569341023,
+      "head_sha": "dc3eabe66b99e26cf6320297b258efb060e68d19",
+      "event": "push",
       "status": "completed",
       "conclusion": "success",
-      "started_at": "2026-09-09T10:04:18Z",
-      "completed_at": "2026-09-09T10:10:18Z",
-      "claim_scope": "clean_room_reproducibility_only",
+      "started_at": "2026-11-09T05:47:55Z",
+      "completed_at": "2026-11-09T05:55:33Z",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/42569341023",
+      "claim_scope": "workflow_result_at_observed_revision",
       "full_admission_matrix": false,
-      "claim_boundary": "This observation establishes clean-room reproducibility evidence only; it is not a complete exact-head admission matrix."
+      "claim_boundary": "This is one completed workflow at the observed revision. The observed set includes failures and does not establish full admission or broader product maturity."
+    },
+    {
+      "kind": "github_actions_run",
+      "workflow": "Clean-room reproducibility",
+      "run_id": 42569340850,
+      "head_sha": "dc3eabe66b99e26cf6320297b258efb060e68d19",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-09T05:47:55Z",
+      "completed_at": "2026-11-09T05:48:34Z",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/42569340850",
+      "claim_scope": "workflow_result_at_observed_revision",
+      "full_admission_matrix": false,
+      "claim_boundary": "This is one completed workflow at the observed revision. The observed set includes failures and does not establish full admission or broader product maturity."
+    },
+    {
+      "kind": "github_actions_run",
+      "workflow": "Coverage",
+      "run_id": 42569340917,
+      "head_sha": "dc3eabe66b99e26cf6320297b258efb060e68d19",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-09T05:47:55Z",
+      "completed_at": "2026-11-09T05:49:04Z",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/42569340917",
+      "claim_scope": "workflow_result_at_observed_revision",
+      "full_admission_matrix": false,
+      "claim_boundary": "This is one completed workflow at the observed revision. The observed set includes failures and does not establish full admission or broader product maturity."
+    },
+    {
+      "kind": "github_actions_run",
+      "workflow": "Formal and adversarial assurance",
+      "run_id": 42569340829,
+      "head_sha": "dc3eabe66b99e26cf6320297b258efb060e68d19",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-09T05:47:55Z",
+      "completed_at": "2026-11-09T05:49:22Z",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/42569340829",
+      "claim_scope": "workflow_result_at_observed_revision",
+      "full_admission_matrix": false,
+      "claim_boundary": "This is one completed workflow at the observed revision. The observed set includes failures and does not establish full admission or broader product maturity."
+    },
+    {
+      "kind": "github_actions_run",
+      "workflow": "CI",
+      "run_id": 42569340967,
+      "head_sha": "dc3eabe66b99e26cf6320297b258efb060e68d19",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "started_at": "2026-11-09T05:47:55Z",
+      "completed_at": "2026-11-09T05:49:33Z",
+      "url": "https://github.com/edithatogo/searchright/actions/runs/42569340967",
+      "claim_scope": "workflow_result_at_observed_revision",
+      "full_admission_matrix": false,
+      "claim_boundary": "This is one completed workflow at the observed revision. The observed set includes failures and does not establish full admission or broader product maturity."
     }
   ],
   "historical_admission": {
-    "revision": "10f983d44e67c08be44131ea6e2b7cf75dc147f6",
-    "checks_passed": 17,
+    "revision": "f502104a81c43ed0117886ce8cb21f00fdeb7588",
+    "checks_passed": 18,
     "failures": 0,
     "pending": 0,
+    "checks_skipped": 2,
     "exact_revision_only": true,
     "transfers_to_observed_head": false,
-    "claim_boundary": "Historical compiler and repository-admission evidence is bound to this exact revision and does not transfer automatically to the observed main revision."
+    "workflow_runs": [
+      {
+        "run_id": 42566040188,
+        "workflow": "Coverage",
+        "url": "https://github.com/edithatogo/searchright/actions/runs/42566040188",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 42566040189,
+        "workflow": "Public API and SemVer",
+        "url": "https://github.com/edithatogo/searchright/actions/runs/42566040189",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 42566040250,
+        "workflow": "Clean-room reproducibility",
+        "url": "https://github.com/edithatogo/searchright/actions/runs/42566040250",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 42566040251,
+        "workflow": "Security",
+        "url": "https://github.com/edithatogo/searchright/actions/runs/42566040251",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 42566040226,
+        "workflow": "CI",
+        "url": "https://github.com/edithatogo/searchright/actions/runs/42566040226",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 42566040190,
+        "workflow": "GitHub control plane",
+        "url": "https://github.com/edithatogo/searchright/actions/runs/42566040190",
+        "conclusion": "success"
+      },
+      {
+        "run_id": 42566040236,
+        "workflow": "Formal and adversarial assurance",
+        "url": "https://github.com/edithatogo/searchright/actions/runs/42566040236",
+        "conclusion": "success"
+      }
+    ],
+    "claim_boundary": "The regular hosted admission suite passed at this exact revision: native CI, coverage admission, security policy, formal component suites, clean-room build and API/SemVer. Scheduled mutation, live operation, independent evaluation and publication are separate obligations; these results do not transfer automatically to later revisions."
+  },
+  "reconciliation": {
+    "date": "2026-11-09",
+    "reason": "Simulated panels and fixture controls had replaced or closed unmet live, human, downstream and publication requirements.",
+    "canonical_source": "conductor/roadmap-coverage.json",
+    "current_status_command": "python scripts/conductor_status.py",
+    "principles": [
+      "Preserve implemented source, tests and authentic revision-bound execution evidence.",
+      "Restore original requirements and stable GitHub task keys; reopen unfinished tasks.",
+      "Derive completed phase and genuinely archived track issue states; do not use issue closure as implementation evidence."
+    ]
   },
   "remote_state_policy": {
     "static_remote_state_claims_allowed": false,
@@ -48,11 +181,14 @@
       "no_open_pull_requests",
       "no_delivery_branches"
     ],
-    "reason": "Dynamic GitHub and local working-copy state cannot remain authoritative in a committed static document without an exact-time receipt."
+    "reason": "This is a dated observation. Read current GitHub and local state separately."
   },
   "limitations": [
-    "No complete exact-head CI, security, formal, release or admission matrix is claimed.",
-    "No live-provider, downstream-cutover, registry-acceptance or external-methodological evidence is claimed.",
-    "The snapshot records bounded observations made on 10 September 2026 and does not promote later commits or remote state."
+    "The observed dc3eabe revision failed five of six observed admission workflows after vendored dependency requirements diverged from Cargo.lock.",
+    "Historical compiler and fixture evidence is valid for f502104; the coverage result is 88.28%, below the greater-than-90% maturity target.",
+    "The 235 active dependency exemptions expire on 10 November 2026; passing the policy does not replace source audits.",
+    "The latest observed scheduled mutation job failed during setup, before executing mutants.",
+    "Current GitHub Project fields, views and item parity were not verified in this reconciliation environment; historical bootstrap receipts remain revision-bound.",
+    "No live-provider, downstream-cutover, independent package-validation, registry-acceptance or external-methodological completion is claimed."
   ]
 }

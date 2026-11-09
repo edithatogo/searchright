@@ -6,6 +6,8 @@ import json
 import re
 from pathlib import Path
 
+from render_github_issues import phase_sections, phase_tasks, track_complete
+
 ROOT = Path(__file__).resolve().parents[1]
 HIERARCHY = ROOT / "conductor/github/issue-hierarchy.json"
 COVERAGE = ROOT / "conductor/roadmap-coverage.json"
@@ -31,10 +33,20 @@ def main() -> int:
     expected_tracks = {f"track-{entry['track_id']}" for entry in tracks}
     expected_phases = {f"track-{entry['track_id']}-phase-{number}" for entry in tracks for number in range(1, 5)}
     expected_tasks: set[str] = set()
+    expected_states = {"roadmap-epic": "open"}
     for entry in tracks:
         track_id = entry["track_id"]
         plan = (ROOT / f"conductor/tracks/{track_id}-{entry['slug']}/plan.md").read_text(encoding="utf-8")
         counts = top_level_task_counts(plan)
+        completed_phases = {}
+        for number, _, section in phase_sections(plan):
+            tasks = phase_tasks(section)
+            completed_phases[number] = bool(tasks) and all(task.completed for task in tasks)
+            phase_key = f"track-{track_id}-phase-{number}"
+            expected_states[phase_key] = "closed" if completed_phases[number] else "open"
+            for task in tasks:
+                expected_states[f"{phase_key}-task-{task.number:02d}"] = "closed" if task.completed else "open"
+        expected_states[f"track-{track_id}"] = "closed" if track_complete(entry, completed_phases) else "open"
         if sorted(counts) != [1, 2, 3, 4]:
             errors.append(f"track {track_id} does not expose phases 1-4")
         for phase, count in counts.items():
@@ -82,6 +94,8 @@ def main() -> int:
             errors.append(f"{key} overclaims remote status")
         if node.get("desired_state") not in {"open", "closed"}:
             errors.append(f"{key} has invalid desired state")
+        elif node.get("desired_state") != expected_states.get(key):
+            errors.append(f"{key} desired state differs from canonical completion")
         fields = node.get("project_fields")
         if not isinstance(fields, dict) or not fields:
             errors.append(f"{key} lacks project fields")
@@ -102,8 +116,8 @@ def main() -> int:
                 errors.append(f"{key} closes without source-complete label")
     if data.get("apply_permitted") is not False:
         errors.append("local hierarchy must not authorise remote apply")
-    if data.get("state_sync_policy") != "task_issues_only":
-        errors.append("only task issues may have their remote open/closed state synchronised")
+    if data.get("state_sync_policy") != "explicit_issue_states":
+        errors.append("issue states require the explicit canonical-state sync policy")
     if data.get("project_manifest") != "conductor/github/project.json":
         errors.append("hierarchy must point to the canonical project manifest")
     for entry in tracks:

@@ -12,6 +12,7 @@ Canonical task state: **source task complete**.
   - Review fix `b98fc59`: Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions.
   - Review fix `0e2fff8`: Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt.
   - Review fix `HEAD`: Implement tests/test_query_ast_dialects_governance.py (6/6 passing network-free), convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-02-conductor-review-2026-11-09.json, and archive Track 02 in-place while preserving external evidence gates.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
 
 ## Completion and evidence contract
 

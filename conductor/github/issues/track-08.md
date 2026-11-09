@@ -21,13 +21,13 @@ Render PRISMA flow/appendix outputs and PRESS/standards assessments directly fro
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-08-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-08-phase-2`)
+- [x] Phase 1: Source implementation (`track-08-phase-1`)
+- [x] Phase 2: Source-level verification (`track-08-phase-2`)
 - [ ] Phase 3: Higher-evidence gates (`track-08-phase-3`)
 - [ ] Phase 4: Review and closeout (`track-08-phase-4`)
 
 ## Claim boundary
 
-All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.
+All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

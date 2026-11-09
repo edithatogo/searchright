@@ -25,8 +25,13 @@
     "SR-040",
     "SR-041"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating registry-evaluator, scholarly-publication-editor, and supply-chain-governance-auditor roles. Panel output is a simulation instrument, not a substitute for live external registry submission or journal peer review. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Publish a verified release that registry packets can reference.",
+    "Submit to each external registry with maintainer approval.",
+    "Record public listing, rejection or revision evidence.",
+    "Complete JOSS submission requirements and independent review."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating registry-evaluator, scholarly-publication-editor, and supply-chain-governance-auditor roles. Panel output is a simulation instrument, not a substitute for live external registry submission or journal peer review. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-19",
@@ -41,6 +46,9 @@
       "track-19-phase-2-task-01",
       "track-19-phase-2-task-02",
       "track-19-phase-3-task-01",
+      "track-19-phase-3-task-02",
+      "track-19-phase-3-task-03",
+      "track-19-phase-3-task-04",
       "track-19-phase-4-task-01",
       "track-19-phase-4-task-02",
       "track-19-phase-4-task-03",
@@ -56,9 +64,8 @@
     "verification/receipts/panel-track-19-governance-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-08",
   "review_fixes": [
-    "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion."
+    "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

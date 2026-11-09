@@ -68,7 +68,10 @@
         "verification/receipts/track-11-conductor-review-2026-11-09.json",
         "verification/receipts/track-11-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists."
+      ],
       "permitted_claim": "Planning through reporting stages and conservative authority gates are compiler-checked locally; host/model behaviour and human calibration are not established."
     },
     {
@@ -133,7 +136,9 @@
         "verification/receipts/track-11-conductor-review-2026-11-09.json",
         "verification/receipts/track-11-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run the scenario suite across every declared supported host and model before making behavioural compatibility claims."
+      ],
       "permitted_claim": "Twelve deterministic cases exercise the real Rust evaluator and replay-safe fixture authority. A context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed the twelve public authority fixtures with strict event integrity; this is bounded fixture compliance, not general host support or calibration. The declared Claude pair remains pending."
     },
     {
@@ -169,7 +174,9 @@
         "verification/receipts/track-11-conductor-review-2026-11-09.json",
         "verification/receipts/track-11-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review."
+      ],
       "permitted_claim": "The explicit-user sibling handoff has a compiler-tested local byte-integrity admission boundary for advisory draft and fixture replay, with retained bytes and artifact-bound approval verification. This is not package semantic validation, source provenance, production approval integration or execution permission; automated invocation remains disabled. ARS PR 807 was closed without merge; its historical 158-entry result does not validate this revised runtime. Downstream adoption, maintenance acceptance and any listing remain pending."
     },
     {
@@ -200,7 +207,9 @@
         "verification/receipts/track-11-conductor-review-2026-11-09.json",
         "verification/receipts/track-11-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
+      ],
       "permitted_claim": "A content-digest-bound registry packet is prepared and validated locally; it remains explicitly unauthorized and unsubmitted."
     }
   ]

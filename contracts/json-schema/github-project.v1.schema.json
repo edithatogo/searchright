@@ -116,7 +116,7 @@
           "const": "scripts/audit_github_control_plane.py"
         },
         "state_policy": {
-          "const": "task_issues_only"
+          "enum": ["task_issues_only", "explicit_issue_states"]
         }
       },
       "required": [

@@ -36,8 +36,12 @@
     "SR-076",
     "SR-077"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-train-engineer, downstream-canary-specialist, and rollback-authority-auditor roles, with contiguous promotion order (CiteWeft -> Searchright -> Sourceright), default-deny automation across all 6 lifecycle stages, 4-step rollback with zero evidence deletion, consumer contract suite conformance, and hardened CI workflows verified in tests/test_cross_repository_release_train_governance.py. Simulation instrument and source-level contracts only; live downstream canaries in CiteWeft and Sourceright and production release promotion remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+    "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+    "Approve promotion or rollback explicitly and record cross-repository receipts."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-train-engineer, downstream-canary-specialist, and rollback-authority-auditor roles, with contiguous promotion order (CiteWeft -> Searchright -> Sourceright), default-deny automation across all 6 lifecycle stages, 4-step rollback with zero evidence deletion, consumer contract suite conformance, and hardened CI workflows verified in tests/test_cross_repository_release_train_governance.py. Simulation instrument and source-level contracts only; live downstream canaries in CiteWeft and Sourceright and production release promotion remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-32",
@@ -69,9 +73,8 @@
     "verification/receipts/panel-track-32-rollback-authority-auditor.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
-    "Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening. Upgraded all 3 assertions (T32-A001..T32-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
+    "Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening. Upgraded all 3 assertions (T32-A001..T32-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-11-phase-3`
 Conductor plan: `conductor/tracks/11-agentic-skill/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication.
+- [ ] Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication.
 
 ## Completion and evidence contract
 

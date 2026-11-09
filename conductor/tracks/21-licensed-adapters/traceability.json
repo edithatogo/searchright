@@ -40,7 +40,11 @@
         "verification/receipts/track-21-conductor-review-2026-11-04.json",
         "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
       "permitted_claim": "Legal/licence/terms review boundaries, zero-credential storage policies, and explicit BYO adapter profiles are verified in source; live transport execution remains gated on user-supplied credentials."
     },
     {
@@ -72,7 +76,11 @@
         "verification/receipts/track-21-conductor-review-2026-11-04.json",
         "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
       "permitted_claim": "Credential redaction and local-only secret injection are verified by request planning unit tests; credentials are never stored, logged, or reflected in endpoints."
     },
     {
@@ -106,7 +114,11 @@
         "verification/receipts/track-21-conductor-review-2026-11-04.json",
         "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
       "permitted_claim": "Provider-specific dialect, host allowlist, and export format contracts are defined for Scopus, Embase, and Web of Science; rate and live transport caching remain gated on live adapter verification."
     },
     {
@@ -139,7 +151,11 @@
         "verification/receipts/track-21-conductor-review-2026-11-04.json",
         "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
       "permitted_claim": "Synthetic fixture conformance and request planning validation pass on canonical fixtures; user-supplied live payload conformance remains gated."
     },
     {
@@ -171,7 +187,11 @@
         "verification/receipts/track-21-conductor-review-2026-11-04.json",
         "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
       "permitted_claim": "Opt-in smoke tooling guards and zero-raw-payload persistence defaults are enforced in contract invariants; live smoke execution requires user credentials."
     },
     {
@@ -203,7 +223,11 @@
         "verification/receipts/track-21-conductor-review-2026-11-04.json",
         "verification/receipts/track-21-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
       "permitted_claim": "Embase, Scopus, and Web of Science adapter profiles are partitioned into discrete manifests with independent terms reviews, env vars, and host allowlists."
     }
   ]

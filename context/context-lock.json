@@ -13,8 +13,8 @@
     },
     {
       "path": "CONTEXT.md",
-      "sha256": "a4c85be1e44f9b9ce9e3c9d0dec7fb8b80910779adddcd63df504d576f183867",
-      "size": 4271
+      "sha256": "17970f68ec27358bb3248e79490d9e7a4717480d22e6a6be1b071a37622da3b0",
+      "size": 4856
     },
     {
       "path": "benchmarks/methodology/manifest.json",
@@ -23,13 +23,13 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "8497236fe7537fdb2a6279ee3ac9325fca0bf0517087adb3dd4660ad10f6e369",
-      "size": 616374
+      "sha256": "4c3c13c95ac7aad99ec14f795091da3b6a4d15a2181749c8009bd42ce4569235",
+      "size": 625884
     },
     {
       "path": "conductor/github/project.json",
-      "sha256": "cbb39aa832dc790d2459e1e564e3f9b69aed5321f9c0fc6a024b1e1b8f49217d",
-      "size": 3775
+      "sha256": "0212b6b6779c9a33cbb6d3a5173d24cdf384de441740470d1788d9f1e4fd4a11",
+      "size": 3780
     },
     {
       "path": "conductor/github/repository-settings.json",
@@ -53,13 +53,13 @@
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "6b7876c38e8b49e571e317d0393aa0753102bd01dd7f67be4aa2063801b25977",
-      "size": 178319
+      "sha256": "c47e823048ae120ad15752d168a50ab5424d6dc38bd1f31445cfdb85c5e76c9d",
+      "size": 207588
     },
     {
       "path": "conductor/traceability-overrides.json",
-      "sha256": "a56d7daa8583b2736558a79bdd85495ad1ba2a70d1dce384681ccfdf0aadbbb9",
-      "size": 262137
+      "sha256": "6721abd370899e69a48e6028ff26fc33ee5c55118e8ea8c3642f251eddb0a21b",
+      "size": 289675
     },
     {
       "path": "context/capability-matrix.json",
@@ -68,8 +68,8 @@
     },
     {
       "path": "context/claim-boundaries.json",
-      "sha256": "82d7383b3958d151ccd37dcf9525214d7609c284b8047f6ea190dfe88c4b2b78",
-      "size": 11281
+      "sha256": "98d9fdf643d6c1001bc340d186dcecbfb312f059bd0b9310ea6d38768cf0bcdd",
+      "size": 11785
     },
     {
       "path": "context/decision-ledger.json",
@@ -78,8 +78,8 @@
     },
     {
       "path": "context/evidence-ledger.json",
-      "sha256": "7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459",
-      "size": 8703
+      "sha256": "c58dda9503155aeb551ccdc7b301bc6acf81694517130573d6744c3d096f2169",
+      "size": 9590
     },
     {
       "path": "context/hazard-log.json",
@@ -88,7 +88,7 @@
     },
     {
       "path": "contracts/compatibility/schema-surface-0.1.0-alpha.1.json",
-      "sha256": "ce89e254edbacc54622cdd860daf48c7b622fee5c20a6bfcd2b001ee97560968",
+      "sha256": "2e48dac5ab59792a032a75fb9f7e9adcedc785be90ede20793e51fcb18ef2af2",
       "size": 26696
     },
     {
@@ -183,8 +183,8 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "5c8ebdcd624da9333f386f29b41d74dc1ff20c5197057ce55e1256e23e02860b",
-      "size": 3230
+      "sha256": "562796f605d6928af34d485de903156ef1e81ee634cc6933389820c3bbc817ce",
+      "size": 3232
     },
     {
       "path": "verification/gate-catalog.json",

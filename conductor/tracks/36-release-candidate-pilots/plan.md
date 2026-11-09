@@ -1,8 +1,6 @@
 # Plan: 36 Release-candidate rehearsal, staged pilots and ecosystem rehearsal
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -42,9 +40,9 @@ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-36-phase-3 -->
 
-- [x] Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
-- [x] Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.
-- [x] Validate exact release candidate packets and obtain explicit approval before any release or registry submission.
+- [ ] Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
+- [ ] Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.
+- [ ] Validate exact release candidate packets and obtain explicit approval before any release or registry submission.
 
 ## Phase 4: Review and closeout
 
@@ -54,4 +52,5 @@ GitHub issue key: `track-36`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Created tests/test_release_candidate_pilots_governance.py with 6 comprehensive unit tests covering release rehearsal script conformance across 11 gates and 3 pilot profiles, mandatory rehearsal safeguards (unexecuted status, dry-run bounds, mandatory rollback), pilot deployment protocol staging (fixture-only local -> institution self-hosted -> remote single-tenant) with PRISMA-S non-negotiable human screening authority and data isolation, ecosystem and registry rehearsal explicit blockers across all 9 submission targets, release-candidate workflow manual dispatch invariants, and reproducible source packaging verification. Upgraded assertions T36-A001..T36-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

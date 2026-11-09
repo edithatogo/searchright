@@ -3,11 +3,11 @@
 
 Parent phase key: `track-12-phase-3`
 Conductor plan: `conductor/tracks/12-citeweft-document-evidence/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.
+- [ ] Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.
 
 ## Completion and evidence contract
 

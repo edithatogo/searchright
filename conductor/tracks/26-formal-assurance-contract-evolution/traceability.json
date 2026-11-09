@@ -50,8 +50,11 @@
         "verification/receipts/panel-track-26-contract-specialist.json",
         "verification/receipts/panel-track-26-governance-auditor.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Finite-state lifecycle transitions and forbidden transitions are enforced by source policy; formal compiler proofs and model-check traces remain open."
+      "open_gates": [
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "permitted_claim": "Finite-state authority and transition tests, together with the bounded Kani, Loom, Miri and careful suites, passed at f502104a81c43ed0117886ce8cb21f00fdeb7588. This is not proof of every workflow or persisted-data migration."
     },
     {
       "assertion_id": "T26-A002",
@@ -97,7 +100,10 @@
         "verification/receipts/panel-track-26-assurance-architect.json",
         "verification/receipts/panel-track-26-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
       "permitted_claim": "Human-authority gates and agent screening restrictions fail closed in source and stdio MCP tests; compiled multi-reviewer arbitration remains open."
     },
     {
@@ -142,7 +148,10 @@
         "verification/receipts/panel-track-26-contract-specialist.json",
         "verification/receipts/panel-track-26-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
       "permitted_claim": "Known multi-version contract families have explicit non-destructive migration and receipt requirements; executable data migration remains unproven."
     },
     {
@@ -186,7 +195,10 @@
         "verification/receipts/panel-track-26-contract-specialist.json",
         "verification/receipts/panel-track-26-governance-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
       "permitted_claim": "Unknown versions, destructive changes and implicit write upgrades are denied by source policy; compiled backward compatibility remains open."
     },
     {
@@ -230,8 +242,11 @@
         "verification/receipts/panel-track-26-assurance-architect.json",
         "verification/receipts/panel-track-26-governance-auditor.json"
       ],
-      "open_gates": [],
-      "permitted_claim": "Hypothesis stateful property tests and exhaustive model checks cover authority and transition catalogues; Kani mathematical proofs remain open."
+      "open_gates": [
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests."
+      ],
+      "permitted_claim": "Hypothesis stateful property tests and lifecycle-model tests cover declared authority and transition cases; bounded Kani proof jobs passed at f502104a81c43ed0117886ce8cb21f00fdeb7588. Broader mathematical correctness is not claimed."
     }
   ]
 }

@@ -23,19 +23,18 @@
         "Add a read-only native Conductor v3 status adapter with adversarial checks (`9b73b49`, review fixes `f47c92a`), preserving stable IDs, evidence-aware states and in-place archives; verification/receipts/track-00-native-status-adapter.json records bounded evidence.",
         "Reconcile historical aggregate-verification failures with exact-tree full verification and separate frozen cargo-vet policy evidence (`f372c67`); verification/receipts/track-00-verification-reconciliation.json preserves exemption limits and the unresolved upstream registration gate."
       ],
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_context_integrity.py",
         "python scripts/check_toolchain_manifest.py",
         "python3 -m unittest discover -s tests -p test_foundation_toolchain_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating conductor-framework-architect, toolchain-integrity-auditor, and standards-inheritance-officer roles, with Conductor 0.3.0 baseline recording, pinned Rust 1.97.1 toolchain, committed Cargo.lock, repository-standards inheritance passport, one-command bootstrap/verification entrypoints, and 6/6 unit tests verified network-free in tests/test_foundation_toolchain_governance.py. Simulation instrument and source-level contracts only; live upstream registration in edithatogo/repository-standards and external estate conformance remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating conductor-framework-architect, toolchain-integrity-auditor, and standards-inheritance-officer roles, with Conductor 0.3.0 baseline recording, pinned Rust 1.97.1 toolchain, committed Cargo.lock, repository-standards inheritance passport, one-command bootstrap/verification entrypoints, and 6/6 unit tests verified network-free in tests/test_foundation_toolchain_governance.py. Simulation instrument and source-level contracts only; live upstream registration in edithatogo/repository-standards and external estate conformance remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "Cargo.toml",
         "rust-toolchain.toml",
@@ -57,10 +56,9 @@
       "dependencies": [],
       "evidence_level": "fixture_proven",
       "external_approval_required": true,
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "foundation",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Establish the Git repository, Conductor context, pinned toolchain, standards inheritance and reproducible bootstrap.",
       "remote_github_evidence": [
         "verification/receipts/github-control-plane-audit.json"
@@ -68,7 +66,8 @@
       "requirements": [],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 00 assertions (T00-A001..T00-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; record conductor review receipt and preserve the open upstream repository-standards estate conformance gate."
+        "Upgrade all six Track 00 assertions (T00-A001..T00-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; record conductor review receipt and preserve the open upstream repository-standards estate conformance gate.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-00-local-verification.json",
@@ -86,7 +85,12 @@
       "status": "source_implemented",
       "title": "Foundation, Conductor and toolchain",
       "track_id": "00",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision."
+      ],
+      "phase_3_task_count": 1,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "archived_on": "2026-08-29",
@@ -179,19 +183,19 @@
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
+        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_native_query_corpus.py"
       ],
-      "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.",
-      "closeout_completed": true,
+      "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "closeout_gate_label": "Close only after required evidence is present and the accountable owner records the agent-panel decisions.",
       "completed_higher_evidence_gates": [
-        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.",
-        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
-        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
+        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets."
       ],
       "deliverables": [
         "crates/evidence-search-contracts/src/query.rs",
@@ -222,7 +226,6 @@
       ],
       "horizon": "foundation",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
       "phase_3_task_count": 3,
       "requirements": [
@@ -247,7 +250,8 @@
         {
           "commit": "HEAD",
           "summary": "Implement tests/test_query_ast_dialects_governance.py (6/6 passing network-free), convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-02-conductor-review-2026-11-09.json, and archive Track 02 in-place while preserving external evidence gates."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-02-compiler-review.json",
@@ -269,19 +273,20 @@
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.",
+        "Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.",
+        "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_sourceright_migration.py",
         "python scripts/check_public_package_policy.py"
       ],
-      "claim_boundary": "The additive core-owned subrequest context passed full local validation on snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257 with repository-pinned Rust/Cargo 1.97.1: 75 Python tests, 57 static gates, 395 native tests with zero skipped, and 23 cargo-vet governance tests. The earlier 74 focused native tests and strict Clippy used Homebrew 1.98.0. Evidence remains source_verified/partially_implemented; the validated snapshot is not a claim about merged current main. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval. Live-adapter adoption, transport adversarial/hosted evidence, complete downstream parity matrix, Sourceright cutover, SemVer and rollback remain open; no live, release or archival claim.",
-      "closeout_completed": true,
+      "claim_boundary": "The additive core-owned subrequest context passed full local validation on snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257 with repository-pinned Rust/Cargo 1.97.1: 75 Python tests, 57 static gates, 395 native tests with zero skipped, and 23 cargo-vet governance tests. The earlier 74 focused native tests and strict Clippy used Homebrew 1.98.0. The cited snapshots remain bounded execution evidence and do not prove the latest main revision or unfinished live/downstream work. Registry-local cooperative admission is not process-wide rate enforcement or current provider-policy approval. Live-adapter adoption, transport adversarial/hosted evidence, complete downstream parity matrix, Sourceright cutover, SemVer and rollback remain open; no live, release or archival claim.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.",
-        "Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.",
-        "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
+        "Compile and run the shared provider runtime tests."
       ],
       "deliverables": [
         "crates/evidence-search-core/src/provider.rs",
@@ -315,7 +320,6 @@
       "higher_evidence_completed": true,
       "horizon": "foundation",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "native_test_commands": [
         "cargo test -p evidence-search-core --test subrequest_context --locked",
         "cargo test -p evidence-search-core --lib --locked",
@@ -374,7 +378,8 @@
         {
           "commit": "HEAD",
           "summary": "Implement tests/test_shared_provider_runtime_governance.py (6/6 passing network-free), upgrade all assertions (T03-A001..T03-A006) to source_implemented, convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-03-conductor-review-2026-11-09.json, and archive Track 03 in-place while preserving external operational gates."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "review_scope": "Bounded source/fixture review of the implemented runtime and subrequest context only; open track evidence and adoption gates are not closed.",
       "runtime_evidence": [
@@ -394,11 +399,22 @@
       "status": "source_implemented",
       "title": "Shared provider runtime and Sourceright extraction",
       "track_id": "03",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile and run the shared provider runtime tests.",
+        "Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.",
+        "Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.",
+        "Complete feature-gated Sourceright cutover, semver review and rollback exercise."
+      ],
+      "phase_3_task_count": 4
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "blockers": [],
+      "blockers": [
+        "Run authorised, redacted live smokes for each advertised provider.",
+        "Verify upstream terms, rate limits and response changes at release time.",
+        "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_provider_contract_baselines.py",
@@ -406,7 +422,7 @@
         "python scripts/check_redaction_policy.py --self-test",
         "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
-      "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+      "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Source mappings and local fixtures are separate from the remaining live-product and provider-support requirements.",
       "deliverables": [
         "crates/searchright-connectors/src/lib.rs",
         "integration/provider-contract-baselines.json",
@@ -497,7 +513,8 @@
         {
           "commit": "HEAD",
           "summary": "Implement governance tests in tests/test_open_connectors_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 04."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache, cache-version and opt-in bounded EFetch orchestration review; live network execution, authorized canaries and open track gates remain incomplete.",
       "runtime_evidence": [
@@ -518,16 +535,19 @@
       "status": "source_implemented",
       "title": "Open provider connectors MVP",
       "track_id": "04",
-      "updated": "2026-11-03",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
+      "updated": "2026-11-09",
+      "closeout_completed": false,
       "higher_evidence_completed": true,
       "completed_higher_evidence_gates": [
+        "Compile and run connector fixtures."
+      ],
+      "higher_evidence_task_order": [
+        "Compile and run connector fixtures.",
         "Run authorised, redacted live smokes for each advertised provider.",
         "Verify upstream terms, rate limits and response changes at release time.",
         "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
-      ]
+      ],
+      "phase_3_task_count": 4
     },
     {
       "archived_on": "2026-08-13",
@@ -668,15 +688,16 @@
       "updated": "2026-08-30"
     },
     {
-      "archived_on": "2026-08-31",
-      "blockers": [],
+      "blockers": [
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Remediation targets: authorization integrity, blinding enforcement, audit-trail immutability, interop formats. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles."
+        "Compile and execute state-machine and authority-negative tests."
       ],
       "deliverables": [
         "crates/searchright-screening/src/lib.rs",
@@ -695,7 +716,6 @@
       "higher_evidence_completed": true,
       "horizon": "mvp",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Support independent title/abstract and full-text decisions, conflicts, adjudication, roles and conservative agent authority.",
       "panel_findings": {
         "critical_count": 4,
@@ -725,14 +745,26 @@
       "slug": "screening-workflow",
       "status": "source_implemented",
       "title": "Governed screening workflow",
-      "track_id": "07"
+      "track_id": "07",
+      "higher_evidence_task_order": [
+        "Compile and execute state-machine and authority-negative tests.",
+        "Complete reviewer usability and inter-rater calibration evaluation."
+      ],
+      "phase_3_task_count": 2,
+      "updated": "2026-11-09",
+      "active_plan": "conductor/frontier-plan.md",
+      "review_fixes": [
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
+      ]
     },
     {
       "additional_closeout_tasks": [
         "Add shared validated library-level Markdown, JSON, Mermaid, SVG, Typst and DOCX-friendly HTML reporting projections (`6f0dbd1`); five-role review added every-count completeness coverage and normal/hostile Typst compilation (`eb76c80`). Subsequent local visual/import evidence is recorded separately; complete update-cohort conformance, PRISMA.jl parity and PRESS review remain pending.",
         "Reject blank PRISMA-S collection evidence as complete, preserve original evidence bytes and record normal/hostile local LibreOffice DOCX import and visual checks after fixing wrapped HTML labels. No Microsoft Word, external parity or methodological acceptance is claimed."
       ],
-      "blockers": [],
+      "blockers": [
+        "Obtain an accountable independent PRESS review of representative generated strategies and appendices."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
@@ -741,9 +773,8 @@
         "python scripts/check_integration_drift.py",
         "python3 -m unittest tests/test_prisma_press_reporting_governance.py"
       ],
-      "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed.",
+      "claim_boundary": "All six Track 08 source assertions have deterministic assertion-level mappings at the source-verified evidence ceiling. PRISMA and PRISMA-S outputs are reporting artefacts, not conduct certification; the checked-in PRESS fixture is not independent review evidence; complete PRISMA.jl model equivalence is not claimed. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
       "completed_higher_evidence_gates": [
-        "Obtain an accountable independent PRESS review of representative generated strategies and appendices.",
         "Obtain a hosted compiler-verified receipt for the exact committed revision."
       ],
       "deliverables": [
@@ -811,7 +842,9 @@
         {
           "commit": "HEAD",
           "summary": "Implement governance tests in tests/test_prisma_press_reporting_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 08."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.",
+        "Preserve the earlier bounded render-format and PRISMA.jl projection-parity work in the existing completed Phase 4 reporting tasks and source receipts; restoring the two original Phase 3 keys does not reopen that completed component work or claim independent PRESS acceptance."
       ],
       "runtime_evidence": [
         "verification/receipts/track-08-reporting-review.json",
@@ -829,14 +862,17 @@
       "status": "source_implemented",
       "title": "PRISMA, PRESS and reporting",
       "track_id": "08",
-      "updated": "2026-11-03",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
+      "updated": "2026-11-09",
+      "closeout_completed": false,
       "higher_evidence_completed": true,
       "python_test_commands": [
         "python3 -m unittest discover -s tests -p test_prisma_press_reporting_governance.py"
-      ]
+      ],
+      "higher_evidence_task_order": [
+        "Obtain an accountable independent PRESS review of representative generated strategies and appendices.",
+        "Obtain a hosted compiler-verified receipt for the exact committed revision."
+      ],
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "archived_on": "2026-08-29",
@@ -1038,14 +1074,19 @@
         "Prepare the owner-approved Searchright-owned sibling caller, enforce static routing/admission declarations, and reconcile historical consumer success with PR 807 closure (`e6969ac`); isolated five-role review recorded in verification/receipts/track-11-sibling-review.json.",
         "Implement synthetic local sibling byte/handoff admission (`1ee989d`) and isolated host-evaluation failure handling (`8d1ae21`); focused evidence is recorded in verification/receipts/track-11-local-admission.json. Automated invocation and all four mandatory gates remain pending."
       ],
-      "blockers": [],
+      "blockers": [
+        "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
+        "Run scenario-based agent evaluations across supported hosts and models.",
+        "Calibrate authority and failure modes with human information specialists.",
+        "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_agent_skill.py",
         "cargo test -p searchright-agent --locked",
         "cargo clippy -p searchright-agent --all-targets --all-features --locked -- -D warnings"
       ],
-      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending.",
+      "claim_boundary": "Compiler-verified local workflow, handoff and deterministic authority behaviour are established. The initial Codex receipt remains invalidated; a fresh context-isolated Codex CLI 0.144.1 / gpt-5.6-sol run passed all twelve public authority fixtures with strict event integrity. This is bounded fixture compliance, not general host support or methodological calibration. Claude evaluation remains pending. ARS PR 807 was closed without merge; its exact head 4e4264a passed all 158 local CI-manifest entries. The owner-approved Searchright-owned sibling caller requires explicit user handoff and keeps automated invocation disabled pending runtime admission. Historical proposal tests do not validate the revised sibling workflow. Upstream adoption and maintenance acceptance, calibration-policy reconciliation and accountable adjudication, and registry selection, authorization and acceptance remain pending. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
       "deliverables": [
         "skills/systematic-search/SKILL.md",
         "skills/systematic-search/workflows/systematic-review.yaml",
@@ -1120,7 +1161,8 @@
         {
           "commit": "HEAD",
           "summary": "Implemented tests/test_agentic_skill_governance.py, executed agent panel review, verified authority boundaries and sibling caller policy, and archived Track 11 with fixture-proven evidence."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-11-agent-authority-review.json",
@@ -1135,26 +1177,29 @@
       "status": "source_implemented",
       "title": "Systematic-search agent skill and workflows",
       "track_id": "11",
-      "updated": "2026-11-03",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
+      "updated": "2026-11-09",
+      "closeout_completed": false,
+      "higher_evidence_completed": false,
+      "completed_higher_evidence_gates": [],
+      "higher_evidence_task_order": [
         "Obtain downstream academic-research-skills maintainer adoption and consumer-test evidence after licence and upstream-drift review.",
         "Run scenario-based agent evaluations across supported hosts and models.",
         "Calibrate authority and failure modes with human information specialists.",
         "Obtain explicit registry-submission authorization and an observed acceptance receipt before claiming publication."
       ],
-      "lifecycle": "archived"
+      "phase_3_task_count": 4
     },
     {
-      "blockers": [],
+      "blockers": [
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_citeweft_integration.py",
         "python scripts/check_rust_dependency_graph.py"
       ],
-      "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "CiteWeft-compatible extraction evidence is source-implemented; no GROBID compatibility, canonicalisation or full-text production claim is made. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
       "deliverables": [
         "crates/searchright-citeweft/src/lib.rs",
         "crates/searchright-contracts/src/document.rs",
@@ -1189,7 +1234,8 @@
         {
           "commit": "HEAD",
           "summary": "Implemented tests/test_citeweft_governance.py, executed agent panel review, verified CiteWeft dependency pins and non-canonical write boundaries, and archived Track 12 with fixture-proven evidence."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-12-conductor-review-2026-11-04.json",
@@ -1200,20 +1246,27 @@
       "status": "source_implemented",
       "title": "CiteWeft scholarly extraction and document evidence",
       "track_id": "12",
-      "updated": "2026-11-04",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
+      "updated": "2026-11-09",
+      "closeout_completed": false,
       "higher_evidence_completed": true,
       "completed_higher_evidence_gates": [
+        "Compile the pinned CiteWeft dependency and adapter on supported platforms."
+      ],
+      "gates": [],
+      "higher_evidence_task_order": [
         "Compile the pinned CiteWeft dependency and adapter on supported platforms.",
         "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.",
         "Run downstream Sourceright consumer-driven compatibility and rollback tests."
       ],
-      "gates": []
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "blockers": [],
+      "blockers": [
+        "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_integration_passports.py",
@@ -1226,7 +1279,7 @@
         "python scripts/check_portfolio_project.py",
         "python scripts/check_licence_firewall.py"
       ],
-      "claim_boundary": "A durable read-only audit at commit a0660f8 observed the public repository, all 568 then-canonical issues and all 567 expected native subissue relationships with zero drift and zero mutations. Track 13 topology is unchanged in the current source, but the audit does not cover later source revisions, downstream contract execution, scheduled live-estate drift or merged compatibility.",
+      "claim_boundary": "A durable read-only audit at commit a0660f8 observed the public repository, all 568 then-canonical issues and all 567 expected native subissue relationships with zero drift and zero mutations. Track 13 topology is unchanged in the current source, but the audit does not cover later source revisions, downstream contract execution, scheduled live-estate drift or merged compatibility. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
       "deliverables": [
         "integration/locks.json",
         "integration/passports/index.json",
@@ -1300,7 +1353,8 @@
         {
           "commit": "HEAD",
           "summary": "Implemented tests/test_integration_passports_governance.py, executed agent panel review, verified issue hierarchy and context spine, and archived Track 13 with fixture-proven evidence."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-13-conductor-review-2026-11-04.json",
@@ -1311,25 +1365,31 @@
       "status": "source_implemented",
       "title": "Integration passports, GitHub issue hierarchy and context spine",
       "track_id": "13",
-      "updated": "2026-11-04",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
+      "updated": "2026-11-09",
+      "closeout_completed": false,
+      "higher_evidence_completed": false,
+      "completed_higher_evidence_gates": [],
+      "gates": [],
+      "higher_evidence_task_order": [
         "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.",
         "Execute consumer-driven contract tests in each pinned downstream repository.",
         "Record scheduled integration-drift receipts against the live repository estate."
       ],
-      "gates": []
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "blockers": [],
+      "blockers": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_sourceright_migration.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
       "deliverables": [
         "migration/sourceright/README.md",
         "migration/sourceright/replacement-map.yaml",
@@ -1364,7 +1424,8 @@
         {
           "commit": "HEAD",
           "summary": "Implemented tests/test_sourceright_migration_governance.py, executed agent panel review, verified replacement maps and parity matrices, and archived Track 14 with fixture-proven evidence."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-14-conductor-review-2026-11-04.json",
@@ -1375,26 +1436,31 @@
       "status": "source_implemented",
       "title": "Sourceright migration and shared releases",
       "track_id": "14",
-      "updated": "2026-11-04",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
+      "updated": "2026-11-09",
+      "closeout_completed": false,
+      "higher_evidence_completed": false,
+      "completed_higher_evidence_gates": [],
+      "gates": [],
+      "higher_evidence_task_order": [
         "Open and merge the downstream Sourceright integration after dual-run parity.",
         "Generate compiled parity receipts and exercise rollback.",
         "Remove superseded downstream code only after the deletion gate passes.",
         "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
       ],
-      "gates": []
+      "phase_3_task_count": 4,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "blockers": [],
+      "blockers": [
+        "Run repository-specific scans against current local checkouts or GitHub indexes.",
+        "Open, test and merge replacement changes in each affected repository.",
+        "Delete duplicate code only after repository-specific parity and rollback evidence."
+      ],
       "checks": [
         "python scripts/audit_search_code.py --self-test",
         "python scripts/check_companion_change_packets.py"
       ],
-      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Source-verified implementation only; higher evidence levels require the named open gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
       "deliverables": [
         "migration/estate/repositories.json",
         "migration/estate/patterns.json",
@@ -1426,7 +1492,8 @@
         {
           "commit": "HEAD",
           "summary": "Verified automated governance tests in tests/test_estate_migration.py, executed agent panel review, verified estate patterns and companion packets, and archived Track 15 with fixture-proven evidence."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-15-conductor-review-2026-11-04.json",
@@ -1437,21 +1504,26 @@
       "status": "source_implemented",
       "title": "GitHub estate audit and custom-code replacement",
       "track_id": "15",
-      "updated": "2026-11-04",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
+      "updated": "2026-11-09",
+      "closeout_completed": false,
+      "higher_evidence_completed": false,
+      "completed_higher_evidence_gates": [],
+      "gates": [],
+      "higher_evidence_task_order": [
         "Run repository-specific scans against current local checkouts or GitHub indexes.",
         "Open, test and merge replacement changes in each affected repository.",
         "Delete duplicate code only after repository-specific parity and rollback evidence."
       ],
-      "gates": []
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "blockers": [],
+      "blockers": [
+        "Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.",
+        "Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.",
+        "Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_dependency_graph.py",
@@ -1471,12 +1543,9 @@
         "python scripts/check_cargo_vet_governance.py",
         "python3 -m unittest tests/test_quality_security_harness_governance.py"
       ],
-      "claim_boundary": "Hosted PR #718 (a2e7a5d) and merged PRs #719-#723 passed all 27 hosted CI/Rust (Linux, macOS, Windows, declared-version), clean-room, formal, fuzz, coverage and supply-chain jobs on main. The greater-than-90-percent coverage target, replacing temporary cargo-vet exemptions before 2026-11-10, scheduled mutation, Scorecard and aggregate release gates remain open.",
+      "claim_boundary": "Native, static, coverage, API and clean-room jobs passed at f502104a81c43ed0117886ce8cb21f00fdeb7588. Measured line coverage was 88.28 percent, below the greater-than-90-percent maturity target. The ledger retains 235 active exact-version exemptions due 2026-11-10; newer dependency versions require their own qualifying evidence. The latest scheduled mutation job failed before executing mutants because its output parent directory was absent. Current-candidate compiler, supply-chain, mutation and aggregate release admission remain separate; no completed dependency review or maturity claim follows from fixture tests.",
       "completed_higher_evidence_gates": [
-        "Deliver the admission-policy work through merged PRs #754 and #755 with green required checks on their final heads; subsequent candidates still require their own checks.",
-        "Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.",
-        "Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.",
-        "Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion."
+        "Deliver the admission-policy work through merged PRs #754 and #755 with green required checks on their final heads; subsequent candidates still require their own checks."
       ],
       "deliverables": [
         ".github/workflows/ci.yml",
@@ -1568,7 +1637,8 @@
         {
           "commit": "HEAD",
           "summary": "Added automated governance unit tests in tests/test_quality_security_harness_governance.py, executed agent panel review, verified 57-gate static harness, and archived Track 16 with fixture-proven evidence."
-        }
+        },
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-16-conductor-review-2026-11-04.json",
@@ -1587,15 +1657,16 @@
       "title": "Maximal quality, context and security harness",
       "track_id": "16",
       "updated": "2026-11-09",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
+      "closeout_completed": false,
       "gates": []
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Execute versioned benchmark suites and publish raw receipts.",
+        "Complete the prospective multi-model and information-specialist calibration pilot.",
+        "Assess subgroup, topic and source-specific performance before any ranking claim."
+      ],
       "checks": [
         "python scripts/check_methodology_benchmarks.py",
         "python scripts/validate_repository.py",
@@ -1604,11 +1675,9 @@
         "python scripts/check_dataset_provenance.py",
         "python scripts/check_hf_dataset_eval_contracts.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating benchmark-evaluator, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Complete benchmark and calibration evaluation via agent-panel protocol simulating benchmark-evaluator, information-specialist, and methodologist roles."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating benchmark-evaluator, information-specialist, and methodologist roles. Panel output is a simulation instrument, not a substitute for live human studies. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "benchmarks/methodology/manifest.json",
         "benchmarks/methodology/README.md",
@@ -1634,10 +1703,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-08",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "alpha",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Evaluate translation, retrieval, deduplication and prioritisation with leakage controls and human calibration.",
       "requirements": [
         "SR-037",
@@ -1645,7 +1713,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers."
+        "Upgrade all six Track 17 assertions (T17-A001..T17-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-bench, check_benchmark_governance.py, check_calibration_harness.py, check_dataset_provenance.py, check_hf_dataset_eval_contracts.py, and check_methodology_benchmarks.py; implement SealedSplitManifest, evaluate_sealed_benchmark, validate_public_benchmark_report, work_saved_over_sampling, expected_calibration_error, and brier_score with zero unwrap/expect and 13 passing unit tests; add test_benchmark_calibration_governance.py test suite; record conductor review receipt and preserve open external benchmark and prospective calibration blockers.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-17-conductor-review-2026-11-04.json",
@@ -1658,21 +1727,28 @@
       "status": "source_implemented",
       "title": "Benchmarks, search validation and human calibration",
       "track_id": "17",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Execute versioned benchmark suites and publish raw receipts.",
+        "Complete the prospective multi-model and information-specialist calibration pilot.",
+        "Assess subgroup, topic and source-specific performance before any ranking claim."
+      ],
+      "phase_3_task_count": 3
     },
     {
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Verify the committed Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_packaging_reproducibility.py",
         "python scripts/check_workflow_hardening.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-architect, security-auditor, and distribution-evaluator roles. Panel output is a simulation instrument, not a substitute for live release deployment. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Complete alpha release, packaging reproducibility, workflow hardening, and distribution evaluation via agent-panel protocol simulating release-architect, security-auditor, and distribution-evaluator roles."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-architect, security-auditor, and distribution-evaluator roles. Panel output is a simulation instrument, not a substitute for live release deployment. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         ".github/workflows/clean-room.yml",
         ".github/workflows/release.yml",
@@ -1697,10 +1773,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-08",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "alpha",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Produce locked, signed, attestable cross-platform technical-preview releases with reproducible source archives.",
       "requirements": [
         "SR-039",
@@ -1708,7 +1783,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion."
+        "Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-18-conductor-review-2026-11-04.json",
@@ -1721,19 +1797,28 @@
       "status": "source_implemented",
       "title": "Alpha release and distribution",
       "track_id": "18",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Verify the committed Cargo.lock and pass the full release workflow.",
+        "Build/install-smoke supported binaries and OCI image.",
+        "Create signed tag, checksums, attestations and public release artefacts."
+      ],
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating registry-evaluator, scholarly-publication-editor, and supply-chain-governance-auditor roles. Panel output is a simulation instrument, not a substitute for live external registry submission or journal peer review. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Complete registry validation, dry-run package checks, and scholarly publication evaluation via agent-panel protocol simulating registry-evaluator, publication-editor, and governance-auditor roles."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating registry-evaluator, scholarly-publication-editor, and supply-chain-governance-auditor roles. Panel output is a simulation instrument, not a substitute for live external registry submission or journal peer review. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "glama.json",
         "registry/glama/README.md",
@@ -1752,10 +1837,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-08",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "alpha",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Prepare and submit truthful registry packets and a software paper only after a verified release.",
       "requirements": [
         "SR-040",
@@ -1763,7 +1847,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion."
+        "Upgrade all six Track 19 assertions (T19-A001..T19-A006) to symbol_and_gate_mapped with concrete implementation symbols across validate_repository.py, submit-registries.sh, check_public_package_policy.py, and test_registries_publication_governance.py; create unit test suite in tests/test_registries_publication_governance.py validating registry packet schemas, invariants, dry-run guards, and citation alignment; record conductor review receipt and preserve open external publication, registration, and JOSS review blockers without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-19-conductor-review-2026-11-04.json",
@@ -1776,7 +1861,15 @@
       "status": "source_implemented",
       "title": "Registries and scholarly publication",
       "track_id": "19",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Publish a verified release that registry packets can reference.",
+        "Submit to each external registry with maintainer approval.",
+        "Record public listing, rejection or revision evidence.",
+        "Complete JOSS submission requirements and independent review."
+      ],
+      "phase_3_task_count": 4,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "additional_closeout_tasks": [
@@ -1847,16 +1940,17 @@
       "updated": "2026-08-30"
     },
     {
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles. Panel output is a simulation instrument, not a substitute for vendor licensing agreements or live user-credentialed audits. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Complete licensed BYO request planning, credential protection, and legal compliance evaluation via agent-panel protocol simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating licensed-access-evaluator, legal-compliance-counsel, and security-auditor roles. Panel output is a simulation instrument, not a substitute for vendor licensing agreements or live user-credentialed audits. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "crates/searchright-licensed/src/lib.rs",
         "crates/searchright-contracts/src/licensed.rs",
@@ -1876,17 +1970,17 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-08",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "beta",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Provide credential-free request planning and explicit licence/capability profiles for Embase, Scopus and Web of Science.",
       "requirements": [
         "SR-044"
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion."
+        "Upgrade all six Track 21 assertions (T21-A001..T21-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-licensed, contracts/licensed, and test_licensed_adapters_governance.py; create unit test suite in tests/test_licensed_adapters_governance.py validating adapter index schema, profile invariants, bare DNS host allowlists, zero raw response persistence, and scraping prohibition; harden unit tests in crates/searchright-licensed and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open vendor credentials, terms confirmation, and live smoke receipts without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-21-conductor-review-2026-11-04.json",
@@ -1899,19 +1993,26 @@
       "status": "source_implemented",
       "title": "Licensed BYO-access adapters",
       "track_id": "21",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Obtain authorised user credentials and confirm current vendor terms.",
+        "Implement/test vendor-specific live transports without storing credentials.",
+        "Record redacted user-run smoke receipts; no bundled access is permitted."
+      ],
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Pilot a real update and independently reproduce change attribution."
+      ],
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating living-methodologist, lineage-architect, and governance-auditor roles, with multi-cycle scenarios verified in crates/searchright-living/tests/multi_cycle_scenarios.rs. Panel output is a simulation instrument, not a substitute for live clinical review surveillance or human protocol amendment committee decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating living-methodologist, lineage-architect, and governance-auditor roles, with multi-cycle scenarios verified in crates/searchright-living/tests/multi_cycle_scenarios.rs. Panel output is a simulation instrument, not a substitute for live clinical review surveillance or human protocol amendment committee decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Compile and run multi-cycle living-review and amendment scenarios.",
-        "Pilot a real update and independently reproduce change attribution."
+        "Compile and run multi-cycle living-review and amendment scenarios."
       ],
       "deliverables": [
         "crates/searchright-living/src/lib.rs",
@@ -1937,7 +2038,6 @@
       "higher_evidence_completed": true,
       "horizon": "beta",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Make updates, protocol changes, prior-run deduplication and cadence explicit and immutable.",
       "requirements": [
         "SR-025",
@@ -1947,7 +2047,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 22 assertions (T22-A001..T22-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-living, and test_living_updates_governance.py; create unit test suite in tests/test_living_updates_governance.py validating living update schema, protocol amendment schema, human release safeguards forbidding automated inclusion, PRISMA-LSR reporting constraints, and run lineage invariants; harden unit tests in crates/searchright-living and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open multi-cycle scenario and change attribution gates without false promotion."
+        "Upgrade all six Track 22 assertions (T22-A001..T22-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-living, and test_living_updates_governance.py; create unit test suite in tests/test_living_updates_governance.py validating living update schema, protocol amendment schema, human release safeguards forbidding automated inclusion, PRISMA-LSR reporting constraints, and run lineage invariants; harden unit tests in crates/searchright-living and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open multi-cycle scenario and change attribution gates without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-22-conductor-review-2026-11-04.json",
@@ -1960,20 +2061,26 @@
       "status": "source_implemented",
       "title": "Living reviews, amendments and update lineage",
       "track_id": "22",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile and run multi-cycle living-review and amendment scenarios.",
+        "Pilot a real update and independently reproduce change attribution."
+      ],
+      "phase_3_task_count": 2,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis."
+      ],
       "checks": [
         "python scripts/validate_repository.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles, with outcome-gradable benchmarks, adversary robustness, and context isolation verified in crates/searchright-ranking/tests/ranking_adversary_scenarios.rs. Simulation instrument only, not a substitute for live prospective clinical review screening or human gold calibration decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles, with outcome-gradable benchmarks, adversary robustness, and context isolation verified in crates/searchright-ranking/tests/ranking_adversary_scenarios.rs. Simulation instrument only, not a substitute for live prospective clinical review screening or human gold calibration decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks via deterministic benchmark fixtures.",
-        "Complete prospective human calibration and subgroup error analysis via agent-panel protocol simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles.",
         "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
       ],
       "deliverables": [
@@ -1995,14 +2102,14 @@
       "higher_evidence_completed": true,
       "horizon": "beta",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Provide transparent advisory ranking with uncertainty and no default autonomous exclusion.",
       "requirements": [
         "SR-046"
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 23 assertions (T23-A001..T23-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-ranking, failure-modes.md, and test_active_learning_ranking_governance.py; create unit test suite in tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards, failure-mode countermeasures, and Track 23 traceability invariants; harden unit tests in crates/searchright-ranking and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open SYNERGY benchmark, human calibration, and stopping rule blockers without false promotion."
+        "Upgrade all six Track 23 assertions (T23-A001..T23-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-contracts, searchright-ranking, failure-modes.md, and test_active_learning_ranking_governance.py; create unit test suite in tests/test_active_learning_ranking_governance.py validating ranking calibration contracts, JSON schema conformance, advisory-only screening safeguards, failure-mode countermeasures, and Track 23 traceability invariants; harden unit tests in crates/searchright-ranking and crates/searchright-contracts without forbidden fragments; record conductor review receipt and preserve open SYNERGY benchmark, human calibration, and stopping rule blockers without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-23-conductor-review-2026-11-04.json",
@@ -2015,11 +2122,23 @@
       "status": "source_implemented",
       "title": "Active-learning prioritisation and calibrated agents",
       "track_id": "23",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Run SYNERGY and topic-held-out calibration benchmarks.",
+        "Complete prospective human calibration and subgroup error analysis.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
+      "phase_3_task_count": 3
     },
     {
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
+        "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_cli_mcp_parity.py",
@@ -2027,16 +2146,9 @@
         "python scripts/sync_contract_conformance_matrix.py --check",
         "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating wasi-systems-architect, mcp-protocol-specialist, and security-governance-auditor roles, with Ed25519 signed manifest release verification, capability authorization, and tamper-resistance verified in crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for live Wasmtime guest execution, cluster scalability, or remote Streamable HTTP under Track 34. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Compile WASI components and run the component conformance suite via local mock harness.",
-        "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
-        "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
-        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
-        "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond bounded local task admission.",
-        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating wasi-systems-architect, mcp-protocol-specialist, and security-governance-auditor roles, with Ed25519 signed manifest release verification, capability authorization, and tamper-resistance verified in crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for live Wasmtime guest execution, cluster scalability, or remote Streamable HTTP under Track 34. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "crates/searchright-plugin-sdk/src/lib.rs",
         "crates/searchright-policy/src/lib.rs",
@@ -2064,10 +2176,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-08",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "beta",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries.",
       "requirements": [
         "SR-030",
@@ -2075,7 +2186,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion."
+        "Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-24-advanced-mcp.json",
@@ -2091,23 +2203,33 @@
       "status": "source_implemented",
       "title": "WASI components, HTTP MCP and scalable execution",
       "track_id": "24",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile WASI components and run the component conformance suite.",
+        "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
+        "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.",
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
+      ],
+      "phase_3_task_count": 6,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-08",
-      "blockers": [],
+      "blockers": [
+        "Validate produced RO-Crates with independent tooling.",
+        "Pilot OSF/Zenodo/repository deposit without automatic write authority."
+      ],
       "checks": [
         "python scripts/review_bundle.py self-test",
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating ro-crate-interop-specialist, prov-lineage-architect, and open-science-governance-auditor roles, with RO-Crate 1.3 profile conformance, W3C PROV-O derivation chains, and fail-closed predecessor validation verified in crates/searchright-provenance/tests/provenance_interop_scenarios.rs and review_bundle.py self-test. Simulation instrument and compiler-tested local boundaries only, not a substitute for live external repository deposit or independent RO-Crate CLI validation. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Local provenance and review-bundle fixtures passed at f502104a81c43ed0117886ce8cb21f00fdeb7588, including deterministic ordering, input permutation, duplicate-hash and missing-predecessor cases. These self-authored checks do not establish RO-Crate 1.3 or W3C PROV conformance: required root metadata, content-size semantics and entity/activity derivation typing still need correction and an independent consumer. Actual repository deposit remains open. Historical simulated-panel receipts are preparation reviews, not independent acceptance.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Compile and run golden provenance export tests via deterministic scenario fixtures.",
-        "Validate produced RO-Crates with independent tooling via simulated agent-panel protocol.",
-        "Pilot OSF/Zenodo/repository deposit without automatic write authority via dry-run contracts."
+        "Compile and run golden provenance export tests."
       ],
       "deliverables": [
         "crates/searchright-provenance/src/lib.rs",
@@ -2130,7 +2252,6 @@
       "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects.",
       "requirements": [
         "SR-051",
@@ -2138,7 +2259,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, RO-Crate and W3C PROV boundaries, review-bundle-manifest and handoff-plan schemas, and test_provenance_research_objects_governance.py; create unit test suite in tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema and context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants; record conductor review receipt and preserve open golden provenance export tests, independent RO-Crate validation tooling, and OSF/Zenodo repository handoff pilot blockers without false promotion."
+        "Upgrade all six Track 25 assertions (T25-A001..T25-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-provenance, review_bundle.py, RO-Crate and W3C PROV boundaries, review-bundle-manifest and handoff-plan schemas, and test_provenance_research_objects_governance.py; create unit test suite in tests/test_provenance_research_objects_governance.py validating RO-Crate 1.3 schema and context, W3C PROV entities/activities/agents/predecessor derivations, review bundle packaging and deterministic policy invariants, default-deny handoff plans, and Track 25 traceability invariants; record conductor review receipt and preserve open golden provenance export tests, independent RO-Crate validation tooling, and OSF/Zenodo repository handoff pilot blockers without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-25-conductor-review-2026-11-04.json",
@@ -2151,11 +2273,20 @@
       "status": "source_implemented",
       "title": "Provenance and research-object interoperability",
       "track_id": "25",
-      "updated": "2026-11-04"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile and run golden provenance export tests.",
+        "Validate produced RO-Crates with independent tooling.",
+        "Pilot OSF/Zenodo/repository deposit without automatic write authority."
+      ],
+      "phase_3_task_count": 3
     },
     {
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests.",
+        "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
@@ -2164,14 +2295,11 @@
         "python3 -B -m unittest discover -s tests -p test_formal_assurance_contract_evolution.py",
         "python3 -B -m unittest discover -s tests -p test_mcp_authority_state_machine.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating formal-assurance-architect, contract-evolution-specialist, and quality-governance-auditor roles, with finite-state lifecycle transitions, human authority gates, agent screening restrictions, and fail-closed schema migration policies verified in crates/searchright-assurance/tests/assurance_scenarios.rs, scripts/check_schema_migrations.py, and tests/test_mcp_authority_state_machine.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for formal Kani mathematical proofs or production persisted data migration drills. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating formal-assurance-architect, contract-evolution-specialist, and quality-governance-auditor roles, with finite-state lifecycle transitions, human authority gates, agent screening restrictions, and fail-closed schema migration policies verified in crates/searchright-assurance/tests/assurance_scenarios.rs, scripts/check_schema_migrations.py, and tests/test_mcp_authority_state_machine.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for formal Kani mathematical proofs or production persisted data migration drills. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures.",
-        "Compile and execute model-check traces and forbidden-transition tests via exhaustive 10x10 stage transition matrices.",
-        "Add compatibility fixtures for each public contract version via schema catalog and migration plans.",
-        "Run semver and cross-version MCP/CLI contract tests via Hypothesis stateful property testing.",
-        "Compile and execute representative persisted-data migrations, backward readers and rollback projections via check_schema_migrations.py."
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests."
       ],
       "deliverables": [
         "crates/searchright-assurance/src/lib.rs",
@@ -2206,7 +2334,6 @@
       "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback.",
       "requirements": [
         "SR-053",
@@ -2215,7 +2342,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all five Track 26 assertions (T26-A001..T26-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-assurance, check_schema_migrations.py, workflow trace schemas, and tests/test_formal_assurance_contract_evolution.py and tests/test_mcp_authority_state_machine.py; create unit test suite in tests/test_formal_assurance_contract_evolution.py validating workflow-trace schemas, fail-closed schema migration registry policies, non-destructive forward migrations with rollback support, and check_schema_migrations.py execution; integrate Hypothesis stateful property testing over the searchright-mcp stdio binary verifying screening authority boundaries; record conductor review receipt and preserve open Kani/Loom/Miri proofs, model-check traces, contract compatibility fixtures, semver cross-version contract tests, and persisted-data migration drill blockers without false promotion."
+        "Upgrade all five Track 26 assertions (T26-A001..T26-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-assurance, check_schema_migrations.py, workflow trace schemas, and tests/test_formal_assurance_contract_evolution.py and tests/test_mcp_authority_state_machine.py; create unit test suite in tests/test_formal_assurance_contract_evolution.py validating workflow-trace schemas, fail-closed schema migration registry policies, non-destructive forward migrations with rollback support, and check_schema_migrations.py execution; integrate Hypothesis stateful property testing over the searchright-mcp stdio binary verifying screening authority boundaries; record conductor review receipt and preserve open Kani/Loom/Miri proofs, model-check traces, contract compatibility fixtures, semver cross-version contract tests, and persisted-data migration drill blockers without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission. Bounded formal execution: https://github.com/edithatogo/searchright/actions/runs/42566040236."
       ],
       "runtime_evidence": [
         "verification/receipts/track-26-conductor-review-2026-11-04.json",
@@ -2228,21 +2356,30 @@
       "status": "source_implemented",
       "title": "Formal assurance and contract evolution",
       "track_id": "26",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.",
+        "Compile and execute model-check traces and forbidden-transition tests.",
+        "Add compatibility fixtures for each public contract version.",
+        "Run semver and cross-version MCP/CLI contract tests.",
+        "Compile and execute representative persisted-data migrations, backward readers and rollback projections."
+      ],
+      "phase_3_task_count": 5,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating accessibility-systems-architect, internationalisation-specialist, and usability-governance-auditor roles, with accessible color-free PlainText/JSON/JSONL rendering, word-based severities, separable message catalogues, and external evaluation protocols verified in crates/searchright-diagnostics/tests/diagnostic_scenarios.rs and evaluation/external-evaluation.json. Simulation instrument and compiler-tested local boundaries only, not a substitute for live participant usability trials or formal ethics clearance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating accessibility-systems-architect, internationalisation-specialist, and usability-governance-auditor roles, with accessible color-free PlainText/JSON/JSONL rendering, word-based severities, separable message catalogues, and external evaluation protocols verified in crates/searchright-diagnostics/tests/diagnostic_scenarios.rs and evaluation/external-evaluation.json. Simulation instrument and compiler-tested local boundaries only, not a substitute for live participant usability trials or formal ethics clearance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Compile and run plain/JSON/JSONL snapshots and no-colour tests via deterministic scenario fixtures.",
-        "Create message catalogues and execute locale-fallback tests via multi-lingual message catalogue tests.",
-        "Complete keyboard, screen-reader and information-specialist usability evaluation via simulated agent-panel protocol."
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests."
       ],
       "deliverables": [
         "crates/searchright-diagnostics/src/lib.rs",
@@ -2266,7 +2403,6 @@
       "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology.",
       "requirements": [
         "SR-055",
@@ -2274,7 +2410,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all five Track 27 assertions (T27-A001..T27-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-diagnostics, searchright-contracts, and test_accessibility_internationalisation_usability_governance.py; create unit test suite in tests/test_accessibility_internationalisation_usability_governance.py validating diagnostic schema conformance, namespaced code rules, blocking remediation invariants, colour-free and glyph-free plain text rendering, locale-neutral machine identifier preservation across message catalogues, and external evaluation independence and design protocols; record conductor review receipt and preserve open plain/JSON/JSONL snapshot and no-colour tests, message catalogue fallback tests, and keyboard/screen-reader/information-specialist usability evaluations without false promotion."
+        "Upgrade all five Track 27 assertions (T27-A001..T27-A005) to symbol_and_gate_mapped with concrete implementation symbols across searchright-diagnostics, searchright-contracts, and test_accessibility_internationalisation_usability_governance.py; create unit test suite in tests/test_accessibility_internationalisation_usability_governance.py validating diagnostic schema conformance, namespaced code rules, blocking remediation invariants, colour-free and glyph-free plain text rendering, locale-neutral machine identifier preservation across message catalogues, and external evaluation independence and design protocols; record conductor review receipt and preserve open plain/JSON/JSONL snapshot and no-colour tests, message catalogue fallback tests, and keyboard/screen-reader/information-specialist usability evaluations without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-27-conductor-review-2026-11-04.json",
@@ -2287,22 +2424,29 @@
       "status": "source_implemented",
       "title": "Accessibility, internationalisation and usability",
       "track_id": "27",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests.",
+        "Create message catalogues and execute locale-fallback tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation."
+      ],
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_redaction_policy.py --self-test",
         "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles, with deny-by-default boundary enforcement, immutable audit records, legal hold protection, and cryptographic approval registry verification in crates/searchright-governance/tests/governance_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for external institutional compliance audit. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles, with deny-by-default boundary enforcement, immutable audit records, legal hold protection, and cryptographic approval registry verification in crates/searchright-governance/tests/governance_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for external institutional compliance audit. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Compile and run comprehensive negative scenario tests with unapproved classification, deployment mode, region, model, and lifecycle transitions.",
-        "Verify deny-by-default bounded approval registry with temporal windows, single-use nonces, and cryptographic head digests.",
-        "Complete structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles."
+        "Compile and run governance/authority negative scenarios."
       ],
       "deliverables": [
         "crates/searchright-governance/src/lib.rs",
@@ -2334,7 +2478,6 @@
       "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Evaluate data handling and least-privilege collaboration policy before sensitive or cross-institution operations.",
       "requirements": [
         "SR-057",
@@ -2343,7 +2486,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Upgrade all five Track 28 assertions (T28-A001..T28-A005) to symbol_and_gate_mapped with concrete symbols across searchright-governance, searchright-contracts, searchright-screening and scripts/redaction.py; add tests/test_institutional_governance_privacy_collaboration.py covering policy/request/decision consistency, deny-by-default blocker codes, human-approval and scoped lifecycle authority, receipt minimisation, adjudication independence and threat-model gates; fix the clippy assert_is_empty lint in the searchright-governance unit tests; record the conductor review receipt and preserve the open compiled negative-scenario, institutional review and cross-institution pilot gates without false promotion."
+        "Upgrade all five Track 28 assertions (T28-A001..T28-A005) to symbol_and_gate_mapped with concrete symbols across searchright-governance, searchright-contracts, searchright-screening and scripts/redaction.py; add tests/test_institutional_governance_privacy_collaboration.py covering policy/request/decision consistency, deny-by-default blocker codes, human-approval and scoped lifecycle authority, receipt minimisation, adjudication independence and threat-model gates; fix the clippy assert_is_empty lint in the searchright-governance unit tests; record the conductor review receipt and preserve the open compiled negative-scenario, institutional review and cross-institution pilot gates without false promotion.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-28-conductor-review-2026-11-04.json",
@@ -2357,25 +2501,31 @@
       "status": "source_implemented",
       "title": "Institutional governance, privacy and collaboration",
       "track_id": "28",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile and run governance/authority negative scenarios.",
+        "Obtain institutional privacy, records and security review for a deployment profile.",
+        "Pilot multi-reviewer and cross-institution artefact exchange with minimised data."
+      ],
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_external_evaluation.py",
         "python3 -B -m unittest discover -s tests -p test_external_evaluation_sustainability_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating methodological-evaluator, sustainability-architect, and adjudication-integrity-auditor roles, with fail-closed preparation contracts, four topic strata, six core outcome definitions, observation-not-documentation sustainability rules, and unsubmitted JOSS draft bounds verified in tests/test_external_evaluation_sustainability_governance.py and tests/test_external_evaluation_check.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for live human participant trials or observed longitudinal maintenance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Evaluate preregistered protocol structure, topic strata, outcome metrics, and benchmark leakage controls via simulated expert panel.",
-        "Verify open-source decision taxonomy, observation-not-documentation principle, and succession safeguards via sustainability architect.",
-        "Complete blinded adjudication audit, mandatory conflict disclosure checks, and unsubmitted JOSS paper draft verification.",
-        "Verify fail-closed preparation contract status (prepared_not_preregistered, prepared_not_observed) via adversarial test harness."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating methodological-evaluator, sustainability-architect, and adjudication-integrity-auditor roles, with fail-closed preparation contracts, four topic strata, six core outcome definitions, observation-not-documentation sustainability rules, and unsubmitted JOSS draft bounds verified in tests/test_external_evaluation_sustainability_governance.py and tests/test_external_evaluation_check.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for live human participant trials or observed longitudinal maintenance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "docs/evaluation/external-methodological-evaluation.md",
         "docs/evaluation/benchmark-and-calibration-protocol.md",
@@ -2399,10 +2549,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-09",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Complete independent methodological/usability evaluation and establish durable governance, publication and succession evidence.",
       "requirements": [
         "SR-041",
@@ -2412,7 +2561,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required."
+        "Map all six Track 29 assertions (T29-A001..T29-A006) to symbols and gates in conductor/traceability-overrides.json; add tests/test_external_evaluation_sustainability_governance.py checking protocol/contract agreement, no preregistration or validation over-claim, blinded developer-independent adjudication, benchmark leakage controls, the unsubmitted JOSS draft, observation-not-documentation sustainability, decision-class governance and mandatory disclosures; record the conductor review receipt. Preregistration, external recruitment and execution, published results and observed sustainability practice remain open; the track stays external_evidence_required.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-29-conductor-review-2026-11-05.json",
@@ -2426,23 +2576,18 @@
       "status": "source_implemented",
       "title": "External methodological evaluation and sustainability",
       "track_id": "29",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Preregister the independent evaluation protocol.",
+        "Recruit external information specialists and execute blinded evaluation.",
+        "Publish results, limitations and response-to-findings matrix.",
+        "Demonstrate observed maintenance, standards surveillance and succession practice."
+      ],
+      "phase_3_task_count": 4
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-09",
-      "blockers": [],
-      "checks": [
-        "python scripts/check_maturity_dossier.py",
-        "python scripts/check_roadmap_coverage.py",
-        "python scripts/generate_evidence_debt.py --check",
-        "python scripts/check_gate_catalog.py --check",
-        "python scripts/check_launch_preparation_roadmap.py",
-        "python3 -m unittest discover -s tests -p test_maturity_gap_closure_governance.py"
-      ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating maturity-architect, launch-coordinator, and provenance-auditor roles, with 17 expected maturity domains, 14 critical blocker domains, fail-closed readiness decision ('not_ready'), 200 roadmap assertions reconciled across evidence debt, 73 static gates bounded to default network isolation, 16 launch preparation work packages (LP-001..LP-016) in an acyclic DAG, and anti-anthropomorphic operational mode bounds verified in tests/test_maturity_gap_closure_governance.py and tests/test_launch_preparation_roadmap.py. Simulation instrument and deterministic governance contracts only; live critical domain receipts, external release-risk waivers, and autonomous agent exclusions remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
+      "blockers": [
         "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
         "Review and approve any explicit release-risk exception without hiding the open gap.",
         "Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.",
@@ -2452,7 +2597,6 @@
         "LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval.",
         "LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.",
         "LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accountable launch-profile decision that keeps those effects unavailable and fail closed.",
-        "LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites.",
         "LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence.",
         "LP-009 / Track 32: execute exact-revision CiteWeft and Sourceright compiled canaries, dual-run parity and rollback without deleting recovery paths.",
         "LP-010 / Track 16: exceed the governed maturity coverage target, triage mutation/fuzz/formal results, resolve or re-approve dependency exemptions and obtain an exact-candidate green matrix.",
@@ -2462,6 +2606,19 @@
         "LP-014 / Track 35: generate and install-smoke locked Python/TypeScript SDKs and complete fixture-backed tutorial walkthroughs.",
         "LP-015 / Track 36: run the reproducible signed/attested release-candidate, bounded pilots and rollback rehearsal without automatic publication.",
         "LP-016 / Track 37: aggregate current evidence, adjudicate every residual risk and perform separately approved release/registry actions only after a not-ready/ready decision."
+      ],
+      "checks": [
+        "python scripts/check_maturity_dossier.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/generate_evidence_debt.py --check",
+        "python scripts/check_gate_catalog.py --check",
+        "python scripts/check_launch_preparation_roadmap.py",
+        "python3 -m unittest discover -s tests -p test_maturity_gap_closure_governance.py"
+      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating maturity-architect, launch-coordinator, and provenance-auditor roles, with 17 expected maturity domains, 14 critical blocker domains, fail-closed readiness decision ('not_ready'), 200 roadmap assertions reconciled across evidence debt, 73 static gates bounded to default network isolation, 16 launch preparation work packages (LP-001..LP-016) in an acyclic DAG, and anti-anthropomorphic operational mode bounds verified in tests/test_maturity_gap_closure_governance.py and tests/test_launch_preparation_roadmap.py. Simulation instrument and deterministic governance contracts only; live critical domain receipts, external release-risk waivers, and autonomous agent exclusions remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [
+        "LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites."
       ],
       "deliverables": [
         "docs/maturity/gap-register.md",
@@ -2496,7 +2653,6 @@
       "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Maintain one evidence-scaled gap register and an executable hardened/polished launch-preparation dependency graph while blocking premature release claims.",
       "requirements": [
         "SR-050",
@@ -2504,7 +2660,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Created tests/test_maturity_gap_closure_governance.py with 6 comprehensive unit tests covering maturity dossier contracts, 17 expected domains, 14 critical blockers, fail-closed 'not_ready' decision, evidence debt reconciliation across all 200 roadmap assertions, gate catalog network isolation, 16 launch preparation work packages in an acyclic DAG, gap register non-waiver rules, and anti-anthropomorphic actor provenance. Upgraded all 4 assertions (T30-A001..T30-A004) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
+        "Created tests/test_maturity_gap_closure_governance.py with 6 comprehensive unit tests covering maturity dossier contracts, 17 expected domains, 14 critical blockers, fail-closed 'not_ready' decision, evidence debt reconciliation across all 200 roadmap assertions, gate catalog network isolation, 16 launch preparation work packages in an acyclic DAG, gap register non-waiver rules, and anti-anthropomorphic actor provenance. Upgraded all 4 assertions (T30-A001..T30-A004) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission. The 8-9 November archival observations are superseded for unfinished live, downstream, human and public-release requirements; their receipts remain unchanged. Optional hosted, broad-estate and mature-release work stays outside the local-product critical path."
       ],
       "runtime_evidence": [
         "verification/receipts/track-30-conductor-review-2026-11-09.json",
@@ -2520,7 +2677,29 @@
       "status": "source_implemented",
       "title": "Maturity gate and gap closure",
       "track_id": "30",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
+        "Review and approve any explicit release-risk exception without hiding the open gap.",
+        "Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.",
+        "LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.",
+        "LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.",
+        "LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.",
+        "LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval.",
+        "LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.",
+        "LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accountable launch-profile decision that keeps those effects unavailable and fail closed.",
+        "LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites.",
+        "LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence.",
+        "LP-009 / Track 32: execute exact-revision CiteWeft and Sourceright compiled canaries, dual-run parity and rollback without deleting recovery paths.",
+        "LP-010 / Track 16: exceed the governed maturity coverage target, triage mutation/fuzz/formal results, resolve or re-approve dependency exemptions and obtain an exact-candidate green matrix.",
+        "LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts.",
+        "LP-012 / Track 29: execute the preregistered sealed methodological evaluation and publish limitations, subgroup results and the accountable response matrix.",
+        "LP-013 / Track 33: execute encrypted restore, audit-chain, incident, cancellation and deployment-SLO rehearsals against the target profile.",
+        "LP-014 / Track 35: generate and install-smoke locked Python/TypeScript SDKs and complete fixture-backed tutorial walkthroughs.",
+        "LP-015 / Track 36: run the reproducible signed/attested release-candidate, bounded pilots and rollback rehearsal without automatic publication.",
+        "LP-016 / Track 37: aggregate current evidence, adjudicate every residual risk and perform separately approved release/registry actions only after a not-ready/ready decision."
+      ],
+      "phase_3_task_count": 19
     },
     {
       "archived_on": "2026-08-12",
@@ -2609,8 +2788,11 @@
       "updated": "2026-08-31"
     },
     {
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+        "Approve promotion or rollback explicitly and record cross-repository receipts."
+      ],
       "checks": [
         "python scripts/check_release_train.py",
         "python scripts/sync_ecosystem_lock.py --check",
@@ -2620,13 +2802,9 @@
         "python scripts/check_integration_drift.py",
         "python3 -m unittest discover -s tests -p test_cross_repository_release_train_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-train-engineer, downstream-canary-specialist, and rollback-authority-auditor roles, with contiguous promotion order (CiteWeft -> Searchright -> Sourceright), default-deny automation across all 6 lifecycle stages, 4-step rollback with zero evidence deletion, consumer contract suite conformance, and hardened CI workflows verified in tests/test_cross_repository_release_train_governance.py. Simulation instrument and source-level contracts only; live downstream canaries in CiteWeft and Sourceright and production release promotion remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
-        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
-        "Approve promotion or rollback explicitly and record cross-repository receipts."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-train-engineer, downstream-canary-specialist, and rollback-authority-auditor roles, with contiguous promotion order (CiteWeft -> Searchright -> Sourceright), default-deny automation across all 6 lifecycle stages, 4-step rollback with zero evidence deletion, consumer contract suite conformance, and hardened CI workflows verified in tests/test_cross_repository_release_train_governance.py. Simulation instrument and source-level contracts only; live downstream canaries in CiteWeft and Sourceright and production release promotion remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "integration/release-train.json",
         "integration/ecosystem-lock.json",
@@ -2651,10 +2829,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-09",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions.",
       "requirements": [
         "SR-065",
@@ -2664,7 +2841,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening. Upgraded all 3 assertions (T32-A001..T32-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
+        "Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening. Upgraded all 3 assertions (T32-A001..T32-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-32-conductor-review-2026-11-09.json",
@@ -2677,11 +2855,21 @@
       "status": "source_implemented",
       "title": "Cross-repository contract release train and downstream canaries",
       "track_id": "32",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+        "Approve promotion or rollback explicitly and record cross-repository receipts."
+      ],
+      "phase_3_task_count": 3,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
+        "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_rust_source_structure.py",
@@ -2689,13 +2877,10 @@
         "python scripts/recovery_rehearsal.py --self-test",
         "python3 -m unittest discover -s tests -p test_operational_reliability_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating site-reliability-architect, privacy-telemetry-auditor, and disaster-recovery-auditor roles, with component health contracts, default-disabled telemetry, encrypted backup manifests, atomic reference recovery rehearsal, and incident response governance verified in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs. Simulation instrument and source-level contracts only; live clean-room backup/restore rehearsals in production environments, deployment-specific restore drills, and live failure injection remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating site-reliability-architect, privacy-telemetry-auditor, and disaster-recovery-auditor roles, with component health contracts, default-disabled telemetry, encrypted backup manifests, atomic reference recovery rehearsal, and incident response governance verified in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs. Simulation instrument and source-level contracts only; live clean-room backup/restore rehearsals in production environments, deployment-specific restore drills, and live failure injection remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
       "completed_higher_evidence_gates": [
-        "Compile and execute operations policy tests and failure-injection scenarios.",
-        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
-        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
-        "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
+        "Compile and execute operations policy tests and failure-injection scenarios."
       ],
       "deliverables": [
         "crates/searchright-ops/src/lib.rs",
@@ -2727,7 +2912,6 @@
       "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments.",
       "requirements": [
         "SR-078",
@@ -2737,7 +2921,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Created tests/test_operational_reliability_governance.py with 6 comprehensive unit tests covering component health contracts, liveness vs readiness distinction, degraded operation states, default-disabled telemetry with strict attribute prohibitions, encrypted backup manifests with mandatory restore testing, incident record structure with containment and postmortem mandates, recovery rehearsal execution and receipt validation, and resilience workflow hardening. Upgraded all 3 assertions (T33-A001..T33-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
+        "Created tests/test_operational_reliability_governance.py with 6 comprehensive unit tests covering component health contracts, liveness vs readiness distinction, degraded operation states, default-disabled telemetry with strict attribute prohibitions, encrypted backup manifests with mandatory restore testing, incident record structure with containment and postmortem mandates, recovery rehearsal execution and receipt validation, and resilience workflow hardening. Upgraded all 3 assertions (T33-A001..T33-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
       ],
       "runtime_evidence": [
         "verification/receipts/track-33-conductor-review-2026-11-09.json",
@@ -2750,11 +2935,22 @@
       "status": "source_implemented",
       "title": "Operational observability, backup, restore and incident response",
       "track_id": "33",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Compile and execute operations policy tests and failure-injection scenarios.",
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
+        "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
+      ],
+      "phase_3_task_count": 4,
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+      ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_default_deny.py",
@@ -2762,13 +2958,9 @@
         "python scripts/remote_mcp_conformance.py",
         "python3 -m unittest discover -s tests -p test_authenticated_remote_mcp_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating remote-mcp-security-architect, authorization-tenancy-auditor, and abuse-budget-auditor roles, with feature-gated loopback Streamable HTTP adapter, TLS terminator separation, rotating JWKS RS256 token verification, request replay nonce enforcement, tenant isolation, regional data residency, human-only final screening decisions, sliding-window rate limits, active task concurrency limits, request timeout budgets, and privacy-preserving redacted audit logging verified in tests/test_authenticated_remote_mcp_governance.py. Simulation instrument and source-level contracts only; live OAuth/OIDC IdP integration, multi-replica distributed replay/rate ledgers, physical cloud data residency verification, and production rollback rehearsals remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
-        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
-        "Complete independent security/privacy review before any hosted or multi-tenant claim."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating remote-mcp-security-architect, authorization-tenancy-auditor, and abuse-budget-auditor roles, with feature-gated loopback Streamable HTTP adapter, TLS terminator separation, rotating JWKS RS256 token verification, request replay nonce enforcement, tenant isolation, regional data residency, human-only final screening decisions, sliding-window rate limits, active task concurrency limits, request timeout budgets, and privacy-preserving redacted audit logging verified in tests/test_authenticated_remote_mcp_governance.py. Simulation instrument and source-level contracts only; live OAuth/OIDC IdP integration, multi-replica distributed replay/rate ledgers, physical cloud data residency verification, and production rollback rehearsals remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "crates/searchright-access/src/lib.rs",
         "crates/searchright-contracts/src/access.rs",
@@ -2793,10 +2985,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-09",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment.",
       "phase_3_task_count": 3,
       "requirements": [
@@ -2808,7 +2999,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Created tests/test_authenticated_remote_mcp_governance.py with 6 unit tests covering tenant policy default-deny boundaries, access request and decision schemas, remote MCP security architecture loopback and TLS boundaries, deterministic remote MCP auth and tenancy conformance receipts, non-human agent autonomous study exclusion prohibition, and OpenAPI specification. Upgraded assertions T34-A001..T34-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+        "Created tests/test_authenticated_remote_mcp_governance.py with 6 unit tests covering tenant policy default-deny boundaries, access request and decision schemas, remote MCP security architecture loopback and TLS boundaries, deterministic remote MCP auth and tenancy conformance receipts, non-human agent autonomous study exclusion prohibition, and OpenAPI specification. Upgraded assertions T34-A001..T34-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/remote-mcp-auth-conformance.json",
@@ -2824,25 +3016,30 @@
       "status": "source_implemented",
       "title": "Authenticated remote MCP, tenancy and data residency",
       "track_id": "34",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+      ],
+      "active_plan": "conductor/frontier-plan.md"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
+      ],
       "checks": [
         "python scripts/check_sdk_examples.py",
         "python scripts/check_cli_mcp_parity.py",
         "python scripts/validate_repository.py",
         "python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating sdk-api-architect, developer-experience-auditor, and adoption-governance-auditor roles, with thin generated SDK constraints, compiler-checked bindings across 74 canonical schemas in sdk/generated-contract-bindings.json, domain logic duplication prohibition, fixture-backed offline tutorials in examples/quickstart/README.md, 35-operation cross-surface parity across CLI, MCP, and Rust facade, PRISMA-S reporting contract doctrine, and human-only study screening authority verified in tests/test_sdk_docs_adoption_governance.py. Simulation instrument and source-level contracts only; live npm/PyPI client packaging, external information specialist walkthroughs, and multi-cycle deprecation tracking remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-        "Run documentation tests and information-specialist tutorial walkthroughs.",
-        "Observe support, deprecation and compatibility operations across at least one release cycle."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating sdk-api-architect, developer-experience-auditor, and adoption-governance-auditor roles, with thin generated SDK constraints, compiler-checked bindings across 74 canonical schemas in sdk/generated-contract-bindings.json, domain logic duplication prohibition, fixture-backed offline tutorials in examples/quickstart/README.md, 35-operation cross-surface parity across CLI, MCP, and Rust facade, PRISMA-S reporting contract doctrine, and human-only study screening authority verified in tests/test_sdk_docs_adoption_governance.py. Simulation instrument and source-level contracts only; live npm/PyPI client packaging, external information specialist walkthroughs, and multi-cycle deprecation tracking remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "sdk/manifest.json",
         "scripts/check_sdk_examples.py",
@@ -2864,10 +3061,9 @@
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "fixture_proven_on": "2026-11-09",
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core.",
       "requirements": [
         "SR-086",
@@ -2876,7 +3072,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Created tests/test_sdk_docs_adoption_governance.py with 6 comprehensive unit tests covering SDK manifest and thin generated client boundaries, contract bindings compiler-checked status across 74 contracts in sdk/generated-contract-bindings.json, 35-operation interface catalog parity across CLI, MCP, and Rust facade, fixture-backed offline tutorials, adoption governance with PRISMA-S reporting contract adherence and human-only screening authority, and public package policy unpublishable bounds. Upgraded assertions T35-A001..T35-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+        "Created tests/test_sdk_docs_adoption_governance.py with 6 comprehensive unit tests covering SDK manifest and thin generated client boundaries, contract bindings compiler-checked status across 74 contracts in sdk/generated-contract-bindings.json, 35-operation interface catalog parity across CLI, MCP, and Rust facade, fixture-backed offline tutorials, adoption governance with PRISMA-S reporting contract adherence and human-only screening authority, and public package policy unpublishable bounds. Upgraded assertions T35-A001..T35-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-35-conductor-review-2026-11-09.json",
@@ -2889,25 +3086,30 @@
       "status": "source_implemented",
       "title": "Generated SDKs, fixture-backed documentation and adoption operations",
       "track_id": "35",
-      "updated": "2026-11-09"
+      "updated": "2026-11-09",
+      "higher_evidence_task_order": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
+      ],
+      "phase_3_task_count": 3
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
       "checks": [
         "python scripts/check_release_rehearsal.py",
         "python scripts/check_packaging_reproducibility.py",
         "python scripts/check_maturity_dossier.py",
         "python3 -m unittest discover -s tests -p test_release_candidate_pilots_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-integrity-architect, pilot-operations-auditor, and ecosystem-registry-auditor roles, with clean-room rehearsal validation in scripts/check_release_rehearsal.py, deterministic packaging reproducibility in scripts/check_packaging_reproducibility.py, staged pilot safety protocols in docs/pilots/pilot-protocol.md, no autonomous exclusions, deployment-controlled data boundaries, explicit registry blockers across 9 submission targets in registry/status.json, and 6/6 unit tests verified network-free in tests/test_release_candidate_pilots_governance.py. Simulation instrument and source-level contracts only; live pilot execution, compiler matrix runs, and public registry submissions remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
-        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
-        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-integrity-architect, pilot-operations-auditor, and ecosystem-registry-auditor roles, with clean-room rehearsal validation in scripts/check_release_rehearsal.py, deterministic packaging reproducibility in scripts/check_packaging_reproducibility.py, staged pilot safety protocols in docs/pilots/pilot-protocol.md, no autonomous exclusions, deployment-controlled data boundaries, explicit registry blockers across 9 submission targets in registry/status.json, and 6/6 unit tests verified network-free in tests/test_release_candidate_pilots_governance.py. Simulation instrument and source-level contracts only; live pilot execution, compiler matrix runs, and public registry submissions remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "release/rehearsal.json",
         "scripts/check_release_rehearsal.py",
@@ -2933,10 +3135,9 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": true,
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals.",
       "requirements": [
         "SR-039",
@@ -2948,7 +3149,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Created tests/test_release_candidate_pilots_governance.py with 6 comprehensive unit tests covering release rehearsal script conformance across 11 gates and 3 pilot profiles, mandatory rehearsal safeguards (unexecuted status, dry-run bounds, mandatory rollback), pilot deployment protocol staging (fixture-only local -> institution self-hosted -> remote single-tenant) with PRISMA-S non-negotiable human screening authority and data isolation, ecosystem and registry rehearsal explicit blockers across all 9 submission targets, release-candidate workflow manual dispatch invariants, and reproducible source packaging verification. Upgraded assertions T36-A001..T36-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+        "Created tests/test_release_candidate_pilots_governance.py with 6 comprehensive unit tests covering release rehearsal script conformance across 11 gates and 3 pilot profiles, mandatory rehearsal safeguards (unexecuted status, dry-run bounds, mandatory rollback), pilot deployment protocol staging (fixture-only local -> institution self-hosted -> remote single-tenant) with PRISMA-S non-negotiable human screening authority and data isolation, ecosystem and registry rehearsal explicit blockers across all 9 submission targets, release-candidate workflow manual dispatch invariants, and reproducible source packaging verification. Upgraded assertions T36-A001..T36-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-36-conductor-review-2026-11-09.json",
@@ -2960,25 +3162,31 @@
       "slug": "release-candidate-pilots",
       "status": "source_implemented",
       "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
-      "track_id": "36"
+      "track_id": "36",
+      "higher_evidence_task_order": [
+        "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
+      "phase_3_task_count": 3,
+      "updated": "2026-11-09"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "archived_on": "2026-11-09",
-      "blockers": [],
+      "blockers": [
+        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
+      ],
       "checks": [
         "python scripts/check_maturity_dossier.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/run_static_harness.py",
         "python3 -m unittest discover -s tests -p test_maturity_1_0_governance.py"
       ],
-      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-governance-officer, long-term-support-architect, and ecosystem-safety-auditor roles, with multi-domain maturity dossier schema validation across 17 distinct domains in conductor/maturity-dossier.json, strict fail-closed decision boundaries in scripts/check_maturity_dossier.py, PRISMA-S reporting contract doctrine, non-negotiable human screening authority, locked unsubmitted registry targets, and 6/6 unit tests verified network-free in tests/test_maturity_1_0_governance.py. Simulation instrument and source-level contracts only; prospective multi-domain exit reviews, executive release signing, and public 1.0 distribution remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
-      "closeout_completed": true,
-      "completed_higher_evidence_gates": [
-        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
-        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
-        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
-      ],
+      "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-governance-officer, long-term-support-architect, and ecosystem-safety-auditor roles, with multi-domain maturity dossier schema validation across 17 distinct domains in conductor/maturity-dossier.json, strict fail-closed decision boundaries in scripts/check_maturity_dossier.py, PRISMA-S reporting contract doctrine, non-negotiable human screening authority, locked unsubmitted registry targets, and 6/6 unit tests verified network-free in tests/test_maturity_1_0_governance.py. Simulation instrument and source-level contracts only; prospective multi-domain exit reviews, executive release signing, and public 1.0 distribution remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
+      "closeout_completed": false,
+      "completed_higher_evidence_gates": [],
       "deliverables": [
         "docs/maturity/1.0-gate.md",
         "docs/maturity/release-decision.md",
@@ -3001,10 +3209,9 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": true,
-      "higher_evidence_completed": true,
+      "higher_evidence_completed": false,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "lifecycle": "archived",
       "outcome": "Release version 1.0 only after every maturity domain has current evidence, no critical blocker, accountable approval and support/rollback readiness.",
       "requirements": [
         "SR-050",
@@ -3013,7 +3220,8 @@
       ],
       "review_completed": true,
       "review_fixes": [
-        "Created tests/test_maturity_1_0_governance.py with 6 comprehensive unit tests covering maturity dossier schema conformance across 17 domains, fail-closed decision boundary (not_ready retaining 14 critical domain blockers), exhaustive ready release decision evidence contracts (9 mandatory fields: accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, support_plan plus approved: true), status snapshot validation against stale and volatile assertions, and network-free execution of scripts/check_maturity_dossier.py. Upgraded assertions T37-A001..T37-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+        "Created tests/test_maturity_1_0_governance.py with 6 comprehensive unit tests covering maturity dossier schema conformance across 17 domains, fail-closed decision boundary (not_ready retaining 14 critical domain blockers), exhaustive ready release decision evidence contracts (9 mandatory fields: accountable_reviewer, exact_git_commit, release_candidate, sbom, attestations, downstream_canaries, pilot_exits, rollback_plan, support_plan plus approved: true), status snapshot validation against stale and volatile assertions, and network-free execution of scripts/check_maturity_dossier.py. Upgraded assertions T37-A001..T37-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.",
+        "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
       ],
       "runtime_evidence": [
         "verification/receipts/track-37-conductor-review-2026-11-09.json",
@@ -3025,8 +3233,15 @@
       "slug": "maturity-1-0",
       "status": "source_implemented",
       "title": "Final mature 1.0 release and long-term operations",
-      "track_id": "37"
+      "track_id": "37",
+      "higher_evidence_task_order": [
+        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
+      ],
+      "phase_3_task_count": 3,
+      "updated": "2026-11-09"
     }
   ],
-  "updated": "2026-11-07"
+  "updated": "2026-11-09"
 }

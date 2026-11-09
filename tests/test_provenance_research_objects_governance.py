@@ -173,11 +173,27 @@ class ProvenanceResearchObjectsGovernanceTests(unittest.TestCase):
         self.assertEqual(traceability.get("evidence_level"), "fixture_proven")
 
         assertions = traceability.get("assertions", [])
-        self.assertEqual(len(assertions), 6, "Track 25 must define exactly 6 assertions")
-
         expected_ids = {f"T25-A{i:03d}" for i in range(1, 7)}
         actual_ids = {a["assertion_id"] for a in assertions}
         self.assertEqual(actual_ids, expected_ids)
+
+        review_path = "verification/receipts/track-25-conductor-review-2026-11-04.json"
+        review = json.loads((ROOT / review_path).read_text(encoding="utf-8"))
+        self.assertTrue(any(
+            result.get("status") == "passed"
+            and "cargo test" in result.get("command", "")
+            and "-p searchright-provenance" in result["command"]
+            for result in review["validation"]
+        ))
+        # Deterministic local exports do not establish independent interoperability.
+        external_boundaries = {
+            "T25-A001": ("durable identifiers",),
+            "T25-A002": ("round-trip",),
+            "T25-A003": ("ro-crate",),
+            "T25-A004": ("w3c prov",),
+            "T25-A005": ("osf", "zenodo"),
+            "T25-A006": ("golden round trips",),
+        }
 
         for assertion in assertions:
             self.assertEqual(assertion.get("state"), "source_implemented")
@@ -186,7 +202,10 @@ class ProvenanceResearchObjectsGovernanceTests(unittest.TestCase):
             self.assertGreater(len(assertion.get("deterministic_tests", [])), 0)
             self.assertGreater(len(assertion.get("native_test_commands", [])), 0)
             self.assertGreater(len(assertion.get("evidence_receipts", [])), 0)
-            self.assertEqual(len(assertion.get("open_gates", [])), 0)
+            self.assertIn(review_path, assertion.get("evidence_receipts", []))
+            gates = " ".join(assertion.get("open_gates", [])).lower()
+            for boundary in external_boundaries[assertion["assertion_id"]]:
+                self.assertIn(boundary, gates, assertion["assertion_id"])
             self.assertTrue(bool(assertion.get("permitted_claim", "").strip()))
             for path in assertion.get("implementation_paths", []):
                 self.assertTrue((ROOT / path).exists(), f"Mapped path {path} must exist on disk")

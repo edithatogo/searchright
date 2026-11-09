@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/00-foundation-conductor-toolchain/plan.md`
 
 ## Task subissues
 
-- [x] T01: Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision. (`track-00-phase-3-task-01`)
+- [ ] T01: Register Searchright in edithatogo/repository-standards and execute estate conformance at an approved upstream revision. (`track-00-phase-3-task-01`)
 
 ## Evidence rule
 

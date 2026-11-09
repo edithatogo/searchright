@@ -38,7 +38,12 @@
         "verification/receipts/track-14-conductor-review-2026-11-09.json",
         "verification/receipts/track-14-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+      ],
       "permitted_claim": "The compatibility facade and replacement mappings are verified locally.",
       "native_test_commands": [
         "cargo test --locked -p searchright-sourceright-compat"
@@ -75,7 +80,12 @@
         "verification/receipts/track-14-conductor-review-2026-11-09.json",
         "verification/receipts/track-14-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+      ],
       "permitted_claim": "Parity fixtures and dimensional matrix are verified against the shared core.",
       "native_test_commands": [
         "cargo test --locked -p searchright-sourceright-compat",
@@ -112,7 +122,12 @@
         "verification/receipts/track-14-conductor-review-2026-11-09.json",
         "verification/receipts/track-14-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+      ],
       "permitted_claim": "Replacement rules and symbol mappings are bounded and verified.",
       "native_test_commands": [
         "cargo test --locked -p searchright-sourceright-compat"
@@ -187,7 +202,12 @@
         "verification/receipts/track-14-conductor-review-2026-11-09.json",
         "verification/receipts/track-14-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+      ],
       "permitted_claim": "Coordinated release policies and migration guides are verified.",
       "native_test_commands": [
         "cargo test --locked -p searchright-sourceright-compat"
@@ -222,7 +242,12 @@
         "verification/receipts/track-14-conductor-review-2026-11-09.json",
         "verification/receipts/track-14-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+      ],
       "permitted_claim": "Deprecation lifecycle and removal policies are governed.",
       "native_test_commands": [
         "cargo test --locked -p searchright-sourceright-compat"
@@ -254,7 +279,11 @@
         "verification/receipts/track-14-conductor-review-2026-11-09.json",
         "verification/receipts/track-14-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Publish a Sourceright producer schema and fixture corpus.",
+        "Add a Searchright advisory consumer contract and evaluate false-positive linkage.",
+        "Verify that integrity signals cannot bypass human final eligibility authority."
+      ],
       "permitted_claim": "Downstream change contract and human-authority boundaries are recorded and verified.",
       "native_test_commands": [
         "cargo test --locked -p searchright-screening"

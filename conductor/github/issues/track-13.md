@@ -21,13 +21,13 @@ Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy 
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-13-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-13-phase-2`)
+- [x] Phase 1: Source implementation (`track-13-phase-1`)
+- [x] Phase 2: Source-level verification (`track-13-phase-2`)
 - [ ] Phase 3: Higher-evidence gates (`track-13-phase-3`)
 - [ ] Phase 4: Review and closeout (`track-13-phase-4`)
 
 ## Claim boundary
 
-A durable read-only audit at commit a0660f8 observed the public repository, all 568 then-canonical issues and all 567 expected native subissue relationships with zero drift and zero mutations. Track 13 topology is unchanged in the current source, but the audit does not cover later source revisions, downstream contract execution, scheduled live-estate drift or merged compatibility.
+A durable read-only audit at commit a0660f8 observed the public repository, all 568 then-canonical issues and all 567 expected native subissue relationships with zero drift and zero mutations. Track 13 topology is unchanged in the current source, but the audit does not cover later source revisions, downstream contract execution, scheduled live-estate drift or merged compatibility. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

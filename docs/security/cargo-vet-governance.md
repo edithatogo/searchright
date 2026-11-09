@@ -41,9 +41,11 @@ An exemption is a temporary risk acceptance, not audit evidence. The accountable
 owner authorised the current set only as exact crate-version-and-criterion entries with a
 linked GitHub issue, rationale, risk summary, replacement plan, decision
 evidence and an expiry no more than 90 days after proposal. Wildcard publisher
-trust is prohibited. Every current exemption is linked to issue #241 and expires
-on 2026-11-10; the dependency-review backlog remains open until audits replace
-the exemptions.
+trust is prohibited. Historical approval entries link to issue #241 and expire
+on 2026-11-10. Those original approval records are preserved; the current
+dependency-review task is [#242](https://github.com/edithatogo/searchright/issues/242),
+while #241 owns coverage. The dependency-review backlog remains open until
+qualifying audits replace the exemptions.
 
 ## Obsolete exemption retirement (2026-11-06)
 
@@ -109,29 +111,33 @@ unresolved for that future upgrade.
 
 ## Deadline remediation sequence
 
-As of 7 November 2026, the active set is 230 `safe-to-deploy` and 17
+As of 9 November 2026, the active set is 218 `safe-to-deploy` and 17
 `safe-to-run` exemptions. The existing checker accepts their 10 November expiry
 through that runner calendar date and rejects them from 11 November. This plan
 does not renew an exemption or certify a dependency. Keep work in Track 16 and
-issue [241](https://github.com/edithatogo/searchright/issues/241), using the
+issue [242](https://github.com/edithatogo/searchright/issues/242), using the
 existing Cargo Vet store and proposal history.
 
-Budget 2–4 agent hours for the first triage, plus native execution/download time.
-Estimate actual source-review work after the first measured batch; there is no
-evidence supporting completion of all 247 reviews within three days.
+Initial triage and the twelve peer-audit retirements above are complete. Estimate
+remaining source-review work from the next measured batch; there is no evidence
+supporting completion of all 235 remaining entries before the next day's expiry.
+The passing Cargo Vet report may count 230 exempted locked packages because
+ledger entries also include qualifying delta-audit roots; do not equate these
+different populations or delete roots solely because their versions are unlocked.
 
 1. Reproduce the locked graph and Cargo Vet result, then use a temporary copy of
    the store for suggestions, one refresh of the four approved registries and
    pruning analysis. Preserve command failures separately from audit gaps.
 2. Compare the refreshed suggestions with the committed snapshot. Inspect any
    imported change before promoting it and preserve peer attribution. The
-   6 November refresh found no additional complete paths; do not assume a new
-   refresh will resolve the backlog.
+   6 November refresh found no additional complete paths; the 8 November refresh
+   closed twelve entries. Neither observation proves a later refresh will resolve
+   the remainder.
 3. Assign at most two review batches in parallel, prioritising security exposure
    and then the actual full/delta review size. Retire an exemption only after the
    resolver proves it unnecessary or qualifying audit evidence replaces it.
-4. Record the measured residual set and revised estimate by 9 November, using the
-   existing issue/PR and CI artifacts. Where gaps cannot be resolved by the
+4. Use the observed 9 November residual set and revise the estimate after each
+   real review batch in the existing issue/PR and CI artifacts. Where gaps cannot be resolved by the
    deadline, present the exact versions, exposure, proposed duration and next
    remediation to the owner for a concrete decision. Existing expiry enforcement
    continues until such a decision actually exists.

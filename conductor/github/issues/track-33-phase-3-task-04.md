@@ -3,11 +3,11 @@
 
 Parent phase key: `track-33-phase-3`
 Conductor plan: `conductor/tracks/33-operational-reliability/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives.
+- [ ] Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives.
 
 ## Completion and evidence contract
 

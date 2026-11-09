@@ -1,6 +1,6 @@
 # Searchright: agent-led frontier development
 
-Updated 7 November 2026. This is the forward development plan, coordinated through
+Updated 9 November 2026. This is the forward development plan, coordinated through
 existing Track 30. It adds no new track hierarchy. Implementation status remains
 in the relevant PRs and observed test results; a planned capability is not a
 working or validated capability.
@@ -35,11 +35,14 @@ Supporting plans:
 | 3. Demonstrate it | Frozen scoped comparison; usable autonomous/solo/team modes; independently validated evidence package | 11, 17, 25, 28, 29 |
 | 4. Expand on results | Selective living updates, broader validation, prospective use and citable releases | 22, 25, 29, 35, 36 |
 
-Archived tracks remain useful ownership references. Follow-up work does not
-reopen their historical acceptance or require a new phase/subissue tree. Track 38
-is already used in [draft PR 679](https://github.com/edithatogo/searchright/pull/679);
-the institutional monitor can become an operational pilot, but is not a recall
-validation study.
+Completed tracks remain useful ownership references. The 9 November
+reconciliation reactivates tracks whose original live, human, downstream or
+publication requirements were incorrectly closed by simulated panels. It retains
+bounded component completions and historical receipts; it creates no new
+phase/subissue tree. Track 38 was proposed in
+[PR 679](https://github.com/edithatogo/searchright/pull/679), closed unmerged on
+8 November. Keep that identifier associated with its proposal; an institutional
+monitor still needs an executed pilot and is not a recall validation study.
 
 ## Immediate execution queue
 
@@ -71,7 +74,7 @@ their existing documents. Do not restart completed work.
 
 | Next work unit and existing owners | Prerequisites | Observable completion | Coding-agent effort |
 | --- | --- | --- | --- |
-| Resolve the dependency-review deadline — 16 | Existing lockfile, approved audit sources and exact-version acceptance records | Follow the [bounded remediation sequence](../docs/security/cargo-vet-governance.md#deadline-remediation-sequence). Retire only genuinely unused audit roots, replace exemptions with qualifying audits, and show the exact residual set before 10 November. No automatic extension or certification from a passing build. | Initial triage 0.5–1 day; source-review effort depends on the remaining code and cannot honestly be fixed at 247 versions in three days |
+| Resolve the dependency-review deadline — 16, [issue 242](https://github.com/edithatogo/searchright/issues/242) | Existing lockfile, approved audit sources and exact-version acceptance records | Initial triage and twelve peer-audit retirements are complete. Follow the [bounded remediation sequence](../docs/security/cargo-vet-governance.md#deadline-remediation-sequence) for the remaining 235 entries before their 10 November expiry. Preserve qualifying audit roots; no automatic extension or certification from a passing build. | Estimate the residual source-review effort from the next measured batch; 235 unresolved entries cannot honestly be promised within one day |
 | Deliver the first bounded two-source review — 03/04, with 05/06/07/09/10 | Shared transport controls; explicit local principal, policy, budget and provider access | CLI and MCP execute the same protocol through the shared live runtime; persist observations, records and decisions; interrupt/resume without duplicate effects or lost decisions; conserve counts through deduplication/export. Cover pagination, retry/429, cancellation, partial failure and budget exhaustion. Record separate authorised redacted live results for the selected pair. | 3–7 days; re-estimate after the first complete run |
 | Reproduce one existing-data baseline — 17, with 23/29 | Benchmark identity repair and a rights-clear pinned input | Use the existing SYNERGY upstream/fork route first; group splits by review/topic family and check shared publications. Reproduce random, lexical and pinned ASReview baselines through a small optional worker. Save per-review predictions, failures, seeds, costs and analysis. The worker receives observed training labels only. | 2–4 days for the first narrow experiment; informs [R3](../docs/research/programme.md#r3-can-ranking-reduce-screening-workload-without-concealing-missed-studies) |
 | Export one independently consumable evidence package — 25 | A small complete review output, which may initially use fixtures, and declared package metadata | Fix RO-Crate date/licence metadata, byte-size versus record-count semantics and PROV entity/activity relations. An independent consumer resolves identifiers, inspects decisions and detects altered/missing assets. Demonstrate deterministic replay where supported and disclose inspection-only/restricted inputs. | 2–4 days, parallel with the baseline; follows the [package specification](../docs/research/evidence-packages.md) |
@@ -84,6 +87,18 @@ includes live-runtime and authority wiring; removing a denial or recording a
 smoke test alone is insufficient. Select the first pair from providers whose
 transport and access conditions can actually be met; PubMed and Europe PMC are
 candidates, not new live-support claims.
+
+The 8–9 November additions improve component scenario coverage, deterministic
+provenance output and assertion mappings. They have not delivered the remaining
+six outcomes above. Coordinate through the existing issues: [live runtime](https://github.com/edithatogo/searchright/issues/43),
+[connectors](https://github.com/edithatogo/searchright/issues/59),
+[baselines](https://github.com/edithatogo/searchright/issues/249),
+[ranking](https://github.com/edithatogo/searchright/issues/339),
+[packages](https://github.com/edithatogo/searchright/issues/370),
+[actor policy](https://github.com/edithatogo/searchright/issues/417), and
+[research](https://github.com/edithatogo/searchright/issues/432), with
+[Track 30](https://github.com/edithatogo/searchright/issues/448) coordinating.
+An issue closes for its stated outcome, not for a replacement simulation.
 
 The baseline and local package can proceed in parallel. Neither waits for a
 hosted service, all companion migrations, a manuscript, a new public repository
@@ -162,15 +177,16 @@ access. Journal review is outside the delivery estimate. An unsuccessful
 experiment should narrow the next increment, not trigger more framework building.
 
 Separate active agent effort from hosted CI queue time when revising these
-estimates. Track 16 should trial `prConcurrentLimit: 2` and
-`commitHourlyLimit: 2` after checking the deployed Renovate version and resolved
-configuration. The existing branch limit can inherit the PR limit. The
+estimates. The 9 November Renovate change at
+`6bf0fa315d00286b48ca74f0cb782979165cc5a9` sets `prConcurrentLimit: 5` and
+`prHourlyLimit: 2`, and suppresses private CiteWeft and rust-toolchain updates.
+Use that deployed configuration as the baseline. Compare CI waiting time and
+routine-update age over one week before tightening it. A new-PR limit does not
+bound automatic rebases; if those are the measured cause, evaluate the documented
 [commit limit](https://docs.renovatebot.com/configuration-options/#commithourlylimit)
-covers automatic rebases as well as new branches; a new-PR limit alone does not
-bound that load. Preserve vulnerability-alert bypasses and existing PRs. Compare
-CI waiting time and routine-update age over one week using existing logs, then
-adjust. This planned change trades slower routine updates for less competing CI
-work; it does not cancel today's jobs or replace the direct urgent-fix path.
+against the deployed Renovate version and resolved configuration. A two-PR/two-
+commit trial remains an option, not an applied setting. Preserve vulnerability
+alert handling and the direct urgent-fix path.
 
 ## Dependency choices and replacement order
 
@@ -233,6 +249,33 @@ ordinary authorised continuation. External publication can be automatic only
 when the destination, scope and content policy were explicitly preauthorised.
 
 ## Experiments that can create a lead
+
+### Frontier checkpoint: 9 November 2026
+
+The comparison must be against working methods and products. Official
+[ASReview documentation](https://asreview.readthedocs.io/en/latest/lab/about.html)
+already describes active-learning screening, simulation, label validation and a
+multi-reviewer server. Reusing that machinery is the baseline, not a new research
+contribution. [Elicit's July 2026 evaluation](https://elicit.com/blog/evaluating-elicit-paper-search)
+reports 60.3% macro recall at 50 results on its BioASQ construction and describes
+an API/MCP surface. This is a vendor-run known-paper retrieval result, not an
+independent systematic-review completeness estimate or a directly transferable
+score for Searchright. Reproduce a matched comparison with pinned inputs before
+using it as a target.
+
+A [2026 stopping-method evaluation](https://doi.org/10.1002/cesm.70068) tests
+15 methods across 81 datasets and finds substantial reliability/work-saving
+trade-offs. Ranking gains alone therefore do not establish safe early stopping.
+Retain misses, non-stopping runs and audit effort in R3's outcomes.
+
+The first defensible lead should be narrow: fewer consequential translation
+errors and less specialist correction time, or less work for a living update at
+equivalent declared evidence quality. Start with the six-topic development
+experiment already planned, choose one primary endpoint from those results,
+freeze a fresh comparison and independent assessment, then release the full
+inputs/predictions/failures. Standards-compliant outputs and autonomous/solo/team
+controls make that advantage usable and inspectable; their existence alone does
+not prove superiority. These are research hypotheses, not achievements.
 
 ### Search meaning and differential testing
 

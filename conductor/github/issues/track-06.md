@@ -21,10 +21,10 @@ Import/export common bibliographic formats, propose conservative duplicate clust
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-06-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-06-phase-2`)
-- [ ] Phase 3: Higher-evidence gates (`track-06-phase-3`)
-- [ ] Phase 4: Review and closeout (`track-06-phase-4`)
+- [x] Phase 1: Source implementation (`track-06-phase-1`)
+- [x] Phase 2: Source-level verification (`track-06-phase-2`)
+- [x] Phase 3: Higher-evidence gates (`track-06-phase-3`)
+- [x] Phase 4: Review and closeout (`track-06-phase-4`)
 
 ## Claim boundary
 

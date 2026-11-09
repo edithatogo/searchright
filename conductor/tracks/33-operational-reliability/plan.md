@@ -1,10 +1,12 @@
 # Plan: 33 Operational observability, backup, restore and incident response
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-33`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -45,9 +47,9 @@ GitHub issue key: `track-33`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-33-phase-3 -->
 
 - [x] Compile and execute operations policy tests and failure-injection scenarios.
-- [x] Run encrypted clean-room backup and restore rehearsals with audit-chain verification.
-- [x] Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.
-- [x] Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives.
+- [ ] Run encrypted clean-room backup and restore rehearsals with audit-chain verification.
+- [ ] Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.
+- [ ] Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives.
 
 ## Phase 4: Review and closeout
 
@@ -57,4 +59,5 @@ GitHub issue key: `track-33`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Created tests/test_operational_reliability_governance.py with 6 comprehensive unit tests covering component health contracts, liveness vs readiness distinction, degraded operation states, default-disabled telemetry with strict attribute prohibitions, encrypted backup manifests with mandatory restore testing, incident record structure with containment and postmortem mandates, recovery rehearsal execution and receipt validation, and resilience workflow hardening. Upgraded all 3 assertions (T33-A001..T33-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

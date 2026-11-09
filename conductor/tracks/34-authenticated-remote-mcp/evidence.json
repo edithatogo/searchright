@@ -36,8 +36,12 @@
     "SR-084",
     "SR-085"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating remote-mcp-security-architect, authorization-tenancy-auditor, and abuse-budget-auditor roles, with feature-gated loopback Streamable HTTP adapter, TLS terminator separation, rotating JWKS RS256 token verification, request replay nonce enforcement, tenant isolation, regional data residency, human-only final screening decisions, sliding-window rate limits, active task concurrency limits, request timeout budgets, and privacy-preserving redacted audit logging verified in tests/test_authenticated_remote_mcp_governance.py. Simulation instrument and source-level contracts only; live OAuth/OIDC IdP integration, multi-replica distributed replay/rate ledgers, physical cloud data residency verification, and production rollback rehearsals remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+    "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
+    "Complete independent security/privacy review before any hosted or multi-tenant claim."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating remote-mcp-security-architect, authorization-tenancy-auditor, and abuse-budget-auditor roles, with feature-gated loopback Streamable HTTP adapter, TLS terminator separation, rotating JWKS RS256 token verification, request replay nonce enforcement, tenant isolation, regional data residency, human-only final screening decisions, sliding-window rate limits, active task concurrency limits, request timeout budgets, and privacy-preserving redacted audit logging verified in tests/test_authenticated_remote_mcp_governance.py. Simulation instrument and source-level contracts only; live OAuth/OIDC IdP integration, multi-replica distributed replay/rate ledgers, physical cloud data residency verification, and production rollback rehearsals remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-34",
@@ -71,9 +75,8 @@
     "verification/receipts/track-34-conductor-review-2026-11-09.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
-    "Created tests/test_authenticated_remote_mcp_governance.py with 6 unit tests covering tenant policy default-deny boundaries, access request and decision schemas, remote MCP security architecture loopback and TLS boundaries, deterministic remote MCP auth and tenancy conformance receipts, non-human agent autonomous study exclusion prohibition, and OpenAPI specification. Upgraded assertions T34-A001..T34-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
+    "Created tests/test_authenticated_remote_mcp_governance.py with 6 unit tests covering tenant policy default-deny boundaries, access request and decision schemas, remote MCP security architecture loopback and TLS boundaries, deterministic remote MCP auth and tenancy conformance receipts, non-human agent autonomous study exclusion prohibition, and OpenAPI specification. Upgraded assertions T34-A001..T34-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

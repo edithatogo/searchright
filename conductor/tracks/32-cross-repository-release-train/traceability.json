@@ -35,7 +35,9 @@
         "verification/receipts/panel-track-32-downstream-canary-specialist.json",
         "verification/receipts/panel-track-32-rollback-authority-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Record the executed Searchright commit and companion release revisions in a release receipt."
+      ],
       "permitted_claim": "Pinned producer-consumer order and observed component identities are source verified; no release was promoted."
     },
     {
@@ -66,7 +68,9 @@
         "verification/receipts/panel-track-32-downstream-canary-specialist.json",
         "verification/receipts/panel-track-32-rollback-authority-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run compiler-backed consumer fixtures and downstream canaries in all three repositories."
+      ],
       "permitted_claim": "Consumer and canary contracts are prepared; cross-repository results do not exist."
     },
     {
@@ -99,7 +103,9 @@
         "verification/receipts/panel-track-32-downstream-canary-specialist.json",
         "verification/receipts/panel-track-32-rollback-authority-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Exercise rollback in a release-candidate rehearsal and obtain human promotion approval."
+      ],
       "permitted_claim": "Promotion is default-deny, rollback is explicit and public packages remain not ready."
     }
   ]

@@ -42,7 +42,11 @@
         "verification/receipts/track-36-agent-panel-evaluation.json",
         "verification/receipts/panel-track-36-release-integrity-architect.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
       "permitted_claim": "Clean-room release candidate rehearsal contracts, required gates, and reproducible source packaging are verified via deterministic tests."
     },
     {
@@ -72,7 +76,11 @@
         "verification/receipts/track-36-agent-panel-evaluation.json",
         "verification/receipts/panel-track-36-pilot-operations-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
       "permitted_claim": "Staged local, institutional, and remote pilot protocols with non-negotiable PRISMA-S / human screening authority bounds and credential isolation are verified via deterministic tests."
     },
     {
@@ -103,7 +111,11 @@
         "verification/receipts/track-36-agent-panel-evaluation.json",
         "verification/receipts/panel-track-36-ecosystem-registry-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate a committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
       "permitted_claim": "Rollback rehearsal requirements and ecosystem/registry unsubmitted blockers across all 9 submission targets are verified via deterministic tests."
     }
   ]

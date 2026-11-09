@@ -6,7 +6,8 @@ Conductor plan: `conductor/tracks/07-screening-workflow/plan.md`
 
 ## Task subissues
 
-- [x] T01: Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles. (`track-07-phase-3-task-01`)
+- [x] T01: Compile and execute state-machine and authority-negative tests. (`track-07-phase-3-task-01`)
+- [ ] T02: Complete reviewer usability and inter-rater calibration evaluation. (`track-07-phase-3-task-02`)
 
 ## Evidence rule
 

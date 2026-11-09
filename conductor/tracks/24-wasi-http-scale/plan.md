@@ -1,10 +1,12 @@
 # Plan: 24 WASI components, HTTP MCP and scalable execution
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-08**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -45,12 +47,12 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-24-phase-3 -->
 
-- [x] Compile WASI components and run the component conformance suite via local mock harness.
-- [x] Implement and compile the WIT host/guest boundary with Wasmtime resource controls.
-- [x] Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.
-- [x] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
-- [x] Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond bounded local task admission.
-- [x] Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary.
+- [ ] Compile WASI components and run the component conformance suite.
+- [ ] Implement and compile the WIT host/guest boundary with Wasmtime resource controls.
+- [ ] Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.
+- [ ] Implement and threat-model authenticated Streamable HTTP/OAuth transport.
+- [ ] Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicitation, pagination and resource-update evidence.
+- [ ] Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary.
 
 ## Phase 4: Review and closeout
 
@@ -60,4 +62,5 @@ GitHub issue key: `track-24`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all six Track 24 assertions (T24-A001..T24-A006) to symbol_and_gate_mapped with concrete implementation symbols across searchright-plugin-sdk, searchright-policy, searchright-contracts, searchright-store, searchright-mcp, OpenAPI specs, and test_wasi_http_scale_governance.py; create unit test suite in tests/test_wasi_http_scale_governance.py validating OpenAPI 3.1.0 specifications, WIT search-provider contracts, provider component example schema conformance, release signature/trust policy schemas, and Track 24 traceability invariants; harden PolicyDecision enum, validate_request helper, and unit tests in crates/searchright-policy without forbidden fragments; record conductor review receipt and preserve open WASI compilation, Wasmtime resource controls, Arrow/Parquet/DuckDB engines, and Streamable HTTP/OAuth blockers without false promotion.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

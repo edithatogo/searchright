@@ -30,8 +30,12 @@
     "SR-039",
     "SR-068"
   ],
-  "blockers": [],
-  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-architect, security-auditor, and distribution-evaluator roles. Panel output is a simulation instrument, not a substitute for live release deployment. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "blockers": [
+    "Verify the committed Cargo.lock and pass the full release workflow.",
+    "Build/install-smoke supported binaries and OCI image.",
+    "Create signed tag, checksums, attestations and public release artefacts."
+  ],
+  "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-architect, security-auditor, and distribution-evaluator roles. Panel output is a simulation instrument, not a substitute for live release deployment. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-18",
@@ -46,6 +50,8 @@
       "track-18-phase-2-task-01",
       "track-18-phase-2-task-02",
       "track-18-phase-3-task-01",
+      "track-18-phase-3-task-02",
+      "track-18-phase-3-task-03",
       "track-18-phase-4-task-01",
       "track-18-phase-4-task-02",
       "track-18-phase-4-task-03",
@@ -61,9 +67,8 @@
     "verification/receipts/panel-track-18-distribution-evaluator.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-08",
   "review_fixes": [
-    "Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion."
+    "Upgrade all six Track 18 assertions (T18-A001..T18-A006) to symbol_and_gate_mapped with concrete implementation symbols across package_source.py, check_packaging_reproducibility.py, generate_source_sbom.py, generate_source_hash_manifest.py, mcp_smoke.py, check_cli_distribution.py, check_workflow_hardening.py, and check_release_rehearsal.py; refactor package_source and check_packaging_reproducibility to expose modular helper APIs with deterministic header normalization; create unit test suite in tests/test_alpha_release_packaging.py; record conductor review receipt and preserve open release, signing, container, and Cargo.lock blockers without false promotion.",
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md."
   ]
 }

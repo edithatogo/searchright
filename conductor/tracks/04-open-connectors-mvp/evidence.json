@@ -53,8 +53,12 @@
     "SR-015",
     "SR-016"
   ],
-  "blockers": [],
-  "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
+  "blockers": [
+    "Run authorised, redacted live smokes for each advertised provider.",
+    "Verify upstream terms, rate limits and response changes at release time.",
+    "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
+  ],
+  "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Source mappings and local fixtures are separate from the remaining live-product and provider-support requirements.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-04",
@@ -71,6 +75,7 @@
       "track-04-phase-3-task-01",
       "track-04-phase-3-task-02",
       "track-04-phase-3-task-03",
+      "track-04-phase-3-task-04",
       "track-04-phase-4-task-01",
       "track-04-phase-4-task-02",
       "track-04-phase-4-task-03",
@@ -93,8 +98,6 @@
     "verification/receipts/track-04-conductor-review-2026-11-09.json"
   ],
   "external_evidence": [],
-  "lifecycle": "archived",
-  "archived_on": "2026-11-09",
   "review_fixes": [
     {
       "commit": "3343d6a86b500e993f34ebe5e6518172ad7876b5",
@@ -119,6 +122,7 @@
     {
       "commit": "HEAD",
       "summary": "Implement governance tests in tests/test_open_connectors_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 04."
-    }
+    },
+    "2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission."
   ]
 }

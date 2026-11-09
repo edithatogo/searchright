@@ -1,8 +1,6 @@
 # Plan: 02 Portable query AST and dialect compilers
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -44,8 +42,8 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-02-phase-3 -->
 
 - [x] Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.
-- [x] Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.
-- [x] Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence.
+- [ ] Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.
+- [ ] Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence.
 
 ## Phase 4: Review and closeout
 
@@ -58,4 +56,5 @@ GitHub issue key: `track-02`. Each numbered phase maps to the same-numbered nati
   - Review fix `b98fc59`: Preserve phase task identity, reject unsupported native syntax without semantic loss, bound parser expansion, and enforce exact corpus bindings with adversarial and Unicode regressions.
   - Review fix `0e2fff8`: Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt.
   - Review fix `HEAD`: Implement tests/test_query_ast_dialects_governance.py (6/6 passing network-free), convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-02-conductor-review-2026-11-09.json, and archive Track 02 in-place while preserving external evidence gates.
-- [x] Close only after required evidence is present and the accountable owner records the agent-panel decisions.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+- [ ] Close only after required evidence is present and the accountable owner records the agent-panel decisions.

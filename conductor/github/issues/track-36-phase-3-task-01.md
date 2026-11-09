@@ -3,11 +3,11 @@
 
 Parent phase key: `track-36-phase-3`
 Conductor plan: `conductor/tracks/36-release-candidate-pilots/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
+- [ ] Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.
 
 ## Completion and evidence contract
 

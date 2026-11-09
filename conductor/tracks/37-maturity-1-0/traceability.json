@@ -44,7 +44,11 @@
         "verification/receipts/track-37-agent-panel-evaluation.json",
         "verification/receipts/panel-track-37-release-governance-officer.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
+      ],
       "permitted_claim": "Fixture-proven maturity governance and multi-domain schema validation; live multi-domain maturity exit closure remains an open operational gate."
     },
     {
@@ -83,7 +87,11 @@
         "verification/receipts/track-37-agent-panel-evaluation.json",
         "verification/receipts/panel-track-37-long-term-support-architect.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
+      ],
       "permitted_claim": "Fixture-proven release decision evidence contract validation; executive release approval and signature remain an open operational gate."
     },
     {
@@ -121,7 +129,11 @@
         "verification/receipts/track-37-agent-panel-evaluation.json",
         "verification/receipts/panel-track-37-ecosystem-safety-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Pass every critical maturity domain and resolve or explicitly reject all release-risk exceptions.",
+        "Approve and sign the release decision tied to the exact Git commit, candidate, SBOM, attestations and downstream/pilot evidence.",
+        "Publish version 1.0 and separately record public release, registry, software-paper, support and maintenance evidence."
+      ],
       "permitted_claim": "Fixture-proven ecosystem safety and long-term support contract governance; external registry submissions and live maintenance operations remain open operational gates."
     }
   ]

@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures.
+- [x] Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks.
 
 ## Completion and evidence contract
 

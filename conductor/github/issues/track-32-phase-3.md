@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/32-cross-repository-release-train/plan.md`
 
 ## Task subissues
 
-- [x] T01: Run compiler-backed consumer contract suites in each producer and consumer repository. (`track-32-phase-3-task-01`)
-- [x] T02: Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions. (`track-32-phase-3-task-02`)
-- [x] T03: Approve promotion or rollback explicitly and record cross-repository receipts. (`track-32-phase-3-task-03`)
+- [ ] T01: Run compiler-backed consumer contract suites in each producer and consumer repository. (`track-32-phase-3-task-01`)
+- [ ] T02: Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions. (`track-32-phase-3-task-02`)
+- [ ] T03: Approve promotion or rollback explicitly and record cross-repository receipts. (`track-32-phase-3-task-03`)
 
 ## Evidence rule
 

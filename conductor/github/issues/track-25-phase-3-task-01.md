@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Compile and run golden provenance export tests via deterministic scenario fixtures.
+- [x] Compile and run golden provenance export tests.
 
 ## Completion and evidence contract
 

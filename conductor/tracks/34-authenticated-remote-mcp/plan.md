@@ -1,10 +1,12 @@
 # Plan: 34 Authenticated remote MCP, tenancy and data residency
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-34`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -42,9 +44,9 @@ GitHub issue key: `track-34`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-34-phase-3 -->
 
-- [x] Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.
-- [x] Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.
-- [x] Complete independent security/privacy review before any hosted or multi-tenant claim.
+- [ ] Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.
+- [ ] Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.
+- [ ] Complete independent security/privacy review before any hosted or multi-tenant claim.
 
 ## Phase 4: Review and closeout
 
@@ -54,4 +56,5 @@ GitHub issue key: `track-34`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Created tests/test_authenticated_remote_mcp_governance.py with 6 unit tests covering tenant policy default-deny boundaries, access request and decision schemas, remote MCP security architecture loopback and TLS boundaries, deterministic remote MCP auth and tenancy conformance receipts, non-human agent autonomous study exclusion prohibition, and OpenAPI specification. Upgraded assertions T34-A001..T34-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

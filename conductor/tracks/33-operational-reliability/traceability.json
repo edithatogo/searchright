@@ -45,7 +45,10 @@
         "verification/receipts/panel-track-33-privacy-telemetry-auditor.json",
         "verification/receipts/panel-track-33-disaster-recovery-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+      ],
       "permitted_claim": "Component health, liveness vs readiness and default-disabled telemetry with strict attribute prohibition are source verified; live provider telemetry is not claimed."
     },
     {
@@ -91,7 +94,10 @@
         "verification/receipts/panel-track-33-privacy-telemetry-auditor.json",
         "verification/receipts/panel-track-33-disaster-recovery-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+      ],
       "permitted_claim": "Atomic replacement, local hash-addressed restore idempotency and tamper rejection pass a deterministic reference rehearsal; encryption and production recovery objectives are not proven."
     },
     {
@@ -130,7 +136,10 @@
         "verification/receipts/panel-track-33-privacy-telemetry-auditor.json",
         "verification/receipts/panel-track-33-disaster-recovery-auditor.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives."
+      ],
       "permitted_claim": "Incident record structure, containment mandates, postmortem requirements and CI workflow hardening are source verified; live operational drills remain open."
     }
   ]

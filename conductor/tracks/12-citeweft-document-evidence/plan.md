@@ -1,10 +1,12 @@
 # Plan: 12 CiteWeft scholarly extraction and document evidence
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -37,8 +39,8 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-12-phase-3 -->
 
 - [x] Compile the pinned CiteWeft dependency and adapter on supported platforms.
-- [x] Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.
-- [x] Run downstream Sourceright consumer-driven compatibility and rollback tests.
+- [ ] Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics.
+- [ ] Run downstream Sourceright consumer-driven compatibility and rollback tests.
 
 ## Phase 4: Review and closeout
 
@@ -49,4 +51,5 @@ GitHub issue key: `track-12`. Each numbered phase maps to the same-numbered nati
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `0ea3f2d`: Upgrade Track 12 assertions to symbol_and_gate_mapped with native tests, add unit tests for from_scholarly_document and adversarial contract validation, and record conductor review receipt.
   - Review fix `HEAD`: Implemented tests/test_citeweft_governance.py, executed agent panel review, verified CiteWeft dependency pins and non-canonical write boundaries, and archived Track 12 with fixture-proven evidence.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

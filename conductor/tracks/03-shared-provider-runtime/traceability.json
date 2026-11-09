@@ -34,7 +34,9 @@
         "verification/receipts/track-03-conductor-review-2026-11-09.json",
         "verification/receipts/track-03-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Refresh against the current Sourceright revision before cutover."
+      ],
       "permitted_claim": "The observed Sourceright provider surface is inventoried at a pinned revision."
     },
     {
@@ -59,7 +61,9 @@
         "verification/receipts/track-03-conductor-review-2026-11-09.json",
         "verification/receipts/track-03-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Add a downstream feature-flag canary."
+      ],
       "permitted_claim": "The compatibility adapter is compiler-tested in Searchright; downstream feature integration is not performed."
     },
     {
@@ -97,7 +101,11 @@
         "verification/receipts/track-03-conductor-review-2026-11-09.json",
         "verification/receipts/track-03-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain exact-revision compiler CI and transport-level adversarial evidence for resolve-validate-pin behavior, proxy suppression, redirects and response bounds.",
+        "Prove cache and error parity against Sourceright.",
+        "Adopt the core context in each live adapter before claiming per-HTTP admission; legacy defaults still admit one page, not hidden HTTP calls."
+      ],
       "permitted_claim": "The core context's admission, shared floors, cooperative deadlines/cancellation and cumulative subrequest bounds are fixture-tested; legacy timeout tightening is deliberate. Full repository-pinned 1.97.1 local validation passed at snapshot 209f3cd3838d22e0b7a6170b19a03571e154b257 (75 Python, 57 static, 395 native with zero skipped, 23 vet governance tests). No live-adapter adoption occurs in this slice; current provider-policy compliance, transport adversarial/hosted evidence, Sourceright parity and opt-in live execution remain unproven.",
       "native_test_commands": [
         "cargo test -p evidence-search-core --test subrequest_context --locked",
@@ -133,7 +141,9 @@
         "verification/receipts/track-03-conductor-review-2026-11-09.json",
         "verification/receipts/track-03-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Execute old/new Sourceright fixtures downstream against the v2 parity matrix; local v2 matrix validation covers synthetic/caller-supplied observations only and does not authenticate downstream execution."
+      ],
       "permitted_claim": "Schema-bound v2 parity execution matrix and digest-verified cell comparator are compiler-tested in Searchright; downstream old/new Sourceright dual-run execution remains pending.",
       "native_test_commands": [
         "cargo test -p searchright-sourceright-compat --test parity_matrix --locked"
@@ -167,7 +177,7 @@
         "verification/receipts/track-03-agent-panel-evaluation.json"
       ],
       "open_gates": [],
-      "permitted_claim": "SemVer and public API gates are configured but not executed."
+      "permitted_claim": "SemVer and public API checks are configured and passed on f502104a81c43ed0117886ce8cb21f00fdeb7588. Downstream Sourceright compatibility and cutover remain separate open requirements."
     },
     {
       "assertion_id": "T03-A006",
@@ -190,7 +200,10 @@
         "verification/receipts/track-03-conductor-review-2026-11-09.json",
         "verification/receipts/track-03-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Modify and test Sourceright through an approved downstream pull request.",
+        "Retain rollback for at least one compatible release."
+      ],
       "permitted_claim": "No Sourceright code has been removed or switched by this repository."
     }
   ],

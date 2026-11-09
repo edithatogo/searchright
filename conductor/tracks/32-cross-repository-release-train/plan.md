@@ -1,10 +1,12 @@
 # Plan: 32 Cross-repository contract release train and downstream canaries
 
 Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
-Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
-
 
 GitHub issue key: `track-32`. Each numbered phase maps to the same-numbered native subissue.
+
+## Active forward plan
+
+[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
@@ -43,9 +45,9 @@ GitHub issue key: `track-32`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-32-phase-3 -->
 
-- [x] Run compiler-backed consumer contract suites in each producer and consumer repository.
-- [x] Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.
-- [x] Approve promotion or rollback explicitly and record cross-repository receipts.
+- [ ] Run compiler-backed consumer contract suites in each producer and consumer repository.
+- [ ] Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.
+- [ ] Approve promotion or rollback explicitly and record cross-repository receipts.
 
 ## Phase 4: Review and closeout
 
@@ -55,4 +57,5 @@ GitHub issue key: `track-32`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening. Upgraded all 3 assertions (T32-A001..T32-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open.
-- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md.
+- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.

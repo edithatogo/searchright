@@ -11,7 +11,7 @@
     "epic_key": {"type": "string", "minLength": 1},
     "generated_at": {"type": "string", "minLength": 1},
     "apply_permitted": {"const": false},
-    "state_sync_policy": {"const": "task_issues_only"},
+    "state_sync_policy": {"enum": ["task_issues_only", "explicit_issue_states"]},
     "project_manifest": {"const": "conductor/github/project.json"},
     "nodes": {
       "type": "array",

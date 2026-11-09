@@ -21,13 +21,13 @@ Provide default-private health, telemetry, backup, restore, resilience and incid
 
 ## Phase subissues
 
-- [ ] Phase 1: Source implementation (`track-33-phase-1`)
-- [ ] Phase 2: Source-level verification (`track-33-phase-2`)
+- [x] Phase 1: Source implementation (`track-33-phase-1`)
+- [x] Phase 2: Source-level verification (`track-33-phase-2`)
 - [ ] Phase 3: Higher-evidence gates (`track-33-phase-3`)
 - [ ] Phase 4: Review and closeout (`track-33-phase-4`)
 
 ## Claim boundary
 
-Fixture-proven via structured agent-panel evaluation simulating site-reliability-architect, privacy-telemetry-auditor, and disaster-recovery-auditor roles, with component health contracts, default-disabled telemetry, encrypted backup manifests, atomic reference recovery rehearsal, and incident response governance verified in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs. Simulation instrument and source-level contracts only; live clean-room backup/restore rehearsals in production environments, deployment-specific restore drills, and live failure injection remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Fixture-proven via structured agent-panel evaluation simulating site-reliability-architect, privacy-telemetry-auditor, and disaster-recovery-auditor roles, with component health contracts, default-disabled telemetry, encrypted backup manifests, atomic reference recovery rehearsal, and incident response governance verified in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs. Simulation instrument and source-level contracts only; live clean-room backup/restore rehearsals in production environments, deployment-specific restore drills, and live failure injection remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims. Original live, downstream, human and public outcomes remain open where listed in blockers; historical simulated-panel approval does not close them.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

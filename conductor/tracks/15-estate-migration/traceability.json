@@ -31,7 +31,9 @@
         "verification/receipts/track-15-conductor-review-2026-11-09.json",
         "verification/receipts/track-15-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run the scanner against current clones of every in-scope repository."
+      ],
       "permitted_claim": "Search-code patterns, self-test verification, and comprehensive unit tests are verified."
     },
     {
@@ -58,7 +60,9 @@
         "verification/receipts/track-15-conductor-review-2026-11-09.json",
         "verification/receipts/track-15-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Refresh exact revisions and owners before each migration."
+      ],
       "permitted_claim": "A source-verified migration inventory exists for observed repositories."
     },
     {
@@ -85,7 +89,9 @@
         "verification/receipts/track-15-conductor-review-2026-11-09.json",
         "verification/receipts/track-15-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Confirm priority with active project owners and current repository state."
+      ],
       "permitted_claim": "Priority and portfolio projections are prepared and verified locally."
     },
     {
@@ -112,7 +118,9 @@
         "verification/receipts/track-15-conductor-review-2026-11-09.json",
         "verification/receipts/track-15-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Implement approved changes in each companion repository and run its native tests."
+      ],
       "permitted_claim": "Change packets and integration passports are prepared and verified."
     },
     {
@@ -138,7 +146,10 @@
         "verification/receipts/track-15-conductor-review-2026-11-09.json",
         "verification/receipts/track-15-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Dual-run old and new paths before deleting any custom code.",
+        "Preserve rollback and provenance receipts."
+      ],
       "permitted_claim": "Pre-deletion behavior verification and provenance boundaries are established."
     },
     {
@@ -165,7 +176,9 @@
         "verification/receipts/track-15-conductor-review-2026-11-09.json",
         "verification/receipts/track-15-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run estate conformance against current remotes and close only evidence-proven migrations."
+      ],
       "permitted_claim": "Estate conformance and closure policies are verified."
     }
   ]

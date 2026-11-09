@@ -74,12 +74,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "00",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -138,12 +138,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "00",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -240,7 +240,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -264,15 +264,15 @@
         "conductor",
         "track:00",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "00",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -304,7 +304,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -427,15 +427,15 @@
         "conductor",
         "track:00",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "00",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -529,12 +529,12 @@
         "evidence:source-verified"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "01",
       "phase_number": null,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Track",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -559,12 +559,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "01",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -623,12 +623,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "01",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -720,12 +720,12 @@
         "phase:3"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "01",
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -850,12 +850,12 @@
         "phase:4"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "01",
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Compiler Verified",
@@ -1044,12 +1044,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "02",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1108,12 +1108,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "02",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1210,7 +1210,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1267,15 +1267,15 @@
         "conductor",
         "track:02",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "02",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1300,15 +1300,15 @@
         "conductor",
         "track:02",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "02",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1340,7 +1340,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1463,15 +1463,15 @@
         "conductor",
         "track:02",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "02",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1529,12 +1529,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "03",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1593,12 +1593,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "03",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1695,7 +1695,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1710,7 +1710,7 @@
     },
     {
       "key": "track-03-phase-3-task-01",
-      "title": "Track 03 / P3 / T01: Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing\u2026",
+      "title": "Track 03 / P3 / T01: Compile and run the shared provider runtime tests",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-01.md",
@@ -1743,7 +1743,7 @@
     },
     {
       "key": "track-03-phase-3-task-02",
-      "title": "Track 03 / P3 / T02: Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is n\u2026",
+      "title": "Track 03 / P3 / T02: Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing\u2026",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-02.md",
@@ -1752,15 +1752,15 @@
         "conductor",
         "track:03",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "03",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1776,7 +1776,7 @@
     },
     {
       "key": "track-03-phase-3-task-03",
-      "title": "Track 03 / P3 / T03: Complete feature-gated Sourceright cutover, semver review and rollback exercise",
+      "title": "Track 03 / P3 / T03: Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is n\u2026",
       "kind": "task",
       "parent_key": "track-03-phase-3",
       "body_path": "conductor/github/issues/track-03-phase-3-task-03.md",
@@ -1785,15 +1785,15 @@
         "conductor",
         "track:03",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "03",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1805,6 +1805,39 @@
         "Track ID": "03",
         "Phase": 3,
         "Task": 3
+      }
+    },
+    {
+      "key": "track-03-phase-3-task-04",
+      "title": "Track 03 / P3 / T04: Complete feature-gated Sourceright cutover, semver review and rollback exercise",
+      "kind": "task",
+      "parent_key": "track-03-phase-3",
+      "body_path": "conductor/github/issues/track-03-phase-3-task-04.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:03",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "03",
+      "phase_number": 3,
+      "task_number": 4,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Foundation",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-03-phase-3-task-04",
+        "Conductor path": "conductor/tracks/03-shared-provider-runtime/plan.md",
+        "Track ID": "03",
+        "Phase": 3,
+        "Task": 4
       }
     },
     {
@@ -1825,7 +1858,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -1948,15 +1981,15 @@
         "conductor",
         "track:03",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "03",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Foundation",
         "Evidence level": "Fixture Proven",
@@ -2014,12 +2047,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "04",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -2078,12 +2111,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "04",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -2180,7 +2213,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -2195,7 +2228,7 @@
     },
     {
       "key": "track-04-phase-3-task-01",
-      "title": "Track 04 / P3 / T01: Run authorised, redacted live smokes for each advertised provider",
+      "title": "Track 04 / P3 / T01: Compile and run connector fixtures",
       "kind": "task",
       "parent_key": "track-04-phase-3",
       "body_path": "conductor/github/issues/track-04-phase-3-task-01.md",
@@ -2228,7 +2261,7 @@
     },
     {
       "key": "track-04-phase-3-task-02",
-      "title": "Track 04 / P3 / T02: Verify upstream terms, rate limits and response changes at release time",
+      "title": "Track 04 / P3 / T02: Run authorised, redacted live smokes for each advertised provider",
       "kind": "task",
       "parent_key": "track-04-phase-3",
       "body_path": "conductor/github/issues/track-04-phase-3-task-02.md",
@@ -2237,15 +2270,15 @@
         "conductor",
         "track:04",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "04",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -2261,7 +2294,7 @@
     },
     {
       "key": "track-04-phase-3-task-03",
-      "title": "Track 04 / P3 / T03: Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion",
+      "title": "Track 04 / P3 / T03: Verify upstream terms, rate limits and response changes at release time",
       "kind": "task",
       "parent_key": "track-04-phase-3",
       "body_path": "conductor/github/issues/track-04-phase-3-task-03.md",
@@ -2270,15 +2303,15 @@
         "conductor",
         "track:04",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "04",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -2290,6 +2323,39 @@
         "Track ID": "04",
         "Phase": 3,
         "Task": 3
+      }
+    },
+    {
+      "key": "track-04-phase-3-task-04",
+      "title": "Track 04 / P3 / T04: Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion",
+      "kind": "task",
+      "parent_key": "track-04-phase-3",
+      "body_path": "conductor/github/issues/track-04-phase-3-task-04.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:04",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "04",
+      "phase_number": 3,
+      "task_number": 4,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Mvp",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-04-phase-3-task-04",
+        "Conductor path": "conductor/tracks/04-open-connectors-mvp/plan.md",
+        "Track ID": "04",
+        "Phase": 3,
+        "Task": 4
       }
     },
     {
@@ -2310,7 +2376,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -2433,15 +2499,15 @@
         "conductor",
         "track:04",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "04",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -2469,12 +2535,12 @@
         "evidence:source-verified"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": null,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Track",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2499,12 +2565,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2563,12 +2629,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2660,12 +2726,12 @@
         "phase:3"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2757,12 +2823,12 @@
         "phase:4"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "05",
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2921,12 +2987,12 @@
         "evidence:source-verified"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": null,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Track",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -2951,12 +3017,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3015,12 +3081,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3112,12 +3178,12 @@
         "phase:3"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3209,12 +3275,12 @@
         "phase:4"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "06",
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -3403,12 +3469,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "07",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -3467,12 +3533,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "07",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -3569,7 +3635,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -3584,7 +3650,7 @@
     },
     {
       "key": "track-07-phase-3-task-01",
-      "title": "Track 07 / P3 / T01: Complete governed screening workflow via agent-panel evaluation simulating screening-reviewer, information-specialist, and methodologist roles",
+      "title": "Track 07 / P3 / T01: Compile and execute state-machine and authority-negative tests",
       "kind": "task",
       "parent_key": "track-07-phase-3",
       "body_path": "conductor/github/issues/track-07-phase-3-task-01.md",
@@ -3616,6 +3682,39 @@
       }
     },
     {
+      "key": "track-07-phase-3-task-02",
+      "title": "Track 07 / P3 / T02: Complete reviewer usability and inter-rater calibration evaluation",
+      "kind": "task",
+      "parent_key": "track-07-phase-3",
+      "body_path": "conductor/github/issues/track-07-phase-3-task-02.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:07",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "07",
+      "phase_number": 3,
+      "task_number": 2,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Mvp",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-07-phase-3-task-02",
+        "Conductor path": "conductor/tracks/07-screening-workflow/plan.md",
+        "Track ID": "07",
+        "Phase": 3,
+        "Task": 2
+      }
+    },
+    {
       "key": "track-07-phase-4",
       "title": "Track 07 / Phase 4: Review and closeout",
       "kind": "phase",
@@ -3633,7 +3732,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -3756,15 +3855,15 @@
         "conductor",
         "track:07",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "07",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -3822,12 +3921,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "08",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -3886,12 +3985,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "08",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -3988,7 +4087,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -4012,15 +4111,15 @@
         "conductor",
         "track:08",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "08",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -4085,7 +4184,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -4208,15 +4307,15 @@
         "conductor",
         "track:08",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "08",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -4310,12 +4409,12 @@
         "evidence:source-verified"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "09",
       "phase_number": null,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Track",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4340,12 +4439,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "09",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4404,12 +4503,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "09",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4501,12 +4600,12 @@
         "phase:3"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "09",
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4598,12 +4697,12 @@
         "phase:4"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "09",
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4762,12 +4861,12 @@
         "evidence:source-verified"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "10",
       "phase_number": null,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Track",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4792,12 +4891,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "10",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4856,12 +4955,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "10",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -4953,12 +5052,12 @@
         "phase:3"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "10",
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -5050,12 +5149,12 @@
         "phase:4"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "10",
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Compiler Verified",
@@ -5244,12 +5343,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "11",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5308,12 +5407,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "11",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5410,7 +5509,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5434,15 +5533,15 @@
         "conductor",
         "track:11",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "11",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5467,15 +5566,15 @@
         "conductor",
         "track:11",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "11",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5500,15 +5599,15 @@
         "conductor",
         "track:11",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "11",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5533,15 +5632,15 @@
         "conductor",
         "track:11",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "11",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5573,7 +5672,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5696,15 +5795,15 @@
         "conductor",
         "track:11",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "11",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mvp",
         "Evidence level": "Fixture Proven",
@@ -5828,12 +5927,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "12",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -5892,12 +5991,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "12",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -5994,7 +6093,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6051,15 +6150,15 @@
         "conductor",
         "track:12",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "12",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6084,15 +6183,15 @@
         "conductor",
         "track:12",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "12",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6124,7 +6223,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6247,15 +6346,15 @@
         "conductor",
         "track:12",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "12",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6313,12 +6412,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "13",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6377,12 +6476,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "13",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6479,7 +6578,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6503,15 +6602,15 @@
         "conductor",
         "track:13",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "13",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6536,15 +6635,15 @@
         "conductor",
         "track:13",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "13",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6569,15 +6668,15 @@
         "conductor",
         "track:13",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "13",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6609,7 +6708,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6732,15 +6831,15 @@
         "conductor",
         "track:13",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "13",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6798,12 +6897,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "14",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6862,12 +6961,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "14",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6964,7 +7063,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -6988,15 +7087,15 @@
         "conductor",
         "track:14",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "14",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7021,15 +7120,15 @@
         "conductor",
         "track:14",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "14",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7054,15 +7153,15 @@
         "conductor",
         "track:14",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "14",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7087,15 +7186,15 @@
         "conductor",
         "track:14",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "14",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7127,7 +7226,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7250,15 +7349,15 @@
         "conductor",
         "track:14",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "14",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7316,12 +7415,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "15",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7380,12 +7479,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "15",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7482,7 +7581,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7506,15 +7605,15 @@
         "conductor",
         "track:15",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "15",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7539,15 +7638,15 @@
         "conductor",
         "track:15",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "15",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7572,15 +7671,15 @@
         "conductor",
         "track:15",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "15",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7612,7 +7711,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7735,15 +7834,15 @@
         "conductor",
         "track:15",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "15",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7801,12 +7900,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "16",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7865,12 +7964,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "16",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -7967,7 +8066,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8024,15 +8123,15 @@
         "conductor",
         "track:16",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "16",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8057,15 +8156,15 @@
         "conductor",
         "track:16",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "16",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8090,15 +8189,15 @@
         "conductor",
         "track:16",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "16",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8130,7 +8229,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8253,15 +8352,15 @@
         "conductor",
         "track:16",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "16",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8319,12 +8418,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "17",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8383,12 +8482,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "17",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8485,7 +8584,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8500,7 +8599,7 @@
     },
     {
       "key": "track-17-phase-3-task-01",
-      "title": "Track 17 / P3 / T01: Complete benchmark and calibration evaluation via agent-panel protocol simulating benchmark-evaluator, information-specialist, and methodologist roles",
+      "title": "Track 17 / P3 / T01: Execute versioned benchmark suites and publish raw receipts",
       "kind": "task",
       "parent_key": "track-17-phase-3",
       "body_path": "conductor/github/issues/track-17-phase-3-task-01.md",
@@ -8509,15 +8608,15 @@
         "conductor",
         "track:17",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "17",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8529,6 +8628,72 @@
         "Track ID": "17",
         "Phase": 3,
         "Task": 1
+      }
+    },
+    {
+      "key": "track-17-phase-3-task-02",
+      "title": "Track 17 / P3 / T02: Complete the prospective multi-model and information-specialist calibration pilot",
+      "kind": "task",
+      "parent_key": "track-17-phase-3",
+      "body_path": "conductor/github/issues/track-17-phase-3-task-02.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:17",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "17",
+      "phase_number": 3,
+      "task_number": 2,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-17-phase-3-task-02",
+        "Conductor path": "conductor/tracks/17-benchmarks-calibration/plan.md",
+        "Track ID": "17",
+        "Phase": 3,
+        "Task": 2
+      }
+    },
+    {
+      "key": "track-17-phase-3-task-03",
+      "title": "Track 17 / P3 / T03: Assess subgroup, topic and source-specific performance before any ranking claim",
+      "kind": "task",
+      "parent_key": "track-17-phase-3",
+      "body_path": "conductor/github/issues/track-17-phase-3-task-03.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:17",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "17",
+      "phase_number": 3,
+      "task_number": 3,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-17-phase-3-task-03",
+        "Conductor path": "conductor/tracks/17-benchmarks-calibration/plan.md",
+        "Track ID": "17",
+        "Phase": 3,
+        "Task": 3
       }
     },
     {
@@ -8549,7 +8714,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8672,15 +8837,15 @@
         "conductor",
         "track:17",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "17",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8738,12 +8903,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "18",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8802,12 +8967,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "18",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8904,7 +9069,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8919,7 +9084,7 @@
     },
     {
       "key": "track-18-phase-3-task-01",
-      "title": "Track 18 / P3 / T01: Complete alpha release, packaging reproducibility, workflow hardening, and distribution evaluation via agent-panel protocol simulating release-architect, security-audito\u2026",
+      "title": "Track 18 / P3 / T01: Verify the committed Cargo.lock and pass the full release workflow",
       "kind": "task",
       "parent_key": "track-18-phase-3",
       "body_path": "conductor/github/issues/track-18-phase-3-task-01.md",
@@ -8928,15 +9093,15 @@
         "conductor",
         "track:18",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "18",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -8948,6 +9113,72 @@
         "Track ID": "18",
         "Phase": 3,
         "Task": 1
+      }
+    },
+    {
+      "key": "track-18-phase-3-task-02",
+      "title": "Track 18 / P3 / T02: Build/install-smoke supported binaries and OCI image",
+      "kind": "task",
+      "parent_key": "track-18-phase-3",
+      "body_path": "conductor/github/issues/track-18-phase-3-task-02.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:18",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "18",
+      "phase_number": 3,
+      "task_number": 2,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-18-phase-3-task-02",
+        "Conductor path": "conductor/tracks/18-alpha-release/plan.md",
+        "Track ID": "18",
+        "Phase": 3,
+        "Task": 2
+      }
+    },
+    {
+      "key": "track-18-phase-3-task-03",
+      "title": "Track 18 / P3 / T03: Create signed tag, checksums, attestations and public release artefacts",
+      "kind": "task",
+      "parent_key": "track-18-phase-3",
+      "body_path": "conductor/github/issues/track-18-phase-3-task-03.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:18",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "18",
+      "phase_number": 3,
+      "task_number": 3,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Must",
+        "External gate": "Yes",
+        "Conductor key": "track-18-phase-3-task-03",
+        "Conductor path": "conductor/tracks/18-alpha-release/plan.md",
+        "Track ID": "18",
+        "Phase": 3,
+        "Task": 3
       }
     },
     {
@@ -8968,7 +9199,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9091,15 +9322,15 @@
         "conductor",
         "track:18",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "18",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9157,12 +9388,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "19",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9221,12 +9452,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "19",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9323,7 +9554,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9338,7 +9569,7 @@
     },
     {
       "key": "track-19-phase-3-task-01",
-      "title": "Track 19 / P3 / T01: Complete registry validation, dry-run package checks, and scholarly publication evaluation via agent-panel protocol simulating registry-evaluator, publication-editor, an\u2026",
+      "title": "Track 19 / P3 / T01: Publish a verified release that registry packets can reference",
       "kind": "task",
       "parent_key": "track-19-phase-3",
       "body_path": "conductor/github/issues/track-19-phase-3-task-01.md",
@@ -9347,15 +9578,15 @@
         "conductor",
         "track:19",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "19",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9367,6 +9598,105 @@
         "Track ID": "19",
         "Phase": 3,
         "Task": 1
+      }
+    },
+    {
+      "key": "track-19-phase-3-task-02",
+      "title": "Track 19 / P3 / T02: Submit to each external registry with maintainer approval",
+      "kind": "task",
+      "parent_key": "track-19-phase-3",
+      "body_path": "conductor/github/issues/track-19-phase-3-task-02.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:19",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "19",
+      "phase_number": 3,
+      "task_number": 2,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Should",
+        "External gate": "Yes",
+        "Conductor key": "track-19-phase-3-task-02",
+        "Conductor path": "conductor/tracks/19-registries-publication/plan.md",
+        "Track ID": "19",
+        "Phase": 3,
+        "Task": 2
+      }
+    },
+    {
+      "key": "track-19-phase-3-task-03",
+      "title": "Track 19 / P3 / T03: Record public listing, rejection or revision evidence",
+      "kind": "task",
+      "parent_key": "track-19-phase-3",
+      "body_path": "conductor/github/issues/track-19-phase-3-task-03.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:19",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "19",
+      "phase_number": 3,
+      "task_number": 3,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Should",
+        "External gate": "Yes",
+        "Conductor key": "track-19-phase-3-task-03",
+        "Conductor path": "conductor/tracks/19-registries-publication/plan.md",
+        "Track ID": "19",
+        "Phase": 3,
+        "Task": 3
+      }
+    },
+    {
+      "key": "track-19-phase-3-task-04",
+      "title": "Track 19 / P3 / T04: Complete JOSS submission requirements and independent review",
+      "kind": "task",
+      "parent_key": "track-19-phase-3",
+      "body_path": "conductor/github/issues/track-19-phase-3-task-04.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:19",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "19",
+      "phase_number": 3,
+      "task_number": 4,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Alpha",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Should",
+        "External gate": "Yes",
+        "Conductor key": "track-19-phase-3-task-04",
+        "Conductor path": "conductor/tracks/19-registries-publication/plan.md",
+        "Track ID": "19",
+        "Phase": 3,
+        "Task": 4
       }
     },
     {
@@ -9387,7 +9717,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9510,15 +9840,15 @@
         "conductor",
         "track:19",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "19",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Alpha",
         "Evidence level": "Fixture Proven",
@@ -9546,12 +9876,12 @@
         "evidence:source-verified"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "20",
       "phase_number": null,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Track",
         "Horizon": "Beta",
         "Evidence level": "Compiler Verified",
@@ -9576,12 +9906,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "20",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Compiler Verified",
@@ -9640,12 +9970,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "20",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Compiler Verified",
@@ -9737,12 +10067,12 @@
         "phase:3"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "20",
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Compiler Verified",
@@ -9867,12 +10197,12 @@
         "phase:4"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "20",
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Compiler Verified",
@@ -10127,12 +10457,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "21",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10191,12 +10521,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "21",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10293,7 +10623,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10308,7 +10638,7 @@
     },
     {
       "key": "track-21-phase-3-task-01",
-      "title": "Track 21 / P3 / T01: Complete licensed BYO request planning, credential protection, and legal compliance evaluation via agent-panel protocol simulating licensed-access-evaluator, legal-compl\u2026",
+      "title": "Track 21 / P3 / T01: Obtain authorised user credentials and confirm current vendor terms",
       "kind": "task",
       "parent_key": "track-21-phase-3",
       "body_path": "conductor/github/issues/track-21-phase-3-task-01.md",
@@ -10317,15 +10647,15 @@
         "conductor",
         "track:21",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "21",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10337,6 +10667,72 @@
         "Track ID": "21",
         "Phase": 3,
         "Task": 1
+      }
+    },
+    {
+      "key": "track-21-phase-3-task-02",
+      "title": "Track 21 / P3 / T02: Implement/test vendor-specific live transports without storing credentials",
+      "kind": "task",
+      "parent_key": "track-21-phase-3",
+      "body_path": "conductor/github/issues/track-21-phase-3-task-02.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:21",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "21",
+      "phase_number": 3,
+      "task_number": 2,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Beta",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Could",
+        "External gate": "Yes",
+        "Conductor key": "track-21-phase-3-task-02",
+        "Conductor path": "conductor/tracks/21-licensed-adapters/plan.md",
+        "Track ID": "21",
+        "Phase": 3,
+        "Task": 2
+      }
+    },
+    {
+      "key": "track-21-phase-3-task-03",
+      "title": "Track 21 / P3 / T03: Record redacted user-run smoke receipts; no bundled access is permitted",
+      "kind": "task",
+      "parent_key": "track-21-phase-3",
+      "body_path": "conductor/github/issues/track-21-phase-3-task-03.md",
+      "labels": [
+        "kind:task",
+        "conductor",
+        "track:21",
+        "phase:3",
+        "state:evidence-open"
+      ],
+      "status": "prepared_not_synced",
+      "desired_state": "open",
+      "track_id": "21",
+      "phase_number": 3,
+      "task_number": 3,
+      "project_fields": {
+        "Delivery status": "Evidence blocked",
+        "Work kind": "Task",
+        "Horizon": "Beta",
+        "Evidence level": "Fixture Proven",
+        "Implementation state": "Source Implemented",
+        "MoSCoW": "Could",
+        "External gate": "Yes",
+        "Conductor key": "track-21-phase-3-task-03",
+        "Conductor path": "conductor/tracks/21-licensed-adapters/plan.md",
+        "Track ID": "21",
+        "Phase": 3,
+        "Task": 3
       }
     },
     {
@@ -10357,7 +10753,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10480,15 +10876,15 @@
         "conductor",
         "track:21",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "21",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10546,12 +10942,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "22",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10610,12 +11006,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "22",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10712,7 +11108,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10769,15 +11165,15 @@
         "conductor",
         "track:22",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "22",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10809,7 +11205,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10932,15 +11328,15 @@
         "conductor",
         "track:22",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "22",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -10998,12 +11394,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "23",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11062,12 +11458,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "23",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11164,7 +11560,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11179,7 +11575,7 @@
     },
     {
       "key": "track-23-phase-3-task-01",
-      "title": "Track 23 / P3 / T01: Run SYNERGY and topic-held-out calibration benchmarks via deterministic benchmark fixtures",
+      "title": "Track 23 / P3 / T01: Run SYNERGY and topic-held-out calibration benchmarks",
       "kind": "task",
       "parent_key": "track-23-phase-3",
       "body_path": "conductor/github/issues/track-23-phase-3-task-01.md",
@@ -11188,15 +11584,15 @@
         "conductor",
         "track:23",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "23",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11212,7 +11608,7 @@
     },
     {
       "key": "track-23-phase-3-task-02",
-      "title": "Track 23 / P3 / T02: Complete prospective human calibration and subgroup error analysis via agent-panel protocol simulating screening-methodologist, ranking-architect, and safety-governance-\u2026",
+      "title": "Track 23 / P3 / T02: Complete prospective human calibration and subgroup error analysis",
       "kind": "task",
       "parent_key": "track-23-phase-3",
       "body_path": "conductor/github/issues/track-23-phase-3-task-02.md",
@@ -11221,15 +11617,15 @@
         "conductor",
         "track:23",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "23",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11294,7 +11690,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11417,15 +11813,15 @@
         "conductor",
         "track:23",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "23",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11483,12 +11879,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "24",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11547,12 +11943,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "24",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11649,7 +12045,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11664,7 +12060,7 @@
     },
     {
       "key": "track-24-phase-3-task-01",
-      "title": "Track 24 / P3 / T01: Compile WASI components and run the component conformance suite via local mock harness",
+      "title": "Track 24 / P3 / T01: Compile WASI components and run the component conformance suite",
       "kind": "task",
       "parent_key": "track-24-phase-3",
       "body_path": "conductor/github/issues/track-24-phase-3-task-01.md",
@@ -11673,15 +12069,15 @@
         "conductor",
         "track:24",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "24",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11706,15 +12102,15 @@
         "conductor",
         "track:24",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "24",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11739,15 +12135,15 @@
         "conductor",
         "track:24",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "24",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11772,15 +12168,15 @@
         "conductor",
         "track:24",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "24",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11796,7 +12192,7 @@
     },
     {
       "key": "track-24-phase-3-task-05",
-      "title": "Track 24 / P3 / T05: Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond bounded local task admission",
+      "title": "Track 24 / P3 / T05: Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond the bounded local task-admission, cancellation, completion, elicita\u2026",
       "kind": "task",
       "parent_key": "track-24-phase-3",
       "body_path": "conductor/github/issues/track-24-phase-3-task-05.md",
@@ -11805,15 +12201,15 @@
         "conductor",
         "track:24",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "24",
       "phase_number": 3,
       "task_number": 5,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11838,15 +12234,15 @@
         "conductor",
         "track:24",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "24",
       "phase_number": 3,
       "task_number": 6,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -11878,7 +12274,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -12001,15 +12397,15 @@
         "conductor",
         "track:24",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "24",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Beta",
         "Evidence level": "Fixture Proven",
@@ -12067,12 +12463,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "25",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12131,12 +12527,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "25",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12233,7 +12629,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12248,7 +12644,7 @@
     },
     {
       "key": "track-25-phase-3-task-01",
-      "title": "Track 25 / P3 / T01: Compile and run golden provenance export tests via deterministic scenario fixtures",
+      "title": "Track 25 / P3 / T01: Compile and run golden provenance export tests",
       "kind": "task",
       "parent_key": "track-25-phase-3",
       "body_path": "conductor/github/issues/track-25-phase-3-task-01.md",
@@ -12281,7 +12677,7 @@
     },
     {
       "key": "track-25-phase-3-task-02",
-      "title": "Track 25 / P3 / T02: Validate produced RO-Crates with independent tooling via simulated agent-panel protocol",
+      "title": "Track 25 / P3 / T02: Validate produced RO-Crates with independent tooling",
       "kind": "task",
       "parent_key": "track-25-phase-3",
       "body_path": "conductor/github/issues/track-25-phase-3-task-02.md",
@@ -12290,15 +12686,15 @@
         "conductor",
         "track:25",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "25",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12314,7 +12710,7 @@
     },
     {
       "key": "track-25-phase-3-task-03",
-      "title": "Track 25 / P3 / T03: Pilot OSF/Zenodo/repository deposit without automatic write authority via dry-run contracts",
+      "title": "Track 25 / P3 / T03: Pilot OSF/Zenodo/repository deposit without automatic write authority",
       "kind": "task",
       "parent_key": "track-25-phase-3",
       "body_path": "conductor/github/issues/track-25-phase-3-task-03.md",
@@ -12323,15 +12719,15 @@
         "conductor",
         "track:25",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "25",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12363,7 +12759,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12486,15 +12882,15 @@
         "conductor",
         "track:25",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "25",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12552,12 +12948,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "26",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12616,12 +13012,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "26",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12718,7 +13114,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12733,7 +13129,7 @@
     },
     {
       "key": "track-26-phase-3-task-01",
-      "title": "Track 26 / P3 / T01: Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures",
+      "title": "Track 26 / P3 / T01: Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks",
       "kind": "task",
       "parent_key": "track-26-phase-3",
       "body_path": "conductor/github/issues/track-26-phase-3-task-01.md",
@@ -12766,7 +13162,7 @@
     },
     {
       "key": "track-26-phase-3-task-02",
-      "title": "Track 26 / P3 / T02: Compile and execute model-check traces and forbidden-transition tests via exhaustive 10x10 stage transition matrices",
+      "title": "Track 26 / P3 / T02: Compile and execute model-check traces and forbidden-transition tests",
       "kind": "task",
       "parent_key": "track-26-phase-3",
       "body_path": "conductor/github/issues/track-26-phase-3-task-02.md",
@@ -12799,7 +13195,7 @@
     },
     {
       "key": "track-26-phase-3-task-03",
-      "title": "Track 26 / P3 / T03: Add compatibility fixtures for each public contract version via schema catalog and migration plans",
+      "title": "Track 26 / P3 / T03: Add compatibility fixtures for each public contract version",
       "kind": "task",
       "parent_key": "track-26-phase-3",
       "body_path": "conductor/github/issues/track-26-phase-3-task-03.md",
@@ -12808,15 +13204,15 @@
         "conductor",
         "track:26",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "26",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12832,7 +13228,7 @@
     },
     {
       "key": "track-26-phase-3-task-04",
-      "title": "Track 26 / P3 / T04: Run semver and cross-version MCP/CLI contract tests via Hypothesis stateful property testing",
+      "title": "Track 26 / P3 / T04: Run semver and cross-version MCP/CLI contract tests",
       "kind": "task",
       "parent_key": "track-26-phase-3",
       "body_path": "conductor/github/issues/track-26-phase-3-task-04.md",
@@ -12841,15 +13237,15 @@
         "conductor",
         "track:26",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "26",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12865,7 +13261,7 @@
     },
     {
       "key": "track-26-phase-3-task-05",
-      "title": "Track 26 / P3 / T05: Compile and execute representative persisted-data migrations, backward readers and rollback projections via check_schema_migrations.py",
+      "title": "Track 26 / P3 / T05: Compile and execute representative persisted-data migrations, backward readers and rollback projections",
       "kind": "task",
       "parent_key": "track-26-phase-3",
       "body_path": "conductor/github/issues/track-26-phase-3-task-05.md",
@@ -12874,15 +13270,15 @@
         "conductor",
         "track:26",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "26",
       "phase_number": 3,
       "task_number": 5,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -12914,7 +13310,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13037,15 +13433,15 @@
         "conductor",
         "track:26",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "26",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13103,12 +13499,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "27",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13167,12 +13563,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "27",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13269,7 +13665,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13284,7 +13680,7 @@
     },
     {
       "key": "track-27-phase-3-task-01",
-      "title": "Track 27 / P3 / T01: Compile and run plain/JSON/JSONL snapshots and no-colour tests via deterministic scenario fixtures",
+      "title": "Track 27 / P3 / T01: Compile and run plain/JSON/JSONL snapshots and no-colour tests",
       "kind": "task",
       "parent_key": "track-27-phase-3",
       "body_path": "conductor/github/issues/track-27-phase-3-task-01.md",
@@ -13317,7 +13713,7 @@
     },
     {
       "key": "track-27-phase-3-task-02",
-      "title": "Track 27 / P3 / T02: Create message catalogues and execute locale-fallback tests via multi-lingual message catalogue tests",
+      "title": "Track 27 / P3 / T02: Create message catalogues and execute locale-fallback tests",
       "kind": "task",
       "parent_key": "track-27-phase-3",
       "body_path": "conductor/github/issues/track-27-phase-3-task-02.md",
@@ -13350,7 +13746,7 @@
     },
     {
       "key": "track-27-phase-3-task-03",
-      "title": "Track 27 / P3 / T03: Complete keyboard, screen-reader and information-specialist usability evaluation via simulated agent-panel protocol",
+      "title": "Track 27 / P3 / T03: Complete keyboard, screen-reader and information-specialist usability evaluation",
       "kind": "task",
       "parent_key": "track-27-phase-3",
       "body_path": "conductor/github/issues/track-27-phase-3-task-03.md",
@@ -13359,15 +13755,15 @@
         "conductor",
         "track:27",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "27",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13399,7 +13795,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13522,15 +13918,15 @@
         "conductor",
         "track:27",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "27",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13588,12 +13984,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "28",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13652,12 +14048,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "28",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13754,7 +14150,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13769,7 +14165,7 @@
     },
     {
       "key": "track-28-phase-3-task-01",
-      "title": "Track 28 / P3 / T01: Compile and run comprehensive negative scenario tests with unapproved classification, deployment mode, region, model, and lifecycle transitions",
+      "title": "Track 28 / P3 / T01: Compile and run governance/authority negative scenarios",
       "kind": "task",
       "parent_key": "track-28-phase-3",
       "body_path": "conductor/github/issues/track-28-phase-3-task-01.md",
@@ -13802,7 +14198,7 @@
     },
     {
       "key": "track-28-phase-3-task-02",
-      "title": "Track 28 / P3 / T02: Verify deny-by-default bounded approval registry with temporal windows, single-use nonces, and cryptographic head digests",
+      "title": "Track 28 / P3 / T02: Obtain institutional privacy, records and security review for a deployment profile",
       "kind": "task",
       "parent_key": "track-28-phase-3",
       "body_path": "conductor/github/issues/track-28-phase-3-task-02.md",
@@ -13811,15 +14207,15 @@
         "conductor",
         "track:28",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "28",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13835,7 +14231,7 @@
     },
     {
       "key": "track-28-phase-3-task-03",
-      "title": "Track 28 / P3 / T03: Complete structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles",
+      "title": "Track 28 / P3 / T03: Pilot multi-reviewer and cross-institution artefact exchange with minimised data",
       "kind": "task",
       "parent_key": "track-28-phase-3",
       "body_path": "conductor/github/issues/track-28-phase-3-task-03.md",
@@ -13844,15 +14240,15 @@
         "conductor",
         "track:28",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "28",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -13884,7 +14280,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14007,15 +14403,15 @@
         "conductor",
         "track:28",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "28",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14073,12 +14469,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "29",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14137,12 +14533,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "29",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14239,7 +14635,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14254,7 +14650,7 @@
     },
     {
       "key": "track-29-phase-3-task-01",
-      "title": "Track 29 / P3 / T01: Evaluate preregistered protocol structure, topic strata, outcome metrics, and benchmark leakage controls via simulated expert panel",
+      "title": "Track 29 / P3 / T01: Preregister the independent evaluation protocol",
       "kind": "task",
       "parent_key": "track-29-phase-3",
       "body_path": "conductor/github/issues/track-29-phase-3-task-01.md",
@@ -14263,15 +14659,15 @@
         "conductor",
         "track:29",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "29",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14287,7 +14683,7 @@
     },
     {
       "key": "track-29-phase-3-task-02",
-      "title": "Track 29 / P3 / T02: Verify open-source decision taxonomy, observation-not-documentation principle, and succession safeguards via sustainability architect",
+      "title": "Track 29 / P3 / T02: Recruit external information specialists and execute blinded evaluation",
       "kind": "task",
       "parent_key": "track-29-phase-3",
       "body_path": "conductor/github/issues/track-29-phase-3-task-02.md",
@@ -14296,15 +14692,15 @@
         "conductor",
         "track:29",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "29",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14320,7 +14716,7 @@
     },
     {
       "key": "track-29-phase-3-task-03",
-      "title": "Track 29 / P3 / T03: Complete blinded adjudication audit, mandatory conflict disclosure checks, and unsubmitted JOSS paper draft verification",
+      "title": "Track 29 / P3 / T03: Publish results, limitations and response-to-findings matrix",
       "kind": "task",
       "parent_key": "track-29-phase-3",
       "body_path": "conductor/github/issues/track-29-phase-3-task-03.md",
@@ -14329,15 +14725,15 @@
         "conductor",
         "track:29",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "29",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14353,7 +14749,7 @@
     },
     {
       "key": "track-29-phase-3-task-04",
-      "title": "Track 29 / P3 / T04: Verify fail-closed preparation contract status (prepared_not_preregistered, prepared_not_observed) via adversarial test harness",
+      "title": "Track 29 / P3 / T04: Demonstrate observed maintenance, standards surveillance and succession practice",
       "kind": "task",
       "parent_key": "track-29-phase-3",
       "body_path": "conductor/github/issues/track-29-phase-3-task-04.md",
@@ -14362,15 +14758,15 @@
         "conductor",
         "track:29",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "29",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14402,7 +14798,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14525,15 +14921,15 @@
         "conductor",
         "track:29",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "29",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14591,12 +14987,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "30",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14655,12 +15051,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "30",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14757,7 +15153,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14781,15 +15177,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14814,15 +15210,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14847,15 +15243,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14880,15 +15276,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14913,15 +15309,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 5,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14946,15 +15342,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 6,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -14979,15 +15375,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 7,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15012,15 +15408,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 8,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15045,15 +15441,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 9,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15111,15 +15507,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 11,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15144,15 +15540,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 12,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15177,15 +15573,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 13,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15210,15 +15606,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 14,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15243,15 +15639,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 15,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15276,15 +15672,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 16,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15309,15 +15705,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 17,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15342,15 +15738,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 18,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15375,15 +15771,15 @@
         "conductor",
         "track:30",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 3,
       "task_number": 19,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15415,7 +15811,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15538,15 +15934,15 @@
         "conductor",
         "track:30",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "30",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -15574,12 +15970,12 @@
         "evidence:external-required"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "31",
       "phase_number": null,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Track",
         "Horizon": "Mature",
         "Evidence level": "Live Proven",
@@ -15604,12 +16000,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "31",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Live Proven",
@@ -15668,12 +16064,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "31",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Live Proven",
@@ -15765,12 +16161,12 @@
         "phase:3"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "31",
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Live Proven",
@@ -15895,12 +16291,12 @@
         "phase:4"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "31",
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Live Proven",
@@ -16089,12 +16485,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "32",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16153,12 +16549,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "32",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16255,7 +16651,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16279,15 +16675,15 @@
         "conductor",
         "track:32",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "32",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16312,15 +16708,15 @@
         "conductor",
         "track:32",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "32",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16345,15 +16741,15 @@
         "conductor",
         "track:32",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "32",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16385,7 +16781,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16508,15 +16904,15 @@
         "conductor",
         "track:32",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "32",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16574,12 +16970,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "33",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16638,12 +17034,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "33",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16740,7 +17136,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16797,15 +17193,15 @@
         "conductor",
         "track:33",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "33",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16830,15 +17226,15 @@
         "conductor",
         "track:33",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "33",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16863,15 +17259,15 @@
         "conductor",
         "track:33",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "33",
       "phase_number": 3,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -16903,7 +17299,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17026,15 +17422,15 @@
         "conductor",
         "track:33",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "33",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17092,12 +17488,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "34",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17156,12 +17552,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "34",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17258,7 +17654,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17282,15 +17678,15 @@
         "conductor",
         "track:34",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "34",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17315,15 +17711,15 @@
         "conductor",
         "track:34",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "34",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17348,15 +17744,15 @@
         "conductor",
         "track:34",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "34",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17388,7 +17784,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17511,15 +17907,15 @@
         "conductor",
         "track:34",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "34",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17577,12 +17973,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "35",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17641,12 +18037,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "35",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17743,7 +18139,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17767,15 +18163,15 @@
         "conductor",
         "track:35",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "35",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17800,15 +18196,15 @@
         "conductor",
         "track:35",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "35",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17833,15 +18229,15 @@
         "conductor",
         "track:35",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "35",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17873,7 +18269,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -17996,15 +18392,15 @@
         "conductor",
         "track:35",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "35",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18062,12 +18458,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "36",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18126,12 +18522,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "36",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18228,7 +18624,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18252,15 +18648,15 @@
         "conductor",
         "track:36",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "36",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18285,15 +18681,15 @@
         "conductor",
         "track:36",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "36",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18318,15 +18714,15 @@
         "conductor",
         "track:36",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "36",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18358,7 +18754,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18481,15 +18877,15 @@
         "conductor",
         "track:36",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "36",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18547,12 +18943,12 @@
         "phase:1"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "37",
       "phase_number": 1,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18611,12 +19007,12 @@
         "phase:2"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "open",
+      "desired_state": "closed",
       "track_id": "37",
       "phase_number": 2,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Done",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18713,7 +19109,7 @@
       "phase_number": 3,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18737,15 +19133,15 @@
         "conductor",
         "track:37",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "37",
       "phase_number": 3,
       "task_number": 1,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18770,15 +19166,15 @@
         "conductor",
         "track:37",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "37",
       "phase_number": 3,
       "task_number": 2,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18803,15 +19199,15 @@
         "conductor",
         "track:37",
         "phase:3",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "37",
       "phase_number": 3,
       "task_number": 3,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Evidence blocked",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18843,7 +19239,7 @@
       "phase_number": 4,
       "task_number": null,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Phase",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18966,15 +19362,15 @@
         "conductor",
         "track:37",
         "phase:4",
-        "state:source-complete"
+        "state:evidence-open"
       ],
       "status": "prepared_not_synced",
-      "desired_state": "closed",
+      "desired_state": "open",
       "track_id": "37",
       "phase_number": 4,
       "task_number": 4,
       "project_fields": {
-        "Delivery status": "Source complete",
+        "Delivery status": "Review",
         "Work kind": "Task",
         "Horizon": "Mature",
         "Evidence level": "Fixture Proven",
@@ -18991,6 +19387,6 @@
   ],
   "generated_at": "source-epoch:2026-08-09",
   "apply_permitted": false,
-  "state_sync_policy": "task_issues_only",
+  "state_sync_policy": "explicit_issue_states",
   "project_manifest": "conductor/github/project.json"
 }

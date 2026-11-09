@@ -7,7 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Run authorised, redacted live smokes for each advertised provider.
+- [x] Compile and run connector fixtures.
 
 ## Completion and evidence contract
 

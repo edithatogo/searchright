@@ -9,6 +9,7 @@ Canonical task state: **source task complete**.
 
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Created tests/test_maturity_gap_closure_governance.py with 6 comprehensive unit tests covering maturity dossier contracts, 17 expected domains, 14 critical blockers, fail-closed 'not_ready' decision, evidence debt reconciliation across all 200 roadmap assertions, gate catalog network isolation, 16 launch preparation work packages in an acyclic DAG, gap register non-waiver rules, and anti-anthropomorphic actor provenance. Upgraded all 4 assertions (T30-A001..T30-A004) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open.
+  - [x] Review fix: 2026-11-09 Track 30 reconciliation: restore unmet original requirements and stable issue keys; preserve source/test improvements and historical fixture reviews. Simulation is not external acceptance. See conductor/tracks/30-maturity-gap-closure/plan.md. Retained bounded compiler/fixture evidence: https://github.com/edithatogo/searchright/actions/runs/42566040226/job/128992651041 at f502104a81c43ed0117886ce8cb21f00fdeb7588; later commits require their own admission. The 8-9 November archival observations are superseded for unfinished live, downstream, human and public-release requirements; their receipts remain unchanged. Optional hosted, broad-estate and mature-release work stays outside the local-product critical path.
 
 ## Completion and evidence contract
 

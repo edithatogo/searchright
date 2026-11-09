@@ -165,7 +165,9 @@
         "cargo test --locked -p searchright-prisma --lib tests::press_state_is_fail_closed_across_all_six_domains",
         "cargo test --locked -p searchright-prisma --test reporting_fixtures canonical_press_fixture_remains_explicitly_incomplete"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Obtain an accountable independent PRESS review of representative generated strategies and appendices."
+      ],
       "permitted_claim": "The six-domain PRESS workflow is source-implemented and fails closed on incomplete coverage or conflated reviewer/approver identity; the fixture is not independent review evidence.",
       "state": "source_implemented"
     },

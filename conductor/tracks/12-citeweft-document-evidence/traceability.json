@@ -76,7 +76,9 @@
         "verification/receipts/track-12-conductor-review-2026-11-09.json",
         "verification/receipts/track-12-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run golden CiteWeft/GROBID extraction fixtures preserving spans, uncertainty and diagnostics."
+      ],
       "permitted_claim": "References, callouts, source spans, uncertainty, diagnostics and extraction provenance are preserved across schema and adapter functions."
     },
     {
@@ -145,7 +147,9 @@
         "verification/receipts/track-12-conductor-review-2026-11-09.json",
         "verification/receipts/track-12-agent-panel-evaluation.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Run downstream Sourceright consumer-driven compatibility and rollback tests."
+      ],
       "permitted_claim": "Sourceright compatibility declarations, schema boundaries, and rollback documentation are verified."
     }
   ]

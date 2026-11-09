@@ -38,7 +38,11 @@
         "verification/receipts/track-35-agent-panel-evaluation.json",
         "verification/receipts/track-35-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
+      ],
       "permitted_claim": "Thin client contracts and compiler-checked bindings are fixture-tested; client packages remain planned until published under explicit human approval."
     },
     {
@@ -72,7 +76,11 @@
         "verification/receipts/track-35-agent-panel-evaluation.json",
         "verification/receipts/track-35-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
+      ],
       "permitted_claim": "Offline fixture-backed tutorials and 35-operation cross-surface parity are verified; live walkthroughs with external information specialists remain open operational gates."
     },
     {
@@ -106,7 +114,11 @@
         "verification/receipts/track-35-agent-panel-evaluation.json",
         "verification/receipts/track-35-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [],
+      "open_gates": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
+      ],
       "permitted_claim": "Adoption operations, deprecation policies, telemetry-free defaults, and PRISMA-S reporting contract adherence are verified; multi-cycle deprecation tracking remains an open operational gate."
     }
   ]

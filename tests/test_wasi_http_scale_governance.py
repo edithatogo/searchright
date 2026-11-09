@@ -110,11 +110,37 @@ class WasiHttpScaleGovernanceTests(unittest.TestCase):
         self.assertEqual(traceability.get("evidence_level"), "fixture_proven")
 
         assertions = traceability.get("assertions", [])
-        self.assertEqual(len(assertions), 6, "Track 24 must define exactly 6 assertions")
-
         expected_ids = {f"T24-A{i:03d}" for i in range(1, 7)}
         actual_ids = {a["assertion_id"] for a in assertions}
         self.assertEqual(actual_ids, expected_ids)
+
+        trust_path = "verification/receipts/track-24-component-trust.json"
+        trust = json.loads((ROOT / trust_path).read_text(encoding="utf-8"))
+        self.assertEqual(trust["status"], "passed")
+        self.assertTrue(any(
+            result.get("status") == "passed"
+            and "cargo test" in result.get("command", "")
+            and "-p searchright-plugin-sdk" in result["command"]
+            for result in trust["commands"]
+        ))
+        mcp_path = "verification/receipts/track-24-advanced-mcp.json"
+        mcp = json.loads((ROOT / mcp_path).read_text(encoding="utf-8"))
+        self.assertTrue(any(
+            "test -p searchright-mcp" in result["command"] and "passed" in result["result"]
+            for result in mcp["passed"]
+        ))
+        by_id = {assertion["assertion_id"]: assertion for assertion in assertions}
+        self.assertIn(trust_path, by_id["T24-A001"]["evidence_receipts"])
+        self.assertIn(mcp_path, by_id["T24-A004"]["evidence_receipts"])
+        # Local cryptographic admission and stdio MCP do not prove these capabilities.
+        external_boundaries = {
+            "T24-A001": ("publisher identity", "key custody"),
+            "T24-A002": ("wasmtime",),
+            "T24-A003": ("arrow", "duckdb"),
+            "T24-A004": ("streamable http", "remote"),
+            "T24-A005": ("oauth",),
+            "T24-A006": ("wasi", "remote"),
+        }
 
         for assertion in assertions:
             self.assertEqual(assertion.get("state"), "source_implemented")
@@ -123,7 +149,9 @@ class WasiHttpScaleGovernanceTests(unittest.TestCase):
             self.assertGreater(len(assertion.get("deterministic_tests", [])), 0)
             self.assertGreater(len(assertion.get("native_test_commands", [])), 0)
             self.assertGreater(len(assertion.get("evidence_receipts", [])), 0)
-            self.assertEqual(len(assertion.get("open_gates", [])), 0)
+            gates = " ".join(assertion.get("open_gates", [])).lower()
+            for boundary in external_boundaries[assertion["assertion_id"]]:
+                self.assertIn(boundary, gates, assertion["assertion_id"])
             self.assertTrue(bool(assertion.get("permitted_claim", "").strip()))
             for path in assertion.get("implementation_paths", []):
                 self.assertTrue((ROOT / path).exists(), f"Mapped path {path} must exist on disk")
