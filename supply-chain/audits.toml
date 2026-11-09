@@ -31,6 +31,18 @@ criteria = "safe-to-deploy"
 version = "0.42.0"
 notes = "Track 16 source review: XML parser 0.42.0 with default feature set only; no unsafe blocks, network, or process execution paths in enabled Searchright XML parsing path."
 
+[[audits.rmcp]]
+who = "OpenAI ChatGPT coding agent"
+criteria = "safe-to-deploy"
+version = "3.9.0"
+notes = "Bounded source review of the upstream rmcp-v3.9.0 tag 5596a8a0bba2a1ec5519cc855cdadf23e4dcecdc with exact crates.io checksum d24a7e92f4bcaa36b97fa93c4fa7ca8f3e669eced949345b3462dba333c7f909. Inspected all 68 crate source filenames via source scanning, plus substantive OAuth/DNS policy, stream body caps, server request limits, response cache and build.rs review; no production unsafe blocks observed. Upstream 3.9 fixes RUSTSEC-2026-0457/0461/0462; Searchright full cross-platform tests and cargo-audit passed at preceding exact head. Build.rs mutates git hooks only in upstream workspace, not as registry dependency. Review applies to Searchright's locked enabled-feature graph and is not an exhaustive third-party penetration test. Limitations and evidence in docs/security/rmcp-3.9.0-source-review.md."
+
+[[audits.rmcp-macros]]
+who = "OpenAI ChatGPT coding agent"
+criteria = "safe-to-deploy"
+version = "3.9.0"
+notes = "AI source review of eight tagged proc-macro Rust source files (tag 5596a8a0bba2a1ec5519cc855cdadf23e4dcecdc). No unsafe, ambient filesystem/network/process execution or build.rs in the proc-macro package. syn/quote/darling parsing and generated router/handler code inspected; unwrap sites operate on internal generated token constructors. Searchright all-features compile and MCP conformance CI passed previously. Exact release is locked; this is not an independent upstream attestation or proof against arbitrary macro input. See docs/security/rmcp-3.9.0-source-review.md."
+
 [[audits.roff]]
 who = "OpenAI Codex <noreply@openai.com>"
 criteria = "safe-to-deploy"
@@ -49,29 +61,6 @@ criteria = "safe-to-deploy"
 version = "1.0.23"
 notes = "Source review of the exact published library and original manifest, matched to upstream f0b52bb194befe6fd242154f2182fafd43a819b8. Reviewed sealed f32/f64 APIs, initialized fixed-size ASCII output, pointer bounds and lookup-table indexing; checked all full table constants and exponent-derived indices independently. Runtime has no allocation or ambient I/O; published manifest disables build scripts. See docs/csv-dependency-decision.md for identity evidence and review limits. Agent review, not an upstream attestation, formal proof or exhaustive native test."
 
-[[audits.tokio]]
-who = "OpenAI Codex <noreply@openai.com>"
-criteria = "safe-to-deploy"
-delta = "1.53.1 -> 1.54.1"
-notes = "Track 16 security advisory patch review: runtime maintenance and advisory remediation update from 1.53.1 to 1.54.1."
-
-# Track 16: exact-version source reviews for the patched MCP dependency graph.
-# See docs/security/rmcp-3.9.0-source-review.md for evidence and scope.
-# These are attributed AI-assisted source reviews, not an independent human audit,
-# authorisation to expand deployment features, or a security guarantee.
-
-[[audits.rmcp]]
-who = "OpenAI ChatGPT coding agent"
-criteria = "safe-to-deploy"
-version = "3.9.0"
-notes = "Bounded source review of the upstream rmcp-v3.9.0 tag 5596a8a0bba2a1ec5519cc855cdadf23e4dcecdc with exact crates.io checksum d24a7e92f4bcaa36b97fa93c4fa7ca8f3e669eced949345b3462dba333c7f909. Inspected all 68 crate source filenames via source scanning, plus substantive OAuth/DNS policy, stream body caps, server request limits, response cache and build.rs review; no production unsafe blocks observed. Upstream 3.9 fixes RUSTSEC-2026-0457/0461/0462; Searchright full cross-platform tests and cargo-audit passed at preceding exact head. Build.rs mutates git hooks only in upstream workspace, not as registry dependency. Review applies to Searchright's locked enabled-feature graph and is not an exhaustive third-party penetration test. Limitations and evidence in docs/security/rmcp-3.9.0-source-review.md."
-
-[[audits.rmcp-macros]]
-who = "OpenAI ChatGPT coding agent"
-criteria = "safe-to-deploy"
-version = "3.9.0"
-notes = "AI source review of eight tagged proc-macro Rust source files (tag 5596a8a0bba2a1ec5519cc855cdadf23e4dcecdc). No unsafe, ambient filesystem/network/process execution or build.rs in the proc-macro package. syn/quote/darling parsing and generated router/handler code inspected; unwrap sites operate on internal generated token constructors. Searchright all-features compile and MCP conformance CI passed previously. Exact release is locked; this is not an independent upstream attestation or proof against arbitrary macro input. See docs/security/rmcp-3.9.0-source-review.md."
-
 [[audits.schemars]]
 who = "OpenAI ChatGPT coding agent"
 criteria = "safe-to-deploy"
@@ -83,3 +72,9 @@ who = "OpenAI ChatGPT coding agent"
 criteria = "safe-to-deploy"
 version = "1.2.3"
 notes = "AI source review of all 14 proc-macro Rust files in GREsau/schemars tag v1.2.3, commit 4791bb7352555d339e45658ca09c092ed9fa1f5d. No unsafe, filesystem/network/process side effects or build.rs; schema-expression, attribute parsing and syn/quote expansion reviewed with syntax-validity assumptions explicit. Independently published Nautech/Greenbone safe-to-deploy delta reviews are corroborative only; no fabricated import/trust endorsement. See docs/security/rmcp-3.9.0-source-review.md."
+
+[[audits.tokio]]
+who = "OpenAI Codex <noreply@openai.com>"
+criteria = "safe-to-deploy"
+delta = "1.53.1 -> 1.54.1"
+notes = "Track 16 security advisory patch review: runtime maintenance and advisory remediation update from 1.53.1 to 1.54.1."
