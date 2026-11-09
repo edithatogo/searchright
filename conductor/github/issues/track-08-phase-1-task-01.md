@@ -33,6 +33,7 @@ Canonical task state: **source task complete**.
   - [x] Present source path: `integration/fixtures/prisma-jl/flow-parity-v1.json`
   - [x] Present source path: `integration/passports/prisma-jl-flow-interop.json`
   - [x] Present source path: `verification/fixtures/track-08/press-workflow-complete.yaml`
+  - [x] Present source path: `tests/test_prisma_press_reporting_governance.py`
   - [x] Assertion ledger: `conductor/tracks/08-prisma-press-reporting/traceability.json`
 
 ## Completion and evidence contract

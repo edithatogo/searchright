@@ -17,7 +17,6 @@ an explicit, approval-gated apply receipt exists.
 
 | ID | Track | Horizon | Status | Implementation | Evidence | Outcome |
 | --- | --- | --- | --- | --- | --- | --- |
-| 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | mvp | source_implemented | source_implemented | source_verified | Render PRISMA flow/appendix outputs and PRESS/standards assessments directly from evidence without conflating reporting and conduct. |
 | 11 | [Systematic-search agent skill and workflows](tracks/11-agentic-skill/spec.md) | mvp | partially_implemented | partially_implemented | compiler_verified | Package planning, PRESS, execution, deduplication, screening and reporting workflows with explicit human checkpoints. |
 | 12 | [CiteWeft scholarly extraction and document evidence](tracks/12-citeweft-document-evidence/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Integrate CiteWeft through a pinned optional adapter while preserving spans, uncertainty, provenance and the no-canonical-write boundary. |
 | 13 | [Integration passports, GitHub issue hierarchy and context spine](tracks/13-integration-passports-github-context/spec.md) | alpha | source_implemented | source_implemented | source_verified | Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked. |
@@ -40,6 +39,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 05 | [Execution, audit and local storage](tracks/05-execution-audit-store/spec.md) | 2026-08-13 | compiler_verified |
 | 06 | [Imports, deduplication and study linkage](tracks/06-imports-dedup-linkage/spec.md) | 2026-08-30 | compiler_verified |
 | 07 | [Governed screening workflow](tracks/07-screening-workflow/spec.md) | 2026-08-31 | fixture_proven |
+| 08 | [PRISMA, PRESS and reporting](tracks/08-prisma-press-reporting/spec.md) | 2026-11-09 | fixture_proven |
 | 09 | [CLI MVP](tracks/09-cli-mvp/spec.md) | 2026-08-29 | compiler_verified |
 | 10 | [MCP stdio server MVP](tracks/10-mcp-mvp/spec.md) | 2026-08-30 | compiler_verified |
 | 17 | [Benchmarks, search validation and human calibration](tracks/17-benchmarks-calibration/spec.md) | 2026-11-08 | fixture_proven |

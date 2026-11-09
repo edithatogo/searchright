@@ -3,11 +3,11 @@
 
 Parent phase key: `track-08-phase-3`
 Conductor plan: `conductor/tracks/08-prisma-press-reporting/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain a hosted compiler-verified receipt for the exact committed revision.
+- [x] Obtain a hosted compiler-verified receipt for the exact committed revision.
 
 ## Completion and evidence contract
 

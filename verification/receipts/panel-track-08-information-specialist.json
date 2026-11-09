@@ -1,0 +1,28 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "08",
+  "evaluator_role": "information-specialist",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "verification/fixtures/track-08/press-workflow-complete.yaml",
+    "contracts/examples/standard-assessment.yaml",
+    "docs/standards-and-provenance.md",
+    "tests/test_prisma_press_reporting_governance.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T08-IS-01",
+      "severity": "LOW",
+      "summary": "Six-domain PRESS peer review workflow enforces rigorous checks across question translation, Boolean logic, vocabulary, textwords, syntax, and limits.",
+      "evidence": "Fail-closed check guarantees that missing domain reviews or unresolved findings halt search execution.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Retain separate reviewer and approver identities across all production search protocols."
+  ]
+}
