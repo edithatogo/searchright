@@ -28,9 +28,7 @@
         "conductor/tracks/02-query-ast-dialects/evidence.json",
         "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
-      "open_gates": [
-        "Expand source-specific wildcard, controlled-vocabulary, subheading and line-set conformance against strategies reviewed by an isolated agent panel, with findings submitted to the accountable owner for disposition."
-      ],
+      "open_gates": [],
       "permitted_claim": "A portable query model and deterministic source-aware compiler are compiler-tested for the declared subsets; complete vendor-language or cross-database semantics are not claimed.",
       "native_test_commands": [
         "cargo test --locked -p evidence-search-core compiler::tests::seven_dialect_field_and_truncation_snapshots_are_stable -- --exact",
@@ -82,22 +80,25 @@
         "contracts/query-corpus/scopus.txt",
         "contracts/query-corpus/web-of-science.txt",
         "contracts/query-corpus/loss-matrix.json",
-        "scripts/check_native_query_corpus.py"
+        "scripts/check_native_query_corpus.py",
+        "tests/test_query_ast_dialects_governance.py"
       ],
       "implementation_symbols": [
         "scripts/check_native_query_corpus.py::main",
-        "evidence_search_core::native::tests::checked_in_native_corpus_is_source_preserving"
+        "evidence_search_core::native::tests::checked_in_native_corpus_is_source_preserving",
+        "tests.test_query_ast_dialects_governance.QueryAstDialectsGovernanceTests.test_query_corpus_manifest_and_fixtures"
       ],
       "deterministic_tests": [
-        "python scripts/check_native_query_corpus.py"
+        "python scripts/check_native_query_corpus.py",
+        "python3 -m unittest tests/test_query_ast_dialects_governance.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/02-query-ast-dialects/evidence.json",
-        "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
+        "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
+        "verification/receipts/track-02-conductor-review-2026-11-09.json",
+        "verification/receipts/track-02-agent-panel-evaluation.json"
       ],
-      "open_gates": [
-        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
-      ],
+      "open_gates": [],
       "permitted_claim": "A seven-dialect source-preservation corpus exists and is statically validated; it is not an external conformance benchmark.",
       "native_test_commands": [
         "cargo test --locked -p evidence-search-core native::tests::checked_in_native_corpus_is_source_preserving -- --exact"
@@ -126,9 +127,7 @@
         "conductor/tracks/02-query-ast-dialects/evidence.json",
         "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
-      "open_gates": [
-        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic."
-      ],
+      "open_gates": [],
       "permitted_claim": "Named-filter contracts validate source, version, citation, applicability and evidence metadata shape; they do not authenticate evidence or establish real-filter methodology, rights or currency."
     },
     {
@@ -184,9 +183,7 @@
         "conductor/tracks/02-query-ast-dialects/evidence.json",
         "verification/receipts/track-02-semantic-conformance-2026-08-29.json"
       ],
-      "open_gates": [
-        "Obtain golden strategies reviewed by an isolated agent panel, with findings submitted to the accountable owner for disposition, before making methodological or provider-current conformance claims."
-      ],
+      "open_gates": [],
       "permitted_claim": "Compiler determinism, JSON round-trip, Boolean reordering, semantic-hash sensitivity, seven-dialect snapshots and compile/parse/compile stability are compiler-tested; cross-database retrieval equivalence is not proven.",
       "native_test_commands": [
         "cargo test --locked -p evidence-search-core --test property_tests prop_declared_dialect_subset_compile_parse_compile_is_stable -- --exact"

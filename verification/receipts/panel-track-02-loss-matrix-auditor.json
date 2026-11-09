@@ -1,0 +1,52 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "02",
+  "panelist_role": "loss-matrix-auditor",
+  "evaluator_role": "loss-matrix-auditor",
+  "evaluated_at": "2026-11-09T10:30:30Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The query loss matrix and metamorphic test suite establish an auditably transparent and fail-closed foundation for query transformation. The seven-dialect loss matrix (contracts/query-corpus/loss-matrix.json) explicitly documents supported constructs and known losses for every dialect (e.g. ordered proximity degrading to unordered adjacency in Ovid MEDLINE, proximity requiring review in PubMed, and controlled vocabulary degrading to phrase in Scopus). Compilation and translation tests in crates/evidence-search-core/src/compiler.rs, native.rs, and tests/property_tests.rs demonstrate robust metamorphic and round-trip invariants: canonical JSON serialization preserves compilation outputs, Boolean conjunction reordering preserves term sets, seven-dialect snapshots remain deterministic, and compile-parse-compile property tests (prop_declared_dialect_subset_compile_parse_compile_is_stable) prove structural stability across round trips. In all cases where dialect semantics diverge, the compiler emits explicit warning codes and marks review_required: true, preventing silent semantic corruption.",
+  "verified_invariants": [
+    "Loss matrix transparency: query-dialect-loss-matrix discloses proximity and subheading losses fail-closed",
+    "Compile-parse-compile stability: property tests confirm stable round-trip compilation across declared subsets",
+    "Metamorphic Boolean reordering: conjunction reordering preserves term sets and compilation equivalence",
+    "Fail-closed loss detection: lossy conversions flag review_required and emit structured loss codes",
+    "Cross-database non-equivalence boundary: loss matrix explicitly disclaims cross-database retrieval equivalence"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Ordered proximity operators in source databases (such as ADJ, PRE/, W/) degrade to unordered proximity (NEAR) or require manual review on target platforms lacking ordered operator semantics; the loss matrix and compiler warnings fail-closed by recording explicit loss codes.",
+      "reference": "contracts/query-corpus/loss-matrix.json:10-53; crates/evidence-search-core/src/compiler.rs:723-750",
+      "recommendation": "Ensure downstream user interfaces display loss warnings prominently whenever ordered proximity is relaxed."
+    },
+    {
+      "severity": "observation",
+      "description": "Compile-parse-compile stability tests prove metamorphic convergence across declared dialect subsets without silent syntax truncation or AST corruption.",
+      "reference": "crates/evidence-search-core/tests/property_tests.rs:248-295; crates/evidence-search-core/src/native.rs:1771-1840",
+      "recommendation": "Keep property test seed runs and snapshot tests integrated into CI harness."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T02-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Corpus loss matrix in contracts/query-corpus/loss-matrix.json documents exact supported constructs and known translation losses for all seven dialects, ensuring transparent degradation disclosures."
+    },
+    {
+      "id": "T02-A006",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Property tests in crates/evidence-search-core/tests/property_tests.rs and unit tests in compiler.rs and native.rs verify compile-parse-compile stability, deterministic JSON round-trips, Boolean conjunction reordering invariance, and loss-code emission."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed."
+  ]
+}

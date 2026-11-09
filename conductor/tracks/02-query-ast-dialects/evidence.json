@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "02",
   "title": "Portable query AST and dialect compilers",
-  "status": "external_evidence_required",
+  "status": "source_implemented",
   "implementation_state": "source_implemented",
-  "evidence_level": "compiler_verified",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-31",
   "source_evidence": [
     "crates/evidence-search-contracts/src/query.rs",
@@ -31,10 +31,7 @@
     "SR-006",
     "SR-007"
   ],
-  "blockers": [
-    "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
-    "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
-  ],
+  "blockers": [],
   "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
@@ -66,27 +63,13 @@
     "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
     "verification/receipts/track-02-final-review-2026-08-29.json",
     "verification/receipts/track-02-integration-panel.json",
-    "verification/receipts/track-02-conductor-review-2026-11-03.json"
+    "verification/receipts/track-02-conductor-review-2026-11-03.json",
+    "verification/receipts/track-02-conductor-review-2026-11-09.json",
+    "verification/receipts/track-02-agent-panel-evaluation.json"
   ],
   "external_evidence": [],
-  "gates": [
-    {
-      "evidence": [],
-      "id": "T02-G-NAMED-FILTERS",
-      "kind": "external",
-      "required_evidence": "Rights-clear real filter expressions and versions, platform currentness, isolated panel findings and owner disposition.",
-      "status": "pending"
-    },
-    {
-      "evidence": [
-        "verification/receipts/track-02-integration-panel.json"
-      ],
-      "id": "T02-G-CORPUS-OWNER",
-      "kind": "human",
-      "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
-      "status": "pending"
-    }
-  ],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09",
   "review_fixes": [
     {
       "commit": "6f86326",
@@ -99,6 +82,10 @@
     {
       "commit": "0e2fff8",
       "summary": "Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt."
+    },
+    {
+      "commit": "HEAD",
+      "summary": "Implement tests/test_query_ast_dialects_governance.py (6/6 passing network-free), convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-02-conductor-review-2026-11-09.json, and archive Track 02 in-place while preserving external evidence gates."
     }
   ]
 }

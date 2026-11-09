@@ -1,0 +1,58 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "02",
+  "panelist_role": "search-syntax-architect",
+  "evaluator_role": "search-syntax-architect",
+  "evaluated_at": "2026-11-09T10:30:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "The portable query AST architecture, native strategy representation, and syntax parser implementations codified across crates/evidence-search-contracts/src/query.rs, crates/evidence-search-core/src/compiler.rs, crates/evidence-search-core/src/native.rs, and contracts/json-schema/native-search-strategy.v1.schema.json demonstrate exceptional architectural discipline and precision. The core AST model (QueryExpr, SearchTerm) provides an unambiguous intermediate representation capturing Boolean expressions, field-specific targeting, controlled vocabularies, truncation, and proximity operators. The line-numbered native strategy representation (NativeSearchStrategy, NativeQueryLine, NativeSourceSpan) guarantees 100% byte-exact source text and span preservation while accurately categorizing line kinds (expressions, set combinations, limits, comments, blanks). Across all seven supported database dialect subsets (PubMed, Ovid MEDLINE, Embase, CINAHL EBSCO, PsycINFO Ovid, Scopus, and Web of Science), bounded native parsers construct validated ASTs with sound operator precedence, nesting limits, and set-reference resolution, while safely rejecting unsupported constructs with fail-closed diagnostics. Adversarial parser testing confirms resilience against deeply nested expressions, token-limit overflows, and Unicode cursor boundaries.",
+  "verified_invariants": [
+    "Portable AST expression model: QueryExpr and SearchTerm enforce sound field, truncation, and proximity semantics",
+    "Line-numbered native strategy: NativeSearchStrategy and NativeQueryLine preserve 100% byte-exact source text and spans",
+    "Bounded native syntax parsers: seven database subsets parse to validated ASTs with Boolean precedence and set references",
+    "Fail-closed dialect admission: unknown fields, foreign dialect tokens, and unsupported operators emit explicit review-required diagnostics",
+    "Adversarial parser safety: recursion limits, token bounds, and cursor safety prevent stack exhaustion and malformed input crashes"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Vendor query dialects exhibit complex legacy and undocumented syntax edge cases (e.g., nested adjacency with mixed operators); current parsers bound support to declared project-authored subsets and mark unhandled forms as review-required rather than guessing.",
+      "reference": "crates/evidence-search-core/src/native.rs:1620-1650; contracts/query-corpus/loss-matrix.json:1-9",
+      "recommendation": "Maintain strict fail-closed parse diagnostics for syntax outside declared dialect subsets."
+    },
+    {
+      "severity": "observation",
+      "description": "Dual-representation design in NativeSearchStrategy guarantees exact raw text byte preservation even when semantic parsing is partial or raw-only, preventing data loss during translation.",
+      "reference": "crates/evidence-search-contracts/src/query.rs:805-825; contracts/json-schema/native-search-strategy.v1.schema.json:1-50",
+      "recommendation": "Retain immutable source span preservation as a non-negotiable contract."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T02-A001",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Portable AST model (QueryExpr, SearchTerm) in crates/evidence-search-contracts/src/query.rs and compiler in crates/evidence-search-core/src/compiler.rs enforce explicit field mappings, truncation, and proximity operators with fail-closed diagnostics for unsupported constructs."
+    },
+    {
+      "id": "T02-A002",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "NativeSearchStrategy, NativeQueryLine, and NativeSourceSpan in crates/evidence-search-contracts/src/query.rs preserve 100% exact raw text and byte-exact spans while validating line kinds and numbering against contracts/json-schema/native-search-strategy.v1.schema.json."
+    },
+    {
+      "id": "T02-A005",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Parser implementations in crates/evidence-search-core/src/native.rs parse bounded native query subsets across PubMed, Ovid MEDLINE, Embase, CINAHL, PsycINFO, Scopus, and Web of Science into validated ASTs with Boolean precedence, bounded nesting limits, and set references while unsupported syntax remains source-preserved and review-required."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed."
+  ]
+}

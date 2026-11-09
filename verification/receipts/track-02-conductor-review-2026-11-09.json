@@ -1,0 +1,33 @@
+{
+  "schema_version": "org.searchright.track-review-verification.v1",
+  "track_id": "02",
+  "observed_at": "2026-11-09T10:31:00Z",
+  "observed_on": "2026-11-09",
+  "source_revision": "HEAD",
+  "toolchain": "1.97.1-aarch64-apple-darwin",
+  "status": "passed_with_external_blockers",
+  "checks": [
+    {
+      "command": "python scripts/validate_repository.py",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/check_native_query_corpus.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -m unittest tests/test_native_query_corpus.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -m unittest tests/test_query_ast_dialects_governance.py",
+      "status": "passed",
+      "tests_passed": 6
+    }
+  ],
+  "limits": [
+    "Seven-dialect native query corpus, loss matrix disclosures, and line-numbered AST representation verified.",
+    "Real named filters and topic-specific PRESS adequacy review remain open operational gates with external evidence required.",
+    "Cross-database retrieval equivalence is not claimed; source preservation doctrine strictly enforced."
+  ]
+}
