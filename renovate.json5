@@ -8,6 +8,8 @@
   ],
   "labels": ["dependencies"],
   "minimumReleaseAge": "7 days",
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
   "packageRules": [
     {
       "matchManagers": ["cargo"],
@@ -18,6 +20,14 @@
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
+    },
+    {
+      "matchPackageNames": ["citeweft"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["rust-toolchain"],
+      "enabled": false
     },
     {
       "matchPackageNames": ["rmcp", "wasmtime"],
