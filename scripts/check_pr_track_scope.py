@@ -19,7 +19,7 @@ RATIONALE_LINE = re.compile(
 AFFECTED_LINE = re.compile(r"(?im)^-\s*Affected tracks:\s*`?([^`\r\n]+)`?\s*$")
 OUTCOME_LINE = re.compile(r"(?im)^-\s*Shared outcome rationale:\s*`?([^`\r\n]+)`?\s*$")
 TRACK_PATH = re.compile(r"^conductor/tracks/(\d{2})-")
-TRACK_ID = re.compile(r"^(?:0\d|[12]\d|3[0-7])$")
+TRACK_ID = re.compile(r"^(?:0\d|[123]\d|4[0-3])$")
 EXCEPTION_LABEL = "scope:multi-track-exception"
 
 
@@ -89,7 +89,7 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
                 or declared not in candidates
                 or len(candidates) < 2
             ):
-                errors.append("Affected tracks requires distinct IDs 00-37 including the primary and another track")
+                errors.append("Affected tracks requires distinct IDs 00-43 including the primary and another track")
             else:
                 admitted_tracks = candidates
             if not outcome or outcome == "none" or len(outcome) < 30:
@@ -112,7 +112,7 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
         }
         invalid = sorted(item for item in candidates if not TRACK_ID.fullmatch(item))
         if invalid or len(candidates) < 2:
-            errors.append("MULTI requires at least two comma-separated Track IDs 00-37")
+            errors.append("MULTI requires at least two comma-separated Track IDs 00-43")
         else:
             admitted_tracks = candidates
         if EXCEPTION_LABEL not in labels:
@@ -120,7 +120,7 @@ def check(event: dict[str, Any], files: list[str]) -> dict[str, Any]:
         if not rationale or rationale == "none" or len(rationale) < 30:
             errors.append("MULTI requires a concrete split-failure rationale of at least 30 characters")
     else:
-        errors.append("Conductor track must be exactly one Track ID 00-37 or `MULTI`")
+        errors.append("Conductor track must be exactly one Track ID 00-43 or `MULTI`")
 
     undeclared = sorted(path_tracks - admitted_tracks)
     if undeclared:

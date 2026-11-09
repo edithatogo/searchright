@@ -1,0 +1,46 @@
+{
+  "schema_version": "conductor.track-metadata.v3",
+  "track_id": "40",
+  "slug": "martingale-conformal-stopping",
+  "title": "Anytime-valid martingale stopping and conformal risk control",
+  "status": "scaffolded",
+  "implementation_state": "scaffolded",
+  "created": "2026-08-08",
+  "updated": "2026-08-09",
+  "dependencies": [
+    "17",
+    "23",
+    "29"
+  ],
+  "horizon": "mature",
+  "evidence_level": "source_verified",
+  "external_approval_required": false,
+  "evidence_path": "conductor/tracks/40-martingale-conformal-stopping/evidence.json",
+  "traceability_path": "conductor/tracks/40-martingale-conformal-stopping/traceability.json",
+  "github": {
+    "epic_issue_key": "roadmap-epic",
+    "track_issue_key": "track-40",
+    "phase_issue_keys": [
+      "track-40-phase-1",
+      "track-40-phase-2",
+      "track-40-phase-3",
+      "track-40-phase-4"
+    ],
+    "task_issue_keys": [
+      "track-40-phase-1-task-01",
+      "track-40-phase-2-task-01",
+      "track-40-phase-2-task-02",
+      "track-40-phase-3-task-01",
+      "track-40-phase-3-task-02",
+      "track-40-phase-3-task-03",
+      "track-40-phase-3-task-04",
+      "track-40-phase-4-task-01",
+      "track-40-phase-4-task-02",
+      "track-40-phase-4-task-03",
+      "track-40-phase-4-task-04"
+    ],
+    "remote_issue_number": null,
+    "remote_phase_issue_numbers": [],
+    "remote_task_issue_numbers": []
+  }
+}

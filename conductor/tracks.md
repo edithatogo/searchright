@@ -17,6 +17,12 @@ an explicit, approval-gated apply receipt exists.
 
 | ID | Track | Horizon | Status | Implementation | Evidence | Outcome |
 | --- | --- | --- | --- | --- | --- | --- |
+| 38 | [Verifiable live two-source execution and zkTLS provenance receipts](tracks/38-zktls-verifiable-live-execution/spec.md) | mature | scaffolded | scaffolded | source_verified | Execute resumable two-source live retrieval (PubMed and Europe PMC) through CLI and MCP with cryptographic zkTLS transcript commitments in .srpack provenance bundles. |
+| 39 | [Formal BDD/SMT query equivalence and semantic loss calculus](tracks/39-smt-query-equivalence-calculus/spec.md) | mature | scaffolded | scaffolded | source_verified | Prove cross-database query translation equivalence, safe broadening, or unsafe narrowing using canonical ROBDDs and synthesize concrete counterexample witness documents. |
+| 40 | [Anytime-valid martingale stopping and conformal risk control](tracks/40-martingale-conformal-stopping/spec.md) | mature | scaffolded | scaffolded | source_verified | Bound missed relevant studies during prioritized screening using anytime-valid hypergeometric betting martingales and conformal risk control. |
+| 41 | [Demand-driven incremental living review computation](tracks/41-salsa-incremental-living-reviews/spec.md) | mature | scaffolded | scaffolded | source_verified | Recompute living systematic review updates through a demand-driven memoized dependency DAG with early cutoff and bisimulation equivalence to full replay. |
+| 42 | [Sub-document byte-span entailment and transitive retraction propagation](tracks/42-subdocument-entailment-retraction/spec.md) | mature | scaffolded | scaffolded | source_verified | Anchor extracted claims to proof-carrying sub-document byte spans with entailment verification and propagate retractions transitively across study syntheses. |
+| 43 | [Adversarial Advocate-Skeptic-Arbiter screening deliberation](tracks/43-adversarial-multi-agent-deliberation/spec.md) | mature | scaffolded | scaffolded | source_verified | Execute zero-trust Advocate-Skeptic-Arbiter screening deliberation with mandatory verbatim span verification, epistemic divergence routing, and human-only final exclusions. |
 
 ## Archived tracks
 

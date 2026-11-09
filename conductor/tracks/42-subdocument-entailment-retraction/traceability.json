@@ -1,0 +1,161 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "42",
+  "title": "Sub-document byte-span entailment and transitive retraction propagation",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/42-subdocument-entailment-retraction/spec.md#scope",
+  "claim_boundary": "Source-verified specification and granular execution playbook only; sub-document byte-span entailment verification and transitive retraction poisoning remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T42-A001",
+      "statement": "Proof-carrying sub-document anchor contract binding extracted claims to `doc_sha256`, page index, UTF-8 byte range, bounding box and verbatim quote digest",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/42-subdocument-entailment-retraction/spec.md",
+        "crates/searchright-contracts/src/document.rs",
+        "crates/searchright-contracts/src/study.rs",
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-living/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/42-subdocument-entailment-retraction/evidence.json"
+      ],
+      "open_gates": [
+        "Define PdfBoundingBox, ProofCarryingSpan, GroundedClaim, IntegrityNotice, and SynthesisQuarantineFlag contracts in crates/searchright-contracts/src/document.rs and crates/searchright-contracts/src/study.rs.",
+        "Implement deterministic UTF-8 byte-slice verification and negation-aware claim entailment checking in crates/searchright-citeweft/src/lib.rs.",
+        "Implement transitive retraction and expression-of-concern poisoning across Report-to-Study-to-Synthesis graphs in crates/searchright-study/src/lib.rs and crates/searchright-living/src/lib.rs.",
+        "Add end-to-end span-tampering rejection and post-inclusion retraction quarantine tests across study synthesis and PRISMA living flow outputs."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T42-A002",
+      "statement": "Deterministic byte-slice verifier rejecting fabricated quotes, offset mismatches or out-of-bounds span references before evidence admission",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/42-subdocument-entailment-retraction/spec.md",
+        "crates/searchright-contracts/src/document.rs",
+        "crates/searchright-contracts/src/study.rs",
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-living/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/42-subdocument-entailment-retraction/evidence.json"
+      ],
+      "open_gates": [
+        "Define PdfBoundingBox, ProofCarryingSpan, GroundedClaim, IntegrityNotice, and SynthesisQuarantineFlag contracts in crates/searchright-contracts/src/document.rs and crates/searchright-contracts/src/study.rs.",
+        "Implement deterministic UTF-8 byte-slice verification and negation-aware claim entailment checking in crates/searchright-citeweft/src/lib.rs.",
+        "Implement transitive retraction and expression-of-concern poisoning across Report-to-Study-to-Synthesis graphs in crates/searchright-study/src/lib.rs and crates/searchright-living/src/lib.rs.",
+        "Add end-to-end span-tampering rejection and post-inclusion retraction quarantine tests across study synthesis and PRISMA living flow outputs."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T42-A003",
+      "statement": "Entailment verification gate scoring whether the anchored verbatim span supports, contradicts or is neutral toward the structured extraction claim",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/42-subdocument-entailment-retraction/spec.md",
+        "crates/searchright-contracts/src/document.rs",
+        "crates/searchright-contracts/src/study.rs",
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-living/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/42-subdocument-entailment-retraction/evidence.json"
+      ],
+      "open_gates": [
+        "Define PdfBoundingBox, ProofCarryingSpan, GroundedClaim, IntegrityNotice, and SynthesisQuarantineFlag contracts in crates/searchright-contracts/src/document.rs and crates/searchright-contracts/src/study.rs.",
+        "Implement deterministic UTF-8 byte-slice verification and negation-aware claim entailment checking in crates/searchright-citeweft/src/lib.rs.",
+        "Implement transitive retraction and expression-of-concern poisoning across Report-to-Study-to-Synthesis graphs in crates/searchright-study/src/lib.rs and crates/searchright-living/src/lib.rs.",
+        "Add end-to-end span-tampering rejection and post-inclusion retraction quarantine tests across study synthesis and PRISMA living flow outputs."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T42-A004",
+      "statement": "Retraction Watch and Crossref update-notice ingestion contract classifying retractions, expressions of concern and major errata",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/42-subdocument-entailment-retraction/spec.md",
+        "crates/searchright-contracts/src/document.rs",
+        "crates/searchright-contracts/src/study.rs",
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-living/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/42-subdocument-entailment-retraction/evidence.json"
+      ],
+      "open_gates": [
+        "Define PdfBoundingBox, ProofCarryingSpan, GroundedClaim, IntegrityNotice, and SynthesisQuarantineFlag contracts in crates/searchright-contracts/src/document.rs and crates/searchright-contracts/src/study.rs.",
+        "Implement deterministic UTF-8 byte-slice verification and negation-aware claim entailment checking in crates/searchright-citeweft/src/lib.rs.",
+        "Implement transitive retraction and expression-of-concern poisoning across Report-to-Study-to-Synthesis graphs in crates/searchright-study/src/lib.rs and crates/searchright-living/src/lib.rs.",
+        "Add end-to-end span-tampering rejection and post-inclusion retraction quarantine tests across study synthesis and PRISMA living flow outputs."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T42-A005",
+      "statement": "Transitive retraction poisoning across the Report-to-Study-to-Synthesis graph flagging affected forest-plot rows and PRISMA counts for mandatory human review",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/42-subdocument-entailment-retraction/spec.md",
+        "crates/searchright-contracts/src/document.rs",
+        "crates/searchright-contracts/src/study.rs",
+        "crates/searchright-citeweft/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-living/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/42-subdocument-entailment-retraction/evidence.json"
+      ],
+      "open_gates": [
+        "Define PdfBoundingBox, ProofCarryingSpan, GroundedClaim, IntegrityNotice, and SynthesisQuarantineFlag contracts in crates/searchright-contracts/src/document.rs and crates/searchright-contracts/src/study.rs.",
+        "Implement deterministic UTF-8 byte-slice verification and negation-aware claim entailment checking in crates/searchright-citeweft/src/lib.rs.",
+        "Implement transitive retraction and expression-of-concern poisoning across Report-to-Study-to-Synthesis graphs in crates/searchright-study/src/lib.rs and crates/searchright-living/src/lib.rs.",
+        "Add end-to-end span-tampering rejection and post-inclusion retraction quarantine tests across study synthesis and PRISMA living flow outputs."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

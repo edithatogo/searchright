@@ -23,8 +23,8 @@
     },
     {
       "path": "conductor/github/issue-hierarchy.json",
-      "sha256": "8497236fe7537fdb2a6279ee3ac9325fca0bf0517087adb3dd4660ad10f6e369",
-      "size": 616374
+      "sha256": "6acadbf0a640a2c2a82c123a84b2300468181137d4b9fe0a201348b414aedd00",
+      "size": 719686
     },
     {
       "path": "conductor/github/project.json",
@@ -48,13 +48,13 @@
     },
     {
       "path": "conductor/requirements.md",
-      "sha256": "431f1581f3a6d02c22b38d3d6d6c7285e43fcbfb3d2acef22372170f2dc0fbea",
-      "size": 26962
+      "sha256": "cfecf418875f6fcf582a38953bbdb285b919e4672cc52b41ef0d49aa549ce020",
+      "size": 30541
     },
     {
       "path": "conductor/roadmap-coverage.json",
-      "sha256": "6b7876c38e8b49e571e317d0393aa0753102bd01dd7f67be4aa2063801b25977",
-      "size": 178319
+      "sha256": "955813f7a9323ae9c2d9c39836103082dba0ddfe7ef5af54e7d25541457f2c94",
+      "size": 192340
     },
     {
       "path": "conductor/traceability-overrides.json",
@@ -68,7 +68,7 @@
     },
     {
       "path": "context/claim-boundaries.json",
-      "sha256": "82d7383b3958d151ccd37dcf9525214d7609c284b8047f6ea190dfe88c4b2b78",
+      "sha256": "ea461f3d2faa8ecf59c16e4f911ff3123ab2d8767215060b1e467638a38894e2",
       "size": 11281
     },
     {
@@ -183,13 +183,13 @@
     },
     {
       "path": "verification/evidence-debt.json",
-      "sha256": "5c8ebdcd624da9333f386f29b41d74dc1ff20c5197057ce55e1256e23e02860b",
-      "size": 3230
+      "sha256": "f98e84928a1ab30bad96f2e5b19678914582fd8882793fe5e9ec777061e0a1fc",
+      "size": 3312
     },
     {
       "path": "verification/gate-catalog.json",
-      "sha256": "a6139d2cfa72cdbd9dd39d551a51509a5d6662a5910af4feb800a9b9c37dee67",
-      "size": 54557
+      "sha256": "98c61f5a81e9e4151f620ecbb69e410dd44f1e16e7f1919798439abac572c046",
+      "size": 56357
     },
     {
       "path": "verification/harness-matrix.json",

@@ -91,7 +91,7 @@ class TrackScopeTests(unittest.TestCase):
         self.assertEqual(receipt["admitted_tracks"], ["16", "31"])
 
     def test_cross_track_declaration_fails_closed_for_invalid_ownership(self) -> None:
-        for affected in ["31, 13", "16", "16, 16", "16, 38", "16,", "16, MULTI"]:
+        for affected in ["31, 13", "16", "16, 16", "16, 99", "16,", "16, MULTI"]:
             declaration = body("16") + (
                 f"- Affected tracks: `{affected}`\n"
                 "- Shared outcome rationale: `Align delivery policy with its executable ownership checker.`\n"

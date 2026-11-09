@@ -30,16 +30,21 @@ Supporting plans:
 
 | Milestone | Deliverable and useful test | Existing owners |
 | --- | --- | --- |
-| 1. Make it work | Two live sources through CLI/MCP; interruption/resume; conservative deduplication; recorded decisions; truthful export and replay | 03, 04, 06, 07, 09, 10 |
-| 2. Find an advantage | Small development comparisons for difficult translations and screening; retain the strongest simple baseline | 02, 17, 23 |
-| 3. Demonstrate it | Frozen scoped comparison; usable autonomous/solo/team modes; independently validated evidence package | 11, 17, 25, 28, 29 |
-| 4. Expand on results | Selective living updates, broader validation, prospective use and citable releases | 22, 25, 29, 35, 36 |
+| 1. Make it work | Two live sources through CLI/MCP; interruption/resume; conservative deduplication; recorded decisions; truthful export and replay | 03, 04, 06, 07, 09, 10, 38 |
+| 2. Find an advantage | Small development comparisons for difficult translations and screening; retain the strongest simple baseline | 02, 17, 23, 39, 40 |
+| 3. Demonstrate it | Frozen scoped comparison; usable autonomous/solo/team modes; independently validated evidence package | 11, 17, 25, 28, 29, 43 |
+| 4. Expand on results | Selective living updates, broader validation, prospective use and citable releases | 22, 25, 29, 35, 36, 41, 42 |
 
 Archived tracks remain useful ownership references. Follow-up work does not
-reopen their historical acceptance or require a new phase/subissue tree. Track 38
-is already used in [draft PR 679](https://github.com/edithatogo/searchright/pull/679);
-the institutional monitor can become an operational pilot, but is not a recall
-validation study.
+reopen their historical acceptance or require a new phase/subissue tree. Tracks
+38–43 provide granular, task-executable playbooks for autonomous coding agents:
+
+- [Track 38: Verifiable live two-source execution and zkTLS provenance receipts](./tracks/38-zktls-verifiable-live-execution/spec.md) (`SR-094`)
+- [Track 39: Formal BDD/SMT query equivalence and semantic loss calculus](./tracks/39-smt-query-equivalence-calculus/spec.md) (`SR-095`)
+- [Track 40: Anytime-valid martingale stopping and conformal risk control](./tracks/40-martingale-conformal-stopping/spec.md) (`SR-096`)
+- [Track 41: Demand-driven incremental living review computation](./tracks/41-salsa-incremental-living-reviews/spec.md) (`SR-097`)
+- [Track 42: Sub-document byte-span entailment and transitive retraction propagation](./tracks/42-subdocument-entailment-retraction/spec.md) (`SR-098`)
+- [Track 43: Adversarial Advocate-Skeptic-Arbiter screening deliberation](./tracks/43-adversarial-multi-agent-deliberation/spec.md) (`SR-099`)
 
 ## Immediate execution queue
 

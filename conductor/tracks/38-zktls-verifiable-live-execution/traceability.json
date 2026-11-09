@@ -1,0 +1,176 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "38",
+  "title": "Verifiable live two-source execution and zkTLS provenance receipts",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/38-zktls-verifiable-live-execution/spec.md#scope",
+  "claim_boundary": "Source-verified specification and granular execution playbook only; live two-source execution and cryptographic zkTLS transcript attestation remain open implementation and live-verification gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T38-A001",
+      "statement": "Stateful cursor pagination, HTTP 429 Retry-After backoff and token-bucket rate governance in the shared live provider runtime",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/spec.md",
+        "crates/evidence-search-contracts/src/lib.rs",
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/searchright-connectors/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/evidence.json"
+      ],
+      "open_gates": [
+        "Define TlsTranscriptCommitment and redacted header byte-range contracts in crates/evidence-search-contracts/src/lib.rs and crates/searchright-contracts/src/lib.rs with unit validation tests.",
+        "Implement PaginationCheckpoint, deterministic HTTP 429 Retry-After backoff, and duplicate-emission prevention on resume in crates/evidence-search-core/src/lib.rs.",
+        "Implement 4 KiB chunk SHA-256 Merkle root computation, secret-preserving byte redaction, and atomic checkpoint persistence in crates/searchright-connectors/src/lib.rs and crates/searchright-store/src/lib.rs.",
+        "Wire explicit LiveExecutionAuthorization and two-source PubMed + Europe PMC execution through crates/searchright/src/engine.rs, crates/searchright-cli/src/main.rs, and crates/searchright-mcp/src/lib.rs.",
+        "Implement offline .srpack zkTLS transcript Merkle verification in crates/searchright-provenance/src/lib.rs and record authorised redacted live receipts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T38-A002",
+      "statement": "Durable checkpoint and resume state machine preventing duplicate record emission or lost decisions across interrupted runs",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/spec.md",
+        "crates/evidence-search-contracts/src/lib.rs",
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/searchright-connectors/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/evidence.json"
+      ],
+      "open_gates": [
+        "Define TlsTranscriptCommitment and redacted header byte-range contracts in crates/evidence-search-contracts/src/lib.rs and crates/searchright-contracts/src/lib.rs with unit validation tests.",
+        "Implement PaginationCheckpoint, deterministic HTTP 429 Retry-After backoff, and duplicate-emission prevention on resume in crates/evidence-search-core/src/lib.rs.",
+        "Implement 4 KiB chunk SHA-256 Merkle root computation, secret-preserving byte redaction, and atomic checkpoint persistence in crates/searchright-connectors/src/lib.rs and crates/searchright-store/src/lib.rs.",
+        "Wire explicit LiveExecutionAuthorization and two-source PubMed + Europe PMC execution through crates/searchright/src/engine.rs, crates/searchright-cli/src/main.rs, and crates/searchright-mcp/src/lib.rs.",
+        "Implement offline .srpack zkTLS transcript Merkle verification in crates/searchright-provenance/src/lib.rs and record authorised redacted live receipts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T38-A003",
+      "statement": "Live two-source execution wiring for PubMed and Europe PMC through CLI and MCP under explicit local authority and budget guards",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/spec.md",
+        "crates/evidence-search-contracts/src/lib.rs",
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/searchright-connectors/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/evidence.json"
+      ],
+      "open_gates": [
+        "Define TlsTranscriptCommitment and redacted header byte-range contracts in crates/evidence-search-contracts/src/lib.rs and crates/searchright-contracts/src/lib.rs with unit validation tests.",
+        "Implement PaginationCheckpoint, deterministic HTTP 429 Retry-After backoff, and duplicate-emission prevention on resume in crates/evidence-search-core/src/lib.rs.",
+        "Implement 4 KiB chunk SHA-256 Merkle root computation, secret-preserving byte redaction, and atomic checkpoint persistence in crates/searchright-connectors/src/lib.rs and crates/searchright-store/src/lib.rs.",
+        "Wire explicit LiveExecutionAuthorization and two-source PubMed + Europe PMC execution through crates/searchright/src/engine.rs, crates/searchright-cli/src/main.rs, and crates/searchright-mcp/src/lib.rs.",
+        "Implement offline .srpack zkTLS transcript Merkle verification in crates/searchright-provenance/src/lib.rs and record authorised redacted live receipts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T38-A004",
+      "statement": "Cryptographic zkTLS transcript commitment and redacted server-certificate chain attestation structures in provenance receipts",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/spec.md",
+        "crates/evidence-search-contracts/src/lib.rs",
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/searchright-connectors/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/evidence.json"
+      ],
+      "open_gates": [
+        "Define TlsTranscriptCommitment and redacted header byte-range contracts in crates/evidence-search-contracts/src/lib.rs and crates/searchright-contracts/src/lib.rs with unit validation tests.",
+        "Implement PaginationCheckpoint, deterministic HTTP 429 Retry-After backoff, and duplicate-emission prevention on resume in crates/evidence-search-core/src/lib.rs.",
+        "Implement 4 KiB chunk SHA-256 Merkle root computation, secret-preserving byte redaction, and atomic checkpoint persistence in crates/searchright-connectors/src/lib.rs and crates/searchright-store/src/lib.rs.",
+        "Wire explicit LiveExecutionAuthorization and two-source PubMed + Europe PMC execution through crates/searchright/src/engine.rs, crates/searchright-cli/src/main.rs, and crates/searchright-mcp/src/lib.rs.",
+        "Implement offline .srpack zkTLS transcript Merkle verification in crates/searchright-provenance/src/lib.rs and record authorised redacted live receipts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T38-A005",
+      "statement": "Independent offline `.srpack` verifier checking TLS transcript Merkle commitments, query hashes and retrieved record digests",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/spec.md",
+        "crates/evidence-search-contracts/src/lib.rs",
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/searchright-connectors/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/38-zktls-verifiable-live-execution/evidence.json"
+      ],
+      "open_gates": [
+        "Define TlsTranscriptCommitment and redacted header byte-range contracts in crates/evidence-search-contracts/src/lib.rs and crates/searchright-contracts/src/lib.rs with unit validation tests.",
+        "Implement PaginationCheckpoint, deterministic HTTP 429 Retry-After backoff, and duplicate-emission prevention on resume in crates/evidence-search-core/src/lib.rs.",
+        "Implement 4 KiB chunk SHA-256 Merkle root computation, secret-preserving byte redaction, and atomic checkpoint persistence in crates/searchright-connectors/src/lib.rs and crates/searchright-store/src/lib.rs.",
+        "Wire explicit LiveExecutionAuthorization and two-source PubMed + Europe PMC execution through crates/searchright/src/engine.rs, crates/searchright-cli/src/main.rs, and crates/searchright-mcp/src/lib.rs.",
+        "Implement offline .srpack zkTLS transcript Merkle verification in crates/searchright-provenance/src/lib.rs and record authorised redacted live receipts."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

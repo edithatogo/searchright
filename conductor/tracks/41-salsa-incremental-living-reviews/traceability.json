@@ -1,0 +1,161 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "41",
+  "title": "Demand-driven incremental living review computation",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/41-salsa-incremental-living-reviews/spec.md#scope",
+  "claim_boundary": "Source-verified specification and granular execution playbook only; demand-driven memoized DAG evaluation and bisimulation equivalence proofs remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T41-A001",
+      "statement": "Fine-grained dependency graph nodes and content-addressed revision fingerprints across observations, deduplication clusters, screening criteria, studies and PRISMA counts",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-prisma/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/evidence.json"
+      ],
+      "open_gates": [
+        "Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.",
+        "Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.",
+        "Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T41-A002",
+      "statement": "Demand-driven memoization and early-cutoff propagation skipping downstream recomputation when an intermediate node's output digest is unchanged",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-prisma/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/evidence.json"
+      ],
+      "open_gates": [
+        "Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.",
+        "Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.",
+        "Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T41-A003",
+      "statement": "Selective criterion-level invalidation on protocol amendments re-queueing only records whose decision depended on the modified eligibility criterion",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-prisma/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/evidence.json"
+      ],
+      "open_gates": [
+        "Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.",
+        "Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.",
+        "Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T41-A004",
+      "statement": "Incremental PRISMA 2020 and Living Systematic Review (LSR) delta ledger tracking added, merged, upgraded and invalidated records across update waves",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-prisma/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/evidence.json"
+      ],
+      "open_gates": [
+        "Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.",
+        "Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.",
+        "Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T41-A005",
+      "statement": "Deterministic bisimulation test harness proving bit-for-bit state identity between incremental update sequences and full from-scratch replay",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-study/src/lib.rs",
+        "crates/searchright-prisma/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/41-salsa-incremental-living-reviews/evidence.json"
+      ],
+      "open_gates": [
+        "Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.",
+        "Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.",
+        "Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}
