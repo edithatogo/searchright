@@ -82,8 +82,8 @@ thiserror = "2.0"
 time = { version = "0.3.55", features = ["formatting", "parsing", "serde", "macros"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "sync", "time", "io-std", "fs", "net", "process", "test-util"] }
 tokio-util = "0.7"
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter", "fmt", "json"] }
 url = { version = "2.5", features = ["serde"] }
 uuid = { version = "1.18", features = ["serde", "v7"] }
 
