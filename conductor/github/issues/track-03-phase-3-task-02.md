@@ -3,11 +3,11 @@
 
 Parent phase key: `track-03-phase-3`
 Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.
+- [x] Validate a revision-pinned provider/fixture/case/dimension execution matrix and run old/new Sourceright fixtures downstream; the v1 dimension-summary readiness flag is not complete execution evidence or cutover authority.
 
 ## Completion and evidence contract
 

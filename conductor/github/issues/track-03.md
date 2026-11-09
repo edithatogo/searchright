@@ -12,9 +12,9 @@ Centralise bounded provider execution, caching, receipts and policy while prepar
 ## Contract
 
 - Horizon: `foundation`
-- Status: `integration_prepared`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `01, 02`
 - Requirements: `SR-008, SR-009, SR-010, SR-011`
 - External approval required: `false`

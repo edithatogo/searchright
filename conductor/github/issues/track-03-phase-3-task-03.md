@@ -3,11 +3,11 @@
 
 Parent phase key: `track-03-phase-3`
 Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
+- [x] Complete feature-gated Sourceright cutover, semver review and rollback exercise.
 
 ## Completion and evidence contract
 

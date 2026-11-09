@@ -3,11 +3,11 @@
 
 Parent phase key: `track-03-phase-3`
 Conductor plan: `conductor/tracks/03-shared-provider-runtime/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
+- [x] Obtain exact-revision compiler CI and deterministic transport-level adversarial evidence for DNS pinning, proxy suppression, redirects and response bounds before closing H-002.
 
 ## Completion and evidence contract
 
