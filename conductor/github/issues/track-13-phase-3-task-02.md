@@ -3,11 +3,11 @@
 
 Parent phase key: `track-13-phase-3`
 Conductor plan: `conductor/tracks/13-integration-passports-github-context/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Execute consumer-driven contract tests in each pinned downstream repository.
+- [x] Execute consumer-driven contract tests in each pinned downstream repository.
 
 ## Completion and evidence contract
 

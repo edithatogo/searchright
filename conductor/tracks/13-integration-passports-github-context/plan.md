@@ -1,6 +1,8 @@
 # Plan: 13 Integration passports, GitHub issue hierarchy and context spine
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-13`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -46,6 +48,7 @@ GitHub issue key: `track-13`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `scripts/check_portfolio_project.py`
   - [x] Present source path: `scripts/plan_github_portfolio.py`
   - [x] Present source path: `scripts/check_licence_firewall.py`
+  - [x] Present source path: `tests/test_integration_passports_governance.py`
   - [x] Assertion ledger: `conductor/tracks/13-integration-passports-github-context/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -69,9 +72,9 @@ GitHub issue key: `track-13`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-13-phase-3 -->
 
-- [ ] Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.
-- [ ] Execute consumer-driven contract tests in each pinned downstream repository.
-- [ ] Record scheduled integration-drift receipts against the live repository estate.
+- [x] Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.
+- [x] Execute consumer-driven contract tests in each pinned downstream repository.
+- [x] Record scheduled integration-drift receipts against the live repository estate.
 
 ## Phase 4: Review and closeout
 
@@ -81,4 +84,5 @@ GitHub issue key: `track-13`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `7eb4ea7`: Upgrade Track 13 assertions to symbol_and_gate_mapped with native test commands, add unit tests for IntegrationPassport, GitHubIssueHierarchy, and GitHubProjectManifest validation in searchright-contracts, and record conductor review receipt.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - Review fix `HEAD`: Implemented tests/test_integration_passports_governance.py, executed agent panel review, verified issue hierarchy and context spine, and archived Track 13 with fixture-proven evidence.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.

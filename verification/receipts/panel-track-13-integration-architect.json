@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "13",
+  "evaluator_role": "integration-architect",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "integration/passports/index.json",
+    "integration/consumer-contract-suite.json",
+    "scripts/check_integration_passports.py",
+    "scripts/check_consumer_contracts.py",
+    "tests/test_integration_passports_governance.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T13-IA-01",
+      "severity": "LOW",
+      "summary": "Integration passports index and consumer contract suite establish robust cross-crate and cross-repository boundaries.",
+      "evidence": "All passports validate against schema, and consumer contract suites maintain backwards-compatible interfaces.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Maintain automated drift checks across external companion packages."
+  ]
+}

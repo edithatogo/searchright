@@ -3,11 +3,11 @@
 
 Parent phase key: `track-13-phase-3`
 Conductor plan: `conductor/tracks/13-integration-passports-github-context/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Record scheduled integration-drift receipts against the live repository estate.
+- [x] Record scheduled integration-drift receipts against the live repository estate.
 
 ## Completion and evidence contract
 

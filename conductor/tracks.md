@@ -17,7 +17,6 @@ an explicit, approval-gated apply receipt exists.
 
 | ID | Track | Horizon | Status | Implementation | Evidence | Outcome |
 | --- | --- | --- | --- | --- | --- | --- |
-| 13 | [Integration passports, GitHub issue hierarchy and context spine](tracks/13-integration-passports-github-context/spec.md) | alpha | source_implemented | source_implemented | source_verified | Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy and agent context machine-readable and drift-checked. |
 | 14 | [Sourceright migration and shared releases](tracks/14-sourceright-migration/spec.md) | alpha | integration_prepared | partially_implemented | source_verified | Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics. |
 | 15 | [GitHub estate audit and custom-code replacement](tracks/15-estate-migration/spec.md) | alpha | partially_implemented | partially_implemented | source_verified | Identify and safely replace duplicate systematic-search code across the GitHub estate. |
 | 16 | [Maximal quality, context and security harness](tracks/16-quality-security-harness/spec.md) | alpha | source_implemented | source_implemented | source_verified | Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz and release evidence gates. |
@@ -42,6 +41,7 @@ GitHub projection keys. Archival never deletes or automatically archives remote 
 | 10 | [MCP stdio server MVP](tracks/10-mcp-mvp/spec.md) | 2026-08-30 | compiler_verified |
 | 11 | [Systematic-search agent skill and workflows](tracks/11-agentic-skill/spec.md) | 2026-11-09 | fixture_proven |
 | 12 | [CiteWeft scholarly extraction and document evidence](tracks/12-citeweft-document-evidence/spec.md) | 2026-11-09 | fixture_proven |
+| 13 | [Integration passports, GitHub issue hierarchy and context spine](tracks/13-integration-passports-github-context/spec.md) | 2026-11-09 | fixture_proven |
 | 17 | [Benchmarks, search validation and human calibration](tracks/17-benchmarks-calibration/spec.md) | 2026-11-08 | fixture_proven |
 | 18 | [Alpha release and distribution](tracks/18-alpha-release/spec.md) | 2026-11-08 | fixture_proven |
 | 19 | [Registries and scholarly publication](tracks/19-registries-publication/spec.md) | 2026-11-08 | fixture_proven |

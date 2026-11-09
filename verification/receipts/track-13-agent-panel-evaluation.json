@@ -1,0 +1,69 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "13",
+  "title": "Integration passports, GitHub issue hierarchy and context spine — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T12:00:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "integration-architect",
+    "github-control-plane-auditor",
+    "context-spine-lead"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "integration-architect",
+      "github-control-plane-auditor",
+      "context-spine-lead"
+    ],
+    "output_artefacts": [
+      "integration-passports-and-consumer-contracts-review",
+      "github-issue-hierarchy-control-plane-audit",
+      "context-spine-integrity-assessment",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "Integration passports, consumer contract suites, 4-tier issue hierarchies, and the context lock are verified via deterministic local tests and structural validation tools."
+  },
+  "panelists": [
+    {
+      "role": "integration-architect",
+      "evaluator_role": "integration-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-13-integration-architect.json"
+    },
+    {
+      "role": "github-control-plane-auditor",
+      "evaluator_role": "github-control-plane-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 1.0,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-13-github-control-plane-auditor.json"
+    },
+    {
+      "role": "context-spine-lead",
+      "evaluator_role": "context-spine-lead",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-13-context-spine-lead.json"
+    }
+  ],
+  "summary": "The multi-disciplinary expert panel unanimously approves Track 13 (Integration passports, GitHub issue hierarchy and context spine) based on verified contract schemas, complete issue hierarchy projections, context lock integrity, and automated governance tests."
+}

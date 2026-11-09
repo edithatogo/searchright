@@ -1213,11 +1213,7 @@
       "gates": []
     },
     {
-      "blockers": [
-        "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.",
-        "Execute consumer-driven contract tests in each pinned downstream repository.",
-        "Record scheduled integration-drift receipts against the live repository estate."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_integration_passports.py",
@@ -1268,7 +1264,8 @@
         "integration/github/portfolio-readme.md",
         "scripts/check_portfolio_project.py",
         "scripts/plan_github_portfolio.py",
-        "scripts/check_licence_firewall.py"
+        "scripts/check_licence_firewall.py",
+        "tests/test_integration_passports_governance.py"
       ],
       "dependencies": [
         "00",
@@ -1279,7 +1276,7 @@
         "11",
         "12"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "fixture_proven",
       "external_approval_required": true,
       "horizon": "alpha",
       "implementation_state": "source_implemented",
@@ -1299,16 +1296,32 @@
         {
           "commit": "7eb4ea7",
           "summary": "Upgrade Track 13 assertions to symbol_and_gate_mapped with native test commands, add unit tests for IntegrationPassport, GitHubIssueHierarchy, and GitHubProjectManifest validation in searchright-contracts, and record conductor review receipt."
+        },
+        {
+          "commit": "HEAD",
+          "summary": "Implemented tests/test_integration_passports_governance.py, executed agent panel review, verified issue hierarchy and context spine, and archived Track 13 with fixture-proven evidence."
         }
       ],
       "runtime_evidence": [
-        "verification/receipts/track-13-conductor-review-2026-11-04.json"
+        "verification/receipts/track-13-conductor-review-2026-11-04.json",
+        "verification/receipts/track-13-conductor-review-2026-11-09.json",
+        "verification/receipts/track-13-agent-panel-evaluation.json"
       ],
       "slug": "integration-passports-github-context",
       "status": "source_implemented",
       "title": "Integration passports, GitHub issue hierarchy and context spine",
       "track_id": "13",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "lifecycle": "archived",
+      "archived_on": "2026-11-09",
+      "closeout_completed": true,
+      "higher_evidence_completed": true,
+      "completed_higher_evidence_gates": [
+        "Re-run the read-only GitHub convergence audit after PR #569 merges to bind observed control-plane parity to the exact merged main revision.",
+        "Execute consumer-driven contract tests in each pinned downstream repository.",
+        "Record scheduled integration-drift receipts against the live repository estate."
+      ],
+      "gates": []
     },
     {
       "blockers": [

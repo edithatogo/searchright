@@ -14,7 +14,7 @@ Make repository boundaries, pinned compatibility, Conductor-to-GitHub hierarchy 
 - Horizon: `alpha`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `00, 01, 03, 09, 10, 11, 12`
 - Requirements: `SR-065, SR-066, SR-067, SR-070`
 - External approval required: `true`

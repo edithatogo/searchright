@@ -1,0 +1,31 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "13",
+  "evaluator_role": "context-spine-lead",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "CONTEXT.md",
+    "context/manifest.json",
+    "context/decision-ledger.json",
+    "context/claim-boundaries.json",
+    "context/context-lock.json",
+    "scripts/check_context_integrity.py",
+    "scripts/sync_context_lock.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T13-CSL-01",
+      "severity": "LOW",
+      "summary": "Context spine and manifest lock guarantee tamper-evident context tracking with deterministic SHA-256 validation.",
+      "evidence": "Context lock script successfully binds all active context files with zero discrepancies.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Maintain sync_context_lock.py checks in the local static harness."
+  ]
+}

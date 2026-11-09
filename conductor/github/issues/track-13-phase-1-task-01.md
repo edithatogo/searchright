@@ -45,6 +45,7 @@ Canonical task state: **source task complete**.
   - [x] Present source path: `scripts/check_portfolio_project.py`
   - [x] Present source path: `scripts/plan_github_portfolio.py`
   - [x] Present source path: `scripts/check_licence_firewall.py`
+  - [x] Present source path: `tests/test_integration_passports_governance.py`
   - [x] Assertion ledger: `conductor/tracks/13-integration-passports-github-context/traceability.json`
 
 ## Completion and evidence contract

@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "13",
+  "evaluator_role": "github-control-plane-auditor",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 1.0,
+  "verdict": "APPROVED",
+  "scope": [
+    "conductor/github/issue-hierarchy.json",
+    "conductor/github/README.md",
+    "scripts/render_github_issues.py",
+    "scripts/check_github_issue_hierarchy.py",
+    "scripts/sync_github_issues.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T13-GCA-01",
+      "severity": "LOW",
+      "summary": "GitHub issue hierarchy enforces strict 4-level nesting (epic -> track -> phase -> task) with zero structural drift.",
+      "evidence": "587 hierarchy nodes validate deterministically with full parent-child key integrity.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Keep dry-run-first invariant enforced for all external synchronisation runs."
+  ]
+}
