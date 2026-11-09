@@ -1,0 +1,22 @@
+{
+  "schema_version": "org.searchright.publication-contract.v1",
+  "publication_id": "R7-primary",
+  "protocol_id": "R7",
+  "protocol_version": "0.1.0",
+  "status": "draft",
+  "article_type": "Methods/metaresearch article; final category subject to journal verification.",
+  "target_journals": ["Journal of Clinical Epidemiology", "Journal of the Medical Library Association", "Research Synthesis Methods"],
+  "journal_requirements_status": "must_verify_before_submission",
+  "core_contribution": "How often are published searches reconstructable, and how much retrieval and downstream variation is attributable to missing or ambiguous reporting?",
+  "required_tables": ["Sampling and source/consumer version matrix", "Primary outcomes with denominator, uncertainty and missingness", "Error taxonomy, unsupported cases and negative results", "Time/resource/rights limitations"],
+  "required_figures": ["Workflow with explicit ownership and evidence boundaries", "Paired or stratified primary-effect display with uncertainty"],
+  "required_supplements": ["Frozen protocol and amendments", "Permitted source/record inventories or reference-only manifests", "Analysis code and locked environments", "Canonical references.csl.json and provenance sidecars", "Claim-to-output map and independent replay instructions"],
+  "permitted_claims_after_evidence": ["Only the preregistered capability/domain-specific findings supported by executed results.", "Distinguish internal conformance from real consumer, live source and independent methodological evidence."],
+  "prohibited_claims": ["Universal whole-literature recall", "A checksum is an authenticity proof", "Reporting incompleteness establishes misconduct", "Internal agent review is independent external validation", "Unqualified beyond-frontier or production-ready claims"],
+  "results_evidence": [],
+  "reporting_profiles": ["PRISMA-S where search reporting applies", "STROBE-informed cross-sectional reporting where applicable; not a claim of a prescribed checklist for every design", "Journal-specific requirements verified before submission"],
+  "authorship_policy": "Use accountable human authors and contribution statements; agree roles prospectively, retain conflicts and AI/tool disclosures; no guaranteed or honorary authorship.",
+  "overlap_policy": "One primary methods paper per genuinely distinct question. Reused corpora/methods are cited and overlapping analyses disclosed; combine studies rather than split minimally different results.",
+  "release_policy": "Every table, figure and numerical claim links to a protocol version, dataset revision, run and result artifact. A new analysis changes the result revision and regenerates dependent manuscript objects. Publication/submission needs explicit human approval.",
+  "canonical_references": "research/references.csl.json"
+}
