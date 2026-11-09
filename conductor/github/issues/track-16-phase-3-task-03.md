@@ -3,11 +3,11 @@
 
 Parent phase key: `track-16-phase-3`
 Conductor plan: `conductor/tracks/16-quality-security-harness/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.
+- [x] Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.
 
 ## Completion and evidence contract
 

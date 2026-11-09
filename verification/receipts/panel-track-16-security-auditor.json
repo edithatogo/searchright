@@ -1,0 +1,30 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "16",
+  "evaluator_role": "security-auditor",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "scripts/check_secrets.py",
+    "scripts/check_default_deny.py",
+    "scripts/check_workflow_hardening.py",
+    "scripts/check_cargo_vet_governance.py",
+    "docs/security/threat-model.md",
+    "policy/redaction-profile.json"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T16-SA-01",
+      "severity": "LOW",
+      "summary": "Security controls enforce default-deny isolation, secret scanning, GHA workflow hardening, and supply chain review governance.",
+      "evidence": "Deterministic security checks pass across the repository without finding leaks or unsanctioned permissions.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Continue tracking upstream advisory notices in cargo-vet governance."
+  ]
+}

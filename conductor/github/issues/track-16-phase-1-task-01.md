@@ -59,6 +59,7 @@ Canonical task state: **source task complete**.
   - [x] Present source path: `scripts/check_cargo_vet_governance.py`
   - [x] Present source path: `supply-chain/exemption-proposals.json`
   - [x] Present source path: `verification/receipts/track-16-hosted-pr-560c78c.json`
+  - [x] Present source path: `tests/test_quality_security_harness_governance.py`
   - [x] Assertion ledger: `conductor/tracks/16-quality-security-harness/traceability.json`
 
 ## Completion and evidence contract

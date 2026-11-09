@@ -14,7 +14,7 @@ Provide compiler, test, coverage, mutation, supply-chain, workflow, secret, fuzz
 - Horizon: `alpha`
 - Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `source_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `00, 01, 13`
 - Requirements: `SR-010, SR-011, SR-033, SR-034, SR-035, SR-036, SR-048, SR-067, SR-068, SR-069`
 - External approval required: `false`

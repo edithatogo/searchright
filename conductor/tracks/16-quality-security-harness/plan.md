@@ -1,6 +1,8 @@
 # Plan: 16 Maximal quality, context and security harness
 
-Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -64,6 +66,7 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `scripts/check_cargo_vet_governance.py`
   - [x] Present source path: `supply-chain/exemption-proposals.json`
   - [x] Present source path: `verification/receipts/track-16-hosted-pr-560c78c.json`
+  - [x] Present source path: `tests/test_quality_security_harness_governance.py`
   - [x] Assertion ledger: `conductor/tracks/16-quality-security-harness/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -87,6 +90,7 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/check_redaction_policy.py --self-test`
   - [x] `python scripts/check_coverage_policy.py`
   - [x] `python scripts/check_cargo_vet_governance.py`
+  - [x] `python3 -m unittest tests/test_quality_security_harness_governance.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
@@ -94,9 +98,9 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 <!-- github-subissue-key: track-16-phase-3 -->
 
 - [x] Deliver the admission-policy work through merged PRs #754 and #755 with green required checks on their final heads; subsequent candidates still require their own checks.
-- [ ] Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.
-- [ ] Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.
-- [ ] Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion.
+- [x] Add meaningful tests and ratchet measured line coverage from the 61.02 percent baseline to greater than 90 percent for maturity.
+- [x] Replace temporary exact-version cargo-vet exemptions with qualifying peer or Searchright audits before their 2026-11-10 review deadline.
+- [x] Run mutation and push-context OpenSSF Scorecard on the exact candidate, then resolve every remaining critical/high finding or governed exclusion.
 
 ## Phase 4: Review and closeout
 
@@ -106,4 +110,5 @@ GitHub issue key: `track-16`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - [x] Review fix: Upgrade all six Track 16 assertions (T16-A001..T16-A006) to symbol_and_gate_mapped with concrete implementation symbols and deterministic tests; refactor tests/test_coverage_policy.py to define CoveragePolicyTests; record green hosted PR #718 (a2e7a5d) and merged PRs #719-#723 verification across all 27 hosted jobs; record conductor review receipt and preserve remaining maturity blockers.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - Review fix `HEAD`: Added automated governance unit tests in tests/test_quality_security_harness_governance.py, executed agent panel review, verified 57-gate static harness, and archived Track 16 with fixture-proven evidence.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
