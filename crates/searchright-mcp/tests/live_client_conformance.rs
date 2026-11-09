@@ -9,7 +9,7 @@
 use rmcp::{
     ClientLifecycleMode, ClientServiceExt, ServiceExt,
     model::{
-        CallToolRequestParams, CallToolResponse, ClientCapabilities, ClientInfo, Implementation,
+        CallToolRequestParams, CallToolResponse, ClientCapabilities, ClientConfig, Implementation,
         JsonObject, ProtocolVersion,
     },
     service::RoleClient,
@@ -23,7 +23,7 @@ use std::{
 };
 use tokio::process::{ChildStdin, ChildStdout, Command};
 
-type ClientService = rmcp::service::RunningService<RoleClient, ClientInfo>;
+type ClientService = rmcp::service::RunningService<RoleClient, ClientConfig>;
 type ChildTransport = (ChildStdout, ChildStdin);
 
 fn child_transport() -> anyhow::Result<ChildTransport> {
@@ -54,7 +54,7 @@ fn child_transport() -> anyhow::Result<ChildTransport> {
 }
 
 async fn serve_current_client() -> anyhow::Result<ClientService> {
-    let client = ClientInfo::new(
+    let client = ClientConfig::new(
         ClientCapabilities::default(),
         Implementation::new("searchright-track10-current", "1.0.0"),
     )
@@ -69,7 +69,7 @@ async fn serve_current_client() -> anyhow::Result<ClientService> {
 }
 
 async fn serve_previous_client() -> anyhow::Result<ClientService> {
-    let client = ClientInfo::new(
+    let client = ClientConfig::new(
         ClientCapabilities::default(),
         Implementation::new("searchright-track10-previous", "1.0.0"),
     )

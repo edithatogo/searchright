@@ -39,8 +39,8 @@ f899d720ed6467bafb457cff0eb078383dbc7d3ef74b054ad4c11e0b19ccc4fc  ./CODEX_HANDOF
 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
 a4c85be1e44f9b9ce9e3c9d0dec7fb8b80910779adddcd63df504d576f183867  ./CONTEXT.md
 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
-fe40603c1cb1204a93e8ee44d9e5f8c11ec51043935b7e44d85fbfeb2ff84e79  ./Cargo.lock
-b12752092f361e188eb1c818b5f7fc9a8c5a3b027a2166bf9b5fad133ded2002  ./Cargo.toml
+8a2feb8de048e0e4e2f55258fa3638c7b046274c3d607fb2b2bd3a0c6c6a17a5  ./Cargo.lock
+3797c2e9153b95e2d90a32427b0a0b82f812e31423a11f99d62d74f1ff07622b  ./Cargo.toml
 94699f8b682f547d0e7cdfb024227d98391ef383b1f11fc3cd7417e7afdc2313  ./Dockerfile
 578a4b18c4f2cb587a64af04b36d81ca8fdb30eb63de45233728adf4cd2c7bdf  ./GEMINI.md
 e80ed3e27f0f4e6c140a76d8e77192856f0d9906a1af13e53f0fe01c63d3277b  ./GOVERNANCE.md
@@ -998,7 +998,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 49a1c1e7898c99cf28469b17e73aca05c551dc07d93e6b26df727130b53e917f  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 ea461f3d2faa8ecf59c16e4f911ff3123ab2d8767215060b1e467638a38894e2  ./context/claim-boundaries.json
-196bc9154d4b4bce5578e3825c51fb0a47f7ab79b5e600a8b3bfa648dd334ecf  ./context/context-lock.json
+26d95dceb1f556b18ef2daa41e82d8f9f2216ecebe853176ce1b7728d85f5f96  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
@@ -1324,13 +1324,13 @@ d6f7d6ff9f5c0a533875aea45de50d0b974faf8044d0e7c0253a507a3194bd6c  ./crates/searc
 f492b560eb4132d643d8eefa32c694bf4ca0500932cd6cf25a5ed8507353b5e6  ./crates/searchright-mcp/Cargo.toml
 fbc8228717db086f4d7b07fb97fb2d2597ec331e956c5d284cdfc9752f620686  ./crates/searchright-mcp/src/bin/searchright-mcp-http.rs
 0bb9c244ad8479f626119793a2979b503ab161fd246d831337b246e3220b3b59  ./crates/searchright-mcp/src/effect_policy.rs
-82297a83873ff9bfec97615f3faec29719f012de83c3a4334956e9eed004b937  ./crates/searchright-mcp/src/lib.rs
+b625cea6752a4ee740a1b035898da56a3b0f6f3e8a875d5fbd921d668dc96c2d  ./crates/searchright-mcp/src/lib.rs
 866b71a08e589b44b2265f0f95481d0a6f9c3cea456d0ed941b3377178ff4734  ./crates/searchright-mcp/src/main.rs
 2913ed7f5512a026e323e7cb2b25713fa7a2321aef024ca55cd921565e5cbd89  ./crates/searchright-mcp/src/remote.rs
-f55859ed5d2459cd1786bfe6cb86b8f25a864678f7731a8cda874e18011d5de9  ./crates/searchright-mcp/tests/advanced_mcp.rs
+01869372dc68d17bae4bd2fd981384c3b642afa0e1077b2dae37cbaaa8ebb3c3  ./crates/searchright-mcp/tests/advanced_mcp.rs
 f20a78107cb99c6de57d27c57aaf24ed79b6ceed07117041fc70b8ac82c1fcc0  ./crates/searchright-mcp/tests/fixtures/remote-mcp-jwks.json
 98235d7b68dfd3d30859b269e740dc28b3c49dceba4fceb588e13a8aeb1e8171  ./crates/searchright-mcp/tests/fixtures/remote-mcp-private.der.b64
-9547895d51163e86f83c3f29f888a3bd8a72d39ac678aa8461d937dd1fc1185f  ./crates/searchright-mcp/tests/live_client_conformance.rs
+e468015054f1d94daa49d7c2b4502503fb4598a1cbb5082f1fe6fd36a282eaed  ./crates/searchright-mcp/tests/live_client_conformance.rs
 279a68319858f647f450e3b8a9f75656438c6a78586898fb700722fdf2dfd23b  ./crates/searchright-ops/Cargo.toml
 227c977c2d7446ce8ac81a91383f3f0788813fde02a03e8511bf58ee0c340e8c  ./crates/searchright-ops/src/lib.rs
 27a95cc701c33bb3191cfad06c4e5900242688b3532b0ba426ed3e53eba531e0  ./crates/searchright-ops/tests/policy_failure_injection.rs
@@ -1464,6 +1464,7 @@ acceca4ad9d544627ae0200c0e522ee1611a67973fb5a55e6ffc2e2ee273498e  ./docs/screeni
 f6b904d27f505877cd4cf88359b4a96734ecba96e7db569629a56594c9981a68  ./docs/security/cargo-vet-governance.md
 a1e8fd4d94e76048d8dbbdd90396512562c8ecca67812e2ee23ae2246d68d8ac  ./docs/security/egress-policy.md
 c59bc292d8b8d896738a7a75517d281b85c91fdad33ace0a29f422f24fc03e48  ./docs/security/redaction-and-data-minimisation.md
+fb05da51497e9c1a8bb98bdaf8b3937db7cb4007e9afa9a5c2edc60950cd5e5a  ./docs/security/rmcp-3.9.0-source-review.md
 2dd364a23999902f3fe1b32ca6e54dc7b2e2eea4de54959f8efd3e03982892bf  ./docs/security/supply-chain.md
 97c5704fb0383413b32afa3ec958cd99125406ef5923686ee0a12e0e1e6e55c0  ./docs/security/threat-model.md
 ea9217435e4eed9e13f752be622b312e3cefcc2e63ecaa6db5bf49c51e0995e9  ./docs/standardflow-integration.md
@@ -1489,7 +1490,7 @@ b94072bbef10f275807d605ca8e3cfbcddf5a88f57fb578c1499e0ab748418d9  ./fuzz/fuzz_ta
 0d94df3f1d68e191367f594be2e5634412766df470584ceaa5b73cbdabe36958  ./glama.json
 9d84ebd000d5698c3fbbe9149019981d7005a19a3de44422fbfa3e550b1322ad  ./integration/citeweft-compatibility.json
 a2a655d966ac9b237793c837d9f0f97ea012db7219e4434513e7c6299d440050  ./integration/consumer-contract-suite.json
-4224d2301b96c372ec396e46d98505a4b6f5d683679cb9b1bde1463008c886d7  ./integration/ecosystem-lock.json
+a6e0bf34e58adcfd6d6bd4137cc2d55212d9d7946b1504888579c134fb2d0915  ./integration/ecosystem-lock.json
 7ebe29e421ab0f9dadbe845a966089cb09cde97cd998213af73789028669810f  ./integration/fixtures/prisma-jl/flow-parity-v1.json
 6841b0d9cea51e5319b20d259d33ba9b9649283847a423e35ca5a8092344e3d0  ./integration/fixtures/standardflow-review-flow-evidence.json
 e98f74fca744bb3cf7874f78b2aadb6c9329f6b2b8bcba32706169ef444f2b9c  ./integration/github/portfolio-project.json
@@ -1681,7 +1682,7 @@ fce023a851c56dc92750237fcf5631d112a4a92bc87aa151ff6e128804761ee9  ./skills/syste
 05dfa9b9e0364eeee96f3ca32d1f93540ddcb8796c981699e4105e758b5d0480  ./skills/systematic-search/references/tool-map.md
 ffa3116397f555294b1773519c24be879318001a0e50ddd5f0f16813fc7864fb  ./skills/systematic-search/workflows/systematic-review.yaml
 b7c5338dd5e4e7b610c66f1d1172a0890e5f75de24e8ae199edb12b4802d636d  ./supply-chain/README.md
-bb3ad09b5315e8491612502f3927c1c74cdc43656ab2512cef23f6115e9126c7  ./supply-chain/audits.toml
+7befe23277c12087b4d23889e5dde69c78d3346a2ba5edda7fcc3bde7e1a6ba3  ./supply-chain/audits.toml
 57c4ca7f3cfa0999b924269ee48b8af1e4d211e2d44633535fb7750d46f8de36  ./supply-chain/config.toml
 98fbcc844c8d456c8d48fff348a6a4e60d2263888321ba1c49d171a076c9ccdb  ./supply-chain/exemption-proposal.schema.json
 d3819ee4aaa31ecae85f9691424b5f1f44f1b44ff1202179eef355561c957b95  ./supply-chain/exemption-proposals.json
@@ -2694,7 +2695,7 @@ b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48  ./verification
 7602b331629a6d0f7e3352005c30b449b27358b76c42efa0281ef7bbc746ff06  ./verification/reviews/track-16-rustls-native-certs-0.8.4/security_safety.md
 0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22  ./verification/reviews/track-16-rustls-native-certs-0.8.4/source-manifest.json
 3c80d96641b9cb0c62ab8911e670058ccae332cf22a3231c180dd7bc26c45a9a  ./verification/reviews/track-16-rustls-native-certs-0.8.4/testing.md
-8d63e2f9e8e13b0adb7f668284812bd8657a3568a05c290bed8d74c1c7ca31cf  ./verification/sbom/source-components.cdx.json
+99aabe01beb379bfb1ead22e0d7631e9eaa16a4383fa0d6ac0286cfe3114ab31  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json
