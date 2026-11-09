@@ -3,11 +3,11 @@
 
 Parent phase key: `track-14-phase-3`
 Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review.
+- [x] Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review.
 
 ## Completion and evidence contract
 

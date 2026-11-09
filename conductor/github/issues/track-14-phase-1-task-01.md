@@ -3,11 +3,11 @@
 
 Parent phase key: `track-14-phase-1`
 Conductor plan: `conductor/tracks/14-sourceright-migration/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `migration/sourceright/README.md`
   - [x] Present source path: `migration/sourceright/replacement-map.yaml`
   - [x] Present source path: `migration/sourceright/parity-cases.json`
@@ -15,6 +15,7 @@ Canonical task state: **open evidence or implementation task**.
   - [x] Present source path: `scripts/check_sourceright_migration.py`
   - [x] Present source path: `migration/companion-repositories/sourceright.json`
   - [x] Present source path: `docs/integration-architecture.md`
+  - [x] Present source path: `tests/test_sourceright_migration_governance.py`
   - [x] Assertion ledger: `conductor/tracks/14-sourceright-migration/traceability.json`
 
 ## Completion and evidence contract

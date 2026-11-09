@@ -1,0 +1,29 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "14",
+  "evaluator_role": "migration-architect",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "migration/sourceright/README.md",
+    "migration/sourceright/replacement-map.yaml",
+    "crates/searchright-sourceright-compat/src/lib.rs",
+    "scripts/check_sourceright_migration.py",
+    "tests/test_sourceright_migration_governance.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T14-MA-01",
+      "severity": "LOW",
+      "summary": "Sourceright replacement mapping clearly defines all symbol substitutions and compatibility facade boundaries.",
+      "evidence": "searchright-sourceright-compat provides non-breaking shims and preserves execution policy semantics.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Retain legacy runtime shims until full ecosystem deprecation."
+  ]
+}

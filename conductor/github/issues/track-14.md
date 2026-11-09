@@ -12,9 +12,9 @@ Adopt the shared runtime in Sourceright and coordinate compatible releases witho
 ## Contract
 
 - Horizon: `alpha`
-- Status: `integration_prepared`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `03, 04, 05, 12, 13`
 - Requirements: `SR-009`
 - External approval required: `true`

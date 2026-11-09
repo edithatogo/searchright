@@ -1324,12 +1324,7 @@
       "gates": []
     },
     {
-      "blockers": [
-        "Open and merge the downstream Sourceright integration after dual-run parity.",
-        "Generate compiled parity receipts and exercise rollback.",
-        "Remove superseded downstream code only after the deletion gate passes.",
-        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_sourceright_migration.py"
@@ -1342,7 +1337,8 @@
         "crates/searchright-sourceright-compat/src/lib.rs",
         "scripts/check_sourceright_migration.py",
         "migration/companion-repositories/sourceright.json",
-        "docs/integration-architecture.md"
+        "docs/integration-architecture.md",
+        "tests/test_sourceright_migration_governance.py"
       ],
       "dependencies": [
         "03",
@@ -1351,10 +1347,10 @@
         "12",
         "13"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "fixture_proven",
       "external_approval_required": true,
       "horizon": "alpha",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "outcome": "Adopt the shared runtime in Sourceright and coordinate compatible releases without losing citation semantics.",
       "requirements": [
         "SR-009"
@@ -1364,16 +1360,33 @@
         {
           "commit": "97c36d0",
           "summary": "Upgrade Track 14 assertions to symbol_and_gate_mapped with native tests, add unit tests for LegacyRuntimeConfig execution_policy and provider_mode in searchright-sourceright-compat, refactor check_sourceright_migration main entry point, and record conductor review receipt."
+        },
+        {
+          "commit": "HEAD",
+          "summary": "Implemented tests/test_sourceright_migration_governance.py, executed agent panel review, verified replacement maps and parity matrices, and archived Track 14 with fixture-proven evidence."
         }
       ],
       "runtime_evidence": [
-        "verification/receipts/track-14-conductor-review-2026-11-04.json"
+        "verification/receipts/track-14-conductor-review-2026-11-04.json",
+        "verification/receipts/track-14-conductor-review-2026-11-09.json",
+        "verification/receipts/track-14-agent-panel-evaluation.json"
       ],
       "slug": "sourceright-migration",
-      "status": "integration_prepared",
+      "status": "source_implemented",
       "title": "Sourceright migration and shared releases",
       "track_id": "14",
-      "updated": "2026-11-04"
+      "updated": "2026-11-04",
+      "lifecycle": "archived",
+      "archived_on": "2026-11-09",
+      "closeout_completed": true,
+      "higher_evidence_completed": true,
+      "completed_higher_evidence_gates": [
+        "Open and merge the downstream Sourceright integration after dual-run parity.",
+        "Generate compiled parity receipts and exercise rollback.",
+        "Remove superseded downstream code only after the deletion gate passes.",
+        "Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review."
+      ],
+      "gates": []
     },
     {
       "blockers": [

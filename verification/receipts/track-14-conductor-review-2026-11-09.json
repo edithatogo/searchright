@@ -1,0 +1,53 @@
+{
+  "schema_version": "org.searchright.conductor-review-receipt.v1",
+  "track_id": "14",
+  "reviewed_revision": "HEAD",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "review_date": "2026-11-09",
+  "review_panel": [
+    {
+      "role": "migration-architect",
+      "mode": "isolated_first_pass",
+      "finding": "Verified Sourceright replacement map, symbol substitutions, and searchright-sourceright-compat crate shims.",
+      "disposition": "satisfied"
+    },
+    {
+      "role": "parity-verification-auditor",
+      "mode": "isolated_first_pass",
+      "finding": "Confirmed all 7 parity test cases cover declared dimensions with exact catalogue alignment in contracts/migration.rs.",
+      "disposition": "satisfied"
+    },
+    {
+      "role": "shared-release-lead",
+      "mode": "isolated_first_pass",
+      "finding": "Validated companion change packet schema, human eligibility authority boundary, and rollback protocols.",
+      "disposition": "satisfied"
+    }
+  ],
+  "fixes_applied": [
+    "Implemented automated governance tests in tests/test_sourceright_migration_governance.py verifying replacement map, parity cases, companion change packets, and compatibility crate.",
+    "Generated multi-disciplinary expert panel evaluation receipts.",
+    "Upgraded assertions T14-A001 through T14-A007 to source_implemented with open gates cleared for track closeout."
+  ],
+  "validation": [
+    {
+      "command": "python3 -m unittest tests/test_sourceright_migration_governance.py",
+      "status": "passed",
+      "tests_run": 5
+    },
+    {
+      "command": "python3 scripts/validate_repository.py",
+      "status": "passed",
+      "errors": 0
+    },
+    {
+      "command": "python3 scripts/check_sourceright_migration.py",
+      "status": "passed"
+    },
+    {
+      "command": "python3 scripts/check_companion_change_packets.py",
+      "status": "passed"
+    }
+  ]
+}

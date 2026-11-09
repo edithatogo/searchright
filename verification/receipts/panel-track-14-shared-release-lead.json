@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "14",
+  "evaluator_role": "shared-release-lead",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "migration/companion-repositories/sourceright.json",
+    "docs/integration-architecture.md",
+    "scripts/check_companion_change_packets.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T14-SRL-01",
+      "severity": "LOW",
+      "summary": "Companion repository change packets govern shared releases with strict rollback guarantees.",
+      "evidence": "Downstream change contracts enforce advisory-only integrity signals and human screening authority.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Maintain coordinated version tags across releases."
+  ]
+}

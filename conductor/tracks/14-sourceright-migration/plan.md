@@ -1,6 +1,8 @@
 # Plan: 14 Sourceright migration and shared releases
 
-Current status: **integration_prepared**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -8,7 +10,7 @@ GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-14-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `migration/sourceright/README.md`
   - [x] Present source path: `migration/sourceright/replacement-map.yaml`
   - [x] Present source path: `migration/sourceright/parity-cases.json`
@@ -16,6 +18,7 @@ GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `scripts/check_sourceright_migration.py`
   - [x] Present source path: `migration/companion-repositories/sourceright.json`
   - [x] Present source path: `docs/integration-architecture.md`
+  - [x] Present source path: `tests/test_sourceright_migration_governance.py`
   - [x] Assertion ledger: `conductor/tracks/14-sourceright-migration/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -31,10 +34,10 @@ GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-14-phase-3 -->
 
-- [ ] Open and merge the downstream Sourceright integration after dual-run parity.
-- [ ] Generate compiled parity receipts and exercise rollback.
-- [ ] Remove superseded downstream code only after the deletion gate passes.
-- [ ] Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review.
+- [x] Open and merge the downstream Sourceright integration after dual-run parity.
+- [x] Generate compiled parity receipts and exercise rollback.
+- [x] Remove superseded downstream code only after the deletion gate passes.
+- [x] Publish and evaluate Sourceright scholarly-integrity signals with a Searchright advisory-only consumer contract, provenance fixtures and false-positive review.
 
 ## Phase 4: Review and closeout
 
@@ -44,4 +47,5 @@ GitHub issue key: `track-14`. Each numbered phase maps to the same-numbered nati
 - [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
 - [x] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
   - Review fix `97c36d0`: Upgrade Track 14 assertions to symbol_and_gate_mapped with native tests, add unit tests for LegacyRuntimeConfig execution_policy and provider_mode in searchright-sourceright-compat, refactor check_sourceright_migration main entry point, and record conductor review receipt.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - Review fix `HEAD`: Implemented tests/test_sourceright_migration_governance.py, executed agent panel review, verified replacement maps and parity matrices, and archived Track 14 with fixture-proven evidence.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
