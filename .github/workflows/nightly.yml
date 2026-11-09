@@ -23,7 +23,9 @@ jobs:
       - name: Install cargo-mutants
         run: cargo install cargo-mutants --version 27.1.0 --locked
       - name: Run bounded mutation suite
-        run: cargo mutants --workspace --timeout 120 --jobs 2 --output target/mutants
+        run: |
+          mkdir -p target
+          cargo mutants --workspace --timeout 120 --jobs 2 --output target/mutants
       - name: Preserve mutation evidence
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

@@ -43,6 +43,9 @@ jobs:
           persist-credentials: false
       - name: Install Rust
         run: rustup toolchain install 1.97.1 --profile minimal
+      - name: Fetch the committed dependency graph
+        # Reject manifest/lock drift before policy tools can resolve another graph.
+        run: cargo fetch --locked
       - name: Identify security-tool cache environment
         id: security-tools-environment
         run: |
@@ -106,7 +109,6 @@ jobs:
       - name: Validate cargo-vet trust governance
         run: |
           python scripts/test_cargo_vet_governance.py
-          cargo fetch --locked
           python scripts/check_cargo_vet_governance.py
       - name: Enforce trusted dependency audit policy
         run: CARGO="$(command -v cargo)" "$SEARCHRIGHT_TOOL_ROOT/bin/cargo-vet" vet --locked --no-minimize-exemptions
