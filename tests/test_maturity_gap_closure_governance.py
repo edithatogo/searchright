@@ -50,7 +50,12 @@ class MaturityGapClosureGovernanceTests(unittest.TestCase):
 
     def test_evidence_debt_reconciles_complete_assertion_inventory(self) -> None:
         self.assertEqual(self.debt["schema_version"], "org.searchright.evidence-debt.v1")
-        self.assertEqual(self.debt["assertions"]["total"], 200)
+        observed = sum(
+            len(json.loads(path.read_text(encoding="utf-8"))["assertions"])
+            for path in sorted((ROOT / "conductor" / "tracks").glob("*/traceability.json"))
+        )
+        self.assertGreater(observed, 0)
+        self.assertEqual(self.debt["assertions"]["total"], observed)
         self.assertGreaterEqual(len(self.debt["maturity"]["critical_blockers"]), 10)
 
     def test_gate_catalog_has_bounded_harness_matrix(self) -> None:
