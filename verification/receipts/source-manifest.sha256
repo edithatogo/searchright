@@ -39,8 +39,8 @@ f899d720ed6467bafb457cff0eb078383dbc7d3ef74b054ad4c11e0b19ccc4fc  ./CODEX_HANDOF
 351060d7767cbc42843c916eb98d1e72a2cc5917a11141012d5fd6305fb850cb  ./CODE_OF_CONDUCT.md
 a4c85be1e44f9b9ce9e3c9d0dec7fb8b80910779adddcd63df504d576f183867  ./CONTEXT.md
 9b5b27869e89bb695a1d0d236df8f7f006ee31840a690e643ab08a6536e868f9  ./CONTRIBUTING.md
-07cda5423ef908fc190e72226f441ea485d23c4b6dc81e9276fe377d475c832d  ./Cargo.lock
-3ec959d39801684d7685af26e29ac9431e85ee91ed8c195fa071abea46474e73  ./Cargo.toml
+fe40603c1cb1204a93e8ee44d9e5f8c11ec51043935b7e44d85fbfeb2ff84e79  ./Cargo.lock
+b12752092f361e188eb1c818b5f7fc9a8c5a3b027a2166bf9b5fad133ded2002  ./Cargo.toml
 94699f8b682f547d0e7cdfb024227d98391ef383b1f11fc3cd7417e7afdc2313  ./Dockerfile
 578a4b18c4f2cb587a64af04b36d81ca8fdb30eb63de45233728adf4cd2c7bdf  ./GEMINI.md
 e80ed3e27f0f4e6c140a76d8e77192856f0d9906a1af13e53f0fe01c63d3277b  ./GOVERNANCE.md
@@ -1621,8 +1621,8 @@ d80786caa7aae45739a898a198145c742223353fdf0a556cd44e51d687b93d6e  ./tests/test_s
 e4c6048b261082661cd7f94445fff7695bf731273ca884155e297daec4441f5d  ./tests/test_track_archival.py
 3d40e75bcbbe700ef0de82282ae37d55ff8b6169d0249c7d566e93e689144074  ./tests/test_wasi_http_scale_governance.py
 4aadcb49a899ade93825544e752212623674c8af567e0c4559cefb5333a5b96e  ./third_party/noyalib/.cargo_vcs_info.json
-e964377c3a040248c137989c53734cfda42b751726d5354fa4421520a8a4897d  ./third_party/noyalib/Cargo.lock
-6b0665d9b0753429a5d2346cc177c0144c4e39944c66fb0ce5ace1f00547737d  ./third_party/noyalib/Cargo.toml
+1467017dc3de3cd755ddabe1350e917fe7177deb5922243376d801129cf143e9  ./third_party/noyalib/Cargo.lock
+6186bfe9bd3ee99e5e3055a5f61bbff10418ba0906c34687c855b56a8cf85b1a  ./third_party/noyalib/Cargo.toml
 cf97e32f397694a54ffbc4a5a213d34d005311ba2310452524e733bc1f5bf2cd  ./third_party/noyalib/Cargo.toml.orig
 96bd8666cb191d86e4108d674120391148d050afaaed373dbcca29d41af310e4  ./third_party/noyalib/LICENSE-APACHE
 0bbbd45c3890a3dbdc4614f1dac05de29053165039aedf71ffc7adb85e2ad810  ./third_party/noyalib/LICENSE-MIT
@@ -2567,7 +2567,7 @@ b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48  ./verification
 7602b331629a6d0f7e3352005c30b449b27358b76c42efa0281ef7bbc746ff06  ./verification/reviews/track-16-rustls-native-certs-0.8.4/security_safety.md
 0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22  ./verification/reviews/track-16-rustls-native-certs-0.8.4/source-manifest.json
 3c80d96641b9cb0c62ab8911e670058ccae332cf22a3231c180dd7bc26c45a9a  ./verification/reviews/track-16-rustls-native-certs-0.8.4/testing.md
-06031630af6adb71b4982e45baf4e20a8e9e2cab6150398508eb912579c8d1d2  ./verification/sbom/source-components.cdx.json
+8d63e2f9e8e13b0adb7f668284812bd8657a3568a05c290bed8d74c1c7ca31cf  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json
