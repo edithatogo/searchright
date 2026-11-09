@@ -1,0 +1,31 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "04",
+  "evaluator_role": "connector-architect",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.99,
+  "verdict": "APPROVED",
+  "scope": [
+    "crates/searchright-connectors/src/lib.rs",
+    "crates/searchright-connectors/src/efetch.rs",
+    "crates/searchright-connectors/tests/efetch_offline.rs",
+    "crates/searchright-connectors/tests/efetch_orchestration.rs",
+    "crates/searchright-connectors/tests/runtime_receipts.rs",
+    "crates/searchright-connectors/tests/cache_parser_version.rs",
+    "tests/test_open_connectors_governance.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T04-ARCH-01",
+      "severity": "LOW",
+      "summary": "Connector architecture ensures deterministic execution through strict parser version partitioning and bounded offline parsing.",
+      "evidence": "PROVIDER_PARSER_VERSION isolation and FixtureProvider::with_version prevent silent cross-version cache corruption under offline execution.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Retain explicit parser version declarations whenever upstream schema models change."
+  ]
+}

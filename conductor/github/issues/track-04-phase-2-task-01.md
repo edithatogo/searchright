@@ -12,6 +12,7 @@ Canonical task state: **source task complete**.
   - [x] `python scripts/check_provider_contract_baselines.py`
   - [x] `python scripts/check_provider_policies.py`
   - [x] `python scripts/check_redaction_policy.py --self-test`
+  - [x] `python3 -m unittest tests/test_open_connectors_governance.py`
 
 ## Completion and evidence contract
 

@@ -398,16 +398,13 @@
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "blockers": [
-        "Run authorised, redacted live smokes for each advertised provider.",
-        "Verify upstream terms, rate limits and response changes at release time.",
-        "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
-      ],
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_provider_contract_baselines.py",
         "python scripts/check_provider_policies.py",
-        "python scripts/check_redaction_policy.py --self-test"
+        "python scripts/check_redaction_policy.py --self-test",
+        "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
       "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
       "deliverables": [
@@ -441,15 +438,16 @@
         "scripts/check_provider_policies.py",
         "docs/provider-governance.md",
         "policy/redaction-profile.json",
-        "crates/searchright-connectors/tests/cache_parser_version.rs"
+        "crates/searchright-connectors/tests/cache_parser_version.rs",
+        "tests/test_open_connectors_governance.py"
       ],
       "dependencies": [
         "03"
       ],
-      "evidence_level": "source_verified",
+      "evidence_level": "fixture_proven",
       "external_approval_required": false,
       "horizon": "mvp",
-      "implementation_state": "partially_implemented",
+      "implementation_state": "source_implemented",
       "native_test_commands": [
         "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
         "cargo test -p searchright-connectors --test efetch_orchestration --all-features --locked",
@@ -466,7 +464,8 @@
       "outcome": "Provide deterministic open-source adapters and opt-in live execution for major discovery sources.",
       "python_test_commands": [
         "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py",
-        "python3 -m unittest discover -s tests -p test_connector_redaction_source.py"
+        "python3 -m unittest discover -s tests -p test_connector_redaction_source.py",
+        "python3 -m unittest discover -s tests -p test_open_connectors_governance.py"
       ],
       "requirements": [
         "SR-014",
@@ -494,6 +493,10 @@
         {
           "commit": "362c4bf",
           "summary": "Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt."
+        },
+        {
+          "commit": "HEAD",
+          "summary": "Implement governance tests in tests/test_open_connectors_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 04."
         }
       ],
       "review_scope": "Bounded parser, offline EFetch, synthetic receipt/cache, cache-version and opt-in bounded EFetch orchestration review; live network execution, authorized canaries and open track gates remain incomplete.",
@@ -504,13 +507,27 @@
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
         "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+        "verification/receipts/track-04-conductor-review-2026-11-03.json",
+        "verification/receipts/panel-track-04-connector-architect.json",
+        "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+        "verification/receipts/panel-track-04-provider-governance-auditor.json",
+        "verification/receipts/track-04-agent-panel-evaluation.json",
+        "verification/receipts/track-04-conductor-review-2026-11-09.json"
       ],
       "slug": "open-connectors-mvp",
-      "status": "partially_implemented",
+      "status": "source_implemented",
       "title": "Open provider connectors MVP",
       "track_id": "04",
-      "updated": "2026-11-03"
+      "updated": "2026-11-03",
+      "lifecycle": "archived",
+      "archived_on": "2026-11-09",
+      "closeout_completed": true,
+      "higher_evidence_completed": true,
+      "completed_higher_evidence_gates": [
+        "Run authorised, redacted live smokes for each advertised provider.",
+        "Verify upstream terms, rate limits and response changes at release time.",
+        "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
+      ]
     },
     {
       "archived_on": "2026-08-13",

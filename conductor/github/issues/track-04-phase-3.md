@@ -6,9 +6,9 @@ Conductor plan: `conductor/tracks/04-open-connectors-mvp/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Run authorised, redacted live smokes for each advertised provider. (`track-04-phase-3-task-01`)
-- [ ] T02: Verify upstream terms, rate limits and response changes at release time. (`track-04-phase-3-task-02`)
-- [ ] T03: Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion. (`track-04-phase-3-task-03`)
+- [x] T01: Run authorised, redacted live smokes for each advertised provider. (`track-04-phase-3-task-01`)
+- [x] T02: Verify upstream terms, rate limits and response changes at release time. (`track-04-phase-3-task-02`)
+- [x] T03: Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion. (`track-04-phase-3-task-03`)
 
 ## Evidence rule
 

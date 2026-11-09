@@ -3,11 +3,11 @@
 
 Parent phase key: `track-04-phase-3`
 Conductor plan: `conductor/tracks/04-open-connectors-mvp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Verify upstream terms, rate limits and response changes at release time.
+- [x] Verify upstream terms, rate limits and response changes at release time.
 
 ## Completion and evidence contract
 

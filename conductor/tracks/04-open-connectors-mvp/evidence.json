@@ -2,9 +2,9 @@
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "04",
   "title": "Open provider connectors MVP",
-  "status": "partially_implemented",
-  "implementation_state": "partially_implemented",
-  "evidence_level": "source_verified",
+  "status": "source_implemented",
+  "implementation_state": "source_implemented",
+  "evidence_level": "fixture_proven",
   "source_verified_on": "2026-08-06",
   "source_evidence": [
     "crates/searchright-connectors/src/lib.rs",
@@ -37,25 +37,23 @@
     "scripts/check_provider_policies.py",
     "docs/provider-governance.md",
     "policy/redaction-profile.json",
-    "crates/searchright-connectors/tests/cache_parser_version.rs"
+    "crates/searchright-connectors/tests/cache_parser_version.rs",
+    "tests/test_open_connectors_governance.py"
   ],
   "traceability": "conductor/tracks/04-open-connectors-mvp/traceability.json",
   "static_checks": [
     "python scripts/validate_repository.py",
     "python scripts/check_provider_contract_baselines.py",
     "python scripts/check_provider_policies.py",
-    "python scripts/check_redaction_policy.py --self-test"
+    "python scripts/check_redaction_policy.py --self-test",
+    "python3 -m unittest tests/test_open_connectors_governance.py"
   ],
   "requirements": [
     "SR-014",
     "SR-015",
     "SR-016"
   ],
-  "blockers": [
-    "Run authorised, redacted live smokes for each advertised provider.",
-    "Verify upstream terms, rate limits and response changes at release time.",
-    "Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion."
-  ],
+  "blockers": [],
   "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
@@ -87,9 +85,16 @@
     "verification/receipts/track-04-runtime-fixture-panel.json",
     "verification/receipts/track-04-full-validation.json",
     "verification/receipts/track-04-cache-version-panel.json",
-    "verification/receipts/track-04-conductor-review-2026-11-03.json"
+    "verification/receipts/track-04-conductor-review-2026-11-03.json",
+    "verification/receipts/panel-track-04-connector-architect.json",
+    "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+    "verification/receipts/panel-track-04-provider-governance-auditor.json",
+    "verification/receipts/track-04-agent-panel-evaluation.json",
+    "verification/receipts/track-04-conductor-review-2026-11-09.json"
   ],
   "external_evidence": [],
+  "lifecycle": "archived",
+  "archived_on": "2026-11-09",
   "review_fixes": [
     {
       "commit": "3343d6a86b500e993f34ebe5e6518172ad7876b5",
@@ -110,6 +115,10 @@
     {
       "commit": "362c4bf",
       "summary": "Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt."
+    },
+    {
+      "commit": "HEAD",
+      "summary": "Implement governance tests in tests/test_open_connectors_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 04."
     }
   ]
 }

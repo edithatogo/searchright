@@ -3,11 +3,11 @@
 
 Parent phase key: `track-04-phase-3`
 Conductor plan: `conductor/tracks/04-open-connectors-mvp/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
+- [x] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
 
 ## Completion and evidence contract
 

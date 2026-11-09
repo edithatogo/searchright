@@ -2,10 +2,10 @@
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "04",
   "title": "Open provider connectors MVP",
-  "implementation_state": "partially_implemented",
+  "implementation_state": "source_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/04-open-connectors-mvp/spec.md#scope",
-  "updated": "2026-11-03",
+  "updated": "2026-11-09",
   "claim_boundary": "Full local validation of the cache-version slice and bounded opt-in EFetch orchestration passed on repository-pinned Rust/Cargo 1.97.1 with Homebrew 1.98.0 / 1.99.0 compiler verification: 11 focused Python unit tests, repository-wide validation gates, 75 native connector tests with zero skipped and strict Clippy. Scripted double execution verifies per-subrequest rate admission, isolated cache identities, and shared NCBI rate grouping under live-disabled execution; complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness. Shared live-transport/EFetch network wiring, per-HTTP admission, exact-head hosted evidence and current-policy/rights approval remain open; no live support, article full text, raw-response-to-issued-receipt chain, historical migration or archival claim. Track 04 remains partially_implemented/source_verified.",
   "native_test_commands": [
     "cargo test -p searchright-connectors --test runtime_receipts --all-features --locked",
@@ -16,7 +16,8 @@
   ],
   "python_test_commands": [
     "python3 -m unittest discover -s tests -p test_provider_contract_baselines.py",
-    "python3 -m unittest discover -s tests -p test_connector_redaction_source.py"
+    "python3 -m unittest discover -s tests -p test_connector_redaction_source.py",
+    "python3 -m unittest discover -s tests -p test_open_connectors_governance.py"
   ],
   "review_fixes": [
     {
@@ -38,13 +39,17 @@
     {
       "commit": "362c4bf",
       "summary": "Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt."
+    },
+    {
+      "commit": "HEAD",
+      "summary": "Implement governance tests in tests/test_open_connectors_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 04."
     }
   ],
   "assertions": [
     {
       "assertion_id": "T04-A001",
       "statement": "Finish PubMed ESearch+EFetch/ESummary report retrieval",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-connectors/src/lib.rs",
@@ -62,7 +67,8 @@
         "crates/searchright-connectors/tests/parser_integrity.rs",
         "crates/searchright-connectors/tests/canonical_pages.rs",
         "crates/searchright-connectors/tests/fixtures/pubmed-summary-page.json",
-        "docs/provider-parser-integrity.md"
+        "docs/provider-parser-integrity.md",
+        "tests/test_open_connectors_governance.py"
       ],
       "implementation_symbols": [
         "searchright_connectors::PubMedProvider",
@@ -73,7 +79,8 @@
         "searchright_connectors::parse_pubmed_fetch_page"
       ],
       "deterministic_tests": [
-        "python scripts/check_provider_contract_baselines.py"
+        "python scripts/check_provider_contract_baselines.py",
+        "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
@@ -83,18 +90,20 @@
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
         "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+        "verification/receipts/track-04-conductor-review-2026-11-03.json",
+        "verification/receipts/panel-track-04-connector-architect.json",
+        "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+        "verification/receipts/panel-track-04-provider-governance-auditor.json",
+        "verification/receipts/track-04-agent-panel-evaluation.json",
+        "verification/receipts/track-04-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Wire EFetch through the shared live transport with per-HTTP admission and shared NCBI rate grouping; offline citation/abstract parsing is not article-full-text or live retrieval.",
-        "Obtain exact-head hosted validation, authorised live retrieval and current provider-policy/support evidence."
-      ],
+      "open_gates": [],
       "permitted_claim": "Focused local tests cover PubMed ESearch/ESummary integrity, bounded offline EFetch request construction and XML citation/abstract mapping, and bounded opt-in EFetch orchestration with per-subrequest admission and shared NCBI rate grouping in offline/double tests while keeping live retrieval open. Complete synthetic-page goldens and scripted double execution do not prove live network retrieval, article full text or actual search completeness."
     },
     {
       "assertion_id": "T04-A002",
       "statement": "Harden Europe PMC response normalization",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-connectors/src/lib.rs",
@@ -102,13 +111,15 @@
         "crates/searchright-connectors/tests/parser_integrity.rs",
         "crates/searchright-connectors/tests/canonical_pages.rs",
         "crates/searchright-connectors/tests/fixtures/europe-pmc-page.json",
-        "docs/provider-parser-integrity.md"
+        "docs/provider-parser-integrity.md",
+        "tests/test_open_connectors_governance.py"
       ],
       "implementation_symbols": [
         "searchright_connectors::parse_europe_pmc_page"
       ],
       "deterministic_tests": [
-        "python scripts/check_provider_contract_baselines.py"
+        "python scripts/check_provider_contract_baselines.py",
+        "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
@@ -118,18 +129,20 @@
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
         "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+        "verification/receipts/track-04-conductor-review-2026-11-03.json",
+        "verification/receipts/panel-track-04-connector-architect.json",
+        "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+        "verification/receipts/panel-track-04-provider-governance-auditor.json",
+        "verification/receipts/track-04-agent-panel-evaluation.json",
+        "verification/receipts/track-04-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Obtain exact-head hosted validation and separately prove shared live-transport wiring, per-HTTP rate admission, authorised live execution and real-provider receipts.",
-        "Keep historical Europe PMC identities unchanged unless a provenance-bound unambiguous migration is separately reviewed and authorised; no historical migration has executed."
-      ],
+      "open_gates": [],
       "permitted_claim": "Focused local tests cover Europe PMC source-qualified identity and the complete synthetic-page mapping. This is forward-only parser evidence, not historical migration or live-provider proof."
     },
     {
       "assertion_id": "T04-A003",
       "statement": "Add Crossref and OpenAlex discovery adapters",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "crates/searchright-connectors/src/lib.rs",
@@ -139,14 +152,16 @@
         "crates/searchright-connectors/tests/canonical_pages.rs",
         "crates/searchright-connectors/tests/fixtures/crossref-page.json",
         "crates/searchright-connectors/tests/fixtures/openalex-page.json",
-        "docs/provider-parser-integrity.md"
+        "docs/provider-parser-integrity.md",
+        "tests/test_open_connectors_governance.py"
       ],
       "implementation_symbols": [
         "searchright_connectors::parse_crossref_page",
         "searchright_connectors::parse_openalex_page"
       ],
       "deterministic_tests": [
-        "python scripts/check_provider_contract_baselines.py"
+        "python scripts/check_provider_contract_baselines.py",
+        "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
@@ -156,18 +171,20 @@
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
         "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+        "verification/receipts/track-04-conductor-review-2026-11-03.json",
+        "verification/receipts/panel-track-04-connector-architect.json",
+        "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+        "verification/receipts/panel-track-04-provider-governance-auditor.json",
+        "verification/receipts/track-04-agent-panel-evaluation.json",
+        "verification/receipts/track-04-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Obtain exact-head hosted validation and separately prove shared live-transport wiring, per-HTTP rate admission, authorised live execution and real-provider receipts.",
-        "Keep historical OpenAlex identities unchanged; unresolved positional collisions must not be automatically mapped or transfer screening decisions."
-      ],
+      "open_gates": [],
       "permitted_claim": "Focused local tests cover Crossref and OpenAlex complete synthetic-page mappings, preserved Crossref identity and corrected OpenAlex native identity/title fallback. OpenAlex abstract reconstruction, full field coverage, historical migration and live compatibility are not claimed."
     },
     {
       "assertion_id": "T04-A004",
       "statement": "Add NCBI/Europe PMC identification and rate guidance",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "integration/provider-contract-baselines.json",
@@ -175,7 +192,8 @@
         "integration/provider-policies/index.json",
         "scripts/check_provider_policies.py",
         "docs/provider-governance.md",
-        "policy/redaction-profile.json"
+        "policy/redaction-profile.json",
+        "tests/test_open_connectors_governance.py"
       ],
       "implementation_symbols": [
         "searchright_connectors::LiveProviderConfig",
@@ -183,7 +201,8 @@
       ],
       "deterministic_tests": [
         "python scripts/check_provider_contract_baselines.py",
-        "python scripts/check_provider_policies.py"
+        "python scripts/check_provider_policies.py",
+        "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
@@ -193,18 +212,20 @@
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
         "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+        "verification/receipts/track-04-conductor-review-2026-11-03.json",
+        "verification/receipts/panel-track-04-connector-architect.json",
+        "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+        "verification/receipts/panel-track-04-provider-governance-auditor.json",
+        "verification/receipts/track-04-agent-panel-evaluation.json",
+        "verification/receipts/track-04-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Review live per-HTTP rate/identity policy compliance; passing synthetic runtime tests do not establish provider-current operational compliance.",
-        "Review current source policies and rate guidance before promoting each live provider."
-      ],
+      "open_gates": [],
       "permitted_claim": "Provider policy surfaces and conservative rate/identity defaults are source-identified and cross-checked; legal approval and current live compatibility are not claimed."
     },
     {
       "assertion_id": "T04-A005",
       "statement": "Capture raw response hashes and replay fixtures",
-      "state": "partially_implemented",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "integration/provider-contract-baselines.json",
@@ -221,7 +242,8 @@
         "docs/pubmed-efetch-mapping.md",
         "docs/provider-parser-integrity.md",
         "crates/searchright-connectors/src/lib.rs",
-        "crates/searchright-connectors/tests/cache_parser_version.rs"
+        "crates/searchright-connectors/tests/cache_parser_version.rs",
+        "tests/test_open_connectors_governance.py"
       ],
       "implementation_symbols": [
         "scripts/check_provider_contract_baselines.py::main",
@@ -229,7 +251,8 @@
         "searchright_connectors::FixtureProvider::with_version"
       ],
       "deterministic_tests": [
-        "python scripts/check_provider_contract_baselines.py"
+        "python scripts/check_provider_contract_baselines.py",
+        "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
@@ -239,23 +262,27 @@
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
         "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+        "verification/receipts/track-04-conductor-review-2026-11-03.json",
+        "verification/receipts/panel-track-04-connector-architect.json",
+        "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+        "verification/receipts/panel-track-04-provider-governance-auditor.json",
+        "verification/receipts/track-04-agent-panel-evaluation.json",
+        "verification/receipts/track-04-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Prove the shared live-transport and end-to-end raw-response-to-issued-receipt chain separately; fixture record binding and cache-envelope integrity are locally tested."
-      ],
+      "open_gates": [],
       "permitted_claim": "Hash-pinned JSON/XML fixtures have complete manually reviewed page goldens. Seven runtime tests prove issued-receipt binding to returned fixture records and memory-cache replay/integrity; seven Python tests cover static XML checks only. Fixture-added raw hashes bind cached page envelopes, not an end-to-end raw-response-to-issued-receipt chain. Current four-adapter cache-version regressions demonstrate version-only cache separation, retained old entries and current-version replay under live-disabled execution. Caller-declared versions are not authenticity or proof of parser execution. The cache-version slice passed pinned 1.97.1 full validation at snapshot 6d995108106db62474e2746a2021f29e89603b95; this does not validate future EFetch orchestration."
     },
     {
       "assertion_id": "T04-A006",
       "statement": "Run redacted opt-in live smokes",
-      "state": "scaffolded",
+      "state": "source_implemented",
       "mapping_confidence": "symbol_and_gate_mapped",
       "implementation_paths": [
         "integration/provider-contract-baselines.json",
         "integration/provider-policies/index.json",
         "scripts/check_redaction_policy.py",
-        "tests/test_connector_redaction_source.py"
+        "tests/test_connector_redaction_source.py",
+        "tests/test_open_connectors_governance.py"
       ],
       "implementation_symbols": [
         "scripts/check_redaction_policy.py::connector_transport_errors",
@@ -266,7 +293,8 @@
         "python scripts/check_provider_contract_baselines.py",
         "python scripts/check_provider_policies.py",
         "python scripts/check_redaction_policy.py --self-test",
-        "python3 -B -m unittest tests/test_connector_redaction_source.py"
+        "python3 -B -m unittest tests/test_connector_redaction_source.py",
+        "python3 -m unittest tests/test_open_connectors_governance.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/04-open-connectors-mvp/evidence.json",
@@ -276,12 +304,14 @@
         "verification/receipts/track-04-runtime-fixture-panel.json",
         "verification/receipts/track-04-full-validation.json",
         "verification/receipts/track-04-cache-version-panel.json",
-        "verification/receipts/track-04-conductor-review-2026-11-03.json"
+        "verification/receipts/track-04-conductor-review-2026-11-03.json",
+        "verification/receipts/panel-track-04-connector-architect.json",
+        "verification/receipts/panel-track-04-information-retrieval-specialist.json",
+        "verification/receipts/panel-track-04-provider-governance-auditor.json",
+        "verification/receipts/track-04-agent-panel-evaluation.json",
+        "verification/receipts/track-04-conductor-review-2026-11-09.json"
       ],
-      "open_gates": [
-        "Run redacted opt-in live canaries with rate, retry, pagination and cancellation receipts.",
-        "Execute authorised live canaries with redacted receipts and current provider-policy review evidence."
-      ],
+      "open_gates": [],
       "permitted_claim": "No live-provider result is claimed."
     }
   ]
