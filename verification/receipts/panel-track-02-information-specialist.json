@@ -1,0 +1,52 @@
+{
+  "schema_version": "org.searchright.panel-evaluation-receipt.v1",
+  "track_id": "02",
+  "panelist_role": "information-specialist",
+  "evaluator_role": "information-specialist",
+  "evaluated_at": "2026-11-09T10:30:15Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "score": 0.99,
+  "overall_assessment": "From the perspective of systematic review methodology and information retrieval practice, Track 02 adheres to rigorous methodological principles. The seven-database query corpus (contracts/query-corpus/index.json) provides concrete, rights-clear test fixtures for PubMed, Ovid MEDLINE, Embase, CINAHL EBSCO, PsycINFO Ovid, Scopus, and Web of Science, verified network-free via scripts/check_native_query_corpus.py. The non-negotiable rule that PRISMA-S is a reporting contract, not a conduct standard, is strictly observed: Searchright preserves exact native search text and line breaks without pretending automated translation satisfies PRESS peer review or methodological suitability. Furthermore, the named filter pack contract (crates/evidence-search-contracts/src/query.rs, contracts/json-schema/named-filter-pack.v1.schema.json) rigorously captures source citation, filter version, applicability, and validation evidence metadata, while explicitly maintaining the checked-in fixture as synthetic (contracts/named-filters/synthetic-validation-evidence.txt) until rights-cleared real filters are dispositioned by the accountable owner.",
+  "verified_invariants": [
+    "Seven-dialect native query corpus: verified fixtures for PubMed, Ovid MEDLINE, Embase, CINAHL, PsycINFO, Scopus, and Web of Science",
+    "PRISMA-S reporting contract doctrine: verbatim native strategies and loss reports preserved without methodological overclaim",
+    "Named filter contracts: JSON schema, metadata validation, and citation requirements fully implemented",
+    "Synthetic filter boundary: checked-in filter packs marked synthetic; real-filter currency and licensing preserved as open gate",
+    "Deterministic corpus verification: scripts/check_native_query_corpus.py and governance tests validate corpus integrity network-free"
+  ],
+  "findings": [
+    {
+      "severity": "minor",
+      "description": "Checked-in named filter pack contains synthetic RCT filter expressions designed for contract schema validation; real-world search filters (e.g., Cochrane, CADTH, SIGN) require explicit copyright/licensing clearance and ongoing version currency monitoring.",
+      "reference": "contracts/named-filters/synthetic-validation-evidence.txt:1-4; contracts/examples/named-filter-pack.json:1-50",
+      "recommendation": "Preserve gate T02-G-NAMED-FILTERS open until rights-cleared real filters are curated and dispositioned by the accountable owner."
+    },
+    {
+      "severity": "observation",
+      "description": "PRISMA-S adherence is correctly treated as a reporting contract rather than a search conduct standard, ensuring verbatim source query reproduction and transparent translation disclosures without overclaiming methodological adequacy.",
+      "reference": "contracts/query-corpus/index.json:1-9; conductor/tracks/02-query-ast-dialects/traceability.json:104-106",
+      "recommendation": "Maintain explicit separation between reporting contract compliance and research team methodological authority."
+    }
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T02-A003",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "The seven-dialect corpus in contracts/query-corpus/ contains verified fixtures for PubMed, Ovid MEDLINE, Embase, CINAHL EBSCO, PsycINFO Ovid, Scopus, and Web of Science, validated against sha256 checksums in index.json and verified network-free via scripts/check_native_query_corpus.py."
+    },
+    {
+      "id": "T02-A004",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Named filter contracts in crates/evidence-search-contracts/src/query.rs, schema contracts/json-schema/named-filter-pack.v1.schema.json, and fixture contracts/examples/named-filter-pack.json enforce source, version, citation, and checksum metadata while strictly maintaining the synthetic validation boundary in contracts/named-filters/synthetic-validation-evidence.txt."
+    }
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed."
+  ]
+}

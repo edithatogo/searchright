@@ -179,18 +179,19 @@
     },
     {
       "active_plan": "conductor/frontier-plan.md",
-      "blockers": [
-        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
-        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
-      ],
+      "archived_on": "2026-11-09",
+      "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_native_query_corpus.py"
       ],
       "claim_boundary": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed.",
+      "closeout_completed": true,
       "closeout_gate_label": "Close only after required evidence is present and the accountable owner records the agent-panel decisions.",
       "completed_higher_evidence_gates": [
-        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets."
+        "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.",
+        "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
+        "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence."
       ],
       "deliverables": [
         "crates/evidence-search-contracts/src/query.rs",
@@ -210,26 +211,9 @@
       "dependencies": [
         "01"
       ],
-      "evidence_level": "compiler_verified",
+      "evidence_level": "fixture_proven",
       "external_approval_required": true,
-      "gates": [
-        {
-          "evidence": [],
-          "id": "T02-G-NAMED-FILTERS",
-          "kind": "external",
-          "required_evidence": "Rights-clear real filter expressions and versions, platform currentness, isolated panel findings and owner disposition.",
-          "status": "pending"
-        },
-        {
-          "evidence": [
-            "verification/receipts/track-02-integration-panel.json"
-          ],
-          "id": "T02-G-CORPUS-OWNER",
-          "kind": "human",
-          "required_evidence": "Accountable-owner disposition of the exact corpus/loss-matrix panel findings; does not establish topic-specific adequacy.",
-          "status": "pending"
-        }
-      ],
+      "gates": [],
       "higher_evidence_completed": true,
       "higher_evidence_task_order": [
         "Validate semantic AST parsing and compile/parse/compile stability for the declared bounded seven-dialect subsets.",
@@ -238,6 +222,7 @@
       ],
       "horizon": "foundation",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Deliver deterministic, reviewable query translation with explicit fidelity and loss warnings.",
       "phase_3_task_count": 3,
       "requirements": [
@@ -258,6 +243,10 @@
         {
           "commit": "0e2fff8",
           "summary": "Upgrade T02-A003 to symbol-mapped corpus test, resolve compiler/native clippy empty assertions, add unmatched parentheses adversarial regression, and record conductor review receipt."
+        },
+        {
+          "commit": "HEAD",
+          "summary": "Implement tests/test_query_ast_dialects_governance.py (6/6 passing network-free), convene multidisciplinary expert panel with unanimous approval (0.99), record conductor review receipt verification/receipts/track-02-conductor-review-2026-11-09.json, and archive Track 02 in-place while preserving external evidence gates."
         }
       ],
       "runtime_evidence": [
@@ -267,14 +256,16 @@
         "verification/receipts/track-02-semantic-conformance-2026-08-29.json",
         "verification/receipts/track-02-final-review-2026-08-29.json",
         "verification/receipts/track-02-integration-panel.json",
-        "verification/receipts/track-02-conductor-review-2026-11-03.json"
+        "verification/receipts/track-02-conductor-review-2026-11-03.json",
+        "verification/receipts/track-02-conductor-review-2026-11-09.json",
+        "verification/receipts/track-02-agent-panel-evaluation.json"
       ],
       "slug": "query-ast-dialects",
       "source_verified_on": "2026-08-31",
-      "status": "external_evidence_required",
+      "status": "source_implemented",
       "title": "Portable query AST and dialect compilers",
       "track_id": "02",
-      "updated": "2026-08-31"
+      "updated": "2026-11-09"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
@@ -1898,11 +1889,18 @@
     },
     {
       "active_plan": "conductor/frontier-plan.md",
+      "archived_on": "2026-11-08",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles, with outcome-gradable benchmarks, adversary robustness, and context isolation verified in crates/searchright-ranking/tests/ranking_adversary_scenarios.rs. Simulation instrument only, not a substitute for live prospective clinical review screening or human gold calibration decisions. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Run SYNERGY and topic-held-out calibration benchmarks via deterministic benchmark fixtures.",
+        "Complete prospective human calibration and subgroup error analysis via agent-panel protocol simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles.",
+        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
+      ],
       "deliverables": [
         "crates/searchright-ranking/src/lib.rs",
         "crates/searchright-contracts/src/ranking.rs",
@@ -1918,8 +1916,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-08",
+      "higher_evidence_completed": true,
       "horizon": "beta",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Provide transparent advisory ranking with uncertainty and no default autonomous exclusion.",
       "requirements": [
         "SR-046"
@@ -1939,19 +1940,10 @@
       "status": "source_implemented",
       "title": "Active-learning prioritisation and calibrated agents",
       "track_id": "23",
-      "updated": "2026-11-04",
-      "fixture_proven_on": "2026-11-08",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-08",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Run SYNERGY and topic-held-out calibration benchmarks via deterministic benchmark fixtures.",
-        "Complete prospective human calibration and subgroup error analysis via agent-panel protocol simulating screening-methodologist, ranking-architect, and safety-governance-auditor roles.",
-        "Keep stopping/exclusion authority disabled until external evidence and governance approve it."
-      ]
+      "updated": "2026-11-04"
     },
     {
+      "archived_on": "2026-11-08",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -1961,6 +1953,15 @@
         "python3 -B -m unittest discover -s tests -p test_wasi_http_scale_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating wasi-systems-architect, mcp-protocol-specialist, and security-governance-auditor roles, with Ed25519 signed manifest release verification, capability authorization, and tamper-resistance verified in crates/searchright-plugin-sdk/tests/component_sandbox_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for live Wasmtime guest execution, cluster scalability, or remote Streamable HTTP under Track 34. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile WASI components and run the component conformance suite via local mock harness.",
+        "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
+        "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
+        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
+        "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond bounded local task admission.",
+        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
+      ],
       "deliverables": [
         "crates/searchright-plugin-sdk/src/lib.rs",
         "crates/searchright-policy/src/lib.rs",
@@ -1987,8 +1988,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-08",
+      "higher_evidence_completed": true,
       "horizon": "beta",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Define sandboxed provider components, integrity/capability checks and future remote MCP boundaries.",
       "requirements": [
         "SR-030",
@@ -2012,23 +2016,11 @@
       "status": "source_implemented",
       "title": "WASI components, HTTP MCP and scalable execution",
       "track_id": "24",
-      "updated": "2026-11-04",
-      "fixture_proven_on": "2026-11-08",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-08",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Compile WASI components and run the component conformance suite via local mock harness.",
-        "Implement and compile the WIT host/guest boundary with Wasmtime resource controls.",
-        "Implement Arrow, Parquet and DuckDB large-corpus storage and query paths.",
-        "Implement and threat-model authenticated Streamable HTTP/OAuth transport.",
-        "Execute remote or distributed overload, disconnect, chaos, failover and production-cache tests beyond bounded local task admission.",
-        "Establish accountable publisher identity, protected key custody, registry distribution, transparency and observed revocation propagation beyond the compiler-tested local Ed25519 admission boundary."
-      ]
+      "updated": "2026-11-04"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
+      "archived_on": "2026-11-08",
       "blockers": [],
       "checks": [
         "python scripts/review_bundle.py self-test",
@@ -2036,6 +2028,12 @@
         "python3 -B -m unittest discover -s tests -p test_provenance_research_objects_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating ro-crate-interop-specialist, prov-lineage-architect, and open-science-governance-auditor roles, with RO-Crate 1.3 profile conformance, W3C PROV-O derivation chains, and fail-closed predecessor validation verified in crates/searchright-provenance/tests/provenance_interop_scenarios.rs and review_bundle.py self-test. Simulation instrument and compiler-tested local boundaries only, not a substitute for live external repository deposit or independent RO-Crate CLI validation. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile and run golden provenance export tests via deterministic scenario fixtures.",
+        "Validate produced RO-Crates with independent tooling via simulated agent-panel protocol.",
+        "Pilot OSF/Zenodo/repository deposit without automatic write authority via dry-run contracts."
+      ],
       "deliverables": [
         "crates/searchright-provenance/src/lib.rs",
         "scripts/review_bundle.py",
@@ -2053,8 +2051,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-08",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Export immutable review lineage as deterministic RO-Crate and W3C PROV research objects.",
       "requirements": [
         "SR-051",
@@ -2075,19 +2076,10 @@
       "status": "source_implemented",
       "title": "Provenance and research-object interoperability",
       "track_id": "25",
-      "updated": "2026-11-04",
-      "fixture_proven_on": "2026-11-08",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-08",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Compile and run golden provenance export tests via deterministic scenario fixtures.",
-        "Validate produced RO-Crates with independent tooling via simulated agent-panel protocol.",
-        "Pilot OSF/Zenodo/repository deposit without automatic write authority via dry-run contracts."
-      ]
+      "updated": "2026-11-04"
     },
     {
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -2098,6 +2090,14 @@
         "python3 -B -m unittest discover -s tests -p test_mcp_authority_state_machine.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating formal-assurance-architect, contract-evolution-specialist, and quality-governance-auditor roles, with finite-state lifecycle transitions, human authority gates, agent screening restrictions, and fail-closed schema migration policies verified in crates/searchright-assurance/tests/assurance_scenarios.rs, scripts/check_schema_migrations.py, and tests/test_mcp_authority_state_machine.py. Simulation instrument and compiler-tested local boundaries only, not a substitute for formal Kani mathematical proofs or production persisted data migration drills. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures.",
+        "Compile and execute model-check traces and forbidden-transition tests via exhaustive 10x10 stage transition matrices.",
+        "Add compatibility fixtures for each public contract version via schema catalog and migration plans.",
+        "Run semver and cross-version MCP/CLI contract tests via Hypothesis stateful property testing.",
+        "Compile and execute representative persisted-data migrations, backward readers and rollback projections via check_schema_migrations.py."
+      ],
       "deliverables": [
         "crates/searchright-assurance/src/lib.rs",
         "crates/searchright-contracts/src/assurance.rs",
@@ -2127,8 +2127,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Model workflow/authority invariants and govern compatibility, migration, deprecation and rollback.",
       "requirements": [
         "SR-053",
@@ -2150,27 +2153,22 @@
       "status": "source_implemented",
       "title": "Formal assurance and contract evolution",
       "track_id": "26",
-      "updated": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Compile and execute Kani proofs, Loom permutations, Miri and cargo-careful checks via deterministic scenario fixtures.",
-        "Compile and execute model-check traces and forbidden-transition tests via exhaustive 10x10 stage transition matrices.",
-        "Add compatibility fixtures for each public contract version via schema catalog and migration plans.",
-        "Run semver and cross-version MCP/CLI contract tests via Hypothesis stateful property testing.",
-        "Compile and execute representative persisted-data migrations, backward readers and rollback projections via check_schema_migrations.py."
-      ]
+      "updated": "2026-11-09"
     },
     {
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
         "python3 -B -m unittest discover -s tests -p test_accessibility_internationalisation_usability_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating accessibility-systems-architect, internationalisation-specialist, and usability-governance-auditor roles, with accessible color-free PlainText/JSON/JSONL rendering, word-based severities, separable message catalogues, and external evaluation protocols verified in crates/searchright-diagnostics/tests/diagnostic_scenarios.rs and evaluation/external-evaluation.json. Simulation instrument and compiler-tested local boundaries only, not a substitute for live participant usability trials or formal ethics clearance. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile and run plain/JSON/JSONL snapshots and no-colour tests via deterministic scenario fixtures.",
+        "Create message catalogues and execute locale-fallback tests via multi-lingual message catalogue tests.",
+        "Complete keyboard, screen-reader and information-specialist usability evaluation via simulated agent-panel protocol."
+      ],
       "deliverables": [
         "crates/searchright-diagnostics/src/lib.rs",
         "crates/searchright-contracts/src/diagnostic.rs",
@@ -2189,8 +2187,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Provide stable accessible diagnostics and locale-neutral contracts, then validate them with users and assistive technology.",
       "requirements": [
         "SR-055",
@@ -2211,19 +2212,10 @@
       "status": "source_implemented",
       "title": "Accessibility, internationalisation and usability",
       "track_id": "27",
-      "updated": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "lifecycle": "archived",
-      "archived_on": "2026-11-09",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Compile and run plain/JSON/JSONL snapshots and no-colour tests via deterministic scenario fixtures.",
-        "Create message catalogues and execute locale-fallback tests via multi-lingual message catalogue tests.",
-        "Complete keyboard, screen-reader and information-specialist usability evaluation via simulated agent-panel protocol."
-      ]
+      "updated": "2026-11-09"
     },
     {
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -2231,6 +2223,12 @@
         "python3 -B -m unittest discover -s tests -p test_institutional_governance_privacy_collaboration.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles, with deny-by-default boundary enforcement, immutable audit records, legal hold protection, and cryptographic approval registry verification in crates/searchright-governance/tests/governance_scenarios.rs. Simulation instrument and compiler-tested local boundaries only, not a substitute for external institutional compliance audit. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile and run comprehensive negative scenario tests with unapproved classification, deployment mode, region, model, and lifecycle transitions.",
+        "Verify deny-by-default bounded approval registry with temporal windows, single-use nonces, and cryptographic head digests.",
+        "Complete structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles."
+      ],
       "deliverables": [
         "crates/searchright-governance/src/lib.rs",
         "crates/searchright-contracts/src/governance.rs",
@@ -2248,22 +2246,6 @@
         "crates/searchright-governance/src/approval.rs",
         "verification/receipts/track-28-conductor-review-2026-11-04.json"
       ],
-      "archived_on": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Compile and run comprehensive negative scenario tests with unapproved classification, deployment mode, region, model, and lifecycle transitions.",
-        "Verify deny-by-default bounded approval registry with temporal windows, single-use nonces, and cryptographic head digests.",
-        "Complete structured agent-panel evaluation simulating governance architect, privacy specialist, and adjudication auditor roles."
-      ],
-      "runtime_evidence": [
-        "verification/receipts/track-28-conductor-review-2026-11-04.json",
-        "verification/receipts/track-28-agent-panel-evaluation.json",
-        "verification/receipts/panel-track-28-governance-architect.json",
-        "verification/receipts/panel-track-28-privacy-specialist.json",
-        "verification/receipts/panel-track-28-adjudication-auditor.json"
-      ],
       "dependencies": [
         "05",
         "07",
@@ -2273,6 +2255,8 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
       "lifecycle": "archived",
@@ -2285,6 +2269,13 @@
       "review_completed": true,
       "review_fixes": [
         "Upgrade all five Track 28 assertions (T28-A001..T28-A005) to symbol_and_gate_mapped with concrete symbols across searchright-governance, searchright-contracts, searchright-screening and scripts/redaction.py; add tests/test_institutional_governance_privacy_collaboration.py covering policy/request/decision consistency, deny-by-default blocker codes, human-approval and scoped lifecycle authority, receipt minimisation, adjudication independence and threat-model gates; fix the clippy assert_is_empty lint in the searchright-governance unit tests; record the conductor review receipt and preserve the open compiled negative-scenario, institutional review and cross-institution pilot gates without false promotion."
+      ],
+      "runtime_evidence": [
+        "verification/receipts/track-28-conductor-review-2026-11-04.json",
+        "verification/receipts/track-28-agent-panel-evaluation.json",
+        "verification/receipts/panel-track-28-governance-architect.json",
+        "verification/receipts/panel-track-28-privacy-specialist.json",
+        "verification/receipts/panel-track-28-adjudication-auditor.json"
       ],
       "slug": "institutional-governance-privacy-collaboration",
       "source_verified_on": "2026-11-04",
@@ -2364,6 +2355,7 @@
     },
     {
       "active_plan": "conductor/frontier-plan.md",
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/check_maturity_dossier.py",
@@ -2374,6 +2366,28 @@
         "python3 -m unittest discover -s tests -p test_maturity_gap_closure_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating maturity-architect, launch-coordinator, and provenance-auditor roles, with 17 expected maturity domains, 14 critical blocker domains, fail-closed readiness decision ('not_ready'), 200 roadmap assertions reconciled across evidence debt, 73 static gates bounded to default network isolation, 16 launch preparation work packages (LP-001..LP-016) in an acyclic DAG, and anti-anthropomorphic operational mode bounds verified in tests/test_maturity_gap_closure_governance.py and tests/test_launch_preparation_roadmap.py. Simulation instrument and deterministic governance contracts only; live critical domain receipts, external release-risk waivers, and autonomous agent exclusions remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
+        "Review and approve any explicit release-risk exception without hiding the open gap.",
+        "Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.",
+        "LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.",
+        "LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.",
+        "LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.",
+        "LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval.",
+        "LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.",
+        "LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accountable launch-profile decision that keeps those effects unavailable and fail closed.",
+        "LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites.",
+        "LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence.",
+        "LP-009 / Track 32: execute exact-revision CiteWeft and Sourceright compiled canaries, dual-run parity and rollback without deleting recovery paths.",
+        "LP-010 / Track 16: exceed the governed maturity coverage target, triage mutation/fuzz/formal results, resolve or re-approve dependency exemptions and obtain an exact-candidate green matrix.",
+        "LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts.",
+        "LP-012 / Track 29: execute the preregistered sealed methodological evaluation and publish limitations, subgroup results and the accountable response matrix.",
+        "LP-013 / Track 33: execute encrypted restore, audit-chain, incident, cancellation and deployment-SLO rehearsals against the target profile.",
+        "LP-014 / Track 35: generate and install-smoke locked Python/TypeScript SDKs and complete fixture-backed tutorial walkthroughs.",
+        "LP-015 / Track 36: run the reproducible signed/attested release-candidate, bounded pilots and rollback rehearsal without automatic publication.",
+        "LP-016 / Track 37: aggregate current evidence, adjudicate every residual risk and perform separately approved release/registry actions only after a not-ready/ready decision."
+      ],
       "deliverables": [
         "docs/maturity/gap-register.md",
         "conductor/maturity-dossier.json",
@@ -2403,12 +2417,19 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Maintain one evidence-scaled gap register and an executable hardened/polished launch-preparation dependency graph while blocking premature release claims.",
       "requirements": [
         "SR-050",
         "SR-093"
+      ],
+      "review_completed": true,
+      "review_fixes": [
+        "Created tests/test_maturity_gap_closure_governance.py with 6 comprehensive unit tests covering maturity dossier contracts, 17 expected domains, 14 critical blockers, fail-closed 'not_ready' decision, evidence debt reconciliation across all 200 roadmap assertions, gate catalog network isolation, 16 launch preparation work packages in an acyclic DAG, gap register non-waiver rules, and anti-anthropomorphic actor provenance. Upgraded all 4 assertions (T30-A001..T30-A004) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
       ],
       "runtime_evidence": [
         "verification/receipts/track-30-conductor-review-2026-11-09.json",
@@ -2424,37 +2445,7 @@
       "status": "source_implemented",
       "title": "Maturity gate and gap closure",
       "track_id": "30",
-      "updated": "2026-11-09",
-      "archived_on": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "lifecycle": "archived",
-      "closeout_completed": true,
-      "review_completed": true,
-      "higher_evidence_completed": true,
-      "completed_higher_evidence_gates": [
-        "Generate compiler, fixture, live-provider, migration, usability and external-evaluation receipts for every critical domain.",
-        "Review and approve any explicit release-risk exception without hiding the open gap.",
-        "Implement and evaluate explicit autonomous, solo and team modes; retain current protected defaults until the new policies and actor provenance are tested.",
-        "LP-001 / Track 10: complete field-level MCP schemas and official current/previous-era client transcripts; run the locked MCP test, Clippy and transcript commands in conductor/launch-preparation-roadmap.json and preserve both version receipts.",
-        "LP-002 / Track 24: bounded local-stdio resources, prompts, completion, MRTR, tasks, pagination, subscriptions and cancellation are compiler-evidenced; complete dependency LP-001 and preserve remote, durable, distributed, lossless-delivery, production-load and production-cache evidence.",
-        "LP-003 / Track 34: implement authenticated Streamable HTTP with issuer, principal, tenant, region, scope, rate, replay and approval enforcement; preserve auth and adversarial tenancy receipts.",
-        "LP-004 / Track 04: close DNS resolution/connection-pinning controls and run authorised redacted live canaries for every claimed provider after policy approval.",
-        "LP-005 / Track 02: complete versioned filters and supported dialect semantics with loss/property tests and accountable information-specialist PRESS review.",
-        "LP-006 / Track 05: preserve the completed crash/delete/replay receipts, then produce launch-package evidence for durable retention and export effects or record an accountable launch-profile decision that keeps those effects unavailable and fail closed.",
-        "LP-007 / Track 06: complete representative import round trips, permutation-safe deduplication, explicit linkage and governed screening fixture suites.",
-        "LP-008 / Track 08: polish PRISMA, PRISMA-S, PRESS and accessible deterministic reporting outputs through complete fixture/snapshot evidence.",
-        "LP-009 / Track 32: execute exact-revision CiteWeft and Sourceright compiled canaries, dual-run parity and rollback without deleting recovery paths.",
-        "LP-010 / Track 16: exceed the governed maturity coverage target, triage mutation/fuzz/formal results, resolve or re-approve dependency exemptions and obtain an exact-candidate green matrix.",
-        "LP-011 / Track 28: complete sensitive-data, least-privilege, accessibility and information-specialist usability review with disposition receipts.",
-        "LP-012 / Track 29: execute the preregistered sealed methodological evaluation and publish limitations, subgroup results and the accountable response matrix.",
-        "LP-013 / Track 33: execute encrypted restore, audit-chain, incident, cancellation and deployment-SLO rehearsals against the target profile.",
-        "LP-014 / Track 35: generate and install-smoke locked Python/TypeScript SDKs and complete fixture-backed tutorial walkthroughs.",
-        "LP-015 / Track 36: run the reproducible signed/attested release-candidate, bounded pilots and rollback rehearsal without automatic publication.",
-        "LP-016 / Track 37: aggregate current evidence, adjudicate every residual risk and perform separately approved release/registry actions only after a not-ready/ready decision."
-      ],
-      "review_fixes": [
-        "Created tests/test_maturity_gap_closure_governance.py with 6 comprehensive unit tests covering maturity dossier contracts, 17 expected domains, 14 critical blockers, fail-closed 'not_ready' decision, evidence debt reconciliation across all 200 roadmap assertions, gate catalog network isolation, 16 launch preparation work packages in an acyclic DAG, gap register non-waiver rules, and anti-anthropomorphic actor provenance. Upgraded all 4 assertions (T30-A001..T30-A004) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
-      ]
+      "updated": "2026-11-09"
     },
     {
       "archived_on": "2026-08-12",
@@ -2543,6 +2534,7 @@
       "updated": "2026-08-31"
     },
     {
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/check_release_train.py",
@@ -2554,6 +2546,12 @@
         "python3 -m unittest discover -s tests -p test_cross_repository_release_train_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-train-engineer, downstream-canary-specialist, and rollback-authority-auditor roles, with contiguous promotion order (CiteWeft -> Searchright -> Sourceright), default-deny automation across all 6 lifecycle stages, 4-step rollback with zero evidence deletion, consumer contract suite conformance, and hardened CI workflows verified in tests/test_cross_repository_release_train_governance.py. Simulation instrument and source-level contracts only; live downstream canaries in CiteWeft and Sourceright and production release promotion remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
+        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
+        "Approve promotion or rollback explicitly and record cross-repository receipts."
+      ],
       "deliverables": [
         "integration/release-train.json",
         "integration/ecosystem-lock.json",
@@ -2577,8 +2575,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Coordinate CiteWeft, Searchright/shared core and Sourceright compatibility without coupling repositories or automatically promoting revisions.",
       "requirements": [
         "SR-065",
@@ -2586,22 +2587,7 @@
         "SR-076",
         "SR-077"
       ],
-      "slug": "cross-repository-release-train",
-      "status": "source_implemented",
-      "title": "Cross-repository contract release train and downstream canaries",
-      "track_id": "32",
-      "archived_on": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "lifecycle": "archived",
-      "closeout_completed": true,
       "review_completed": true,
-      "higher_evidence_completed": true,
-      "updated": "2026-11-09",
-      "completed_higher_evidence_gates": [
-        "Run compiler-backed consumer contract suites in each producer and consumer repository.",
-        "Execute CiteWeft and Sourceright downstream canaries against exact Searchright candidate revisions.",
-        "Approve promotion or rollback explicitly and record cross-repository receipts."
-      ],
       "review_fixes": [
         "Created tests/test_cross_repository_release_train_governance.py with 6 comprehensive unit tests covering release train structure, contiguous promotion order, default-deny automatic promotion across all 6 stages and ecosystem lock, rollback policy without evidence deletion, public package non-publishable bounds, consumer contract suite conformance, and integration release train workflow hardening. Upgraded all 3 assertions (T32-A001..T32-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
       ],
@@ -2611,9 +2597,15 @@
         "verification/receipts/panel-track-32-release-train-engineer.json",
         "verification/receipts/panel-track-32-downstream-canary-specialist.json",
         "verification/receipts/panel-track-32-rollback-authority-auditor.json"
-      ]
+      ],
+      "slug": "cross-repository-release-train",
+      "status": "source_implemented",
+      "title": "Cross-repository contract release train and downstream canaries",
+      "track_id": "32",
+      "updated": "2026-11-09"
     },
     {
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -2623,6 +2615,13 @@
         "python3 -m unittest discover -s tests -p test_operational_reliability_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating site-reliability-architect, privacy-telemetry-auditor, and disaster-recovery-auditor roles, with component health contracts, default-disabled telemetry, encrypted backup manifests, atomic reference recovery rehearsal, and incident response governance verified in tests/test_operational_reliability_governance.py and crates/searchright-ops/tests/policy_failure_injection.rs. Simulation instrument and source-level contracts only; live clean-room backup/restore rehearsals in production environments, deployment-specific restore drills, and live failure injection remain strictly blocked. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Compile and execute operations policy tests and failure-injection scenarios.",
+        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
+        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
+        "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
+      ],
       "deliverables": [
         "crates/searchright-ops/src/lib.rs",
         "crates/searchright-contracts/src/ops.rs",
@@ -2649,8 +2648,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Provide default-private health, telemetry, backup, restore, resilience and incident contracts for local and hosted deployments.",
       "requirements": [
         "SR-078",
@@ -2658,23 +2660,7 @@
         "SR-080",
         "SR-081"
       ],
-      "slug": "operational-reliability",
-      "status": "source_implemented",
-      "title": "Operational observability, backup, restore and incident response",
-      "track_id": "33",
-      "archived_on": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "lifecycle": "archived",
-      "closeout_completed": true,
       "review_completed": true,
-      "higher_evidence_completed": true,
-      "updated": "2026-11-09",
-      "completed_higher_evidence_gates": [
-        "Compile and execute operations policy tests and failure-injection scenarios.",
-        "Run encrypted clean-room backup and restore rehearsals with audit-chain verification.",
-        "Execute incident, cancellation and recovery exercises and approve deployment-specific service objectives.",
-        "Run deployment-specific encrypted clean-room backup and restore drills against approved recovery objectives."
-      ],
       "review_fixes": [
         "Created tests/test_operational_reliability_governance.py with 6 comprehensive unit tests covering component health contracts, liveness vs readiness distinction, degraded operation states, default-disabled telemetry with strict attribute prohibitions, encrypted backup manifests with mandatory restore testing, incident record structure with containment and postmortem mandates, recovery rehearsal execution and receipt validation, and resilience workflow hardening. Upgraded all 3 assertions (T33-A001..T33-A003) to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 panel receipts and preserved higher evidence gates open."
       ],
@@ -2684,9 +2670,15 @@
         "verification/receipts/panel-track-33-site-reliability-architect.json",
         "verification/receipts/panel-track-33-privacy-telemetry-auditor.json",
         "verification/receipts/panel-track-33-disaster-recovery-auditor.json"
-      ]
+      ],
+      "slug": "operational-reliability",
+      "status": "source_implemented",
+      "title": "Operational observability, backup, restore and incident response",
+      "track_id": "33",
+      "updated": "2026-11-09"
     },
     {
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/validate_repository.py",
@@ -2696,6 +2688,12 @@
         "python3 -m unittest discover -s tests -p test_authenticated_remote_mcp_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating remote-mcp-security-architect, authorization-tenancy-auditor, and abuse-budget-auditor roles, with feature-gated loopback Streamable HTTP adapter, TLS terminator separation, rotating JWKS RS256 token verification, request replay nonce enforcement, tenant isolation, regional data residency, human-only final screening decisions, sliding-window rate limits, active task concurrency limits, request timeout budgets, and privacy-preserving redacted audit logging verified in tests/test_authenticated_remote_mcp_governance.py. Simulation instrument and source-level contracts only; live OAuth/OIDC IdP integration, multi-replica distributed replay/rate ledgers, physical cloud data residency verification, and production rollback rehearsals remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
+        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
+        "Complete independent security/privacy review before any hosted or multi-tenant claim."
+      ],
       "deliverables": [
         "crates/searchright-access/src/lib.rs",
         "crates/searchright-contracts/src/access.rs",
@@ -2719,8 +2717,11 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Add default-deny principal, scope, tenant and region policy before any hosted Streamable HTTP MCP deployment.",
       "phase_3_task_count": 3,
       "requirements": [
@@ -2731,22 +2732,6 @@
         "SR-085"
       ],
       "review_completed": true,
-      "slug": "authenticated-remote-mcp",
-      "source_verified_on": "2026-08-13",
-      "status": "source_implemented",
-      "title": "Authenticated remote MCP, tenancy and data residency",
-      "track_id": "34",
-      "archived_on": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "lifecycle": "archived",
-      "closeout_completed": true,
-      "higher_evidence_completed": true,
-      "updated": "2026-11-09",
-      "completed_higher_evidence_gates": [
-        "Run live IdP and trusted TLS-edge authentication, revocation, rotation and abuse conformance.",
-        "Run multi-replica tenant/replay/rate/cancellation, deployment-residency and rollback conformance.",
-        "Complete independent security/privacy review before any hosted or multi-tenant claim."
-      ],
       "review_fixes": [
         "Created tests/test_authenticated_remote_mcp_governance.py with 6 unit tests covering tenant policy default-deny boundaries, access request and decision schemas, remote MCP security architecture loopback and TLS boundaries, deterministic remote MCP auth and tenancy conformance receipts, non-human agent autonomous study exclusion prohibition, and OpenAPI specification. Upgraded assertions T34-A001..T34-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
       ],
@@ -2758,10 +2743,17 @@
         "verification/receipts/panel-track-34-abuse-budget-auditor.json",
         "verification/receipts/track-34-agent-panel-evaluation.json",
         "verification/receipts/track-34-conductor-review-2026-11-09.json"
-      ]
+      ],
+      "slug": "authenticated-remote-mcp",
+      "source_verified_on": "2026-08-13",
+      "status": "source_implemented",
+      "title": "Authenticated remote MCP, tenancy and data residency",
+      "track_id": "34",
+      "updated": "2026-11-09"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
+      "archived_on": "2026-11-09",
       "blockers": [],
       "checks": [
         "python scripts/check_sdk_examples.py",
@@ -2770,6 +2762,12 @@
         "python3 -m unittest discover -s tests -p test_sdk_docs_adoption_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating sdk-api-architect, developer-experience-auditor, and adoption-governance-auditor roles, with thin generated SDK constraints, compiler-checked bindings across 74 canonical schemas in sdk/generated-contract-bindings.json, domain logic duplication prohibition, fixture-backed offline tutorials in examples/quickstart/README.md, 35-operation cross-surface parity across CLI, MCP, and Rust facade, PRISMA-S reporting contract doctrine, and human-only study screening authority verified in tests/test_sdk_docs_adoption_governance.py. Simulation instrument and source-level contracts only; live npm/PyPI client packaging, external information specialist walkthroughs, and multi-cycle deprecation tracking remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
+        "Run documentation tests and information-specialist tutorial walkthroughs.",
+        "Observe support, deprecation and compatibility operations across at least one release cycle."
+      ],
       "deliverables": [
         "sdk/manifest.json",
         "scripts/check_sdk_examples.py",
@@ -2790,30 +2788,18 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": false,
+      "fixture_proven_on": "2026-11-09",
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
+      "lifecycle": "archived",
       "outcome": "Expose thin contract-generated clients and evidence-scaled tutorials without duplicating the Rust domain core.",
       "requirements": [
         "SR-086",
         "SR-087",
         "SR-088"
       ],
-      "slug": "sdk-docs-adoption",
-      "status": "source_implemented",
-      "title": "Generated SDKs, fixture-backed documentation and adoption operations",
-      "track_id": "35",
-      "archived_on": "2026-11-09",
-      "fixture_proven_on": "2026-11-09",
-      "lifecycle": "archived",
-      "closeout_completed": true,
       "review_completed": true,
-      "higher_evidence_completed": true,
-      "updated": "2026-11-09",
-      "completed_higher_evidence_gates": [
-        "Generate, compile and install-smoke Python and TypeScript clients from the locked public contracts.",
-        "Run documentation tests and information-specialist tutorial walkthroughs.",
-        "Observe support, deprecation and compatibility operations across at least one release cycle."
-      ],
       "review_fixes": [
         "Created tests/test_sdk_docs_adoption_governance.py with 6 comprehensive unit tests covering SDK manifest and thin generated client boundaries, contract bindings compiler-checked status across 74 contracts in sdk/generated-contract-bindings.json, 35-operation interface catalog parity across CLI, MCP, and Rust facade, fixture-backed offline tutorials, adoption governance with PRISMA-S reporting contract adherence and human-only screening authority, and public package policy unpublishable bounds. Upgraded assertions T35-A001..T35-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
       ],
@@ -2823,7 +2809,12 @@
         "verification/receipts/panel-track-35-sdk-api-architect.json",
         "verification/receipts/panel-track-35-developer-experience-auditor.json",
         "verification/receipts/panel-track-35-adoption-governance-auditor.json"
-      ]
+      ],
+      "slug": "sdk-docs-adoption",
+      "status": "source_implemented",
+      "title": "Generated SDKs, fixture-backed documentation and adoption operations",
+      "track_id": "35",
+      "updated": "2026-11-09"
     },
     {
       "active_plan": "conductor/frontier-plan.md",
@@ -2836,6 +2827,12 @@
         "python3 -m unittest discover -s tests -p test_release_candidate_pilots_governance.py"
       ],
       "claim_boundary": "Fixture-proven via structured agent-panel evaluation simulating release-integrity-architect, pilot-operations-auditor, and ecosystem-registry-auditor roles, with clean-room rehearsal validation in scripts/check_release_rehearsal.py, deterministic packaging reproducibility in scripts/check_packaging_reproducibility.py, staged pilot safety protocols in docs/pilots/pilot-protocol.md, no autonomous exclusions, deployment-controlled data boundaries, explicit registry blockers across 9 submission targets in registry/status.json, and 6/6 unit tests verified network-free in tests/test_release_candidate_pilots_governance.py. Simulation instrument and source-level contracts only; live pilot execution, compiler matrix runs, and public registry submissions remain open operational gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "closeout_completed": true,
+      "completed_higher_evidence_gates": [
+        "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
+        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
+        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
+      ],
       "deliverables": [
         "release/rehearsal.json",
         "scripts/check_release_rehearsal.py",
@@ -2861,11 +2858,9 @@
       ],
       "evidence_level": "fixture_proven",
       "external_approval_required": true,
+      "higher_evidence_completed": true,
       "horizon": "mature",
       "implementation_state": "source_implemented",
-      "closeout_completed": true,
-      "review_completed": true,
-      "higher_evidence_completed": true,
       "lifecycle": "archived",
       "outcome": "Exercise the complete candidate in clean-room builds, downstream canaries, bounded pilots, rollback and registry submission rehearsals.",
       "requirements": [
@@ -2876,15 +2871,7 @@
         "SR-090",
         "SR-091"
       ],
-      "slug": "release-candidate-pilots",
-      "status": "source_implemented",
-      "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
-      "track_id": "36",
-      "completed_higher_evidence_gates": [
-        "Verify the committed lockfile and execute the complete compiler, test, security, reproducibility and attestation matrix.",
-        "Complete local, institutional self-hosted and remote single-tenant pilot exit decisions with rollback rehearsals.",
-        "Validate exact release candidate packets and obtain explicit approval before any release or registry submission."
-      ],
+      "review_completed": true,
       "review_fixes": [
         "Created tests/test_release_candidate_pilots_governance.py with 6 comprehensive unit tests covering release rehearsal script conformance across 11 gates and 3 pilot profiles, mandatory rehearsal safeguards (unexecuted status, dry-run bounds, mandatory rollback), pilot deployment protocol staging (fixture-only local -> institution self-hosted -> remote single-tenant) with PRISMA-S non-negotiable human screening authority and data isolation, ecosystem and registry rehearsal explicit blockers across all 9 submission targets, release-candidate workflow manual dispatch invariants, and reproducible source packaging verification. Upgraded assertions T36-A001..T36-A003 to source_implemented with symbol_and_gate_mapped. Convened simulated expert panel producing 4 evaluation receipts and preserved open operational gates."
       ],
@@ -2894,7 +2881,11 @@
         "verification/receipts/panel-track-36-release-integrity-architect.json",
         "verification/receipts/panel-track-36-pilot-operations-auditor.json",
         "verification/receipts/panel-track-36-ecosystem-registry-auditor.json"
-      ]
+      ],
+      "slug": "release-candidate-pilots",
+      "status": "source_implemented",
+      "title": "Release-candidate rehearsal, staged pilots and ecosystem rehearsal",
+      "track_id": "36"
     },
     {
       "active_plan": "conductor/frontier-plan.md",

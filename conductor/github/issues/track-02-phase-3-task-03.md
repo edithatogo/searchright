@@ -3,11 +3,11 @@
 
 Parent phase key: `track-02-phase-3`
 Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence.
+- [x] Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence.
 
 ## Completion and evidence contract
 

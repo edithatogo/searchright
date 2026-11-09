@@ -1,0 +1,155 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "02",
+  "title": "Portable query AST and dialect compilers \u2014 agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T10:31:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "search-syntax-architect",
+    "information-specialist",
+    "loss-matrix-auditor"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "search-syntax-architect",
+      "information-specialist",
+      "loss-matrix-auditor"
+    ],
+    "output_artefacts": [
+      "query-ast-and-syntax-parser-audit",
+      "information-specialist-corpus-and-filter-audit",
+      "loss-matrix-and-metamorphic-stability-audit",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "compiler_verified",
+    "limitation": "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed."
+  },
+  "panelists": [
+    {
+      "role": "search-syntax-architect",
+      "evaluator_role": "search-syntax-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "information-specialist",
+      "evaluator_role": "information-specialist",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    },
+    {
+      "role": "loss-matrix-auditor",
+      "evaluator_role": "loss-matrix-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 2,
+      "critical": 0,
+      "major": 0,
+      "minor": 1,
+      "observation": 1,
+      "disposition": "approved"
+    }
+  ],
+  "synthesized_findings": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 02 (Portable query AST and dialect compilers). Across all six acceptance assertions (T02-A001 through T02-A006), the portable query AST and compilation engine demonstrate rigorous adherence to fail-closed translation principles and source-preserving integrity. The core query AST model (QueryExpr, SearchTerm) and compiler in crates/evidence-search-contracts/src/query.rs and crates/evidence-search-core/src/compiler.rs establish sound semantics for field targeting, controlled vocabularies, truncation, and proximity. The line-numbered native strategy representation (NativeSearchStrategy, NativeQueryLine, NativeSourceSpan) guarantees 100% byte-exact source text and span preservation with validated JSON schema contracts. Across the seven supported database dialects (PubMed, Ovid MEDLINE, Embase, CINAHL EBSCO, PsycINFO Ovid, Scopus, and Web of Science), bounded syntax parsers construct validated ASTs with Boolean precedence, recursion limits, and set-reference resolution. The loss matrix (contracts/query-corpus/loss-matrix.json) transparently discloses known syntax degradations, such as ordered proximity relaxing to unordered adjacency or requiring manual review. Metamorphic and round-trip tests confirm compile-parse-compile stability and Boolean conjunction invariance. PRISMA-S is strictly preserved as a reporting contract rather than a conduct standard, and checked-in named filters remain synthetic until rights-cleared real filters are dispositioned under open operational gates. All 6 governance unit tests in tests/test_query_ast_dialects_governance.py pass 100% network-free.",
+  "consensus_summary": "The multidisciplinary expert evaluation panel reached unanimous consensus approving Track 02 (Portable query AST and dialect compilers). Across all six acceptance assertions (T02-A001 through T02-A006), the portable query AST and compilation engine demonstrate rigorous adherence to fail-closed translation principles and source-preserving integrity. The core query AST model (QueryExpr, SearchTerm) and compiler in crates/evidence-search-contracts/src/query.rs and crates/evidence-search-core/src/compiler.rs establish sound semantics for field targeting, controlled vocabularies, truncation, and proximity. The line-numbered native strategy representation (NativeSearchStrategy, NativeQueryLine, NativeSourceSpan) guarantees 100% byte-exact source text and span preservation with validated JSON schema contracts. Across the seven supported database dialects (PubMed, Ovid MEDLINE, Embase, CINAHL EBSCO, PsycINFO Ovid, Scopus, and Web of Science), bounded syntax parsers construct validated ASTs with Boolean precedence, recursion limits, and set-reference resolution. The loss matrix (contracts/query-corpus/loss-matrix.json) transparently discloses known syntax degradations, such as ordered proximity relaxing to unordered adjacency or requiring manual review. Metamorphic and round-trip tests confirm compile-parse-compile stability and Boolean conjunction invariance. PRISMA-S is strictly preserved as a reporting contract rather than a conduct standard, and checked-in named filters remain synthetic until rights-cleared real filters are dispositioned under open operational gates. All 6 governance unit tests in tests/test_query_ast_dialects_governance.py pass 100% network-free.",
+  "recommendations": [
+    "Preserve open gate T02-G-NAMED-FILTERS until rights-clear real named-filter expressions and versions are reviewed by an isolated panel and approved by the accountable owner.",
+    "Preserve open gate T02-G-CORPUS-OWNER until the accountable owner records a formal disposition of exact digest-bound panel findings.",
+    "Maintain strict fail-closed diagnostics for syntax outside declared dialect subsets to ensure unhandled vendor syntax is never translated lossily without review."
+  ],
+  "assertions_evaluated": [
+    {
+      "id": "T02-A001",
+      "statement": "Complete field/proximity/truncation semantics",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Portable AST model (QueryExpr, SearchTerm) in crates/evidence-search-contracts/src/query.rs and compiler in crates/evidence-search-core/src/compiler.rs enforce explicit field mappings, truncation, and proximity operators with fail-closed diagnostics for unsupported constructs."
+    },
+    {
+      "id": "T02-A002",
+      "statement": "Add line-numbered native strategy representation",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "NativeSearchStrategy, NativeQueryLine, and NativeSourceSpan in crates/evidence-search-contracts/src/query.rs preserve 100% exact raw text and byte-exact spans while validating line kinds and numbering against contracts/json-schema/native-search-strategy.v1.schema.json."
+    },
+    {
+      "id": "T02-A003",
+      "statement": "Build PubMed/Ovid MEDLINE/Embase/CINAHL/PsycINFO/Scopus/Web of Science corpus",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Seven-dialect corpus in contracts/query-corpus/ validated against sha256 checksums in index.json, loss matrix verified, and check_native_query_corpus.py passing cleanly network-free."
+    },
+    {
+      "id": "T02-A004",
+      "statement": "Add named filter contracts with source/version/citation",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Named filter contracts in crates/evidence-search-contracts/src/query.rs, schema contracts/json-schema/named-filter-pack.v1.schema.json, and fixture contracts/examples/named-filter-pack.json enforce source, version, citation, and checksum metadata while strictly maintaining the synthetic validation boundary."
+    },
+    {
+      "id": "T02-A005",
+      "statement": "Add syntax parsers for supported native dialect subsets",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Parser implementations in crates/evidence-search-core/src/native.rs parse bounded native query subsets across seven databases into validated ASTs with Boolean precedence, bounded nesting limits, and set references while unsupported syntax remains source-preserved and review-required."
+    },
+    {
+      "id": "T02-A006",
+      "statement": "Create metamorphic and round-trip translation tests",
+      "verdict": "PASSED",
+      "confidence": "HIGH",
+      "notes": "Property tests in crates/evidence-search-core/tests/property_tests.rs and unit tests in compiler.rs and native.rs verify compile-parse-compile stability, deterministic JSON round-trips, Boolean conjunction reordering invariance, and loss-code emission."
+    }
+  ],
+  "open_gates": [
+    {
+      "gate": "T02-G-NAMED-FILTERS",
+      "statement": "Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.",
+      "status": "OPEN",
+      "evidence": "Preserved open until rights-clear real filters are reviewed by an isolated panel and approved by the accountable owner."
+    },
+    {
+      "gate": "T02-G-CORPUS-OWNER",
+      "statement": "Obtain the accountable owner's disposition of the exact digest-bound corpus/loss-matrix agent-panel findings; topic-specific PRESS adequacy and empirical retrieval claims require separate protocol and outcome evidence.",
+      "status": "OPEN",
+      "evidence": "Preserved open until accountable owner issues final review and disposition."
+    }
+  ],
+  "verified_invariants": [
+    "Seven-dialect corpus complete: pub_med, ovid_medline, embase, cinahl_ebsco, psyc_info_ovid, scopus, web_of_science validated",
+    "Loss matrix transparency: query-dialect-loss-matrix discloses proximity and subheading losses fail-closed",
+    "Native line-numbered strategy: schema and example validated with 100% source span preservation",
+    "Named filter contracts: JSON schema and example validated; synthetic evidence boundary maintained",
+    "Syntax parser subsets: seven bounded database subsets parse to validated ASTs",
+    "Metamorphic & round-trip tests: property tests confirm compile-parse-compile stability",
+    "Deterministic governance tests: tests/test_query_ast_dialects_governance.py passes 6/6 tests network-free"
+  ],
+  "disposition": "approved",
+  "limitations": [
+    "Compiler-backed tests cover the declared project-authored query subsets, source preservation and fail-closed normalization. Complete vendor-language semantics, cross-database retrieval equivalence, real-filter currency, topic-specific search adequacy and owner approval are not claimed."
+  ]
+}

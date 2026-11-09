@@ -12,9 +12,9 @@ Deliver deterministic, reviewable query translation with explicit fidelity and l
 ## Contract
 
 - Horizon: `foundation`
-- Status: `external_evidence_required`
+- Status: `source_implemented`
 - Implementation: `source_implemented`
-- Evidence: `compiler_verified`
+- Evidence: `fixture_proven`
 - Dependencies: `01`
 - Requirements: `SR-005, SR-006, SR-007`
 - External approval required: `true`

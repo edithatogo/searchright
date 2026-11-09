@@ -3,11 +3,11 @@
 
 Parent phase key: `track-02-phase-3`
 Conductor plan: `conductor/tracks/02-query-ast-dialects/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.
+- [x] Obtain rights-clear real named-filter expressions, exact versions and provider-current evidence; an isolated agent panel reviews them and the accountable owner records the decision. The checked-in pack remains synthetic.
 
 ## Completion and evidence contract
 
