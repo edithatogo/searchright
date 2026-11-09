@@ -1,0 +1,31 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "04",
+  "evaluator_role": "provider-governance-auditor",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 1.0,
+  "verdict": "APPROVED",
+  "scope": [
+    "integration/provider-contract-baselines.json",
+    "integration/provider-policies/index.json",
+    "policy/redaction-profile.json",
+    "scripts/check_provider_contract_baselines.py",
+    "scripts/check_provider_policies.py",
+    "scripts/check_redaction_policy.py",
+    "docs/provider-governance.md"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T04-GOV-01",
+      "severity": "LOW",
+      "summary": "Strict rate limiting, credentials omission, and redaction profiles prevent unauthorized provider access and leakage.",
+      "evidence": "Verification scripts enforce fail-closed checks: no live network access without explicit opt-in, strict interval enforcement, and zero credential persistence.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Keep live canary execution strictly disabled by default until explicit institutional credentials and approval are granted."
+  ]
+}

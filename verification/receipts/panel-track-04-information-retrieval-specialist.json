@@ -1,0 +1,31 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "04",
+  "evaluator_role": "information-retrieval-specialist",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 0.98,
+  "verdict": "APPROVED",
+  "scope": [
+    "provider-fixtures/mvp/pubmed-esearch.json",
+    "provider-fixtures/mvp/pubmed-esummary.json",
+    "provider-fixtures/mvp/europe-pmc.json",
+    "provider-fixtures/mvp/crossref.json",
+    "provider-fixtures/mvp/openalex.json",
+    "docs/pubmed-efetch-mapping.md",
+    "docs/provider-parser-integrity.md"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T04-IR-01",
+      "severity": "LOW",
+      "summary": "Source-qualified identifiers preserve bibliographic integrity across PubMed, Europe PMC, Crossref, and OpenAlex.",
+      "evidence": "Deterministic fixtures guarantee zero fabrication of missing fields and enforce explicit citation boundary checks.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Maintain unmapped inverted-index abstracts as explicit limitations in provider documentation."
+  ]
+}

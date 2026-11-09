@@ -12,9 +12,9 @@ Provide deterministic open-source adapters and opt-in live execution for major d
 ## Contract
 
 - Horizon: `mvp`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `03`
 - Requirements: `SR-014, SR-015, SR-016`
 - External approval required: `false`

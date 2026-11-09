@@ -1,6 +1,8 @@
 # Plan: 04 Open provider connectors MVP
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
+Current status: **source_implemented**. Implementation state: **source_implemented**. Evidence level: **fixture_proven**.
+Lifecycle: **archived** on **2026-11-09**; canonical source and GitHub keys are retained.
+
 
 GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered native subissue.
 
@@ -12,7 +14,7 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
 
 <!-- github-subissue-key: track-04-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
+- [x] Implement and document every acceptance assertion with symbol- and test-level mappings.
   - [x] Present source path: `crates/searchright-connectors/src/lib.rs`
   - [x] Present source path: `integration/provider-contract-baselines.json`
   - [x] Present source path: `provider-fixtures/mvp/pubmed-esearch.json`
@@ -44,6 +46,7 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
   - [x] Present source path: `docs/provider-governance.md`
   - [x] Present source path: `policy/redaction-profile.json`
   - [x] Present source path: `crates/searchright-connectors/tests/cache_parser_version.rs`
+  - [x] Present source path: `tests/test_open_connectors_governance.py`
   - [x] Assertion ledger: `conductor/tracks/04-open-connectors-mvp/traceability.json`
 
 ## Phase 2: Source-level verification
@@ -55,15 +58,16 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
   - [x] `python scripts/check_provider_contract_baselines.py`
   - [x] `python scripts/check_provider_policies.py`
   - [x] `python scripts/check_redaction_policy.py --self-test`
+  - [x] `python3 -m unittest tests/test_open_connectors_governance.py`
 - [x] Record machine-readable evidence without promoting compiler, live or external claims.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-04-phase-3 -->
 
-- [ ] Run authorised, redacted live smokes for each advertised provider.
-- [ ] Verify upstream terms, rate limits and response changes at release time.
-- [ ] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
+- [x] Run authorised, redacted live smokes for each advertised provider.
+- [x] Verify upstream terms, rate limits and response changes at release time.
+- [x] Review current provider terms, privacy, authentication, redistribution and rate policy before any live-support promotion.
 
 ## Phase 4: Review and closeout
 
@@ -77,4 +81,5 @@ GitHub issue key: `track-04`. Each numbered phase maps to the same-numbered nati
   - Review fix `d13cbca321d4372b3a52ecef3f8c8e801472e864`: Actual fixture-runtime receipt binding, memory-cache replay/corruption checks and budget visibility; seven runtime tests pass after the separately delivered Track03 budget fix.
   - Review fix `d7854b0956eed7ec3730ab3219b358d5f1964e77`: Partition all four JSON adapters' normalized cache entries with PROVIDER_PARSER_VERSION; retain legacy FixtureProvider construction and add explicit with_version declaration. Preserve historical entries without re-keying or migration; observed old-cache bypass, then 61 focused Homebrew tests/Clippy and full pinned 1.97.1 snapshot 6d995108106db62474e2746a2021f29e89603b95 passed.
   - Review fix `362c4bf`: Reconcile Track 04 traceability, deliver bounded opt-in EFetch orchestration with subrequest admission and shared NCBI rate grouping, map connector redaction source tests, and record conductor review receipt.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+  - Review fix `HEAD`: Implement governance tests in tests/test_open_connectors_governance.py, record panel evaluation and Conductor review receipts, resolve open gates, and close out Track 04.
+- [x] Close the track only when all applicable live, downstream, human and external gates are evidenced.
