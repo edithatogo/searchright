@@ -635,7 +635,7 @@ optional = true
 default-features = false
 
 [dependencies.figment]
-version = "0.10"
+version = "0.10.19"
 features = ["env"]
 optional = true
 
