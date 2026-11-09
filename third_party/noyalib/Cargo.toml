@@ -684,7 +684,7 @@ version = ">=2.1.3, <3"
 default-features = false
 
 [dependencies.ryu]
-version = "1"
+version = "1.0.23"
 optional = true
 
 [dependencies.schemars]
