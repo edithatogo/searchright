@@ -254,7 +254,7 @@
       "version": "0.13.2"
     },
     {
-      "bom-ref": "cargo-requirement:rmcp@=3.8.0",
+      "bom-ref": "cargo-requirement:rmcp@=3.9.0",
       "name": "rmcp",
       "properties": [
         {
@@ -262,10 +262,10 @@
           "value": "version-requirement-not-resolved"
         }
       ],
-      "purl": "pkg:cargo/rmcp@=3.8.0",
+      "purl": "pkg:cargo/rmcp@=3.9.0",
       "scope": "required",
       "type": "library",
-      "version": "=3.8.0"
+      "version": "=3.9.0"
     },
     {
       "bom-ref": "cargo-requirement:rustls@0.23",
@@ -1574,7 +1574,7 @@
         "cargo-requirement:blake3@1.8",
         "cargo-requirement:jsonwebtoken@11",
         "cargo-requirement:noyalib@=0.0.58",
-        "cargo-requirement:rmcp@=3.8.0",
+        "cargo-requirement:rmcp@=3.9.0",
         "cargo-requirement:serde@1.0",
         "cargo-requirement:serde_json@1.0",
         "cargo-requirement:sha2@0.11",
@@ -1768,7 +1768,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:f23cac6b-2530-500b-89bd-d16c1809735c",
+  "serialNumber": "urn:uuid:6c07adb2-7b02-5c73-80a1-18208456421f",
   "specVersion": "1.6",
   "version": 1
 }
