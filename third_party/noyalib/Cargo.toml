@@ -655,7 +655,7 @@ features = ["serde"]
 default-features = false
 
 [dependencies.itoa]
-version = "1"
+version = "1.0.18"
 optional = true
 
 [dependencies.jsonschema]
