@@ -95,6 +95,18 @@ inspected but retains its unreviewed exemption as it lacks a complete peer
 `safe-to-deploy` chain, and `untrusted 0.7.1` retains its unreviewed exemption.
 The remaining 235 exemptions retain the 2026-11-10 deadline.
 
+## Locked dependency reconciliation (2026-11-09)
+
+Automated updates raised the vendored Noyalib minimum versions for `libm` and
+`rustix` without updating the workspace lockfile. Restore their original upstream
+requirements (`0.2` and `1.1.4`, also recorded in `Cargo.toml.orig`) so the
+committed `libm 0.2.6` and `rustix 1.1.4` graph remains usable with `--locked`.
+The existing Mozilla audit covers `libm 0.2.6`; `rustix 1.1.4` retains its existing
+temporary exemption. This changes neither locked versions nor accepted reviews.
+Reintroduce higher minimum versions together with a coherent lockfile, qualifying
+review evidence and native checks; the observed `libm 0.2.16` audit gap remains
+unresolved for that future upgrade.
+
 ## Deadline remediation sequence
 
 As of 7 November 2026, the active set is 230 `safe-to-deploy` and 17
