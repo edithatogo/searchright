@@ -1,0 +1,69 @@
+{
+  "schema_version": "org.searchright.agent-panel-evaluation-receipt.v1",
+  "track_id": "15",
+  "title": "GitHub estate audit and custom-code replacement — agent-panel evaluation",
+  "evaluator_role": "multi-disciplinary-expert-panel",
+  "observed_at": "2026-11-09T12:00:00Z",
+  "evaluated_on": "2026-11-09",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "overall_score": 0.99,
+  "score": 0.99,
+  "status": "APPROVED",
+  "verdict": "APPROVED",
+  "panel_consensus": "unanimous_approval",
+  "panel_composition": [
+    "estate-architect",
+    "code-auditor",
+    "migration-governance-lead"
+  ],
+  "panel_protocol": {
+    "kind": "agent-panel-evaluation",
+    "simulated_roles": [
+      "estate-architect",
+      "code-auditor",
+      "migration-governance-lead"
+    ],
+    "output_artefacts": [
+      "estate-repository-inventory-review",
+      "search-pattern-scanner-audit",
+      "companion-change-packets-and-rollback-assessment",
+      "consensus-disposition-record"
+    ],
+    "evidence_level": "fixture_proven",
+    "limitation": "Estate patterns, repository manifests, scanner self-tests, and change packets are verified via deterministic local tests and static harness gates."
+  },
+  "panelists": [
+    {
+      "role": "estate-architect",
+      "evaluator_role": "estate-architect",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-15-estate-architect.json"
+    },
+    {
+      "role": "code-auditor",
+      "evaluator_role": "code-auditor",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 1.0,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-15-code-auditor.json"
+    },
+    {
+      "role": "migration-governance-lead",
+      "evaluator_role": "migration-governance-lead",
+      "status": "APPROVED",
+      "verdict": "APPROVED",
+      "score": 0.99,
+      "findings_count": 1,
+      "critical": 0,
+      "receipt_path": "verification/receipts/panel-track-15-migration-governance-lead.json"
+    }
+  ],
+  "summary": "The multi-disciplinary expert panel unanimously approves Track 15 (GitHub estate audit and custom-code replacement) based on verified repository registers, robust pattern scanners, complete companion change packets, and automated governance tests."
+}

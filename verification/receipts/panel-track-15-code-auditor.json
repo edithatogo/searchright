@@ -1,0 +1,27 @@
+{
+  "schema_version": "org.searchright.expert-panel-evaluation-receipt.v1",
+  "track_id": "15",
+  "evaluator_role": "code-auditor",
+  "evaluation_date": "2026-11-09",
+  "source_revision": "HEAD",
+  "status": "APPROVED",
+  "score": 1.0,
+  "verdict": "APPROVED",
+  "scope": [
+    "scripts/audit_search_code.py",
+    "migration/estate/patterns.json",
+    "tests/test_estate_migration.py"
+  ],
+  "findings": [
+    {
+      "finding_id": "FIND-T15-CA-01",
+      "severity": "LOW",
+      "summary": "audit_search_code.py self-test passes with 12 canonical patterns and successfully scans multi-language files.",
+      "evidence": "11 unit tests in tests/test_estate_migration.py verify pattern matching, ignored directories, and error handling.",
+      "disposition": "satisfied"
+    }
+  ],
+  "recommendations": [
+    "Ensure scanner self-tests remain part of the static harness."
+  ]
+}

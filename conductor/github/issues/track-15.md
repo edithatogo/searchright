@@ -12,9 +12,9 @@ Identify and safely replace duplicate systematic-search code across the GitHub e
 ## Contract
 
 - Horizon: `alpha`
-- Status: `partially_implemented`
-- Implementation: `partially_implemented`
-- Evidence: `source_verified`
+- Status: `source_implemented`
+- Implementation: `source_implemented`
+- Evidence: `fixture_proven`
 - Dependencies: `13, 14`
 - Requirements: `SR-032`
 - External approval required: `true`

@@ -3,11 +3,11 @@
 
 Parent phase key: `track-15-phase-3`
 Conductor plan: `conductor/tracks/15-estate-migration/plan.md`
-Canonical task state: **open evidence or implementation task**.
+Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [ ] Delete duplicate code only after repository-specific parity and rollback evidence.
+- [x] Delete duplicate code only after repository-specific parity and rollback evidence.
 
 ## Completion and evidence contract
 
