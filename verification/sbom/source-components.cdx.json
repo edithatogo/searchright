@@ -394,7 +394,7 @@
       "version": "1"
     },
     {
-      "bom-ref": "cargo-requirement:tracing-subscriber@0.3",
+      "bom-ref": "cargo-requirement:tracing-subscriber@0.3.23",
       "name": "tracing-subscriber",
       "properties": [
         {
@@ -402,13 +402,13 @@
           "value": "version-requirement-not-resolved"
         }
       ],
-      "purl": "pkg:cargo/tracing-subscriber@0.3",
+      "purl": "pkg:cargo/tracing-subscriber@0.3.23",
       "scope": "required",
       "type": "library",
-      "version": "0.3"
+      "version": "0.3.23"
     },
     {
-      "bom-ref": "cargo-requirement:tracing@0.1",
+      "bom-ref": "cargo-requirement:tracing@0.1.44",
       "name": "tracing",
       "properties": [
         {
@@ -416,10 +416,10 @@
           "value": "version-requirement-not-resolved"
         }
       ],
-      "purl": "pkg:cargo/tracing@0.1",
+      "purl": "pkg:cargo/tracing@0.1.44",
       "scope": "required",
       "type": "library",
-      "version": "0.1"
+      "version": "0.1.44"
     },
     {
       "bom-ref": "cargo-requirement:url@2.5",
@@ -1582,7 +1582,7 @@
         "cargo-requirement:time@0.3.55",
         "cargo-requirement:tokio-util@0.7",
         "cargo-requirement:tokio@1",
-        "cargo-requirement:tracing-subscriber@0.3",
+        "cargo-requirement:tracing-subscriber@0.3.23",
         "cargo:searchright-access@0.1.0-alpha.1",
         "cargo:searchright-contracts@0.1.0-alpha.1",
         "cargo:searchright@0.1.0-alpha.1"
@@ -1768,7 +1768,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:01599af4-bdf8-5a09-bd6d-c1ccdc1435a6",
+  "serialNumber": "urn:uuid:d715a406-0c38-5761-b2f3-16011b6f2b73",
   "specVersion": "1.6",
   "version": 1
 }
