@@ -664,7 +664,7 @@ optional = true
 default-features = false
 
 [dependencies.libm]
-version = "0.2"
+version = "0.2.16"
 default-features = false
 
 [dependencies.memchr]
