@@ -630,7 +630,7 @@ optional = true
 default-features = false
 
 [dependencies.bytes]
-version = "1"
+version = "1.12.1"
 optional = true
 default-features = false
 
