@@ -1327,10 +1327,10 @@ fbc8228717db086f4d7b07fb97fb2d2597ec331e956c5d284cdfc9752f620686  ./crates/searc
 b625cea6752a4ee740a1b035898da56a3b0f6f3e8a875d5fbd921d668dc96c2d  ./crates/searchright-mcp/src/lib.rs
 866b71a08e589b44b2265f0f95481d0a6f9c3cea456d0ed941b3377178ff4734  ./crates/searchright-mcp/src/main.rs
 2913ed7f5512a026e323e7cb2b25713fa7a2321aef024ca55cd921565e5cbd89  ./crates/searchright-mcp/src/remote.rs
-f55859ed5d2459cd1786bfe6cb86b8f25a864678f7731a8cda874e18011d5de9  ./crates/searchright-mcp/tests/advanced_mcp.rs
+01869372dc68d17bae4bd2fd981384c3b642afa0e1077b2dae37cbaaa8ebb3c3  ./crates/searchright-mcp/tests/advanced_mcp.rs
 f20a78107cb99c6de57d27c57aaf24ed79b6ceed07117041fc70b8ac82c1fcc0  ./crates/searchright-mcp/tests/fixtures/remote-mcp-jwks.json
 98235d7b68dfd3d30859b269e740dc28b3c49dceba4fceb588e13a8aeb1e8171  ./crates/searchright-mcp/tests/fixtures/remote-mcp-private.der.b64
-9547895d51163e86f83c3f29f888a3bd8a72d39ac678aa8461d937dd1fc1185f  ./crates/searchright-mcp/tests/live_client_conformance.rs
+e468015054f1d94daa49d7c2b4502503fb4598a1cbb5082f1fe6fd36a282eaed  ./crates/searchright-mcp/tests/live_client_conformance.rs
 279a68319858f647f450e3b8a9f75656438c6a78586898fb700722fdf2dfd23b  ./crates/searchright-ops/Cargo.toml
 227c977c2d7446ce8ac81a91383f3f0788813fde02a03e8511bf58ee0c340e8c  ./crates/searchright-ops/src/lib.rs
 27a95cc701c33bb3191cfad06c4e5900242688b3532b0ba426ed3e53eba531e0  ./crates/searchright-ops/tests/policy_failure_injection.rs
@@ -1489,7 +1489,7 @@ b94072bbef10f275807d605ca8e3cfbcddf5a88f57fb578c1499e0ab748418d9  ./fuzz/fuzz_ta
 0d94df3f1d68e191367f594be2e5634412766df470584ceaa5b73cbdabe36958  ./glama.json
 9d84ebd000d5698c3fbbe9149019981d7005a19a3de44422fbfa3e550b1322ad  ./integration/citeweft-compatibility.json
 a2a655d966ac9b237793c837d9f0f97ea012db7219e4434513e7c6299d440050  ./integration/consumer-contract-suite.json
-4224d2301b96c372ec396e46d98505a4b6f5d683679cb9b1bde1463008c886d7  ./integration/ecosystem-lock.json
+b3d2b130bf375ffbc62336ee15a3091e2edb7c52d20ac8245b769894c0cb410c  ./integration/ecosystem-lock.json
 7ebe29e421ab0f9dadbe845a966089cb09cde97cd998213af73789028669810f  ./integration/fixtures/prisma-jl/flow-parity-v1.json
 6841b0d9cea51e5319b20d259d33ba9b9649283847a423e35ca5a8092344e3d0  ./integration/fixtures/standardflow-review-flow-evidence.json
 e98f74fca744bb3cf7874f78b2aadb6c9329f6b2b8bcba32706169ef444f2b9c  ./integration/github/portfolio-project.json
