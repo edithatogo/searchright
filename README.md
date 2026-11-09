@@ -6,7 +6,7 @@
 
 Searchright is a Rust-core research tool for designing, translating, validating, executing and updating multi-source literature searches. It preserves source observations, search strategies, record identity, provenance and the information needed to independently inspect a search. Its outputs are intended for evidence synthesis **and** bibliometric/scientometric analyses.
 
-> **Project status: technical alpha.** Source implementations, deterministic fixtures, contracts, Rust API, CLI, local MCP server and agent skill exist. A complete live multi-source search-to-consumer workflow, methodological superiority, independently validated reproducibility, production hosting and publication/registry acceptance are **not** established. Consult [the evidence model](docs/vertical-slice-definition-of-done.md), [Conductor](conductor/tracks.md) and [GitHub Actions](../../actions) for revision-bound evidence. The [historical status snapshot](PROJECT_STATUS.md) is dated September 2026 and is **not** a live dashboard.
+> **Project status: technical alpha.** Source implementations, deterministic fixtures, contracts, Rust API, CLI, local MCP server and agent skill exist. A complete live multi-source search-to-consumer workflow, methodological superiority, independently validated reproducibility, production hosting and publication/registry acceptance are **not** established. Consult [the evidence model](docs/vertical-slice-definition-of-done.md), [Conductor](conductor/tracks.md) and [GitHub Actions](https://github.com/edithatogo/searchright/actions) for revision-bound evidence. The [historical status snapshot](PROJECT_STATUS.md) is dated September 2026 and is **not** a live dashboard.
 
 ## What Searchright does
 
