@@ -1,50 +1,54 @@
-# Plan: 41 Demand-driven incremental living review computation
+# Plan: 41 Temporal acquisition and versioned living-search corpora
 
-Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
-
-GitHub issue key: `track-41`. Each numbered phase maps to the same-numbered native subissue.
-
-## Active forward plan
-
-[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
+Status: **scaffolded**. Evidence ceiling: **source_verified**; historical issue/phase/task identifiers remain stable. The superseded algorithmic scope is not a current implementation requirement.
 
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-41-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/41-salsa-incremental-living-reviews/spec.md`
-  - [x] Present source path: `crates/searchright-contracts/src/living.rs`
-  - [x] Present source path: `crates/searchright-living/src/lib.rs`
-  - [x] Present source path: `crates/searchright-dedup/src/lib.rs`
-  - [x] Present source path: `crates/searchright-study/src/lib.rs`
-  - [x] Present source path: `crates/searchright-prisma/src/lib.rs`
-  - [x] Assertion ledger: `conductor/tracks/41-salsa-incremental-living-reviews/traceability.json`
+- [ ] Implement the new scope and bind assertions to actual source symbols.
 
 ## Phase 2: Source-level verification
 
 <!-- github-subissue-key: track-41-phase-2 -->
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/check_traceability.py`
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [x] Historical network-free source validation existed (not current behaviour proof).
+- [ ] Re-run static and traceability validators on the revised exact head.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-41-phase-3 -->
 
-- [ ] Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.
-- [ ] Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.
-- [ ] Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.
-- [ ] Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay.
+- [ ] **41.1 — Distinct logical corpus/content revision/observation/run/attempt/profile identities**
+  - Prerequisite: 40.1–2; immutable identity tests.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
+- [ ] **41.2 — New, changed, withdrawn, corrected and delayed-index source observations**
+  - Prerequisite: 41.1; three-wave delta fixtures.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
+- [ ] **41.3 — Narrow safe invalidation for strategy, metadata, vocabulary and identity changes**
+  - Prerequisite: 41.2; dependency-change metamorphic fixtures.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
+- [ ] **41.4 — Full-replay equivalence versus incremental results**
+  - Prerequisite: 41.3; property tests and explicit ordering semantics.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
+- [ ] **41.5 — Qualify Salsa/DVC against simple existing Rust/CI baseline**
+  - Prerequisite: 41.4; measured value/maintenance/rollback decision.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Phase 4: Review and closeout
 
 <!-- github-subissue-key: track-41-phase-4 -->
 
-- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
-- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Run an actual Conductor review where available or state limits of repository-native review.
+- [ ] Apply review findings and pass exact-head security, compiler and relevant consumer tests.
+- [ ] Archive only after all applicable assertions, provenance and external gates pass; otherwise keep open.

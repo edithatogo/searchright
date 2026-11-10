@@ -1,108 +1,78 @@
-# 41: Demand-driven incremental living review computation
+# 41: Temporal acquisition and versioned living-search corpora
 
 ## Objective
 
-Re-architect living systematic review updates (`crates/searchright-living`, `crates/searchright-dedup`, `crates/searchright-study`, and `crates/searchright-prisma`) around a demand-driven, Salsa-inspired memoized dependency DAG so that when new provider delta observations arrive or a single eligibility criterion is amended, only the exact downstream clusters, screening judgements, study aggregates and PRISMA cells that depend on the changed inputs are recomputed, with deterministic bisimulation equivalence to a full from-scratch replay.
+Searchright owns systematic search and provenance-rich CSL-JSON corpus. Sourceright reconciles references; CiteWeft extracts; ASReview screens; pybibx/bibliometrix/VOSviewer/tobac/voiage analyse.
+
+- Distinct logical corpus/content revision/observation/run/attempt/profile identities
+- New, changed, withdrawn, corrected and delayed-index source observations
+- Narrow safe invalidation for strategy, metadata, vocabulary and identity changes
+- Full-replay equivalence versus incremental results
+- Qualify Salsa/DVC against simple existing Rust/CI baseline
 
 ## Scope
 
-- Fine-grained dependency graph nodes and content-addressed revision fingerprints across observations, deduplication clusters, screening criteria, studies and PRISMA counts
-- Demand-driven memoization and early-cutoff propagation skipping downstream recomputation when an intermediate node's output digest is unchanged
-- Selective criterion-level invalidation on protocol amendments re-queueing only records whose decision depended on the modified eligibility criterion
-- Incremental PRISMA 2020 and Living Systematic Review (LSR) delta ledger tracking added, merged, upgraded and invalidated records across update waves
-- Deterministic bisimulation test harness proving bit-for-bit state identity between incremental update sequences and full from-scratch replay
+- **41.1** Distinct logical corpus/content revision/observation/run/attempt/profile identities
+- **41.2** New, changed, withdrawn, corrected and delayed-index source observations
+- **41.3** Narrow safe invalidation for strategy, metadata, vocabulary and identity changes
+- **41.4** Full-replay equivalence versus incremental results
+- **41.5** Qualify Salsa/DVC against simple existing Rust/CI baseline
 
 ## Requirements owned
 
 `SR-097`
 
-## Acceptance contract
+## Implementation ownership
 
-- All source deliverables exist, are contract-linked and pass the named network-free checks.
-- Higher evidence is promoted only by current reproducible receipts at the claimed level.
-- Remote, downstream, human and publication work remains approval-gated and reversible.
-- Safety, privacy, migration, support and public-claim boundaries are reviewed.
+- `crates/searchright-living/src/lib.rs`
+- `crates/searchright-dedup/src/lib.rs`
+- `crates/searchright-interchange/src/csl_corpus.rs`
 
-## Granular Agent Execution Playbook
+## Acceptance and exclusions
 
-Follow these step-by-step instructions to build the demand-driven incremental engine and bisimulation proof suite.
+Salsa and DVC are optional; fresh live source observation is never inferred from cache.
 
-### Task 1: Define Incremental Dependency DAG Node & Revision Contracts (`crates/searchright-contracts`)
+Source-level planning is not compiler, authorised live, real-consumer or independent methodological evidence. Screening/stopping, extraction/entailment and VOI remain with their downstream owners; track closure requires verified acceptance.
 
-1. **Target Files**:
-   - `crates/searchright-contracts/src/living.rs`
-   - `crates/searchright-contracts/src/lib.rs`
-2. **Data Structures to Add**:
-   - `DagNodeKey`:
-     - Enum variants:
-       - `SourceObservation { observation_id: String }`
-       - `DedupCluster { cluster_id: String }`
-       - `EligibilityCriterion { criterion_id: String }`
-       - `ScreeningCell { cluster_id: String, criterion_id: String }`
-       - `RecordDecision { cluster_id: String }`
-       - `StudyGroup { study_id: String }`
-       - `PrismaCounter { counter_name: String }`
-   - `NodeMemoEntry`:
-     - `node_key: DagNodeKey`
-     - `input_dependencies: Vec<(DagNodeKey, String)>` (pairs of `(upstream_key, upstream_output_sha256)`)
-     - `output_sha256: String`
-     - `last_verified_revision: u64`
-     - `last_changed_revision: u64`
-   - `IncrementalUpdateReceipt`:
-     - `revision: u64`
-     - `dirty_input_keys: Vec<DagNodeKey>`
-     - `recomputed_nodes: Vec<DagNodeKey>`
-     - `early_cutoff_nodes: Vec<DagNodeKey>`
-     - `reused_clean_nodes: usize`
-     - `state_root_sha256: String`
-3. **Verification Command**:
-   - `cargo test --locked -p searchright-contracts`
+### 41.1: Distinct logical corpus/content revision/observation/run/attempt/profile identities
 
-### Task 2: Implement Demand-Driven Memoization Engine with Early Cutoff (`crates/searchright-living`)
+**Prerequisites:** 40.1–2; immutable identity tests.
 
-1. **Target Files**:
-   - `crates/searchright-living/src/dag.rs` (new module, exported in `crates/searchright-living/src/lib.rs`)
-2. **Algorithms to Implement**:
-   - Implement `IncrementalReviewDag`:
-     - Stores `revision: u64` and `memos: BTreeMap<DagNodeKey, NodeMemoEntry>`.
-     - **Early Cutoff Rule**: When an upstream input `SourceObservation` changes (e.g. a provider re-emits the same PMID with only a changed retrieval timestamp, leaving title, abstract, DOI and identifiers identical), `DedupCluster` recomputes its canonical content digest. Because its `output_sha256` matches the previous revision's `output_sha256`, `last_changed_revision` is NOT bumped, and downstream `ScreeningCell`, `RecordDecision`, `StudyGroup`, and `PrismaCounter` nodes are recorded in `early_cutoff_nodes` without re-execution.
-     - **Selective Criterion Amendment Rule**: When `EligibilityCriterion { criterion_id: C }` is amended:
-       1. Mark only `ScreeningCell { cluster_id: *, criterion_id: C }` as dirty.
-       2. Further prune: if a `cluster_id` was already definitively excluded by an *unmodified* mandatory criterion $C' \neq C$ (`ScreeningCell { cluster_id, criterion_id: C' } == Excluded`), do not re-queue `cluster_id` for human re-screening unless $C'$ itself changes.
-3. **Unit Tests to Add**:
-   - Test metadata-only provenance refresh triggers early cutoff at `DedupCluster` and performs zero screening recomputations.
-   - Test amending Criterion `C2` re-evaluates records included or pending on `C2`, while leaving records already excluded by untouched Criterion `C1` stable.
-4. **Verification Command**:
-   - `cargo test --locked -p searchright-living`
+**Acceptance:** cargo test --locked -p searchright-living.
 
-### Task 3: Incremental Deduplication & Study Linkage (`crates/searchright-dedup` & `crates/searchright-study`)
+**Command:** `undefined`.
 
-1. **Target Files**:
-   - `crates/searchright-dedup/src/lib.rs`
-   - `crates/searchright-study/src/lib.rs`
-2. **Functions to Implement**:
-   - In `crates/searchright-dedup/src/lib.rs`:
-     - Implement `pub fn incremental_merge_observations(existing_clusters: &[DedupClusterRecord], delta_observations: &[SourceObservationRecord]) -> (Vec<DedupClusterRecord>, BTreeSet<String>)` returning the updated cluster list and the exact set of `changed_cluster_ids`.
-   - In `crates/searchright-study/src/lib.rs`:
-     - Implement `pub fn recompute_affected_studies(existing_studies: &[StudyAggregate], changed_cluster_ids: &BTreeSet<String>, all_clusters: &[DedupClusterRecord]) -> Vec<StudyAggregate>`.
-3. **Verification Command**:
-   - `cargo test --locked -p searchright-dedup -p searchright-study`
+### 41.2: New, changed, withdrawn, corrected and delayed-index source observations
 
-### Task 4: Bisimulation Equivalence Test Suite (`crates/searchright-living` & `crates/searchright-prisma`)
+**Prerequisites:** 41.1; three-wave delta fixtures.
 
-1. **Target Files**:
-   - `crates/searchright-living/tests/bisimulation_replay.rs` (new integration test)
-2. **Test Specification**:
-   - Construct a 3-wave living review scenario:
-     - **Wave 1**: Initial 25 observations across PubMed and Europe PMC, deduplicated and screened under Protocol v1.
-     - **Wave 2**: 8 new observations (3 duplicates of Wave 1 records, 2 secondary reports of an existing RCT study, 3 brand-new studies).
-     - **Wave 3**: Protocol v2 amends secondary outcome criterion `IC-03`.
-   - Run **Path A (Incremental DAG)**: Apply Wave 1 $\rightarrow$ incremental Wave 2 $\rightarrow$ incremental Wave 3.
-   - Run **Path B (From-Scratch Replay)**: Concatenate all observations through Wave 3 and execute a clean batch run under Protocol v2 with the same recorded human decisions.
-   - Assert `state_root_sha256`, cluster sets, study groupings, and PRISMA flow counts are **bit-for-bit identical** between Path A and Path B, while Path A recomputes $< 35\%$ of the nodes in Wave 2 and Wave 3.
-3. **Verification Command**:
-   - `cargo test --locked -p searchright-living -p searchright-prisma`
+**Acceptance:** cargo test --locked -p searchright-living.
 
-## Out of scope
+**Command:** `undefined`.
 
-Claims or capabilities owned by later evidence gates remain explicit blockers rather than inferred completion.
+### 41.3: Narrow safe invalidation for strategy, metadata, vocabulary and identity changes
+
+**Prerequisites:** 41.2; dependency-change metamorphic fixtures.
+
+**Acceptance:** cargo test --locked -p searchright-living.
+
+**Command:** `undefined`.
+
+### 41.4: Full-replay equivalence versus incremental results
+
+**Prerequisites:** 41.3; property tests and explicit ordering semantics.
+
+**Acceptance:** cargo test --locked -p searchright-living.
+
+**Command:** `undefined`.
+
+### 41.5: Qualify Salsa/DVC against simple existing Rust/CI baseline
+
+**Prerequisites:** 41.4; measured value/maintenance/rollback decision.
+
+**Acceptance:** ./scripts/verify.sh.
+
+**Command:** `undefined`.
+
+
+Follow `conductor/refinements/38-44-search-scope-20261110.json` for task identity and sequence. Do not advertise an untested source or research result.

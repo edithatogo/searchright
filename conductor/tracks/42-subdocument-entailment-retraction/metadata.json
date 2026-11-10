@@ -2,15 +2,16 @@
   "schema_version": "conductor.track-metadata.v3",
   "track_id": "42",
   "slug": "subdocument-entailment-retraction",
-  "title": "Sub-document byte-span entailment and transitive retraction propagation",
+  "title": "Search provenance, integrity notices and independent evidence packages",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-11-10",
   "dependencies": [
-    "12",
-    "22",
-    "24"
+    "25",
+    "38",
+    "40",
+    "41"
   ],
   "horizon": "mature",
   "evidence_level": "source_verified",
