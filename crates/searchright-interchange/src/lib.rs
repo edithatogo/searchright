@@ -12,6 +12,8 @@ use searchright_contracts::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
+pub mod csl_corpus;
+
 mod xml;
 use xml::{blocks as extract_all_xml_blocks, text as xml_element_text};
 
