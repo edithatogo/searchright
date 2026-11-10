@@ -710,7 +710,7 @@ version = "0.1.14"
 optional = true
 
 [dependencies.serde_json]
-version = "1.0"
+version = "1.0.154"
 optional = true
 
 [dependencies.smallvec]
@@ -764,7 +764,7 @@ version = "0.11"
 version = "0.1.14"
 
 [dev-dependencies.serde_json]
-version = "1.0"
+version = "1.0.154"
 
 [dev-dependencies.serde_path_to_error]
 version = "0.1"
