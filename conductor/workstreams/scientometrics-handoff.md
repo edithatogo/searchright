@@ -7,8 +7,7 @@ owners: 01 (neutral contracts), 06 (interchange), 13 (consumer integration),
 cross-repository delivery unit under existing ownership, not a new track/issue
 hierarchy. Historical archived acceptance remains unchanged.
 
-The downstream working name is `bibx`; CiteLattice is proposed, not selected.
-No repository rename, release, data acquisition or new licensed access is implied.
+The canonical downstream consumer is [`edithatogo/CiteLattice`](https://github.com/edithatogo/CiteLattice), replacing the temporary `bibx` name. CiteLattice PR #1 carries the mirrored design-only schema, fixtures and core contract proposals. Neither producer runtime compatibility nor a published consumer release is implied. No licensed data access is assumed.
 
 ## Requirements and boundaries
 
@@ -35,8 +34,7 @@ mandatory circular Cargo dependency or duplicated provider runtime is introduced
 
 [Schema](../../contracts/proposals/scholarly-stream.v1.schema.json) and
 [synthetic fixture](../../contracts/proposals/fixtures/scholarly-stream-upsert.json)
-are deliberately outside the frozen published schema catalogue. The exact bytes
-also ship in bibx design.2. [Candidate descriptor](../../integration/candidates/bibx-scholarly-stream.json)
+are deliberately outside the frozen published schema catalogue. The exact bytes also ship in CiteLattice's current consumer contract branch. [Candidate descriptor](../../integration/candidates/bibx-scholarly-stream.json)
 records their identity; it is not an active integration passport.
 
 The envelope carries contract/version, stream/epoch/sequence/event identity,
