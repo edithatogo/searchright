@@ -1248,40 +1248,90 @@ fn export_csl_json(records: &[BibliographicRecord]) -> Result<String, Interchang
         let old_names = original
             .and_then(|item| item.get("author"))
             .and_then(Value::as_array)
-            .map(|authors| authors.iter().filter_map(|a| {
-                let literal = a.get("literal").and_then(Value::as_str).unwrap_or("");
-                if !literal.is_empty() {
-                    return Some(literal.to_owned());
-                }
-                let family = a.get("family").and_then(Value::as_str).unwrap_or("");
-                let given = a.get("given").and_then(Value::as_str).unwrap_or("");
-                let name = format!("{family}, {given}").trim_matches([',', ' ']).to_owned();
-                (!name.is_empty()).then_some(name)
-            }).collect::<Vec<_>>());
+            .map(|authors| {
+                authors
+                    .iter()
+                    .filter_map(|a| {
+                        let literal = a.get("literal").and_then(Value::as_str).unwrap_or("");
+                        if !literal.is_empty() {
+                            return Some(literal.to_owned());
+                        }
+                        let family = a.get("family").and_then(Value::as_str).unwrap_or("");
+                        let given = a.get("given").and_then(Value::as_str).unwrap_or("");
+                        let name = format!("{family}, {given}")
+                            .trim_matches([',', ' '])
+                            .to_owned();
+                        (!name.is_empty()).then_some(name)
+                    })
+                    .collect::<Vec<_>>()
+            });
         if record.authors.is_empty() {
             fields.remove("author");
         } else if old_names.as_ref() != Some(&record.authors) {
-            fields.insert("author".to_owned(), json!(
-                record.authors.iter().map(|a| json!({"literal": a})).collect::<Vec<_>>()
-            ));
+            fields.insert(
+                "author".to_owned(),
+                json!(
+                    record
+                        .authors
+                        .iter()
+                        .map(|a| json!({"literal": a}))
+                        .collect::<Vec<_>>()
+                ),
+            );
         }
-        set_csl_field(&mut fields, "abstract", record.abstract_text.clone().map(Value::String));
-        set_csl_field(&mut fields, "container-title", record.container_title.clone().map(Value::String));
+        set_csl_field(
+            &mut fields,
+            "abstract",
+            record.abstract_text.clone().map(Value::String),
+        );
+        set_csl_field(
+            &mut fields,
+            "container-title",
+            record.container_title.clone().map(Value::String),
+        );
         let old_year = original
             .and_then(|item| item.get("issued"))
             .and_then(|date| date.get("date-parts"))
-            .and_then(Value::as_array).and_then(|dates| dates.first())
-            .and_then(Value::as_array).and_then(|date| date.first())
-            .and_then(Value::as_i64).and_then(|year| i32::try_from(year).ok());
+            .and_then(Value::as_array)
+            .and_then(|dates| dates.first())
+            .and_then(Value::as_array)
+            .and_then(|date| date.first())
+            .and_then(Value::as_i64)
+            .and_then(|year| i32::try_from(year).ok());
         if old_year != record.publication_year {
-            set_csl_field(&mut fields, "issued",
-                record.publication_year.map(|year| json!({"date-parts": [[year]]})));
+            set_csl_field(
+                &mut fields,
+                "issued",
+                record
+                    .publication_year
+                    .map(|year| json!({"date-parts": [[year]]})),
+            );
         }
-        set_csl_field(&mut fields, "DOI", record.identifiers.doi.clone().map(Value::String));
-        set_csl_field(&mut fields, "ISBN", record.identifiers.isbn.clone().map(Value::String));
-        set_csl_field(&mut fields, "PMID", record.identifiers.pmid.clone().map(Value::String));
-        set_csl_field(&mut fields, "URL", record.urls.first().cloned().map(Value::String));
-        set_csl_field(&mut fields, "language", record.languages.first().cloned().map(Value::String));
+        set_csl_field(
+            &mut fields,
+            "DOI",
+            record.identifiers.doi.clone().map(Value::String),
+        );
+        set_csl_field(
+            &mut fields,
+            "ISBN",
+            record.identifiers.isbn.clone().map(Value::String),
+        );
+        set_csl_field(
+            &mut fields,
+            "PMID",
+            record.identifiers.pmid.clone().map(Value::String),
+        );
+        set_csl_field(
+            &mut fields,
+            "URL",
+            record.urls.first().cloned().map(Value::String),
+        );
+        set_csl_field(
+            &mut fields,
+            "language",
+            record.languages.first().cloned().map(Value::String),
+        );
         output.push(Value::Object(fields));
     }
     Ok(serde_json::to_string_pretty(&output)?)
@@ -1810,19 +1860,24 @@ mod tests {
             "publisher": "Original publisher", "volume": "10",
             "DOI": "10.1000/old"
         }]);
-        let imported = import_records(&serde_json::to_string(&input)?,
-            InterchangeFormat::CslJson, "source")?;
+        let imported = import_records(
+            &serde_json::to_string(&input)?,
+            InterchangeFormat::CslJson,
+            "source",
+        )?;
         assert_eq!(imported.records.len(), 1);
-        let value: Value = serde_json::from_str(
-            &export_records(&imported.records, InterchangeFormat::CslJson)?)?;
+        let value: Value = serde_json::from_str(&export_records(
+            &imported.records,
+            InterchangeFormat::CslJson,
+        )?)?;
         assert_eq!(value[0], input[0]);
 
         let mut corrected = imported.records;
         corrected[0].title = "After".to_owned();
         corrected[0].publication_year = Some(2026);
         corrected[0].identifiers.doi = Some("10.1000/new".to_owned());
-        let value: Value = serde_json::from_str(
-            &export_records(&corrected, InterchangeFormat::CslJson)?)?;
+        let value: Value =
+            serde_json::from_str(&export_records(&corrected, InterchangeFormat::CslJson)?)?;
         assert_eq!(value[0]["title"], "After");
         assert_eq!(value[0]["DOI"], "10.1000/new");
         assert_eq!(value[0]["issued"], json!({"date-parts": [[2026]]}));
@@ -1847,12 +1902,11 @@ mod tests {
     }
 
     #[test]
-    fn csl_export_keeps_unrelated_provider_metadata_out()
-    -> Result<(), InterchangeError> {
+    fn csl_export_keeps_unrelated_provider_metadata_out() -> Result<(), InterchangeError> {
         let mut record = golden_record();
         record.provider_metadata = json!({"source": "provider", "id": "other", "secret": "bad"});
-        let value: Value = serde_json::from_str(
-            &export_records(&[record], InterchangeFormat::CslJson)?)?;
+        let value: Value =
+            serde_json::from_str(&export_records(&[record], InterchangeFormat::CslJson)?)?;
         assert!(value[0].get("source").is_none());
         assert!(value[0].get("secret").is_none());
         assert_eq!(value[0]["id"], "golden-native-1");
