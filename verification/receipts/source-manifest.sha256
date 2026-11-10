@@ -72,7 +72,7 @@ daada8d2ffd7cf4154a04e29db29ce457410d01750bbd24528df73fdec82d7eb  ./compose.yaml
 cfd257985d77b8ef86d4e1c5890a92d22c376b8e6f1fa6f75bdae6b111250c4f  ./conductor/design.md
 05b6dbad9385f48b92c4a5403fa3ab6af44da6a2ad44aa0646ed96a921241464  ./conductor/frontier-plan.md
 0735e60ae7509844102d89832e43f76241aca28c80f308887f64246ad5ae4633  ./conductor/github/README.md
-bdf3d81b240b9b25c375eb52d11384d8df0e418f90cc90ee508a0ebc5af2895e  ./conductor/github/issue-hierarchy.json
+11b79124ecd2fd8853b671cd8558b1e218ba86b5905b13f826b948ddcd6fbfa0  ./conductor/github/issue-hierarchy.json
 13d502e700c1497d73bb3467121434176a7105a23eaab7bb4e2c5005853a1176  ./conductor/github/issues/roadmap-epic.md
 80e119e0bc3972597f252c9b78ecb269e7c45778549fc5510819d781d4689c37  ./conductor/github/issues/track-00-phase-1-task-01.md
 31a39ef15089bae39e243d295215ec8d18714f86396e760c549b36c509860c0b  ./conductor/github/issues/track-00-phase-1.md
@@ -1022,7 +1022,7 @@ e940cfec67cdd7e23fa2d659e879ec1905322ee15e910f0079ebc8d7fe59326b  ./conductor/up
 49a1c1e7898c99cf28469b17e73aca05c551dc07d93e6b26df727130b53e917f  ./conductor/workflow.md
 944dd756c58e5a02da9667700204cde5ee5550c3ca83a87013ec9e9e640089c2  ./context/capability-matrix.json
 cfaca932ac9c08853a44842e6c8184afed9c70c18a93563c28fb8e54ab80bcd6  ./context/claim-boundaries.json
-0c61adf55c68144e22b0b5e75c9407c0266d4beb6a730f7babeeeb93ef7dfa78  ./context/context-lock.json
+569a1b75170df0ed081a112c9de348587f76d4fee71260a117855f7ea605a319  ./context/context-lock.json
 757cd7da71133e74c6158659408f819ac3307cb3afe00bce426b1ff68d08b553  ./context/decision-ledger.json
 7ad38b9e343def2d6ff168e4426233608a12564415b3416c94b9745327468459  ./context/evidence-ledger.json
 1b79c0b190a85cdf9157f3a254f12a4fe339566319fa348110388f72284ff48b  ./context/hazard-log.json
