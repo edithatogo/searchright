@@ -6,7 +6,7 @@ dependencies, research studies and versioned outputs. Historical evidence and
 archived acceptance below remain historical; new planned modes are not current
 runtime claims. Do not generate a second phase/task hierarchy for this programme.
 
-Track status, implementation completeness and evidence level are separate.
+Track status, implementation completeness and evidence level are separate. On 10 November 2026 the forward scopes 38–44 were reconciled to systematic searching; historical stable slugs and issue keys remain unchanged. All seven tracks retain open acceptance gates, so none is eligible for archival.
 `scaffolded` and `partially_implemented` prevent path presence from being
 misrepresented as completed behaviour; `traceability.json` owns assertion-level claims.
 
@@ -17,13 +17,13 @@ an explicit, approval-gated apply receipt exists.
 
 | ID | Track | Horizon | Status | Implementation | Evidence | Outcome |
 | --- | --- | --- | --- | --- | --- | --- |
-| 38 | [Verifiable live two-source execution and zkTLS provenance receipts](tracks/38-zktls-verifiable-live-execution/spec.md) | mature | scaffolded | scaffolded | source_verified | Execute resumable two-source live retrieval (PubMed and Europe PMC) through CLI and MCP with cryptographic zkTLS transcript commitments in .srpack provenance bundles. |
-| 39 | [Formal BDD/SMT query equivalence and semantic loss calculus](tracks/39-smt-query-equivalence-calculus/spec.md) | mature | scaffolded | scaffolded | source_verified | Prove cross-database query translation equivalence, safe broadening, or unsafe narrowing using canonical ROBDDs and synthesize concrete counterexample witness documents. |
-| 40 | [Anytime-valid martingale stopping and conformal risk control](tracks/40-martingale-conformal-stopping/spec.md) | mature | scaffolded | scaffolded | source_verified | Bound missed relevant studies during prioritized screening using anytime-valid hypergeometric betting martingales and conformal risk control. |
-| 41 | [Demand-driven incremental living review computation](tracks/41-salsa-incremental-living-reviews/spec.md) | mature | scaffolded | scaffolded | source_verified | Recompute living systematic review updates through a demand-driven memoized dependency DAG with early cutoff and bisimulation equivalence to full replay. |
-| 42 | [Sub-document byte-span entailment and transitive retraction propagation](tracks/42-subdocument-entailment-retraction/spec.md) | mature | scaffolded | scaffolded | source_verified | Anchor extracted claims to proof-carrying sub-document byte spans with entailment verification and propagate retractions transitively across study syntheses. |
-| 43 | [Adversarial Advocate-Skeptic-Arbiter screening deliberation](tracks/43-adversarial-multi-agent-deliberation/spec.md) | mature | scaffolded | scaffolded | source_verified | Execute zero-trust Advocate-Skeptic-Arbiter screening deliberation with mandatory verbatim span verification, epistemic divergence routing, and human-only final exclusions. |
-| 44 | [Living systematic review to VOI and bias-transport handoff for tobac](tracks/44-tobac-living-evidence-transport/spec.md) | mature | scaffolded | scaffolded | source_verified | Export living systematic review delta updates as structured effect-size, risk-of-bias, and PICO transportability packets with byte-span provenance for downstream tobac and voiage regulatory VOI evaluation. |
+| 38 | [Bounded live search, recovery and source receipts](tracks/38-zktls-verifiable-live-execution/spec.md) | mature | scaffolded | scaffolded | source_verified | Search-specific delivery; downstream TLSNotary optional and must be real notary evidence, not local Merkle/hash claims. |
+| 39 | [Conditional dialect semantics and translation fidelity](tracks/39-smt-query-equivalence-calculus/spec.md) | mature | scaffolded | scaffolded | source_verified | Search-specific delivery; downstream A BDD proof is never itself proof of live database retrieval equivalence. |
+| 40 | [Canonical CSL-JSON and downstream consumer interoperability](tracks/40-martingale-conformal-stopping/spec.md) | mature | partially_implemented | partially_implemented | source_verified | Search-specific delivery; downstream ASReview screening/stopping and bibliometric network analysis remain downstream. |
+| 41 | [Temporal acquisition and versioned living-search corpora](tracks/41-salsa-incremental-living-reviews/spec.md) | mature | scaffolded | scaffolded | source_verified | Search-specific delivery; downstream Salsa and DVC are optional; fresh live source observation is never inferred from cache. |
+| 42 | [Search provenance, integrity notices and independent evidence packages](tracks/42-subdocument-entailment-retraction/spec.md) | mature | scaffolded | scaffolded | source_verified | Search-specific delivery; downstream Document extraction stays with CiteWeft, canonical reference verification with Sourceright. |
+| 43 | [Search strategy auditing and SEARCH-REPLAY evaluation](tracks/43-adversarial-multi-agent-deliberation/spec.md) | mature | scaffolded | scaffolded | source_verified | Search-specific delivery; downstream No new multi-agent screening arbitration or simulated independent human reviewers. |
+| 44 | [Generic versioned corpus and downstream-research handoff](tracks/44-tobac-living-evidence-transport/spec.md) | mature | scaffolded | scaffolded | source_verified | Search-specific delivery; downstream tobac/voiage own effects, bias transport and VOI; source neutrality is the default. |
 
 ## Archived tracks
 

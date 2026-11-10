@@ -2,15 +2,13 @@
   "schema_version": "conductor.track-metadata.v3",
   "track_id": "44",
   "slug": "tobac-living-evidence-transport",
-  "title": "Living systematic review to VOI and bias-transport handoff for tobac",
+  "title": "Generic versioned corpus and downstream-research handoff",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-11-10",
   "dependencies": [
-    "12",
-    "22",
-    "25",
+    "40",
     "41",
     "42"
   ],
