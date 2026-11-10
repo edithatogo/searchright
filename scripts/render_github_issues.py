@@ -7,6 +7,8 @@ roadmap epic -> track -> phase -> task. Conductor remains canonical.
 from __future__ import annotations
 
 import argparse
+import difflib
+import sys
 import json
 import re
 from dataclasses import dataclass
@@ -487,6 +489,14 @@ def main() -> int:
         if args.check:
             if not path.is_file() or path.read_text(encoding="utf-8") != content:
                 stale.append(path.relative_to(ROOT).as_posix())
+                if path == HIERARCHY and path.is_file():
+                    actual = path.read_text(encoding="utf-8")
+                    difference = list(difflib.unified_diff(
+                        actual.splitlines(), content.splitlines(),
+                        fromfile="committed hierarchy", tofile="generated hierarchy",
+                        lineterm="", n=2,
+                    ))
+                    print("\\n".join(difference[:45]), file=sys.stderr)
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(content, encoding="utf-8")

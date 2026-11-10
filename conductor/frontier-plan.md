@@ -25,7 +25,7 @@ Independent tasks may run in parallel when declared prerequisites exist; no mand
 
 ## Decision identity and operational modes
 
-Preserve actor, mode and policy version across autonomous, solo and team workflows; machine recommendations are not independent human reviews and cannot autonomously amend a search strategy. Retain immutable original source observations, individual interventions and actual human approvals. The existing screening owner remains ASReview.
+Preserve actor, mode and policy version across autonomous, solo and team workflows; keep machine decisions identifiable and link human confirmations to their sources; machine recommendations are not independent human reviews and cannot autonomously amend a search strategy. Retain immutable original source observations, individual interventions and actual human approvals. The existing screening owner remains ASReview.
 
 ## Conductor tracks
 

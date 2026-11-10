@@ -1,6 +1,6 @@
 # Plan: 40 Canonical CSL-JSON and downstream consumer interoperability
 
-Current status: **partially_implemented**. Implementation state: **partially_implemented**. Current evidence ceiling: **source_verified**. The historical issue/phase/task identifiers in metadata remain stable; superseded screening/VOI algorithms are not implementation requirements.
+Current status: **partially_implemented**. Implementation state: **partially_implemented**. Evidence level: **source_verified**.
 
 ## Phase 1: Source implementation
 

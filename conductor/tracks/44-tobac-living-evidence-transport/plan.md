@@ -1,6 +1,6 @@
 # Plan: 44 Generic versioned corpus and downstream-research handoff
 
-Status: **scaffolded**, Evidence level: **source_verified**. Retain historical issue IDs; no VOI/source-span extraction engine is promised within Searchright.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 ## Phase 1: Source implementation
 

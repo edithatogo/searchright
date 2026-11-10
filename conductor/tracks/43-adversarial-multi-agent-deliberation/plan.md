@@ -1,6 +1,6 @@
 # Plan: 43 Search strategy auditing and SEARCH-REPLAY evaluation
 
-Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**; historical issue/phase/task identifiers remain stable. The superseded algorithmic scope is not a current implementation requirement.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
 
 ## Phase 1: Source implementation
 
