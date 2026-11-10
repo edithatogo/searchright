@@ -22,3 +22,5 @@
 - [Requirements](./requirements.md)
 - [Design](./design.md)
 - [Tracks Registry](./tracks.md)
+- [Versioned scientometrics handoff](./workstreams/scientometrics-handoff.md) —
+  Track 41-led producer/consumer proposal; no runtime compatibility claim.
