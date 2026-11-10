@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/41-salsa-incremental-living-reviews/plan.md`
 
 ## Task subissues
 
-- [x] T01: Run deterministic, network-free contract and policy checks. (`track-41-phase-2-task-01`)
-- [x] T02: Record machine-readable evidence without promoting compiler, live or external claims. (`track-41-phase-2-task-02`)
+- [x] T01: Historical network-free source validation existed (not current behaviour proof). (`track-41-phase-2-task-01`)
+- [ ] T02: Re-run static and traceability validators on the revised exact head. (`track-41-phase-2-task-02`)
 
 ## Evidence rule
 

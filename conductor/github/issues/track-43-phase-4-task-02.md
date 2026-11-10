@@ -3,11 +3,11 @@
 
 Parent phase key: `track-43-phase-4`
 Conductor plan: `conductor/tracks/43-adversarial-multi-agent-deliberation/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Apply review findings and pass exact-head security, compiler and relevant consumer tests.
 
 ## Completion and evidence contract
 

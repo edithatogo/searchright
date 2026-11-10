@@ -7,7 +7,10 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage.
+- [ ] **44.4 — Consumer compatibility, SemVer, access and tamper negative tests**
+  - Depends on: 44.3; two independently qualified imports
+  - Required result: ./scripts/verify.sh
+  - Verify: `undefined`
 
 ## Completion and evidence contract
 

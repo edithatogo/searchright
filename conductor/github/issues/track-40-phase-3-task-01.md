@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.
+- [ ] **40.1 — Canonical CSL-JSON ID/order/field-preservation and content-revision primitive**
+  - Prerequisite: Existing serde_json/blake3, no new deps, adversarial unit tests.
+  - Acceptance: cargo test --locked -p searchright-interchange csl_corpus.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

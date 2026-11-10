@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.
+- [ ] **39.3 — Property and metamorphic differential tests with verified witnesses**
+  - Prerequisite: 39.2; independently evaluated counterexamples.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.
+- [ ] **41.3 — Narrow safe invalidation for strategy, metadata, vocabulary and identity changes**
+  - Prerequisite: 41.2; dependency-change metamorphic fixtures.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

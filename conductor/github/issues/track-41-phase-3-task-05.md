@@ -1,13 +1,17 @@
-<!-- searchright-issue-key: track-44-phase-4-task-04 -->
-# Track 44 / Phase 4 / Task 04
+<!-- searchright-issue-key: track-41-phase-3-task-05 -->
+# Track 41 / Phase 3 / Task 05
 
-Parent phase key: `track-44-phase-4`
-Conductor plan: `conductor/tracks/44-tobac-living-evidence-transport/plan.md`
+Parent phase key: `track-41-phase-3`
+Conductor plan: `conductor/tracks/41-salsa-incremental-living-reviews/plan.md`
 Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] **41.5 — Qualify Salsa/DVC against simple existing Rust/CI baseline**
+  - Prerequisite: 41.4; measured value/maintenance/rollback decision.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

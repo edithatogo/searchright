@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.
+- [ ] **41.2 — New, changed, withdrawn, corrected and delayed-index source observations**
+  - Prerequisite: 41.1; three-wave delta fixtures.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

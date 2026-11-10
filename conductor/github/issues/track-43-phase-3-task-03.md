@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Enforce Advocate-Skeptic prompt isolation and non-autonomous final exclusion guards in crates/searchright-agent/src/lib.rs.
+- [ ] **43.3 — Record-set differences, known-study retention and interpretation uncertainty envelopes**
+  - Prerequisite: 43.2/38.6; index drift separate and no false confidence intervals.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

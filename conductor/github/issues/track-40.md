@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: track-40 -->
-# Track 40: Anytime-valid martingale stopping and conformal risk control
+# Track 40: Canonical CSL-JSON and downstream consumer interoperability
 
-Bound missed relevant studies during prioritized screening using anytime-valid hypergeometric betting martingales and conformal risk control.
+Searchright systematic-search contract: Canonical CSL-JSON and downstream consumer interoperability. ASReview screening/stopping and bibliometric network analysis remain downstream.
 
 ## Source of truth
 
@@ -12,10 +12,10 @@ Bound missed relevant studies during prioritized screening using anytime-valid h
 ## Contract
 
 - Horizon: `mature`
-- Status: `scaffolded`
-- Implementation: `scaffolded`
+- Status: `partially_implemented`
+- Implementation: `partially_implemented`
 - Evidence: `source_verified`
-- Dependencies: `17, 23, 29`
+- Dependencies: `06, 25, 38`
 - Requirements: `SR-096`
 - External approval required: `false`
 
@@ -28,6 +28,6 @@ Bound missed relevant studies during prioritized screening using anytime-valid h
 
 ## Claim boundary
 
-Source-verified specification and granular execution playbook only; anytime-valid martingale stopping and conformal calibration on sealed benchmarks remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

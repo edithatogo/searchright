@@ -6,10 +6,9 @@ Conductor plan: `conductor/tracks/40-martingale-conformal-stopping/plan.md`
 
 ## Task subissues
 
-- [x] T01: Reconcile source paths, requirements, interface effects and claim boundaries. (`track-40-phase-4-task-01`)
-- [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-40-phase-4-task-02`)
-- [ ] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-40-phase-4-task-03`)
-- [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-40-phase-4-task-04`)
+- [ ] T01: Run an actual Conductor review if available, or equivalent repository-native checks with limitation stated. (`track-40-phase-4-task-01`)
+- [ ] T02: Apply findings, rebuild, run security/source-integrity and relevant consumer/live tests on the exact head. (`track-40-phase-4-task-02`)
+- [ ] T03: Reconcile roadmap coverage, traceability and receipts and archive only if every applicable gate passes; otherwise retain active status. (`track-40-phase-4-task-03`)
 
 ## Evidence rule
 

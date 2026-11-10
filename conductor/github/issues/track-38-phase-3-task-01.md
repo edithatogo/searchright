@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define TlsTranscriptCommitment and redacted header byte-range contracts in crates/evidence-search-contracts/src/lib.rs and crates/searchright-contracts/src/lib.rs with unit validation tests.
+- [ ] **38.1 — Authorised provider contracts and explicit query/source/budget policy**
+  - Prerequisite: Provider contract fixtures; fail-closed unauthorized requests.
+  - Acceptance: cargo test --locked -p evidence-search-core.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

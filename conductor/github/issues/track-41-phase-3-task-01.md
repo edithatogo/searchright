@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.
+- [ ] **41.1 — Distinct logical corpus/content revision/observation/run/attempt/profile identities**
+  - Prerequisite: 40.1–2; immutable identity tests.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.
+- [ ] **39.1 — Supported Boolean, field, proximity, truncation and controlled-vocabulary model**
+  - Prerequisite: Existing compiler fixtures; unsupported semantics explicit Unknown.
+  - Acceptance: cargo test --locked -p evidence-search-core.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Wire explicit LiveExecutionAuthorization and two-source PubMed + Europe PMC execution through crates/searchright/src/engine.rs, crates/searchright-cli/src/main.rs, and crates/searchright-mcp/src/lib.rs.
+- [ ] **38.4 — CLI/MCP parity with denied-by-default consequential operations**
+  - Prerequisite: 38.3; same query, source, identity and approval semantics.
+  - Acceptance: cargo test --locked -p searchright-cli -p searchright-mcp.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/42-subdocument-entailment-retraction/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-42-phase-1-task-01`)
+- [ ] T01: Implement the new scope and bind assertions to actual source symbols. (`track-42-phase-1-task-01`)
 
 ## Evidence rule
 

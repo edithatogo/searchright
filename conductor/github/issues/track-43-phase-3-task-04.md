@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Add adversarial hallucinated-quote rejection, high-divergence human escalation, and non-human-consensus invariant tests.
+- [ ] **43.4 — Optional agent audits with deterministic verification and human amendments**
+  - Prerequisite: 43.1–3; prompt injection and false expert-independence tests.
+  - Acceptance: cargo test --locked -p searchright-agent.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

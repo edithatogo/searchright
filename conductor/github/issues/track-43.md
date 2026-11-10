@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: track-43 -->
-# Track 43: Adversarial Advocate-Skeptic-Arbiter screening deliberation
+# Track 43: Search strategy auditing and SEARCH-REPLAY evaluation
 
-Execute zero-trust Advocate-Skeptic-Arbiter screening deliberation with mandatory verbatim span verification, epistemic divergence routing, and human-only final exclusions.
+Searchright systematic-search contract: Search strategy auditing and SEARCH-REPLAY evaluation. No new multi-agent screening arbitration or simulated independent human reviewers.
 
 ## Source of truth
 
@@ -15,7 +15,7 @@ Execute zero-trust Advocate-Skeptic-Arbiter screening deliberation with mandator
 - Status: `scaffolded`
 - Implementation: `scaffolded`
 - Evidence: `source_verified`
-- Dependencies: `07, 11, 28`
+- Dependencies: `17, 29, 39, 42`
 - Requirements: `SR-099`
 - External approval required: `false`
 
@@ -28,6 +28,6 @@ Execute zero-trust Advocate-Skeptic-Arbiter screening deliberation with mandator
 
 ## Claim boundary
 
-Source-verified specification and granular execution playbook only; three-role adversarial screening deliberation and calibrated arbiter routing remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

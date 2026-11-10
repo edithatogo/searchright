@@ -7,14 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/41-salsa-incremental-living-reviews/spec.md`
-  - [x] Present source path: `crates/searchright-contracts/src/living.rs`
-  - [x] Present source path: `crates/searchright-living/src/lib.rs`
-  - [x] Present source path: `crates/searchright-dedup/src/lib.rs`
-  - [x] Present source path: `crates/searchright-study/src/lib.rs`
-  - [x] Present source path: `crates/searchright-prisma/src/lib.rs`
-  - [x] Assertion ledger: `conductor/tracks/41-salsa-incremental-living-reviews/traceability.json`
+- [ ] Implement the new scope and bind assertions to actual source symbols.
 
 ## Completion and evidence contract
 

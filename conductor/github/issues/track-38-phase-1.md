@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/38-zktls-verifiable-live-execution/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-38-phase-1-task-01`)
+- [ ] T01: Implement the current scope and bind each assertion to source symbols and evidence. (`track-38-phase-1-task-01`)
 
 ## Evidence rule
 

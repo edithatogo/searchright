@@ -3,11 +3,11 @@
 
 Parent phase key: `track-44-phase-4`
 Conductor plan: `conductor/tracks/44-tobac-living-evidence-transport/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
+- [ ] Correct findings and pass current CI/security/live/consumer checks relevant to claims.
 
 ## Completion and evidence contract
 

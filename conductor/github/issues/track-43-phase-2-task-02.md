@@ -3,11 +3,11 @@
 
 Parent phase key: `track-43-phase-2`
 Conductor plan: `conductor/tracks/43-adversarial-multi-agent-deliberation/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [ ] Re-run static and traceability validators on the revised exact head.
 
 ## Completion and evidence contract
 

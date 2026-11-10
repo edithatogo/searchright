@@ -7,7 +7,10 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.
+- [ ] **44.2 — Deterministic full and delta corpora with typed change notices**
+  - Depends on: 44.1/41; full-replay fixture parity
+  - Required result: cargo test --locked -p searchright-living
+  - Verify: `undefined`
 
 ## Completion and evidence contract
 

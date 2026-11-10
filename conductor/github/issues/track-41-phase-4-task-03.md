@@ -7,7 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
+- [ ] Archive only after all applicable assertions, provenance and external gates pass; otherwise keep open.
 
 ## Completion and evidence contract
 

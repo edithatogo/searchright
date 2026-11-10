@@ -7,12 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md`
-  - [x] Present source path: `crates/searchright-contracts/src/screening.rs`
-  - [x] Present source path: `crates/searchright-screening/src/lib.rs`
-  - [x] Present source path: `crates/searchright-agent/src/lib.rs`
-  - [x] Assertion ledger: `conductor/tracks/43-adversarial-multi-agent-deliberation/traceability.json`
+- [ ] Implement the new scope and bind assertions to actual source symbols.
 
 ## Completion and evidence contract
 

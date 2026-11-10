@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/44-tobac-living-evidence-transport/plan.md`
 
 ## Task subissues
 
-- [x] T01: Run deterministic, network-free contract and policy checks. (`track-44-phase-2-task-01`)
-- [x] T02: Record machine-readable evidence without promoting compiler, live or external claims. (`track-44-phase-2-task-02`)
+- [x] T01: Historical network-free scaffolding checks were recorded. (`track-44-phase-2-task-01`)
+- [ ] T02: Re-run traceability and static validators on this revised head. (`track-44-phase-2-task-02`)
 
 ## Evidence rule
 

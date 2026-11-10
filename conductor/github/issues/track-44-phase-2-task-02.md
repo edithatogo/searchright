@@ -3,11 +3,11 @@
 
 Parent phase key: `track-44-phase-2`
 Conductor plan: `conductor/tracks/44-tobac-living-evidence-transport/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [ ] Re-run traceability and static validators on this revised head.
 
 ## Completion and evidence contract
 

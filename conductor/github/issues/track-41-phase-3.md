@@ -6,10 +6,11 @@ Conductor plan: `conductor/tracks/41-salsa-incremental-living-reviews/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs. (`track-41-phase-3-task-01`)
-- [ ] T02: Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs. (`track-41-phase-3-task-02`)
-- [ ] T03: Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs. (`track-41-phase-3-task-03`)
-- [ ] T04: Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay. (`track-41-phase-3-task-04`)
+- [ ] T01: **41.1 — Distinct logical corpus/content revision/observation/run/attempt/profile identities** (`track-41-phase-3-task-01`)
+- [ ] T02: **41.2 — New, changed, withdrawn, corrected and delayed-index source observations** (`track-41-phase-3-task-02`)
+- [ ] T03: **41.3 — Narrow safe invalidation for strategy, metadata, vocabulary and identity changes** (`track-41-phase-3-task-03`)
+- [ ] T04: **41.4 — Full-replay equivalence versus incremental results** (`track-41-phase-3-task-04`)
+- [ ] T05: **41.5 — Qualify Salsa/DVC against simple existing Rust/CI baseline** (`track-41-phase-3-task-05`)
 
 ## Evidence rule
 

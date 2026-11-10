@@ -43,13 +43,13 @@ This issue is generated from `conductor/roadmap-coverage.json`. Conductor remain
 - [ ] `35` — Generated SDKs, fixture-backed documentation and adoption operations (`track-35`)
 - [ ] `36` — Release-candidate rehearsal, staged pilots and ecosystem rehearsal (`track-36`)
 - [ ] `37` — Final mature 1.0 release and long-term operations (`track-37`)
-- [ ] `38` — Verifiable live two-source execution and zkTLS provenance receipts (`track-38`)
-- [ ] `39` — Formal BDD/SMT query equivalence and semantic loss calculus (`track-39`)
-- [ ] `40` — Anytime-valid martingale stopping and conformal risk control (`track-40`)
-- [ ] `41` — Demand-driven incremental living review computation (`track-41`)
-- [ ] `42` — Sub-document byte-span entailment and transitive retraction propagation (`track-42`)
-- [ ] `43` — Adversarial Advocate-Skeptic-Arbiter screening deliberation (`track-43`)
-- [ ] `44` — Living systematic review to VOI and bias-transport handoff for tobac (`track-44`)
+- [ ] `38` — Bounded live search, recovery and source receipts (`track-38`)
+- [ ] `39` — Conditional dialect semantics and translation fidelity (`track-39`)
+- [ ] `40` — Canonical CSL-JSON and downstream consumer interoperability (`track-40`)
+- [ ] `41` — Temporal acquisition and versioned living-search corpora (`track-41`)
+- [ ] `42` — Search provenance, integrity notices and independent evidence packages (`track-42`)
+- [ ] `43` — Search strategy auditing and SEARCH-REPLAY evaluation (`track-43`)
+- [ ] `44` — Generic versioned corpus and downstream-research handoff (`track-44`)
 
 ## Synchronisation contract
 

@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement 4 KiB chunk SHA-256 Merkle root computation, secret-preserving byte redaction, and atomic checkpoint persistence in crates/searchright-connectors/src/lib.rs and crates/searchright-store/src/lib.rs.
+- [ ] **38.3 — Atomic checkpoints, resume and idempotent record emission**
+  - Prerequisite: 38.2; crash/restart and cancellation fixture.
+  - Acceptance: cargo test --locked -p evidence-search-core -p searchright-store.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

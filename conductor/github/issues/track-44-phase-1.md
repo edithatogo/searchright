@@ -6,7 +6,7 @@ Conductor plan: `conductor/tracks/44-tobac-living-evidence-transport/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Complete every acceptance assertion; existing paths are scaffolding or partial implementation only. (`track-44-phase-1-task-01`)
+- [ ] T01: Implement task-scoped source changes with symbols and positive/negative tests. (`track-44-phase-1-task-01`)
 
 ## Evidence rule
 

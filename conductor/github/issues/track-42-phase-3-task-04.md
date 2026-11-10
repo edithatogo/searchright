@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Add end-to-end span-tampering rejection and post-inclusion retraction quarantine tests across study synthesis and PRISMA living flow outputs.
+- [ ] **42.4 — Independent preserved-input replay and missing/tampered asset rejection**
+  - Prerequisite: 42.2–3; non-author verifier fixture.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

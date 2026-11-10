@@ -1,13 +1,17 @@
-<!-- searchright-issue-key: track-39-phase-4-task-04 -->
-# Track 39 / Phase 4 / Task 04
+<!-- searchright-issue-key: track-39-phase-3-task-05 -->
+# Track 39 / Phase 3 / Task 05
 
-Parent phase key: `track-39-phase-4`
+Parent phase key: `track-39-phase-3`
 Conductor plan: `conductor/tracks/39-smt-query-equivalence-calculus/plan.md`
 Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] **39.5 — Held-out real expert strategies and known-study retention benchmark**
+  - Prerequisite: 39.1–4, lawful source access and independent assessors.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

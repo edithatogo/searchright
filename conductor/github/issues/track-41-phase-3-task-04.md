@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay.
+- [ ] **41.4 — Full-replay equivalence versus incremental results**
+  - Prerequisite: 41.3; property tests and explicit ordering semantics.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

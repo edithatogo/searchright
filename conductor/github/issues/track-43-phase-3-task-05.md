@@ -1,13 +1,17 @@
-<!-- searchright-issue-key: track-43-phase-4-task-04 -->
-# Track 43 / Phase 4 / Task 04
+<!-- searchright-issue-key: track-43-phase-3-task-05 -->
+# Track 43 / Phase 3 / Task 05
 
-Parent phase key: `track-43-phase-4`
+Parent phase key: `track-43-phase-3`
 Conductor plan: `conductor/tracks/43-adversarial-multi-agent-deliberation/plan.md`
 Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] **43.5 — SEARCH-REPLAY pilot/confirmation protocol, research datasets and publication contracts**
+  - Prerequisite: 43.3–4; independently reviewable design and rights gates.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

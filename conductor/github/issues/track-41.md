@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: track-41 -->
-# Track 41: Demand-driven incremental living review computation
+# Track 41: Temporal acquisition and versioned living-search corpora
 
-Recompute living systematic review updates through a demand-driven memoized dependency DAG with early cutoff and bisimulation equivalence to full replay.
+Searchright systematic-search contract: Temporal acquisition and versioned living-search corpora. Salsa and DVC are optional; fresh live source observation is never inferred from cache.
 
 ## Source of truth
 
@@ -15,7 +15,7 @@ Recompute living systematic review updates through a demand-driven memoized depe
 - Status: `scaffolded`
 - Implementation: `scaffolded`
 - Evidence: `source_verified`
-- Dependencies: `06, 07, 08, 22, 24`
+- Dependencies: `22, 38, 40`
 - Requirements: `SR-097`
 - External approval required: `false`
 
@@ -28,6 +28,6 @@ Recompute living systematic review updates through a demand-driven memoized depe
 
 ## Claim boundary
 
-Source-verified specification and granular execution playbook only; demand-driven memoized DAG evaluation and bisimulation equivalence proofs remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

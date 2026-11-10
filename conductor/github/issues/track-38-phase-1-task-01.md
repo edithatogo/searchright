@@ -7,16 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/38-zktls-verifiable-live-execution/spec.md`
-  - [x] Present source path: `crates/evidence-search-contracts/src/lib.rs`
-  - [x] Present source path: `crates/evidence-search-core/src/lib.rs`
-  - [x] Present source path: `crates/searchright-connectors/src/lib.rs`
-  - [x] Present source path: `crates/searchright-provenance/src/lib.rs`
-  - [x] Present source path: `crates/searchright/src/engine.rs`
-  - [x] Present source path: `crates/searchright-cli/src/main.rs`
-  - [x] Present source path: `crates/searchright-mcp/src/lib.rs`
-  - [x] Assertion ledger: `conductor/tracks/38-zktls-verifiable-live-execution/traceability.json`
+- [ ] Implement the current scope and bind each assertion to source symbols and evidence.
 
 ## Completion and evidence contract
 

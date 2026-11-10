@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement PaginationCheckpoint, deterministic HTTP 429 Retry-After backoff, and duplicate-emission prevention on resume in crates/evidence-search-core/src/lib.rs.
+- [ ] **38.2 — PubMed and Europe PMC cursor paging through the existing shared runtime**
+  - Prerequisite: 38.1; retry/429, failed-page, duplicate-page fixtures.
+  - Acceptance: cargo test --locked -p searchright-connectors.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

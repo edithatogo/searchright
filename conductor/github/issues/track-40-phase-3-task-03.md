@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.
+- [ ] **40.3 — Pinned ASReview CSV/RIS import and optional extension with corpus-to-label crosswalk**
+  - Prerequisite: 40.2; real ASReview consumer tests, no Searchright screening model.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement deterministic UTF-8 byte-slice verification and negation-aware claim entailment checking in crates/searchright-citeweft/src/lib.rs.
+- [ ] **42.2 — Deterministic manifest of native query, source, CSL, sidecar, code and environment revisions**
+  - Prerequisite: 42.1; cross-platform content and tamper tests.
+  - Acceptance: cargo test --locked -p searchright-provenance.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

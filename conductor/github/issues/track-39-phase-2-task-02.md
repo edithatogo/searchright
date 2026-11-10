@@ -3,11 +3,11 @@
 
 Parent phase key: `track-39-phase-2`
 Conductor plan: `conductor/tracks/39-smt-query-equivalence-calculus/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [ ] Re-run the static source/evidence validators on the exact revised head.
 
 ## Completion and evidence contract
 
