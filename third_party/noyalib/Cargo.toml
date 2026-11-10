@@ -714,7 +714,7 @@ version = "1.0"
 optional = true
 
 [dependencies.smallvec]
-version = "1.13"
+version = "1.16.4"
 default-features = false
 
 [dependencies.sval]
