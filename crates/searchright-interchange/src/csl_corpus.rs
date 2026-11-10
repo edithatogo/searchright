@@ -92,6 +92,7 @@ fn sort_json_keys(value: &Value) -> Value {
 }
 
 #[cfg(test)]
+#[allow(clippy::expect_used, clippy::indexing_slicing, reason = "bounded CSL regression fixtures")]
 mod tests {
     use super::*;
 
