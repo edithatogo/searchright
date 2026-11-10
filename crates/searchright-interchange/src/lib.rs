@@ -1214,25 +1214,85 @@ fn export_json_lines(records: &[BibliographicRecord]) -> Result<String, Intercha
     Ok(format!("{}\n", lines.join("\n")))
 }
 
+/// Export canonical CSL-JSON without discarding fields from a preceding CSL import.
+/// Source-specific metadata is never mistaken for a canonical CSL reference.
 fn export_csl_json(records: &[BibliographicRecord]) -> Result<String, InterchangeError> {
-    let values: Vec<Value> = records
-        .iter()
-        .map(|record| {
-            json!({
-                "id": record.native_id,
-                "type": csl_type(&record.kind),
-                "title": record.title,
-                "abstract": record.abstract_text,
-                "author": record.authors.iter().map(|author| json!({"literal": author})).collect::<Vec<_>>(),
-                "container-title": record.container_title,
-                "issued": record.publication_year.map(|year| json!({"date-parts": [[year]]})),
-                "DOI": record.identifiers.doi,
-                "PMID": record.identifiers.pmid,
-                "URL": record.urls.first()
-            })
-        })
-        .collect();
-    Ok(serde_json::to_string_pretty(&values)?)
+    let mut ids = std::collections::BTreeSet::new();
+    let mut output = Vec::with_capacity(records.len());
+    for record in records {
+        let id = record.native_id.as_str();
+        if id.trim().is_empty() {
+            return Err(InterchangeError::InvalidCslId);
+        }
+        if !ids.insert(id) {
+            return Err(InterchangeError::DuplicateCslId(id.to_owned()));
+        }
+        let original = record.provider_metadata.as_object().filter(|fields| {
+            fields.get("id").and_then(Value::as_str) == Some(id)
+                && fields.get("type").and_then(Value::as_str).is_some()
+        });
+        let mut fields = original.cloned().unwrap_or_default();
+        fields.insert("id".to_owned(), json!(id));
+        let original_type = original
+            .and_then(|item| item.get("type"))
+            .and_then(Value::as_str);
+        let kind = match record.kind {
+            RecordKind::Other(_) => original_type.unwrap_or(csl_type(&record.kind)),
+            _ => csl_type(&record.kind),
+        };
+        fields.insert("type".to_owned(), json!(kind));
+        fields.insert("title".to_owned(), json!(record.title));
+
+        // Preserve structured name parts when they still agree with the
+        // canonical record's text projection; otherwise emit updated literals.
+        let old_names = original
+            .and_then(|item| item.get("author"))
+            .and_then(Value::as_array)
+            .map(|authors| authors.iter().filter_map(|a| {
+                let literal = a.get("literal").and_then(Value::as_str).unwrap_or("");
+                if !literal.is_empty() {
+                    return Some(literal.to_owned());
+                }
+                let family = a.get("family").and_then(Value::as_str).unwrap_or("");
+                let given = a.get("given").and_then(Value::as_str).unwrap_or("");
+                let name = format!("{family}, {given}").trim_matches([',', ' ']).to_owned();
+                (!name.is_empty()).then_some(name)
+            }).collect::<Vec<_>>());
+        if record.authors.is_empty() {
+            fields.remove("author");
+        } else if old_names.as_ref() != Some(&record.authors) {
+            fields.insert("author".to_owned(), json!(
+                record.authors.iter().map(|a| json!({"literal": a})).collect::<Vec<_>>()
+            ));
+        }
+        set_csl_field(&mut fields, "abstract", record.abstract_text.clone().map(Value::String));
+        set_csl_field(&mut fields, "container-title", record.container_title.clone().map(Value::String));
+        let old_year = original
+            .and_then(|item| item.get("issued"))
+            .and_then(|date| date.get("date-parts"))
+            .and_then(Value::as_array).and_then(|dates| dates.first())
+            .and_then(Value::as_array).and_then(|date| date.first())
+            .and_then(Value::as_i64).and_then(|year| i32::try_from(year).ok());
+        if old_year != record.publication_year {
+            set_csl_field(&mut fields, "issued",
+                record.publication_year.map(|year| json!({"date-parts": [[year]]})));
+        }
+        set_csl_field(&mut fields, "DOI", record.identifiers.doi.clone().map(Value::String));
+        set_csl_field(&mut fields, "ISBN", record.identifiers.isbn.clone().map(Value::String));
+        set_csl_field(&mut fields, "PMID", record.identifiers.pmid.clone().map(Value::String));
+        set_csl_field(&mut fields, "URL", record.urls.first().cloned().map(Value::String));
+        set_csl_field(&mut fields, "language", record.languages.first().cloned().map(Value::String));
+        output.push(Value::Object(fields));
+    }
+    Ok(serde_json::to_string_pretty(&output)?)
+}
+
+fn set_csl_field(fields: &mut serde_json::Map<String, Value>, key: &str, value: Option<Value>) {
+    if let Some(value) = value {
+        fields.insert(key.to_owned(), value);
+    } else {
+        fields.remove(key);
+    }
 }
 
 fn export_ris(records: &[BibliographicRecord]) -> String {
@@ -1642,6 +1702,12 @@ pub enum InterchangeError {
     /// Contract validation failed.
     #[error(transparent)]
     Contract(#[from] searchright_contracts::ContractError),
+    /// An empty identifier cannot be used as a canonical CSL key.
+    #[error("canonical CSL reference id is blank")]
+    InvalidCslId,
+    /// Two records cannot share one canonical CSL identifier.
+    #[error("duplicate canonical CSL reference id: {0}")]
+    DuplicateCslId(String),
     /// Input format is not yet supported by the deterministic importer.
     #[error("import format is not supported: {0:?}")]
     UnsupportedImport(InterchangeFormat),
@@ -1731,6 +1797,65 @@ mod tests {
                 );
             }
         }
+        Ok(())
+    }
+
+    #[test]
+    fn csl_export_preserves_source_fields_and_updates_changed_properties()
+    -> Result<(), InterchangeError> {
+        let input = json!([{
+            "id": "csl-1", "type": "article-journal", "title": "Before",
+            "author": [{"family": "Doe", "given": "Jane"}],
+            "issued": {"date-parts": [[2025, 6, 12]]},
+            "publisher": "Original publisher", "volume": "10",
+            "DOI": "10.1000/old"
+        }]);
+        let imported = import_records(&serde_json::to_string(&input)?,
+            InterchangeFormat::CslJson, "source")?;
+        assert_eq!(imported.records.len(), 1);
+        let value: Value = serde_json::from_str(
+            &export_records(&imported.records, InterchangeFormat::CslJson)?)?;
+        assert_eq!(value[0], input[0]);
+
+        let mut corrected = imported.records;
+        corrected[0].title = "After".to_owned();
+        corrected[0].publication_year = Some(2026);
+        corrected[0].identifiers.doi = Some("10.1000/new".to_owned());
+        let value: Value = serde_json::from_str(
+            &export_records(&corrected, InterchangeFormat::CslJson)?)?;
+        assert_eq!(value[0]["title"], "After");
+        assert_eq!(value[0]["DOI"], "10.1000/new");
+        assert_eq!(value[0]["issued"], json!({"date-parts": [[2026]]}));
+        assert_eq!(value[0]["publisher"], "Original publisher");
+        assert_eq!(value[0]["author"], input[0]["author"]);
+        Ok(())
+    }
+
+    #[test]
+    fn csl_export_rejects_repeated_and_blank_canonical_identifiers() {
+        let a = golden_record();
+        assert!(matches!(
+            export_records(&[a.clone(), a.clone()], InterchangeFormat::CslJson),
+            Err(InterchangeError::DuplicateCslId(_))
+        ));
+        let mut blank = a;
+        blank.native_id = "  ".to_owned();
+        assert!(matches!(
+            export_records(&[blank], InterchangeFormat::CslJson),
+            Err(InterchangeError::InvalidCslId)
+        ));
+    }
+
+    #[test]
+    fn csl_export_keeps_unrelated_provider_metadata_out()
+    -> Result<(), InterchangeError> {
+        let mut record = golden_record();
+        record.provider_metadata = json!({"source": "provider", "id": "other", "secret": "bad"});
+        let value: Value = serde_json::from_str(
+            &export_records(&[record], InterchangeFormat::CslJson)?)?;
+        assert!(value[0].get("source").is_none());
+        assert!(value[0].get("secret").is_none());
+        assert_eq!(value[0]["id"], "golden-native-1");
         Ok(())
     }
 
