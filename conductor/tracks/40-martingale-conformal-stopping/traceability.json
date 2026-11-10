@@ -1,151 +1,157 @@
 {
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "40",
-  "title": "Anytime-valid martingale stopping and conformal risk control",
-  "implementation_state": "scaffolded",
+  "title": "Canonical CSL-JSON and downstream consumer interoperability",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/40-martingale-conformal-stopping/spec.md#scope",
-  "claim_boundary": "Source-verified specification and granular execution playbook only; anytime-valid martingale stopping and conformal calibration on sealed benchmarks remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Source-level planning or implementation is not compiler, authorised live, real-consumer or independent methodological evidence. Screening/stopping, extraction/entailment and VOI remain with their own tools; track closure requires independently verifiable admission.",
   "assertions": [
     {
       "assertion_id": "T40-A001",
-      "statement": "Pluggable active-learning ranking worker interface with strict separation between observed training labels and sealed holdout pools",
-      "state": "scaffolded",
+      "statement": "Canonical CSL-JSON ID/order/field-preservation and content-revision primitive",
+      "state": "source_implemented",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/40-martingale-conformal-stopping/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-ranking/src/lib.rs",
-        "crates/searchright-bench/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
       ],
-      "implementation_symbols": [],
+      "implementation_symbols": [
+        "searchright_interchange::csl_corpus::canonical_csl_bibliography"
+      ],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/40-martingale-conformal-stopping/evidence.json"
       ],
       "open_gates": [
-        "Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.",
-        "Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.",
-        "Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs."
+        "Current exact-head Rust CI must compile and pass the CSL corpus unit tests."
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Rust source and unit tests authored; exact-head compilation, full CSL-schema validation and consumer conformance not yet evidenced."
     },
     {
       "assertion_id": "T40-A002",
-      "statement": "Anytime-valid hypergeometric betting martingale and e-value wealth tracker for sequential without-replacement screening",
+      "statement": "Versioned rights, lineage, source-record, citation-edge, affiliation and identity sidecars",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/40-martingale-conformal-stopping/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-ranking/src/lib.rs",
-        "crates/searchright-bench/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/40-martingale-conformal-stopping/evidence.json"
       ],
       "open_gates": [
-        "Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.",
-        "Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.",
-        "Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs."
+        "python scripts/validate_repository.py"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T40-A003",
-      "statement": "Conformal risk-controlling threshold calibrator bounding false-negative screening error rates at user-specified significance levels",
+      "statement": "Pinned ASReview CSV/RIS import and optional extension with corpus-to-label crosswalk",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/40-martingale-conformal-stopping/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-ranking/src/lib.rs",
-        "crates/searchright-bench/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/40-martingale-conformal-stopping/evidence.json"
       ],
       "open_gates": [
-        "Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.",
-        "Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.",
-        "Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs."
+        "./scripts/verify.sh"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T40-A004",
-      "statement": "Tamper-evident stopping certificate recording martingale wealth trajectory, remaining pool size, target recall and significance level",
+      "statement": "Pinned pybibx adapter with truthful supported data source/neutral export",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/40-martingale-conformal-stopping/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-ranking/src/lib.rs",
-        "crates/searchright-bench/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/40-martingale-conformal-stopping/evidence.json"
       ],
       "open_gates": [
-        "Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.",
-        "Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.",
-        "Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs."
+        "./scripts/verify.sh"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T40-A005",
-      "statement": "Sealed benchmark evaluation harness over SYNERGY and CLEF TAR datasets measuring workload reduction (WSS) and empirical stopping coverage",
+      "statement": "bibliometrix and VOSviewer imports preserving available citation/affiliation edges",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/40-martingale-conformal-stopping/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-ranking/src/lib.rs",
-        "crates/searchright-bench/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/40-martingale-conformal-stopping/evidence.json"
       ],
       "open_gates": [
-        "Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.",
-        "Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.",
-        "Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs."
+        "./scripts/verify.sh"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
+    },
+    {
+      "assertion_id": "T40-A006",
+      "statement": "Negative round-trip tests across consumers and immutable revision-bound return events",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/40-martingale-conformal-stopping/spec.md",
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        null,
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/40-martingale-conformal-stopping/evidence.json"
+      ],
+      "open_gates": [
+        "./scripts/verify.sh"
+      ],
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     }
   ]
 }

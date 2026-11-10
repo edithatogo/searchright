@@ -1,166 +1,131 @@
 {
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "39",
-  "title": "Formal BDD/SMT query equivalence and semantic loss calculus",
+  "title": "Conditional dialect semantics and translation fidelity",
   "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/39-smt-query-equivalence-calculus/spec.md#scope",
-  "claim_boundary": "Source-verified specification and granular execution playbook only; canonical ROBDD equivalence solving and witness synthesis remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Source-level planning or implementation is not compiler, authorised live, real-consumer or independent methodological evidence. Screening/stopping, extraction/entailment and VOI remain with their own tools; track closure requires independently verifiable admission.",
   "assertions": [
     {
       "assertion_id": "T39-A001",
-      "statement": "Canonical Reduced Ordered Binary Decision Diagram (ROBDD) builder over atomic search predicates, field scopes and MeSH explosion trees",
+      "statement": "Supported Boolean, field, proximity, truncation and controlled-vocabulary model",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/39-smt-query-equivalence-calculus/spec.md",
-        "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
-        "crates/evidence-search-core/src/native.rs",
-        "crates/evidence-search-core/src/lib.rs",
-        "crates/searchright-validation/src/lib.rs",
-        "crates/searchright/src/engine.rs"
+        "crates/evidence-search-contracts/src/query.rs",
+        "crates/searchright-validation/src/lib.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/39-smt-query-equivalence-calculus/evidence.json"
       ],
       "open_gates": [
-        "Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.",
-        "Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.",
-        "Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.",
-        "Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites."
+        "cargo test --locked -p evidence-search-core"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T39-A002",
-      "statement": "Bounded relational constraint encoding for proximity operators (`NEAR/k`, `ADJ/k`) and date/publication-type filters",
+      "statement": "Semantic comparison classification under declared assumptions",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/39-smt-query-equivalence-calculus/spec.md",
-        "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
-        "crates/evidence-search-core/src/native.rs",
-        "crates/evidence-search-core/src/lib.rs",
-        "crates/searchright-validation/src/lib.rs",
-        "crates/searchright/src/engine.rs"
+        "crates/evidence-search-contracts/src/query.rs",
+        "crates/searchright-validation/src/lib.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/39-smt-query-equivalence-calculus/evidence.json"
       ],
       "open_gates": [
-        "Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.",
-        "Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.",
-        "Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.",
-        "Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites."
+        "cargo test --locked -p searchright-validation"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T39-A003",
-      "statement": "Directional semantic subsumption solver classifying translations as equivalent, safe broadening, unsafe narrowing or incomparable",
+      "statement": "Property and metamorphic differential tests with verified witnesses",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/39-smt-query-equivalence-calculus/spec.md",
-        "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
-        "crates/evidence-search-core/src/native.rs",
-        "crates/evidence-search-core/src/lib.rs",
-        "crates/searchright-validation/src/lib.rs",
-        "crates/searchright/src/engine.rs"
+        "crates/evidence-search-contracts/src/query.rs",
+        "crates/searchright-validation/src/lib.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/39-smt-query-equivalence-calculus/evidence.json"
       ],
       "open_gates": [
-        "Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.",
-        "Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.",
-        "Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.",
-        "Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites."
+        "cargo test --locked -p searchright-validation"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T39-A004",
-      "statement": "Concrete witness counterexample document synthesizer generating minimal pseudo-records that match the source query but fail the target query",
+      "statement": "Measure OxiDD/SMT reuse against existing implementation, do not adopt without benefit",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/39-smt-query-equivalence-calculus/spec.md",
-        "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
-        "crates/evidence-search-core/src/native.rs",
-        "crates/evidence-search-core/src/lib.rs",
-        "crates/searchright-validation/src/lib.rs",
-        "crates/searchright/src/engine.rs"
+        "crates/evidence-search-contracts/src/query.rs",
+        "crates/searchright-validation/src/lib.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/39-smt-query-equivalence-calculus/evidence.json"
       ],
       "open_gates": [
-        "Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.",
-        "Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.",
-        "Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.",
-        "Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites."
+        "cargo test --locked -p searchright-validation"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T39-A005",
-      "statement": "Compiler integration attaching machine-checkable semantic equivalence proofs and counterexample witnesses to every cross-provider translation receipt",
+      "statement": "Held-out real expert strategies and known-study retention benchmark",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/39-smt-query-equivalence-calculus/spec.md",
-        "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
-        "crates/evidence-search-core/src/native.rs",
-        "crates/evidence-search-core/src/lib.rs",
-        "crates/searchright-validation/src/lib.rs",
-        "crates/searchright/src/engine.rs"
+        "crates/evidence-search-contracts/src/query.rs",
+        "crates/searchright-validation/src/lib.rs"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/39-smt-query-equivalence-calculus/evidence.json"
       ],
       "open_gates": [
-        "Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.",
-        "Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.",
-        "Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.",
-        "Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites."
+        "./scripts/verify.sh"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     }
   ]
 }

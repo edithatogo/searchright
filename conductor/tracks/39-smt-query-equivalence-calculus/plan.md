@@ -1,51 +1,54 @@
-# Plan: 39 Formal BDD/SMT query equivalence and semantic loss calculus
+# Plan: 39 Conditional dialect semantics and translation fidelity
 
-Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
-
-GitHub issue key: `track-39`. Each numbered phase maps to the same-numbered native subissue.
-
-## Active forward plan
-
-[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
+Status: **scaffolded**. Current evidence ceiling: **source_verified**. The historical issue/phase/task identifiers in metadata remain stable; superseded screening/VOI algorithms are not implementation requirements.
 
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-39-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/39-smt-query-equivalence-calculus/spec.md`
-  - [x] Present source path: `crates/evidence-search-contracts/src/query.rs`
-  - [x] Present source path: `crates/evidence-search-core/src/compiler.rs`
-  - [x] Present source path: `crates/evidence-search-core/src/native.rs`
-  - [x] Present source path: `crates/evidence-search-core/src/lib.rs`
-  - [x] Present source path: `crates/searchright-validation/src/lib.rs`
-  - [x] Present source path: `crates/searchright/src/engine.rs`
-  - [x] Assertion ledger: `conductor/tracks/39-smt-query-equivalence-calculus/traceability.json`
+- [ ] Implement the current scope and bind each assertion to source symbols and evidence.
 
 ## Phase 2: Source-level verification
 
 <!-- github-subissue-key: track-39-phase-2 -->
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/check_traceability.py`
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [x] Historical network-free source validation exists (not evidence of current functional completeness).
+- [ ] Re-run the static source/evidence validators on the exact revised head.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-39-phase-3 -->
 
-- [ ] Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.
-- [ ] Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.
-- [ ] Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.
-- [ ] Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites.
+- [ ] **39.1 — Supported Boolean, field, proximity, truncation and controlled-vocabulary model**
+  - Prerequisite: Existing compiler fixtures; unsupported semantics explicit Unknown.
+  - Acceptance: cargo test --locked -p evidence-search-core.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **39.2 — Semantic comparison classification under declared assumptions**
+  - Prerequisite: 39.1; equivalence/broadening/narrowing/incomparable/unknown fixtures.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **39.3 — Property and metamorphic differential tests with verified witnesses**
+  - Prerequisite: 39.2; independently evaluated counterexamples.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **39.4 — Measure OxiDD/SMT reuse against existing implementation, do not adopt without benefit**
+  - Prerequisite: 39.3; memory, security, MSRV, licence, maintenance and parity report.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **39.5 — Held-out real expert strategies and known-study retention benchmark**
+  - Prerequisite: 39.1–4, lawful source access and independent assessors.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Phase 4: Review and closeout
 
 <!-- github-subissue-key: track-39-phase-4 -->
 
-- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
-- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Run an actual Conductor review if available, or equivalent repository-native checks with limitation stated.
+- [ ] Apply findings, rebuild, run security/source-integrity and relevant consumer/live tests on the exact head.
+- [ ] Reconcile roadmap coverage, traceability and receipts and archive only if every applicable gate passes; otherwise retain active status.

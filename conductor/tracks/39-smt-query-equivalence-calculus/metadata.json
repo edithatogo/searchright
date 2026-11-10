@@ -2,15 +2,16 @@
   "schema_version": "conductor.track-metadata.v3",
   "track_id": "39",
   "slug": "smt-query-equivalence-calculus",
-  "title": "Formal BDD/SMT query equivalence and semantic loss calculus",
+  "title": "Conditional dialect semantics and translation fidelity",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-11-10",
   "dependencies": [
     "02",
     "21",
-    "26"
+    "26",
+    "38"
   ],
   "horizon": "mature",
   "evidence_level": "source_verified",

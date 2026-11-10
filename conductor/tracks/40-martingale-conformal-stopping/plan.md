@@ -1,48 +1,59 @@
-# Plan: 40 Anytime-valid martingale stopping and conformal risk control
+# Plan: 40 Canonical CSL-JSON and downstream consumer interoperability
 
-Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
-
-GitHub issue key: `track-40`. Each numbered phase maps to the same-numbered native subissue.
-
-## Active forward plan
-
-[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
+Status: **partially_implemented**. Current evidence ceiling: **source_verified**. The historical issue/phase/task identifiers in metadata remain stable; superseded screening/VOI algorithms are not implementation requirements.
 
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-40-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/40-martingale-conformal-stopping/spec.md`
-  - [x] Present source path: `crates/searchright-contracts/src/screening.rs`
-  - [x] Present source path: `crates/searchright-ranking/src/lib.rs`
-  - [x] Present source path: `crates/searchright-bench/src/lib.rs`
-  - [x] Assertion ledger: `conductor/tracks/40-martingale-conformal-stopping/traceability.json`
+- [ ] Implement the current scope and bind each assertion to source symbols and evidence.
 
 ## Phase 2: Source-level verification
 
 <!-- github-subissue-key: track-40-phase-2 -->
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/check_traceability.py`
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [x] Historical network-free source validation exists (not evidence of current functional completeness).
+- [ ] Re-run the static source/evidence validators on the exact revised head.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-40-phase-3 -->
 
-- [ ] Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.
-- [ ] Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.
-- [ ] Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.
-- [ ] Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs.
+- [ ] **40.1 — Canonical CSL-JSON ID/order/field-preservation and content-revision primitive**
+  - Prerequisite: Existing serde_json/blake3, no new deps, adversarial unit tests.
+  - Acceptance: cargo test --locked -p searchright-interchange csl_corpus.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **40.2 — Versioned rights, lineage, source-record, citation-edge, affiliation and identity sidecars**
+  - Prerequisite: 40.1; upstream CSL schema and cross-artifact invariants.
+  - Acceptance: python scripts/validate_repository.py.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **40.3 — Pinned ASReview CSV/RIS import and optional extension with corpus-to-label crosswalk**
+  - Prerequisite: 40.2; real ASReview consumer tests, no Searchright screening model.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **40.4 — Pinned pybibx adapter with truthful supported data source/neutral export**
+  - Prerequisite: 40.2; real pybibx import and field-loss report.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **40.5 — bibliometrix and VOSviewer imports preserving available citation/affiliation edges**
+  - Prerequisite: 40.2; independent expected-count and missingness fixtures.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
+- [ ] **40.6 — Negative round-trip tests across consumers and immutable revision-bound return events**
+  - Prerequisite: 40.3–40.5; no canonical overwrite or silent loss.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Phase 4: Review and closeout
 
 <!-- github-subissue-key: track-40-phase-4 -->
 
-- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
-- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Run an actual Conductor review if available, or equivalent repository-native checks with limitation stated.
+- [ ] Apply findings, rebuild, run security/source-integrity and relevant consumer/live tests on the exact head.
+- [ ] Reconcile roadmap coverage, traceability and receipts and archive only if every applicable gate passes; otherwise retain active status.

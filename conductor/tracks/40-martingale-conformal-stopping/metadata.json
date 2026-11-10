@@ -2,15 +2,15 @@
   "schema_version": "conductor.track-metadata.v3",
   "track_id": "40",
   "slug": "martingale-conformal-stopping",
-  "title": "Anytime-valid martingale stopping and conformal risk control",
-  "status": "scaffolded",
-  "implementation_state": "scaffolded",
+  "title": "Canonical CSL-JSON and downstream consumer interoperability",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-11-10",
   "dependencies": [
-    "17",
-    "23",
-    "29"
+    "06",
+    "25",
+    "38"
   ],
   "horizon": "mature",
   "evidence_level": "source_verified",
