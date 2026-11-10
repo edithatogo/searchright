@@ -16,6 +16,12 @@ class ScholarlyStreamProposal(unittest.TestCase):
         self.event = json.loads(FIXTURE.read_text())
         self.validator = Draft202012Validator(self.schema, format_checker=FormatChecker())
 
+    def test_required_datetime_checker_active(self):
+        checker = FormatChecker()
+        self.assertIn("date-time", checker.checkers)
+        self.assertFalse(checker.conforms("yesterday", "date-time"))
+        self.assertFalse(checker.conforms("2026-02-30T00:00:00Z", "date-time"))
+
     def test_schema_and_fixture(self):
         Draft202012Validator.check_schema(self.schema)
         self.validator.validate(self.event)
