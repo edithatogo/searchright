@@ -1,6 +1,6 @@
 # Plan: 39 Conditional dialect semantics and translation fidelity
 
-Status: **scaffolded**. Current evidence ceiling: **source_verified**. The historical issue/phase/task identifiers in metadata remain stable; superseded screening/VOI algorithms are not implementation requirements.
+Current status: **scaffolded**. Implementation state: **scaffolded**. Current evidence ceiling: **source_verified**. The historical issue/phase/task identifiers in metadata remain stable; superseded screening/VOI algorithms are not implementation requirements.
 
 ## Phase 1: Source implementation
 

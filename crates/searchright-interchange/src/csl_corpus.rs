@@ -53,14 +53,19 @@ pub fn canonical_csl_bibliography(input: &str) -> Result<CslBibliography, CslCor
     let mut normalised = Vec::with_capacity(items.len());
     for (index, item) in items.iter().enumerate() {
         let object = item.as_object().ok_or(CslCorpusError::NotObject(index))?;
-        let id = object.get("id").and_then(Value::as_str)
+        let id = object
+            .get("id")
+            .and_then(Value::as_str)
             .filter(|id| !id.trim().is_empty())
             .ok_or(CslCorpusError::InvalidId(index))?;
         if !ids.insert(id.to_owned()) {
             return Err(CslCorpusError::DuplicateId(id.to_owned()));
         }
-        if object.get("type").and_then(Value::as_str)
-            .is_none_or(|kind| kind.trim().is_empty()) {
+        if object
+            .get("type")
+            .and_then(Value::as_str)
+            .is_none_or(|kind| kind.trim().is_empty())
+        {
             return Err(CslCorpusError::InvalidType(index));
         }
         normalised.push((id.to_owned(), sort_json_keys(item)));
@@ -72,7 +77,10 @@ pub fn canonical_csl_bibliography(input: &str) -> Result<CslBibliography, CslCor
     hasher.update(b"searchright/csl-bibliography/v1\n");
     hasher.update(&payload);
     let revision = format!("blake3:{}", hasher.finalize().to_hex());
-    Ok(CslBibliography { references, revision })
+    Ok(CslBibliography {
+        references,
+        revision,
+    })
 }
 
 fn sort_json_keys(value: &Value) -> Value {
@@ -92,7 +100,11 @@ fn sort_json_keys(value: &Value) -> Value {
 }
 
 #[cfg(test)]
-#[allow(clippy::expect_used, clippy::indexing_slicing, reason = "bounded CSL regression fixtures")]
+#[allow(
+    clippy::expect_used,
+    clippy::indexing_slicing,
+    reason = "bounded CSL regression fixtures"
+)]
 mod tests {
     use super::*;
 
@@ -108,8 +120,10 @@ mod tests {
 
     #[test]
     fn bibliographic_change_creates_new_revision() {
-        let a = canonical_csl_bibliography(r#"[{"id":"a","type":"report","title":"Before"}]"#).expect("a");
-        let b = canonical_csl_bibliography(r#"[{"id":"a","type":"report","title":"After"}]"#).expect("b");
+        let a = canonical_csl_bibliography(r#"[{"id":"a","type":"report","title":"Before"}]"#)
+            .expect("a");
+        let b = canonical_csl_bibliography(r#"[{"id":"a","type":"report","title":"After"}]"#)
+            .expect("b");
         assert_ne!(a.revision, b.revision);
     }
 
@@ -124,7 +138,9 @@ mod tests {
             Err(CslCorpusError::InvalidId(0))
         ));
         assert!(matches!(
-            canonical_csl_bibliography(r#"[{"id":"a","type":"report"},{"id":"a","type":"report"}]"#),
+            canonical_csl_bibliography(
+                r#"[{"id":"a","type":"report"},{"id":"a","type":"report"}]"#
+            ),
             Err(CslCorpusError::DuplicateId(_))
         ));
         assert!(matches!(

@@ -23,6 +23,10 @@ Searchright owns systematic search and provenance-rich CSL-JSON corpus. Sourceri
 
 Independent tasks may run in parallel when declared prerequisites exist; no mandatory replacement of useful existing code. DVC, Salsa, OxiDD, TLSNotary, Snakemake, ASReview extensions, local agent auditing and OpenLineage are optional only after compatibility/value/security qualification. Searchright does not implement the ASReview screening/active-learning core.
 
+## Decision identity and operational modes
+
+Preserve actor, mode and policy version across autonomous, solo and team workflows; machine recommendations are not independent human reviews and cannot autonomously amend a search strategy. Retain immutable original source observations, individual interventions and actual human approvals. The existing screening owner remains ASReview.
+
 ## Conductor tracks
 
 - [Track 38: Bounded live search, recovery and source receipts](tracks/38-zktls-verifiable-live-execution/plan.md) — 6 individually executable gated tasks
