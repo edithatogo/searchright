@@ -1,0 +1,45 @@
+{
+  "schema_version": "org.searchright.scientometrics-candidate.design.2",
+  "status": "proposed_not_active",
+  "integration_id": "citelattice-scholarly-stream",
+  "producer": "edithatogo/searchright",
+  "producer_baseline": "fbfdde8814ce121fd4d79a3ff1285fa91e9e12a1",
+  "consumer": "CiteLattice contract scaffold (not admitted producer/consumer integration)",
+  "consumer_repository": "edithatogo/CiteLattice",
+  "primary_track": "41",
+  "affected_tracks": [
+    "01",
+    "06",
+    "13",
+    "21",
+    "25",
+    "26",
+    "41",
+    "44"
+  ],
+  "contract_id": "org.scholarly.stream",
+  "contract_version": "1.0.0-design.2",
+  "schema_path": "contracts/proposals/scholarly-stream.v1.schema.json",
+  "schema_sha256": "730f7d374185ed523ce7f362983933d0bdd20443ae047751cfbee9aef622d7ed",
+  "fixture_paths": [
+    "contracts/proposals/fixtures/scholarly-stream-upsert.json"
+  ],
+  "default_network": false,
+  "default_telemetry": false,
+  "default_external_writes": false,
+  "automatic_promotion": false,
+  "gate": "python -m unittest discover -s tests -p test_scholarly_stream_proposal.py -v",
+  "compatibility_evidence": "structural design fixture only; no producer-consumer execution",
+  "promotion_requires": [
+    "exact consumer artifact or commit identity",
+    "Rust/Serde wire parity and semantic validation",
+    "actual bounded producer stream",
+    "consumer parse and checkpoint/replay tests",
+    "rights/coverage propagation",
+    "schema catalogue and package-surface admission",
+    "exact source SHA from CiteLattice main after CI admission"
+  ],
+  "rollback": "Keep existing native JSONL and CSL-JSON exporters unchanged; disable optional new stream adapter.",
+  "consumer_revision": "3698f5281f4401a7f9657af080da1dfc5d6158b4",
+  "consumer_pull_request": "https://github.com/edithatogo/CiteLattice/pull/1"
+}
