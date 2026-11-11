@@ -1290,6 +1290,18 @@
       "version": "29eef336d9b2848a0b548edc03f92a220660cdb8"
     },
     {
+      "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/privacy-secrets@985503bc8eae58e7d6ef36a6e5427d0077e0193c",
+      "name": "edithatogo/repository-standards/.github/actions/privacy-secrets",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "985503bc8eae58e7d6ef36a6e5427d0077e0193c"
+    },
+    {
       "bom-ref": "github-action:github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3",
       "name": "github/codeql-action/analyze",
       "properties": [
@@ -1768,7 +1780,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:6c07adb2-7b02-5c73-80a1-18208456421f",
+  "serialNumber": "urn:uuid:51b094b1-0678-55f8-99bf-05dba795a6ac",
   "specVersion": "1.6",
   "version": 1
 }
