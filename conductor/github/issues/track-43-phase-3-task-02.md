@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement verbatim evidence quote byte-range validation, epistemic divergence calculation, and conservative CalibratedArbiter adjudication in crates/searchright-screening/src/lib.rs.
+- [ ] **43.2 — Literal and plausible query reconstruction scenarios with frozen assumptions**
+  - Prerequisite: 43.1; negative tests for auto-repair.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

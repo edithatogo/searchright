@@ -6,8 +6,8 @@ Conductor plan: `conductor/tracks/38-zktls-verifiable-live-execution/plan.md`
 
 ## Task subissues
 
-- [x] T01: Run deterministic, network-free contract and policy checks. (`track-38-phase-2-task-01`)
-- [x] T02: Record machine-readable evidence without promoting compiler, live or external claims. (`track-38-phase-2-task-02`)
+- [x] T01: Historical network-free source validation exists (not evidence of current functional completeness). (`track-38-phase-2-task-01`)
+- [ ] T02: Re-run the static source/evidence validators on the exact revised head. (`track-38-phase-2-task-02`)
 
 ## Evidence rule
 

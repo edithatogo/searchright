@@ -2,17 +2,15 @@
   "schema_version": "conductor.track-metadata.v3",
   "track_id": "41",
   "slug": "salsa-incremental-living-reviews",
-  "title": "Demand-driven incremental living review computation",
+  "title": "Temporal acquisition and versioned living-search corpora",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-11-10",
   "dependencies": [
-    "06",
-    "07",
-    "08",
     "22",
-    "24"
+    "38",
+    "40"
   ],
   "horizon": "mature",
   "evidence_level": "source_verified",

@@ -7,12 +7,7 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/44-tobac-living-evidence-transport/spec.md`
-  - [x] Present source path: `crates/searchright-contracts/src/living.rs`
-  - [x] Present source path: `crates/searchright-living/src/lib.rs`
-  - [x] Present source path: `crates/searchright-provenance/src/lib.rs`
-  - [x] Assertion ledger: `conductor/tracks/44-tobac-living-evidence-transport/traceability.json`
+- [ ] Implement task-scoped source changes with symbols and positive/negative tests.
 
 ## Completion and evidence contract
 

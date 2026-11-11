@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define PdfBoundingBox, ProofCarryingSpan, GroundedClaim, IntegrityNotice, and SynthesisQuarantineFlag contracts in crates/searchright-contracts/src/document.rs and crates/searchright-contracts/src/study.rs.
+- [ ] **42.1 — Reference-field provenance and rights sidecars with source observation links**
+  - Prerequisite: 40.2/38.5; fail unresolved identities and restricted disclosures.
+  - Acceptance: cargo test --locked -p searchright-provenance.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

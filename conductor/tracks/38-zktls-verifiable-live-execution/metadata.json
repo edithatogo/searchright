@@ -2,11 +2,11 @@
   "schema_version": "conductor.track-metadata.v3",
   "track_id": "38",
   "slug": "zktls-verifiable-live-execution",
-  "title": "Verifiable live two-source execution and zkTLS provenance receipts",
+  "title": "Bounded live search, recovery and source receipts",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-11-10",
   "dependencies": [
     "03",
     "04",

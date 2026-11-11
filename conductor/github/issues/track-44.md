@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: track-44 -->
-# Track 44: Living systematic review to VOI and bias-transport handoff for tobac
+# Track 44: Generic versioned corpus and downstream-research handoff
 
-Export living systematic review delta updates as structured effect-size, risk-of-bias, and PICO transportability packets with byte-span provenance for downstream tobac and voiage regulatory VOI evaluation.
+Searchright systematic-search contract: Generic versioned corpus and downstream-research handoff. tobac/voiage own effects, bias transport and VOI; source neutrality is the default.
 
 ## Source of truth
 
@@ -15,7 +15,7 @@ Export living systematic review delta updates as structured effect-size, risk-of
 - Status: `scaffolded`
 - Implementation: `scaffolded`
 - Evidence: `source_verified`
-- Dependencies: `12, 22, 25, 41, 42`
+- Dependencies: `40, 41, 42`
 - Requirements: `SR-100`
 - External approval required: `false`
 
@@ -28,6 +28,6 @@ Export living systematic review delta updates as structured effect-size, risk-of
 
 ## Claim boundary
 
-Source-verified specification and granular execution playbook only; living-review-to-VOI delta export and PICO transportability weighting remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

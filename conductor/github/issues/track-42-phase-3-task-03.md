@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement transitive retraction and expression-of-concern poisoning across Report-to-Study-to-Synthesis graphs in crates/searchright-study/src/lib.rs and crates/searchright-living/src/lib.rs.
+- [ ] **42.3 — Correction, withdrawal and retraction notices, without changing downstream conclusions**
+  - Prerequisite: 42.2; notification propagation tests.
+  - Acceptance: cargo test --locked -p searchright-living.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

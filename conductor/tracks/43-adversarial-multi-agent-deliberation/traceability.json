@@ -1,151 +1,131 @@
 {
   "schema_version": "org.searchright.track-traceability.v1",
   "track_id": "43",
-  "title": "Adversarial Advocate-Skeptic-Arbiter screening deliberation",
+  "title": "Search strategy auditing and SEARCH-REPLAY evaluation",
   "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
   "source_of_assertions": "conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md#scope",
-  "claim_boundary": "Source-verified specification and granular execution playbook only; three-role adversarial screening deliberation and calibrated arbiter routing remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Source-level planning is not compiler, authorised live, real-consumer or independent methodological evidence. Screening/stopping, extraction/entailment and VOI remain with their downstream owners; track closure requires verified acceptance.",
   "assertions": [
     {
       "assertion_id": "T43-A001",
-      "statement": "Isolated three-role screening protocol (`AdvocateAgent`, `SkepticAgent`, `CalibratedArbiter`) with strict context separation between Advocate and Skeptic",
+      "statement": "Evidence-location-aware PRESS/PRISMA-S strategy audit",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-screening/src/lib.rs",
-        "crates/searchright-agent/src/lib.rs"
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "docs/research/programme.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/evidence.json"
       ],
       "open_gates": [
-        "Define DeliberationRole, CriterionArgument, ArbiterDisposition, and DeliberationTranscript contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement verbatim evidence quote byte-range validation, epistemic divergence calculation, and conservative CalibratedArbiter adjudication in crates/searchright-screening/src/lib.rs.",
-        "Enforce Advocate-Skeptic prompt isolation and non-autonomous final exclusion guards in crates/searchright-agent/src/lib.rs.",
-        "Add adversarial hallucinated-quote rejection, high-divergence human escalation, and non-human-consensus invariant tests."
+        "cargo test --locked -p searchright-validation"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T43-A002",
-      "statement": "Mandatory verbatim source-span citation validation for every Advocate inclusion claim and Skeptic exclusion claim against the candidate record text",
+      "statement": "Literal and plausible query reconstruction scenarios with frozen assumptions",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-screening/src/lib.rs",
-        "crates/searchright-agent/src/lib.rs"
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "docs/research/programme.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/evidence.json"
       ],
       "open_gates": [
-        "Define DeliberationRole, CriterionArgument, ArbiterDisposition, and DeliberationTranscript contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement verbatim evidence quote byte-range validation, epistemic divergence calculation, and conservative CalibratedArbiter adjudication in crates/searchright-screening/src/lib.rs.",
-        "Enforce Advocate-Skeptic prompt isolation and non-autonomous final exclusion guards in crates/searchright-agent/src/lib.rs.",
-        "Add adversarial hallucinated-quote rejection, high-divergence human escalation, and non-human-consensus invariant tests."
+        "cargo test --locked -p searchright-validation"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T43-A003",
-      "statement": "Criterion-by-criterion epistemic divergence calculator measuring disagreement entropy and abstention triggers between Advocate and Skeptic",
+      "statement": "Record-set differences, known-study retention and interpretation uncertainty envelopes",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-screening/src/lib.rs",
-        "crates/searchright-agent/src/lib.rs"
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "docs/research/programme.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/evidence.json"
       ],
       "open_gates": [
-        "Define DeliberationRole, CriterionArgument, ArbiterDisposition, and DeliberationTranscript contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement verbatim evidence quote byte-range validation, epistemic divergence calculation, and conservative CalibratedArbiter adjudication in crates/searchright-screening/src/lib.rs.",
-        "Enforce Advocate-Skeptic prompt isolation and non-autonomous final exclusion guards in crates/searchright-agent/src/lib.rs.",
-        "Add adversarial hallucinated-quote rejection, high-divergence human escalation, and non-human-consensus invariant tests."
+        "cargo test --locked -p searchright-validation"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T43-A004",
-      "statement": "Calibrated Arbiter synthesis rule enforcing conservative recall preservation and routing any contested or low-confidence record to human adjudication",
+      "statement": "Optional agent audits with deterministic verification and human amendments",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-screening/src/lib.rs",
-        "crates/searchright-agent/src/lib.rs"
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "docs/research/programme.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/evidence.json"
       ],
       "open_gates": [
-        "Define DeliberationRole, CriterionArgument, ArbiterDisposition, and DeliberationTranscript contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement verbatim evidence quote byte-range validation, epistemic divergence calculation, and conservative CalibratedArbiter adjudication in crates/searchright-screening/src/lib.rs.",
-        "Enforce Advocate-Skeptic prompt isolation and non-autonomous final exclusion guards in crates/searchright-agent/src/lib.rs.",
-        "Add adversarial hallucinated-quote rejection, high-divergence human escalation, and non-human-consensus invariant tests."
+        "cargo test --locked -p searchright-agent"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     },
     {
       "assertion_id": "T43-A005",
-      "statement": "Immutable deliberation transcript ledger preserving machine role identities distinctly from human dual-reviewer consensus",
+      "statement": "SEARCH-REPLAY pilot/confirmation protocol, research datasets and publication contracts",
       "state": "scaffolded",
       "mapping_confidence": "track_level_only",
       "implementation_paths": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-screening/src/lib.rs",
-        "crates/searchright-agent/src/lib.rs"
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "docs/research/programme.md"
       ],
       "implementation_symbols": [],
       "deterministic_tests": [
-        "python scripts/validate_repository.py",
-        "python scripts/check_roadmap_coverage.py",
+        null,
         "python scripts/check_traceability.py"
       ],
       "evidence_receipts": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/evidence.json"
       ],
       "open_gates": [
-        "Define DeliberationRole, CriterionArgument, ArbiterDisposition, and DeliberationTranscript contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement verbatim evidence quote byte-range validation, epistemic divergence calculation, and conservative CalibratedArbiter adjudication in crates/searchright-screening/src/lib.rs.",
-        "Enforce Advocate-Skeptic prompt isolation and non-autonomous final exclusion guards in crates/searchright-agent/src/lib.rs.",
-        "Add adversarial hallucinated-quote rejection, high-divergence human escalation, and non-human-consensus invariant tests."
+        "./scripts/verify.sh"
       ],
-      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+      "permitted_claim": "Only source-scoped implementation planning; independent acceptance remains open."
     }
   ]
 }

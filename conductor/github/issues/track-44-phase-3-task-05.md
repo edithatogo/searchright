@@ -1,13 +1,16 @@
-<!-- searchright-issue-key: track-38-phase-4-task-04 -->
-# Track 38 / Phase 4 / Task 04
+<!-- searchright-issue-key: track-44-phase-3-task-05 -->
+# Track 44 / Phase 3 / Task 05
 
-Parent phase key: `track-38-phase-4`
-Conductor plan: `conductor/tracks/38-zktls-verifiable-live-execution/plan.md`
+Parent phase key: `track-44-phase-3`
+Conductor plan: `conductor/tracks/44-tobac-living-evidence-transport/plan.md`
 Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] **44.5 — Reproducible package and versioned API release once exact-head gates pass**
+  - Depends on: 44.4; no publication/registry acceptance claim
+  - Required result: ./scripts/verify.sh
+  - Verify: `undefined`
 
 ## Completion and evidence contract
 

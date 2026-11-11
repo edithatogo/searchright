@@ -7,10 +7,7 @@ Canonical task state: **source task complete**.
 
 ## Canonical task
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/check_traceability.py`
+- [x] Historical network-free scaffolding checks were recorded.
 
 ## Completion and evidence contract
 

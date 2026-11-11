@@ -15,7 +15,8 @@
     "Repository settings, protected environments, security controls, branch rules and Project fields are managed by an idempotent dry-run-first control plane.",
     "Maturity now includes cross-repository release trains, operational reliability, authenticated tenancy, generated SDK boundaries, staged pilots and a final release decision.",
     "Telemetry is disabled by default; backups, restore, incidents and remote access are explicit versioned contracts rather than deployment assumptions.",
-    "Assertion-level traceability separates implementation completeness from evidence level and deliberately downgrades incomplete tracks."
+    "Assertion-level traceability separates implementation completeness from evidence level and deliberately downgrades incomplete tracks.",
+    "CSL-JSON is canonical; source-observation, citation-edge and rights sidecars are versioned; ASReview, pybibx, bibliometrix, VOSviewer, tobac and voiage remain independent downstream consumers."
   ],
   "tracks": [
     {
@@ -3028,26 +3029,25 @@
       "track_id": "37"
     },
     {
-      "active_plan": "conductor/frontier-plan.md",
+      "active_plan": "conductor/tracks/38-zktls-verifiable-live-execution/plan.md",
       "blockers": [
-        "Define TlsTranscriptCommitment and redacted header byte-range contracts in crates/evidence-search-contracts/src/lib.rs and crates/searchright-contracts/src/lib.rs with unit validation tests.",
-        "Implement PaginationCheckpoint, deterministic HTTP 429 Retry-After backoff, and duplicate-emission prevention on resume in crates/evidence-search-core/src/lib.rs.",
-        "Implement 4 KiB chunk SHA-256 Merkle root computation, secret-preserving byte redaction, and atomic checkpoint persistence in crates/searchright-connectors/src/lib.rs and crates/searchright-store/src/lib.rs.",
-        "Wire explicit LiveExecutionAuthorization and two-source PubMed + Europe PMC execution through crates/searchright/src/engine.rs, crates/searchright-cli/src/main.rs, and crates/searchright-mcp/src/lib.rs.",
-        "Implement offline .srpack zkTLS transcript Merkle verification in crates/searchright-provenance/src/lib.rs and record authorised redacted live receipts."
+        "38.1: Authorised provider contracts and explicit query/source/budget policy",
+        "38.2: PubMed and Europe PMC cursor paging through the existing shared runtime",
+        "38.3: Atomic checkpoints, resume and idempotent record emission",
+        "38.4: CLI/MCP parity with denied-by-default consequential operations",
+        "38.5: Canonical CSL export plus source-record retention and loss receipts",
+        "38.6: Authorised two-source live run and independent retained-input replay"
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/check_traceability.py"
       ],
-      "claim_boundary": "Source-verified specification and granular execution playbook only; live two-source execution and cryptographic zkTLS transcript attestation remain open implementation and live-verification gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
       "deliverables": [
         "conductor/tracks/38-zktls-verifiable-live-execution/spec.md",
-        "crates/evidence-search-contracts/src/lib.rs",
         "crates/evidence-search-core/src/lib.rs",
         "crates/searchright-connectors/src/lib.rs",
-        "crates/searchright-provenance/src/lib.rs",
         "crates/searchright/src/engine.rs",
         "crates/searchright-cli/src/main.rs",
         "crates/searchright-mcp/src/lib.rs"
@@ -3064,243 +3064,242 @@
       "horizon": "mature",
       "implementation_state": "scaffolded",
       "lifecycle": "active",
-      "outcome": "Execute resumable two-source live retrieval (PubMed and Europe PMC) through CLI and MCP with cryptographic zkTLS transcript commitments in .srpack provenance bundles.",
+      "outcome": "Searchright systematic-search contract: Bounded live search, recovery and source receipts. TLSNotary optional and must be real notary evidence, not local Merkle/hash claims.",
       "requirements": [
         "SR-094"
       ],
       "slug": "zktls-verifiable-live-execution",
       "status": "scaffolded",
-      "title": "Verifiable live two-source execution and zkTLS provenance receipts",
+      "title": "Bounded live search, recovery and source receipts",
       "track_id": "38"
     },
     {
-      "active_plan": "conductor/frontier-plan.md",
+      "active_plan": "conductor/tracks/39-smt-query-equivalence-calculus/plan.md",
       "blockers": [
-        "Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.",
-        "Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.",
-        "Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.",
-        "Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites."
+        "39.1: Supported Boolean, field, proximity, truncation and controlled-vocabulary model",
+        "39.2: Semantic comparison classification under declared assumptions",
+        "39.3: Property and metamorphic differential tests with verified witnesses",
+        "39.4: Measure OxiDD/SMT reuse against existing implementation, do not adopt without benefit",
+        "39.5: Held-out real expert strategies and known-study retention benchmark"
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/check_traceability.py"
       ],
-      "claim_boundary": "Source-verified specification and granular execution playbook only; canonical ROBDD equivalence solving and witness synthesis remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
       "deliverables": [
         "conductor/tracks/39-smt-query-equivalence-calculus/spec.md",
-        "crates/evidence-search-contracts/src/query.rs",
         "crates/evidence-search-core/src/compiler.rs",
-        "crates/evidence-search-core/src/native.rs",
-        "crates/evidence-search-core/src/lib.rs",
-        "crates/searchright-validation/src/lib.rs",
-        "crates/searchright/src/engine.rs"
+        "crates/evidence-search-contracts/src/query.rs",
+        "crates/searchright-validation/src/lib.rs"
       ],
       "dependencies": [
         "02",
         "21",
-        "26"
+        "26",
+        "38"
       ],
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "mature",
       "implementation_state": "scaffolded",
       "lifecycle": "active",
-      "outcome": "Prove cross-database query translation equivalence, safe broadening, or unsafe narrowing using canonical ROBDDs and synthesize concrete counterexample witness documents.",
+      "outcome": "Searchright systematic-search contract: Conditional dialect semantics and translation fidelity. A BDD proof is never itself proof of live database retrieval equivalence.",
       "requirements": [
         "SR-095"
       ],
       "slug": "smt-query-equivalence-calculus",
       "status": "scaffolded",
-      "title": "Formal BDD/SMT query equivalence and semantic loss calculus",
+      "title": "Conditional dialect semantics and translation fidelity",
       "track_id": "39"
     },
     {
-      "active_plan": "conductor/frontier-plan.md",
+      "active_plan": "conductor/tracks/40-martingale-conformal-stopping/plan.md",
       "blockers": [
-        "Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.",
-        "Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.",
-        "Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs."
+        "40.1: Canonical CSL-JSON ID/order/field-preservation and content-revision primitive",
+        "40.2: Versioned rights, lineage, source-record, citation-edge, affiliation and identity sidecars",
+        "40.3: Pinned ASReview CSV/RIS import and optional extension with corpus-to-label crosswalk",
+        "40.4: Pinned pybibx adapter with truthful supported data source/neutral export",
+        "40.5: bibliometrix and VOSviewer imports preserving available citation/affiliation edges",
+        "40.6: Negative round-trip tests across consumers and immutable revision-bound return events"
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/check_traceability.py"
       ],
-      "claim_boundary": "Source-verified specification and granular execution playbook only; anytime-valid martingale stopping and conformal calibration on sealed benchmarks remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
       "deliverables": [
         "conductor/tracks/40-martingale-conformal-stopping/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-ranking/src/lib.rs",
-        "crates/searchright-bench/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
       ],
       "dependencies": [
-        "17",
-        "23",
-        "29"
+        "06",
+        "25",
+        "38"
       ],
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "mature",
-      "implementation_state": "scaffolded",
+      "implementation_state": "partially_implemented",
       "lifecycle": "active",
-      "outcome": "Bound missed relevant studies during prioritized screening using anytime-valid hypergeometric betting martingales and conformal risk control.",
+      "outcome": "Searchright systematic-search contract: Canonical CSL-JSON and downstream consumer interoperability. ASReview screening/stopping and bibliometric network analysis remain downstream.",
       "requirements": [
         "SR-096"
       ],
       "slug": "martingale-conformal-stopping",
-      "status": "scaffolded",
-      "title": "Anytime-valid martingale stopping and conformal risk control",
+      "status": "partially_implemented",
+      "title": "Canonical CSL-JSON and downstream consumer interoperability",
       "track_id": "40"
     },
     {
-      "active_plan": "conductor/frontier-plan.md",
+      "active_plan": "conductor/tracks/41-salsa-incremental-living-reviews/plan.md",
       "blockers": [
-        "Define DagNodeKey, NodeMemoEntry, and IncrementalUpdateReceipt contracts in crates/searchright-contracts/src/living.rs.",
-        "Implement IncrementalReviewDag with content-addressed early cutoff and selective criterion-amendment invalidation in crates/searchright-living/src/lib.rs.",
-        "Implement incremental cluster merge and affected-study recomputation in crates/searchright-dedup/src/lib.rs and crates/searchright-study/src/lib.rs.",
-        "Build multi-wave bisimulation equivalence test suite in crates/searchright-living and crates/searchright-prisma proving bit-for-bit identity between incremental updates and full replay."
+        "41.1: Distinct logical corpus/content revision/observation/run/attempt/profile identities",
+        "41.2: New, changed, withdrawn, corrected and delayed-index source observations",
+        "41.3: Narrow safe invalidation for strategy, metadata, vocabulary and identity changes",
+        "41.4: Full-replay equivalence versus incremental results",
+        "41.5: Qualify Salsa/DVC against simple existing Rust/CI baseline"
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/check_traceability.py"
       ],
-      "claim_boundary": "Source-verified specification and granular execution playbook only; demand-driven memoized DAG evaluation and bisimulation equivalence proofs remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
       "deliverables": [
         "conductor/tracks/41-salsa-incremental-living-reviews/spec.md",
-        "crates/searchright-contracts/src/living.rs",
         "crates/searchright-living/src/lib.rs",
         "crates/searchright-dedup/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "crates/searchright-prisma/src/lib.rs"
+        "crates/searchright-interchange/src/csl_corpus.rs"
       ],
       "dependencies": [
-        "06",
-        "07",
-        "08",
         "22",
-        "24"
+        "38",
+        "40"
       ],
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "mature",
       "implementation_state": "scaffolded",
       "lifecycle": "active",
-      "outcome": "Recompute living systematic review updates through a demand-driven memoized dependency DAG with early cutoff and bisimulation equivalence to full replay.",
+      "outcome": "Searchright systematic-search contract: Temporal acquisition and versioned living-search corpora. Salsa and DVC are optional; fresh live source observation is never inferred from cache.",
       "requirements": [
         "SR-097"
       ],
       "slug": "salsa-incremental-living-reviews",
       "status": "scaffolded",
-      "title": "Demand-driven incremental living review computation",
+      "title": "Temporal acquisition and versioned living-search corpora",
       "track_id": "41"
     },
     {
-      "active_plan": "conductor/frontier-plan.md",
+      "active_plan": "conductor/tracks/42-subdocument-entailment-retraction/plan.md",
       "blockers": [
-        "Define PdfBoundingBox, ProofCarryingSpan, GroundedClaim, IntegrityNotice, and SynthesisQuarantineFlag contracts in crates/searchright-contracts/src/document.rs and crates/searchright-contracts/src/study.rs.",
-        "Implement deterministic UTF-8 byte-slice verification and negation-aware claim entailment checking in crates/searchright-citeweft/src/lib.rs.",
-        "Implement transitive retraction and expression-of-concern poisoning across Report-to-Study-to-Synthesis graphs in crates/searchright-study/src/lib.rs and crates/searchright-living/src/lib.rs.",
-        "Add end-to-end span-tampering rejection and post-inclusion retraction quarantine tests across study synthesis and PRISMA living flow outputs."
+        "42.1: Reference-field provenance and rights sidecars with source observation links",
+        "42.2: Deterministic manifest of native query, source, CSL, sidecar, code and environment revisions",
+        "42.3: Correction, withdrawal and retraction notices, without changing downstream conclusions",
+        "42.4: Independent preserved-input replay and missing/tampered asset rejection",
+        "42.5: Evaluate RO-Crate compatibility, optional TLSNotary and OpenLineage"
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/check_traceability.py"
       ],
-      "claim_boundary": "Source-verified specification and granular execution playbook only; sub-document byte-span entailment verification and transitive retraction poisoning remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
       "deliverables": [
         "conductor/tracks/42-subdocument-entailment-retraction/spec.md",
-        "crates/searchright-contracts/src/document.rs",
-        "crates/searchright-contracts/src/study.rs",
-        "crates/searchright-citeweft/src/lib.rs",
-        "crates/searchright-study/src/lib.rs",
-        "crates/searchright-living/src/lib.rs"
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs"
       ],
       "dependencies": [
-        "12",
-        "22",
-        "24"
+        "25",
+        "38",
+        "40",
+        "41"
       ],
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "mature",
       "implementation_state": "scaffolded",
       "lifecycle": "active",
-      "outcome": "Anchor extracted claims to proof-carrying sub-document byte spans with entailment verification and propagate retractions transitively across study syntheses.",
+      "outcome": "Searchright systematic-search contract: Search provenance, integrity notices and independent evidence packages. Document extraction stays with CiteWeft, canonical reference verification with Sourceright.",
       "requirements": [
         "SR-098"
       ],
       "slug": "subdocument-entailment-retraction",
       "status": "scaffolded",
-      "title": "Sub-document byte-span entailment and transitive retraction propagation",
+      "title": "Search provenance, integrity notices and independent evidence packages",
       "track_id": "42"
     },
     {
-      "active_plan": "conductor/frontier-plan.md",
+      "active_plan": "conductor/tracks/43-adversarial-multi-agent-deliberation/plan.md",
       "blockers": [
-        "Define DeliberationRole, CriterionArgument, ArbiterDisposition, and DeliberationTranscript contracts in crates/searchright-contracts/src/screening.rs.",
-        "Implement verbatim evidence quote byte-range validation, epistemic divergence calculation, and conservative CalibratedArbiter adjudication in crates/searchright-screening/src/lib.rs.",
-        "Enforce Advocate-Skeptic prompt isolation and non-autonomous final exclusion guards in crates/searchright-agent/src/lib.rs.",
-        "Add adversarial hallucinated-quote rejection, high-divergence human escalation, and non-human-consensus invariant tests."
+        "43.1: Evidence-location-aware PRESS/PRISMA-S strategy audit",
+        "43.2: Literal and plausible query reconstruction scenarios with frozen assumptions",
+        "43.3: Record-set differences, known-study retention and interpretation uncertainty envelopes",
+        "43.4: Optional agent audits with deterministic verification and human amendments",
+        "43.5: SEARCH-REPLAY pilot/confirmation protocol, research datasets and publication contracts"
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/check_traceability.py"
       ],
-      "claim_boundary": "Source-verified specification and granular execution playbook only; three-role adversarial screening deliberation and calibrated arbiter routing remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
       "deliverables": [
         "conductor/tracks/43-adversarial-multi-agent-deliberation/spec.md",
-        "crates/searchright-contracts/src/screening.rs",
-        "crates/searchright-screening/src/lib.rs",
-        "crates/searchright-agent/src/lib.rs"
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "docs/research/programme.md"
       ],
       "dependencies": [
-        "07",
-        "11",
-        "28"
+        "17",
+        "29",
+        "39",
+        "42"
       ],
       "evidence_level": "source_verified",
       "external_approval_required": false,
       "horizon": "mature",
       "implementation_state": "scaffolded",
       "lifecycle": "active",
-      "outcome": "Execute zero-trust Advocate-Skeptic-Arbiter screening deliberation with mandatory verbatim span verification, epistemic divergence routing, and human-only final exclusions.",
+      "outcome": "Searchright systematic-search contract: Search strategy auditing and SEARCH-REPLAY evaluation. No new multi-agent screening arbitration or simulated independent human reviewers.",
       "requirements": [
         "SR-099"
       ],
       "slug": "adversarial-multi-agent-deliberation",
       "status": "scaffolded",
-      "title": "Adversarial Advocate-Skeptic-Arbiter screening deliberation",
+      "title": "Search strategy auditing and SEARCH-REPLAY evaluation",
       "track_id": "43"
     },
     {
-      "active_plan": "conductor/frontier-plan.md",
+      "active_plan": "conductor/tracks/44-tobac-living-evidence-transport/plan.md",
       "blockers": [
-        "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
-        "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
-        "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
-        "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+        "44.1: Consumer-neutral versioned CSL+sidecar+rights+identity manifest",
+        "44.2: Deterministic full and delta corpora with typed change notices",
+        "44.3: Optional tobac/voiage adapter, with no invented effect or risk-of-bias calculation",
+        "44.4: Consumer compatibility, SemVer, access and tamper negative tests",
+        "44.5: Reproducible package and versioned API release once exact-head gates pass"
       ],
       "checks": [
         "python scripts/validate_repository.py",
         "python scripts/check_roadmap_coverage.py",
         "python scripts/check_traceability.py"
       ],
-      "claim_boundary": "Source-verified specification and granular execution playbook only; living-review-to-VOI delta export and PICO transportability weighting remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
       "deliverables": [
         "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
-        "crates/searchright-contracts/src/living.rs",
-        "crates/searchright-living/src/lib.rs",
-        "crates/searchright-provenance/src/lib.rs"
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-living/src/lib.rs"
       ],
       "dependencies": [
-        "12",
-        "22",
-        "25",
+        "40",
         "41",
         "42"
       ],
@@ -3309,13 +3308,13 @@
       "horizon": "mature",
       "implementation_state": "scaffolded",
       "lifecycle": "active",
-      "outcome": "Export living systematic review delta updates as structured effect-size, risk-of-bias, and PICO transportability packets with byte-span provenance for downstream tobac and voiage regulatory VOI evaluation.",
+      "outcome": "Searchright systematic-search contract: Generic versioned corpus and downstream-research handoff. tobac/voiage own effects, bias transport and VOI; source neutrality is the default.",
       "requirements": [
         "SR-100"
       ],
       "slug": "tobac-living-evidence-transport",
       "status": "scaffolded",
-      "title": "Living systematic review to VOI and bias-transport handoff for tobac",
+      "title": "Generic versioned corpus and downstream-research handoff",
       "track_id": "44"
     }
   ],

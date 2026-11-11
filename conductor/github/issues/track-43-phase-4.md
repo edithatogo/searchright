@@ -6,10 +6,9 @@ Conductor plan: `conductor/tracks/43-adversarial-multi-agent-deliberation/plan.m
 
 ## Task subissues
 
-- [x] T01: Reconcile source paths, requirements, interface effects and claim boundaries. (`track-43-phase-4-task-01`)
-- [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-43-phase-4-task-02`)
-- [ ] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-43-phase-4-task-03`)
-- [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-43-phase-4-task-04`)
+- [ ] T01: Run an actual Conductor review where available or state limits of repository-native review. (`track-43-phase-4-task-01`)
+- [ ] T02: Apply review findings and pass exact-head security, compiler and relevant consumer tests. (`track-43-phase-4-task-02`)
+- [ ] T03: Archive only after all applicable assertions, provenance and external gates pass; otherwise keep open. (`track-43-phase-4-task-03`)
 
 ## Evidence rule
 

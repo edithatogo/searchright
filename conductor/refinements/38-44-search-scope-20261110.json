@@ -1,0 +1,364 @@
+{
+  "schema_version": "org.searchright.conductor-scope-reconciliation.v1",
+  "created": "2026-11-10",
+  "status": "implementation_planned_with_partial_source",
+  "authority": "Searchright owns systematic search and provenance-rich CSL-JSON corpus. Sourceright reconciles references; CiteWeft extracts; ASReview screens; pybibx/bibliometrix/VOSviewer/tobac/voiage analyse.",
+  "review_policy": "Do not archive until all applicable assertions, tests, exact-head checks, live/provider/consumer evidence and independent review pass. Original history remains in Git.",
+  "tracks": [
+    {
+      "id": "38",
+      "dir": "38-zktls-verifiable-live-execution",
+      "title": "Bounded live search, recovery and source receipts",
+      "dependencies": [
+        "03",
+        "04",
+        "09",
+        "10",
+        "25"
+      ],
+      "paths": [
+        "crates/evidence-search-core/src/lib.rs",
+        "crates/searchright-connectors/src/lib.rs",
+        "crates/searchright/src/engine.rs",
+        "crates/searchright-cli/src/main.rs",
+        "crates/searchright-mcp/src/lib.rs"
+      ],
+      "tasks": [
+        {
+          "id": "38.1",
+          "action": "Authorised provider contracts and explicit query/source/budget policy",
+          "prerequisites": "Provider contract fixtures; fail-closed unauthorized requests",
+          "acceptance": "cargo test --locked -p evidence-search-core"
+        },
+        {
+          "id": "38.2",
+          "action": "PubMed and Europe PMC cursor paging through the existing shared runtime",
+          "prerequisites": "38.1; retry/429, failed-page, duplicate-page fixtures",
+          "acceptance": "cargo test --locked -p searchright-connectors"
+        },
+        {
+          "id": "38.3",
+          "action": "Atomic checkpoints, resume and idempotent record emission",
+          "prerequisites": "38.2; crash/restart and cancellation fixture",
+          "acceptance": "cargo test --locked -p evidence-search-core -p searchright-store"
+        },
+        {
+          "id": "38.4",
+          "action": "CLI/MCP parity with denied-by-default consequential operations",
+          "prerequisites": "38.3; same query, source, identity and approval semantics",
+          "acceptance": "cargo test --locked -p searchright-cli -p searchright-mcp"
+        },
+        {
+          "id": "38.5",
+          "action": "Canonical CSL export plus source-record retention and loss receipts",
+          "prerequisites": "38.4 and 40.1; no dropped/native source records",
+          "acceptance": "cargo test --locked -p searchright-interchange"
+        },
+        {
+          "id": "38.6",
+          "action": "Authorised two-source live run and independent retained-input replay",
+          "prerequisites": "38.5, rights and access; externally checked redacted receipts",
+          "acceptance": "./scripts/verify.sh"
+        }
+      ],
+      "exclusions": "TLSNotary optional and must be real notary evidence, not local Merkle/hash claims."
+    },
+    {
+      "id": "39",
+      "dir": "39-smt-query-equivalence-calculus",
+      "title": "Conditional dialect semantics and translation fidelity",
+      "dependencies": [
+        "02",
+        "21",
+        "26",
+        "38"
+      ],
+      "paths": [
+        "crates/evidence-search-core/src/compiler.rs",
+        "crates/evidence-search-contracts/src/query.rs",
+        "crates/searchright-validation/src/lib.rs"
+      ],
+      "tasks": [
+        {
+          "id": "39.1",
+          "action": "Supported Boolean, field, proximity, truncation and controlled-vocabulary model",
+          "prerequisites": "Existing compiler fixtures; unsupported semantics explicit Unknown",
+          "acceptance": "cargo test --locked -p evidence-search-core"
+        },
+        {
+          "id": "39.2",
+          "action": "Semantic comparison classification under declared assumptions",
+          "prerequisites": "39.1; equivalence/broadening/narrowing/incomparable/unknown fixtures",
+          "acceptance": "cargo test --locked -p searchright-validation"
+        },
+        {
+          "id": "39.3",
+          "action": "Property and metamorphic differential tests with verified witnesses",
+          "prerequisites": "39.2; independently evaluated counterexamples",
+          "acceptance": "cargo test --locked -p searchright-validation"
+        },
+        {
+          "id": "39.4",
+          "action": "Measure OxiDD/SMT reuse against existing implementation, do not adopt without benefit",
+          "prerequisites": "39.3; memory, security, MSRV, licence, maintenance and parity report",
+          "acceptance": "cargo test --locked -p searchright-validation"
+        },
+        {
+          "id": "39.5",
+          "action": "Held-out real expert strategies and known-study retention benchmark",
+          "prerequisites": "39.1–4, lawful source access and independent assessors",
+          "acceptance": "./scripts/verify.sh"
+        }
+      ],
+      "exclusions": "A BDD proof is never itself proof of live database retrieval equivalence."
+    },
+    {
+      "id": "40",
+      "dir": "40-martingale-conformal-stopping",
+      "title": "Canonical CSL-JSON and downstream consumer interoperability",
+      "dependencies": [
+        "06",
+        "25",
+        "38"
+      ],
+      "paths": [
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs",
+        "crates/searchright-contracts/src/interchange.rs"
+      ],
+      "tasks": [
+        {
+          "id": "40.1",
+          "action": "Canonical CSL-JSON ID/order/field-preservation and content-revision primitive",
+          "prerequisites": "Existing serde_json/blake3, no new deps, adversarial unit tests",
+          "acceptance": "cargo test --locked -p searchright-interchange csl_corpus"
+        },
+        {
+          "id": "40.2",
+          "action": "Versioned rights, lineage, source-record, citation-edge, affiliation and identity sidecars",
+          "prerequisites": "40.1; upstream CSL schema and cross-artifact invariants",
+          "acceptance": "python scripts/validate_repository.py"
+        },
+        {
+          "id": "40.3",
+          "action": "Pinned ASReview CSV/RIS import and optional extension with corpus-to-label crosswalk",
+          "prerequisites": "40.2; real ASReview consumer tests, no Searchright screening model",
+          "acceptance": "./scripts/verify.sh"
+        },
+        {
+          "id": "40.4",
+          "action": "Pinned pybibx adapter with truthful supported data source/neutral export",
+          "prerequisites": "40.2; real pybibx import and field-loss report",
+          "acceptance": "./scripts/verify.sh"
+        },
+        {
+          "id": "40.5",
+          "action": "bibliometrix and VOSviewer imports preserving available citation/affiliation edges",
+          "prerequisites": "40.2; independent expected-count and missingness fixtures",
+          "acceptance": "./scripts/verify.sh"
+        },
+        {
+          "id": "40.6",
+          "action": "Negative round-trip tests across consumers and immutable revision-bound return events",
+          "prerequisites": "40.3–40.5; no canonical overwrite or silent loss",
+          "acceptance": "./scripts/verify.sh"
+        }
+      ],
+      "exclusions": "ASReview screening/stopping and bibliometric network analysis remain downstream."
+    },
+    {
+      "id": "41",
+      "dir": "41-salsa-incremental-living-reviews",
+      "title": "Temporal acquisition and versioned living-search corpora",
+      "dependencies": [
+        "22",
+        "38",
+        "40"
+      ],
+      "paths": [
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-dedup/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs"
+      ],
+      "tasks": [
+        {
+          "id": "41.1",
+          "action": "Distinct logical corpus/content revision/observation/run/attempt/profile identities",
+          "prerequisites": "40.1–2; immutable identity tests",
+          "acceptance": "cargo test --locked -p searchright-living"
+        },
+        {
+          "id": "41.2",
+          "action": "New, changed, withdrawn, corrected and delayed-index source observations",
+          "prerequisites": "41.1; three-wave delta fixtures",
+          "acceptance": "cargo test --locked -p searchright-living"
+        },
+        {
+          "id": "41.3",
+          "action": "Narrow safe invalidation for strategy, metadata, vocabulary and identity changes",
+          "prerequisites": "41.2; dependency-change metamorphic fixtures",
+          "acceptance": "cargo test --locked -p searchright-living"
+        },
+        {
+          "id": "41.4",
+          "action": "Full-replay equivalence versus incremental results",
+          "prerequisites": "41.3; property tests and explicit ordering semantics",
+          "acceptance": "cargo test --locked -p searchright-living"
+        },
+        {
+          "id": "41.5",
+          "action": "Qualify Salsa/DVC against simple existing Rust/CI baseline",
+          "prerequisites": "41.4; measured value/maintenance/rollback decision",
+          "acceptance": "./scripts/verify.sh"
+        }
+      ],
+      "exclusions": "Salsa and DVC are optional; fresh live source observation is never inferred from cache."
+    },
+    {
+      "id": "42",
+      "dir": "42-subdocument-entailment-retraction",
+      "title": "Search provenance, integrity notices and independent evidence packages",
+      "dependencies": [
+        "25",
+        "38",
+        "40",
+        "41"
+      ],
+      "paths": [
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-interchange/src/csl_corpus.rs"
+      ],
+      "tasks": [
+        {
+          "id": "42.1",
+          "action": "Reference-field provenance and rights sidecars with source observation links",
+          "prerequisites": "40.2/38.5; fail unresolved identities and restricted disclosures",
+          "acceptance": "cargo test --locked -p searchright-provenance"
+        },
+        {
+          "id": "42.2",
+          "action": "Deterministic manifest of native query, source, CSL, sidecar, code and environment revisions",
+          "prerequisites": "42.1; cross-platform content and tamper tests",
+          "acceptance": "cargo test --locked -p searchright-provenance"
+        },
+        {
+          "id": "42.3",
+          "action": "Correction, withdrawal and retraction notices, without changing downstream conclusions",
+          "prerequisites": "42.2; notification propagation tests",
+          "acceptance": "cargo test --locked -p searchright-living"
+        },
+        {
+          "id": "42.4",
+          "action": "Independent preserved-input replay and missing/tampered asset rejection",
+          "prerequisites": "42.2–3; non-author verifier fixture",
+          "acceptance": "./scripts/verify.sh"
+        },
+        {
+          "id": "42.5",
+          "action": "Evaluate RO-Crate compatibility, optional TLSNotary and OpenLineage",
+          "prerequisites": "42.4; independently validated versions and no fabricated proof",
+          "acceptance": "python scripts/validate_repository.py"
+        }
+      ],
+      "exclusions": "Document extraction stays with CiteWeft, canonical reference verification with Sourceright."
+    },
+    {
+      "id": "43",
+      "dir": "43-adversarial-multi-agent-deliberation",
+      "title": "Search strategy auditing and SEARCH-REPLAY evaluation",
+      "dependencies": [
+        "17",
+        "29",
+        "39",
+        "42"
+      ],
+      "paths": [
+        "crates/searchright-validation/src/lib.rs",
+        "crates/searchright-agent/src/lib.rs",
+        "docs/research/programme.md"
+      ],
+      "tasks": [
+        {
+          "id": "43.1",
+          "action": "Evidence-location-aware PRESS/PRISMA-S strategy audit",
+          "prerequisites": "Existing standards; distinguish missing, ambiguous, contradictory, inaccessible",
+          "acceptance": "cargo test --locked -p searchright-validation"
+        },
+        {
+          "id": "43.2",
+          "action": "Literal and plausible query reconstruction scenarios with frozen assumptions",
+          "prerequisites": "43.1; negative tests for auto-repair",
+          "acceptance": "cargo test --locked -p searchright-validation"
+        },
+        {
+          "id": "43.3",
+          "action": "Record-set differences, known-study retention and interpretation uncertainty envelopes",
+          "prerequisites": "43.2/38.6; index drift separate and no false confidence intervals",
+          "acceptance": "cargo test --locked -p searchright-validation"
+        },
+        {
+          "id": "43.4",
+          "action": "Optional agent audits with deterministic verification and human amendments",
+          "prerequisites": "43.1–3; prompt injection and false expert-independence tests",
+          "acceptance": "cargo test --locked -p searchright-agent"
+        },
+        {
+          "id": "43.5",
+          "action": "SEARCH-REPLAY pilot/confirmation protocol, research datasets and publication contracts",
+          "prerequisites": "43.3–4; independently reviewable design and rights gates",
+          "acceptance": "./scripts/verify.sh"
+        }
+      ],
+      "exclusions": "No new multi-agent screening arbitration or simulated independent human reviewers."
+    },
+    {
+      "id": "44",
+      "dir": "44-tobac-living-evidence-transport",
+      "title": "Generic versioned corpus and downstream-research handoff",
+      "dependencies": [
+        "40",
+        "41",
+        "42"
+      ],
+      "paths": [
+        "crates/searchright-interchange/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs",
+        "crates/searchright-living/src/lib.rs"
+      ],
+      "tasks": [
+        {
+          "id": "44.1",
+          "action": "Consumer-neutral versioned CSL+sidecar+rights+identity manifest",
+          "prerequisites": "40/42; reference resolution and access invariants",
+          "acceptance": "cargo test --locked -p searchright-interchange"
+        },
+        {
+          "id": "44.2",
+          "action": "Deterministic full and delta corpora with typed change notices",
+          "prerequisites": "44.1/41; full-replay fixture parity",
+          "acceptance": "cargo test --locked -p searchright-living"
+        },
+        {
+          "id": "44.3",
+          "action": "Optional tobac/voiage adapter, with no invented effect or risk-of-bias calculation",
+          "prerequisites": "44.2; real downstream parse and loss accounting",
+          "acceptance": "./scripts/verify.sh"
+        },
+        {
+          "id": "44.4",
+          "action": "Consumer compatibility, SemVer, access and tamper negative tests",
+          "prerequisites": "44.3; two independently qualified imports",
+          "acceptance": "./scripts/verify.sh"
+        },
+        {
+          "id": "44.5",
+          "action": "Reproducible package and versioned API release once exact-head gates pass",
+          "prerequisites": "44.4; no publication/registry acceptance claim",
+          "acceptance": "./scripts/verify.sh"
+        }
+      ],
+      "exclusions": "tobac/voiage own effects, bias transport and VOI; source neutrality is the default."
+    }
+  ]
+}

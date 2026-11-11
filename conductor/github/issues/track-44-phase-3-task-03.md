@@ -7,7 +7,10 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.
+- [ ] **44.3 — Optional tobac/voiage adapter, with no invented effect or risk-of-bias calculation**
+  - Depends on: 44.2; real downstream parse and loss accounting
+  - Required result: ./scripts/verify.sh
+  - Verify: `undefined`
 
 ## Completion and evidence contract
 

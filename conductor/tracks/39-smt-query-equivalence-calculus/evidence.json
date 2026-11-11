@@ -1,19 +1,16 @@
 {
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "39",
-  "title": "Formal BDD/SMT query equivalence and semantic loss calculus",
+  "title": "Conditional dialect semantics and translation fidelity",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-11-10",
   "source_evidence": [
     "conductor/tracks/39-smt-query-equivalence-calculus/spec.md",
-    "crates/evidence-search-contracts/src/query.rs",
     "crates/evidence-search-core/src/compiler.rs",
-    "crates/evidence-search-core/src/native.rs",
-    "crates/evidence-search-core/src/lib.rs",
-    "crates/searchright-validation/src/lib.rs",
-    "crates/searchright/src/engine.rs"
+    "crates/evidence-search-contracts/src/query.rs",
+    "crates/searchright-validation/src/lib.rs"
   ],
   "traceability": "conductor/tracks/39-smt-query-equivalence-calculus/traceability.json",
   "static_checks": [
@@ -25,12 +22,13 @@
     "SR-095"
   ],
   "blockers": [
-    "Define SemanticRelation, CounterexampleWitness, and QueryEquivalenceProof contracts in crates/evidence-search-contracts/src/query.rs and crates/searchright-contracts/src/lib.rs.",
-    "Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.",
-    "Implement prove_translation_equivalence and lexicographically minimal counterexample witness document synthesis across PubMed, Ovid MEDLINE, and Scopus in crates/evidence-search-core/src/compiler.rs.",
-    "Enforce fail-closed recall narrowing validation in crates/searchright-validation/src/lib.rs and crates/searchright/src/engine.rs with differential compiler test suites."
+    "39.1: Supported Boolean, field, proximity, truncation and controlled-vocabulary model",
+    "39.2: Semantic comparison classification under declared assumptions",
+    "39.3: Property and metamorphic differential tests with verified witnesses",
+    "39.4: Measure OxiDD/SMT reuse against existing implementation, do not adopt without benefit",
+    "39.5: Held-out real expert strategies and known-study retention benchmark"
   ],
-  "claim_boundary": "Source-verified specification and granular execution playbook only; canonical ROBDD equivalence solving and witness synthesis remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Source-level planning or implementation is not compiler, authorised live, real-consumer or independent methodological evidence. Screening/stopping, extraction/entailment and VOI remain with their own tools; track closure requires independently verifiable admission.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-39",

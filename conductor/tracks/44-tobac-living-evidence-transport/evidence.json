@@ -1,16 +1,16 @@
 {
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "44",
-  "title": "Living systematic review to VOI and bias-transport handoff for tobac",
+  "title": "Generic versioned corpus and downstream-research handoff",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-11-10",
   "source_evidence": [
     "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
-    "crates/searchright-contracts/src/living.rs",
-    "crates/searchright-living/src/lib.rs",
-    "crates/searchright-provenance/src/lib.rs"
+    "crates/searchright-interchange/src/lib.rs",
+    "crates/searchright-provenance/src/lib.rs",
+    "crates/searchright-living/src/lib.rs"
   ],
   "traceability": "conductor/tracks/44-tobac-living-evidence-transport/traceability.json",
   "static_checks": [
@@ -22,12 +22,13 @@
     "SR-100"
   ],
   "blockers": [
-    "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
-    "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
-    "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
-    "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+    "44.1: Consumer-neutral versioned CSL+sidecar+rights+identity manifest",
+    "44.2: Deterministic full and delta corpora with typed change notices",
+    "44.3: Optional tobac/voiage adapter, with no invented effect or risk-of-bias calculation",
+    "44.4: Consumer compatibility, SemVer, access and tamper negative tests",
+    "44.5: Reproducible package and versioned API release once exact-head gates pass"
   ],
-  "claim_boundary": "Source-verified specification and granular execution playbook only; living-review-to-VOI delta export and PICO transportability weighting remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-44",

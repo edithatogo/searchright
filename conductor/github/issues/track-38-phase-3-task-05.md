@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement offline .srpack zkTLS transcript Merkle verification in crates/searchright-provenance/src/lib.rs and record authorised redacted live receipts.
+- [ ] **38.5 — Canonical CSL export plus source-record retention and loss receipts**
+  - Prerequisite: 38.4 and 40.1; no dropped/native source records.
+  - Acceptance: cargo test --locked -p searchright-interchange.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

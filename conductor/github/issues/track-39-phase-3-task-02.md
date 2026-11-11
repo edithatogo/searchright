@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Implement canonical Reduced Ordered Binary Decision Diagram (ROBDD) arena with Shannon reduction and field/explosion/proximity domain subsumption axioms in crates/evidence-search-core/src/lib.rs.
+- [ ] **39.2 — Semantic comparison classification under declared assumptions**
+  - Prerequisite: 39.1; equivalence/broadening/narrowing/incomparable/unknown fixtures.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

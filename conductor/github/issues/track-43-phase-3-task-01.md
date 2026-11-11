@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define DeliberationRole, CriterionArgument, ArbiterDisposition, and DeliberationTranscript contracts in crates/searchright-contracts/src/screening.rs.
+- [ ] **43.1 — Evidence-location-aware PRESS/PRISMA-S strategy audit**
+  - Prerequisite: Existing standards; distinguish missing, ambiguous, contradictory, inaccessible.
+  - Acceptance: cargo test --locked -p searchright-validation.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

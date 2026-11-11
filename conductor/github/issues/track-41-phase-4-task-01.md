@@ -3,11 +3,11 @@
 
 Parent phase key: `track-41-phase-4`
 Conductor plan: `conductor/tracks/41-salsa-incremental-living-reviews/plan.md`
-Canonical task state: **source task complete**.
+Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
+- [ ] Run an actual Conductor review where available or state limits of repository-native review.
 
 ## Completion and evidence contract
 

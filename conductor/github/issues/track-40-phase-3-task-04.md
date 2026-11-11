@@ -7,7 +7,11 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs.
+- [ ] **40.4 — Pinned pybibx adapter with truthful supported data source/neutral export**
+  - Prerequisite: 40.2; real pybibx import and field-loss report.
+  - Acceptance: ./scripts/verify.sh.
+  - Verification: `undefined`.
+  - Preserve the tested input/output revisions, outcomes and blockers; do not promote source presence to live or external evidence.
 
 ## Completion and evidence contract
 

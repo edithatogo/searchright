@@ -1,16 +1,16 @@
 {
   "schema_version": "org.searchright.track-evidence.v2",
   "track_id": "40",
-  "title": "Anytime-valid martingale stopping and conformal risk control",
-  "status": "scaffolded",
-  "implementation_state": "scaffolded",
+  "title": "Canonical CSL-JSON and downstream consumer interoperability",
+  "status": "partially_implemented",
+  "implementation_state": "partially_implemented",
   "evidence_level": "source_verified",
-  "source_verified_on": "2026-08-06",
+  "source_verified_on": "2026-11-10",
   "source_evidence": [
     "conductor/tracks/40-martingale-conformal-stopping/spec.md",
-    "crates/searchright-contracts/src/screening.rs",
-    "crates/searchright-ranking/src/lib.rs",
-    "crates/searchright-bench/src/lib.rs"
+    "crates/searchright-interchange/src/lib.rs",
+    "crates/searchright-interchange/src/csl_corpus.rs",
+    "crates/searchright-contracts/src/interchange.rs"
   ],
   "traceability": "conductor/tracks/40-martingale-conformal-stopping/traceability.json",
   "static_checks": [
@@ -22,12 +22,14 @@
     "SR-096"
   ],
   "blockers": [
-    "Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs.",
-    "Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs.",
-    "Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs.",
-    "Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs."
+    "40.1: Canonical CSL-JSON ID/order/field-preservation and content-revision primitive",
+    "40.2: Versioned rights, lineage, source-record, citation-edge, affiliation and identity sidecars",
+    "40.3: Pinned ASReview CSV/RIS import and optional extension with corpus-to-label crosswalk",
+    "40.4: Pinned pybibx adapter with truthful supported data source/neutral export",
+    "40.5: bibliometrix and VOSviewer imports preserving available citation/affiliation edges",
+    "40.6: Negative round-trip tests across consumers and immutable revision-bound return events"
   ],
-  "claim_boundary": "Source-verified specification and granular execution playbook only; anytime-valid martingale stopping and conformal calibration on sealed benchmarks remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "claim_boundary": "Source-level planning or implementation is not compiler, authorised live, real-consumer or independent methodological evidence. Screening/stopping, extraction/entailment and VOI remain with their own tools; track closure requires independently verifiable admission.",
   "github_issue_keys": {
     "epic": "roadmap-epic",
     "track": "track-40",

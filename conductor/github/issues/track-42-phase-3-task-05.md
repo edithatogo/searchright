@@ -1,13 +1,17 @@
-<!-- searchright-issue-key: track-42-phase-4-task-04 -->
-# Track 42 / Phase 4 / Task 04
+<!-- searchright-issue-key: track-42-phase-3-task-05 -->
+# Track 42 / Phase 3 / Task 05
 
-Parent phase key: `track-42-phase-4`
+Parent phase key: `track-42-phase-3`
 Conductor plan: `conductor/tracks/42-subdocument-entailment-retraction/plan.md`
 Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] **42.5 — Evaluate RO-Crate compatibility, optional TLSNotary and OpenLineage**
+  - Prerequisite: 42.4; independently validated versions and no fabricated proof.
+  - Acceptance: python scripts/validate_repository.py.
+  - Verification: `undefined`.
+  - Record input/output revisions and test evidence before completion.
 
 ## Completion and evidence contract
 

@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: track-38 -->
-# Track 38: Verifiable live two-source execution and zkTLS provenance receipts
+# Track 38: Bounded live search, recovery and source receipts
 
-Execute resumable two-source live retrieval (PubMed and Europe PMC) through CLI and MCP with cryptographic zkTLS transcript commitments in .srpack provenance bundles.
+Searchright systematic-search contract: Bounded live search, recovery and source receipts. TLSNotary optional and must be real notary evidence, not local Merkle/hash claims.
 
 ## Source of truth
 
@@ -28,6 +28,6 @@ Execute resumable two-source live retrieval (PubMed and Europe PMC) through CLI 
 
 ## Claim boundary
 
-Source-verified specification and granular execution playbook only; live two-source execution and cryptographic zkTLS transcript attestation remain open implementation and live-verification gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

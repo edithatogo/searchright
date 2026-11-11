@@ -1,48 +1,49 @@
-# Plan: 44 Living systematic review to VOI and bias-transport handoff for tobac
+# Plan: 44 Generic versioned corpus and downstream-research handoff
 
 Current status: **scaffolded**. Implementation state: **scaffolded**. Evidence level: **source_verified**.
-
-GitHub issue key: `track-44`. Each numbered phase maps to the same-numbered native subissue.
-
-## Active forward plan
-
-[Agent-led frontier programme](../../../conductor/frontier-plan.md) defines current milestones and optional operating/release profiles. The legacy phases below retain their evidence history; no new phase/task hierarchy is required for the programme.
 
 ## Phase 1: Source implementation
 
 <!-- github-subissue-key: track-44-phase-1 -->
 
-- [ ] Complete every acceptance assertion; existing paths are scaffolding or partial implementation only.
-  - [x] Present source path: `conductor/tracks/44-tobac-living-evidence-transport/spec.md`
-  - [x] Present source path: `crates/searchright-contracts/src/living.rs`
-  - [x] Present source path: `crates/searchright-living/src/lib.rs`
-  - [x] Present source path: `crates/searchright-provenance/src/lib.rs`
-  - [x] Assertion ledger: `conductor/tracks/44-tobac-living-evidence-transport/traceability.json`
+- [ ] Implement task-scoped source changes with symbols and positive/negative tests.
 
 ## Phase 2: Source-level verification
 
 <!-- github-subissue-key: track-44-phase-2 -->
 
-- [x] Run deterministic, network-free contract and policy checks.
-  - [x] `python scripts/validate_repository.py`
-  - [x] `python scripts/check_roadmap_coverage.py`
-  - [x] `python scripts/check_traceability.py`
-- [x] Record machine-readable evidence without promoting compiler, live or external claims.
+- [x] Historical network-free scaffolding checks were recorded.
+- [ ] Re-run traceability and static validators on this revised head.
 
 ## Phase 3: Higher-evidence gates
 
 <!-- github-subissue-key: track-44-phase-3 -->
 
-- [ ] Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.
-- [ ] Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.
-- [ ] Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.
-- [ ] Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage.
+- [ ] **44.1 — Consumer-neutral versioned CSL+sidecar+rights+identity manifest**
+  - Depends on: 40/42; reference resolution and access invariants
+  - Required result: cargo test --locked -p searchright-interchange
+  - Verify: `undefined`
+- [ ] **44.2 — Deterministic full and delta corpora with typed change notices**
+  - Depends on: 44.1/41; full-replay fixture parity
+  - Required result: cargo test --locked -p searchright-living
+  - Verify: `undefined`
+- [ ] **44.3 — Optional tobac/voiage adapter, with no invented effect or risk-of-bias calculation**
+  - Depends on: 44.2; real downstream parse and loss accounting
+  - Required result: ./scripts/verify.sh
+  - Verify: `undefined`
+- [ ] **44.4 — Consumer compatibility, SemVer, access and tamper negative tests**
+  - Depends on: 44.3; two independently qualified imports
+  - Required result: ./scripts/verify.sh
+  - Verify: `undefined`
+- [ ] **44.5 — Reproducible package and versioned API release once exact-head gates pass**
+  - Depends on: 44.4; no publication/registry acceptance claim
+  - Required result: ./scripts/verify.sh
+  - Verify: `undefined`
 
 ## Phase 4: Review and closeout
 
 <!-- github-subissue-key: track-44-phase-4 -->
 
-- [x] Reconcile source paths, requirements, interface effects and claim boundaries.
-- [x] Record unresolved blockers in `evidence.json` and the roadmap coverage ledger.
-- [ ] Run compiler-backed Conductor review and append review fixes after Cargo gates execute.
-- [ ] Close the track only when all applicable live, downstream, human and external gates are evidenced.
+- [ ] Run Conductor review or clearly scoped repository-native parity checks.
+- [ ] Correct findings and pass current CI/security/live/consumer checks relevant to claims.
+- [ ] Archive only with all higher-evidence and traceability gates passed.

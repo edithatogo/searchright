@@ -1,7 +1,7 @@
 <!-- searchright-issue-key: track-42 -->
-# Track 42: Sub-document byte-span entailment and transitive retraction propagation
+# Track 42: Search provenance, integrity notices and independent evidence packages
 
-Anchor extracted claims to proof-carrying sub-document byte spans with entailment verification and propagate retractions transitively across study syntheses.
+Searchright systematic-search contract: Search provenance, integrity notices and independent evidence packages. Document extraction stays with CiteWeft, canonical reference verification with Sourceright.
 
 ## Source of truth
 
@@ -15,7 +15,7 @@ Anchor extracted claims to proof-carrying sub-document byte spans with entailmen
 - Status: `scaffolded`
 - Implementation: `scaffolded`
 - Evidence: `source_verified`
-- Dependencies: `12, 22, 24`
+- Dependencies: `25, 38, 40, 41`
 - Requirements: `SR-098`
 - External approval required: `false`
 
@@ -28,6 +28,6 @@ Anchor extracted claims to proof-carrying sub-document byte spans with entailmen
 
 ## Claim boundary
 
-Source-verified specification and granular execution playbook only; sub-document byte-span entailment verification and transitive retraction poisoning remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.
+Planned scope is not working, live, externally reproducible or validated behaviour. Searchright owns systematic search and CSL-JSON corpora; screening, extraction, entailment, bibliometrics and VOI belong downstream. No track archive without verified acceptance.
 
 > Closing this GitHub issue cannot by itself promote evidence. The Conductor evidence record and applicable runtime or external receipts remain authoritative.

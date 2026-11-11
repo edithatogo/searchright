@@ -2,15 +2,16 @@
   "schema_version": "conductor.track-metadata.v3",
   "track_id": "43",
   "slug": "adversarial-multi-agent-deliberation",
-  "title": "Adversarial Advocate-Skeptic-Arbiter screening deliberation",
+  "title": "Search strategy auditing and SEARCH-REPLAY evaluation",
   "status": "scaffolded",
   "implementation_state": "scaffolded",
   "created": "2026-08-08",
-  "updated": "2026-08-09",
+  "updated": "2026-11-10",
   "dependencies": [
-    "07",
-    "11",
-    "28"
+    "17",
+    "29",
+    "39",
+    "42"
   ],
   "horizon": "mature",
   "evidence_level": "source_verified",

@@ -6,10 +6,12 @@ Conductor plan: `conductor/tracks/40-martingale-conformal-stopping/plan.md`
 
 ## Task subissues
 
-- [ ] T01: Define StoppingConfig, MartingaleStep, and StoppingCertificate contracts in crates/searchright-contracts/src/screening.rs. (`track-40-phase-3-task-01`)
-- [ ] T02: Implement anytime-valid hypergeometric betting martingale and Ville's inequality e-value wealth trajectory evaluator in crates/searchright-ranking/src/lib.rs. (`track-40-phase-3-task-02`)
-- [ ] T03: Implement conformal risk-controlling threshold calibration bounding false-negative screening loss in crates/searchright-ranking/src/lib.rs. (`track-40-phase-3-task-03`)
-- [ ] T04: Integrate martingale stopping certificates and strict holdout-leakage guards into sealed SYNERGY/CLEF TAR benchmark evaluation in crates/searchright-bench/src/lib.rs. (`track-40-phase-3-task-04`)
+- [ ] T01: **40.1 — Canonical CSL-JSON ID/order/field-preservation and content-revision primitive** (`track-40-phase-3-task-01`)
+- [ ] T02: **40.2 — Versioned rights, lineage, source-record, citation-edge, affiliation and identity sidecars** (`track-40-phase-3-task-02`)
+- [ ] T03: **40.3 — Pinned ASReview CSV/RIS import and optional extension with corpus-to-label crosswalk** (`track-40-phase-3-task-03`)
+- [ ] T04: **40.4 — Pinned pybibx adapter with truthful supported data source/neutral export** (`track-40-phase-3-task-04`)
+- [ ] T05: **40.5 — bibliometrix and VOSviewer imports preserving available citation/affiliation edges** (`track-40-phase-3-task-05`)
+- [ ] T06: **40.6 — Negative round-trip tests across consumers and immutable revision-bound return events** (`track-40-phase-3-task-06`)
 
 ## Evidence rule
 

@@ -7,7 +7,10 @@ Canonical task state: **open evidence or implementation task**.
 
 ## Canonical task
 
-- [ ] Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.
+- [ ] **44.1 — Consumer-neutral versioned CSL+sidecar+rights+identity manifest**
+  - Depends on: 40/42; reference resolution and access invariants
+  - Required result: cargo test --locked -p searchright-interchange
+  - Verify: `undefined`
 
 ## Completion and evidence contract
 

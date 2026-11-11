@@ -6,10 +6,9 @@ Conductor plan: `conductor/tracks/44-tobac-living-evidence-transport/plan.md`
 
 ## Task subissues
 
-- [x] T01: Reconcile source paths, requirements, interface effects and claim boundaries. (`track-44-phase-4-task-01`)
-- [x] T02: Record unresolved blockers in `evidence.json` and the roadmap coverage ledger. (`track-44-phase-4-task-02`)
-- [ ] T03: Run compiler-backed Conductor review and append review fixes after Cargo gates execute. (`track-44-phase-4-task-03`)
-- [ ] T04: Close the track only when all applicable live, downstream, human and external gates are evidenced. (`track-44-phase-4-task-04`)
+- [ ] T01: Run Conductor review or clearly scoped repository-native parity checks. (`track-44-phase-4-task-01`)
+- [ ] T02: Correct findings and pass current CI/security/live/consumer checks relevant to claims. (`track-44-phase-4-task-02`)
+- [ ] T03: Archive only with all higher-evidence and traceability gates passed. (`track-44-phase-4-task-03`)
 
 ## Evidence rule
 
