@@ -2,292 +2,100 @@
 
 <!-- mcp-name: io.github.edithatogo/searchright -->
 
-**Searchright** is contract-first Rust infrastructure for planning, executing,
-screening, updating, auditing and reporting systematic, scoping, rapid and
-living literature searches. One product facade exposes the same governed
-operations through a Rust API, CLI, Model Context Protocol (MCP) server and
-agent skill.
+**Programmable, auditable systematic literature searching — from a research question to a versioned, reusable corpus.**
 
-> **Current evidence level: source-verified technical alpha with historical
-> hosted admission and bounded exact-head clean-room evidence.**
-> The repository contains a committed `Cargo.lock` and compiler-backed hosted
-> evidence. The observed `main` revision is
-> `9b4a4a4dba818d75f9dbb9ee6be458871b09a878`; exact-head clean-room workflow
-> run `34338222604` succeeded. The last fully admitted revision in the committed
-> evidence record is `10f983d44e67c08be44131ea6e2b7cf75dc147f6`.
-> No complete exact-head admission matrix, live-provider evidence, downstream
-> cutover, registry acceptance or external methodological validation is claimed.
-> See `PROJECT_STATUS.md` and
-> `verification/receipts/project-status-snapshot.json`.
+Searchright is a Rust-core research tool for designing, translating, validating, executing and updating multi-source literature searches. It preserves source observations, search strategies, record identity, provenance and the information needed to independently inspect a search. Its outputs are intended for evidence synthesis **and** bibliometric/scientometric analyses.
 
-## Why Searchright
+> **Project status: technical alpha.** Source implementations, deterministic fixtures, contracts, Rust API, CLI, local MCP server and agent skill exist. A complete live multi-source search-to-consumer workflow, methodological superiority, independently validated reproducibility, production hosting and publication/registry acceptance are **not** established. Consult [the evidence model](docs/vertical-slice-definition-of-done.md), [Conductor](conductor/tracks.md) and [GitHub Actions](https://github.com/edithatogo/searchright/actions) for revision-bound evidence. The [historical status snapshot](PROJECT_STATUS.md) (source: `verification/receipts/project-status-snapshot.json`) records the **observed 10 September 2026 main revision** `9b4a4a4dba818d75f9dbb9ee6be458871b09a878` and **last fully admitted historical revision** `10f983d44e67c08be44131ea6e2b7cf75dc147f6`. It is dated September 2026 and is **not** a live dashboard.
 
-Systematic-search intent is usually fragmented across protocol prose, database
-interfaces, spreadsheets, reference managers and one-off scripts. Searchright
-turns that intent into versioned, inspectable contracts and retains evidence from
-question formulation through search translation, retrieval, deduplication,
-screening, study linkage, amendments and reporting.
+## What Searchright does
 
-The differentiator is not a long connector list. It is a reusable evidence-search
-kernel with explicit authority, translation-loss reporting, bounded execution,
-immutable lineage and claims that cannot outrun their evidence.
+| Stage | Purpose | Evidence boundary |
+| --- | --- | --- |
+| **Plan** | Record the research question, concepts, sources, limits, native strategies, changes and approvals | A validated protocol is not proof of a comprehensive search |
+| **Translate and inspect** | Parse and compile source-specific strategies; surface unsupported features and possible semantic loss | Cross-database equivalence is conditional, not universal |
+| **Acquire** | Apply bounded provider policies, paging, retry, cancellation, receipts and replay | Fixture-backed connectors do not imply authorised live access |
+| **Reconcile** | Preserve source observations; conservatively deduplicate records while retaining identity links and disagreements | Bibliographic publications, reports and underlying studies remain distinct |
+| **Export** | Produce a canonical CSL-JSON bibliography with versioned provenance/metadata sidecars and derived consumer views | CSV, RIS, BibTeX, Parquet and consumer files are **projections**, not competing canonical references |
+| **Update and audit** | Track new/changed records, protocol amendments, update lineage, uncertainty and research artefacts | Historical exact replay needs preserved source responses or snapshots |
 
-## Architecture boundary
+The **primary product boundary is systematic search and corpus construction**. Searchright is not intended to replace ASReview's screening/active learning, pybibx's analysis, bibliometrix, VOSviewer, or specialised synthesis tools. It supplies their inputs; optional adapters are independently qualified against real consumer versions.
 
-The repository estate now has three distinct scholarly domains:
+### Canonical references and provenance
 
-- **CiteWeft** owns backend-neutral scholarly-document extraction evidence,
-  including source spans, uncertainty, diagnostics and optional backend routing.
-  CiteWeft is GROBID-inspired; it is not represented as a Rust port, fork,
-  reimplementation or compatibility replacement for GROBID.
-- **Searchright** owns review planning, source selection, search validation,
-  execution orchestration, import/export, deduplication, record–report–study
-  linkage, screening, living updates and standards-aware reporting.
-- **Sourceright** owns canonical CSL, provider-backed citation verification,
-  citation reconciliation and reference-integrity workflows.
+**CSL-JSON is the authoritative bibliographic representation.** Canonical reconciliation and reference integrity belong with [Sourceright](https://github.com/edithatogo/sourceright). Searchright retains stable CSL IDs, source-specific record identifiers, provenance and identity crosswalks. Structured cited-reference edges, authorship–affiliation relations, field-specific source observations, citation counts, licence/access restrictions and run histories belong in **versioned sidecars**, keyed to canonical references and corpus revision; they are not silently compressed into a bibliographic field.
 
-The product-neutral **`evidence-search-contracts`** crate owns portable query,
-provider, receipt, record and audit contracts. **`evidence-search-core`** sits
-above it and owns dialect compilation, provider execution, rate/retry/budget
-policy, cache/replay interfaces and audit-ledger behaviour. Searchright and
-Sourceright are intended to consume those neutral layers without importing
-review-specific contracts or copying runtime code.
+Original source records remain available according to their rights and retention policies. Derived exports must document omitted or transformed fields and preserve a reversible mapping to canonical records where supported. Missing metadata is not interpreted as zero.
 
-Only the non-publishable leaf crate `searchright-citeweft` depends on CiteWeft.
-The Searchright facade, shared kernel, CLI and MCP server remain extraction-
-backend neutral. CLI and MCP are adapters over `SearchrightEngine`; they do not
-maintain separate methodological logic.
+## Downstream research tools
 
-## Implemented source surface
+| Consumer | Intended handoff | State |
+| --- | --- | --- |
+| **ASReview** | Deduplicated, identifier-stable title/abstract dataset; optional dataset/subcommand extension and return-event reconciliation | **Planned and under qualification**; Searchright does not implement competing screening models |
+| **pybibx** | Separately qualified source/neutral import with stable identifiers and explicit information-loss reporting | **Planned**; no fabricated Scopus/WoS exports |
+| **bibliometrix / VOSviewer** | Corpus plus citation-edge, author/affiliation, source and missingness sidecars, translated to supported consumer formats | **Planned**, real-consumer parity not established |
+| **Other tools** | Standard, versioned CSL-JSON and neutral provenance-aware projections | Contract-first interface; each adapter must demonstrate compatibility |
 
-See [Offline XML imports](docs/xml-imports.md) for PubMed/EndNote text decoding,
-record isolation, quarantine provenance and external-entity boundaries.
+The current implementation includes historical screening, ranking and reporting crates. These remain as compatibility and evaluation surfaces until migration is evidenced; **their presence does not change the intended ownership boundary**.
 
-### Methodological contracts
-
-- Review questions and frameworks including PICO, PCC, SPIDER and PEO.
-- Explicit eligibility criteria, governance, protocol registration and
-  amendments.
-- Portable Boolean query AST, source-specific dialect compilation, fidelity
-  classes, loss codes and mandatory review markers.
-- Search runs, source receipts, provider pages, audit events and execution
-  envelopes.
-- Records, reports, studies, retrieval attempts and evidence-bearing linkage.
-- Dual-phase screening, reviewer authority, conflicts and full-text exclusion
-  reasons.
-- PRISMA 2020 flow arithmetic with JSON, Mermaid, Markdown, SVG, Typst and
-  DOCX-friendly outputs; PRISMA-S ledgers; complete source appendices; and
-  fail-closed PRESS/seed-set validation.
-- Living-review lineage, ranking calibration, supplementary discovery,
-  interchange, diagnostics, governance, benchmark and provider-component
-  contracts.
-- Neutral document evidence and consumer-driven cross-repository integration
-  contracts.
-
-### Executable Rust components
-
-The workspace currently contains **30 internal crates**. All packages are non-publishable by default; only three neutral/SDK candidates may be promoted after compiler, SemVer, consumer and supply-chain evidence:
+## Architecture
 
 ```text
-crates/evidence-search-contracts/      Neutral query/provider/receipt/audit contracts
-crates/evidence-search-core/           Shared query/provider/audit kernel
-crates/searchright-contracts/          Canonical Rust contract types
-crates/searchright-citeweft/           Optional one-way CiteWeft evidence adapter
-crates/searchright-connectors/         Open-provider fixtures and opt-in adapters
-crates/searchright-store/              Single-writer audit and snapshot store
-crates/searchright-dedup/              Conservative duplicate clustering
-crates/searchright-study/              Record–report–study graph operations
-crates/searchright-screening/          Human-governed screening and reconciliation
-crates/searchright-validation/         PRESS, seed recall and translation gates
-crates/searchright-prisma/             PRISMA flow and PRISMA-S outputs
-crates/searchright-interchange/        Searchright JSON, JSONL, CSL, RIS, NBIB, PubMed XML, CSV, BibTeX, EndNote XML
-crates/searchright-living/             Immutable update lineage and record diffs
-crates/searchright-provenance/         RO-Crate 1.3 and W3C PROV-style exports
-crates/searchright-ranking/            Explainable advisory ranking/calibration
-crates/searchright-discovery/          Bounded citation/grey-literature discovery
-crates/searchright-policy/             Host, capability and hostile-content policy
-crates/searchright-governance/         Institutional data-handling decisions
-crates/searchright-assurance/          Finite lifecycle and formal authority model
-crates/searchright-plugin-sdk/         WASI component manifest verification
-crates/searchright-licensed/           Redacted BYO-access request planning
-crates/searchright-bench/              Retrieval/ranking/dedup regression metrics
-crates/searchright-diagnostics/        Accessible stable diagnostics
-crates/searchright-sourceright-compat/ Sourceright parity/cutover helpers
-crates/searchright/                    Shared application facade
-crates/searchright-cli/                `searchright` CLI
-crates/searchright-mcp/                `searchright-mcp` stdio server
-crates/searchright-agent/              Governed agent workflow
-crates/searchright-access/             Authentication, tenancy and authority policy
-crates/searchright-ops/                Health, telemetry, backup and incident contracts
+Review question and source strategy
+            │
+   Searchright orchestration / Rust CLI / MCP / agent skill
+            │
+  evidence-search-contracts + evidence-search-core
+            │
+       Provider observations
+            │
+ Searchright source reconciliation and provenance
+            │
+      Canonical CSL-JSON  + versioned sidecars
+            │
+    ┌───────┼─────────┬────────────┐
+ ASReview  pybibx  bibliometrix  Other consumers
 ```
 
-### Contracts, integration and standards
+- **[CiteWeft](https://github.com/edithatogo/citeweft)** owns document extraction and source spans; it is an optional one-way integration.
+- **[Sourceright](https://github.com/edithatogo/sourceright)** owns canonical reference verification and reconciliation.
+- **[Searchright](https://github.com/edithatogo/searchright)** owns systematic-search orchestration, search-specific evidence and corpus preparation.
+- **`evidence-search-contracts` and `evidence-search-core`** provide neutral query/provider/receipt/runtime interfaces shared with appropriate consumers.
 
-- **74** Draft 2020-12 JSON Schemas with 74 conforming examples.
-- A machine-readable schema catalogue and a **35-operation**
-  CLI–MCP–facade interface catalogue.
-- OpenAPI and WIT boundary contracts.
-- Eight exact-revision integration passports and eight matching
-  producer–consumer interactions.
-- A read-only integration-drift workflow that cannot update revisions or claims.
-- Versioned standards packs for PRISMA 2020, PRISMA-S, PRISMA-ScR, PRISMA-LSR,
-  PRISMA-P, PRESS, Cochrane, MECIR, JBI and Campbell guidance.
-- Licensed-source profiles for Embase, Scopus and Web of Science that contain no
-  credentials and do not imply bundled access.
+Network and consequential actions are deny-by-default, with explicit authorisation, budgets and source rights. Agent recommendations cannot silently amend strategies or assert human screening decisions. No source index is assumed immutable.
 
-Cross-repository integration uses exact pins, neutral schemas, golden fixtures,
-consumer-driven contracts and optional leaf adapters. It deliberately avoids Git
-submodules, copied implementation code and automatic dependency promotion.
+## Try the existing local interfaces
 
-## Implementation truth model
-
-Every one of the 38 Conductor tracks now has assertion-level traceability. The
-current 200 acceptance assertions include 108 symbol-and-gate mappings, seven
-path-and-gate mappings, one contract mapping and 84 conservative track-level
-mappings. A track cannot be promoted merely because a named file exists, an
-issue is closed or a remote Project field changes.
-
-The repository distinguishes:
-
-- **contracted** — requirement exists;
-- **scaffolded** — interface or placeholder exists, without behaviour claim;
-- **partially implemented** — some behaviour is mapped, while scope remains open;
-- **source implemented** — every assertion maps to symbols and deterministic
-  tests, while compiler/runtime evidence remains separate;
-- **higher evidence** — compiler, fixture, live, downstream, external and public
-  acceptance receipts, each independently earned.
-
-Additional local controls now freeze the exact JSON Schema, WIT, OpenAPI and MCP
-surface; prohibit publishing any workspace crate by default; pin rights-clear
-provider response baselines; distinguish canonical upstreams from personal
-forks; and reject unclear-licence integrations from redistributed code/content.
-
-The verification system also assigns every registered gate an explicit evidence
-ceiling, enforces architectural capability placement, records evidence debt as
-a derived gap register, separates provider terms and data-handling review from
-technical compatibility, applies deterministic receipt minimisation, and
-requires declared migration and rollback paths for evolving persisted schemas.
-These controls prevent a passing static check from being misreported as
-compiler, legal, live-provider, recovery or methodological evidence.
-
-A deterministic `.srpack` review bundle can package and verify review artefacts,
-while a derived review-state reducer binds to an externally verified audit head
-and rejects non-human attempts to exercise final screening authority. These are
-local source/fixture proofs, not claims of a completed systematic review.
-
-## Agentic workflow
-
-The `systematic-search` skill and role cards support planning, search design,
-PRESS review, bounded execution, screening assistance, reporting and updates.
-Agents may propose, translate, critique, prioritise and explain. They cannot
-silently amend a protocol, release a consequential write, make a final exclusion
-or promote a public readiness claim.
-
-## Conductor and GitHub hierarchy
-
-Conductor context is fully scaffolded with vision, strategy, architecture,
-MoSCoW requirements and **38 ordered tracks** spanning foundation through a
-version 1.0 maturity dossier. Every track has `spec.md`, a four-phase `plan.md`,
-`metadata.json`, `evidence.json`, source work and higher-evidence blockers.
-
-The canonical roadmap deterministically renders **595 GitHub work items** in a four-level hierarchy:
-
-- one roadmap epic;
-- 38 track issues;
-- 152 phase subissues, four under each track;
-- 404 task subissues corresponding to every top-level Conductor task.
-
-Remote mutation is dry-run first and requires an explicit workflow input, a
-protected write environment, issue/project scopes, a clean Git tree and a
-second environment opt-in. A declarative GitHub Project v2 manifest owns 12
-custom fields and six views, including a separate implementation-gap view; an additive synchroniser creates or updates the
-Project and places all 595 issue nodes into it without deleting or archiving
-remote work. A one-command bootstrap controller can create the remote repository,
-apply settings and the main-branch ruleset, synchronise the issue hierarchy, and
-create/populate the Project. The public Searchright repository, issue hierarchy
-and Project exist; exact-current projection parity still requires the observed
-post-apply audit receipt named by the launch roadmap.
-
-The repository prepares host-aware Conductor installation scripts and records the
-observed upstream version. A compatible Gemini, Antigravity or Claude host was
-not present in this runtime, so installation is not falsely claimed.
-
-## Operational and maturity control plane
-
-Searchright now includes source contracts and policy crates for authenticated
-remote MCP, tenant-scoped authorisation, bounded long-running tasks, component
-health, opt-in telemetry, backup manifests, incident records and restore/rollback
-planning. A cross-repository release train orders CiteWeft → Searchright →
-Sourceright promotion through explicit consumer and downstream-canary evidence.
-A release-candidate rehearsal and three pilot profiles are prepared; neither is
-represented as executed. The final maturity track records a version 1.0 decision
-only when every required evidence domain passes.
-
-## Maximal engineering harness
-
-The source configures a 28-dimension assurance matrix covering schema and
-semantic contracts, unit/integration/doctests, property and metamorphic tests,
-coverage, mutation, fuzzing, Kani proofs, Loom concurrency exploration, Miri,
-`cargo-careful`, SSRF/hostile-content controls, supply-chain review, clean-room
-offline builds, reproducible archives and binaries, attestations, MCP transcripts
-and human methodological evaluation.
-
-The network-free aggregate harness currently runs **57 static gates**, with a
-**67-gate catalogue** covering the harness and auxiliary traceability commands.
-Gates include assertion traceability, evidence ceilings and debt, architectural
-fitness, package-surface policy, contract-surface freezing,
-schema migration governance, provider policy manifests, receipt redaction,
-reference recovery mechanics, provider baselines, a rights-clear end-to-end
-contract reference slice, review-bundle and review-state self-tests, benchmark
-leakage controls, licence firewalls, portfolio consistency and exact
-CI/developer-tool pin parity. Configured compiler, runtime, live and external
-gates do not become passing evidence until
-their receipts are observed.
-
-## Intended local use
-
-Once Rust 1.97.1 and dependency access are available:
+The following are source-backed CLI examples; they exercise local contracts and compilation, **not a validated live systematic review**. The workspace pins Rust 1.97.1 and uses a committed `Cargo.lock`.
 
 ```bash
 ./scripts/bootstrap.sh
-cargo generate-lockfile
-npm ci --prefix requirements/bindings --ignore-scripts --no-audit --no-fund
-./scripts/verify.sh
+cargo test --workspace --locked
 
-cargo run -p searchright-cli -- validate-plan contracts/examples/review-plan.yaml
-cargo run -p searchright-cli -- compile contracts/examples/search-strategy.yaml --dialect pubmed
-cargo run -p searchright-cli -- prisma contracts/examples/prisma-flow.json --format mermaid
-cargo run -p searchright-mcp
+cargo run --locked -p searchright-cli -- validate-plan contracts/examples/review-plan.yaml
+cargo run --locked -p searchright-cli -- compile contracts/examples/search-strategy.yaml --dialect pubmed
+cargo run --locked -p searchright-cli -- prisma contracts/examples/prisma-flow.json --format mermaid
+cargo run --locked -p searchright-mcp
 ```
 
-The committed lockfile is deliberately a release gate. Internal path dependencies
-carry exact workspace versions; unpublished Git-only adapters remain
-`publish = false` until their registry dependency exists.
+For broader repository verification run `./scripts/verify.sh` after installing the documented prerequisites. See [the docs index](docs/README.md), [architecture](docs/architecture.md), [contracts](docs/contracts.md) and [vertical-slice definition of done](docs/vertical-slice-definition-of-done.md). Live access requires separate provider policy, explicit authority and actual execution evidence.
 
-## Evidence and claims
+## Research and development direction
 
-Searchright uses this evidence ladder:
+Current priority is a **working two-source search → canonical corpus → independently consumable export**, including resumption, provenance and correct error reporting, before adding further architectural frameworks. The actively evolving [frontier roadmap](conductor/frontier-plan.md) and [research programme](docs/research/programme.md) cover search-translation fidelity, error/loss in reconciliation, the effects of corpus construction on bibliometrics, temporal search updates and external reconstruction.
 
-1. contracted;
-2. source-verified;
-3. compiler-verified;
-4. fixture-proven;
-5. opt-in live proven;
-6. externally validated;
-7. publicly accepted.
+The [CSL-first refinement and SEARCH-REPLAY protocol (PR #799)](https://github.com/edithatogo/searchright/pull/799) describe the proposed boundary and a metaresearch study of missing details in published search strategies, plausible reconstructions and retrieval uncertainty. **Draft planning is not implemented functionality, a registered study or an accepted publication.**
 
-Prepared registry metadata is not acceptance. A provider fixture is not live
-proof. Internal benchmarks are not methodological validation. A migration map is
-not downstream cutover. A consumer-contract declaration is not downstream
-compatibility.
+Existing libraries and frameworks are preferred **only after** demonstrated behavioural parity and a practical advantage in maintenance, security, performance or interoperability. OxiDD, Salsa and DVC are candidates, not mandatory dependencies; optional TLS attestation, advanced semantic reasoning and workflow integrations have separate value and evidence gates.
 
-## Safety and non-goals
+## Evidence, maturity and limitations
 
-Searchright does not certify comprehensiveness, clinical truth, legal compliance
-or journal acceptance. It does not circumvent licensed platforms, execute
-provider text as instructions, permit agent-only final exclusions or claim
-one-click autonomous systematic reviews.
+Searchright separates *contracted*, *source implemented*, *compiler verified*, *fixture proven*, *authorised live proven*, *externally validated* and *publicly accepted*. A passing static check does not prove a live database search; a matching hit count does not prove identical records; a portable research package does not establish search completeness.
+
+The repository's Conductor inventory currently includes **44 track identities**, with historical archived tracks and newer scaffolded tracks, and **230 acceptance assertions** in the current evidence-debt inventory. These counts are planning/traceability facts, not measures of research validity; see [the canonical track index](conductor/tracks.md) for changes.
+
+Searchright does not certify whole-literature recall, scientific truth, medical decisions, legal compliance or journal acceptance. It does not bypass licensed access, silently discard ambiguous records or claim autonomous human-equivalent systematic reviews.
 
 ## Licence
 
-Dual licensed under the MIT or Apache-2.0 licence at your option.
+MIT OR Apache-2.0. Third-party source records, abstracts, full texts, data and proprietary database access retain their own terms.
