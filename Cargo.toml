@@ -75,7 +75,7 @@ reqwest = { version = "0.13.2", default-features = false, features = ["json", "r
 rmcp = { version = "=3.9.0", features = ["server", "client", "elicitation", "macros", "transport-io", "schemars"] }
 schemars = "1.2.3"
 serde = { version = "1.0", features = ["derive"] }
-serde_json = { version = "1.0", features = ["preserve_order"] }
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
 noyalib = { version = "=0.0.58", default-features = false, features = ["std"] }
 sha2 = "0.11"
 thiserror = "2.0"
