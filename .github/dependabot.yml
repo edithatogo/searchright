@@ -11,3 +11,7 @@ updates:
     schedule:
       interval: weekly
     labels: [dependencies, ci]
+    groups:
+      codeql-action:
+        patterns:
+          - "github/codeql-action/*"
