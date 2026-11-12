@@ -29,7 +29,7 @@ use rmcp::{
         InputRequest, InputRequests, InputRequiredResult, JsonObject, ListPromptsResult,
         ListResourcesResult, ListToolsResult, PaginatedRequestParams, Prompt, PromptArgument,
         PromptMessage, ProtocolVersion, ReadResourceRequestParams, ReadResourceResponse,
-        ReadResourceResult, Resource, ResourceContents, Role, ServerCapabilities, ServerInfo,
+        ReadResourceResult, Resource, ResourceContents, Role, ServerCapabilities, ServerConfig,
         SubscriptionFilter, UpdateTaskParams,
     },
     schemars,
@@ -1563,7 +1563,7 @@ impl ServerHandler for SearchrightServer {
         Ok(info)
     }
 
-    fn get_info(&self) -> ServerInfo {
+    fn get_info(&self) -> ServerConfig {
         let capabilities = if self.remote_http {
             ServerCapabilities::builder().enable_tools().build()
         } else {
@@ -1576,7 +1576,7 @@ impl ServerHandler for SearchrightServer {
                 .enable_tasks()
                 .build()
         };
-        ServerInfo::new(capabilities)
+        ServerConfig::new(capabilities)
     }
 
     fn supported_protocol_versions(&self) -> Cow<'static, [ProtocolVersion]> {

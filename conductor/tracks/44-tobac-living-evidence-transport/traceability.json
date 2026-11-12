@@ -1,0 +1,151 @@
+{
+  "schema_version": "org.searchright.track-traceability.v1",
+  "track_id": "44",
+  "title": "Living systematic review to VOI and bias-transport handoff for tobac",
+  "implementation_state": "scaffolded",
+  "evidence_level": "source_verified",
+  "source_of_assertions": "conductor/tracks/44-tobac-living-evidence-transport/spec.md#scope",
+  "claim_boundary": "Source-verified specification and granular execution playbook only; living-review-to-VOI delta export and PICO transportability weighting remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+  "assertions": [
+    {
+      "assertion_id": "T44-A001",
+      "statement": "Typed `StudyEffectTransportRecord`, `RiskOfBiasDomainScore`, `PicoTransportWeight`, and `LivingVoiDeltaBundle` contracts in `crates/searchright-contracts/src/living.rs`",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/44-tobac-living-evidence-transport/evidence.json"
+      ],
+      "open_gates": [
+        "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
+        "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
+        "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T44-A002",
+      "statement": "Deterministic living-delta exporter in `crates/searchright-living/src/lib.rs` emitting added, updated, and retraction-quarantined study effect records between two review snapshots",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/44-tobac-living-evidence-transport/evidence.json"
+      ],
+      "open_gates": [
+        "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
+        "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
+        "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T44-A003",
+      "statement": "Proof-carrying byte-span and `citeweft`/`sourceright` provenance digest enforcement on every exported numeric effect size and confidence interval",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/44-tobac-living-evidence-transport/evidence.json"
+      ],
+      "open_gates": [
+        "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
+        "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
+        "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T44-A004",
+      "statement": "Target-population PICO transportability and internal-validity bias-adjustment metadata formatting for direct ingestion by `tobac` and `voiage`",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/44-tobac-living-evidence-transport/evidence.json"
+      ],
+      "open_gates": [
+        "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
+        "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
+        "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    },
+    {
+      "assertion_id": "T44-A005",
+      "statement": "Fail-closed quarantine guard preventing retracted or ungrounded study claims from entering active downstream prior-updating bundles",
+      "state": "scaffolded",
+      "mapping_confidence": "track_level_only",
+      "implementation_paths": [
+        "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs"
+      ],
+      "implementation_symbols": [],
+      "deterministic_tests": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "evidence_receipts": [
+        "conductor/tracks/44-tobac-living-evidence-transport/evidence.json"
+      ],
+      "open_gates": [
+        "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
+        "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
+        "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+      ],
+      "permitted_claim": "Scaffolding exists; behaviour is not claimed."
+    }
+  ]
+}

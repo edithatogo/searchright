@@ -23,6 +23,7 @@ an explicit, approval-gated apply receipt exists.
 | 41 | [Demand-driven incremental living review computation](tracks/41-salsa-incremental-living-reviews/spec.md) | mature | scaffolded | scaffolded | source_verified | Recompute living systematic review updates through a demand-driven memoized dependency DAG with early cutoff and bisimulation equivalence to full replay. |
 | 42 | [Sub-document byte-span entailment and transitive retraction propagation](tracks/42-subdocument-entailment-retraction/spec.md) | mature | scaffolded | scaffolded | source_verified | Anchor extracted claims to proof-carrying sub-document byte spans with entailment verification and propagate retractions transitively across study syntheses. |
 | 43 | [Adversarial Advocate-Skeptic-Arbiter screening deliberation](tracks/43-adversarial-multi-agent-deliberation/spec.md) | mature | scaffolded | scaffolded | source_verified | Execute zero-trust Advocate-Skeptic-Arbiter screening deliberation with mandatory verbatim span verification, epistemic divergence routing, and human-only final exclusions. |
+| 44 | [Living systematic review to VOI and bias-transport handoff for tobac](tracks/44-tobac-living-evidence-transport/spec.md) | mature | scaffolded | scaffolded | source_verified | Export living systematic review delta updates as structured effect-size, risk-of-bias, and PICO transportability packets with byte-span provenance for downstream tobac and voiage regulatory VOI evaluation. |
 
 ## Archived tracks
 
