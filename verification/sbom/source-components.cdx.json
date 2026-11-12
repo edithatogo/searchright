@@ -1302,7 +1302,7 @@
       "version": "985503bc8eae58e7d6ef36a6e5427d0077e0193c"
     },
     {
-      "bom-ref": "github-action:github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "bom-ref": "github-action:github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066",
       "name": "github/codeql-action/analyze",
       "properties": [
         {
@@ -1311,10 +1311,10 @@
         }
       ],
       "type": "application",
-      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+      "version": "33d7b85da1a04171e211befe2c739303b9a4c066"
     },
     {
-      "bom-ref": "github-action:github/codeql-action/autobuild@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "bom-ref": "github-action:github/codeql-action/autobuild@33d7b85da1a04171e211befe2c739303b9a4c066",
       "name": "github/codeql-action/autobuild",
       "properties": [
         {
@@ -1323,10 +1323,10 @@
         }
       ],
       "type": "application",
-      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+      "version": "33d7b85da1a04171e211befe2c739303b9a4c066"
     },
     {
-      "bom-ref": "github-action:github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "bom-ref": "github-action:github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066",
       "name": "github/codeql-action/init",
       "properties": [
         {
@@ -1335,10 +1335,10 @@
         }
       ],
       "type": "application",
-      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+      "version": "33d7b85da1a04171e211befe2c739303b9a4c066"
     },
     {
-      "bom-ref": "github-action:github/codeql-action/upload-sarif@5595ccaf912efad79be6eef63a5619ff05969be3",
+      "bom-ref": "github-action:github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066",
       "name": "github/codeql-action/upload-sarif",
       "properties": [
         {
@@ -1347,7 +1347,7 @@
         }
       ],
       "type": "application",
-      "version": "5595ccaf912efad79be6eef63a5619ff05969be3"
+      "version": "33d7b85da1a04171e211befe2c739303b9a4c066"
     },
     {
       "bom-ref": "github-action:gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e",
@@ -1780,7 +1780,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:51b094b1-0678-55f8-99bf-05dba795a6ac",
+  "serialNumber": "urn:uuid:f81ce6aa-bce3-5ae7-aa24-23594420b171",
   "specVersion": "1.6",
   "version": 1
 }

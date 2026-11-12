@@ -5,7 +5,7 @@
 35f870b9710cd89e3ad4706b611e7c2ae80e4d2337d90dbb85d64cd4eb9553f5  ./.github/ISSUE_TEMPLATE/bug.yml
 ed52073385e93f7d864e262070366de5c2d7b0496fda20541ba4819fa92d074b  ./.github/ISSUE_TEMPLATE/feature.yml
 4d7959b2ccfbfd01e913e1d10db9dd52b243c3d257ffd2e301eb4c023ea5ce82  ./.github/copilot-instructions.md
-5f2586e3fc3c921c49a1870f8e2d3d73879ff9de9215231c3bd65f2358f60b67  ./.github/dependabot.yml
+ef22abe3c245636fcf2aafe11e59ff2ec9db46b9d69e541ae6d7df68e37ceef5  ./.github/dependabot.yml
 981a0e128be8e3b7c190935d1680264e9a854d1ee1339627287d7cd57eb9f350  ./.github/pull_request_template.md
 ed885101114ecd525ee170babaf5a4e479ea8a1cbdd2f24659fd2dd5dc736f88  ./.github/workflows/ci.yml
 455bb5a1bdcb1a09914fd9fcb56da4f4e2e8496e76f9932a425eb7c72be499fc  ./.github/workflows/clean-room.yml
@@ -23,7 +23,7 @@ f4485513368b250cdaf37c2083603d9179e409413a93f36e3ef27831580ab688  ./.github/work
 1e48bc62ad1aba1910929f477815dd9793c201f17645177f99e8f30b77bab26b  ./.github/workflows/release-candidate.yml
 0c784c5a44198e1a8953b17ef434010a0740c8c1da0e2232923660b34aaca9cd  ./.github/workflows/release.yml
 0c53e108c6b7d1231cf2b744fc2520544674564e7beeb169fa092773f875d3c4  ./.github/workflows/resilience.yml
-767f9b8a7eb702bd3a27109cc7cc095a13fe05955691e9d958e9465b5aed2814  ./.github/workflows/security.yml
+a7144511f9895ea04ea857fe6b66c82c7672af56cda5a1d5961bd596a7dbb043  ./.github/workflows/security.yml
 8a6c385c390a2316e0aeaf69a300e2656a05e6247881f12e6201a4bd114a7318  ./.gitignore
 ed5f8c3a259fbdfb99d06d519b5dd72f7838bcc0fb0e810545683725d6b6b0b7  ./.gitleaks.toml
 6594d7d20dad9cb44f9393d5da8163a12170b357a9a77bbfa3ec131b1bd0bdb1  ./.markdownlint-cli2.jsonc
@@ -2717,7 +2717,7 @@ b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48  ./verification
 7602b331629a6d0f7e3352005c30b449b27358b76c42efa0281ef7bbc746ff06  ./verification/reviews/track-16-rustls-native-certs-0.8.4/security_safety.md
 0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22  ./verification/reviews/track-16-rustls-native-certs-0.8.4/source-manifest.json
 3c80d96641b9cb0c62ab8911e670058ccae332cf22a3231c180dd7bc26c45a9a  ./verification/reviews/track-16-rustls-native-certs-0.8.4/testing.md
-676e2fd60aa9e244853fb0d1c744668b19ed4b61b934faf972d982482dca11a1  ./verification/sbom/source-components.cdx.json
+1221f21201d1e5d2cefacc6e3d978561f54da10b4eb7c915b08b5f7575bc1ed7  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json
