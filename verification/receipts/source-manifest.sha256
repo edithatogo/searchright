@@ -23,7 +23,7 @@ f4485513368b250cdaf37c2083603d9179e409413a93f36e3ef27831580ab688  ./.github/work
 1e48bc62ad1aba1910929f477815dd9793c201f17645177f99e8f30b77bab26b  ./.github/workflows/release-candidate.yml
 0c784c5a44198e1a8953b17ef434010a0740c8c1da0e2232923660b34aaca9cd  ./.github/workflows/release.yml
 0c53e108c6b7d1231cf2b744fc2520544674564e7beeb169fa092773f875d3c4  ./.github/workflows/resilience.yml
-767f9b8a7eb702bd3a27109cc7cc095a13fe05955691e9d958e9465b5aed2814  ./.github/workflows/security.yml
+6c586ffcd3578b4d72357836a3b53c479dde93bb19867c3182d75ac2b2917700  ./.github/workflows/security.yml
 8a6c385c390a2316e0aeaf69a300e2656a05e6247881f12e6201a4bd114a7318  ./.gitignore
 ed5f8c3a259fbdfb99d06d519b5dd72f7838bcc0fb0e810545683725d6b6b0b7  ./.gitleaks.toml
 6594d7d20dad9cb44f9393d5da8163a12170b357a9a77bbfa3ec131b1bd0bdb1  ./.markdownlint-cli2.jsonc
@@ -2717,7 +2717,7 @@ b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48  ./verification
 7602b331629a6d0f7e3352005c30b449b27358b76c42efa0281ef7bbc746ff06  ./verification/reviews/track-16-rustls-native-certs-0.8.4/security_safety.md
 0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22  ./verification/reviews/track-16-rustls-native-certs-0.8.4/source-manifest.json
 3c80d96641b9cb0c62ab8911e670058ccae332cf22a3231c180dd7bc26c45a9a  ./verification/reviews/track-16-rustls-native-certs-0.8.4/testing.md
-676e2fd60aa9e244853fb0d1c744668b19ed4b61b934faf972d982482dca11a1  ./verification/sbom/source-components.cdx.json
+a23102f6a9cda5a964296ddcfc21add13db5da7cdd52b881e81be107ec55417b  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json

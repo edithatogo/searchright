@@ -1374,7 +1374,7 @@
       "version": "69d357bade1eb7b32bc3fc3d5c3d173c5bfa5237"
     },
     {
-      "bom-ref": "github-action:ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc",
+      "bom-ref": "github-action:ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e",
       "name": "ossf/scorecard-action",
       "properties": [
         {
@@ -1383,7 +1383,7 @@
         }
       ],
       "type": "application",
-      "version": "2d1146689b8cda280b9bc96326124645441f03bc"
+      "version": "fa7117db83c52d787ae5a89f350999701505d78e"
     }
   ],
   "dependencies": [
@@ -1780,7 +1780,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:51b094b1-0678-55f8-99bf-05dba795a6ac",
+  "serialNumber": "urn:uuid:1dbe7992-caf7-5f94-98d2-81b6e84ffb41",
   "specVersion": "1.6",
   "version": 1
 }
