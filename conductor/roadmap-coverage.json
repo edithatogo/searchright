@@ -3276,7 +3276,48 @@
       "status": "scaffolded",
       "title": "Adversarial Advocate-Skeptic-Arbiter screening deliberation",
       "track_id": "43"
+    },
+    {
+      "active_plan": "conductor/frontier-plan.md",
+      "blockers": [
+        "Define StudyEffectTransportRecord, RiskOfBiasDomainScore, PicoTransportWeight, and LivingVoiDeltaBundle contracts in crates/searchright-contracts/src/living.rs.",
+        "Implement deterministic living-delta extraction and retraction-quarantine filtering for downstream VOI handoff in crates/searchright-living/src/lib.rs.",
+        "Enforce sub-document byte-span digest and Sourceright/CiteWeft provenance binding on every exported effect estimate in crates/searchright-provenance/src/lib.rs.",
+        "Add golden tobacco/vaping policy evidence transport fixtures and negative ungrounded-effect rejection tests for tobac and voiage."
+      ],
+      "checks": [
+        "python scripts/validate_repository.py",
+        "python scripts/check_roadmap_coverage.py",
+        "python scripts/check_traceability.py"
+      ],
+      "claim_boundary": "Source-verified specification and granular execution playbook only; living-review-to-VOI delta export and PICO transportability weighting remain open implementation gates. Path presence is not behavioural proof; assertion-level traceability governs implementation claims.",
+      "deliverables": [
+        "conductor/tracks/44-tobac-living-evidence-transport/spec.md",
+        "crates/searchright-contracts/src/living.rs",
+        "crates/searchright-living/src/lib.rs",
+        "crates/searchright-provenance/src/lib.rs"
+      ],
+      "dependencies": [
+        "12",
+        "22",
+        "25",
+        "41",
+        "42"
+      ],
+      "evidence_level": "source_verified",
+      "external_approval_required": false,
+      "horizon": "mature",
+      "implementation_state": "scaffolded",
+      "lifecycle": "active",
+      "outcome": "Export living systematic review delta updates as structured effect-size, risk-of-bias, and PICO transportability packets with byte-span provenance for downstream tobac and voiage regulatory VOI evaluation.",
+      "requirements": [
+        "SR-100"
+      ],
+      "slug": "tobac-living-evidence-transport",
+      "status": "scaffolded",
+      "title": "Living systematic review to VOI and bias-transport handoff for tobac",
+      "track_id": "44"
     }
   ],
-  "updated": "2026-11-09"
+  "updated": "2026-11-10"
 }

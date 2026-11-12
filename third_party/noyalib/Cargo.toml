@@ -706,7 +706,7 @@ features = ["alloc"]
 default-features = false
 
 [dependencies.serde_ignored]
-version = "0.1"
+version = "0.1.14"
 optional = true
 
 [dependencies.serde_json]
@@ -761,7 +761,7 @@ features = ["derive"]
 version = "0.11"
 
 [dev-dependencies.serde_ignored]
-version = "0.1"
+version = "0.1.14"
 
 [dev-dependencies.serde_json]
 version = "1.0"

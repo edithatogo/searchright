@@ -33,7 +33,7 @@ class StatusTests(unittest.TestCase):
         before = {str(p): p.read_bytes() for p in self.root.rglob("*") if p.is_file()}
         report = audit(self.root)
         self.assertEqual(report["errors"], [])
-        self.assertEqual(report["counts"]["tracks"], 44)
+        self.assertEqual(report["counts"]["tracks"], 45)
         expected_archived = sum(1 for m in (self.root / "conductor/tracks").glob("*/metadata.json") if json.loads(m.read_text()).get("lifecycle") == "archived")
         self.assertEqual(report["counts"]["archived"], expected_archived)
         self.assertEqual(report["isolation"]["state"], "unconfigured")
