@@ -718,7 +718,7 @@ version = "1.13"
 default-features = false
 
 [dependencies.sval]
-version = "2"
+version = "2.22.0"
 optional = true
 default-features = false
 
