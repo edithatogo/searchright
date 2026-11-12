@@ -49,6 +49,7 @@ This issue is generated from `conductor/roadmap-coverage.json`. Conductor remain
 - [ ] `41` — Demand-driven incremental living review computation (`track-41`)
 - [ ] `42` — Sub-document byte-span entailment and transitive retraction propagation (`track-42`)
 - [ ] `43` — Adversarial Advocate-Skeptic-Arbiter screening deliberation (`track-43`)
+- [ ] `44` — Living systematic review to VOI and bias-transport handoff for tobac (`track-44`)
 
 ## Synchronisation contract
 
