@@ -19,3 +19,5 @@
 - Benchmark performance proposals with fixed fixtures and baseline/candidate receipts, including correctness, memory, CPU and determinism.
 - Decision for each candidate must be recorded as adopt, retain, reject or defer with evidence, risks and rollback.
 - Do not expose identifiable, secret, copyrighted or otherwise restricted raw data in tracing, snapshots, benchmarks or CI artifacts.
+
+<!-- Scope: existing track 38 and shared frontier track assurance. -->
