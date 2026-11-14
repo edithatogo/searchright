@@ -1,5 +1,5 @@
 name: Bug report
-about: Report a deterministic defect without sensitive review data
+description: Report a deterministic defect without sensitive review data
 body:
   - type: textarea
     id: observed
