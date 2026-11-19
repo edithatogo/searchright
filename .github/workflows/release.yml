@@ -45,6 +45,22 @@ jobs:
         run: |
           python scripts/generate_source_sbom.py
           python scripts/package_source.py --output-dir dist/source
+      - name: Inventory exact locked Rust dependencies
+        uses: edithatogo/repository-standards/.github/actions/cargo-lock-sbom@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          lockfile: Cargo.lock
+          output: .grype/searchright.dependencies.cdx.json
+          name: searchright
+          source-sha: ${{ github.sha }}
+      - name: Scan resolved Rust dependencies with Grype
+        uses: edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          sbom: .grype/searchright.dependencies.cdx.json
+          mode: enforce
+          severity-cutoff: critical
+          artifact-name: grype-searchright-release
+          output-directory: .grype/release-report
+          source-sha: ${{ github.sha }}
       - name: Attest source archives, manifest and SBOM
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
@@ -62,6 +78,8 @@ jobs:
           path: |
             dist/source/*
             verification/sbom/source-components.cdx.json
+            .grype/searchright.dependencies.cdx.json
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 90
 

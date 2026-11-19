@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Generate a reproducible CycloneDX source-component inventory.
+"""Generate a reproducible CycloneDX manifest and automation inventory.
 
-This is deliberately labelled a source inventory when Cargo.lock is absent. It
-must not be represented as a fully resolved binary SBOM.
+Manifest requirements are not resolved versions. The separate release Grype
+lane generates its dependency inventory from Cargo.lock; this document retains
+workspace, manifest, schema and automation context without claiming resolution.
 """
 
 from __future__ import annotations
@@ -44,6 +45,11 @@ def generate() -> dict[str, Any]:
             package_version = version
         bom_ref = component_ref("cargo", name, str(package_version))
         package_refs[name] = bom_ref
+        license_expression = package.get("license", package_defaults["license"])
+        if isinstance(license_expression, dict):
+            if license_expression != {"workspace": True}:
+                raise ValueError(f"unsupported inherited license for {name}")
+            license_expression = package_defaults["license"]
         components.append(
             {
                 "type": "library" if "lib.rs" in {path.name for path in (member / "src").glob("*.rs")} else "application",
@@ -51,7 +57,7 @@ def generate() -> dict[str, Any]:
                 "name": name,
                 "version": str(package_version),
                 "purl": f"pkg:cargo/{name}@{package_version}",
-                "licenses": [{"expression": package.get("license", package_defaults["license"])}],
+                "licenses": [{"expression": license_expression}],
                 "properties": [
                     {"name": "searchright:path", "value": member_value},
                     {"name": "searchright:component-kind", "value": "workspace-crate"},
@@ -72,11 +78,9 @@ def generate() -> dict[str, Any]:
                 "type": "library",
                 "bom-ref": bom_ref,
                 "name": name,
-                "version": requirement,
-                "purl": f"pkg:cargo/{name}@{requirement}",
-                "scope": "required",
                 "properties": [
                     {"name": "searchright:resolution", "value": "version-requirement-not-resolved"},
+                    {"name": "searchright:version-requirement", "value": requirement},
                 ],
             }
         )
@@ -129,11 +133,11 @@ def generate() -> dict[str, Any]:
                 "purl": f"pkg:github/edithatogo/searchright@{version}",
             },
             "properties": [
-                {"name": "searchright:evidence-level", "value": "source-inventory" if not lockfile_present else "lockfile-resolved-source-inventory"},
+                {"name": "searchright:evidence-level", "value": "manifest-and-automation-inventory"},
                 {"name": "searchright:cargo-lock-present", "value": str(lockfile_present).lower()},
                 {"name": "searchright:schema-count", "value": str(len(schema_catalog["entries"]))},
                 {"name": "searchright:standard-pack-count", "value": str(len(standard_catalog["packs"]))},
-                {"name": "searchright:claim-boundary", "value": "not-a-binary-sbom-without-compiler-and-release-artifact"},
+                {"name": "searchright:claim-boundary", "value": "manifest requirements are unresolved; separate Cargo.lock inventory is required for vulnerability matching; neither inventory proves binary composition"},
             ],
         },
         "components": sorted(components, key=lambda value: value["bom-ref"]),
