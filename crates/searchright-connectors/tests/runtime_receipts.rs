@@ -470,3 +470,76 @@ async fn exact_record_budget_with_continuation_is_explicitly_partial() -> TestRe
     );
     Ok(())
 }
+
+/// Track 38: a page-two failure must not turn the first cached page into
+/// duplicate records or a misleading successful receipt on a subsequent run.
+/// This is fixture/cache replay, not durable crash recovery or live-provider proof.
+#[tokio::test]
+async fn failed_second_page_replay_has_complete_receipt_and_no_duplicates() -> TestResult {
+    let pages = two_pages()?;
+    let first_page = pages
+        .get(&None)
+        .ok_or("missing first fixture page")?
+        .clone();
+    let second_cursor = Some("second-page".to_owned());
+    let second_page = pages
+        .get(&second_cursor)
+        .ok_or("missing second fixture page")?
+        .clone();
+    let cache = Arc::new(ObservedCache::default());
+
+    // The first page is cached, then the absent second page fails the run.
+    // The failed execution must not return a partial success receipt.
+    let interrupted = registry(
+        cache.clone(),
+        "openalex",
+        BTreeMap::from([(None, first_page)]),
+    )?
+    .execute("openalex", request(), "synthetic interrupted pagination")
+    .await;
+    assert!(matches!(interrupted, Err(ProviderError::Upstream { .. })));
+    assert_eq!(cache.provider_calls.load(Ordering::SeqCst), 2);
+    assert_eq!(cache.writes.lock().await.len(), 1);
+
+    // A fresh registry has only the previously missing second page.
+    // Success therefore requires replaying the cached first page exactly once.
+    let resumed = registry(
+        cache.clone(),
+        "openalex",
+        BTreeMap::from([(second_cursor, second_page)]),
+    )?
+    .execute("openalex", request(), "synthetic interrupted pagination")
+    .await?;
+    assert_receipt(&resumed, "openalex", 2, 2, "mixed-fixture-replay")?;
+    assert_eq!(resumed.receipt.cache_hits, 1);
+    assert_eq!(resumed.receipt.cache_writes, 1);
+    assert_eq!(cache.provider_calls.load(Ordering::SeqCst), 3);
+    assert_eq!(cache.writes.lock().await.len(), 2);
+    assert_eq!(
+        resumed
+            .records
+            .iter()
+            .map(|record| record.native_id.as_str())
+            .collect::<Vec<_>>(),
+        ["https://openalex.org/W1", "https://openalex.org/W2"]
+    );
+
+    // With no available fixture pages, the complete result can be reproduced
+    // entirely from cached pages. It receives a new per-execution receipt.
+    let replay = registry(cache.clone(), "openalex", BTreeMap::new())?
+        .execute("openalex", request(), "synthetic interrupted pagination")
+        .await?;
+    assert_receipt(&replay, "openalex", 2, 2, "replay")?;
+    assert_eq!(replay.receipt.cache_hits, 2);
+    assert_eq!(replay.receipt.cache_writes, 0);
+    assert_eq!(cache.provider_calls.load(Ordering::SeqCst), 3);
+    assert_ne!(resumed.receipt.receipt_id, replay.receipt.receipt_id);
+
+    let mut resumed_records = resumed.records;
+    let mut replay_records = replay.records;
+    for record in resumed_records.iter_mut().chain(replay_records.iter_mut()) {
+        "pending-receipt".clone_into(&mut record.source_receipt_id);
+    }
+    assert_eq!(resumed_records, replay_records);
+    Ok(())
+}

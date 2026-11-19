@@ -1288,7 +1288,7 @@ c68fcd2c6cdec1093c64597b0b5078f651784045d88b4fd78462bacdffb00a29  ./crates/searc
 d02f5cd062196d7544f6b09d88dbc1eb7234b4893be507f5456ab55c0220bdd3  ./crates/searchright-connectors/tests/fixtures/pubmed-efetch.xml
 81b1e0e0883fbad8dc67a2eb9d973995261ecb19e5fbd57a7ab712d79aeff563  ./crates/searchright-connectors/tests/fixtures/pubmed-summary-page.json
 9036de025b0d3b61bd888270fc33780a8fc276d3267ea1a982ac83394eba2bba  ./crates/searchright-connectors/tests/parser_integrity.rs
-f05b2c77d8e826fca2ccb6081dfe313a3fc48ab906ab03e88fd34cf83ee7a5ce  ./crates/searchright-connectors/tests/runtime_receipts.rs
+2d3dd0a2ada250906bf9625ae2cf8900ca9dd238360ddbd83c7396aa4a60988b  ./crates/searchright-connectors/tests/runtime_receipts.rs
 89c0decabd36a7c1eb31b8d0c30b91978a9d56b7117655d81f536d0d25dd7e26  ./crates/searchright-contracts/Cargo.toml
 43dae39179286f90f83ebfc4771d5195d592d8f14ddca24fc1c152c5dee66059  ./crates/searchright-contracts/src/access.rs
 3e1692c3d9ebd3233cbc08f18376440218fc403e5b7f0689fad44c3225808a5e  ./crates/searchright-contracts/src/amendment.rs
