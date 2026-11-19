@@ -13,7 +13,7 @@ ed885101114ecd525ee170babaf5a4e479ea8a1cbdd2f24659fd2dd5dc736f88  ./.github/work
 342dd0894aad3adc3e63a354a9493586724bfbe71ae643a237060a89c85b4605  ./.github/workflows/formal.yml
 dcc4f716f40899549c76b2b5ef80bdfaf41004b4ff641bbe3a0e713a6930c03d  ./.github/workflows/fuzz.yml
 d621b202cac6771726ea2b77313c2e820d2e9a93a910f021a91aa470a7b7d7f4  ./.github/workflows/github-control-plane.yml
-b791fc049dd5af623f53fa303e017cb103a181b55fe002910de773444c594f1a  ./.github/workflows/grype.yml
+f5439606952f8a675e92ed0e7ef3861284c6ddb9c18bec12af78448b8552b0ac  ./.github/workflows/grype.yml
 cce714669169df331306081360d5d495e972a1278bb5afdd4b4056bf74fa249a  ./.github/workflows/integration-drift.yml
 9a8b47929c65aefcc5b03db5665ee9db2d2a7521637c0ab8716f884b33dc46b2  ./.github/workflows/integration-release-train.yml
 49502be90d24abcf52e8a6b8891bb1532fc7786c48f9a422cd9e197bfc45776a  ./.github/workflows/issue-sync.yml
@@ -2721,7 +2721,7 @@ b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48  ./verification
 7602b331629a6d0f7e3352005c30b449b27358b76c42efa0281ef7bbc746ff06  ./verification/reviews/track-16-rustls-native-certs-0.8.4/security_safety.md
 0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22  ./verification/reviews/track-16-rustls-native-certs-0.8.4/source-manifest.json
 3c80d96641b9cb0c62ab8911e670058ccae332cf22a3231c180dd7bc26c45a9a  ./verification/reviews/track-16-rustls-native-certs-0.8.4/testing.md
-858f87b4329b5d1543d21bd1637ab92a19fa73261c460b5c3a16638043d8f775  ./verification/sbom/source-components.cdx.json
+61ee3951a10068c3ae2d7f528916cd6fed5fafcba24679c4a931e5dcf6f65cfe  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json

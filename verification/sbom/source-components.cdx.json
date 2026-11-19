@@ -1274,7 +1274,7 @@
       "version": "bc76f1fbe0fa87a1371eadc06b08f54b48c623f7"
     },
     {
-      "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/download-release-sbom@72e1f236fc538b259a2a6096c75c69e9dc88a037",
+      "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/download-release-sbom@610f76cb8267b45cadf18310a973233e293960ab",
       "name": "edithatogo/repository-standards/.github/actions/download-release-sbom",
       "properties": [
         {
@@ -1283,7 +1283,7 @@
         }
       ],
       "type": "application",
-      "version": "72e1f236fc538b259a2a6096c75c69e9dc88a037"
+      "version": "610f76cb8267b45cadf18310a973233e293960ab"
     },
     {
       "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7",
@@ -1788,7 +1788,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:b18b5bc1-2a0a-5834-a892-0ea8ce9e2a78",
+  "serialNumber": "urn:uuid:fe157132-5f23-5ee6-a813-e084dd449ece",
   "specVersion": "1.6",
   "version": 1
 }
