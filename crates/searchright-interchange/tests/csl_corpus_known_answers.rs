@@ -35,8 +35,7 @@ fn minimal_bibliography_matches_independent_blake3_known_answer() -> Result<(), 
 }
 
 #[test]
-fn nested_key_and_record_permutation_preserve_revision_and_full_fields()
--> Result<(), CslCorpusError> {
+fn nested_order_invariance_preserves_fields() -> Result<(), CslCorpusError> {
     let first = r#"[{"type":"report","id":"z","custom":{"beta":2,"alpha":1},"author":[{"given":"Ana","family":"Lee"},{"literal":"Collective"}]},{"id":"a","type":"article-journal","issued":{"date-parts":[[2025,3,7]]}}]"#;
     let second = r#"[{"issued":{"date-parts":[[2025,3,7]]},"type":"article-journal","id":"a"},{"author":[{"family":"Lee","given":"Ana"},{"literal":"Collective"}],"custom":{"alpha":1,"beta":2},"id":"z","type":"report"}]"#;
     let a = canonical_csl_bibliography(first)?;
@@ -86,8 +85,7 @@ fn malformed_identity_errors_have_precise_second_item_index() {
 }
 
 #[test]
-fn identity_validation_does_not_pretend_to_be_a_full_csl_schema_validator()
--> Result<(), CslCorpusError> {
+fn full_schema_validation_is_not_claimed() -> Result<(), CslCorpusError> {
     let output = canonical_csl_bibliography(r#"[{"id":"a","type":"synthetic-unsupported-type"}]"#)?;
     assert_eq!(
         output.references,
