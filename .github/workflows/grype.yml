@@ -1,0 +1,98 @@
+name: Grype resolved dependency advisory
+
+on:
+  pull_request:
+    paths:
+      - Cargo.lock
+      - Cargo.toml
+      - '**/Cargo.toml'
+      - .github/workflows/grype.yml
+      - .github/workflows/release.yml
+  push:
+    branches: [main]
+    paths:
+      - Cargo.lock
+      - Cargo.toml
+      - '**/Cargo.toml'
+      - .github/workflows/grype.yml
+      - .github/workflows/release.yml
+  schedule:
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Optional exact release commit or tag to rescan its locked source dependencies
+        type: string
+        required: false
+      released_inventory:
+        description: Rescan the latest published release SBOM instead of source resolution
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: grype-source-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  scan:
+    if: github.event_name != 'schedule' && inputs.released_inventory != true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          persist-credentials: false
+      - name: Record the exact source being scanned
+        id: source
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Generate full Cargo.lock resolution inventory
+        uses: edithatogo/repository-standards/.github/actions/cargo-lock-sbom@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          lockfile: Cargo.lock
+          output: .grype/searchright.dependencies.cdx.json
+          name: searchright
+          source-sha: ${{ steps.source.outputs.sha }}
+      - name: Scan current source resolution
+        uses: edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          sbom: .grype/searchright.dependencies.cdx.json
+          mode: advisory
+          severity-cutoff: critical
+          artifact-name: grype-searchright-source-${{ github.run_id }}-${{ github.run_attempt }}
+          output-directory: .grype/report
+          source-sha: ${{ steps.source.outputs.sha }}
+
+  released-sbom:
+    if: github.event_name == 'schedule' || inputs.released_inventory == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Download and verify the released inventory asset
+        id: download
+        uses: edithatogo/repository-standards/.github/actions/download-release-sbom@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          sbom-asset: searchright.dependencies.cdx.json
+          output-directory: ${{ runner.temp }}/released-sbom
+      - name: Rescan the immutable released inventory
+        uses: edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          sbom: ${{ steps.download.outputs.sbom }}
+          source-sha: ${{ steps.download.outputs.source-sha }}
+          source-role: observed-release-tag
+          mode: advisory
+          severity-cutoff: critical
+          output-directory: ${{ runner.temp }}/grype-released
+          artifact-name: grype-searchright-released
+      - name: Preserve the release asset identity and verification evidence
+        if: ${{ always() && steps.download.outputs.evidence-directory != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: grype-searchright-released-input
+          path: ${{ steps.download.outputs.evidence-directory }}
+          if-no-files-found: error
+          retention-days: 90

@@ -8,12 +8,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.0"
         }
       ],
-      "purl": "pkg:cargo/anyhow@1.0",
-      "scope": "required",
-      "type": "library",
-      "version": "1.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:async-trait@0.1.89",
@@ -22,12 +23,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.1.89"
         }
       ],
-      "purl": "pkg:cargo/async-trait@0.1.89",
-      "scope": "required",
-      "type": "library",
-      "version": "0.1.89"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:aws-lc-rs@1.18.0",
@@ -36,12 +38,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.18.0"
         }
       ],
-      "purl": "pkg:cargo/aws-lc-rs@1.18.0",
-      "scope": "required",
-      "type": "library",
-      "version": "1.18.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:axum@0.8",
@@ -50,12 +53,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.8"
         }
       ],
-      "purl": "pkg:cargo/axum@0.8",
-      "scope": "required",
-      "type": "library",
-      "version": "0.8"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:base64@0.23",
@@ -64,12 +68,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.23"
         }
       ],
-      "purl": "pkg:cargo/base64@0.23",
-      "scope": "required",
-      "type": "library",
-      "version": "0.23"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:blake3@1.8",
@@ -78,12 +83,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.8"
         }
       ],
-      "purl": "pkg:cargo/blake3@1.8",
-      "scope": "required",
-      "type": "library",
-      "version": "1.8"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:citeweft@0.1.0",
@@ -92,12 +98,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.1.0"
         }
       ],
-      "purl": "pkg:cargo/citeweft@0.1.0",
-      "scope": "required",
-      "type": "library",
-      "version": "0.1.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:clap@4.5",
@@ -106,12 +113,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "4.5"
         }
       ],
-      "purl": "pkg:cargo/clap@4.5",
-      "scope": "required",
-      "type": "library",
-      "version": "4.5"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:clap_mangen@0.2",
@@ -120,12 +128,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.2"
         }
       ],
-      "purl": "pkg:cargo/clap_mangen@0.2",
-      "scope": "required",
-      "type": "library",
-      "version": "0.2"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:csv@=1.4.0",
@@ -134,12 +143,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "=1.4.0"
         }
       ],
-      "purl": "pkg:cargo/csv@=1.4.0",
-      "scope": "required",
-      "type": "library",
-      "version": "=1.4.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:futures@0.3",
@@ -148,12 +158,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.3"
         }
       ],
-      "purl": "pkg:cargo/futures@0.3",
-      "scope": "required",
-      "type": "library",
-      "version": "0.3"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:indexmap@2.12",
@@ -162,12 +173,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "2.12"
         }
       ],
-      "purl": "pkg:cargo/indexmap@2.12",
-      "scope": "required",
-      "type": "library",
-      "version": "2.12"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:jsonwebtoken@11",
@@ -176,12 +188,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "11"
         }
       ],
-      "purl": "pkg:cargo/jsonwebtoken@11",
-      "scope": "required",
-      "type": "library",
-      "version": "11"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:loom@0.7.2",
@@ -190,12 +203,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.7.2"
         }
       ],
-      "purl": "pkg:cargo/loom@0.7.2",
-      "scope": "required",
-      "type": "library",
-      "version": "0.7.2"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:noyalib@=0.0.58",
@@ -204,12 +218,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "=0.0.58"
         }
       ],
-      "purl": "pkg:cargo/noyalib@=0.0.58",
-      "scope": "required",
-      "type": "library",
-      "version": "=0.0.58"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:proptest@1.8",
@@ -218,12 +233,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.8"
         }
       ],
-      "purl": "pkg:cargo/proptest@1.8",
-      "scope": "required",
-      "type": "library",
-      "version": "1.8"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:quick-xml@=0.42.0",
@@ -232,12 +248,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "=0.42.0"
         }
       ],
-      "purl": "pkg:cargo/quick-xml@=0.42.0",
-      "scope": "required",
-      "type": "library",
-      "version": "=0.42.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:reqwest@0.13.2",
@@ -246,12 +263,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.13.2"
         }
       ],
-      "purl": "pkg:cargo/reqwest@0.13.2",
-      "scope": "required",
-      "type": "library",
-      "version": "0.13.2"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:rmcp@=3.9.0",
@@ -260,12 +278,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "=3.9.0"
         }
       ],
-      "purl": "pkg:cargo/rmcp@=3.9.0",
-      "scope": "required",
-      "type": "library",
-      "version": "=3.9.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:rustls@0.23",
@@ -274,12 +293,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.23"
         }
       ],
-      "purl": "pkg:cargo/rustls@0.23",
-      "scope": "required",
-      "type": "library",
-      "version": "0.23"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:schemars@1.2.3",
@@ -288,12 +308,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.2.3"
         }
       ],
-      "purl": "pkg:cargo/schemars@1.2.3",
-      "scope": "required",
-      "type": "library",
-      "version": "1.2.3"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:serde@1.0",
@@ -302,12 +323,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.0"
         }
       ],
-      "purl": "pkg:cargo/serde@1.0",
-      "scope": "required",
-      "type": "library",
-      "version": "1.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:serde_json@1.0",
@@ -316,12 +338,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.0"
         }
       ],
-      "purl": "pkg:cargo/serde_json@1.0",
-      "scope": "required",
-      "type": "library",
-      "version": "1.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:sha2@0.11",
@@ -330,12 +353,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.11"
         }
       ],
-      "purl": "pkg:cargo/sha2@0.11",
-      "scope": "required",
-      "type": "library",
-      "version": "0.11"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:thiserror@2.0",
@@ -344,12 +368,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "2.0"
         }
       ],
-      "purl": "pkg:cargo/thiserror@2.0",
-      "scope": "required",
-      "type": "library",
-      "version": "2.0"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:time@0.3.55",
@@ -358,12 +383,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.3.55"
         }
       ],
-      "purl": "pkg:cargo/time@0.3.55",
-      "scope": "required",
-      "type": "library",
-      "version": "0.3.55"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:tokio-util@0.7",
@@ -372,12 +398,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.7"
         }
       ],
-      "purl": "pkg:cargo/tokio-util@0.7",
-      "scope": "required",
-      "type": "library",
-      "version": "0.7"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:tokio@1",
@@ -386,12 +413,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1"
         }
       ],
-      "purl": "pkg:cargo/tokio@1",
-      "scope": "required",
-      "type": "library",
-      "version": "1"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:tracing-subscriber@0.3.23",
@@ -400,12 +428,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.3.23"
         }
       ],
-      "purl": "pkg:cargo/tracing-subscriber@0.3.23",
-      "scope": "required",
-      "type": "library",
-      "version": "0.3.23"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:tracing@0.1.44",
@@ -414,12 +443,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "0.1.44"
         }
       ],
-      "purl": "pkg:cargo/tracing@0.1.44",
-      "scope": "required",
-      "type": "library",
-      "version": "0.1.44"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:url@2.5",
@@ -428,12 +458,13 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "2.5"
         }
       ],
-      "purl": "pkg:cargo/url@2.5",
-      "scope": "required",
-      "type": "library",
-      "version": "2.5"
+      "type": "library"
     },
     {
       "bom-ref": "cargo-requirement:uuid@1.18",
@@ -442,20 +473,19 @@
         {
           "name": "searchright:resolution",
           "value": "version-requirement-not-resolved"
+        },
+        {
+          "name": "searchright:version-requirement",
+          "value": "1.18"
         }
       ],
-      "purl": "pkg:cargo/uuid@1.18",
-      "scope": "required",
-      "type": "library",
-      "version": "1.18"
+      "type": "library"
     },
     {
       "bom-ref": "cargo:evidence-search-contracts@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "evidence-search-contracts",
@@ -477,9 +507,7 @@
       "bom-ref": "cargo:evidence-search-core@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "evidence-search-core",
@@ -501,9 +529,7 @@
       "bom-ref": "cargo:searchright-access@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-access",
@@ -525,9 +551,7 @@
       "bom-ref": "cargo:searchright-agent@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-agent",
@@ -549,9 +573,7 @@
       "bom-ref": "cargo:searchright-assurance@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-assurance",
@@ -573,9 +595,7 @@
       "bom-ref": "cargo:searchright-bench@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-bench",
@@ -597,9 +617,7 @@
       "bom-ref": "cargo:searchright-citeweft@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-citeweft",
@@ -621,9 +639,7 @@
       "bom-ref": "cargo:searchright-cli@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-cli",
@@ -645,9 +661,7 @@
       "bom-ref": "cargo:searchright-connectors@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-connectors",
@@ -669,9 +683,7 @@
       "bom-ref": "cargo:searchright-contracts@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-contracts",
@@ -693,9 +705,7 @@
       "bom-ref": "cargo:searchright-dedup@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-dedup",
@@ -717,9 +727,7 @@
       "bom-ref": "cargo:searchright-diagnostics@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-diagnostics",
@@ -741,9 +749,7 @@
       "bom-ref": "cargo:searchright-discovery@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-discovery",
@@ -765,9 +771,7 @@
       "bom-ref": "cargo:searchright-governance@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-governance",
@@ -789,9 +793,7 @@
       "bom-ref": "cargo:searchright-interchange@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-interchange",
@@ -813,9 +815,7 @@
       "bom-ref": "cargo:searchright-licensed@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-licensed",
@@ -837,9 +837,7 @@
       "bom-ref": "cargo:searchright-living@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-living",
@@ -861,9 +859,7 @@
       "bom-ref": "cargo:searchright-mcp@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-mcp",
@@ -885,9 +881,7 @@
       "bom-ref": "cargo:searchright-ops@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-ops",
@@ -909,9 +903,7 @@
       "bom-ref": "cargo:searchright-plugin-sdk@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-plugin-sdk",
@@ -933,9 +925,7 @@
       "bom-ref": "cargo:searchright-policy@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-policy",
@@ -957,9 +947,7 @@
       "bom-ref": "cargo:searchright-prisma@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-prisma",
@@ -981,9 +969,7 @@
       "bom-ref": "cargo:searchright-provenance@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-provenance",
@@ -1005,9 +991,7 @@
       "bom-ref": "cargo:searchright-ranking@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-ranking",
@@ -1029,9 +1013,7 @@
       "bom-ref": "cargo:searchright-screening@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-screening",
@@ -1053,9 +1035,7 @@
       "bom-ref": "cargo:searchright-sourceright-compat@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-sourceright-compat",
@@ -1077,9 +1057,7 @@
       "bom-ref": "cargo:searchright-store@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-store",
@@ -1101,9 +1079,7 @@
       "bom-ref": "cargo:searchright-study@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-study",
@@ -1125,9 +1101,7 @@
       "bom-ref": "cargo:searchright-validation@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright-validation",
@@ -1149,9 +1123,7 @@
       "bom-ref": "cargo:searchright@0.1.0-alpha.1",
       "licenses": [
         {
-          "expression": {
-            "workspace": true
-          }
+          "expression": "MIT OR Apache-2.0"
         }
       ],
       "name": "searchright",
@@ -1288,6 +1260,42 @@
       ],
       "type": "application",
       "version": "29eef336d9b2848a0b548edc03f92a220660cdb8"
+    },
+    {
+      "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/cargo-lock-sbom@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7",
+      "name": "edithatogo/repository-standards/.github/actions/cargo-lock-sbom",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "bc76f1fbe0fa87a1371eadc06b08f54b48c623f7"
+    },
+    {
+      "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/download-release-sbom@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7",
+      "name": "edithatogo/repository-standards/.github/actions/download-release-sbom",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "bc76f1fbe0fa87a1371eadc06b08f54b48c623f7"
+    },
+    {
+      "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7",
+      "name": "edithatogo/repository-standards/.github/actions/grype-scan",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "bc76f1fbe0fa87a1371eadc06b08f54b48c623f7"
     },
     {
       "bom-ref": "github-action:edithatogo/repository-standards/.github/actions/privacy-secrets@985503bc8eae58e7d6ef36a6e5427d0077e0193c",
@@ -1760,7 +1768,7 @@
     "properties": [
       {
         "name": "searchright:evidence-level",
-        "value": "lockfile-resolved-source-inventory"
+        "value": "manifest-and-automation-inventory"
       },
       {
         "name": "searchright:cargo-lock-present",
@@ -1776,11 +1784,11 @@
       },
       {
         "name": "searchright:claim-boundary",
-        "value": "not-a-binary-sbom-without-compiler-and-release-artifact"
+        "value": "manifest requirements are unresolved; separate Cargo.lock inventory is required for vulnerability matching; neither inventory proves binary composition"
       }
     ]
   },
-  "serialNumber": "urn:uuid:51b094b1-0678-55f8-99bf-05dba795a6ac",
+  "serialNumber": "urn:uuid:d78f2525-87e8-54b2-8c2b-059554401232",
   "specVersion": "1.6",
   "version": 1
 }
