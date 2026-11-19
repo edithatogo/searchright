@@ -477,7 +477,8 @@ async fn exact_record_budget_with_continuation_is_explicitly_partial() -> TestRe
 /// This is fixture/cache replay, not durable crash recovery or live-provider proof.
 #[tokio::test]
 async fn failed_second_page_recovers_with_one_complete_receipt_and_no_duplicate_records()
--> TestResult {
+    -> TestResult
+{
     let pages = two_pages()?;
     let first_page = pages.get(&None).ok_or("missing first fixture page")?.clone();
     let second_cursor = Some("second-page".to_owned());
