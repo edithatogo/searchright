@@ -100,20 +100,6 @@
       "version": "0.1.0"
     },
     {
-      "bom-ref": "cargo-requirement:clap@4.5",
-      "name": "clap",
-      "properties": [
-        {
-          "name": "searchright:resolution",
-          "value": "version-requirement-not-resolved"
-        }
-      ],
-      "purl": "pkg:cargo/clap@4.5",
-      "scope": "required",
-      "type": "library",
-      "version": "4.5"
-    },
-    {
       "bom-ref": "cargo-requirement:clap_mangen@0.2",
       "name": "clap_mangen",
       "properties": [
@@ -126,6 +112,20 @@
       "scope": "required",
       "type": "library",
       "version": "0.2"
+    },
+    {
+      "bom-ref": "cargo-requirement:clap@4.5",
+      "name": "clap",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/clap@4.5",
+      "scope": "required",
+      "type": "library",
+      "version": "4.5"
     },
     {
       "bom-ref": "cargo-requirement:csv@=1.4.0",
@@ -296,20 +296,6 @@
       "version": "1.2.3"
     },
     {
-      "bom-ref": "cargo-requirement:serde@1.0",
-      "name": "serde",
-      "properties": [
-        {
-          "name": "searchright:resolution",
-          "value": "version-requirement-not-resolved"
-        }
-      ],
-      "purl": "pkg:cargo/serde@1.0",
-      "scope": "required",
-      "type": "library",
-      "version": "1.0"
-    },
-    {
       "bom-ref": "cargo-requirement:serde_json@1.0",
       "name": "serde_json",
       "properties": [
@@ -319,6 +305,20 @@
         }
       ],
       "purl": "pkg:cargo/serde_json@1.0",
+      "scope": "required",
+      "type": "library",
+      "version": "1.0"
+    },
+    {
+      "bom-ref": "cargo-requirement:serde@1.0",
+      "name": "serde",
+      "properties": [
+        {
+          "name": "searchright:resolution",
+          "value": "version-requirement-not-resolved"
+        }
+      ],
+      "purl": "pkg:cargo/serde@1.0",
       "scope": "required",
       "type": "library",
       "version": "1.0"
@@ -1302,6 +1302,18 @@
       "version": "985503bc8eae58e7d6ef36a6e5427d0077e0193c"
     },
     {
+      "bom-ref": "github-action:fair-software/howfairis-github-action@4c11146488125aa6e1531184eed51d781bcd5871",
+      "name": "fair-software/howfairis-github-action",
+      "properties": [
+        {
+          "name": "searchright:component-kind",
+          "value": "github-action"
+        }
+      ],
+      "type": "application",
+      "version": "4c11146488125aa6e1531184eed51d781bcd5871"
+    },
+    {
       "bom-ref": "github-action:github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3",
       "name": "github/codeql-action/analyze",
       "properties": [
@@ -1780,7 +1792,7 @@
       }
     ]
   },
-  "serialNumber": "urn:uuid:51b094b1-0678-55f8-99bf-05dba795a6ac",
+  "serialNumber": "urn:uuid:0890163f-1dfb-5f21-a0b9-ef792c4e81cc",
   "specVersion": "1.6",
   "version": 1
 }
