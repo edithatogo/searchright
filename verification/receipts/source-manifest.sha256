@@ -10,6 +10,7 @@ ed52073385e93f7d864e262070366de5c2d7b0496fda20541ba4819fa92d074b  ./.github/ISSU
 ed885101114ecd525ee170babaf5a4e479ea8a1cbdd2f24659fd2dd5dc736f88  ./.github/workflows/ci.yml
 455bb5a1bdcb1a09914fd9fcb56da4f4e2e8496e76f9932a425eb7c72be499fc  ./.github/workflows/clean-room.yml
 03c8e9e49e69b588ec7fc762ecc0bd34827aa97f479dc5206817d2f30cadba3a  ./.github/workflows/coverage.yml
+fd53e4c245cce3db0bb996c9ff19a11d4a2ef2cd5094130163b9aea2df88412a  ./.github/workflows/fair-software.yml
 342dd0894aad3adc3e63a354a9493586724bfbe71ae643a237060a89c85b4605  ./.github/workflows/formal.yml
 dcc4f716f40899549c76b2b5ef80bdfaf41004b4ff641bbe3a0e713a6930c03d  ./.github/workflows/fuzz.yml
 d621b202cac6771726ea2b77313c2e820d2e9a93a910f021a91aa470a7b7d7f4  ./.github/workflows/github-control-plane.yml
@@ -1408,6 +1409,7 @@ d594d6f38cfe7dca9b4fb86768f18ea5a909e89437149ec6f2e9b654e6928b33  ./crates/searc
 a4b655ad1496fe74e2fd92280d3dbd1988610a0d8e67f394e5313e29c96faf47  ./crates/searchright/src/lib.rs
 4082922de8b7e23a26e424592dfc0ad10c39155149a4ff3b0f8230f6bee91923  ./crates/searchright/tests/facade_edges.rs
 c1f5691e92af337dead2cc76e02dc63d2a630b113dce0d83652958c1566ce9db  ./deny.toml
+9a221464c793eecb072102dacbee7193aa7ea1de2ba00d2a751e4b79fe707cc1  ./docs/FAIR_SOFTWARE_ASSESSMENT.md
 3266af86697894ef5a1305f9016af0c5bb6e0da51878fce5c64da0f1dde16ee1  ./docs/README.md
 7c85d3300c142f3e80ade0d675e807fec4befc93d6f81df8f813980e109209b8  ./docs/adrs/0001-shared-evidence-search-core.md
 380418eb767db9d859e908f0f0892b82ac24c49af84da7fd1fe533e2d6bede0e  ./docs/adrs/0002-contract-first-and-event-ledger.md
@@ -2717,7 +2719,7 @@ b24e136202659c3a75512e621400f7f3ba2b1968166839c3f419fe7abd21db48  ./verification
 7602b331629a6d0f7e3352005c30b449b27358b76c42efa0281ef7bbc746ff06  ./verification/reviews/track-16-rustls-native-certs-0.8.4/security_safety.md
 0acf33c9f2412b8842e1568f0b01c4ab9aa3d7df5f55e1e7244e5cd3ba27db22  ./verification/reviews/track-16-rustls-native-certs-0.8.4/source-manifest.json
 3c80d96641b9cb0c62ab8911e670058ccae332cf22a3231c180dd7bc26c45a9a  ./verification/reviews/track-16-rustls-native-certs-0.8.4/testing.md
-676e2fd60aa9e244853fb0d1c744668b19ed4b61b934faf972d982482dca11a1  ./verification/sbom/source-components.cdx.json
+69cbb446820a7d745d7a86545ac520ab14178f831adb00902276386c8ca1f899  ./verification/sbom/source-components.cdx.json
 d3fbe3c21aac0c0d1e8baa26989ba9167b54faa8d7ef96f469f24d2821518a01  ./verification/vertical-slice/README.md
 70d7370a20bb7ff9a0f3972ebd318d3f465ac74b3cdc75b8402fee236d685ec2  ./verification/vertical-slice/decisions.json
 c511ace5eda3be3c253e80549755a5e30c9b6a6af0ab2a9189a27fd6a92be697  ./verification/vertical-slice/expected.json
