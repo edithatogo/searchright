@@ -1,0 +1,331 @@
+{
+  "schema_version": "org.searchright.source-selection-catalogue.v1",
+  "authority": "advisory_only",
+  "observed_on": "2026-11-23",
+  "source_directory_reference": "https://refhunter.org/en/",
+  "limitations": [
+    "A pilot selection of first-party source identities, not a complete RefHunter import or independent methodological certification.",
+    "Data are advisory and cannot grant network, licence, access or screening authority."
+  ],
+  "sources": [
+    {
+      "source_id": "anzctr",
+      "source_name": "Australian New Zealand Clinical Trials Registry",
+      "source_kind": "trial_register",
+      "aliases": [
+        "ANZCTR"
+      ],
+      "first_party_url": "https://www.anzctr.org.au/Support/AboutUs.aspx",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": null,
+      "limitations": [
+        "Trial registration is not evidence of publication; external live adapter support is not claimed."
+      ],
+      "platforms": [
+        {
+          "platform_id": "anzctr-portal",
+          "platform_name": "ANZCTR search portal",
+          "access": "free",
+          "execution_evidence": "manual_method_documented",
+          "existing_contract_path": "contracts/fixtures/discovery-source-methods.json"
+        }
+      ]
+    },
+    {
+      "source_id": "cinahl",
+      "source_name": "CINAHL",
+      "source_kind": "bibliographic_database",
+      "aliases": [],
+      "first_party_url": "https://about.ebsco.com/products/research-databases/cinahl-database",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": 839,
+      "limitations": [
+        "Subject headings, native syntax and licence export policy require separate current platform verification."
+      ],
+      "platforms": [
+        {
+          "platform_id": "ebscohost",
+          "platform_name": "EBSCOhost",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "clinicaltrials-gov",
+      "source_name": "ClinicalTrials.gov",
+      "source_kind": "trial_register",
+      "aliases": [],
+      "first_party_url": "https://clinicaltrials.gov/",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": 842,
+      "limitations": [
+        "The existing documented manual method does not prove a Searchright API adapter; study registrations differ from published reports."
+      ],
+      "platforms": [
+        {
+          "platform_id": "clinicaltrials-portal",
+          "platform_name": "ClinicalTrials.gov search portal",
+          "access": "free",
+          "execution_evidence": "manual_method_documented",
+          "existing_contract_path": "contracts/fixtures/discovery-source-methods.json"
+        },
+        {
+          "platform_id": "clinicaltrials-api",
+          "platform_name": "ClinicalTrials.gov API v2",
+          "access": "free",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "cochrane-cdsr",
+      "source_name": "Cochrane Database of Systematic Reviews",
+      "source_kind": "review_database",
+      "aliases": [
+        "CDSR"
+      ],
+      "first_party_url": "https://www.cochranelibrary.com/",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": 841,
+      "limitations": [
+        "CDSR reviews are not CENTRAL trial records; access and export limits require separate review."
+      ],
+      "platforms": [
+        {
+          "platform_id": "cochrane-library",
+          "platform_name": "Cochrane Library",
+          "access": "mixed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "cochrane-central",
+      "source_name": "Cochrane Central Register of Controlled Trials",
+      "source_kind": "bibliographic_database",
+      "aliases": [
+        "CENTRAL"
+      ],
+      "first_party_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": 841,
+      "limitations": [
+        "CENTRAL contains trial reports and registry records; source coverage and update status are not guaranteed by catalogue listing."
+      ],
+      "platforms": [
+        {
+          "platform_id": "cochrane-library",
+          "platform_name": "Cochrane Library",
+          "access": "mixed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "embase",
+      "source_name": "Embase",
+      "source_kind": "bibliographic_database",
+      "aliases": [],
+      "first_party_url": "https://www.elsevier.com/products/embase",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": 838,
+      "limitations": [
+        "Emtree and provider-specific syntax must be checked independently; existing BYO metadata does not supply access."
+      ],
+      "platforms": [
+        {
+          "platform_id": "embase-com",
+          "platform_name": "Embase.com",
+          "access": "licensed",
+          "execution_evidence": "existing_contract_unverified",
+          "existing_contract_path": "contracts/licensed/embase.yaml"
+        },
+        {
+          "platform_id": "ovid",
+          "platform_name": "Ovid search platform",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "europe-pmc",
+      "source_name": "Europe PMC",
+      "source_kind": "discovery_index",
+      "aliases": [],
+      "first_party_url": "https://dev.europepmc.org/About",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": null,
+      "limitations": [
+        "Europe PMC overlaps PubMed and adds other content; corresponding searches can return different records."
+      ],
+      "platforms": [
+        {
+          "platform_id": "europe-pmc",
+          "platform_name": "Europe PMC",
+          "access": "free",
+          "execution_evidence": "existing_contract_unverified",
+          "existing_contract_path": "conductor/tracks/04-open-connectors-mvp/spec.md"
+        }
+      ]
+    },
+    {
+      "source_id": "medline",
+      "source_name": "MEDLINE",
+      "source_kind": "bibliographic_database",
+      "aliases": [],
+      "first_party_url": "https://pubmed.ncbi.nlm.nih.gov/about/",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": 837,
+      "limitations": [
+        "PubMed contains additional non-MEDLINE citations and is not identical to MEDLINE indexed via Ovid."
+      ],
+      "platforms": [
+        {
+          "platform_id": "pubmed",
+          "platform_name": "PubMed",
+          "access": "free",
+          "execution_evidence": "existing_contract_unverified",
+          "existing_contract_path": "conductor/tracks/04-open-connectors-mvp/spec.md"
+        },
+        {
+          "platform_id": "ovid",
+          "platform_name": "Ovid search platform",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "openalex",
+      "source_name": "OpenAlex",
+      "source_kind": "discovery_index",
+      "aliases": [],
+      "first_party_url": "https://openalex.org/transparency",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": null,
+      "limitations": [
+        "Broad scholarly metadata discovery is not a substitute for method-specific bibliographic database searches."
+      ],
+      "platforms": [
+        {
+          "platform_id": "openalex",
+          "platform_name": "OpenAlex",
+          "access": "free",
+          "execution_evidence": "existing_contract_unverified",
+          "existing_contract_path": "conductor/tracks/04-open-connectors-mvp/spec.md"
+        }
+      ]
+    },
+    {
+      "source_id": "psycinfo",
+      "source_name": "APA PsycInfo",
+      "source_kind": "bibliographic_database",
+      "aliases": [
+        "PsycINFO"
+      ],
+      "first_party_url": "https://www.apa.org/pubs/databases/psycinfo/",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": 840,
+      "limitations": [
+        "Current platform-specific thesaurus, syntax, coverage and licensed access remain to be assessed."
+      ],
+      "platforms": [
+        {
+          "platform_id": "apa-psycnet",
+          "platform_name": "APA PsycNet",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "scopus",
+      "source_name": "Scopus",
+      "source_kind": "discovery_index",
+      "aliases": [],
+      "first_party_url": "https://www.elsevier.com/products/scopus",
+      "observed_on": "2026-11-23",
+      "verification_state": "requires_review",
+      "disposition": "under_review",
+      "issue_number": null,
+      "limitations": [
+        "Licensed BYO profile, not independently verified live execution or search adequacy."
+      ],
+      "platforms": [
+        {
+          "platform_id": "elsevier-api",
+          "platform_name": "Elsevier APIs",
+          "access": "licensed",
+          "execution_evidence": "existing_contract_unverified",
+          "existing_contract_path": "contracts/licensed/scopus.yaml"
+        },
+        {
+          "platform_id": "scopus-web",
+          "platform_name": "Scopus web interface",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    },
+    {
+      "source_id": "web-of-science-core",
+      "source_name": "Web of Science Core Collection",
+      "source_kind": "discovery_index",
+      "aliases": [],
+      "first_party_url": "https://clarivate.com/academia-government/scientific-and-academic-research/research-discovery-and-referencing/web-of-science/web-of-science-core-collection/",
+      "observed_on": "2026-11-23",
+      "verification_state": "first_party_identity_checked",
+      "disposition": "under_review",
+      "issue_number": null,
+      "limitations": [
+        "Core Collection is distinct from the broader Web of Science platform; export and licensing details require review."
+      ],
+      "platforms": [
+        {
+          "platform_id": "web-of-science-api",
+          "platform_name": "Clarivate Web of Science API",
+          "access": "licensed",
+          "execution_evidence": "existing_contract_unverified",
+          "existing_contract_path": "contracts/licensed/web-of-science.yaml"
+        },
+        {
+          "platform_id": "web-of-science-web",
+          "platform_name": "Web of Science search interface",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
+        }
+      ]
+    }
+  ]
+}

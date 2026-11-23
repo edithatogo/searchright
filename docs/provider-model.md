@@ -32,3 +32,13 @@ silently mutate canonical records.
 
 Licensed providers remain bring-your-own access and may use manual export/import
 where APIs or licence terms do not permit automation.
+
+## Source selection is not provider support
+
+The [source-selection catalogue](source-selection-catalogue.md) is an **advisory,
+versioned source/platform assessment index** for review planning. It links a
+small first-party-confirmed sample to existing provider manifests and manual
+methods without giving those entries executable authority. A database/platform
+entry, a planned connector, a fixture-backed parser and an observed live run
+are distinct claims. RefHunter is treated as a secondary reference only; it is
+not a Searchright live provider or a right to bulk-redistribute descriptions.
