@@ -99,9 +99,8 @@ class SourceDirectoryRegistryTests(unittest.TestCase):
 
     def test_issues_are_linked_but_not_claimed_native_subissues(self):
         for row in self.rows:
-            self.assertEqual(
-                row["issue_number"], 834 if row["directory_id"] == "refhunter" else 845
-            )
+            expected = {"refhunter": 834, "dbis": 847, "re3data": 848}
+            self.assertEqual(row["issue_number"], expected.get(row["directory_id"], 845))
 
     def test_no_directory_is_misrepresented_as_retrieval_provider(self):
         types = {row["directory_type"] for row in self.rows}
@@ -110,6 +109,11 @@ class SourceDirectoryRegistryTests(unittest.TestCase):
         for row in self.rows:
             self.assertTrue(row["scope"])
             self.assertIn(row["priority"], {"high", "medium", "low"})
+
+    def test_api_documentation_is_explicitly_versioned(self):
+        by_id = {row["directory_id"]: row for row in self.rows}
+        self.assertEqual(by_id["dbis"]["api_documentation"], "https://dbis-api.ur.de/api-description")
+        self.assertEqual(by_id["re3data"]["api_documentation"], "https://www.re3data.org/api/doc/")
 
     def test_registry_is_deterministically_serialized(self):
         result = json.dumps(self.data, indent=2, ensure_ascii=True) + "\n"
