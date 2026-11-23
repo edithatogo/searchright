@@ -7,6 +7,8 @@ on:
       - 'migration/**'
       - 'contracts/**'
       - 'scripts/check_release_train.py'
+      - 'scripts/check_equator_directory_reference.py'
+      - 'tests/test_equator_directory_reference.py'
       - '.github/workflows/integration-release-train.yml'
   push:
     branches: [main]
@@ -43,6 +45,20 @@ jobs:
           python scripts/check_integration_passports.py
           python scripts/check_consumer_contracts.py
           python scripts/check_integration_drift.py
+      - name: Obtain pinned StandardFlow EQUATOR discovery (read-only)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: edithatogo/standards_check
+          ref: f02701c4b6139c6d588b3bfcccbf2e7ef3069bb9
+          path: target/equator-source
+          sparse-checkout: source/equator/discovery.json
+          persist-credentials: false
+      - name: Verify producer source bytes and candidate consumer contracts
+        run: |
+          test "$(git -C target/equator-source rev-parse HEAD)" = "f02701c4b6139c6d588b3bfcccbf2e7ef3069bb9"
+          python -m unittest tests.test_equator_directory_reference -v
+          python scripts/check_equator_directory_reference.py \
+            --catalogue target/equator-source/source/equator/discovery.json
       - name: Preserve read-only receipt
         run: python scripts/check_release_train.py > verification/receipts/integration-release-train.json
       - name: Upload receipt

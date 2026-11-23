@@ -1,0 +1,16 @@
+{
+  "schema_version": "org.searchright.equator-directory-reference.v1",
+  "status": "proposed_not_active",
+  "producer_repository": "edithatogo/standards_check",
+  "producer_revision": "f02701c4b6139c6d588b3bfcccbf2e7ef3069bb9",
+  "producer_path": "source/equator/discovery.json",
+  "producer_blob_sha": "8ff120a176e930ae2d57335d1948f5b53fd3f391",
+  "upstream_repository": "https://github.com/EQUATOR-Network/equator-website",
+  "upstream_revision": "46124ee9d420cf5477b1b0b1d7e39d2fcf469bc1",
+  "expected_published_count": 719,
+  "rights_status": "not_assessed_for_individual_guidelines",
+  "auto_promote": false,
+  "default_network": false,
+  "default_external_writes": false,
+  "claim_boundary": "Discovery metadata only: no approved checklist text, Standard Pack, edition selection, methodological certification, Searchright review-state change, or active adapter."
+}
