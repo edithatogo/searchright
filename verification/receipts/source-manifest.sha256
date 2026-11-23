@@ -71,7 +71,7 @@ db6e5881a3fca95b3d239f6a455de4223a75542acc716acec8c54432eb6548ef  ./benchmarks/s
 daada8d2ffd7cf4154a04e29db29ce457410d01750bbd24528df73fdec82d7eb  ./compose.yaml
 1cf888df82b42dc75a048d2bcec654c9226c038b2f82ea9d0d9e9d14de426897  ./conductor/code_styleguides/rust.md
 cfd257985d77b8ef86d4e1c5890a92d22c376b8e6f1fa6f75bdae6b111250c4f  ./conductor/design.md
-c66aa317b8091e0d28603e879f84a71c4995f3f41c9c7c30c7491e471338e648  ./conductor/frontier-plan.md
+376d171f9fe374edb73c19eeb2934fdcf7f8bd288ab1d50c5f63760e857ec8f4  ./conductor/frontier-plan.md
 0735e60ae7509844102d89832e43f76241aca28c80f308887f64246ad5ae4633  ./conductor/github/README.md
 08f587724fa83014249a6d41f646323e9c9a486ed3eef14646bf5c953952ced1  ./conductor/github/issue-hierarchy.json
 898ed0c04d7f30eac9ec4140ed11f987bf422ee59c8c22553ad4f4f3f8cf5d2a  ./conductor/github/issues/roadmap-epic.md
@@ -1407,6 +1407,7 @@ d594d6f38cfe7dca9b4fb86768f18ea5a909e89437149ec6f2e9b654e6928b33  ./crates/searc
 819899e7e8302b578b75deb0d70a92b47b8181ed836be989080bd351e1584458  ./crates/searchright/src/engine.rs
 a4b655ad1496fe74e2fd92280d3dbd1988610a0d8e67f394e5313e29c96faf47  ./crates/searchright/src/lib.rs
 4082922de8b7e23a26e424592dfc0ad10c39155149a4ff3b0f8230f6bee91923  ./crates/searchright/tests/facade_edges.rs
+a1719602cec393ef2b23687f3c508ffdb5977137a8b99bb782652eeae1354561  ./data/source-selection/catalogue.v1.json
 c1f5691e92af337dead2cc76e02dc63d2a630b113dce0d83652958c1566ce9db  ./deny.toml
 3266af86697894ef5a1305f9016af0c5bb6e0da51878fce5c64da0f1dde16ee1  ./docs/README.md
 7c85d3300c142f3e80ade0d675e807fec4befc93d6f81df8f813980e109209b8  ./docs/adrs/0001-shared-evidence-search-core.md
@@ -1458,7 +1459,7 @@ d2fcef7417425124afc81534fa9b06c24b5a738a562f885db1c29ea4a35c0dab  ./docs/operati
 89fc17bd03ef13341d8268074042876c5d4c910617883d2492c8557f33cfff2c  ./docs/pilots/pilot-protocol.md
 49d3194f225dd5f8f88b10e86782d438bc76f2f8b8af50c83c88bd6400f2592a  ./docs/prisma-jl-interop.md
 7f2e5320332567eea48697d0304990d75566439a3bd2e185076001abc83dd36a  ./docs/provider-governance.md
-401deead39dfe56c0f55a303030eb0b0078d545c82ed7a6235f91dcc39ad9571  ./docs/provider-model.md
+b9d1c438565d4881610c254c2e3fa8eed584beea779c5d86db2615374e81abd7  ./docs/provider-model.md
 3b77ba5fcac8ee7d3a04767d73f50b77366e351f0182f4248e71bcf102d9f114  ./docs/provider-parser-integrity.md
 6f0e2d3015a4ef493cca60beb169c8bd9414ab02c655c8ade02636192fd2716e  ./docs/provider-subrequest-context.md
 1adfbe5368487bcd44178c727e3d9342bd72e3c9eca0ec9bb55f1acf1dfe866c  ./docs/pubmed-efetch-mapping.md
@@ -1489,6 +1490,7 @@ c59bc292d8b8d896738a7a75517d281b85c91fdad33ace0a29f422f24fc03e48  ./docs/securit
 fb05da51497e9c1a8bb98bdaf8b3937db7cb4007e9afa9a5c2edc60950cd5e5a  ./docs/security/rmcp-3.9.0-source-review.md
 2dd364a23999902f3fe1b32ca6e54dc7b2e2eea4de54959f8efd3e03982892bf  ./docs/security/supply-chain.md
 97c5704fb0383413b32afa3ec958cd99125406ef5923686ee0a12e0e1e6e55c0  ./docs/security/threat-model.md
+6a151b18da0614e34ab2388e482ddb367b5b28cc841b731b3913450d00b3da5c  ./docs/source-selection-catalogue.md
 ea9217435e4eed9e13f752be622b312e3cefcc2e63ecaa6db5bf49c51e0995e9  ./docs/standardflow-integration.md
 373919cb4089582a4421dc697423095ec42898b62d183e021cea3797606eb1cd  ./docs/standards-and-provenance.md
 8923aec5bfc714ca4b779cad40db29d4c93bf6cb01fc8b452ebe94c3c88040c4  ./docs/supplementary-discovery.md
@@ -1628,6 +1630,7 @@ fcf5839f99f0c44563a5afff1dd72f8ba51f68b9698f1d7045b4afcc7d1b5e8b  ./scripts/chec
 3b670801317f9dc44847d28dcab77463cc2928b0e13b9021c4c78bb957bdd8c6  ./scripts/check_schema_migrations.py
 ca133c0bc7b2e41ac17f8491524947463bedda5639a54651d7d1c382a809b7c1  ./scripts/check_sdk_examples.py
 c9c44768c8f958fc75b1169eba268e61c52149ad5e5b94ef43542a6147dca1fa  ./scripts/check_secrets.py
+ba04296fcf7025dbab8fbbd095b54c454a81da8ff9003bc95ff8c12910438432  ./scripts/check_source_catalogue.py
 82ff4c96a5e74c04bf35b4004914c7afc44616e72f8a792d992298c55eba31cf  ./scripts/check_sourceright_migration.py
 59b04ef9511db78ac8ba09b0cb0e657a9623fe4adec689ba25029713f77336f0  ./scripts/check_toolchain_manifest.py
 f15ee0861db7e03f220ffe749b1401acdfaef50f6ea7b75e9399050647e6b242  ./scripts/check_traceability.py
@@ -1766,6 +1769,7 @@ b702f51c445f220456cd695a049b67417c44027df7c5df714a2f0456e02071e3  ./tests/test_q
 c763140d45f6b9a612586fa381b5df72e941b64dc9aafe64a0533c46bcb2f5d3  ./tests/test_review_bundle_security.py
 d80786caa7aae45739a898a198145c742223353fdf0a556cd44e51d687b93d6e  ./tests/test_sdk_docs_adoption_governance.py
 983457bb23a6f2b8ebcc19c466013989bfb84df0878575a1e94b160c1b9e68c1  ./tests/test_shared_provider_runtime_governance.py
+4465e744840407fe493654a13913918cf5d071aee5c1b62b5271c38cca09cfc7  ./tests/test_source_catalogue.py
 9abbcebca553ec96c7f4d5b6d15c30453598e579210ce4a6cc2a6eee022b81ab  ./tests/test_sourceright_migration.py
 4f8f6fd46e8950cbcd2b39014cd236fc8a17b1c40a4e2d250abed5d620de53e8  ./tests/test_sourceright_migration_governance.py
 e4c6048b261082661cd7f94445fff7695bf731273ca884155e297daec4441f5d  ./tests/test_track_archival.py
