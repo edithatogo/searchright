@@ -282,11 +282,18 @@
       ],
       "platforms": [
         {
-          "platform_id": "scopus",
-          "platform_name": "Scopus",
+          "platform_id": "elsevier-api",
+          "platform_name": "Elsevier APIs",
           "access": "licensed",
           "execution_evidence": "existing_contract_unverified",
           "existing_contract_path": "contracts/licensed/scopus.yaml"
+        },
+        {
+          "platform_id": "scopus-web",
+          "platform_name": "Scopus web interface",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
         }
       ]
     },
@@ -305,11 +312,18 @@
       ],
       "platforms": [
         {
-          "platform_id": "web-of-science",
-          "platform_name": "Web of Science",
+          "platform_id": "web-of-science-api",
+          "platform_name": "Clarivate Web of Science API",
           "access": "licensed",
           "execution_evidence": "existing_contract_unverified",
           "existing_contract_path": "contracts/licensed/web-of-science.yaml"
+        },
+        {
+          "platform_id": "web-of-science-web",
+          "platform_name": "Web of Science search interface",
+          "access": "licensed",
+          "execution_evidence": "not_claimed",
+          "existing_contract_path": null
         }
       ]
     }
