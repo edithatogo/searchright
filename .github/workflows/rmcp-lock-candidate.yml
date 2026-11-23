@@ -1,0 +1,48 @@
+name: rmcp lock candidate (read-only, temporary)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/rmcp-lock-candidate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  regenerate-rmcp:
+    name: Generate chrono-free rmcp lock candidate and MCP smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust
+        run: |
+          rustup toolchain install 1.97.1 --profile minimal
+          rustup default 1.97.1
+      - name: Generate Cargo-managed lockfile and verify graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo +1.97.1 metadata --format-version 1 --all-features > "$RUNNER_TEMP/metadata.json"
+          python3 - "$RUNNER_TEMP/metadata.json" <<'PY'
+          import json
+          import sys
+          with open(sys.argv[1], encoding='utf-8') as source:
+              packages = json.load(source)['packages']
+          chrono = [p for p in packages if p['name'] == 'chrono']
+          rmcp = [p for p in packages if p['name'] == 'rmcp']
+          if chrono or len(rmcp) != 1:
+              raise SystemExit(f"dependency graph invalid: chrono={len(chrono)}, rmcp={len(rmcp)}")
+          assert '9043cdfa8694d83bf506c2f3eb0313ec173edd7e' in rmcp[0]['source'], rmcp[0]['source']
+          print("CHRONO_ABSENT_GRAPH_SATISFIED")
+          print("RMCP_SOURCE_PINNED", rmcp[0]['version'], rmcp[0]['source'])
+          PY
+          cargo +1.97.1 metadata --locked --format-version 1 --no-deps > /dev/null
+          echo __SEARCHRIGHT_RMCP_DIFF_START__
+          git diff -- Cargo.lock
+          echo __SEARCHRIGHT_RMCP_DIFF_END__
+          cargo +1.97.1 check -p searchright-mcp --all-targets --all-features --locked
+          echo MCP_BUILD_SUCCEEDED_ON_COMBINED_CANDIDATE
