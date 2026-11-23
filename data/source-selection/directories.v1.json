@@ -36,13 +36,13 @@
       "directory_type": "academic_database_directory",
       "homepage": "https://dbis.ur.de/",
       "first_party_evidence": "https://dbis-api.ur.de/",
-      "api_documentation": "https://dbis-api.ur.de/",
+      "api_documentation": "https://dbis-api.ur.de/api-description",
       "priority": "high",
       "access_characterization": "public_catalogue",
       "scope": "Broad multidisciplinary scholarly databases and platform/access information",
       "rights_note": "Published OpenAPI JSON access does not itself grant bulk metadata redistribution; review terms first.",
-      "recommended_use": "Pilot bounded link/identity comparisons after API/rights review",
-      "issue_number": 845
+      "recommended_use": "Bounded global resource and subject ID reconciliation, subject to metadata reuse/terms clearance; organization-scoped entitlements remain institution-specific.",
+      "issue_number": 847
     },
     {
       "observed_on": "2026-11-23",
@@ -136,13 +136,13 @@
       "directory_type": "research_data_repository_directory",
       "homepage": "https://www.re3data.org/",
       "first_party_evidence": "https://www.re3data.org/about",
-      "api_documentation": "https://www.re3data.org/api",
+      "api_documentation": "https://www.re3data.org/api/doc/",
       "priority": "high",
       "access_characterization": "public_catalogue",
       "scope": "Cross-disciplinary research-data repositories",
       "rights_note": "Publisher declares CC0 for registry metadata; still validate schema/version, API terms and provenance before ingest.",
-      "recommended_use": "Assess bounded metadata pilot for dataset-repository discovery",
-      "issue_number": 845
+      "recommended_use": "Propose only a CC0 metadata v4 proof-of-concept, not access to indexed datasets; API compatibility untested.",
+      "issue_number": 848
     },
     {
       "observed_on": "2026-11-23",
