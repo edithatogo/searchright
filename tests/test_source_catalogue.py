@@ -84,6 +84,24 @@ class SourceCatalogueTests(unittest.TestCase):
         data["sources"][0]["issue_number"] = None
         self.assertEqual(self.checker.validate_catalogue(data), [])
 
+    def test_licensed_web_interfaces_are_not_api_contracts(self):
+        for source_id, api, interface in (
+            ("scopus", "elsevier-api", "scopus-web"),
+            ("web-of-science-core", "web-of-science-api", "web-of-science-web"),
+        ):
+            source = next(s for s in self.data["sources"] if s["source_id"] == source_id)
+            by_id = {p["platform_id"]: p for p in source["platforms"]}
+            self.assertEqual(by_id[api]["execution_evidence"], "existing_contract_unverified")
+            self.assertEqual(by_id[interface]["execution_evidence"], "not_claimed")
+            self.assertIsNone(by_id[interface]["existing_contract_path"])
+
+    def test_existing_contract_requires_a_path(self):
+        data = copy.deepcopy(self.data)
+        medline = next(s for s in data["sources"] if s["source_id"] == "medline")
+        pubmed = next(p for p in medline["platforms"] if p["platform_id"] == "pubmed")
+        pubmed["existing_contract_path"] = None
+        self.check_rejected(data, "requires exact path")
+
     def test_repeated_evaluation_is_deterministic(self):
         first = self.checker.validate_catalogue(self.data)
         second = self.checker.validate_catalogue(copy.deepcopy(self.data))
