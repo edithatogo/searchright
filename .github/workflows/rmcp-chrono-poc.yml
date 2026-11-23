@@ -1,0 +1,55 @@
+name: rmcp chrono-free upstream qualification (read-only POC)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/rmcp-chrono-poc.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-graph-poc:
+    name: Assess upstream rmcp chrono-free dependency and MCP build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust
+        run: |
+          rustup toolchain install 1.97.1 --profile minimal
+          rustup default 1.97.1
+      - name: Use exact upstream pull request source only in disposable workspace
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('Cargo.toml')
+          text = path.read_text(encoding='utf-8')
+          old = 'rmcp = { version = "=3.9.0", features = ["server", "client", "elicitation", "macros", "transport-io", "schemars"] }'
+          new = 'rmcp = { git = "https://github.com/modelcontextprotocol/rust-sdk.git", rev = "9043cdfa8694d83bf506c2f3eb0313ec173edd7e", default-features = false, features = ["base64", "server", "client", "elicitation", "macros", "transport-io", "schemars"] }'
+          assert text.count(old) == 1, 'unexpected workspace rmcp dependency'
+          path.write_text(text.replace(old, new), encoding='utf-8')
+          PY
+          cargo +1.97.1 metadata --format-version 1 --all-features > "$RUNNER_TEMP/metadata.json"
+          python3 - "$RUNNER_TEMP/metadata.json" <<'PY'
+          import json
+          import sys
+          with open(sys.argv[1], encoding='utf-8') as handle:
+              meta = json.load(handle)
+          packages = meta['packages']
+          match = [p for p in packages if p['name'] in ('rmcp', 'chrono', 'schemars', 'jiff')]
+          print('RESOLVED_CANDIDATE_PACKAGES')
+          for p in match:
+              print(p['name'], p['version'], p['source'])
+          chrono = [p for p in packages if p['name'] == 'chrono']
+          if chrono:
+              raise SystemExit('UNRESOLVED_CHRONO_IN_ALL_FEATURE_WORKSPACE_GRAPH')
+          print('CHRONO_ABSENT_IN_ALL_FEATURE_WORKSPACE_GRAPH')
+          PY
+          cargo +1.97.1 check -p searchright-mcp --all-targets --all-features
+          echo MCP_BUILD_SUCCEEDED_ON_EXACT_CANDIDATE
