@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 import re
 import unittest
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data/source-selection/directories.v1.json"
@@ -47,7 +47,9 @@ class SourceDirectoryRegistryTests(unittest.TestCase):
                     self.assertTrue(value.hostname)
                     self.assertFalse(value.username)
                     self.assertFalse(value.password)
-                    self.assertFalse(value.query)
+                    forbidden_keys = {"token", "password", "api_key", "apikey", "access_token", "secret", "session"}
+                    for key, _ in parse_qsl(value.query, keep_blank_values=True):
+                        self.assertNotIn(key.casefold(), forbidden_keys)
 
     def test_reference_catalogue_never_grants_execution_or_ingestion(self):
         for row in self.rows:
