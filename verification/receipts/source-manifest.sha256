@@ -1408,6 +1408,7 @@ d594d6f38cfe7dca9b4fb86768f18ea5a909e89437149ec6f2e9b654e6928b33  ./crates/searc
 a4b655ad1496fe74e2fd92280d3dbd1988610a0d8e67f394e5313e29c96faf47  ./crates/searchright/src/lib.rs
 4082922de8b7e23a26e424592dfc0ad10c39155149a4ff3b0f8230f6bee91923  ./crates/searchright/tests/facade_edges.rs
 a1719602cec393ef2b23687f3c508ffdb5977137a8b99bb782652eeae1354561  ./data/source-selection/catalogue.v1.json
+6ccdb26a82ae0fad11e50a87a1cababed688605146f89ada0fc71f27004e4f5e  ./data/source-selection/directories.v1.json
 c1f5691e92af337dead2cc76e02dc63d2a630b113dce0d83652958c1566ce9db  ./deny.toml
 3266af86697894ef5a1305f9016af0c5bb6e0da51878fce5c64da0f1dde16ee1  ./docs/README.md
 7c85d3300c142f3e80ade0d675e807fec4befc93d6f81df8f813980e109209b8  ./docs/adrs/0001-shared-evidence-search-core.md
@@ -1490,7 +1491,7 @@ c59bc292d8b8d896738a7a75517d281b85c91fdad33ace0a29f422f24fc03e48  ./docs/securit
 fb05da51497e9c1a8bb98bdaf8b3937db7cb4007e9afa9a5c2edc60950cd5e5a  ./docs/security/rmcp-3.9.0-source-review.md
 2dd364a23999902f3fe1b32ca6e54dc7b2e2eea4de54959f8efd3e03982892bf  ./docs/security/supply-chain.md
 97c5704fb0383413b32afa3ec958cd99125406ef5923686ee0a12e0e1e6e55c0  ./docs/security/threat-model.md
-6a151b18da0614e34ab2388e482ddb367b5b28cc841b731b3913450d00b3da5c  ./docs/source-selection-catalogue.md
+be54c92d2d6289f1b2f11cd852c4a41aa770b34dc59337b207666a65420c563d  ./docs/source-selection-catalogue.md
 ea9217435e4eed9e13f752be622b312e3cefcc2e63ecaa6db5bf49c51e0995e9  ./docs/standardflow-integration.md
 373919cb4089582a4421dc697423095ec42898b62d183e021cea3797606eb1cd  ./docs/standards-and-provenance.md
 8923aec5bfc714ca4b779cad40db29d4c93bf6cb01fc8b452ebe94c3c88040c4  ./docs/supplementary-discovery.md
@@ -1770,6 +1771,7 @@ c763140d45f6b9a612586fa381b5df72e941b64dc9aafe64a0533c46bcb2f5d3  ./tests/test_r
 d80786caa7aae45739a898a198145c742223353fdf0a556cd44e51d687b93d6e  ./tests/test_sdk_docs_adoption_governance.py
 983457bb23a6f2b8ebcc19c466013989bfb84df0878575a1e94b160c1b9e68c1  ./tests/test_shared_provider_runtime_governance.py
 4465e744840407fe493654a13913918cf5d071aee5c1b62b5271c38cca09cfc7  ./tests/test_source_catalogue.py
+f88fdebe8c7012c8e1581ba343cf4e0800b5a50b975f77918ba754bb5154261f  ./tests/test_source_directories.py
 9abbcebca553ec96c7f4d5b6d15c30453598e579210ce4a6cc2a6eee022b81ab  ./tests/test_sourceright_migration.py
 4f8f6fd46e8950cbcd2b39014cd236fc8a17b1c40a4e2d250abed5d620de53e8  ./tests/test_sourceright_migration_governance.py
 e4c6048b261082661cd7f94445fff7695bf731273ca884155e297daec4441f5d  ./tests/test_track_archival.py
