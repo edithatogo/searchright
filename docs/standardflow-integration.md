@@ -27,4 +27,6 @@ python scripts/check_equator_directory_reference.py --catalogue /path/to/standar
 python -m unittest tests.test_equator_directory_reference
 ```
 
+The producer's existing 56-entry legacy reconciliation is maintained separately by [StandardFlow PR #127](https://github.com/edithatogo/standards_check/pull/127); candidate guideline identity is not source-text or methodological validation. The existing integration lock remains unchanged.
+
 The validator checks the exact Git blob hash, pinned producer/upstream revisions, identity conservation, and unknown-content/rights rejection. It **does not fetch source data**, recommend standards, transcribe checklists, approve licence rights, change review policy, or claim an executing cross-repo adapter. Runtime selection and real downstream evidence remain with [#843](https://github.com/edithatogo/searchright/issues/843); only a subsequent rights-qualified producer/consumer contract can activate the integration.
