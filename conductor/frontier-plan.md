@@ -312,6 +312,26 @@ regression tests; use fresh confirmation data or a declared repeated-test design
 for new superiority claims after tuning. Release useful software while these
 research questions remain open.
 
+## Source catalogue and qualification intake (23 November 2026)
+
+The [source coverage coordination issue](https://github.com/edithatogo/searchright/issues/835)
+and [inventory increment](https://github.com/edithatogo/searchright/issues/836)
+are a bounded **Track 11** source-selection work unit in the existing frontier
+programme, not another Conductor track hierarchy. The [RefHunter assessment
+issue](https://github.com/edithatogo/searchright/issues/834) remains a
+reference/rights decision. [Source-selection catalogue guidance](../docs/source-selection-catalogue.md)
+links an advisory, revisioned identity sample to the existing ReviewPlan,
+provider manifests and supplementary-method contracts.
+
+The six linked initial assessments [#837–#842](https://github.com/edithatogo/searchright/issues/835)
+are source-specific qualification requests, **not** live-adapter requests.
+Track 02 owns syntax/translation evidence, Track 04 owns open provider runtime,
+Track 08 owns PRESS/PRISMA-S, Track 20 owns manual supplementary methods and
+Track 21 owns licensed BYO-adapter contracts. Track 30 retains priority and
+evidence gating. No archived track is reopened and no external rights or
+methodological/live-source evidence is inferred from catalogue entries or issue
+state. The normal Python unittest discovery gate checks catalogue invariants.
+
 ## Completion of this planning change
 
 This plan records intended work and sources. It does not claim live support,
