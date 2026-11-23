@@ -34,3 +34,29 @@ These scenarios describe **expected human review questions**, not an implemented
 3. **Umbrella review / current evidence surveillance:** keep CDSR separate from CENTRAL, consider additional open discovery indexes only as supplementary, and document why a bibliographic discovery API is not a substitute for each source required by the protocol.
 
 Any source-selection quality claims need a separately specified baseline comparison, independent information-specialist review and reproducible retrieval evidence. These cases are currently **planning fixtures only**, not that evaluation.
+
+## External directories and registers of candidate search sources (23 November 2026)
+
+Searchright now records a **link-only, internally authored** [directory-of-directories index](../data/source-selection/directories.v1.json) with 10 candidate references, a source class, first-party URL, date, rights/API uncertainty, planned use and GitHub intake issue [#845](https://github.com/edithatogo/searchright/issues/845). It is not an import of directory records. The 12-item source catalogue above remains a *different dataset*: it indexes actual candidate databases/registers/platforms, not the reference services that suggest them. Python unittest discovery runs [directory policy tests](../tests/test_source_directories.py) with network disabled.
+
+| Reference | What it enumerates | How to use it |
+| --- | --- | --- |
+| [DBIS](https://dbis.ur.de/) · [published API](https://dbis-api.ur.de/) | Multidisciplinary academic databases, with institutional access overlays and a documented JSON API | **Highest-priority machine-discovery pilot** after terms and data-reuse review, maintaining database/platform identity |
+| [RefHunter](https://refhunter.org/en/) | Health and adjacent-field database features and search-interface capabilities | Human comparison and source-selection planning; link only pending clearance of its CC BY-SA and public-copy restrictions |
+| [FAIRsharing](https://fairsharing.org/databases) | Research databases, repositories, standards and policies | Discover domain-specific data/knowledge bases; licence/share-alike and API rules require separate review |
+| [OpenDOAR](https://www.jisc.ac.uk/opendoar) | Curated open-access scholarly repositories | Supplementary/grey-literature repository candidates; not a bibliographic database compiler |
+| [re3data](https://www.re3data.org/about) | Research data repositories, with CC0 registry metadata and documented API | Strong potential rights-clear dataset repository discovery pilot; still check current API and provenance |
+| [OpenAIRE PROVIDE](https://www.openaire.eu/validator-registration-guide) | Scholarly data providers, repositories, journals, aggregators and CRIS | Assess source coverage and harvesting relationships; not presumed a general database directory |
+| [WHO ICTRP network](https://www.who.int/tools/clinical-trials-registry-platform/network/primary-registries) | Primary trial registries, distinct from [ICTRP data providers](https://www.who.int/tools/clinical-trials-registry-platform/network/data-providers) | Crosswalk with Track 20's ClinicalTrials.gov, ANZCTR and ICTRP manual procedures; avoid trial double counting |
+| [CDA-AMC Grey Matters](https://www.cda-amc.ca/grey-matters-practical-tool-searching-health-related-grey-literature) | Grey-literature source websites for HTA, guidelines, economics, policy and regulators | Topic-specific, human-guided supplementary search plans; do not copy the checklist |
+| [ISSN ROAD](https://www.issn.org/services/online-services/road-the-directory-of-open-access-scholarly-resources/) | Open-access scholarly journals, repositories, proceedings and other serials | Optional source-name/serial identity reconciliation, not an adapter |
+| [UQ sources-to-search guide](https://guides.library.uq.edu.au/tools-and-techniques/systematic-reviews/sources-to-search) | Topic-based library recommendations for databases | Method guidance only; subscriptions depend on the actual institution |
+
+**Supplementary methodological authority** remains independent of directories: [Cochrane Handbook Chapter 4](https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04) gives intervention-search minimum sources and method-specific considerations; [NHMRC guidance](https://www.nhmrc.gov.au/guidelinesforguidelines/develop/identifying-evidence) identifies Australian and broader health-evidence resources. These do not automatically certify a particular source set or substitute for human method review.
+
+### Admission and verification contract
+
+1. Crosswalk each external directory candidate against the already-declared `ReviewPlan`, source-methods and licensed/open-provider manifests before a new source issue or adapter is proposed. Preserve database, platform, API/provider and aggregator identities separately.
+2. A directory's published API is a *candidate metadata interface*, not permission to crawl, mirror, redistribute or execute it. Before ingesting, check licence and share-alike, robots/terms, attribution, request budgets, source revision, stable ID mapping and derivative-export obligations. A public first-party page is an evidence link, **not** observed live interoperability.
+3. A human information specialist must decide which sources are suitable for each topic, review type and region; evaluate key seed-record recall, overlap, omitted-source risk, licensing and translation losses before reporting search adequacy. PRISMA-S supplies reporting evidence, not methodological certification.
+4. Keep the `directories.v1.json` and `catalogue.v1.json` registers **advisory**. No entry permits active network connections, final screening decisions, data import or unsupported source claims. The unresolved Track 16 dependency-security gate [#831](https://github.com/edithatogo/searchright/issues/831) also remains independent of this catalogue work.
