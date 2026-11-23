@@ -83,7 +83,7 @@ class EquatorDirectoryReferenceTests(unittest.TestCase):
         duplicate["guidelines"].append(duplicate["guidelines"][0])
         duplicate["published_count"] = 2
         with self.assertRaisesRegex(ValueError, "source identity"):
-            self.check(duplicate)
+            self.check(duplicate, expected_published_count=2)
 
 
 if __name__ == "__main__":
