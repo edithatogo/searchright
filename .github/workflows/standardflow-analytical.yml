@@ -1,0 +1,44 @@
+name: StandardFlow analytical snapshot canary
+on:
+  pull_request:
+    paths:
+      - scripts/check_standardflow_analytical_snapshot.py
+      - tests/test_standardflow_snapshot.py
+      - requirements/standardflow-analytics.txt
+      - .github/workflows/standardflow-analytical.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  snapshot:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Offline contract regressions
+        run: python -m unittest tests.test_standardflow_snapshot -v
+      - name: Install optional analytical dependency
+        run: python -m pip install -r requirements/standardflow-analytics.txt
+      - name: Retrieve explicitly pinned historical producer artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 45388593899 --repo edithatogo/standards_check --name equator-analytical-replay-e68ece5dfdbeb1a312cea632686e3c58a9125003-45388593899 --dir "$RUNNER_TEMP/standardflow-snapshot"
+      - name: Verify producer bytes, schema, source revision and discovery-only boundary
+        run: |
+          python scripts/check_standardflow_analytical_snapshot.py "$RUNNER_TEMP/standardflow-snapshot" \
+            --manifest-sha256 d8bc7e97d1644967e90f7ff6b1b61f3cdba30e43f8e5b1a3e94be1c4b716f893 \
+            --producer-revision e68ece5dfdbeb1a312cea632686e3c58a9125003 \
+            --source-revision d74413b15d266334067e1e5c104957601be3ba6c \
+            --allow-historical-replay > "$RUNNER_TEMP/standardflow-consumer-receipt.json"
+          cat "$RUNNER_TEMP/standardflow-consumer-receipt.json"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: standardflow-consumer-receipt
+          path: ${{ runner.temp }}/standardflow-consumer-receipt.json
+          if-no-files-found: error
+          retention-days: 30
