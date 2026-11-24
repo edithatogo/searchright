@@ -52,3 +52,9 @@ runs the same local checker; it cannot select or approve a reporting
 guideline. The consumer and producer qualifications are separate.
 Tracked by [#843](https://github.com/edithatogo/searchright/issues/843)
 and [StandardFlow #142](https://github.com/edithatogo/standards_check/pull/142).
+
+### Observed cross-repository evidence
+
+The historical consumer canary [run 45389077100](https://github.com/edithatogo/searchright/actions/runs/45389077100) passed. Its [receipt 14918081392](https://github.com/edithatogo/searchright/actions/runs/45389077100/artifacts/14918081392) records all four counts, two held identity conflicts, zero pack promotions and zero review-state mutations. Receipt SHA-256 `8a567602a2e2f930f6587bda08b00a77ca0e6d52ac71d04cfd267ed5328e1b7e`.
+
+The producer also completed a separate [fresh acquisition snapshot 14916344312](https://github.com/edithatogo/standards_check/actions/runs/45388593899/artifacts/14916344312), manifest SHA-256 `7cf2f7505805d4577ce735c9db2a8c99afef0a2f87afe87f0604602510e3f5af` at the same producer and source revisions. It contains 720 identities, 160 acquisition records, 52 item fingerprints and 2267 review findings. The fresh acquisition observed TRIPOD+AI 52 rows while five priority editions were held; do not replace the historical CONSORT/SPIRIT fingerprints merely because this snapshot is newer. Both artifacts are candidate evidence, not standards pack releases.
