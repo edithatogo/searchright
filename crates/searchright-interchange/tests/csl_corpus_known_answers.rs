@@ -2,8 +2,8 @@
 //!
 //! Intentionally does not change the implementation or claim CSL schema,
 //! source-rights, live-provider or downstream-consumer conformance.
-//! Pinned digest inputs are tiny, ASCII-only and independently calculated
-//! from the documented domain prefix and BLAKE3 test-vector algorithm.
+//! Pinned digest inputs are tiny and independently calculated from the
+//! documented domain prefix and canonical ASCII/UTF-8 payload bytes.
 
 use searchright_interchange::csl_corpus::{CslCorpusError, canonical_csl_bibliography};
 
@@ -20,7 +20,7 @@ fn empty_bibliography_matches_independent_blake3_known_answer() -> Result<(), Cs
 
 #[test]
 fn minimal_bibliography_matches_independent_blake3_known_answer() -> Result<(), CslCorpusError> {
-    // Hashed bytes: b"searchright/csl-bibliography/v1\\n" followed by
+    // Hashed bytes: b"searchright/csl-bibliography/v1\n" followed by
     // b'[{"id":"a","type":"report"}]' (no terminator).
     let output = canonical_csl_bibliography(r#"[{"type":"report","id":"a"}]"#)?;
     assert_eq!(
@@ -30,6 +30,40 @@ fn minimal_bibliography_matches_independent_blake3_known_answer() -> Result<(), 
     assert_eq!(
         output.references,
         vec![serde_json::json!({"id": "a", "type": "report"})]
+    );
+    Ok(())
+}
+
+#[test]
+fn unicode_and_control_escapes_have_stable_distinct_revisions() -> Result<(), CslCorpusError> {
+    let escaped = canonical_csl_bibliography(
+        r#"[{"type":"report","title":"Caf\u00e9\n\"review\"","id":"unicode"}]"#,
+    )?;
+    let literal = canonical_csl_bibliography(
+        r#"[{"id":"unicode","title":"Café\n\"review\"","type":"report"}]"#,
+    )?;
+    assert_eq!(escaped, literal);
+    assert_eq!(
+        escaped.revision,
+        "blake3:17823b33cd008aaa329f9c14eee4a02eb7f6748336aacc1ada7356f06550517e"
+    );
+    assert_eq!(
+        escaped.references,
+        vec![serde_json::json!({"id":"unicode","title":"Caf\u{e9}\n\"review\"","type":"report"})]
+    );
+
+    // Preserve decomposed Unicode; the identity boundary does not normalise text.
+    let decomposed = canonical_csl_bibliography(
+        r#"[{"id":"unicode","title":"Cafe\u0301\n\"review\"","type":"report"}]"#,
+    )?;
+    assert_eq!(
+        decomposed.revision,
+        "blake3:eec6ef72a9188fc50aacc1ceeeec9ae2618cf21781abb61ce935b158471f2301"
+    );
+    assert_ne!(escaped.revision, decomposed.revision);
+    assert_eq!(
+        decomposed.references,
+        vec![serde_json::json!({"id":"unicode","title":"Cafe\u{301}\n\"review\"","type":"report"})]
     );
     Ok(())
 }
